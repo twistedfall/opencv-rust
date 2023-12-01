@@ -36,7 +36,7 @@ pub mod tracking {
 		fn as_raw_mut_TrackerCSRT(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn set_initial_mask(&mut self, mask: &impl core::ToInputArray) -> Result<()> {
+		fn set_initial_mask(&mut self, mask: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_tracking_TrackerCSRT_setInitialMask_const__InputArrayR(self.as_raw_mut_TrackerCSRT(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -73,6 +73,8 @@ pub mod tracking {
 		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { TrackerCSRT, crate::video::TrackerTraitConst, as_raw_Tracker, crate::video::TrackerTrait, as_raw_mut_Tracker }
+	
 	impl crate::tracking::TrackerCSRTTraitConst for TrackerCSRT {
 		#[inline] fn as_raw_TrackerCSRT(&self) -> *const c_void { self.as_raw() }
 	}
@@ -80,6 +82,8 @@ pub mod tracking {
 	impl crate::tracking::TrackerCSRTTrait for TrackerCSRT {
 		#[inline] fn as_raw_mut_TrackerCSRT(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { TrackerCSRT, crate::tracking::TrackerCSRTTraitConst, as_raw_TrackerCSRT, crate::tracking::TrackerCSRTTrait, as_raw_mut_TrackerCSRT }
 	
 	impl TrackerCSRT {
 		/// Create CSRT tracker instance
@@ -89,7 +93,7 @@ pub mod tracking {
 		/// ## C++ default parameters
 		/// * parameters: TrackerCSRT::Params()
 		#[inline]
-		pub fn create(parameters: &crate::tracking::TrackerCSRT_Params) -> Result<core::Ptr<crate::tracking::TrackerCSRT>> {
+		pub fn create(parameters: &impl crate::tracking::TrackerCSRT_ParamsTraitConst) -> Result<core::Ptr<crate::tracking::TrackerCSRT>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_tracking_TrackerCSRT_create_const_ParamsR(parameters.as_raw_TrackerCSRT_Params(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -492,6 +496,8 @@ pub mod tracking {
 		#[inline] fn as_raw_mut_TrackerCSRT_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { TrackerCSRT_Params, crate::tracking::TrackerCSRT_ParamsTraitConst, as_raw_TrackerCSRT_Params, crate::tracking::TrackerCSRT_ParamsTrait, as_raw_mut_TrackerCSRT_Params }
+	
 	impl TrackerCSRT_Params {
 		#[inline]
 		pub fn default() -> Result<crate::tracking::TrackerCSRT_Params> {
@@ -612,6 +618,8 @@ pub mod tracking {
 		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { TrackerKCF, crate::video::TrackerTraitConst, as_raw_Tracker, crate::video::TrackerTrait, as_raw_mut_Tracker }
+	
 	impl crate::tracking::TrackerKCFTraitConst for TrackerKCF {
 		#[inline] fn as_raw_TrackerKCF(&self) -> *const c_void { self.as_raw() }
 	}
@@ -619,6 +627,8 @@ pub mod tracking {
 	impl crate::tracking::TrackerKCFTrait for TrackerKCF {
 		#[inline] fn as_raw_mut_TrackerKCF(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { TrackerKCF, crate::tracking::TrackerKCFTraitConst, as_raw_TrackerKCF, crate::tracking::TrackerKCFTrait, as_raw_mut_TrackerKCF }
 	
 	impl TrackerKCF {
 		/// Create KCF tracker instance

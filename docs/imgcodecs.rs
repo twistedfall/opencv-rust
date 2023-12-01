@@ -412,7 +412,7 @@ pub mod imgcodecs {
 	/// * buf: Input array or vector of bytes.
 	/// * flags: The same flags as in cv::imread, see cv::ImreadModes.
 	#[inline]
-	pub fn imdecode(buf: &impl core::ToInputArray, flags: i32) -> Result<core::Mat> {
+	pub fn imdecode(buf: &impl ToInputArray, flags: i32) -> Result<core::Mat> {
 		input_array_arg!(buf);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imdecode_const__InputArrayR_int(buf.as_raw__InputArray(), flags, ocvrs_return.as_mut_ptr()) };
@@ -442,7 +442,7 @@ pub mod imgcodecs {
 	/// * dst: The optional output placeholder for the decoded matrix. It can save the image
 	/// reallocations when the function is called repeatedly for images of the same size.
 	#[inline]
-	pub fn imdecode_to(buf: &impl core::ToInputArray, flags: i32, dst: &mut core::Mat) -> Result<core::Mat> {
+	pub fn imdecode_to(buf: &impl ToInputArray, flags: i32, dst: &mut impl core::MatTrait) -> Result<core::Mat> {
 		input_array_arg!(buf);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imdecode_const__InputArrayR_int_MatX(buf.as_raw__InputArray(), flags, dst.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
@@ -471,7 +471,7 @@ pub mod imgcodecs {
 	/// This alternative version of [imdecodemulti] function uses the following default values for its arguments:
 	/// * range: Range::all()
 	#[inline]
-	pub fn imdecodemulti_def(buf: &impl core::ToInputArray, flags: i32, mats: &mut core::Vector<core::Mat>) -> Result<bool> {
+	pub fn imdecodemulti_def(buf: &impl ToInputArray, flags: i32, mats: &mut core::Vector<core::Mat>) -> Result<bool> {
 		input_array_arg!(buf);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imdecodemulti_const__InputArrayR_int_vectorLMatGR(buf.as_raw__InputArray(), flags, mats.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
@@ -498,7 +498,7 @@ pub mod imgcodecs {
 	/// ## C++ default parameters
 	/// * range: Range::all()
 	#[inline]
-	pub fn imdecodemulti(buf: &impl core::ToInputArray, flags: i32, mats: &mut core::Vector<core::Mat>, range: &core::Range) -> Result<bool> {
+	pub fn imdecodemulti(buf: &impl ToInputArray, flags: i32, mats: &mut core::Vector<core::Mat>, range: &impl core::RangeTraitConst) -> Result<bool> {
 		input_array_arg!(buf);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imdecodemulti_const__InputArrayR_int_vectorLMatGR_const_RangeR(buf.as_raw__InputArray(), flags, mats.as_raw_mut_VectorOfMat(), range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
@@ -522,7 +522,7 @@ pub mod imgcodecs {
 	/// This alternative version of [imencode] function uses the following default values for its arguments:
 	/// * params: std::vector<int>()
 	#[inline]
-	pub fn imencode_def(ext: &str, img: &impl core::ToInputArray, buf: &mut core::Vector<u8>) -> Result<bool> {
+	pub fn imencode_def(ext: &str, img: &impl ToInputArray, buf: &mut core::Vector<u8>) -> Result<bool> {
 		extern_container_arg!(ext);
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
@@ -546,7 +546,7 @@ pub mod imgcodecs {
 	/// ## C++ default parameters
 	/// * params: std::vector<int>()
 	#[inline]
-	pub fn imencode(ext: &str, img: &impl core::ToInputArray, buf: &mut core::Vector<u8>, params: &core::Vector<i32>) -> Result<bool> {
+	pub fn imencode(ext: &str, img: &impl ToInputArray, buf: &mut core::Vector<u8>, params: &core::Vector<i32>) -> Result<bool> {
 		extern_container_arg!(ext);
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
@@ -827,7 +827,7 @@ pub mod imgcodecs {
 	/// This alternative version of [imwrite] function uses the following default values for its arguments:
 	/// * params: std::vector<int>()
 	#[inline]
-	pub fn imwrite_def(filename: &str, img: &impl core::ToInputArray) -> Result<bool> {
+	pub fn imwrite_def(filename: &str, img: &impl ToInputArray) -> Result<bool> {
 		extern_container_arg!(filename);
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
@@ -878,7 +878,7 @@ pub mod imgcodecs {
 	/// ## C++ default parameters
 	/// * params: std::vector<int>()
 	#[inline]
-	pub fn imwrite(filename: &str, img: &impl core::ToInputArray, params: &core::Vector<i32>) -> Result<bool> {
+	pub fn imwrite(filename: &str, img: &impl ToInputArray, params: &core::Vector<i32>) -> Result<bool> {
 		extern_container_arg!(filename);
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
@@ -894,7 +894,7 @@ pub mod imgcodecs {
 	/// This alternative version of [imwritemulti] function uses the following default values for its arguments:
 	/// * params: std::vector<int>()
 	#[inline]
-	pub fn imwritemulti_def(filename: &str, img: &impl core::ToInputArray) -> Result<bool> {
+	pub fn imwritemulti_def(filename: &str, img: &impl ToInputArray) -> Result<bool> {
 		extern_container_arg!(filename);
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
@@ -909,7 +909,7 @@ pub mod imgcodecs {
 	/// ## C++ default parameters
 	/// * params: std::vector<int>()
 	#[inline]
-	pub fn imwritemulti(filename: &str, img: &impl core::ToInputArray, params: &core::Vector<i32>) -> Result<bool> {
+	pub fn imwritemulti(filename: &str, img: &impl ToInputArray, params: &core::Vector<i32>) -> Result<bool> {
 		extern_container_arg!(filename);
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
@@ -1034,6 +1034,8 @@ pub mod imgcodecs {
 		#[inline] fn as_raw_mut_ImageCollection(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { ImageCollection, crate::imgcodecs::ImageCollectionTraitConst, as_raw_ImageCollection, crate::imgcodecs::ImageCollectionTrait, as_raw_mut_ImageCollection }
+	
 	impl ImageCollection {
 		#[inline]
 		pub fn default() -> Result<crate::imgcodecs::ImageCollection> {
@@ -1121,9 +1123,11 @@ pub mod imgcodecs {
 		#[inline] fn as_raw_mut_ImageCollection_iterator(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { ImageCollection_iterator, crate::imgcodecs::ImageCollection_iteratorTraitConst, as_raw_ImageCollection_iterator, crate::imgcodecs::ImageCollection_iteratorTrait, as_raw_mut_ImageCollection_iterator }
+	
 	impl ImageCollection_iterator {
 		#[inline]
-		pub fn new(col: &mut crate::imgcodecs::ImageCollection) -> Result<crate::imgcodecs::ImageCollection_iterator> {
+		pub fn new(col: &mut impl crate::imgcodecs::ImageCollectionTrait) -> Result<crate::imgcodecs::ImageCollection_iterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ImageCollection_iterator_iterator_ImageCollectionX(col.as_raw_mut_ImageCollection(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1133,7 +1137,7 @@ pub mod imgcodecs {
 		}
 		
 		#[inline]
-		pub fn new_1(col: &mut crate::imgcodecs::ImageCollection, end: i32) -> Result<crate::imgcodecs::ImageCollection_iterator> {
+		pub fn new_1(col: &mut impl crate::imgcodecs::ImageCollectionTrait, end: i32) -> Result<crate::imgcodecs::ImageCollection_iterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ImageCollection_iterator_iterator_ImageCollectionX_int(col.as_raw_mut_ImageCollection(), end, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

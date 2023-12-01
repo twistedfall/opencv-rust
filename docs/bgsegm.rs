@@ -334,7 +334,7 @@ pub mod bgsegm {
 	/// * wavespeed: 0.2
 	/// * objspeed: 6.0
 	#[inline]
-	pub fn create_synthetic_sequence_generator_def(background: &impl core::ToInputArray, object: &impl core::ToInputArray) -> Result<core::Ptr<crate::bgsegm::SyntheticSequenceGenerator>> {
+	pub fn create_synthetic_sequence_generator_def(background: &impl ToInputArray, object: &impl ToInputArray) -> Result<core::Ptr<crate::bgsegm::SyntheticSequenceGenerator>> {
 		input_array_arg!(background);
 		input_array_arg!(object);
 		return_send!(via ocvrs_return);
@@ -361,7 +361,7 @@ pub mod bgsegm {
 	/// * wavespeed: 0.2
 	/// * objspeed: 6.0
 	#[inline]
-	pub fn create_synthetic_sequence_generator(background: &impl core::ToInputArray, object: &impl core::ToInputArray, amplitude: f64, wavelength: f64, wavespeed: f64, objspeed: f64) -> Result<core::Ptr<crate::bgsegm::SyntheticSequenceGenerator>> {
+	pub fn create_synthetic_sequence_generator(background: &impl ToInputArray, object: &impl ToInputArray, amplitude: f64, wavelength: f64, wavespeed: f64, objspeed: f64) -> Result<core::Ptr<crate::bgsegm::SyntheticSequenceGenerator>> {
 		input_array_arg!(background);
 		input_array_arg!(object);
 		return_send!(via ocvrs_return);
@@ -377,7 +377,7 @@ pub mod bgsegm {
 		fn as_raw_BackgroundSubtractorCNT(&self) -> *const c_void;
 	
 		#[inline]
-		fn get_background_image(&self, background_image: &mut impl core::ToOutputArray) -> Result<()> {
+		fn get_background_image(&self, background_image: &mut impl ToOutputArray) -> Result<()> {
 			output_array_arg!(background_image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorCNT_getBackgroundImage_const_const__OutputArrayR(self.as_raw_BackgroundSubtractorCNT(), background_image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
@@ -435,7 +435,7 @@ pub mod bgsegm {
 		/// ## C++ default parameters
 		/// * learning_rate: -1
 		#[inline]
-		fn apply(&mut self, image: &impl core::ToInputArray, fgmask: &mut impl core::ToOutputArray, learning_rate: f64) -> Result<()> {
+		fn apply(&mut self, image: &impl ToInputArray, fgmask: &mut impl ToOutputArray, learning_rate: f64) -> Result<()> {
 			input_array_arg!(image);
 			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
@@ -449,7 +449,7 @@ pub mod bgsegm {
 		/// This alternative version of [BackgroundSubtractorCNTTrait::apply] function uses the following default values for its arguments:
 		/// * learning_rate: -1
 		#[inline]
-		fn apply_def(&mut self, image: &impl core::ToInputArray, fgmask: &mut impl core::ToOutputArray) -> Result<()> {
+		fn apply_def(&mut self, image: &impl ToInputArray, fgmask: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(image);
 			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
@@ -530,6 +530,8 @@ pub mod bgsegm {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { BackgroundSubtractorCNT, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::video::BackgroundSubtractorTraitConst for BackgroundSubtractorCNT {
 		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.as_raw() }
 	}
@@ -538,6 +540,8 @@ pub mod bgsegm {
 		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { BackgroundSubtractorCNT, crate::video::BackgroundSubtractorTraitConst, as_raw_BackgroundSubtractor, crate::video::BackgroundSubtractorTrait, as_raw_mut_BackgroundSubtractor }
+	
 	impl crate::bgsegm::BackgroundSubtractorCNTTraitConst for BackgroundSubtractorCNT {
 		#[inline] fn as_raw_BackgroundSubtractorCNT(&self) -> *const c_void { self.as_raw() }
 	}
@@ -545,6 +549,8 @@ pub mod bgsegm {
 	impl crate::bgsegm::BackgroundSubtractorCNTTrait for BackgroundSubtractorCNT {
 		#[inline] fn as_raw_mut_BackgroundSubtractorCNT(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { BackgroundSubtractorCNT, crate::bgsegm::BackgroundSubtractorCNTTraitConst, as_raw_BackgroundSubtractorCNT, crate::bgsegm::BackgroundSubtractorCNTTrait, as_raw_mut_BackgroundSubtractorCNT }
 	
 	impl BackgroundSubtractorCNT {
 	}
@@ -810,6 +816,8 @@ pub mod bgsegm {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { BackgroundSubtractorGMG, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::video::BackgroundSubtractorTraitConst for BackgroundSubtractorGMG {
 		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.as_raw() }
 	}
@@ -818,6 +826,8 @@ pub mod bgsegm {
 		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { BackgroundSubtractorGMG, crate::video::BackgroundSubtractorTraitConst, as_raw_BackgroundSubtractor, crate::video::BackgroundSubtractorTrait, as_raw_mut_BackgroundSubtractor }
+	
 	impl crate::bgsegm::BackgroundSubtractorGMGTraitConst for BackgroundSubtractorGMG {
 		#[inline] fn as_raw_BackgroundSubtractorGMG(&self) -> *const c_void { self.as_raw() }
 	}
@@ -825,6 +835,8 @@ pub mod bgsegm {
 	impl crate::bgsegm::BackgroundSubtractorGMGTrait for BackgroundSubtractorGMG {
 		#[inline] fn as_raw_mut_BackgroundSubtractorGMG(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { BackgroundSubtractorGMG, crate::bgsegm::BackgroundSubtractorGMGTraitConst, as_raw_BackgroundSubtractorGMG, crate::bgsegm::BackgroundSubtractorGMGTrait, as_raw_mut_BackgroundSubtractorGMG }
 	
 	impl BackgroundSubtractorGMG {
 	}
@@ -846,7 +858,7 @@ pub mod bgsegm {
 		fn as_raw_BackgroundSubtractorGSOC(&self) -> *const c_void;
 	
 		#[inline]
-		fn get_background_image(&self, background_image: &mut impl core::ToOutputArray) -> Result<()> {
+		fn get_background_image(&self, background_image: &mut impl ToOutputArray) -> Result<()> {
 			output_array_arg!(background_image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorGSOC_getBackgroundImage_const_const__OutputArrayR(self.as_raw_BackgroundSubtractorGSOC(), background_image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
@@ -864,7 +876,7 @@ pub mod bgsegm {
 		/// ## C++ default parameters
 		/// * learning_rate: -1
 		#[inline]
-		fn apply(&mut self, image: &impl core::ToInputArray, fgmask: &mut impl core::ToOutputArray, learning_rate: f64) -> Result<()> {
+		fn apply(&mut self, image: &impl ToInputArray, fgmask: &mut impl ToOutputArray, learning_rate: f64) -> Result<()> {
 			input_array_arg!(image);
 			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
@@ -878,7 +890,7 @@ pub mod bgsegm {
 		/// This alternative version of [BackgroundSubtractorGSOCTrait::apply] function uses the following default values for its arguments:
 		/// * learning_rate: -1
 		#[inline]
-		fn apply_def(&mut self, image: &impl core::ToInputArray, fgmask: &mut impl core::ToOutputArray) -> Result<()> {
+		fn apply_def(&mut self, image: &impl ToInputArray, fgmask: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(image);
 			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
@@ -916,6 +928,8 @@ pub mod bgsegm {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { BackgroundSubtractorGSOC, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::video::BackgroundSubtractorTraitConst for BackgroundSubtractorGSOC {
 		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.as_raw() }
 	}
@@ -924,6 +938,8 @@ pub mod bgsegm {
 		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { BackgroundSubtractorGSOC, crate::video::BackgroundSubtractorTraitConst, as_raw_BackgroundSubtractor, crate::video::BackgroundSubtractorTrait, as_raw_mut_BackgroundSubtractor }
+	
 	impl crate::bgsegm::BackgroundSubtractorGSOCTraitConst for BackgroundSubtractorGSOC {
 		#[inline] fn as_raw_BackgroundSubtractorGSOC(&self) -> *const c_void { self.as_raw() }
 	}
@@ -931,6 +947,8 @@ pub mod bgsegm {
 	impl crate::bgsegm::BackgroundSubtractorGSOCTrait for BackgroundSubtractorGSOC {
 		#[inline] fn as_raw_mut_BackgroundSubtractorGSOC(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { BackgroundSubtractorGSOC, crate::bgsegm::BackgroundSubtractorGSOCTraitConst, as_raw_BackgroundSubtractorGSOC, crate::bgsegm::BackgroundSubtractorGSOCTrait, as_raw_mut_BackgroundSubtractorGSOC }
 	
 	impl BackgroundSubtractorGSOC {
 	}
@@ -952,7 +970,7 @@ pub mod bgsegm {
 		fn as_raw_BackgroundSubtractorLSBP(&self) -> *const c_void;
 	
 		#[inline]
-		fn get_background_image(&self, background_image: &mut impl core::ToOutputArray) -> Result<()> {
+		fn get_background_image(&self, background_image: &mut impl ToOutputArray) -> Result<()> {
 			output_array_arg!(background_image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBP_getBackgroundImage_const_const__OutputArrayR(self.as_raw_BackgroundSubtractorLSBP(), background_image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
@@ -970,7 +988,7 @@ pub mod bgsegm {
 		/// ## C++ default parameters
 		/// * learning_rate: -1
 		#[inline]
-		fn apply(&mut self, image: &impl core::ToInputArray, fgmask: &mut impl core::ToOutputArray, learning_rate: f64) -> Result<()> {
+		fn apply(&mut self, image: &impl ToInputArray, fgmask: &mut impl ToOutputArray, learning_rate: f64) -> Result<()> {
 			input_array_arg!(image);
 			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
@@ -984,7 +1002,7 @@ pub mod bgsegm {
 		/// This alternative version of [BackgroundSubtractorLSBPTrait::apply] function uses the following default values for its arguments:
 		/// * learning_rate: -1
 		#[inline]
-		fn apply_def(&mut self, image: &impl core::ToInputArray, fgmask: &mut impl core::ToOutputArray) -> Result<()> {
+		fn apply_def(&mut self, image: &impl ToInputArray, fgmask: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(image);
 			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
@@ -1020,6 +1038,8 @@ pub mod bgsegm {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { BackgroundSubtractorLSBP, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::video::BackgroundSubtractorTraitConst for BackgroundSubtractorLSBP {
 		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1028,6 +1048,8 @@ pub mod bgsegm {
 		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { BackgroundSubtractorLSBP, crate::video::BackgroundSubtractorTraitConst, as_raw_BackgroundSubtractor, crate::video::BackgroundSubtractorTrait, as_raw_mut_BackgroundSubtractor }
+	
 	impl crate::bgsegm::BackgroundSubtractorLSBPTraitConst for BackgroundSubtractorLSBP {
 		#[inline] fn as_raw_BackgroundSubtractorLSBP(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1035,6 +1057,8 @@ pub mod bgsegm {
 	impl crate::bgsegm::BackgroundSubtractorLSBPTrait for BackgroundSubtractorLSBP {
 		#[inline] fn as_raw_mut_BackgroundSubtractorLSBP(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { BackgroundSubtractorLSBP, crate::bgsegm::BackgroundSubtractorLSBPTraitConst, as_raw_BackgroundSubtractorLSBP, crate::bgsegm::BackgroundSubtractorLSBPTrait, as_raw_mut_BackgroundSubtractorLSBP }
 	
 	impl BackgroundSubtractorLSBP {
 	}
@@ -1087,9 +1111,11 @@ pub mod bgsegm {
 		#[inline] fn as_raw_mut_BackgroundSubtractorLSBPDesc(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { BackgroundSubtractorLSBPDesc, crate::bgsegm::BackgroundSubtractorLSBPDescTraitConst, as_raw_BackgroundSubtractorLSBPDesc, crate::bgsegm::BackgroundSubtractorLSBPDescTrait, as_raw_mut_BackgroundSubtractorLSBPDesc }
+	
 	impl BackgroundSubtractorLSBPDesc {
 		#[inline]
-		pub fn calc_local_svd_values(local_svd_values: &mut impl core::ToOutputArray, frame: &core::Mat) -> Result<()> {
+		pub fn calc_local_svd_values(local_svd_values: &mut impl ToOutputArray, frame: &impl core::MatTraitConst) -> Result<()> {
 			output_array_arg!(local_svd_values);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBPDesc_calcLocalSVDValues_const__OutputArrayR_const_MatR(local_svd_values.as_raw__OutputArray(), frame.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
@@ -1099,7 +1125,7 @@ pub mod bgsegm {
 		}
 		
 		#[inline]
-		pub fn compute_from_local_svd_values(desc: &mut impl core::ToOutputArray, local_svd_values: &core::Mat, lsbp_sample_points: &core::Point2i) -> Result<()> {
+		pub fn compute_from_local_svd_values(desc: &mut impl ToOutputArray, local_svd_values: &impl core::MatTraitConst, lsbp_sample_points: &core::Point2i) -> Result<()> {
 			output_array_arg!(desc);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBPDesc_computeFromLocalSVDValues_const__OutputArrayR_const_MatR_const_Point2iX(desc.as_raw__OutputArray(), local_svd_values.as_raw_Mat(), lsbp_sample_points, ocvrs_return.as_mut_ptr()) };
@@ -1109,7 +1135,7 @@ pub mod bgsegm {
 		}
 		
 		#[inline]
-		pub fn compute(desc: &mut impl core::ToOutputArray, frame: &core::Mat, lsbp_sample_points: &core::Point2i) -> Result<()> {
+		pub fn compute(desc: &mut impl ToOutputArray, frame: &impl core::MatTraitConst, lsbp_sample_points: &core::Point2i) -> Result<()> {
 			output_array_arg!(desc);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBPDesc_compute_const__OutputArrayR_const_MatR_const_Point2iX(desc.as_raw__OutputArray(), frame.as_raw_Mat(), lsbp_sample_points, ocvrs_return.as_mut_ptr()) };
@@ -1238,6 +1264,8 @@ pub mod bgsegm {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { BackgroundSubtractorMOG, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::video::BackgroundSubtractorTraitConst for BackgroundSubtractorMOG {
 		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1246,6 +1274,8 @@ pub mod bgsegm {
 		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { BackgroundSubtractorMOG, crate::video::BackgroundSubtractorTraitConst, as_raw_BackgroundSubtractor, crate::video::BackgroundSubtractorTrait, as_raw_mut_BackgroundSubtractor }
+	
 	impl crate::bgsegm::BackgroundSubtractorMOGTraitConst for BackgroundSubtractorMOG {
 		#[inline] fn as_raw_BackgroundSubtractorMOG(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1253,6 +1283,8 @@ pub mod bgsegm {
 	impl crate::bgsegm::BackgroundSubtractorMOGTrait for BackgroundSubtractorMOG {
 		#[inline] fn as_raw_mut_BackgroundSubtractorMOG(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { BackgroundSubtractorMOG, crate::bgsegm::BackgroundSubtractorMOGTraitConst, as_raw_BackgroundSubtractorMOG, crate::bgsegm::BackgroundSubtractorMOGTrait, as_raw_mut_BackgroundSubtractorMOG }
 	
 	impl BackgroundSubtractorMOG {
 	}
@@ -1285,7 +1317,7 @@ pub mod bgsegm {
 		/// * frame: Output frame.
 		/// * gtMask: Output ground-truth (reference) segmentation mask object/background.
 		#[inline]
-		fn get_next_frame(&mut self, frame: &mut impl core::ToOutputArray, gt_mask: &mut impl core::ToOutputArray) -> Result<()> {
+		fn get_next_frame(&mut self, frame: &mut impl ToOutputArray, gt_mask: &mut impl ToOutputArray) -> Result<()> {
 			output_array_arg!(frame);
 			output_array_arg!(gt_mask);
 			return_send!(via ocvrs_return);
@@ -1324,6 +1356,8 @@ pub mod bgsegm {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { SyntheticSequenceGenerator, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::bgsegm::SyntheticSequenceGeneratorTraitConst for SyntheticSequenceGenerator {
 		#[inline] fn as_raw_SyntheticSequenceGenerator(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1331,6 +1365,8 @@ pub mod bgsegm {
 	impl crate::bgsegm::SyntheticSequenceGeneratorTrait for SyntheticSequenceGenerator {
 		#[inline] fn as_raw_mut_SyntheticSequenceGenerator(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { SyntheticSequenceGenerator, crate::bgsegm::SyntheticSequenceGeneratorTraitConst, as_raw_SyntheticSequenceGenerator, crate::bgsegm::SyntheticSequenceGeneratorTrait, as_raw_mut_SyntheticSequenceGenerator }
 	
 	impl SyntheticSequenceGenerator {
 		/// Creates an instance of SyntheticSequenceGenerator.
@@ -1343,7 +1379,7 @@ pub mod bgsegm {
 		/// * wavespeed: How fast waves will move.
 		/// * objspeed: How fast object will fly over background.
 		#[inline]
-		pub fn new(background: &impl core::ToInputArray, object: &impl core::ToInputArray, amplitude: f64, wavelength: f64, wavespeed: f64, objspeed: f64) -> Result<crate::bgsegm::SyntheticSequenceGenerator> {
+		pub fn new(background: &impl ToInputArray, object: &impl ToInputArray, amplitude: f64, wavelength: f64, wavespeed: f64, objspeed: f64) -> Result<crate::bgsegm::SyntheticSequenceGenerator> {
 			input_array_arg!(background);
 			input_array_arg!(object);
 			return_send!(via ocvrs_return);

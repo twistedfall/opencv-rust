@@ -82,7 +82,7 @@ pub mod dpm {
 		/// * image: An image.
 		/// * objects: The detections: rectangulars, scores and class IDs.
 		#[inline]
-		fn detect(&mut self, image: &mut core::Mat, objects: &mut core::Vector<crate::dpm::DPMDetector_ObjectDetection>) -> Result<()> {
+		fn detect(&mut self, image: &mut impl core::MatTrait, objects: &mut core::Vector<crate::dpm::DPMDetector_ObjectDetection>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dpm_DPMDetector_detect_MatR_vectorLObjectDetectionGR(self.as_raw_mut_DPMDetector(), image.as_raw_mut_Mat(), objects.as_raw_mut_VectorOfDPMDetector_ObjectDetection(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -115,6 +115,8 @@ pub mod dpm {
 	impl crate::dpm::DPMDetectorTrait for DPMDetector {
 		#[inline] fn as_raw_mut_DPMDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { DPMDetector, crate::dpm::DPMDetectorTraitConst, as_raw_DPMDetector, crate::dpm::DPMDetectorTrait, as_raw_mut_DPMDetector }
 	
 	impl DPMDetector {
 		/// Load the trained models from given .xml files and return cv::Ptr\<DPMDetector\>.
@@ -200,7 +202,7 @@ pub mod dpm {
 	
 		#[inline]
 		fn set_rect(&mut self, val: core::Rect) {
-			let ret = unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_propRect_const_Rect(self.as_raw_mut_DPMDetector_ObjectDetection(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_propRect_const_Rect(self.as_raw_mut_DPMDetector_ObjectDetection(), &val) };
 			ret
 		}
 		
@@ -240,6 +242,8 @@ pub mod dpm {
 	impl crate::dpm::DPMDetector_ObjectDetectionTrait for DPMDetector_ObjectDetection {
 		#[inline] fn as_raw_mut_DPMDetector_ObjectDetection(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { DPMDetector_ObjectDetection, crate::dpm::DPMDetector_ObjectDetectionTraitConst, as_raw_DPMDetector_ObjectDetection, crate::dpm::DPMDetector_ObjectDetectionTrait, as_raw_mut_DPMDetector_ObjectDetection }
 	
 	impl DPMDetector_ObjectDetection {
 		#[inline]

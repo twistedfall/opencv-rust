@@ -19,7 +19,7 @@ pub mod cudaarithm {
 	/// This alternative version of [abs_sum] function uses the following default values for its arguments:
 	/// * mask: noArray()
 	#[inline]
-	pub fn abs_sum_def(src: &impl core::ToInputArray) -> Result<core::Scalar> {
+	pub fn abs_sum_def(src: &impl ToInputArray) -> Result<core::Scalar> {
 		input_array_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_absSum_const__InputArrayR(src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -37,7 +37,7 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
-	pub fn abs_sum(src: &impl core::ToInputArray, mask: &impl core::ToInputArray) -> Result<core::Scalar> {
+	pub fn abs_sum(src: &impl ToInputArray, mask: &impl ToInputArray) -> Result<core::Scalar> {
 		input_array_arg!(src);
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
@@ -60,7 +60,7 @@ pub mod cudaarithm {
 	/// This alternative version of [abs] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn abs_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn abs_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -82,7 +82,7 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn abs(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn abs(src: &impl ToInputArray, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -106,7 +106,7 @@ pub mod cudaarithm {
 	/// This alternative version of [absdiff] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn absdiff_def(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn absdiff_def(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		output_array_arg!(dst);
@@ -130,7 +130,7 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn absdiff(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn absdiff(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		output_array_arg!(dst);
@@ -168,7 +168,7 @@ pub mod cudaarithm {
 	/// * dtype: -1
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn add_weighted_def(src1: &impl core::ToInputArray, alpha: f64, src2: &impl core::ToInputArray, beta: f64, gamma: f64, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn add_weighted_def(src1: &impl ToInputArray, alpha: f64, src2: &impl ToInputArray, beta: f64, gamma: f64, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		output_array_arg!(dst);
@@ -205,7 +205,7 @@ pub mod cudaarithm {
 	/// * dtype: -1
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn add_weighted(src1: &impl core::ToInputArray, alpha: f64, src2: &impl core::ToInputArray, beta: f64, gamma: f64, dst: &mut impl core::ToOutputArray, dtype: i32, stream: &mut core::Stream) -> Result<()> {
+	pub fn add_weighted(src1: &impl ToInputArray, alpha: f64, src2: &impl ToInputArray, beta: f64, gamma: f64, dst: &mut impl ToOutputArray, dtype: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		output_array_arg!(dst);
@@ -236,7 +236,7 @@ pub mod cudaarithm {
 	/// * dtype: -1
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn add_def(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn add_def(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		output_array_arg!(dst);
@@ -266,7 +266,7 @@ pub mod cudaarithm {
 	/// * dtype: -1
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn add(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, dtype: i32, stream: &mut core::Stream) -> Result<()> {
+	pub fn add(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, mask: &impl ToInputArray, dtype: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		output_array_arg!(dst);
@@ -293,7 +293,7 @@ pub mod cudaarithm {
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn bitwise_and_def(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn bitwise_and_def(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		output_array_arg!(dst);
@@ -318,7 +318,7 @@ pub mod cudaarithm {
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn bitwise_and(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn bitwise_and(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		output_array_arg!(dst);
@@ -344,7 +344,7 @@ pub mod cudaarithm {
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn bitwise_not_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn bitwise_not_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -367,7 +367,7 @@ pub mod cudaarithm {
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn bitwise_not(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn bitwise_not(src: &impl ToInputArray, dst: &mut impl ToOutputArray, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		input_array_arg!(mask);
@@ -393,7 +393,7 @@ pub mod cudaarithm {
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn bitwise_or_def(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn bitwise_or_def(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		output_array_arg!(dst);
@@ -418,7 +418,7 @@ pub mod cudaarithm {
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn bitwise_or(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn bitwise_or(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		output_array_arg!(dst);
@@ -445,7 +445,7 @@ pub mod cudaarithm {
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn bitwise_xor_def(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn bitwise_xor_def(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		output_array_arg!(dst);
@@ -470,7 +470,7 @@ pub mod cudaarithm {
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn bitwise_xor(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn bitwise_xor(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		output_array_arg!(dst);
@@ -489,7 +489,7 @@ pub mod cudaarithm {
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn calc_abs_sum_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn calc_abs_sum_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -505,7 +505,7 @@ pub mod cudaarithm {
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn calc_abs_sum(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn calc_abs_sum(src: &impl ToInputArray, dst: &mut impl ToOutputArray, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		input_array_arg!(mask);
@@ -523,7 +523,7 @@ pub mod cudaarithm {
 	/// * norm_type: NORM_L2
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn calc_norm_diff_def(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn calc_norm_diff_def(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		output_array_arg!(dst);
@@ -540,7 +540,7 @@ pub mod cudaarithm {
 	/// * norm_type: NORM_L2
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn calc_norm_diff(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, norm_type: i32, stream: &mut core::Stream) -> Result<()> {
+	pub fn calc_norm_diff(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, norm_type: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		output_array_arg!(dst);
@@ -558,7 +558,7 @@ pub mod cudaarithm {
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn calc_norm_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, norm_type: i32) -> Result<()> {
+	pub fn calc_norm_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, norm_type: i32) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -574,7 +574,7 @@ pub mod cudaarithm {
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn calc_norm(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, norm_type: i32, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn calc_norm(src: &impl ToInputArray, dst: &mut impl ToOutputArray, norm_type: i32, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		input_array_arg!(mask);
@@ -592,7 +592,7 @@ pub mod cudaarithm {
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn calc_sqr_sum_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn calc_sqr_sum_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -608,7 +608,7 @@ pub mod cudaarithm {
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn calc_sqr_sum(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn calc_sqr_sum(src: &impl ToInputArray, dst: &mut impl ToOutputArray, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		input_array_arg!(mask);
@@ -626,7 +626,7 @@ pub mod cudaarithm {
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn calc_sum_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn calc_sum_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -642,7 +642,7 @@ pub mod cudaarithm {
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn calc_sum(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn calc_sum(src: &impl ToInputArray, dst: &mut impl ToOutputArray, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		input_array_arg!(mask);
@@ -670,7 +670,7 @@ pub mod cudaarithm {
 	/// * angle_in_degrees: false
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn cart_to_polar_def(x: &impl core::ToInputArray, y: &impl core::ToInputArray, magnitude: &mut impl core::ToOutputArray, angle: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn cart_to_polar_def(x: &impl ToInputArray, y: &impl ToInputArray, magnitude: &mut impl ToOutputArray, angle: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(x);
 		input_array_arg!(y);
 		output_array_arg!(magnitude);
@@ -698,7 +698,7 @@ pub mod cudaarithm {
 	/// * angle_in_degrees: false
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn cart_to_polar(x: &impl core::ToInputArray, y: &impl core::ToInputArray, magnitude: &mut impl core::ToOutputArray, angle: &mut impl core::ToOutputArray, angle_in_degrees: bool, stream: &mut core::Stream) -> Result<()> {
+	pub fn cart_to_polar(x: &impl ToInputArray, y: &impl ToInputArray, magnitude: &mut impl ToOutputArray, angle: &mut impl ToOutputArray, angle_in_degrees: bool, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(x);
 		input_array_arg!(y);
 		output_array_arg!(magnitude);
@@ -731,7 +731,7 @@ pub mod cudaarithm {
 	/// This alternative version of [compare] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn compare_def(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, cmpop: i32) -> Result<()> {
+	pub fn compare_def(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, cmpop: i32) -> Result<()> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		output_array_arg!(dst);
@@ -762,7 +762,7 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn compare(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, cmpop: i32, stream: &mut core::Stream) -> Result<()> {
+	pub fn compare(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, cmpop: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		output_array_arg!(dst);
@@ -794,7 +794,7 @@ pub mod cudaarithm {
 	/// * value: Scalar()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn copy_make_border_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, top: i32, bottom: i32, left: i32, right: i32, border_type: i32) -> Result<()> {
+	pub fn copy_make_border_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, top: i32, bottom: i32, left: i32, right: i32, border_type: i32) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -824,11 +824,11 @@ pub mod cudaarithm {
 	/// * value: Scalar()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn copy_make_border(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, top: i32, bottom: i32, left: i32, right: i32, border_type: i32, value: core::Scalar, stream: &mut core::Stream) -> Result<()> {
+	pub fn copy_make_border(src: &impl ToInputArray, dst: &mut impl ToOutputArray, top: i32, bottom: i32, left: i32, right: i32, border_type: i32, value: core::Scalar, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_copyMakeBorder_const__InputArrayR_const__OutputArrayR_int_int_int_int_int_Scalar_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), top, bottom, left, right, border_type, value.opencv_as_extern(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_copyMakeBorder_const__InputArrayR_const__OutputArrayR_int_int_int_int_int_Scalar_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), top, bottom, left, right, border_type, &value, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -843,7 +843,7 @@ pub mod cudaarithm {
 	/// ## See also
 	/// countNonZero
 	#[inline]
-	pub fn count_non_zero(src: &impl core::ToInputArray) -> Result<i32> {
+	pub fn count_non_zero(src: &impl ToInputArray) -> Result<i32> {
 		input_array_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_countNonZero_const__InputArrayR(src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -858,7 +858,7 @@ pub mod cudaarithm {
 	/// This alternative version of [count_non_zero_1] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn count_non_zero_1_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn count_non_zero_1_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -882,7 +882,7 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn count_non_zero_1(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn count_non_zero_1(src: &impl ToInputArray, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -924,7 +924,7 @@ pub mod cudaarithm {
 	#[inline]
 	pub fn create_convolution(user_block_size: core::Size) -> Result<core::Ptr<crate::cudaarithm::Convolution>> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_createConvolution_Size(user_block_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_createConvolution_Size(&user_block_size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudaarithm::Convolution>::opencv_from_extern(ret) };
@@ -947,7 +947,7 @@ pub mod cudaarithm {
 	#[inline]
 	pub fn create_dft(dft_size: core::Size, flags: i32) -> Result<core::Ptr<crate::cudaarithm::DFT>> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_createDFT_Size_int(dft_size.opencv_as_extern(), flags, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_createDFT_Size_int(&dft_size, flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudaarithm::DFT>::opencv_from_extern(ret) };
@@ -959,7 +959,7 @@ pub mod cudaarithm {
 	/// ## Parameters
 	/// * lut: Look-up table of 256 elements. It is a continuous CV_8U matrix.
 	#[inline]
-	pub fn create_look_up_table(lut: &impl core::ToInputArray) -> Result<core::Ptr<crate::cudaarithm::LookUpTable>> {
+	pub fn create_look_up_table(lut: &impl ToInputArray) -> Result<core::Ptr<crate::cudaarithm::LookUpTable>> {
 		input_array_arg!(lut);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createLookUpTable_const__InputArrayR(lut.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -1010,11 +1010,11 @@ pub mod cudaarithm {
 	/// * flags: 0
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn dft_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, dft_size: core::Size) -> Result<()> {
+	pub fn dft_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, dft_size: core::Size) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_dft_const__InputArrayR_const__OutputArrayR_Size(src.as_raw__InputArray(), dst.as_raw__OutputArray(), dft_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_dft_const__InputArrayR_const__OutputArrayR_Size(src.as_raw__InputArray(), dst.as_raw__OutputArray(), &dft_size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1060,11 +1060,11 @@ pub mod cudaarithm {
 	/// * flags: 0
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn dft(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, dft_size: core::Size, flags: i32, stream: &mut core::Stream) -> Result<()> {
+	pub fn dft(src: &impl ToInputArray, dst: &mut impl ToOutputArray, dft_size: core::Size, flags: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_dft_const__InputArrayR_const__OutputArrayR_Size_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), dft_size.opencv_as_extern(), flags, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_dft_const__InputArrayR_const__OutputArrayR_Size_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), &dft_size, flags, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1091,7 +1091,7 @@ pub mod cudaarithm {
 	/// * dtype: -1
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn divide_def(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn divide_def(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		output_array_arg!(dst);
@@ -1122,7 +1122,7 @@ pub mod cudaarithm {
 	/// * dtype: -1
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn divide(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, scale: f64, dtype: i32, stream: &mut core::Stream) -> Result<()> {
+	pub fn divide(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, scale: f64, dtype: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		output_array_arg!(dst);
@@ -1146,7 +1146,7 @@ pub mod cudaarithm {
 	/// This alternative version of [exp] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn exp_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn exp_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1168,7 +1168,7 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn exp(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn exp(src: &impl ToInputArray, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1185,7 +1185,7 @@ pub mod cudaarithm {
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn find_min_max_loc_def(src: &impl core::ToInputArray, min_max_vals: &mut impl core::ToOutputArray, loc: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn find_min_max_loc_def(src: &impl ToInputArray, min_max_vals: &mut impl ToOutputArray, loc: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(min_max_vals);
 		output_array_arg!(loc);
@@ -1202,7 +1202,7 @@ pub mod cudaarithm {
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn find_min_max_loc(src: &impl core::ToInputArray, min_max_vals: &mut impl core::ToOutputArray, loc: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn find_min_max_loc(src: &impl ToInputArray, min_max_vals: &mut impl ToOutputArray, loc: &mut impl ToOutputArray, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(min_max_vals);
 		output_array_arg!(loc);
@@ -1221,7 +1221,7 @@ pub mod cudaarithm {
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn find_min_max_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn find_min_max_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1237,7 +1237,7 @@ pub mod cudaarithm {
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn find_min_max(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn find_min_max(src: &impl ToInputArray, dst: &mut impl ToOutputArray, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		input_array_arg!(mask);
@@ -1266,7 +1266,7 @@ pub mod cudaarithm {
 	/// This alternative version of [flip] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn flip_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, flip_code: i32) -> Result<()> {
+	pub fn flip_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, flip_code: i32) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1293,7 +1293,7 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn flip(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, flip_code: i32, stream: &mut core::Stream) -> Result<()> {
+	pub fn flip(src: &impl ToInputArray, dst: &mut impl ToOutputArray, flip_code: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1335,7 +1335,7 @@ pub mod cudaarithm {
 	/// * flags: 0
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn gemm_def(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, alpha: f64, src3: &impl core::ToInputArray, beta: f64, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn gemm_def(src1: &impl ToInputArray, src2: &impl ToInputArray, alpha: f64, src3: &impl ToInputArray, beta: f64, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		input_array_arg!(src3);
@@ -1378,7 +1378,7 @@ pub mod cudaarithm {
 	/// * flags: 0
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn gemm(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, alpha: f64, src3: &impl core::ToInputArray, beta: f64, dst: &mut impl core::ToOutputArray, flags: i32, stream: &mut core::Stream) -> Result<()> {
+	pub fn gemm(src1: &impl ToInputArray, src2: &impl ToInputArray, alpha: f64, src3: &impl ToInputArray, beta: f64, dst: &mut impl ToOutputArray, flags: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		input_array_arg!(src3);
@@ -1418,7 +1418,7 @@ pub mod cudaarithm {
 	/// This alternative version of [in_range] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn in_range_def(src: &impl core::ToInputArray, lowerb: core::Scalar, upperb: core::Scalar, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn in_range_def(src: &impl ToInputArray, lowerb: core::Scalar, upperb: core::Scalar, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1455,7 +1455,7 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn in_range(src: &impl core::ToInputArray, lowerb: core::Scalar, upperb: core::Scalar, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn in_range(src: &impl ToInputArray, lowerb: core::Scalar, upperb: core::Scalar, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1478,7 +1478,7 @@ pub mod cudaarithm {
 	/// This alternative version of [integral] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn integral_def(src: &impl core::ToInputArray, sum: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn integral_def(src: &impl ToInputArray, sum: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(sum);
 		return_send!(via ocvrs_return);
@@ -1500,7 +1500,7 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn integral(src: &impl core::ToInputArray, sum: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn integral(src: &impl ToInputArray, sum: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(sum);
 		return_send!(via ocvrs_return);
@@ -1523,7 +1523,7 @@ pub mod cudaarithm {
 	/// This alternative version of [log] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn log_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn log_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1545,7 +1545,7 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn log(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn log(src: &impl ToInputArray, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1568,11 +1568,11 @@ pub mod cudaarithm {
 	/// This alternative version of [lshift] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn lshift_def(src: &impl core::ToInputArray, val: core::Scalar_<i32>, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn lshift_def(src: &impl ToInputArray, val: core::Scalar_<i32>, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_lshift_const__InputArrayR_Scalar_LintG_const__OutputArrayR(src.as_raw__InputArray(), val.opencv_as_extern(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_lshift_const__InputArrayR_Scalar_LintG_const__OutputArrayR(src.as_raw__InputArray(), &val, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1590,11 +1590,11 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn lshift(src: &impl core::ToInputArray, val: core::Scalar_<i32>, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn lshift(src: &impl ToInputArray, val: core::Scalar_<i32>, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_lshift_const__InputArrayR_Scalar_LintG_const__OutputArrayR_StreamR(src.as_raw__InputArray(), val.opencv_as_extern(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_lshift_const__InputArrayR_Scalar_LintG_const__OutputArrayR_StreamR(src.as_raw__InputArray(), &val, dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1604,11 +1604,11 @@ pub mod cudaarithm {
 	/// This alternative version of [lshift_1] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn lshift_1_def(src: &impl core::ToInputArray, val: core::Scalar, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn lshift_1_def(src: &impl ToInputArray, val: core::Scalar, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_lshift_const__InputArrayR_Scalar_const__OutputArrayR(src.as_raw__InputArray(), val.opencv_as_extern(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_lshift_const__InputArrayR_Scalar_const__OutputArrayR(src.as_raw__InputArray(), &val, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1617,11 +1617,11 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn lshift_1(src: &impl core::ToInputArray, val: core::Scalar, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn lshift_1(src: &impl ToInputArray, val: core::Scalar, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_lshift_const__InputArrayR_Scalar_const__OutputArrayR_StreamR(src.as_raw__InputArray(), val.opencv_as_extern(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_lshift_const__InputArrayR_Scalar_const__OutputArrayR_StreamR(src.as_raw__InputArray(), &val, dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1640,7 +1640,7 @@ pub mod cudaarithm {
 	/// This alternative version of [magnitude_sqr_1] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn magnitude_sqr_1_def(x: &impl core::ToInputArray, y: &impl core::ToInputArray, magnitude: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn magnitude_sqr_1_def(x: &impl ToInputArray, y: &impl ToInputArray, magnitude: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(x);
 		input_array_arg!(y);
 		output_array_arg!(magnitude);
@@ -1670,7 +1670,7 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn magnitude_sqr_1(x: &impl core::ToInputArray, y: &impl core::ToInputArray, magnitude: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn magnitude_sqr_1(x: &impl ToInputArray, y: &impl ToInputArray, magnitude: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(x);
 		input_array_arg!(y);
 		output_array_arg!(magnitude);
@@ -1692,7 +1692,7 @@ pub mod cudaarithm {
 	/// This alternative version of [magnitude_sqr] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn magnitude_sqr_def(xy: &impl core::ToInputArray, magnitude: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn magnitude_sqr_def(xy: &impl ToInputArray, magnitude: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(xy);
 		output_array_arg!(magnitude);
 		return_send!(via ocvrs_return);
@@ -1712,7 +1712,7 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn magnitude_sqr(xy: &impl core::ToInputArray, magnitude: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn magnitude_sqr(xy: &impl ToInputArray, magnitude: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(xy);
 		output_array_arg!(magnitude);
 		return_send!(via ocvrs_return);
@@ -1735,7 +1735,7 @@ pub mod cudaarithm {
 	/// This alternative version of [magnitude_1] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn magnitude_1_def(x: &impl core::ToInputArray, y: &impl core::ToInputArray, magnitude: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn magnitude_1_def(x: &impl ToInputArray, y: &impl ToInputArray, magnitude: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(x);
 		input_array_arg!(y);
 		output_array_arg!(magnitude);
@@ -1767,7 +1767,7 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn magnitude_1(x: &impl core::ToInputArray, y: &impl core::ToInputArray, magnitude: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn magnitude_1(x: &impl ToInputArray, y: &impl ToInputArray, magnitude: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(x);
 		input_array_arg!(y);
 		output_array_arg!(magnitude);
@@ -1791,7 +1791,7 @@ pub mod cudaarithm {
 	/// This alternative version of [magnitude] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn magnitude_def(xy: &impl core::ToInputArray, magnitude: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn magnitude_def(xy: &impl ToInputArray, magnitude: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(xy);
 		output_array_arg!(magnitude);
 		return_send!(via ocvrs_return);
@@ -1813,7 +1813,7 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn magnitude(xy: &impl core::ToInputArray, magnitude: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn magnitude(xy: &impl ToInputArray, magnitude: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(xy);
 		output_array_arg!(magnitude);
 		return_send!(via ocvrs_return);
@@ -1837,7 +1837,7 @@ pub mod cudaarithm {
 	/// This alternative version of [max] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn max_def(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn max_def(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		output_array_arg!(dst);
@@ -1861,7 +1861,7 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn max(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn max(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		output_array_arg!(dst);
@@ -1888,7 +1888,7 @@ pub mod cudaarithm {
 	/// * mean: Mean value.
 	/// * stddev: Standard deviation value.
 	#[inline]
-	pub fn mean_std_dev_3(mtx: &impl core::ToInputArray, mean: &mut core::Scalar, stddev: &mut core::Scalar) -> Result<()> {
+	pub fn mean_std_dev_3(mtx: &impl ToInputArray, mean: &mut core::Scalar, stddev: &mut core::Scalar) -> Result<()> {
 		input_array_arg!(mtx);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_meanStdDev_const__InputArrayR_ScalarR_ScalarR(mtx.as_raw__InputArray(), mean, stddev, ocvrs_return.as_mut_ptr()) };
@@ -1914,7 +1914,7 @@ pub mod cudaarithm {
 	/// * stddev: Standard deviation value.
 	/// * mask: Operation mask.
 	#[inline]
-	pub fn mean_std_dev_2(src: &impl core::ToInputArray, mean: &mut core::Scalar, stddev: &mut core::Scalar, mask: &impl core::ToInputArray) -> Result<()> {
+	pub fn mean_std_dev_2(src: &impl ToInputArray, mean: &mut core::Scalar, stddev: &mut core::Scalar, mask: &impl ToInputArray) -> Result<()> {
 		input_array_arg!(src);
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
@@ -1934,7 +1934,7 @@ pub mod cudaarithm {
 	/// This alternative version of [mean_std_dev_1] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn mean_std_dev_1_def(mtx: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn mean_std_dev_1_def(mtx: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(mtx);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1963,7 +1963,7 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn mean_std_dev_1(mtx: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn mean_std_dev_1(mtx: &impl ToInputArray, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(mtx);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1987,7 +1987,7 @@ pub mod cudaarithm {
 	/// This alternative version of [mean_std_dev] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn mean_std_dev_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray) -> Result<()> {
+	pub fn mean_std_dev_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, mask: &impl ToInputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		input_array_arg!(mask);
@@ -2011,7 +2011,7 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn mean_std_dev(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn mean_std_dev(src: &impl ToInputArray, dst: &mut impl ToOutputArray, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		input_array_arg!(mask);
@@ -2036,7 +2036,7 @@ pub mod cudaarithm {
 	/// This alternative version of [merge] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn merge_def(src: &core::GpuMat, n: size_t, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn merge_def(src: &impl core::GpuMatTraitConst, n: size_t, dst: &mut impl ToOutputArray) -> Result<()> {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_merge_const_GpuMatX_size_t_const__OutputArrayR(src.as_raw_GpuMat(), n, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
@@ -2058,7 +2058,7 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn merge(src: &core::GpuMat, n: size_t, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn merge(src: &impl core::GpuMatTraitConst, n: size_t, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_merge_const_GpuMatX_size_t_const__OutputArrayR_StreamR(src.as_raw_GpuMat(), n, dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
@@ -2073,7 +2073,7 @@ pub mod cudaarithm {
 	/// This alternative version of [merge_1] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn merge_1_def(src: &core::Vector<core::GpuMat>, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn merge_1_def(src: &core::Vector<core::GpuMat>, dst: &mut impl ToOutputArray) -> Result<()> {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_merge_const_vectorLGpuMatGR_const__OutputArrayR(src.as_raw_VectorOfGpuMat(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
@@ -2097,7 +2097,7 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn merge_1(src: &core::Vector<core::GpuMat>, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn merge_1(src: &core::Vector<core::GpuMat>, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_merge_const_vectorLGpuMatGR_const__OutputArrayR_StreamR(src.as_raw_VectorOfGpuMat(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
@@ -2124,7 +2124,7 @@ pub mod cudaarithm {
 	/// This alternative version of [min_max_loc] function uses the following default values for its arguments:
 	/// * mask: noArray()
 	#[inline]
-	pub fn min_max_loc_def(src: &impl core::ToInputArray, min_val: &mut f64, max_val: &mut f64, min_loc: &mut core::Point, max_loc: &mut core::Point) -> Result<()> {
+	pub fn min_max_loc_def(src: &impl ToInputArray, min_val: &mut f64, max_val: &mut f64, min_loc: &mut core::Point, max_loc: &mut core::Point) -> Result<()> {
 		input_array_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_minMaxLoc_const__InputArrayR_doubleX_doubleX_PointX_PointX(src.as_raw__InputArray(), min_val, max_val, min_loc, max_loc, ocvrs_return.as_mut_ptr()) };
@@ -2150,7 +2150,7 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
-	pub fn min_max_loc(src: &impl core::ToInputArray, min_val: &mut f64, max_val: &mut f64, min_loc: &mut core::Point, max_loc: &mut core::Point, mask: &impl core::ToInputArray) -> Result<()> {
+	pub fn min_max_loc(src: &impl ToInputArray, min_val: &mut f64, max_val: &mut f64, min_loc: &mut core::Point, max_loc: &mut core::Point, mask: &impl ToInputArray) -> Result<()> {
 		input_array_arg!(src);
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
@@ -2176,7 +2176,7 @@ pub mod cudaarithm {
 	/// This alternative version of [min_max] function uses the following default values for its arguments:
 	/// * mask: noArray()
 	#[inline]
-	pub fn min_max_def(src: &impl core::ToInputArray, min_val: &mut f64, max_val: &mut f64) -> Result<()> {
+	pub fn min_max_def(src: &impl ToInputArray, min_val: &mut f64, max_val: &mut f64) -> Result<()> {
 		input_array_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_minMax_const__InputArrayR_doubleX_doubleX(src.as_raw__InputArray(), min_val, max_val, ocvrs_return.as_mut_ptr()) };
@@ -2200,7 +2200,7 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
-	pub fn min_max(src: &impl core::ToInputArray, min_val: &mut f64, max_val: &mut f64, mask: &impl core::ToInputArray) -> Result<()> {
+	pub fn min_max(src: &impl ToInputArray, min_val: &mut f64, max_val: &mut f64, mask: &impl ToInputArray) -> Result<()> {
 		input_array_arg!(src);
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
@@ -2224,7 +2224,7 @@ pub mod cudaarithm {
 	/// This alternative version of [min] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn min_def(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn min_def(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		output_array_arg!(dst);
@@ -2248,7 +2248,7 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn min(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn min(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		output_array_arg!(dst);
@@ -2280,7 +2280,7 @@ pub mod cudaarithm {
 	/// * conj_b: false
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn mul_and_scale_spectrums_def(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, flags: i32, scale: f32) -> Result<()> {
+	pub fn mul_and_scale_spectrums_def(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, flags: i32, scale: f32) -> Result<()> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		output_array_arg!(dst);
@@ -2311,7 +2311,7 @@ pub mod cudaarithm {
 	/// * conj_b: false
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn mul_and_scale_spectrums(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, flags: i32, scale: f32, conj_b: bool, stream: &mut core::Stream) -> Result<()> {
+	pub fn mul_and_scale_spectrums(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, flags: i32, scale: f32, conj_b: bool, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		output_array_arg!(dst);
@@ -2342,7 +2342,7 @@ pub mod cudaarithm {
 	/// * conj_b: false
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn mul_spectrums_def(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, flags: i32) -> Result<()> {
+	pub fn mul_spectrums_def(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, flags: i32) -> Result<()> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		output_array_arg!(dst);
@@ -2372,7 +2372,7 @@ pub mod cudaarithm {
 	/// * conj_b: false
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn mul_spectrums(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, flags: i32, conj_b: bool, stream: &mut core::Stream) -> Result<()> {
+	pub fn mul_spectrums(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, flags: i32, conj_b: bool, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		output_array_arg!(dst);
@@ -2402,7 +2402,7 @@ pub mod cudaarithm {
 	/// * dtype: -1
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn multiply_def(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn multiply_def(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		output_array_arg!(dst);
@@ -2431,7 +2431,7 @@ pub mod cudaarithm {
 	/// * dtype: -1
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn multiply(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, scale: f64, dtype: i32, stream: &mut core::Stream) -> Result<()> {
+	pub fn multiply(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, scale: f64, dtype: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		output_array_arg!(dst);
@@ -2455,7 +2455,7 @@ pub mod cudaarithm {
 	/// This alternative version of [norm_1] function uses the following default values for its arguments:
 	/// * norm_type: NORM_L2
 	#[inline]
-	pub fn norm_1_def(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray) -> Result<f64> {
+	pub fn norm_1_def(src1: &impl ToInputArray, src2: &impl ToInputArray) -> Result<f64> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		return_send!(via ocvrs_return);
@@ -2477,7 +2477,7 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * norm_type: NORM_L2
 	#[inline]
-	pub fn norm_1(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, norm_type: i32) -> Result<f64> {
+	pub fn norm_1(src1: &impl ToInputArray, src2: &impl ToInputArray, norm_type: i32) -> Result<f64> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		return_send!(via ocvrs_return);
@@ -2500,7 +2500,7 @@ pub mod cudaarithm {
 	/// This alternative version of [norm] function uses the following default values for its arguments:
 	/// * mask: noArray()
 	#[inline]
-	pub fn norm_def(src1: &impl core::ToInputArray, norm_type: i32) -> Result<f64> {
+	pub fn norm_def(src1: &impl ToInputArray, norm_type: i32) -> Result<f64> {
 		input_array_arg!(src1);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_norm_const__InputArrayR_int(src1.as_raw__InputArray(), norm_type, ocvrs_return.as_mut_ptr()) };
@@ -2521,7 +2521,7 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
-	pub fn norm(src1: &impl core::ToInputArray, norm_type: i32, mask: &impl core::ToInputArray) -> Result<f64> {
+	pub fn norm(src1: &impl ToInputArray, norm_type: i32, mask: &impl ToInputArray) -> Result<f64> {
 		input_array_arg!(src1);
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
@@ -2553,7 +2553,7 @@ pub mod cudaarithm {
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn normalize_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, alpha: f64, beta: f64, norm_type: i32, dtype: i32) -> Result<()> {
+	pub fn normalize_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, alpha: f64, beta: f64, norm_type: i32, dtype: i32) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -2584,7 +2584,7 @@ pub mod cudaarithm {
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn normalize(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, alpha: f64, beta: f64, norm_type: i32, dtype: i32, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn normalize(src: &impl ToInputArray, dst: &mut impl ToOutputArray, alpha: f64, beta: f64, norm_type: i32, dtype: i32, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		input_array_arg!(mask);
@@ -2611,7 +2611,7 @@ pub mod cudaarithm {
 	/// * angle_in_degrees: false
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn phase_def(x: &impl core::ToInputArray, y: &impl core::ToInputArray, angle: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn phase_def(x: &impl ToInputArray, y: &impl ToInputArray, angle: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(x);
 		input_array_arg!(y);
 		output_array_arg!(angle);
@@ -2637,7 +2637,7 @@ pub mod cudaarithm {
 	/// * angle_in_degrees: false
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn phase(x: &impl core::ToInputArray, y: &impl core::ToInputArray, angle: &mut impl core::ToOutputArray, angle_in_degrees: bool, stream: &mut core::Stream) -> Result<()> {
+	pub fn phase(x: &impl ToInputArray, y: &impl ToInputArray, angle: &mut impl ToOutputArray, angle_in_degrees: bool, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(x);
 		input_array_arg!(y);
 		output_array_arg!(angle);
@@ -2663,7 +2663,7 @@ pub mod cudaarithm {
 	/// * angle_in_degrees: false
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn polar_to_cart_def(magnitude: &impl core::ToInputArray, angle: &impl core::ToInputArray, x: &mut impl core::ToOutputArray, y: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn polar_to_cart_def(magnitude: &impl ToInputArray, angle: &impl ToInputArray, x: &mut impl ToOutputArray, y: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(magnitude);
 		input_array_arg!(angle);
 		output_array_arg!(x);
@@ -2689,7 +2689,7 @@ pub mod cudaarithm {
 	/// * angle_in_degrees: false
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn polar_to_cart(magnitude: &impl core::ToInputArray, angle: &impl core::ToInputArray, x: &mut impl core::ToOutputArray, y: &mut impl core::ToOutputArray, angle_in_degrees: bool, stream: &mut core::Stream) -> Result<()> {
+	pub fn polar_to_cart(magnitude: &impl ToInputArray, angle: &impl ToInputArray, x: &mut impl ToOutputArray, y: &mut impl ToOutputArray, angle_in_degrees: bool, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(magnitude);
 		input_array_arg!(angle);
 		output_array_arg!(x);
@@ -2719,7 +2719,7 @@ pub mod cudaarithm {
 	/// This alternative version of [pow] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn pow_def(src: &impl core::ToInputArray, power: f64, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn pow_def(src: &impl ToInputArray, power: f64, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -2746,7 +2746,7 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn pow(src: &impl core::ToInputArray, power: f64, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn pow(src: &impl ToInputArray, power: f64, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -2769,12 +2769,12 @@ pub mod cudaarithm {
 	/// This alternative version of [rect_std_dev] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn rect_std_dev_def(src: &impl core::ToInputArray, sqr: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, rect: core::Rect) -> Result<()> {
+	pub fn rect_std_dev_def(src: &impl ToInputArray, sqr: &impl ToInputArray, dst: &mut impl ToOutputArray, rect: core::Rect) -> Result<()> {
 		input_array_arg!(src);
 		input_array_arg!(sqr);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_rectStdDev_const__InputArrayR_const__InputArrayR_const__OutputArrayR_Rect(src.as_raw__InputArray(), sqr.as_raw__InputArray(), dst.as_raw__OutputArray(), rect.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_rectStdDev_const__InputArrayR_const__InputArrayR_const__OutputArrayR_Rect(src.as_raw__InputArray(), sqr.as_raw__InputArray(), dst.as_raw__OutputArray(), &rect, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -2792,12 +2792,12 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn rect_std_dev(src: &impl core::ToInputArray, sqr: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, rect: core::Rect, stream: &mut core::Stream) -> Result<()> {
+	pub fn rect_std_dev(src: &impl ToInputArray, sqr: &impl ToInputArray, dst: &mut impl ToOutputArray, rect: core::Rect, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		input_array_arg!(sqr);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_rectStdDev_const__InputArrayR_const__InputArrayR_const__OutputArrayR_Rect_StreamR(src.as_raw__InputArray(), sqr.as_raw__InputArray(), dst.as_raw__OutputArray(), rect.opencv_as_extern(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_rectStdDev_const__InputArrayR_const__InputArrayR_const__OutputArrayR_Rect_StreamR(src.as_raw__InputArray(), sqr.as_raw__InputArray(), dst.as_raw__OutputArray(), &rect, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -2835,7 +2835,7 @@ pub mod cudaarithm {
 	/// * dtype: -1
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn reduce_def(mtx: &impl core::ToInputArray, vec: &mut impl core::ToOutputArray, dim: i32, reduce_op: i32) -> Result<()> {
+	pub fn reduce_def(mtx: &impl ToInputArray, vec: &mut impl ToOutputArray, dim: i32, reduce_op: i32) -> Result<()> {
 		input_array_arg!(mtx);
 		output_array_arg!(vec);
 		return_send!(via ocvrs_return);
@@ -2876,7 +2876,7 @@ pub mod cudaarithm {
 	/// * dtype: -1
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn reduce(mtx: &impl core::ToInputArray, vec: &mut impl core::ToOutputArray, dim: i32, reduce_op: i32, dtype: i32, stream: &mut core::Stream) -> Result<()> {
+	pub fn reduce(mtx: &impl ToInputArray, vec: &mut impl ToOutputArray, dim: i32, reduce_op: i32, dtype: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(mtx);
 		output_array_arg!(vec);
 		return_send!(via ocvrs_return);
@@ -2898,11 +2898,11 @@ pub mod cudaarithm {
 	/// This alternative version of [rshift] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn rshift_def(src: &impl core::ToInputArray, val: core::Scalar_<i32>, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn rshift_def(src: &impl ToInputArray, val: core::Scalar_<i32>, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_rshift_const__InputArrayR_Scalar_LintG_const__OutputArrayR(src.as_raw__InputArray(), val.opencv_as_extern(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_rshift_const__InputArrayR_Scalar_LintG_const__OutputArrayR(src.as_raw__InputArray(), &val, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -2919,11 +2919,11 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn rshift(src: &impl core::ToInputArray, val: core::Scalar_<i32>, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn rshift(src: &impl ToInputArray, val: core::Scalar_<i32>, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_rshift_const__InputArrayR_Scalar_LintG_const__OutputArrayR_StreamR(src.as_raw__InputArray(), val.opencv_as_extern(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_rshift_const__InputArrayR_Scalar_LintG_const__OutputArrayR_StreamR(src.as_raw__InputArray(), &val, dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -2933,11 +2933,11 @@ pub mod cudaarithm {
 	/// This alternative version of [rshift_1] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn rshift_1_def(src: &impl core::ToInputArray, val: core::Scalar, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn rshift_1_def(src: &impl ToInputArray, val: core::Scalar, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_rshift_const__InputArrayR_Scalar_const__OutputArrayR(src.as_raw__InputArray(), val.opencv_as_extern(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_rshift_const__InputArrayR_Scalar_const__OutputArrayR(src.as_raw__InputArray(), &val, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -2946,11 +2946,11 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn rshift_1(src: &impl core::ToInputArray, val: core::Scalar, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn rshift_1(src: &impl ToInputArray, val: core::Scalar, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_rshift_const__InputArrayR_Scalar_const__OutputArrayR_StreamR(src.as_raw__InputArray(), val.opencv_as_extern(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_rshift_const__InputArrayR_Scalar_const__OutputArrayR_StreamR(src.as_raw__InputArray(), &val, dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -2969,7 +2969,7 @@ pub mod cudaarithm {
 	/// This alternative version of [split] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn split_def(src: &impl core::ToInputArray, dst: &mut core::GpuMat) -> Result<()> {
+	pub fn split_def(src: &impl ToInputArray, dst: &mut impl core::GpuMatTrait) -> Result<()> {
 		input_array_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_split_const__InputArrayR_GpuMatX(src.as_raw__InputArray(), dst.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
@@ -2990,7 +2990,7 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn split(src: &impl core::ToInputArray, dst: &mut core::GpuMat, stream: &mut core::Stream) -> Result<()> {
+	pub fn split(src: &impl ToInputArray, dst: &mut impl core::GpuMatTrait, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_split_const__InputArrayR_GpuMatX_StreamR(src.as_raw__InputArray(), dst.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
@@ -3005,7 +3005,7 @@ pub mod cudaarithm {
 	/// This alternative version of [split_1] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn split_1_def(src: &impl core::ToInputArray, dst: &mut core::Vector<core::GpuMat>) -> Result<()> {
+	pub fn split_1_def(src: &impl ToInputArray, dst: &mut core::Vector<core::GpuMat>) -> Result<()> {
 		input_array_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_split_const__InputArrayR_vectorLGpuMatGR(src.as_raw__InputArray(), dst.as_raw_mut_VectorOfGpuMat(), ocvrs_return.as_mut_ptr()) };
@@ -3028,7 +3028,7 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn split_1(src: &impl core::ToInputArray, dst: &mut core::Vector<core::GpuMat>, stream: &mut core::Stream) -> Result<()> {
+	pub fn split_1(src: &impl ToInputArray, dst: &mut core::Vector<core::GpuMat>, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_split_const__InputArrayR_vectorLGpuMatGR_StreamR(src.as_raw__InputArray(), dst.as_raw_mut_VectorOfGpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
@@ -3049,7 +3049,7 @@ pub mod cudaarithm {
 	/// This alternative version of [sqr_integral] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn sqr_integral_def(src: &impl core::ToInputArray, sqsum: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn sqr_integral_def(src: &impl ToInputArray, sqsum: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(sqsum);
 		return_send!(via ocvrs_return);
@@ -3070,7 +3070,7 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn sqr_integral(src: &impl core::ToInputArray, sqsum: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn sqr_integral(src: &impl ToInputArray, sqsum: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(sqsum);
 		return_send!(via ocvrs_return);
@@ -3090,7 +3090,7 @@ pub mod cudaarithm {
 	/// This alternative version of [sqr_sum] function uses the following default values for its arguments:
 	/// * mask: noArray()
 	#[inline]
-	pub fn sqr_sum_def(src: &impl core::ToInputArray) -> Result<core::Scalar> {
+	pub fn sqr_sum_def(src: &impl ToInputArray) -> Result<core::Scalar> {
 		input_array_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_sqrSum_const__InputArrayR(src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -3108,7 +3108,7 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
-	pub fn sqr_sum(src: &impl core::ToInputArray, mask: &impl core::ToInputArray) -> Result<core::Scalar> {
+	pub fn sqr_sum(src: &impl ToInputArray, mask: &impl ToInputArray) -> Result<core::Scalar> {
 		input_array_arg!(src);
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
@@ -3129,7 +3129,7 @@ pub mod cudaarithm {
 	/// This alternative version of [sqr] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn sqr_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn sqr_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -3149,7 +3149,7 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn sqr(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn sqr(src: &impl ToInputArray, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -3172,7 +3172,7 @@ pub mod cudaarithm {
 	/// This alternative version of [sqrt] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn sqrt_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn sqrt_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -3194,7 +3194,7 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn sqrt(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn sqrt(src: &impl ToInputArray, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -3224,7 +3224,7 @@ pub mod cudaarithm {
 	/// * dtype: -1
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn subtract_def(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn subtract_def(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		output_array_arg!(dst);
@@ -3254,7 +3254,7 @@ pub mod cudaarithm {
 	/// * dtype: -1
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn subtract(src1: &impl core::ToInputArray, src2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, dtype: i32, stream: &mut core::Stream) -> Result<()> {
+	pub fn subtract(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, mask: &impl ToInputArray, dtype: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		output_array_arg!(dst);
@@ -3278,7 +3278,7 @@ pub mod cudaarithm {
 	/// This alternative version of [sum] function uses the following default values for its arguments:
 	/// * mask: noArray()
 	#[inline]
-	pub fn sum_def(src: &impl core::ToInputArray) -> Result<core::Scalar> {
+	pub fn sum_def(src: &impl ToInputArray) -> Result<core::Scalar> {
 		input_array_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_sum_const__InputArrayR(src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -3298,7 +3298,7 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
-	pub fn sum(src: &impl core::ToInputArray, mask: &impl core::ToInputArray) -> Result<core::Scalar> {
+	pub fn sum(src: &impl ToInputArray, mask: &impl ToInputArray) -> Result<core::Scalar> {
 		input_array_arg!(src);
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
@@ -3325,7 +3325,7 @@ pub mod cudaarithm {
 	/// This alternative version of [threshold] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn threshold_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, thresh: f64, maxval: f64, typ: i32) -> Result<f64> {
+	pub fn threshold_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, thresh: f64, maxval: f64, typ: i32) -> Result<f64> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -3351,7 +3351,7 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn threshold(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, thresh: f64, maxval: f64, typ: i32, stream: &mut core::Stream) -> Result<f64> {
+	pub fn threshold(src: &impl ToInputArray, dst: &mut impl ToOutputArray, thresh: f64, maxval: f64, typ: i32, stream: &mut impl core::StreamTrait) -> Result<f64> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -3374,7 +3374,7 @@ pub mod cudaarithm {
 	/// This alternative version of [transpose] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn transpose_def(src1: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn transpose_def(src1: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src1);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -3396,7 +3396,7 @@ pub mod cudaarithm {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn transpose(src1: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn transpose(src1: &impl ToInputArray, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src1);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -3431,7 +3431,7 @@ pub mod cudaarithm {
 		/// * ccorr: false
 		/// * stream: Stream::Null()
 		#[inline]
-		fn convolve(&mut self, image: &impl core::ToInputArray, templ: &impl core::ToInputArray, result: &mut impl core::ToOutputArray, ccorr: bool, stream: &mut core::Stream) -> Result<()> {
+		fn convolve(&mut self, image: &impl ToInputArray, templ: &impl ToInputArray, result: &mut impl ToOutputArray, ccorr: bool, stream: &mut impl core::StreamTrait) -> Result<()> {
 			input_array_arg!(image);
 			input_array_arg!(templ);
 			output_array_arg!(result);
@@ -3458,7 +3458,7 @@ pub mod cudaarithm {
 		/// * ccorr: false
 		/// * stream: Stream::Null()
 		#[inline]
-		fn convolve_def(&mut self, image: &impl core::ToInputArray, templ: &impl core::ToInputArray, result: &mut impl core::ToOutputArray) -> Result<()> {
+		fn convolve_def(&mut self, image: &impl ToInputArray, templ: &impl ToInputArray, result: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(image);
 			input_array_arg!(templ);
 			output_array_arg!(result);
@@ -3495,6 +3495,8 @@ pub mod cudaarithm {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Convolution, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::cudaarithm::ConvolutionTraitConst for Convolution {
 		#[inline] fn as_raw_Convolution(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3502,6 +3504,8 @@ pub mod cudaarithm {
 	impl crate::cudaarithm::ConvolutionTrait for Convolution {
 		#[inline] fn as_raw_mut_Convolution(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { Convolution, crate::cudaarithm::ConvolutionTraitConst, as_raw_Convolution, crate::cudaarithm::ConvolutionTrait, as_raw_mut_Convolution }
 	
 	impl Convolution {
 	}
@@ -3536,7 +3540,7 @@ pub mod cudaarithm {
 		/// ## C++ default parameters
 		/// * stream: Stream::Null()
 		#[inline]
-		fn compute(&mut self, image: &impl core::ToInputArray, result: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		fn compute(&mut self, image: &impl ToInputArray, result: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 			input_array_arg!(image);
 			output_array_arg!(result);
 			return_send!(via ocvrs_return);
@@ -3557,7 +3561,7 @@ pub mod cudaarithm {
 		/// This alternative version of [DFTTrait::compute] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
 		#[inline]
-		fn compute_def(&mut self, image: &impl core::ToInputArray, result: &mut impl core::ToOutputArray) -> Result<()> {
+		fn compute_def(&mut self, image: &impl ToInputArray, result: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(image);
 			output_array_arg!(result);
 			return_send!(via ocvrs_return);
@@ -3593,6 +3597,8 @@ pub mod cudaarithm {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { DFT, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::cudaarithm::DFTTraitConst for DFT {
 		#[inline] fn as_raw_DFT(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3600,6 +3606,8 @@ pub mod cudaarithm {
 	impl crate::cudaarithm::DFTTrait for DFT {
 		#[inline] fn as_raw_mut_DFT(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { DFT, crate::cudaarithm::DFTTraitConst, as_raw_DFT, crate::cudaarithm::DFTTrait, as_raw_mut_DFT }
 	
 	impl DFT {
 	}
@@ -3635,7 +3643,7 @@ pub mod cudaarithm {
 		/// ## C++ default parameters
 		/// * stream: Stream::Null()
 		#[inline]
-		fn transform(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		fn transform(&mut self, src: &impl ToInputArray, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 			input_array_arg!(src);
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
@@ -3657,7 +3665,7 @@ pub mod cudaarithm {
 		/// This alternative version of [LookUpTableTrait::transform] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
 		#[inline]
-		fn transform_def(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		fn transform_def(&mut self, src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(src);
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
@@ -3693,6 +3701,8 @@ pub mod cudaarithm {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { LookUpTable, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::cudaarithm::LookUpTableTraitConst for LookUpTable {
 		#[inline] fn as_raw_LookUpTable(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3700,6 +3710,8 @@ pub mod cudaarithm {
 	impl crate::cudaarithm::LookUpTableTrait for LookUpTable {
 		#[inline] fn as_raw_mut_LookUpTable(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { LookUpTable, crate::cudaarithm::LookUpTableTraitConst, as_raw_LookUpTable, crate::cudaarithm::LookUpTableTrait, as_raw_mut_LookUpTable }
 	
 	impl LookUpTable {
 	}

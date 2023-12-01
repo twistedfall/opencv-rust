@@ -1438,7 +1438,7 @@ pub mod videoio {
 		/// ## C++ default parameters
 		/// * flag: 0
 		#[inline]
-		fn retrieve(&mut self, image: &mut impl core::ToOutputArray, flag: i32) -> Result<bool> {
+		fn retrieve(&mut self, image: &mut impl ToOutputArray, flag: i32) -> Result<bool> {
 			output_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_retrieve_const__OutputArrayR_int(self.as_raw_mut_VideoCapture(), image.as_raw__OutputArray(), flag, ocvrs_return.as_mut_ptr()) };
@@ -1470,7 +1470,7 @@ pub mod videoio {
 		/// This alternative version of [VideoCaptureTrait::retrieve] function uses the following default values for its arguments:
 		/// * flag: 0
 		#[inline]
-		fn retrieve_def(&mut self, image: &mut impl core::ToOutputArray) -> Result<bool> {
+		fn retrieve_def(&mut self, image: &mut impl ToOutputArray) -> Result<bool> {
 			output_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_retrieve_const__OutputArrayR(self.as_raw_mut_VideoCapture(), image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
@@ -1496,7 +1496,7 @@ pub mod videoio {
 		/// capturing structure. It is not allowed to modify or release the image! You can copy the frame using
 		/// cvCloneImage and then do whatever you want with the copy.
 		#[inline]
-		fn read(&mut self, image: &mut impl core::ToOutputArray) -> Result<bool> {
+		fn read(&mut self, image: &mut impl ToOutputArray) -> Result<bool> {
 			output_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_read_const__OutputArrayR(self.as_raw_mut_VideoCapture(), image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
@@ -1590,6 +1590,8 @@ pub mod videoio {
 	impl crate::videoio::VideoCaptureTrait for VideoCapture {
 		#[inline] fn as_raw_mut_VideoCapture(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { VideoCapture, crate::videoio::VideoCaptureTraitConst, as_raw_VideoCapture, crate::videoio::VideoCaptureTrait, as_raw_mut_VideoCapture }
 	
 	impl VideoCapture {
 		/// Default constructor
@@ -1904,7 +1906,7 @@ pub mod videoio {
 		fn open(&mut self, filename: &str, fourcc: i32, fps: f64, frame_size: core::Size, is_color: bool) -> Result<bool> {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_VideoWriter_open_const_StringR_int_double_Size_bool(self.as_raw_mut_VideoWriter(), filename.opencv_as_extern(), fourcc, fps, frame_size.opencv_as_extern(), is_color, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_VideoWriter_open_const_StringR_int_double_Size_bool(self.as_raw_mut_VideoWriter(), filename.opencv_as_extern(), fourcc, fps, &frame_size, is_color, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1926,7 +1928,7 @@ pub mod videoio {
 		fn open_def(&mut self, filename: &str, fourcc: i32, fps: f64, frame_size: core::Size) -> Result<bool> {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_VideoWriter_open_const_StringR_int_double_Size(self.as_raw_mut_VideoWriter(), filename.opencv_as_extern(), fourcc, fps, frame_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_VideoWriter_open_const_StringR_int_double_Size(self.as_raw_mut_VideoWriter(), filename.opencv_as_extern(), fourcc, fps, &frame_size, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1949,7 +1951,7 @@ pub mod videoio {
 		fn open_with_backend(&mut self, filename: &str, api_preference: i32, fourcc: i32, fps: f64, frame_size: core::Size, is_color: bool) -> Result<bool> {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_VideoWriter_open_const_StringR_int_int_double_Size_bool(self.as_raw_mut_VideoWriter(), filename.opencv_as_extern(), api_preference, fourcc, fps, frame_size.opencv_as_extern(), is_color, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_VideoWriter_open_const_StringR_int_int_double_Size_bool(self.as_raw_mut_VideoWriter(), filename.opencv_as_extern(), api_preference, fourcc, fps, &frame_size, is_color, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1964,7 +1966,7 @@ pub mod videoio {
 		fn open_with_backend_def(&mut self, filename: &str, api_preference: i32, fourcc: i32, fps: f64, frame_size: core::Size) -> Result<bool> {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_VideoWriter_open_const_StringR_int_int_double_Size(self.as_raw_mut_VideoWriter(), filename.opencv_as_extern(), api_preference, fourcc, fps, frame_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_VideoWriter_open_const_StringR_int_int_double_Size(self.as_raw_mut_VideoWriter(), filename.opencv_as_extern(), api_preference, fourcc, fps, &frame_size, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -2031,7 +2033,7 @@ pub mod videoio {
 		/// The function/method writes the specified image to video file. It must have the same size as has
 		/// been specified when opening the video writer.
 		#[inline]
-		fn write(&mut self, image: &impl core::ToInputArray) -> Result<()> {
+		fn write(&mut self, image: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoWriter_write_const__InputArrayR(self.as_raw_mut_VideoWriter(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -2085,6 +2087,8 @@ pub mod videoio {
 	impl crate::videoio::VideoWriterTrait for VideoWriter {
 		#[inline] fn as_raw_mut_VideoWriter(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { VideoWriter, crate::videoio::VideoWriterTraitConst, as_raw_VideoWriter, crate::videoio::VideoWriterTrait, as_raw_mut_VideoWriter }
 	
 	impl VideoWriter {
 		/// Default constructors
@@ -2144,7 +2148,7 @@ pub mod videoio {
 		pub fn new(filename: &str, fourcc: i32, fps: f64, frame_size: core::Size, is_color: bool) -> Result<crate::videoio::VideoWriter> {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_VideoWriter_VideoWriter_const_StringR_int_double_Size_bool(filename.opencv_as_extern(), fourcc, fps, frame_size.opencv_as_extern(), is_color, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_VideoWriter_VideoWriter_const_StringR_int_double_Size_bool(filename.opencv_as_extern(), fourcc, fps, &frame_size, is_color, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::videoio::VideoWriter::opencv_from_extern(ret) };
@@ -2185,7 +2189,7 @@ pub mod videoio {
 		pub fn new_def(filename: &str, fourcc: i32, fps: f64, frame_size: core::Size) -> Result<crate::videoio::VideoWriter> {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_VideoWriter_VideoWriter_const_StringR_int_double_Size(filename.opencv_as_extern(), fourcc, fps, frame_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_VideoWriter_VideoWriter_const_StringR_int_double_Size(filename.opencv_as_extern(), fourcc, fps, &frame_size, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::videoio::VideoWriter::opencv_from_extern(ret) };
@@ -2210,7 +2214,7 @@ pub mod videoio {
 		pub fn new_with_backend(filename: &str, api_preference: i32, fourcc: i32, fps: f64, frame_size: core::Size, is_color: bool) -> Result<crate::videoio::VideoWriter> {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_VideoWriter_VideoWriter_const_StringR_int_int_double_Size_bool(filename.opencv_as_extern(), api_preference, fourcc, fps, frame_size.opencv_as_extern(), is_color, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_VideoWriter_VideoWriter_const_StringR_int_int_double_Size_bool(filename.opencv_as_extern(), api_preference, fourcc, fps, &frame_size, is_color, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::videoio::VideoWriter::opencv_from_extern(ret) };
@@ -2228,7 +2232,7 @@ pub mod videoio {
 		pub fn new_with_backend_def(filename: &str, api_preference: i32, fourcc: i32, fps: f64, frame_size: core::Size) -> Result<crate::videoio::VideoWriter> {
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_VideoWriter_VideoWriter_const_StringR_int_int_double_Size(filename.opencv_as_extern(), api_preference, fourcc, fps, frame_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_VideoWriter_VideoWriter_const_StringR_int_int_double_Size(filename.opencv_as_extern(), api_preference, fourcc, fps, &frame_size, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::videoio::VideoWriter::opencv_from_extern(ret) };

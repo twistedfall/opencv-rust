@@ -655,7 +655,7 @@ pub mod mcc {
 		/// 
 		///                    default: empty array
 		#[inline]
-		fn set_weights_list(&mut self, weights_list: &core::Mat) -> Result<()> {
+		fn set_weights_list(&mut self, weights_list: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccm_ColorCorrectionModel_setWeightsList_const_MatR(self.as_raw_mut_ColorCorrectionModel(), weights_list.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -743,7 +743,7 @@ pub mod mcc {
 		/// ## C++ default parameters
 		/// * islinear: false
 		#[inline]
-		fn infer(&mut self, img: &core::Mat, islinear: bool) -> Result<core::Mat> {
+		fn infer(&mut self, img: &impl core::MatTraitConst, islinear: bool) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccm_ColorCorrectionModel_infer_const_MatR_bool(self.as_raw_mut_ColorCorrectionModel(), img.as_raw_Mat(), islinear, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -763,7 +763,7 @@ pub mod mcc {
 		/// This alternative version of [ColorCorrectionModelTrait::infer] function uses the following default values for its arguments:
 		/// * islinear: false
 		#[inline]
-		fn infer_def(&mut self, img: &core::Mat) -> Result<core::Mat> {
+		fn infer_def(&mut self, img: &impl core::MatTraitConst) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccm_ColorCorrectionModel_infer_const_MatR(self.as_raw_mut_ColorCorrectionModel(), img.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -800,6 +800,8 @@ pub mod mcc {
 		#[inline] fn as_raw_mut_ColorCorrectionModel(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { ColorCorrectionModel, crate::mcc::ColorCorrectionModelTraitConst, as_raw_ColorCorrectionModel, crate::mcc::ColorCorrectionModelTrait, as_raw_mut_ColorCorrectionModel }
+	
 	impl ColorCorrectionModel {
 		/// Color Correction Model
 		/// 
@@ -814,7 +816,7 @@ pub mod mcc {
 		///            the color type is RGB not BGR, and the color values are in [0, 1];
 		/// * constcolor: the Built-in color card
 		#[inline]
-		pub fn new(src: &core::Mat, constcolor: crate::mcc::CONST_COLOR) -> Result<crate::mcc::ColorCorrectionModel> {
+		pub fn new(src: &impl core::MatTraitConst, constcolor: crate::mcc::CONST_COLOR) -> Result<crate::mcc::ColorCorrectionModel> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccm_ColorCorrectionModel_ColorCorrectionModel_const_MatR_CONST_COLOR(src.as_raw_Mat(), constcolor, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -834,7 +836,7 @@ pub mod mcc {
 		///            If the color type is some RGB, the format is RGB not BGR;
 		/// 
 		#[inline]
-		pub fn new_1(src: &core::Mat, mut colors: core::Mat, ref_cs: crate::mcc::COLOR_SPACE) -> Result<crate::mcc::ColorCorrectionModel> {
+		pub fn new_1(src: &impl core::MatTraitConst, mut colors: impl core::MatTrait, ref_cs: crate::mcc::COLOR_SPACE) -> Result<crate::mcc::ColorCorrectionModel> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccm_ColorCorrectionModel_ColorCorrectionModel_const_MatR_Mat_COLOR_SPACE(src.as_raw_Mat(), colors.as_raw_mut_Mat(), ref_cs, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -853,7 +855,7 @@ pub mod mcc {
 		///            If the color type is some RGB, the format is RGB not BGR;
 		/// * colored: mask of colored color
 		#[inline]
-		pub fn new_2(src: &core::Mat, mut colors: core::Mat, ref_cs: crate::mcc::COLOR_SPACE, mut colored: core::Mat) -> Result<crate::mcc::ColorCorrectionModel> {
+		pub fn new_2(src: &impl core::MatTraitConst, mut colors: impl core::MatTrait, ref_cs: crate::mcc::COLOR_SPACE, mut colored: impl core::MatTrait) -> Result<crate::mcc::ColorCorrectionModel> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ccm_ColorCorrectionModel_ColorCorrectionModel_const_MatR_Mat_COLOR_SPACE_Mat(src.as_raw_Mat(), colors.as_raw_mut_Mat(), ref_cs, colored.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -901,7 +903,7 @@ pub mod mcc {
 		}
 		
 		#[inline]
-		fn set_charts_rgb(&mut self, mut _charts_rgb: core::Mat) -> Result<()> {
+		fn set_charts_rgb(&mut self, mut _charts_rgb: impl core::MatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CChecker_setChartsRGB_Mat(self.as_raw_mut_MCC_CChecker(), _charts_rgb.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -910,7 +912,7 @@ pub mod mcc {
 		}
 		
 		#[inline]
-		fn set_charts_y_cb_cr(&mut self, mut _charts_y_cb_cr: core::Mat) -> Result<()> {
+		fn set_charts_y_cb_cr(&mut self, mut _charts_y_cb_cr: impl core::MatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CChecker_setChartsYCbCr_Mat(self.as_raw_mut_MCC_CChecker(), _charts_y_cb_cr.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -930,7 +932,7 @@ pub mod mcc {
 		#[inline]
 		fn set_center(&mut self, _center: core::Point2f) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_mcc_CChecker_setCenter_Point2f(self.as_raw_mut_MCC_CChecker(), _center.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_mcc_CChecker_setCenter_Point2f(self.as_raw_mut_MCC_CChecker(), &_center, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1025,6 +1027,8 @@ pub mod mcc {
 		#[inline] fn as_raw_mut_MCC_CChecker(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { MCC_CChecker, crate::mcc::MCC_CCheckerTraitConst, as_raw_MCC_CChecker, crate::mcc::MCC_CCheckerTrait, as_raw_mut_MCC_CChecker }
+	
 	impl MCC_CChecker {
 		/// \brief Create a new CChecker object.
 		/// \return A pointer to the implementation of the CChecker
@@ -1069,7 +1073,7 @@ pub mod mcc {
 		/// \return true if it was able to set the detector's network,
 		///        false otherwise.
 		#[inline]
-		fn set_net(&mut self, mut net: crate::dnn::Net) -> Result<bool> {
+		fn set_net(&mut self, mut net: impl crate::dnn::NetTrait) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CCheckerDetector_setNet_Net(self.as_raw_mut_MCC_CCheckerDetector(), net.as_raw_mut_Net(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1101,7 +1105,7 @@ pub mod mcc {
 		/// * use_net: false
 		/// * params: DetectorParameters::create()
 		#[inline]
-		fn process_with_roi(&mut self, image: &impl core::ToInputArray, chart_type: crate::mcc::MCC_TYPECHART, regions_of_interest: &core::Vector<core::Rect>, nc: i32, use_net: bool, params: &core::Ptr<crate::mcc::MCC_DetectorParameters>) -> Result<bool> {
+		fn process_with_roi(&mut self, image: &impl ToInputArray, chart_type: crate::mcc::MCC_TYPECHART, regions_of_interest: &core::Vector<core::Rect>, nc: i32, use_net: bool, params: &core::Ptr<crate::mcc::MCC_DetectorParameters>) -> Result<bool> {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CCheckerDetector_process_const__InputArrayR_const_TYPECHART_const_vectorLRectGR_const_int_bool_const_PtrLDetectorParametersGR(self.as_raw_mut_MCC_CCheckerDetector(), image.as_raw__InputArray(), chart_type, regions_of_interest.as_raw_VectorOfRect(), nc, use_net, params.as_raw_PtrOfMCC_DetectorParameters(), ocvrs_return.as_mut_ptr()) };
@@ -1135,7 +1139,7 @@ pub mod mcc {
 		/// * use_net: false
 		/// * params: DetectorParameters::create()
 		#[inline]
-		fn process_with_roi_def(&mut self, image: &impl core::ToInputArray, chart_type: crate::mcc::MCC_TYPECHART, regions_of_interest: &core::Vector<core::Rect>) -> Result<bool> {
+		fn process_with_roi_def(&mut self, image: &impl ToInputArray, chart_type: crate::mcc::MCC_TYPECHART, regions_of_interest: &core::Vector<core::Rect>) -> Result<bool> {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CCheckerDetector_process_const__InputArrayR_const_TYPECHART_const_vectorLRectGR(self.as_raw_mut_MCC_CCheckerDetector(), image.as_raw__InputArray(), chart_type, regions_of_interest.as_raw_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
@@ -1169,7 +1173,7 @@ pub mod mcc {
 		/// * use_net: false
 		/// * params: DetectorParameters::create()
 		#[inline]
-		fn process(&mut self, image: &impl core::ToInputArray, chart_type: crate::mcc::MCC_TYPECHART, nc: i32, use_net: bool, params: &core::Ptr<crate::mcc::MCC_DetectorParameters>) -> Result<bool> {
+		fn process(&mut self, image: &impl ToInputArray, chart_type: crate::mcc::MCC_TYPECHART, nc: i32, use_net: bool, params: &core::Ptr<crate::mcc::MCC_DetectorParameters>) -> Result<bool> {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CCheckerDetector_process_const__InputArrayR_const_TYPECHART_const_int_bool_const_PtrLDetectorParametersGR(self.as_raw_mut_MCC_CCheckerDetector(), image.as_raw__InputArray(), chart_type, nc, use_net, params.as_raw_PtrOfMCC_DetectorParameters(), ocvrs_return.as_mut_ptr()) };
@@ -1204,7 +1208,7 @@ pub mod mcc {
 		/// * use_net: false
 		/// * params: DetectorParameters::create()
 		#[inline]
-		fn process_def(&mut self, image: &impl core::ToInputArray, chart_type: crate::mcc::MCC_TYPECHART) -> Result<bool> {
+		fn process_def(&mut self, image: &impl ToInputArray, chart_type: crate::mcc::MCC_TYPECHART) -> Result<bool> {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CCheckerDetector_process_const__InputArrayR_const_TYPECHART(self.as_raw_mut_MCC_CCheckerDetector(), image.as_raw__InputArray(), chart_type, ocvrs_return.as_mut_ptr()) };
@@ -1265,6 +1269,8 @@ pub mod mcc {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { MCC_CCheckerDetector, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::mcc::MCC_CCheckerDetectorTraitConst for MCC_CCheckerDetector {
 		#[inline] fn as_raw_MCC_CCheckerDetector(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1272,6 +1278,8 @@ pub mod mcc {
 	impl crate::mcc::MCC_CCheckerDetectorTrait for MCC_CCheckerDetector {
 		#[inline] fn as_raw_mut_MCC_CCheckerDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { MCC_CCheckerDetector, crate::mcc::MCC_CCheckerDetectorTraitConst, as_raw_MCC_CCheckerDetector, crate::mcc::MCC_CCheckerDetectorTrait, as_raw_mut_MCC_CCheckerDetector }
 	
 	impl MCC_CCheckerDetector {
 		/// \brief Returns the implementation of the CCheckerDetector.
@@ -1311,7 +1319,7 @@ pub mod mcc {
 		/// \param img image in color space BGR
 		/// \return void
 		#[inline]
-		fn draw(&mut self, img: &mut impl core::ToInputOutputArray) -> Result<()> {
+		fn draw(&mut self, img: &mut impl ToInputOutputArray) -> Result<()> {
 			input_output_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_mcc_CCheckerDraw_draw_const__InputOutputArrayR(self.as_raw_mut_MCC_CCheckerDraw(), img.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
@@ -1358,6 +1366,8 @@ pub mod mcc {
 		#[inline] fn as_raw_mut_MCC_CCheckerDraw(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { MCC_CCheckerDraw, crate::mcc::MCC_CCheckerDrawTraitConst, as_raw_MCC_CCheckerDraw, crate::mcc::MCC_CCheckerDrawTrait, as_raw_mut_MCC_CCheckerDraw }
+	
 	impl MCC_CCheckerDraw {
 		/// \brief Create a new CCheckerDraw object.
 		/// \param pChecker The checker which will be drawn by this object.
@@ -1373,7 +1383,7 @@ pub mod mcc {
 		#[inline]
 		pub fn create(mut p_checker: core::Ptr<crate::mcc::MCC_CChecker>, color: core::Scalar, thickness: i32) -> Result<core::Ptr<crate::mcc::MCC_CCheckerDraw>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_mcc_CCheckerDraw_create_PtrLCCheckerG_Scalar_int(p_checker.as_raw_mut_PtrOfMCC_CChecker(), color.opencv_as_extern(), thickness, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_mcc_CCheckerDraw_create_PtrLCCheckerG_Scalar_int(p_checker.as_raw_mut_PtrOfMCC_CChecker(), &color, thickness, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::mcc::MCC_CCheckerDraw>::opencv_from_extern(ret) };
@@ -1709,6 +1719,8 @@ pub mod mcc {
 	impl crate::mcc::MCC_DetectorParametersTrait for MCC_DetectorParameters {
 		#[inline] fn as_raw_mut_MCC_DetectorParameters(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { MCC_DetectorParameters, crate::mcc::MCC_DetectorParametersTraitConst, as_raw_MCC_DetectorParameters, crate::mcc::MCC_DetectorParametersTrait, as_raw_mut_MCC_DetectorParameters }
 	
 	impl MCC_DetectorParameters {
 		#[inline]

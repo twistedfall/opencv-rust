@@ -70,7 +70,7 @@ pub mod photo {
 	/// * green_mul: 1.0f
 	/// * blue_mul: 1.0f
 	#[inline]
-	pub fn color_change_def(src: &impl core::ToInputArray, mask: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn color_change_def(src: &impl ToInputArray, mask: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		input_array_arg!(mask);
 		output_array_arg!(dst);
@@ -99,7 +99,7 @@ pub mod photo {
 	/// * green_mul: 1.0f
 	/// * blue_mul: 1.0f
 	#[inline]
-	pub fn color_change(src: &impl core::ToInputArray, mask: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, red_mul: f32, green_mul: f32, blue_mul: f32) -> Result<()> {
+	pub fn color_change(src: &impl ToInputArray, mask: &impl ToInputArray, dst: &mut impl ToOutputArray, red_mul: f32, green_mul: f32, blue_mul: f32) -> Result<()> {
 		input_array_arg!(src);
 		input_array_arg!(mask);
 		output_array_arg!(dst);
@@ -496,7 +496,7 @@ pub mod photo {
 	/// * block_size: 7
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn fast_nl_means_denoising_colored_1_def(src: &core::GpuMat, dst: &mut core::GpuMat, h_luminance: f32, photo_render: f32) -> Result<()> {
+	pub fn fast_nl_means_denoising_colored_1_def(src: &impl core::GpuMatTraitConst, dst: &mut impl core::GpuMatTrait, h_luminance: f32, photo_render: f32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_fastNlMeansDenoisingColored_const_GpuMatR_GpuMatR_float_float(src.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), h_luminance, photo_render, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -509,7 +509,7 @@ pub mod photo {
 	/// * block_size: 7
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn fast_nl_means_denoising_colored_1(src: &core::GpuMat, dst: &mut core::GpuMat, h_luminance: f32, photo_render: f32, search_window: i32, block_size: i32, stream: &mut core::Stream) -> Result<()> {
+	pub fn fast_nl_means_denoising_colored_1(src: &impl core::GpuMatTraitConst, dst: &mut impl core::GpuMatTrait, h_luminance: f32, photo_render: f32, search_window: i32, block_size: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_fastNlMeansDenoisingColored_const_GpuMatR_GpuMatR_float_float_int_int_StreamR(src.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), h_luminance, photo_render, search_window, block_size, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -544,7 +544,7 @@ pub mod photo {
 	/// * block_size: 7
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn fast_nl_means_denoising_colored_cuda_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, h_luminance: f32, photo_render: f32) -> Result<()> {
+	pub fn fast_nl_means_denoising_colored_cuda_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, h_luminance: f32, photo_render: f32) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -580,7 +580,7 @@ pub mod photo {
 	/// * block_size: 7
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn fast_nl_means_denoising_colored_cuda(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, h_luminance: f32, photo_render: f32, search_window: i32, block_size: i32, stream: &mut core::Stream) -> Result<()> {
+	pub fn fast_nl_means_denoising_colored_cuda(src: &impl ToInputArray, dst: &mut impl ToOutputArray, h_luminance: f32, photo_render: f32, search_window: i32, block_size: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -596,7 +596,7 @@ pub mod photo {
 	/// * block_size: 7
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn fast_nl_means_denoising_1_def(src: &core::GpuMat, dst: &mut core::GpuMat, h: f32) -> Result<()> {
+	pub fn fast_nl_means_denoising_1_def(src: &impl core::GpuMatTraitConst, dst: &mut impl core::GpuMatTrait, h: f32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_fastNlMeansDenoising_const_GpuMatR_GpuMatR_float(src.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), h, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -609,7 +609,7 @@ pub mod photo {
 	/// * block_size: 7
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn fast_nl_means_denoising_1(src: &core::GpuMat, dst: &mut core::GpuMat, h: f32, search_window: i32, block_size: i32, stream: &mut core::Stream) -> Result<()> {
+	pub fn fast_nl_means_denoising_1(src: &impl core::GpuMatTraitConst, dst: &mut impl core::GpuMatTrait, h: f32, search_window: i32, block_size: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_fastNlMeansDenoising_const_GpuMatR_GpuMatR_float_int_int_StreamR(src.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), h, search_window, block_size, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -644,7 +644,7 @@ pub mod photo {
 	/// * block_size: 7
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn fast_nl_means_denoising_cuda_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, h: f32) -> Result<()> {
+	pub fn fast_nl_means_denoising_cuda_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, h: f32) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -680,7 +680,7 @@ pub mod photo {
 	/// * block_size: 7
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn fast_nl_means_denoising_cuda(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, h: f32, search_window: i32, block_size: i32, stream: &mut core::Stream) -> Result<()> {
+	pub fn fast_nl_means_denoising_cuda(src: &impl ToInputArray, dst: &mut impl ToOutputArray, h: f32, search_window: i32, block_size: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -697,7 +697,7 @@ pub mod photo {
 	/// * border_mode: BORDER_DEFAULT
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn non_local_means_1_def(src: &core::GpuMat, dst: &mut core::GpuMat, h: f32) -> Result<()> {
+	pub fn non_local_means_1_def(src: &impl core::GpuMatTraitConst, dst: &mut impl core::GpuMatTrait, h: f32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_nonLocalMeans_const_GpuMatR_GpuMatR_float(src.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), h, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -711,7 +711,7 @@ pub mod photo {
 	/// * border_mode: BORDER_DEFAULT
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn non_local_means_1(src: &core::GpuMat, dst: &mut core::GpuMat, h: f32, search_window: i32, block_size: i32, border_mode: i32, stream: &mut core::Stream) -> Result<()> {
+	pub fn non_local_means_1(src: &impl core::GpuMatTraitConst, dst: &mut impl core::GpuMatTrait, h: f32, search_window: i32, block_size: i32, border_mode: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_nonLocalMeans_const_GpuMatR_GpuMatR_float_int_int_int_StreamR(src.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), h, search_window, block_size, border_mode, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -740,7 +740,7 @@ pub mod photo {
 	/// * border_mode: BORDER_DEFAULT
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn non_local_means_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, h: f32) -> Result<()> {
+	pub fn non_local_means_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, h: f32) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -770,7 +770,7 @@ pub mod photo {
 	/// * border_mode: BORDER_DEFAULT
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn non_local_means(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, h: f32, search_window: i32, block_size: i32, border_mode: i32, stream: &mut core::Stream) -> Result<()> {
+	pub fn non_local_means(src: &impl ToInputArray, dst: &mut impl ToOutputArray, h: f32, search_window: i32, block_size: i32, border_mode: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -791,7 +791,7 @@ pub mod photo {
 	/// 
 	/// This function is to be applied on color images.
 	#[inline]
-	pub fn decolor(src: &impl core::ToInputArray, grayscale: &mut impl core::ToOutputArray, color_boost: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn decolor(src: &impl ToInputArray, grayscale: &mut impl ToOutputArray, color_boost: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(grayscale);
 		output_array_arg!(color_boost);
@@ -845,7 +845,7 @@ pub mod photo {
 	/// * lambda: 1.0
 	/// * niters: 30
 	#[inline]
-	pub fn denoise_tvl1_def(observations: &core::Vector<core::Mat>, result: &mut core::Mat) -> Result<()> {
+	pub fn denoise_tvl1_def(observations: &core::Vector<core::Mat>, result: &mut impl core::MatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_denoise_TVL1_const_vectorLMatGR_MatR(observations.as_raw_VectorOfMat(), result.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -895,7 +895,7 @@ pub mod photo {
 	/// * lambda: 1.0
 	/// * niters: 30
 	#[inline]
-	pub fn denoise_tvl1(observations: &core::Vector<core::Mat>, result: &mut core::Mat, lambda: f64, niters: i32) -> Result<()> {
+	pub fn denoise_tvl1(observations: &core::Vector<core::Mat>, result: &mut impl core::MatTrait, lambda: f64, niters: i32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_denoise_TVL1_const_vectorLMatGR_MatR_double_int(observations.as_raw_VectorOfMat(), result.as_raw_mut_Mat(), lambda, niters, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -916,7 +916,7 @@ pub mod photo {
 	/// * sigma_s: 10
 	/// * sigma_r: 0.15f
 	#[inline]
-	pub fn detail_enhance_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn detail_enhance_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -938,7 +938,7 @@ pub mod photo {
 	/// * sigma_s: 10
 	/// * sigma_r: 0.15f
 	#[inline]
-	pub fn detail_enhance(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, sigma_s: f32, sigma_r: f32) -> Result<()> {
+	pub fn detail_enhance(src: &impl ToInputArray, dst: &mut impl ToOutputArray, sigma_s: f32, sigma_r: f32) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -964,7 +964,7 @@ pub mod photo {
 	/// * sigma_s: 60
 	/// * sigma_r: 0.4f
 	#[inline]
-	pub fn edge_preserving_filter_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn edge_preserving_filter_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -989,7 +989,7 @@ pub mod photo {
 	/// * sigma_s: 60
 	/// * sigma_r: 0.4f
 	#[inline]
-	pub fn edge_preserving_filter(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, flags: i32, sigma_s: f32, sigma_r: f32) -> Result<()> {
+	pub fn edge_preserving_filter(src: &impl ToInputArray, dst: &mut impl ToOutputArray, flags: i32, sigma_s: f32, sigma_r: f32) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1030,7 +1030,7 @@ pub mod photo {
 	/// * template_window_size: 7
 	/// * search_window_size: 21
 	#[inline]
-	pub fn fast_nl_means_denoising_colored_multi_def(src_imgs: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, img_to_denoise_index: i32, temporal_window_size: i32) -> Result<()> {
+	pub fn fast_nl_means_denoising_colored_multi_def(src_imgs: &impl ToInputArray, dst: &mut impl ToOutputArray, img_to_denoise_index: i32, temporal_window_size: i32) -> Result<()> {
 		input_array_arg!(src_imgs);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1070,7 +1070,7 @@ pub mod photo {
 	/// * template_window_size: 7
 	/// * search_window_size: 21
 	#[inline]
-	pub fn fast_nl_means_denoising_colored_multi(src_imgs: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, img_to_denoise_index: i32, temporal_window_size: i32, h: f32, h_color: f32, template_window_size: i32, search_window_size: i32) -> Result<()> {
+	pub fn fast_nl_means_denoising_colored_multi(src_imgs: &impl ToInputArray, dst: &mut impl ToOutputArray, img_to_denoise_index: i32, temporal_window_size: i32, h: f32, h_color: f32, template_window_size: i32, search_window_size: i32) -> Result<()> {
 		input_array_arg!(src_imgs);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1106,7 +1106,7 @@ pub mod photo {
 	/// * template_window_size: 7
 	/// * search_window_size: 21
 	#[inline]
-	pub fn fast_nl_means_denoising_colored_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn fast_nl_means_denoising_colored_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1141,7 +1141,7 @@ pub mod photo {
 	/// * template_window_size: 7
 	/// * search_window_size: 21
 	#[inline]
-	pub fn fast_nl_means_denoising_colored(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, h: f32, h_color: f32, template_window_size: i32, search_window_size: i32) -> Result<()> {
+	pub fn fast_nl_means_denoising_colored(src: &impl ToInputArray, dst: &mut impl ToOutputArray, h: f32, h_color: f32, template_window_size: i32, search_window_size: i32) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1181,7 +1181,7 @@ pub mod photo {
 	/// * template_window_size: 7
 	/// * search_window_size: 21
 	#[inline]
-	pub fn fast_nl_means_denoising_multi_def(src_imgs: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, img_to_denoise_index: i32, temporal_window_size: i32) -> Result<()> {
+	pub fn fast_nl_means_denoising_multi_def(src_imgs: &impl ToInputArray, dst: &mut impl ToOutputArray, img_to_denoise_index: i32, temporal_window_size: i32) -> Result<()> {
 		input_array_arg!(src_imgs);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1223,7 +1223,7 @@ pub mod photo {
 	/// * search_window_size: 21
 	/// * norm_type: NORM_L2
 	#[inline]
-	pub fn fast_nl_means_denoising_multi_vec_def(src_imgs: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, img_to_denoise_index: i32, temporal_window_size: i32, h: &core::Vector<f32>) -> Result<()> {
+	pub fn fast_nl_means_denoising_multi_vec_def(src_imgs: &impl ToInputArray, dst: &mut impl ToOutputArray, img_to_denoise_index: i32, temporal_window_size: i32, h: &core::Vector<f32>) -> Result<()> {
 		input_array_arg!(src_imgs);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1264,7 +1264,7 @@ pub mod photo {
 	/// * search_window_size: 21
 	/// * norm_type: NORM_L2
 	#[inline]
-	pub fn fast_nl_means_denoising_multi_vec(src_imgs: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, img_to_denoise_index: i32, temporal_window_size: i32, h: &core::Vector<f32>, template_window_size: i32, search_window_size: i32, norm_type: i32) -> Result<()> {
+	pub fn fast_nl_means_denoising_multi_vec(src_imgs: &impl ToInputArray, dst: &mut impl ToOutputArray, img_to_denoise_index: i32, temporal_window_size: i32, h: &core::Vector<f32>, template_window_size: i32, search_window_size: i32, norm_type: i32) -> Result<()> {
 		input_array_arg!(src_imgs);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1303,7 +1303,7 @@ pub mod photo {
 	/// * template_window_size: 7
 	/// * search_window_size: 21
 	#[inline]
-	pub fn fast_nl_means_denoising_multi(src_imgs: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, img_to_denoise_index: i32, temporal_window_size: i32, h: f32, template_window_size: i32, search_window_size: i32) -> Result<()> {
+	pub fn fast_nl_means_denoising_multi(src_imgs: &impl ToInputArray, dst: &mut impl ToOutputArray, img_to_denoise_index: i32, temporal_window_size: i32, h: f32, template_window_size: i32, search_window_size: i32) -> Result<()> {
 		input_array_arg!(src_imgs);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1340,7 +1340,7 @@ pub mod photo {
 	/// * template_window_size: 7
 	/// * search_window_size: 21
 	#[inline]
-	pub fn fast_nl_means_denoising_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn fast_nl_means_denoising_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1381,7 +1381,7 @@ pub mod photo {
 	/// * search_window_size: 21
 	/// * norm_type: NORM_L2
 	#[inline]
-	pub fn fast_nl_means_denoising_vec_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, h: &core::Vector<f32>) -> Result<()> {
+	pub fn fast_nl_means_denoising_vec_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, h: &core::Vector<f32>) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1421,7 +1421,7 @@ pub mod photo {
 	/// * search_window_size: 21
 	/// * norm_type: NORM_L2
 	#[inline]
-	pub fn fast_nl_means_denoising_vec(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, h: &core::Vector<f32>, template_window_size: i32, search_window_size: i32, norm_type: i32) -> Result<()> {
+	pub fn fast_nl_means_denoising_vec(src: &impl ToInputArray, dst: &mut impl ToOutputArray, h: &core::Vector<f32>, template_window_size: i32, search_window_size: i32, norm_type: i32) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1457,7 +1457,7 @@ pub mod photo {
 	/// * template_window_size: 7
 	/// * search_window_size: 21
 	#[inline]
-	pub fn fast_nl_means_denoising(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, h: f32, template_window_size: i32, search_window_size: i32) -> Result<()> {
+	pub fn fast_nl_means_denoising(src: &impl ToInputArray, dst: &mut impl ToOutputArray, h: f32, template_window_size: i32, search_window_size: i32) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1484,7 +1484,7 @@ pub mod photo {
 	/// * alpha: 0.2f
 	/// * beta: 0.4f
 	#[inline]
-	pub fn illumination_change_def(src: &impl core::ToInputArray, mask: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn illumination_change_def(src: &impl ToInputArray, mask: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		input_array_arg!(mask);
 		output_array_arg!(dst);
@@ -1511,7 +1511,7 @@ pub mod photo {
 	/// * alpha: 0.2f
 	/// * beta: 0.4f
 	#[inline]
-	pub fn illumination_change(src: &impl core::ToInputArray, mask: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, alpha: f32, beta: f32) -> Result<()> {
+	pub fn illumination_change(src: &impl ToInputArray, mask: &impl ToInputArray, dst: &mut impl ToOutputArray, alpha: f32, beta: f32) -> Result<()> {
 		input_array_arg!(src);
 		input_array_arg!(mask);
 		output_array_arg!(dst);
@@ -1544,7 +1544,7 @@ pub mod photo {
 	///    *   (Python) An example using the inpainting technique can be found at
 	///        opencv_source_code/samples/python/inpaint.py
 	#[inline]
-	pub fn inpaint(src: &impl core::ToInputArray, inpaint_mask: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, inpaint_radius: f64, flags: i32) -> Result<()> {
+	pub fn inpaint(src: &impl ToInputArray, inpaint_mask: &impl ToInputArray, dst: &mut impl ToOutputArray, inpaint_radius: f64, flags: i32) -> Result<()> {
 		input_array_arg!(src);
 		input_array_arg!(inpaint_mask);
 		output_array_arg!(dst);
@@ -1574,7 +1574,7 @@ pub mod photo {
 	/// * sigma_r: 0.07f
 	/// * shade_factor: 0.02f
 	#[inline]
-	pub fn pencil_sketch_def(src: &impl core::ToInputArray, dst1: &mut impl core::ToOutputArray, dst2: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn pencil_sketch_def(src: &impl ToInputArray, dst1: &mut impl ToOutputArray, dst2: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst1);
 		output_array_arg!(dst2);
@@ -1603,7 +1603,7 @@ pub mod photo {
 	/// * sigma_r: 0.07f
 	/// * shade_factor: 0.02f
 	#[inline]
-	pub fn pencil_sketch(src: &impl core::ToInputArray, dst1: &mut impl core::ToOutputArray, dst2: &mut impl core::ToOutputArray, sigma_s: f32, sigma_r: f32, shade_factor: f32) -> Result<()> {
+	pub fn pencil_sketch(src: &impl ToInputArray, dst1: &mut impl ToOutputArray, dst2: &mut impl ToOutputArray, sigma_s: f32, sigma_r: f32, shade_factor: f32) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst1);
 		output_array_arg!(dst2);
@@ -1631,13 +1631,13 @@ pub mod photo {
 	/// * blend: Output image with the same size and type as dst.
 	/// * flags: Cloning method that could be cv::NORMAL_CLONE, cv::MIXED_CLONE or cv::MONOCHROME_TRANSFER
 	#[inline]
-	pub fn seamless_clone(src: &impl core::ToInputArray, dst: &impl core::ToInputArray, mask: &impl core::ToInputArray, p: core::Point, blend: &mut impl core::ToOutputArray, flags: i32) -> Result<()> {
+	pub fn seamless_clone(src: &impl ToInputArray, dst: &impl ToInputArray, mask: &impl ToInputArray, p: core::Point, blend: &mut impl ToOutputArray, flags: i32) -> Result<()> {
 		input_array_arg!(src);
 		input_array_arg!(dst);
 		input_array_arg!(mask);
 		output_array_arg!(blend);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_seamlessClone_const__InputArrayR_const__InputArrayR_const__InputArrayR_Point_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__InputArray(), mask.as_raw__InputArray(), p.opencv_as_extern(), blend.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_seamlessClone_const__InputArrayR_const__InputArrayR_const__InputArrayR_Point_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__InputArray(), mask.as_raw__InputArray(), &p, blend.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1658,7 +1658,7 @@ pub mod photo {
 	/// * sigma_s: 60
 	/// * sigma_r: 0.45f
 	#[inline]
-	pub fn stylization_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn stylization_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1682,7 +1682,7 @@ pub mod photo {
 	/// * sigma_s: 60
 	/// * sigma_r: 0.45f
 	#[inline]
-	pub fn stylization(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, sigma_s: f32, sigma_r: f32) -> Result<()> {
+	pub fn stylization(src: &impl ToInputArray, dst: &mut impl ToOutputArray, sigma_s: f32, sigma_r: f32) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1715,7 +1715,7 @@ pub mod photo {
 	/// * high_threshold: 45
 	/// * kernel_size: 3
 	#[inline]
-	pub fn texture_flattening_def(src: &impl core::ToInputArray, mask: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn texture_flattening_def(src: &impl ToInputArray, mask: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		input_array_arg!(mask);
 		output_array_arg!(dst);
@@ -1748,7 +1748,7 @@ pub mod photo {
 	/// * high_threshold: 45
 	/// * kernel_size: 3
 	#[inline]
-	pub fn texture_flattening(src: &impl core::ToInputArray, mask: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, low_threshold: f32, high_threshold: f32, kernel_size: i32) -> Result<()> {
+	pub fn texture_flattening(src: &impl ToInputArray, mask: &impl ToInputArray, dst: &mut impl ToOutputArray, low_threshold: f32, high_threshold: f32, kernel_size: i32) -> Result<()> {
 		input_array_arg!(src);
 		input_array_arg!(mask);
 		output_array_arg!(dst);
@@ -1778,7 +1778,7 @@ pub mod photo {
 		/// * response: 256x1 matrix with inverse camera response function for each pixel value, it should
 		/// have the same number of channels as images.
 		#[inline]
-		fn process(&mut self, src: &impl core::ToInputArray, dst: &mut core::Vector<core::Mat>, times: &impl core::ToInputArray, response: &impl core::ToInputArray) -> Result<()> {
+		fn process(&mut self, src: &impl ToInputArray, dst: &mut core::Vector<core::Mat>, times: &impl ToInputArray, response: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(src);
 			input_array_arg!(times);
 			input_array_arg!(response);
@@ -1815,6 +1815,8 @@ pub mod photo {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { AlignExposures, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::photo::AlignExposuresTraitConst for AlignExposures {
 		#[inline] fn as_raw_AlignExposures(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1822,6 +1824,8 @@ pub mod photo {
 	impl crate::photo::AlignExposuresTrait for AlignExposures {
 		#[inline] fn as_raw_mut_AlignExposures(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { AlignExposures, crate::photo::AlignExposuresTraitConst, as_raw_AlignExposures, crate::photo::AlignExposuresTrait, as_raw_mut_AlignExposures }
 	
 	impl AlignExposures {
 	}
@@ -1876,7 +1880,7 @@ pub mod photo {
 		fn as_raw_mut_AlignMTB(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn process_with_response(&mut self, src: &impl core::ToInputArray, dst: &mut core::Vector<core::Mat>, times: &impl core::ToInputArray, response: &impl core::ToInputArray) -> Result<()> {
+		fn process_with_response(&mut self, src: &impl ToInputArray, dst: &mut core::Vector<core::Mat>, times: &impl ToInputArray, response: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(src);
 			input_array_arg!(times);
 			input_array_arg!(response);
@@ -1893,7 +1897,7 @@ pub mod photo {
 		/// * src: vector of input images
 		/// * dst: vector of aligned images
 		#[inline]
-		fn process(&mut self, src: &impl core::ToInputArray, dst: &mut core::Vector<core::Mat>) -> Result<()> {
+		fn process(&mut self, src: &impl ToInputArray, dst: &mut core::Vector<core::Mat>) -> Result<()> {
 			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_AlignMTB_process_const__InputArrayR_vectorLMatGR(self.as_raw_mut_AlignMTB(), src.as_raw__InputArray(), dst.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
@@ -1909,7 +1913,7 @@ pub mod photo {
 		/// * img0: first image
 		/// * img1: second image
 		#[inline]
-		fn calculate_shift(&mut self, img0: &impl core::ToInputArray, img1: &impl core::ToInputArray) -> Result<core::Point> {
+		fn calculate_shift(&mut self, img0: &impl ToInputArray, img1: &impl ToInputArray) -> Result<core::Point> {
 			input_array_arg!(img0);
 			input_array_arg!(img1);
 			return_send!(via ocvrs_return);
@@ -1926,11 +1930,11 @@ pub mod photo {
 		/// * dst: result image
 		/// * shift: shift value
 		#[inline]
-		fn shift_mat(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, shift: core::Point) -> Result<()> {
+		fn shift_mat(&mut self, src: &impl ToInputArray, dst: &mut impl ToOutputArray, shift: core::Point) -> Result<()> {
 			input_array_arg!(src);
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_AlignMTB_shiftMat_const__InputArrayR_const__OutputArrayR_const_Point(self.as_raw_mut_AlignMTB(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), shift.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_AlignMTB_shiftMat_const__InputArrayR_const__OutputArrayR_const_Point(self.as_raw_mut_AlignMTB(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), &shift, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1943,7 +1947,7 @@ pub mod photo {
 		/// * tb: median threshold bitmap
 		/// * eb: exclude bitmap
 		#[inline]
-		fn compute_bitmaps(&mut self, img: &impl core::ToInputArray, tb: &mut impl core::ToOutputArray, eb: &mut impl core::ToOutputArray) -> Result<()> {
+		fn compute_bitmaps(&mut self, img: &impl ToInputArray, tb: &mut impl ToOutputArray, eb: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(img);
 			output_array_arg!(tb);
 			output_array_arg!(eb);
@@ -2014,6 +2018,8 @@ pub mod photo {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { AlignMTB, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::photo::AlignExposuresTraitConst for AlignMTB {
 		#[inline] fn as_raw_AlignExposures(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2022,6 +2028,8 @@ pub mod photo {
 		#[inline] fn as_raw_mut_AlignExposures(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { AlignMTB, crate::photo::AlignExposuresTraitConst, as_raw_AlignExposures, crate::photo::AlignExposuresTrait, as_raw_mut_AlignExposures }
+	
 	impl crate::photo::AlignMTBTraitConst for AlignMTB {
 		#[inline] fn as_raw_AlignMTB(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2029,6 +2037,8 @@ pub mod photo {
 	impl crate::photo::AlignMTBTrait for AlignMTB {
 		#[inline] fn as_raw_mut_AlignMTB(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { AlignMTB, crate::photo::AlignMTBTraitConst, as_raw_AlignMTB, crate::photo::AlignMTBTrait, as_raw_mut_AlignMTB }
 	
 	impl AlignMTB {
 	}
@@ -2062,7 +2072,7 @@ pub mod photo {
 		/// * dst: 256x1 matrix with inverse camera response function
 		/// * times: vector of exposure time values for each image
 		#[inline]
-		fn process(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, times: &impl core::ToInputArray) -> Result<()> {
+		fn process(&mut self, src: &impl ToInputArray, dst: &mut impl ToOutputArray, times: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(src);
 			output_array_arg!(dst);
 			input_array_arg!(times);
@@ -2099,6 +2109,8 @@ pub mod photo {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { CalibrateCRF, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::photo::CalibrateCRFTraitConst for CalibrateCRF {
 		#[inline] fn as_raw_CalibrateCRF(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2106,6 +2118,8 @@ pub mod photo {
 	impl crate::photo::CalibrateCRFTrait for CalibrateCRF {
 		#[inline] fn as_raw_mut_CalibrateCRF(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { CalibrateCRF, crate::photo::CalibrateCRFTraitConst, as_raw_CalibrateCRF, crate::photo::CalibrateCRFTrait, as_raw_mut_CalibrateCRF }
 	
 	impl CalibrateCRF {
 	}
@@ -2218,6 +2232,8 @@ pub mod photo {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { CalibrateDebevec, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::photo::CalibrateCRFTraitConst for CalibrateDebevec {
 		#[inline] fn as_raw_CalibrateCRF(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2226,6 +2242,8 @@ pub mod photo {
 		#[inline] fn as_raw_mut_CalibrateCRF(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { CalibrateDebevec, crate::photo::CalibrateCRFTraitConst, as_raw_CalibrateCRF, crate::photo::CalibrateCRFTrait, as_raw_mut_CalibrateCRF }
+	
 	impl crate::photo::CalibrateDebevecTraitConst for CalibrateDebevec {
 		#[inline] fn as_raw_CalibrateDebevec(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2233,6 +2251,8 @@ pub mod photo {
 	impl crate::photo::CalibrateDebevecTrait for CalibrateDebevec {
 		#[inline] fn as_raw_mut_CalibrateDebevec(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { CalibrateDebevec, crate::photo::CalibrateDebevecTraitConst, as_raw_CalibrateDebevec, crate::photo::CalibrateDebevecTrait, as_raw_mut_CalibrateDebevec }
 	
 	impl CalibrateDebevec {
 	}
@@ -2334,6 +2354,8 @@ pub mod photo {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { CalibrateRobertson, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::photo::CalibrateCRFTraitConst for CalibrateRobertson {
 		#[inline] fn as_raw_CalibrateCRF(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2342,6 +2364,8 @@ pub mod photo {
 		#[inline] fn as_raw_mut_CalibrateCRF(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { CalibrateRobertson, crate::photo::CalibrateCRFTraitConst, as_raw_CalibrateCRF, crate::photo::CalibrateCRFTrait, as_raw_mut_CalibrateCRF }
+	
 	impl crate::photo::CalibrateRobertsonTraitConst for CalibrateRobertson {
 		#[inline] fn as_raw_CalibrateRobertson(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2349,6 +2373,8 @@ pub mod photo {
 	impl crate::photo::CalibrateRobertsonTrait for CalibrateRobertson {
 		#[inline] fn as_raw_mut_CalibrateRobertson(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { CalibrateRobertson, crate::photo::CalibrateRobertsonTraitConst, as_raw_CalibrateRobertson, crate::photo::CalibrateRobertsonTrait, as_raw_mut_CalibrateRobertson }
 	
 	impl CalibrateRobertson {
 	}
@@ -2376,7 +2402,7 @@ pub mod photo {
 		fn as_raw_mut_MergeDebevec(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn process_with_response(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, times: &impl core::ToInputArray, response: &impl core::ToInputArray) -> Result<()> {
+		fn process_with_response(&mut self, src: &impl ToInputArray, dst: &mut impl ToOutputArray, times: &impl ToInputArray, response: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(src);
 			output_array_arg!(dst);
 			input_array_arg!(times);
@@ -2389,7 +2415,7 @@ pub mod photo {
 		}
 		
 		#[inline]
-		fn process(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, times: &impl core::ToInputArray) -> Result<()> {
+		fn process(&mut self, src: &impl ToInputArray, dst: &mut impl ToOutputArray, times: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(src);
 			output_array_arg!(dst);
 			input_array_arg!(times);
@@ -2429,6 +2455,8 @@ pub mod photo {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { MergeDebevec, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::photo::MergeExposuresTraitConst for MergeDebevec {
 		#[inline] fn as_raw_MergeExposures(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2437,6 +2465,8 @@ pub mod photo {
 		#[inline] fn as_raw_mut_MergeExposures(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { MergeDebevec, crate::photo::MergeExposuresTraitConst, as_raw_MergeExposures, crate::photo::MergeExposuresTrait, as_raw_mut_MergeExposures }
+	
 	impl crate::photo::MergeDebevecTraitConst for MergeDebevec {
 		#[inline] fn as_raw_MergeDebevec(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2444,6 +2474,8 @@ pub mod photo {
 	impl crate::photo::MergeDebevecTrait for MergeDebevec {
 		#[inline] fn as_raw_mut_MergeDebevec(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { MergeDebevec, crate::photo::MergeDebevecTraitConst, as_raw_MergeDebevec, crate::photo::MergeDebevecTrait, as_raw_mut_MergeDebevec }
 	
 	impl MergeDebevec {
 	}
@@ -2479,7 +2511,7 @@ pub mod photo {
 		/// * response: 256x1 matrix with inverse camera response function for each pixel value, it should
 		/// have the same number of channels as images.
 		#[inline]
-		fn process(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, times: &impl core::ToInputArray, response: &impl core::ToInputArray) -> Result<()> {
+		fn process(&mut self, src: &impl ToInputArray, dst: &mut impl ToOutputArray, times: &impl ToInputArray, response: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(src);
 			output_array_arg!(dst);
 			input_array_arg!(times);
@@ -2517,6 +2549,8 @@ pub mod photo {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { MergeExposures, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::photo::MergeExposuresTraitConst for MergeExposures {
 		#[inline] fn as_raw_MergeExposures(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2524,6 +2558,8 @@ pub mod photo {
 	impl crate::photo::MergeExposuresTrait for MergeExposures {
 		#[inline] fn as_raw_mut_MergeExposures(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { MergeExposures, crate::photo::MergeExposuresTraitConst, as_raw_MergeExposures, crate::photo::MergeExposuresTrait, as_raw_mut_MergeExposures }
 	
 	impl MergeExposures {
 	}
@@ -2582,7 +2618,7 @@ pub mod photo {
 		fn as_raw_mut_MergeMertens(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn process_with_response(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, times: &impl core::ToInputArray, response: &impl core::ToInputArray) -> Result<()> {
+		fn process_with_response(&mut self, src: &impl ToInputArray, dst: &mut impl ToOutputArray, times: &impl ToInputArray, response: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(src);
 			output_array_arg!(dst);
 			input_array_arg!(times);
@@ -2600,7 +2636,7 @@ pub mod photo {
 		/// * src: vector of input images
 		/// * dst: result image
 		#[inline]
-		fn process(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		fn process(&mut self, src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(src);
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
@@ -2672,6 +2708,8 @@ pub mod photo {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { MergeMertens, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::photo::MergeExposuresTraitConst for MergeMertens {
 		#[inline] fn as_raw_MergeExposures(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2680,6 +2718,8 @@ pub mod photo {
 		#[inline] fn as_raw_mut_MergeExposures(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { MergeMertens, crate::photo::MergeExposuresTraitConst, as_raw_MergeExposures, crate::photo::MergeExposuresTrait, as_raw_mut_MergeExposures }
+	
 	impl crate::photo::MergeMertensTraitConst for MergeMertens {
 		#[inline] fn as_raw_MergeMertens(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2687,6 +2727,8 @@ pub mod photo {
 	impl crate::photo::MergeMertensTrait for MergeMertens {
 		#[inline] fn as_raw_mut_MergeMertens(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { MergeMertens, crate::photo::MergeMertensTraitConst, as_raw_MergeMertens, crate::photo::MergeMertensTrait, as_raw_mut_MergeMertens }
 	
 	impl MergeMertens {
 	}
@@ -2714,7 +2756,7 @@ pub mod photo {
 		fn as_raw_mut_MergeRobertson(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn process_with_response(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, times: &impl core::ToInputArray, response: &impl core::ToInputArray) -> Result<()> {
+		fn process_with_response(&mut self, src: &impl ToInputArray, dst: &mut impl ToOutputArray, times: &impl ToInputArray, response: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(src);
 			output_array_arg!(dst);
 			input_array_arg!(times);
@@ -2727,7 +2769,7 @@ pub mod photo {
 		}
 		
 		#[inline]
-		fn process(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, times: &impl core::ToInputArray) -> Result<()> {
+		fn process(&mut self, src: &impl ToInputArray, dst: &mut impl ToOutputArray, times: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(src);
 			output_array_arg!(dst);
 			input_array_arg!(times);
@@ -2767,6 +2809,8 @@ pub mod photo {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { MergeRobertson, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::photo::MergeExposuresTraitConst for MergeRobertson {
 		#[inline] fn as_raw_MergeExposures(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2775,6 +2819,8 @@ pub mod photo {
 		#[inline] fn as_raw_mut_MergeExposures(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { MergeRobertson, crate::photo::MergeExposuresTraitConst, as_raw_MergeExposures, crate::photo::MergeExposuresTrait, as_raw_mut_MergeExposures }
+	
 	impl crate::photo::MergeRobertsonTraitConst for MergeRobertson {
 		#[inline] fn as_raw_MergeRobertson(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2782,6 +2828,8 @@ pub mod photo {
 	impl crate::photo::MergeRobertsonTrait for MergeRobertson {
 		#[inline] fn as_raw_mut_MergeRobertson(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { MergeRobertson, crate::photo::MergeRobertsonTraitConst, as_raw_MergeRobertson, crate::photo::MergeRobertsonTrait, as_raw_mut_MergeRobertson }
 	
 	impl MergeRobertson {
 	}
@@ -2823,7 +2871,7 @@ pub mod photo {
 		/// * src: source image - CV_32FC3 Mat (float 32 bits 3 channels)
 		/// * dst: destination image - CV_32FC3 Mat with values in [0, 1] range
 		#[inline]
-		fn process(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		fn process(&mut self, src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(src);
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
@@ -2868,6 +2916,8 @@ pub mod photo {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Tonemap, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::photo::TonemapTraitConst for Tonemap {
 		#[inline] fn as_raw_Tonemap(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2875,6 +2925,8 @@ pub mod photo {
 	impl crate::photo::TonemapTrait for Tonemap {
 		#[inline] fn as_raw_mut_Tonemap(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { Tonemap, crate::photo::TonemapTraitConst, as_raw_Tonemap, crate::photo::TonemapTrait, as_raw_mut_Tonemap }
 	
 	impl Tonemap {
 	}
@@ -2975,6 +3027,8 @@ pub mod photo {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { TonemapDrago, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::photo::TonemapTraitConst for TonemapDrago {
 		#[inline] fn as_raw_Tonemap(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2983,6 +3037,8 @@ pub mod photo {
 		#[inline] fn as_raw_mut_Tonemap(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { TonemapDrago, crate::photo::TonemapTraitConst, as_raw_Tonemap, crate::photo::TonemapTrait, as_raw_mut_Tonemap }
+	
 	impl crate::photo::TonemapDragoTraitConst for TonemapDrago {
 		#[inline] fn as_raw_TonemapDrago(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2990,6 +3046,8 @@ pub mod photo {
 	impl crate::photo::TonemapDragoTrait for TonemapDrago {
 		#[inline] fn as_raw_mut_TonemapDrago(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { TonemapDrago, crate::photo::TonemapDragoTraitConst, as_raw_TonemapDrago, crate::photo::TonemapDragoTrait, as_raw_mut_TonemapDrago }
 	
 	impl TonemapDrago {
 	}
@@ -3082,6 +3140,8 @@ pub mod photo {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { TonemapMantiuk, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::photo::TonemapTraitConst for TonemapMantiuk {
 		#[inline] fn as_raw_Tonemap(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3090,6 +3150,8 @@ pub mod photo {
 		#[inline] fn as_raw_mut_Tonemap(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { TonemapMantiuk, crate::photo::TonemapTraitConst, as_raw_Tonemap, crate::photo::TonemapTrait, as_raw_mut_Tonemap }
+	
 	impl crate::photo::TonemapMantiukTraitConst for TonemapMantiuk {
 		#[inline] fn as_raw_TonemapMantiuk(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3097,6 +3159,8 @@ pub mod photo {
 	impl crate::photo::TonemapMantiukTrait for TonemapMantiuk {
 		#[inline] fn as_raw_mut_TonemapMantiuk(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { TonemapMantiuk, crate::photo::TonemapMantiukTraitConst, as_raw_TonemapMantiuk, crate::photo::TonemapMantiukTrait, as_raw_mut_TonemapMantiuk }
 	
 	impl TonemapMantiuk {
 	}
@@ -3208,6 +3272,8 @@ pub mod photo {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { TonemapReinhard, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::photo::TonemapTraitConst for TonemapReinhard {
 		#[inline] fn as_raw_Tonemap(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3216,6 +3282,8 @@ pub mod photo {
 		#[inline] fn as_raw_mut_Tonemap(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { TonemapReinhard, crate::photo::TonemapTraitConst, as_raw_Tonemap, crate::photo::TonemapTrait, as_raw_mut_Tonemap }
+	
 	impl crate::photo::TonemapReinhardTraitConst for TonemapReinhard {
 		#[inline] fn as_raw_TonemapReinhard(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3223,6 +3291,8 @@ pub mod photo {
 	impl crate::photo::TonemapReinhardTrait for TonemapReinhard {
 		#[inline] fn as_raw_mut_TonemapReinhard(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { TonemapReinhard, crate::photo::TonemapReinhardTraitConst, as_raw_TonemapReinhard, crate::photo::TonemapReinhardTrait, as_raw_mut_TonemapReinhard }
 	
 	impl TonemapReinhard {
 	}

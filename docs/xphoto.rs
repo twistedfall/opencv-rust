@@ -107,7 +107,7 @@ pub mod xphoto {
 	/// * gainG: gain for the G channel
 	/// * gainR: gain for the R channel
 	#[inline]
-	pub fn apply_channel_gains(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, gain_b: f32, gain_g: f32, gain_r: f32) -> Result<()> {
+	pub fn apply_channel_gains(src: &impl ToInputArray, dst: &mut impl ToOutputArray, gain_b: f32, gain_g: f32, gain_r: f32) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -168,7 +168,7 @@ pub mod xphoto {
 	/// * step: cv::xphoto::BM3D_STEPALL
 	/// * transform_type: cv::xphoto::HAAR
 	#[inline]
-	pub fn bm3d_denoising_def(src: &impl core::ToInputArray, dst_step1: &mut impl core::ToInputOutputArray, dst_step2: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn bm3d_denoising_def(src: &impl ToInputArray, dst_step1: &mut impl ToInputOutputArray, dst_step2: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		input_output_array_arg!(dst_step1);
 		output_array_arg!(dst_step2);
@@ -229,7 +229,7 @@ pub mod xphoto {
 	/// * step: cv::xphoto::BM3D_STEPALL
 	/// * transform_type: cv::xphoto::HAAR
 	#[inline]
-	pub fn bm3d_denoising(src: &impl core::ToInputArray, dst_step1: &mut impl core::ToInputOutputArray, dst_step2: &mut impl core::ToOutputArray, h: f32, template_window_size: i32, search_window_size: i32, block_matching_step1: i32, block_matching_step2: i32, group_size: i32, sliding_step: i32, beta: f32, norm_type: i32, step: i32, transform_type: i32) -> Result<()> {
+	pub fn bm3d_denoising(src: &impl ToInputArray, dst_step1: &mut impl ToInputOutputArray, dst_step2: &mut impl ToOutputArray, h: f32, template_window_size: i32, search_window_size: i32, block_matching_step1: i32, block_matching_step2: i32, group_size: i32, sliding_step: i32, beta: f32, norm_type: i32, step: i32, transform_type: i32) -> Result<()> {
 		input_array_arg!(src);
 		input_output_array_arg!(dst_step1);
 		output_array_arg!(dst_step2);
@@ -291,7 +291,7 @@ pub mod xphoto {
 	/// * step: cv::xphoto::BM3D_STEPALL
 	/// * transform_type: cv::xphoto::HAAR
 	#[inline]
-	pub fn bm3d_denoising_1_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn bm3d_denoising_1_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -351,7 +351,7 @@ pub mod xphoto {
 	/// * step: cv::xphoto::BM3D_STEPALL
 	/// * transform_type: cv::xphoto::HAAR
 	#[inline]
-	pub fn bm3d_denoising_1(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, h: f32, template_window_size: i32, search_window_size: i32, block_matching_step1: i32, block_matching_step2: i32, group_size: i32, sliding_step: i32, beta: f32, norm_type: i32, step: i32, transform_type: i32) -> Result<()> {
+	pub fn bm3d_denoising_1(src: &impl ToInputArray, dst: &mut impl ToOutputArray, h: f32, template_window_size: i32, search_window_size: i32, block_matching_step1: i32, block_matching_step2: i32, group_size: i32, sliding_step: i32, beta: f32, norm_type: i32, step: i32, transform_type: i32) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -491,7 +491,7 @@ pub mod xphoto {
 	/// This alternative version of [dct_denoising] function uses the following default values for its arguments:
 	/// * psize: 16
 	#[inline]
-	pub fn dct_denoising_def(src: &core::Mat, dst: &mut core::Mat, sigma: f64) -> Result<()> {
+	pub fn dct_denoising_def(src: &impl core::MatTraitConst, dst: &mut impl core::MatTrait, sigma: f64) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xphoto_dctDenoising_const_MatR_MatR_const_double(src.as_raw_Mat(), dst.as_raw_mut_Mat(), sigma, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -513,7 +513,7 @@ pub mod xphoto {
 	/// ## C++ default parameters
 	/// * psize: 16
 	#[inline]
-	pub fn dct_denoising(src: &core::Mat, dst: &mut core::Mat, sigma: f64, psize: i32) -> Result<()> {
+	pub fn dct_denoising(src: &impl core::MatTraitConst, dst: &mut impl core::MatTrait, sigma: f64, psize: i32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xphoto_dctDenoising_const_MatR_MatR_const_double_const_int(src.as_raw_Mat(), dst.as_raw_mut_Mat(), sigma, psize, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -537,7 +537,7 @@ pub mod xphoto {
 	/// * dst: destination image
 	/// * algorithmType: see xphoto::InpaintTypes
 	#[inline]
-	pub fn inpaint(src: &core::Mat, mask: &core::Mat, dst: &mut core::Mat, algorithm_type: i32) -> Result<()> {
+	pub fn inpaint(src: &impl core::MatTraitConst, mask: &impl core::MatTraitConst, dst: &mut impl core::MatTrait, algorithm_type: i32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_xphoto_inpaint_const_MatR_const_MatR_MatR_const_int(src.as_raw_Mat(), mask.as_raw_Mat(), dst.as_raw_mut_Mat(), algorithm_type, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -553,7 +553,7 @@ pub mod xphoto {
 	/// * size: neighbouring size is 2-size+1
 	/// * dynRatio: image is divided by dynRatio before histogram processing
 	#[inline]
-	pub fn oil_painting_1(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, size: i32, dyn_ratio: i32) -> Result<()> {
+	pub fn oil_painting_1(src: &impl ToInputArray, dst: &mut impl ToOutputArray, size: i32, dyn_ratio: i32) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -572,7 +572,7 @@ pub mod xphoto {
 	/// * dynRatio: image is divided by dynRatio before histogram processing
 	/// * code: 	color space conversion code(see ColorConversionCodes). Histogram will used only first plane
 	#[inline]
-	pub fn oil_painting(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, size: i32, dyn_ratio: i32, code: i32) -> Result<()> {
+	pub fn oil_painting(src: &impl ToInputArray, dst: &mut impl ToOutputArray, size: i32, dyn_ratio: i32, code: i32) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -663,6 +663,8 @@ pub mod xphoto {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { GrayworldWB, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::xphoto::WhiteBalancerTraitConst for GrayworldWB {
 		#[inline] fn as_raw_WhiteBalancer(&self) -> *const c_void { self.as_raw() }
 	}
@@ -671,6 +673,8 @@ pub mod xphoto {
 		#[inline] fn as_raw_mut_WhiteBalancer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { GrayworldWB, crate::xphoto::WhiteBalancerTraitConst, as_raw_WhiteBalancer, crate::xphoto::WhiteBalancerTrait, as_raw_mut_WhiteBalancer }
+	
 	impl crate::xphoto::GrayworldWBTraitConst for GrayworldWB {
 		#[inline] fn as_raw_GrayworldWB(&self) -> *const c_void { self.as_raw() }
 	}
@@ -678,6 +682,8 @@ pub mod xphoto {
 	impl crate::xphoto::GrayworldWBTrait for GrayworldWB {
 		#[inline] fn as_raw_mut_GrayworldWB(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { GrayworldWB, crate::xphoto::GrayworldWBTraitConst, as_raw_GrayworldWB, crate::xphoto::GrayworldWBTrait, as_raw_mut_GrayworldWB }
 	
 	impl GrayworldWB {
 	}
@@ -759,7 +765,7 @@ pub mod xphoto {
 		/// * src: Input three-channel image (BGR color space is assumed).
 		/// * dst: An array of four (r,g) chromaticity tuples corresponding to the features listed above.
 		#[inline]
-		fn extract_simple_features(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		fn extract_simple_features(&mut self, src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(src);
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
@@ -847,6 +853,8 @@ pub mod xphoto {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { LearningBasedWB, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::xphoto::WhiteBalancerTraitConst for LearningBasedWB {
 		#[inline] fn as_raw_WhiteBalancer(&self) -> *const c_void { self.as_raw() }
 	}
@@ -855,6 +863,8 @@ pub mod xphoto {
 		#[inline] fn as_raw_mut_WhiteBalancer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { LearningBasedWB, crate::xphoto::WhiteBalancerTraitConst, as_raw_WhiteBalancer, crate::xphoto::WhiteBalancerTrait, as_raw_mut_WhiteBalancer }
+	
 	impl crate::xphoto::LearningBasedWBTraitConst for LearningBasedWB {
 		#[inline] fn as_raw_LearningBasedWB(&self) -> *const c_void { self.as_raw() }
 	}
@@ -862,6 +872,8 @@ pub mod xphoto {
 	impl crate::xphoto::LearningBasedWBTrait for LearningBasedWB {
 		#[inline] fn as_raw_mut_LearningBasedWB(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { LearningBasedWB, crate::xphoto::LearningBasedWBTraitConst, as_raw_LearningBasedWB, crate::xphoto::LearningBasedWBTrait, as_raw_mut_LearningBasedWB }
 	
 	impl LearningBasedWB {
 	}
@@ -1036,6 +1048,8 @@ pub mod xphoto {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { SimpleWB, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::xphoto::WhiteBalancerTraitConst for SimpleWB {
 		#[inline] fn as_raw_WhiteBalancer(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1044,6 +1058,8 @@ pub mod xphoto {
 		#[inline] fn as_raw_mut_WhiteBalancer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { SimpleWB, crate::xphoto::WhiteBalancerTraitConst, as_raw_WhiteBalancer, crate::xphoto::WhiteBalancerTrait, as_raw_mut_WhiteBalancer }
+	
 	impl crate::xphoto::SimpleWBTraitConst for SimpleWB {
 		#[inline] fn as_raw_SimpleWB(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1051,6 +1067,8 @@ pub mod xphoto {
 	impl crate::xphoto::SimpleWBTrait for SimpleWB {
 		#[inline] fn as_raw_mut_SimpleWB(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { SimpleWB, crate::xphoto::SimpleWBTraitConst, as_raw_SimpleWB, crate::xphoto::SimpleWBTrait, as_raw_mut_SimpleWB }
 	
 	impl SimpleWB {
 	}
@@ -1182,6 +1200,8 @@ pub mod xphoto {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { TonemapDurand, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::photo::TonemapTraitConst for TonemapDurand {
 		#[inline] fn as_raw_Tonemap(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1190,6 +1210,8 @@ pub mod xphoto {
 		#[inline] fn as_raw_mut_Tonemap(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { TonemapDurand, crate::photo::TonemapTraitConst, as_raw_Tonemap, crate::photo::TonemapTrait, as_raw_mut_Tonemap }
+	
 	impl crate::xphoto::TonemapDurandTraitConst for TonemapDurand {
 		#[inline] fn as_raw_TonemapDurand(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1197,6 +1219,8 @@ pub mod xphoto {
 	impl crate::xphoto::TonemapDurandTrait for TonemapDurand {
 		#[inline] fn as_raw_mut_TonemapDurand(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { TonemapDurand, crate::xphoto::TonemapDurandTraitConst, as_raw_TonemapDurand, crate::xphoto::TonemapDurandTrait, as_raw_mut_TonemapDurand }
 	
 	impl TonemapDurand {
 	}
@@ -1231,7 +1255,7 @@ pub mod xphoto {
 		/// ## See also
 		/// cvtColor, equalizeHist
 		#[inline]
-		fn balance_white(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		fn balance_white(&mut self, src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(src);
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
@@ -1267,6 +1291,8 @@ pub mod xphoto {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WhiteBalancer, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::xphoto::WhiteBalancerTraitConst for WhiteBalancer {
 		#[inline] fn as_raw_WhiteBalancer(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1274,6 +1300,8 @@ pub mod xphoto {
 	impl crate::xphoto::WhiteBalancerTrait for WhiteBalancer {
 		#[inline] fn as_raw_mut_WhiteBalancer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { WhiteBalancer, crate::xphoto::WhiteBalancerTraitConst, as_raw_WhiteBalancer, crate::xphoto::WhiteBalancerTrait, as_raw_mut_WhiteBalancer }
 	
 	impl WhiteBalancer {
 	}

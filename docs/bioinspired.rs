@@ -41,7 +41,7 @@ pub mod bioinspired {
 		/// 
 		/// ## Overloaded parameters
 		#[inline]
-		fn write_to_storage(&self, fs: &mut core::FileStorage) -> Result<()> {
+		fn write_to_storage(&self, fs: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bioinspired_Retina_write_const_FileStorageR(self.as_raw_Retina(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -177,7 +177,7 @@ pub mod bioinspired {
 		/// ## C++ default parameters
 		/// * apply_default_setup_on_failure: true
 		#[inline]
-		fn setup_from_storage(&mut self, fs: &mut core::FileStorage, apply_default_setup_on_failure: bool) -> Result<()> {
+		fn setup_from_storage(&mut self, fs: &mut impl core::FileStorageTrait, apply_default_setup_on_failure: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bioinspired_Retina_setup_FileStorageR_const_bool(self.as_raw_mut_Retina(), fs.as_raw_mut_FileStorage(), apply_default_setup_on_failure, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -194,7 +194,7 @@ pub mod bioinspired {
 		/// This alternative version of [RetinaTrait::setup_from_storage] function uses the following default values for its arguments:
 		/// * apply_default_setup_on_failure: true
 		#[inline]
-		fn setup_from_storage_def(&mut self, fs: &mut core::FileStorage) -> Result<()> {
+		fn setup_from_storage_def(&mut self, fs: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bioinspired_Retina_setup_FileStorageR(self.as_raw_mut_Retina(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -217,7 +217,7 @@ pub mod bioinspired {
 		/// 
 		/// * newParameters: a parameters structures updated with the new target configuration.
 		#[inline]
-		fn setup(&mut self, mut new_parameters: crate::bioinspired::RetinaParameters) -> Result<()> {
+		fn setup(&mut self, mut new_parameters: impl crate::bioinspired::RetinaParametersTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bioinspired_Retina_setup_RetinaParameters(self.as_raw_mut_Retina(), new_parameters.as_raw_mut_RetinaParameters(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -456,7 +456,7 @@ pub mod bioinspired {
 		/// * inputImage: the input Mat image to be processed, can be gray level or BGR coded in any
 		/// format (from 8bit to 16bits)
 		#[inline]
-		fn run(&mut self, input_image: &impl core::ToInputArray) -> Result<()> {
+		fn run(&mut self, input_image: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(input_image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bioinspired_Retina_run_const__InputArrayR(self.as_raw_mut_Retina(), input_image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -482,7 +482,7 @@ pub mod bioinspired {
 		/// CV_32FC1, CV_32F_C3, CV_32F_C4, the 4th channel won't be considered).
 		/// * outputToneMappedImage: the output 8bit/channel tone mapped image (CV_8U or CV_8UC3 format).
 		#[inline]
-		fn apply_fast_tone_mapping(&mut self, input_image: &impl core::ToInputArray, output_tone_mapped_image: &mut impl core::ToOutputArray) -> Result<()> {
+		fn apply_fast_tone_mapping(&mut self, input_image: &impl ToInputArray, output_tone_mapped_image: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(input_image);
 			output_array_arg!(output_tone_mapped_image);
 			return_send!(via ocvrs_return);
@@ -506,7 +506,7 @@ pub mod bioinspired {
 		/// ## See also
 		/// getParvoRAW
 		#[inline]
-		fn get_parvo(&mut self, retina_output_parvo: &mut impl core::ToOutputArray) -> Result<()> {
+		fn get_parvo(&mut self, retina_output_parvo: &mut impl ToOutputArray) -> Result<()> {
 			output_array_arg!(retina_output_parvo);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bioinspired_Retina_getParvo_const__OutputArrayR(self.as_raw_mut_Retina(), retina_output_parvo.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
@@ -519,7 +519,7 @@ pub mod bioinspired {
 		/// ## See also
 		/// getParvo
 		#[inline]
-		fn get_parvo_raw_to(&mut self, retina_output_parvo: &mut impl core::ToOutputArray) -> Result<()> {
+		fn get_parvo_raw_to(&mut self, retina_output_parvo: &mut impl ToOutputArray) -> Result<()> {
 			output_array_arg!(retina_output_parvo);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bioinspired_Retina_getParvoRAW_const__OutputArrayR(self.as_raw_mut_Retina(), retina_output_parvo.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
@@ -540,7 +540,7 @@ pub mod bioinspired {
 		/// ## See also
 		/// getMagnoRAW
 		#[inline]
-		fn get_magno(&mut self, retina_output_magno: &mut impl core::ToOutputArray) -> Result<()> {
+		fn get_magno(&mut self, retina_output_magno: &mut impl ToOutputArray) -> Result<()> {
 			output_array_arg!(retina_output_magno);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bioinspired_Retina_getMagno_const__OutputArrayR(self.as_raw_mut_Retina(), retina_output_magno.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
@@ -553,7 +553,7 @@ pub mod bioinspired {
 		/// ## See also
 		/// getMagno
 		#[inline]
-		fn get_magno_raw_to(&mut self, retina_output_magno: &mut impl core::ToOutputArray) -> Result<()> {
+		fn get_magno_raw_to(&mut self, retina_output_magno: &mut impl ToOutputArray) -> Result<()> {
 			output_array_arg!(retina_output_magno);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bioinspired_Retina_getMagnoRAW_const__OutputArrayR(self.as_raw_mut_Retina(), retina_output_magno.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
@@ -690,6 +690,8 @@ pub mod bioinspired {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Retina, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::bioinspired::RetinaTraitConst for Retina {
 		#[inline] fn as_raw_Retina(&self) -> *const c_void { self.as_raw() }
 	}
@@ -697,6 +699,8 @@ pub mod bioinspired {
 	impl crate::bioinspired::RetinaTrait for Retina {
 		#[inline] fn as_raw_mut_Retina(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { Retina, crate::bioinspired::RetinaTraitConst, as_raw_Retina, crate::bioinspired::RetinaTrait, as_raw_mut_Retina }
 	
 	impl Retina {
 		/// Constructors from standardized interfaces : retreive a smart pointer to a Retina instance
@@ -720,7 +724,7 @@ pub mod bioinspired {
 		#[inline]
 		pub fn create(input_size: core::Size) -> Result<core::Ptr<crate::bioinspired::Retina>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_bioinspired_Retina_create_Size(input_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_bioinspired_Retina_create_Size(&input_size, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::bioinspired::Retina>::opencv_from_extern(ret) };
@@ -752,7 +756,7 @@ pub mod bioinspired {
 		#[inline]
 		pub fn create_ext(input_size: core::Size, color_mode: bool, color_sampling_method: i32, use_retina_log_sampling: bool, reduction_factor: f32, sampling_strength: f32) -> Result<core::Ptr<crate::bioinspired::Retina>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_bioinspired_Retina_create_Size_const_bool_int_const_bool_const_float_const_float(input_size.opencv_as_extern(), color_mode, color_sampling_method, use_retina_log_sampling, reduction_factor, sampling_strength, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_bioinspired_Retina_create_Size_const_bool_int_const_bool_const_float_const_float(&input_size, color_mode, color_sampling_method, use_retina_log_sampling, reduction_factor, sampling_strength, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::bioinspired::Retina>::opencv_from_extern(ret) };
@@ -785,7 +789,7 @@ pub mod bioinspired {
 		#[inline]
 		pub fn create_ext_def(input_size: core::Size, color_mode: bool) -> Result<core::Ptr<crate::bioinspired::Retina>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_bioinspired_Retina_create_Size_const_bool(input_size.opencv_as_extern(), color_mode, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_bioinspired_Retina_create_Size_const_bool(&input_size, color_mode, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::bioinspired::Retina>::opencv_from_extern(ret) };
@@ -831,7 +835,7 @@ pub mod bioinspired {
 		/// * inputImage: the input image to process RGB or gray levels
 		/// * outputToneMappedImage: the output tone mapped image
 		#[inline]
-		fn apply_fast_tone_mapping(&mut self, input_image: &impl core::ToInputArray, output_tone_mapped_image: &mut impl core::ToOutputArray) -> Result<()> {
+		fn apply_fast_tone_mapping(&mut self, input_image: &impl ToInputArray, output_tone_mapped_image: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(input_image);
 			output_array_arg!(output_tone_mapped_image);
 			return_send!(via ocvrs_return);
@@ -923,6 +927,8 @@ pub mod bioinspired {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { RetinaFastToneMapping, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::bioinspired::RetinaFastToneMappingTraitConst for RetinaFastToneMapping {
 		#[inline] fn as_raw_RetinaFastToneMapping(&self) -> *const c_void { self.as_raw() }
 	}
@@ -931,11 +937,13 @@ pub mod bioinspired {
 		#[inline] fn as_raw_mut_RetinaFastToneMapping(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { RetinaFastToneMapping, crate::bioinspired::RetinaFastToneMappingTraitConst, as_raw_RetinaFastToneMapping, crate::bioinspired::RetinaFastToneMappingTrait, as_raw_mut_RetinaFastToneMapping }
+	
 	impl RetinaFastToneMapping {
 		#[inline]
 		pub fn create(input_size: core::Size) -> Result<core::Ptr<crate::bioinspired::RetinaFastToneMapping>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_bioinspired_RetinaFastToneMapping_create_Size(input_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_bioinspired_RetinaFastToneMapping_create_Size(&input_size, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::bioinspired::RetinaFastToneMapping>::opencv_from_extern(ret) };
@@ -982,13 +990,13 @@ pub mod bioinspired {
 	
 		#[inline]
 		fn set_op_land_ipl_parvo(&mut self, val: crate::bioinspired::RetinaParameters_OPLandIplParvoParameters) {
-			let ret = unsafe { sys::cv_bioinspired_RetinaParameters_propOPLandIplParvo_const_OPLandIplParvoParameters(self.as_raw_mut_RetinaParameters(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_bioinspired_RetinaParameters_propOPLandIplParvo_const_OPLandIplParvoParameters(self.as_raw_mut_RetinaParameters(), &val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_ipl_magno(&mut self, val: crate::bioinspired::RetinaParameters_IplMagnoParameters) {
-			let ret = unsafe { sys::cv_bioinspired_RetinaParameters_propIplMagno_const_IplMagnoParameters(self.as_raw_mut_RetinaParameters(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_bioinspired_RetinaParameters_propIplMagno_const_IplMagnoParameters(self.as_raw_mut_RetinaParameters(), &val) };
 			ret
 		}
 		
@@ -1076,6 +1084,8 @@ pub mod bioinspired {
 	impl crate::bioinspired::RetinaParametersTrait for RetinaParameters {
 		#[inline] fn as_raw_mut_RetinaParameters(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { RetinaParameters, crate::bioinspired::RetinaParametersTraitConst, as_raw_RetinaParameters, crate::bioinspired::RetinaParametersTrait, as_raw_mut_RetinaParameters }
 	
 	impl RetinaParameters {
 		fn default() -> Self {
@@ -1219,7 +1229,7 @@ pub mod bioinspired {
 		/// ## Parameters
 		/// * fs: : a cv::Filestorage object ready to be filled
 		#[inline]
-		fn write_to_storage(&self, fs: &mut core::FileStorage) -> Result<()> {
+		fn write_to_storage(&self, fs: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_write_const_FileStorageR(self.as_raw_TransientAreasSegmentationModule(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1296,7 +1306,7 @@ pub mod bioinspired {
 		/// ## C++ default parameters
 		/// * apply_default_setup_on_failure: true
 		#[inline]
-		fn setup_from_storage(&mut self, fs: &mut core::FileStorage, apply_default_setup_on_failure: bool) -> Result<()> {
+		fn setup_from_storage(&mut self, fs: &mut impl core::FileStorageTrait, apply_default_setup_on_failure: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_setup_FileStorageR_const_bool(self.as_raw_mut_TransientAreasSegmentationModule(), fs.as_raw_mut_FileStorage(), apply_default_setup_on_failure, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1316,7 +1326,7 @@ pub mod bioinspired {
 		/// This alternative version of [TransientAreasSegmentationModuleTrait::setup_from_storage] function uses the following default values for its arguments:
 		/// * apply_default_setup_on_failure: true
 		#[inline]
-		fn setup_from_storage_def(&mut self, fs: &mut core::FileStorage) -> Result<()> {
+		fn setup_from_storage_def(&mut self, fs: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_setup_FileStorageR(self.as_raw_mut_TransientAreasSegmentationModule(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1333,7 +1343,7 @@ pub mod bioinspired {
 		#[inline]
 		fn setup(&mut self, new_parameters: crate::bioinspired::SegmentationParameters) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_setup_SegmentationParameters(self.as_raw_mut_TransientAreasSegmentationModule(), new_parameters.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_setup_SegmentationParameters(self.as_raw_mut_TransientAreasSegmentationModule(), &new_parameters, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1370,7 +1380,7 @@ pub mod bioinspired {
 		/// ## C++ default parameters
 		/// * channel_index: 0
 		#[inline]
-		fn run(&mut self, input_to_segment: &impl core::ToInputArray, channel_index: i32) -> Result<()> {
+		fn run(&mut self, input_to_segment: &impl ToInputArray, channel_index: i32) -> Result<()> {
 			input_array_arg!(input_to_segment);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_run_const__InputArrayR_const_int(self.as_raw_mut_TransientAreasSegmentationModule(), input_to_segment.as_raw__InputArray(), channel_index, ocvrs_return.as_mut_ptr()) };
@@ -1388,7 +1398,7 @@ pub mod bioinspired {
 		/// This alternative version of [TransientAreasSegmentationModuleTrait::run] function uses the following default values for its arguments:
 		/// * channel_index: 0
 		#[inline]
-		fn run_def(&mut self, input_to_segment: &impl core::ToInputArray) -> Result<()> {
+		fn run_def(&mut self, input_to_segment: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(input_to_segment);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_run_const__InputArrayR(self.as_raw_mut_TransientAreasSegmentationModule(), input_to_segment.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -1400,7 +1410,7 @@ pub mod bioinspired {
 		/// access function
 		/// return the last segmentation result: a boolean picture which is resampled between 0 and 255 for a display purpose
 		#[inline]
-		fn get_segmentation_picture(&mut self, transient_areas: &mut impl core::ToOutputArray) -> Result<()> {
+		fn get_segmentation_picture(&mut self, transient_areas: &mut impl ToOutputArray) -> Result<()> {
 			output_array_arg!(transient_areas);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_getSegmentationPicture_const__OutputArrayR(self.as_raw_mut_TransientAreasSegmentationModule(), transient_areas.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
@@ -1456,6 +1466,8 @@ pub mod bioinspired {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { TransientAreasSegmentationModule, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::bioinspired::TransientAreasSegmentationModuleTraitConst for TransientAreasSegmentationModule {
 		#[inline] fn as_raw_TransientAreasSegmentationModule(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1464,6 +1476,8 @@ pub mod bioinspired {
 		#[inline] fn as_raw_mut_TransientAreasSegmentationModule(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { TransientAreasSegmentationModule, crate::bioinspired::TransientAreasSegmentationModuleTraitConst, as_raw_TransientAreasSegmentationModule, crate::bioinspired::TransientAreasSegmentationModuleTrait, as_raw_mut_TransientAreasSegmentationModule }
+	
 	impl TransientAreasSegmentationModule {
 		/// allocator
 		/// ## Parameters
@@ -1471,7 +1485,7 @@ pub mod bioinspired {
 		#[inline]
 		pub fn create(input_size: core::Size) -> Result<core::Ptr<crate::bioinspired::TransientAreasSegmentationModule>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_create_Size(input_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_create_Size(&input_size, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::bioinspired::TransientAreasSegmentationModule>::opencv_from_extern(ret) };

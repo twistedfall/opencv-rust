@@ -585,7 +585,7 @@ pub mod calib3d {
 	/// * qy: noArray()
 	/// * qz: noArray()
 	#[inline]
-	pub fn rq_decomp3x3_def(src: &impl core::ToInputArray, mtx_r: &mut impl core::ToOutputArray, mtx_q: &mut impl core::ToOutputArray) -> Result<core::Vec3d> {
+	pub fn rq_decomp3x3_def(src: &impl ToInputArray, mtx_r: &mut impl ToOutputArray, mtx_q: &mut impl ToOutputArray) -> Result<core::Vec3d> {
 		input_array_arg!(src);
 		output_array_arg!(mtx_r);
 		output_array_arg!(mtx_q);
@@ -621,7 +621,7 @@ pub mod calib3d {
 	/// * qy: noArray()
 	/// * qz: noArray()
 	#[inline]
-	pub fn rq_decomp3x3(src: &impl core::ToInputArray, mtx_r: &mut impl core::ToOutputArray, mtx_q: &mut impl core::ToOutputArray, qx: &mut impl core::ToOutputArray, qy: &mut impl core::ToOutputArray, qz: &mut impl core::ToOutputArray) -> Result<core::Vec3d> {
+	pub fn rq_decomp3x3(src: &impl ToInputArray, mtx_r: &mut impl ToOutputArray, mtx_q: &mut impl ToOutputArray, qx: &mut impl ToOutputArray, qy: &mut impl ToOutputArray, qz: &mut impl ToOutputArray) -> Result<core::Vec3d> {
 		input_array_arg!(src);
 		output_array_arg!(mtx_r);
 		output_array_arg!(mtx_q);
@@ -668,7 +668,7 @@ pub mod calib3d {
 	/// This alternative version of [rodrigues] function uses the following default values for its arguments:
 	/// * jacobian: noArray()
 	#[inline]
-	pub fn rodrigues_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn rodrigues_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -710,7 +710,7 @@ pub mod calib3d {
 	/// ## C++ default parameters
 	/// * jacobian: noArray()
 	#[inline]
-	pub fn rodrigues(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, jacobian: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn rodrigues(src: &impl ToInputArray, dst: &mut impl ToOutputArray, jacobian: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		output_array_arg!(jacobian);
@@ -728,7 +728,7 @@ pub mod calib3d {
 	/// * flags: 0
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
 	#[inline]
-	pub fn calibrate_camera_ro_def(object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, image_size: core::Size, i_fixed_point: i32, camera_matrix: &mut impl core::ToInputOutputArray, dist_coeffs: &mut impl core::ToInputOutputArray, rvecs: &mut impl core::ToOutputArray, tvecs: &mut impl core::ToOutputArray, new_obj_points: &mut impl core::ToOutputArray) -> Result<f64> {
+	pub fn calibrate_camera_ro_def(object_points: &impl ToInputArray, image_points: &impl ToInputArray, image_size: core::Size, i_fixed_point: i32, camera_matrix: &mut impl ToInputOutputArray, dist_coeffs: &mut impl ToInputOutputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray, new_obj_points: &mut impl ToOutputArray) -> Result<f64> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points);
 		input_output_array_arg!(camera_matrix);
@@ -737,7 +737,7 @@ pub mod calib3d {
 		output_array_arg!(tvecs);
 		output_array_arg!(new_obj_points);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_calibrateCameraRO_const__InputArrayR_const__InputArrayR_Size_int_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), image_size.opencv_as_extern(), i_fixed_point, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), new_obj_points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_calibrateCameraRO_const__InputArrayR_const__InputArrayR_Size_int_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &image_size, i_fixed_point, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), new_obj_points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -807,7 +807,7 @@ pub mod calib3d {
 	/// * flags: 0
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
 	#[inline]
-	pub fn calibrate_camera_ro_extended_def(object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, image_size: core::Size, i_fixed_point: i32, camera_matrix: &mut impl core::ToInputOutputArray, dist_coeffs: &mut impl core::ToInputOutputArray, rvecs: &mut impl core::ToOutputArray, tvecs: &mut impl core::ToOutputArray, new_obj_points: &mut impl core::ToOutputArray, std_deviations_intrinsics: &mut impl core::ToOutputArray, std_deviations_extrinsics: &mut impl core::ToOutputArray, std_deviations_obj_points: &mut impl core::ToOutputArray, per_view_errors: &mut impl core::ToOutputArray) -> Result<f64> {
+	pub fn calibrate_camera_ro_extended_def(object_points: &impl ToInputArray, image_points: &impl ToInputArray, image_size: core::Size, i_fixed_point: i32, camera_matrix: &mut impl ToInputOutputArray, dist_coeffs: &mut impl ToInputOutputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray, new_obj_points: &mut impl ToOutputArray, std_deviations_intrinsics: &mut impl ToOutputArray, std_deviations_extrinsics: &mut impl ToOutputArray, std_deviations_obj_points: &mut impl ToOutputArray, per_view_errors: &mut impl ToOutputArray) -> Result<f64> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points);
 		input_output_array_arg!(camera_matrix);
@@ -820,7 +820,7 @@ pub mod calib3d {
 		output_array_arg!(std_deviations_obj_points);
 		output_array_arg!(per_view_errors);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_calibrateCameraRO_const__InputArrayR_const__InputArrayR_Size_int_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), image_size.opencv_as_extern(), i_fixed_point, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), new_obj_points.as_raw__OutputArray(), std_deviations_intrinsics.as_raw__OutputArray(), std_deviations_extrinsics.as_raw__OutputArray(), std_deviations_obj_points.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_calibrateCameraRO_const__InputArrayR_const__InputArrayR_Size_int_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &image_size, i_fixed_point, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), new_obj_points.as_raw__OutputArray(), std_deviations_intrinsics.as_raw__OutputArray(), std_deviations_extrinsics.as_raw__OutputArray(), std_deviations_obj_points.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -889,7 +889,7 @@ pub mod calib3d {
 	/// * flags: 0
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
 	#[inline]
-	pub fn calibrate_camera_ro_extended(object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, image_size: core::Size, i_fixed_point: i32, camera_matrix: &mut impl core::ToInputOutputArray, dist_coeffs: &mut impl core::ToInputOutputArray, rvecs: &mut impl core::ToOutputArray, tvecs: &mut impl core::ToOutputArray, new_obj_points: &mut impl core::ToOutputArray, std_deviations_intrinsics: &mut impl core::ToOutputArray, std_deviations_extrinsics: &mut impl core::ToOutputArray, std_deviations_obj_points: &mut impl core::ToOutputArray, per_view_errors: &mut impl core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
+	pub fn calibrate_camera_ro_extended(object_points: &impl ToInputArray, image_points: &impl ToInputArray, image_size: core::Size, i_fixed_point: i32, camera_matrix: &mut impl ToInputOutputArray, dist_coeffs: &mut impl ToInputOutputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray, new_obj_points: &mut impl ToOutputArray, std_deviations_intrinsics: &mut impl ToOutputArray, std_deviations_extrinsics: &mut impl ToOutputArray, std_deviations_obj_points: &mut impl ToOutputArray, per_view_errors: &mut impl ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points);
 		input_output_array_arg!(camera_matrix);
@@ -902,7 +902,7 @@ pub mod calib3d {
 		output_array_arg!(std_deviations_obj_points);
 		output_array_arg!(per_view_errors);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_calibrateCameraRO_const__InputArrayR_const__InputArrayR_Size_int_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), image_size.opencv_as_extern(), i_fixed_point, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), new_obj_points.as_raw__OutputArray(), std_deviations_intrinsics.as_raw__OutputArray(), std_deviations_extrinsics.as_raw__OutputArray(), std_deviations_obj_points.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_calibrateCameraRO_const__InputArrayR_const__InputArrayR_Size_int_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &image_size, i_fixed_point, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), new_obj_points.as_raw__OutputArray(), std_deviations_intrinsics.as_raw__OutputArray(), std_deviations_extrinsics.as_raw__OutputArray(), std_deviations_obj_points.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, &criteria, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -973,7 +973,7 @@ pub mod calib3d {
 	/// * flags: 0
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
 	#[inline]
-	pub fn calibrate_camera_ro(object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, image_size: core::Size, i_fixed_point: i32, camera_matrix: &mut impl core::ToInputOutputArray, dist_coeffs: &mut impl core::ToInputOutputArray, rvecs: &mut impl core::ToOutputArray, tvecs: &mut impl core::ToOutputArray, new_obj_points: &mut impl core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
+	pub fn calibrate_camera_ro(object_points: &impl ToInputArray, image_points: &impl ToInputArray, image_size: core::Size, i_fixed_point: i32, camera_matrix: &mut impl ToInputOutputArray, dist_coeffs: &mut impl ToInputOutputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray, new_obj_points: &mut impl ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points);
 		input_output_array_arg!(camera_matrix);
@@ -982,7 +982,7 @@ pub mod calib3d {
 		output_array_arg!(tvecs);
 		output_array_arg!(new_obj_points);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_calibrateCameraRO_const__InputArrayR_const__InputArrayR_Size_int_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), image_size.opencv_as_extern(), i_fixed_point, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), new_obj_points.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_calibrateCameraRO_const__InputArrayR_const__InputArrayR_Size_int_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &image_size, i_fixed_point, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), new_obj_points.as_raw__OutputArray(), flags, &criteria, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -995,7 +995,7 @@ pub mod calib3d {
 	/// * flags: 0
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
 	#[inline]
-	pub fn calibrate_camera_def(object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, image_size: core::Size, camera_matrix: &mut impl core::ToInputOutputArray, dist_coeffs: &mut impl core::ToInputOutputArray, rvecs: &mut impl core::ToOutputArray, tvecs: &mut impl core::ToOutputArray) -> Result<f64> {
+	pub fn calibrate_camera_def(object_points: &impl ToInputArray, image_points: &impl ToInputArray, image_size: core::Size, camera_matrix: &mut impl ToInputOutputArray, dist_coeffs: &mut impl ToInputOutputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray) -> Result<f64> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points);
 		input_output_array_arg!(camera_matrix);
@@ -1003,7 +1003,7 @@ pub mod calib3d {
 		output_array_arg!(rvecs);
 		output_array_arg!(tvecs);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_calibrateCamera_const__InputArrayR_const__InputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), image_size.opencv_as_extern(), camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_calibrateCamera_const__InputArrayR_const__InputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &image_size, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1136,7 +1136,7 @@ pub mod calib3d {
 	/// * flags: 0
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
 	#[inline]
-	pub fn calibrate_camera_extended_def(object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, image_size: core::Size, camera_matrix: &mut impl core::ToInputOutputArray, dist_coeffs: &mut impl core::ToInputOutputArray, rvecs: &mut impl core::ToOutputArray, tvecs: &mut impl core::ToOutputArray, std_deviations_intrinsics: &mut impl core::ToOutputArray, std_deviations_extrinsics: &mut impl core::ToOutputArray, per_view_errors: &mut impl core::ToOutputArray) -> Result<f64> {
+	pub fn calibrate_camera_extended_def(object_points: &impl ToInputArray, image_points: &impl ToInputArray, image_size: core::Size, camera_matrix: &mut impl ToInputOutputArray, dist_coeffs: &mut impl ToInputOutputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray, std_deviations_intrinsics: &mut impl ToOutputArray, std_deviations_extrinsics: &mut impl ToOutputArray, per_view_errors: &mut impl ToOutputArray) -> Result<f64> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points);
 		input_output_array_arg!(camera_matrix);
@@ -1147,7 +1147,7 @@ pub mod calib3d {
 		output_array_arg!(std_deviations_extrinsics);
 		output_array_arg!(per_view_errors);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_calibrateCamera_const__InputArrayR_const__InputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), image_size.opencv_as_extern(), camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), std_deviations_intrinsics.as_raw__OutputArray(), std_deviations_extrinsics.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_calibrateCamera_const__InputArrayR_const__InputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &image_size, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), std_deviations_intrinsics.as_raw__OutputArray(), std_deviations_extrinsics.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1279,7 +1279,7 @@ pub mod calib3d {
 	/// * flags: 0
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
 	#[inline]
-	pub fn calibrate_camera_extended(object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, image_size: core::Size, camera_matrix: &mut impl core::ToInputOutputArray, dist_coeffs: &mut impl core::ToInputOutputArray, rvecs: &mut impl core::ToOutputArray, tvecs: &mut impl core::ToOutputArray, std_deviations_intrinsics: &mut impl core::ToOutputArray, std_deviations_extrinsics: &mut impl core::ToOutputArray, per_view_errors: &mut impl core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
+	pub fn calibrate_camera_extended(object_points: &impl ToInputArray, image_points: &impl ToInputArray, image_size: core::Size, camera_matrix: &mut impl ToInputOutputArray, dist_coeffs: &mut impl ToInputOutputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray, std_deviations_intrinsics: &mut impl ToOutputArray, std_deviations_extrinsics: &mut impl ToOutputArray, per_view_errors: &mut impl ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points);
 		input_output_array_arg!(camera_matrix);
@@ -1290,7 +1290,7 @@ pub mod calib3d {
 		output_array_arg!(std_deviations_extrinsics);
 		output_array_arg!(per_view_errors);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_calibrateCamera_const__InputArrayR_const__InputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), image_size.opencv_as_extern(), camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), std_deviations_intrinsics.as_raw__OutputArray(), std_deviations_extrinsics.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_calibrateCamera_const__InputArrayR_const__InputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &image_size, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), std_deviations_intrinsics.as_raw__OutputArray(), std_deviations_extrinsics.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, &criteria, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1424,7 +1424,7 @@ pub mod calib3d {
 	/// * flags: 0
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
 	#[inline]
-	pub fn calibrate_camera(object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, image_size: core::Size, camera_matrix: &mut impl core::ToInputOutputArray, dist_coeffs: &mut impl core::ToInputOutputArray, rvecs: &mut impl core::ToOutputArray, tvecs: &mut impl core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
+	pub fn calibrate_camera(object_points: &impl ToInputArray, image_points: &impl ToInputArray, image_size: core::Size, camera_matrix: &mut impl ToInputOutputArray, dist_coeffs: &mut impl ToInputOutputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points);
 		input_output_array_arg!(camera_matrix);
@@ -1432,7 +1432,7 @@ pub mod calib3d {
 		output_array_arg!(rvecs);
 		output_array_arg!(tvecs);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_calibrateCamera_const__InputArrayR_const__InputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), image_size.opencv_as_extern(), camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_calibrateCamera_const__InputArrayR_const__InputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &image_size, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, &criteria, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1514,7 +1514,7 @@ pub mod calib3d {
 	/// This alternative version of [calibrate_hand_eye] function uses the following default values for its arguments:
 	/// * method: CALIB_HAND_EYE_TSAI
 	#[inline]
-	pub fn calibrate_hand_eye_def(r_gripper2base: &impl core::ToInputArray, t_gripper2base: &impl core::ToInputArray, r_target2cam: &impl core::ToInputArray, t_target2cam: &impl core::ToInputArray, r_cam2gripper: &mut impl core::ToOutputArray, t_cam2gripper: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn calibrate_hand_eye_def(r_gripper2base: &impl ToInputArray, t_gripper2base: &impl ToInputArray, r_target2cam: &impl ToInputArray, t_target2cam: &impl ToInputArray, r_cam2gripper: &mut impl ToOutputArray, t_cam2gripper: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(r_gripper2base);
 		input_array_arg!(t_gripper2base);
 		input_array_arg!(r_target2cam);
@@ -1603,7 +1603,7 @@ pub mod calib3d {
 	/// ## C++ default parameters
 	/// * method: CALIB_HAND_EYE_TSAI
 	#[inline]
-	pub fn calibrate_hand_eye(r_gripper2base: &impl core::ToInputArray, t_gripper2base: &impl core::ToInputArray, r_target2cam: &impl core::ToInputArray, t_target2cam: &impl core::ToInputArray, r_cam2gripper: &mut impl core::ToOutputArray, t_cam2gripper: &mut impl core::ToOutputArray, method: crate::calib3d::HandEyeCalibrationMethod) -> Result<()> {
+	pub fn calibrate_hand_eye(r_gripper2base: &impl ToInputArray, t_gripper2base: &impl ToInputArray, r_target2cam: &impl ToInputArray, t_target2cam: &impl ToInputArray, r_cam2gripper: &mut impl ToOutputArray, t_cam2gripper: &mut impl ToOutputArray, method: crate::calib3d::HandEyeCalibrationMethod) -> Result<()> {
 		input_array_arg!(r_gripper2base);
 		input_array_arg!(t_gripper2base);
 		input_array_arg!(r_target2cam);
@@ -1687,7 +1687,7 @@ pub mod calib3d {
 	/// This alternative version of [calibrate_robot_world_hand_eye] function uses the following default values for its arguments:
 	/// * method: CALIB_ROBOT_WORLD_HAND_EYE_SHAH
 	#[inline]
-	pub fn calibrate_robot_world_hand_eye_def(r_world2cam: &impl core::ToInputArray, t_world2cam: &impl core::ToInputArray, r_base2gripper: &impl core::ToInputArray, t_base2gripper: &impl core::ToInputArray, r_base2world: &mut impl core::ToOutputArray, t_base2world: &mut impl core::ToOutputArray, r_gripper2cam: &mut impl core::ToOutputArray, t_gripper2cam: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn calibrate_robot_world_hand_eye_def(r_world2cam: &impl ToInputArray, t_world2cam: &impl ToInputArray, r_base2gripper: &impl ToInputArray, t_base2gripper: &impl ToInputArray, r_base2world: &mut impl ToOutputArray, t_base2world: &mut impl ToOutputArray, r_gripper2cam: &mut impl ToOutputArray, t_gripper2cam: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(r_world2cam);
 		input_array_arg!(t_world2cam);
 		input_array_arg!(r_base2gripper);
@@ -1772,7 +1772,7 @@ pub mod calib3d {
 	/// ## C++ default parameters
 	/// * method: CALIB_ROBOT_WORLD_HAND_EYE_SHAH
 	#[inline]
-	pub fn calibrate_robot_world_hand_eye(r_world2cam: &impl core::ToInputArray, t_world2cam: &impl core::ToInputArray, r_base2gripper: &impl core::ToInputArray, t_base2gripper: &impl core::ToInputArray, r_base2world: &mut impl core::ToOutputArray, t_base2world: &mut impl core::ToOutputArray, r_gripper2cam: &mut impl core::ToOutputArray, t_gripper2cam: &mut impl core::ToOutputArray, method: crate::calib3d::RobotWorldHandEyeCalibrationMethod) -> Result<()> {
+	pub fn calibrate_robot_world_hand_eye(r_world2cam: &impl ToInputArray, t_world2cam: &impl ToInputArray, r_base2gripper: &impl ToInputArray, t_base2gripper: &impl ToInputArray, r_base2world: &mut impl ToOutputArray, t_base2world: &mut impl ToOutputArray, r_gripper2cam: &mut impl ToOutputArray, t_gripper2cam: &mut impl ToOutputArray, method: crate::calib3d::RobotWorldHandEyeCalibrationMethod) -> Result<()> {
 		input_array_arg!(r_world2cam);
 		input_array_arg!(t_world2cam);
 		input_array_arg!(r_base2gripper);
@@ -1810,20 +1810,20 @@ pub mod calib3d {
 	///    Do keep in mind that the unity measure 'mm' stands for whatever unit of measure one chooses for
 	///    the chessboard pitch (it can thus be any value).
 	#[inline]
-	pub fn calibration_matrix_values(camera_matrix: &impl core::ToInputArray, image_size: core::Size, aperture_width: f64, aperture_height: f64, fovx: &mut f64, fovy: &mut f64, focal_length: &mut f64, principal_point: &mut core::Point2d, aspect_ratio: &mut f64) -> Result<()> {
+	pub fn calibration_matrix_values(camera_matrix: &impl ToInputArray, image_size: core::Size, aperture_width: f64, aperture_height: f64, fovx: &mut f64, fovy: &mut f64, focal_length: &mut f64, principal_point: &mut core::Point2d, aspect_ratio: &mut f64) -> Result<()> {
 		input_array_arg!(camera_matrix);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_calibrationMatrixValues_const__InputArrayR_Size_double_double_doubleR_doubleR_doubleR_Point2dR_doubleR(camera_matrix.as_raw__InputArray(), image_size.opencv_as_extern(), aperture_width, aperture_height, fovx, fovy, focal_length, principal_point, aspect_ratio, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_calibrationMatrixValues_const__InputArrayR_Size_double_double_doubleR_doubleR_doubleR_Point2dR_doubleR(camera_matrix.as_raw__InputArray(), &image_size, aperture_width, aperture_height, fovx, fovy, focal_length, principal_point, aspect_ratio, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
-	pub fn check_chessboard(img: &impl core::ToInputArray, size: core::Size) -> Result<bool> {
+	pub fn check_chessboard(img: &impl ToInputArray, size: core::Size) -> Result<bool> {
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_checkChessboard_const__InputArrayR_Size(img.as_raw__InputArray(), size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_checkChessboard_const__InputArrayR_Size(img.as_raw__InputArray(), &size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1870,7 +1870,7 @@ pub mod calib3d {
 	/// * dt3dr2: noArray()
 	/// * dt3dt2: noArray()
 	#[inline]
-	pub fn compose_rt_def(rvec1: &impl core::ToInputArray, tvec1: &impl core::ToInputArray, rvec2: &impl core::ToInputArray, tvec2: &impl core::ToInputArray, rvec3: &mut impl core::ToOutputArray, tvec3: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn compose_rt_def(rvec1: &impl ToInputArray, tvec1: &impl ToInputArray, rvec2: &impl ToInputArray, tvec2: &impl ToInputArray, rvec3: &mut impl ToOutputArray, tvec3: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(rvec1);
 		input_array_arg!(tvec1);
 		input_array_arg!(rvec2);
@@ -1924,7 +1924,7 @@ pub mod calib3d {
 	/// * dt3dr2: noArray()
 	/// * dt3dt2: noArray()
 	#[inline]
-	pub fn compose_rt(rvec1: &impl core::ToInputArray, tvec1: &impl core::ToInputArray, rvec2: &impl core::ToInputArray, tvec2: &impl core::ToInputArray, rvec3: &mut impl core::ToOutputArray, tvec3: &mut impl core::ToOutputArray, dr3dr1: &mut impl core::ToOutputArray, dr3dt1: &mut impl core::ToOutputArray, dr3dr2: &mut impl core::ToOutputArray, dr3dt2: &mut impl core::ToOutputArray, dt3dr1: &mut impl core::ToOutputArray, dt3dt1: &mut impl core::ToOutputArray, dt3dr2: &mut impl core::ToOutputArray, dt3dt2: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn compose_rt(rvec1: &impl ToInputArray, tvec1: &impl ToInputArray, rvec2: &impl ToInputArray, tvec2: &impl ToInputArray, rvec3: &mut impl ToOutputArray, tvec3: &mut impl ToOutputArray, dr3dr1: &mut impl ToOutputArray, dr3dt1: &mut impl ToOutputArray, dr3dr2: &mut impl ToOutputArray, dr3dt2: &mut impl ToOutputArray, dt3dr1: &mut impl ToOutputArray, dt3dt1: &mut impl ToOutputArray, dt3dr2: &mut impl ToOutputArray, dt3dt2: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(rvec1);
 		input_array_arg!(tvec1);
 		input_array_arg!(rvec2);
@@ -1970,7 +1970,7 @@ pub mod calib3d {
 	/// 
 	/// Line coefficients are defined up to a scale. They are normalized so that ![inline formula](https://latex.codecogs.com/png.latex?a%5Fi%5E2%2Bb%5Fi%5E2%3D1) .
 	#[inline]
-	pub fn compute_correspond_epilines(points: &impl core::ToInputArray, which_image: i32, f: &impl core::ToInputArray, lines: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn compute_correspond_epilines(points: &impl ToInputArray, which_image: i32, f: &impl ToInputArray, lines: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(points);
 		input_array_arg!(f);
 		output_array_arg!(lines);
@@ -1991,7 +1991,7 @@ pub mod calib3d {
 	/// each point (x1, x2, ... x(n-1), xn) is converted to (x1/xn, x2/xn, ..., x(n-1)/xn). When xn=0, the
 	/// output point coordinates will be (0,0,0,...).
 	#[inline]
-	pub fn convert_points_from_homogeneous(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn convert_points_from_homogeneous(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -2013,7 +2013,7 @@ pub mod calib3d {
 	/// 
 	/// Note: The function is obsolete. Use one of the previous two functions instead.
 	#[inline]
-	pub fn convert_points_homogeneous(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn convert_points_homogeneous(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -2032,7 +2032,7 @@ pub mod calib3d {
 	/// The function converts points from Euclidean to homogeneous space by appending 1's to the tuple of
 	/// point coordinates. That is, each point (x1, x2, ..., xn) is converted to (x1, x2, ..., xn, 1).
 	#[inline]
-	pub fn convert_points_to_homogeneous(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn convert_points_to_homogeneous(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -2058,7 +2058,7 @@ pub mod calib3d {
 	/// geometric distance between points ![inline formula](https://latex.codecogs.com/png.latex?a) and ![inline formula](https://latex.codecogs.com/png.latex?b) ) subject to the epipolar constraint
 	/// ![inline formula](https://latex.codecogs.com/png.latex?newPoints2%5ET%20%5Ccdot%20F%20%5Ccdot%20newPoints1%20%3D%200) .
 	#[inline]
-	pub fn correct_matches(f: &impl core::ToInputArray, points1: &impl core::ToInputArray, points2: &impl core::ToInputArray, new_points1: &mut impl core::ToOutputArray, new_points2: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn correct_matches(f: &impl ToInputArray, points1: &impl ToInputArray, points2: &impl ToInputArray, new_points1: &mut impl ToOutputArray, new_points2: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(f);
 		input_array_arg!(points1);
 		input_array_arg!(points2);
@@ -2090,7 +2090,7 @@ pub mod calib3d {
 	/// can only get the direction of the translation. For this reason, the translation t is returned with
 	/// unit length.
 	#[inline]
-	pub fn decompose_essential_mat(e: &impl core::ToInputArray, r1: &mut impl core::ToOutputArray, r2: &mut impl core::ToOutputArray, t: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn decompose_essential_mat(e: &impl ToInputArray, r1: &mut impl ToOutputArray, r2: &mut impl ToOutputArray, t: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(e);
 		output_array_arg!(r1);
 		output_array_arg!(r2);
@@ -2125,7 +2125,7 @@ pub mod calib3d {
 	/// If point correspondences are available, at least two solutions may further be invalidated, by
 	/// applying positive depth constraint, i.e. all points must be in front of the camera.
 	#[inline]
-	pub fn decompose_homography_mat(h: &impl core::ToInputArray, k: &impl core::ToInputArray, rotations: &mut impl core::ToOutputArray, translations: &mut impl core::ToOutputArray, normals: &mut impl core::ToOutputArray) -> Result<i32> {
+	pub fn decompose_homography_mat(h: &impl ToInputArray, k: &impl ToInputArray, rotations: &mut impl ToOutputArray, translations: &mut impl ToOutputArray, normals: &mut impl ToOutputArray) -> Result<i32> {
 		input_array_arg!(h);
 		input_array_arg!(k);
 		output_array_arg!(rotations);
@@ -2168,7 +2168,7 @@ pub mod calib3d {
 	/// * rot_matrix_z: noArray()
 	/// * euler_angles: noArray()
 	#[inline]
-	pub fn decompose_projection_matrix_def(proj_matrix: &impl core::ToInputArray, camera_matrix: &mut impl core::ToOutputArray, rot_matrix: &mut impl core::ToOutputArray, trans_vect: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn decompose_projection_matrix_def(proj_matrix: &impl ToInputArray, camera_matrix: &mut impl ToOutputArray, rot_matrix: &mut impl ToOutputArray, trans_vect: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(proj_matrix);
 		output_array_arg!(camera_matrix);
 		output_array_arg!(rot_matrix);
@@ -2209,7 +2209,7 @@ pub mod calib3d {
 	/// * rot_matrix_z: noArray()
 	/// * euler_angles: noArray()
 	#[inline]
-	pub fn decompose_projection_matrix(proj_matrix: &impl core::ToInputArray, camera_matrix: &mut impl core::ToOutputArray, rot_matrix: &mut impl core::ToOutputArray, trans_vect: &mut impl core::ToOutputArray, rot_matrix_x: &mut impl core::ToOutputArray, rot_matrix_y: &mut impl core::ToOutputArray, rot_matrix_z: &mut impl core::ToOutputArray, euler_angles: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn decompose_projection_matrix(proj_matrix: &impl ToInputArray, camera_matrix: &mut impl ToOutputArray, rot_matrix: &mut impl ToOutputArray, trans_vect: &mut impl ToOutputArray, rot_matrix_x: &mut impl ToOutputArray, rot_matrix_y: &mut impl ToOutputArray, rot_matrix_z: &mut impl ToOutputArray, euler_angles: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(proj_matrix);
 		output_array_arg!(camera_matrix);
 		output_array_arg!(rot_matrix);
@@ -2238,11 +2238,11 @@ pub mod calib3d {
 	/// The function draws individual chessboard corners detected either as red circles if the board was not
 	/// found, or as colored corners connected with lines if the board was found.
 	#[inline]
-	pub fn draw_chessboard_corners(image: &mut impl core::ToInputOutputArray, pattern_size: core::Size, corners: &impl core::ToInputArray, pattern_was_found: bool) -> Result<()> {
+	pub fn draw_chessboard_corners(image: &mut impl ToInputOutputArray, pattern_size: core::Size, corners: &impl ToInputArray, pattern_was_found: bool) -> Result<()> {
 		input_output_array_arg!(image);
 		input_array_arg!(corners);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_drawChessboardCorners_const__InputOutputArrayR_Size_const__InputArrayR_bool(image.as_raw__InputOutputArray(), pattern_size.opencv_as_extern(), corners.as_raw__InputArray(), pattern_was_found, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_drawChessboardCorners_const__InputOutputArrayR_Size_const__InputArrayR_bool(image.as_raw__InputOutputArray(), &pattern_size, corners.as_raw__InputArray(), pattern_was_found, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -2269,7 +2269,7 @@ pub mod calib3d {
 	/// This alternative version of [draw_frame_axes] function uses the following default values for its arguments:
 	/// * thickness: 3
 	#[inline]
-	pub fn draw_frame_axes_def(image: &mut impl core::ToInputOutputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, rvec: &impl core::ToInputArray, tvec: &impl core::ToInputArray, length: f32) -> Result<()> {
+	pub fn draw_frame_axes_def(image: &mut impl ToInputOutputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvec: &impl ToInputArray, tvec: &impl ToInputArray, length: f32) -> Result<()> {
 		input_output_array_arg!(image);
 		input_array_arg!(camera_matrix);
 		input_array_arg!(dist_coeffs);
@@ -2302,7 +2302,7 @@ pub mod calib3d {
 	/// ## C++ default parameters
 	/// * thickness: 3
 	#[inline]
-	pub fn draw_frame_axes(image: &mut impl core::ToInputOutputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, rvec: &impl core::ToInputArray, tvec: &impl core::ToInputArray, length: f32, thickness: i32) -> Result<()> {
+	pub fn draw_frame_axes(image: &mut impl ToInputOutputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvec: &impl ToInputArray, tvec: &impl ToInputArray, length: f32, thickness: i32) -> Result<()> {
 		input_output_array_arg!(image);
 		input_array_arg!(camera_matrix);
 		input_array_arg!(dist_coeffs);
@@ -2365,7 +2365,7 @@ pub mod calib3d {
 	/// * confidence: 0.99
 	/// * refine_iters: 10
 	#[inline]
-	pub fn estimate_affine_2d_def(from: &impl core::ToInputArray, to: &impl core::ToInputArray) -> Result<core::Mat> {
+	pub fn estimate_affine_2d_def(from: &impl ToInputArray, to: &impl ToInputArray) -> Result<core::Mat> {
 		input_array_arg!(from);
 		input_array_arg!(to);
 		return_send!(via ocvrs_return);
@@ -2377,7 +2377,7 @@ pub mod calib3d {
 	}
 	
 	#[inline]
-	pub fn estimate_affine_2d_1(pts1: &impl core::ToInputArray, pts2: &impl core::ToInputArray, inliers: &mut impl core::ToOutputArray, params: crate::calib3d::UsacParams) -> Result<core::Mat> {
+	pub fn estimate_affine_2d_1(pts1: &impl ToInputArray, pts2: &impl ToInputArray, inliers: &mut impl ToOutputArray, params: crate::calib3d::UsacParams) -> Result<core::Mat> {
 		input_array_arg!(pts1);
 		input_array_arg!(pts2);
 		output_array_arg!(inliers);
@@ -2438,7 +2438,7 @@ pub mod calib3d {
 	/// * confidence: 0.99
 	/// * refine_iters: 10
 	#[inline]
-	pub fn estimate_affine_2d(from: &impl core::ToInputArray, to: &impl core::ToInputArray, inliers: &mut impl core::ToOutputArray, method: i32, ransac_reproj_threshold: f64, max_iters: size_t, confidence: f64, refine_iters: size_t) -> Result<core::Mat> {
+	pub fn estimate_affine_2d(from: &impl ToInputArray, to: &impl ToInputArray, inliers: &mut impl ToOutputArray, method: i32, ransac_reproj_threshold: f64, max_iters: size_t, confidence: f64, refine_iters: size_t) -> Result<core::Mat> {
 		input_array_arg!(from);
 		input_array_arg!(to);
 		output_array_arg!(inliers);
@@ -2476,7 +2476,7 @@ pub mod calib3d {
 	/// * scale: nullptr
 	/// * force_rotation: true
 	#[inline]
-	pub fn estimate_affine_3d_1_def(src: &impl core::ToInputArray, dst: &impl core::ToInputArray) -> Result<core::Mat> {
+	pub fn estimate_affine_3d_1_def(src: &impl ToInputArray, dst: &impl ToInputArray) -> Result<core::Mat> {
 		input_array_arg!(src);
 		input_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -2512,7 +2512,7 @@ pub mod calib3d {
 	/// * ransac_threshold: 3
 	/// * confidence: 0.99
 	#[inline]
-	pub fn estimate_affine_3d_def(src: &impl core::ToInputArray, dst: &impl core::ToInputArray, out: &mut impl core::ToOutputArray, inliers: &mut impl core::ToOutputArray) -> Result<i32> {
+	pub fn estimate_affine_3d_def(src: &impl ToInputArray, dst: &impl ToInputArray, out: &mut impl ToOutputArray, inliers: &mut impl ToOutputArray) -> Result<i32> {
 		input_array_arg!(src);
 		input_array_arg!(dst);
 		output_array_arg!(out);
@@ -2548,7 +2548,7 @@ pub mod calib3d {
 	/// * ransac_threshold: 3
 	/// * confidence: 0.99
 	#[inline]
-	pub fn estimate_affine_3d(src: &impl core::ToInputArray, dst: &impl core::ToInputArray, out: &mut impl core::ToOutputArray, inliers: &mut impl core::ToOutputArray, ransac_threshold: f64, confidence: f64) -> Result<i32> {
+	pub fn estimate_affine_3d(src: &impl ToInputArray, dst: &impl ToInputArray, out: &mut impl ToOutputArray, inliers: &mut impl ToOutputArray, ransac_threshold: f64, confidence: f64) -> Result<i32> {
 		input_array_arg!(src);
 		input_array_arg!(dst);
 		output_array_arg!(out);
@@ -2585,7 +2585,7 @@ pub mod calib3d {
 	/// * scale: nullptr
 	/// * force_rotation: true
 	#[inline]
-	pub fn estimate_affine_3d_1(src: &impl core::ToInputArray, dst: &impl core::ToInputArray, scale: &mut f64, force_rotation: bool) -> Result<core::Mat> {
+	pub fn estimate_affine_3d_1(src: &impl ToInputArray, dst: &impl ToInputArray, scale: &mut f64, force_rotation: bool) -> Result<core::Mat> {
 		input_array_arg!(src);
 		input_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -2649,7 +2649,7 @@ pub mod calib3d {
 	/// * confidence: 0.99
 	/// * refine_iters: 10
 	#[inline]
-	pub fn estimate_affine_partial_2d_def(from: &impl core::ToInputArray, to: &impl core::ToInputArray) -> Result<core::Mat> {
+	pub fn estimate_affine_partial_2d_def(from: &impl ToInputArray, to: &impl ToInputArray) -> Result<core::Mat> {
 		input_array_arg!(from);
 		input_array_arg!(to);
 		return_send!(via ocvrs_return);
@@ -2712,7 +2712,7 @@ pub mod calib3d {
 	/// * confidence: 0.99
 	/// * refine_iters: 10
 	#[inline]
-	pub fn estimate_affine_partial_2d(from: &impl core::ToInputArray, to: &impl core::ToInputArray, inliers: &mut impl core::ToOutputArray, method: i32, ransac_reproj_threshold: f64, max_iters: size_t, confidence: f64, refine_iters: size_t) -> Result<core::Mat> {
+	pub fn estimate_affine_partial_2d(from: &impl ToInputArray, to: &impl ToInputArray, inliers: &mut impl ToOutputArray, method: i32, ransac_reproj_threshold: f64, max_iters: size_t, confidence: f64, refine_iters: size_t) -> Result<core::Mat> {
 		input_array_arg!(from);
 		input_array_arg!(to);
 		output_array_arg!(inliers);
@@ -2759,11 +2759,11 @@ pub mod calib3d {
 	/// * vertical: false
 	/// * sharpness: noArray()
 	#[inline]
-	pub fn estimate_chessboard_sharpness_def(image: &impl core::ToInputArray, pattern_size: core::Size, corners: &impl core::ToInputArray) -> Result<core::Scalar> {
+	pub fn estimate_chessboard_sharpness_def(image: &impl ToInputArray, pattern_size: core::Size, corners: &impl ToInputArray) -> Result<core::Scalar> {
 		input_array_arg!(image);
 		input_array_arg!(corners);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_estimateChessboardSharpness_const__InputArrayR_Size_const__InputArrayR(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), corners.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_estimateChessboardSharpness_const__InputArrayR_Size_const__InputArrayR(image.as_raw__InputArray(), &pattern_size, corners.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -2803,12 +2803,12 @@ pub mod calib3d {
 	/// * vertical: false
 	/// * sharpness: noArray()
 	#[inline]
-	pub fn estimate_chessboard_sharpness(image: &impl core::ToInputArray, pattern_size: core::Size, corners: &impl core::ToInputArray, rise_distance: f32, vertical: bool, sharpness: &mut impl core::ToOutputArray) -> Result<core::Scalar> {
+	pub fn estimate_chessboard_sharpness(image: &impl ToInputArray, pattern_size: core::Size, corners: &impl ToInputArray, rise_distance: f32, vertical: bool, sharpness: &mut impl ToOutputArray) -> Result<core::Scalar> {
 		input_array_arg!(image);
 		input_array_arg!(corners);
 		output_array_arg!(sharpness);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_estimateChessboardSharpness_const__InputArrayR_Size_const__InputArrayR_float_bool_const__OutputArrayR(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), corners.as_raw__InputArray(), rise_distance, vertical, sharpness.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_estimateChessboardSharpness_const__InputArrayR_Size_const__InputArrayR_float_bool_const__OutputArrayR(image.as_raw__InputArray(), &pattern_size, corners.as_raw__InputArray(), rise_distance, vertical, sharpness.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -2839,7 +2839,7 @@ pub mod calib3d {
 	/// * ransac_threshold: 3
 	/// * confidence: 0.99
 	#[inline]
-	pub fn estimate_translation_3d_def(src: &impl core::ToInputArray, dst: &impl core::ToInputArray, out: &mut impl core::ToOutputArray, inliers: &mut impl core::ToOutputArray) -> Result<i32> {
+	pub fn estimate_translation_3d_def(src: &impl ToInputArray, dst: &impl ToInputArray, out: &mut impl ToOutputArray, inliers: &mut impl ToOutputArray) -> Result<i32> {
 		input_array_arg!(src);
 		input_array_arg!(dst);
 		output_array_arg!(out);
@@ -2875,7 +2875,7 @@ pub mod calib3d {
 	/// * ransac_threshold: 3
 	/// * confidence: 0.99
 	#[inline]
-	pub fn estimate_translation_3d(src: &impl core::ToInputArray, dst: &impl core::ToInputArray, out: &mut impl core::ToOutputArray, inliers: &mut impl core::ToOutputArray, ransac_threshold: f64, confidence: f64) -> Result<i32> {
+	pub fn estimate_translation_3d(src: &impl ToInputArray, dst: &impl ToInputArray, out: &mut impl ToOutputArray, inliers: &mut impl ToOutputArray, ransac_threshold: f64, confidence: f64) -> Result<i32> {
 		input_array_arg!(src);
 		input_array_arg!(dst);
 		output_array_arg!(out);
@@ -2909,7 +2909,7 @@ pub mod calib3d {
 	/// This alternative version of [filter_homography_decomp_by_visible_refpoints] function uses the following default values for its arguments:
 	/// * points_mask: noArray()
 	#[inline]
-	pub fn filter_homography_decomp_by_visible_refpoints_def(rotations: &impl core::ToInputArray, normals: &impl core::ToInputArray, before_points: &impl core::ToInputArray, after_points: &impl core::ToInputArray, possible_solutions: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn filter_homography_decomp_by_visible_refpoints_def(rotations: &impl ToInputArray, normals: &impl ToInputArray, before_points: &impl ToInputArray, after_points: &impl ToInputArray, possible_solutions: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(rotations);
 		input_array_arg!(normals);
 		input_array_arg!(before_points);
@@ -2943,7 +2943,7 @@ pub mod calib3d {
 	/// ## C++ default parameters
 	/// * points_mask: noArray()
 	#[inline]
-	pub fn filter_homography_decomp_by_visible_refpoints(rotations: &impl core::ToInputArray, normals: &impl core::ToInputArray, before_points: &impl core::ToInputArray, after_points: &impl core::ToInputArray, possible_solutions: &mut impl core::ToOutputArray, points_mask: &impl core::ToInputArray) -> Result<()> {
+	pub fn filter_homography_decomp_by_visible_refpoints(rotations: &impl ToInputArray, normals: &impl ToInputArray, before_points: &impl ToInputArray, after_points: &impl ToInputArray, possible_solutions: &mut impl ToOutputArray, points_mask: &impl ToInputArray) -> Result<()> {
 		input_array_arg!(rotations);
 		input_array_arg!(normals);
 		input_array_arg!(before_points);
@@ -2974,7 +2974,7 @@ pub mod calib3d {
 	/// This alternative version of [filter_speckles] function uses the following default values for its arguments:
 	/// * buf: noArray()
 	#[inline]
-	pub fn filter_speckles_def(img: &mut impl core::ToInputOutputArray, new_val: f64, max_speckle_size: i32, max_diff: f64) -> Result<()> {
+	pub fn filter_speckles_def(img: &mut impl ToInputOutputArray, new_val: f64, max_speckle_size: i32, max_diff: f64) -> Result<()> {
 		input_output_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_filterSpeckles_const__InputOutputArrayR_double_int_double(img.as_raw__InputOutputArray(), new_val, max_speckle_size, max_diff, ocvrs_return.as_mut_ptr()) };
@@ -2999,7 +2999,7 @@ pub mod calib3d {
 	/// ## C++ default parameters
 	/// * buf: noArray()
 	#[inline]
-	pub fn filter_speckles(img: &mut impl core::ToInputOutputArray, new_val: f64, max_speckle_size: i32, max_diff: f64, buf: &mut impl core::ToInputOutputArray) -> Result<()> {
+	pub fn filter_speckles(img: &mut impl ToInputOutputArray, new_val: f64, max_speckle_size: i32, max_diff: f64, buf: &mut impl ToInputOutputArray) -> Result<()> {
 		input_output_array_arg!(img);
 		input_output_array_arg!(buf);
 		return_send!(via ocvrs_return);
@@ -3011,11 +3011,11 @@ pub mod calib3d {
 	
 	/// finds subpixel-accurate positions of the chessboard corners
 	#[inline]
-	pub fn find4_quad_corner_subpix(img: &impl core::ToInputArray, corners: &mut impl core::ToInputOutputArray, region_size: core::Size) -> Result<bool> {
+	pub fn find4_quad_corner_subpix(img: &impl ToInputArray, corners: &mut impl ToInputOutputArray, region_size: core::Size) -> Result<bool> {
 		input_array_arg!(img);
 		input_output_array_arg!(corners);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_find4QuadCornerSubpix_const__InputArrayR_const__InputOutputArrayR_Size(img.as_raw__InputArray(), corners.as_raw__InputOutputArray(), region_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_find4QuadCornerSubpix_const__InputArrayR_const__InputOutputArrayR_Size(img.as_raw__InputArray(), corners.as_raw__InputOutputArray(), &region_size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -3027,11 +3027,11 @@ pub mod calib3d {
 	/// This alternative version of [find_chessboard_corners_sb] function uses the following default values for its arguments:
 	/// * flags: 0
 	#[inline]
-	pub fn find_chessboard_corners_sb_def(image: &impl core::ToInputArray, pattern_size: core::Size, corners: &mut impl core::ToOutputArray) -> Result<bool> {
+	pub fn find_chessboard_corners_sb_def(image: &impl ToInputArray, pattern_size: core::Size, corners: &mut impl ToOutputArray) -> Result<bool> {
 		input_array_arg!(image);
 		output_array_arg!(corners);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_findChessboardCornersSB_const__InputArrayR_Size_const__OutputArrayR(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), corners.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_findChessboardCornersSB_const__InputArrayR_Size_const__OutputArrayR(image.as_raw__InputArray(), &pattern_size, corners.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -3094,11 +3094,11 @@ pub mod calib3d {
 	/// ## C++ default parameters
 	/// * flags: 0
 	#[inline]
-	pub fn find_chessboard_corners_sb(image: &impl core::ToInputArray, pattern_size: core::Size, corners: &mut impl core::ToOutputArray, flags: i32) -> Result<bool> {
+	pub fn find_chessboard_corners_sb(image: &impl ToInputArray, pattern_size: core::Size, corners: &mut impl ToOutputArray, flags: i32) -> Result<bool> {
 		input_array_arg!(image);
 		output_array_arg!(corners);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_findChessboardCornersSB_const__InputArrayR_Size_const__OutputArrayR_int(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), corners.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_findChessboardCornersSB_const__InputArrayR_Size_const__OutputArrayR_int(image.as_raw__InputArray(), &pattern_size, corners.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -3156,12 +3156,12 @@ pub mod calib3d {
 	/// Use gen_pattern.py ([tutorial_camera_calibration_pattern]) to create checkerboard.
 	/// ![Checkerboard](https://docs.opencv.org/4.9.0/checkerboard_radon.png)
 	#[inline]
-	pub fn find_chessboard_corners_sb_with_meta(image: &impl core::ToInputArray, pattern_size: core::Size, corners: &mut impl core::ToOutputArray, flags: i32, meta: &mut impl core::ToOutputArray) -> Result<bool> {
+	pub fn find_chessboard_corners_sb_with_meta(image: &impl ToInputArray, pattern_size: core::Size, corners: &mut impl ToOutputArray, flags: i32, meta: &mut impl ToOutputArray) -> Result<bool> {
 		input_array_arg!(image);
 		output_array_arg!(corners);
 		output_array_arg!(meta);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_findChessboardCornersSB_const__InputArrayR_Size_const__OutputArrayR_int_const__OutputArrayR(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), corners.as_raw__OutputArray(), flags, meta.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_findChessboardCornersSB_const__InputArrayR_Size_const__OutputArrayR_int_const__OutputArrayR(image.as_raw__InputArray(), &pattern_size, corners.as_raw__OutputArray(), flags, meta.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -3229,11 +3229,11 @@ pub mod calib3d {
 	/// This alternative version of [find_chessboard_corners] function uses the following default values for its arguments:
 	/// * flags: CALIB_CB_ADAPTIVE_THRESH+CALIB_CB_NORMALIZE_IMAGE
 	#[inline]
-	pub fn find_chessboard_corners_def(image: &impl core::ToInputArray, pattern_size: core::Size, corners: &mut impl core::ToOutputArray) -> Result<bool> {
+	pub fn find_chessboard_corners_def(image: &impl ToInputArray, pattern_size: core::Size, corners: &mut impl ToOutputArray) -> Result<bool> {
 		input_array_arg!(image);
 		output_array_arg!(corners);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_findChessboardCorners_const__InputArrayR_Size_const__OutputArrayR(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), corners.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_findChessboardCorners_const__InputArrayR_Size_const__OutputArrayR(image.as_raw__InputArray(), &pattern_size, corners.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -3300,11 +3300,11 @@ pub mod calib3d {
 	/// ## C++ default parameters
 	/// * flags: CALIB_CB_ADAPTIVE_THRESH+CALIB_CB_NORMALIZE_IMAGE
 	#[inline]
-	pub fn find_chessboard_corners(image: &impl core::ToInputArray, pattern_size: core::Size, corners: &mut impl core::ToOutputArray, flags: i32) -> Result<bool> {
+	pub fn find_chessboard_corners(image: &impl ToInputArray, pattern_size: core::Size, corners: &mut impl ToOutputArray, flags: i32) -> Result<bool> {
 		input_array_arg!(image);
 		output_array_arg!(corners);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_findChessboardCorners_const__InputArrayR_Size_const__OutputArrayR_int(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), corners.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_findChessboardCorners_const__InputArrayR_Size_const__OutputArrayR_int(image.as_raw__InputArray(), &pattern_size, corners.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -3317,11 +3317,11 @@ pub mod calib3d {
 	/// * flags: CALIB_CB_SYMMETRIC_GRID
 	/// * blob_detector: SimpleBlobDetector::create()
 	#[inline]
-	pub fn find_circles_grid_1_def(image: &impl core::ToInputArray, pattern_size: core::Size, centers: &mut impl core::ToOutputArray) -> Result<bool> {
+	pub fn find_circles_grid_1_def(image: &impl ToInputArray, pattern_size: core::Size, centers: &mut impl ToOutputArray) -> Result<bool> {
 		input_array_arg!(image);
 		output_array_arg!(centers);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_findCirclesGrid_const__InputArrayR_Size_const__OutputArrayR(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), centers.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_findCirclesGrid_const__InputArrayR_Size_const__OutputArrayR(image.as_raw__InputArray(), &pattern_size, centers.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -3369,11 +3369,11 @@ pub mod calib3d {
 	/// * flags: CALIB_CB_SYMMETRIC_GRID
 	/// * blob_detector: SimpleBlobDetector::create()
 	#[inline]
-	pub fn find_circles_grid_1(image: &impl core::ToInputArray, pattern_size: core::Size, centers: &mut impl core::ToOutputArray, flags: i32, blob_detector: &core::Ptr<crate::features2d::Feature2D>) -> Result<bool> {
+	pub fn find_circles_grid_1(image: &impl ToInputArray, pattern_size: core::Size, centers: &mut impl ToOutputArray, flags: i32, blob_detector: &core::Ptr<crate::features2d::Feature2D>) -> Result<bool> {
 		input_array_arg!(image);
 		output_array_arg!(centers);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_findCirclesGrid_const__InputArrayR_Size_const__OutputArrayR_int_const_PtrLFeature2DGR(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), centers.as_raw__OutputArray(), flags, blob_detector.as_raw_PtrOfFeature2D(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_findCirclesGrid_const__InputArrayR_Size_const__OutputArrayR_int_const_PtrLFeature2DGR(image.as_raw__InputArray(), &pattern_size, centers.as_raw__OutputArray(), flags, blob_detector.as_raw_PtrOfFeature2D(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -3415,11 +3415,11 @@ pub mod calib3d {
 	/// Note: The function requires white space (like a square-thick border, the wider the better) around
 	/// the board to make the detection more robust in various environments.
 	#[inline]
-	pub fn find_circles_grid(image: &impl core::ToInputArray, pattern_size: core::Size, centers: &mut impl core::ToOutputArray, flags: i32, blob_detector: &core::Ptr<crate::features2d::Feature2D>, parameters: crate::calib3d::CirclesGridFinderParameters) -> Result<bool> {
+	pub fn find_circles_grid(image: &impl ToInputArray, pattern_size: core::Size, centers: &mut impl ToOutputArray, flags: i32, blob_detector: &core::Ptr<crate::features2d::Feature2D>, parameters: crate::calib3d::CirclesGridFinderParameters) -> Result<bool> {
 		input_array_arg!(image);
 		output_array_arg!(centers);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_findCirclesGrid_const__InputArrayR_Size_const__OutputArrayR_int_const_PtrLFeature2DGR_const_CirclesGridFinderParametersR(image.as_raw__InputArray(), pattern_size.opencv_as_extern(), centers.as_raw__OutputArray(), flags, blob_detector.as_raw_PtrOfFeature2D(), &parameters, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_findCirclesGrid_const__InputArrayR_Size_const__OutputArrayR_int_const_PtrLFeature2DGR_const_CirclesGridFinderParametersR(image.as_raw__InputArray(), &pattern_size, centers.as_raw__OutputArray(), flags, blob_detector.as_raw_PtrOfFeature2D(), &parameters, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -3461,7 +3461,7 @@ pub mod calib3d {
 	/// * max_iters: 1000
 	/// * mask: noArray()
 	#[inline]
-	pub fn find_essential_mat_1_def(points1: &impl core::ToInputArray, points2: &impl core::ToInputArray) -> Result<core::Mat> {
+	pub fn find_essential_mat_1_def(points1: &impl ToInputArray, points2: &impl ToInputArray) -> Result<core::Mat> {
 		input_array_arg!(points1);
 		input_array_arg!(points2);
 		return_send!(via ocvrs_return);
@@ -3514,7 +3514,7 @@ pub mod calib3d {
 	/// * max_iters: 1000
 	/// * mask: noArray()
 	#[inline]
-	pub fn find_essential_mat_def(points1: &impl core::ToInputArray, points2: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray) -> Result<core::Mat> {
+	pub fn find_essential_mat_def(points1: &impl ToInputArray, points2: &impl ToInputArray, camera_matrix: &impl ToInputArray) -> Result<core::Mat> {
 		input_array_arg!(points1);
 		input_array_arg!(points2);
 		input_array_arg!(camera_matrix);
@@ -3578,7 +3578,7 @@ pub mod calib3d {
 	/// * threshold: 1.0
 	/// * mask: noArray()
 	#[inline]
-	pub fn find_essential_mat_3_def(points1: &impl core::ToInputArray, points2: &impl core::ToInputArray, camera_matrix1: &impl core::ToInputArray, dist_coeffs1: &impl core::ToInputArray, camera_matrix2: &impl core::ToInputArray, dist_coeffs2: &impl core::ToInputArray) -> Result<core::Mat> {
+	pub fn find_essential_mat_3_def(points1: &impl ToInputArray, points2: &impl ToInputArray, camera_matrix1: &impl ToInputArray, dist_coeffs1: &impl ToInputArray, camera_matrix2: &impl ToInputArray, dist_coeffs2: &impl ToInputArray) -> Result<core::Mat> {
 		input_array_arg!(points1);
 		input_array_arg!(points2);
 		input_array_arg!(camera_matrix1);
@@ -3594,7 +3594,7 @@ pub mod calib3d {
 	}
 	
 	#[inline]
-	pub fn find_essential_mat_4(points1: &impl core::ToInputArray, points2: &impl core::ToInputArray, camera_matrix1: &impl core::ToInputArray, camera_matrix2: &impl core::ToInputArray, dist_coeff1: &impl core::ToInputArray, dist_coeff2: &impl core::ToInputArray, mask: &mut impl core::ToOutputArray, params: crate::calib3d::UsacParams) -> Result<core::Mat> {
+	pub fn find_essential_mat_4(points1: &impl ToInputArray, points2: &impl ToInputArray, camera_matrix1: &impl ToInputArray, camera_matrix2: &impl ToInputArray, dist_coeff1: &impl ToInputArray, dist_coeff2: &impl ToInputArray, mask: &mut impl ToOutputArray, params: crate::calib3d::UsacParams) -> Result<core::Mat> {
 		input_array_arg!(points1);
 		input_array_arg!(points2);
 		input_array_arg!(camera_matrix1);
@@ -3661,7 +3661,7 @@ pub mod calib3d {
 	/// * threshold: 1.0
 	/// * mask: noArray()
 	#[inline]
-	pub fn find_essential_mat_3(points1: &impl core::ToInputArray, points2: &impl core::ToInputArray, camera_matrix1: &impl core::ToInputArray, dist_coeffs1: &impl core::ToInputArray, camera_matrix2: &impl core::ToInputArray, dist_coeffs2: &impl core::ToInputArray, method: i32, prob: f64, threshold: f64, mask: &mut impl core::ToOutputArray) -> Result<core::Mat> {
+	pub fn find_essential_mat_3(points1: &impl ToInputArray, points2: &impl ToInputArray, camera_matrix1: &impl ToInputArray, dist_coeffs1: &impl ToInputArray, camera_matrix2: &impl ToInputArray, dist_coeffs2: &impl ToInputArray, method: i32, prob: f64, threshold: f64, mask: &mut impl ToOutputArray) -> Result<core::Mat> {
 		input_array_arg!(points1);
 		input_array_arg!(points2);
 		input_array_arg!(camera_matrix1);
@@ -3713,7 +3713,7 @@ pub mod calib3d {
 	/// 
 	/// ## Overloaded parameters
 	#[inline]
-	pub fn find_essential_mat_matrix(points1: &impl core::ToInputArray, points2: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray, method: i32, prob: f64, threshold: f64, mask: &mut impl core::ToOutputArray) -> Result<core::Mat> {
+	pub fn find_essential_mat_matrix(points1: &impl ToInputArray, points2: &impl ToInputArray, camera_matrix: &impl ToInputArray, method: i32, prob: f64, threshold: f64, mask: &mut impl ToOutputArray) -> Result<core::Mat> {
 		input_array_arg!(points1);
 		input_array_arg!(points2);
 		input_array_arg!(camera_matrix);
@@ -3767,7 +3767,7 @@ pub mod calib3d {
 	/// * max_iters: 1000
 	/// * mask: noArray()
 	#[inline]
-	pub fn find_essential_mat(points1: &impl core::ToInputArray, points2: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray, method: i32, prob: f64, threshold: f64, max_iters: i32, mask: &mut impl core::ToOutputArray) -> Result<core::Mat> {
+	pub fn find_essential_mat(points1: &impl ToInputArray, points2: &impl ToInputArray, camera_matrix: &impl ToInputArray, method: i32, prob: f64, threshold: f64, max_iters: i32, mask: &mut impl ToOutputArray) -> Result<core::Mat> {
 		input_array_arg!(points1);
 		input_array_arg!(points2);
 		input_array_arg!(camera_matrix);
@@ -3816,12 +3816,12 @@ pub mod calib3d {
 	/// 
 	/// ## Overloaded parameters
 	#[inline]
-	pub fn find_essential_mat_2(points1: &impl core::ToInputArray, points2: &impl core::ToInputArray, focal: f64, pp: core::Point2d, method: i32, prob: f64, threshold: f64, mask: &mut impl core::ToOutputArray) -> Result<core::Mat> {
+	pub fn find_essential_mat_2(points1: &impl ToInputArray, points2: &impl ToInputArray, focal: f64, pp: core::Point2d, method: i32, prob: f64, threshold: f64, mask: &mut impl ToOutputArray) -> Result<core::Mat> {
 		input_array_arg!(points1);
 		input_array_arg!(points2);
 		output_array_arg!(mask);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_findEssentialMat_const__InputArrayR_const__InputArrayR_double_Point2d_int_double_double_const__OutputArrayR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), focal, pp.opencv_as_extern(), method, prob, threshold, mask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_findEssentialMat_const__InputArrayR_const__InputArrayR_double_Point2d_int_double_double_const__OutputArrayR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), focal, &pp, method, prob, threshold, mask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -3897,12 +3897,12 @@ pub mod calib3d {
 	/// * max_iters: 1000
 	/// * mask: noArray()
 	#[inline]
-	pub fn find_essential_mat_1(points1: &impl core::ToInputArray, points2: &impl core::ToInputArray, focal: f64, pp: core::Point2d, method: i32, prob: f64, threshold: f64, max_iters: i32, mask: &mut impl core::ToOutputArray) -> Result<core::Mat> {
+	pub fn find_essential_mat_1(points1: &impl ToInputArray, points2: &impl ToInputArray, focal: f64, pp: core::Point2d, method: i32, prob: f64, threshold: f64, max_iters: i32, mask: &mut impl ToOutputArray) -> Result<core::Mat> {
 		input_array_arg!(points1);
 		input_array_arg!(points2);
 		output_array_arg!(mask);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_findEssentialMat_const__InputArrayR_const__InputArrayR_double_Point2d_int_double_double_int_const__OutputArrayR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), focal, pp.opencv_as_extern(), method, prob, threshold, max_iters, mask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_findEssentialMat_const__InputArrayR_const__InputArrayR_double_Point2d_int_double_double_int_const__OutputArrayR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), focal, &pp, method, prob, threshold, max_iters, mask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -3918,7 +3918,7 @@ pub mod calib3d {
 	/// * confidence: 0.99
 	/// * mask: noArray()
 	#[inline]
-	pub fn find_fundamental_mat_1_def(points1: &impl core::ToInputArray, points2: &impl core::ToInputArray) -> Result<core::Mat> {
+	pub fn find_fundamental_mat_1_def(points1: &impl ToInputArray, points2: &impl ToInputArray) -> Result<core::Mat> {
 		input_array_arg!(points1);
 		input_array_arg!(points2);
 		return_send!(via ocvrs_return);
@@ -3937,7 +3937,7 @@ pub mod calib3d {
 	/// * ransac_reproj_threshold: 3.
 	/// * confidence: 0.99
 	#[inline]
-	pub fn find_fundamental_mat_mask_def(points1: &impl core::ToInputArray, points2: &impl core::ToInputArray, mask: &mut impl core::ToOutputArray) -> Result<core::Mat> {
+	pub fn find_fundamental_mat_mask_def(points1: &impl ToInputArray, points2: &impl ToInputArray, mask: &mut impl ToOutputArray) -> Result<core::Mat> {
 		input_array_arg!(points1);
 		input_array_arg!(points2);
 		output_array_arg!(mask);
@@ -3950,7 +3950,7 @@ pub mod calib3d {
 	}
 	
 	#[inline]
-	pub fn find_fundamental_mat_2(points1: &impl core::ToInputArray, points2: &impl core::ToInputArray, mask: &mut impl core::ToOutputArray, params: crate::calib3d::UsacParams) -> Result<core::Mat> {
+	pub fn find_fundamental_mat_2(points1: &impl ToInputArray, points2: &impl ToInputArray, mask: &mut impl ToOutputArray, params: crate::calib3d::UsacParams) -> Result<core::Mat> {
 		input_array_arg!(points1);
 		input_array_arg!(points2);
 		output_array_arg!(mask);
@@ -4022,7 +4022,7 @@ pub mod calib3d {
 	/// * ransac_reproj_threshold: 3.
 	/// * confidence: 0.99
 	#[inline]
-	pub fn find_fundamental_mat_mask(points1: &impl core::ToInputArray, points2: &impl core::ToInputArray, mask: &mut impl core::ToOutputArray, method: i32, ransac_reproj_threshold: f64, confidence: f64) -> Result<core::Mat> {
+	pub fn find_fundamental_mat_mask(points1: &impl ToInputArray, points2: &impl ToInputArray, mask: &mut impl ToOutputArray, method: i32, ransac_reproj_threshold: f64, confidence: f64) -> Result<core::Mat> {
 		input_array_arg!(points1);
 		input_array_arg!(points2);
 		output_array_arg!(mask);
@@ -4095,7 +4095,7 @@ pub mod calib3d {
 	/// * confidence: 0.99
 	/// * mask: noArray()
 	#[inline]
-	pub fn find_fundamental_mat_1(points1: &impl core::ToInputArray, points2: &impl core::ToInputArray, method: i32, ransac_reproj_threshold: f64, confidence: f64, mask: &mut impl core::ToOutputArray) -> Result<core::Mat> {
+	pub fn find_fundamental_mat_1(points1: &impl ToInputArray, points2: &impl ToInputArray, method: i32, ransac_reproj_threshold: f64, confidence: f64, mask: &mut impl ToOutputArray) -> Result<core::Mat> {
 		input_array_arg!(points1);
 		input_array_arg!(points2);
 		output_array_arg!(mask);
@@ -4164,7 +4164,7 @@ pub mod calib3d {
 	/// This alternative version of [find_fundamental_mat] function uses the following default values for its arguments:
 	/// * mask: noArray()
 	#[inline]
-	pub fn find_fundamental_mat_def(points1: &impl core::ToInputArray, points2: &impl core::ToInputArray, method: i32, ransac_reproj_threshold: f64, confidence: f64, max_iters: i32) -> Result<core::Mat> {
+	pub fn find_fundamental_mat_def(points1: &impl ToInputArray, points2: &impl ToInputArray, method: i32, ransac_reproj_threshold: f64, confidence: f64, max_iters: i32) -> Result<core::Mat> {
 		input_array_arg!(points1);
 		input_array_arg!(points2);
 		return_send!(via ocvrs_return);
@@ -4231,7 +4231,7 @@ pub mod calib3d {
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
-	pub fn find_fundamental_mat(points1: &impl core::ToInputArray, points2: &impl core::ToInputArray, method: i32, ransac_reproj_threshold: f64, confidence: f64, max_iters: i32, mask: &mut impl core::ToOutputArray) -> Result<core::Mat> {
+	pub fn find_fundamental_mat(points1: &impl ToInputArray, points2: &impl ToInputArray, method: i32, ransac_reproj_threshold: f64, confidence: f64, max_iters: i32, mask: &mut impl ToOutputArray) -> Result<core::Mat> {
 		input_array_arg!(points1);
 		input_array_arg!(points2);
 		output_array_arg!(mask);
@@ -4310,7 +4310,7 @@ pub mod calib3d {
 	/// * max_iters: 2000
 	/// * confidence: 0.995
 	#[inline]
-	pub fn find_homography_ext_def(src_points: &impl core::ToInputArray, dst_points: &impl core::ToInputArray) -> Result<core::Mat> {
+	pub fn find_homography_ext_def(src_points: &impl ToInputArray, dst_points: &impl ToInputArray) -> Result<core::Mat> {
 		input_array_arg!(src_points);
 		input_array_arg!(dst_points);
 		return_send!(via ocvrs_return);
@@ -4328,7 +4328,7 @@ pub mod calib3d {
 	/// * method: 0
 	/// * ransac_reproj_threshold: 3
 	#[inline]
-	pub fn find_homography_def(src_points: &impl core::ToInputArray, dst_points: &impl core::ToInputArray, mask: &mut impl core::ToOutputArray) -> Result<core::Mat> {
+	pub fn find_homography_def(src_points: &impl ToInputArray, dst_points: &impl ToInputArray, mask: &mut impl ToOutputArray) -> Result<core::Mat> {
 		input_array_arg!(src_points);
 		input_array_arg!(dst_points);
 		output_array_arg!(mask);
@@ -4341,7 +4341,7 @@ pub mod calib3d {
 	}
 	
 	#[inline]
-	pub fn find_homography_1(src_points: &impl core::ToInputArray, dst_points: &impl core::ToInputArray, mask: &mut impl core::ToOutputArray, params: crate::calib3d::UsacParams) -> Result<core::Mat> {
+	pub fn find_homography_1(src_points: &impl ToInputArray, dst_points: &impl ToInputArray, mask: &mut impl ToOutputArray, params: crate::calib3d::UsacParams) -> Result<core::Mat> {
 		input_array_arg!(src_points);
 		input_array_arg!(dst_points);
 		output_array_arg!(mask);
@@ -4418,7 +4418,7 @@ pub mod calib3d {
 	/// * method: 0
 	/// * ransac_reproj_threshold: 3
 	#[inline]
-	pub fn find_homography(src_points: &impl core::ToInputArray, dst_points: &impl core::ToInputArray, mask: &mut impl core::ToOutputArray, method: i32, ransac_reproj_threshold: f64) -> Result<core::Mat> {
+	pub fn find_homography(src_points: &impl ToInputArray, dst_points: &impl ToInputArray, mask: &mut impl ToOutputArray, method: i32, ransac_reproj_threshold: f64) -> Result<core::Mat> {
 		input_array_arg!(src_points);
 		input_array_arg!(dst_points);
 		output_array_arg!(mask);
@@ -4496,7 +4496,7 @@ pub mod calib3d {
 	/// * max_iters: 2000
 	/// * confidence: 0.995
 	#[inline]
-	pub fn find_homography_ext(src_points: &impl core::ToInputArray, dst_points: &impl core::ToInputArray, method: i32, ransac_reproj_threshold: f64, mask: &mut impl core::ToOutputArray, max_iters: i32, confidence: f64) -> Result<core::Mat> {
+	pub fn find_homography_ext(src_points: &impl ToInputArray, dst_points: &impl ToInputArray, method: i32, ransac_reproj_threshold: f64, mask: &mut impl ToOutputArray, max_iters: i32, confidence: f64) -> Result<core::Mat> {
 		input_array_arg!(src_points);
 		input_array_arg!(dst_points);
 		output_array_arg!(mask);
@@ -4549,7 +4549,7 @@ pub mod calib3d {
 	/// * flags: 0
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,100,DBL_EPSILON)
 	#[inline]
-	pub fn calibrate_def(object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, image_size: core::Size, k: &mut impl core::ToInputOutputArray, d: &mut impl core::ToInputOutputArray, rvecs: &mut impl core::ToOutputArray, tvecs: &mut impl core::ToOutputArray) -> Result<f64> {
+	pub fn calibrate_def(object_points: &impl ToInputArray, image_points: &impl ToInputArray, image_size: core::Size, k: &mut impl ToInputOutputArray, d: &mut impl ToInputOutputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray) -> Result<f64> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points);
 		input_output_array_arg!(k);
@@ -4603,7 +4603,7 @@ pub mod calib3d {
 	/// * flags: 0
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,100,DBL_EPSILON)
 	#[inline]
-	pub fn calibrate(object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, image_size: core::Size, k: &mut impl core::ToInputOutputArray, d: &mut impl core::ToInputOutputArray, rvecs: &mut impl core::ToOutputArray, tvecs: &mut impl core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
+	pub fn calibrate(object_points: &impl ToInputArray, image_points: &impl ToInputArray, image_size: core::Size, k: &mut impl ToInputOutputArray, d: &mut impl ToInputOutputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points);
 		input_output_array_arg!(k);
@@ -4611,7 +4611,7 @@ pub mod calib3d {
 		output_array_arg!(rvecs);
 		output_array_arg!(tvecs);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_fisheye_calibrate_const__InputArrayR_const__InputArrayR_const_SizeR_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &image_size, k.as_raw__InputOutputArray(), d.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_fisheye_calibrate_const__InputArrayR_const__InputArrayR_const_SizeR_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &image_size, k.as_raw__InputOutputArray(), d.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, &criteria, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -4634,7 +4634,7 @@ pub mod calib3d {
 	/// This alternative version of [fisheye_distort_points] function uses the following default values for its arguments:
 	/// * alpha: 0
 	#[inline]
-	pub fn fisheye_distort_points_def(undistorted: &impl core::ToInputArray, distorted: &mut impl core::ToOutputArray, k: &impl core::ToInputArray, d: &impl core::ToInputArray) -> Result<()> {
+	pub fn fisheye_distort_points_def(undistorted: &impl ToInputArray, distorted: &mut impl ToOutputArray, k: &impl ToInputArray, d: &impl ToInputArray) -> Result<()> {
 		input_array_arg!(undistorted);
 		output_array_arg!(distorted);
 		input_array_arg!(k);
@@ -4662,7 +4662,7 @@ pub mod calib3d {
 	/// ## C++ default parameters
 	/// * alpha: 0
 	#[inline]
-	pub fn fisheye_distort_points(undistorted: &impl core::ToInputArray, distorted: &mut impl core::ToOutputArray, k: &impl core::ToInputArray, d: &impl core::ToInputArray, alpha: f64) -> Result<()> {
+	pub fn fisheye_distort_points(undistorted: &impl ToInputArray, distorted: &mut impl ToOutputArray, k: &impl ToInputArray, d: &impl ToInputArray, alpha: f64) -> Result<()> {
 		input_array_arg!(undistorted);
 		output_array_arg!(distorted);
 		input_array_arg!(k);
@@ -4694,7 +4694,7 @@ pub mod calib3d {
 	/// * new_size: Size()
 	/// * fov_scale: 1.0
 	#[inline]
-	pub fn estimate_new_camera_matrix_for_undistort_rectify_def(k: &impl core::ToInputArray, d: &impl core::ToInputArray, image_size: core::Size, r: &impl core::ToInputArray, p: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn estimate_new_camera_matrix_for_undistort_rectify_def(k: &impl ToInputArray, d: &impl ToInputArray, image_size: core::Size, r: &impl ToInputArray, p: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(k);
 		input_array_arg!(d);
 		input_array_arg!(r);
@@ -4725,7 +4725,7 @@ pub mod calib3d {
 	/// * new_size: Size()
 	/// * fov_scale: 1.0
 	#[inline]
-	pub fn estimate_new_camera_matrix_for_undistort_rectify(k: &impl core::ToInputArray, d: &impl core::ToInputArray, image_size: core::Size, r: &impl core::ToInputArray, p: &mut impl core::ToOutputArray, balance: f64, new_size: core::Size, fov_scale: f64) -> Result<()> {
+	pub fn estimate_new_camera_matrix_for_undistort_rectify(k: &impl ToInputArray, d: &impl ToInputArray, image_size: core::Size, r: &impl ToInputArray, p: &mut impl ToOutputArray, balance: f64, new_size: core::Size, fov_scale: f64) -> Result<()> {
 		input_array_arg!(k);
 		input_array_arg!(d);
 		input_array_arg!(r);
@@ -4752,7 +4752,7 @@ pub mod calib3d {
 	/// * map1: The first output map.
 	/// * map2: The second output map.
 	#[inline]
-	pub fn fisheye_init_undistort_rectify_map(k: &impl core::ToInputArray, d: &impl core::ToInputArray, r: &impl core::ToInputArray, p: &impl core::ToInputArray, size: core::Size, m1type: i32, map1: &mut impl core::ToOutputArray, map2: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn fisheye_init_undistort_rectify_map(k: &impl ToInputArray, d: &impl ToInputArray, r: &impl ToInputArray, p: &impl ToInputArray, size: core::Size, m1type: i32, map1: &mut impl ToOutputArray, map2: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(k);
 		input_array_arg!(d);
 		input_array_arg!(r);
@@ -4792,7 +4792,7 @@ pub mod calib3d {
 	/// * alpha: 0
 	/// * jacobian: noArray()
 	#[inline]
-	pub fn fisheye_project_points_def(object_points: &impl core::ToInputArray, image_points: &mut impl core::ToOutputArray, affine: core::Affine3d, k: &impl core::ToInputArray, d: &impl core::ToInputArray) -> Result<()> {
+	pub fn fisheye_project_points_def(object_points: &impl ToInputArray, image_points: &mut impl ToOutputArray, affine: core::Affine3d, k: &impl ToInputArray, d: &impl ToInputArray) -> Result<()> {
 		input_array_arg!(object_points);
 		output_array_arg!(image_points);
 		input_array_arg!(k);
@@ -4829,7 +4829,7 @@ pub mod calib3d {
 	/// * alpha: 0
 	/// * jacobian: noArray()
 	#[inline]
-	pub fn fisheye_project_points(object_points: &impl core::ToInputArray, image_points: &mut impl core::ToOutputArray, affine: core::Affine3d, k: &impl core::ToInputArray, d: &impl core::ToInputArray, alpha: f64, jacobian: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn fisheye_project_points(object_points: &impl ToInputArray, image_points: &mut impl ToOutputArray, affine: core::Affine3d, k: &impl ToInputArray, d: &impl ToInputArray, alpha: f64, jacobian: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(object_points);
 		output_array_arg!(image_points);
 		input_array_arg!(k);
@@ -4849,7 +4849,7 @@ pub mod calib3d {
 	/// * alpha: 0
 	/// * jacobian: noArray()
 	#[inline]
-	pub fn fisheye_project_points_vec_def(object_points: &impl core::ToInputArray, image_points: &mut impl core::ToOutputArray, rvec: &impl core::ToInputArray, tvec: &impl core::ToInputArray, k: &impl core::ToInputArray, d: &impl core::ToInputArray) -> Result<()> {
+	pub fn fisheye_project_points_vec_def(object_points: &impl ToInputArray, image_points: &mut impl ToOutputArray, rvec: &impl ToInputArray, tvec: &impl ToInputArray, k: &impl ToInputArray, d: &impl ToInputArray) -> Result<()> {
 		input_array_arg!(object_points);
 		output_array_arg!(image_points);
 		input_array_arg!(rvec);
@@ -4890,7 +4890,7 @@ pub mod calib3d {
 	/// * alpha: 0
 	/// * jacobian: noArray()
 	#[inline]
-	pub fn fisheye_project_points_vec(object_points: &impl core::ToInputArray, image_points: &mut impl core::ToOutputArray, rvec: &impl core::ToInputArray, tvec: &impl core::ToInputArray, k: &impl core::ToInputArray, d: &impl core::ToInputArray, alpha: f64, jacobian: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn fisheye_project_points_vec(object_points: &impl ToInputArray, image_points: &mut impl ToOutputArray, rvec: &impl ToInputArray, tvec: &impl ToInputArray, k: &impl ToInputArray, d: &impl ToInputArray, alpha: f64, jacobian: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(object_points);
 		output_array_arg!(image_points);
 		input_array_arg!(rvec);
@@ -4912,7 +4912,7 @@ pub mod calib3d {
 	/// * flags: fisheye::CALIB_FIX_INTRINSIC
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,100,DBL_EPSILON)
 	#[inline]
-	pub fn fisheye_stereo_calibrate_def(object_points: &impl core::ToInputArray, image_points1: &impl core::ToInputArray, image_points2: &impl core::ToInputArray, k1: &mut impl core::ToInputOutputArray, d1: &mut impl core::ToInputOutputArray, k2: &mut impl core::ToInputOutputArray, d2: &mut impl core::ToInputOutputArray, image_size: core::Size, r: &mut impl core::ToOutputArray, t: &mut impl core::ToOutputArray) -> Result<f64> {
+	pub fn fisheye_stereo_calibrate_def(object_points: &impl ToInputArray, image_points1: &impl ToInputArray, image_points2: &impl ToInputArray, k1: &mut impl ToInputOutputArray, d1: &mut impl ToInputOutputArray, k2: &mut impl ToInputOutputArray, d2: &mut impl ToInputOutputArray, image_size: core::Size, r: &mut impl ToOutputArray, t: &mut impl ToOutputArray) -> Result<f64> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points1);
 		input_array_arg!(image_points2);
@@ -4923,7 +4923,7 @@ pub mod calib3d {
 		output_array_arg!(r);
 		output_array_arg!(t);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_fisheye_stereoCalibrate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_const__OutputArrayR_const__OutputArrayR(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), k1.as_raw__InputOutputArray(), d1.as_raw__InputOutputArray(), k2.as_raw__InputOutputArray(), d2.as_raw__InputOutputArray(), image_size.opencv_as_extern(), r.as_raw__OutputArray(), t.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_fisheye_stereoCalibrate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_const__OutputArrayR_const__OutputArrayR(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), k1.as_raw__InputOutputArray(), d1.as_raw__InputOutputArray(), k2.as_raw__InputOutputArray(), d2.as_raw__InputOutputArray(), &image_size, r.as_raw__OutputArray(), t.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -4976,7 +4976,7 @@ pub mod calib3d {
 	/// * flags: fisheye::CALIB_FIX_INTRINSIC
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,100,DBL_EPSILON)
 	#[inline]
-	pub fn stereo_calibrate_2_def(object_points: &impl core::ToInputArray, image_points1: &impl core::ToInputArray, image_points2: &impl core::ToInputArray, k1: &mut impl core::ToInputOutputArray, d1: &mut impl core::ToInputOutputArray, k2: &mut impl core::ToInputOutputArray, d2: &mut impl core::ToInputOutputArray, image_size: core::Size, r: &mut impl core::ToOutputArray, t: &mut impl core::ToOutputArray, rvecs: &mut impl core::ToOutputArray, tvecs: &mut impl core::ToOutputArray) -> Result<f64> {
+	pub fn stereo_calibrate_2_def(object_points: &impl ToInputArray, image_points1: &impl ToInputArray, image_points2: &impl ToInputArray, k1: &mut impl ToInputOutputArray, d1: &mut impl ToInputOutputArray, k2: &mut impl ToInputOutputArray, d2: &mut impl ToInputOutputArray, image_size: core::Size, r: &mut impl ToOutputArray, t: &mut impl ToOutputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray) -> Result<f64> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points1);
 		input_array_arg!(image_points2);
@@ -4989,7 +4989,7 @@ pub mod calib3d {
 		output_array_arg!(rvecs);
 		output_array_arg!(tvecs);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_fisheye_stereoCalibrate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), k1.as_raw__InputOutputArray(), d1.as_raw__InputOutputArray(), k2.as_raw__InputOutputArray(), d2.as_raw__InputOutputArray(), image_size.opencv_as_extern(), r.as_raw__OutputArray(), t.as_raw__OutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_fisheye_stereoCalibrate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), k1.as_raw__InputOutputArray(), d1.as_raw__InputOutputArray(), k2.as_raw__InputOutputArray(), d2.as_raw__InputOutputArray(), &image_size, r.as_raw__OutputArray(), t.as_raw__OutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -5041,7 +5041,7 @@ pub mod calib3d {
 	/// * flags: fisheye::CALIB_FIX_INTRINSIC
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,100,DBL_EPSILON)
 	#[inline]
-	pub fn stereo_calibrate_2(object_points: &impl core::ToInputArray, image_points1: &impl core::ToInputArray, image_points2: &impl core::ToInputArray, k1: &mut impl core::ToInputOutputArray, d1: &mut impl core::ToInputOutputArray, k2: &mut impl core::ToInputOutputArray, d2: &mut impl core::ToInputOutputArray, image_size: core::Size, r: &mut impl core::ToOutputArray, t: &mut impl core::ToOutputArray, rvecs: &mut impl core::ToOutputArray, tvecs: &mut impl core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
+	pub fn stereo_calibrate_2(object_points: &impl ToInputArray, image_points1: &impl ToInputArray, image_points2: &impl ToInputArray, k1: &mut impl ToInputOutputArray, d1: &mut impl ToInputOutputArray, k2: &mut impl ToInputOutputArray, d2: &mut impl ToInputOutputArray, image_size: core::Size, r: &mut impl ToOutputArray, t: &mut impl ToOutputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points1);
 		input_array_arg!(image_points2);
@@ -5054,7 +5054,7 @@ pub mod calib3d {
 		output_array_arg!(rvecs);
 		output_array_arg!(tvecs);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_fisheye_stereoCalibrate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), k1.as_raw__InputOutputArray(), d1.as_raw__InputOutputArray(), k2.as_raw__InputOutputArray(), d2.as_raw__InputOutputArray(), image_size.opencv_as_extern(), r.as_raw__OutputArray(), t.as_raw__OutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_fisheye_stereoCalibrate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), k1.as_raw__InputOutputArray(), d1.as_raw__InputOutputArray(), k2.as_raw__InputOutputArray(), d2.as_raw__InputOutputArray(), &image_size, r.as_raw__OutputArray(), t.as_raw__OutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, &criteria, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -5108,7 +5108,7 @@ pub mod calib3d {
 	/// * flags: fisheye::CALIB_FIX_INTRINSIC
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,100,DBL_EPSILON)
 	#[inline]
-	pub fn fisheye_stereo_calibrate(object_points: &impl core::ToInputArray, image_points1: &impl core::ToInputArray, image_points2: &impl core::ToInputArray, k1: &mut impl core::ToInputOutputArray, d1: &mut impl core::ToInputOutputArray, k2: &mut impl core::ToInputOutputArray, d2: &mut impl core::ToInputOutputArray, image_size: core::Size, r: &mut impl core::ToOutputArray, t: &mut impl core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
+	pub fn fisheye_stereo_calibrate(object_points: &impl ToInputArray, image_points1: &impl ToInputArray, image_points2: &impl ToInputArray, k1: &mut impl ToInputOutputArray, d1: &mut impl ToInputOutputArray, k2: &mut impl ToInputOutputArray, d2: &mut impl ToInputOutputArray, image_size: core::Size, r: &mut impl ToOutputArray, t: &mut impl ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points1);
 		input_array_arg!(image_points2);
@@ -5119,7 +5119,7 @@ pub mod calib3d {
 		output_array_arg!(r);
 		output_array_arg!(t);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_fisheye_stereoCalibrate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), k1.as_raw__InputOutputArray(), d1.as_raw__InputOutputArray(), k2.as_raw__InputOutputArray(), d2.as_raw__InputOutputArray(), image_size.opencv_as_extern(), r.as_raw__OutputArray(), t.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_fisheye_stereoCalibrate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), k1.as_raw__InputOutputArray(), d1.as_raw__InputOutputArray(), k2.as_raw__InputOutputArray(), d2.as_raw__InputOutputArray(), &image_size, r.as_raw__OutputArray(), t.as_raw__OutputArray(), flags, &criteria, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -5162,7 +5162,7 @@ pub mod calib3d {
 	/// * balance: 0.0
 	/// * fov_scale: 1.0
 	#[inline]
-	pub fn fisheye_stereo_rectify_def(k1: &impl core::ToInputArray, d1: &impl core::ToInputArray, k2: &impl core::ToInputArray, d2: &impl core::ToInputArray, image_size: core::Size, r: &impl core::ToInputArray, tvec: &impl core::ToInputArray, r1: &mut impl core::ToOutputArray, r2: &mut impl core::ToOutputArray, p1: &mut impl core::ToOutputArray, p2: &mut impl core::ToOutputArray, q: &mut impl core::ToOutputArray, flags: i32) -> Result<()> {
+	pub fn fisheye_stereo_rectify_def(k1: &impl ToInputArray, d1: &impl ToInputArray, k2: &impl ToInputArray, d2: &impl ToInputArray, image_size: core::Size, r: &impl ToInputArray, tvec: &impl ToInputArray, r1: &mut impl ToOutputArray, r2: &mut impl ToOutputArray, p1: &mut impl ToOutputArray, p2: &mut impl ToOutputArray, q: &mut impl ToOutputArray, flags: i32) -> Result<()> {
 		input_array_arg!(k1);
 		input_array_arg!(d1);
 		input_array_arg!(k2);
@@ -5217,7 +5217,7 @@ pub mod calib3d {
 	/// * balance: 0.0
 	/// * fov_scale: 1.0
 	#[inline]
-	pub fn fisheye_stereo_rectify(k1: &impl core::ToInputArray, d1: &impl core::ToInputArray, k2: &impl core::ToInputArray, d2: &impl core::ToInputArray, image_size: core::Size, r: &impl core::ToInputArray, tvec: &impl core::ToInputArray, r1: &mut impl core::ToOutputArray, r2: &mut impl core::ToOutputArray, p1: &mut impl core::ToOutputArray, p2: &mut impl core::ToOutputArray, q: &mut impl core::ToOutputArray, flags: i32, new_image_size: core::Size, balance: f64, fov_scale: f64) -> Result<()> {
+	pub fn fisheye_stereo_rectify(k1: &impl ToInputArray, d1: &impl ToInputArray, k2: &impl ToInputArray, d2: &impl ToInputArray, image_size: core::Size, r: &impl ToInputArray, tvec: &impl ToInputArray, r1: &mut impl ToOutputArray, r2: &mut impl ToOutputArray, p1: &mut impl ToOutputArray, p2: &mut impl ToOutputArray, q: &mut impl ToOutputArray, flags: i32, new_image_size: core::Size, balance: f64, fov_scale: f64) -> Result<()> {
 		input_array_arg!(k1);
 		input_array_arg!(d1);
 		input_array_arg!(k2);
@@ -5270,7 +5270,7 @@ pub mod calib3d {
 	/// * knew: cv::noArray()
 	/// * new_size: Size()
 	#[inline]
-	pub fn fisheye_undistort_image_def(distorted: &impl core::ToInputArray, undistorted: &mut impl core::ToOutputArray, k: &impl core::ToInputArray, d: &impl core::ToInputArray) -> Result<()> {
+	pub fn fisheye_undistort_image_def(distorted: &impl ToInputArray, undistorted: &mut impl ToOutputArray, k: &impl ToInputArray, d: &impl ToInputArray) -> Result<()> {
 		input_array_arg!(distorted);
 		output_array_arg!(undistorted);
 		input_array_arg!(k);
@@ -5315,7 +5315,7 @@ pub mod calib3d {
 	/// * knew: cv::noArray()
 	/// * new_size: Size()
 	#[inline]
-	pub fn fisheye_undistort_image(distorted: &impl core::ToInputArray, undistorted: &mut impl core::ToOutputArray, k: &impl core::ToInputArray, d: &impl core::ToInputArray, knew: &impl core::ToInputArray, new_size: core::Size) -> Result<()> {
+	pub fn fisheye_undistort_image(distorted: &impl ToInputArray, undistorted: &mut impl ToOutputArray, k: &impl ToInputArray, d: &impl ToInputArray, knew: &impl ToInputArray, new_size: core::Size) -> Result<()> {
 		input_array_arg!(distorted);
 		output_array_arg!(undistorted);
 		input_array_arg!(k);
@@ -5347,7 +5347,7 @@ pub mod calib3d {
 	/// * p: noArray()
 	/// * criteria: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,10,1e-8)
 	#[inline]
-	pub fn fisheye_undistort_points_def(distorted: &impl core::ToInputArray, undistorted: &mut impl core::ToOutputArray, k: &impl core::ToInputArray, d: &impl core::ToInputArray) -> Result<()> {
+	pub fn fisheye_undistort_points_def(distorted: &impl ToInputArray, undistorted: &mut impl ToOutputArray, k: &impl ToInputArray, d: &impl ToInputArray) -> Result<()> {
 		input_array_arg!(distorted);
 		output_array_arg!(undistorted);
 		input_array_arg!(k);
@@ -5377,7 +5377,7 @@ pub mod calib3d {
 	/// * p: noArray()
 	/// * criteria: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,10,1e-8)
 	#[inline]
-	pub fn fisheye_undistort_points(distorted: &impl core::ToInputArray, undistorted: &mut impl core::ToOutputArray, k: &impl core::ToInputArray, d: &impl core::ToInputArray, r: &impl core::ToInputArray, p: &impl core::ToInputArray, criteria: core::TermCriteria) -> Result<()> {
+	pub fn fisheye_undistort_points(distorted: &impl ToInputArray, undistorted: &mut impl ToOutputArray, k: &impl ToInputArray, d: &impl ToInputArray, r: &impl ToInputArray, p: &impl ToInputArray, criteria: core::TermCriteria) -> Result<()> {
 		input_array_arg!(distorted);
 		output_array_arg!(undistorted);
 		input_array_arg!(k);
@@ -5385,7 +5385,7 @@ pub mod calib3d {
 		input_array_arg!(r);
 		input_array_arg!(p);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_fisheye_undistortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_TermCriteria(distorted.as_raw__InputArray(), undistorted.as_raw__OutputArray(), k.as_raw__InputArray(), d.as_raw__InputArray(), r.as_raw__InputArray(), p.as_raw__InputArray(), criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_fisheye_undistortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_TermCriteria(distorted.as_raw__InputArray(), undistorted.as_raw__OutputArray(), k.as_raw__InputArray(), d.as_raw__InputArray(), r.as_raw__InputArray(), p.as_raw__InputArray(), &criteria, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -5419,7 +5419,7 @@ pub mod calib3d {
 	/// * imgsize: Size()
 	/// * center_principal_point: false
 	#[inline]
-	pub fn get_default_new_camera_matrix_def(camera_matrix: &impl core::ToInputArray) -> Result<core::Mat> {
+	pub fn get_default_new_camera_matrix_def(camera_matrix: &impl ToInputArray) -> Result<core::Mat> {
 		input_array_arg!(camera_matrix);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_getDefaultNewCameraMatrix_const__InputArrayR(camera_matrix.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -5456,10 +5456,10 @@ pub mod calib3d {
 	/// * imgsize: Size()
 	/// * center_principal_point: false
 	#[inline]
-	pub fn get_default_new_camera_matrix(camera_matrix: &impl core::ToInputArray, imgsize: core::Size, center_principal_point: bool) -> Result<core::Mat> {
+	pub fn get_default_new_camera_matrix(camera_matrix: &impl ToInputArray, imgsize: core::Size, center_principal_point: bool) -> Result<core::Mat> {
 		input_array_arg!(camera_matrix);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_getDefaultNewCameraMatrix_const__InputArrayR_Size_bool(camera_matrix.as_raw__InputArray(), imgsize.opencv_as_extern(), center_principal_point, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_getDefaultNewCameraMatrix_const__InputArrayR_Size_bool(camera_matrix.as_raw__InputArray(), &imgsize, center_principal_point, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -5500,11 +5500,11 @@ pub mod calib3d {
 	/// * valid_pix_roi: 0
 	/// * center_principal_point: false
 	#[inline]
-	pub fn get_optimal_new_camera_matrix_def(camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, image_size: core::Size, alpha: f64) -> Result<core::Mat> {
+	pub fn get_optimal_new_camera_matrix_def(camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, image_size: core::Size, alpha: f64) -> Result<core::Mat> {
 		input_array_arg!(camera_matrix);
 		input_array_arg!(dist_coeffs);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_getOptimalNewCameraMatrix_const__InputArrayR_const__InputArrayR_Size_double(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), image_size.opencv_as_extern(), alpha, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_getOptimalNewCameraMatrix_const__InputArrayR_const__InputArrayR_Size_double(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), &image_size, alpha, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -5544,11 +5544,11 @@ pub mod calib3d {
 	/// * valid_pix_roi: 0
 	/// * center_principal_point: false
 	#[inline]
-	pub fn get_optimal_new_camera_matrix(camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, image_size: core::Size, alpha: f64, new_img_size: core::Size, valid_pix_roi: Option<&mut core::Rect>, center_principal_point: bool) -> Result<core::Mat> {
+	pub fn get_optimal_new_camera_matrix(camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, image_size: core::Size, alpha: f64, new_img_size: core::Size, valid_pix_roi: Option<&mut core::Rect>, center_principal_point: bool) -> Result<core::Mat> {
 		input_array_arg!(camera_matrix);
 		input_array_arg!(dist_coeffs);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_getOptimalNewCameraMatrix_const__InputArrayR_const__InputArrayR_Size_double_Size_RectX_bool(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), image_size.opencv_as_extern(), alpha, new_img_size.opencv_as_extern(), valid_pix_roi.map_or(::core::ptr::null_mut(), |x| x), center_principal_point, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_getOptimalNewCameraMatrix_const__InputArrayR_const__InputArrayR_Size_double_Size_RectX_bool(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), &image_size, alpha, &new_img_size, valid_pix_roi.map_or(::core::ptr::null_mut(), |valid_pix_roi| valid_pix_roi), center_principal_point, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -5559,7 +5559,7 @@ pub mod calib3d {
 	#[inline]
 	pub fn get_valid_disparity_roi(roi1: core::Rect, roi2: core::Rect, min_disparity: i32, number_of_disparities: i32, block_size: i32) -> Result<core::Rect> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_getValidDisparityROI_Rect_Rect_int_int_int(roi1.opencv_as_extern(), roi2.opencv_as_extern(), min_disparity, number_of_disparities, block_size, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_getValidDisparityROI_Rect_Rect_int_int_int(&roi1, &roi2, min_disparity, number_of_disparities, block_size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -5585,11 +5585,11 @@ pub mod calib3d {
 	/// This alternative version of [init_camera_matrix_2d] function uses the following default values for its arguments:
 	/// * aspect_ratio: 1.0
 	#[inline]
-	pub fn init_camera_matrix_2d_def(object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, image_size: core::Size) -> Result<core::Mat> {
+	pub fn init_camera_matrix_2d_def(object_points: &impl ToInputArray, image_points: &impl ToInputArray, image_size: core::Size) -> Result<core::Mat> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_initCameraMatrix2D_const__InputArrayR_const__InputArrayR_Size(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), image_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_initCameraMatrix2D_const__InputArrayR_const__InputArrayR_Size(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &image_size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -5615,11 +5615,11 @@ pub mod calib3d {
 	/// ## C++ default parameters
 	/// * aspect_ratio: 1.0
 	#[inline]
-	pub fn init_camera_matrix_2d(object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, image_size: core::Size, aspect_ratio: f64) -> Result<core::Mat> {
+	pub fn init_camera_matrix_2d(object_points: &impl ToInputArray, image_points: &impl ToInputArray, image_size: core::Size, aspect_ratio: f64) -> Result<core::Mat> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_initCameraMatrix2D_const__InputArrayR_const__InputArrayR_Size_double(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), image_size.opencv_as_extern(), aspect_ratio, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_initCameraMatrix2D_const__InputArrayR_const__InputArrayR_Size_double(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &image_size, aspect_ratio, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -5671,7 +5671,7 @@ pub mod calib3d {
 	/// * map1: The first output map for #remap.
 	/// * map2: The second output map for #remap.
 	#[inline]
-	pub fn init_inverse_rectification_map(camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, r: &impl core::ToInputArray, new_camera_matrix: &impl core::ToInputArray, size: core::Size, m1type: i32, map1: &mut impl core::ToOutputArray, map2: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn init_inverse_rectification_map(camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, r: &impl ToInputArray, new_camera_matrix: &impl ToInputArray, size: core::Size, m1type: i32, map1: &mut impl ToOutputArray, map2: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(camera_matrix);
 		input_array_arg!(dist_coeffs);
 		input_array_arg!(r);
@@ -5729,7 +5729,7 @@ pub mod calib3d {
 	/// * map1: The first output map.
 	/// * map2: The second output map.
 	#[inline]
-	pub fn init_undistort_rectify_map(camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, r: &impl core::ToInputArray, new_camera_matrix: &impl core::ToInputArray, size: core::Size, m1type: i32, map1: &mut impl core::ToOutputArray, map2: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn init_undistort_rectify_map(camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, r: &impl ToInputArray, new_camera_matrix: &impl ToInputArray, size: core::Size, m1type: i32, map1: &mut impl ToOutputArray, map2: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(camera_matrix);
 		input_array_arg!(dist_coeffs);
 		input_array_arg!(r);
@@ -5737,7 +5737,7 @@ pub mod calib3d {
 		output_array_arg!(map1);
 		output_array_arg!(map2);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_initUndistortRectifyMap_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_Size_int_const__OutputArrayR_const__OutputArrayR(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), r.as_raw__InputArray(), new_camera_matrix.as_raw__InputArray(), size.opencv_as_extern(), m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_initUndistortRectifyMap_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_Size_int_const__OutputArrayR_const__OutputArrayR(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), r.as_raw__InputArray(), new_camera_matrix.as_raw__InputArray(), &size, m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -5750,13 +5750,13 @@ pub mod calib3d {
 	/// * proj_type: PROJ_SPHERICAL_EQRECT
 	/// * alpha: 0
 	#[inline]
-	pub fn init_wide_angle_proj_map_def(camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, image_size: core::Size, dest_image_width: i32, m1type: i32, map1: &mut impl core::ToOutputArray, map2: &mut impl core::ToOutputArray) -> Result<f32> {
+	pub fn init_wide_angle_proj_map_def(camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, image_size: core::Size, dest_image_width: i32, m1type: i32, map1: &mut impl ToOutputArray, map2: &mut impl ToOutputArray) -> Result<f32> {
 		input_array_arg!(camera_matrix);
 		input_array_arg!(dist_coeffs);
 		output_array_arg!(map1);
 		output_array_arg!(map2);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_initWideAngleProjMap_const__InputArrayR_const__InputArrayR_Size_int_int_const__OutputArrayR_const__OutputArrayR(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), image_size.opencv_as_extern(), dest_image_width, m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_initWideAngleProjMap_const__InputArrayR_const__InputArrayR_Size_int_int_const__OutputArrayR_const__OutputArrayR(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), &image_size, dest_image_width, m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -5768,13 +5768,13 @@ pub mod calib3d {
 	/// * proj_type: PROJ_SPHERICAL_EQRECT
 	/// * alpha: 0
 	#[inline]
-	pub fn init_wide_angle_proj_map(camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, image_size: core::Size, dest_image_width: i32, m1type: i32, map1: &mut impl core::ToOutputArray, map2: &mut impl core::ToOutputArray, proj_type: crate::calib3d::UndistortTypes, alpha: f64) -> Result<f32> {
+	pub fn init_wide_angle_proj_map(camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, image_size: core::Size, dest_image_width: i32, m1type: i32, map1: &mut impl ToOutputArray, map2: &mut impl ToOutputArray, proj_type: crate::calib3d::UndistortTypes, alpha: f64) -> Result<f32> {
 		input_array_arg!(camera_matrix);
 		input_array_arg!(dist_coeffs);
 		output_array_arg!(map1);
 		output_array_arg!(map2);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_initWideAngleProjMap_const__InputArrayR_const__InputArrayR_Size_int_int_const__OutputArrayR_const__OutputArrayR_UndistortTypes_double(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), image_size.opencv_as_extern(), dest_image_width, m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray(), proj_type, alpha, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_initWideAngleProjMap_const__InputArrayR_const__InputArrayR_Size_int_int_const__OutputArrayR_const__OutputArrayR_UndistortTypes_double(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), &image_size, dest_image_width, m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray(), proj_type, alpha, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -5794,7 +5794,7 @@ pub mod calib3d {
 	/// the elements of each of the two input matrices. The function is used to compute the Jacobian
 	/// matrices in [stereo_calibrate] but can also be used in any other similar optimization function.
 	#[inline]
-	pub fn mat_mul_deriv(a: &impl core::ToInputArray, b: &impl core::ToInputArray, d_a_bd_a: &mut impl core::ToOutputArray, d_a_bd_b: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn mat_mul_deriv(a: &impl ToInputArray, b: &impl ToInputArray, d_a_bd_a: &mut impl ToOutputArray, d_a_bd_b: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(a);
 		input_array_arg!(b);
 		output_array_arg!(d_a_bd_a);
@@ -5846,7 +5846,7 @@ pub mod calib3d {
 	/// * jacobian: noArray()
 	/// * aspect_ratio: 0
 	#[inline]
-	pub fn project_points_def(object_points: &impl core::ToInputArray, rvec: &impl core::ToInputArray, tvec: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, image_points: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn project_points_def(object_points: &impl ToInputArray, rvec: &impl ToInputArray, tvec: &impl ToInputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, image_points: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(object_points);
 		input_array_arg!(rvec);
 		input_array_arg!(tvec);
@@ -5899,7 +5899,7 @@ pub mod calib3d {
 	/// * jacobian: noArray()
 	/// * aspect_ratio: 0
 	#[inline]
-	pub fn project_points(object_points: &impl core::ToInputArray, rvec: &impl core::ToInputArray, tvec: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, image_points: &mut impl core::ToOutputArray, jacobian: &mut impl core::ToOutputArray, aspect_ratio: f64) -> Result<()> {
+	pub fn project_points(object_points: &impl ToInputArray, rvec: &impl ToInputArray, tvec: &impl ToInputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, image_points: &mut impl ToOutputArray, jacobian: &mut impl ToOutputArray, aspect_ratio: f64) -> Result<()> {
 		input_array_arg!(object_points);
 		input_array_arg!(rvec);
 		input_array_arg!(tvec);
@@ -5986,7 +5986,7 @@ pub mod calib3d {
 	/// * threshold: 1.0
 	/// * mask: noArray()
 	#[inline]
-	pub fn recover_pose_2_cameras_def(points1: &impl core::ToInputArray, points2: &impl core::ToInputArray, camera_matrix1: &impl core::ToInputArray, dist_coeffs1: &impl core::ToInputArray, camera_matrix2: &impl core::ToInputArray, dist_coeffs2: &impl core::ToInputArray, e: &mut impl core::ToOutputArray, r: &mut impl core::ToOutputArray, t: &mut impl core::ToOutputArray) -> Result<i32> {
+	pub fn recover_pose_2_cameras_def(points1: &impl ToInputArray, points2: &impl ToInputArray, camera_matrix1: &impl ToInputArray, dist_coeffs1: &impl ToInputArray, camera_matrix2: &impl ToInputArray, dist_coeffs2: &impl ToInputArray, e: &mut impl ToOutputArray, r: &mut impl ToOutputArray, t: &mut impl ToOutputArray) -> Result<i32> {
 		input_array_arg!(points1);
 		input_array_arg!(points2);
 		input_array_arg!(camera_matrix1);
@@ -6074,7 +6074,7 @@ pub mod calib3d {
 	/// * threshold: 1.0
 	/// * mask: noArray()
 	#[inline]
-	pub fn recover_pose_2_cameras(points1: &impl core::ToInputArray, points2: &impl core::ToInputArray, camera_matrix1: &impl core::ToInputArray, dist_coeffs1: &impl core::ToInputArray, camera_matrix2: &impl core::ToInputArray, dist_coeffs2: &impl core::ToInputArray, e: &mut impl core::ToOutputArray, r: &mut impl core::ToOutputArray, t: &mut impl core::ToOutputArray, method: i32, prob: f64, threshold: f64, mask: &mut impl core::ToInputOutputArray) -> Result<i32> {
+	pub fn recover_pose_2_cameras(points1: &impl ToInputArray, points2: &impl ToInputArray, camera_matrix1: &impl ToInputArray, dist_coeffs1: &impl ToInputArray, camera_matrix2: &impl ToInputArray, dist_coeffs2: &impl ToInputArray, e: &mut impl ToOutputArray, r: &mut impl ToOutputArray, t: &mut impl ToOutputArray, method: i32, prob: f64, threshold: f64, mask: &mut impl ToInputOutputArray) -> Result<i32> {
 		input_array_arg!(points1);
 		input_array_arg!(points2);
 		input_array_arg!(camera_matrix1);
@@ -6148,7 +6148,7 @@ pub mod calib3d {
 	/// This alternative version of [recover_pose_estimated] function uses the following default values for its arguments:
 	/// * mask: noArray()
 	#[inline]
-	pub fn recover_pose_estimated_def(e: &impl core::ToInputArray, points1: &impl core::ToInputArray, points2: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray, r: &mut impl core::ToOutputArray, t: &mut impl core::ToOutputArray) -> Result<i32> {
+	pub fn recover_pose_estimated_def(e: &impl ToInputArray, points1: &impl ToInputArray, points2: &impl ToInputArray, camera_matrix: &impl ToInputArray, r: &mut impl ToOutputArray, t: &mut impl ToOutputArray) -> Result<i32> {
 		input_array_arg!(e);
 		input_array_arg!(points1);
 		input_array_arg!(points2);
@@ -6217,7 +6217,7 @@ pub mod calib3d {
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
-	pub fn recover_pose_estimated(e: &impl core::ToInputArray, points1: &impl core::ToInputArray, points2: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray, r: &mut impl core::ToOutputArray, t: &mut impl core::ToOutputArray, mask: &mut impl core::ToInputOutputArray) -> Result<i32> {
+	pub fn recover_pose_estimated(e: &impl ToInputArray, points1: &impl ToInputArray, points2: &impl ToInputArray, camera_matrix: &impl ToInputArray, r: &mut impl ToOutputArray, t: &mut impl ToOutputArray, mask: &mut impl ToInputOutputArray) -> Result<i32> {
 		input_array_arg!(e);
 		input_array_arg!(points1);
 		input_array_arg!(points2);
@@ -6263,7 +6263,7 @@ pub mod calib3d {
 	/// * mask: noArray()
 	/// * triangulated_points: noArray()
 	#[inline]
-	pub fn recover_pose_triangulated_def(e: &impl core::ToInputArray, points1: &impl core::ToInputArray, points2: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray, r: &mut impl core::ToOutputArray, t: &mut impl core::ToOutputArray, distance_thresh: f64) -> Result<i32> {
+	pub fn recover_pose_triangulated_def(e: &impl ToInputArray, points1: &impl ToInputArray, points2: &impl ToInputArray, camera_matrix: &impl ToInputArray, r: &mut impl ToOutputArray, t: &mut impl ToOutputArray, distance_thresh: f64) -> Result<i32> {
 		input_array_arg!(e);
 		input_array_arg!(points1);
 		input_array_arg!(points2);
@@ -6359,7 +6359,7 @@ pub mod calib3d {
 	/// * mask: noArray()
 	/// * triangulated_points: noArray()
 	#[inline]
-	pub fn recover_pose_triangulated(e: &impl core::ToInputArray, points1: &impl core::ToInputArray, points2: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray, r: &mut impl core::ToOutputArray, t: &mut impl core::ToOutputArray, distance_thresh: f64, mask: &mut impl core::ToInputOutputArray, triangulated_points: &mut impl core::ToOutputArray) -> Result<i32> {
+	pub fn recover_pose_triangulated(e: &impl ToInputArray, points1: &impl ToInputArray, points2: &impl ToInputArray, camera_matrix: &impl ToInputArray, r: &mut impl ToOutputArray, t: &mut impl ToOutputArray, distance_thresh: f64, mask: &mut impl ToInputOutputArray, triangulated_points: &mut impl ToOutputArray) -> Result<i32> {
 		input_array_arg!(e);
 		input_array_arg!(points1);
 		input_array_arg!(points2);
@@ -6406,7 +6406,7 @@ pub mod calib3d {
 	/// * pp: Point2d(0,0)
 	/// * mask: noArray()
 	#[inline]
-	pub fn recover_pose_def(e: &impl core::ToInputArray, points1: &impl core::ToInputArray, points2: &impl core::ToInputArray, r: &mut impl core::ToOutputArray, t: &mut impl core::ToOutputArray) -> Result<i32> {
+	pub fn recover_pose_def(e: &impl ToInputArray, points1: &impl ToInputArray, points2: &impl ToInputArray, r: &mut impl ToOutputArray, t: &mut impl ToOutputArray) -> Result<i32> {
 		input_array_arg!(e);
 		input_array_arg!(points1);
 		input_array_arg!(points2);
@@ -6501,7 +6501,7 @@ pub mod calib3d {
 	/// * pp: Point2d(0,0)
 	/// * mask: noArray()
 	#[inline]
-	pub fn recover_pose(e: &impl core::ToInputArray, points1: &impl core::ToInputArray, points2: &impl core::ToInputArray, r: &mut impl core::ToOutputArray, t: &mut impl core::ToOutputArray, focal: f64, pp: core::Point2d, mask: &mut impl core::ToInputOutputArray) -> Result<i32> {
+	pub fn recover_pose(e: &impl ToInputArray, points1: &impl ToInputArray, points2: &impl ToInputArray, r: &mut impl ToOutputArray, t: &mut impl ToOutputArray, focal: f64, pp: core::Point2d, mask: &mut impl ToInputOutputArray) -> Result<i32> {
 		input_array_arg!(e);
 		input_array_arg!(points1);
 		input_array_arg!(points2);
@@ -6509,7 +6509,7 @@ pub mod calib3d {
 		output_array_arg!(t);
 		input_output_array_arg!(mask);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_recoverPose_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_Point2d_const__InputOutputArrayR(e.as_raw__InputArray(), points1.as_raw__InputArray(), points2.as_raw__InputArray(), r.as_raw__OutputArray(), t.as_raw__OutputArray(), focal, pp.opencv_as_extern(), mask.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_recoverPose_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_Point2d_const__InputOutputArrayR(e.as_raw__InputArray(), points1.as_raw__InputArray(), points2.as_raw__InputArray(), r.as_raw__OutputArray(), t.as_raw__OutputArray(), focal, &pp, mask.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -6517,7 +6517,7 @@ pub mod calib3d {
 	
 	/// computes the rectification transformations for 3-head camera, where all the heads are on the same line.
 	#[inline]
-	pub fn rectify3_collinear(camera_matrix1: &impl core::ToInputArray, dist_coeffs1: &impl core::ToInputArray, camera_matrix2: &impl core::ToInputArray, dist_coeffs2: &impl core::ToInputArray, camera_matrix3: &impl core::ToInputArray, dist_coeffs3: &impl core::ToInputArray, imgpt1: &impl core::ToInputArray, imgpt3: &impl core::ToInputArray, image_size: core::Size, r12: &impl core::ToInputArray, t12: &impl core::ToInputArray, r13: &impl core::ToInputArray, t13: &impl core::ToInputArray, r1: &mut impl core::ToOutputArray, r2: &mut impl core::ToOutputArray, r3: &mut impl core::ToOutputArray, p1: &mut impl core::ToOutputArray, p2: &mut impl core::ToOutputArray, p3: &mut impl core::ToOutputArray, q: &mut impl core::ToOutputArray, alpha: f64, new_img_size: core::Size, roi1: &mut core::Rect, roi2: &mut core::Rect, flags: i32) -> Result<f32> {
+	pub fn rectify3_collinear(camera_matrix1: &impl ToInputArray, dist_coeffs1: &impl ToInputArray, camera_matrix2: &impl ToInputArray, dist_coeffs2: &impl ToInputArray, camera_matrix3: &impl ToInputArray, dist_coeffs3: &impl ToInputArray, imgpt1: &impl ToInputArray, imgpt3: &impl ToInputArray, image_size: core::Size, r12: &impl ToInputArray, t12: &impl ToInputArray, r13: &impl ToInputArray, t13: &impl ToInputArray, r1: &mut impl ToOutputArray, r2: &mut impl ToOutputArray, r3: &mut impl ToOutputArray, p1: &mut impl ToOutputArray, p2: &mut impl ToOutputArray, p3: &mut impl ToOutputArray, q: &mut impl ToOutputArray, alpha: f64, new_img_size: core::Size, roi1: &mut core::Rect, roi2: &mut core::Rect, flags: i32) -> Result<f32> {
 		input_array_arg!(camera_matrix1);
 		input_array_arg!(dist_coeffs1);
 		input_array_arg!(camera_matrix2);
@@ -6538,7 +6538,7 @@ pub mod calib3d {
 		output_array_arg!(p3);
 		output_array_arg!(q);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_rectify3Collinear_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_Size_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_double_Size_RectX_RectX_int(camera_matrix1.as_raw__InputArray(), dist_coeffs1.as_raw__InputArray(), camera_matrix2.as_raw__InputArray(), dist_coeffs2.as_raw__InputArray(), camera_matrix3.as_raw__InputArray(), dist_coeffs3.as_raw__InputArray(), imgpt1.as_raw__InputArray(), imgpt3.as_raw__InputArray(), image_size.opencv_as_extern(), r12.as_raw__InputArray(), t12.as_raw__InputArray(), r13.as_raw__InputArray(), t13.as_raw__InputArray(), r1.as_raw__OutputArray(), r2.as_raw__OutputArray(), r3.as_raw__OutputArray(), p1.as_raw__OutputArray(), p2.as_raw__OutputArray(), p3.as_raw__OutputArray(), q.as_raw__OutputArray(), alpha, new_img_size.opencv_as_extern(), roi1, roi2, flags, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_rectify3Collinear_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_Size_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_double_Size_RectX_RectX_int(camera_matrix1.as_raw__InputArray(), dist_coeffs1.as_raw__InputArray(), camera_matrix2.as_raw__InputArray(), dist_coeffs2.as_raw__InputArray(), camera_matrix3.as_raw__InputArray(), dist_coeffs3.as_raw__InputArray(), imgpt1.as_raw__InputArray(), imgpt3.as_raw__InputArray(), &image_size, r12.as_raw__InputArray(), t12.as_raw__InputArray(), r13.as_raw__InputArray(), t13.as_raw__InputArray(), r1.as_raw__OutputArray(), r2.as_raw__OutputArray(), r3.as_raw__OutputArray(), p1.as_raw__OutputArray(), p2.as_raw__OutputArray(), p3.as_raw__OutputArray(), q.as_raw__OutputArray(), alpha, &new_img_size, roi1, roi2, flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -6578,7 +6578,7 @@ pub mod calib3d {
 	/// * handle_missing_values: false
 	/// * ddepth: -1
 	#[inline]
-	pub fn reproject_image_to_3d_def(disparity: &impl core::ToInputArray, _3d_image: &mut impl core::ToOutputArray, q: &impl core::ToInputArray) -> Result<()> {
+	pub fn reproject_image_to_3d_def(disparity: &impl ToInputArray, _3d_image: &mut impl ToOutputArray, q: &impl ToInputArray) -> Result<()> {
 		input_array_arg!(disparity);
 		output_array_arg!(_3d_image);
 		input_array_arg!(q);
@@ -6622,7 +6622,7 @@ pub mod calib3d {
 	/// * handle_missing_values: false
 	/// * ddepth: -1
 	#[inline]
-	pub fn reproject_image_to_3d(disparity: &impl core::ToInputArray, _3d_image: &mut impl core::ToOutputArray, q: &impl core::ToInputArray, handle_missing_values: bool, ddepth: i32) -> Result<()> {
+	pub fn reproject_image_to_3d(disparity: &impl ToInputArray, _3d_image: &mut impl ToOutputArray, q: &impl ToInputArray, handle_missing_values: bool, ddepth: i32) -> Result<()> {
 		input_array_arg!(disparity);
 		output_array_arg!(_3d_image);
 		input_array_arg!(q);
@@ -6645,7 +6645,7 @@ pub mod calib3d {
 	/// ## Returns
 	/// The computed Sampson distance.
 	#[inline]
-	pub fn sampson_distance(pt1: &impl core::ToInputArray, pt2: &impl core::ToInputArray, f: &impl core::ToInputArray) -> Result<f64> {
+	pub fn sampson_distance(pt1: &impl ToInputArray, pt2: &impl ToInputArray, f: &impl ToInputArray) -> Result<f64> {
 		input_array_arg!(pt1);
 		input_array_arg!(pt2);
 		input_array_arg!(f);
@@ -6685,7 +6685,7 @@ pub mod calib3d {
 	/// Note:
 	/// The solutions are sorted by reprojection errors (lowest to highest).
 	#[inline]
-	pub fn solve_p3p(object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, rvecs: &mut impl core::ToOutputArray, tvecs: &mut impl core::ToOutputArray, flags: i32) -> Result<i32> {
+	pub fn solve_p3p(object_points: &impl ToInputArray, image_points: &impl ToInputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray, flags: i32) -> Result<i32> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points);
 		input_array_arg!(camera_matrix);
@@ -6781,7 +6781,7 @@ pub mod calib3d {
 	/// * tvec: noArray()
 	/// * reprojection_error: noArray()
 	#[inline]
-	pub fn solve_pnp_generic_def(object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, rvecs: &mut impl core::ToOutputArray, tvecs: &mut impl core::ToOutputArray) -> Result<i32> {
+	pub fn solve_pnp_generic_def(object_points: &impl ToInputArray, image_points: &impl ToInputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray) -> Result<i32> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points);
 		input_array_arg!(camera_matrix);
@@ -6876,7 +6876,7 @@ pub mod calib3d {
 	/// * tvec: noArray()
 	/// * reprojection_error: noArray()
 	#[inline]
-	pub fn solve_pnp_generic(object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, rvecs: &mut impl core::ToOutputArray, tvecs: &mut impl core::ToOutputArray, use_extrinsic_guess: bool, flags: crate::calib3d::SolvePnPMethod, rvec: &impl core::ToInputArray, tvec: &impl core::ToInputArray, reprojection_error: &mut impl core::ToOutputArray) -> Result<i32> {
+	pub fn solve_pnp_generic(object_points: &impl ToInputArray, image_points: &impl ToInputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray, use_extrinsic_guess: bool, flags: crate::calib3d::SolvePnPMethod, rvec: &impl ToInputArray, tvec: &impl ToInputArray, reprojection_error: &mut impl ToOutputArray) -> Result<i32> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points);
 		input_array_arg!(camera_matrix);
@@ -6947,7 +6947,7 @@ pub mod calib3d {
 	/// * inliers: noArray()
 	/// * flags: SOLVEPNP_ITERATIVE
 	#[inline]
-	pub fn solve_pnp_ransac_def(object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, rvec: &mut impl core::ToOutputArray, tvec: &mut impl core::ToOutputArray) -> Result<bool> {
+	pub fn solve_pnp_ransac_def(object_points: &impl ToInputArray, image_points: &impl ToInputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvec: &mut impl ToOutputArray, tvec: &mut impl ToOutputArray) -> Result<bool> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points);
 		input_array_arg!(camera_matrix);
@@ -7014,7 +7014,7 @@ pub mod calib3d {
 	/// * inliers: noArray()
 	/// * flags: SOLVEPNP_ITERATIVE
 	#[inline]
-	pub fn solve_pnp_ransac(object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, rvec: &mut impl core::ToOutputArray, tvec: &mut impl core::ToOutputArray, use_extrinsic_guess: bool, iterations_count: i32, reprojection_error: f32, confidence: f64, inliers: &mut impl core::ToOutputArray, flags: i32) -> Result<bool> {
+	pub fn solve_pnp_ransac(object_points: &impl ToInputArray, image_points: &impl ToInputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvec: &mut impl ToOutputArray, tvec: &mut impl ToOutputArray, use_extrinsic_guess: bool, iterations_count: i32, reprojection_error: f32, confidence: f64, inliers: &mut impl ToOutputArray, flags: i32) -> Result<bool> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points);
 		input_array_arg!(camera_matrix);
@@ -7033,7 +7033,7 @@ pub mod calib3d {
 	/// This alternative version of [solve_pnp_ransac_1] function uses the following default values for its arguments:
 	/// * params: UsacParams()
 	#[inline]
-	pub fn solve_pnp_ransac_1_def(object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, camera_matrix: &mut impl core::ToInputOutputArray, dist_coeffs: &impl core::ToInputArray, rvec: &mut impl core::ToOutputArray, tvec: &mut impl core::ToOutputArray, inliers: &mut impl core::ToOutputArray) -> Result<bool> {
+	pub fn solve_pnp_ransac_1_def(object_points: &impl ToInputArray, image_points: &impl ToInputArray, camera_matrix: &mut impl ToInputOutputArray, dist_coeffs: &impl ToInputArray, rvec: &mut impl ToOutputArray, tvec: &mut impl ToOutputArray, inliers: &mut impl ToOutputArray) -> Result<bool> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points);
 		input_output_array_arg!(camera_matrix);
@@ -7051,7 +7051,7 @@ pub mod calib3d {
 	/// ## C++ default parameters
 	/// * params: UsacParams()
 	#[inline]
-	pub fn solve_pnp_ransac_1(object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, camera_matrix: &mut impl core::ToInputOutputArray, dist_coeffs: &impl core::ToInputArray, rvec: &mut impl core::ToOutputArray, tvec: &mut impl core::ToOutputArray, inliers: &mut impl core::ToOutputArray, params: crate::calib3d::UsacParams) -> Result<bool> {
+	pub fn solve_pnp_ransac_1(object_points: &impl ToInputArray, image_points: &impl ToInputArray, camera_matrix: &mut impl ToInputOutputArray, dist_coeffs: &impl ToInputArray, rvec: &mut impl ToOutputArray, tvec: &mut impl ToOutputArray, inliers: &mut impl ToOutputArray, params: crate::calib3d::UsacParams) -> Result<bool> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points);
 		input_output_array_arg!(camera_matrix);
@@ -7095,7 +7095,7 @@ pub mod calib3d {
 	/// This alternative version of [solve_pnp_refine_lm] function uses the following default values for its arguments:
 	/// * criteria: TermCriteria(TermCriteria::EPS+TermCriteria::COUNT,20,FLT_EPSILON)
 	#[inline]
-	pub fn solve_pnp_refine_lm_def(object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, rvec: &mut impl core::ToInputOutputArray, tvec: &mut impl core::ToInputOutputArray) -> Result<()> {
+	pub fn solve_pnp_refine_lm_def(object_points: &impl ToInputArray, image_points: &impl ToInputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvec: &mut impl ToInputOutputArray, tvec: &mut impl ToInputOutputArray) -> Result<()> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points);
 		input_array_arg!(camera_matrix);
@@ -7137,7 +7137,7 @@ pub mod calib3d {
 	/// ## C++ default parameters
 	/// * criteria: TermCriteria(TermCriteria::EPS+TermCriteria::COUNT,20,FLT_EPSILON)
 	#[inline]
-	pub fn solve_pnp_refine_lm(object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, rvec: &mut impl core::ToInputOutputArray, tvec: &mut impl core::ToInputOutputArray, criteria: core::TermCriteria) -> Result<()> {
+	pub fn solve_pnp_refine_lm(object_points: &impl ToInputArray, image_points: &impl ToInputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvec: &mut impl ToInputOutputArray, tvec: &mut impl ToInputOutputArray, criteria: core::TermCriteria) -> Result<()> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points);
 		input_array_arg!(camera_matrix);
@@ -7145,7 +7145,7 @@ pub mod calib3d {
 		input_output_array_arg!(rvec);
 		input_output_array_arg!(tvec);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_solvePnPRefineLM_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_solvePnPRefineLM_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), &criteria, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -7183,7 +7183,7 @@ pub mod calib3d {
 	/// * criteria: TermCriteria(TermCriteria::EPS+TermCriteria::COUNT,20,FLT_EPSILON)
 	/// * vv_slambda: 1
 	#[inline]
-	pub fn solve_pnp_refine_vvs_def(object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, rvec: &mut impl core::ToInputOutputArray, tvec: &mut impl core::ToInputOutputArray) -> Result<()> {
+	pub fn solve_pnp_refine_vvs_def(object_points: &impl ToInputArray, image_points: &impl ToInputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvec: &mut impl ToInputOutputArray, tvec: &mut impl ToInputOutputArray) -> Result<()> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points);
 		input_array_arg!(camera_matrix);
@@ -7228,7 +7228,7 @@ pub mod calib3d {
 	/// * criteria: TermCriteria(TermCriteria::EPS+TermCriteria::COUNT,20,FLT_EPSILON)
 	/// * vv_slambda: 1
 	#[inline]
-	pub fn solve_pnp_refine_vvs(object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, rvec: &mut impl core::ToInputOutputArray, tvec: &mut impl core::ToInputOutputArray, criteria: core::TermCriteria, vv_slambda: f64) -> Result<()> {
+	pub fn solve_pnp_refine_vvs(object_points: &impl ToInputArray, image_points: &impl ToInputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvec: &mut impl ToInputOutputArray, tvec: &mut impl ToInputOutputArray, criteria: core::TermCriteria, vv_slambda: f64) -> Result<()> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points);
 		input_array_arg!(camera_matrix);
@@ -7236,7 +7236,7 @@ pub mod calib3d {
 		input_output_array_arg!(rvec);
 		input_output_array_arg!(tvec);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_solvePnPRefineVVS_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_TermCriteria_double(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), criteria.opencv_as_extern(), vv_slambda, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_solvePnPRefineVVS_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_TermCriteria_double(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), &criteria, vv_slambda, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -7314,7 +7314,7 @@ pub mod calib3d {
 	/// * use_extrinsic_guess: false
 	/// * flags: SOLVEPNP_ITERATIVE
 	#[inline]
-	pub fn solve_pnp_def(object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, rvec: &mut impl core::ToOutputArray, tvec: &mut impl core::ToOutputArray) -> Result<bool> {
+	pub fn solve_pnp_def(object_points: &impl ToInputArray, image_points: &impl ToInputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvec: &mut impl ToOutputArray, tvec: &mut impl ToOutputArray) -> Result<bool> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points);
 		input_array_arg!(camera_matrix);
@@ -7399,7 +7399,7 @@ pub mod calib3d {
 	/// * use_extrinsic_guess: false
 	/// * flags: SOLVEPNP_ITERATIVE
 	#[inline]
-	pub fn solve_pnp(object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, rvec: &mut impl core::ToOutputArray, tvec: &mut impl core::ToOutputArray, use_extrinsic_guess: bool, flags: i32) -> Result<bool> {
+	pub fn solve_pnp(object_points: &impl ToInputArray, image_points: &impl ToInputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvec: &mut impl ToOutputArray, tvec: &mut impl ToOutputArray, use_extrinsic_guess: bool, flags: i32) -> Result<bool> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points);
 		input_array_arg!(camera_matrix);
@@ -7420,7 +7420,7 @@ pub mod calib3d {
 	/// * flags: CALIB_FIX_INTRINSIC
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,1e-6)
 	#[inline]
-	pub fn stereo_calibrate_1_def(object_points: &impl core::ToInputArray, image_points1: &impl core::ToInputArray, image_points2: &impl core::ToInputArray, camera_matrix1: &mut impl core::ToInputOutputArray, dist_coeffs1: &mut impl core::ToInputOutputArray, camera_matrix2: &mut impl core::ToInputOutputArray, dist_coeffs2: &mut impl core::ToInputOutputArray, image_size: core::Size, r: &mut impl core::ToInputOutputArray, t: &mut impl core::ToInputOutputArray, e: &mut impl core::ToOutputArray, f: &mut impl core::ToOutputArray, per_view_errors: &mut impl core::ToOutputArray) -> Result<f64> {
+	pub fn stereo_calibrate_1_def(object_points: &impl ToInputArray, image_points1: &impl ToInputArray, image_points2: &impl ToInputArray, camera_matrix1: &mut impl ToInputOutputArray, dist_coeffs1: &mut impl ToInputOutputArray, camera_matrix2: &mut impl ToInputOutputArray, dist_coeffs2: &mut impl ToInputOutputArray, image_size: core::Size, r: &mut impl ToInputOutputArray, t: &mut impl ToInputOutputArray, e: &mut impl ToOutputArray, f: &mut impl ToOutputArray, per_view_errors: &mut impl ToOutputArray) -> Result<f64> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points1);
 		input_array_arg!(image_points2);
@@ -7434,7 +7434,7 @@ pub mod calib3d {
 		output_array_arg!(f);
 		output_array_arg!(per_view_errors);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_stereoCalibrate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), camera_matrix1.as_raw__InputOutputArray(), dist_coeffs1.as_raw__InputOutputArray(), camera_matrix2.as_raw__InputOutputArray(), dist_coeffs2.as_raw__InputOutputArray(), image_size.opencv_as_extern(), r.as_raw__InputOutputArray(), t.as_raw__InputOutputArray(), e.as_raw__OutputArray(), f.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_stereoCalibrate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), camera_matrix1.as_raw__InputOutputArray(), dist_coeffs1.as_raw__InputOutputArray(), camera_matrix2.as_raw__InputOutputArray(), dist_coeffs2.as_raw__InputOutputArray(), &image_size, r.as_raw__InputOutputArray(), t.as_raw__InputOutputArray(), e.as_raw__OutputArray(), f.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -7564,7 +7564,7 @@ pub mod calib3d {
 	/// * flags: CALIB_FIX_INTRINSIC
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,1e-6)
 	#[inline]
-	pub fn stereo_calibrate_extended_def(object_points: &impl core::ToInputArray, image_points1: &impl core::ToInputArray, image_points2: &impl core::ToInputArray, camera_matrix1: &mut impl core::ToInputOutputArray, dist_coeffs1: &mut impl core::ToInputOutputArray, camera_matrix2: &mut impl core::ToInputOutputArray, dist_coeffs2: &mut impl core::ToInputOutputArray, image_size: core::Size, r: &mut impl core::ToInputOutputArray, t: &mut impl core::ToInputOutputArray, e: &mut impl core::ToOutputArray, f: &mut impl core::ToOutputArray, rvecs: &mut impl core::ToOutputArray, tvecs: &mut impl core::ToOutputArray, per_view_errors: &mut impl core::ToOutputArray) -> Result<f64> {
+	pub fn stereo_calibrate_extended_def(object_points: &impl ToInputArray, image_points1: &impl ToInputArray, image_points2: &impl ToInputArray, camera_matrix1: &mut impl ToInputOutputArray, dist_coeffs1: &mut impl ToInputOutputArray, camera_matrix2: &mut impl ToInputOutputArray, dist_coeffs2: &mut impl ToInputOutputArray, image_size: core::Size, r: &mut impl ToInputOutputArray, t: &mut impl ToInputOutputArray, e: &mut impl ToOutputArray, f: &mut impl ToOutputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray, per_view_errors: &mut impl ToOutputArray) -> Result<f64> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points1);
 		input_array_arg!(image_points2);
@@ -7580,7 +7580,7 @@ pub mod calib3d {
 		output_array_arg!(tvecs);
 		output_array_arg!(per_view_errors);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_stereoCalibrate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), camera_matrix1.as_raw__InputOutputArray(), dist_coeffs1.as_raw__InputOutputArray(), camera_matrix2.as_raw__InputOutputArray(), dist_coeffs2.as_raw__InputOutputArray(), image_size.opencv_as_extern(), r.as_raw__InputOutputArray(), t.as_raw__InputOutputArray(), e.as_raw__OutputArray(), f.as_raw__OutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_stereoCalibrate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), camera_matrix1.as_raw__InputOutputArray(), dist_coeffs1.as_raw__InputOutputArray(), camera_matrix2.as_raw__InputOutputArray(), dist_coeffs2.as_raw__InputOutputArray(), &image_size, r.as_raw__InputOutputArray(), t.as_raw__InputOutputArray(), e.as_raw__OutputArray(), f.as_raw__OutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -7709,7 +7709,7 @@ pub mod calib3d {
 	/// * flags: CALIB_FIX_INTRINSIC
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,1e-6)
 	#[inline]
-	pub fn stereo_calibrate_extended(object_points: &impl core::ToInputArray, image_points1: &impl core::ToInputArray, image_points2: &impl core::ToInputArray, camera_matrix1: &mut impl core::ToInputOutputArray, dist_coeffs1: &mut impl core::ToInputOutputArray, camera_matrix2: &mut impl core::ToInputOutputArray, dist_coeffs2: &mut impl core::ToInputOutputArray, image_size: core::Size, r: &mut impl core::ToInputOutputArray, t: &mut impl core::ToInputOutputArray, e: &mut impl core::ToOutputArray, f: &mut impl core::ToOutputArray, rvecs: &mut impl core::ToOutputArray, tvecs: &mut impl core::ToOutputArray, per_view_errors: &mut impl core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
+	pub fn stereo_calibrate_extended(object_points: &impl ToInputArray, image_points1: &impl ToInputArray, image_points2: &impl ToInputArray, camera_matrix1: &mut impl ToInputOutputArray, dist_coeffs1: &mut impl ToInputOutputArray, camera_matrix2: &mut impl ToInputOutputArray, dist_coeffs2: &mut impl ToInputOutputArray, image_size: core::Size, r: &mut impl ToInputOutputArray, t: &mut impl ToInputOutputArray, e: &mut impl ToOutputArray, f: &mut impl ToOutputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray, per_view_errors: &mut impl ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points1);
 		input_array_arg!(image_points2);
@@ -7725,7 +7725,7 @@ pub mod calib3d {
 		output_array_arg!(tvecs);
 		output_array_arg!(per_view_errors);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_stereoCalibrate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), camera_matrix1.as_raw__InputOutputArray(), dist_coeffs1.as_raw__InputOutputArray(), camera_matrix2.as_raw__InputOutputArray(), dist_coeffs2.as_raw__InputOutputArray(), image_size.opencv_as_extern(), r.as_raw__InputOutputArray(), t.as_raw__InputOutputArray(), e.as_raw__OutputArray(), f.as_raw__OutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_stereoCalibrate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), camera_matrix1.as_raw__InputOutputArray(), dist_coeffs1.as_raw__InputOutputArray(), camera_matrix2.as_raw__InputOutputArray(), dist_coeffs2.as_raw__InputOutputArray(), &image_size, r.as_raw__InputOutputArray(), t.as_raw__InputOutputArray(), e.as_raw__OutputArray(), f.as_raw__OutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, &criteria, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -7856,7 +7856,7 @@ pub mod calib3d {
 	/// * flags: CALIB_FIX_INTRINSIC
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,1e-6)
 	#[inline]
-	pub fn stereo_calibrate_1(object_points: &impl core::ToInputArray, image_points1: &impl core::ToInputArray, image_points2: &impl core::ToInputArray, camera_matrix1: &mut impl core::ToInputOutputArray, dist_coeffs1: &mut impl core::ToInputOutputArray, camera_matrix2: &mut impl core::ToInputOutputArray, dist_coeffs2: &mut impl core::ToInputOutputArray, image_size: core::Size, r: &mut impl core::ToInputOutputArray, t: &mut impl core::ToInputOutputArray, e: &mut impl core::ToOutputArray, f: &mut impl core::ToOutputArray, per_view_errors: &mut impl core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
+	pub fn stereo_calibrate_1(object_points: &impl ToInputArray, image_points1: &impl ToInputArray, image_points2: &impl ToInputArray, camera_matrix1: &mut impl ToInputOutputArray, dist_coeffs1: &mut impl ToInputOutputArray, camera_matrix2: &mut impl ToInputOutputArray, dist_coeffs2: &mut impl ToInputOutputArray, image_size: core::Size, r: &mut impl ToInputOutputArray, t: &mut impl ToInputOutputArray, e: &mut impl ToOutputArray, f: &mut impl ToOutputArray, per_view_errors: &mut impl ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points1);
 		input_array_arg!(image_points2);
@@ -7870,7 +7870,7 @@ pub mod calib3d {
 		output_array_arg!(f);
 		output_array_arg!(per_view_errors);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_stereoCalibrate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), camera_matrix1.as_raw__InputOutputArray(), dist_coeffs1.as_raw__InputOutputArray(), camera_matrix2.as_raw__InputOutputArray(), dist_coeffs2.as_raw__InputOutputArray(), image_size.opencv_as_extern(), r.as_raw__InputOutputArray(), t.as_raw__InputOutputArray(), e.as_raw__OutputArray(), f.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_stereoCalibrate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), camera_matrix1.as_raw__InputOutputArray(), dist_coeffs1.as_raw__InputOutputArray(), camera_matrix2.as_raw__InputOutputArray(), dist_coeffs2.as_raw__InputOutputArray(), &image_size, r.as_raw__InputOutputArray(), t.as_raw__InputOutputArray(), e.as_raw__OutputArray(), f.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, &criteria, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -7883,7 +7883,7 @@ pub mod calib3d {
 	/// * flags: CALIB_FIX_INTRINSIC
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,1e-6)
 	#[inline]
-	pub fn stereo_calibrate_def(object_points: &impl core::ToInputArray, image_points1: &impl core::ToInputArray, image_points2: &impl core::ToInputArray, camera_matrix1: &mut impl core::ToInputOutputArray, dist_coeffs1: &mut impl core::ToInputOutputArray, camera_matrix2: &mut impl core::ToInputOutputArray, dist_coeffs2: &mut impl core::ToInputOutputArray, image_size: core::Size, r: &mut impl core::ToOutputArray, t: &mut impl core::ToOutputArray, e: &mut impl core::ToOutputArray, f: &mut impl core::ToOutputArray) -> Result<f64> {
+	pub fn stereo_calibrate_def(object_points: &impl ToInputArray, image_points1: &impl ToInputArray, image_points2: &impl ToInputArray, camera_matrix1: &mut impl ToInputOutputArray, dist_coeffs1: &mut impl ToInputOutputArray, camera_matrix2: &mut impl ToInputOutputArray, dist_coeffs2: &mut impl ToInputOutputArray, image_size: core::Size, r: &mut impl ToOutputArray, t: &mut impl ToOutputArray, e: &mut impl ToOutputArray, f: &mut impl ToOutputArray) -> Result<f64> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points1);
 		input_array_arg!(image_points2);
@@ -7896,7 +7896,7 @@ pub mod calib3d {
 		output_array_arg!(e);
 		output_array_arg!(f);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_stereoCalibrate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), camera_matrix1.as_raw__InputOutputArray(), dist_coeffs1.as_raw__InputOutputArray(), camera_matrix2.as_raw__InputOutputArray(), dist_coeffs2.as_raw__InputOutputArray(), image_size.opencv_as_extern(), r.as_raw__OutputArray(), t.as_raw__OutputArray(), e.as_raw__OutputArray(), f.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_stereoCalibrate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), camera_matrix1.as_raw__InputOutputArray(), dist_coeffs1.as_raw__InputOutputArray(), camera_matrix2.as_raw__InputOutputArray(), dist_coeffs2.as_raw__InputOutputArray(), &image_size, r.as_raw__OutputArray(), t.as_raw__OutputArray(), e.as_raw__OutputArray(), f.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -8027,7 +8027,7 @@ pub mod calib3d {
 	/// * flags: CALIB_FIX_INTRINSIC
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,1e-6)
 	#[inline]
-	pub fn stereo_calibrate(object_points: &impl core::ToInputArray, image_points1: &impl core::ToInputArray, image_points2: &impl core::ToInputArray, camera_matrix1: &mut impl core::ToInputOutputArray, dist_coeffs1: &mut impl core::ToInputOutputArray, camera_matrix2: &mut impl core::ToInputOutputArray, dist_coeffs2: &mut impl core::ToInputOutputArray, image_size: core::Size, r: &mut impl core::ToOutputArray, t: &mut impl core::ToOutputArray, e: &mut impl core::ToOutputArray, f: &mut impl core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
+	pub fn stereo_calibrate(object_points: &impl ToInputArray, image_points1: &impl ToInputArray, image_points2: &impl ToInputArray, camera_matrix1: &mut impl ToInputOutputArray, dist_coeffs1: &mut impl ToInputOutputArray, camera_matrix2: &mut impl ToInputOutputArray, dist_coeffs2: &mut impl ToInputOutputArray, image_size: core::Size, r: &mut impl ToOutputArray, t: &mut impl ToOutputArray, e: &mut impl ToOutputArray, f: &mut impl ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points1);
 		input_array_arg!(image_points2);
@@ -8040,7 +8040,7 @@ pub mod calib3d {
 		output_array_arg!(e);
 		output_array_arg!(f);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_stereoCalibrate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), camera_matrix1.as_raw__InputOutputArray(), dist_coeffs1.as_raw__InputOutputArray(), camera_matrix2.as_raw__InputOutputArray(), dist_coeffs2.as_raw__InputOutputArray(), image_size.opencv_as_extern(), r.as_raw__OutputArray(), t.as_raw__OutputArray(), e.as_raw__OutputArray(), f.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_stereoCalibrate_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_Size_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), camera_matrix1.as_raw__InputOutputArray(), dist_coeffs1.as_raw__InputOutputArray(), camera_matrix2.as_raw__InputOutputArray(), dist_coeffs2.as_raw__InputOutputArray(), &image_size, r.as_raw__OutputArray(), t.as_raw__OutputArray(), e.as_raw__OutputArray(), f.as_raw__OutputArray(), flags, &criteria, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -8081,14 +8081,14 @@ pub mod calib3d {
 	/// This alternative version of [stereo_rectify_uncalibrated] function uses the following default values for its arguments:
 	/// * threshold: 5
 	#[inline]
-	pub fn stereo_rectify_uncalibrated_def(points1: &impl core::ToInputArray, points2: &impl core::ToInputArray, f: &impl core::ToInputArray, img_size: core::Size, h1: &mut impl core::ToOutputArray, h2: &mut impl core::ToOutputArray) -> Result<bool> {
+	pub fn stereo_rectify_uncalibrated_def(points1: &impl ToInputArray, points2: &impl ToInputArray, f: &impl ToInputArray, img_size: core::Size, h1: &mut impl ToOutputArray, h2: &mut impl ToOutputArray) -> Result<bool> {
 		input_array_arg!(points1);
 		input_array_arg!(points2);
 		input_array_arg!(f);
 		output_array_arg!(h1);
 		output_array_arg!(h2);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_stereoRectifyUncalibrated_const__InputArrayR_const__InputArrayR_const__InputArrayR_Size_const__OutputArrayR_const__OutputArrayR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), f.as_raw__InputArray(), img_size.opencv_as_extern(), h1.as_raw__OutputArray(), h2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_stereoRectifyUncalibrated_const__InputArrayR_const__InputArrayR_const__InputArrayR_Size_const__OutputArrayR_const__OutputArrayR(points1.as_raw__InputArray(), points2.as_raw__InputArray(), f.as_raw__InputArray(), &img_size, h1.as_raw__OutputArray(), h2.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -8128,14 +8128,14 @@ pub mod calib3d {
 	/// ## C++ default parameters
 	/// * threshold: 5
 	#[inline]
-	pub fn stereo_rectify_uncalibrated(points1: &impl core::ToInputArray, points2: &impl core::ToInputArray, f: &impl core::ToInputArray, img_size: core::Size, h1: &mut impl core::ToOutputArray, h2: &mut impl core::ToOutputArray, threshold: f64) -> Result<bool> {
+	pub fn stereo_rectify_uncalibrated(points1: &impl ToInputArray, points2: &impl ToInputArray, f: &impl ToInputArray, img_size: core::Size, h1: &mut impl ToOutputArray, h2: &mut impl ToOutputArray, threshold: f64) -> Result<bool> {
 		input_array_arg!(points1);
 		input_array_arg!(points2);
 		input_array_arg!(f);
 		output_array_arg!(h1);
 		output_array_arg!(h2);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_stereoRectifyUncalibrated_const__InputArrayR_const__InputArrayR_const__InputArrayR_Size_const__OutputArrayR_const__OutputArrayR_double(points1.as_raw__InputArray(), points2.as_raw__InputArray(), f.as_raw__InputArray(), img_size.opencv_as_extern(), h1.as_raw__OutputArray(), h2.as_raw__OutputArray(), threshold, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_stereoRectifyUncalibrated_const__InputArrayR_const__InputArrayR_const__InputArrayR_Size_const__OutputArrayR_const__OutputArrayR_double(points1.as_raw__InputArray(), points2.as_raw__InputArray(), f.as_raw__InputArray(), &img_size, h1.as_raw__OutputArray(), h2.as_raw__OutputArray(), threshold, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -8243,7 +8243,7 @@ pub mod calib3d {
 	/// * valid_pix_roi1: 0
 	/// * valid_pix_roi2: 0
 	#[inline]
-	pub fn stereo_rectify_def(camera_matrix1: &impl core::ToInputArray, dist_coeffs1: &impl core::ToInputArray, camera_matrix2: &impl core::ToInputArray, dist_coeffs2: &impl core::ToInputArray, image_size: core::Size, r: &impl core::ToInputArray, t: &impl core::ToInputArray, r1: &mut impl core::ToOutputArray, r2: &mut impl core::ToOutputArray, p1: &mut impl core::ToOutputArray, p2: &mut impl core::ToOutputArray, q: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn stereo_rectify_def(camera_matrix1: &impl ToInputArray, dist_coeffs1: &impl ToInputArray, camera_matrix2: &impl ToInputArray, dist_coeffs2: &impl ToInputArray, image_size: core::Size, r: &impl ToInputArray, t: &impl ToInputArray, r1: &mut impl ToOutputArray, r2: &mut impl ToOutputArray, p1: &mut impl ToOutputArray, p2: &mut impl ToOutputArray, q: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(camera_matrix1);
 		input_array_arg!(dist_coeffs1);
 		input_array_arg!(camera_matrix2);
@@ -8256,7 +8256,7 @@ pub mod calib3d {
 		output_array_arg!(p2);
 		output_array_arg!(q);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_stereoRectify_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(camera_matrix1.as_raw__InputArray(), dist_coeffs1.as_raw__InputArray(), camera_matrix2.as_raw__InputArray(), dist_coeffs2.as_raw__InputArray(), image_size.opencv_as_extern(), r.as_raw__InputArray(), t.as_raw__InputArray(), r1.as_raw__OutputArray(), r2.as_raw__OutputArray(), p1.as_raw__OutputArray(), p2.as_raw__OutputArray(), q.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_stereoRectify_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(camera_matrix1.as_raw__InputArray(), dist_coeffs1.as_raw__InputArray(), camera_matrix2.as_raw__InputArray(), dist_coeffs2.as_raw__InputArray(), &image_size, r.as_raw__InputArray(), t.as_raw__InputArray(), r1.as_raw__OutputArray(), r2.as_raw__OutputArray(), p1.as_raw__OutputArray(), p2.as_raw__OutputArray(), q.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -8363,7 +8363,7 @@ pub mod calib3d {
 	/// * valid_pix_roi1: 0
 	/// * valid_pix_roi2: 0
 	#[inline]
-	pub fn stereo_rectify(camera_matrix1: &impl core::ToInputArray, dist_coeffs1: &impl core::ToInputArray, camera_matrix2: &impl core::ToInputArray, dist_coeffs2: &impl core::ToInputArray, image_size: core::Size, r: &impl core::ToInputArray, t: &impl core::ToInputArray, r1: &mut impl core::ToOutputArray, r2: &mut impl core::ToOutputArray, p1: &mut impl core::ToOutputArray, p2: &mut impl core::ToOutputArray, q: &mut impl core::ToOutputArray, flags: i32, alpha: f64, new_image_size: core::Size, valid_pix_roi1: &mut core::Rect, valid_pix_roi2: &mut core::Rect) -> Result<()> {
+	pub fn stereo_rectify(camera_matrix1: &impl ToInputArray, dist_coeffs1: &impl ToInputArray, camera_matrix2: &impl ToInputArray, dist_coeffs2: &impl ToInputArray, image_size: core::Size, r: &impl ToInputArray, t: &impl ToInputArray, r1: &mut impl ToOutputArray, r2: &mut impl ToOutputArray, p1: &mut impl ToOutputArray, p2: &mut impl ToOutputArray, q: &mut impl ToOutputArray, flags: i32, alpha: f64, new_image_size: core::Size, valid_pix_roi1: &mut core::Rect, valid_pix_roi2: &mut core::Rect) -> Result<()> {
 		input_array_arg!(camera_matrix1);
 		input_array_arg!(dist_coeffs1);
 		input_array_arg!(camera_matrix2);
@@ -8376,7 +8376,7 @@ pub mod calib3d {
 		output_array_arg!(p2);
 		output_array_arg!(q);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_stereoRectify_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_double_Size_RectX_RectX(camera_matrix1.as_raw__InputArray(), dist_coeffs1.as_raw__InputArray(), camera_matrix2.as_raw__InputArray(), dist_coeffs2.as_raw__InputArray(), image_size.opencv_as_extern(), r.as_raw__InputArray(), t.as_raw__InputArray(), r1.as_raw__OutputArray(), r2.as_raw__OutputArray(), p1.as_raw__OutputArray(), p2.as_raw__OutputArray(), q.as_raw__OutputArray(), flags, alpha, new_image_size.opencv_as_extern(), valid_pix_roi1, valid_pix_roi2, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_stereoRectify_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_Size_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_double_Size_RectX_RectX(camera_matrix1.as_raw__InputArray(), dist_coeffs1.as_raw__InputArray(), camera_matrix2.as_raw__InputArray(), dist_coeffs2.as_raw__InputArray(), &image_size, r.as_raw__InputArray(), t.as_raw__InputArray(), r1.as_raw__OutputArray(), r2.as_raw__OutputArray(), p1.as_raw__OutputArray(), p2.as_raw__OutputArray(), q.as_raw__OutputArray(), flags, alpha, &new_image_size, valid_pix_roi1, valid_pix_roi2, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -8408,7 +8408,7 @@ pub mod calib3d {
 	/// ## See also
 	/// reprojectImageTo3D
 	#[inline]
-	pub fn triangulate_points(proj_matr1: &impl core::ToInputArray, proj_matr2: &impl core::ToInputArray, proj_points1: &impl core::ToInputArray, proj_points2: &impl core::ToInputArray, points4_d: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn triangulate_points(proj_matr1: &impl ToInputArray, proj_matr2: &impl ToInputArray, proj_points1: &impl ToInputArray, proj_points2: &impl ToInputArray, points4_d: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(proj_matr1);
 		input_array_arg!(proj_matr2);
 		input_array_arg!(proj_points1);
@@ -8434,7 +8434,7 @@ pub mod calib3d {
 	/// This alternative version of [undistort_image_points] function uses the following default values for its arguments:
 	/// * unnamed: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,5,0.01)
 	#[inline]
-	pub fn undistort_image_points_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray) -> Result<()> {
+	pub fn undistort_image_points_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		input_array_arg!(camera_matrix);
@@ -8458,13 +8458,13 @@ pub mod calib3d {
 	/// ## C++ default parameters
 	/// * unnamed: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,5,0.01)
 	#[inline]
-	pub fn undistort_image_points(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, unnamed: core::TermCriteria) -> Result<()> {
+	pub fn undistort_image_points(src: &impl ToInputArray, dst: &mut impl ToOutputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, unnamed: core::TermCriteria) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		input_array_arg!(camera_matrix);
 		input_array_arg!(dist_coeffs);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_undistortImagePoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_TermCriteria(src.as_raw__InputArray(), dst.as_raw__OutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), unnamed.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_undistortImagePoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_TermCriteria(src.as_raw__InputArray(), dst.as_raw__OutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), &unnamed, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -8504,7 +8504,7 @@ pub mod calib3d {
 	/// * r: noArray()
 	/// * p: noArray()
 	#[inline]
-	pub fn undistort_points_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray) -> Result<()> {
+	pub fn undistort_points_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		input_array_arg!(camera_matrix);
@@ -8549,7 +8549,7 @@ pub mod calib3d {
 	/// * r: noArray()
 	/// * p: noArray()
 	#[inline]
-	pub fn undistort_points(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, r: &impl core::ToInputArray, p: &impl core::ToInputArray) -> Result<()> {
+	pub fn undistort_points(src: &impl ToInputArray, dst: &mut impl ToOutputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, r: &impl ToInputArray, p: &impl ToInputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		input_array_arg!(camera_matrix);
@@ -8597,7 +8597,7 @@ pub mod calib3d {
 	/// 
 	/// Note: Default version of [undistort_points] does 5 iterations to compute undistorted points.
 	#[inline]
-	pub fn undistort_points_iter(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, r: &impl core::ToInputArray, p: &impl core::ToInputArray, criteria: core::TermCriteria) -> Result<()> {
+	pub fn undistort_points_iter(src: &impl ToInputArray, dst: &mut impl ToOutputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, r: &impl ToInputArray, p: &impl ToInputArray, criteria: core::TermCriteria) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		input_array_arg!(camera_matrix);
@@ -8605,7 +8605,7 @@ pub mod calib3d {
 		input_array_arg!(r);
 		input_array_arg!(p);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_undistortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_TermCriteria(src.as_raw__InputArray(), dst.as_raw__OutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), r.as_raw__InputArray(), p.as_raw__InputArray(), criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_undistortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_TermCriteria(src.as_raw__InputArray(), dst.as_raw__OutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), r.as_raw__InputArray(), p.as_raw__InputArray(), &criteria, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -8644,7 +8644,7 @@ pub mod calib3d {
 	/// This alternative version of [undistort] function uses the following default values for its arguments:
 	/// * new_camera_matrix: noArray()
 	#[inline]
-	pub fn undistort_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray) -> Result<()> {
+	pub fn undistort_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		input_array_arg!(camera_matrix);
@@ -8688,7 +8688,7 @@ pub mod calib3d {
 	/// ## C++ default parameters
 	/// * new_camera_matrix: noArray()
 	#[inline]
-	pub fn undistort(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, new_camera_matrix: &impl core::ToInputArray) -> Result<()> {
+	pub fn undistort(src: &impl ToInputArray, dst: &mut impl ToOutputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, new_camera_matrix: &impl ToInputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		input_array_arg!(camera_matrix);
@@ -8707,7 +8707,7 @@ pub mod calib3d {
 	/// This alternative version of [validate_disparity] function uses the following default values for its arguments:
 	/// * disp12_max_disp: 1
 	#[inline]
-	pub fn validate_disparity_def(disparity: &mut impl core::ToInputOutputArray, cost: &impl core::ToInputArray, min_disparity: i32, number_of_disparities: i32) -> Result<()> {
+	pub fn validate_disparity_def(disparity: &mut impl ToInputOutputArray, cost: &impl ToInputArray, min_disparity: i32, number_of_disparities: i32) -> Result<()> {
 		input_output_array_arg!(disparity);
 		input_array_arg!(cost);
 		return_send!(via ocvrs_return);
@@ -8722,7 +8722,7 @@ pub mod calib3d {
 	/// ## C++ default parameters
 	/// * disp12_max_disp: 1
 	#[inline]
-	pub fn validate_disparity(disparity: &mut impl core::ToInputOutputArray, cost: &impl core::ToInputArray, min_disparity: i32, number_of_disparities: i32, disp12_max_disp: i32) -> Result<()> {
+	pub fn validate_disparity(disparity: &mut impl ToInputOutputArray, cost: &impl ToInputArray, min_disparity: i32, number_of_disparities: i32, disp12_max_disp: i32) -> Result<()> {
 		input_output_array_arg!(disparity);
 		input_array_arg!(cost);
 		return_send!(via ocvrs_return);
@@ -8785,7 +8785,7 @@ pub mod calib3d {
 		/// and the dimensionality of optimized criteria is defined by the size of err vector
 		/// computed by the callback.
 		#[inline]
-		fn run(&self, param: &mut impl core::ToInputOutputArray) -> Result<i32> {
+		fn run(&self, param: &mut impl ToInputOutputArray) -> Result<i32> {
 			input_output_array_arg!(param);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_LMSolver_run_const_const__InputOutputArrayR(self.as_raw_LMSolver(), param.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
@@ -8852,6 +8852,8 @@ pub mod calib3d {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { LMSolver, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::calib3d::LMSolverTraitConst for LMSolver {
 		#[inline] fn as_raw_LMSolver(&self) -> *const c_void { self.as_raw() }
 	}
@@ -8859,6 +8861,8 @@ pub mod calib3d {
 	impl crate::calib3d::LMSolverTrait for LMSolver {
 		#[inline] fn as_raw_mut_LMSolver(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { LMSolver, crate::calib3d::LMSolverTraitConst, as_raw_LMSolver, crate::calib3d::LMSolverTrait, as_raw_mut_LMSolver }
 	
 	impl LMSolver {
 		/// Creates Levenberg-Marquard solver
@@ -8915,7 +8919,7 @@ pub mod calib3d {
 		/// The callback should explicitly allocate (with "create" method) each output array
 		/// (unless it's noArray()).
 		#[inline]
-		fn compute(&self, param: &impl core::ToInputArray, err: &mut impl core::ToOutputArray, j: &mut impl core::ToOutputArray) -> Result<bool> {
+		fn compute(&self, param: &impl ToInputArray, err: &mut impl ToOutputArray, j: &mut impl ToOutputArray) -> Result<bool> {
 			input_array_arg!(param);
 			output_array_arg!(err);
 			output_array_arg!(j);
@@ -8956,6 +8960,8 @@ pub mod calib3d {
 	impl crate::calib3d::LMSolver_CallbackTrait for LMSolver_Callback {
 		#[inline] fn as_raw_mut_LMSolver_Callback(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { LMSolver_Callback, crate::calib3d::LMSolver_CallbackTraitConst, as_raw_LMSolver_Callback, crate::calib3d::LMSolver_CallbackTrait, as_raw_mut_LMSolver_Callback }
 	
 	impl LMSolver_Callback {
 	}
@@ -9107,7 +9113,7 @@ pub mod calib3d {
 		#[inline]
 		fn set_roi1(&mut self, roi1: core::Rect) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_StereoBM_setROI1_Rect(self.as_raw_mut_StereoBM(), roi1.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_StereoBM_setROI1_Rect(self.as_raw_mut_StereoBM(), &roi1, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -9116,7 +9122,7 @@ pub mod calib3d {
 		#[inline]
 		fn set_roi2(&mut self, roi2: core::Rect) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_StereoBM_setROI2_Rect(self.as_raw_mut_StereoBM(), roi2.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_StereoBM_setROI2_Rect(self.as_raw_mut_StereoBM(), &roi2, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -9149,6 +9155,8 @@ pub mod calib3d {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { StereoBM, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::calib3d::StereoMatcherTraitConst for StereoBM {
 		#[inline] fn as_raw_StereoMatcher(&self) -> *const c_void { self.as_raw() }
 	}
@@ -9157,6 +9165,8 @@ pub mod calib3d {
 		#[inline] fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { StereoBM, crate::calib3d::StereoMatcherTraitConst, as_raw_StereoMatcher, crate::calib3d::StereoMatcherTrait, as_raw_mut_StereoMatcher }
+	
 	impl crate::calib3d::StereoBMTraitConst for StereoBM {
 		#[inline] fn as_raw_StereoBM(&self) -> *const c_void { self.as_raw() }
 	}
@@ -9164,6 +9174,8 @@ pub mod calib3d {
 	impl crate::calib3d::StereoBMTrait for StereoBM {
 		#[inline] fn as_raw_mut_StereoBM(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { StereoBM, crate::calib3d::StereoBMTraitConst, as_raw_StereoBM, crate::calib3d::StereoBMTrait, as_raw_mut_StereoBM }
 	
 	impl StereoBM {
 		/// Creates StereoBM object
@@ -9308,7 +9320,7 @@ pub mod calib3d {
 		/// like StereoBM or StereoSGBM compute 16-bit fixed-point disparity map (where each disparity value
 		/// has 4 fractional bits), whereas other algorithms output 32-bit floating-point disparity map.
 		#[inline]
-		fn compute(&mut self, left: &impl core::ToInputArray, right: &impl core::ToInputArray, disparity: &mut impl core::ToOutputArray) -> Result<()> {
+		fn compute(&mut self, left: &impl ToInputArray, right: &impl ToInputArray, disparity: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(left);
 			input_array_arg!(right);
 			output_array_arg!(disparity);
@@ -9399,6 +9411,8 @@ pub mod calib3d {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { StereoMatcher, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::calib3d::StereoMatcherTraitConst for StereoMatcher {
 		#[inline] fn as_raw_StereoMatcher(&self) -> *const c_void { self.as_raw() }
 	}
@@ -9406,6 +9420,8 @@ pub mod calib3d {
 	impl crate::calib3d::StereoMatcherTrait for StereoMatcher {
 		#[inline] fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { StereoMatcher, crate::calib3d::StereoMatcherTraitConst, as_raw_StereoMatcher, crate::calib3d::StereoMatcherTrait, as_raw_mut_StereoMatcher }
 	
 	impl StereoMatcher {
 	}
@@ -9567,6 +9583,8 @@ pub mod calib3d {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { StereoSGBM, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::calib3d::StereoMatcherTraitConst for StereoSGBM {
 		#[inline] fn as_raw_StereoMatcher(&self) -> *const c_void { self.as_raw() }
 	}
@@ -9575,6 +9593,8 @@ pub mod calib3d {
 		#[inline] fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { StereoSGBM, crate::calib3d::StereoMatcherTraitConst, as_raw_StereoMatcher, crate::calib3d::StereoMatcherTrait, as_raw_mut_StereoMatcher }
+	
 	impl crate::calib3d::StereoSGBMTraitConst for StereoSGBM {
 		#[inline] fn as_raw_StereoSGBM(&self) -> *const c_void { self.as_raw() }
 	}
@@ -9582,6 +9602,8 @@ pub mod calib3d {
 	impl crate::calib3d::StereoSGBMTrait for StereoSGBM {
 		#[inline] fn as_raw_mut_StereoSGBM(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { StereoSGBM, crate::calib3d::StereoSGBMTraitConst, as_raw_StereoSGBM, crate::calib3d::StereoSGBMTrait, as_raw_mut_StereoSGBM }
 	
 	impl StereoSGBM {
 		/// Creates StereoSGBM object

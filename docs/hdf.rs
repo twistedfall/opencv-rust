@@ -595,7 +595,7 @@ pub mod hdf {
 		}
 		
 		#[inline]
-		fn dswrite(&self, array: &impl core::ToInputArray, dslabel: &str) -> Result<()> {
+		fn dswrite(&self, array: &impl ToInputArray, dslabel: &str) -> Result<()> {
 			input_array_arg!(array);
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
@@ -608,7 +608,7 @@ pub mod hdf {
 		/// ## C++ default parameters
 		/// * dims_counts: vector<int>()
 		#[inline]
-		fn dswrite_offset(&self, array: &impl core::ToInputArray, dslabel: &str, dims_offset: &core::Vector<i32>, dims_counts: &core::Vector<i32>) -> Result<()> {
+		fn dswrite_offset(&self, array: &impl ToInputArray, dslabel: &str, dims_offset: &core::Vector<i32>, dims_counts: &core::Vector<i32>) -> Result<()> {
 			input_array_arg!(array);
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
@@ -622,7 +622,7 @@ pub mod hdf {
 		/// This alternative version of [HDF5TraitConst::dswrite_offset] function uses the following default values for its arguments:
 		/// * dims_counts: vector<int>()
 		#[inline]
-		fn dswrite_offset_def(&self, array: &impl core::ToInputArray, dslabel: &str, dims_offset: &core::Vector<i32>) -> Result<()> {
+		fn dswrite_offset_def(&self, array: &impl ToInputArray, dslabel: &str, dims_offset: &core::Vector<i32>) -> Result<()> {
 			input_array_arg!(array);
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
@@ -633,7 +633,7 @@ pub mod hdf {
 		}
 		
 		#[inline]
-		fn dsinsert(&self, array: &impl core::ToInputArray, dslabel: &str) -> Result<()> {
+		fn dsinsert(&self, array: &impl ToInputArray, dslabel: &str) -> Result<()> {
 			input_array_arg!(array);
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
@@ -646,7 +646,7 @@ pub mod hdf {
 		/// ## C++ default parameters
 		/// * dims_counts: vector<int>()
 		#[inline]
-		fn dsinsert_offset(&self, array: &impl core::ToInputArray, dslabel: &str, dims_offset: &core::Vector<i32>, dims_counts: &core::Vector<i32>) -> Result<()> {
+		fn dsinsert_offset(&self, array: &impl ToInputArray, dslabel: &str, dims_offset: &core::Vector<i32>, dims_counts: &core::Vector<i32>) -> Result<()> {
 			input_array_arg!(array);
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
@@ -660,7 +660,7 @@ pub mod hdf {
 		/// This alternative version of [HDF5TraitConst::dsinsert_offset] function uses the following default values for its arguments:
 		/// * dims_counts: vector<int>()
 		#[inline]
-		fn dsinsert_offset_def(&self, array: &impl core::ToInputArray, dslabel: &str, dims_offset: &core::Vector<i32>) -> Result<()> {
+		fn dsinsert_offset_def(&self, array: &impl ToInputArray, dslabel: &str, dims_offset: &core::Vector<i32>) -> Result<()> {
 			input_array_arg!(array);
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
@@ -671,7 +671,7 @@ pub mod hdf {
 		}
 		
 		#[inline]
-		fn dsread(&self, array: &mut impl core::ToOutputArray, dslabel: &str) -> Result<()> {
+		fn dsread(&self, array: &mut impl ToOutputArray, dslabel: &str) -> Result<()> {
 			output_array_arg!(array);
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
@@ -684,7 +684,7 @@ pub mod hdf {
 		/// ## C++ default parameters
 		/// * dims_counts: vector<int>()
 		#[inline]
-		fn dsread_offset(&self, array: &mut impl core::ToOutputArray, dslabel: &str, dims_offset: &core::Vector<i32>, dims_counts: &core::Vector<i32>) -> Result<()> {
+		fn dsread_offset(&self, array: &mut impl ToOutputArray, dslabel: &str, dims_offset: &core::Vector<i32>, dims_counts: &core::Vector<i32>) -> Result<()> {
 			output_array_arg!(array);
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
@@ -698,7 +698,7 @@ pub mod hdf {
 		/// This alternative version of [HDF5TraitConst::dsread_offset] function uses the following default values for its arguments:
 		/// * dims_counts: vector<int>()
 		#[inline]
-		fn dsread_offset_def(&self, array: &mut impl core::ToOutputArray, dslabel: &str, dims_offset: &core::Vector<i32>) -> Result<()> {
+		fn dsread_offset_def(&self, array: &mut impl ToOutputArray, dslabel: &str, dims_offset: &core::Vector<i32>) -> Result<()> {
 			output_array_arg!(array);
 			extern_container_arg!(dslabel);
 			return_send!(via ocvrs_return);
@@ -1452,7 +1452,7 @@ pub mod hdf {
 		/// ## See also
 		/// atexists, atdelete, atread.
 		#[inline]
-		fn atwrite(&mut self, value: &impl core::ToInputArray, atlabel: &str) -> Result<()> {
+		fn atwrite(&mut self, value: &impl ToInputArray, atlabel: &str) -> Result<()> {
 			input_array_arg!(value);
 			extern_container_arg!(atlabel);
 			return_send!(via ocvrs_return);
@@ -1474,7 +1474,7 @@ pub mod hdf {
 		/// ## See also
 		/// atexists, atdelete, atwrite
 		#[inline]
-		fn atread(&mut self, value: &mut impl core::ToOutputArray, atlabel: &str) -> Result<()> {
+		fn atread(&mut self, value: &mut impl ToOutputArray, atlabel: &str) -> Result<()> {
 			output_array_arg!(value);
 			extern_container_arg!(atlabel);
 			return_send!(via ocvrs_return);
@@ -1511,6 +1511,8 @@ pub mod hdf {
 	impl crate::hdf::HDF5Trait for HDF5 {
 		#[inline] fn as_raw_mut_HDF5(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { HDF5, crate::hdf::HDF5TraitConst, as_raw_HDF5, crate::hdf::HDF5Trait, as_raw_mut_HDF5 }
 	
 	impl HDF5 {
 	}

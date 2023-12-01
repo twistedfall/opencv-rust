@@ -129,11 +129,11 @@ include!(concat!(env!("OUT_DIR"), "/opencv/xobjdetect.rs"));
 #[cfg(ocvrs_has_module_xphoto)]
 include!(concat!(env!("OUT_DIR"), "/opencv/xphoto.rs"));
 pub mod types {
-include!(concat!(env!("OUT_DIR"), "/opencv/types.rs"));
+	include!(concat!(env!("OUT_DIR"), "/opencv/types.rs"));
 }
 #[doc(hidden)]
 pub mod sys {
-include!(concat!(env!("OUT_DIR"), "/opencv/sys.rs"));
+	include!(concat!(env!("OUT_DIR"), "/opencv/sys.rs"));
 }
 pub mod hub_prelude {
 	#[cfg(ocvrs_has_module_alphamat)]

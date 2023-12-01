@@ -385,7 +385,7 @@ pub mod surface_matching {
 		/// 
 		/// \details It is assumed that the model is registered on the scene. Scene remains static, while the model transforms. The output poses transform the models onto the scene. Because of the point to plane minimization, the scene is expected to have the normals available. Expected to have the normals (Nx6).
 		#[inline]
-		fn register_model_to_scene(&mut self, src_pc: &core::Mat, dst_pc: &core::Mat, residual: &mut f64, pose: &mut core::Matx44d) -> Result<i32> {
+		fn register_model_to_scene(&mut self, src_pc: &impl core::MatTraitConst, dst_pc: &impl core::MatTraitConst, residual: &mut f64, pose: &mut core::Matx44d) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ppf_match_3d_ICP_registerModelToScene_const_MatR_const_MatR_doubleR_Matx44dR(self.as_raw_mut_ICP(), src_pc.as_raw_Mat(), dst_pc.as_raw_Mat(), residual, pose, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -404,7 +404,7 @@ pub mod surface_matching {
 		/// 
 		/// \details It is assumed that the model is registered on the scene. Scene remains static, while the model transforms. The output poses transform the models onto the scene. Because of the point to plane minimization, the scene is expected to have the normals available. Expected to have the normals (Nx6).
 		#[inline]
-		fn register_model_to_scene_vec(&mut self, src_pc: &core::Mat, dst_pc: &core::Mat, poses: &mut core::Vector<crate::surface_matching::Pose3DPtr>) -> Result<i32> {
+		fn register_model_to_scene_vec(&mut self, src_pc: &impl core::MatTraitConst, dst_pc: &impl core::MatTraitConst, poses: &mut core::Vector<crate::surface_matching::Pose3DPtr>) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ppf_match_3d_ICP_registerModelToScene_const_MatR_const_MatR_vectorLPose3DPtrGR(self.as_raw_mut_ICP(), src_pc.as_raw_Mat(), dst_pc.as_raw_Mat(), poses.as_raw_mut_VectorOfPose3DPtr(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -452,6 +452,8 @@ pub mod surface_matching {
 	impl crate::surface_matching::ICPTrait for ICP {
 		#[inline] fn as_raw_mut_ICP(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { ICP, crate::surface_matching::ICPTraitConst, as_raw_ICP, crate::surface_matching::ICPTrait, as_raw_mut_ICP }
 	
 	impl ICP {
 		#[inline]
@@ -593,7 +595,7 @@ pub mod surface_matching {
 		/// 
 		/// \details Uses the parameters set in the constructor to downsample and learn a new model. When the model is learnt, the instance gets ready for calling "match".
 		#[inline]
-		fn train_model(&mut self, model: &core::Mat) -> Result<()> {
+		fn train_model(&mut self, model: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ppf_match_3d_PPF3DDetector_trainModel_const_MatR(self.as_raw_mut_PPF3DDetector(), model.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -613,7 +615,7 @@ pub mod surface_matching {
 		/// * relative_scene_sample_step: 1.0/5.0
 		/// * relative_scene_distance: 0.03
 		#[inline]
-		fn match_(&mut self, scene: &core::Mat, results: &mut core::Vector<crate::surface_matching::Pose3DPtr>, relative_scene_sample_step: f64, relative_scene_distance: f64) -> Result<()> {
+		fn match_(&mut self, scene: &impl core::MatTraitConst, results: &mut core::Vector<crate::surface_matching::Pose3DPtr>, relative_scene_sample_step: f64, relative_scene_distance: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ppf_match_3d_PPF3DDetector_match_const_MatR_vectorLPose3DPtrGR_const_double_const_double(self.as_raw_mut_PPF3DDetector(), scene.as_raw_Mat(), results.as_raw_mut_VectorOfPose3DPtr(), relative_scene_sample_step, relative_scene_distance, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -634,7 +636,7 @@ pub mod surface_matching {
 		/// * relative_scene_sample_step: 1.0/5.0
 		/// * relative_scene_distance: 0.03
 		#[inline]
-		fn match__def(&mut self, scene: &core::Mat, results: &mut core::Vector<crate::surface_matching::Pose3DPtr>) -> Result<()> {
+		fn match__def(&mut self, scene: &impl core::MatTraitConst, results: &mut core::Vector<crate::surface_matching::Pose3DPtr>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ppf_match_3d_PPF3DDetector_match_const_MatR_vectorLPose3DPtrGR(self.as_raw_mut_PPF3DDetector(), scene.as_raw_Mat(), results.as_raw_mut_VectorOfPose3DPtr(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -677,6 +679,8 @@ pub mod surface_matching {
 	impl crate::surface_matching::PPF3DDetectorTrait for PPF3DDetector {
 		#[inline] fn as_raw_mut_PPF3DDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { PPF3DDetector, crate::surface_matching::PPF3DDetectorTraitConst, as_raw_PPF3DDetector, crate::surface_matching::PPF3DDetectorTrait, as_raw_mut_PPF3DDetector }
 	
 	impl PPF3DDetector {
 		/// \brief Empty constructor. Sets default arguments
@@ -829,7 +833,7 @@ pub mod surface_matching {
 		
 		#[inline]
 		fn set_pose(&mut self, val: core::Matx44d) {
-			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propPose_const_Matx44d(self.as_raw_mut_Pose3D(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propPose_const_Matx44d(self.as_raw_mut_Pose3D(), &val) };
 			ret
 		}
 		
@@ -841,13 +845,13 @@ pub mod surface_matching {
 		
 		#[inline]
 		fn set_t(&mut self, val: core::Vec3d) {
-			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propT_const_Vec3d(self.as_raw_mut_Pose3D(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propT_const_Vec3d(self.as_raw_mut_Pose3D(), &val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_q(&mut self, val: core::Vec4d) {
-			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propQ_const_Vec4d(self.as_raw_mut_Pose3D(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propQ_const_Vec4d(self.as_raw_mut_Pose3D(), &val) };
 			ret
 		}
 		
@@ -959,6 +963,8 @@ pub mod surface_matching {
 	impl crate::surface_matching::Pose3DTrait for Pose3D {
 		#[inline] fn as_raw_mut_Pose3D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { Pose3D, crate::surface_matching::Pose3DTraitConst, as_raw_Pose3D, crate::surface_matching::Pose3DTrait, as_raw_mut_Pose3D }
 	
 	impl Pose3D {
 		#[inline]
@@ -1122,6 +1128,8 @@ pub mod surface_matching {
 	impl crate::surface_matching::PoseCluster3DTrait for PoseCluster3D {
 		#[inline] fn as_raw_mut_PoseCluster3D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { PoseCluster3D, crate::surface_matching::PoseCluster3DTraitConst, as_raw_PoseCluster3D, crate::surface_matching::PoseCluster3DTrait, as_raw_mut_PoseCluster3D }
 	
 	impl PoseCluster3D {
 		#[inline]

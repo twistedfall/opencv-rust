@@ -152,7 +152,7 @@ pub mod gapi {
 	pub type ImgProc_GMat3 = core::Tuple<(crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat)>;
 	pub type ImgProc_retr_mode = crate::imgproc::RetrievalModes;
 	#[inline]
-	pub fn descr_of_2(mat: &core::Mat) -> Result<crate::gapi::GMatDesc> {
+	pub fn descr_of_2(mat: &impl core::MatTraitConst) -> Result<crate::gapi::GMatDesc> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_descr_of_const_MatR(mat.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -162,7 +162,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn descr_of_4(frame: &crate::gapi::MediaFrame) -> Result<crate::gapi::GFrameDesc> {
+	pub fn descr_of_4(frame: &impl crate::gapi::MediaFrameTraitConst) -> Result<crate::gapi::GFrameDesc> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_descr_of_const_MediaFrameR(frame.as_raw_MediaFrame(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -172,7 +172,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn descr_of_1(mat: &crate::gapi::RMat) -> Result<crate::gapi::GMatDesc> {
+	pub fn descr_of_1(mat: &impl crate::gapi::RMatTraitConst) -> Result<crate::gapi::GMatDesc> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_descr_of_const_RMatR(mat.as_raw_RMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -192,7 +192,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn descr_of(mat: &core::UMat) -> Result<crate::gapi::GMatDesc> {
+	pub fn descr_of(mat: &impl core::UMatTraitConst) -> Result<crate::gapi::GMatDesc> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_descr_of_const_UMatR(mat.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -245,7 +245,7 @@ pub mod gapi {
 	/// ## See also
 	/// BGR2LUV
 	#[inline]
-	pub fn bgr2_gray(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn bgr2_gray(src: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_BGR2Gray_const_GMatR(src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -271,7 +271,7 @@ pub mod gapi {
 	/// ## See also
 	/// I4202BGR
 	#[inline]
-	pub fn bgr2_i420(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn bgr2_i420(src: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_BGR2I420_const_GMatR(src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -295,7 +295,7 @@ pub mod gapi {
 	/// ## See also
 	/// RGB2Lab, RGB2LUV
 	#[inline]
-	pub fn bgr2_luv(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn bgr2_luv(src: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_BGR2LUV_const_GMatR(src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -319,7 +319,7 @@ pub mod gapi {
 	/// ## See also
 	/// RGB2BGR
 	#[inline]
-	pub fn bgr2_rgb(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn bgr2_rgb(src: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_BGR2RGB_const_GMatR(src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -343,7 +343,7 @@ pub mod gapi {
 	/// ## See also
 	/// YUV2BGR
 	#[inline]
-	pub fn bgr2_yuv(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn bgr2_yuv(src: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_BGR2YUV_const_GMatR(src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -366,7 +366,7 @@ pub mod gapi {
 	/// ## See also
 	/// YUV2BGR, NV12toRGB
 	#[inline]
-	pub fn bayer_gr2_rgb(src_gr: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn bayer_gr2_rgb(src_gr: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_BayerGR2RGB_const_GMatR(src_gr.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -400,7 +400,7 @@ pub mod gapi {
 	/// * aperture_size: 3
 	/// * l2gradient: false
 	#[inline]
-	pub fn canny_def(image: &crate::gapi::GMat, threshold1: f64, threshold2: f64) -> Result<crate::gapi::GMat> {
+	pub fn canny_def(image: &impl crate::gapi::GMatTraitConst, threshold1: f64, threshold2: f64) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_Canny_const_GMatR_double_double(image.as_raw_GMat(), threshold1, threshold2, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -433,7 +433,7 @@ pub mod gapi {
 	/// * aperture_size: 3
 	/// * l2gradient: false
 	#[inline]
-	pub fn canny(image: &crate::gapi::GMat, threshold1: f64, threshold2: f64, aperture_size: i32, l2gradient: bool) -> Result<crate::gapi::GMat> {
+	pub fn canny(image: &impl crate::gapi::GMatTraitConst, threshold1: f64, threshold2: f64, aperture_size: i32, l2gradient: bool) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_Canny_const_GMatR_double_double_int_bool(image.as_raw_GMat(), threshold1, threshold2, aperture_size, l2gradient, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -459,7 +459,7 @@ pub mod gapi {
 	/// ## See also
 	/// BGR2I420
 	#[inline]
-	pub fn i4202_bgr(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn i4202_bgr(src: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_I4202BGR_const_GMatR(src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -485,7 +485,7 @@ pub mod gapi {
 	/// ## See also
 	/// RGB2I420
 	#[inline]
-	pub fn i4202_rgb(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn i4202_rgb(src: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_I4202RGB_const_GMatR(src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -512,7 +512,7 @@ pub mod gapi {
 	/// either have a single channel (in this case the same table is used for all channels) or the same
 	/// number of channels as in the input matrix.
 	#[inline]
-	pub fn lut(src: &crate::gapi::GMat, lut: &core::Mat) -> Result<crate::gapi::GMat> {
+	pub fn lut(src: &impl crate::gapi::GMatTraitConst, lut: &impl core::MatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_LUT_const_GMatR_const_MatR(src.as_raw_GMat(), lut.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -536,7 +536,7 @@ pub mod gapi {
 	/// ## See also
 	/// BGR2LUV
 	#[inline]
-	pub fn luv2_bgr(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn luv2_bgr(src: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_LUV2BGR_const_GMatR(src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -581,7 +581,7 @@ pub mod gapi {
 	/// * delta: 0
 	/// * border_type: BORDER_DEFAULT
 	#[inline]
-	pub fn laplacian_def(src: &crate::gapi::GMat, ddepth: i32) -> Result<crate::gapi::GMat> {
+	pub fn laplacian_def(src: &impl crate::gapi::GMatTraitConst, ddepth: i32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_Laplacian_const_GMatR_int(src.as_raw_GMat(), ddepth, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -625,7 +625,7 @@ pub mod gapi {
 	/// * delta: 0
 	/// * border_type: BORDER_DEFAULT
 	#[inline]
-	pub fn laplacian(src: &crate::gapi::GMat, ddepth: i32, ksize: i32, scale: f64, delta: f64, border_type: i32) -> Result<crate::gapi::GMat> {
+	pub fn laplacian(src: &impl crate::gapi::GMatTraitConst, ddepth: i32, ksize: i32, scale: f64, delta: f64, border_type: i32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_Laplacian_const_GMatR_int_int_double_double_int(src.as_raw_GMat(), ddepth, ksize, scale, delta, border_type, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -649,7 +649,7 @@ pub mod gapi {
 	/// ## See also
 	/// YUV2BGR, NV12toRGB
 	#[inline]
-	pub fn nv12to_bgr(src_y: &crate::gapi::GMat, src_uv: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn nv12to_bgr(src_y: &impl crate::gapi::GMatTraitConst, src_uv: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_NV12toBGR_const_GMatR_const_GMatR(src_y.as_raw_GMat(), src_uv.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -676,7 +676,7 @@ pub mod gapi {
 	/// ## See also
 	/// YUV2RGB, NV12toRGBp, NV12toBGR
 	#[inline]
-	pub fn nv12to_bg_rp(src_y: &crate::gapi::GMat, src_uv: &crate::gapi::GMat) -> Result<crate::gapi::GMatP> {
+	pub fn nv12to_bg_rp(src_y: &impl crate::gapi::GMatTraitConst, src_uv: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMatP> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_NV12toBGRp_const_GMatR_const_GMatR(src_y.as_raw_GMat(), src_uv.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -700,7 +700,7 @@ pub mod gapi {
 	/// ## See also
 	/// YUV2RGB, NV12toBGR
 	#[inline]
-	pub fn nv12to_gray(src_y: &crate::gapi::GMat, src_uv: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn nv12to_gray(src_y: &impl crate::gapi::GMatTraitConst, src_uv: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_NV12toGray_const_GMatR_const_GMatR(src_y.as_raw_GMat(), src_uv.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -724,7 +724,7 @@ pub mod gapi {
 	/// ## See also
 	/// YUV2RGB, NV12toBGR
 	#[inline]
-	pub fn nv12to_rgb(src_y: &crate::gapi::GMat, src_uv: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn nv12to_rgb(src_y: &impl crate::gapi::GMatTraitConst, src_uv: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_NV12toRGB_const_GMatR_const_GMatR(src_y.as_raw_GMat(), src_uv.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -751,7 +751,7 @@ pub mod gapi {
 	/// ## See also
 	/// YUV2RGB, NV12toBGRp, NV12toRGB
 	#[inline]
-	pub fn nv12to_rg_bp(src_y: &crate::gapi::GMat, src_uv: &crate::gapi::GMat) -> Result<crate::gapi::GMatP> {
+	pub fn nv12to_rg_bp(src_y: &impl crate::gapi::GMatTraitConst, src_uv: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMatP> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_NV12toRGBp_const_GMatR_const_GMatR(src_y.as_raw_GMat(), src_uv.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -774,7 +774,7 @@ pub mod gapi {
 	/// ## See also
 	/// RGB2YUV
 	#[inline]
-	pub fn rgb2_gray(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn rgb2_gray(src: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_RGB2Gray_const_GMatR(src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -811,7 +811,7 @@ pub mod gapi {
 	/// * bY: float multiplier for B channel.
 	/// RGB2YUV
 	#[inline]
-	pub fn rgb2_gray_1(src: &crate::gapi::GMat, r_y: f32, g_y: f32, b_y: f32) -> Result<crate::gapi::GMat> {
+	pub fn rgb2_gray_1(src: &impl crate::gapi::GMatTraitConst, r_y: f32, g_y: f32, b_y: f32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_RGB2Gray_const_GMatR_float_float_float(src.as_raw_GMat(), r_y, g_y, b_y, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -834,7 +834,7 @@ pub mod gapi {
 	/// ## See also
 	/// YUV2BGR, NV12toRGB
 	#[inline]
-	pub fn rgb2_hsv(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn rgb2_hsv(src: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_RGB2HSV_const_GMatR(src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -860,7 +860,7 @@ pub mod gapi {
 	/// ## See also
 	/// I4202RGB
 	#[inline]
-	pub fn rgb2_i420(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn rgb2_i420(src: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_RGB2I420_const_GMatR(src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -884,7 +884,7 @@ pub mod gapi {
 	/// ## See also
 	/// RGB2YUV, RGB2LUV
 	#[inline]
-	pub fn rgb2_lab(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn rgb2_lab(src: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_RGB2Lab_const_GMatR(src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -907,7 +907,7 @@ pub mod gapi {
 	/// ## See also
 	/// YUV2BGR, NV12toRGB
 	#[inline]
-	pub fn rgb2_yuv422(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn rgb2_yuv422(src: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_RGB2YUV422_const_GMatR(src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -934,7 +934,7 @@ pub mod gapi {
 	/// ## See also
 	/// YUV2RGB, RGB2Lab
 	#[inline]
-	pub fn rgb2_yuv(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn rgb2_yuv(src: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_RGB2YUV_const_GMatR(src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1000,7 +1000,7 @@ pub mod gapi {
 	/// * border_type: BORDER_DEFAULT
 	/// * border_value: Scalar(0)
 	#[inline]
-	pub fn sobel_xy_def(src: &crate::gapi::GMat, ddepth: i32, order: i32) -> Result<core::Tuple<(crate::gapi::GMat, crate::gapi::GMat)>> {
+	pub fn sobel_xy_def(src: &impl crate::gapi::GMatTraitConst, ddepth: i32, order: i32) -> Result<core::Tuple<(crate::gapi::GMat, crate::gapi::GMat)>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_SobelXY_const_GMatR_int_int(src.as_raw_GMat(), ddepth, order, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1065,7 +1065,7 @@ pub mod gapi {
 	/// * border_type: BORDER_DEFAULT
 	/// * border_value: Scalar(0)
 	#[inline]
-	pub fn sobel_xy(src: &crate::gapi::GMat, ddepth: i32, order: i32, ksize: i32, scale: f64, delta: f64, border_type: i32, border_value: core::Scalar) -> Result<core::Tuple<(crate::gapi::GMat, crate::gapi::GMat)>> {
+	pub fn sobel_xy(src: &impl crate::gapi::GMatTraitConst, ddepth: i32, order: i32, ksize: i32, scale: f64, delta: f64, border_type: i32, border_value: core::Scalar) -> Result<core::Tuple<(crate::gapi::GMat, crate::gapi::GMat)>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_SobelXY_const_GMatR_int_int_int_double_double_int_const_ScalarR(src.as_raw_GMat(), ddepth, order, ksize, scale, delta, border_type, &border_value, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1131,7 +1131,7 @@ pub mod gapi {
 	/// * border_type: BORDER_DEFAULT
 	/// * border_value: Scalar(0)
 	#[inline]
-	pub fn sobel_def(src: &crate::gapi::GMat, ddepth: i32, dx: i32, dy: i32) -> Result<crate::gapi::GMat> {
+	pub fn sobel_def(src: &impl crate::gapi::GMatTraitConst, ddepth: i32, dx: i32, dy: i32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_Sobel_const_GMatR_int_int_int(src.as_raw_GMat(), ddepth, dx, dy, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1196,7 +1196,7 @@ pub mod gapi {
 	/// * border_type: BORDER_DEFAULT
 	/// * border_value: Scalar(0)
 	#[inline]
-	pub fn sobel(src: &crate::gapi::GMat, ddepth: i32, dx: i32, dy: i32, ksize: i32, scale: f64, delta: f64, border_type: i32, border_value: core::Scalar) -> Result<crate::gapi::GMat> {
+	pub fn sobel(src: &impl crate::gapi::GMatTraitConst, ddepth: i32, dx: i32, dy: i32, ksize: i32, scale: f64, delta: f64, border_type: i32, border_value: core::Scalar) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_Sobel_const_GMatR_int_int_int_int_double_double_int_const_ScalarR(src.as_raw_GMat(), ddepth, dx, dy, ksize, scale, delta, border_type, &border_value, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1220,7 +1220,7 @@ pub mod gapi {
 	/// ## See also
 	/// BGR2YUV
 	#[inline]
-	pub fn yuv2_bgr(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn yuv2_bgr(src: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_YUV2BGR_const_GMatR(src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1243,7 +1243,7 @@ pub mod gapi {
 	/// ## See also
 	/// RGB2Lab, RGB2YUV
 	#[inline]
-	pub fn yuv2_rgb(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn yuv2_rgb(src: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_YUV2RGB_const_GMatR(src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1270,7 +1270,7 @@ pub mod gapi {
 	/// ## See also
 	/// min, max
 	#[inline]
-	pub fn abs_diff_c(src: &crate::gapi::GMat, c: &crate::gapi::GScalar) -> Result<crate::gapi::GMat> {
+	pub fn abs_diff_c(src: &impl crate::gapi::GMatTraitConst, c: &impl crate::gapi::GScalarTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_absDiffC_const_GMatR_const_GScalarR(src.as_raw_GMat(), c.as_raw_GScalar(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1297,7 +1297,7 @@ pub mod gapi {
 	/// ## See also
 	/// abs
 	#[inline]
-	pub fn abs_diff(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn abs_diff(src1: &impl crate::gapi::GMatTraitConst, src2: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_absDiff_const_GMatR_const_GMatR(src1.as_raw_GMat(), src2.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1332,7 +1332,7 @@ pub mod gapi {
 	/// This alternative version of [add_c] function uses the following default values for its arguments:
 	/// * ddepth: -1
 	#[inline]
-	pub fn add_c_def(src1: &crate::gapi::GMat, c: &crate::gapi::GScalar) -> Result<crate::gapi::GMat> {
+	pub fn add_c_def(src1: &impl crate::gapi::GMatTraitConst, c: &impl crate::gapi::GScalarTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_addC_const_GMatR_const_GScalarR(src1.as_raw_GMat(), c.as_raw_GScalar(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1366,7 +1366,7 @@ pub mod gapi {
 	/// ## C++ default parameters
 	/// * ddepth: -1
 	#[inline]
-	pub fn add_c(src1: &crate::gapi::GMat, c: &crate::gapi::GScalar, ddepth: i32) -> Result<crate::gapi::GMat> {
+	pub fn add_c(src1: &impl crate::gapi::GMatTraitConst, c: &impl crate::gapi::GScalarTraitConst, ddepth: i32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_addC_const_GMatR_const_GScalarR_int(src1.as_raw_GMat(), c.as_raw_GScalar(), ddepth, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1381,7 +1381,7 @@ pub mod gapi {
 	/// This alternative version of [add_c_1] function uses the following default values for its arguments:
 	/// * ddepth: -1
 	#[inline]
-	pub fn add_c_1_def(c: &crate::gapi::GScalar, src1: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn add_c_1_def(c: &impl crate::gapi::GScalarTraitConst, src1: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_addC_const_GScalarR_const_GMatR(c.as_raw_GScalar(), src1.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1417,7 +1417,7 @@ pub mod gapi {
 	/// ## C++ default parameters
 	/// * ddepth: -1
 	#[inline]
-	pub fn add_c_1(c: &crate::gapi::GScalar, src1: &crate::gapi::GMat, ddepth: i32) -> Result<crate::gapi::GMat> {
+	pub fn add_c_1(c: &impl crate::gapi::GScalarTraitConst, src1: &impl crate::gapi::GMatTraitConst, ddepth: i32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_addC_const_GScalarR_const_GMatR_int(c.as_raw_GScalar(), src1.as_raw_GMat(), ddepth, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1454,7 +1454,7 @@ pub mod gapi {
 	/// This alternative version of [add_weighted] function uses the following default values for its arguments:
 	/// * ddepth: -1
 	#[inline]
-	pub fn add_weighted_def(src1: &crate::gapi::GMat, alpha: f64, src2: &crate::gapi::GMat, beta: f64, gamma: f64) -> Result<crate::gapi::GMat> {
+	pub fn add_weighted_def(src1: &impl crate::gapi::GMatTraitConst, alpha: f64, src2: &impl crate::gapi::GMatTraitConst, beta: f64, gamma: f64) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_addWeighted_const_GMatR_double_const_GMatR_double_double(src1.as_raw_GMat(), alpha, src2.as_raw_GMat(), beta, gamma, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1490,7 +1490,7 @@ pub mod gapi {
 	/// ## C++ default parameters
 	/// * ddepth: -1
 	#[inline]
-	pub fn add_weighted(src1: &crate::gapi::GMat, alpha: f64, src2: &crate::gapi::GMat, beta: f64, gamma: f64, ddepth: i32) -> Result<crate::gapi::GMat> {
+	pub fn add_weighted(src1: &impl crate::gapi::GMatTraitConst, alpha: f64, src2: &impl crate::gapi::GMatTraitConst, beta: f64, gamma: f64, ddepth: i32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_addWeighted_const_GMatR_double_const_GMatR_double_double_int(src1.as_raw_GMat(), alpha, src2.as_raw_GMat(), beta, gamma, ddepth, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1528,7 +1528,7 @@ pub mod gapi {
 	/// This alternative version of [add] function uses the following default values for its arguments:
 	/// * ddepth: -1
 	#[inline]
-	pub fn add_def(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn add_def(src1: &impl crate::gapi::GMatTraitConst, src2: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_add_const_GMatR_const_GMatR(src1.as_raw_GMat(), src2.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1565,7 +1565,7 @@ pub mod gapi {
 	/// ## C++ default parameters
 	/// * ddepth: -1
 	#[inline]
-	pub fn add(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat, ddepth: i32) -> Result<crate::gapi::GMat> {
+	pub fn add(src1: &impl crate::gapi::GMatTraitConst, src2: &impl crate::gapi::GMatTraitConst, ddepth: i32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_add_const_GMatR_const_GMatR_int(src1.as_raw_GMat(), src2.as_raw_GMat(), ddepth, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1612,7 +1612,7 @@ pub mod gapi {
 	/// This alternative version of [bilateral_filter] function uses the following default values for its arguments:
 	/// * border_type: BORDER_DEFAULT
 	#[inline]
-	pub fn bilateral_filter_def(src: &crate::gapi::GMat, d: i32, sigma_color: f64, sigma_space: f64) -> Result<crate::gapi::GMat> {
+	pub fn bilateral_filter_def(src: &impl crate::gapi::GMatTraitConst, d: i32, sigma_color: f64, sigma_space: f64) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_bilateralFilter_const_GMatR_int_double_double(src.as_raw_GMat(), d, sigma_color, sigma_space, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1658,7 +1658,7 @@ pub mod gapi {
 	/// ## C++ default parameters
 	/// * border_type: BORDER_DEFAULT
 	#[inline]
-	pub fn bilateral_filter(src: &crate::gapi::GMat, d: i32, sigma_color: f64, sigma_space: f64, border_type: i32) -> Result<crate::gapi::GMat> {
+	pub fn bilateral_filter(src: &impl crate::gapi::GMatTraitConst, d: i32, sigma_color: f64, sigma_space: f64, border_type: i32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_bilateralFilter_const_GMatR_int_double_double_int(src.as_raw_GMat(), d, sigma_color, sigma_space, border_type, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1685,7 +1685,7 @@ pub mod gapi {
 	/// * src1: first input matrix.
 	/// * src2: second input matrix.
 	#[inline]
-	pub fn bitwise_and(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn bitwise_and(src1: &impl crate::gapi::GMatTraitConst, src2: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_bitwise_and_const_GMatR_const_GMatR(src1.as_raw_GMat(), src2.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1719,7 +1719,7 @@ pub mod gapi {
 	/// * src1: first input matrix.
 	/// * src2: scalar, which will be per-lemenetly conjuncted with elements of src1.
 	#[inline]
-	pub fn bitwise_and_1(src1: &crate::gapi::GMat, src2: &crate::gapi::GScalar) -> Result<crate::gapi::GMat> {
+	pub fn bitwise_and_1(src1: &impl crate::gapi::GMatTraitConst, src2: &impl crate::gapi::GScalarTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_bitwise_and_const_GMatR_const_GScalarR(src1.as_raw_GMat(), src2.as_raw_GScalar(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1748,7 +1748,7 @@ pub mod gapi {
 	/// ## Parameters
 	/// * src: input matrix.
 	#[inline]
-	pub fn bitwise_not(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn bitwise_not(src: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_bitwise_not_const_GMatR(src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1775,7 +1775,7 @@ pub mod gapi {
 	/// * src1: first input matrix.
 	/// * src2: second input matrix.
 	#[inline]
-	pub fn bitwise_or(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn bitwise_or(src1: &impl crate::gapi::GMatTraitConst, src2: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_bitwise_or_const_GMatR_const_GMatR(src1.as_raw_GMat(), src2.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1809,7 +1809,7 @@ pub mod gapi {
 	/// * src1: first input matrix.
 	/// * src2: scalar, which will be per-lemenetly disjuncted with elements of src1.
 	#[inline]
-	pub fn bitwise_or_1(src1: &crate::gapi::GMat, src2: &crate::gapi::GScalar) -> Result<crate::gapi::GMat> {
+	pub fn bitwise_or_1(src1: &impl crate::gapi::GMatTraitConst, src2: &impl crate::gapi::GScalarTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_bitwise_or_const_GMatR_const_GScalarR(src1.as_raw_GMat(), src2.as_raw_GScalar(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1836,7 +1836,7 @@ pub mod gapi {
 	/// * src1: first input matrix.
 	/// * src2: second input matrix.
 	#[inline]
-	pub fn bitwise_xor(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn bitwise_xor(src1: &impl crate::gapi::GMatTraitConst, src2: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_bitwise_xor_const_GMatR_const_GMatR(src1.as_raw_GMat(), src2.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1870,7 +1870,7 @@ pub mod gapi {
 	/// * src1: first input matrix.
 	/// * src2: scalar, for which per-lemenet "logical or" operation on elements of src1 will be performed.
 	#[inline]
-	pub fn bitwise_xor_1(src1: &crate::gapi::GMat, src2: &crate::gapi::GScalar) -> Result<crate::gapi::GMat> {
+	pub fn bitwise_xor_1(src1: &impl crate::gapi::GMatTraitConst, src2: &impl crate::gapi::GScalarTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_bitwise_xor_const_GMatR_const_GScalarR(src1.as_raw_GMat(), src2.as_raw_GScalar(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1911,7 +1911,7 @@ pub mod gapi {
 	/// * border_type: BORDER_DEFAULT
 	/// * border_value: Scalar(0)
 	#[inline]
-	pub fn blur_def(src: &crate::gapi::GMat, ksize: core::Size) -> Result<crate::gapi::GMat> {
+	pub fn blur_def(src: &impl crate::gapi::GMatTraitConst, ksize: core::Size) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_blur_const_GMatR_const_SizeR(src.as_raw_GMat(), &ksize, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1951,7 +1951,7 @@ pub mod gapi {
 	/// * border_type: BORDER_DEFAULT
 	/// * border_value: Scalar(0)
 	#[inline]
-	pub fn blur(src: &crate::gapi::GMat, ksize: core::Size, anchor: core::Point, border_type: i32, border_value: core::Scalar) -> Result<crate::gapi::GMat> {
+	pub fn blur(src: &impl crate::gapi::GMatTraitConst, ksize: core::Size, anchor: core::Point, border_type: i32, border_value: core::Scalar) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_blur_const_GMatR_const_SizeR_const_PointR_int_const_ScalarR(src.as_raw_GMat(), &ksize, &anchor, border_type, &border_value, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2000,7 +2000,7 @@ pub mod gapi {
 	/// * border_type: BORDER_DEFAULT
 	/// * border_value: Scalar(0)
 	#[inline]
-	pub fn box_filter_def(src: &crate::gapi::GMat, dtype: i32, ksize: core::Size) -> Result<crate::gapi::GMat> {
+	pub fn box_filter_def(src: &impl crate::gapi::GMatTraitConst, dtype: i32, ksize: core::Size) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_boxFilter_const_GMatR_int_const_SizeR(src.as_raw_GMat(), dtype, &ksize, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2048,7 +2048,7 @@ pub mod gapi {
 	/// * border_type: BORDER_DEFAULT
 	/// * border_value: Scalar(0)
 	#[inline]
-	pub fn box_filter(src: &crate::gapi::GMat, dtype: i32, ksize: core::Size, anchor: core::Point, normalize: bool, border_type: i32, border_value: core::Scalar) -> Result<crate::gapi::GMat> {
+	pub fn box_filter(src: &impl crate::gapi::GMatTraitConst, dtype: i32, ksize: core::Size, anchor: core::Point, normalize: bool, border_type: i32, border_value: core::Scalar) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_boxFilter_const_GMatR_int_const_SizeR_const_PointR_bool_int_const_ScalarR(src.as_raw_GMat(), dtype, &ksize, &anchor, normalize, border_type, &border_value, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2085,7 +2085,7 @@ pub mod gapi {
 	/// This alternative version of [cart_to_polar] function uses the following default values for its arguments:
 	/// * angle_in_degrees: false
 	#[inline]
-	pub fn cart_to_polar_def(x: &crate::gapi::GMat, y: &crate::gapi::GMat) -> Result<core::Tuple<(crate::gapi::GMat, crate::gapi::GMat)>> {
+	pub fn cart_to_polar_def(x: &impl crate::gapi::GMatTraitConst, y: &impl crate::gapi::GMatTraitConst) -> Result<core::Tuple<(crate::gapi::GMat, crate::gapi::GMat)>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_cartToPolar_const_GMatR_const_GMatR(x.as_raw_GMat(), y.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2121,7 +2121,7 @@ pub mod gapi {
 	/// ## C++ default parameters
 	/// * angle_in_degrees: false
 	#[inline]
-	pub fn cart_to_polar(x: &crate::gapi::GMat, y: &crate::gapi::GMat, angle_in_degrees: bool) -> Result<core::Tuple<(crate::gapi::GMat, crate::gapi::GMat)>> {
+	pub fn cart_to_polar(x: &impl crate::gapi::GMatTraitConst, y: &impl crate::gapi::GMatTraitConst, angle_in_degrees: bool) -> Result<core::Tuple<(crate::gapi::GMat, crate::gapi::GMat)>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_cartToPolar_const_GMatR_const_GMatR_bool(x.as_raw_GMat(), y.as_raw_GMat(), angle_in_degrees, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2153,7 +2153,7 @@ pub mod gapi {
 	/// ## See also
 	/// min, max, threshold, cmpNE
 	#[inline]
-	pub fn cmp_eq(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn cmp_eq(src1: &impl crate::gapi::GMatTraitConst, src2: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_cmpEQ_const_GMatR_const_GMatR(src1.as_raw_GMat(), src2.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2190,7 +2190,7 @@ pub mod gapi {
 	/// 
 	/// Note: Function textual ID is "org.opencv.core.pixelwise.compare.cmpEQScalar"
 	#[inline]
-	pub fn cmp_eq_1(src1: &crate::gapi::GMat, src2: &crate::gapi::GScalar) -> Result<crate::gapi::GMat> {
+	pub fn cmp_eq_1(src1: &impl crate::gapi::GMatTraitConst, src2: &impl crate::gapi::GScalarTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_cmpEQ_const_GMatR_const_GScalarR(src1.as_raw_GMat(), src2.as_raw_GScalar(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2222,7 +2222,7 @@ pub mod gapi {
 	/// ## See also
 	/// min, max, threshold, cmpLE, cmpGT, cmpLT
 	#[inline]
-	pub fn cmp_ge(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn cmp_ge(src1: &impl crate::gapi::GMatTraitConst, src2: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_cmpGE_const_GMatR_const_GMatR(src1.as_raw_GMat(), src2.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2259,7 +2259,7 @@ pub mod gapi {
 	/// 
 	/// Note: Function textual ID is "org.opencv.core.pixelwise.compare.cmpLGEcalar"
 	#[inline]
-	pub fn cmp_ge_1(src1: &crate::gapi::GMat, src2: &crate::gapi::GScalar) -> Result<crate::gapi::GMat> {
+	pub fn cmp_ge_1(src1: &impl crate::gapi::GMatTraitConst, src2: &impl crate::gapi::GScalarTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_cmpGE_const_GMatR_const_GScalarR(src1.as_raw_GMat(), src2.as_raw_GScalar(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2291,7 +2291,7 @@ pub mod gapi {
 	/// ## See also
 	/// min, max, threshold, cmpLE, cmpGE, cmpLT
 	#[inline]
-	pub fn cmp_gt(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn cmp_gt(src1: &impl crate::gapi::GMatTraitConst, src2: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_cmpGT_const_GMatR_const_GMatR(src1.as_raw_GMat(), src2.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2328,7 +2328,7 @@ pub mod gapi {
 	/// 
 	/// Note: Function textual ID is "org.opencv.core.pixelwise.compare.cmpGTScalar"
 	#[inline]
-	pub fn cmp_gt_1(src1: &crate::gapi::GMat, src2: &crate::gapi::GScalar) -> Result<crate::gapi::GMat> {
+	pub fn cmp_gt_1(src1: &impl crate::gapi::GMatTraitConst, src2: &impl crate::gapi::GScalarTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_cmpGT_const_GMatR_const_GScalarR(src1.as_raw_GMat(), src2.as_raw_GScalar(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2360,7 +2360,7 @@ pub mod gapi {
 	/// ## See also
 	/// min, max, threshold, cmpGT, cmpGE, cmpLT
 	#[inline]
-	pub fn cmp_le(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn cmp_le(src1: &impl crate::gapi::GMatTraitConst, src2: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_cmpLE_const_GMatR_const_GMatR(src1.as_raw_GMat(), src2.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2397,7 +2397,7 @@ pub mod gapi {
 	/// 
 	/// Note: Function textual ID is "org.opencv.core.pixelwise.compare.cmpLEScalar"
 	#[inline]
-	pub fn cmp_le_1(src1: &crate::gapi::GMat, src2: &crate::gapi::GScalar) -> Result<crate::gapi::GMat> {
+	pub fn cmp_le_1(src1: &impl crate::gapi::GMatTraitConst, src2: &impl crate::gapi::GScalarTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_cmpLE_const_GMatR_const_GScalarR(src1.as_raw_GMat(), src2.as_raw_GScalar(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2429,7 +2429,7 @@ pub mod gapi {
 	/// ## See also
 	/// min, max, threshold, cmpLE, cmpGE, cmpGT
 	#[inline]
-	pub fn cmp_lt(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn cmp_lt(src1: &impl crate::gapi::GMatTraitConst, src2: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_cmpLT_const_GMatR_const_GMatR(src1.as_raw_GMat(), src2.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2466,7 +2466,7 @@ pub mod gapi {
 	/// 
 	/// Note: Function textual ID is "org.opencv.core.pixelwise.compare.cmpLTScalar"
 	#[inline]
-	pub fn cmp_lt_1(src1: &crate::gapi::GMat, src2: &crate::gapi::GScalar) -> Result<crate::gapi::GMat> {
+	pub fn cmp_lt_1(src1: &impl crate::gapi::GMatTraitConst, src2: &impl crate::gapi::GScalarTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_cmpLT_const_GMatR_const_GScalarR(src1.as_raw_GMat(), src2.as_raw_GScalar(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2498,7 +2498,7 @@ pub mod gapi {
 	/// ## See also
 	/// min, max, threshold, cmpEQ
 	#[inline]
-	pub fn cmp_ne(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn cmp_ne(src1: &impl crate::gapi::GMatTraitConst, src2: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_cmpNE_const_GMatR_const_GMatR(src1.as_raw_GMat(), src2.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2535,7 +2535,7 @@ pub mod gapi {
 	/// 
 	/// Note: Function textual ID is "org.opencv.core.pixelwise.compare.cmpNEScalar"
 	#[inline]
-	pub fn cmp_ne_1(src1: &crate::gapi::GMat, src2: &crate::gapi::GScalar) -> Result<crate::gapi::GMat> {
+	pub fn cmp_ne_1(src1: &impl crate::gapi::GMatTraitConst, src2: &impl crate::gapi::GScalarTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_cmpNE_const_GMatR_const_GScalarR(src1.as_raw_GMat(), src2.as_raw_GScalar(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2552,7 +2552,7 @@ pub mod gapi {
 	/// ## Returns
 	/// a new kernel package.
 	#[inline]
-	pub fn combine(lhs: &crate::gapi::GKernelPackage, rhs: &crate::gapi::GKernelPackage) -> Result<crate::gapi::GKernelPackage> {
+	pub fn combine(lhs: &impl crate::gapi::GKernelPackageTraitConst, rhs: &impl crate::gapi::GKernelPackageTraitConst) -> Result<crate::gapi::GKernelPackage> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_combine_const_GKernelPackageR_const_GKernelPackageR(lhs.as_raw_GKernelPackage(), rhs.as_raw_GKernelPackage(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2591,7 +2591,7 @@ pub mod gapi {
 	/// ## See also
 	/// concatVert
 	#[inline]
-	pub fn concat_hor(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn concat_hor(src1: &impl crate::gapi::GMatTraitConst, src2: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_concatHor_const_GMatR_const_GMatR(src1.as_raw_GMat(), src2.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2680,7 +2680,7 @@ pub mod gapi {
 	/// ## See also
 	/// concatHor
 	#[inline]
-	pub fn concat_vert(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn concat_vert(src1: &impl crate::gapi::GMatTraitConst, src2: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_concatVert_const_GMatR_const_GMatR(src1.as_raw_GMat(), src2.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2761,7 +2761,7 @@ pub mod gapi {
 	/// * alpha: 1
 	/// * beta: 0
 	#[inline]
-	pub fn convert_to_def(src: &crate::gapi::GMat, rdepth: i32) -> Result<crate::gapi::GMat> {
+	pub fn convert_to_def(src: &impl crate::gapi::GMatTraitConst, rdepth: i32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_convertTo_const_GMatR_int(src.as_raw_GMat(), rdepth, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2791,7 +2791,7 @@ pub mod gapi {
 	/// * alpha: 1
 	/// * beta: 0
 	#[inline]
-	pub fn convert_to(src: &crate::gapi::GMat, rdepth: i32, alpha: f64, beta: f64) -> Result<crate::gapi::GMat> {
+	pub fn convert_to(src: &impl crate::gapi::GMatTraitConst, rdepth: i32, alpha: f64, beta: f64) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_convertTo_const_GMatR_int_double_double(src.as_raw_GMat(), rdepth, alpha, beta, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2812,7 +2812,7 @@ pub mod gapi {
 	/// ## Returns
 	/// Copy of the input
 	#[inline]
-	pub fn copy_1(in_: &crate::gapi::GFrame) -> Result<crate::gapi::GFrame> {
+	pub fn copy_1(in_: &impl crate::gapi::GFrameTraitConst) -> Result<crate::gapi::GFrame> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_copy_const_GFrameR(in_.as_raw_GFrame(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2833,7 +2833,7 @@ pub mod gapi {
 	/// ## Returns
 	/// Copy of the input
 	#[inline]
-	pub fn copy(in_: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn copy(in_: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_copy_const_GMatR(in_.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2857,7 +2857,7 @@ pub mod gapi {
 	/// ## See also
 	/// resize
 	#[inline]
-	pub fn crop(src: &crate::gapi::GMat, rect: core::Rect) -> Result<crate::gapi::GMat> {
+	pub fn crop(src: &impl crate::gapi::GMatTraitConst, rect: core::Rect) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_crop_const_GMatR_const_RectR(src.as_raw_GMat(), &rect, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2894,7 +2894,7 @@ pub mod gapi {
 	/// * border_type: BORDER_CONSTANT
 	/// * border_value: morphologyDefaultBorderValue()
 	#[inline]
-	pub fn dilate3x3_def(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn dilate3x3_def(src: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_dilate3x3_const_GMatR(src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2930,7 +2930,7 @@ pub mod gapi {
 	/// * border_type: BORDER_CONSTANT
 	/// * border_value: morphologyDefaultBorderValue()
 	#[inline]
-	pub fn dilate3x3(src: &crate::gapi::GMat, iterations: i32, border_type: i32, border_value: core::Scalar) -> Result<crate::gapi::GMat> {
+	pub fn dilate3x3(src: &impl crate::gapi::GMatTraitConst, iterations: i32, border_type: i32, border_value: core::Scalar) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_dilate3x3_const_GMatR_int_int_const_ScalarR(src.as_raw_GMat(), iterations, border_type, &border_value, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -2972,7 +2972,7 @@ pub mod gapi {
 	/// * border_type: BORDER_CONSTANT
 	/// * border_value: morphologyDefaultBorderValue()
 	#[inline]
-	pub fn dilate_def(src: &crate::gapi::GMat, kernel: &core::Mat) -> Result<crate::gapi::GMat> {
+	pub fn dilate_def(src: &impl crate::gapi::GMatTraitConst, kernel: &impl core::MatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_dilate_const_GMatR_const_MatR(src.as_raw_GMat(), kernel.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3013,7 +3013,7 @@ pub mod gapi {
 	/// * border_type: BORDER_CONSTANT
 	/// * border_value: morphologyDefaultBorderValue()
 	#[inline]
-	pub fn dilate(src: &crate::gapi::GMat, kernel: &core::Mat, anchor: core::Point, iterations: i32, border_type: i32, border_value: core::Scalar) -> Result<crate::gapi::GMat> {
+	pub fn dilate(src: &impl crate::gapi::GMatTraitConst, kernel: &impl core::MatTraitConst, anchor: core::Point, iterations: i32, border_type: i32, border_value: core::Scalar) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_dilate_const_GMatR_const_MatR_const_PointR_int_int_const_ScalarR(src.as_raw_GMat(), kernel.as_raw_Mat(), &anchor, iterations, border_type, &border_value, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3048,7 +3048,7 @@ pub mod gapi {
 	/// This alternative version of [div_c] function uses the following default values for its arguments:
 	/// * ddepth: -1
 	#[inline]
-	pub fn div_c_def(src: &crate::gapi::GMat, divisor: &crate::gapi::GScalar, scale: f64) -> Result<crate::gapi::GMat> {
+	pub fn div_c_def(src: &impl crate::gapi::GMatTraitConst, divisor: &impl crate::gapi::GScalarTraitConst, scale: f64) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_divC_const_GMatR_const_GScalarR_double(src.as_raw_GMat(), divisor.as_raw_GScalar(), scale, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3082,7 +3082,7 @@ pub mod gapi {
 	/// ## C++ default parameters
 	/// * ddepth: -1
 	#[inline]
-	pub fn div_c(src: &crate::gapi::GMat, divisor: &crate::gapi::GScalar, scale: f64, ddepth: i32) -> Result<crate::gapi::GMat> {
+	pub fn div_c(src: &impl crate::gapi::GMatTraitConst, divisor: &impl crate::gapi::GScalarTraitConst, scale: f64, ddepth: i32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_divC_const_GMatR_const_GScalarR_double_int(src.as_raw_GMat(), divisor.as_raw_GScalar(), scale, ddepth, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3117,7 +3117,7 @@ pub mod gapi {
 	/// This alternative version of [div_rc] function uses the following default values for its arguments:
 	/// * ddepth: -1
 	#[inline]
-	pub fn div_rc_def(divident: &crate::gapi::GScalar, src: &crate::gapi::GMat, scale: f64) -> Result<crate::gapi::GMat> {
+	pub fn div_rc_def(divident: &impl crate::gapi::GScalarTraitConst, src: &impl crate::gapi::GMatTraitConst, scale: f64) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_divRC_const_GScalarR_const_GMatR_double(divident.as_raw_GScalar(), src.as_raw_GMat(), scale, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3151,7 +3151,7 @@ pub mod gapi {
 	/// ## C++ default parameters
 	/// * ddepth: -1
 	#[inline]
-	pub fn div_rc(divident: &crate::gapi::GScalar, src: &crate::gapi::GMat, scale: f64, ddepth: i32) -> Result<crate::gapi::GMat> {
+	pub fn div_rc(divident: &impl crate::gapi::GScalarTraitConst, src: &impl crate::gapi::GMatTraitConst, scale: f64, ddepth: i32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_divRC_const_GScalarR_const_GMatR_double_int(divident.as_raw_GScalar(), src.as_raw_GMat(), scale, ddepth, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3188,7 +3188,7 @@ pub mod gapi {
 	/// This alternative version of [div] function uses the following default values for its arguments:
 	/// * ddepth: -1
 	#[inline]
-	pub fn div_def(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat, scale: f64) -> Result<crate::gapi::GMat> {
+	pub fn div_def(src1: &impl crate::gapi::GMatTraitConst, src2: &impl crate::gapi::GMatTraitConst, scale: f64) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_div_const_GMatR_const_GMatR_double(src1.as_raw_GMat(), src2.as_raw_GMat(), scale, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3224,7 +3224,7 @@ pub mod gapi {
 	/// ## C++ default parameters
 	/// * ddepth: -1
 	#[inline]
-	pub fn div(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat, scale: f64, ddepth: i32) -> Result<crate::gapi::GMat> {
+	pub fn div(src1: &impl crate::gapi::GMatTraitConst, src2: &impl crate::gapi::GMatTraitConst, scale: f64, ddepth: i32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_div_const_GMatR_const_GMatR_double_int(src1.as_raw_GMat(), src2.as_raw_GMat(), scale, ddepth, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3254,7 +3254,7 @@ pub mod gapi {
 	/// ## Parameters
 	/// * src: Source 8-bit single channel image.
 	#[inline]
-	pub fn equalize_hist(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn equalize_hist(src: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_equalizeHist_const_GMatR(src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3288,7 +3288,7 @@ pub mod gapi {
 	/// * border_type: BORDER_CONSTANT
 	/// * border_value: morphologyDefaultBorderValue()
 	#[inline]
-	pub fn erode3x3_def(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn erode3x3_def(src: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_erode3x3_const_GMatR(src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3321,7 +3321,7 @@ pub mod gapi {
 	/// * border_type: BORDER_CONSTANT
 	/// * border_value: morphologyDefaultBorderValue()
 	#[inline]
-	pub fn erode3x3(src: &crate::gapi::GMat, iterations: i32, border_type: i32, border_value: core::Scalar) -> Result<crate::gapi::GMat> {
+	pub fn erode3x3(src: &impl crate::gapi::GMatTraitConst, iterations: i32, border_type: i32, border_value: core::Scalar) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_erode3x3_const_GMatR_int_int_const_ScalarR(src.as_raw_GMat(), iterations, border_type, &border_value, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3364,7 +3364,7 @@ pub mod gapi {
 	/// * border_type: BORDER_CONSTANT
 	/// * border_value: morphologyDefaultBorderValue()
 	#[inline]
-	pub fn erode_def(src: &crate::gapi::GMat, kernel: &core::Mat) -> Result<crate::gapi::GMat> {
+	pub fn erode_def(src: &impl crate::gapi::GMatTraitConst, kernel: &impl core::MatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_erode_const_GMatR_const_MatR(src.as_raw_GMat(), kernel.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3406,7 +3406,7 @@ pub mod gapi {
 	/// * border_type: BORDER_CONSTANT
 	/// * border_value: morphologyDefaultBorderValue()
 	#[inline]
-	pub fn erode(src: &crate::gapi::GMat, kernel: &core::Mat, anchor: core::Point, iterations: i32, border_type: i32, border_value: core::Scalar) -> Result<crate::gapi::GMat> {
+	pub fn erode(src: &impl crate::gapi::GMatTraitConst, kernel: &impl core::MatTraitConst, anchor: core::Point, iterations: i32, border_type: i32, border_value: core::Scalar) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_erode_const_GMatR_const_MatR_const_PointR_int_int_const_ScalarR(src.as_raw_GMat(), kernel.as_raw_Mat(), &anchor, iterations, border_type, &border_value, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3458,7 +3458,7 @@ pub mod gapi {
 	/// * border_type: BORDER_DEFAULT
 	/// * border_value: Scalar(0)
 	#[inline]
-	pub fn filter_2d_def(src: &crate::gapi::GMat, ddepth: i32, kernel: &core::Mat) -> Result<crate::gapi::GMat> {
+	pub fn filter_2d_def(src: &impl crate::gapi::GMatTraitConst, ddepth: i32, kernel: &impl core::MatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_filter2D_const_GMatR_int_const_MatR(src.as_raw_GMat(), ddepth, kernel.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3509,7 +3509,7 @@ pub mod gapi {
 	/// * border_type: BORDER_DEFAULT
 	/// * border_value: Scalar(0)
 	#[inline]
-	pub fn filter_2d(src: &crate::gapi::GMat, ddepth: i32, kernel: &core::Mat, anchor: core::Point, delta: core::Scalar, border_type: i32, border_value: core::Scalar) -> Result<crate::gapi::GMat> {
+	pub fn filter_2d(src: &impl crate::gapi::GMatTraitConst, ddepth: i32, kernel: &impl core::MatTraitConst, anchor: core::Point, delta: core::Scalar, border_type: i32, border_value: core::Scalar) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_filter2D_const_GMatR_int_const_MatR_const_PointR_const_ScalarR_int_const_ScalarR(src.as_raw_GMat(), ddepth, kernel.as_raw_Mat(), &anchor, &delta, border_type, &border_value, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3549,7 +3549,7 @@ pub mod gapi {
 	/// ## See also
 	/// remap
 	#[inline]
-	pub fn flip(src: &crate::gapi::GMat, flip_code: i32) -> Result<crate::gapi::GMat> {
+	pub fn flip(src: &impl crate::gapi::GMatTraitConst, flip_code: i32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_flip_const_GMatR_int(src.as_raw_GMat(), flip_code, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3591,7 +3591,7 @@ pub mod gapi {
 	/// * border_type: BORDER_DEFAULT
 	/// * border_value: Scalar(0)
 	#[inline]
-	pub fn gaussian_blur_def(src: &crate::gapi::GMat, ksize: core::Size, sigma_x: f64) -> Result<crate::gapi::GMat> {
+	pub fn gaussian_blur_def(src: &impl crate::gapi::GMatTraitConst, ksize: core::Size, sigma_x: f64) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_gaussianBlur_const_GMatR_const_SizeR_double(src.as_raw_GMat(), &ksize, sigma_x, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3632,7 +3632,7 @@ pub mod gapi {
 	/// * border_type: BORDER_DEFAULT
 	/// * border_value: Scalar(0)
 	#[inline]
-	pub fn gaussian_blur(src: &crate::gapi::GMat, ksize: core::Size, sigma_x: f64, sigma_y: f64, border_type: i32, border_value: core::Scalar) -> Result<crate::gapi::GMat> {
+	pub fn gaussian_blur(src: &impl crate::gapi::GMatTraitConst, ksize: core::Size, sigma_x: f64, sigma_y: f64, border_type: i32, border_value: core::Scalar) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_gaussianBlur_const_GMatR_const_SizeR_double_double_int_const_ScalarR(src.as_raw_GMat(), &ksize, sigma_x, sigma_y, border_type, &border_value, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3658,7 +3658,7 @@ pub mod gapi {
 	/// ## See also
 	/// threshold
 	#[inline]
-	pub fn in_range(src: &crate::gapi::GMat, thresh_low: &crate::gapi::GScalar, thresh_up: &crate::gapi::GScalar) -> Result<crate::gapi::GMat> {
+	pub fn in_range(src: &impl crate::gapi::GMatTraitConst, thresh_low: &impl crate::gapi::GScalarTraitConst, thresh_up: &impl crate::gapi::GScalarTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_inRange_const_GMatR_const_GScalarR_const_GScalarR(src.as_raw_GMat(), thresh_low.as_raw_GScalar(), thresh_up.as_raw_GScalar(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3692,7 +3692,7 @@ pub mod gapi {
 	/// * sdepth: -1
 	/// * sqdepth: -1
 	#[inline]
-	pub fn integral_def(src: &crate::gapi::GMat) -> Result<core::Tuple<(crate::gapi::GMat, crate::gapi::GMat)>> {
+	pub fn integral_def(src: &impl crate::gapi::GMatTraitConst) -> Result<core::Tuple<(crate::gapi::GMat, crate::gapi::GMat)>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_integral_const_GMatR(src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3725,7 +3725,7 @@ pub mod gapi {
 	/// * sdepth: -1
 	/// * sqdepth: -1
 	#[inline]
-	pub fn integral(src: &crate::gapi::GMat, sdepth: i32, sqdepth: i32) -> Result<core::Tuple<(crate::gapi::GMat, crate::gapi::GMat)>> {
+	pub fn integral(src: &impl crate::gapi::GMatTraitConst, sdepth: i32, sqdepth: i32) -> Result<core::Tuple<(crate::gapi::GMat, crate::gapi::GMat)>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_integral_const_GMatR_int_int(src.as_raw_GMat(), sdepth, sqdepth, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3747,7 +3747,7 @@ pub mod gapi {
 	/// * src: input matrix.
 	/// * mask: input mask matrix.
 	#[inline]
-	pub fn mask(src: &crate::gapi::GMat, mask: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn mask(src: &impl crate::gapi::GMatTraitConst, mask: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_mask_const_GMatR_const_GMatR(src.as_raw_GMat(), mask.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3774,7 +3774,7 @@ pub mod gapi {
 	/// ## See also
 	/// min, compare, cmpEQ, cmpGT, cmpGE
 	#[inline]
-	pub fn max(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn max(src1: &impl crate::gapi::GMatTraitConst, src2: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_max_const_GMatR_const_GMatR(src1.as_raw_GMat(), src2.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3797,7 +3797,7 @@ pub mod gapi {
 	/// ## See also
 	/// countNonZero, min, max
 	#[inline]
-	pub fn mean(src: &crate::gapi::GMat) -> Result<crate::gapi::GScalar> {
+	pub fn mean(src: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GScalar> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_mean_const_GMatR(src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3822,7 +3822,7 @@ pub mod gapi {
 	/// ## See also
 	/// boxFilter, gaussianBlur
 	#[inline]
-	pub fn median_blur(src: &crate::gapi::GMat, ksize: i32) -> Result<crate::gapi::GMat> {
+	pub fn median_blur(src: &impl crate::gapi::GMatTraitConst, ksize: i32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_medianBlur_const_GMatR_int(src.as_raw_GMat(), ksize, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3851,7 +3851,7 @@ pub mod gapi {
 	/// ## See also
 	/// merge4, split4, split3
 	#[inline]
-	pub fn merge3(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat, src3: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn merge3(src1: &impl crate::gapi::GMatTraitConst, src2: &impl crate::gapi::GMatTraitConst, src3: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_merge3_const_GMatR_const_GMatR_const_GMatR(src1.as_raw_GMat(), src2.as_raw_GMat(), src3.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3881,7 +3881,7 @@ pub mod gapi {
 	/// ## See also
 	/// merge3, split4, split3
 	#[inline]
-	pub fn merge4(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat, src3: &crate::gapi::GMat, src4: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn merge4(src1: &impl crate::gapi::GMatTraitConst, src2: &impl crate::gapi::GMatTraitConst, src3: &impl crate::gapi::GMatTraitConst, src4: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_merge4_const_GMatR_const_GMatR_const_GMatR_const_GMatR(src1.as_raw_GMat(), src2.as_raw_GMat(), src3.as_raw_GMat(), src4.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3908,7 +3908,7 @@ pub mod gapi {
 	/// ## See also
 	/// max, cmpEQ, cmpLT, cmpLE
 	#[inline]
-	pub fn min(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn min(src1: &impl crate::gapi::GMatTraitConst, src2: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_min_const_GMatR_const_GMatR(src1.as_raw_GMat(), src2.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3953,7 +3953,7 @@ pub mod gapi {
 	/// * border_type: BORDER_CONSTANT
 	/// * border_value: morphologyDefaultBorderValue()
 	#[inline]
-	pub fn morphology_ex_def(src: &crate::gapi::GMat, op: crate::imgproc::MorphTypes, kernel: &core::Mat) -> Result<crate::gapi::GMat> {
+	pub fn morphology_ex_def(src: &impl crate::gapi::GMatTraitConst, op: crate::imgproc::MorphTypes, kernel: &impl core::MatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_morphologyEx_const_GMatR_const_MorphTypes_const_MatR(src.as_raw_GMat(), op, kernel.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -3997,7 +3997,7 @@ pub mod gapi {
 	/// * border_type: BORDER_CONSTANT
 	/// * border_value: morphologyDefaultBorderValue()
 	#[inline]
-	pub fn morphology_ex(src: &crate::gapi::GMat, op: crate::imgproc::MorphTypes, kernel: &core::Mat, anchor: core::Point, iterations: i32, border_type: core::BorderTypes, border_value: core::Scalar) -> Result<crate::gapi::GMat> {
+	pub fn morphology_ex(src: &impl crate::gapi::GMatTraitConst, op: crate::imgproc::MorphTypes, kernel: &impl core::MatTraitConst, anchor: core::Point, iterations: i32, border_type: core::BorderTypes, border_value: core::Scalar) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_morphologyEx_const_GMatR_const_MorphTypes_const_MatR_const_PointR_const_int_const_BorderTypes_const_ScalarR(src.as_raw_GMat(), op, kernel.as_raw_Mat(), &anchor, iterations, border_type, &border_value, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4012,7 +4012,7 @@ pub mod gapi {
 	/// This alternative version of [mul_c_1] function uses the following default values for its arguments:
 	/// * ddepth: -1
 	#[inline]
-	pub fn mul_c_1_def(src: &crate::gapi::GMat, multiplier: &crate::gapi::GScalar) -> Result<crate::gapi::GMat> {
+	pub fn mul_c_1_def(src: &impl crate::gapi::GMatTraitConst, multiplier: &impl crate::gapi::GScalarTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_mulC_const_GMatR_const_GScalarR(src.as_raw_GMat(), multiplier.as_raw_GScalar(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4045,7 +4045,7 @@ pub mod gapi {
 	/// ## C++ default parameters
 	/// * ddepth: -1
 	#[inline]
-	pub fn mul_c_1(src: &crate::gapi::GMat, multiplier: &crate::gapi::GScalar, ddepth: i32) -> Result<crate::gapi::GMat> {
+	pub fn mul_c_1(src: &impl crate::gapi::GMatTraitConst, multiplier: &impl crate::gapi::GScalarTraitConst, ddepth: i32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_mulC_const_GMatR_const_GScalarR_int(src.as_raw_GMat(), multiplier.as_raw_GScalar(), ddepth, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4077,7 +4077,7 @@ pub mod gapi {
 	/// This alternative version of [mul_c] function uses the following default values for its arguments:
 	/// * ddepth: -1
 	#[inline]
-	pub fn mul_c_def(src: &crate::gapi::GMat, multiplier: f64) -> Result<crate::gapi::GMat> {
+	pub fn mul_c_def(src: &impl crate::gapi::GMatTraitConst, multiplier: f64) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_mulC_const_GMatR_double(src.as_raw_GMat(), multiplier, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4108,7 +4108,7 @@ pub mod gapi {
 	/// ## C++ default parameters
 	/// * ddepth: -1
 	#[inline]
-	pub fn mul_c(src: &crate::gapi::GMat, multiplier: f64, ddepth: i32) -> Result<crate::gapi::GMat> {
+	pub fn mul_c(src: &impl crate::gapi::GMatTraitConst, multiplier: f64, ddepth: i32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_mulC_const_GMatR_double_int(src.as_raw_GMat(), multiplier, ddepth, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4123,7 +4123,7 @@ pub mod gapi {
 	/// This alternative version of [mul_c_2] function uses the following default values for its arguments:
 	/// * ddepth: -1
 	#[inline]
-	pub fn mul_c_2_def(multiplier: &crate::gapi::GScalar, src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn mul_c_2_def(multiplier: &impl crate::gapi::GScalarTraitConst, src: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_mulC_const_GScalarR_const_GMatR(multiplier.as_raw_GScalar(), src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4156,7 +4156,7 @@ pub mod gapi {
 	/// ## C++ default parameters
 	/// * ddepth: -1
 	#[inline]
-	pub fn mul_c_2(multiplier: &crate::gapi::GScalar, src: &crate::gapi::GMat, ddepth: i32) -> Result<crate::gapi::GMat> {
+	pub fn mul_c_2(multiplier: &impl crate::gapi::GScalarTraitConst, src: &impl crate::gapi::GMatTraitConst, ddepth: i32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_mulC_const_GScalarR_const_GMatR_int(multiplier.as_raw_GScalar(), src.as_raw_GMat(), ddepth, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4192,7 +4192,7 @@ pub mod gapi {
 	/// * scale: 1.0
 	/// * ddepth: -1
 	#[inline]
-	pub fn mul_def(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn mul_def(src1: &impl crate::gapi::GMatTraitConst, src2: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_mul_const_GMatR_const_GMatR(src1.as_raw_GMat(), src2.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4227,7 +4227,7 @@ pub mod gapi {
 	/// * scale: 1.0
 	/// * ddepth: -1
 	#[inline]
-	pub fn mul(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat, scale: f64, ddepth: i32) -> Result<crate::gapi::GMat> {
+	pub fn mul(src1: &impl crate::gapi::GMatTraitConst, src2: &impl crate::gapi::GMatTraitConst, scale: f64, ddepth: i32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_mul_const_GMatR_const_GMatR_double_int(src1.as_raw_GMat(), src2.as_raw_GMat(), scale, ddepth, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4260,7 +4260,7 @@ pub mod gapi {
 	/// ## See also
 	/// normL1, normL2
 	#[inline]
-	pub fn norm_inf(src: &crate::gapi::GMat) -> Result<crate::gapi::GScalar> {
+	pub fn norm_inf(src: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GScalar> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_normInf_const_GMatR(src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4293,7 +4293,7 @@ pub mod gapi {
 	/// ## See also
 	/// normL2, normInf
 	#[inline]
-	pub fn norm_l1(src: &crate::gapi::GMat) -> Result<crate::gapi::GScalar> {
+	pub fn norm_l1(src: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GScalar> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_normL1_const_GMatR(src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4325,7 +4325,7 @@ pub mod gapi {
 	/// ## See also
 	/// normL1, normInf
 	#[inline]
-	pub fn norm_l2(src: &crate::gapi::GMat) -> Result<crate::gapi::GScalar> {
+	pub fn norm_l2(src: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GScalar> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_normL2_const_GMatR(src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4361,7 +4361,7 @@ pub mod gapi {
 	/// This alternative version of [normalize] function uses the following default values for its arguments:
 	/// * ddepth: -1
 	#[inline]
-	pub fn normalize_def(src: &crate::gapi::GMat, alpha: f64, beta: f64, norm_type: i32) -> Result<crate::gapi::GMat> {
+	pub fn normalize_def(src: &impl crate::gapi::GMatTraitConst, alpha: f64, beta: f64, norm_type: i32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_normalize_const_GMatR_double_double_int(src.as_raw_GMat(), alpha, beta, norm_type, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4396,7 +4396,7 @@ pub mod gapi {
 	/// ## C++ default parameters
 	/// * ddepth: -1
 	#[inline]
-	pub fn normalize(src: &crate::gapi::GMat, alpha: f64, beta: f64, norm_type: i32, ddepth: i32) -> Result<crate::gapi::GMat> {
+	pub fn normalize(src: &impl crate::gapi::GMatTraitConst, alpha: f64, beta: f64, norm_type: i32, ddepth: i32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_normalize_const_GMatR_double_double_int_int(src.as_raw_GMat(), alpha, beta, norm_type, ddepth, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4426,7 +4426,7 @@ pub mod gapi {
 	/// This alternative version of [phase] function uses the following default values for its arguments:
 	/// * angle_in_degrees: false
 	#[inline]
-	pub fn phase_def(x: &crate::gapi::GMat, y: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn phase_def(x: &impl crate::gapi::GMatTraitConst, y: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_phase_const_GMatR_const_GMatR(x.as_raw_GMat(), y.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4455,7 +4455,7 @@ pub mod gapi {
 	/// ## C++ default parameters
 	/// * angle_in_degrees: false
 	#[inline]
-	pub fn phase(x: &crate::gapi::GMat, y: &crate::gapi::GMat, angle_in_degrees: bool) -> Result<crate::gapi::GMat> {
+	pub fn phase(x: &impl crate::gapi::GMatTraitConst, y: &impl crate::gapi::GMatTraitConst, angle_in_degrees: bool) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_phase_const_GMatR_const_GMatR_bool(x.as_raw_GMat(), y.as_raw_GMat(), angle_in_degrees, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4491,7 +4491,7 @@ pub mod gapi {
 	/// This alternative version of [polar_to_cart] function uses the following default values for its arguments:
 	/// * angle_in_degrees: false
 	#[inline]
-	pub fn polar_to_cart_def(magnitude: &crate::gapi::GMat, angle: &crate::gapi::GMat) -> Result<core::Tuple<(crate::gapi::GMat, crate::gapi::GMat)>> {
+	pub fn polar_to_cart_def(magnitude: &impl crate::gapi::GMatTraitConst, angle: &impl crate::gapi::GMatTraitConst) -> Result<core::Tuple<(crate::gapi::GMat, crate::gapi::GMat)>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_polarToCart_const_GMatR_const_GMatR(magnitude.as_raw_GMat(), angle.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4526,7 +4526,7 @@ pub mod gapi {
 	/// ## C++ default parameters
 	/// * angle_in_degrees: false
 	#[inline]
-	pub fn polar_to_cart(magnitude: &crate::gapi::GMat, angle: &crate::gapi::GMat, angle_in_degrees: bool) -> Result<core::Tuple<(crate::gapi::GMat, crate::gapi::GMat)>> {
+	pub fn polar_to_cart(magnitude: &impl crate::gapi::GMatTraitConst, angle: &impl crate::gapi::GMatTraitConst, angle_in_degrees: bool) -> Result<core::Tuple<(crate::gapi::GMat, crate::gapi::GMat)>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_polarToCart_const_GMatR_const_GMatR_bool(magnitude.as_raw_GMat(), angle.as_raw_GMat(), angle_in_degrees, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4573,7 +4573,7 @@ pub mod gapi {
 	/// * border_mode: BORDER_CONSTANT
 	/// * border_value: Scalar()
 	#[inline]
-	pub fn remap_def(src: &crate::gapi::GMat, map1: &core::Mat, map2: &core::Mat, interpolation: i32) -> Result<crate::gapi::GMat> {
+	pub fn remap_def(src: &impl crate::gapi::GMatTraitConst, map1: &impl core::MatTraitConst, map2: &impl core::MatTraitConst, interpolation: i32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_remap_const_GMatR_const_MatR_const_MatR_int(src.as_raw_GMat(), map1.as_raw_Mat(), map2.as_raw_Mat(), interpolation, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4619,7 +4619,7 @@ pub mod gapi {
 	/// * border_mode: BORDER_CONSTANT
 	/// * border_value: Scalar()
 	#[inline]
-	pub fn remap(src: &crate::gapi::GMat, map1: &core::Mat, map2: &core::Mat, interpolation: i32, border_mode: i32, border_value: core::Scalar) -> Result<crate::gapi::GMat> {
+	pub fn remap(src: &impl crate::gapi::GMatTraitConst, map1: &impl core::MatTraitConst, map2: &impl core::MatTraitConst, interpolation: i32, border_mode: i32, border_value: core::Scalar) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_remap_const_GMatR_const_MatR_const_MatR_int_int_const_ScalarR(src.as_raw_GMat(), map1.as_raw_Mat(), map2.as_raw_Mat(), interpolation, border_mode, &border_value, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4650,7 +4650,7 @@ pub mod gapi {
 	/// This alternative version of [resize_p] function uses the following default values for its arguments:
 	/// * interpolation: cv::INTER_LINEAR
 	#[inline]
-	pub fn resize_p_def(src: &crate::gapi::GMatP, dsize: core::Size) -> Result<crate::gapi::GMatP> {
+	pub fn resize_p_def(src: &impl crate::gapi::GMatPTraitConst, dsize: core::Size) -> Result<crate::gapi::GMatP> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_resizeP_const_GMatPR_const_SizeR(src.as_raw_GMatP(), &dsize, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4680,7 +4680,7 @@ pub mod gapi {
 	/// ## C++ default parameters
 	/// * interpolation: cv::INTER_LINEAR
 	#[inline]
-	pub fn resize_p(src: &crate::gapi::GMatP, dsize: core::Size, interpolation: i32) -> Result<crate::gapi::GMatP> {
+	pub fn resize_p(src: &impl crate::gapi::GMatPTraitConst, dsize: core::Size, interpolation: i32) -> Result<crate::gapi::GMatP> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_resizeP_const_GMatPR_const_SizeR_int(src.as_raw_GMatP(), &dsize, interpolation, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4736,7 +4736,7 @@ pub mod gapi {
 	/// * fy: 0
 	/// * interpolation: INTER_LINEAR
 	#[inline]
-	pub fn resize_def(src: &crate::gapi::GMat, dsize: core::Size) -> Result<crate::gapi::GMat> {
+	pub fn resize_def(src: &impl crate::gapi::GMatTraitConst, dsize: core::Size) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_resize_const_GMatR_const_SizeR(src.as_raw_GMat(), &dsize, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4791,7 +4791,7 @@ pub mod gapi {
 	/// * fy: 0
 	/// * interpolation: INTER_LINEAR
 	#[inline]
-	pub fn resize(src: &crate::gapi::GMat, dsize: core::Size, fx: f64, fy: f64, interpolation: i32) -> Result<crate::gapi::GMat> {
+	pub fn resize(src: &impl crate::gapi::GMatTraitConst, dsize: core::Size, fx: f64, fy: f64, interpolation: i32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_resize_const_GMatR_const_SizeR_double_double_int(src.as_raw_GMat(), &dsize, fx, fy, interpolation, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4816,7 +4816,7 @@ pub mod gapi {
 	/// * src2: second input matrix.
 	/// * mask: mask input matrix.
 	#[inline]
-	pub fn select(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat, mask: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn select(src1: &impl crate::gapi::GMatTraitConst, src2: &impl crate::gapi::GMatTraitConst, mask: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_select_const_GMatR_const_GMatR_const_GMatR(src1.as_raw_GMat(), src2.as_raw_GMat(), mask.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4863,7 +4863,7 @@ pub mod gapi {
 	/// * border_type: BORDER_DEFAULT
 	/// * border_value: Scalar(0)
 	#[inline]
-	pub fn sep_filter_def(src: &crate::gapi::GMat, ddepth: i32, kernel_x: &core::Mat, kernel_y: &core::Mat, anchor: core::Point, delta: core::Scalar) -> Result<crate::gapi::GMat> {
+	pub fn sep_filter_def(src: &impl crate::gapi::GMatTraitConst, ddepth: i32, kernel_x: &impl core::MatTraitConst, kernel_y: &impl core::MatTraitConst, anchor: core::Point, delta: core::Scalar) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_sepFilter_const_GMatR_int_const_MatR_const_MatR_const_PointR_const_ScalarR(src.as_raw_GMat(), ddepth, kernel_x.as_raw_Mat(), kernel_y.as_raw_Mat(), &anchor, &delta, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4909,7 +4909,7 @@ pub mod gapi {
 	/// * border_type: BORDER_DEFAULT
 	/// * border_value: Scalar(0)
 	#[inline]
-	pub fn sep_filter(src: &crate::gapi::GMat, ddepth: i32, kernel_x: &core::Mat, kernel_y: &core::Mat, anchor: core::Point, delta: core::Scalar, border_type: i32, border_value: core::Scalar) -> Result<crate::gapi::GMat> {
+	pub fn sep_filter(src: &impl crate::gapi::GMatTraitConst, ddepth: i32, kernel_x: &impl core::MatTraitConst, kernel_y: &impl core::MatTraitConst, anchor: core::Point, delta: core::Scalar, border_type: i32, border_value: core::Scalar) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_sepFilter_const_GMatR_int_const_MatR_const_MatR_const_PointR_const_ScalarR_int_const_ScalarR(src.as_raw_GMat(), ddepth, kernel_x.as_raw_Mat(), kernel_y.as_raw_Mat(), &anchor, &delta, border_type, &border_value, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4936,7 +4936,7 @@ pub mod gapi {
 	/// ## See also
 	/// split4, merge3, merge4
 	#[inline]
-	pub fn split3(src: &crate::gapi::GMat) -> Result<core::Tuple<(crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat)>> {
+	pub fn split3(src: &impl crate::gapi::GMatTraitConst) -> Result<core::Tuple<(crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat)>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_split3_const_GMatR(src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4963,7 +4963,7 @@ pub mod gapi {
 	/// ## See also
 	/// split3, merge3, merge4
 	#[inline]
-	pub fn split4(src: &crate::gapi::GMat) -> Result<core::Tuple<(crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat)>> {
+	pub fn split4(src: &impl crate::gapi::GMatTraitConst) -> Result<core::Tuple<(crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat)>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_split4_const_GMatR(src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -4983,7 +4983,7 @@ pub mod gapi {
 	/// ## Returns
 	/// output array of the same size and type as src.
 	#[inline]
-	pub fn sqrt(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn sqrt(src: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_sqrt_const_GMatR(src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5002,7 +5002,7 @@ pub mod gapi {
 	/// ## Returns
 	/// Image in BGR format
 	#[inline]
-	pub fn bgr(in_: &crate::gapi::GFrame) -> Result<crate::gapi::GMat> {
+	pub fn bgr(in_: &impl crate::gapi::GFrameTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_streaming_BGR_const_GFrameR(in_.as_raw_GFrame(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5021,7 +5021,7 @@ pub mod gapi {
 	/// ## Parameters
 	/// * frame: input media frame.
 	#[inline]
-	pub fn uv(frame: &crate::gapi::GFrame) -> Result<crate::gapi::GMat> {
+	pub fn uv(frame: &impl crate::gapi::GFrameTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_streaming_UV_const_GFrameR(frame.as_raw_GFrame(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5040,7 +5040,7 @@ pub mod gapi {
 	/// ## Parameters
 	/// * frame: input media frame.
 	#[inline]
-	pub fn y(frame: &crate::gapi::GFrame) -> Result<crate::gapi::GMat> {
+	pub fn y(frame: &impl crate::gapi::GFrameTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_streaming_Y_const_GFrameR(frame.as_raw_GFrame(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5050,7 +5050,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn desync_1(f: &crate::gapi::GFrame) -> Result<crate::gapi::GFrame> {
+	pub fn desync_1(f: &impl crate::gapi::GFrameTraitConst) -> Result<crate::gapi::GFrame> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_streaming_desync_const_GFrameR(f.as_raw_GFrame(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5081,7 +5081,7 @@ pub mod gapi {
 	/// Note: This feature is highly experimental now and is currently
 	/// limited to a single GMat/GFrame argument only.
 	#[inline]
-	pub fn desync(g: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn desync(g: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_streaming_desync_const_GMatR(g.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5124,7 +5124,7 @@ pub mod gapi {
 	/// This alternative version of [sub_c] function uses the following default values for its arguments:
 	/// * ddepth: -1
 	#[inline]
-	pub fn sub_c_def(src: &crate::gapi::GMat, c: &crate::gapi::GScalar) -> Result<crate::gapi::GMat> {
+	pub fn sub_c_def(src: &impl crate::gapi::GMatTraitConst, c: &impl crate::gapi::GScalarTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_subC_const_GMatR_const_GScalarR(src.as_raw_GMat(), c.as_raw_GScalar(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5156,7 +5156,7 @@ pub mod gapi {
 	/// ## C++ default parameters
 	/// * ddepth: -1
 	#[inline]
-	pub fn sub_c(src: &crate::gapi::GMat, c: &crate::gapi::GScalar, ddepth: i32) -> Result<crate::gapi::GMat> {
+	pub fn sub_c(src: &impl crate::gapi::GMatTraitConst, c: &impl crate::gapi::GScalarTraitConst, ddepth: i32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_subC_const_GMatR_const_GScalarR_int(src.as_raw_GMat(), c.as_raw_GScalar(), ddepth, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5189,7 +5189,7 @@ pub mod gapi {
 	/// This alternative version of [sub_rc] function uses the following default values for its arguments:
 	/// * ddepth: -1
 	#[inline]
-	pub fn sub_rc_def(c: &crate::gapi::GScalar, src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn sub_rc_def(c: &impl crate::gapi::GScalarTraitConst, src: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_subRC_const_GScalarR_const_GMatR(c.as_raw_GScalar(), src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5221,7 +5221,7 @@ pub mod gapi {
 	/// ## C++ default parameters
 	/// * ddepth: -1
 	#[inline]
-	pub fn sub_rc(c: &crate::gapi::GScalar, src: &crate::gapi::GMat, ddepth: i32) -> Result<crate::gapi::GMat> {
+	pub fn sub_rc(c: &impl crate::gapi::GScalarTraitConst, src: &impl crate::gapi::GMatTraitConst, ddepth: i32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_subRC_const_GScalarR_const_GMatR_int(c.as_raw_GScalar(), src.as_raw_GMat(), ddepth, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5260,7 +5260,7 @@ pub mod gapi {
 	/// This alternative version of [sub] function uses the following default values for its arguments:
 	/// * ddepth: -1
 	#[inline]
-	pub fn sub_def(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn sub_def(src1: &impl crate::gapi::GMatTraitConst, src2: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_sub_const_GMatR_const_GMatR(src1.as_raw_GMat(), src2.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5298,7 +5298,7 @@ pub mod gapi {
 	/// ## C++ default parameters
 	/// * ddepth: -1
 	#[inline]
-	pub fn sub(src1: &crate::gapi::GMat, src2: &crate::gapi::GMat, ddepth: i32) -> Result<crate::gapi::GMat> {
+	pub fn sub(src1: &impl crate::gapi::GMatTraitConst, src2: &impl crate::gapi::GMatTraitConst, ddepth: i32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_sub_const_GMatR_const_GMatR_int(src1.as_raw_GMat(), src2.as_raw_GMat(), ddepth, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5320,7 +5320,7 @@ pub mod gapi {
 	/// ## See also
 	/// countNonZero, mean, min, max
 	#[inline]
-	pub fn sum(src: &crate::gapi::GMat) -> Result<crate::gapi::GScalar> {
+	pub fn sum(src: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GScalar> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_sum_const_GMatR(src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5358,7 +5358,7 @@ pub mod gapi {
 	/// ## See also
 	/// min, max, cmpGT, cmpLE, cmpGE, cmpLT
 	#[inline]
-	pub fn threshold(src: &crate::gapi::GMat, thresh: &crate::gapi::GScalar, maxval: &crate::gapi::GScalar, typ: i32) -> Result<crate::gapi::GMat> {
+	pub fn threshold(src: &impl crate::gapi::GMatTraitConst, thresh: &impl crate::gapi::GScalarTraitConst, maxval: &impl crate::gapi::GScalarTraitConst, typ: i32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_threshold_const_GMatR_const_GScalarR_const_GScalarR_int(src.as_raw_GMat(), thresh.as_raw_GScalar(), maxval.as_raw_GScalar(), typ, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5402,7 +5402,7 @@ pub mod gapi {
 	/// 
 	/// Note: Function textual ID is "org.opencv.core.matrixop.thresholdOT"
 	#[inline]
-	pub fn threshold_1(src: &crate::gapi::GMat, maxval: &crate::gapi::GScalar, typ: i32) -> Result<core::Tuple<(crate::gapi::GMat, crate::gapi::GScalar)>> {
+	pub fn threshold_1(src: &impl crate::gapi::GMatTraitConst, maxval: &impl crate::gapi::GScalarTraitConst, typ: i32) -> Result<core::Tuple<(crate::gapi::GMat, crate::gapi::GScalar)>> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_threshold_const_GMatR_const_GScalarR_int(src.as_raw_GMat(), maxval.as_raw_GScalar(), typ, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5424,7 +5424,7 @@ pub mod gapi {
 	/// ## Parameters
 	/// * src: input array.
 	#[inline]
-	pub fn transpose(src: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn transpose(src: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_transpose_const_GMatR(src.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5462,7 +5462,7 @@ pub mod gapi {
 	/// * border_mode: cv::BORDER_CONSTANT
 	/// * border_value: Scalar()
 	#[inline]
-	pub fn warp_affine_def(src: &crate::gapi::GMat, m: &core::Mat, dsize: core::Size) -> Result<crate::gapi::GMat> {
+	pub fn warp_affine_def(src: &impl crate::gapi::GMatTraitConst, m: &impl core::MatTraitConst, dsize: core::Size) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_warpAffine_const_GMatR_const_MatR_const_SizeR(src.as_raw_GMat(), m.as_raw_Mat(), &dsize, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5499,7 +5499,7 @@ pub mod gapi {
 	/// * border_mode: cv::BORDER_CONSTANT
 	/// * border_value: Scalar()
 	#[inline]
-	pub fn warp_affine(src: &crate::gapi::GMat, m: &core::Mat, dsize: core::Size, flags: i32, border_mode: i32, border_value: core::Scalar) -> Result<crate::gapi::GMat> {
+	pub fn warp_affine(src: &impl crate::gapi::GMatTraitConst, m: &impl core::MatTraitConst, dsize: core::Size, flags: i32, border_mode: i32, border_value: core::Scalar) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_warpAffine_const_GMatR_const_MatR_const_SizeR_int_int_const_ScalarR(src.as_raw_GMat(), m.as_raw_Mat(), &dsize, flags, border_mode, &border_value, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5535,7 +5535,7 @@ pub mod gapi {
 	/// * border_mode: cv::BORDER_CONSTANT
 	/// * border_value: Scalar()
 	#[inline]
-	pub fn warp_perspective_def(src: &crate::gapi::GMat, m: &core::Mat, dsize: core::Size) -> Result<crate::gapi::GMat> {
+	pub fn warp_perspective_def(src: &impl crate::gapi::GMatTraitConst, m: &impl core::MatTraitConst, dsize: core::Size) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_warpPerspective_const_GMatR_const_MatR_const_SizeR(src.as_raw_GMat(), m.as_raw_Mat(), &dsize, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5570,7 +5570,7 @@ pub mod gapi {
 	/// * border_mode: cv::BORDER_CONSTANT
 	/// * border_value: Scalar()
 	#[inline]
-	pub fn warp_perspective(src: &crate::gapi::GMat, m: &core::Mat, dsize: core::Size, flags: i32, border_mode: i32, border_value: core::Scalar) -> Result<crate::gapi::GMat> {
+	pub fn warp_perspective(src: &impl crate::gapi::GMatTraitConst, m: &impl core::MatTraitConst, dsize: core::Size, flags: i32, border_mode: i32, border_value: core::Scalar) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_gapi_warpPerspective_const_GMatR_const_MatR_const_SizeR_int_int_const_ScalarR(src.as_raw_GMat(), m.as_raw_Mat(), &dsize, flags, border_mode, &border_value, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5580,7 +5580,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn add_gmat_gmat(lhs: &crate::gapi::GMat, rhs: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn add_gmat_gmat(lhs: &impl crate::gapi::GMatTraitConst, rhs: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorA_const_GMatR_const_GMatR(lhs.as_raw_GMat(), rhs.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5590,7 +5590,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn add_gmat_gscalar(lhs: &crate::gapi::GMat, rhs: &crate::gapi::GScalar) -> Result<crate::gapi::GMat> {
+	pub fn add_gmat_gscalar(lhs: &impl crate::gapi::GMatTraitConst, rhs: &impl crate::gapi::GScalarTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorA_const_GMatR_const_GScalarR(lhs.as_raw_GMat(), rhs.as_raw_GScalar(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5600,7 +5600,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn add_gscalar_gmat(lhs: &crate::gapi::GScalar, rhs: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn add_gscalar_gmat(lhs: &impl crate::gapi::GScalarTraitConst, rhs: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorA_const_GScalarR_const_GMatR(lhs.as_raw_GScalar(), rhs.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5610,7 +5610,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn div_gmat_gmat(lhs: &crate::gapi::GMat, rhs: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn div_gmat_gmat(lhs: &impl crate::gapi::GMatTraitConst, rhs: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorD_const_GMatR_const_GMatR(lhs.as_raw_GMat(), rhs.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5620,7 +5620,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn div_gmat_gscalar(lhs: &crate::gapi::GMat, rhs: &crate::gapi::GScalar) -> Result<crate::gapi::GMat> {
+	pub fn div_gmat_gscalar(lhs: &impl crate::gapi::GMatTraitConst, rhs: &impl crate::gapi::GScalarTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorD_const_GMatR_const_GScalarR(lhs.as_raw_GMat(), rhs.as_raw_GScalar(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5630,7 +5630,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn div_gscalar_gmat(lhs: &crate::gapi::GScalar, rhs: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn div_gscalar_gmat(lhs: &impl crate::gapi::GScalarTraitConst, rhs: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorD_const_GScalarR_const_GMatR(lhs.as_raw_GScalar(), rhs.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5640,7 +5640,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn equals_gmat_gmat(lhs: &crate::gapi::GMat, rhs: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn equals_gmat_gmat(lhs: &impl crate::gapi::GMatTraitConst, rhs: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorEQ_const_GMatR_const_GMatR(lhs.as_raw_GMat(), rhs.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5650,7 +5650,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn equals_gmat_gscalar(lhs: &crate::gapi::GMat, rhs: &crate::gapi::GScalar) -> Result<crate::gapi::GMat> {
+	pub fn equals_gmat_gscalar(lhs: &impl crate::gapi::GMatTraitConst, rhs: &impl crate::gapi::GScalarTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorEQ_const_GMatR_const_GScalarR(lhs.as_raw_GMat(), rhs.as_raw_GScalar(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5660,7 +5660,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn equals_gscalar_gmat(lhs: &crate::gapi::GScalar, rhs: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn equals_gscalar_gmat(lhs: &impl crate::gapi::GScalarTraitConst, rhs: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorEQ_const_GScalarR_const_GMatR(lhs.as_raw_GScalar(), rhs.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5670,7 +5670,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn greater_than_or_equal_gmat_gmat(lhs: &crate::gapi::GMat, rhs: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn greater_than_or_equal_gmat_gmat(lhs: &impl crate::gapi::GMatTraitConst, rhs: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorGE_const_GMatR_const_GMatR(lhs.as_raw_GMat(), rhs.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5680,7 +5680,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn greater_than_or_equal_gmat_gscalar(lhs: &crate::gapi::GMat, rhs: &crate::gapi::GScalar) -> Result<crate::gapi::GMat> {
+	pub fn greater_than_or_equal_gmat_gscalar(lhs: &impl crate::gapi::GMatTraitConst, rhs: &impl crate::gapi::GScalarTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorGE_const_GMatR_const_GScalarR(lhs.as_raw_GMat(), rhs.as_raw_GScalar(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5690,7 +5690,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn greater_than_or_equal_gscalar_gmat(lhs: &crate::gapi::GScalar, rhs: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn greater_than_or_equal_gscalar_gmat(lhs: &impl crate::gapi::GScalarTraitConst, rhs: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorGE_const_GScalarR_const_GMatR(lhs.as_raw_GScalar(), rhs.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5700,7 +5700,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn greater_than_gmat_gmat(lhs: &crate::gapi::GMat, rhs: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn greater_than_gmat_gmat(lhs: &impl crate::gapi::GMatTraitConst, rhs: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorG_const_GMatR_const_GMatR(lhs.as_raw_GMat(), rhs.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5710,7 +5710,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn greater_than_gmat_gscalar(lhs: &crate::gapi::GMat, rhs: &crate::gapi::GScalar) -> Result<crate::gapi::GMat> {
+	pub fn greater_than_gmat_gscalar(lhs: &impl crate::gapi::GMatTraitConst, rhs: &impl crate::gapi::GScalarTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorG_const_GMatR_const_GScalarR(lhs.as_raw_GMat(), rhs.as_raw_GScalar(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5720,7 +5720,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn greater_than_gscalar_gmat(lhs: &crate::gapi::GScalar, rhs: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn greater_than_gscalar_gmat(lhs: &impl crate::gapi::GScalarTraitConst, rhs: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorG_const_GScalarR_const_GMatR(lhs.as_raw_GScalar(), rhs.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5730,7 +5730,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn less_than_or_equal_gmat_gmat(lhs: &crate::gapi::GMat, rhs: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn less_than_or_equal_gmat_gmat(lhs: &impl crate::gapi::GMatTraitConst, rhs: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorLE_const_GMatR_const_GMatR(lhs.as_raw_GMat(), rhs.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5740,7 +5740,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn less_than_or_equal_gmat_gscalar(lhs: &crate::gapi::GMat, rhs: &crate::gapi::GScalar) -> Result<crate::gapi::GMat> {
+	pub fn less_than_or_equal_gmat_gscalar(lhs: &impl crate::gapi::GMatTraitConst, rhs: &impl crate::gapi::GScalarTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorLE_const_GMatR_const_GScalarR(lhs.as_raw_GMat(), rhs.as_raw_GScalar(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5750,7 +5750,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn less_than_or_equal_gscalar_gmat(lhs: &crate::gapi::GScalar, rhs: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn less_than_or_equal_gscalar_gmat(lhs: &impl crate::gapi::GScalarTraitConst, rhs: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorLE_const_GScalarR_const_GMatR(lhs.as_raw_GScalar(), rhs.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5760,7 +5760,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn less_than_gmat_gmat(lhs: &crate::gapi::GMat, rhs: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn less_than_gmat_gmat(lhs: &impl crate::gapi::GMatTraitConst, rhs: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorL_const_GMatR_const_GMatR(lhs.as_raw_GMat(), rhs.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5770,7 +5770,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn less_than_gmat_gscalar(lhs: &crate::gapi::GMat, rhs: &crate::gapi::GScalar) -> Result<crate::gapi::GMat> {
+	pub fn less_than_gmat_gscalar(lhs: &impl crate::gapi::GMatTraitConst, rhs: &impl crate::gapi::GScalarTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorL_const_GMatR_const_GScalarR(lhs.as_raw_GMat(), rhs.as_raw_GScalar(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5780,7 +5780,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn less_than_gscalar_gmat(lhs: &crate::gapi::GScalar, rhs: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn less_than_gscalar_gmat(lhs: &impl crate::gapi::GScalarTraitConst, rhs: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorL_const_GScalarR_const_GMatR(lhs.as_raw_GScalar(), rhs.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5790,7 +5790,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn not_equals_gmat_gmat(lhs: &crate::gapi::GMat, rhs: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn not_equals_gmat_gmat(lhs: &impl crate::gapi::GMatTraitConst, rhs: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorNE_const_GMatR_const_GMatR(lhs.as_raw_GMat(), rhs.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5800,7 +5800,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn not_equals_gmat_gscalar(lhs: &crate::gapi::GMat, rhs: &crate::gapi::GScalar) -> Result<crate::gapi::GMat> {
+	pub fn not_equals_gmat_gscalar(lhs: &impl crate::gapi::GMatTraitConst, rhs: &impl crate::gapi::GScalarTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorNE_const_GMatR_const_GScalarR(lhs.as_raw_GMat(), rhs.as_raw_GScalar(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5810,7 +5810,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn not_equals_gscalar_gmat(lhs: &crate::gapi::GScalar, rhs: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn not_equals_gscalar_gmat(lhs: &impl crate::gapi::GScalarTraitConst, rhs: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorNE_const_GScalarR_const_GMatR(lhs.as_raw_GScalar(), rhs.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5820,7 +5820,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn negate(lhs: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn negate(lhs: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorNOTB_const_GMatR(lhs.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5830,7 +5830,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn or_gmat_gmat(lhs: &crate::gapi::GMat, rhs: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn or_gmat_gmat(lhs: &impl crate::gapi::GMatTraitConst, rhs: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorOR_const_GMatR_const_GMatR(lhs.as_raw_GMat(), rhs.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5840,7 +5840,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn or_gmat_gscalar(lhs: &crate::gapi::GMat, rhs: &crate::gapi::GScalar) -> Result<crate::gapi::GMat> {
+	pub fn or_gmat_gscalar(lhs: &impl crate::gapi::GMatTraitConst, rhs: &impl crate::gapi::GScalarTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorOR_const_GMatR_const_GScalarR(lhs.as_raw_GMat(), rhs.as_raw_GScalar(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5850,7 +5850,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn or_gscalar_gmat(lhs: &crate::gapi::GScalar, rhs: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn or_gscalar_gmat(lhs: &impl crate::gapi::GScalarTraitConst, rhs: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorOR_const_GScalarR_const_GMatR(lhs.as_raw_GScalar(), rhs.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5860,7 +5860,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn and_gmat_gmat(lhs: &crate::gapi::GMat, rhs: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn and_gmat_gmat(lhs: &impl crate::gapi::GMatTraitConst, rhs: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorR_const_GMatR_const_GMatR(lhs.as_raw_GMat(), rhs.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5870,7 +5870,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn and_gmat_gscalar(lhs: &crate::gapi::GMat, rhs: &crate::gapi::GScalar) -> Result<crate::gapi::GMat> {
+	pub fn and_gmat_gscalar(lhs: &impl crate::gapi::GMatTraitConst, rhs: &impl crate::gapi::GScalarTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorR_const_GMatR_const_GScalarR(lhs.as_raw_GMat(), rhs.as_raw_GScalar(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5880,7 +5880,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn and_gscalar_gmat(lhs: &crate::gapi::GScalar, rhs: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn and_gscalar_gmat(lhs: &impl crate::gapi::GScalarTraitConst, rhs: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorR_const_GScalarR_const_GMatR(lhs.as_raw_GScalar(), rhs.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5890,7 +5890,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn sub_gmat_gmat(lhs: &crate::gapi::GMat, rhs: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn sub_gmat_gmat(lhs: &impl crate::gapi::GMatTraitConst, rhs: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorS_const_GMatR_const_GMatR(lhs.as_raw_GMat(), rhs.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5900,7 +5900,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn sub_gmat_gscalar(lhs: &crate::gapi::GMat, rhs: &crate::gapi::GScalar) -> Result<crate::gapi::GMat> {
+	pub fn sub_gmat_gscalar(lhs: &impl crate::gapi::GMatTraitConst, rhs: &impl crate::gapi::GScalarTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorS_const_GMatR_const_GScalarR(lhs.as_raw_GMat(), rhs.as_raw_GScalar(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5910,7 +5910,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn sub_gscalar_gmat(lhs: &crate::gapi::GScalar, rhs: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn sub_gscalar_gmat(lhs: &impl crate::gapi::GScalarTraitConst, rhs: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorS_const_GScalarR_const_GMatR(lhs.as_raw_GScalar(), rhs.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5920,7 +5920,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn xor_gmat_gmat(lhs: &crate::gapi::GMat, rhs: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn xor_gmat_gmat(lhs: &impl crate::gapi::GMatTraitConst, rhs: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorXOR_const_GMatR_const_GMatR(lhs.as_raw_GMat(), rhs.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5930,7 +5930,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn xor_gmat_gscalar(lhs: &crate::gapi::GMat, rhs: &crate::gapi::GScalar) -> Result<crate::gapi::GMat> {
+	pub fn xor_gmat_gscalar(lhs: &impl crate::gapi::GMatTraitConst, rhs: &impl crate::gapi::GScalarTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorXOR_const_GMatR_const_GScalarR(lhs.as_raw_GMat(), rhs.as_raw_GScalar(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5940,7 +5940,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn xor_gscalar_gmat(lhs: &crate::gapi::GScalar, rhs: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn xor_gscalar_gmat(lhs: &impl crate::gapi::GScalarTraitConst, rhs: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorXOR_const_GScalarR_const_GMatR(lhs.as_raw_GScalar(), rhs.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5950,7 +5950,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn mul_gmat_gscalar(lhs: &crate::gapi::GMat, rhs: &crate::gapi::GScalar) -> Result<crate::gapi::GMat> {
+	pub fn mul_gmat_gscalar(lhs: &impl crate::gapi::GMatTraitConst, rhs: &impl crate::gapi::GScalarTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorX_const_GMatR_const_GScalarR(lhs.as_raw_GMat(), rhs.as_raw_GScalar(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5960,7 +5960,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn mul_gmat_f32(lhs: &crate::gapi::GMat, rhs: f32) -> Result<crate::gapi::GMat> {
+	pub fn mul_gmat_f32(lhs: &impl crate::gapi::GMatTraitConst, rhs: f32) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorX_const_GMatR_float(lhs.as_raw_GMat(), rhs, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5970,7 +5970,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn mul_gscalar_gmat(lhs: &crate::gapi::GScalar, rhs: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn mul_gscalar_gmat(lhs: &impl crate::gapi::GScalarTraitConst, rhs: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorX_const_GScalarR_const_GMatR(lhs.as_raw_GScalar(), rhs.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5980,7 +5980,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn mul_f32_gmat(lhs: f32, rhs: &crate::gapi::GMat) -> Result<crate::gapi::GMat> {
+	pub fn mul_f32_gmat(lhs: f32, rhs: &impl crate::gapi::GMatTraitConst) -> Result<crate::gapi::GMat> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_operatorX_float_const_GMatR(lhs, rhs.as_raw_GMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -5990,7 +5990,7 @@ pub mod gapi {
 	}
 	
 	#[inline]
-	pub fn validate_input_arg(arg: &crate::gapi::GRunArg) -> Result<()> {
+	pub fn validate_input_arg(arg: &impl crate::gapi::GRunArgTraitConst) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_validate_input_arg_const_GRunArgR(arg.as_raw_GRunArg(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -6074,6 +6074,8 @@ pub mod gapi {
 		#[inline] fn as_raw_mut_GArg(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { GArg, crate::gapi::GArgTraitConst, as_raw_GArg, crate::gapi::GArgTrait, as_raw_mut_GArg }
+	
 	impl GArg {
 		#[inline]
 		pub fn default() -> Result<crate::gapi::GArg> {
@@ -6102,7 +6104,7 @@ pub mod gapi {
 		fn as_raw_GArrayDesc(&self) -> *const c_void;
 	
 		#[inline]
-		fn equals(&self, unnamed: &crate::gapi::GArrayDesc) -> Result<bool> {
+		fn equals(&self, unnamed: &impl crate::gapi::GArrayDescTraitConst) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GArrayDesc_operatorEQ_const_const_GArrayDescR(self.as_raw_GArrayDesc(), unnamed.as_raw_GArrayDesc(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -6141,6 +6143,8 @@ pub mod gapi {
 	impl crate::gapi::GArrayDescTrait for GArrayDesc {
 		#[inline] fn as_raw_mut_GArrayDesc(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { GArrayDesc, crate::gapi::GArrayDescTraitConst, as_raw_GArrayDesc, crate::gapi::GArrayDescTrait, as_raw_mut_GArrayDesc }
 	
 	impl GArrayDesc {
 		fn default() -> Self {
@@ -6336,9 +6340,11 @@ pub mod gapi {
 		#[inline] fn as_raw_mut_GCall(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { GCall, crate::gapi::GCallTraitConst, as_raw_GCall, crate::gapi::GCallTrait, as_raw_mut_GCall }
+	
 	impl GCall {
 		#[inline]
-		pub fn new(k: &crate::gapi::GKernel) -> Result<crate::gapi::GCall> {
+		pub fn new(k: &impl crate::gapi::GKernelTraitConst) -> Result<crate::gapi::GCall> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GCall_GCall_const_GKernelR(k.as_raw_GKernel(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -6414,6 +6420,8 @@ pub mod gapi {
 	impl crate::gapi::GCompileArgTrait for GCompileArg {
 		#[inline] fn as_raw_mut_GCompileArg(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { GCompileArg, crate::gapi::GCompileArgTraitConst, as_raw_GCompileArg, crate::gapi::GCompileArgTrait, as_raw_mut_GCompileArg }
 	
 	impl GCompileArg {
 		#[inline]
@@ -6506,7 +6514,7 @@ pub mod gapi {
 		/// * out: output cv::Mat for unary computation
 		/// process.
 		#[inline]
-		fn apply(&mut self, mut in_: core::Mat, out: &mut core::Mat) -> Result<()> {
+		fn apply(&mut self, mut in_: impl core::MatTrait, out: &mut impl core::MatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GCompiled_operator___Mat_MatR(self.as_raw_mut_GCompiled(), in_.as_raw_mut_Mat(), out.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -6542,7 +6550,7 @@ pub mod gapi {
 		/// * out: output cv::Scalar for unary computation
 		/// process.
 		#[inline]
-		fn apply_1(&mut self, mut in_: core::Mat, out: &mut core::Scalar) -> Result<()> {
+		fn apply_1(&mut self, mut in_: impl core::MatTrait, out: &mut core::Scalar) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GCompiled_operator___Mat_ScalarR(self.as_raw_mut_GCompiled(), in_.as_raw_mut_Mat(), out, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -6579,7 +6587,7 @@ pub mod gapi {
 		/// * out: output cv::Mat for binary computation
 		/// process.
 		#[inline]
-		fn apply_2(&mut self, mut in1: core::Mat, mut in2: core::Mat, out: &mut core::Mat) -> Result<()> {
+		fn apply_2(&mut self, mut in1: impl core::MatTrait, mut in2: impl core::MatTrait, out: &mut impl core::MatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GCompiled_operator___Mat_Mat_MatR(self.as_raw_mut_GCompiled(), in1.as_raw_mut_Mat(), in2.as_raw_mut_Mat(), out.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -6616,7 +6624,7 @@ pub mod gapi {
 		/// * out: output cv::Scalar for binary computation
 		/// process.
 		#[inline]
-		fn apply_3(&mut self, mut in1: core::Mat, mut in2: core::Mat, out: &mut core::Scalar) -> Result<()> {
+		fn apply_3(&mut self, mut in1: impl core::MatTrait, mut in2: impl core::MatTrait, out: &mut core::Scalar) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GCompiled_operator___Mat_Mat_ScalarR(self.as_raw_mut_GCompiled(), in1.as_raw_mut_Mat(), in2.as_raw_mut_Mat(), out, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -6739,6 +6747,8 @@ pub mod gapi {
 		#[inline] fn as_raw_mut_GCompiled(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { GCompiled, crate::gapi::GCompiledTraitConst, as_raw_GCompiled, crate::gapi::GCompiledTrait, as_raw_mut_GCompiled }
+	
 	impl GCompiled {
 		/// Constructs an empty object
 		#[inline]
@@ -6776,7 +6786,7 @@ pub mod gapi {
 		/// ## C++ default parameters
 		/// * args: {}
 		#[inline]
-		fn apply(&mut self, callback: &crate::gapi::Detail_ExtractArgsCallback, mut args: crate::gapi::GCompileArgs) -> Result<core::Vector<crate::gapi::GRunArg>> {
+		fn apply(&mut self, callback: &impl crate::gapi::Detail_ExtractArgsCallbackTraitConst, mut args: crate::gapi::GCompileArgs) -> Result<core::Vector<crate::gapi::GRunArg>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GComputation_apply_const_ExtractArgsCallbackR_GCompileArgsRR(self.as_raw_mut_GComputation(), callback.as_raw_Detail_ExtractArgsCallback(), args.as_raw_mut_VectorOfGCompileArg(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -6791,7 +6801,7 @@ pub mod gapi {
 		/// This alternative version of [GComputationTrait::apply] function uses the following default values for its arguments:
 		/// * args: {}
 		#[inline]
-		fn apply_def(&mut self, callback: &crate::gapi::Detail_ExtractArgsCallback) -> Result<core::Vector<crate::gapi::GRunArg>> {
+		fn apply_def(&mut self, callback: &impl crate::gapi::Detail_ExtractArgsCallbackTraitConst) -> Result<core::Vector<crate::gapi::GRunArg>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GComputation_apply_const_ExtractArgsCallbackR(self.as_raw_mut_GComputation(), callback.as_raw_Detail_ExtractArgsCallback(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -6842,7 +6852,7 @@ pub mod gapi {
 		/// ## C++ default parameters
 		/// * args: {}
 		#[inline]
-		fn apply_2(&mut self, mut in_: core::Mat, out: &mut core::Mat, mut args: crate::gapi::GCompileArgs) -> Result<()> {
+		fn apply_2(&mut self, mut in_: impl core::MatTrait, out: &mut impl core::MatTrait, mut args: crate::gapi::GCompileArgs) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GComputation_apply_Mat_MatR_GCompileArgsRR(self.as_raw_mut_GComputation(), in_.as_raw_mut_Mat(), out.as_raw_mut_Mat(), args.as_raw_mut_VectorOfGCompileArg(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -6863,7 +6873,7 @@ pub mod gapi {
 		/// This alternative version of [GComputationTrait::apply] function uses the following default values for its arguments:
 		/// * args: {}
 		#[inline]
-		fn apply_def_2(&mut self, mut in_: core::Mat, out: &mut core::Mat) -> Result<()> {
+		fn apply_def_2(&mut self, mut in_: impl core::MatTrait, out: &mut impl core::MatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GComputation_apply_Mat_MatR(self.as_raw_mut_GComputation(), in_.as_raw_mut_Mat(), out.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -6886,7 +6896,7 @@ pub mod gapi {
 		/// ## C++ default parameters
 		/// * args: {}
 		#[inline]
-		fn apply_3(&mut self, mut in_: core::Mat, out: &mut core::Scalar, mut args: crate::gapi::GCompileArgs) -> Result<()> {
+		fn apply_3(&mut self, mut in_: impl core::MatTrait, out: &mut core::Scalar, mut args: crate::gapi::GCompileArgs) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GComputation_apply_Mat_ScalarR_GCompileArgsRR(self.as_raw_mut_GComputation(), in_.as_raw_mut_Mat(), out, args.as_raw_mut_VectorOfGCompileArg(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -6907,7 +6917,7 @@ pub mod gapi {
 		/// This alternative version of [GComputationTrait::apply] function uses the following default values for its arguments:
 		/// * args: {}
 		#[inline]
-		fn apply_def_3(&mut self, mut in_: core::Mat, out: &mut core::Scalar) -> Result<()> {
+		fn apply_def_3(&mut self, mut in_: impl core::MatTrait, out: &mut core::Scalar) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GComputation_apply_Mat_ScalarR(self.as_raw_mut_GComputation(), in_.as_raw_mut_Mat(), out, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -6931,7 +6941,7 @@ pub mod gapi {
 		/// ## C++ default parameters
 		/// * args: {}
 		#[inline]
-		fn apply_4(&mut self, mut in1: core::Mat, mut in2: core::Mat, out: &mut core::Mat, mut args: crate::gapi::GCompileArgs) -> Result<()> {
+		fn apply_4(&mut self, mut in1: impl core::MatTrait, mut in2: impl core::MatTrait, out: &mut impl core::MatTrait, mut args: crate::gapi::GCompileArgs) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GComputation_apply_Mat_Mat_MatR_GCompileArgsRR(self.as_raw_mut_GComputation(), in1.as_raw_mut_Mat(), in2.as_raw_mut_Mat(), out.as_raw_mut_Mat(), args.as_raw_mut_VectorOfGCompileArg(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -6953,7 +6963,7 @@ pub mod gapi {
 		/// This alternative version of [GComputationTrait::apply] function uses the following default values for its arguments:
 		/// * args: {}
 		#[inline]
-		fn apply_def_4(&mut self, mut in1: core::Mat, mut in2: core::Mat, out: &mut core::Mat) -> Result<()> {
+		fn apply_def_4(&mut self, mut in1: impl core::MatTrait, mut in2: impl core::MatTrait, out: &mut impl core::MatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GComputation_apply_Mat_Mat_MatR(self.as_raw_mut_GComputation(), in1.as_raw_mut_Mat(), in2.as_raw_mut_Mat(), out.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -6977,7 +6987,7 @@ pub mod gapi {
 		/// ## C++ default parameters
 		/// * args: {}
 		#[inline]
-		fn apply_5(&mut self, mut in1: core::Mat, mut in2: core::Mat, out: &mut core::Scalar, mut args: crate::gapi::GCompileArgs) -> Result<()> {
+		fn apply_5(&mut self, mut in1: impl core::MatTrait, mut in2: impl core::MatTrait, out: &mut core::Scalar, mut args: crate::gapi::GCompileArgs) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GComputation_apply_Mat_Mat_ScalarR_GCompileArgsRR(self.as_raw_mut_GComputation(), in1.as_raw_mut_Mat(), in2.as_raw_mut_Mat(), out, args.as_raw_mut_VectorOfGCompileArg(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -6999,7 +7009,7 @@ pub mod gapi {
 		/// This alternative version of [GComputationTrait::apply] function uses the following default values for its arguments:
 		/// * args: {}
 		#[inline]
-		fn apply_def_5(&mut self, mut in1: core::Mat, mut in2: core::Mat, out: &mut core::Scalar) -> Result<()> {
+		fn apply_def_5(&mut self, mut in1: impl core::MatTrait, mut in2: impl core::MatTrait, out: &mut core::Scalar) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GComputation_apply_Mat_Mat_ScalarR(self.as_raw_mut_GComputation(), in1.as_raw_mut_Mat(), in2.as_raw_mut_Mat(), out, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7133,7 +7143,7 @@ pub mod gapi {
 		/// ## C++ default parameters
 		/// * args: {}
 		#[inline]
-		fn compile_streaming_1(&mut self, callback: &crate::gapi::Detail_ExtractMetaCallback, mut args: crate::gapi::GCompileArgs) -> Result<crate::gapi::GStreamingCompiled> {
+		fn compile_streaming_1(&mut self, callback: &impl crate::gapi::Detail_ExtractMetaCallbackTraitConst, mut args: crate::gapi::GCompileArgs) -> Result<crate::gapi::GStreamingCompiled> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GComputation_compileStreaming_const_ExtractMetaCallbackR_GCompileArgsRR(self.as_raw_mut_GComputation(), callback.as_raw_Detail_ExtractMetaCallback(), args.as_raw_mut_VectorOfGCompileArg(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7148,7 +7158,7 @@ pub mod gapi {
 		/// This alternative version of [GComputationTrait::compile_streaming] function uses the following default values for its arguments:
 		/// * args: {}
 		#[inline]
-		fn compile_streaming_def_1(&mut self, callback: &crate::gapi::Detail_ExtractMetaCallback) -> Result<crate::gapi::GStreamingCompiled> {
+		fn compile_streaming_def_1(&mut self, callback: &impl crate::gapi::Detail_ExtractMetaCallbackTraitConst) -> Result<crate::gapi::GStreamingCompiled> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GComputation_compileStreaming_const_ExtractMetaCallbackR(self.as_raw_mut_GComputation(), callback.as_raw_Detail_ExtractMetaCallback(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7246,6 +7256,8 @@ pub mod gapi {
 		#[inline] fn as_raw_mut_GComputation(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { GComputation, crate::gapi::GComputationTraitConst, as_raw_GComputation, crate::gapi::GComputationTrait, as_raw_mut_GComputation }
+	
 	impl GComputation {
 		/// Defines an unary (one input -- one output) computation
 		/// 
@@ -7271,7 +7283,7 @@ pub mod gapi {
 		/// * in: input GMat of the defined unary computation
 		/// * out: output GMat of the defined unary computation
 		#[inline]
-		pub fn new(mut in_: crate::gapi::GMat, mut out: crate::gapi::GMat) -> Result<crate::gapi::GComputation> {
+		pub fn new(mut in_: impl crate::gapi::GMatTrait, mut out: impl crate::gapi::GMatTrait) -> Result<crate::gapi::GComputation> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GComputation_GComputation_GMat_GMat(in_.as_raw_mut_GMat(), out.as_raw_mut_GMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7304,7 +7316,7 @@ pub mod gapi {
 		/// * in: input GMat of the defined unary computation
 		/// * out: output GScalar of the defined unary computation
 		#[inline]
-		pub fn new_1(mut in_: crate::gapi::GMat, mut out: crate::gapi::GScalar) -> Result<crate::gapi::GComputation> {
+		pub fn new_1(mut in_: impl crate::gapi::GMatTrait, mut out: impl crate::gapi::GScalarTrait) -> Result<crate::gapi::GComputation> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GComputation_GComputation_GMat_GScalar(in_.as_raw_mut_GMat(), out.as_raw_mut_GScalar(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7338,7 +7350,7 @@ pub mod gapi {
 		/// * in2: second input GMat of the defined binary computation
 		/// * out: output GMat of the defined binary computation
 		#[inline]
-		pub fn new_2(mut in1: crate::gapi::GMat, mut in2: crate::gapi::GMat, mut out: crate::gapi::GMat) -> Result<crate::gapi::GComputation> {
+		pub fn new_2(mut in1: impl crate::gapi::GMatTrait, mut in2: impl crate::gapi::GMatTrait, mut out: impl crate::gapi::GMatTrait) -> Result<crate::gapi::GComputation> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GComputation_GComputation_GMat_GMat_GMat(in1.as_raw_mut_GMat(), in2.as_raw_mut_GMat(), out.as_raw_mut_GMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7372,7 +7384,7 @@ pub mod gapi {
 		/// * in2: second input GMat of the defined binary computation
 		/// * out: output GScalar of the defined binary computation
 		#[inline]
-		pub fn new_3(mut in1: crate::gapi::GMat, mut in2: crate::gapi::GMat, mut out: crate::gapi::GScalar) -> Result<crate::gapi::GComputation> {
+		pub fn new_3(mut in1: impl crate::gapi::GMatTrait, mut in2: impl crate::gapi::GMatTrait, mut out: impl crate::gapi::GScalarTrait) -> Result<crate::gapi::GComputation> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GComputation_GComputation_GMat_GMat_GScalar(in1.as_raw_mut_GMat(), in2.as_raw_mut_GMat(), out.as_raw_mut_GScalar(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7494,6 +7506,8 @@ pub mod gapi {
 		#[inline] fn as_raw_mut_GFrame(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { GFrame, crate::gapi::GFrameTraitConst, as_raw_GFrame, crate::gapi::GFrameTrait, as_raw_mut_GFrame }
+	
 	impl GFrame {
 		/// Constructs an empty GFrame
 		/// 
@@ -7549,7 +7563,7 @@ pub mod gapi {
 		}
 		
 		#[inline]
-		fn equals(&self, unnamed: &crate::gapi::GFrameDesc) -> Result<bool> {
+		fn equals(&self, unnamed: &impl crate::gapi::GFrameDescTraitConst) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GFrameDesc_operatorEQ_const_const_GFrameDescR(self.as_raw_GFrameDesc(), unnamed.as_raw_GFrameDesc(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7571,7 +7585,7 @@ pub mod gapi {
 		
 		#[inline]
 		fn set_size(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_GFrameDesc_propSize_const_Size(self.as_raw_mut_GFrameDesc(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_GFrameDesc_propSize_const_Size(self.as_raw_mut_GFrameDesc(), &val) };
 			ret
 		}
 		
@@ -7600,6 +7614,8 @@ pub mod gapi {
 	impl crate::gapi::GFrameDescTrait for GFrameDesc {
 		#[inline] fn as_raw_mut_GFrameDesc(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { GFrameDesc, crate::gapi::GFrameDescTraitConst, as_raw_GFrameDesc, crate::gapi::GFrameDescTrait, as_raw_mut_GFrameDesc }
 	
 	impl GFrameDesc {
 	}
@@ -7716,6 +7732,8 @@ pub mod gapi {
 		#[inline] fn as_raw_mut_GKernel(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { GKernel, crate::gapi::GKernelTraitConst, as_raw_GKernel, crate::gapi::GKernelTrait, as_raw_mut_GKernel }
+	
 	impl GKernel {
 	}
 	
@@ -7750,7 +7768,7 @@ pub mod gapi {
 		fn as_raw_mut_GKernelImpl(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn set_opaque(&mut self, val: crate::gapi::any) {
+		fn set_opaque(&mut self, val: impl crate::gapi::anyTraitConst) {
 			let ret = unsafe { sys::cv_GKernelImpl_propOpaque_const_any(self.as_raw_mut_GKernelImpl(), val.as_raw_any()) };
 			ret
 		}
@@ -7779,6 +7797,8 @@ pub mod gapi {
 	impl crate::gapi::GKernelImplTrait for GKernelImpl {
 		#[inline] fn as_raw_mut_GKernelImpl(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { GKernelImpl, crate::gapi::GKernelImplTraitConst, as_raw_GKernelImpl, crate::gapi::GKernelImplTrait, as_raw_mut_GKernelImpl }
 	
 	impl GKernelImpl {
 	}
@@ -7868,7 +7888,7 @@ pub mod gapi {
 		fn as_raw_mut_GKernelPackage(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn include(&mut self, functor: &crate::gapi::GFunctor) -> Result<()> {
+		fn include(&mut self, functor: &impl crate::gapi::GFunctorTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GKernelPackage_include_const_GFunctorR(self.as_raw_mut_GKernelPackage(), functor.as_raw_GFunctor(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7884,7 +7904,7 @@ pub mod gapi {
 		/// ## Parameters
 		/// * backend: backend which kernels to remove
 		#[inline]
-		fn remove(&mut self, backend: &crate::gapi::GBackend) -> Result<()> {
+		fn remove(&mut self, backend: &impl crate::gapi::GBackendTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GKernelPackage_remove_const_GBackendR(self.as_raw_mut_GKernelPackage(), backend.as_raw_GBackend(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -7898,7 +7918,7 @@ pub mod gapi {
 		/// * backend: backend associated with the kernel
 		/// * kernel_id: a name/id of the kernel
 		#[inline]
-		fn include_1(&mut self, backend: &crate::gapi::GBackend, kernel_id: &str) -> Result<()> {
+		fn include_1(&mut self, backend: &impl crate::gapi::GBackendTraitConst, kernel_id: &str) -> Result<()> {
 			extern_container_arg!(kernel_id);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GKernelPackage_include_const_GBackendR_const_stringR(self.as_raw_mut_GKernelPackage(), backend.as_raw_GBackend(), kernel_id.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
@@ -7955,6 +7975,8 @@ pub mod gapi {
 	impl crate::gapi::GKernelPackageTrait for GKernelPackage {
 		#[inline] fn as_raw_mut_GKernelPackage(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { GKernelPackage, crate::gapi::GKernelPackageTraitConst, as_raw_GKernelPackage, crate::gapi::GKernelPackageTrait, as_raw_mut_GKernelPackage }
 	
 	impl GKernelPackage {
 		fn default() -> Self {
@@ -8034,6 +8056,8 @@ pub mod gapi {
 		#[inline] fn as_raw_mut_GMat(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { GMat, crate::gapi::GMatTraitConst, as_raw_GMat, crate::gapi::GMatTrait, as_raw_mut_GMat }
+	
 	impl GMat {
 		/// Constructs an empty GMat
 		/// 
@@ -8106,7 +8130,7 @@ pub mod gapi {
 		}
 		
 		#[inline]
-		fn equals(&self, rhs: &crate::gapi::GMatDesc) -> Result<bool> {
+		fn equals(&self, rhs: &impl crate::gapi::GMatDescTraitConst) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GMatDesc_operatorEQ_const_const_GMatDescR(self.as_raw_GMatDesc(), rhs.as_raw_GMatDesc(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -8115,7 +8139,7 @@ pub mod gapi {
 		}
 		
 		#[inline]
-		fn not_equals(&self, rhs: &crate::gapi::GMatDesc) -> Result<bool> {
+		fn not_equals(&self, rhs: &impl crate::gapi::GMatDescTraitConst) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GMatDesc_operatorNE_const_const_GMatDescR(self.as_raw_GMatDesc(), rhs.as_raw_GMatDesc(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -8133,7 +8157,7 @@ pub mod gapi {
 		}
 		
 		#[inline]
-		fn can_describe(&self, mat: &core::Mat) -> Result<bool> {
+		fn can_describe(&self, mat: &impl core::MatTraitConst) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GMatDesc_canDescribe_const_const_MatR(self.as_raw_GMatDesc(), mat.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -8142,7 +8166,7 @@ pub mod gapi {
 		}
 		
 		#[inline]
-		fn can_describe_1(&self, mat: &crate::gapi::RMat) -> Result<bool> {
+		fn can_describe_1(&self, mat: &impl crate::gapi::RMatTraitConst) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GMatDesc_canDescribe_const_const_RMatR(self.as_raw_GMatDesc(), mat.as_raw_RMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -8153,7 +8177,7 @@ pub mod gapi {
 		#[inline]
 		fn with_size_delta(&self, delta: core::Size) -> Result<crate::gapi::GMatDesc> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_GMatDesc_withSizeDelta_const_Size(self.as_raw_GMatDesc(), delta.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_GMatDesc_withSizeDelta_const_Size(self.as_raw_GMatDesc(), &delta, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::gapi::GMatDesc::opencv_from_extern(ret) };
@@ -8173,7 +8197,7 @@ pub mod gapi {
 		#[inline]
 		fn with_size(&self, sz: core::Size) -> Result<crate::gapi::GMatDesc> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_GMatDesc_withSize_const_Size(self.as_raw_GMatDesc(), sz.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_GMatDesc_withSize_const_Size(self.as_raw_GMatDesc(), &sz, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::gapi::GMatDesc::opencv_from_extern(ret) };
@@ -8250,7 +8274,7 @@ pub mod gapi {
 		
 		#[inline]
 		fn set_size(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_GMatDesc_propSize_const_Size(self.as_raw_mut_GMatDesc(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_GMatDesc_propSize_const_Size(self.as_raw_mut_GMatDesc(), &val) };
 			ret
 		}
 		
@@ -8292,13 +8316,15 @@ pub mod gapi {
 		#[inline] fn as_raw_mut_GMatDesc(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { GMatDesc, crate::gapi::GMatDescTraitConst, as_raw_GMatDesc, crate::gapi::GMatDescTrait, as_raw_mut_GMatDesc }
+	
 	impl GMatDesc {
 		/// ## C++ default parameters
 		/// * p: false
 		#[inline]
 		pub fn new(d: i32, c: i32, s: core::Size, p: bool) -> Result<crate::gapi::GMatDesc> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_GMatDesc_GMatDesc_int_int_Size_bool(d, c, s.opencv_as_extern(), p, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_GMatDesc_GMatDesc_int_int_Size_bool(d, c, &s, p, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::gapi::GMatDesc::opencv_from_extern(ret) };
@@ -8311,7 +8337,7 @@ pub mod gapi {
 		#[inline]
 		pub fn new_def(d: i32, c: i32, s: core::Size) -> Result<crate::gapi::GMatDesc> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_GMatDesc_GMatDesc_int_int_Size(d, c, s.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_GMatDesc_GMatDesc_int_int_Size(d, c, &s, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::gapi::GMatDesc::opencv_from_extern(ret) };
@@ -8405,6 +8431,8 @@ pub mod gapi {
 		#[inline] fn as_raw_mut_GMat(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { GMatP, crate::gapi::GMatTraitConst, as_raw_GMat, crate::gapi::GMatTrait, as_raw_mut_GMat }
+	
 	impl crate::gapi::GMatPTraitConst for GMatP {
 		#[inline] fn as_raw_GMatP(&self) -> *const c_void { self.as_raw() }
 	}
@@ -8412,6 +8440,8 @@ pub mod gapi {
 	impl crate::gapi::GMatPTrait for GMatP {
 		#[inline] fn as_raw_mut_GMatP(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { GMatP, crate::gapi::GMatPTraitConst, as_raw_GMatP, crate::gapi::GMatPTrait, as_raw_mut_GMatP }
 	
 	impl GMatP {
 	}
@@ -8431,7 +8461,7 @@ pub mod gapi {
 		fn as_raw_GOpaqueDesc(&self) -> *const c_void;
 	
 		#[inline]
-		fn equals(&self, unnamed: &crate::gapi::GOpaqueDesc) -> Result<bool> {
+		fn equals(&self, unnamed: &impl crate::gapi::GOpaqueDescTraitConst) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GOpaqueDesc_operatorEQ_const_const_GOpaqueDescR(self.as_raw_GOpaqueDesc(), unnamed.as_raw_GOpaqueDesc(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -8470,6 +8500,8 @@ pub mod gapi {
 	impl crate::gapi::GOpaqueDescTrait for GOpaqueDesc {
 		#[inline] fn as_raw_mut_GOpaqueDesc(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { GOpaqueDesc, crate::gapi::GOpaqueDescTraitConst, as_raw_GOpaqueDesc, crate::gapi::GOpaqueDescTrait, as_raw_mut_GOpaqueDesc }
 	
 	impl GOpaqueDesc {
 		fn default() -> Self {
@@ -8512,7 +8544,7 @@ pub mod gapi {
 		fn as_raw_mut_GRunArg(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn set(&mut self, arg: &crate::gapi::GRunArg) -> Result<()> {
+		fn set(&mut self, arg: &impl crate::gapi::GRunArgTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GRunArg_operatorST_const_GRunArgR(self.as_raw_mut_GRunArg(), arg.as_raw_GRunArg(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -8554,6 +8586,8 @@ pub mod gapi {
 		#[inline] fn as_raw_mut_GRunArg(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { GRunArg, crate::gapi::GRunArgTraitConst, as_raw_GRunArg, crate::gapi::GRunArgTrait, as_raw_mut_GRunArg }
+	
 	impl GRunArg {
 		#[inline]
 		pub fn default() -> Result<crate::gapi::GRunArg> {
@@ -8566,7 +8600,7 @@ pub mod gapi {
 		}
 		
 		#[inline]
-		pub fn copy(arg: &crate::gapi::GRunArg) -> Result<crate::gapi::GRunArg> {
+		pub fn copy(arg: &impl crate::gapi::GRunArgTraitConst) -> Result<crate::gapi::GRunArg> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GRunArg_GRunArg_const_GRunArgR(arg.as_raw_GRunArg(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -8643,6 +8677,8 @@ pub mod gapi {
 	impl crate::gapi::GScalarTrait for GScalar {
 		#[inline] fn as_raw_mut_GScalar(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { GScalar, crate::gapi::GScalarTraitConst, as_raw_GScalar, crate::gapi::GScalarTrait, as_raw_mut_GScalar }
 	
 	impl GScalar {
 		/// Constructs an empty GScalar
@@ -8785,7 +8821,7 @@ pub mod gapi {
 		fn as_raw_GScalarDesc(&self) -> *const c_void;
 	
 		#[inline]
-		fn equals(&self, unnamed: &crate::gapi::GScalarDesc) -> Result<bool> {
+		fn equals(&self, unnamed: &impl crate::gapi::GScalarDescTraitConst) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GScalarDesc_operatorEQ_const_const_GScalarDescR(self.as_raw_GScalarDesc(), unnamed.as_raw_GScalarDesc(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -8794,7 +8830,7 @@ pub mod gapi {
 		}
 		
 		#[inline]
-		fn not_equals(&self, rhs: &crate::gapi::GScalarDesc) -> Result<bool> {
+		fn not_equals(&self, rhs: &impl crate::gapi::GScalarDescTraitConst) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GScalarDesc_operatorNE_const_const_GScalarDescR(self.as_raw_GScalarDesc(), rhs.as_raw_GScalarDesc(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -8833,6 +8869,8 @@ pub mod gapi {
 	impl crate::gapi::GScalarDescTrait for GScalarDesc {
 		#[inline] fn as_raw_mut_GScalarDesc(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { GScalarDesc, crate::gapi::GScalarDescTraitConst, as_raw_GScalarDesc, crate::gapi::GScalarDescTrait, as_raw_mut_GScalarDesc }
 	
 	impl GScalarDesc {
 		fn default() -> Self {
@@ -8958,7 +8996,7 @@ pub mod gapi {
 		
 		/// @private -- Exclude this function from OpenCV documentation
 		#[inline]
-		fn set_source_1(&mut self, callback: &crate::gapi::Detail_ExtractArgsCallback) -> Result<()> {
+		fn set_source_1(&mut self, callback: &impl crate::gapi::Detail_ExtractArgsCallbackTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GStreamingCompiled_setSource_const_ExtractArgsCallbackR(self.as_raw_mut_GStreamingCompiled(), callback.as_raw_Detail_ExtractArgsCallback(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -9058,6 +9096,8 @@ pub mod gapi {
 		#[inline] fn as_raw_mut_GStreamingCompiled(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { GStreamingCompiled, crate::gapi::GStreamingCompiledTraitConst, as_raw_GStreamingCompiled, crate::gapi::GStreamingCompiledTrait, as_raw_mut_GStreamingCompiled }
+	
 	impl GStreamingCompiled {
 		#[inline]
 		pub fn default() -> Result<crate::gapi::GStreamingCompiled> {
@@ -9135,6 +9175,8 @@ pub mod gapi {
 		#[inline] fn as_raw_mut_GTransform(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { GTransform, crate::gapi::GTransformTraitConst, as_raw_GTransform, crate::gapi::GTransformTrait, as_raw_mut_GTransform }
+	
 	impl GTransform {
 	}
 	
@@ -9209,6 +9251,8 @@ pub mod gapi {
 	impl crate::gapi::GTypeInfoTrait for GTypeInfo {
 		#[inline] fn as_raw_mut_GTypeInfo(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { GTypeInfo, crate::gapi::GTypeInfoTraitConst, as_raw_GTypeInfo, crate::gapi::GTypeInfoTrait, as_raw_mut_GTypeInfo }
 	
 	impl GTypeInfo {
 		fn default() -> Self {
@@ -9316,6 +9360,8 @@ pub mod gapi {
 		#[inline] fn as_raw_mut_MediaFrame(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { MediaFrame, crate::gapi::MediaFrameTraitConst, as_raw_MediaFrame, crate::gapi::MediaFrameTrait, as_raw_mut_MediaFrame }
+	
 	impl MediaFrame {
 		/// Constructs an empty MediaFrame
 		/// 
@@ -9404,6 +9450,8 @@ pub mod gapi {
 		#[inline] fn as_raw_mut_MediaFrame_IAdapter(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { MediaFrame_IAdapter, crate::gapi::MediaFrame_IAdapterTraitConst, as_raw_MediaFrame_IAdapter, crate::gapi::MediaFrame_IAdapterTrait, as_raw_mut_MediaFrame_IAdapter }
+	
 	impl MediaFrame_IAdapter {
 	}
 	
@@ -9485,6 +9533,8 @@ pub mod gapi {
 		#[inline] fn as_raw_mut_MediaFrame_View(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { MediaFrame_View, crate::gapi::MediaFrame_ViewTraitConst, as_raw_MediaFrame_View, crate::gapi::MediaFrame_ViewTrait, as_raw_mut_MediaFrame_View }
+	
 	impl MediaFrame_View {
 		pub const MAX_PLANES: u32 = 4;
 		/// @private
@@ -9550,6 +9600,8 @@ pub mod gapi {
 	impl crate::gapi::RMatTrait for RMat {
 		#[inline] fn as_raw_mut_RMat(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { RMat, crate::gapi::RMatTraitConst, as_raw_RMat, crate::gapi::RMatTrait, as_raw_mut_RMat }
 	
 	impl RMat {
 		#[inline]
@@ -9621,6 +9673,8 @@ pub mod gapi {
 	impl crate::gapi::RMat_IAdapterTrait for RMat_IAdapter {
 		#[inline] fn as_raw_mut_RMat_IAdapter(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { RMat_IAdapter, crate::gapi::RMat_IAdapterTraitConst, as_raw_RMat_IAdapter, crate::gapi::RMat_IAdapterTrait, as_raw_mut_RMat_IAdapter }
 	
 	impl RMat_IAdapter {
 	}
@@ -9783,6 +9837,8 @@ pub mod gapi {
 		#[inline] fn as_raw_mut_RMat_View(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { RMat_View, crate::gapi::RMat_ViewTraitConst, as_raw_RMat_View, crate::gapi::RMat_ViewTrait, as_raw_mut_RMat_View }
+	
 	impl RMat_View {
 		#[inline]
 		pub fn default() -> crate::gapi::RMat_View {
@@ -9861,6 +9917,8 @@ pub mod gapi {
 		#[inline] fn as_raw_mut_Detail_ExtractArgsCallback(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Detail_ExtractArgsCallback, crate::gapi::Detail_ExtractArgsCallbackTraitConst, as_raw_Detail_ExtractArgsCallback, crate::gapi::Detail_ExtractArgsCallbackTrait, as_raw_mut_Detail_ExtractArgsCallback }
+	
 	impl Detail_ExtractArgsCallback {
 	}
 	
@@ -9906,6 +9964,8 @@ pub mod gapi {
 	impl crate::gapi::Detail_ExtractMetaCallbackTrait for Detail_ExtractMetaCallback {
 		#[inline] fn as_raw_mut_Detail_ExtractMetaCallback(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { Detail_ExtractMetaCallback, crate::gapi::Detail_ExtractMetaCallbackTraitConst, as_raw_Detail_ExtractMetaCallback, crate::gapi::Detail_ExtractMetaCallbackTrait, as_raw_mut_Detail_ExtractMetaCallback }
 	
 	impl Detail_ExtractMetaCallback {
 	}
@@ -9953,6 +10013,8 @@ pub mod gapi {
 		#[inline] fn as_raw_mut_Detail_GArrayU(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Detail_GArrayU, crate::gapi::Detail_GArrayUTraitConst, as_raw_Detail_GArrayU, crate::gapi::Detail_GArrayUTrait, as_raw_mut_Detail_GArrayU }
+	
 	impl Detail_GArrayU {
 	}
 	
@@ -9999,6 +10061,8 @@ pub mod gapi {
 		#[inline] fn as_raw_mut_Detail_GOpaqueU(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Detail_GOpaqueU, crate::gapi::Detail_GOpaqueUTraitConst, as_raw_Detail_GOpaqueU, crate::gapi::Detail_GOpaqueUTrait, as_raw_mut_Detail_GOpaqueU }
+	
 	impl Detail_GOpaqueU {
 	}
 	
@@ -10015,7 +10079,7 @@ pub mod gapi {
 		fn as_raw_GBackend(&self) -> *const c_void;
 	
 		#[inline]
-		fn equals(&self, rhs: &crate::gapi::GBackend) -> Result<bool> {
+		fn equals(&self, rhs: &impl crate::gapi::GBackendTraitConst) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_gapi_GBackend_operatorEQ_const_const_GBackendR(self.as_raw_GBackend(), rhs.as_raw_GBackend(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -10054,6 +10118,8 @@ pub mod gapi {
 	impl crate::gapi::GBackendTrait for GBackend {
 		#[inline] fn as_raw_mut_GBackend(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { GBackend, crate::gapi::GBackendTraitConst, as_raw_GBackend, crate::gapi::GBackendTrait, as_raw_mut_GBackend }
 	
 	impl GBackend {
 		#[inline]
@@ -10142,6 +10208,8 @@ pub mod gapi {
 		#[inline] fn as_raw_mut_GFunctor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { GFunctor, crate::gapi::GFunctorTraitConst, as_raw_GFunctor, crate::gapi::GFunctorTrait, as_raw_mut_GFunctor }
+	
 	impl GFunctor {
 	}
 	
@@ -10219,6 +10287,8 @@ pub mod gapi {
 	impl crate::gapi::ScalarTrait for Scalar {
 		#[inline] fn as_raw_mut_Scalar(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { Scalar, crate::gapi::ScalarTraitConst, as_raw_Scalar, crate::gapi::ScalarTrait, as_raw_mut_Scalar }
 	
 	impl Scalar {
 		#[inline]
@@ -10350,7 +10420,7 @@ pub mod gapi {
 		fn as_raw_mut_use_only(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn set_pkg(&mut self, val: crate::gapi::GKernelPackage) {
+		fn set_pkg(&mut self, val: impl crate::gapi::GKernelPackageTraitConst) {
 			let ret = unsafe { sys::cv_gapi_use_only_propPkg_const_GKernelPackage(self.as_raw_mut_use_only(), val.as_raw_GKernelPackage()) };
 			ret
 		}
@@ -10385,6 +10455,8 @@ pub mod gapi {
 	impl crate::gapi::use_onlyTrait for use_only {
 		#[inline] fn as_raw_mut_use_only(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { use_only, crate::gapi::use_onlyTraitConst, as_raw_use_only, crate::gapi::use_onlyTrait, as_raw_mut_use_only }
 	
 	impl use_only {
 	}
@@ -10438,6 +10510,8 @@ pub mod gapi {
 		#[inline] fn as_raw_mut_GRunArg(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Data, crate::gapi::GRunArgTraitConst, as_raw_GRunArg, crate::gapi::GRunArgTrait, as_raw_mut_GRunArg }
+	
 	impl crate::gapi::DataTraitConst for Data {
 		#[inline] fn as_raw_Data(&self) -> *const c_void { self.as_raw() }
 	}
@@ -10445,6 +10519,8 @@ pub mod gapi {
 	impl crate::gapi::DataTrait for Data {
 		#[inline] fn as_raw_mut_Data(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { Data, crate::gapi::DataTraitConst, as_raw_Data, crate::gapi::DataTrait, as_raw_mut_Data }
 	
 	impl Data {
 	}
@@ -10585,20 +10661,20 @@ pub mod gapi {
 		/// The bottom-left corner of the image
 		#[inline]
 		fn set_org(&mut self, val: core::Point) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Image_propOrg_const_Point(self.as_raw_mut_Image(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Image_propOrg_const_Point(self.as_raw_mut_Image(), &val) };
 			ret
 		}
 		
 		/// Image to draw
 		#[inline]
-		fn set_img(&mut self, val: core::Mat) {
+		fn set_img(&mut self, val: impl core::MatTraitConst) {
 			let ret = unsafe { sys::cv_gapi_wip_draw_Image_propImg_const_Mat(self.as_raw_mut_Image(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// Alpha channel for image to draw (same size and number of channels)
 		#[inline]
-		fn set_alpha(&mut self, val: core::Mat) {
+		fn set_alpha(&mut self, val: impl core::MatTraitConst) {
 			let ret = unsafe { sys::cv_gapi_wip_draw_Image_propAlpha_const_Mat(self.as_raw_mut_Image(), val.as_raw_Mat()) };
 			ret
 		}
@@ -10631,6 +10707,8 @@ pub mod gapi {
 		#[inline] fn as_raw_mut_Image(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Image, crate::gapi::ImageTraitConst, as_raw_Image, crate::gapi::ImageTrait, as_raw_mut_Image }
+	
 	impl Image {
 		/// Mosaic constructor
 		/// 
@@ -10639,7 +10717,7 @@ pub mod gapi {
 		/// * img_: Image to draw
 		/// * alpha_: Alpha channel for image to draw (same size and number of channels)
 		#[inline]
-		pub fn new(org_: core::Point, img_: &core::Mat, alpha_: &core::Mat) -> Result<crate::gapi::Image> {
+		pub fn new(org_: core::Point, img_: &impl core::MatTraitConst, alpha_: &impl core::MatTraitConst) -> Result<crate::gapi::Image> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_gapi_wip_draw_Image_Image_const_PointR_const_MatR_const_MatR(&org_, img_.as_raw_Mat(), alpha_.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -10872,7 +10950,7 @@ pub mod gapi {
 		/// The line color
 		#[inline]
 		fn set_color(&mut self, val: core::Scalar) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_propColor_const_Scalar(self.as_raw_mut_Poly(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_propColor_const_Scalar(self.as_raw_mut_Poly(), &val) };
 			ret
 		}
 		
@@ -10922,6 +11000,8 @@ pub mod gapi {
 	impl crate::gapi::PolyTrait for Poly {
 		#[inline] fn as_raw_mut_Poly(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { Poly, crate::gapi::PolyTraitConst, as_raw_Poly, crate::gapi::PolyTrait, as_raw_mut_Poly }
 	
 	impl Poly {
 		/// Mosaic constructor
@@ -11174,7 +11254,7 @@ pub mod gapi {
 		/// The bottom-left corner of the text string in the image
 		#[inline]
 		fn set_org(&mut self, val: core::Point) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propOrg_const_Point(self.as_raw_mut_Text(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propOrg_const_Point(self.as_raw_mut_Text(), &val) };
 			ret
 		}
 		
@@ -11195,7 +11275,7 @@ pub mod gapi {
 		/// The text color
 		#[inline]
 		fn set_color(&mut self, val: core::Scalar) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propColor_const_Scalar(self.as_raw_mut_Text(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propColor_const_Scalar(self.as_raw_mut_Text(), &val) };
 			ret
 		}
 		
@@ -11247,6 +11327,8 @@ pub mod gapi {
 	impl crate::gapi::TextTrait for Text {
 		#[inline] fn as_raw_mut_Text(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { Text, crate::gapi::TextTraitConst, as_raw_Text, crate::gapi::TextTrait, as_raw_mut_Text }
 	
 	impl Text {
 		/// Text constructor
@@ -11361,7 +11443,7 @@ pub mod gapi {
 		}
 		
 		#[inline]
-		fn set_1(&mut self, src: &crate::gapi::any) -> Result<()> {
+		fn set_1(&mut self, src: &impl crate::gapi::anyTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_util_any_operatorST_const_anyR(self.as_raw_mut_any(), src.as_raw_any(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -11394,9 +11476,11 @@ pub mod gapi {
 		#[inline] fn as_raw_mut_any(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { any, crate::gapi::anyTraitConst, as_raw_any, crate::gapi::anyTrait, as_raw_mut_any }
+	
 	impl any {
 		#[inline]
-		pub fn copy(src: &crate::gapi::any) -> Result<crate::gapi::any> {
+		pub fn copy(src: &impl crate::gapi::anyTraitConst) -> Result<crate::gapi::any> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_util_any_any_const_anyR(src.as_raw_any(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -11406,7 +11490,7 @@ pub mod gapi {
 		}
 		
 		#[inline]
-		pub fn copy_mut(src: &mut crate::gapi::any) -> Result<crate::gapi::any> {
+		pub fn copy_mut(src: &mut impl crate::gapi::anyTrait) -> Result<crate::gapi::any> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_util_any_any_anyR(src.as_raw_mut_any(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

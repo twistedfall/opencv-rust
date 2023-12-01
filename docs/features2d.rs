@@ -171,7 +171,7 @@ pub mod features2d {
 	/// This alternative version of [agast] function uses the following default values for its arguments:
 	/// * nonmax_suppression: true
 	#[inline]
-	pub fn agast_def(image: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, threshold: i32) -> Result<()> {
+	pub fn agast_def(image: &impl ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, threshold: i32) -> Result<()> {
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_AGAST_const__InputArrayR_vectorLKeyPointGR_int(image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), threshold, ocvrs_return.as_mut_ptr()) };
@@ -203,7 +203,7 @@ pub mod features2d {
 	/// ## C++ default parameters
 	/// * nonmax_suppression: true
 	#[inline]
-	pub fn agast(image: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, threshold: i32, nonmax_suppression: bool) -> Result<()> {
+	pub fn agast(image: &impl ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, threshold: i32, nonmax_suppression: bool) -> Result<()> {
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_AGAST_const__InputArrayR_vectorLKeyPointGR_int_bool(image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), threshold, nonmax_suppression, ocvrs_return.as_mut_ptr()) };
@@ -230,7 +230,7 @@ pub mod features2d {
 	/// The perl script and examples of tree generation are placed in features2d/doc folder.
 	/// Detects corners using the AGAST algorithm by [mair2010_agast](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_mair2010_agast) .
 	#[inline]
-	pub fn agast_with_type(image: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, threshold: i32, nonmax_suppression: bool, typ: crate::features2d::AgastFeatureDetector_DetectorType) -> Result<()> {
+	pub fn agast_with_type(image: &impl ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, threshold: i32, nonmax_suppression: bool, typ: crate::features2d::AgastFeatureDetector_DetectorType) -> Result<()> {
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_AGAST_const__InputArrayR_vectorLKeyPointGR_int_bool_DetectorType(image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), threshold, nonmax_suppression, typ, ocvrs_return.as_mut_ptr()) };
@@ -245,7 +245,7 @@ pub mod features2d {
 	/// This alternative version of [fast] function uses the following default values for its arguments:
 	/// * nonmax_suppression: true
 	#[inline]
-	pub fn fast_def(image: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, threshold: i32) -> Result<()> {
+	pub fn fast_def(image: &impl ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, threshold: i32) -> Result<()> {
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_FAST_const__InputArrayR_vectorLKeyPointGR_int(image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), threshold, ocvrs_return.as_mut_ptr()) };
@@ -279,7 +279,7 @@ pub mod features2d {
 	/// ## C++ default parameters
 	/// * nonmax_suppression: true
 	#[inline]
-	pub fn fast(image: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, threshold: i32, nonmax_suppression: bool) -> Result<()> {
+	pub fn fast(image: &impl ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, threshold: i32, nonmax_suppression: bool) -> Result<()> {
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_FAST_const__InputArrayR_vectorLKeyPointGR_int_bool(image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), threshold, nonmax_suppression, ocvrs_return.as_mut_ptr()) };
@@ -308,7 +308,7 @@ pub mod features2d {
 	/// cv.FAST_FEATURE_DETECTOR_TYPE_7_12 and cv.FAST_FEATURE_DETECTOR_TYPE_9_16. For corner
 	/// detection, use cv.FAST.detect() method.
 	#[inline]
-	pub fn fast_with_type(image: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, threshold: i32, nonmax_suppression: bool, typ: crate::features2d::FastFeatureDetector_DetectorType) -> Result<()> {
+	pub fn fast_with_type(image: &impl ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, threshold: i32, nonmax_suppression: bool, typ: crate::features2d::FastFeatureDetector_DetectorType) -> Result<()> {
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_FAST_const__InputArrayR_vectorLKeyPointGR_int_bool_DetectorType(image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), threshold, nonmax_suppression, typ, ocvrs_return.as_mut_ptr()) };
@@ -348,7 +348,7 @@ pub mod features2d {
 	/// * color: Scalar::all(-1)
 	/// * flags: DrawMatchesFlags::DEFAULT
 	#[inline]
-	pub fn draw_keypoints_def(image: &impl core::ToInputArray, keypoints: &core::Vector<core::KeyPoint>, out_image: &mut impl core::ToInputOutputArray) -> Result<()> {
+	pub fn draw_keypoints_def(image: &impl ToInputArray, keypoints: &core::Vector<core::KeyPoint>, out_image: &mut impl ToInputOutputArray) -> Result<()> {
 		input_array_arg!(image);
 		input_output_array_arg!(out_image);
 		return_send!(via ocvrs_return);
@@ -379,7 +379,7 @@ pub mod features2d {
 	/// * color: Scalar::all(-1)
 	/// * flags: DrawMatchesFlags::DEFAULT
 	#[inline]
-	pub fn draw_keypoints(image: &impl core::ToInputArray, keypoints: &core::Vector<core::KeyPoint>, out_image: &mut impl core::ToInputOutputArray, color: core::Scalar, flags: crate::features2d::DrawMatchesFlags) -> Result<()> {
+	pub fn draw_keypoints(image: &impl ToInputArray, keypoints: &core::Vector<core::KeyPoint>, out_image: &mut impl ToInputOutputArray, color: core::Scalar, flags: crate::features2d::DrawMatchesFlags) -> Result<()> {
 		input_array_arg!(image);
 		input_output_array_arg!(out_image);
 		return_send!(via ocvrs_return);
@@ -419,7 +419,7 @@ pub mod features2d {
 	/// * matches_mask: std::vector<char>()
 	/// * flags: DrawMatchesFlags::DEFAULT
 	#[inline]
-	pub fn draw_matches_def(img1: &impl core::ToInputArray, keypoints1: &core::Vector<core::KeyPoint>, img2: &impl core::ToInputArray, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::DMatch>, out_img: &mut impl core::ToInputOutputArray) -> Result<()> {
+	pub fn draw_matches_def(img1: &impl ToInputArray, keypoints1: &core::Vector<core::KeyPoint>, img2: &impl ToInputArray, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::DMatch>, out_img: &mut impl ToInputOutputArray) -> Result<()> {
 		input_array_arg!(img1);
 		input_array_arg!(img2);
 		input_output_array_arg!(out_img);
@@ -459,7 +459,7 @@ pub mod features2d {
 	/// * matches_mask: std::vector<char>()
 	/// * flags: DrawMatchesFlags::DEFAULT
 	#[inline]
-	pub fn draw_matches(img1: &impl core::ToInputArray, keypoints1: &core::Vector<core::KeyPoint>, img2: &impl core::ToInputArray, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::DMatch>, out_img: &mut impl core::ToInputOutputArray, match_color: core::Scalar, single_point_color: core::Scalar, matches_mask: &core::Vector<c_char>, flags: crate::features2d::DrawMatchesFlags) -> Result<()> {
+	pub fn draw_matches(img1: &impl ToInputArray, keypoints1: &core::Vector<core::KeyPoint>, img2: &impl ToInputArray, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::DMatch>, out_img: &mut impl ToInputOutputArray, match_color: core::Scalar, single_point_color: core::Scalar, matches_mask: &core::Vector<c_char>, flags: crate::features2d::DrawMatchesFlags) -> Result<()> {
 		input_array_arg!(img1);
 		input_array_arg!(img2);
 		input_output_array_arg!(out_img);
@@ -479,7 +479,7 @@ pub mod features2d {
 	/// * matches_mask: std::vector<char>()
 	/// * flags: DrawMatchesFlags::DEFAULT
 	#[inline]
-	pub fn draw_matches_1_def(img1: &impl core::ToInputArray, keypoints1: &core::Vector<core::KeyPoint>, img2: &impl core::ToInputArray, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::DMatch>, out_img: &mut impl core::ToInputOutputArray, matches_thickness: i32) -> Result<()> {
+	pub fn draw_matches_1_def(img1: &impl ToInputArray, keypoints1: &core::Vector<core::KeyPoint>, img2: &impl ToInputArray, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::DMatch>, out_img: &mut impl ToInputOutputArray, matches_thickness: i32) -> Result<()> {
 		input_array_arg!(img1);
 		input_array_arg!(img2);
 		input_output_array_arg!(out_img);
@@ -521,7 +521,7 @@ pub mod features2d {
 	/// * matches_mask: std::vector<char>()
 	/// * flags: DrawMatchesFlags::DEFAULT
 	#[inline]
-	pub fn draw_matches_1(img1: &impl core::ToInputArray, keypoints1: &core::Vector<core::KeyPoint>, img2: &impl core::ToInputArray, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::DMatch>, out_img: &mut impl core::ToInputOutputArray, matches_thickness: i32, match_color: core::Scalar, single_point_color: core::Scalar, matches_mask: &core::Vector<c_char>, flags: crate::features2d::DrawMatchesFlags) -> Result<()> {
+	pub fn draw_matches_1(img1: &impl ToInputArray, keypoints1: &core::Vector<core::KeyPoint>, img2: &impl ToInputArray, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::DMatch>, out_img: &mut impl ToInputOutputArray, matches_thickness: i32, match_color: core::Scalar, single_point_color: core::Scalar, matches_mask: &core::Vector<c_char>, flags: crate::features2d::DrawMatchesFlags) -> Result<()> {
 		input_array_arg!(img1);
 		input_array_arg!(img2);
 		input_output_array_arg!(out_img);
@@ -539,7 +539,7 @@ pub mod features2d {
 	/// * matches_mask: std::vector<std::vector<char>>()
 	/// * flags: DrawMatchesFlags::DEFAULT
 	#[inline]
-	pub fn draw_matches_knn_def(img1: &impl core::ToInputArray, keypoints1: &core::Vector<core::KeyPoint>, img2: &impl core::ToInputArray, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::Vector<core::DMatch>>, out_img: &mut impl core::ToInputOutputArray) -> Result<()> {
+	pub fn draw_matches_knn_def(img1: &impl ToInputArray, keypoints1: &core::Vector<core::KeyPoint>, img2: &impl ToInputArray, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::Vector<core::DMatch>>, out_img: &mut impl ToInputOutputArray) -> Result<()> {
 		input_array_arg!(img1);
 		input_array_arg!(img2);
 		input_output_array_arg!(out_img);
@@ -556,7 +556,7 @@ pub mod features2d {
 	/// * matches_mask: std::vector<std::vector<char>>()
 	/// * flags: DrawMatchesFlags::DEFAULT
 	#[inline]
-	pub fn draw_matches_knn(img1: &impl core::ToInputArray, keypoints1: &core::Vector<core::KeyPoint>, img2: &impl core::ToInputArray, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::Vector<core::DMatch>>, out_img: &mut impl core::ToInputOutputArray, match_color: core::Scalar, single_point_color: core::Scalar, matches_mask: &core::Vector<core::Vector<c_char>>, flags: crate::features2d::DrawMatchesFlags) -> Result<()> {
+	pub fn draw_matches_knn(img1: &impl ToInputArray, keypoints1: &core::Vector<core::KeyPoint>, img2: &impl ToInputArray, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::Vector<core::DMatch>>, out_img: &mut impl ToInputOutputArray, match_color: core::Scalar, single_point_color: core::Scalar, matches_mask: &core::Vector<core::Vector<c_char>>, flags: crate::features2d::DrawMatchesFlags) -> Result<()> {
 		input_array_arg!(img1);
 		input_array_arg!(img2);
 		input_output_array_arg!(out_img);
@@ -575,7 +575,7 @@ pub mod features2d {
 	/// This alternative version of [evaluate_feature_detector] function uses the following default values for its arguments:
 	/// * fdetector: Ptr<FeatureDetector>()
 	#[inline]
-	pub fn evaluate_feature_detector_def(img1: &core::Mat, img2: &core::Mat, h1to2: &core::Mat, keypoints1: &mut core::Vector<core::KeyPoint>, keypoints2: &mut core::Vector<core::KeyPoint>, repeatability: &mut f32, corresp_count: &mut i32) -> Result<()> {
+	pub fn evaluate_feature_detector_def(img1: &impl core::MatTraitConst, img2: &impl core::MatTraitConst, h1to2: &impl core::MatTraitConst, keypoints1: &mut core::Vector<core::KeyPoint>, keypoints2: &mut core::Vector<core::KeyPoint>, repeatability: &mut f32, corresp_count: &mut i32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_evaluateFeatureDetector_const_MatR_const_MatR_const_MatR_vectorLKeyPointGX_vectorLKeyPointGX_floatR_intR(img1.as_raw_Mat(), img2.as_raw_Mat(), h1to2.as_raw_Mat(), keypoints1.as_raw_mut_VectorOfKeyPoint(), keypoints2.as_raw_mut_VectorOfKeyPoint(), repeatability, corresp_count, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -590,7 +590,7 @@ pub mod features2d {
 	/// ## C++ default parameters
 	/// * fdetector: Ptr<FeatureDetector>()
 	#[inline]
-	pub fn evaluate_feature_detector(img1: &core::Mat, img2: &core::Mat, h1to2: &core::Mat, keypoints1: &mut core::Vector<core::KeyPoint>, keypoints2: &mut core::Vector<core::KeyPoint>, repeatability: &mut f32, corresp_count: &mut i32, fdetector: &core::Ptr<crate::features2d::Feature2D>) -> Result<()> {
+	pub fn evaluate_feature_detector(img1: &impl core::MatTraitConst, img2: &impl core::MatTraitConst, h1to2: &impl core::MatTraitConst, keypoints1: &mut core::Vector<core::KeyPoint>, keypoints2: &mut core::Vector<core::KeyPoint>, repeatability: &mut f32, corresp_count: &mut i32, fdetector: &core::Ptr<crate::features2d::Feature2D>) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_evaluateFeatureDetector_const_MatR_const_MatR_const_MatR_vectorLKeyPointGX_vectorLKeyPointGX_floatR_intR_const_PtrLFeature2DGR(img1.as_raw_Mat(), img2.as_raw_Mat(), h1to2.as_raw_Mat(), keypoints1.as_raw_mut_VectorOfKeyPoint(), keypoints2.as_raw_mut_VectorOfKeyPoint(), repeatability, corresp_count, fdetector.as_raw_PtrOfFeature2D(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -822,6 +822,8 @@ pub mod features2d {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { AKAZE, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::features2d::Feature2DTraitConst for AKAZE {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -830,6 +832,8 @@ pub mod features2d {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { AKAZE, crate::features2d::Feature2DTraitConst, as_raw_Feature2D, crate::features2d::Feature2DTrait, as_raw_mut_Feature2D }
+	
 	impl crate::features2d::AKAZETraitConst for AKAZE {
 		#[inline] fn as_raw_AKAZE(&self) -> *const c_void { self.as_raw() }
 	}
@@ -837,6 +841,8 @@ pub mod features2d {
 	impl crate::features2d::AKAZETrait for AKAZE {
 		#[inline] fn as_raw_mut_AKAZE(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { AKAZE, crate::features2d::AKAZETraitConst, as_raw_AKAZE, crate::features2d::AKAZETrait, as_raw_mut_AKAZE }
 	
 	impl AKAZE {
 		/// The AKAZE constructor
@@ -989,6 +995,8 @@ pub mod features2d {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { AffineFeature, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::features2d::Feature2DTraitConst for AffineFeature {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -997,6 +1005,8 @@ pub mod features2d {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { AffineFeature, crate::features2d::Feature2DTraitConst, as_raw_Feature2D, crate::features2d::Feature2DTrait, as_raw_mut_Feature2D }
+	
 	impl crate::features2d::AffineFeatureTraitConst for AffineFeature {
 		#[inline] fn as_raw_AffineFeature(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1004,6 +1014,8 @@ pub mod features2d {
 	impl crate::features2d::AffineFeatureTrait for AffineFeature {
 		#[inline] fn as_raw_mut_AffineFeature(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { AffineFeature, crate::features2d::AffineFeatureTraitConst, as_raw_AffineFeature, crate::features2d::AffineFeatureTrait, as_raw_mut_AffineFeature }
 	
 	impl AffineFeature {
 		/// ## Parameters
@@ -1165,6 +1177,8 @@ pub mod features2d {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { AgastFeatureDetector, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::features2d::Feature2DTraitConst for AgastFeatureDetector {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1173,6 +1187,8 @@ pub mod features2d {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { AgastFeatureDetector, crate::features2d::Feature2DTraitConst, as_raw_Feature2D, crate::features2d::Feature2DTrait, as_raw_mut_Feature2D }
+	
 	impl crate::features2d::AgastFeatureDetectorTraitConst for AgastFeatureDetector {
 		#[inline] fn as_raw_AgastFeatureDetector(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1180,6 +1196,8 @@ pub mod features2d {
 	impl crate::features2d::AgastFeatureDetectorTrait for AgastFeatureDetector {
 		#[inline] fn as_raw_mut_AgastFeatureDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { AgastFeatureDetector, crate::features2d::AgastFeatureDetectorTraitConst, as_raw_AgastFeatureDetector, crate::features2d::AgastFeatureDetectorTrait, as_raw_mut_AgastFeatureDetector }
 	
 	impl AgastFeatureDetector {
 		/// ## C++ default parameters
@@ -1300,6 +1318,8 @@ pub mod features2d {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { BFMatcher, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::features2d::DescriptorMatcherTraitConst for BFMatcher {
 		#[inline] fn as_raw_DescriptorMatcher(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1308,6 +1328,8 @@ pub mod features2d {
 		#[inline] fn as_raw_mut_DescriptorMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { BFMatcher, crate::features2d::DescriptorMatcherTraitConst, as_raw_DescriptorMatcher, crate::features2d::DescriptorMatcherTrait, as_raw_mut_DescriptorMatcher }
+	
 	impl crate::features2d::BFMatcherTraitConst for BFMatcher {
 		#[inline] fn as_raw_BFMatcher(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1315,6 +1337,8 @@ pub mod features2d {
 	impl crate::features2d::BFMatcherTrait for BFMatcher {
 		#[inline] fn as_raw_mut_BFMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { BFMatcher, crate::features2d::BFMatcherTraitConst, as_raw_BFMatcher, crate::features2d::BFMatcherTrait, as_raw_mut_BFMatcher }
 	
 	impl BFMatcher {
 		/// Brute-force matcher constructor (obsolete). Please use BFMatcher.create()
@@ -1462,7 +1486,7 @@ pub mod features2d {
 		/// * vocabulary: Vocabulary (can be trained using the inheritor of BOWTrainer ). Each row of the
 		/// vocabulary is a visual word (cluster center).
 		#[inline]
-		fn set_vocabulary(&mut self, vocabulary: &core::Mat) -> Result<()> {
+		fn set_vocabulary(&mut self, vocabulary: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BOWImgDescriptorExtractor_setVocabulary_const_MatR(self.as_raw_mut_BOWImgDescriptorExtractor(), vocabulary.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1485,7 +1509,7 @@ pub mod features2d {
 		/// * point_idxs_of_clusters: 0
 		/// * descriptors: 0
 		#[inline]
-		fn compute_desc(&mut self, image: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, img_descriptor: &mut impl core::ToOutputArray, point_idxs_of_clusters: &mut core::Vector<core::Vector<i32>>, descriptors: &mut core::Mat) -> Result<()> {
+		fn compute_desc(&mut self, image: &impl ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, img_descriptor: &mut impl ToOutputArray, point_idxs_of_clusters: &mut core::Vector<core::Vector<i32>>, descriptors: &mut impl core::MatTrait) -> Result<()> {
 			input_array_arg!(image);
 			output_array_arg!(img_descriptor);
 			return_send!(via ocvrs_return);
@@ -1511,7 +1535,7 @@ pub mod features2d {
 		/// * point_idxs_of_clusters: 0
 		/// * descriptors: 0
 		#[inline]
-		fn compute_desc_def(&mut self, image: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, img_descriptor: &mut impl core::ToOutputArray) -> Result<()> {
+		fn compute_desc_def(&mut self, image: &impl ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, img_descriptor: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(image);
 			output_array_arg!(img_descriptor);
 			return_send!(via ocvrs_return);
@@ -1543,7 +1567,7 @@ pub mod features2d {
 		/// ## C++ default parameters
 		/// * point_idxs_of_clusters: 0
 		#[inline]
-		fn compute(&mut self, keypoint_descriptors: &impl core::ToInputArray, img_descriptor: &mut impl core::ToOutputArray, point_idxs_of_clusters: &mut core::Vector<core::Vector<i32>>) -> Result<()> {
+		fn compute(&mut self, keypoint_descriptors: &impl ToInputArray, img_descriptor: &mut impl ToOutputArray, point_idxs_of_clusters: &mut core::Vector<core::Vector<i32>>) -> Result<()> {
 			input_array_arg!(keypoint_descriptors);
 			output_array_arg!(img_descriptor);
 			return_send!(via ocvrs_return);
@@ -1565,7 +1589,7 @@ pub mod features2d {
 		/// This alternative version of [BOWImgDescriptorExtractorTrait::compute] function uses the following default values for its arguments:
 		/// * point_idxs_of_clusters: 0
 		#[inline]
-		fn compute_def(&mut self, keypoint_descriptors: &impl core::ToInputArray, img_descriptor: &mut impl core::ToOutputArray) -> Result<()> {
+		fn compute_def(&mut self, keypoint_descriptors: &impl ToInputArray, img_descriptor: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(keypoint_descriptors);
 			output_array_arg!(img_descriptor);
 			return_send!(via ocvrs_return);
@@ -1576,7 +1600,7 @@ pub mod features2d {
 		}
 		
 		#[inline]
-		fn compute2(&mut self, image: &core::Mat, keypoints: &mut core::Vector<core::KeyPoint>, img_descriptor: &mut core::Mat) -> Result<()> {
+		fn compute2(&mut self, image: &impl core::MatTraitConst, keypoints: &mut core::Vector<core::KeyPoint>, img_descriptor: &mut impl core::MatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BOWImgDescriptorExtractor_compute2_const_MatR_vectorLKeyPointGR_MatR(self.as_raw_mut_BOWImgDescriptorExtractor(), image.as_raw_Mat(), keypoints.as_raw_mut_VectorOfKeyPoint(), img_descriptor.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1617,6 +1641,8 @@ pub mod features2d {
 	impl crate::features2d::BOWImgDescriptorExtractorTrait for BOWImgDescriptorExtractor {
 		#[inline] fn as_raw_mut_BOWImgDescriptorExtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { BOWImgDescriptorExtractor, crate::features2d::BOWImgDescriptorExtractorTraitConst, as_raw_BOWImgDescriptorExtractor, crate::features2d::BOWImgDescriptorExtractorTrait, as_raw_mut_BOWImgDescriptorExtractor }
 	
 	impl BOWImgDescriptorExtractor {
 		/// The constructor.
@@ -1680,7 +1706,7 @@ pub mod features2d {
 		}
 		
 		#[inline]
-		fn cluster_1(&self, descriptors: &core::Mat) -> Result<core::Mat> {
+		fn cluster_1(&self, descriptors: &impl core::MatTraitConst) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BOWKMeansTrainer_cluster_const_const_MatR(self.as_raw_BOWKMeansTrainer(), descriptors.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1721,6 +1747,8 @@ pub mod features2d {
 		#[inline] fn as_raw_mut_BOWTrainer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { BOWKMeansTrainer, crate::features2d::BOWTrainerTraitConst, as_raw_BOWTrainer, crate::features2d::BOWTrainerTrait, as_raw_mut_BOWTrainer }
+	
 	impl crate::features2d::BOWKMeansTrainerTraitConst for BOWKMeansTrainer {
 		#[inline] fn as_raw_BOWKMeansTrainer(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1728,6 +1756,8 @@ pub mod features2d {
 	impl crate::features2d::BOWKMeansTrainerTrait for BOWKMeansTrainer {
 		#[inline] fn as_raw_mut_BOWKMeansTrainer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { BOWKMeansTrainer, crate::features2d::BOWKMeansTrainerTraitConst, as_raw_BOWKMeansTrainer, crate::features2d::BOWKMeansTrainerTrait, as_raw_mut_BOWKMeansTrainer }
 	
 	impl BOWKMeansTrainer {
 		/// The constructor.
@@ -1835,7 +1865,7 @@ pub mod features2d {
 		/// variant of the method, train descriptors stored in the object are clustered. In the second variant,
 		/// input descriptors are clustered.
 		#[inline]
-		fn cluster_with_descriptors(&self, descriptors: &core::Mat) -> Result<core::Mat> {
+		fn cluster_with_descriptors(&self, descriptors: &impl core::MatTraitConst) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BOWTrainer_cluster_const_const_MatR(self.as_raw_BOWTrainer(), descriptors.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1858,7 +1888,7 @@ pub mod features2d {
 		/// 
 		/// The training set is clustered using clustermethod to construct the vocabulary.
 		#[inline]
-		fn add(&mut self, descriptors: &core::Mat) -> Result<()> {
+		fn add(&mut self, descriptors: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BOWTrainer_add_const_MatR(self.as_raw_mut_BOWTrainer(), descriptors.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1903,6 +1933,8 @@ pub mod features2d {
 	impl crate::features2d::BOWTrainerTrait for BOWTrainer {
 		#[inline] fn as_raw_mut_BOWTrainer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { BOWTrainer, crate::features2d::BOWTrainerTraitConst, as_raw_BOWTrainer, crate::features2d::BOWTrainerTrait, as_raw_mut_BOWTrainer }
 	
 	impl BOWTrainer {
 	}
@@ -2027,6 +2059,8 @@ pub mod features2d {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { BRISK, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::features2d::Feature2DTraitConst for BRISK {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2035,6 +2069,8 @@ pub mod features2d {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { BRISK, crate::features2d::Feature2DTraitConst, as_raw_Feature2D, crate::features2d::Feature2DTrait, as_raw_mut_Feature2D }
+	
 	impl crate::features2d::BRISKTraitConst for BRISK {
 		#[inline] fn as_raw_BRISK(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2042,6 +2078,8 @@ pub mod features2d {
 	impl crate::features2d::BRISKTrait for BRISK {
 		#[inline] fn as_raw_mut_BRISK(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { BRISK, crate::features2d::BRISKTraitConst, as_raw_BRISK, crate::features2d::BRISKTrait, as_raw_mut_BRISK }
 	
 	impl BRISK {
 		/// The BRISK constructor
@@ -2272,7 +2310,7 @@ pub mod features2d {
 		/// ## C++ default parameters
 		/// * mask: noArray()
 		#[inline]
-		fn train_match(&self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::DMatch>, mask: &impl core::ToInputArray) -> Result<()> {
+		fn train_match(&self, query_descriptors: &impl ToInputArray, train_descriptors: &impl ToInputArray, matches: &mut core::Vector<core::DMatch>, mask: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			input_array_arg!(train_descriptors);
 			input_array_arg!(mask);
@@ -2304,7 +2342,7 @@ pub mod features2d {
 		/// This alternative version of [DescriptorMatcherTraitConst::train_match] function uses the following default values for its arguments:
 		/// * mask: noArray()
 		#[inline]
-		fn train_match_def(&self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::DMatch>) -> Result<()> {
+		fn train_match_def(&self, query_descriptors: &impl ToInputArray, train_descriptors: &impl ToInputArray, matches: &mut core::Vector<core::DMatch>) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			input_array_arg!(train_descriptors);
 			return_send!(via ocvrs_return);
@@ -2337,7 +2375,7 @@ pub mod features2d {
 		/// * mask: noArray()
 		/// * compact_result: false
 		#[inline]
-		fn knn_train_match(&self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32, mask: &impl core::ToInputArray, compact_result: bool) -> Result<()> {
+		fn knn_train_match(&self, query_descriptors: &impl ToInputArray, train_descriptors: &impl ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32, mask: &impl ToInputArray, compact_result: bool) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			input_array_arg!(train_descriptors);
 			input_array_arg!(mask);
@@ -2372,7 +2410,7 @@ pub mod features2d {
 		/// * mask: noArray()
 		/// * compact_result: false
 		#[inline]
-		fn knn_train_match_def(&self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32) -> Result<()> {
+		fn knn_train_match_def(&self, query_descriptors: &impl ToInputArray, train_descriptors: &impl ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			input_array_arg!(train_descriptors);
 			return_send!(via ocvrs_return);
@@ -2406,7 +2444,7 @@ pub mod features2d {
 		/// * mask: noArray()
 		/// * compact_result: false
 		#[inline]
-		fn radius_train_match(&self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32, mask: &impl core::ToInputArray, compact_result: bool) -> Result<()> {
+		fn radius_train_match(&self, query_descriptors: &impl ToInputArray, train_descriptors: &impl ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32, mask: &impl ToInputArray, compact_result: bool) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			input_array_arg!(train_descriptors);
 			input_array_arg!(mask);
@@ -2442,7 +2480,7 @@ pub mod features2d {
 		/// * mask: noArray()
 		/// * compact_result: false
 		#[inline]
-		fn radius_train_match_def(&self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32) -> Result<()> {
+		fn radius_train_match_def(&self, query_descriptors: &impl ToInputArray, train_descriptors: &impl ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			input_array_arg!(train_descriptors);
 			return_send!(via ocvrs_return);
@@ -2463,7 +2501,7 @@ pub mod features2d {
 		}
 		
 		#[inline]
-		fn write_1(&self, unnamed: &mut core::FileStorage) -> Result<()> {
+		fn write_1(&self, unnamed: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_write_const_FileStorageR(self.as_raw_DescriptorMatcher(), unnamed.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2512,7 +2550,7 @@ pub mod features2d {
 		}
 		
 		#[inline]
-		fn write_2(&self, fs: &mut core::FileStorage, name: &str) -> Result<()> {
+		fn write_2(&self, fs: &mut impl core::FileStorageTrait, name: &str) -> Result<()> {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_write_const_FileStorageR_const_StringR(self.as_raw_DescriptorMatcher(), fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
@@ -2546,7 +2584,7 @@ pub mod features2d {
 		/// * descriptors: Descriptors to add. Each descriptors[i] is a set of descriptors from the same
 		/// train image.
 		#[inline]
-		fn add(&mut self, descriptors: &impl core::ToInputArray) -> Result<()> {
+		fn add(&mut self, descriptors: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_add_const__InputArrayR(self.as_raw_mut_DescriptorMatcher(), descriptors.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -2608,7 +2646,7 @@ pub mod features2d {
 		/// ## C++ default parameters
 		/// * masks: noArray()
 		#[inline]
-		fn match_(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::DMatch>, masks: &impl core::ToInputArray) -> Result<()> {
+		fn match_(&mut self, query_descriptors: &impl ToInputArray, matches: &mut core::Vector<core::DMatch>, masks: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			input_array_arg!(masks);
 			return_send!(via ocvrs_return);
@@ -2630,7 +2668,7 @@ pub mod features2d {
 		/// This alternative version of [DescriptorMatcherTrait::match_] function uses the following default values for its arguments:
 		/// * masks: noArray()
 		#[inline]
-		fn match__def(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::DMatch>) -> Result<()> {
+		fn match__def(&mut self, query_descriptors: &impl ToInputArray, matches: &mut core::Vector<core::DMatch>) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_match_const__InputArrayR_vectorLDMatchGR(self.as_raw_mut_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfDMatch(), ocvrs_return.as_mut_ptr()) };
@@ -2674,7 +2712,7 @@ pub mod features2d {
 		/// * masks: noArray()
 		/// * compact_result: false
 		#[inline]
-		fn knn_match(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32, masks: &impl core::ToInputArray, compact_result: bool) -> Result<()> {
+		fn knn_match(&mut self, query_descriptors: &impl ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32, masks: &impl ToInputArray, compact_result: bool) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			input_array_arg!(masks);
 			return_send!(via ocvrs_return);
@@ -2701,7 +2739,7 @@ pub mod features2d {
 		/// * masks: noArray()
 		/// * compact_result: false
 		#[inline]
-		fn knn_match_def(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32) -> Result<()> {
+		fn knn_match_def(&mut self, query_descriptors: &impl ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_knnMatch_const__InputArrayR_vectorLvectorLDMatchGGR_int(self.as_raw_mut_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), k, ocvrs_return.as_mut_ptr()) };
@@ -2747,7 +2785,7 @@ pub mod features2d {
 		/// * masks: noArray()
 		/// * compact_result: false
 		#[inline]
-		fn radius_match(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32, masks: &impl core::ToInputArray, compact_result: bool) -> Result<()> {
+		fn radius_match(&mut self, query_descriptors: &impl ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32, masks: &impl ToInputArray, compact_result: bool) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			input_array_arg!(masks);
 			return_send!(via ocvrs_return);
@@ -2775,7 +2813,7 @@ pub mod features2d {
 		/// * masks: noArray()
 		/// * compact_result: false
 		#[inline]
-		fn radius_match_def(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32) -> Result<()> {
+		fn radius_match_def(&mut self, query_descriptors: &impl ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_radiusMatch_const__InputArrayR_vectorLvectorLDMatchGGR_float(self.as_raw_mut_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), max_distance, ocvrs_return.as_mut_ptr()) };
@@ -2795,7 +2833,7 @@ pub mod features2d {
 		}
 		
 		#[inline]
-		fn read_1(&mut self, unnamed: &core::FileNode) -> Result<()> {
+		fn read_1(&mut self, unnamed: &impl core::FileNodeTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_read_const_FileNodeR(self.as_raw_mut_DescriptorMatcher(), unnamed.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2832,6 +2870,8 @@ pub mod features2d {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { DescriptorMatcher, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::features2d::DescriptorMatcherTraitConst for DescriptorMatcher {
 		#[inline] fn as_raw_DescriptorMatcher(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2839,6 +2879,8 @@ pub mod features2d {
 	impl crate::features2d::DescriptorMatcherTrait for DescriptorMatcher {
 		#[inline] fn as_raw_mut_DescriptorMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { DescriptorMatcher, crate::features2d::DescriptorMatcherTraitConst, as_raw_DescriptorMatcher, crate::features2d::DescriptorMatcherTrait, as_raw_mut_DescriptorMatcher }
 	
 	impl DescriptorMatcher {
 		/// Creates a descriptor matcher of a given type with the default parameters (using default
@@ -2866,7 +2908,7 @@ pub mod features2d {
 		#[inline]
 		pub fn create_with_matcher_type(matcher_type: crate::features2d::DescriptorMatcher_MatcherType) -> Result<core::Ptr<crate::features2d::DescriptorMatcher>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_DescriptorMatcher_create_const_MatcherTypeR(&matcher_type, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_DescriptorMatcher_create_const_MatcherTypeR(matcher_type, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::DescriptorMatcher>::opencv_from_extern(ret) };
@@ -2989,6 +3031,8 @@ pub mod features2d {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { FastFeatureDetector, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::features2d::Feature2DTraitConst for FastFeatureDetector {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2997,6 +3041,8 @@ pub mod features2d {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { FastFeatureDetector, crate::features2d::Feature2DTraitConst, as_raw_Feature2D, crate::features2d::Feature2DTrait, as_raw_mut_Feature2D }
+	
 	impl crate::features2d::FastFeatureDetectorTraitConst for FastFeatureDetector {
 		#[inline] fn as_raw_FastFeatureDetector(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3004,6 +3050,8 @@ pub mod features2d {
 	impl crate::features2d::FastFeatureDetectorTrait for FastFeatureDetector {
 		#[inline] fn as_raw_mut_FastFeatureDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { FastFeatureDetector, crate::features2d::FastFeatureDetectorTraitConst, as_raw_FastFeatureDetector, crate::features2d::FastFeatureDetectorTrait, as_raw_mut_FastFeatureDetector }
 	
 	impl FastFeatureDetector {
 		/// ## C++ default parameters
@@ -3091,7 +3139,7 @@ pub mod features2d {
 		}
 		
 		#[inline]
-		fn write_1(&self, unnamed: &mut core::FileStorage) -> Result<()> {
+		fn write_1(&self, unnamed: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_write_const_FileStorageR(self.as_raw_Feature2D(), unnamed.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3120,7 +3168,7 @@ pub mod features2d {
 		}
 		
 		#[inline]
-		fn write_2(&self, fs: &mut core::FileStorage, name: &str) -> Result<()> {
+		fn write_2(&self, fs: &mut impl core::FileStorageTrait, name: &str) -> Result<()> {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_write_const_FileStorageR_const_StringR(self.as_raw_Feature2D(), fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
@@ -3157,7 +3205,7 @@ pub mod features2d {
 		/// ## C++ default parameters
 		/// * mask: noArray()
 		#[inline]
-		fn detect(&mut self, image: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, mask: &impl core::ToInputArray) -> Result<()> {
+		fn detect(&mut self, image: &impl ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, mask: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(image);
 			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
@@ -3180,7 +3228,7 @@ pub mod features2d {
 		/// This alternative version of [Feature2DTrait::detect] function uses the following default values for its arguments:
 		/// * mask: noArray()
 		#[inline]
-		fn detect_def(&mut self, image: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>) -> Result<()> {
+		fn detect_def(&mut self, image: &impl ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>) -> Result<()> {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_detect_const__InputArrayR_vectorLKeyPointGR(self.as_raw_mut_Feature2D(), image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), ocvrs_return.as_mut_ptr()) };
@@ -3209,7 +3257,7 @@ pub mod features2d {
 		/// ## C++ default parameters
 		/// * masks: noArray()
 		#[inline]
-		fn detect_multiple(&mut self, images: &impl core::ToInputArray, keypoints: &mut core::Vector<core::Vector<core::KeyPoint>>, masks: &impl core::ToInputArray) -> Result<()> {
+		fn detect_multiple(&mut self, images: &impl ToInputArray, keypoints: &mut core::Vector<core::Vector<core::KeyPoint>>, masks: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(images);
 			input_array_arg!(masks);
 			return_send!(via ocvrs_return);
@@ -3231,7 +3279,7 @@ pub mod features2d {
 		/// This alternative version of [Feature2DTrait::detect_multiple] function uses the following default values for its arguments:
 		/// * masks: noArray()
 		#[inline]
-		fn detect_multiple_def(&mut self, images: &impl core::ToInputArray, keypoints: &mut core::Vector<core::Vector<core::KeyPoint>>) -> Result<()> {
+		fn detect_multiple_def(&mut self, images: &impl ToInputArray, keypoints: &mut core::Vector<core::Vector<core::KeyPoint>>) -> Result<()> {
 			input_array_arg!(images);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_detect_const__InputArrayR_vectorLvectorLKeyPointGGR(self.as_raw_mut_Feature2D(), images.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfVectorOfKeyPoint(), ocvrs_return.as_mut_ptr()) };
@@ -3252,7 +3300,7 @@ pub mod features2d {
 		/// descriptors computed for a keypoints[i]. Row j is the keypoints (or keypoints[i]) is the
 		/// descriptor for keypoint j-th keypoint.
 		#[inline]
-		fn compute(&mut self, image: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, descriptors: &mut impl core::ToOutputArray) -> Result<()> {
+		fn compute(&mut self, image: &impl ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, descriptors: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(image);
 			output_array_arg!(descriptors);
 			return_send!(via ocvrs_return);
@@ -3285,7 +3333,7 @@ pub mod features2d {
 		/// descriptors computed for a keypoints[i]. Row j is the keypoints (or keypoints[i]) is the
 		/// descriptor for keypoint j-th keypoint.
 		#[inline]
-		fn compute_multiple(&mut self, images: &impl core::ToInputArray, keypoints: &mut core::Vector<core::Vector<core::KeyPoint>>, descriptors: &mut impl core::ToOutputArray) -> Result<()> {
+		fn compute_multiple(&mut self, images: &impl ToInputArray, keypoints: &mut core::Vector<core::Vector<core::KeyPoint>>, descriptors: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(images);
 			output_array_arg!(descriptors);
 			return_send!(via ocvrs_return);
@@ -3300,7 +3348,7 @@ pub mod features2d {
 		/// ## C++ default parameters
 		/// * use_provided_keypoints: false
 		#[inline]
-		fn detect_and_compute(&mut self, image: &impl core::ToInputArray, mask: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, descriptors: &mut impl core::ToOutputArray, use_provided_keypoints: bool) -> Result<()> {
+		fn detect_and_compute(&mut self, image: &impl ToInputArray, mask: &impl ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, descriptors: &mut impl ToOutputArray, use_provided_keypoints: bool) -> Result<()> {
 			input_array_arg!(image);
 			input_array_arg!(mask);
 			output_array_arg!(descriptors);
@@ -3317,7 +3365,7 @@ pub mod features2d {
 		/// This alternative version of [Feature2DTrait::detect_and_compute] function uses the following default values for its arguments:
 		/// * use_provided_keypoints: false
 		#[inline]
-		fn detect_and_compute_def(&mut self, image: &impl core::ToInputArray, mask: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, descriptors: &mut impl core::ToOutputArray) -> Result<()> {
+		fn detect_and_compute_def(&mut self, image: &impl ToInputArray, mask: &impl ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, descriptors: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(image);
 			input_array_arg!(mask);
 			output_array_arg!(descriptors);
@@ -3339,7 +3387,7 @@ pub mod features2d {
 		}
 		
 		#[inline]
-		fn read_1(&mut self, unnamed: &core::FileNode) -> Result<()> {
+		fn read_1(&mut self, unnamed: &impl core::FileNodeTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_read_const_FileNodeR(self.as_raw_mut_Feature2D(), unnamed.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3372,6 +3420,8 @@ pub mod features2d {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Feature2D, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::features2d::Feature2DTraitConst for Feature2D {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3379,6 +3429,8 @@ pub mod features2d {
 	impl crate::features2d::Feature2DTrait for Feature2D {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { Feature2D, crate::features2d::Feature2DTraitConst, as_raw_Feature2D, crate::features2d::Feature2DTrait, as_raw_mut_Feature2D }
 	
 	impl Feature2D {
 	}
@@ -3420,7 +3472,7 @@ pub mod features2d {
 		fn as_raw_FlannBasedMatcher(&self) -> *const c_void;
 	
 		#[inline]
-		fn write(&self, unnamed: &mut core::FileStorage) -> Result<()> {
+		fn write(&self, unnamed: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FlannBasedMatcher_write_const_FileStorageR(self.as_raw_FlannBasedMatcher(), unnamed.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3470,7 +3522,7 @@ pub mod features2d {
 		fn as_raw_mut_FlannBasedMatcher(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn add(&mut self, descriptors: &impl core::ToInputArray) -> Result<()> {
+		fn add(&mut self, descriptors: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FlannBasedMatcher_add_const__InputArrayR(self.as_raw_mut_FlannBasedMatcher(), descriptors.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -3489,7 +3541,7 @@ pub mod features2d {
 		}
 		
 		#[inline]
-		fn read(&mut self, unnamed: &core::FileNode) -> Result<()> {
+		fn read(&mut self, unnamed: &impl core::FileNodeTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FlannBasedMatcher_read_const_FileNodeR(self.as_raw_mut_FlannBasedMatcher(), unnamed.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3537,6 +3589,8 @@ pub mod features2d {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { FlannBasedMatcher, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::features2d::DescriptorMatcherTraitConst for FlannBasedMatcher {
 		#[inline] fn as_raw_DescriptorMatcher(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3545,6 +3599,8 @@ pub mod features2d {
 		#[inline] fn as_raw_mut_DescriptorMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { FlannBasedMatcher, crate::features2d::DescriptorMatcherTraitConst, as_raw_DescriptorMatcher, crate::features2d::DescriptorMatcherTrait, as_raw_mut_DescriptorMatcher }
+	
 	impl crate::features2d::FlannBasedMatcherTraitConst for FlannBasedMatcher {
 		#[inline] fn as_raw_FlannBasedMatcher(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3552,6 +3608,8 @@ pub mod features2d {
 	impl crate::features2d::FlannBasedMatcherTrait for FlannBasedMatcher {
 		#[inline] fn as_raw_mut_FlannBasedMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { FlannBasedMatcher, crate::features2d::FlannBasedMatcherTraitConst, as_raw_FlannBasedMatcher, crate::features2d::FlannBasedMatcherTrait, as_raw_mut_FlannBasedMatcher }
 	
 	impl FlannBasedMatcher {
 		/// ## C++ default parameters
@@ -3777,6 +3835,8 @@ pub mod features2d {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { GFTTDetector, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::features2d::Feature2DTraitConst for GFTTDetector {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3785,6 +3845,8 @@ pub mod features2d {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { GFTTDetector, crate::features2d::Feature2DTraitConst, as_raw_Feature2D, crate::features2d::Feature2DTrait, as_raw_mut_Feature2D }
+	
 	impl crate::features2d::GFTTDetectorTraitConst for GFTTDetector {
 		#[inline] fn as_raw_GFTTDetector(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3792,6 +3854,8 @@ pub mod features2d {
 	impl crate::features2d::GFTTDetectorTrait for GFTTDetector {
 		#[inline] fn as_raw_mut_GFTTDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { GFTTDetector, crate::features2d::GFTTDetectorTraitConst, as_raw_GFTTDetector, crate::features2d::GFTTDetectorTrait, as_raw_mut_GFTTDetector }
 	
 	impl GFTTDetector {
 		/// ## C++ default parameters
@@ -4029,6 +4093,8 @@ pub mod features2d {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { KAZE, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::features2d::Feature2DTraitConst for KAZE {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -4037,6 +4103,8 @@ pub mod features2d {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { KAZE, crate::features2d::Feature2DTraitConst, as_raw_Feature2D, crate::features2d::Feature2DTrait, as_raw_mut_Feature2D }
+	
 	impl crate::features2d::KAZETraitConst for KAZE {
 		#[inline] fn as_raw_KAZE(&self) -> *const c_void { self.as_raw() }
 	}
@@ -4044,6 +4112,8 @@ pub mod features2d {
 	impl crate::features2d::KAZETrait for KAZE {
 		#[inline] fn as_raw_mut_KAZE(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { KAZE, crate::features2d::KAZETraitConst, as_raw_KAZE, crate::features2d::KAZETrait, as_raw_mut_KAZE }
 	
 	impl KAZE {
 		/// The KAZE constructor
@@ -4156,6 +4226,8 @@ pub mod features2d {
 		#[inline] fn as_raw_mut_KeyPointsFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { KeyPointsFilter, crate::features2d::KeyPointsFilterTraitConst, as_raw_KeyPointsFilter, crate::features2d::KeyPointsFilterTrait, as_raw_mut_KeyPointsFilter }
+	
 	impl KeyPointsFilter {
 		#[inline]
 		pub fn default() -> Result<crate::features2d::KeyPointsFilter> {
@@ -4170,7 +4242,7 @@ pub mod features2d {
 		#[inline]
 		pub fn run_by_image_border(keypoints: &mut core::Vector<core::KeyPoint>, image_size: core::Size, border_size: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_KeyPointsFilter_runByImageBorder_vectorLKeyPointGR_Size_int(keypoints.as_raw_mut_VectorOfKeyPoint(), image_size.opencv_as_extern(), border_size, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_KeyPointsFilter_runByImageBorder_vectorLKeyPointGR_Size_int(keypoints.as_raw_mut_VectorOfKeyPoint(), &image_size, border_size, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -4200,7 +4272,7 @@ pub mod features2d {
 		}
 		
 		#[inline]
-		pub fn run_by_pixels_mask(keypoints: &mut core::Vector<core::KeyPoint>, mask: &core::Mat) -> Result<()> {
+		pub fn run_by_pixels_mask(keypoints: &mut core::Vector<core::KeyPoint>, mask: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KeyPointsFilter_runByPixelsMask_vectorLKeyPointGR_const_MatR(keypoints.as_raw_mut_VectorOfKeyPoint(), mask.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4209,7 +4281,7 @@ pub mod features2d {
 		}
 		
 		#[inline]
-		pub fn run_by_pixels_mask2_vector_point(keypoints: &mut core::Vector<core::KeyPoint>, remove_from: &mut core::Vector<core::Vector<core::Point>>, mask: &core::Mat) -> Result<()> {
+		pub fn run_by_pixels_mask2_vector_point(keypoints: &mut core::Vector<core::KeyPoint>, remove_from: &mut core::Vector<core::Vector<core::Point>>, mask: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KeyPointsFilter_runByPixelsMask2VectorPoint_vectorLKeyPointGR_vectorLvectorLPointGGR_const_MatR(keypoints.as_raw_mut_VectorOfKeyPoint(), remove_from.as_raw_mut_VectorOfVectorOfPoint(), mask.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4371,7 +4443,7 @@ pub mod features2d {
 		/// * msers: resulting list of point sets
 		/// * bboxes: resulting bounding boxes
 		#[inline]
-		fn detect_regions(&mut self, image: &impl core::ToInputArray, msers: &mut core::Vector<core::Vector<core::Point>>, bboxes: &mut core::Vector<core::Rect>) -> Result<()> {
+		fn detect_regions(&mut self, image: &impl ToInputArray, msers: &mut core::Vector<core::Vector<core::Point>>, bboxes: &mut core::Vector<core::Rect>) -> Result<()> {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_MSER_detectRegions_const__InputArrayR_vectorLvectorLPointGGR_vectorLRectGR(self.as_raw_mut_MSER(), image.as_raw__InputArray(), msers.as_raw_mut_VectorOfVectorOfPoint(), bboxes.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
@@ -4509,6 +4581,8 @@ pub mod features2d {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { MSER, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::features2d::Feature2DTraitConst for MSER {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -4517,6 +4591,8 @@ pub mod features2d {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { MSER, crate::features2d::Feature2DTraitConst, as_raw_Feature2D, crate::features2d::Feature2DTrait, as_raw_mut_Feature2D }
+	
 	impl crate::features2d::MSERTraitConst for MSER {
 		#[inline] fn as_raw_MSER(&self) -> *const c_void { self.as_raw() }
 	}
@@ -4524,6 +4600,8 @@ pub mod features2d {
 	impl crate::features2d::MSERTrait for MSER {
 		#[inline] fn as_raw_mut_MSER(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { MSER, crate::features2d::MSERTraitConst, as_raw_MSER, crate::features2d::MSERTrait, as_raw_mut_MSER }
 	
 	impl MSER {
 		/// Full constructor for %MSER detector
@@ -4820,6 +4898,8 @@ pub mod features2d {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { ORB, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::features2d::Feature2DTraitConst for ORB {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -4828,6 +4908,8 @@ pub mod features2d {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { ORB, crate::features2d::Feature2DTraitConst, as_raw_Feature2D, crate::features2d::Feature2DTrait, as_raw_mut_Feature2D }
+	
 	impl crate::features2d::ORBTraitConst for ORB {
 		#[inline] fn as_raw_ORB(&self) -> *const c_void { self.as_raw() }
 	}
@@ -4835,6 +4917,8 @@ pub mod features2d {
 	impl crate::features2d::ORBTrait for ORB {
 		#[inline] fn as_raw_mut_ORB(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { ORB, crate::features2d::ORBTraitConst, as_raw_ORB, crate::features2d::ORBTrait, as_raw_mut_ORB }
 	
 	impl ORB {
 		pub const kBytes: i32 = 32;
@@ -5094,6 +5178,8 @@ pub mod features2d {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { SIFT, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::features2d::Feature2DTraitConst for SIFT {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -5102,6 +5188,8 @@ pub mod features2d {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { SIFT, crate::features2d::Feature2DTraitConst, as_raw_Feature2D, crate::features2d::Feature2DTrait, as_raw_mut_Feature2D }
+	
 	impl crate::features2d::SIFTTraitConst for SIFT {
 		#[inline] fn as_raw_SIFT(&self) -> *const c_void { self.as_raw() }
 	}
@@ -5109,6 +5197,8 @@ pub mod features2d {
 	impl crate::features2d::SIFTTrait for SIFT {
 		#[inline] fn as_raw_mut_SIFT(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { SIFT, crate::features2d::SIFTTraitConst, as_raw_SIFT, crate::features2d::SIFTTrait, as_raw_mut_SIFT }
 	
 	impl SIFT {
 		/// ## Parameters
@@ -5398,6 +5488,8 @@ pub mod features2d {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { SimpleBlobDetector, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::features2d::Feature2DTraitConst for SimpleBlobDetector {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -5406,6 +5498,8 @@ pub mod features2d {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { SimpleBlobDetector, crate::features2d::Feature2DTraitConst, as_raw_Feature2D, crate::features2d::Feature2DTrait, as_raw_mut_Feature2D }
+	
 	impl crate::features2d::SimpleBlobDetectorTraitConst for SimpleBlobDetector {
 		#[inline] fn as_raw_SimpleBlobDetector(&self) -> *const c_void { self.as_raw() }
 	}
@@ -5413,6 +5507,8 @@ pub mod features2d {
 	impl crate::features2d::SimpleBlobDetectorTrait for SimpleBlobDetector {
 		#[inline] fn as_raw_mut_SimpleBlobDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { SimpleBlobDetector, crate::features2d::SimpleBlobDetectorTraitConst, as_raw_SimpleBlobDetector, crate::features2d::SimpleBlobDetectorTrait, as_raw_mut_SimpleBlobDetector }
 	
 	impl SimpleBlobDetector {
 		/// ## C++ default parameters
@@ -5483,9 +5579,9 @@ pub mod features2d {
 	
 	impl SimpleBlobDetector_Params {
 		#[inline]
-		pub fn write(self, fs: &mut core::FileStorage) -> Result<()> {
+		pub fn write(self, fs: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SimpleBlobDetector_Params_write_const_FileStorageR(self.opencv_as_extern(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_SimpleBlobDetector_Params_write_const_FileStorageR(&self, fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -5501,9 +5597,9 @@ pub mod features2d {
 		}
 		
 		#[inline]
-		pub fn read(self, fn_: &core::FileNode) -> Result<()> {
+		pub fn read(self, fn_: &impl core::FileNodeTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SimpleBlobDetector_Params_read_const_FileNodeR(self.opencv_as_extern(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_SimpleBlobDetector_Params_read_const_FileNodeR(&self, fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)

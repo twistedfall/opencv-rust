@@ -20,7 +20,7 @@ pub mod quality {
 		/// ## Returns
 		/// cv::Scalar with the score in the first element.  The score ranges from 0 (best quality) to 100 (worst quality)
 		#[inline]
-		fn compute(&mut self, img: &impl core::ToInputArray) -> Result<core::Scalar> {
+		fn compute(&mut self, img: &impl ToInputArray) -> Result<core::Scalar> {
 			input_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_quality_QualityBRISQUE_compute_const__InputArrayR(self.as_raw_mut_QualityBRISQUE(), img.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -62,6 +62,8 @@ pub mod quality {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { QualityBRISQUE, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::quality::QualityBaseTraitConst for QualityBRISQUE {
 		#[inline] fn as_raw_QualityBase(&self) -> *const c_void { self.as_raw() }
 	}
@@ -70,6 +72,8 @@ pub mod quality {
 		#[inline] fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { QualityBRISQUE, crate::quality::QualityBaseTraitConst, as_raw_QualityBase, crate::quality::QualityBaseTrait, as_raw_mut_QualityBase }
+	
 	impl crate::quality::QualityBRISQUETraitConst for QualityBRISQUE {
 		#[inline] fn as_raw_QualityBRISQUE(&self) -> *const c_void { self.as_raw() }
 	}
@@ -77,6 +81,8 @@ pub mod quality {
 	impl crate::quality::QualityBRISQUETrait for QualityBRISQUE {
 		#[inline] fn as_raw_mut_QualityBRISQUE(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { QualityBRISQUE, crate::quality::QualityBRISQUETraitConst, as_raw_QualityBRISQUE, crate::quality::QualityBRISQUETrait, as_raw_mut_QualityBRISQUE }
 	
 	impl QualityBRISQUE {
 		/// Create an object which calculates quality
@@ -100,7 +106,7 @@ pub mod quality {
 		/// * model: cv::Ptr<cv::ml::SVM> which contains a loaded BRISQUE model
 		/// * range: cv::Mat which contains BRISQUE range data
 		#[inline]
-		pub fn create_1(model: &core::Ptr<crate::ml::SVM>, range: &core::Mat) -> Result<core::Ptr<crate::quality::QualityBRISQUE>> {
+		pub fn create_1(model: &core::Ptr<crate::ml::SVM>, range: &impl core::MatTraitConst) -> Result<core::Ptr<crate::quality::QualityBRISQUE>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_quality_QualityBRISQUE_create_const_PtrLSVMGR_const_MatR(model.as_raw_PtrOfSVM(), range.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -117,7 +123,7 @@ pub mod quality {
 		/// ## Returns
 		/// cv::Scalar with the score in the first element.  The score ranges from 0 (best quality) to 100 (worst quality)
 		#[inline]
-		pub fn compute(img: &impl core::ToInputArray, model_file_path: &str, range_file_path: &str) -> Result<core::Scalar> {
+		pub fn compute(img: &impl ToInputArray, model_file_path: &str, range_file_path: &str) -> Result<core::Scalar> {
 			input_array_arg!(img);
 			extern_container_arg!(model_file_path);
 			extern_container_arg!(range_file_path);
@@ -133,7 +139,7 @@ pub mod quality {
 		/// * img: image (BGR(A) or grayscale) for which to compute features
 		/// * features: output row vector of features to cv::Mat or cv::UMat
 		#[inline]
-		pub fn compute_features(img: &impl core::ToInputArray, features: &mut impl core::ToOutputArray) -> Result<()> {
+		pub fn compute_features(img: &impl ToInputArray, features: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(img);
 			output_array_arg!(features);
 			return_send!(via ocvrs_return);
@@ -163,7 +169,7 @@ pub mod quality {
 	
 		/// Returns output quality map that was generated during computation, if supported by the algorithm
 		#[inline]
-		fn get_quality_map(&self, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		fn get_quality_map(&self, dst: &mut impl ToOutputArray) -> Result<()> {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_quality_QualityBase_getQualityMap_const_const__OutputArrayR(self.as_raw_QualityBase(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
@@ -192,7 +198,7 @@ pub mod quality {
 		/// ## Parameters
 		/// * img: comparison image, or image to evalute for no-reference quality algorithms
 		#[inline]
-		fn compute(&mut self, img: &impl core::ToInputArray) -> Result<core::Scalar> {
+		fn compute(&mut self, img: &impl ToInputArray) -> Result<core::Scalar> {
 			input_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_quality_QualityBase_compute_const__InputArrayR(self.as_raw_mut_QualityBase(), img.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -237,6 +243,8 @@ pub mod quality {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { QualityBase, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::quality::QualityBaseTraitConst for QualityBase {
 		#[inline] fn as_raw_QualityBase(&self) -> *const c_void { self.as_raw() }
 	}
@@ -244,6 +252,8 @@ pub mod quality {
 	impl crate::quality::QualityBaseTrait for QualityBase {
 		#[inline] fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { QualityBase, crate::quality::QualityBaseTraitConst, as_raw_QualityBase, crate::quality::QualityBaseTrait, as_raw_mut_QualityBase }
 	
 	impl QualityBase {
 	}
@@ -294,7 +304,7 @@ pub mod quality {
 		/// ## Returns
 		/// cv::Scalar with per-channel quality value.  Values range from 0 (worst) to 1 (best)
 		#[inline]
-		fn compute(&mut self, cmp: &impl core::ToInputArray) -> Result<core::Scalar> {
+		fn compute(&mut self, cmp: &impl ToInputArray) -> Result<core::Scalar> {
 			input_array_arg!(cmp);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_quality_QualityGMSD_compute_const__InputArrayR(self.as_raw_mut_QualityGMSD(), cmp.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -340,6 +350,8 @@ pub mod quality {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { QualityGMSD, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::quality::QualityBaseTraitConst for QualityGMSD {
 		#[inline] fn as_raw_QualityBase(&self) -> *const c_void { self.as_raw() }
 	}
@@ -347,6 +359,8 @@ pub mod quality {
 	impl crate::quality::QualityBaseTrait for QualityGMSD {
 		#[inline] fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { QualityGMSD, crate::quality::QualityBaseTraitConst, as_raw_QualityBase, crate::quality::QualityBaseTrait, as_raw_mut_QualityBase }
 	
 	impl crate::quality::QualityGMSDTraitConst for QualityGMSD {
 		#[inline] fn as_raw_QualityGMSD(&self) -> *const c_void { self.as_raw() }
@@ -356,12 +370,14 @@ pub mod quality {
 		#[inline] fn as_raw_mut_QualityGMSD(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { QualityGMSD, crate::quality::QualityGMSDTraitConst, as_raw_QualityGMSD, crate::quality::QualityGMSDTrait, as_raw_mut_QualityGMSD }
+	
 	impl QualityGMSD {
 		/// Create an object which calculates image quality
 		/// ## Parameters
 		/// * ref: reference image
 		#[inline]
-		pub fn create(ref_: &impl core::ToInputArray) -> Result<core::Ptr<crate::quality::QualityGMSD>> {
+		pub fn create(ref_: &impl ToInputArray) -> Result<core::Ptr<crate::quality::QualityGMSD>> {
 			input_array_arg!(ref_);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_quality_QualityGMSD_create_const__InputArrayR(ref_.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -379,7 +395,7 @@ pub mod quality {
 		/// ## Returns
 		/// cv::Scalar with per-channel quality value.  Values range from 0 (worst) to 1 (best)
 		#[inline]
-		pub fn compute(ref_: &impl core::ToInputArray, cmp: &impl core::ToInputArray, quality_map: &mut impl core::ToOutputArray) -> Result<core::Scalar> {
+		pub fn compute(ref_: &impl ToInputArray, cmp: &impl ToInputArray, quality_map: &mut impl ToOutputArray) -> Result<core::Scalar> {
 			input_array_arg!(ref_);
 			input_array_arg!(cmp);
 			output_array_arg!(quality_map);
@@ -430,7 +446,7 @@ pub mod quality {
 		/// ## Returns
 		/// cv::Scalar with per-channel quality values.  Values range from 0 (best) to potentially max float (worst)
 		#[inline]
-		fn compute(&mut self, cmp_imgs: &impl core::ToInputArray) -> Result<core::Scalar> {
+		fn compute(&mut self, cmp_imgs: &impl ToInputArray) -> Result<core::Scalar> {
 			input_array_arg!(cmp_imgs);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_quality_QualityMSE_compute_const__InputArrayR(self.as_raw_mut_QualityMSE(), cmp_imgs.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -475,6 +491,8 @@ pub mod quality {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { QualityMSE, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::quality::QualityBaseTraitConst for QualityMSE {
 		#[inline] fn as_raw_QualityBase(&self) -> *const c_void { self.as_raw() }
 	}
@@ -482,6 +500,8 @@ pub mod quality {
 	impl crate::quality::QualityBaseTrait for QualityMSE {
 		#[inline] fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { QualityMSE, crate::quality::QualityBaseTraitConst, as_raw_QualityBase, crate::quality::QualityBaseTrait, as_raw_mut_QualityBase }
 	
 	impl crate::quality::QualityMSETraitConst for QualityMSE {
 		#[inline] fn as_raw_QualityMSE(&self) -> *const c_void { self.as_raw() }
@@ -491,12 +511,14 @@ pub mod quality {
 		#[inline] fn as_raw_mut_QualityMSE(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { QualityMSE, crate::quality::QualityMSETraitConst, as_raw_QualityMSE, crate::quality::QualityMSETrait, as_raw_mut_QualityMSE }
+	
 	impl QualityMSE {
 		/// Create an object which calculates quality
 		/// ## Parameters
 		/// * ref: input image to use as the reference for comparison
 		#[inline]
-		pub fn create(ref_: &impl core::ToInputArray) -> Result<core::Ptr<crate::quality::QualityMSE>> {
+		pub fn create(ref_: &impl ToInputArray) -> Result<core::Ptr<crate::quality::QualityMSE>> {
 			input_array_arg!(ref_);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_quality_QualityMSE_create_const__InputArrayR(ref_.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -514,7 +536,7 @@ pub mod quality {
 		/// ## Returns
 		/// cv::Scalar with per-channel quality values.  Values range from 0 (best) to max float (worst)
 		#[inline]
-		pub fn compute(ref_: &impl core::ToInputArray, cmp: &impl core::ToInputArray, quality_map: &mut impl core::ToOutputArray) -> Result<core::Scalar> {
+		pub fn compute(ref_: &impl ToInputArray, cmp: &impl ToInputArray, quality_map: &mut impl ToOutputArray) -> Result<core::Scalar> {
 			input_array_arg!(ref_);
 			input_array_arg!(cmp);
 			output_array_arg!(quality_map);
@@ -575,7 +597,7 @@ pub mod quality {
 		/// ## Returns
 		/// Per-channel PSNR value, or std::numeric_limits<double>::infinity() if the MSE between the two images == 0
 		#[inline]
-		fn compute(&mut self, cmp: &impl core::ToInputArray) -> Result<core::Scalar> {
+		fn compute(&mut self, cmp: &impl ToInputArray) -> Result<core::Scalar> {
 			input_array_arg!(cmp);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_quality_QualityPSNR_compute_const__InputArrayR(self.as_raw_mut_QualityPSNR(), cmp.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -632,6 +654,8 @@ pub mod quality {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { QualityPSNR, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::quality::QualityBaseTraitConst for QualityPSNR {
 		#[inline] fn as_raw_QualityBase(&self) -> *const c_void { self.as_raw() }
 	}
@@ -640,6 +664,8 @@ pub mod quality {
 		#[inline] fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { QualityPSNR, crate::quality::QualityBaseTraitConst, as_raw_QualityBase, crate::quality::QualityBaseTrait, as_raw_mut_QualityBase }
+	
 	impl crate::quality::QualityPSNRTraitConst for QualityPSNR {
 		#[inline] fn as_raw_QualityPSNR(&self) -> *const c_void { self.as_raw() }
 	}
@@ -647,6 +673,8 @@ pub mod quality {
 	impl crate::quality::QualityPSNRTrait for QualityPSNR {
 		#[inline] fn as_raw_mut_QualityPSNR(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { QualityPSNR, crate::quality::QualityPSNRTraitConst, as_raw_QualityPSNR, crate::quality::QualityPSNRTrait, as_raw_mut_QualityPSNR }
 	
 	impl QualityPSNR {
 		pub const MAX_PIXEL_VALUE_DEFAULT: f64 = 255.;
@@ -658,7 +686,7 @@ pub mod quality {
 		/// ## C++ default parameters
 		/// * max_pixel_value: QualityPSNR::MAX_PIXEL_VALUE_DEFAULT
 		#[inline]
-		pub fn create(ref_: &impl core::ToInputArray, max_pixel_value: f64) -> Result<core::Ptr<crate::quality::QualityPSNR>> {
+		pub fn create(ref_: &impl ToInputArray, max_pixel_value: f64) -> Result<core::Ptr<crate::quality::QualityPSNR>> {
 			input_array_arg!(ref_);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_quality_QualityPSNR_create_const__InputArrayR_double(ref_.as_raw__InputArray(), max_pixel_value, ocvrs_return.as_mut_ptr()) };
@@ -677,7 +705,7 @@ pub mod quality {
 		/// This alternative version of [QualityPSNR::create] function uses the following default values for its arguments:
 		/// * max_pixel_value: QualityPSNR::MAX_PIXEL_VALUE_DEFAULT
 		#[inline]
-		pub fn create_def(ref_: &impl core::ToInputArray) -> Result<core::Ptr<crate::quality::QualityPSNR>> {
+		pub fn create_def(ref_: &impl ToInputArray) -> Result<core::Ptr<crate::quality::QualityPSNR>> {
 			input_array_arg!(ref_);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_quality_QualityPSNR_create_const__InputArrayR(ref_.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -699,7 +727,7 @@ pub mod quality {
 		/// ## C++ default parameters
 		/// * max_pixel_value: QualityPSNR::MAX_PIXEL_VALUE_DEFAULT
 		#[inline]
-		pub fn compute(ref_: &impl core::ToInputArray, cmp: &impl core::ToInputArray, quality_map: &mut impl core::ToOutputArray, max_pixel_value: f64) -> Result<core::Scalar> {
+		pub fn compute(ref_: &impl ToInputArray, cmp: &impl ToInputArray, quality_map: &mut impl ToOutputArray, max_pixel_value: f64) -> Result<core::Scalar> {
 			input_array_arg!(ref_);
 			input_array_arg!(cmp);
 			output_array_arg!(quality_map);
@@ -723,7 +751,7 @@ pub mod quality {
 		/// This alternative version of [QualityPSNR::compute] function uses the following default values for its arguments:
 		/// * max_pixel_value: QualityPSNR::MAX_PIXEL_VALUE_DEFAULT
 		#[inline]
-		pub fn compute_def(ref_: &impl core::ToInputArray, cmp: &impl core::ToInputArray, quality_map: &mut impl core::ToOutputArray) -> Result<core::Scalar> {
+		pub fn compute_def(ref_: &impl ToInputArray, cmp: &impl ToInputArray, quality_map: &mut impl ToOutputArray) -> Result<core::Scalar> {
 			input_array_arg!(ref_);
 			input_array_arg!(cmp);
 			output_array_arg!(quality_map);
@@ -774,7 +802,7 @@ pub mod quality {
 		/// ## Returns
 		/// cv::Scalar with per-channel quality values.  Values range from 0 (worst) to 1 (best)
 		#[inline]
-		fn compute(&mut self, cmp: &impl core::ToInputArray) -> Result<core::Scalar> {
+		fn compute(&mut self, cmp: &impl ToInputArray) -> Result<core::Scalar> {
 			input_array_arg!(cmp);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_quality_QualitySSIM_compute_const__InputArrayR(self.as_raw_mut_QualitySSIM(), cmp.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -819,6 +847,8 @@ pub mod quality {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { QualitySSIM, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::quality::QualityBaseTraitConst for QualitySSIM {
 		#[inline] fn as_raw_QualityBase(&self) -> *const c_void { self.as_raw() }
 	}
@@ -826,6 +856,8 @@ pub mod quality {
 	impl crate::quality::QualityBaseTrait for QualitySSIM {
 		#[inline] fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { QualitySSIM, crate::quality::QualityBaseTraitConst, as_raw_QualityBase, crate::quality::QualityBaseTrait, as_raw_mut_QualityBase }
 	
 	impl crate::quality::QualitySSIMTraitConst for QualitySSIM {
 		#[inline] fn as_raw_QualitySSIM(&self) -> *const c_void { self.as_raw() }
@@ -835,12 +867,14 @@ pub mod quality {
 		#[inline] fn as_raw_mut_QualitySSIM(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { QualitySSIM, crate::quality::QualitySSIMTraitConst, as_raw_QualitySSIM, crate::quality::QualitySSIMTrait, as_raw_mut_QualitySSIM }
+	
 	impl QualitySSIM {
 		/// Create an object which calculates quality
 		/// ## Parameters
 		/// * ref: input image to use as the reference image for comparison
 		#[inline]
-		pub fn create(ref_: &impl core::ToInputArray) -> Result<core::Ptr<crate::quality::QualitySSIM>> {
+		pub fn create(ref_: &impl ToInputArray) -> Result<core::Ptr<crate::quality::QualitySSIM>> {
 			input_array_arg!(ref_);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_quality_QualitySSIM_create_const__InputArrayR(ref_.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -858,7 +892,7 @@ pub mod quality {
 		/// ## Returns
 		/// cv::Scalar with per-channel quality values.  Values range from 0 (worst) to 1 (best)
 		#[inline]
-		pub fn compute(ref_: &impl core::ToInputArray, cmp: &impl core::ToInputArray, quality_map: &mut impl core::ToOutputArray) -> Result<core::Scalar> {
+		pub fn compute(ref_: &impl ToInputArray, cmp: &impl ToInputArray, quality_map: &mut impl ToOutputArray) -> Result<core::Scalar> {
 			input_array_arg!(ref_);
 			input_array_arg!(cmp);
 			output_array_arg!(quality_map);

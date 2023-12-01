@@ -393,10 +393,10 @@ pub mod highgui {
 	/// * org: Point(x,y) where the text should start on an image.
 	/// * font: Font to use to draw a text.
 	#[inline]
-	pub fn add_text(img: &core::Mat, text: &str, org: core::Point, font: &crate::highgui::QtFont) -> Result<()> {
+	pub fn add_text(img: &impl core::MatTraitConst, text: &str, org: core::Point, font: &impl crate::highgui::QtFontTraitConst) -> Result<()> {
 		extern_container_arg!(text);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_addText_const_MatR_const_StringR_Point_const_QtFontR(img.as_raw_Mat(), text.opencv_as_extern(), org.opencv_as_extern(), font.as_raw_QtFont(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_addText_const_MatR_const_StringR_Point_const_QtFontR(img.as_raw_Mat(), text.opencv_as_extern(), &org, font.as_raw_QtFont(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -425,11 +425,11 @@ pub mod highgui {
 	/// * style: QT_STYLE_NORMAL
 	/// * spacing: 0
 	#[inline]
-	pub fn add_text_with_font_def(img: &core::Mat, text: &str, org: core::Point, name_font: &str) -> Result<()> {
+	pub fn add_text_with_font_def(img: &impl core::MatTraitConst, text: &str, org: core::Point, name_font: &str) -> Result<()> {
 		extern_container_arg!(text);
 		extern_container_arg!(name_font);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_addText_const_MatR_const_StringR_Point_const_StringR(img.as_raw_Mat(), text.opencv_as_extern(), org.opencv_as_extern(), name_font.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_addText_const_MatR_const_StringR_Point_const_StringR(img.as_raw_Mat(), text.opencv_as_extern(), &org, name_font.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -457,11 +457,11 @@ pub mod highgui {
 	/// * style: QT_STYLE_NORMAL
 	/// * spacing: 0
 	#[inline]
-	pub fn add_text_with_font(img: &core::Mat, text: &str, org: core::Point, name_font: &str, point_size: i32, color: core::Scalar, weight: i32, style: i32, spacing: i32) -> Result<()> {
+	pub fn add_text_with_font(img: &impl core::MatTraitConst, text: &str, org: core::Point, name_font: &str, point_size: i32, color: core::Scalar, weight: i32, style: i32, spacing: i32) -> Result<()> {
 		extern_container_arg!(text);
 		extern_container_arg!(name_font);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_addText_const_MatR_const_StringR_Point_const_StringR_int_Scalar_int_int_int(img.as_raw_Mat(), text.opencv_as_extern(), org.opencv_as_extern(), name_font.opencv_as_extern(), point_size, color.opencv_as_extern(), weight, style, spacing, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_addText_const_MatR_const_StringR_Point_const_StringR_int_Scalar_int_int_int(img.as_raw_Mat(), text.opencv_as_extern(), &org, name_font.opencv_as_extern(), point_size, &color, weight, style, spacing, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -595,7 +595,7 @@ pub mod highgui {
 		callback_arg!(on_change_trampoline(pos: i32, userdata: *mut c_void) -> () => userdata in callbacks => on_change(pos: i32) -> ());
 		userdata_arg!(userdata in callbacks => on_change);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_createTrackbar_const_StringR_const_StringR_intX_int_TrackbarCallback_voidX(trackbarname.opencv_as_extern(), winname.opencv_as_extern(), value.map_or(::core::ptr::null_mut(), |x| x), count, on_change_trampoline, userdata, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_createTrackbar_const_StringR_const_StringR_intX_int_TrackbarCallback_voidX(trackbarname.opencv_as_extern(), winname.opencv_as_extern(), value.map_or(::core::ptr::null_mut(), |value| value), count, on_change_trampoline, userdata, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -807,7 +807,7 @@ pub mod highgui {
 	pub fn font_qt(name_font: &str, point_size: i32, color: core::Scalar, weight: i32, style: i32, spacing: i32) -> Result<crate::highgui::QtFont> {
 		extern_container_arg!(name_font);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_fontQt_const_StringR_int_Scalar_int_int_int(name_font.opencv_as_extern(), point_size, color.opencv_as_extern(), weight, style, spacing, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_fontQt_const_StringR_int_Scalar_int_int_int(name_font.opencv_as_extern(), point_size, &color, weight, style, spacing, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { crate::highgui::QtFont::opencv_from_extern(ret) };
@@ -935,7 +935,7 @@ pub mod highgui {
 	/// * winname: Name of the window.
 	/// * mat: Image to be shown.
 	#[inline]
-	pub fn imshow(winname: &str, mat: &impl core::ToInputArray) -> Result<()> {
+	pub fn imshow(winname: &str, mat: &impl ToInputArray) -> Result<()> {
 		extern_container_arg!(winname);
 		input_array_arg!(mat);
 		return_send!(via ocvrs_return);
@@ -1164,7 +1164,7 @@ pub mod highgui {
 	/// * from_center: false
 	/// * print_notice: true
 	#[inline]
-	pub fn select_roi_def(window_name: &str, img: &impl core::ToInputArray) -> Result<core::Rect> {
+	pub fn select_roi_def(window_name: &str, img: &impl ToInputArray) -> Result<core::Rect> {
 		extern_container_arg!(window_name);
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
@@ -1198,7 +1198,7 @@ pub mod highgui {
 	/// * from_center: false
 	/// * print_notice: true
 	#[inline]
-	pub fn select_roi(window_name: &str, img: &impl core::ToInputArray, show_crosshair: bool, from_center: bool, print_notice: bool) -> Result<core::Rect> {
+	pub fn select_roi(window_name: &str, img: &impl ToInputArray, show_crosshair: bool, from_center: bool, print_notice: bool) -> Result<core::Rect> {
 		extern_container_arg!(window_name);
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
@@ -1216,7 +1216,7 @@ pub mod highgui {
 	/// * from_center: false
 	/// * print_notice: true
 	#[inline]
-	pub fn select_roi_1_def(img: &impl core::ToInputArray) -> Result<core::Rect> {
+	pub fn select_roi_1_def(img: &impl ToInputArray) -> Result<core::Rect> {
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_selectROI_const__InputArrayR(img.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -1251,7 +1251,7 @@ pub mod highgui {
 	/// * from_center: false
 	/// * print_notice: true
 	#[inline]
-	pub fn select_roi_1(img: &impl core::ToInputArray, show_crosshair: bool, from_center: bool, print_notice: bool) -> Result<core::Rect> {
+	pub fn select_roi_1(img: &impl ToInputArray, show_crosshair: bool, from_center: bool, print_notice: bool) -> Result<core::Rect> {
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_selectROI_const__InputArrayR_bool_bool_bool(img.as_raw__InputArray(), show_crosshair, from_center, print_notice, ocvrs_return.as_mut_ptr()) };
@@ -1285,7 +1285,7 @@ pub mod highgui {
 	/// * from_center: false
 	/// * print_notice: true
 	#[inline]
-	pub fn select_ro_is_def(window_name: &str, img: &impl core::ToInputArray, bounding_boxes: &mut core::Vector<core::Rect>) -> Result<()> {
+	pub fn select_ro_is_def(window_name: &str, img: &impl ToInputArray, bounding_boxes: &mut core::Vector<core::Rect>) -> Result<()> {
 		extern_container_arg!(window_name);
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
@@ -1319,7 +1319,7 @@ pub mod highgui {
 	/// * from_center: false
 	/// * print_notice: true
 	#[inline]
-	pub fn select_ro_is(window_name: &str, img: &impl core::ToInputArray, bounding_boxes: &mut core::Vector<core::Rect>, show_crosshair: bool, from_center: bool, print_notice: bool) -> Result<()> {
+	pub fn select_ro_is(window_name: &str, img: &impl ToInputArray, bounding_boxes: &mut core::Vector<core::Rect>, show_crosshair: bool, from_center: bool, print_notice: bool) -> Result<()> {
 		extern_container_arg!(window_name);
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
@@ -1761,7 +1761,7 @@ pub mod highgui {
 		/// Color of the font. Scalar(blue_component, green_component, red_component[, alpha_component])
 		#[inline]
 		fn set_color(&mut self, val: core::Scalar) {
-			let ret = unsafe { sys::cv_QtFont_propColor_const_Scalar(self.as_raw_mut_QtFont(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_QtFont_propColor_const_Scalar(self.as_raw_mut_QtFont(), &val) };
 			ret
 		}
 		
@@ -1837,6 +1837,8 @@ pub mod highgui {
 	impl crate::highgui::QtFontTrait for QtFont {
 		#[inline] fn as_raw_mut_QtFont(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { QtFont, crate::highgui::QtFontTraitConst, as_raw_QtFont, crate::highgui::QtFontTrait, as_raw_mut_QtFont }
 	
 	impl QtFont {
 	}

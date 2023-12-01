@@ -38,7 +38,7 @@ pub mod intensity_transform {
 	/// * a: -0.3293f
 	/// * b: 1.1258f
 	#[inline]
-	pub fn bimef_def(input: &impl core::ToInputArray, output: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn bimef_def(input: &impl ToInputArray, output: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(input);
 		output_array_arg!(output);
 		return_send!(via ocvrs_return);
@@ -66,7 +66,7 @@ pub mod intensity_transform {
 	/// * a: -0.3293f
 	/// * b: 1.1258f
 	#[inline]
-	pub fn bimef(input: &impl core::ToInputArray, output: &mut impl core::ToOutputArray, mu: f32, a: f32, b: f32) -> Result<()> {
+	pub fn bimef(input: &impl ToInputArray, output: &mut impl ToOutputArray, mu: f32, a: f32, b: f32) -> Result<()> {
 		input_array_arg!(input);
 		output_array_arg!(output);
 		return_send!(via ocvrs_return);
@@ -92,7 +92,7 @@ pub mod intensity_transform {
 	/// Compared to the original code, this implementation is a little bit slower and does not provide the same results.
 	/// In particular, quality of the image enhancement is degraded for the bright areas in certain conditions.
 	#[inline]
-	pub fn bimef2(input: &impl core::ToInputArray, output: &mut impl core::ToOutputArray, k: f32, mu: f32, a: f32, b: f32) -> Result<()> {
+	pub fn bimef2(input: &impl ToInputArray, output: &mut impl ToOutputArray, k: f32, mu: f32, a: f32, b: f32) -> Result<()> {
 		input_array_arg!(input);
 		output_array_arg!(output);
 		return_send!(via ocvrs_return);
@@ -109,7 +109,7 @@ pub mod intensity_transform {
 	/// * input: input bgr or grayscale image.
 	/// * output: resulting image of autoscaling.
 	#[inline]
-	pub fn autoscaling(input: core::Mat, output: &mut core::Mat) -> Result<()> {
+	pub fn autoscaling(input: impl core::MatTraitConst, output: &mut impl core::MatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_intensity_transform_autoscaling_const_Mat_MatR(input.as_raw_Mat(), output.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -128,7 +128,7 @@ pub mod intensity_transform {
 	/// * r2: x coordinate of second point (r2, s2) in the transformation function.
 	/// * s2: y coordinate of second point (r2, s2) in the transformation function.
 	#[inline]
-	pub fn contrast_stretching(input: core::Mat, output: &mut core::Mat, r1: i32, s1: i32, r2: i32, s2: i32) -> Result<()> {
+	pub fn contrast_stretching(input: impl core::MatTraitConst, output: &mut impl core::MatTrait, r1: i32, s1: i32, r2: i32, s2: i32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_intensity_transform_contrastStretching_const_Mat_MatR_const_int_const_int_const_int_const_int(input.as_raw_Mat(), output.as_raw_mut_Mat(), r1, s1, r2, s2, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -144,7 +144,7 @@ pub mod intensity_transform {
 	/// * output: resulting image of gamma corrections.
 	/// * gamma: constant in c*r^gamma where r is pixel value.
 	#[inline]
-	pub fn gamma_correction(input: core::Mat, output: &mut core::Mat, gamma: f32) -> Result<()> {
+	pub fn gamma_correction(input: impl core::MatTraitConst, output: &mut impl core::MatTrait, gamma: f32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_intensity_transform_gammaCorrection_const_Mat_MatR_const_float(input.as_raw_Mat(), output.as_raw_mut_Mat(), gamma, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -159,7 +159,7 @@ pub mod intensity_transform {
 	/// * input: input bgr or grayscale image.
 	/// * output: resulting image of log transformations.
 	#[inline]
-	pub fn log_transform(input: core::Mat, output: &mut core::Mat) -> Result<()> {
+	pub fn log_transform(input: impl core::MatTraitConst, output: &mut impl core::MatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_intensity_transform_logTransform_const_Mat_MatR(input.as_raw_Mat(), output.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);

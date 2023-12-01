@@ -123,7 +123,7 @@ pub mod line_descriptor {
 	/// * color: Scalar::all(-1)
 	/// * flags: DrawLinesMatchesFlags::DEFAULT
 	#[inline]
-	pub fn draw_keylines_def(image: &core::Mat, keylines: &core::Vector<crate::line_descriptor::KeyLine>, out_image: &mut core::Mat) -> Result<()> {
+	pub fn draw_keylines_def(image: &impl core::MatTraitConst, keylines: &core::Vector<crate::line_descriptor::KeyLine>, out_image: &mut impl core::MatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_line_descriptor_drawKeylines_const_MatR_const_vectorLKeyLineGR_MatR(image.as_raw_Mat(), keylines.as_raw_VectorOfKeyLine(), out_image.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -144,7 +144,7 @@ pub mod line_descriptor {
 	/// * color: Scalar::all(-1)
 	/// * flags: DrawLinesMatchesFlags::DEFAULT
 	#[inline]
-	pub fn draw_keylines(image: &core::Mat, keylines: &core::Vector<crate::line_descriptor::KeyLine>, out_image: &mut core::Mat, color: core::Scalar, flags: i32) -> Result<()> {
+	pub fn draw_keylines(image: &impl core::MatTraitConst, keylines: &core::Vector<crate::line_descriptor::KeyLine>, out_image: &mut impl core::MatTrait, color: core::Scalar, flags: i32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_line_descriptor_drawKeylines_const_MatR_const_vectorLKeyLineGR_MatR_const_ScalarR_int(image.as_raw_Mat(), keylines.as_raw_VectorOfKeyLine(), out_image.as_raw_mut_Mat(), &color, flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -177,7 +177,7 @@ pub mod line_descriptor {
 	/// * matches_mask: std::vector<char>()
 	/// * flags: DrawLinesMatchesFlags::DEFAULT
 	#[inline]
-	pub fn draw_line_matches_def(img1: &core::Mat, keylines1: &core::Vector<crate::line_descriptor::KeyLine>, img2: &core::Mat, keylines2: &core::Vector<crate::line_descriptor::KeyLine>, matches1to2: &core::Vector<core::DMatch>, out_img: &mut core::Mat) -> Result<()> {
+	pub fn draw_line_matches_def(img1: &impl core::MatTraitConst, keylines1: &core::Vector<crate::line_descriptor::KeyLine>, img2: &impl core::MatTraitConst, keylines2: &core::Vector<crate::line_descriptor::KeyLine>, matches1to2: &core::Vector<core::DMatch>, out_img: &mut impl core::MatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_line_descriptor_drawLineMatches_const_MatR_const_vectorLKeyLineGR_const_MatR_const_vectorLKeyLineGR_const_vectorLDMatchGR_MatR(img1.as_raw_Mat(), keylines1.as_raw_VectorOfKeyLine(), img2.as_raw_Mat(), keylines2.as_raw_VectorOfKeyLine(), matches1to2.as_raw_VectorOfDMatch(), out_img.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -209,7 +209,7 @@ pub mod line_descriptor {
 	/// * matches_mask: std::vector<char>()
 	/// * flags: DrawLinesMatchesFlags::DEFAULT
 	#[inline]
-	pub fn draw_line_matches(img1: &core::Mat, keylines1: &core::Vector<crate::line_descriptor::KeyLine>, img2: &core::Mat, keylines2: &core::Vector<crate::line_descriptor::KeyLine>, matches1to2: &core::Vector<core::DMatch>, out_img: &mut core::Mat, match_color: core::Scalar, single_line_color: core::Scalar, matches_mask: &core::Vector<c_char>, flags: i32) -> Result<()> {
+	pub fn draw_line_matches(img1: &impl core::MatTraitConst, keylines1: &core::Vector<crate::line_descriptor::KeyLine>, img2: &impl core::MatTraitConst, keylines2: &core::Vector<crate::line_descriptor::KeyLine>, matches1to2: &core::Vector<core::DMatch>, out_img: &mut impl core::MatTrait, match_color: core::Scalar, single_line_color: core::Scalar, matches_mask: &core::Vector<c_char>, flags: i32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_line_descriptor_drawLineMatches_const_MatR_const_vectorLKeyLineGR_const_MatR_const_vectorLKeyLineGR_const_vectorLDMatchGR_MatR_const_ScalarR_const_ScalarR_const_vectorLcharGR_int(img1.as_raw_Mat(), keylines1.as_raw_VectorOfKeyLine(), img2.as_raw_Mat(), keylines2.as_raw_VectorOfKeyLine(), matches1to2.as_raw_VectorOfDMatch(), out_img.as_raw_mut_Mat(), &match_color, &single_line_color, matches_mask.as_raw_VectorOfc_char(), flags, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -226,7 +226,7 @@ pub mod line_descriptor {
 		/// ## Parameters
 		/// * fs: output FileStorage file
 		#[inline]
-		fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
+		fn write(&self, fs: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_line_descriptor_BinaryDescriptor_write_const_FileStorageR(self.as_raw_BinaryDescriptor(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -289,7 +289,7 @@ pub mod line_descriptor {
 		/// ## C++ default parameters
 		/// * return_float_descr: false
 		#[inline]
-		fn compute(&self, image: &core::Mat, keylines: &mut core::Vector<crate::line_descriptor::KeyLine>, descriptors: &mut core::Mat, return_float_descr: bool) -> Result<()> {
+		fn compute(&self, image: &impl core::MatTraitConst, keylines: &mut core::Vector<crate::line_descriptor::KeyLine>, descriptors: &mut impl core::MatTrait, return_float_descr: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_line_descriptor_BinaryDescriptor_compute_const_const_MatR_vectorLKeyLineGR_MatR_bool(self.as_raw_BinaryDescriptor(), image.as_raw_Mat(), keylines.as_raw_mut_VectorOfKeyLine(), descriptors.as_raw_mut_Mat(), return_float_descr, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -309,7 +309,7 @@ pub mod line_descriptor {
 		/// This alternative version of [BinaryDescriptorTraitConst::compute] function uses the following default values for its arguments:
 		/// * return_float_descr: false
 		#[inline]
-		fn compute_def(&self, image: &core::Mat, keylines: &mut core::Vector<crate::line_descriptor::KeyLine>, descriptors: &mut core::Mat) -> Result<()> {
+		fn compute_def(&self, image: &impl core::MatTraitConst, keylines: &mut core::Vector<crate::line_descriptor::KeyLine>, descriptors: &mut impl core::MatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_line_descriptor_BinaryDescriptor_compute_const_const_MatR_vectorLKeyLineGR_MatR(self.as_raw_BinaryDescriptor(), image.as_raw_Mat(), keylines.as_raw_mut_VectorOfKeyLine(), descriptors.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -411,7 +411,7 @@ pub mod line_descriptor {
 		/// * use_provided_key_lines: false
 		/// * return_float_descr: false
 		#[inline]
-		fn apply(&self, image: &impl core::ToInputArray, mask: &impl core::ToInputArray, keylines: &mut core::Vector<crate::line_descriptor::KeyLine>, descriptors: &mut impl core::ToOutputArray, use_provided_key_lines: bool, return_float_descr: bool) -> Result<()> {
+		fn apply(&self, image: &impl ToInputArray, mask: &impl ToInputArray, keylines: &mut core::Vector<crate::line_descriptor::KeyLine>, descriptors: &mut impl ToOutputArray, use_provided_key_lines: bool, return_float_descr: bool) -> Result<()> {
 			input_array_arg!(image);
 			input_array_arg!(mask);
 			output_array_arg!(descriptors);
@@ -440,7 +440,7 @@ pub mod line_descriptor {
 		/// * use_provided_key_lines: false
 		/// * return_float_descr: false
 		#[inline]
-		fn apply_def(&self, image: &impl core::ToInputArray, mask: &impl core::ToInputArray, keylines: &mut core::Vector<crate::line_descriptor::KeyLine>, descriptors: &mut impl core::ToOutputArray) -> Result<()> {
+		fn apply_def(&self, image: &impl ToInputArray, mask: &impl ToInputArray, keylines: &mut core::Vector<crate::line_descriptor::KeyLine>, descriptors: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(image);
 			input_array_arg!(mask);
 			output_array_arg!(descriptors);
@@ -528,7 +528,7 @@ pub mod line_descriptor {
 		/// ## Parameters
 		/// * fn: source FileNode file
 		#[inline]
-		fn read(&mut self, fn_: &core::FileNode) -> Result<()> {
+		fn read(&mut self, fn_: &impl core::FileNodeTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_line_descriptor_BinaryDescriptor_read_const_FileNodeR(self.as_raw_mut_BinaryDescriptor(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -546,7 +546,7 @@ pub mod line_descriptor {
 		/// ## C++ default parameters
 		/// * mask: Mat()
 		#[inline]
-		fn detect_1(&mut self, image: &core::Mat, keypoints: &mut core::Vector<crate::line_descriptor::KeyLine>, mask: &core::Mat) -> Result<()> {
+		fn detect_1(&mut self, image: &impl core::MatTraitConst, keypoints: &mut core::Vector<crate::line_descriptor::KeyLine>, mask: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_line_descriptor_BinaryDescriptor_detect_const_MatR_vectorLKeyLineGR_const_MatR(self.as_raw_mut_BinaryDescriptor(), image.as_raw_Mat(), keypoints.as_raw_mut_VectorOfKeyLine(), mask.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -565,7 +565,7 @@ pub mod line_descriptor {
 		/// This alternative version of [BinaryDescriptorTrait::detect] function uses the following default values for its arguments:
 		/// * mask: Mat()
 		#[inline]
-		fn detect_def_1(&mut self, image: &core::Mat, keypoints: &mut core::Vector<crate::line_descriptor::KeyLine>) -> Result<()> {
+		fn detect_def_1(&mut self, image: &impl core::MatTraitConst, keypoints: &mut core::Vector<crate::line_descriptor::KeyLine>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_line_descriptor_BinaryDescriptor_detect_const_MatR_vectorLKeyLineGR(self.as_raw_mut_BinaryDescriptor(), image.as_raw_Mat(), keypoints.as_raw_mut_VectorOfKeyLine(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -604,6 +604,8 @@ pub mod line_descriptor {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { BinaryDescriptor, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::line_descriptor::BinaryDescriptorTraitConst for BinaryDescriptor {
 		#[inline] fn as_raw_BinaryDescriptor(&self) -> *const c_void { self.as_raw() }
 	}
@@ -611,6 +613,8 @@ pub mod line_descriptor {
 	impl crate::line_descriptor::BinaryDescriptorTrait for BinaryDescriptor {
 		#[inline] fn as_raw_mut_BinaryDescriptor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { BinaryDescriptor, crate::line_descriptor::BinaryDescriptorTraitConst, as_raw_BinaryDescriptor, crate::line_descriptor::BinaryDescriptorTrait, as_raw_mut_BinaryDescriptor }
 	
 	impl BinaryDescriptor {
 		/// Constructor
@@ -624,7 +628,7 @@ pub mod line_descriptor {
 		/// ## C++ default parameters
 		/// * parameters: BinaryDescriptor::Params()
 		#[inline]
-		pub fn new(parameters: &crate::line_descriptor::BinaryDescriptor_Params) -> Result<crate::line_descriptor::BinaryDescriptor> {
+		pub fn new(parameters: &impl crate::line_descriptor::BinaryDescriptor_ParamsTraitConst) -> Result<crate::line_descriptor::BinaryDescriptor> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_line_descriptor_BinaryDescriptor_BinaryDescriptor_const_ParamsR(parameters.as_raw_BinaryDescriptor_Params(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -667,7 +671,7 @@ pub mod line_descriptor {
 		}
 		
 		#[inline]
-		pub fn create_binary_descriptor_1(mut parameters: crate::line_descriptor::BinaryDescriptor_Params) -> Result<core::Ptr<crate::line_descriptor::BinaryDescriptor>> {
+		pub fn create_binary_descriptor_1(mut parameters: impl crate::line_descriptor::BinaryDescriptor_ParamsTrait) -> Result<core::Ptr<crate::line_descriptor::BinaryDescriptor>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_line_descriptor_BinaryDescriptor_createBinaryDescriptor_Params(parameters.as_raw_mut_BinaryDescriptor_Params(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -721,7 +725,7 @@ pub mod line_descriptor {
 		
 		/// store parameters to a FileStorage object (struct function)
 		#[inline]
-		fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
+		fn write(&self, fs: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_write_const_FileStorageR(self.as_raw_BinaryDescriptor_Params(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -764,7 +768,7 @@ pub mod line_descriptor {
 		
 		/// read parameters from a FileNode object and store them (struct function)
 		#[inline]
-		fn read(&mut self, fn_: &core::FileNode) -> Result<()> {
+		fn read(&mut self, fn_: &impl core::FileNodeTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_read_const_FileNodeR(self.as_raw_mut_BinaryDescriptor_Params(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -797,6 +801,8 @@ pub mod line_descriptor {
 	impl crate::line_descriptor::BinaryDescriptor_ParamsTrait for BinaryDescriptor_Params {
 		#[inline] fn as_raw_mut_BinaryDescriptor_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { BinaryDescriptor_Params, crate::line_descriptor::BinaryDescriptor_ParamsTraitConst, as_raw_BinaryDescriptor_Params, crate::line_descriptor::BinaryDescriptor_ParamsTrait, as_raw_mut_BinaryDescriptor_Params }
 	
 	impl BinaryDescriptor_Params {
 		#[inline]
@@ -839,7 +845,7 @@ pub mod line_descriptor {
 		/// ## C++ default parameters
 		/// * mask: Mat()
 		#[inline]
-		fn match_(&self, query_descriptors: &core::Mat, train_descriptors: &core::Mat, matches: &mut core::Vector<core::DMatch>, mask: &core::Mat) -> Result<()> {
+		fn match_(&self, query_descriptors: &impl core::MatTraitConst, train_descriptors: &impl core::MatTraitConst, matches: &mut core::Vector<core::DMatch>, mask: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_line_descriptor_BinaryDescriptorMatcher_match_const_const_MatR_const_MatR_vectorLDMatchGR_const_MatR(self.as_raw_BinaryDescriptorMatcher(), query_descriptors.as_raw_Mat(), train_descriptors.as_raw_Mat(), matches.as_raw_mut_VectorOfDMatch(), mask.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -860,7 +866,7 @@ pub mod line_descriptor {
 		/// This alternative version of [BinaryDescriptorMatcherTraitConst::match_] function uses the following default values for its arguments:
 		/// * mask: Mat()
 		#[inline]
-		fn match__def(&self, query_descriptors: &core::Mat, train_descriptors: &core::Mat, matches: &mut core::Vector<core::DMatch>) -> Result<()> {
+		fn match__def(&self, query_descriptors: &impl core::MatTraitConst, train_descriptors: &impl core::MatTraitConst, matches: &mut core::Vector<core::DMatch>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_line_descriptor_BinaryDescriptorMatcher_match_const_const_MatR_const_MatR_vectorLDMatchGR(self.as_raw_BinaryDescriptorMatcher(), query_descriptors.as_raw_Mat(), train_descriptors.as_raw_Mat(), matches.as_raw_mut_VectorOfDMatch(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -884,7 +890,7 @@ pub mod line_descriptor {
 		/// * mask: Mat()
 		/// * compact_result: false
 		#[inline]
-		fn knn_match(&self, query_descriptors: &core::Mat, train_descriptors: &core::Mat, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32, mask: &core::Mat, compact_result: bool) -> Result<()> {
+		fn knn_match(&self, query_descriptors: &impl core::MatTraitConst, train_descriptors: &impl core::MatTraitConst, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32, mask: &impl core::MatTraitConst, compact_result: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_line_descriptor_BinaryDescriptorMatcher_knnMatch_const_const_MatR_const_MatR_vectorLvectorLDMatchGGR_int_const_MatR_bool(self.as_raw_BinaryDescriptorMatcher(), query_descriptors.as_raw_Mat(), train_descriptors.as_raw_Mat(), matches.as_raw_mut_VectorOfVectorOfDMatch(), k, mask.as_raw_Mat(), compact_result, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -909,7 +915,7 @@ pub mod line_descriptor {
 		/// * mask: Mat()
 		/// * compact_result: false
 		#[inline]
-		fn knn_match_def(&self, query_descriptors: &core::Mat, train_descriptors: &core::Mat, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32) -> Result<()> {
+		fn knn_match_def(&self, query_descriptors: &impl core::MatTraitConst, train_descriptors: &impl core::MatTraitConst, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_line_descriptor_BinaryDescriptorMatcher_knnMatch_const_const_MatR_const_MatR_vectorLvectorLDMatchGGR_int(self.as_raw_BinaryDescriptorMatcher(), query_descriptors.as_raw_Mat(), train_descriptors.as_raw_Mat(), matches.as_raw_mut_VectorOfVectorOfDMatch(), k, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -933,7 +939,7 @@ pub mod line_descriptor {
 		/// * mask: Mat()
 		/// * compact_result: false
 		#[inline]
-		fn radius_match(&self, query_descriptors: &core::Mat, train_descriptors: &core::Mat, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32, mask: &core::Mat, compact_result: bool) -> Result<()> {
+		fn radius_match(&self, query_descriptors: &impl core::MatTraitConst, train_descriptors: &impl core::MatTraitConst, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32, mask: &impl core::MatTraitConst, compact_result: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_line_descriptor_BinaryDescriptorMatcher_radiusMatch_const_const_MatR_const_MatR_vectorLvectorLDMatchGGR_float_const_MatR_bool(self.as_raw_BinaryDescriptorMatcher(), query_descriptors.as_raw_Mat(), train_descriptors.as_raw_Mat(), matches.as_raw_mut_VectorOfVectorOfDMatch(), max_distance, mask.as_raw_Mat(), compact_result, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -958,7 +964,7 @@ pub mod line_descriptor {
 		/// * mask: Mat()
 		/// * compact_result: false
 		#[inline]
-		fn radius_match_def(&self, query_descriptors: &core::Mat, train_descriptors: &core::Mat, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32) -> Result<()> {
+		fn radius_match_def(&self, query_descriptors: &impl core::MatTraitConst, train_descriptors: &impl core::MatTraitConst, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_line_descriptor_BinaryDescriptorMatcher_radiusMatch_const_const_MatR_const_MatR_vectorLvectorLDMatchGGR_float(self.as_raw_BinaryDescriptorMatcher(), query_descriptors.as_raw_Mat(), train_descriptors.as_raw_Mat(), matches.as_raw_mut_VectorOfVectorOfDMatch(), max_distance, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -992,7 +998,7 @@ pub mod line_descriptor {
 		/// ## C++ default parameters
 		/// * masks: std::vector<Mat>()
 		#[inline]
-		fn match_query(&mut self, query_descriptors: &core::Mat, matches: &mut core::Vector<core::DMatch>, masks: &core::Vector<core::Mat>) -> Result<()> {
+		fn match_query(&mut self, query_descriptors: &impl core::MatTraitConst, matches: &mut core::Vector<core::DMatch>, masks: &core::Vector<core::Mat>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_line_descriptor_BinaryDescriptorMatcher_match_const_MatR_vectorLDMatchGR_const_vectorLMatGR(self.as_raw_mut_BinaryDescriptorMatcher(), query_descriptors.as_raw_Mat(), matches.as_raw_mut_VectorOfDMatch(), masks.as_raw_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1012,7 +1018,7 @@ pub mod line_descriptor {
 		/// This alternative version of [BinaryDescriptorMatcherTrait::match_query] function uses the following default values for its arguments:
 		/// * masks: std::vector<Mat>()
 		#[inline]
-		fn match_query_def(&mut self, query_descriptors: &core::Mat, matches: &mut core::Vector<core::DMatch>) -> Result<()> {
+		fn match_query_def(&mut self, query_descriptors: &impl core::MatTraitConst, matches: &mut core::Vector<core::DMatch>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_line_descriptor_BinaryDescriptorMatcher_match_const_MatR_vectorLDMatchGR(self.as_raw_mut_BinaryDescriptorMatcher(), query_descriptors.as_raw_Mat(), matches.as_raw_mut_VectorOfDMatch(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1047,7 +1053,7 @@ pub mod line_descriptor {
 		/// * masks: std::vector<Mat>()
 		/// * compact_result: false
 		#[inline]
-		fn knn_match_query(&mut self, query_descriptors: &core::Mat, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32, masks: &core::Vector<core::Mat>, compact_result: bool) -> Result<()> {
+		fn knn_match_query(&mut self, query_descriptors: &impl core::MatTraitConst, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32, masks: &core::Vector<core::Mat>, compact_result: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_line_descriptor_BinaryDescriptorMatcher_knnMatch_const_MatR_vectorLvectorLDMatchGGR_int_const_vectorLMatGR_bool(self.as_raw_mut_BinaryDescriptorMatcher(), query_descriptors.as_raw_Mat(), matches.as_raw_mut_VectorOfVectorOfDMatch(), k, masks.as_raw_VectorOfMat(), compact_result, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1071,7 +1077,7 @@ pub mod line_descriptor {
 		/// * masks: std::vector<Mat>()
 		/// * compact_result: false
 		#[inline]
-		fn knn_match_query_def(&mut self, query_descriptors: &core::Mat, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32) -> Result<()> {
+		fn knn_match_query_def(&mut self, query_descriptors: &impl core::MatTraitConst, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_line_descriptor_BinaryDescriptorMatcher_knnMatch_const_MatR_vectorLvectorLDMatchGGR_int(self.as_raw_mut_BinaryDescriptorMatcher(), query_descriptors.as_raw_Mat(), matches.as_raw_mut_VectorOfVectorOfDMatch(), k, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1106,7 +1112,7 @@ pub mod line_descriptor {
 		/// * masks: std::vector<Mat>()
 		/// * compact_result: false
 		#[inline]
-		fn radius_match_1(&mut self, query_descriptors: &core::Mat, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32, masks: &core::Vector<core::Mat>, compact_result: bool) -> Result<()> {
+		fn radius_match_1(&mut self, query_descriptors: &impl core::MatTraitConst, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32, masks: &core::Vector<core::Mat>, compact_result: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_line_descriptor_BinaryDescriptorMatcher_radiusMatch_const_MatR_vectorLvectorLDMatchGGR_float_const_vectorLMatGR_bool(self.as_raw_mut_BinaryDescriptorMatcher(), query_descriptors.as_raw_Mat(), matches.as_raw_mut_VectorOfVectorOfDMatch(), max_distance, masks.as_raw_VectorOfMat(), compact_result, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1130,7 +1136,7 @@ pub mod line_descriptor {
 		/// * masks: std::vector<Mat>()
 		/// * compact_result: false
 		#[inline]
-		fn radius_match_def_1(&mut self, query_descriptors: &core::Mat, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32) -> Result<()> {
+		fn radius_match_def_1(&mut self, query_descriptors: &impl core::MatTraitConst, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_line_descriptor_BinaryDescriptorMatcher_radiusMatch_const_MatR_vectorLvectorLDMatchGGR_float(self.as_raw_mut_BinaryDescriptorMatcher(), query_descriptors.as_raw_Mat(), matches.as_raw_mut_VectorOfVectorOfDMatch(), max_distance, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1241,6 +1247,8 @@ pub mod line_descriptor {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { BinaryDescriptorMatcher, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::line_descriptor::BinaryDescriptorMatcherTraitConst for BinaryDescriptorMatcher {
 		#[inline] fn as_raw_BinaryDescriptorMatcher(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1248,6 +1256,8 @@ pub mod line_descriptor {
 	impl crate::line_descriptor::BinaryDescriptorMatcherTrait for BinaryDescriptorMatcher {
 		#[inline] fn as_raw_mut_BinaryDescriptorMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { BinaryDescriptorMatcher, crate::line_descriptor::BinaryDescriptorMatcherTraitConst, as_raw_BinaryDescriptorMatcher, crate::line_descriptor::BinaryDescriptorMatcherTrait, as_raw_mut_BinaryDescriptorMatcher }
 	
 	impl BinaryDescriptorMatcher {
 		/// Create a BinaryDescriptorMatcher object and return a smart pointer to it.
@@ -1347,7 +1357,7 @@ pub mod line_descriptor {
 		#[inline]
 		pub fn get_start_point(self) -> Result<core::Point2f> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_line_descriptor_KeyLine_getStartPoint_const(self.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_line_descriptor_KeyLine_getStartPoint_const(&self, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1357,7 +1367,7 @@ pub mod line_descriptor {
 		#[inline]
 		pub fn get_end_point(self) -> Result<core::Point2f> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_line_descriptor_KeyLine_getEndPoint_const(self.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_line_descriptor_KeyLine_getEndPoint_const(&self, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1367,7 +1377,7 @@ pub mod line_descriptor {
 		#[inline]
 		pub fn get_start_point_in_octave(self) -> Result<core::Point2f> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_line_descriptor_KeyLine_getStartPointInOctave_const(self.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_line_descriptor_KeyLine_getStartPointInOctave_const(&self, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1377,7 +1387,7 @@ pub mod line_descriptor {
 		#[inline]
 		pub fn get_end_point_in_octave(self) -> Result<core::Point2f> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_line_descriptor_KeyLine_getEndPointInOctave_const(self.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_line_descriptor_KeyLine_getEndPointInOctave_const(&self, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1465,7 +1475,7 @@ pub mod line_descriptor {
 		/// ## C++ default parameters
 		/// * mask: Mat()
 		#[inline]
-		fn detect(&mut self, image: &core::Mat, keypoints: &mut core::Vector<crate::line_descriptor::KeyLine>, scale: i32, num_octaves: i32, mask: &core::Mat) -> Result<()> {
+		fn detect(&mut self, image: &impl core::MatTraitConst, keypoints: &mut core::Vector<crate::line_descriptor::KeyLine>, scale: i32, num_octaves: i32, mask: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_line_descriptor_LSDDetector_detect_const_MatR_vectorLKeyLineGR_int_int_const_MatR(self.as_raw_mut_LSDDetector(), image.as_raw_Mat(), keypoints.as_raw_mut_VectorOfKeyLine(), scale, num_octaves, mask.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1486,7 +1496,7 @@ pub mod line_descriptor {
 		/// This alternative version of [LSDDetectorTrait::detect] function uses the following default values for its arguments:
 		/// * mask: Mat()
 		#[inline]
-		fn detect_def(&mut self, image: &core::Mat, keypoints: &mut core::Vector<crate::line_descriptor::KeyLine>, scale: i32, num_octaves: i32) -> Result<()> {
+		fn detect_def(&mut self, image: &impl core::MatTraitConst, keypoints: &mut core::Vector<crate::line_descriptor::KeyLine>, scale: i32, num_octaves: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_line_descriptor_LSDDetector_detect_const_MatR_vectorLKeyLineGR_int_int(self.as_raw_mut_LSDDetector(), image.as_raw_Mat(), keypoints.as_raw_mut_VectorOfKeyLine(), scale, num_octaves, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1519,6 +1529,8 @@ pub mod line_descriptor {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { LSDDetector, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::line_descriptor::LSDDetectorTraitConst for LSDDetector {
 		#[inline] fn as_raw_LSDDetector(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1526,6 +1538,8 @@ pub mod line_descriptor {
 	impl crate::line_descriptor::LSDDetectorTrait for LSDDetector {
 		#[inline] fn as_raw_mut_LSDDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { LSDDetector, crate::line_descriptor::LSDDetectorTraitConst, as_raw_LSDDetector, crate::line_descriptor::LSDDetectorTrait, as_raw_mut_LSDDetector }
 	
 	impl LSDDetector {
 		#[inline]
@@ -1541,7 +1555,7 @@ pub mod line_descriptor {
 		#[inline]
 		pub fn new(_params: crate::line_descriptor::LSDParam) -> Result<crate::line_descriptor::LSDDetector> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_line_descriptor_LSDDetector_LSDDetector_LSDParam(_params.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_line_descriptor_LSDDetector_LSDDetector_LSDParam(&_params, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::line_descriptor::LSDDetector::opencv_from_extern(ret) };
@@ -1562,7 +1576,7 @@ pub mod line_descriptor {
 		#[inline]
 		pub fn create_lsd_detector_with_params(params: crate::line_descriptor::LSDParam) -> Result<core::Ptr<crate::line_descriptor::LSDDetector>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_line_descriptor_LSDDetector_createLSDDetector_LSDParam(params.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_line_descriptor_LSDDetector_createLSDDetector_LSDParam(&params, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::line_descriptor::LSDDetector>::opencv_from_extern(ret) };

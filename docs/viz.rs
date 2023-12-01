@@ -147,7 +147,7 @@ pub mod viz {
 	/// * mesh: Input mesh.
 	/// * normals: Normals at very point in the mesh of type CV_64FC3.
 	#[inline]
-	pub fn compute_normals(mesh: &crate::viz::Mesh, normals: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn compute_normals(mesh: &impl crate::viz::MeshTraitConst, normals: &mut impl ToOutputArray) -> Result<()> {
 		output_array_arg!(normals);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_computeNormals_const_MeshR_const__OutputArrayR(mesh.as_raw_Mesh(), normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
@@ -183,7 +183,7 @@ pub mod viz {
 	/// This alternative version of [imshow] function uses the following default values for its arguments:
 	/// * window_size: Size(-1,-1)
 	#[inline]
-	pub fn imshow_def(window_name: &str, image: &impl core::ToInputArray) -> Result<crate::viz::Viz3d> {
+	pub fn imshow_def(window_name: &str, image: &impl ToInputArray) -> Result<crate::viz::Viz3d> {
 		extern_container_arg!(window_name);
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
@@ -199,7 +199,7 @@ pub mod viz {
 	/// ## C++ default parameters
 	/// * window_size: Size(-1,-1)
 	#[inline]
-	pub fn imshow(window_name: &str, image: &impl core::ToInputArray, window_size: core::Size) -> Result<crate::viz::Viz3d> {
+	pub fn imshow(window_name: &str, image: &impl ToInputArray, window_size: core::Size) -> Result<crate::viz::Viz3d> {
 		extern_container_arg!(window_name);
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
@@ -314,7 +314,7 @@ pub mod viz {
 	/// * colors: noArray()
 	/// * normals: noArray()
 	#[inline]
-	pub fn read_cloud(file: &str, colors: &mut impl core::ToOutputArray, normals: &mut impl core::ToOutputArray) -> Result<core::Mat> {
+	pub fn read_cloud(file: &str, colors: &mut impl ToOutputArray, normals: &mut impl ToOutputArray) -> Result<core::Mat> {
 		extern_container_arg!(file);
 		output_array_arg!(colors);
 		output_array_arg!(normals);
@@ -394,7 +394,7 @@ pub mod viz {
 	/// * end: INT_MAX
 	/// * tag: "pose"
 	#[inline]
-	pub fn read_trajectory_def(traj: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn read_trajectory_def(traj: &mut impl ToOutputArray) -> Result<()> {
 		output_array_arg!(traj);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_readTrajectory_const__OutputArrayR(traj.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
@@ -421,7 +421,7 @@ pub mod viz {
 	/// * end: INT_MAX
 	/// * tag: "pose"
 	#[inline]
-	pub fn read_trajectory(traj: &mut impl core::ToOutputArray, files_format: &str, start: i32, end: i32, tag: &str) -> Result<()> {
+	pub fn read_trajectory(traj: &mut impl ToOutputArray, files_format: &str, start: i32, end: i32, tag: &str) -> Result<()> {
 		output_array_arg!(traj);
 		extern_container_arg!(files_format);
 		extern_container_arg!(tag);
@@ -456,7 +456,7 @@ pub mod viz {
 	/// * normals: noArray()
 	/// * binary: false
 	#[inline]
-	pub fn write_cloud_def(file: &str, cloud: &impl core::ToInputArray) -> Result<()> {
+	pub fn write_cloud_def(file: &str, cloud: &impl ToInputArray) -> Result<()> {
 		extern_container_arg!(file);
 		input_array_arg!(cloud);
 		return_send!(via ocvrs_return);
@@ -479,7 +479,7 @@ pub mod viz {
 	/// * normals: noArray()
 	/// * binary: false
 	#[inline]
-	pub fn write_cloud(file: &str, cloud: &impl core::ToInputArray, colors: &impl core::ToInputArray, normals: &impl core::ToInputArray, binary: bool) -> Result<()> {
+	pub fn write_cloud(file: &str, cloud: &impl ToInputArray, colors: &impl ToInputArray, normals: &impl ToInputArray, binary: bool) -> Result<()> {
 		extern_container_arg!(file);
 		input_array_arg!(cloud);
 		input_array_arg!(colors);
@@ -544,7 +544,7 @@ pub mod viz {
 	/// * start: 0
 	/// * tag: "pose"
 	#[inline]
-	pub fn write_trajectory_def(traj: &impl core::ToInputArray) -> Result<()> {
+	pub fn write_trajectory_def(traj: &impl ToInputArray) -> Result<()> {
 		input_array_arg!(traj);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_viz_writeTrajectory_const__InputArrayR(traj.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -569,7 +569,7 @@ pub mod viz {
 	/// * start: 0
 	/// * tag: "pose"
 	#[inline]
-	pub fn write_trajectory(traj: &impl core::ToInputArray, files_format: &str, start: i32, tag: &str) -> Result<()> {
+	pub fn write_trajectory(traj: &impl ToInputArray, files_format: &str, start: i32, tag: &str) -> Result<()> {
 		input_array_arg!(traj);
 		extern_container_arg!(files_format);
 		extern_container_arg!(tag);
@@ -705,6 +705,8 @@ pub mod viz {
 	impl crate::viz::CameraTrait for Camera {
 		#[inline] fn as_raw_mut_Camera(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { Camera, crate::viz::CameraTraitConst, as_raw_Camera, crate::viz::CameraTrait, as_raw_mut_Camera }
 	
 	impl Camera {
 		/// Constructs a Camera.
@@ -876,6 +878,8 @@ pub mod viz {
 	impl crate::viz::ColorTrait for Color {
 		#[inline] fn as_raw_mut_Color(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { Color, crate::viz::ColorTraitConst, as_raw_Color, crate::viz::ColorTrait, as_raw_mut_Color }
 	
 	impl Color {
 		/// ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1369,6 +1373,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_KeyboardEvent(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { KeyboardEvent, crate::viz::KeyboardEventTraitConst, as_raw_KeyboardEvent, crate::viz::KeyboardEventTrait, as_raw_mut_KeyboardEvent }
+	
 	impl KeyboardEvent {
 		/// Constructs a KeyboardEvent.
 		/// 
@@ -1461,41 +1467,41 @@ pub mod viz {
 	
 		/// point coordinates of type CV_32FC3 or CV_64FC3 with only 1 row
 		#[inline]
-		fn set_cloud(&mut self, val: core::Mat) {
+		fn set_cloud(&mut self, val: impl core::MatTraitConst) {
 			let ret = unsafe { sys::cv_viz_Mesh_propCloud_const_Mat(self.as_raw_mut_Mesh(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// point color of type CV_8UC3 or CV_8UC4 with only 1 row
 		#[inline]
-		fn set_colors(&mut self, val: core::Mat) {
+		fn set_colors(&mut self, val: impl core::MatTraitConst) {
 			let ret = unsafe { sys::cv_viz_Mesh_propColors_const_Mat(self.as_raw_mut_Mesh(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// point normals of type CV_32FC3, CV_32FC4, CV_64FC3 or CV_64FC4 with only 1 row
 		#[inline]
-		fn set_normals(&mut self, val: core::Mat) {
+		fn set_normals(&mut self, val: impl core::MatTraitConst) {
 			let ret = unsafe { sys::cv_viz_Mesh_propNormals_const_Mat(self.as_raw_mut_Mesh(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// CV_32SC1 with only 1 row
 		#[inline]
-		fn set_polygons(&mut self, val: core::Mat) {
+		fn set_polygons(&mut self, val: impl core::MatTraitConst) {
 			let ret = unsafe { sys::cv_viz_Mesh_propPolygons_const_Mat(self.as_raw_mut_Mesh(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_texture(&mut self, val: core::Mat) {
+		fn set_texture(&mut self, val: impl core::MatTraitConst) {
 			let ret = unsafe { sys::cv_viz_Mesh_propTexture_const_Mat(self.as_raw_mut_Mesh(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// CV_32FC2 or CV_64FC2 with only 1 row
 		#[inline]
-		fn set_tcoords(&mut self, val: core::Mat) {
+		fn set_tcoords(&mut self, val: impl core::MatTraitConst) {
 			let ret = unsafe { sys::cv_viz_Mesh_propTcoords_const_Mat(self.as_raw_mut_Mesh(), val.as_raw_Mat()) };
 			ret
 		}
@@ -1525,6 +1531,8 @@ pub mod viz {
 	impl crate::viz::MeshTrait for Mesh {
 		#[inline] fn as_raw_mut_Mesh(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { Mesh, crate::viz::MeshTraitConst, as_raw_Mesh, crate::viz::MeshTrait, as_raw_mut_Mesh }
 	
 	impl Mesh {
 		#[inline]
@@ -1661,7 +1669,7 @@ pub mod viz {
 		
 		#[inline]
 		fn set_pointer(&mut self, val: core::Point) {
-			let ret = unsafe { sys::cv_viz_MouseEvent_propPointer_const_Point(self.as_raw_mut_MouseEvent(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_viz_MouseEvent_propPointer_const_Point(self.as_raw_mut_MouseEvent(), &val) };
 			ret
 		}
 		
@@ -1697,6 +1705,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_MouseEvent(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { MouseEvent, crate::viz::MouseEventTraitConst, as_raw_MouseEvent, crate::viz::MouseEventTrait, as_raw_mut_MouseEvent }
+	
 	impl MouseEvent {
 		/// Constructs a MouseEvent.
 		/// 
@@ -1710,7 +1720,7 @@ pub mod viz {
 		#[inline]
 		pub fn new(typ: crate::viz::MouseEvent_Type, button: crate::viz::MouseEvent_MouseButton, pointer: core::Point, modifiers: i32) -> Result<crate::viz::MouseEvent> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_MouseEvent_MouseEvent_const_TypeR_const_MouseButtonR_const_PointR_int(&typ, &button, &pointer, modifiers, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_viz_MouseEvent_MouseEvent_const_TypeR_const_MouseButtonR_const_PointR_int(typ, button, &pointer, modifiers, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::viz::MouseEvent::opencv_from_extern(ret) };
@@ -1838,7 +1848,7 @@ pub mod viz {
 		fn as_raw_mut_Viz3d(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn set(&mut self, unnamed: &crate::viz::Viz3d) -> Result<()> {
+		fn set(&mut self, unnamed: &impl crate::viz::Viz3dTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_Viz3d_operatorST_const_Viz3dR(self.as_raw_mut_Viz3d(), unnamed.as_raw_Viz3d(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1855,7 +1865,7 @@ pub mod viz {
 		/// ## C++ default parameters
 		/// * pose: Affine3d::Identity()
 		#[inline]
-		fn show_widget(&mut self, id: &str, widget: &crate::viz::Widget, pose: core::Affine3d) -> Result<()> {
+		fn show_widget(&mut self, id: &str, widget: &impl crate::viz::WidgetTraitConst, pose: core::Affine3d) -> Result<()> {
 			extern_container_arg!(id);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_Viz3d_showWidget_const_StringR_const_WidgetR_const_Affine3dR(self.as_raw_mut_Viz3d(), id.opencv_as_extern(), widget.as_raw_Widget(), &pose, ocvrs_return.as_mut_ptr()) };
@@ -1874,7 +1884,7 @@ pub mod viz {
 		/// This alternative version of [Viz3dTrait::show_widget] function uses the following default values for its arguments:
 		/// * pose: Affine3d::Identity()
 		#[inline]
-		fn show_widget_def(&mut self, id: &str, widget: &crate::viz::Widget) -> Result<()> {
+		fn show_widget_def(&mut self, id: &str, widget: &impl crate::viz::WidgetTraitConst) -> Result<()> {
 			extern_container_arg!(id);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_Viz3d_showWidget_const_StringR_const_WidgetR(self.as_raw_mut_Viz3d(), id.opencv_as_extern(), widget.as_raw_Widget(), ocvrs_return.as_mut_ptr()) };
@@ -1916,7 +1926,7 @@ pub mod viz {
 		/// ## C++ default parameters
 		/// * window_size: Size(-1,-1)
 		#[inline]
-		fn show_image(&mut self, image: &impl core::ToInputArray, window_size: core::Size) -> Result<()> {
+		fn show_image(&mut self, image: &impl ToInputArray, window_size: core::Size) -> Result<()> {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_Viz3d_showImage_const__InputArrayR_const_SizeR(self.as_raw_mut_Viz3d(), image.as_raw__InputArray(), &window_size, ocvrs_return.as_mut_ptr()) };
@@ -1935,7 +1945,7 @@ pub mod viz {
 		/// This alternative version of [Viz3dTrait::show_image] function uses the following default values for its arguments:
 		/// * window_size: Size(-1,-1)
 		#[inline]
-		fn show_image_def(&mut self, image: &impl core::ToInputArray) -> Result<()> {
+		fn show_image_def(&mut self, image: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_Viz3d_showImage_const__InputArrayR(self.as_raw_mut_Viz3d(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -1978,7 +1988,7 @@ pub mod viz {
 		/// ## Parameters
 		/// * camera: Camera object wrapping intrinsic parameters.
 		#[inline]
-		fn set_camera(&mut self, camera: &crate::viz::Camera) -> Result<()> {
+		fn set_camera(&mut self, camera: &impl crate::viz::CameraTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_Viz3d_setCamera_const_CameraR(self.as_raw_mut_Viz3d(), camera.as_raw_Camera(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2130,7 +2140,7 @@ pub mod viz {
 		/// * color: Color::black()
 		/// * color2: Color::not_set()
 		#[inline]
-		fn set_background_color(&mut self, color: &crate::viz::Viz3d_Color, color2: &crate::viz::Viz3d_Color) -> Result<()> {
+		fn set_background_color(&mut self, color: &impl crate::viz::ColorTraitConst, color2: &impl crate::viz::ColorTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_Viz3d_setBackgroundColor_const_ColorR_const_ColorR(self.as_raw_mut_Viz3d(), color.as_raw_Color(), color2.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2156,7 +2166,7 @@ pub mod viz {
 		/// ## C++ default parameters
 		/// * image: noArray()
 		#[inline]
-		fn set_background_texture(&mut self, image: &impl core::ToInputArray) -> Result<()> {
+		fn set_background_texture(&mut self, image: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_Viz3d_setBackgroundTexture_const__InputArrayR(self.as_raw_mut_Viz3d(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -2270,7 +2280,7 @@ pub mod viz {
 		/// * ambient_color: Color::black()
 		/// * specular_color: Color::white()
 		#[inline]
-		fn add_light(&mut self, position: core::Vec3d, focal_point: core::Vec3d, color: &crate::viz::Viz3d_Color, diffuse_color: &crate::viz::Viz3d_Color, ambient_color: &crate::viz::Viz3d_Color, specular_color: &crate::viz::Viz3d_Color) -> Result<()> {
+		fn add_light(&mut self, position: core::Vec3d, focal_point: core::Vec3d, color: &impl crate::viz::ColorTraitConst, diffuse_color: &impl crate::viz::ColorTraitConst, ambient_color: &impl crate::viz::ColorTraitConst, specular_color: &impl crate::viz::ColorTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_Viz3d_addLight_const_Vec3dR_const_Vec3dR_const_ColorR_const_ColorR_const_ColorR_const_ColorR(self.as_raw_mut_Viz3d(), &position, &focal_point, color.as_raw_Color(), diffuse_color.as_raw_Color(), ambient_color.as_raw_Color(), specular_color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2488,6 +2498,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Viz3d(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Viz3d, crate::viz::Viz3dTraitConst, as_raw_Viz3d, crate::viz::Viz3dTrait, as_raw_mut_Viz3d }
+	
 	impl Viz3d {
 		/// The constructors.
 		/// 
@@ -2526,7 +2538,7 @@ pub mod viz {
 		}
 		
 		#[inline]
-		pub fn copy(unnamed: &crate::viz::Viz3d) -> Result<crate::viz::Viz3d> {
+		pub fn copy(unnamed: &impl crate::viz::Viz3dTraitConst) -> Result<crate::viz::Viz3d> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_Viz3d_Viz3d_const_Viz3dR(unnamed.as_raw_Viz3d(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2581,6 +2593,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WArrow, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+	
 	impl crate::viz::Widget3DTraitConst for WArrow {
 		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2589,6 +2603,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WArrow, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+	
 	impl crate::viz::WArrowTraitConst for WArrow {
 		#[inline] fn as_raw_WArrow(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2596,6 +2612,8 @@ pub mod viz {
 	impl crate::viz::WArrowTrait for WArrow {
 		#[inline] fn as_raw_mut_WArrow(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { WArrow, crate::viz::WArrowTraitConst, as_raw_WArrow, crate::viz::WArrowTrait, as_raw_mut_WArrow }
 	
 	impl WArrow {
 		/// Constructs an WArrow.
@@ -2613,7 +2631,7 @@ pub mod viz {
 		/// * thickness: 0.03
 		/// * color: Color::white()
 		#[inline]
-		pub fn new(pt1: core::Point3d, pt2: core::Point3d, thickness: f64, color: &crate::viz::Color) -> Result<crate::viz::WArrow> {
+		pub fn new(pt1: core::Point3d, pt2: core::Point3d, thickness: f64, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WArrow> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WArrow_WArrow_const_Point3dR_const_Point3dR_double_const_ColorR(&pt1, &pt2, thickness, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2697,6 +2715,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WCameraPosition, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+	
 	impl crate::viz::Widget3DTraitConst for WCameraPosition {
 		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2705,6 +2725,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WCameraPosition, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+	
 	impl crate::viz::WCameraPositionTraitConst for WCameraPosition {
 		#[inline] fn as_raw_WCameraPosition(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2712,6 +2734,8 @@ pub mod viz {
 	impl crate::viz::WCameraPositionTrait for WCameraPosition {
 		#[inline] fn as_raw_mut_WCameraPosition(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { WCameraPosition, crate::viz::WCameraPositionTraitConst, as_raw_WCameraPosition, crate::viz::WCameraPositionTrait, as_raw_mut_WCameraPosition }
 	
 	impl WCameraPosition {
 		/// Creates camera coordinate frame at the origin.
@@ -2761,7 +2785,7 @@ pub mod viz {
 		/// * scale: 1.0
 		/// * color: Color::white()
 		#[inline]
-		pub fn new_1(k: core::Matx33d, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCameraPosition> {
+		pub fn new_1(k: core::Matx33d, scale: f64, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WCameraPosition> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Matx33dR_double_const_ColorR(&k, scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2808,7 +2832,7 @@ pub mod viz {
 		/// * scale: 1.0
 		/// * color: Color::white()
 		#[inline]
-		pub fn new_2(fov: core::Vec2d, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCameraPosition> {
+		pub fn new_2(fov: core::Vec2d, scale: f64, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WCameraPosition> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Vec2dR_double_const_ColorR(&fov, scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2858,7 +2882,7 @@ pub mod viz {
 		/// * scale: 1.0
 		/// * color: Color::white()
 		#[inline]
-		pub fn new_3(k: core::Matx33d, image: &impl core::ToInputArray, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCameraPosition> {
+		pub fn new_3(k: core::Matx33d, image: &impl ToInputArray, scale: f64, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WCameraPosition> {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Matx33dR_const__InputArrayR_double_const_ColorR(&k, image.as_raw__InputArray(), scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
@@ -2886,7 +2910,7 @@ pub mod viz {
 		/// * scale: 1.0
 		/// * color: Color::white()
 		#[inline]
-		pub fn new_def_3(k: core::Matx33d, image: &impl core::ToInputArray) -> Result<crate::viz::WCameraPosition> {
+		pub fn new_def_3(k: core::Matx33d, image: &impl ToInputArray) -> Result<crate::viz::WCameraPosition> {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Matx33dR_const__InputArrayR(&k, image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -2913,7 +2937,7 @@ pub mod viz {
 		/// * scale: 1.0
 		/// * color: Color::white()
 		#[inline]
-		pub fn new_4(fov: core::Vec2d, image: &impl core::ToInputArray, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCameraPosition> {
+		pub fn new_4(fov: core::Vec2d, image: &impl ToInputArray, scale: f64, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WCameraPosition> {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Vec2dR_const__InputArrayR_double_const_ColorR(&fov, image.as_raw__InputArray(), scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
@@ -2941,7 +2965,7 @@ pub mod viz {
 		/// * scale: 1.0
 		/// * color: Color::white()
 		#[inline]
-		pub fn new_def_4(fov: core::Vec2d, image: &impl core::ToInputArray) -> Result<crate::viz::WCameraPosition> {
+		pub fn new_def_4(fov: core::Vec2d, image: &impl ToInputArray) -> Result<crate::viz::WCameraPosition> {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Vec2dR_const__InputArrayR(&fov, image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -3001,6 +3025,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WCircle, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+	
 	impl crate::viz::Widget3DTraitConst for WCircle {
 		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3009,6 +3035,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WCircle, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+	
 	impl crate::viz::WCircleTraitConst for WCircle {
 		#[inline] fn as_raw_WCircle(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3016,6 +3044,8 @@ pub mod viz {
 	impl crate::viz::WCircleTrait for WCircle {
 		#[inline] fn as_raw_mut_WCircle(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { WCircle, crate::viz::WCircleTraitConst, as_raw_WCircle, crate::viz::WCircleTrait, as_raw_mut_WCircle }
 	
 	impl WCircle {
 		/// Constructs default planar circle centered at origin with plane normal along z-axis
@@ -3029,7 +3059,7 @@ pub mod viz {
 		/// * thickness: 0.01
 		/// * color: Color::white()
 		#[inline]
-		pub fn new(radius: f64, thickness: f64, color: &crate::viz::Color) -> Result<crate::viz::WCircle> {
+		pub fn new(radius: f64, thickness: f64, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WCircle> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WCircle_WCircle_double_double_const_ColorR(radius, thickness, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3072,7 +3102,7 @@ pub mod viz {
 		/// * thickness: 0.01
 		/// * color: Color::white()
 		#[inline]
-		pub fn new_1(radius: f64, center: core::Point3d, normal: core::Vec3d, thickness: f64, color: &crate::viz::Color) -> Result<crate::viz::WCircle> {
+		pub fn new_1(radius: f64, center: core::Point3d, normal: core::Vec3d, thickness: f64, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WCircle> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WCircle_WCircle_double_const_Point3dR_const_Vec3dR_double_const_ColorR(radius, &center, &normal, thickness, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3157,6 +3187,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WCloud, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+	
 	impl crate::viz::Widget3DTraitConst for WCloud {
 		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3165,6 +3197,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WCloud, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+	
 	impl crate::viz::WCloudTraitConst for WCloud {
 		#[inline] fn as_raw_WCloud(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3172,6 +3206,8 @@ pub mod viz {
 	impl crate::viz::WCloudTrait for WCloud {
 		#[inline] fn as_raw_mut_WCloud(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { WCloud, crate::viz::WCloudTraitConst, as_raw_WCloud, crate::viz::WCloudTrait, as_raw_mut_WCloud }
 	
 	impl WCloud {
 		/// Constructs a WCloud.
@@ -3182,7 +3218,7 @@ pub mod viz {
 		/// 
 		/// Points in the cloud belong to mask when they are set to (NaN, NaN, NaN).
 		#[inline]
-		pub fn new(cloud: &impl core::ToInputArray, colors: &impl core::ToInputArray) -> Result<crate::viz::WCloud> {
+		pub fn new(cloud: &impl ToInputArray, colors: &impl ToInputArray) -> Result<crate::viz::WCloud> {
 			input_array_arg!(cloud);
 			input_array_arg!(colors);
 			return_send!(via ocvrs_return);
@@ -3203,7 +3239,7 @@ pub mod viz {
 		/// ## C++ default parameters
 		/// * color: Color::white()
 		#[inline]
-		pub fn new_1(cloud: &impl core::ToInputArray, color: &crate::viz::Color) -> Result<crate::viz::WCloud> {
+		pub fn new_1(cloud: &impl ToInputArray, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WCloud> {
 			input_array_arg!(cloud);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WCloud_WCloud_const__InputArrayR_const_ColorR(cloud.as_raw__InputArray(), color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
@@ -3224,7 +3260,7 @@ pub mod viz {
 		/// This alternative version of [new] function uses the following default values for its arguments:
 		/// * color: Color::white()
 		#[inline]
-		pub fn new_def(cloud: &impl core::ToInputArray) -> Result<crate::viz::WCloud> {
+		pub fn new_def(cloud: &impl ToInputArray) -> Result<crate::viz::WCloud> {
 			input_array_arg!(cloud);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WCloud_WCloud_const__InputArrayR(cloud.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -3242,7 +3278,7 @@ pub mod viz {
 		/// 
 		/// Points in the cloud belong to mask when they are set to (NaN, NaN, NaN).
 		#[inline]
-		pub fn new_2(cloud: &impl core::ToInputArray, colors: &impl core::ToInputArray, normals: &impl core::ToInputArray) -> Result<crate::viz::WCloud> {
+		pub fn new_2(cloud: &impl ToInputArray, colors: &impl ToInputArray, normals: &impl ToInputArray) -> Result<crate::viz::WCloud> {
 			input_array_arg!(cloud);
 			input_array_arg!(colors);
 			input_array_arg!(normals);
@@ -3263,7 +3299,7 @@ pub mod viz {
 		/// Size and type should match with the cloud parameter.
 		/// Points in the cloud belong to mask when they are set to (NaN, NaN, NaN).
 		#[inline]
-		pub fn new_3(cloud: &impl core::ToInputArray, color: &crate::viz::Color, normals: &impl core::ToInputArray) -> Result<crate::viz::WCloud> {
+		pub fn new_3(cloud: &impl ToInputArray, color: &impl crate::viz::ColorTraitConst, normals: &impl ToInputArray) -> Result<crate::viz::WCloud> {
 			input_array_arg!(cloud);
 			input_array_arg!(normals);
 			return_send!(via ocvrs_return);
@@ -3308,7 +3344,7 @@ pub mod viz {
 		/// ## C++ default parameters
 		/// * pose: Affine3d::Identity()
 		#[inline]
-		fn add_cloud(&mut self, cloud: &impl core::ToInputArray, colors: &impl core::ToInputArray, pose: core::Affine3d) -> Result<()> {
+		fn add_cloud(&mut self, cloud: &impl ToInputArray, colors: &impl ToInputArray, pose: core::Affine3d) -> Result<()> {
 			input_array_arg!(cloud);
 			input_array_arg!(colors);
 			return_send!(via ocvrs_return);
@@ -3329,7 +3365,7 @@ pub mod viz {
 		/// This alternative version of [WCloudCollectionTrait::add_cloud] function uses the following default values for its arguments:
 		/// * pose: Affine3d::Identity()
 		#[inline]
-		fn add_cloud_def(&mut self, cloud: &impl core::ToInputArray, colors: &impl core::ToInputArray) -> Result<()> {
+		fn add_cloud_def(&mut self, cloud: &impl ToInputArray, colors: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(cloud);
 			input_array_arg!(colors);
 			return_send!(via ocvrs_return);
@@ -3350,7 +3386,7 @@ pub mod viz {
 		/// * color: Color::white()
 		/// * pose: Affine3d::Identity()
 		#[inline]
-		fn add_cloud_1(&mut self, cloud: &impl core::ToInputArray, color: &crate::viz::Color, pose: core::Affine3d) -> Result<()> {
+		fn add_cloud_1(&mut self, cloud: &impl ToInputArray, color: &impl crate::viz::ColorTraitConst, pose: core::Affine3d) -> Result<()> {
 			input_array_arg!(cloud);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WCloudCollection_addCloud_const__InputArrayR_const_ColorR_const_Affine3dR(self.as_raw_mut_WCloudCollection(), cloud.as_raw__InputArray(), color.as_raw_Color(), &pose, ocvrs_return.as_mut_ptr()) };
@@ -3371,7 +3407,7 @@ pub mod viz {
 		/// * color: Color::white()
 		/// * pose: Affine3d::Identity()
 		#[inline]
-		fn add_cloud_def_1(&mut self, cloud: &impl core::ToInputArray) -> Result<()> {
+		fn add_cloud_def_1(&mut self, cloud: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(cloud);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WCloudCollection_addCloud_const__InputArrayR(self.as_raw_mut_WCloudCollection(), cloud.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -3420,6 +3456,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WCloudCollection, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+	
 	impl crate::viz::Widget3DTraitConst for WCloudCollection {
 		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3428,6 +3466,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WCloudCollection, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+	
 	impl crate::viz::WCloudCollectionTraitConst for WCloudCollection {
 		#[inline] fn as_raw_WCloudCollection(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3435,6 +3475,8 @@ pub mod viz {
 	impl crate::viz::WCloudCollectionTrait for WCloudCollection {
 		#[inline] fn as_raw_mut_WCloudCollection(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { WCloudCollection, crate::viz::WCloudCollectionTraitConst, as_raw_WCloudCollection, crate::viz::WCloudCollectionTrait, as_raw_mut_WCloudCollection }
 	
 	impl WCloudCollection {
 		#[inline]
@@ -3497,6 +3539,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WCloudNormals, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+	
 	impl crate::viz::Widget3DTraitConst for WCloudNormals {
 		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3505,6 +3549,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WCloudNormals, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+	
 	impl crate::viz::WCloudNormalsTraitConst for WCloudNormals {
 		#[inline] fn as_raw_WCloudNormals(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3512,6 +3558,8 @@ pub mod viz {
 	impl crate::viz::WCloudNormalsTrait for WCloudNormals {
 		#[inline] fn as_raw_mut_WCloudNormals(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { WCloudNormals, crate::viz::WCloudNormalsTraitConst, as_raw_WCloudNormals, crate::viz::WCloudNormalsTrait, as_raw_mut_WCloudNormals }
 	
 	impl WCloudNormals {
 		/// Constructs a WCloudNormals.
@@ -3531,7 +3579,7 @@ pub mod viz {
 		/// * scale: 0.1
 		/// * color: Color::white()
 		#[inline]
-		pub fn new(cloud: &impl core::ToInputArray, normals: &impl core::ToInputArray, level: i32, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCloudNormals> {
+		pub fn new(cloud: &impl ToInputArray, normals: &impl ToInputArray, level: i32, scale: f64, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WCloudNormals> {
 			input_array_arg!(cloud);
 			input_array_arg!(normals);
 			return_send!(via ocvrs_return);
@@ -3560,7 +3608,7 @@ pub mod viz {
 		/// * scale: 0.1
 		/// * color: Color::white()
 		#[inline]
-		pub fn new_def(cloud: &impl core::ToInputArray, normals: &impl core::ToInputArray) -> Result<crate::viz::WCloudNormals> {
+		pub fn new_def(cloud: &impl ToInputArray, normals: &impl ToInputArray) -> Result<crate::viz::WCloudNormals> {
 			input_array_arg!(cloud);
 			input_array_arg!(normals);
 			return_send!(via ocvrs_return);
@@ -3621,6 +3669,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WCone, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+	
 	impl crate::viz::Widget3DTraitConst for WCone {
 		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3629,6 +3679,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WCone, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+	
 	impl crate::viz::WConeTraitConst for WCone {
 		#[inline] fn as_raw_WCone(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3636,6 +3688,8 @@ pub mod viz {
 	impl crate::viz::WConeTrait for WCone {
 		#[inline] fn as_raw_mut_WCone(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { WCone, crate::viz::WConeTraitConst, as_raw_WCone, crate::viz::WConeTrait, as_raw_mut_WCone }
 	
 	impl WCone {
 		/// Constructs default cone oriented along x-axis with center of its base located at origin
@@ -3650,7 +3704,7 @@ pub mod viz {
 		/// * resolution: 6
 		/// * color: Color::white()
 		#[inline]
-		pub fn new(length: f64, radius: f64, resolution: i32, color: &crate::viz::Color) -> Result<crate::viz::WCone> {
+		pub fn new(length: f64, radius: f64, resolution: i32, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WCone> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WCone_WCone_double_double_int_const_ColorR(length, radius, resolution, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3694,7 +3748,7 @@ pub mod viz {
 		/// * resolution: 6
 		/// * color: Color::white()
 		#[inline]
-		pub fn new_1(radius: f64, center: core::Point3d, tip: core::Point3d, resolution: i32, color: &crate::viz::Color) -> Result<crate::viz::WCone> {
+		pub fn new_1(radius: f64, center: core::Point3d, tip: core::Point3d, resolution: i32, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WCone> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WCone_WCone_double_const_Point3dR_const_Point3dR_int_const_ColorR(radius, &center, &tip, resolution, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3776,6 +3830,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WCoordinateSystem, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+	
 	impl crate::viz::Widget3DTraitConst for WCoordinateSystem {
 		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3784,6 +3840,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WCoordinateSystem, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+	
 	impl crate::viz::WCoordinateSystemTraitConst for WCoordinateSystem {
 		#[inline] fn as_raw_WCoordinateSystem(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3791,6 +3849,8 @@ pub mod viz {
 	impl crate::viz::WCoordinateSystemTrait for WCoordinateSystem {
 		#[inline] fn as_raw_mut_WCoordinateSystem(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { WCoordinateSystem, crate::viz::WCoordinateSystemTraitConst, as_raw_WCoordinateSystem, crate::viz::WCoordinateSystemTrait, as_raw_mut_WCoordinateSystem }
 	
 	impl WCoordinateSystem {
 		/// Constructs a WCoordinateSystem.
@@ -3878,6 +3938,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WCube, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+	
 	impl crate::viz::Widget3DTraitConst for WCube {
 		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3886,6 +3948,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WCube, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+	
 	impl crate::viz::WCubeTraitConst for WCube {
 		#[inline] fn as_raw_WCube(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3893,6 +3957,8 @@ pub mod viz {
 	impl crate::viz::WCubeTrait for WCube {
 		#[inline] fn as_raw_mut_WCube(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { WCube, crate::viz::WCubeTraitConst, as_raw_WCube, crate::viz::WCubeTrait, as_raw_mut_WCube }
 	
 	impl WCube {
 		/// Constructs a WCube.
@@ -3911,7 +3977,7 @@ pub mod viz {
 		/// * wire_frame: true
 		/// * color: Color::white()
 		#[inline]
-		pub fn new(min_point: core::Point3d, max_point: core::Point3d, wire_frame: bool, color: &crate::viz::Color) -> Result<crate::viz::WCube> {
+		pub fn new(min_point: core::Point3d, max_point: core::Point3d, wire_frame: bool, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WCube> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WCube_WCube_const_Point3dR_const_Point3dR_bool_const_ColorR(&min_point, &max_point, wire_frame, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3996,6 +4062,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WCylinder, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+	
 	impl crate::viz::Widget3DTraitConst for WCylinder {
 		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -4004,6 +4072,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WCylinder, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+	
 	impl crate::viz::WCylinderTraitConst for WCylinder {
 		#[inline] fn as_raw_WCylinder(&self) -> *const c_void { self.as_raw() }
 	}
@@ -4011,6 +4081,8 @@ pub mod viz {
 	impl crate::viz::WCylinderTrait for WCylinder {
 		#[inline] fn as_raw_mut_WCylinder(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { WCylinder, crate::viz::WCylinderTraitConst, as_raw_WCylinder, crate::viz::WCylinderTrait, as_raw_mut_WCylinder }
 	
 	impl WCylinder {
 		/// Constructs a WCylinder.
@@ -4026,7 +4098,7 @@ pub mod viz {
 		/// * numsides: 30
 		/// * color: Color::white()
 		#[inline]
-		pub fn new(axis_point1: core::Point3d, axis_point2: core::Point3d, radius: f64, numsides: i32, color: &crate::viz::Color) -> Result<crate::viz::WCylinder> {
+		pub fn new(axis_point1: core::Point3d, axis_point2: core::Point3d, radius: f64, numsides: i32, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WCylinder> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WCylinder_WCylinder_const_Point3dR_const_Point3dR_double_int_const_ColorR(&axis_point1, &axis_point2, radius, numsides, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4108,6 +4180,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WGrid, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+	
 	impl crate::viz::Widget3DTraitConst for WGrid {
 		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -4116,6 +4190,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WGrid, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+	
 	impl crate::viz::WGridTraitConst for WGrid {
 		#[inline] fn as_raw_WGrid(&self) -> *const c_void { self.as_raw() }
 	}
@@ -4123,6 +4199,8 @@ pub mod viz {
 	impl crate::viz::WGridTrait for WGrid {
 		#[inline] fn as_raw_mut_WGrid(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { WGrid, crate::viz::WGridTraitConst, as_raw_WGrid, crate::viz::WGridTrait, as_raw_mut_WGrid }
 	
 	impl WGrid {
 		/// Constructs a WGrid.
@@ -4137,7 +4215,7 @@ pub mod viz {
 		/// * cells_spacing: Vec2d::all(1.0)
 		/// * color: Color::white()
 		#[inline]
-		pub fn new(cells: core::Vec2i, cells_spacing: core::Vec2d, color: &crate::viz::Color) -> Result<crate::viz::WGrid> {
+		pub fn new(cells: core::Vec2i, cells_spacing: core::Vec2d, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WGrid> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WGrid_WGrid_const_Vec2iR_const_Vec2dR_const_ColorR(&cells, &cells_spacing, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4175,7 +4253,7 @@ pub mod viz {
 		/// * cells_spacing: Vec2d::all(1.0)
 		/// * color: Color::white()
 		#[inline]
-		pub fn new_1(center: core::Point3d, normal: core::Vec3d, new_yaxis: core::Vec3d, cells: core::Vec2i, cells_spacing: core::Vec2d, color: &crate::viz::Color) -> Result<crate::viz::WGrid> {
+		pub fn new_1(center: core::Point3d, normal: core::Vec3d, new_yaxis: core::Vec3d, cells: core::Vec2i, cells_spacing: core::Vec2d, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WGrid> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WGrid_WGrid_const_Point3dR_const_Vec3dR_const_Vec3dR_const_Vec2iR_const_Vec2dR_const_ColorR(&center, &normal, &new_yaxis, &cells, &cells_spacing, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4230,7 +4308,7 @@ pub mod viz {
 		/// ## Parameters
 		/// * image: BGR or Gray-Scale image.
 		#[inline]
-		fn set_image(&mut self, image: &impl core::ToInputArray) -> Result<()> {
+		fn set_image(&mut self, image: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WImage3D_setImage_const__InputArrayR(self.as_raw_mut_WImage3D(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -4278,6 +4356,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WImage3D, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+	
 	impl crate::viz::Widget3DTraitConst for WImage3D {
 		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -4285,6 +4365,8 @@ pub mod viz {
 	impl crate::viz::Widget3DTrait for WImage3D {
 		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { WImage3D, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
 	
 	impl crate::viz::WImage3DTraitConst for WImage3D {
 		#[inline] fn as_raw_WImage3D(&self) -> *const c_void { self.as_raw() }
@@ -4294,6 +4376,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_WImage3D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WImage3D, crate::viz::WImage3DTraitConst, as_raw_WImage3D, crate::viz::WImage3DTrait, as_raw_mut_WImage3D }
+	
 	impl WImage3D {
 		/// Constructs an WImage3D.
 		/// 
@@ -4301,7 +4385,7 @@ pub mod viz {
 		/// * image: BGR or Gray-Scale image.
 		/// * size: Size of the image.
 		#[inline]
-		pub fn new(image: &impl core::ToInputArray, size: core::Size2d) -> Result<crate::viz::WImage3D> {
+		pub fn new(image: &impl ToInputArray, size: core::Size2d) -> Result<crate::viz::WImage3D> {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WImage3D_WImage3D_const__InputArrayR_const_Size2dR(image.as_raw__InputArray(), &size, ocvrs_return.as_mut_ptr()) };
@@ -4320,7 +4404,7 @@ pub mod viz {
 		/// * normal: Normal of the plane that represents the image.
 		/// * up_vector: Determines orientation of the image.
 		#[inline]
-		pub fn new_1(image: &impl core::ToInputArray, size: core::Size2d, center: core::Vec3d, normal: core::Vec3d, up_vector: core::Vec3d) -> Result<crate::viz::WImage3D> {
+		pub fn new_1(image: &impl ToInputArray, size: core::Size2d, center: core::Vec3d, normal: core::Vec3d, up_vector: core::Vec3d) -> Result<crate::viz::WImage3D> {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WImage3D_WImage3D_const__InputArrayR_const_Size2dR_const_Vec3dR_const_Vec3dR_const_Vec3dR(image.as_raw__InputArray(), &size, &center, &normal, &up_vector, ocvrs_return.as_mut_ptr()) };
@@ -4359,7 +4443,7 @@ pub mod viz {
 		/// ## Parameters
 		/// * image: BGR or Gray-Scale image.
 		#[inline]
-		fn set_image(&mut self, image: &impl core::ToInputArray) -> Result<()> {
+		fn set_image(&mut self, image: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WImageOverlay_setImage_const__InputArrayR(self.as_raw_mut_WImageOverlay(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -4394,6 +4478,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WImageOverlay, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+	
 	impl crate::viz::Widget2DTraitConst for WImageOverlay {
 		#[inline] fn as_raw_Widget2D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -4401,6 +4487,8 @@ pub mod viz {
 	impl crate::viz::Widget2DTrait for WImageOverlay {
 		#[inline] fn as_raw_mut_Widget2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { WImageOverlay, crate::viz::Widget2DTraitConst, as_raw_Widget2D, crate::viz::Widget2DTrait, as_raw_mut_Widget2D }
 	
 	impl crate::viz::WImageOverlayTraitConst for WImageOverlay {
 		#[inline] fn as_raw_WImageOverlay(&self) -> *const c_void { self.as_raw() }
@@ -4410,6 +4498,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_WImageOverlay(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WImageOverlay, crate::viz::WImageOverlayTraitConst, as_raw_WImageOverlay, crate::viz::WImageOverlayTrait, as_raw_mut_WImageOverlay }
+	
 	impl WImageOverlay {
 		/// Constructs an WImageOverlay.
 		/// 
@@ -4417,7 +4507,7 @@ pub mod viz {
 		/// * image: BGR or Gray-Scale image.
 		/// * rect: Image is scaled and positioned based on rect.
 		#[inline]
-		pub fn new(image: &impl core::ToInputArray, rect: core::Rect) -> Result<crate::viz::WImageOverlay> {
+		pub fn new(image: &impl ToInputArray, rect: core::Rect) -> Result<crate::viz::WImageOverlay> {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WImageOverlay_WImageOverlay_const__InputArrayR_const_RectR(image.as_raw__InputArray(), &rect, ocvrs_return.as_mut_ptr()) };
@@ -4477,6 +4567,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WLine, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+	
 	impl crate::viz::Widget3DTraitConst for WLine {
 		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -4485,6 +4577,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WLine, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+	
 	impl crate::viz::WLineTraitConst for WLine {
 		#[inline] fn as_raw_WLine(&self) -> *const c_void { self.as_raw() }
 	}
@@ -4492,6 +4586,8 @@ pub mod viz {
 	impl crate::viz::WLineTrait for WLine {
 		#[inline] fn as_raw_mut_WLine(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { WLine, crate::viz::WLineTraitConst, as_raw_WLine, crate::viz::WLineTrait, as_raw_mut_WLine }
 	
 	impl WLine {
 		/// Constructs a WLine.
@@ -4504,7 +4600,7 @@ pub mod viz {
 		/// ## C++ default parameters
 		/// * color: Color::white()
 		#[inline]
-		pub fn new(pt1: core::Point3d, pt2: core::Point3d, color: &crate::viz::Color) -> Result<crate::viz::WLine> {
+		pub fn new(pt1: core::Point3d, pt2: core::Point3d, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WLine> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WLine_WLine_const_Point3dR_const_Point3dR_const_ColorR(&pt1, &pt2, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4590,6 +4686,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WMesh, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+	
 	impl crate::viz::Widget3DTraitConst for WMesh {
 		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -4597,6 +4695,8 @@ pub mod viz {
 	impl crate::viz::Widget3DTrait for WMesh {
 		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { WMesh, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
 	
 	impl crate::viz::WMeshTraitConst for WMesh {
 		#[inline] fn as_raw_WMesh(&self) -> *const c_void { self.as_raw() }
@@ -4606,9 +4706,11 @@ pub mod viz {
 		#[inline] fn as_raw_mut_WMesh(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WMesh, crate::viz::WMeshTraitConst, as_raw_WMesh, crate::viz::WMeshTrait, as_raw_mut_WMesh }
+	
 	impl WMesh {
 		#[inline]
-		pub fn new(mesh: &crate::viz::Mesh) -> Result<crate::viz::WMesh> {
+		pub fn new(mesh: &impl crate::viz::MeshTraitConst) -> Result<crate::viz::WMesh> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WMesh_WMesh_const_MeshR(mesh.as_raw_Mesh(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4621,7 +4723,7 @@ pub mod viz {
 		/// * colors: noArray()
 		/// * normals: noArray()
 		#[inline]
-		pub fn new_1(cloud: &impl core::ToInputArray, polygons: &impl core::ToInputArray, colors: &impl core::ToInputArray, normals: &impl core::ToInputArray) -> Result<crate::viz::WMesh> {
+		pub fn new_1(cloud: &impl ToInputArray, polygons: &impl ToInputArray, colors: &impl ToInputArray, normals: &impl ToInputArray) -> Result<crate::viz::WMesh> {
 			input_array_arg!(cloud);
 			input_array_arg!(polygons);
 			input_array_arg!(colors);
@@ -4639,7 +4741,7 @@ pub mod viz {
 		/// * colors: noArray()
 		/// * normals: noArray()
 		#[inline]
-		pub fn new_def(cloud: &impl core::ToInputArray, polygons: &impl core::ToInputArray) -> Result<crate::viz::WMesh> {
+		pub fn new_def(cloud: &impl ToInputArray, polygons: &impl ToInputArray) -> Result<crate::viz::WMesh> {
 			input_array_arg!(cloud);
 			input_array_arg!(polygons);
 			return_send!(via ocvrs_return);
@@ -4699,6 +4801,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WPaintedCloud, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+	
 	impl crate::viz::Widget3DTraitConst for WPaintedCloud {
 		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -4706,6 +4810,8 @@ pub mod viz {
 	impl crate::viz::Widget3DTrait for WPaintedCloud {
 		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { WPaintedCloud, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
 	
 	impl crate::viz::WPaintedCloudTraitConst for WPaintedCloud {
 		#[inline] fn as_raw_WPaintedCloud(&self) -> *const c_void { self.as_raw() }
@@ -4715,10 +4821,12 @@ pub mod viz {
 		#[inline] fn as_raw_mut_WPaintedCloud(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WPaintedCloud, crate::viz::WPaintedCloudTraitConst, as_raw_WPaintedCloud, crate::viz::WPaintedCloudTrait, as_raw_mut_WPaintedCloud }
+	
 	impl WPaintedCloud {
 		/// Paint cloud with default gradient between cloud bounds points
 		#[inline]
-		pub fn new(cloud: &impl core::ToInputArray) -> Result<crate::viz::WPaintedCloud> {
+		pub fn new(cloud: &impl ToInputArray) -> Result<crate::viz::WPaintedCloud> {
 			input_array_arg!(cloud);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WPaintedCloud_WPaintedCloud_const__InputArrayR(cloud.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -4730,7 +4838,7 @@ pub mod viz {
 		
 		/// Paint cloud with default gradient between given points
 		#[inline]
-		pub fn new_1(cloud: &impl core::ToInputArray, p1: core::Point3d, p2: core::Point3d) -> Result<crate::viz::WPaintedCloud> {
+		pub fn new_1(cloud: &impl ToInputArray, p1: core::Point3d, p2: core::Point3d) -> Result<crate::viz::WPaintedCloud> {
 			input_array_arg!(cloud);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WPaintedCloud_WPaintedCloud_const__InputArrayR_const_Point3dR_const_Point3dR(cloud.as_raw__InputArray(), &p1, &p2, ocvrs_return.as_mut_ptr()) };
@@ -4742,7 +4850,7 @@ pub mod viz {
 		
 		/// Paint cloud with gradient specified by given colors between given points
 		#[inline]
-		pub fn new_2(cloud: &impl core::ToInputArray, p1: core::Point3d, p2: core::Point3d, c1: &crate::viz::Color, c2: crate::viz::Color) -> Result<crate::viz::WPaintedCloud> {
+		pub fn new_2(cloud: &impl ToInputArray, p1: core::Point3d, p2: core::Point3d, c1: &impl crate::viz::ColorTraitConst, c2: impl crate::viz::ColorTraitConst) -> Result<crate::viz::WPaintedCloud> {
 			input_array_arg!(cloud);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WPaintedCloud_WPaintedCloud_const__InputArrayR_const_Point3dR_const_Point3dR_const_ColorR_const_Color(cloud.as_raw__InputArray(), &p1, &p2, c1.as_raw_Color(), c2.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
@@ -4802,6 +4910,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WPlane, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+	
 	impl crate::viz::Widget3DTraitConst for WPlane {
 		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -4810,6 +4920,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WPlane, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+	
 	impl crate::viz::WPlaneTraitConst for WPlane {
 		#[inline] fn as_raw_WPlane(&self) -> *const c_void { self.as_raw() }
 	}
@@ -4817,6 +4929,8 @@ pub mod viz {
 	impl crate::viz::WPlaneTrait for WPlane {
 		#[inline] fn as_raw_mut_WPlane(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { WPlane, crate::viz::WPlaneTraitConst, as_raw_WPlane, crate::viz::WPlaneTrait, as_raw_mut_WPlane }
 	
 	impl WPlane {
 		/// Constructs a default plane with center point at origin and normal oriented along z-axis.
@@ -4829,7 +4943,7 @@ pub mod viz {
 		/// * size: Size2d(1.0,1.0)
 		/// * color: Color::white()
 		#[inline]
-		pub fn new(size: core::Size2d, color: &crate::viz::Color) -> Result<crate::viz::WPlane> {
+		pub fn new(size: core::Size2d, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WPlane> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WPlane_WPlane_const_Size2dR_const_ColorR(&size, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4871,7 +4985,7 @@ pub mod viz {
 		/// * size: Size2d(1.0,1.0)
 		/// * color: Color::white()
 		#[inline]
-		pub fn new_1(center: core::Point3d, normal: core::Vec3d, new_yaxis: core::Vec3d, size: core::Size2d, color: &crate::viz::Color) -> Result<crate::viz::WPlane> {
+		pub fn new_1(center: core::Point3d, normal: core::Vec3d, new_yaxis: core::Vec3d, size: core::Size2d, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WPlane> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WPlane_WPlane_const_Point3dR_const_Vec3dR_const_Vec3dR_const_Size2dR_const_ColorR(&center, &normal, &new_yaxis, &size, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4953,6 +5067,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WPolyLine, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+	
 	impl crate::viz::Widget3DTraitConst for WPolyLine {
 		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -4960,6 +5076,8 @@ pub mod viz {
 	impl crate::viz::Widget3DTrait for WPolyLine {
 		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { WPolyLine, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
 	
 	impl crate::viz::WPolyLineTraitConst for WPolyLine {
 		#[inline] fn as_raw_WPolyLine(&self) -> *const c_void { self.as_raw() }
@@ -4969,9 +5087,11 @@ pub mod viz {
 		#[inline] fn as_raw_mut_WPolyLine(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WPolyLine, crate::viz::WPolyLineTraitConst, as_raw_WPolyLine, crate::viz::WPolyLineTrait, as_raw_mut_WPolyLine }
+	
 	impl WPolyLine {
 		#[inline]
-		pub fn new(points: &impl core::ToInputArray, colors: &impl core::ToInputArray) -> Result<crate::viz::WPolyLine> {
+		pub fn new(points: &impl ToInputArray, colors: &impl ToInputArray) -> Result<crate::viz::WPolyLine> {
 			input_array_arg!(points);
 			input_array_arg!(colors);
 			return_send!(via ocvrs_return);
@@ -4991,7 +5111,7 @@ pub mod viz {
 		/// ## C++ default parameters
 		/// * color: Color::white()
 		#[inline]
-		pub fn new_1(points: &impl core::ToInputArray, color: &crate::viz::Color) -> Result<crate::viz::WPolyLine> {
+		pub fn new_1(points: &impl ToInputArray, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WPolyLine> {
 			input_array_arg!(points);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WPolyLine_WPolyLine_const__InputArrayR_const_ColorR(points.as_raw__InputArray(), color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
@@ -5011,7 +5131,7 @@ pub mod viz {
 		/// This alternative version of [new] function uses the following default values for its arguments:
 		/// * color: Color::white()
 		#[inline]
-		pub fn new_def(points: &impl core::ToInputArray) -> Result<crate::viz::WPolyLine> {
+		pub fn new_def(points: &impl ToInputArray) -> Result<crate::viz::WPolyLine> {
 			input_array_arg!(points);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WPolyLine_WPolyLine_const__InputArrayR(points.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -5071,6 +5191,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WSphere, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+	
 	impl crate::viz::Widget3DTraitConst for WSphere {
 		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -5079,6 +5201,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WSphere, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+	
 	impl crate::viz::WSphereTraitConst for WSphere {
 		#[inline] fn as_raw_WSphere(&self) -> *const c_void { self.as_raw() }
 	}
@@ -5086,6 +5210,8 @@ pub mod viz {
 	impl crate::viz::WSphereTrait for WSphere {
 		#[inline] fn as_raw_mut_WSphere(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { WSphere, crate::viz::WSphereTraitConst, as_raw_WSphere, crate::viz::WSphereTrait, as_raw_mut_WSphere }
 	
 	impl WSphere {
 		/// Constructs a WSphere.
@@ -5100,7 +5226,7 @@ pub mod viz {
 		/// * sphere_resolution: 10
 		/// * color: Color::white()
 		#[inline]
-		pub fn new(center: core::Point3d, radius: f64, sphere_resolution: i32, color: &crate::viz::Color) -> Result<crate::viz::WSphere> {
+		pub fn new(center: core::Point3d, radius: f64, sphere_resolution: i32, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WSphere> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WSphere_WSphere_const_Point3dR_double_int_const_ColorR(&center, radius, sphere_resolution, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -5206,6 +5332,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WText, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+	
 	impl crate::viz::Widget2DTraitConst for WText {
 		#[inline] fn as_raw_Widget2D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -5214,6 +5342,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WText, crate::viz::Widget2DTraitConst, as_raw_Widget2D, crate::viz::Widget2DTrait, as_raw_mut_Widget2D }
+	
 	impl crate::viz::WTextTraitConst for WText {
 		#[inline] fn as_raw_WText(&self) -> *const c_void { self.as_raw() }
 	}
@@ -5221,6 +5351,8 @@ pub mod viz {
 	impl crate::viz::WTextTrait for WText {
 		#[inline] fn as_raw_mut_WText(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { WText, crate::viz::WTextTraitConst, as_raw_WText, crate::viz::WTextTrait, as_raw_mut_WText }
 	
 	impl WText {
 		/// Constructs a WText.
@@ -5235,7 +5367,7 @@ pub mod viz {
 		/// * font_size: 20
 		/// * color: Color::white()
 		#[inline]
-		pub fn new(text: &str, pos: core::Point, font_size: i32, color: &crate::viz::Color) -> Result<crate::viz::WText> {
+		pub fn new(text: &str, pos: core::Point, font_size: i32, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WText> {
 			extern_container_arg!(text);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WText_WText_const_StringR_const_PointR_int_const_ColorR(text.opencv_as_extern(), &pos, font_size, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
@@ -5343,6 +5475,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WText3D, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+	
 	impl crate::viz::Widget3DTraitConst for WText3D {
 		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -5351,6 +5485,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WText3D, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+	
 	impl crate::viz::WText3DTraitConst for WText3D {
 		#[inline] fn as_raw_WText3D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -5358,6 +5494,8 @@ pub mod viz {
 	impl crate::viz::WText3DTrait for WText3D {
 		#[inline] fn as_raw_mut_WText3D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { WText3D, crate::viz::WText3DTraitConst, as_raw_WText3D, crate::viz::WText3DTrait, as_raw_mut_WText3D }
 	
 	impl WText3D {
 		/// Constructs a WText3D.
@@ -5374,7 +5512,7 @@ pub mod viz {
 		/// * face_camera: true
 		/// * color: Color::white()
 		#[inline]
-		pub fn new(text: &str, position: core::Point3d, text_scale: f64, face_camera: bool, color: &crate::viz::Color) -> Result<crate::viz::WText3D> {
+		pub fn new(text: &str, position: core::Point3d, text_scale: f64, face_camera: bool, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WText3D> {
 			extern_container_arg!(text);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WText3D_WText3D_const_StringR_const_Point3dR_double_bool_const_ColorR(text.opencv_as_extern(), &position, text_scale, face_camera, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
@@ -5459,6 +5597,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WTrajectory, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+	
 	impl crate::viz::Widget3DTraitConst for WTrajectory {
 		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -5467,6 +5607,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WTrajectory, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+	
 	impl crate::viz::WTrajectoryTraitConst for WTrajectory {
 		#[inline] fn as_raw_WTrajectory(&self) -> *const c_void { self.as_raw() }
 	}
@@ -5474,6 +5616,8 @@ pub mod viz {
 	impl crate::viz::WTrajectoryTrait for WTrajectory {
 		#[inline] fn as_raw_mut_WTrajectory(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { WTrajectory, crate::viz::WTrajectoryTraitConst, as_raw_WTrajectory, crate::viz::WTrajectoryTrait, as_raw_mut_WTrajectory }
 	
 	impl WTrajectory {
 		/// Constructs a WTrajectory.
@@ -5495,7 +5639,7 @@ pub mod viz {
 		/// * scale: 1.0
 		/// * color: Color::white()
 		#[inline]
-		pub fn new(path: &impl core::ToInputArray, display_mode: i32, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WTrajectory> {
+		pub fn new(path: &impl ToInputArray, display_mode: i32, scale: f64, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WTrajectory> {
 			input_array_arg!(path);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WTrajectory_WTrajectory_const__InputArrayR_int_double_const_ColorR(path.as_raw__InputArray(), display_mode, scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
@@ -5525,7 +5669,7 @@ pub mod viz {
 		/// * scale: 1.0
 		/// * color: Color::white()
 		#[inline]
-		pub fn new_def(path: &impl core::ToInputArray) -> Result<crate::viz::WTrajectory> {
+		pub fn new_def(path: &impl ToInputArray) -> Result<crate::viz::WTrajectory> {
 			input_array_arg!(path);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WTrajectory_WTrajectory_const__InputArrayR(path.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -5585,6 +5729,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WTrajectoryFrustums, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+	
 	impl crate::viz::Widget3DTraitConst for WTrajectoryFrustums {
 		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -5593,6 +5739,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WTrajectoryFrustums, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+	
 	impl crate::viz::WTrajectoryFrustumsTraitConst for WTrajectoryFrustums {
 		#[inline] fn as_raw_WTrajectoryFrustums(&self) -> *const c_void { self.as_raw() }
 	}
@@ -5600,6 +5748,8 @@ pub mod viz {
 	impl crate::viz::WTrajectoryFrustumsTrait for WTrajectoryFrustums {
 		#[inline] fn as_raw_mut_WTrajectoryFrustums(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { WTrajectoryFrustums, crate::viz::WTrajectoryFrustumsTraitConst, as_raw_WTrajectoryFrustums, crate::viz::WTrajectoryFrustumsTrait, as_raw_mut_WTrajectoryFrustums }
 	
 	impl WTrajectoryFrustums {
 		/// Constructs a WTrajectoryFrustums.
@@ -5616,7 +5766,7 @@ pub mod viz {
 		/// * scale: 1.
 		/// * color: Color::white()
 		#[inline]
-		pub fn new(path: &impl core::ToInputArray, k: core::Matx33d, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WTrajectoryFrustums> {
+		pub fn new(path: &impl ToInputArray, k: core::Matx33d, scale: f64, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WTrajectoryFrustums> {
 			input_array_arg!(path);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WTrajectoryFrustums_WTrajectoryFrustums_const__InputArrayR_const_Matx33dR_double_const_ColorR(path.as_raw__InputArray(), &k, scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
@@ -5641,7 +5791,7 @@ pub mod viz {
 		/// * scale: 1.
 		/// * color: Color::white()
 		#[inline]
-		pub fn new_def(path: &impl core::ToInputArray, k: core::Matx33d) -> Result<crate::viz::WTrajectoryFrustums> {
+		pub fn new_def(path: &impl ToInputArray, k: core::Matx33d) -> Result<crate::viz::WTrajectoryFrustums> {
 			input_array_arg!(path);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WTrajectoryFrustums_WTrajectoryFrustums_const__InputArrayR_const_Matx33dR(path.as_raw__InputArray(), &k, ocvrs_return.as_mut_ptr()) };
@@ -5665,7 +5815,7 @@ pub mod viz {
 		/// * scale: 1.
 		/// * color: Color::white()
 		#[inline]
-		pub fn new_1(path: &impl core::ToInputArray, fov: core::Vec2d, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WTrajectoryFrustums> {
+		pub fn new_1(path: &impl ToInputArray, fov: core::Vec2d, scale: f64, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WTrajectoryFrustums> {
 			input_array_arg!(path);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WTrajectoryFrustums_WTrajectoryFrustums_const__InputArrayR_const_Vec2dR_double_const_ColorR(path.as_raw__InputArray(), &fov, scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
@@ -5690,7 +5840,7 @@ pub mod viz {
 		/// * scale: 1.
 		/// * color: Color::white()
 		#[inline]
-		pub fn new_def_1(path: &impl core::ToInputArray, fov: core::Vec2d) -> Result<crate::viz::WTrajectoryFrustums> {
+		pub fn new_def_1(path: &impl ToInputArray, fov: core::Vec2d) -> Result<crate::viz::WTrajectoryFrustums> {
 			input_array_arg!(path);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WTrajectoryFrustums_WTrajectoryFrustums_const__InputArrayR_const_Vec2dR(path.as_raw__InputArray(), &fov, ocvrs_return.as_mut_ptr()) };
@@ -5753,6 +5903,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WTrajectorySpheres, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+	
 	impl crate::viz::Widget3DTraitConst for WTrajectorySpheres {
 		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -5761,6 +5913,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WTrajectorySpheres, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+	
 	impl crate::viz::WTrajectorySpheresTraitConst for WTrajectorySpheres {
 		#[inline] fn as_raw_WTrajectorySpheres(&self) -> *const c_void { self.as_raw() }
 	}
@@ -5768,6 +5922,8 @@ pub mod viz {
 	impl crate::viz::WTrajectorySpheresTrait for WTrajectorySpheres {
 		#[inline] fn as_raw_mut_WTrajectorySpheres(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { WTrajectorySpheres, crate::viz::WTrajectorySpheresTraitConst, as_raw_WTrajectorySpheres, crate::viz::WTrajectorySpheresTrait, as_raw_mut_WTrajectorySpheres }
 	
 	impl WTrajectorySpheres {
 		/// Constructs a WTrajectorySpheres.
@@ -5785,7 +5941,7 @@ pub mod viz {
 		/// * from: Color::red()
 		/// * to: Color::white()
 		#[inline]
-		pub fn new(path: &impl core::ToInputArray, line_length: f64, radius: f64, from: &crate::viz::Color, to: &crate::viz::Color) -> Result<crate::viz::WTrajectorySpheres> {
+		pub fn new(path: &impl ToInputArray, line_length: f64, radius: f64, from: &impl crate::viz::ColorTraitConst, to: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WTrajectorySpheres> {
 			input_array_arg!(path);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WTrajectorySpheres_WTrajectorySpheres_const__InputArrayR_double_double_const_ColorR_const_ColorR(path.as_raw__InputArray(), line_length, radius, from.as_raw_Color(), to.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
@@ -5811,7 +5967,7 @@ pub mod viz {
 		/// * from: Color::red()
 		/// * to: Color::white()
 		#[inline]
-		pub fn new_def(path: &impl core::ToInputArray) -> Result<crate::viz::WTrajectorySpheres> {
+		pub fn new_def(path: &impl ToInputArray) -> Result<crate::viz::WTrajectorySpheres> {
 			input_array_arg!(path);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WTrajectorySpheres_WTrajectorySpheres_const__InputArrayR(path.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -5850,7 +6006,7 @@ pub mod viz {
 		/// ## C++ default parameters
 		/// * pose: Affine3d::Identity()
 		#[inline]
-		fn add_widget(&mut self, widget: &crate::viz::Widget3D, pose: core::Affine3d) -> Result<()> {
+		fn add_widget(&mut self, widget: &impl crate::viz::Widget3DTraitConst, pose: core::Affine3d) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WWidgetMerger_addWidget_const_Widget3DR_const_Affine3dR(self.as_raw_mut_WWidgetMerger(), widget.as_raw_Widget3D(), &pose, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -5864,7 +6020,7 @@ pub mod viz {
 		/// This alternative version of [WWidgetMergerTrait::add_widget] function uses the following default values for its arguments:
 		/// * pose: Affine3d::Identity()
 		#[inline]
-		fn add_widget_def(&mut self, widget: &crate::viz::Widget3D) -> Result<()> {
+		fn add_widget_def(&mut self, widget: &impl crate::viz::Widget3DTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_WWidgetMerger_addWidget_const_Widget3DR(self.as_raw_mut_WWidgetMerger(), widget.as_raw_Widget3D(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -5913,6 +6069,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WWidgetMerger, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+	
 	impl crate::viz::Widget3DTraitConst for WWidgetMerger {
 		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -5921,6 +6079,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { WWidgetMerger, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+	
 	impl crate::viz::WWidgetMergerTraitConst for WWidgetMerger {
 		#[inline] fn as_raw_WWidgetMerger(&self) -> *const c_void { self.as_raw() }
 	}
@@ -5928,6 +6088,8 @@ pub mod viz {
 	impl crate::viz::WWidgetMergerTrait for WWidgetMerger {
 		#[inline] fn as_raw_mut_WWidgetMerger(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { WWidgetMerger, crate::viz::WWidgetMergerTraitConst, as_raw_WWidgetMerger, crate::viz::WWidgetMergerTrait, as_raw_mut_WWidgetMerger }
 	
 	impl WWidgetMerger {
 		#[inline]
@@ -5999,7 +6161,7 @@ pub mod viz {
 		fn as_raw_mut_Widget(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn set(&mut self, other: &crate::viz::Widget) -> Result<()> {
+		fn set(&mut self, other: &impl crate::viz::WidgetTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_Widget_operatorST_const_WidgetR(self.as_raw_mut_Widget(), other.as_raw_Widget(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -6067,6 +6229,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Widget, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+	
 	impl Widget {
 		#[inline]
 		pub fn default() -> Result<crate::viz::Widget> {
@@ -6079,7 +6243,7 @@ pub mod viz {
 		}
 		
 		#[inline]
-		pub fn copy(other: &crate::viz::Widget) -> Result<crate::viz::Widget> {
+		pub fn copy(other: &impl crate::viz::WidgetTraitConst) -> Result<crate::viz::Widget> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_Widget_Widget_const_WidgetR(other.as_raw_Widget(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -6128,7 +6292,7 @@ pub mod viz {
 		/// ## Parameters
 		/// * color: color of type Color
 		#[inline]
-		fn set_color(&mut self, color: &crate::viz::Color) -> Result<()> {
+		fn set_color(&mut self, color: &impl crate::viz::ColorTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_Widget2D_setColor_const_ColorR(self.as_raw_mut_Widget2D(), color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -6162,6 +6326,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Widget2D, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+	
 	impl crate::viz::Widget2DTraitConst for Widget2D {
 		#[inline] fn as_raw_Widget2D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -6169,6 +6335,8 @@ pub mod viz {
 	impl crate::viz::Widget2DTrait for Widget2D {
 		#[inline] fn as_raw_mut_Widget2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { Widget2D, crate::viz::Widget2DTraitConst, as_raw_Widget2D, crate::viz::Widget2DTrait, as_raw_mut_Widget2D }
 	
 	impl Widget2D {
 		#[inline]
@@ -6257,7 +6425,7 @@ pub mod viz {
 		/// ## Parameters
 		/// * color: color of type Color
 		#[inline]
-		fn set_color(&mut self, color: &crate::viz::Color) -> Result<()> {
+		fn set_color(&mut self, color: &impl crate::viz::ColorTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_Widget3D_setColor_const_ColorR(self.as_raw_mut_Widget3D(), color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -6291,6 +6459,8 @@ pub mod viz {
 		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Widget3D, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+	
 	impl crate::viz::Widget3DTraitConst for Widget3D {
 		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -6298,6 +6468,8 @@ pub mod viz {
 	impl crate::viz::Widget3DTrait for Widget3D {
 		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { Widget3D, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
 	
 	impl Widget3D {
 		#[inline]

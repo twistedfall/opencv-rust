@@ -106,11 +106,11 @@ pub mod freetype {
 		/// * line_type: Line type. See the line for details.
 		/// * bottomLeftOrigin: When true, the image data origin is at the bottom-left corner. Otherwise, it is at the top-left corner.
 		#[inline]
-		fn put_text(&mut self, img: &mut impl core::ToInputOutputArray, text: &str, org: core::Point, font_height: i32, color: core::Scalar, thickness: i32, line_type: i32, bottom_left_origin: bool) -> Result<()> {
+		fn put_text(&mut self, img: &mut impl ToInputOutputArray, text: &str, org: core::Point, font_height: i32, color: core::Scalar, thickness: i32, line_type: i32, bottom_left_origin: bool) -> Result<()> {
 			input_output_array_arg!(img);
 			extern_container_arg!(text);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_freetype_FreeType2_putText_const__InputOutputArrayR_const_StringR_Point_int_Scalar_int_int_bool(self.as_raw_mut_FreeType2(), img.as_raw__InputOutputArray(), text.opencv_as_extern(), org.opencv_as_extern(), font_height, color.opencv_as_extern(), thickness, line_type, bottom_left_origin, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_freetype_FreeType2_putText_const__InputOutputArrayR_const_StringR_Point_int_Scalar_int_int_bool(self.as_raw_mut_FreeType2(), img.as_raw__InputOutputArray(), text.opencv_as_extern(), &org, font_height, &color, thickness, line_type, bottom_left_origin, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -208,6 +208,8 @@ pub mod freetype {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { FreeType2, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::freetype::FreeType2TraitConst for FreeType2 {
 		#[inline] fn as_raw_FreeType2(&self) -> *const c_void { self.as_raw() }
 	}
@@ -215,6 +217,8 @@ pub mod freetype {
 	impl crate::freetype::FreeType2Trait for FreeType2 {
 		#[inline] fn as_raw_mut_FreeType2(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { FreeType2, crate::freetype::FreeType2TraitConst, as_raw_FreeType2, crate::freetype::FreeType2Trait, as_raw_mut_FreeType2 }
 	
 	impl FreeType2 {
 	}

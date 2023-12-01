@@ -195,7 +195,7 @@ pub mod ovis {
 	/// ## C++ default parameters
 	/// * image: noArray()
 	#[inline]
-	pub fn create_plane_mesh(name: &str, size: core::Size2f, image: &impl core::ToInputArray) -> Result<()> {
+	pub fn create_plane_mesh(name: &str, size: core::Size2f, image: &impl ToInputArray) -> Result<()> {
 		extern_container_arg!(name);
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
@@ -217,7 +217,7 @@ pub mod ovis {
 	/// This alternative version of [create_point_cloud_mesh] function uses the following default values for its arguments:
 	/// * colors: noArray()
 	#[inline]
-	pub fn create_point_cloud_mesh_def(name: &str, vertices: &impl core::ToInputArray) -> Result<()> {
+	pub fn create_point_cloud_mesh_def(name: &str, vertices: &impl ToInputArray) -> Result<()> {
 		extern_container_arg!(name);
 		input_array_arg!(vertices);
 		return_send!(via ocvrs_return);
@@ -238,7 +238,7 @@ pub mod ovis {
 	/// ## C++ default parameters
 	/// * colors: noArray()
 	#[inline]
-	pub fn create_point_cloud_mesh(name: &str, vertices: &impl core::ToInputArray, colors: &impl core::ToInputArray) -> Result<()> {
+	pub fn create_point_cloud_mesh(name: &str, vertices: &impl ToInputArray, colors: &impl ToInputArray) -> Result<()> {
 		extern_container_arg!(name);
 		input_array_arg!(vertices);
 		input_array_arg!(colors);
@@ -263,7 +263,7 @@ pub mod ovis {
 	/// * normals: noArray()
 	/// * indices: noArray()
 	#[inline]
-	pub fn create_triangle_mesh_def(name: &str, vertices: &impl core::ToInputArray) -> Result<()> {
+	pub fn create_triangle_mesh_def(name: &str, vertices: &impl ToInputArray) -> Result<()> {
 		extern_container_arg!(name);
 		input_array_arg!(vertices);
 		return_send!(via ocvrs_return);
@@ -286,7 +286,7 @@ pub mod ovis {
 	/// * normals: noArray()
 	/// * indices: noArray()
 	#[inline]
-	pub fn create_triangle_mesh(name: &str, vertices: &impl core::ToInputArray, normals: &impl core::ToInputArray, indices: &impl core::ToInputArray) -> Result<()> {
+	pub fn create_triangle_mesh(name: &str, vertices: &impl ToInputArray, normals: &impl ToInputArray, indices: &impl ToInputArray) -> Result<()> {
 		extern_container_arg!(name);
 		input_array_arg!(vertices);
 		input_array_arg!(normals);
@@ -402,7 +402,7 @@ pub mod ovis {
 	/// * prop: [MaterialProperty]
 	/// * value: the texture data
 	#[inline]
-	pub fn set_material_texture(name: &str, prop: i32, value: &impl core::ToInputArray) -> Result<()> {
+	pub fn set_material_texture(name: &str, prop: i32, value: &impl ToInputArray) -> Result<()> {
 		extern_container_arg!(name);
 		input_array_arg!(value);
 		return_send!(via ocvrs_return);
@@ -416,7 +416,7 @@ pub mod ovis {
 	/// **Deprecated**: use setMaterialProperty
 	#[deprecated = "use setMaterialProperty"]
 	#[inline]
-	pub fn update_texture(name: &str, image: &impl core::ToInputArray) -> Result<()> {
+	pub fn update_texture(name: &str, image: &impl ToInputArray) -> Result<()> {
 		extern_container_arg!(name);
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
@@ -479,7 +479,7 @@ pub mod ovis {
 		/// ## Parameters
 		/// * image: 
 		#[inline]
-		fn set_background(&mut self, image: &impl core::ToInputArray) -> Result<()> {
+		fn set_background(&mut self, image: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ovis_WindowScene_setBackground_const__InputArrayR(self.as_raw_mut_WindowScene(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -535,7 +535,7 @@ pub mod ovis {
 		/// * tvec: noArray()
 		/// * rot: noArray()
 		#[inline]
-		fn create_entity(&mut self, name: &str, meshname: &str, tvec: &impl core::ToInputArray, rot: &impl core::ToInputArray) -> Result<()> {
+		fn create_entity(&mut self, name: &str, meshname: &str, tvec: &impl ToInputArray, rot: &impl ToInputArray) -> Result<()> {
 			extern_container_arg!(name);
 			extern_container_arg!(meshname);
 			input_array_arg!(tvec);
@@ -652,7 +652,7 @@ pub mod ovis {
 		/// * prop: [EntityProperty]
 		/// * value: the value
 		#[inline]
-		fn get_entity_property(&mut self, name: &str, prop: i32, value: &mut impl core::ToOutputArray) -> Result<()> {
+		fn get_entity_property(&mut self, name: &str, prop: i32, value: &mut impl ToOutputArray) -> Result<()> {
 			extern_container_arg!(name);
 			output_array_arg!(value);
 			return_send!(via ocvrs_return);
@@ -681,7 +681,7 @@ pub mod ovis {
 		/// * rot: noArray()
 		/// * color: Scalar::all(1)
 		#[inline]
-		fn create_camera_entity(&mut self, name: &str, k: &impl core::ToInputArray, imsize: core::Size, z_far: f32, tvec: &impl core::ToInputArray, rot: &impl core::ToInputArray, color: core::Scalar) -> Result<core::Rect2d> {
+		fn create_camera_entity(&mut self, name: &str, k: &impl ToInputArray, imsize: core::Size, z_far: f32, tvec: &impl ToInputArray, rot: &impl ToInputArray, color: core::Scalar) -> Result<core::Rect2d> {
 			extern_container_arg!(name);
 			input_array_arg!(k);
 			input_array_arg!(tvec);
@@ -713,7 +713,7 @@ pub mod ovis {
 		/// * rot: noArray()
 		/// * color: Scalar::all(1)
 		#[inline]
-		fn create_camera_entity_def(&mut self, name: &str, k: &impl core::ToInputArray, imsize: core::Size, z_far: f32) -> Result<core::Rect2d> {
+		fn create_camera_entity_def(&mut self, name: &str, k: &impl ToInputArray, imsize: core::Size, z_far: f32) -> Result<core::Rect2d> {
 			extern_container_arg!(name);
 			input_array_arg!(k);
 			return_send!(via ocvrs_return);
@@ -737,7 +737,7 @@ pub mod ovis {
 		/// * diffuse_color: Scalar::all(1)
 		/// * specular_color: Scalar::all(1)
 		#[inline]
-		fn create_light_entity(&mut self, name: &str, tvec: &impl core::ToInputArray, rot: &impl core::ToInputArray, diffuse_color: core::Scalar, specular_color: core::Scalar) -> Result<()> {
+		fn create_light_entity(&mut self, name: &str, tvec: &impl ToInputArray, rot: &impl ToInputArray, diffuse_color: core::Scalar, specular_color: core::Scalar) -> Result<()> {
 			extern_container_arg!(name);
 			input_array_arg!(tvec);
 			input_array_arg!(rot);
@@ -782,7 +782,7 @@ pub mod ovis {
 		/// * tvec: noArray()
 		/// * rot: noArray()
 		#[inline]
-		fn update_entity_pose(&mut self, name: &str, tvec: &impl core::ToInputArray, rot: &impl core::ToInputArray) -> Result<()> {
+		fn update_entity_pose(&mut self, name: &str, tvec: &impl ToInputArray, rot: &impl ToInputArray) -> Result<()> {
 			extern_container_arg!(name);
 			input_array_arg!(tvec);
 			input_array_arg!(rot);
@@ -825,7 +825,7 @@ pub mod ovis {
 		/// * rot: noArray()
 		/// * invert: false
 		#[inline]
-		fn set_entity_pose(&mut self, name: &str, tvec: &impl core::ToInputArray, rot: &impl core::ToInputArray, invert: bool) -> Result<()> {
+		fn set_entity_pose(&mut self, name: &str, tvec: &impl ToInputArray, rot: &impl ToInputArray, invert: bool) -> Result<()> {
 			extern_container_arg!(name);
 			input_array_arg!(tvec);
 			input_array_arg!(rot);
@@ -870,7 +870,7 @@ pub mod ovis {
 		/// * tvec: noArray()
 		/// * invert: false
 		#[inline]
-		fn get_entity_pose(&mut self, name: &str, r: &mut impl core::ToOutputArray, tvec: &mut impl core::ToOutputArray, invert: bool) -> Result<()> {
+		fn get_entity_pose(&mut self, name: &str, r: &mut impl ToOutputArray, tvec: &mut impl ToOutputArray, invert: bool) -> Result<()> {
 			extern_container_arg!(name);
 			output_array_arg!(r);
 			output_array_arg!(tvec);
@@ -977,7 +977,7 @@ pub mod ovis {
 		
 		/// read back the image generated by the last call to [waitKey]
 		#[inline]
-		fn get_screenshot(&mut self, frame: &mut impl core::ToOutputArray) -> Result<()> {
+		fn get_screenshot(&mut self, frame: &mut impl ToOutputArray) -> Result<()> {
 			output_array_arg!(frame);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ovis_WindowScene_getScreenshot_const__OutputArrayR(self.as_raw_mut_WindowScene(), frame.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
@@ -996,7 +996,7 @@ pub mod ovis {
 		/// ## C++ default parameters
 		/// * mrt_index: 0
 		#[inline]
-		fn get_compositor_texture(&mut self, compname: &str, texname: &str, out: &mut impl core::ToOutputArray, mrt_index: i32) -> Result<()> {
+		fn get_compositor_texture(&mut self, compname: &str, texname: &str, out: &mut impl ToOutputArray, mrt_index: i32) -> Result<()> {
 			extern_container_arg!(compname);
 			extern_container_arg!(texname);
 			output_array_arg!(out);
@@ -1018,7 +1018,7 @@ pub mod ovis {
 		/// This alternative version of [WindowSceneTrait::get_compositor_texture] function uses the following default values for its arguments:
 		/// * mrt_index: 0
 		#[inline]
-		fn get_compositor_texture_def(&mut self, compname: &str, texname: &str, out: &mut impl core::ToOutputArray) -> Result<()> {
+		fn get_compositor_texture_def(&mut self, compname: &str, texname: &str, out: &mut impl ToOutputArray) -> Result<()> {
 			extern_container_arg!(compname);
 			extern_container_arg!(texname);
 			output_array_arg!(out);
@@ -1033,7 +1033,7 @@ pub mod ovis {
 		/// 
 		/// return the per pixel distance to the camera in world units
 		#[inline]
-		fn get_depth(&mut self, depth: &mut impl core::ToOutputArray) -> Result<()> {
+		fn get_depth(&mut self, depth: &mut impl ToOutputArray) -> Result<()> {
 			output_array_arg!(depth);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ovis_WindowScene_getDepth_const__OutputArrayR(self.as_raw_mut_WindowScene(), depth.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
@@ -1052,7 +1052,7 @@ pub mod ovis {
 		/// ## C++ default parameters
 		/// * up: noArray()
 		#[inline]
-		fn fix_camera_yaw_axis(&mut self, use_fixed: bool, up: &impl core::ToInputArray) -> Result<()> {
+		fn fix_camera_yaw_axis(&mut self, use_fixed: bool, up: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(up);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ovis_WindowScene_fixCameraYawAxis_bool_const__InputArrayR(self.as_raw_mut_WindowScene(), use_fixed, up.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -1091,7 +1091,7 @@ pub mod ovis {
 		/// * rot: noArray()
 		/// * invert: false
 		#[inline]
-		fn set_camera_pose(&mut self, tvec: &impl core::ToInputArray, rot: &impl core::ToInputArray, invert: bool) -> Result<()> {
+		fn set_camera_pose(&mut self, tvec: &impl ToInputArray, rot: &impl ToInputArray, invert: bool) -> Result<()> {
 			input_array_arg!(tvec);
 			input_array_arg!(rot);
 			return_send!(via ocvrs_return);
@@ -1129,7 +1129,7 @@ pub mod ovis {
 		/// ## C++ default parameters
 		/// * offset: noArray()
 		#[inline]
-		fn set_camera_look_at(&mut self, target: &str, offset: &impl core::ToInputArray) -> Result<()> {
+		fn set_camera_look_at(&mut self, target: &str, offset: &impl ToInputArray) -> Result<()> {
 			extern_container_arg!(target);
 			input_array_arg!(offset);
 			return_send!(via ocvrs_return);
@@ -1167,7 +1167,7 @@ pub mod ovis {
 		/// ## C++ default parameters
 		/// * offset: noArray()
 		#[inline]
-		fn set_entity_look_at(&mut self, origin: &str, target: &str, offset: &impl core::ToInputArray) -> Result<()> {
+		fn set_entity_look_at(&mut self, origin: &str, target: &str, offset: &impl ToInputArray) -> Result<()> {
 			extern_container_arg!(origin);
 			extern_container_arg!(target);
 			input_array_arg!(offset);
@@ -1210,7 +1210,7 @@ pub mod ovis {
 		/// * tvec: noArray()
 		/// * invert: false
 		#[inline]
-		fn get_camera_pose(&mut self, r: &mut impl core::ToOutputArray, tvec: &mut impl core::ToOutputArray, invert: bool) -> Result<()> {
+		fn get_camera_pose(&mut self, r: &mut impl ToOutputArray, tvec: &mut impl ToOutputArray, invert: bool) -> Result<()> {
 			output_array_arg!(r);
 			output_array_arg!(tvec);
 			return_send!(via ocvrs_return);
@@ -1253,7 +1253,7 @@ pub mod ovis {
 		/// * z_near: -1
 		/// * z_far: -1
 		#[inline]
-		fn set_camera_intrinsics(&mut self, k: &impl core::ToInputArray, imsize: core::Size, z_near: f32, z_far: f32) -> Result<()> {
+		fn set_camera_intrinsics(&mut self, k: &impl ToInputArray, imsize: core::Size, z_near: f32, z_far: f32) -> Result<()> {
 			input_array_arg!(k);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ovis_WindowScene_setCameraIntrinsics_const__InputArrayR_const_SizeR_float_float(self.as_raw_mut_WindowScene(), k.as_raw__InputArray(), &imsize, z_near, z_far, ocvrs_return.as_mut_ptr()) };
@@ -1276,7 +1276,7 @@ pub mod ovis {
 		/// * z_near: -1
 		/// * z_far: -1
 		#[inline]
-		fn set_camera_intrinsics_def(&mut self, k: &impl core::ToInputArray, imsize: core::Size) -> Result<()> {
+		fn set_camera_intrinsics_def(&mut self, k: &impl ToInputArray, imsize: core::Size) -> Result<()> {
 			input_array_arg!(k);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ovis_WindowScene_setCameraIntrinsics_const__InputArrayR_const_SizeR(self.as_raw_mut_WindowScene(), k.as_raw__InputArray(), &imsize, ocvrs_return.as_mut_ptr()) };
@@ -1320,6 +1320,8 @@ pub mod ovis {
 	impl crate::ovis::WindowSceneTrait for WindowScene {
 		#[inline] fn as_raw_mut_WindowScene(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { WindowScene, crate::ovis::WindowSceneTraitConst, as_raw_WindowScene, crate::ovis::WindowSceneTrait, as_raw_mut_WindowScene }
 	
 	impl WindowScene {
 	}

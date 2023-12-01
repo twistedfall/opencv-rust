@@ -28,7 +28,7 @@ pub mod wechat_qrcode {
 		/// ## C++ default parameters
 		/// * points: noArray()
 		#[inline]
-		fn detect_and_decode(&mut self, img: &impl core::ToInputArray, points: &mut impl core::ToOutputArray) -> Result<core::Vector<String>> {
+		fn detect_and_decode(&mut self, img: &impl ToInputArray, points: &mut impl ToOutputArray) -> Result<core::Vector<String>> {
 			input_array_arg!(img);
 			output_array_arg!(points);
 			return_send!(via ocvrs_return);
@@ -53,7 +53,7 @@ pub mod wechat_qrcode {
 		/// This alternative version of [WeChatQRCodeTrait::detect_and_decode] function uses the following default values for its arguments:
 		/// * points: noArray()
 		#[inline]
-		fn detect_and_decode_def(&mut self, img: &impl core::ToInputArray) -> Result<core::Vector<String>> {
+		fn detect_and_decode_def(&mut self, img: &impl ToInputArray) -> Result<core::Vector<String>> {
 			input_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_wechat_qrcode_WeChatQRCode_detectAndDecode_const__InputArrayR(self.as_raw_mut_WeChatQRCode(), img.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -120,6 +120,8 @@ pub mod wechat_qrcode {
 	impl crate::wechat_qrcode::WeChatQRCodeTrait for WeChatQRCode {
 		#[inline] fn as_raw_mut_WeChatQRCode(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { WeChatQRCode, crate::wechat_qrcode::WeChatQRCodeTraitConst, as_raw_WeChatQRCode, crate::wechat_qrcode::WeChatQRCodeTrait, as_raw_mut_WeChatQRCode }
 	
 	impl WeChatQRCode {
 		/// Initialize the WeChatQRCode.

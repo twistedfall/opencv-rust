@@ -167,7 +167,7 @@ pub mod cudaimgproc {
 	/// This alternative version of [alpha_comp] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn alpha_comp_def(img1: &impl core::ToInputArray, img2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, alpha_op: i32) -> Result<()> {
+	pub fn alpha_comp_def(img1: &impl ToInputArray, img2: &impl ToInputArray, dst: &mut impl ToOutputArray, alpha_op: i32) -> Result<()> {
 		input_array_arg!(img1);
 		input_array_arg!(img2);
 		output_array_arg!(dst);
@@ -208,7 +208,7 @@ pub mod cudaimgproc {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn alpha_comp(img1: &impl core::ToInputArray, img2: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, alpha_op: i32, stream: &mut core::Stream) -> Result<()> {
+	pub fn alpha_comp(img1: &impl ToInputArray, img2: &impl ToInputArray, dst: &mut impl ToOutputArray, alpha_op: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(img1);
 		input_array_arg!(img2);
 		output_array_arg!(dst);
@@ -239,7 +239,7 @@ pub mod cudaimgproc {
 	/// * border_mode: BORDER_DEFAULT
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn bilateral_filter_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, kernel_size: i32, sigma_color: f32, sigma_spatial: f32) -> Result<()> {
+	pub fn bilateral_filter_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, kernel_size: i32, sigma_color: f32, sigma_spatial: f32) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -268,7 +268,7 @@ pub mod cudaimgproc {
 	/// * border_mode: BORDER_DEFAULT
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn bilateral_filter(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, kernel_size: i32, sigma_color: f32, sigma_spatial: f32, border_mode: i32, stream: &mut core::Stream) -> Result<()> {
+	pub fn bilateral_filter(src: &impl ToInputArray, dst: &mut impl ToOutputArray, kernel_size: i32, sigma_color: f32, sigma_spatial: f32, border_mode: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -294,7 +294,7 @@ pub mod cudaimgproc {
 	/// This alternative version of [blend_linear] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn blend_linear_def(img1: &impl core::ToInputArray, img2: &impl core::ToInputArray, weights1: &impl core::ToInputArray, weights2: &impl core::ToInputArray, result: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn blend_linear_def(img1: &impl ToInputArray, img2: &impl ToInputArray, weights1: &impl ToInputArray, weights2: &impl ToInputArray, result: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(img1);
 		input_array_arg!(img2);
 		input_array_arg!(weights1);
@@ -322,7 +322,7 @@ pub mod cudaimgproc {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn blend_linear(img1: &impl core::ToInputArray, img2: &impl core::ToInputArray, weights1: &impl core::ToInputArray, weights2: &impl core::ToInputArray, result: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn blend_linear(img1: &impl ToInputArray, img2: &impl ToInputArray, weights1: &impl ToInputArray, weights2: &impl ToInputArray, result: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(img1);
 		input_array_arg!(img2);
 		input_array_arg!(weights1);
@@ -347,7 +347,7 @@ pub mod cudaimgproc {
 	/// This alternative version of [calc_hist_1] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn calc_hist_1_def(src: &impl core::ToInputArray, mask: &impl core::ToInputArray, hist: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn calc_hist_1_def(src: &impl ToInputArray, mask: &impl ToInputArray, hist: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		input_array_arg!(mask);
 		output_array_arg!(hist);
@@ -369,7 +369,7 @@ pub mod cudaimgproc {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn calc_hist_1(src: &impl core::ToInputArray, mask: &impl core::ToInputArray, hist: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn calc_hist_1(src: &impl ToInputArray, mask: &impl ToInputArray, hist: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		input_array_arg!(mask);
 		output_array_arg!(hist);
@@ -391,7 +391,7 @@ pub mod cudaimgproc {
 	/// This alternative version of [calc_hist] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn calc_hist_def(src: &impl core::ToInputArray, hist: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn calc_hist_def(src: &impl ToInputArray, hist: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(hist);
 		return_send!(via ocvrs_return);
@@ -411,7 +411,7 @@ pub mod cudaimgproc {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn calc_hist(src: &impl core::ToInputArray, hist: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn calc_hist(src: &impl ToInputArray, hist: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(hist);
 		return_send!(via ocvrs_return);
@@ -434,7 +434,7 @@ pub mod cudaimgproc {
 	/// * connectivity: 8
 	/// * ltype: CV_32S
 	#[inline]
-	pub fn connected_components_def(image: &impl core::ToInputArray, labels: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn connected_components_def(image: &impl ToInputArray, labels: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(image);
 		output_array_arg!(labels);
 		return_send!(via ocvrs_return);
@@ -478,7 +478,7 @@ pub mod cudaimgproc {
 	/// * connectivity: 8
 	/// * ltype: CV_32S
 	#[inline]
-	pub fn connected_components(image: &impl core::ToInputArray, labels: &mut impl core::ToOutputArray, connectivity: i32, ltype: i32) -> Result<()> {
+	pub fn connected_components(image: &impl ToInputArray, labels: &mut impl ToOutputArray, connectivity: i32, ltype: i32) -> Result<()> {
 		input_array_arg!(image);
 		output_array_arg!(labels);
 		return_send!(via ocvrs_return);
@@ -510,7 +510,7 @@ pub mod cudaimgproc {
 	/// 
 	/// opencv_contrib_source_code/modules/cudaimgproc/samples/connected_components.cpp
 	#[inline]
-	pub fn connected_components_with_algorithm(image: &impl core::ToInputArray, labels: &mut impl core::ToOutputArray, connectivity: i32, ltype: i32, ccltype: crate::cudaimgproc::CUDA_ConnectedComponentsAlgorithmsTypes) -> Result<()> {
+	pub fn connected_components_with_algorithm(image: &impl ToInputArray, labels: &mut impl ToOutputArray, connectivity: i32, ltype: i32, ccltype: crate::cudaimgproc::CUDA_ConnectedComponentsAlgorithmsTypes) -> Result<()> {
 		input_array_arg!(image);
 		output_array_arg!(labels);
 		return_send!(via ocvrs_return);
@@ -554,7 +554,7 @@ pub mod cudaimgproc {
 	#[inline]
 	pub fn create_clahe(clip_limit: f64, tile_grid_size: core::Size) -> Result<core::Ptr<crate::cudaimgproc::CUDA_CLAHE>> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_createCLAHE_double_Size(clip_limit, tile_grid_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_createCLAHE_double_Size(clip_limit, &tile_grid_size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_CLAHE>::opencv_from_extern(ret) };
@@ -1030,7 +1030,7 @@ pub mod cudaimgproc {
 	#[inline]
 	pub fn create_template_matching(src_type: i32, method: i32, user_block_size: core::Size) -> Result<core::Ptr<crate::cudaimgproc::CUDA_TemplateMatching>> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_createTemplateMatching_int_int_Size(src_type, method, user_block_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_createTemplateMatching_int_int_Size(src_type, method, &user_block_size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_TemplateMatching>::opencv_from_extern(ret) };
@@ -1057,7 +1057,7 @@ pub mod cudaimgproc {
 	/// * dcn: 0
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn cvt_color_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, code: i32) -> Result<()> {
+	pub fn cvt_color_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, code: i32) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1086,7 +1086,7 @@ pub mod cudaimgproc {
 	/// * dcn: 0
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn cvt_color(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, code: i32, dcn: i32, stream: &mut core::Stream) -> Result<()> {
+	pub fn cvt_color(src: &impl ToInputArray, dst: &mut impl ToOutputArray, code: i32, dcn: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1127,7 +1127,7 @@ pub mod cudaimgproc {
 	/// * dcn: -1
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn demosaicing_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, code: i32) -> Result<()> {
+	pub fn demosaicing_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, code: i32) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1167,7 +1167,7 @@ pub mod cudaimgproc {
 	/// * dcn: -1
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn demosaicing(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, code: i32, dcn: i32, stream: &mut core::Stream) -> Result<()> {
+	pub fn demosaicing(src: &impl ToInputArray, dst: &mut impl ToOutputArray, code: i32, dcn: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1190,7 +1190,7 @@ pub mod cudaimgproc {
 	/// This alternative version of [equalize_hist] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn equalize_hist_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn equalize_hist_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1212,7 +1212,7 @@ pub mod cudaimgproc {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn equalize_hist(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn equalize_hist(src: &impl ToInputArray, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1235,7 +1235,7 @@ pub mod cudaimgproc {
 	/// This alternative version of [even_levels] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn even_levels_def(levels: &mut impl core::ToOutputArray, n_levels: i32, lower_level: i32, upper_level: i32) -> Result<()> {
+	pub fn even_levels_def(levels: &mut impl ToOutputArray, n_levels: i32, lower_level: i32, upper_level: i32) -> Result<()> {
 		output_array_arg!(levels);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_evenLevels_const__OutputArrayR_int_int_int(levels.as_raw__OutputArray(), n_levels, lower_level, upper_level, ocvrs_return.as_mut_ptr()) };
@@ -1256,7 +1256,7 @@ pub mod cudaimgproc {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn even_levels(levels: &mut impl core::ToOutputArray, n_levels: i32, lower_level: i32, upper_level: i32, stream: &mut core::Stream) -> Result<()> {
+	pub fn even_levels(levels: &mut impl ToOutputArray, n_levels: i32, lower_level: i32, upper_level: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 		output_array_arg!(levels);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_evenLevels_const__OutputArrayR_int_int_int_StreamR(levels.as_raw__OutputArray(), n_levels, lower_level, upper_level, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
@@ -1278,7 +1278,7 @@ pub mod cudaimgproc {
 	/// * forward: true
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn gamma_correction_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn gamma_correction_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1300,7 +1300,7 @@ pub mod cudaimgproc {
 	/// * forward: true
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn gamma_correction(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, forward: bool, stream: &mut core::Stream) -> Result<()> {
+	pub fn gamma_correction(src: &impl ToInputArray, dst: &mut impl ToOutputArray, forward: bool, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1325,7 +1325,7 @@ pub mod cudaimgproc {
 	/// This alternative version of [hist_even] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn hist_even_def(src: &impl core::ToInputArray, hist: &mut impl core::ToOutputArray, hist_size: i32, lower_level: i32, upper_level: i32) -> Result<()> {
+	pub fn hist_even_def(src: &impl ToInputArray, hist: &mut impl ToOutputArray, hist_size: i32, lower_level: i32, upper_level: i32) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(hist);
 		return_send!(via ocvrs_return);
@@ -1349,7 +1349,7 @@ pub mod cudaimgproc {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn hist_even(src: &impl core::ToInputArray, hist: &mut impl core::ToOutputArray, hist_size: i32, lower_level: i32, upper_level: i32, stream: &mut core::Stream) -> Result<()> {
+	pub fn hist_even(src: &impl ToInputArray, hist: &mut impl ToOutputArray, hist_size: i32, lower_level: i32, upper_level: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(hist);
 		return_send!(via ocvrs_return);
@@ -1372,7 +1372,7 @@ pub mod cudaimgproc {
 	/// This alternative version of [hist_range] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn hist_range_def(src: &impl core::ToInputArray, hist: &mut impl core::ToOutputArray, levels: &impl core::ToInputArray) -> Result<()> {
+	pub fn hist_range_def(src: &impl ToInputArray, hist: &mut impl ToOutputArray, levels: &impl ToInputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(hist);
 		input_array_arg!(levels);
@@ -1395,7 +1395,7 @@ pub mod cudaimgproc {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn hist_range(src: &impl core::ToInputArray, hist: &mut impl core::ToOutputArray, levels: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+	pub fn hist_range(src: &impl ToInputArray, hist: &mut impl ToOutputArray, levels: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(hist);
 		input_array_arg!(levels);
@@ -1425,7 +1425,7 @@ pub mod cudaimgproc {
 	/// * criteria: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,5,1)
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn mean_shift_filtering_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, sp: i32, sr: i32) -> Result<()> {
+	pub fn mean_shift_filtering_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, sp: i32, sr: i32) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1453,11 +1453,11 @@ pub mod cudaimgproc {
 	/// * criteria: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,5,1)
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn mean_shift_filtering(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, sp: i32, sr: i32, criteria: core::TermCriteria, stream: &mut core::Stream) -> Result<()> {
+	pub fn mean_shift_filtering(src: &impl ToInputArray, dst: &mut impl ToOutputArray, sp: i32, sr: i32, criteria: core::TermCriteria, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_meanShiftFiltering_const__InputArrayR_const__OutputArrayR_int_int_TermCriteria_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), sp, sr, criteria.opencv_as_extern(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_meanShiftFiltering_const__InputArrayR_const__OutputArrayR_int_int_TermCriteria_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), sp, sr, &criteria, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1484,7 +1484,7 @@ pub mod cudaimgproc {
 	/// * criteria: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,5,1)
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn mean_shift_proc_def(src: &impl core::ToInputArray, dstr: &mut impl core::ToOutputArray, dstsp: &mut impl core::ToOutputArray, sp: i32, sr: i32) -> Result<()> {
+	pub fn mean_shift_proc_def(src: &impl ToInputArray, dstr: &mut impl ToOutputArray, dstsp: &mut impl ToOutputArray, sp: i32, sr: i32) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dstr);
 		output_array_arg!(dstsp);
@@ -1515,12 +1515,12 @@ pub mod cudaimgproc {
 	/// * criteria: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,5,1)
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn mean_shift_proc(src: &impl core::ToInputArray, dstr: &mut impl core::ToOutputArray, dstsp: &mut impl core::ToOutputArray, sp: i32, sr: i32, criteria: core::TermCriteria, stream: &mut core::Stream) -> Result<()> {
+	pub fn mean_shift_proc(src: &impl ToInputArray, dstr: &mut impl ToOutputArray, dstsp: &mut impl ToOutputArray, sp: i32, sr: i32, criteria: core::TermCriteria, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dstr);
 		output_array_arg!(dstsp);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_meanShiftProc_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_int_TermCriteria_StreamR(src.as_raw__InputArray(), dstr.as_raw__OutputArray(), dstsp.as_raw__OutputArray(), sp, sr, criteria.opencv_as_extern(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_meanShiftProc_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_int_TermCriteria_StreamR(src.as_raw__InputArray(), dstr.as_raw__OutputArray(), dstsp.as_raw__OutputArray(), sp, sr, &criteria, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1542,7 +1542,7 @@ pub mod cudaimgproc {
 	/// * criteria: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,5,1)
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn mean_shift_segmentation_def(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, sp: i32, sr: i32, minsize: i32) -> Result<()> {
+	pub fn mean_shift_segmentation_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, sp: i32, sr: i32, minsize: i32) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -1567,11 +1567,11 @@ pub mod cudaimgproc {
 	/// * criteria: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,5,1)
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn mean_shift_segmentation(src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, sp: i32, sr: i32, minsize: i32, criteria: core::TermCriteria, stream: &mut core::Stream) -> Result<()> {
+	pub fn mean_shift_segmentation(src: &impl ToInputArray, dst: &mut impl ToOutputArray, sp: i32, sr: i32, minsize: i32, criteria: core::TermCriteria, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_meanShiftSegmentation_const__InputArrayR_const__OutputArrayR_int_int_int_TermCriteria_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), sp, sr, minsize, criteria.opencv_as_extern(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_meanShiftSegmentation_const__InputArrayR_const__OutputArrayR_int_int_int_TermCriteria_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), sp, sr, minsize, &criteria, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -1607,7 +1607,7 @@ pub mod cudaimgproc {
 	/// * order: MomentsOrder::THIRD_ORDER_MOMENTS
 	/// * moments_type: CV_64F
 	#[inline]
-	pub fn moments_def(src: &impl core::ToInputArray) -> Result<core::Moments> {
+	pub fn moments_def(src: &impl ToInputArray) -> Result<core::Moments> {
 		input_array_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_moments_const__InputArrayR(src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -1645,7 +1645,7 @@ pub mod cudaimgproc {
 	/// * order: MomentsOrder::THIRD_ORDER_MOMENTS
 	/// * moments_type: CV_64F
 	#[inline]
-	pub fn moments(src: &impl core::ToInputArray, binary_image: bool, order: crate::cudaimgproc::CUDA_MomentsOrder, moments_type: i32) -> Result<core::Moments> {
+	pub fn moments(src: &impl ToInputArray, binary_image: bool, order: crate::cudaimgproc::CUDA_MomentsOrder, moments_type: i32) -> Result<core::Moments> {
 		input_array_arg!(src);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_moments_const__InputArrayR_const_bool_const_MomentsOrder_const_int(src.as_raw__InputArray(), binary_image, order, moments_type, ocvrs_return.as_mut_ptr()) };
@@ -1709,7 +1709,7 @@ pub mod cudaimgproc {
 	/// * moments_type: CV_64F
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn spatial_moments_def(src: &impl core::ToInputArray, moments: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn spatial_moments_def(src: &impl ToInputArray, moments: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(moments);
 		return_send!(via ocvrs_return);
@@ -1757,7 +1757,7 @@ pub mod cudaimgproc {
 	/// * moments_type: CV_64F
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn spatial_moments(src: &impl core::ToInputArray, moments: &mut impl core::ToOutputArray, binary_image: bool, order: crate::cudaimgproc::CUDA_MomentsOrder, moments_type: i32, stream: &mut core::Stream) -> Result<()> {
+	pub fn spatial_moments(src: &impl ToInputArray, moments: &mut impl ToOutputArray, binary_image: bool, order: crate::cudaimgproc::CUDA_MomentsOrder, moments_type: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(moments);
 		return_send!(via ocvrs_return);
@@ -1782,7 +1782,7 @@ pub mod cudaimgproc {
 	/// This alternative version of [swap_channels] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn swap_channels_def(image: &mut impl core::ToInputOutputArray, dst_order: &[i32; 4]) -> Result<()> {
+	pub fn swap_channels_def(image: &mut impl ToInputOutputArray, dst_order: &[i32; 4]) -> Result<()> {
 		input_output_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_swapChannels_const__InputOutputArrayR_const_intXX(image.as_raw__InputOutputArray(), dst_order, ocvrs_return.as_mut_ptr()) };
@@ -1805,7 +1805,7 @@ pub mod cudaimgproc {
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn swap_channels(image: &mut impl core::ToInputOutputArray, dst_order: &[i32; 4], stream: &mut core::Stream) -> Result<()> {
+	pub fn swap_channels(image: &mut impl ToInputOutputArray, dst_order: &[i32; 4], stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_output_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_swapChannels_const__InputOutputArrayR_const_intXX_StreamR(image.as_raw__InputOutputArray(), dst_order, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
@@ -1831,7 +1831,7 @@ pub mod cudaimgproc {
 		/// * dst: Destination image.
 		/// * stream: Stream for the asynchronous version.
 		#[inline]
-		fn apply(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		fn apply(&mut self, src: &impl ToInputArray, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 			input_array_arg!(src);
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
@@ -1867,6 +1867,8 @@ pub mod cudaimgproc {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { CUDA_CLAHE, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::imgproc::CLAHETraitConst for CUDA_CLAHE {
 		#[inline] fn as_raw_CLAHE(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1875,6 +1877,8 @@ pub mod cudaimgproc {
 		#[inline] fn as_raw_mut_CLAHE(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { CUDA_CLAHE, crate::imgproc::CLAHETraitConst, as_raw_CLAHE, crate::imgproc::CLAHETrait, as_raw_mut_CLAHE }
+	
 	impl crate::cudaimgproc::CUDA_CLAHETraitConst for CUDA_CLAHE {
 		#[inline] fn as_raw_CUDA_CLAHE(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1882,6 +1886,8 @@ pub mod cudaimgproc {
 	impl crate::cudaimgproc::CUDA_CLAHETrait for CUDA_CLAHE {
 		#[inline] fn as_raw_mut_CUDA_CLAHE(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { CUDA_CLAHE, crate::cudaimgproc::CUDA_CLAHETraitConst, as_raw_CUDA_CLAHE, crate::cudaimgproc::CUDA_CLAHETrait, as_raw_mut_CUDA_CLAHE }
 	
 	impl CUDA_CLAHE {
 	}
@@ -1954,7 +1960,7 @@ pub mod cudaimgproc {
 		/// ## C++ default parameters
 		/// * stream: Stream::Null()
 		#[inline]
-		fn detect(&mut self, image: &impl core::ToInputArray, edges: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		fn detect(&mut self, image: &impl ToInputArray, edges: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 			input_array_arg!(image);
 			output_array_arg!(edges);
 			return_send!(via ocvrs_return);
@@ -1975,7 +1981,7 @@ pub mod cudaimgproc {
 		/// This alternative version of [CUDA_CannyEdgeDetectorTrait::detect] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
 		#[inline]
-		fn detect_def(&mut self, image: &impl core::ToInputArray, edges: &mut impl core::ToOutputArray) -> Result<()> {
+		fn detect_def(&mut self, image: &impl ToInputArray, edges: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(image);
 			output_array_arg!(edges);
 			return_send!(via ocvrs_return);
@@ -2002,7 +2008,7 @@ pub mod cudaimgproc {
 		/// ## C++ default parameters
 		/// * stream: Stream::Null()
 		#[inline]
-		fn detect_1(&mut self, dx: &impl core::ToInputArray, dy: &impl core::ToInputArray, edges: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		fn detect_1(&mut self, dx: &impl ToInputArray, dy: &impl ToInputArray, edges: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 			input_array_arg!(dx);
 			input_array_arg!(dy);
 			output_array_arg!(edges);
@@ -2024,7 +2030,7 @@ pub mod cudaimgproc {
 		/// This alternative version of [CUDA_CannyEdgeDetectorTrait::detect] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
 		#[inline]
-		fn detect_def_1(&mut self, dx: &impl core::ToInputArray, dy: &impl core::ToInputArray, edges: &mut impl core::ToOutputArray) -> Result<()> {
+		fn detect_def_1(&mut self, dx: &impl ToInputArray, dy: &impl ToInputArray, edges: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(dx);
 			input_array_arg!(dy);
 			output_array_arg!(edges);
@@ -2097,6 +2103,8 @@ pub mod cudaimgproc {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { CUDA_CannyEdgeDetector, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::cudaimgproc::CUDA_CannyEdgeDetectorTraitConst for CUDA_CannyEdgeDetector {
 		#[inline] fn as_raw_CUDA_CannyEdgeDetector(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2104,6 +2112,8 @@ pub mod cudaimgproc {
 	impl crate::cudaimgproc::CUDA_CannyEdgeDetectorTrait for CUDA_CannyEdgeDetector {
 		#[inline] fn as_raw_mut_CUDA_CannyEdgeDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { CUDA_CannyEdgeDetector, crate::cudaimgproc::CUDA_CannyEdgeDetectorTraitConst, as_raw_CUDA_CannyEdgeDetector, crate::cudaimgproc::CUDA_CannyEdgeDetectorTrait, as_raw_mut_CUDA_CannyEdgeDetector }
 	
 	impl CUDA_CannyEdgeDetector {
 	}
@@ -2139,7 +2149,7 @@ pub mod cudaimgproc {
 		/// ## C++ default parameters
 		/// * stream: Stream::Null()
 		#[inline]
-		fn compute(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		fn compute(&mut self, src: &impl ToInputArray, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 			input_array_arg!(src);
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
@@ -2161,7 +2171,7 @@ pub mod cudaimgproc {
 		/// This alternative version of [CUDA_CornernessCriteriaTrait::compute] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
 		#[inline]
-		fn compute_def(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		fn compute_def(&mut self, src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(src);
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
@@ -2197,6 +2207,8 @@ pub mod cudaimgproc {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { CUDA_CornernessCriteria, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::cudaimgproc::CUDA_CornernessCriteriaTraitConst for CUDA_CornernessCriteria {
 		#[inline] fn as_raw_CUDA_CornernessCriteria(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2204,6 +2216,8 @@ pub mod cudaimgproc {
 	impl crate::cudaimgproc::CUDA_CornernessCriteriaTrait for CUDA_CornernessCriteria {
 		#[inline] fn as_raw_mut_CUDA_CornernessCriteria(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { CUDA_CornernessCriteria, crate::cudaimgproc::CUDA_CornernessCriteriaTraitConst, as_raw_CUDA_CornernessCriteria, crate::cudaimgproc::CUDA_CornernessCriteriaTrait, as_raw_mut_CUDA_CornernessCriteria }
 	
 	impl CUDA_CornernessCriteria {
 	}
@@ -2242,7 +2256,7 @@ pub mod cudaimgproc {
 		/// * mask: noArray()
 		/// * stream: Stream::Null()
 		#[inline]
-		fn detect(&mut self, image: &impl core::ToInputArray, corners: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+		fn detect(&mut self, image: &impl ToInputArray, corners: &mut impl ToOutputArray, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 			input_array_arg!(image);
 			output_array_arg!(corners);
 			input_array_arg!(mask);
@@ -2268,7 +2282,7 @@ pub mod cudaimgproc {
 		/// * mask: noArray()
 		/// * stream: Stream::Null()
 		#[inline]
-		fn detect_def(&mut self, image: &impl core::ToInputArray, corners: &mut impl core::ToOutputArray) -> Result<()> {
+		fn detect_def(&mut self, image: &impl ToInputArray, corners: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(image);
 			output_array_arg!(corners);
 			return_send!(via ocvrs_return);
@@ -2304,6 +2318,8 @@ pub mod cudaimgproc {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { CUDA_CornersDetector, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::cudaimgproc::CUDA_CornersDetectorTraitConst for CUDA_CornersDetector {
 		#[inline] fn as_raw_CUDA_CornersDetector(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2311,6 +2327,8 @@ pub mod cudaimgproc {
 	impl crate::cudaimgproc::CUDA_CornersDetectorTrait for CUDA_CornersDetector {
 		#[inline] fn as_raw_mut_CUDA_CornersDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { CUDA_CornersDetector, crate::cudaimgproc::CUDA_CornersDetectorTraitConst, as_raw_CUDA_CornersDetector, crate::cudaimgproc::CUDA_CornersDetectorTrait, as_raw_mut_CUDA_CornersDetector }
 	
 	impl CUDA_CornersDetector {
 	}
@@ -2411,7 +2429,7 @@ pub mod cudaimgproc {
 		/// ## C++ default parameters
 		/// * stream: Stream::Null()
 		#[inline]
-		fn detect(&mut self, src: &impl core::ToInputArray, circles: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		fn detect(&mut self, src: &impl ToInputArray, circles: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 			input_array_arg!(src);
 			output_array_arg!(circles);
 			return_send!(via ocvrs_return);
@@ -2435,7 +2453,7 @@ pub mod cudaimgproc {
 		/// This alternative version of [CUDA_HoughCirclesDetectorTrait::detect] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
 		#[inline]
-		fn detect_def(&mut self, src: &impl core::ToInputArray, circles: &mut impl core::ToOutputArray) -> Result<()> {
+		fn detect_def(&mut self, src: &impl ToInputArray, circles: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(src);
 			output_array_arg!(circles);
 			return_send!(via ocvrs_return);
@@ -2534,6 +2552,8 @@ pub mod cudaimgproc {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { CUDA_HoughCirclesDetector, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::cudaimgproc::CUDA_HoughCirclesDetectorTraitConst for CUDA_HoughCirclesDetector {
 		#[inline] fn as_raw_CUDA_HoughCirclesDetector(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2541,6 +2561,8 @@ pub mod cudaimgproc {
 	impl crate::cudaimgproc::CUDA_HoughCirclesDetectorTrait for CUDA_HoughCirclesDetector {
 		#[inline] fn as_raw_mut_CUDA_HoughCirclesDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { CUDA_HoughCirclesDetector, crate::cudaimgproc::CUDA_HoughCirclesDetectorTraitConst, as_raw_CUDA_HoughCirclesDetector, crate::cudaimgproc::CUDA_HoughCirclesDetectorTrait, as_raw_mut_CUDA_HoughCirclesDetector }
 	
 	impl CUDA_HoughCirclesDetector {
 	}
@@ -2625,7 +2647,7 @@ pub mod cudaimgproc {
 		/// ## C++ default parameters
 		/// * stream: Stream::Null()
 		#[inline]
-		fn detect(&mut self, src: &impl core::ToInputArray, lines: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		fn detect(&mut self, src: &impl ToInputArray, lines: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 			input_array_arg!(src);
 			output_array_arg!(lines);
 			return_send!(via ocvrs_return);
@@ -2651,7 +2673,7 @@ pub mod cudaimgproc {
 		/// This alternative version of [CUDA_HoughLinesDetectorTrait::detect] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
 		#[inline]
-		fn detect_def(&mut self, src: &impl core::ToInputArray, lines: &mut impl core::ToOutputArray) -> Result<()> {
+		fn detect_def(&mut self, src: &impl ToInputArray, lines: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(src);
 			output_array_arg!(lines);
 			return_send!(via ocvrs_return);
@@ -2673,7 +2695,7 @@ pub mod cudaimgproc {
 		/// * h_votes: noArray()
 		/// * stream: Stream::Null()
 		#[inline]
-		fn download_results(&mut self, d_lines: &impl core::ToInputArray, h_lines: &mut impl core::ToOutputArray, h_votes: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		fn download_results(&mut self, d_lines: &impl ToInputArray, h_lines: &mut impl ToOutputArray, h_votes: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 			input_array_arg!(d_lines);
 			output_array_arg!(h_lines);
 			output_array_arg!(h_votes);
@@ -2697,7 +2719,7 @@ pub mod cudaimgproc {
 		/// * h_votes: noArray()
 		/// * stream: Stream::Null()
 		#[inline]
-		fn download_results_def(&mut self, d_lines: &impl core::ToInputArray, h_lines: &mut impl core::ToOutputArray) -> Result<()> {
+		fn download_results_def(&mut self, d_lines: &impl ToInputArray, h_lines: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(d_lines);
 			output_array_arg!(h_lines);
 			return_send!(via ocvrs_return);
@@ -2778,6 +2800,8 @@ pub mod cudaimgproc {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { CUDA_HoughLinesDetector, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::cudaimgproc::CUDA_HoughLinesDetectorTraitConst for CUDA_HoughLinesDetector {
 		#[inline] fn as_raw_CUDA_HoughLinesDetector(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2785,6 +2809,8 @@ pub mod cudaimgproc {
 	impl crate::cudaimgproc::CUDA_HoughLinesDetectorTrait for CUDA_HoughLinesDetector {
 		#[inline] fn as_raw_mut_CUDA_HoughLinesDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { CUDA_HoughLinesDetector, crate::cudaimgproc::CUDA_HoughLinesDetectorTraitConst, as_raw_CUDA_HoughLinesDetector, crate::cudaimgproc::CUDA_HoughLinesDetectorTrait, as_raw_mut_CUDA_HoughLinesDetector }
 	
 	impl CUDA_HoughLinesDetector {
 	}
@@ -2877,7 +2903,7 @@ pub mod cudaimgproc {
 		/// ## C++ default parameters
 		/// * stream: Stream::Null()
 		#[inline]
-		fn detect(&mut self, src: &impl core::ToInputArray, lines: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		fn detect(&mut self, src: &impl ToInputArray, lines: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 			input_array_arg!(src);
 			output_array_arg!(lines);
 			return_send!(via ocvrs_return);
@@ -2902,7 +2928,7 @@ pub mod cudaimgproc {
 		/// This alternative version of [CUDA_HoughSegmentDetectorTrait::detect] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
 		#[inline]
-		fn detect_def(&mut self, src: &impl core::ToInputArray, lines: &mut impl core::ToOutputArray) -> Result<()> {
+		fn detect_def(&mut self, src: &impl ToInputArray, lines: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(src);
 			output_array_arg!(lines);
 			return_send!(via ocvrs_return);
@@ -2992,6 +3018,8 @@ pub mod cudaimgproc {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { CUDA_HoughSegmentDetector, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::cudaimgproc::CUDA_HoughSegmentDetectorTraitConst for CUDA_HoughSegmentDetector {
 		#[inline] fn as_raw_CUDA_HoughSegmentDetector(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2999,6 +3027,8 @@ pub mod cudaimgproc {
 	impl crate::cudaimgproc::CUDA_HoughSegmentDetectorTrait for CUDA_HoughSegmentDetector {
 		#[inline] fn as_raw_mut_CUDA_HoughSegmentDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { CUDA_HoughSegmentDetector, crate::cudaimgproc::CUDA_HoughSegmentDetectorTraitConst, as_raw_CUDA_HoughSegmentDetector, crate::cudaimgproc::CUDA_HoughSegmentDetectorTrait, as_raw_mut_CUDA_HoughSegmentDetector }
 	
 	impl CUDA_HoughSegmentDetector {
 	}
@@ -3035,7 +3065,7 @@ pub mod cudaimgproc {
 		/// ## C++ default parameters
 		/// * stream: Stream::Null()
 		#[inline]
-		fn match_(&mut self, image: &impl core::ToInputArray, templ: &impl core::ToInputArray, result: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		fn match_(&mut self, image: &impl ToInputArray, templ: &impl ToInputArray, result: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 			input_array_arg!(image);
 			input_array_arg!(templ);
 			output_array_arg!(result);
@@ -3059,7 +3089,7 @@ pub mod cudaimgproc {
 		/// This alternative version of [CUDA_TemplateMatchingTrait::match_] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
 		#[inline]
-		fn match__def(&mut self, image: &impl core::ToInputArray, templ: &impl core::ToInputArray, result: &mut impl core::ToOutputArray) -> Result<()> {
+		fn match__def(&mut self, image: &impl ToInputArray, templ: &impl ToInputArray, result: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(image);
 			input_array_arg!(templ);
 			output_array_arg!(result);
@@ -3096,6 +3126,8 @@ pub mod cudaimgproc {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { CUDA_TemplateMatching, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::cudaimgproc::CUDA_TemplateMatchingTraitConst for CUDA_TemplateMatching {
 		#[inline] fn as_raw_CUDA_TemplateMatching(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3103,6 +3135,8 @@ pub mod cudaimgproc {
 	impl crate::cudaimgproc::CUDA_TemplateMatchingTrait for CUDA_TemplateMatching {
 		#[inline] fn as_raw_mut_CUDA_TemplateMatching(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { CUDA_TemplateMatching, crate::cudaimgproc::CUDA_TemplateMatchingTraitConst, as_raw_CUDA_TemplateMatching, crate::cudaimgproc::CUDA_TemplateMatchingTrait, as_raw_mut_CUDA_TemplateMatching }
 	
 	impl CUDA_TemplateMatching {
 	}

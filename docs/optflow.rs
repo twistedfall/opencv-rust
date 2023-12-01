@@ -108,7 +108,7 @@ pub mod optflow {
 	/// histogram, where a recent motion has a larger weight and the motion occurred in the past has a
 	/// smaller weight, as recorded in mhi .
 	#[inline]
-	pub fn calc_global_orientation(orientation: &impl core::ToInputArray, mask: &impl core::ToInputArray, mhi: &impl core::ToInputArray, timestamp: f64, duration: f64) -> Result<f64> {
+	pub fn calc_global_orientation(orientation: &impl ToInputArray, mask: &impl ToInputArray, mhi: &impl ToInputArray, timestamp: f64, duration: f64) -> Result<f64> {
 		input_array_arg!(orientation);
 		input_array_arg!(mask);
 		input_array_arg!(mhi);
@@ -153,7 +153,7 @@ pub mod optflow {
 	/// This alternative version of [calc_motion_gradient] function uses the following default values for its arguments:
 	/// * aperture_size: 3
 	#[inline]
-	pub fn calc_motion_gradient_def(mhi: &impl core::ToInputArray, mask: &mut impl core::ToOutputArray, orientation: &mut impl core::ToOutputArray, delta1: f64, delta2: f64) -> Result<()> {
+	pub fn calc_motion_gradient_def(mhi: &impl ToInputArray, mask: &mut impl ToOutputArray, orientation: &mut impl ToOutputArray, delta1: f64, delta2: f64) -> Result<()> {
 		input_array_arg!(mhi);
 		output_array_arg!(mask);
 		output_array_arg!(orientation);
@@ -197,7 +197,7 @@ pub mod optflow {
 	/// ## C++ default parameters
 	/// * aperture_size: 3
 	#[inline]
-	pub fn calc_motion_gradient(mhi: &impl core::ToInputArray, mask: &mut impl core::ToOutputArray, orientation: &mut impl core::ToOutputArray, delta1: f64, delta2: f64, aperture_size: i32) -> Result<()> {
+	pub fn calc_motion_gradient(mhi: &impl ToInputArray, mask: &mut impl ToOutputArray, orientation: &mut impl ToOutputArray, delta1: f64, delta2: f64, aperture_size: i32) -> Result<()> {
 		input_array_arg!(mhi);
 		output_array_arg!(mask);
 		output_array_arg!(orientation);
@@ -224,7 +224,7 @@ pub mod optflow {
 	/// direction for every component can be calculated with calcGlobalOrientation using the extracted mask
 	/// of the particular component.
 	#[inline]
-	pub fn segment_motion(mhi: &impl core::ToInputArray, segmask: &mut impl core::ToOutputArray, bounding_rects: &mut core::Vector<core::Rect>, timestamp: f64, seg_thresh: f64) -> Result<()> {
+	pub fn segment_motion(mhi: &impl ToInputArray, segmask: &mut impl ToOutputArray, bounding_rects: &mut core::Vector<core::Rect>, timestamp: f64, seg_thresh: f64) -> Result<()> {
 		input_array_arg!(mhi);
 		output_array_arg!(segmask);
 		return_send!(via ocvrs_return);
@@ -253,7 +253,7 @@ pub mod optflow {
 	/// The function, together with calcMotionGradient and calcGlobalOrientation , implements a motion
 	/// templates technique described in [Davis97](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Davis97) and [Bradski00](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Bradski00) .
 	#[inline]
-	pub fn update_motion_history(silhouette: &impl core::ToInputArray, mhi: &mut impl core::ToInputOutputArray, timestamp: f64, duration: f64) -> Result<()> {
+	pub fn update_motion_history(silhouette: &impl ToInputArray, mhi: &mut impl ToInputOutputArray, timestamp: f64, duration: f64) -> Result<()> {
 		input_array_arg!(silhouette);
 		input_output_array_arg!(mhi);
 		return_send!(via ocvrs_return);
@@ -337,7 +337,7 @@ pub mod optflow {
 	/// * fgs_sigma: 1.5f
 	/// * use_variational_refinement: false
 	#[inline]
-	pub fn calc_optical_flow_dense_rlof_def(i0: &impl core::ToInputArray, i1: &impl core::ToInputArray, flow: &mut impl core::ToInputOutputArray) -> Result<()> {
+	pub fn calc_optical_flow_dense_rlof_def(i0: &impl ToInputArray, i1: &impl ToInputArray, flow: &mut impl ToInputOutputArray) -> Result<()> {
 		input_array_arg!(i0);
 		input_array_arg!(i1);
 		input_output_array_arg!(flow);
@@ -421,12 +421,12 @@ pub mod optflow {
 	/// * fgs_sigma: 1.5f
 	/// * use_variational_refinement: false
 	#[inline]
-	pub fn calc_optical_flow_dense_rlof(i0: &impl core::ToInputArray, i1: &impl core::ToInputArray, flow: &mut impl core::ToInputOutputArray, mut rlof_param: core::Ptr<crate::optflow::RLOFOpticalFlowParameter>, forward_backward_threshold: f32, grid_step: core::Size, interp_type: crate::optflow::InterpolationType, epic_k: i32, epic_sigma: f32, epic_lambda: f32, ric_sp_size: i32, ric_slic_type: i32, use_post_proc: bool, fgs_lambda: f32, fgs_sigma: f32, use_variational_refinement: bool) -> Result<()> {
+	pub fn calc_optical_flow_dense_rlof(i0: &impl ToInputArray, i1: &impl ToInputArray, flow: &mut impl ToInputOutputArray, mut rlof_param: core::Ptr<crate::optflow::RLOFOpticalFlowParameter>, forward_backward_threshold: f32, grid_step: core::Size, interp_type: crate::optflow::InterpolationType, epic_k: i32, epic_sigma: f32, epic_lambda: f32, ric_sp_size: i32, ric_slic_type: i32, use_post_proc: bool, fgs_lambda: f32, fgs_sigma: f32, use_variational_refinement: bool) -> Result<()> {
 		input_array_arg!(i0);
 		input_array_arg!(i1);
 		input_output_array_arg!(flow);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_optflow_calcOpticalFlowDenseRLOF_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_PtrLRLOFOpticalFlowParameterG_float_Size_InterpolationType_int_float_float_int_int_bool_float_float_bool(i0.as_raw__InputArray(), i1.as_raw__InputArray(), flow.as_raw__InputOutputArray(), rlof_param.as_raw_mut_PtrOfRLOFOpticalFlowParameter(), forward_backward_threshold, grid_step.opencv_as_extern(), interp_type, epic_k, epic_sigma, epic_lambda, ric_sp_size, ric_slic_type, use_post_proc, fgs_lambda, fgs_sigma, use_variational_refinement, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_optflow_calcOpticalFlowDenseRLOF_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_PtrLRLOFOpticalFlowParameterG_float_Size_InterpolationType_int_float_float_int_int_bool_float_float_bool(i0.as_raw__InputArray(), i1.as_raw__InputArray(), flow.as_raw__InputOutputArray(), rlof_param.as_raw_mut_PtrOfRLOFOpticalFlowParameter(), forward_backward_threshold, &grid_step, interp_type, epic_k, epic_sigma, epic_lambda, ric_sp_size, ric_slic_type, use_post_proc, fgs_lambda, fgs_sigma, use_variational_refinement, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -462,7 +462,7 @@ pub mod optflow {
 	/// 
 	/// ## Overloaded parameters
 	#[inline]
-	pub fn calc_optical_flow_sf(from: &impl core::ToInputArray, to: &impl core::ToInputArray, flow: &mut impl core::ToOutputArray, layers: i32, averaging_block_size: i32, max_flow: i32) -> Result<()> {
+	pub fn calc_optical_flow_sf(from: &impl ToInputArray, to: &impl ToInputArray, flow: &mut impl ToOutputArray, layers: i32, averaging_block_size: i32, max_flow: i32) -> Result<()> {
 		input_array_arg!(from);
 		input_array_arg!(to);
 		output_array_arg!(flow);
@@ -501,7 +501,7 @@ pub mod optflow {
 	/// Note:
 	///    *   An example using the simpleFlow algorithm can be found at samples/simpleflow_demo.cpp
 	#[inline]
-	pub fn calc_optical_flow_sf_1(from: &impl core::ToInputArray, to: &impl core::ToInputArray, flow: &mut impl core::ToOutputArray, layers: i32, averaging_block_size: i32, max_flow: i32, sigma_dist: f64, sigma_color: f64, postprocess_window: i32, sigma_dist_fix: f64, sigma_color_fix: f64, occ_thr: f64, upscale_averaging_radius: i32, upscale_sigma_dist: f64, upscale_sigma_color: f64, speed_up_thr: f64) -> Result<()> {
+	pub fn calc_optical_flow_sf_1(from: &impl ToInputArray, to: &impl ToInputArray, flow: &mut impl ToOutputArray, layers: i32, averaging_block_size: i32, max_flow: i32, sigma_dist: f64, sigma_color: f64, postprocess_window: i32, sigma_dist_fix: f64, sigma_color_fix: f64, occ_thr: f64, upscale_averaging_radius: i32, upscale_sigma_dist: f64, upscale_sigma_color: f64, speed_up_thr: f64) -> Result<()> {
 		input_array_arg!(from);
 		input_array_arg!(to);
 		output_array_arg!(flow);
@@ -547,7 +547,7 @@ pub mod optflow {
 	/// * rlof_param: Ptr<RLOFOpticalFlowParameter>()
 	/// * forward_backward_threshold: 0
 	#[inline]
-	pub fn calc_optical_flow_sparse_rlof_def(prev_img: &impl core::ToInputArray, next_img: &impl core::ToInputArray, prev_pts: &impl core::ToInputArray, next_pts: &mut impl core::ToInputOutputArray, status: &mut impl core::ToOutputArray, err: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn calc_optical_flow_sparse_rlof_def(prev_img: &impl ToInputArray, next_img: &impl ToInputArray, prev_pts: &impl ToInputArray, next_pts: &mut impl ToInputOutputArray, status: &mut impl ToOutputArray, err: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(prev_img);
 		input_array_arg!(next_img);
 		input_array_arg!(prev_pts);
@@ -595,7 +595,7 @@ pub mod optflow {
 	/// * rlof_param: Ptr<RLOFOpticalFlowParameter>()
 	/// * forward_backward_threshold: 0
 	#[inline]
-	pub fn calc_optical_flow_sparse_rlof(prev_img: &impl core::ToInputArray, next_img: &impl core::ToInputArray, prev_pts: &impl core::ToInputArray, next_pts: &mut impl core::ToInputOutputArray, status: &mut impl core::ToOutputArray, err: &mut impl core::ToOutputArray, mut rlof_param: core::Ptr<crate::optflow::RLOFOpticalFlowParameter>, forward_backward_threshold: f32) -> Result<()> {
+	pub fn calc_optical_flow_sparse_rlof(prev_img: &impl ToInputArray, next_img: &impl ToInputArray, prev_pts: &impl ToInputArray, next_pts: &mut impl ToInputOutputArray, status: &mut impl ToOutputArray, err: &mut impl ToOutputArray, mut rlof_param: core::Ptr<crate::optflow::RLOFOpticalFlowParameter>, forward_backward_threshold: f32) -> Result<()> {
 		input_array_arg!(prev_img);
 		input_array_arg!(next_img);
 		input_array_arg!(prev_pts);
@@ -637,7 +637,7 @@ pub mod optflow {
 	/// * fgs_lambda: 500.0f
 	/// * fgs_sigma: 1.5f
 	#[inline]
-	pub fn calc_optical_flow_sparse_to_dense_def(from: &impl core::ToInputArray, to: &impl core::ToInputArray, flow: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn calc_optical_flow_sparse_to_dense_def(from: &impl ToInputArray, to: &impl ToInputArray, flow: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(from);
 		input_array_arg!(to);
 		output_array_arg!(flow);
@@ -675,7 +675,7 @@ pub mod optflow {
 	/// * fgs_lambda: 500.0f
 	/// * fgs_sigma: 1.5f
 	#[inline]
-	pub fn calc_optical_flow_sparse_to_dense(from: &impl core::ToInputArray, to: &impl core::ToInputArray, flow: &mut impl core::ToOutputArray, grid_step: i32, k: i32, sigma: f32, use_post_proc: bool, fgs_lambda: f32, fgs_sigma: f32) -> Result<()> {
+	pub fn calc_optical_flow_sparse_to_dense(from: &impl ToInputArray, to: &impl ToInputArray, flow: &mut impl ToOutputArray, grid_step: i32, k: i32, sigma: f32, use_post_proc: bool, fgs_lambda: f32, fgs_sigma: f32) -> Result<()> {
 		input_array_arg!(from);
 		input_array_arg!(to);
 		output_array_arg!(flow);
@@ -798,16 +798,16 @@ pub mod optflow {
 	}
 	
 	#[inline]
-	pub fn read(fn_: &core::FileNode, node: &mut crate::optflow::GPCTree_Node, unnamed: crate::optflow::GPCTree_Node) -> Result<()> {
+	pub fn read(fn_: &impl core::FileNodeTraitConst, node: &mut crate::optflow::GPCTree_Node, unnamed: crate::optflow::GPCTree_Node) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_read_const_FileNodeR_NodeR_Node(fn_.as_raw_FileNode(), node, unnamed.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_read_const_FileNodeR_NodeR_Node(fn_.as_raw_FileNode(), node, &unnamed, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
 	#[inline]
-	pub fn write(fs: &mut core::FileStorage, name: &str, node: crate::optflow::GPCTree_Node) -> Result<()> {
+	pub fn write(fs: &mut impl core::FileStorageTrait, name: &str, node: crate::optflow::GPCTree_Node) -> Result<()> {
 		extern_container_arg!(name);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_write_FileStorageR_const_StringR_const_NodeR(fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), &node, ocvrs_return.as_mut_ptr()) };
@@ -1046,7 +1046,7 @@ pub mod optflow {
 		#[inline]
 		fn set_grid_step(&mut self, val: core::Size) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setGridStep_Size(self.as_raw_mut_DenseRLOFOpticalFlow(), val.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_setGridStep_Size(self.as_raw_mut_DenseRLOFOpticalFlow(), &val, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1243,6 +1243,8 @@ pub mod optflow {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { DenseRLOFOpticalFlow, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::video::DenseOpticalFlowTraitConst for DenseRLOFOpticalFlow {
 		#[inline] fn as_raw_DenseOpticalFlow(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1251,6 +1253,8 @@ pub mod optflow {
 		#[inline] fn as_raw_mut_DenseOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { DenseRLOFOpticalFlow, crate::video::DenseOpticalFlowTraitConst, as_raw_DenseOpticalFlow, crate::video::DenseOpticalFlowTrait, as_raw_mut_DenseOpticalFlow }
+	
 	impl crate::optflow::DenseRLOFOpticalFlowTraitConst for DenseRLOFOpticalFlow {
 		#[inline] fn as_raw_DenseRLOFOpticalFlow(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1258,6 +1262,8 @@ pub mod optflow {
 	impl crate::optflow::DenseRLOFOpticalFlowTrait for DenseRLOFOpticalFlow {
 		#[inline] fn as_raw_mut_DenseRLOFOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { DenseRLOFOpticalFlow, crate::optflow::DenseRLOFOpticalFlowTraitConst, as_raw_DenseRLOFOpticalFlow, crate::optflow::DenseRLOFOpticalFlowTrait, as_raw_mut_DenseRLOFOpticalFlow }
 	
 	impl DenseRLOFOpticalFlow {
 		/// Creates instance of optflow::DenseRLOFOpticalFlow
@@ -1294,7 +1300,7 @@ pub mod optflow {
 		#[inline]
 		pub fn create(mut rlof_param: core::Ptr<crate::optflow::RLOFOpticalFlowParameter>, forward_backward_threshold: f32, grid_step: core::Size, interp_type: crate::optflow::InterpolationType, epic_k: i32, epic_sigma: f32, epic_lambda: f32, ric_sp_size: i32, ric_slic_type: i32, use_post_proc: bool, fgs_lambda: f32, fgs_sigma: f32, use_variational_refinement: bool) -> Result<core::Ptr<crate::optflow::DenseRLOFOpticalFlow>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_create_PtrLRLOFOpticalFlowParameterG_float_Size_InterpolationType_int_float_float_int_int_bool_float_float_bool(rlof_param.as_raw_mut_PtrOfRLOFOpticalFlowParameter(), forward_backward_threshold, grid_step.opencv_as_extern(), interp_type, epic_k, epic_sigma, epic_lambda, ric_sp_size, ric_slic_type, use_post_proc, fgs_lambda, fgs_sigma, use_variational_refinement, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_create_PtrLRLOFOpticalFlowParameterG_float_Size_InterpolationType_int_float_float_int_int_bool_float_float_bool(rlof_param.as_raw_mut_PtrOfRLOFOpticalFlowParameter(), forward_backward_threshold, &grid_step, interp_type, epic_k, epic_sigma, epic_lambda, ric_sp_size, ric_slic_type, use_post_proc, fgs_lambda, fgs_sigma, use_variational_refinement, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::optflow::DenseRLOFOpticalFlow>::opencv_from_extern(ret) };
@@ -1721,6 +1727,8 @@ pub mod optflow {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { DualTVL1OpticalFlow, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::video::DenseOpticalFlowTraitConst for DualTVL1OpticalFlow {
 		#[inline] fn as_raw_DenseOpticalFlow(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1729,6 +1737,8 @@ pub mod optflow {
 		#[inline] fn as_raw_mut_DenseOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { DualTVL1OpticalFlow, crate::video::DenseOpticalFlowTraitConst, as_raw_DenseOpticalFlow, crate::video::DenseOpticalFlowTrait, as_raw_mut_DenseOpticalFlow }
+	
 	impl crate::optflow::DualTVL1OpticalFlowTraitConst for DualTVL1OpticalFlow {
 		#[inline] fn as_raw_DualTVL1OpticalFlow(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1736,6 +1746,8 @@ pub mod optflow {
 	impl crate::optflow::DualTVL1OpticalFlowTrait for DualTVL1OpticalFlow {
 		#[inline] fn as_raw_mut_DualTVL1OpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { DualTVL1OpticalFlow, crate::optflow::DualTVL1OpticalFlowTraitConst, as_raw_DualTVL1OpticalFlow, crate::optflow::DualTVL1OpticalFlowTrait, as_raw_mut_DualTVL1OpticalFlow }
 	
 	impl DualTVL1OpticalFlow {
 		/// Creates instance of cv::DualTVL1OpticalFlow
@@ -1838,6 +1850,8 @@ pub mod optflow {
 		#[inline] fn as_raw_mut_GPCDetails(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { GPCDetails, crate::optflow::GPCDetailsTraitConst, as_raw_GPCDetails, crate::optflow::GPCDetailsTrait, as_raw_mut_GPCDetails }
+	
 	impl GPCDetails {
 		#[inline]
 		pub fn drop_outliers(corr: &mut core::Vector<core::Tuple<(core::Point2i, core::Point2i)>>) -> Result<()> {
@@ -1849,7 +1863,7 @@ pub mod optflow {
 		}
 		
 		#[inline]
-		pub fn get_all_descriptors_for_image(img_ch: &core::Mat, descr: &mut core::Vector<crate::optflow::GPCPatchDescriptor>, mp: crate::optflow::GPCMatchingParams, typ: i32) -> Result<()> {
+		pub fn get_all_descriptors_for_image(img_ch: &impl core::MatTraitConst, descr: &mut core::Vector<crate::optflow::GPCPatchDescriptor>, mp: crate::optflow::GPCMatchingParams, typ: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_GPCDetails_getAllDescriptorsForImage_const_MatX_vectorLGPCPatchDescriptorGR_const_GPCMatchingParamsR_int(img_ch.as_raw_Mat(), descr.as_raw_mut_VectorOfGPCPatchDescriptor(), &mp, typ, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1860,7 +1874,7 @@ pub mod optflow {
 		#[inline]
 		pub fn get_coordinates_from_index(index: size_t, sz: core::Size, x: &mut i32, y: &mut i32) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_optflow_GPCDetails_getCoordinatesFromIndex_size_t_Size_intR_intR(index, sz.opencv_as_extern(), x, y, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_optflow_GPCDetails_getCoordinatesFromIndex_size_t_Size_intR_intR(index, &sz, x, y, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1959,7 +1973,7 @@ pub mod optflow {
 	
 		#[inline]
 		fn set_feature(&mut self, val: core::VecN<f64, 18>) {
-			let ret = unsafe { sys::cv_optflow_GPCPatchDescriptor_propFeature_const_VecLdouble__18G(self.as_raw_mut_GPCPatchDescriptor(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_optflow_GPCPatchDescriptor_propFeature_const_VecLdouble__18G(self.as_raw_mut_GPCPatchDescriptor(), &val) };
 			ret
 		}
 		
@@ -1996,6 +2010,8 @@ pub mod optflow {
 	impl crate::optflow::GPCPatchDescriptorTrait for GPCPatchDescriptor {
 		#[inline] fn as_raw_mut_GPCPatchDescriptor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { GPCPatchDescriptor, crate::optflow::GPCPatchDescriptorTraitConst, as_raw_GPCPatchDescriptor, crate::optflow::GPCPatchDescriptorTrait, as_raw_mut_GPCPatchDescriptor }
 	
 	impl GPCPatchDescriptor {
 		/// number of features in a patch descriptor
@@ -2052,19 +2068,19 @@ pub mod optflow {
 		fn as_raw_mut_GPCPatchSample(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn set_ref(&mut self, val: crate::optflow::GPCPatchDescriptor) {
+		fn set_ref(&mut self, val: impl crate::optflow::GPCPatchDescriptorTraitConst) {
 			let ret = unsafe { sys::cv_optflow_GPCPatchSample_propRef_const_GPCPatchDescriptor(self.as_raw_mut_GPCPatchSample(), val.as_raw_GPCPatchDescriptor()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_pos(&mut self, val: crate::optflow::GPCPatchDescriptor) {
+		fn set_pos(&mut self, val: impl crate::optflow::GPCPatchDescriptorTraitConst) {
 			let ret = unsafe { sys::cv_optflow_GPCPatchSample_propPos_const_GPCPatchDescriptor(self.as_raw_mut_GPCPatchSample(), val.as_raw_GPCPatchDescriptor()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_neg(&mut self, val: crate::optflow::GPCPatchDescriptor) {
+		fn set_neg(&mut self, val: impl crate::optflow::GPCPatchDescriptorTraitConst) {
 			let ret = unsafe { sys::cv_optflow_GPCPatchSample_propNeg_const_GPCPatchDescriptor(self.as_raw_mut_GPCPatchSample(), val.as_raw_GPCPatchDescriptor()) };
 			ret
 		}
@@ -2093,6 +2109,8 @@ pub mod optflow {
 	impl crate::optflow::GPCPatchSampleTrait for GPCPatchSample {
 		#[inline] fn as_raw_mut_GPCPatchSample(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { GPCPatchSample, crate::optflow::GPCPatchSampleTraitConst, as_raw_GPCPatchSample, crate::optflow::GPCPatchSampleTrait, as_raw_mut_GPCPatchSample }
 	
 	impl GPCPatchSample {
 	}
@@ -2128,7 +2146,7 @@ pub mod optflow {
 		#[inline]
 		pub fn check(self) -> Result<bool> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_optflow_GPCTrainingParams_check_const(self.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_optflow_GPCTrainingParams_check_const(&self, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -2219,6 +2237,8 @@ pub mod optflow {
 		#[inline] fn as_raw_mut_GPCTrainingSamples(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { GPCTrainingSamples, crate::optflow::GPCTrainingSamplesTraitConst, as_raw_GPCTrainingSamples, crate::optflow::GPCTrainingSamplesTrait, as_raw_mut_GPCTrainingSamples }
+	
 	impl GPCTrainingSamples {
 		/// This function can be used to extract samples from a pair of images and a ground truth flow.
 		/// Sizes of all the provided vectors must be equal.
@@ -2233,7 +2253,7 @@ pub mod optflow {
 		}
 		
 		#[inline]
-		pub fn create_1(images_from: &impl core::ToInputArray, images_to: &impl core::ToInputArray, gt: &impl core::ToInputArray, descriptor_type: i32) -> Result<core::Ptr<crate::optflow::GPCTrainingSamples>> {
+		pub fn create_1(images_from: &impl ToInputArray, images_to: &impl ToInputArray, gt: &impl ToInputArray, descriptor_type: i32) -> Result<core::Ptr<crate::optflow::GPCTrainingSamples>> {
 			input_array_arg!(images_from);
 			input_array_arg!(images_to);
 			input_array_arg!(gt);
@@ -2260,7 +2280,7 @@ pub mod optflow {
 		fn as_raw_GPCTree(&self) -> *const c_void;
 	
 		#[inline]
-		fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
+		fn write(&self, fs: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_GPCTree_write_const_FileStorageR(self.as_raw_GPCTree(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2269,7 +2289,7 @@ pub mod optflow {
 		}
 		
 		#[inline]
-		fn find_leaf_for_patch(&self, descr: &crate::optflow::GPCPatchDescriptor) -> Result<u32> {
+		fn find_leaf_for_patch(&self, descr: &impl crate::optflow::GPCPatchDescriptorTraitConst) -> Result<u32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_GPCTree_findLeafForPatch_const_const_GPCPatchDescriptorR(self.as_raw_GPCTree(), descr.as_raw_GPCPatchDescriptor(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2278,7 +2298,7 @@ pub mod optflow {
 		}
 		
 		#[inline]
-		fn equals(&self, t: &crate::optflow::GPCTree) -> Result<bool> {
+		fn equals(&self, t: &impl crate::optflow::GPCTreeTraitConst) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_GPCTree_operatorEQ_const_const_GPCTreeR(self.as_raw_GPCTree(), t.as_raw_GPCTree(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2304,9 +2324,9 @@ pub mod optflow {
 		/// ## C++ default parameters
 		/// * params: GPCTrainingParams()
 		#[inline]
-		fn train(&mut self, samples: &mut crate::optflow::GPCTrainingSamples, params: crate::optflow::GPCTrainingParams) -> Result<()> {
+		fn train(&mut self, samples: &mut impl crate::optflow::GPCTrainingSamplesTrait, params: crate::optflow::GPCTrainingParams) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_optflow_GPCTree_train_GPCTrainingSamplesR_const_GPCTrainingParams(self.as_raw_mut_GPCTree(), samples.as_raw_mut_GPCTrainingSamples(), params.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_optflow_GPCTree_train_GPCTrainingSamplesR_const_GPCTrainingParams(self.as_raw_mut_GPCTree(), samples.as_raw_mut_GPCTrainingSamples(), &params, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -2316,7 +2336,7 @@ pub mod optflow {
 		/// This alternative version of [GPCTreeTrait::train] function uses the following default values for its arguments:
 		/// * params: GPCTrainingParams()
 		#[inline]
-		fn train_def(&mut self, samples: &mut crate::optflow::GPCTrainingSamples) -> Result<()> {
+		fn train_def(&mut self, samples: &mut impl crate::optflow::GPCTrainingSamplesTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_GPCTree_train_GPCTrainingSamplesR(self.as_raw_mut_GPCTree(), samples.as_raw_mut_GPCTrainingSamples(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2325,7 +2345,7 @@ pub mod optflow {
 		}
 		
 		#[inline]
-		fn read(&mut self, fn_: &core::FileNode) -> Result<()> {
+		fn read(&mut self, fn_: &impl core::FileNodeTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_optflow_GPCTree_read_const_FileNodeR(self.as_raw_mut_GPCTree(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2359,6 +2379,8 @@ pub mod optflow {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { GPCTree, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::optflow::GPCTreeTraitConst for GPCTree {
 		#[inline] fn as_raw_GPCTree(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2366,6 +2388,8 @@ pub mod optflow {
 	impl crate::optflow::GPCTreeTrait for GPCTree {
 		#[inline] fn as_raw_mut_GPCTree(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { GPCTree, crate::optflow::GPCTreeTraitConst, as_raw_GPCTree, crate::optflow::GPCTreeTrait, as_raw_mut_GPCTree }
 	
 	impl GPCTree {
 		#[inline]
@@ -2407,7 +2431,7 @@ pub mod optflow {
 		#[inline]
 		pub fn equals(self, n: crate::optflow::GPCTree_Node) -> Result<bool> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_optflow_GPCTree_Node_operatorEQ_const_const_NodeR(self.opencv_as_extern(), &n, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_optflow_GPCTree_Node_operatorEQ_const_const_NodeR(&self, &n, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -2426,7 +2450,7 @@ pub mod optflow {
 		fn as_raw_mut_OpticalFlowPCAFlow(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn calc(&mut self, i0: &impl core::ToInputArray, i1: &impl core::ToInputArray, flow: &mut impl core::ToInputOutputArray) -> Result<()> {
+		fn calc(&mut self, i0: &impl ToInputArray, i1: &impl ToInputArray, flow: &mut impl ToInputOutputArray) -> Result<()> {
 			input_array_arg!(i0);
 			input_array_arg!(i1);
 			input_output_array_arg!(flow);
@@ -2472,6 +2496,8 @@ pub mod optflow {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { OpticalFlowPCAFlow, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::video::DenseOpticalFlowTraitConst for OpticalFlowPCAFlow {
 		#[inline] fn as_raw_DenseOpticalFlow(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2480,6 +2506,8 @@ pub mod optflow {
 		#[inline] fn as_raw_mut_DenseOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { OpticalFlowPCAFlow, crate::video::DenseOpticalFlowTraitConst, as_raw_DenseOpticalFlow, crate::video::DenseOpticalFlowTrait, as_raw_mut_DenseOpticalFlow }
+	
 	impl crate::optflow::OpticalFlowPCAFlowTraitConst for OpticalFlowPCAFlow {
 		#[inline] fn as_raw_OpticalFlowPCAFlow(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2487,6 +2515,8 @@ pub mod optflow {
 	impl crate::optflow::OpticalFlowPCAFlowTrait for OpticalFlowPCAFlow {
 		#[inline] fn as_raw_mut_OpticalFlowPCAFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { OpticalFlowPCAFlow, crate::optflow::OpticalFlowPCAFlowTraitConst, as_raw_OpticalFlowPCAFlow, crate::optflow::OpticalFlowPCAFlowTrait, as_raw_mut_OpticalFlowPCAFlow }
 	
 	impl OpticalFlowPCAFlow {
 		/// Creates an instance of PCAFlow algorithm.
@@ -2510,7 +2540,7 @@ pub mod optflow {
 		#[inline]
 		pub fn new(_prior: core::Ptr<crate::optflow::PCAPrior>, _basis_size: core::Size, _sparse_rate: f32, _retained_corners_fraction: f32, _occlusions_threshold: f32, _damping_factor: f32, _clahe_clip: f32) -> Result<crate::optflow::OpticalFlowPCAFlow> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_optflow_OpticalFlowPCAFlow_OpticalFlowPCAFlow_PtrLconst_PCAPriorG_const_Size_float_float_float_float_float(_prior.as_raw_PtrOfPCAPrior(), _basis_size.opencv_as_extern(), _sparse_rate, _retained_corners_fraction, _occlusions_threshold, _damping_factor, _clahe_clip, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_optflow_OpticalFlowPCAFlow_OpticalFlowPCAFlow_PtrLconst_PCAPriorG_const_Size_float_float_float_float_float(_prior.as_raw_PtrOfPCAPrior(), &_basis_size, _sparse_rate, _retained_corners_fraction, _occlusions_threshold, _damping_factor, _clahe_clip, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::optflow::OpticalFlowPCAFlow::opencv_from_extern(ret) };
@@ -2625,6 +2655,8 @@ pub mod optflow {
 	impl crate::optflow::PCAPriorTrait for PCAPrior {
 		#[inline] fn as_raw_mut_PCAPrior(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { PCAPrior, crate::optflow::PCAPriorTraitConst, as_raw_PCAPrior, crate::optflow::PCAPriorTrait, as_raw_mut_PCAPrior }
 	
 	impl PCAPrior {
 		#[inline]
@@ -3148,6 +3180,8 @@ pub mod optflow {
 		#[inline] fn as_raw_mut_RLOFOpticalFlowParameter(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { RLOFOpticalFlowParameter, crate::optflow::RLOFOpticalFlowParameterTraitConst, as_raw_RLOFOpticalFlowParameter, crate::optflow::RLOFOpticalFlowParameterTrait, as_raw_mut_RLOFOpticalFlowParameter }
+	
 	impl RLOFOpticalFlowParameter {
 		#[inline]
 		pub fn default() -> Result<crate::optflow::RLOFOpticalFlowParameter> {
@@ -3300,6 +3334,8 @@ pub mod optflow {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { SparseRLOFOpticalFlow, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::video::SparseOpticalFlowTraitConst for SparseRLOFOpticalFlow {
 		#[inline] fn as_raw_SparseOpticalFlow(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3308,6 +3344,8 @@ pub mod optflow {
 		#[inline] fn as_raw_mut_SparseOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { SparseRLOFOpticalFlow, crate::video::SparseOpticalFlowTraitConst, as_raw_SparseOpticalFlow, crate::video::SparseOpticalFlowTrait, as_raw_mut_SparseOpticalFlow }
+	
 	impl crate::optflow::SparseRLOFOpticalFlowTraitConst for SparseRLOFOpticalFlow {
 		#[inline] fn as_raw_SparseRLOFOpticalFlow(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3315,6 +3353,8 @@ pub mod optflow {
 	impl crate::optflow::SparseRLOFOpticalFlowTrait for SparseRLOFOpticalFlow {
 		#[inline] fn as_raw_mut_SparseRLOFOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { SparseRLOFOpticalFlow, crate::optflow::SparseRLOFOpticalFlowTraitConst, as_raw_SparseRLOFOpticalFlow, crate::optflow::SparseRLOFOpticalFlowTrait, as_raw_mut_SparseRLOFOpticalFlow }
 	
 	impl SparseRLOFOpticalFlow {
 		/// Creates instance of SparseRLOFOpticalFlow

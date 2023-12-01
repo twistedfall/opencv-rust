@@ -34,7 +34,7 @@ pub mod cudafilters {
 	#[inline]
 	pub fn create_box_filter_def(src_type: i32, dst_type: i32, ksize: core::Size) -> Result<core::Ptr<crate::cudafilters::Filter>> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_createBoxFilter_int_int_Size(src_type, dst_type, ksize.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_createBoxFilter_int_int_Size(src_type, dst_type, &ksize, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
@@ -61,7 +61,7 @@ pub mod cudafilters {
 	#[inline]
 	pub fn create_box_filter(src_type: i32, dst_type: i32, ksize: core::Size, anchor: core::Point, border_mode: i32, border_val: core::Scalar) -> Result<core::Ptr<crate::cudafilters::Filter>> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_createBoxFilter_int_int_Size_Point_int_Scalar(src_type, dst_type, ksize.opencv_as_extern(), anchor.opencv_as_extern(), border_mode, border_val.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_createBoxFilter_int_int_Size_Point_int_Scalar(src_type, dst_type, &ksize, &anchor, border_mode, &border_val, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
@@ -85,7 +85,7 @@ pub mod cudafilters {
 	#[inline]
 	pub fn create_box_max_filter_def(src_type: i32, ksize: core::Size) -> Result<core::Ptr<crate::cudafilters::Filter>> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_createBoxMaxFilter_int_Size(src_type, ksize.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_createBoxMaxFilter_int_Size(src_type, &ksize, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
@@ -108,7 +108,7 @@ pub mod cudafilters {
 	#[inline]
 	pub fn create_box_max_filter(src_type: i32, ksize: core::Size, anchor: core::Point, border_mode: i32, border_val: core::Scalar) -> Result<core::Ptr<crate::cudafilters::Filter>> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_createBoxMaxFilter_int_Size_Point_int_Scalar(src_type, ksize.opencv_as_extern(), anchor.opencv_as_extern(), border_mode, border_val.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_createBoxMaxFilter_int_Size_Point_int_Scalar(src_type, &ksize, &anchor, border_mode, &border_val, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
@@ -132,7 +132,7 @@ pub mod cudafilters {
 	#[inline]
 	pub fn create_box_min_filter_def(src_type: i32, ksize: core::Size) -> Result<core::Ptr<crate::cudafilters::Filter>> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_createBoxMinFilter_int_Size(src_type, ksize.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_createBoxMinFilter_int_Size(src_type, &ksize, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
@@ -155,7 +155,7 @@ pub mod cudafilters {
 	#[inline]
 	pub fn create_box_min_filter(src_type: i32, ksize: core::Size, anchor: core::Point, border_mode: i32, border_val: core::Scalar) -> Result<core::Ptr<crate::cudafilters::Filter>> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_createBoxMinFilter_int_Size_Point_int_Scalar(src_type, ksize.opencv_as_extern(), anchor.opencv_as_extern(), border_mode, border_val.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_createBoxMinFilter_int_Size_Point_int_Scalar(src_type, &ksize, &anchor, border_mode, &border_val, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
@@ -204,7 +204,7 @@ pub mod cudafilters {
 	#[inline]
 	pub fn create_column_sum_filter(src_type: i32, dst_type: i32, ksize: i32, anchor: i32, border_mode: i32, border_val: core::Scalar) -> Result<core::Ptr<crate::cudafilters::Filter>> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_createColumnSumFilter_int_int_int_int_int_Scalar(src_type, dst_type, ksize, anchor, border_mode, border_val.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_createColumnSumFilter_int_int_int_int_int_Scalar(src_type, dst_type, ksize, anchor, border_mode, &border_val, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
@@ -297,7 +297,7 @@ pub mod cudafilters {
 	#[inline]
 	pub fn create_gaussian_filter_def(src_type: i32, dst_type: i32, ksize: core::Size, sigma1: f64) -> Result<core::Ptr<crate::cudafilters::Filter>> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_createGaussianFilter_int_int_Size_double(src_type, dst_type, ksize.opencv_as_extern(), sigma1, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_createGaussianFilter_int_int_Size_double(src_type, dst_type, &ksize, sigma1, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
@@ -326,7 +326,7 @@ pub mod cudafilters {
 	#[inline]
 	pub fn create_gaussian_filter(src_type: i32, dst_type: i32, ksize: core::Size, sigma1: f64, sigma2: f64, row_border_mode: i32, column_border_mode: i32) -> Result<core::Ptr<crate::cudafilters::Filter>> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_createGaussianFilter_int_int_Size_double_double_int_int(src_type, dst_type, ksize.opencv_as_extern(), sigma1, sigma2, row_border_mode, column_border_mode, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_createGaussianFilter_int_int_Size_double_double_int_int(src_type, dst_type, &ksize, sigma1, sigma2, row_border_mode, column_border_mode, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
@@ -385,7 +385,7 @@ pub mod cudafilters {
 	#[inline]
 	pub fn create_laplacian_filter(src_type: i32, dst_type: i32, ksize: i32, scale: f64, border_mode: i32, border_val: core::Scalar) -> Result<core::Ptr<crate::cudafilters::Filter>> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_createLaplacianFilter_int_int_int_double_int_Scalar(src_type, dst_type, ksize, scale, border_mode, border_val.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_createLaplacianFilter_int_int_int_double_int_Scalar(src_type, dst_type, ksize, scale, border_mode, &border_val, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
@@ -411,7 +411,7 @@ pub mod cudafilters {
 	/// * border_mode: BORDER_DEFAULT
 	/// * border_val: Scalar::all(0)
 	#[inline]
-	pub fn create_linear_filter_def(src_type: i32, dst_type: i32, kernel: &impl core::ToInputArray) -> Result<core::Ptr<crate::cudafilters::Filter>> {
+	pub fn create_linear_filter_def(src_type: i32, dst_type: i32, kernel: &impl ToInputArray) -> Result<core::Ptr<crate::cudafilters::Filter>> {
 		input_array_arg!(kernel);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createLinearFilter_int_int_const__InputArrayR(src_type, dst_type, kernel.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -439,10 +439,10 @@ pub mod cudafilters {
 	/// * border_mode: BORDER_DEFAULT
 	/// * border_val: Scalar::all(0)
 	#[inline]
-	pub fn create_linear_filter(src_type: i32, dst_type: i32, kernel: &impl core::ToInputArray, anchor: core::Point, border_mode: i32, border_val: core::Scalar) -> Result<core::Ptr<crate::cudafilters::Filter>> {
+	pub fn create_linear_filter(src_type: i32, dst_type: i32, kernel: &impl ToInputArray, anchor: core::Point, border_mode: i32, border_val: core::Scalar) -> Result<core::Ptr<crate::cudafilters::Filter>> {
 		input_array_arg!(kernel);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_createLinearFilter_int_int_const__InputArrayR_Point_int_Scalar(src_type, dst_type, kernel.as_raw__InputArray(), anchor.opencv_as_extern(), border_mode, border_val.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_createLinearFilter_int_int_const__InputArrayR_Point_int_Scalar(src_type, dst_type, kernel.as_raw__InputArray(), &anchor, border_mode, &border_val, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
@@ -524,7 +524,7 @@ pub mod cudafilters {
 	/// * anchor: Point(-1,-1)
 	/// * iterations: 1
 	#[inline]
-	pub fn create_morphology_filter_def(op: i32, src_type: i32, kernel: &impl core::ToInputArray) -> Result<core::Ptr<crate::cudafilters::Filter>> {
+	pub fn create_morphology_filter_def(op: i32, src_type: i32, kernel: &impl ToInputArray) -> Result<core::Ptr<crate::cudafilters::Filter>> {
 		input_array_arg!(kernel);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_createMorphologyFilter_int_int_const__InputArrayR(op, src_type, kernel.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -557,10 +557,10 @@ pub mod cudafilters {
 	/// * anchor: Point(-1,-1)
 	/// * iterations: 1
 	#[inline]
-	pub fn create_morphology_filter(op: i32, src_type: i32, kernel: &impl core::ToInputArray, anchor: core::Point, iterations: i32) -> Result<core::Ptr<crate::cudafilters::Filter>> {
+	pub fn create_morphology_filter(op: i32, src_type: i32, kernel: &impl ToInputArray, anchor: core::Point, iterations: i32) -> Result<core::Ptr<crate::cudafilters::Filter>> {
 		input_array_arg!(kernel);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_createMorphologyFilter_int_int_const__InputArrayR_Point_int(op, src_type, kernel.as_raw__InputArray(), anchor.opencv_as_extern(), iterations, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_createMorphologyFilter_int_int_const__InputArrayR_Point_int(op, src_type, kernel.as_raw__InputArray(), &anchor, iterations, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
@@ -609,7 +609,7 @@ pub mod cudafilters {
 	#[inline]
 	pub fn create_row_sum_filter(src_type: i32, dst_type: i32, ksize: i32, anchor: i32, border_mode: i32, border_val: core::Scalar) -> Result<core::Ptr<crate::cudafilters::Filter>> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_createRowSumFilter_int_int_int_int_int_Scalar(src_type, dst_type, ksize, anchor, border_mode, border_val.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_createRowSumFilter_int_int_int_int_int_Scalar(src_type, dst_type, ksize, anchor, border_mode, &border_val, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
@@ -696,7 +696,7 @@ pub mod cudafilters {
 	/// * row_border_mode: BORDER_DEFAULT
 	/// * column_border_mode: -1
 	#[inline]
-	pub fn create_separable_linear_filter_def(src_type: i32, dst_type: i32, row_kernel: &impl core::ToInputArray, column_kernel: &impl core::ToInputArray) -> Result<core::Ptr<crate::cudafilters::Filter>> {
+	pub fn create_separable_linear_filter_def(src_type: i32, dst_type: i32, row_kernel: &impl ToInputArray, column_kernel: &impl ToInputArray) -> Result<core::Ptr<crate::cudafilters::Filter>> {
 		input_array_arg!(row_kernel);
 		input_array_arg!(column_kernel);
 		return_send!(via ocvrs_return);
@@ -727,11 +727,11 @@ pub mod cudafilters {
 	/// * row_border_mode: BORDER_DEFAULT
 	/// * column_border_mode: -1
 	#[inline]
-	pub fn create_separable_linear_filter(src_type: i32, dst_type: i32, row_kernel: &impl core::ToInputArray, column_kernel: &impl core::ToInputArray, anchor: core::Point, row_border_mode: i32, column_border_mode: i32) -> Result<core::Ptr<crate::cudafilters::Filter>> {
+	pub fn create_separable_linear_filter(src_type: i32, dst_type: i32, row_kernel: &impl ToInputArray, column_kernel: &impl ToInputArray, anchor: core::Point, row_border_mode: i32, column_border_mode: i32) -> Result<core::Ptr<crate::cudafilters::Filter>> {
 		input_array_arg!(row_kernel);
 		input_array_arg!(column_kernel);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cuda_createSeparableLinearFilter_int_int_const__InputArrayR_const__InputArrayR_Point_int_int(src_type, dst_type, row_kernel.as_raw__InputArray(), column_kernel.as_raw__InputArray(), anchor.opencv_as_extern(), row_border_mode, column_border_mode, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cuda_createSeparableLinearFilter_int_int_const__InputArrayR_const__InputArrayR_Point_int_int(src_type, dst_type, row_kernel.as_raw__InputArray(), column_kernel.as_raw__InputArray(), &anchor, row_border_mode, column_border_mode, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
@@ -821,7 +821,7 @@ pub mod cudafilters {
 		/// ## C++ default parameters
 		/// * stream: Stream::Null()
 		#[inline]
-		fn apply(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		fn apply(&mut self, src: &impl ToInputArray, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 			input_array_arg!(src);
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
@@ -842,7 +842,7 @@ pub mod cudafilters {
 		/// This alternative version of [FilterTrait::apply] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
 		#[inline]
-		fn apply_def(&mut self, src: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		fn apply_def(&mut self, src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(src);
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
@@ -878,6 +878,8 @@ pub mod cudafilters {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Filter, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::cudafilters::FilterTraitConst for Filter {
 		#[inline] fn as_raw_Filter(&self) -> *const c_void { self.as_raw() }
 	}
@@ -885,6 +887,8 @@ pub mod cudafilters {
 	impl crate::cudafilters::FilterTrait for Filter {
 		#[inline] fn as_raw_mut_Filter(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { Filter, crate::cudafilters::FilterTraitConst, as_raw_Filter, crate::cudafilters::FilterTrait, as_raw_mut_Filter }
 	
 	impl Filter {
 	}

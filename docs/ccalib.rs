@@ -46,7 +46,7 @@ pub mod ccalib {
 	/// This alternative version of [calibrate] function uses the following default values for its arguments:
 	/// * idx: noArray()
 	#[inline]
-	pub fn calibrate_def(object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, size: core::Size, k: &mut impl core::ToInputOutputArray, xi: &mut impl core::ToInputOutputArray, d: &mut impl core::ToInputOutputArray, rvecs: &mut impl core::ToOutputArray, tvecs: &mut impl core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
+	pub fn calibrate_def(object_points: &impl ToInputArray, image_points: &impl ToInputArray, size: core::Size, k: &mut impl ToInputOutputArray, xi: &mut impl ToInputOutputArray, d: &mut impl ToInputOutputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points);
 		input_output_array_arg!(k);
@@ -55,7 +55,7 @@ pub mod ccalib {
 		output_array_arg!(rvecs);
 		output_array_arg!(tvecs);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_omnidir_calibrate_const__InputArrayR_const__InputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), size.opencv_as_extern(), k.as_raw__InputOutputArray(), xi.as_raw__InputOutputArray(), d.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_omnidir_calibrate_const__InputArrayR_const__InputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &size, k.as_raw__InputOutputArray(), xi.as_raw__InputOutputArray(), d.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, &criteria, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -82,7 +82,7 @@ pub mod ccalib {
 	/// ## C++ default parameters
 	/// * idx: noArray()
 	#[inline]
-	pub fn calibrate(object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, size: core::Size, k: &mut impl core::ToInputOutputArray, xi: &mut impl core::ToInputOutputArray, d: &mut impl core::ToInputOutputArray, rvecs: &mut impl core::ToOutputArray, tvecs: &mut impl core::ToOutputArray, flags: i32, criteria: core::TermCriteria, idx: &mut impl core::ToOutputArray) -> Result<f64> {
+	pub fn calibrate(object_points: &impl ToInputArray, image_points: &impl ToInputArray, size: core::Size, k: &mut impl ToInputOutputArray, xi: &mut impl ToInputOutputArray, d: &mut impl ToInputOutputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray, flags: i32, criteria: core::TermCriteria, idx: &mut impl ToOutputArray) -> Result<f64> {
 		input_array_arg!(object_points);
 		input_array_arg!(image_points);
 		input_output_array_arg!(k);
@@ -92,7 +92,7 @@ pub mod ccalib {
 		output_array_arg!(tvecs);
 		output_array_arg!(idx);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_omnidir_calibrate_const__InputArrayR_const__InputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria_const__OutputArrayR(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), size.opencv_as_extern(), k.as_raw__InputOutputArray(), xi.as_raw__InputOutputArray(), d.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), idx.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_omnidir_calibrate_const__InputArrayR_const__InputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria_const__OutputArrayR(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &size, k.as_raw__InputOutputArray(), xi.as_raw__InputOutputArray(), d.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, &criteria, idx.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -116,7 +116,7 @@ pub mod ccalib {
 	/// * flags: Flags indicates the rectification type,  RECTIFY_PERSPECTIVE, RECTIFY_CYLINDRICAL, RECTIFY_LONGLATI and RECTIFY_STEREOGRAPHIC
 	/// are supported.
 	#[inline]
-	pub fn init_undistort_rectify_map(k: &impl core::ToInputArray, d: &impl core::ToInputArray, xi: &impl core::ToInputArray, r: &impl core::ToInputArray, p: &impl core::ToInputArray, size: core::Size, m1type: i32, map1: &mut impl core::ToOutputArray, map2: &mut impl core::ToOutputArray, flags: i32) -> Result<()> {
+	pub fn init_undistort_rectify_map(k: &impl ToInputArray, d: &impl ToInputArray, xi: &impl ToInputArray, r: &impl ToInputArray, p: &impl ToInputArray, size: core::Size, m1type: i32, map1: &mut impl ToOutputArray, map2: &mut impl ToOutputArray, flags: i32) -> Result<()> {
 		input_array_arg!(k);
 		input_array_arg!(d);
 		input_array_arg!(xi);
@@ -137,7 +137,7 @@ pub mod ccalib {
 	/// This alternative version of [project_points_1] function uses the following default values for its arguments:
 	/// * jacobian: noArray()
 	#[inline]
-	pub fn project_points_1_def(object_points: &impl core::ToInputArray, image_points: &mut impl core::ToOutputArray, affine: core::Affine3d, k: &impl core::ToInputArray, xi: f64, d: &impl core::ToInputArray) -> Result<()> {
+	pub fn project_points_1_def(object_points: &impl ToInputArray, image_points: &mut impl ToOutputArray, affine: core::Affine3d, k: &impl ToInputArray, xi: f64, d: &impl ToInputArray) -> Result<()> {
 		input_array_arg!(object_points);
 		output_array_arg!(image_points);
 		input_array_arg!(k);
@@ -174,7 +174,7 @@ pub mod ccalib {
 	/// ## C++ default parameters
 	/// * jacobian: noArray()
 	#[inline]
-	pub fn project_points_1(object_points: &impl core::ToInputArray, image_points: &mut impl core::ToOutputArray, affine: core::Affine3d, k: &impl core::ToInputArray, xi: f64, d: &impl core::ToInputArray, jacobian: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn project_points_1(object_points: &impl ToInputArray, image_points: &mut impl ToOutputArray, affine: core::Affine3d, k: &impl ToInputArray, xi: f64, d: &impl ToInputArray, jacobian: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(object_points);
 		output_array_arg!(image_points);
 		input_array_arg!(k);
@@ -211,7 +211,7 @@ pub mod ccalib {
 	/// This alternative version of [project_points] function uses the following default values for its arguments:
 	/// * jacobian: noArray()
 	#[inline]
-	pub fn project_points_def(object_points: &impl core::ToInputArray, image_points: &mut impl core::ToOutputArray, rvec: &impl core::ToInputArray, tvec: &impl core::ToInputArray, k: &impl core::ToInputArray, xi: f64, d: &impl core::ToInputArray) -> Result<()> {
+	pub fn project_points_def(object_points: &impl ToInputArray, image_points: &mut impl ToOutputArray, rvec: &impl ToInputArray, tvec: &impl ToInputArray, k: &impl ToInputArray, xi: f64, d: &impl ToInputArray) -> Result<()> {
 		input_array_arg!(object_points);
 		output_array_arg!(image_points);
 		input_array_arg!(rvec);
@@ -248,7 +248,7 @@ pub mod ccalib {
 	/// ## C++ default parameters
 	/// * jacobian: noArray()
 	#[inline]
-	pub fn project_points(object_points: &impl core::ToInputArray, image_points: &mut impl core::ToOutputArray, rvec: &impl core::ToInputArray, tvec: &impl core::ToInputArray, k: &impl core::ToInputArray, xi: f64, d: &impl core::ToInputArray, jacobian: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn project_points(object_points: &impl ToInputArray, image_points: &mut impl ToOutputArray, rvec: &impl ToInputArray, tvec: &impl ToInputArray, k: &impl ToInputArray, xi: f64, d: &impl ToInputArray, jacobian: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(object_points);
 		output_array_arg!(image_points);
 		input_array_arg!(rvec);
@@ -295,7 +295,7 @@ pub mod ccalib {
 	/// This alternative version of [stereo_calibrate] function uses the following default values for its arguments:
 	/// * idx: noArray()
 	#[inline]
-	pub fn stereo_calibrate_def(object_points: &mut impl core::ToInputOutputArray, image_points1: &mut impl core::ToInputOutputArray, image_points2: &mut impl core::ToInputOutputArray, image_size1: core::Size, image_size2: core::Size, k1: &mut impl core::ToInputOutputArray, xi1: &mut impl core::ToInputOutputArray, d1: &mut impl core::ToInputOutputArray, k2: &mut impl core::ToInputOutputArray, xi2: &mut impl core::ToInputOutputArray, d2: &mut impl core::ToInputOutputArray, rvec: &mut impl core::ToOutputArray, tvec: &mut impl core::ToOutputArray, rvecs_l: &mut impl core::ToOutputArray, tvecs_l: &mut impl core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
+	pub fn stereo_calibrate_def(object_points: &mut impl ToInputOutputArray, image_points1: &mut impl ToInputOutputArray, image_points2: &mut impl ToInputOutputArray, image_size1: core::Size, image_size2: core::Size, k1: &mut impl ToInputOutputArray, xi1: &mut impl ToInputOutputArray, d1: &mut impl ToInputOutputArray, k2: &mut impl ToInputOutputArray, xi2: &mut impl ToInputOutputArray, d2: &mut impl ToInputOutputArray, rvec: &mut impl ToOutputArray, tvec: &mut impl ToOutputArray, rvecs_l: &mut impl ToOutputArray, tvecs_l: &mut impl ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
 		input_output_array_arg!(object_points);
 		input_output_array_arg!(image_points1);
 		input_output_array_arg!(image_points2);
@@ -310,7 +310,7 @@ pub mod ccalib {
 		output_array_arg!(rvecs_l);
 		output_array_arg!(tvecs_l);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_omnidir_stereoCalibrate_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const_SizeR_const_SizeR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputOutputArray(), image_points1.as_raw__InputOutputArray(), image_points2.as_raw__InputOutputArray(), &image_size1, &image_size2, k1.as_raw__InputOutputArray(), xi1.as_raw__InputOutputArray(), d1.as_raw__InputOutputArray(), k2.as_raw__InputOutputArray(), xi2.as_raw__InputOutputArray(), d2.as_raw__InputOutputArray(), rvec.as_raw__OutputArray(), tvec.as_raw__OutputArray(), rvecs_l.as_raw__OutputArray(), tvecs_l.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_omnidir_stereoCalibrate_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const_SizeR_const_SizeR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points.as_raw__InputOutputArray(), image_points1.as_raw__InputOutputArray(), image_points2.as_raw__InputOutputArray(), &image_size1, &image_size2, k1.as_raw__InputOutputArray(), xi1.as_raw__InputOutputArray(), d1.as_raw__InputOutputArray(), k2.as_raw__InputOutputArray(), xi2.as_raw__InputOutputArray(), d2.as_raw__InputOutputArray(), rvec.as_raw__OutputArray(), tvec.as_raw__OutputArray(), rvecs_l.as_raw__OutputArray(), tvecs_l.as_raw__OutputArray(), flags, &criteria, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -347,7 +347,7 @@ pub mod ccalib {
 	/// ## C++ default parameters
 	/// * idx: noArray()
 	#[inline]
-	pub fn stereo_calibrate(object_points: &mut impl core::ToInputOutputArray, image_points1: &mut impl core::ToInputOutputArray, image_points2: &mut impl core::ToInputOutputArray, image_size1: core::Size, image_size2: core::Size, k1: &mut impl core::ToInputOutputArray, xi1: &mut impl core::ToInputOutputArray, d1: &mut impl core::ToInputOutputArray, k2: &mut impl core::ToInputOutputArray, xi2: &mut impl core::ToInputOutputArray, d2: &mut impl core::ToInputOutputArray, rvec: &mut impl core::ToOutputArray, tvec: &mut impl core::ToOutputArray, rvecs_l: &mut impl core::ToOutputArray, tvecs_l: &mut impl core::ToOutputArray, flags: i32, criteria: core::TermCriteria, idx: &mut impl core::ToOutputArray) -> Result<f64> {
+	pub fn stereo_calibrate(object_points: &mut impl ToInputOutputArray, image_points1: &mut impl ToInputOutputArray, image_points2: &mut impl ToInputOutputArray, image_size1: core::Size, image_size2: core::Size, k1: &mut impl ToInputOutputArray, xi1: &mut impl ToInputOutputArray, d1: &mut impl ToInputOutputArray, k2: &mut impl ToInputOutputArray, xi2: &mut impl ToInputOutputArray, d2: &mut impl ToInputOutputArray, rvec: &mut impl ToOutputArray, tvec: &mut impl ToOutputArray, rvecs_l: &mut impl ToOutputArray, tvecs_l: &mut impl ToOutputArray, flags: i32, criteria: core::TermCriteria, idx: &mut impl ToOutputArray) -> Result<f64> {
 		input_output_array_arg!(object_points);
 		input_output_array_arg!(image_points1);
 		input_output_array_arg!(image_points2);
@@ -363,7 +363,7 @@ pub mod ccalib {
 		output_array_arg!(tvecs_l);
 		output_array_arg!(idx);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_omnidir_stereoCalibrate_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const_SizeR_const_SizeR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria_const__OutputArrayR(object_points.as_raw__InputOutputArray(), image_points1.as_raw__InputOutputArray(), image_points2.as_raw__InputOutputArray(), &image_size1, &image_size2, k1.as_raw__InputOutputArray(), xi1.as_raw__InputOutputArray(), d1.as_raw__InputOutputArray(), k2.as_raw__InputOutputArray(), xi2.as_raw__InputOutputArray(), d2.as_raw__InputOutputArray(), rvec.as_raw__OutputArray(), tvec.as_raw__OutputArray(), rvecs_l.as_raw__OutputArray(), tvecs_l.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), idx.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_omnidir_stereoCalibrate_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const_SizeR_const_SizeR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria_const__OutputArrayR(object_points.as_raw__InputOutputArray(), image_points1.as_raw__InputOutputArray(), image_points2.as_raw__InputOutputArray(), &image_size1, &image_size2, k1.as_raw__InputOutputArray(), xi1.as_raw__InputOutputArray(), d1.as_raw__InputOutputArray(), k2.as_raw__InputOutputArray(), xi2.as_raw__InputOutputArray(), d2.as_raw__InputOutputArray(), rvec.as_raw__OutputArray(), tvec.as_raw__OutputArray(), rvecs_l.as_raw__OutputArray(), tvecs_l.as_raw__OutputArray(), flags, &criteria, idx.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -400,7 +400,7 @@ pub mod ccalib {
 	/// * point_cloud: cv::noArray()
 	/// * point_type: XYZRGB
 	#[inline]
-	pub fn stereo_reconstruct_def(image1: &impl core::ToInputArray, image2: &impl core::ToInputArray, k1: &impl core::ToInputArray, d1: &impl core::ToInputArray, xi1: &impl core::ToInputArray, k2: &impl core::ToInputArray, d2: &impl core::ToInputArray, xi2: &impl core::ToInputArray, r: &impl core::ToInputArray, t: &impl core::ToInputArray, flag: i32, num_disparities: i32, sad_window_size: i32, disparity: &mut impl core::ToOutputArray, image1_rec: &mut impl core::ToOutputArray, image2_rec: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn stereo_reconstruct_def(image1: &impl ToInputArray, image2: &impl ToInputArray, k1: &impl ToInputArray, d1: &impl ToInputArray, xi1: &impl ToInputArray, k2: &impl ToInputArray, d2: &impl ToInputArray, xi2: &impl ToInputArray, r: &impl ToInputArray, t: &impl ToInputArray, flag: i32, num_disparities: i32, sad_window_size: i32, disparity: &mut impl ToOutputArray, image1_rec: &mut impl ToOutputArray, image2_rec: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(image1);
 		input_array_arg!(image2);
 		input_array_arg!(k1);
@@ -451,7 +451,7 @@ pub mod ccalib {
 	/// * point_cloud: cv::noArray()
 	/// * point_type: XYZRGB
 	#[inline]
-	pub fn stereo_reconstruct(image1: &impl core::ToInputArray, image2: &impl core::ToInputArray, k1: &impl core::ToInputArray, d1: &impl core::ToInputArray, xi1: &impl core::ToInputArray, k2: &impl core::ToInputArray, d2: &impl core::ToInputArray, xi2: &impl core::ToInputArray, r: &impl core::ToInputArray, t: &impl core::ToInputArray, flag: i32, num_disparities: i32, sad_window_size: i32, disparity: &mut impl core::ToOutputArray, image1_rec: &mut impl core::ToOutputArray, image2_rec: &mut impl core::ToOutputArray, new_size: core::Size, knew: &impl core::ToInputArray, point_cloud: &mut impl core::ToOutputArray, point_type: i32) -> Result<()> {
+	pub fn stereo_reconstruct(image1: &impl ToInputArray, image2: &impl ToInputArray, k1: &impl ToInputArray, d1: &impl ToInputArray, xi1: &impl ToInputArray, k2: &impl ToInputArray, d2: &impl ToInputArray, xi2: &impl ToInputArray, r: &impl ToInputArray, t: &impl ToInputArray, flag: i32, num_disparities: i32, sad_window_size: i32, disparity: &mut impl ToOutputArray, image1_rec: &mut impl ToOutputArray, image2_rec: &mut impl ToOutputArray, new_size: core::Size, knew: &impl ToInputArray, point_cloud: &mut impl ToOutputArray, point_type: i32) -> Result<()> {
 		input_array_arg!(image1);
 		input_array_arg!(image2);
 		input_array_arg!(k1);
@@ -482,7 +482,7 @@ pub mod ccalib {
 	/// * R1: Output 3x3 rotation matrix for the first camera
 	/// * R2: Output 3x3 rotation matrix for the second camera
 	#[inline]
-	pub fn stereo_rectify(r: &impl core::ToInputArray, t: &impl core::ToInputArray, r1: &mut impl core::ToOutputArray, r2: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn stereo_rectify(r: &impl ToInputArray, t: &impl ToInputArray, r1: &mut impl ToOutputArray, r2: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(r);
 		input_array_arg!(t);
 		output_array_arg!(r1);
@@ -513,7 +513,7 @@ pub mod ccalib {
 	/// * new_size: Size()
 	/// * r: Mat::eye(3,3,CV_64F)
 	#[inline]
-	pub fn undistort_image_def(distorted: &impl core::ToInputArray, undistorted: &mut impl core::ToOutputArray, k: &impl core::ToInputArray, d: &impl core::ToInputArray, xi: &impl core::ToInputArray, flags: i32) -> Result<()> {
+	pub fn undistort_image_def(distorted: &impl ToInputArray, undistorted: &mut impl ToOutputArray, k: &impl ToInputArray, d: &impl ToInputArray, xi: &impl ToInputArray, flags: i32) -> Result<()> {
 		input_array_arg!(distorted);
 		output_array_arg!(undistorted);
 		input_array_arg!(k);
@@ -544,7 +544,7 @@ pub mod ccalib {
 	/// * new_size: Size()
 	/// * r: Mat::eye(3,3,CV_64F)
 	#[inline]
-	pub fn undistort_image(distorted: &impl core::ToInputArray, undistorted: &mut impl core::ToOutputArray, k: &impl core::ToInputArray, d: &impl core::ToInputArray, xi: &impl core::ToInputArray, flags: i32, knew: &impl core::ToInputArray, new_size: core::Size, r: &impl core::ToInputArray) -> Result<()> {
+	pub fn undistort_image(distorted: &impl ToInputArray, undistorted: &mut impl ToOutputArray, k: &impl ToInputArray, d: &impl ToInputArray, xi: &impl ToInputArray, flags: i32, knew: &impl ToInputArray, new_size: core::Size, r: &impl ToInputArray) -> Result<()> {
 		input_array_arg!(distorted);
 		output_array_arg!(undistorted);
 		input_array_arg!(k);
@@ -572,7 +572,7 @@ pub mod ccalib {
 	/// * undistorted: array of normalized object points, vector of Vec2f/Vec2d or 1xN/Nx1 2-channel Mat with the same
 	/// depth of distorted points.
 	#[inline]
-	pub fn undistort_points(distorted: &impl core::ToInputArray, undistorted: &mut impl core::ToOutputArray, k: &impl core::ToInputArray, d: &impl core::ToInputArray, xi: &impl core::ToInputArray, r: &impl core::ToInputArray) -> Result<()> {
+	pub fn undistort_points(distorted: &impl ToInputArray, undistorted: &mut impl ToOutputArray, k: &impl ToInputArray, d: &impl ToInputArray, xi: &impl ToInputArray, r: &impl ToInputArray) -> Result<()> {
 		input_array_arg!(distorted);
 		output_array_arg!(undistorted);
 		input_array_arg!(k);
@@ -599,11 +599,11 @@ pub mod ccalib {
 		/// ## C++ default parameters
 		/// * output: noArray()
 		#[inline]
-		fn create(&mut self, pattern: &impl core::ToInputArray, board_size: core::Size2f, output: &mut impl core::ToOutputArray) -> Result<bool> {
+		fn create(&mut self, pattern: &impl ToInputArray, board_size: core::Size2f, output: &mut impl ToOutputArray) -> Result<bool> {
 			input_array_arg!(pattern);
 			output_array_arg!(output);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ccalib_CustomPattern_create_const__InputArrayR_const_Size2f_const__OutputArrayR(self.as_raw_mut_CustomPattern(), pattern.as_raw__InputArray(), board_size.opencv_as_extern(), output.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ccalib_CustomPattern_create_const__InputArrayR_const_Size2f_const__OutputArrayR(self.as_raw_mut_CustomPattern(), pattern.as_raw__InputArray(), &board_size, output.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -613,10 +613,10 @@ pub mod ccalib {
 		/// This alternative version of [CustomPatternTrait::create] function uses the following default values for its arguments:
 		/// * output: noArray()
 		#[inline]
-		fn create_def(&mut self, pattern: &impl core::ToInputArray, board_size: core::Size2f) -> Result<bool> {
+		fn create_def(&mut self, pattern: &impl ToInputArray, board_size: core::Size2f) -> Result<bool> {
 			input_array_arg!(pattern);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ccalib_CustomPattern_create_const__InputArrayR_const_Size2f(self.as_raw_mut_CustomPattern(), pattern.as_raw__InputArray(), board_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ccalib_CustomPattern_create_const__InputArrayR_const_Size2f(self.as_raw_mut_CustomPattern(), pattern.as_raw__InputArray(), &board_size, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -630,7 +630,7 @@ pub mod ccalib {
 		/// * h: noArray()
 		/// * pattern_corners: noArray()
 		#[inline]
-		fn find_pattern(&mut self, image: &impl core::ToInputArray, matched_features: &mut impl core::ToOutputArray, pattern_points: &mut impl core::ToOutputArray, ratio: f64, proj_error: f64, refine_position: bool, out: &mut impl core::ToOutputArray, h: &mut impl core::ToOutputArray, pattern_corners: &mut impl core::ToOutputArray) -> Result<bool> {
+		fn find_pattern(&mut self, image: &impl ToInputArray, matched_features: &mut impl ToOutputArray, pattern_points: &mut impl ToOutputArray, ratio: f64, proj_error: f64, refine_position: bool, out: &mut impl ToOutputArray, h: &mut impl ToOutputArray, pattern_corners: &mut impl ToOutputArray) -> Result<bool> {
 			input_array_arg!(image);
 			output_array_arg!(matched_features);
 			output_array_arg!(pattern_points);
@@ -653,7 +653,7 @@ pub mod ccalib {
 		/// * h: noArray()
 		/// * pattern_corners: noArray()
 		#[inline]
-		fn find_pattern_def(&mut self, image: &impl core::ToInputArray, matched_features: &mut impl core::ToOutputArray, pattern_points: &mut impl core::ToOutputArray) -> Result<bool> {
+		fn find_pattern_def(&mut self, image: &impl ToInputArray, matched_features: &mut impl ToOutputArray, pattern_points: &mut impl ToOutputArray) -> Result<bool> {
 			input_array_arg!(image);
 			output_array_arg!(matched_features);
 			output_array_arg!(pattern_points);
@@ -752,7 +752,7 @@ pub mod ccalib {
 		/// * flags: 0
 		/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
 		#[inline]
-		fn calibrate(&mut self, object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, image_size: core::Size, camera_matrix: &mut impl core::ToInputOutputArray, dist_coeffs: &mut impl core::ToInputOutputArray, rvecs: &mut impl core::ToOutputArray, tvecs: &mut impl core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
+		fn calibrate(&mut self, object_points: &impl ToInputArray, image_points: &impl ToInputArray, image_size: core::Size, camera_matrix: &mut impl ToInputOutputArray, dist_coeffs: &mut impl ToInputOutputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
 			input_array_arg!(object_points);
 			input_array_arg!(image_points);
 			input_output_array_arg!(camera_matrix);
@@ -760,7 +760,7 @@ pub mod ccalib {
 			output_array_arg!(rvecs);
 			output_array_arg!(tvecs);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ccalib_CustomPattern_calibrate_const__InputArrayR_const__InputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(self.as_raw_mut_CustomPattern(), object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), image_size.opencv_as_extern(), camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ccalib_CustomPattern_calibrate_const__InputArrayR_const__InputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(self.as_raw_mut_CustomPattern(), object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &image_size, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, &criteria, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -771,7 +771,7 @@ pub mod ccalib {
 		/// * flags: 0
 		/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
 		#[inline]
-		fn calibrate_def(&mut self, object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, image_size: core::Size, camera_matrix: &mut impl core::ToInputOutputArray, dist_coeffs: &mut impl core::ToInputOutputArray, rvecs: &mut impl core::ToOutputArray, tvecs: &mut impl core::ToOutputArray) -> Result<f64> {
+		fn calibrate_def(&mut self, object_points: &impl ToInputArray, image_points: &impl ToInputArray, image_size: core::Size, camera_matrix: &mut impl ToInputOutputArray, dist_coeffs: &mut impl ToInputOutputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray) -> Result<f64> {
 			input_array_arg!(object_points);
 			input_array_arg!(image_points);
 			input_output_array_arg!(camera_matrix);
@@ -779,7 +779,7 @@ pub mod ccalib {
 			output_array_arg!(rvecs);
 			output_array_arg!(tvecs);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ccalib_CustomPattern_calibrate_const__InputArrayR_const__InputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_CustomPattern(), object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), image_size.opencv_as_extern(), camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ccalib_CustomPattern_calibrate_const__InputArrayR_const__InputArrayR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_CustomPattern(), object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &image_size, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -789,7 +789,7 @@ pub mod ccalib {
 		/// * use_extrinsic_guess: false
 		/// * flags: SOLVEPNP_ITERATIVE
 		#[inline]
-		fn find_rt(&mut self, object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, rvec: &mut impl core::ToInputOutputArray, tvec: &mut impl core::ToInputOutputArray, use_extrinsic_guess: bool, flags: i32) -> Result<bool> {
+		fn find_rt(&mut self, object_points: &impl ToInputArray, image_points: &impl ToInputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvec: &mut impl ToInputOutputArray, tvec: &mut impl ToInputOutputArray, use_extrinsic_guess: bool, flags: i32) -> Result<bool> {
 			input_array_arg!(object_points);
 			input_array_arg!(image_points);
 			input_array_arg!(camera_matrix);
@@ -808,7 +808,7 @@ pub mod ccalib {
 		/// * use_extrinsic_guess: false
 		/// * flags: SOLVEPNP_ITERATIVE
 		#[inline]
-		fn find_rt_def(&mut self, object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, rvec: &mut impl core::ToInputOutputArray, tvec: &mut impl core::ToInputOutputArray) -> Result<bool> {
+		fn find_rt_def(&mut self, object_points: &impl ToInputArray, image_points: &impl ToInputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvec: &mut impl ToInputOutputArray, tvec: &mut impl ToInputOutputArray) -> Result<bool> {
 			input_array_arg!(object_points);
 			input_array_arg!(image_points);
 			input_array_arg!(camera_matrix);
@@ -826,7 +826,7 @@ pub mod ccalib {
 		/// * use_extrinsic_guess: false
 		/// * flags: SOLVEPNP_ITERATIVE
 		#[inline]
-		fn find_rt_1(&mut self, image: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, rvec: &mut impl core::ToInputOutputArray, tvec: &mut impl core::ToInputOutputArray, use_extrinsic_guess: bool, flags: i32) -> Result<bool> {
+		fn find_rt_1(&mut self, image: &impl ToInputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvec: &mut impl ToInputOutputArray, tvec: &mut impl ToInputOutputArray, use_extrinsic_guess: bool, flags: i32) -> Result<bool> {
 			input_array_arg!(image);
 			input_array_arg!(camera_matrix);
 			input_array_arg!(dist_coeffs);
@@ -844,7 +844,7 @@ pub mod ccalib {
 		/// * use_extrinsic_guess: false
 		/// * flags: SOLVEPNP_ITERATIVE
 		#[inline]
-		fn find_rt_def_1(&mut self, image: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, rvec: &mut impl core::ToInputOutputArray, tvec: &mut impl core::ToInputOutputArray) -> Result<bool> {
+		fn find_rt_def_1(&mut self, image: &impl ToInputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvec: &mut impl ToInputOutputArray, tvec: &mut impl ToInputOutputArray) -> Result<bool> {
 			input_array_arg!(image);
 			input_array_arg!(camera_matrix);
 			input_array_arg!(dist_coeffs);
@@ -865,7 +865,7 @@ pub mod ccalib {
 		/// * inliers: noArray()
 		/// * flags: SOLVEPNP_ITERATIVE
 		#[inline]
-		fn find_rt_ransac(&mut self, object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, rvec: &mut impl core::ToInputOutputArray, tvec: &mut impl core::ToInputOutputArray, use_extrinsic_guess: bool, iterations_count: i32, reprojection_error: f32, min_inliers_count: i32, inliers: &mut impl core::ToOutputArray, flags: i32) -> Result<bool> {
+		fn find_rt_ransac(&mut self, object_points: &impl ToInputArray, image_points: &impl ToInputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvec: &mut impl ToInputOutputArray, tvec: &mut impl ToInputOutputArray, use_extrinsic_guess: bool, iterations_count: i32, reprojection_error: f32, min_inliers_count: i32, inliers: &mut impl ToOutputArray, flags: i32) -> Result<bool> {
 			input_array_arg!(object_points);
 			input_array_arg!(image_points);
 			input_array_arg!(camera_matrix);
@@ -889,7 +889,7 @@ pub mod ccalib {
 		/// * inliers: noArray()
 		/// * flags: SOLVEPNP_ITERATIVE
 		#[inline]
-		fn find_rt_ransac_def(&mut self, object_points: &impl core::ToInputArray, image_points: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, rvec: &mut impl core::ToInputOutputArray, tvec: &mut impl core::ToInputOutputArray) -> Result<bool> {
+		fn find_rt_ransac_def(&mut self, object_points: &impl ToInputArray, image_points: &impl ToInputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvec: &mut impl ToInputOutputArray, tvec: &mut impl ToInputOutputArray) -> Result<bool> {
 			input_array_arg!(object_points);
 			input_array_arg!(image_points);
 			input_array_arg!(camera_matrix);
@@ -911,7 +911,7 @@ pub mod ccalib {
 		/// * inliers: noArray()
 		/// * flags: SOLVEPNP_ITERATIVE
 		#[inline]
-		fn find_rt_ransac_1(&mut self, image: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, rvec: &mut impl core::ToInputOutputArray, tvec: &mut impl core::ToInputOutputArray, use_extrinsic_guess: bool, iterations_count: i32, reprojection_error: f32, min_inliers_count: i32, inliers: &mut impl core::ToOutputArray, flags: i32) -> Result<bool> {
+		fn find_rt_ransac_1(&mut self, image: &impl ToInputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvec: &mut impl ToInputOutputArray, tvec: &mut impl ToInputOutputArray, use_extrinsic_guess: bool, iterations_count: i32, reprojection_error: f32, min_inliers_count: i32, inliers: &mut impl ToOutputArray, flags: i32) -> Result<bool> {
 			input_array_arg!(image);
 			input_array_arg!(camera_matrix);
 			input_array_arg!(dist_coeffs);
@@ -934,7 +934,7 @@ pub mod ccalib {
 		/// * inliers: noArray()
 		/// * flags: SOLVEPNP_ITERATIVE
 		#[inline]
-		fn find_rt_ransac_def_1(&mut self, image: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, rvec: &mut impl core::ToInputOutputArray, tvec: &mut impl core::ToInputOutputArray) -> Result<bool> {
+		fn find_rt_ransac_def_1(&mut self, image: &impl ToInputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvec: &mut impl ToInputOutputArray, tvec: &mut impl ToInputOutputArray) -> Result<bool> {
 			input_array_arg!(image);
 			input_array_arg!(camera_matrix);
 			input_array_arg!(dist_coeffs);
@@ -951,7 +951,7 @@ pub mod ccalib {
 		/// * axis_length: 3
 		/// * axis_width: 2
 		#[inline]
-		fn draw_orientation(&mut self, image: &mut impl core::ToInputOutputArray, tvec: &impl core::ToInputArray, rvec: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, axis_length: f64, axis_width: i32) -> Result<()> {
+		fn draw_orientation(&mut self, image: &mut impl ToInputOutputArray, tvec: &impl ToInputArray, rvec: &impl ToInputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, axis_length: f64, axis_width: i32) -> Result<()> {
 			input_output_array_arg!(image);
 			input_array_arg!(tvec);
 			input_array_arg!(rvec);
@@ -969,7 +969,7 @@ pub mod ccalib {
 		/// * axis_length: 3
 		/// * axis_width: 2
 		#[inline]
-		fn draw_orientation_def(&mut self, image: &mut impl core::ToInputOutputArray, tvec: &impl core::ToInputArray, rvec: &impl core::ToInputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray) -> Result<()> {
+		fn draw_orientation_def(&mut self, image: &mut impl ToInputOutputArray, tvec: &impl ToInputArray, rvec: &impl ToInputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray) -> Result<()> {
 			input_output_array_arg!(image);
 			input_array_arg!(tvec);
 			input_array_arg!(rvec);
@@ -1007,6 +1007,8 @@ pub mod ccalib {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { CustomPattern, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::ccalib::CustomPatternTraitConst for CustomPattern {
 		#[inline] fn as_raw_CustomPattern(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1014,6 +1016,8 @@ pub mod ccalib {
 	impl crate::ccalib::CustomPatternTrait for CustomPattern {
 		#[inline] fn as_raw_mut_CustomPattern(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { CustomPattern, crate::ccalib::CustomPatternTraitConst, as_raw_CustomPattern, crate::ccalib::CustomPatternTrait, as_raw_mut_CustomPattern }
 	
 	impl CustomPattern {
 		#[inline]
@@ -1131,6 +1135,8 @@ pub mod ccalib {
 		#[inline] fn as_raw_mut_MultiCameraCalibration(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { MultiCameraCalibration, crate::ccalib::MultiCameraCalibrationTraitConst, as_raw_MultiCameraCalibration, crate::ccalib::MultiCameraCalibrationTrait, as_raw_mut_MultiCameraCalibration }
+	
 	impl MultiCameraCalibration {
 		/// ## C++ default parameters
 		/// * verbose: 0
@@ -1145,7 +1151,7 @@ pub mod ccalib {
 		pub fn new(camera_type: i32, n_cameras: i32, file_name: &str, pattern_width: f32, pattern_height: f32, verbose: i32, show_extration: i32, n_mini_matches: i32, flags: i32, criteria: core::TermCriteria, mut detector: core::Ptr<crate::features2d::Feature2D>, mut descriptor: core::Ptr<crate::features2d::Feature2D>, mut matcher: core::Ptr<crate::features2d::DescriptorMatcher>) -> Result<crate::ccalib::MultiCameraCalibration> {
 			extern_container_arg!(file_name);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_multicalib_MultiCameraCalibration_MultiCameraCalibration_int_int_const_stringR_float_float_int_int_int_int_TermCriteria_PtrLFeature2DG_PtrLFeature2DG_PtrLDescriptorMatcherG(camera_type, n_cameras, file_name.opencv_as_extern(), pattern_width, pattern_height, verbose, show_extration, n_mini_matches, flags, criteria.opencv_as_extern(), detector.as_raw_mut_PtrOfFeature2D(), descriptor.as_raw_mut_PtrOfFeature2D(), matcher.as_raw_mut_PtrOfDescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_multicalib_MultiCameraCalibration_MultiCameraCalibration_int_int_const_stringR_float_float_int_int_int_int_TermCriteria_PtrLFeature2DG_PtrLFeature2DG_PtrLDescriptorMatcherG(camera_type, n_cameras, file_name.opencv_as_extern(), pattern_width, pattern_height, verbose, show_extration, n_mini_matches, flags, &criteria, detector.as_raw_mut_PtrOfFeature2D(), descriptor.as_raw_mut_PtrOfFeature2D(), matcher.as_raw_mut_PtrOfDescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::ccalib::MultiCameraCalibration::opencv_from_extern(ret) };
@@ -1237,7 +1243,7 @@ pub mod ccalib {
 		}
 		
 		#[inline]
-		fn set_transform(&mut self, val: core::Mat) {
+		fn set_transform(&mut self, val: impl core::MatTraitConst) {
 			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_propTransform_const_Mat(self.as_raw_mut_MultiCameraCalibration_edge(), val.as_raw_Mat()) };
 			ret
 		}
@@ -1267,9 +1273,11 @@ pub mod ccalib {
 		#[inline] fn as_raw_mut_MultiCameraCalibration_edge(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { MultiCameraCalibration_edge, crate::ccalib::MultiCameraCalibration_edgeTraitConst, as_raw_MultiCameraCalibration_edge, crate::ccalib::MultiCameraCalibration_edgeTrait, as_raw_mut_MultiCameraCalibration_edge }
+	
 	impl MultiCameraCalibration_edge {
 		#[inline]
-		pub fn new(cv: i32, pv: i32, pi: i32, mut trans: core::Mat) -> Result<crate::ccalib::MultiCameraCalibration_edge> {
+		pub fn new(cv: i32, pv: i32, pi: i32, mut trans: impl core::MatTrait) -> Result<crate::ccalib::MultiCameraCalibration_edge> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_edge_int_int_int_Mat(cv, pv, pi, trans.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1316,7 +1324,7 @@ pub mod ccalib {
 		fn as_raw_mut_MultiCameraCalibration_vertex(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn set_pose(&mut self, val: core::Mat) {
+		fn set_pose(&mut self, val: impl core::MatTraitConst) {
 			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_propPose_const_Mat(self.as_raw_mut_MultiCameraCalibration_vertex(), val.as_raw_Mat()) };
 			ret
 		}
@@ -1352,9 +1360,11 @@ pub mod ccalib {
 		#[inline] fn as_raw_mut_MultiCameraCalibration_vertex(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { MultiCameraCalibration_vertex, crate::ccalib::MultiCameraCalibration_vertexTraitConst, as_raw_MultiCameraCalibration_vertex, crate::ccalib::MultiCameraCalibration_vertexTrait, as_raw_mut_MultiCameraCalibration_vertex }
+	
 	impl MultiCameraCalibration_vertex {
 		#[inline]
-		pub fn new(mut po: core::Mat, ts: i32) -> Result<crate::ccalib::MultiCameraCalibration_vertex> {
+		pub fn new(mut po: impl core::MatTrait, ts: i32) -> Result<crate::ccalib::MultiCameraCalibration_vertex> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_vertex_Mat_int(po.as_raw_mut_Mat(), ts, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1396,7 +1406,7 @@ pub mod ccalib {
 		fn as_raw_mut_RandomPatternCornerFinder(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn load_pattern(&mut self, pattern_image: &core::Mat) -> Result<()> {
+		fn load_pattern(&mut self, pattern_image: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_randpattern_RandomPatternCornerFinder_loadPattern_const_MatR(self.as_raw_mut_RandomPatternCornerFinder(), pattern_image.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1405,7 +1415,7 @@ pub mod ccalib {
 		}
 		
 		#[inline]
-		fn load_pattern_1(&mut self, pattern_image: &core::Mat, pattern_key_points: &core::Vector<core::KeyPoint>, pattern_descriptors: &core::Mat) -> Result<()> {
+		fn load_pattern_1(&mut self, pattern_image: &impl core::MatTraitConst, pattern_key_points: &core::Vector<core::KeyPoint>, pattern_descriptors: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_randpattern_RandomPatternCornerFinder_loadPattern_const_MatR_const_vectorLKeyPointGR_const_MatR(self.as_raw_mut_RandomPatternCornerFinder(), pattern_image.as_raw_Mat(), pattern_key_points.as_raw_VectorOfKeyPoint(), pattern_descriptors.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1423,7 +1433,7 @@ pub mod ccalib {
 		}
 		
 		#[inline]
-		fn compute_object_image_points_for_single(&mut self, mut input_image: core::Mat) -> Result<core::Vector<core::Mat>> {
+		fn compute_object_image_points_for_single(&mut self, mut input_image: impl core::MatTrait) -> Result<core::Vector<core::Mat>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_randpattern_RandomPatternCornerFinder_computeObjectImagePointsForSingle_Mat(self.as_raw_mut_RandomPatternCornerFinder(), input_image.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1485,6 +1495,8 @@ pub mod ccalib {
 	impl crate::ccalib::RandomPatternCornerFinderTrait for RandomPatternCornerFinder {
 		#[inline] fn as_raw_mut_RandomPatternCornerFinder(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { RandomPatternCornerFinder, crate::ccalib::RandomPatternCornerFinderTraitConst, as_raw_RandomPatternCornerFinder, crate::ccalib::RandomPatternCornerFinderTrait, as_raw_mut_RandomPatternCornerFinder }
 	
 	impl RandomPatternCornerFinder {
 		/// ## C++ default parameters
@@ -1587,6 +1599,8 @@ pub mod ccalib {
 	impl crate::ccalib::RandomPatternGeneratorTrait for RandomPatternGenerator {
 		#[inline] fn as_raw_mut_RandomPatternGenerator(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { RandomPatternGenerator, crate::ccalib::RandomPatternGeneratorTraitConst, as_raw_RandomPatternGenerator, crate::ccalib::RandomPatternGeneratorTrait, as_raw_mut_RandomPatternGenerator }
 	
 	impl RandomPatternGenerator {
 		#[inline]

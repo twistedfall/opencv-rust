@@ -20,7 +20,7 @@ pub mod rapid {
 	/// * pts3d: noArray()
 	/// * mask: noArray()
 	#[inline]
-	pub fn convert_correspondencies_def(cols: &impl core::ToInputArray, src_locations: &impl core::ToInputArray, pts2d: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn convert_correspondencies_def(cols: &impl ToInputArray, src_locations: &impl ToInputArray, pts2d: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(cols);
 		input_array_arg!(src_locations);
 		output_array_arg!(pts2d);
@@ -43,7 +43,7 @@ pub mod rapid {
 	/// * pts3d: noArray()
 	/// * mask: noArray()
 	#[inline]
-	pub fn convert_correspondencies(cols: &impl core::ToInputArray, src_locations: &impl core::ToInputArray, pts2d: &mut impl core::ToOutputArray, pts3d: &mut impl core::ToInputOutputArray, mask: &impl core::ToInputArray) -> Result<()> {
+	pub fn convert_correspondencies(cols: &impl ToInputArray, src_locations: &impl ToInputArray, pts2d: &mut impl ToOutputArray, pts3d: &mut impl ToInputOutputArray, mask: &impl ToInputArray) -> Result<()> {
 		input_array_arg!(cols);
 		input_array_arg!(src_locations);
 		output_array_arg!(pts2d);
@@ -66,7 +66,7 @@ pub mod rapid {
 	/// This alternative version of [draw_correspondencies] function uses the following default values for its arguments:
 	/// * colors: noArray()
 	#[inline]
-	pub fn draw_correspondencies_def(bundle: &mut impl core::ToInputOutputArray, cols: &impl core::ToInputArray) -> Result<()> {
+	pub fn draw_correspondencies_def(bundle: &mut impl ToInputOutputArray, cols: &impl ToInputArray) -> Result<()> {
 		input_output_array_arg!(bundle);
 		input_array_arg!(cols);
 		return_send!(via ocvrs_return);
@@ -85,7 +85,7 @@ pub mod rapid {
 	/// ## C++ default parameters
 	/// * colors: noArray()
 	#[inline]
-	pub fn draw_correspondencies(bundle: &mut impl core::ToInputOutputArray, cols: &impl core::ToInputArray, colors: &impl core::ToInputArray) -> Result<()> {
+	pub fn draw_correspondencies(bundle: &mut impl ToInputOutputArray, cols: &impl ToInputArray, colors: &impl ToInputArray) -> Result<()> {
 		input_output_array_arg!(bundle);
 		input_array_arg!(cols);
 		input_array_arg!(colors);
@@ -102,7 +102,7 @@ pub mod rapid {
 	/// * locations: the source locations of a line bundle
 	/// * color: the line color
 	#[inline]
-	pub fn draw_search_lines(img: &mut impl core::ToInputOutputArray, locations: &impl core::ToInputArray, color: core::Scalar) -> Result<()> {
+	pub fn draw_search_lines(img: &mut impl ToInputOutputArray, locations: &impl ToInputArray, color: core::Scalar) -> Result<()> {
 		input_output_array_arg!(img);
 		input_array_arg!(locations);
 		return_send!(via ocvrs_return);
@@ -126,7 +126,7 @@ pub mod rapid {
 	/// * typ: LINE_8
 	/// * cull_backface: false
 	#[inline]
-	pub fn draw_wireframe_def(img: &mut impl core::ToInputOutputArray, pts2d: &impl core::ToInputArray, tris: &impl core::ToInputArray, color: core::Scalar) -> Result<()> {
+	pub fn draw_wireframe_def(img: &mut impl ToInputOutputArray, pts2d: &impl ToInputArray, tris: &impl ToInputArray, color: core::Scalar) -> Result<()> {
 		input_output_array_arg!(img);
 		input_array_arg!(pts2d);
 		input_array_arg!(tris);
@@ -150,7 +150,7 @@ pub mod rapid {
 	/// * typ: LINE_8
 	/// * cull_backface: false
 	#[inline]
-	pub fn draw_wireframe(img: &mut impl core::ToInputOutputArray, pts2d: &impl core::ToInputArray, tris: &impl core::ToInputArray, color: core::Scalar, typ: i32, cull_backface: bool) -> Result<()> {
+	pub fn draw_wireframe(img: &mut impl ToInputOutputArray, pts2d: &impl ToInputArray, tris: &impl ToInputArray, color: core::Scalar, typ: i32, cull_backface: bool) -> Result<()> {
 		input_output_array_arg!(img);
 		input_array_arg!(pts2d);
 		input_array_arg!(tris);
@@ -176,7 +176,7 @@ pub mod rapid {
 	/// * ctl2d: the 2D locations of the control points
 	/// * ctl3d: matching 3D points of the mesh
 	#[inline]
-	pub fn extract_control_points(num: i32, len: i32, pts3d: &impl core::ToInputArray, rvec: &impl core::ToInputArray, tvec: &impl core::ToInputArray, k: &impl core::ToInputArray, imsize: core::Size, tris: &impl core::ToInputArray, ctl2d: &mut impl core::ToOutputArray, ctl3d: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn extract_control_points(num: i32, len: i32, pts3d: &impl ToInputArray, rvec: &impl ToInputArray, tvec: &impl ToInputArray, k: &impl ToInputArray, imsize: core::Size, tris: &impl ToInputArray, ctl2d: &mut impl ToOutputArray, ctl3d: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(pts3d);
 		input_array_arg!(rvec);
 		input_array_arg!(tvec);
@@ -200,7 +200,7 @@ pub mod rapid {
 	/// * bundle: line bundle image with size `ctl2d.rows() x (2 * len + 1)` and the same type as @p img
 	/// * srcLocations: the source pixel locations of @p bundle in @p img as CV_16SC2
 	#[inline]
-	pub fn extract_line_bundle(len: i32, ctl2d: &impl core::ToInputArray, img: &impl core::ToInputArray, bundle: &mut impl core::ToOutputArray, src_locations: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn extract_line_bundle(len: i32, ctl2d: &impl ToInputArray, img: &impl ToInputArray, bundle: &mut impl ToOutputArray, src_locations: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(ctl2d);
 		input_array_arg!(img);
 		output_array_arg!(bundle);
@@ -223,7 +223,7 @@ pub mod rapid {
 	/// This alternative version of [find_correspondencies] function uses the following default values for its arguments:
 	/// * response: noArray()
 	#[inline]
-	pub fn find_correspondencies_def(bundle: &impl core::ToInputArray, cols: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn find_correspondencies_def(bundle: &impl ToInputArray, cols: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(bundle);
 		output_array_arg!(cols);
 		return_send!(via ocvrs_return);
@@ -243,7 +243,7 @@ pub mod rapid {
 	/// ## C++ default parameters
 	/// * response: noArray()
 	#[inline]
-	pub fn find_correspondencies(bundle: &impl core::ToInputArray, cols: &mut impl core::ToOutputArray, response: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn find_correspondencies(bundle: &impl ToInputArray, cols: &mut impl ToOutputArray, response: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(bundle);
 		output_array_arg!(cols);
 		output_array_arg!(response);
@@ -279,7 +279,7 @@ pub mod rapid {
 	/// This alternative version of [rapid] function uses the following default values for its arguments:
 	/// * rmsd: 0
 	#[inline]
-	pub fn rapid_def(img: &impl core::ToInputArray, num: i32, len: i32, pts3d: &impl core::ToInputArray, tris: &impl core::ToInputArray, k: &impl core::ToInputArray, rvec: &mut impl core::ToInputOutputArray, tvec: &mut impl core::ToInputOutputArray) -> Result<f32> {
+	pub fn rapid_def(img: &impl ToInputArray, num: i32, len: i32, pts3d: &impl ToInputArray, tris: &impl ToInputArray, k: &impl ToInputArray, rvec: &mut impl ToInputOutputArray, tvec: &mut impl ToInputOutputArray) -> Result<f32> {
 		input_array_arg!(img);
 		input_array_arg!(pts3d);
 		input_array_arg!(tris);
@@ -317,7 +317,7 @@ pub mod rapid {
 	/// ## C++ default parameters
 	/// * rmsd: 0
 	#[inline]
-	pub fn rapid(img: &impl core::ToInputArray, num: i32, len: i32, pts3d: &impl core::ToInputArray, tris: &impl core::ToInputArray, k: &impl core::ToInputArray, rvec: &mut impl core::ToInputOutputArray, tvec: &mut impl core::ToInputOutputArray, rmsd: &mut f64) -> Result<f32> {
+	pub fn rapid(img: &impl ToInputArray, num: i32, len: i32, pts3d: &impl ToInputArray, tris: &impl ToInputArray, k: &impl ToInputArray, rvec: &mut impl ToInputOutputArray, tvec: &mut impl ToInputOutputArray, rmsd: &mut f64) -> Result<f32> {
 		input_array_arg!(img);
 		input_array_arg!(pts3d);
 		input_array_arg!(tris);
@@ -367,6 +367,8 @@ pub mod rapid {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Rapid_GOSTracker, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::rapid::Rapid_TrackerTraitConst for Rapid_GOSTracker {
 		#[inline] fn as_raw_Rapid_Tracker(&self) -> *const c_void { self.as_raw() }
 	}
@@ -374,6 +376,8 @@ pub mod rapid {
 	impl crate::rapid::Rapid_TrackerTrait for Rapid_GOSTracker {
 		#[inline] fn as_raw_mut_Rapid_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { Rapid_GOSTracker, crate::rapid::Rapid_TrackerTraitConst, as_raw_Rapid_Tracker, crate::rapid::Rapid_TrackerTrait, as_raw_mut_Rapid_Tracker }
 	
 	impl crate::rapid::Rapid_GOSTrackerTraitConst for Rapid_GOSTracker {
 		#[inline] fn as_raw_Rapid_GOSTracker(&self) -> *const c_void { self.as_raw() }
@@ -383,12 +387,14 @@ pub mod rapid {
 		#[inline] fn as_raw_mut_Rapid_GOSTracker(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Rapid_GOSTracker, crate::rapid::Rapid_GOSTrackerTraitConst, as_raw_Rapid_GOSTracker, crate::rapid::Rapid_GOSTrackerTrait, as_raw_mut_Rapid_GOSTracker }
+	
 	impl Rapid_GOSTracker {
 		/// ## C++ default parameters
 		/// * hist_bins: 4
 		/// * sobel_thesh: 10
 		#[inline]
-		pub fn create(pts3d: &impl core::ToInputArray, tris: &impl core::ToInputArray, hist_bins: i32, sobel_thesh: u8) -> Result<core::Ptr<crate::rapid::Rapid_OLSTracker>> {
+		pub fn create(pts3d: &impl ToInputArray, tris: &impl ToInputArray, hist_bins: i32, sobel_thesh: u8) -> Result<core::Ptr<crate::rapid::Rapid_OLSTracker>> {
 			input_array_arg!(pts3d);
 			input_array_arg!(tris);
 			return_send!(via ocvrs_return);
@@ -404,7 +410,7 @@ pub mod rapid {
 		/// * hist_bins: 4
 		/// * sobel_thesh: 10
 		#[inline]
-		pub fn create_def(pts3d: &impl core::ToInputArray, tris: &impl core::ToInputArray) -> Result<core::Ptr<crate::rapid::Rapid_OLSTracker>> {
+		pub fn create_def(pts3d: &impl ToInputArray, tris: &impl ToInputArray) -> Result<core::Ptr<crate::rapid::Rapid_OLSTracker>> {
 			input_array_arg!(pts3d);
 			input_array_arg!(tris);
 			return_send!(via ocvrs_return);
@@ -466,6 +472,8 @@ pub mod rapid {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Rapid_OLSTracker, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::rapid::Rapid_TrackerTraitConst for Rapid_OLSTracker {
 		#[inline] fn as_raw_Rapid_Tracker(&self) -> *const c_void { self.as_raw() }
 	}
@@ -473,6 +481,8 @@ pub mod rapid {
 	impl crate::rapid::Rapid_TrackerTrait for Rapid_OLSTracker {
 		#[inline] fn as_raw_mut_Rapid_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { Rapid_OLSTracker, crate::rapid::Rapid_TrackerTraitConst, as_raw_Rapid_Tracker, crate::rapid::Rapid_TrackerTrait, as_raw_mut_Rapid_Tracker }
 	
 	impl crate::rapid::Rapid_OLSTrackerTraitConst for Rapid_OLSTracker {
 		#[inline] fn as_raw_Rapid_OLSTracker(&self) -> *const c_void { self.as_raw() }
@@ -482,12 +492,14 @@ pub mod rapid {
 		#[inline] fn as_raw_mut_Rapid_OLSTracker(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Rapid_OLSTracker, crate::rapid::Rapid_OLSTrackerTraitConst, as_raw_Rapid_OLSTracker, crate::rapid::Rapid_OLSTrackerTrait, as_raw_mut_Rapid_OLSTracker }
+	
 	impl Rapid_OLSTracker {
 		/// ## C++ default parameters
 		/// * hist_bins: 8
 		/// * sobel_thesh: 10
 		#[inline]
-		pub fn create(pts3d: &impl core::ToInputArray, tris: &impl core::ToInputArray, hist_bins: i32, sobel_thesh: u8) -> Result<core::Ptr<crate::rapid::Rapid_OLSTracker>> {
+		pub fn create(pts3d: &impl ToInputArray, tris: &impl ToInputArray, hist_bins: i32, sobel_thesh: u8) -> Result<core::Ptr<crate::rapid::Rapid_OLSTracker>> {
 			input_array_arg!(pts3d);
 			input_array_arg!(tris);
 			return_send!(via ocvrs_return);
@@ -503,7 +515,7 @@ pub mod rapid {
 		/// * hist_bins: 8
 		/// * sobel_thesh: 10
 		#[inline]
-		pub fn create_def(pts3d: &impl core::ToInputArray, tris: &impl core::ToInputArray) -> Result<core::Ptr<crate::rapid::Rapid_OLSTracker>> {
+		pub fn create_def(pts3d: &impl ToInputArray, tris: &impl ToInputArray) -> Result<core::Ptr<crate::rapid::Rapid_OLSTracker>> {
 			input_array_arg!(pts3d);
 			input_array_arg!(tris);
 			return_send!(via ocvrs_return);
@@ -564,6 +576,8 @@ pub mod rapid {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Rapid_Rapid, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::rapid::Rapid_TrackerTraitConst for Rapid_Rapid {
 		#[inline] fn as_raw_Rapid_Tracker(&self) -> *const c_void { self.as_raw() }
 	}
@@ -571,6 +585,8 @@ pub mod rapid {
 	impl crate::rapid::Rapid_TrackerTrait for Rapid_Rapid {
 		#[inline] fn as_raw_mut_Rapid_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { Rapid_Rapid, crate::rapid::Rapid_TrackerTraitConst, as_raw_Rapid_Tracker, crate::rapid::Rapid_TrackerTrait, as_raw_mut_Rapid_Tracker }
 	
 	impl crate::rapid::Rapid_RapidTraitConst for Rapid_Rapid {
 		#[inline] fn as_raw_Rapid_Rapid(&self) -> *const c_void { self.as_raw() }
@@ -580,9 +596,11 @@ pub mod rapid {
 		#[inline] fn as_raw_mut_Rapid_Rapid(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Rapid_Rapid, crate::rapid::Rapid_RapidTraitConst, as_raw_Rapid_Rapid, crate::rapid::Rapid_RapidTrait, as_raw_mut_Rapid_Rapid }
+	
 	impl Rapid_Rapid {
 		#[inline]
-		pub fn create(pts3d: &impl core::ToInputArray, tris: &impl core::ToInputArray) -> Result<core::Ptr<crate::rapid::Rapid_Rapid>> {
+		pub fn create(pts3d: &impl ToInputArray, tris: &impl ToInputArray) -> Result<core::Ptr<crate::rapid::Rapid_Rapid>> {
 			input_array_arg!(pts3d);
 			input_array_arg!(tris);
 			return_send!(via ocvrs_return);
@@ -620,7 +638,7 @@ pub mod rapid {
 		/// ## C++ default parameters
 		/// * termcrit: TermCriteria(TermCriteria::MAX_ITER|TermCriteria::EPS,5,1.5)
 		#[inline]
-		fn compute(&mut self, img: &impl core::ToInputArray, num: i32, len: i32, k: &impl core::ToInputArray, rvec: &mut impl core::ToInputOutputArray, tvec: &mut impl core::ToInputOutputArray, termcrit: core::TermCriteria) -> Result<f32> {
+		fn compute(&mut self, img: &impl ToInputArray, num: i32, len: i32, k: &impl ToInputArray, rvec: &mut impl ToInputOutputArray, tvec: &mut impl ToInputOutputArray, termcrit: core::TermCriteria) -> Result<f32> {
 			input_array_arg!(img);
 			input_array_arg!(k);
 			input_output_array_arg!(rvec);
@@ -636,7 +654,7 @@ pub mod rapid {
 		/// This alternative version of [Rapid_TrackerTrait::compute] function uses the following default values for its arguments:
 		/// * termcrit: TermCriteria(TermCriteria::MAX_ITER|TermCriteria::EPS,5,1.5)
 		#[inline]
-		fn compute_def(&mut self, img: &impl core::ToInputArray, num: i32, len: i32, k: &impl core::ToInputArray, rvec: &mut impl core::ToInputOutputArray, tvec: &mut impl core::ToInputOutputArray) -> Result<f32> {
+		fn compute_def(&mut self, img: &impl ToInputArray, num: i32, len: i32, k: &impl ToInputArray, rvec: &mut impl ToInputOutputArray, tvec: &mut impl ToInputOutputArray) -> Result<f32> {
 			input_array_arg!(img);
 			input_array_arg!(k);
 			input_output_array_arg!(rvec);
@@ -683,6 +701,8 @@ pub mod rapid {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Rapid_Tracker, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::rapid::Rapid_TrackerTraitConst for Rapid_Tracker {
 		#[inline] fn as_raw_Rapid_Tracker(&self) -> *const c_void { self.as_raw() }
 	}
@@ -690,6 +710,8 @@ pub mod rapid {
 	impl crate::rapid::Rapid_TrackerTrait for Rapid_Tracker {
 		#[inline] fn as_raw_mut_Rapid_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { Rapid_Tracker, crate::rapid::Rapid_TrackerTraitConst, as_raw_Rapid_Tracker, crate::rapid::Rapid_TrackerTrait, as_raw_mut_Rapid_Tracker }
 	
 	impl Rapid_Tracker {
 	}

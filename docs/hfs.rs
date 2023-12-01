@@ -218,7 +218,7 @@ pub mod hfs {
 		/// ## C++ default parameters
 		/// * if_draw: true
 		#[inline]
-		fn perform_segment_gpu(&mut self, src: &impl core::ToInputArray, if_draw: bool) -> Result<core::Mat> {
+		fn perform_segment_gpu(&mut self, src: &impl ToInputArray, if_draw: bool) -> Result<core::Mat> {
 			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hfs_HfsSegment_performSegmentGpu_const__InputArrayR_bool(self.as_raw_mut_HfsSegment(), src.as_raw__InputArray(), if_draw, ocvrs_return.as_mut_ptr()) };
@@ -242,7 +242,7 @@ pub mod hfs {
 		/// This alternative version of [HfsSegmentTrait::perform_segment_gpu] function uses the following default values for its arguments:
 		/// * if_draw: true
 		#[inline]
-		fn perform_segment_gpu_def(&mut self, src: &impl core::ToInputArray) -> Result<core::Mat> {
+		fn perform_segment_gpu_def(&mut self, src: &impl ToInputArray) -> Result<core::Mat> {
 			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hfs_HfsSegment_performSegmentGpu_const__InputArrayR(self.as_raw_mut_HfsSegment(), src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -259,7 +259,7 @@ pub mod hfs {
 		/// ## C++ default parameters
 		/// * if_draw: true
 		#[inline]
-		fn perform_segment_cpu(&mut self, src: &impl core::ToInputArray, if_draw: bool) -> Result<core::Mat> {
+		fn perform_segment_cpu(&mut self, src: &impl ToInputArray, if_draw: bool) -> Result<core::Mat> {
 			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hfs_HfsSegment_performSegmentCpu_const__InputArrayR_bool(self.as_raw_mut_HfsSegment(), src.as_raw__InputArray(), if_draw, ocvrs_return.as_mut_ptr()) };
@@ -277,7 +277,7 @@ pub mod hfs {
 		/// This alternative version of [HfsSegmentTrait::perform_segment_cpu] function uses the following default values for its arguments:
 		/// * if_draw: true
 		#[inline]
-		fn perform_segment_cpu_def(&mut self, src: &impl core::ToInputArray) -> Result<core::Mat> {
+		fn perform_segment_cpu_def(&mut self, src: &impl ToInputArray) -> Result<core::Mat> {
 			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hfs_HfsSegment_performSegmentCpu_const__InputArrayR(self.as_raw_mut_HfsSegment(), src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -312,6 +312,8 @@ pub mod hfs {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { HfsSegment, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::hfs::HfsSegmentTraitConst for HfsSegment {
 		#[inline] fn as_raw_HfsSegment(&self) -> *const c_void { self.as_raw() }
 	}
@@ -319,6 +321,8 @@ pub mod hfs {
 	impl crate::hfs::HfsSegmentTrait for HfsSegment {
 		#[inline] fn as_raw_mut_HfsSegment(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { HfsSegment, crate::hfs::HfsSegmentTraitConst, as_raw_HfsSegment, crate::hfs::HfsSegmentTrait, as_raw_mut_HfsSegment }
 	
 	impl HfsSegment {
 		/// create a hfs object

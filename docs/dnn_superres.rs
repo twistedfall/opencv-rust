@@ -94,7 +94,7 @@ pub mod dnn_superres {
 		/// * img: Image to upscale
 		/// * result: Destination upscaled image
 		#[inline]
-		fn upsample(&mut self, img: &impl core::ToInputArray, result: &mut impl core::ToOutputArray) -> Result<()> {
+		fn upsample(&mut self, img: &impl ToInputArray, result: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(img);
 			output_array_arg!(result);
 			return_send!(via ocvrs_return);
@@ -111,7 +111,7 @@ pub mod dnn_superres {
 		/// * scale_factors: Scaling factors of the output nodes
 		/// * node_names: Names of the output nodes in the neural network
 		#[inline]
-		fn upsample_multioutput(&mut self, img: &impl core::ToInputArray, imgs_new: &mut core::Vector<core::Mat>, scale_factors: &core::Vector<i32>, node_names: &core::Vector<String>) -> Result<()> {
+		fn upsample_multioutput(&mut self, img: &impl ToInputArray, imgs_new: &mut core::Vector<core::Mat>, scale_factors: &core::Vector<i32>, node_names: &core::Vector<String>) -> Result<()> {
 			input_array_arg!(img);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_superres_DnnSuperResImpl_upsampleMultioutput_const__InputArrayR_vectorLMatGR_const_vectorLintGR_const_vectorLStringGR(self.as_raw_mut_DnnSuperResImpl(), img.as_raw__InputArray(), imgs_new.as_raw_mut_VectorOfMat(), scale_factors.as_raw_VectorOfi32(), node_names.as_raw_VectorOfString(), ocvrs_return.as_mut_ptr()) };
@@ -176,6 +176,8 @@ pub mod dnn_superres {
 	impl crate::dnn_superres::DnnSuperResImplTrait for DnnSuperResImpl {
 		#[inline] fn as_raw_mut_DnnSuperResImpl(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { DnnSuperResImpl, crate::dnn_superres::DnnSuperResImplTraitConst, as_raw_DnnSuperResImpl, crate::dnn_superres::DnnSuperResImplTrait, as_raw_mut_DnnSuperResImpl }
 	
 	impl DnnSuperResImpl {
 		/// Empty constructor for python

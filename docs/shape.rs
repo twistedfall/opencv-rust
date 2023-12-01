@@ -15,7 +15,7 @@ pub mod shape {
 	/// the histogram in each bin.
 	/// * signature2: Second signature of the same format and size as signature1.
 	#[inline]
-	pub fn emdl1(signature1: &impl core::ToInputArray, signature2: &impl core::ToInputArray) -> Result<f32> {
+	pub fn emdl1(signature1: &impl ToInputArray, signature2: &impl ToInputArray) -> Result<f32> {
 		input_array_arg!(signature1);
 		input_array_arg!(signature2);
 		return_send!(via ocvrs_return);
@@ -295,6 +295,8 @@ pub mod shape {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { AffineTransformer, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::shape::ShapeTransformerTraitConst for AffineTransformer {
 		#[inline] fn as_raw_ShapeTransformer(&self) -> *const c_void { self.as_raw() }
 	}
@@ -303,6 +305,8 @@ pub mod shape {
 		#[inline] fn as_raw_mut_ShapeTransformer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { AffineTransformer, crate::shape::ShapeTransformerTraitConst, as_raw_ShapeTransformer, crate::shape::ShapeTransformerTrait, as_raw_mut_ShapeTransformer }
+	
 	impl crate::shape::AffineTransformerTraitConst for AffineTransformer {
 		#[inline] fn as_raw_AffineTransformer(&self) -> *const c_void { self.as_raw() }
 	}
@@ -310,6 +314,8 @@ pub mod shape {
 	impl crate::shape::AffineTransformerTrait for AffineTransformer {
 		#[inline] fn as_raw_mut_AffineTransformer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { AffineTransformer, crate::shape::AffineTransformerTraitConst, as_raw_AffineTransformer, crate::shape::AffineTransformerTrait, as_raw_mut_AffineTransformer }
 	
 	impl AffineTransformer {
 	}
@@ -362,6 +368,8 @@ pub mod shape {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { ChiHistogramCostExtractor, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::shape::HistogramCostExtractorTraitConst for ChiHistogramCostExtractor {
 		#[inline] fn as_raw_HistogramCostExtractor(&self) -> *const c_void { self.as_raw() }
 	}
@@ -370,6 +378,8 @@ pub mod shape {
 		#[inline] fn as_raw_mut_HistogramCostExtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { ChiHistogramCostExtractor, crate::shape::HistogramCostExtractorTraitConst, as_raw_HistogramCostExtractor, crate::shape::HistogramCostExtractorTrait, as_raw_mut_HistogramCostExtractor }
+	
 	impl crate::shape::ChiHistogramCostExtractorTraitConst for ChiHistogramCostExtractor {
 		#[inline] fn as_raw_ChiHistogramCostExtractor(&self) -> *const c_void { self.as_raw() }
 	}
@@ -377,6 +387,8 @@ pub mod shape {
 	impl crate::shape::ChiHistogramCostExtractorTrait for ChiHistogramCostExtractor {
 		#[inline] fn as_raw_mut_ChiHistogramCostExtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { ChiHistogramCostExtractor, crate::shape::ChiHistogramCostExtractorTraitConst, as_raw_ChiHistogramCostExtractor, crate::shape::ChiHistogramCostExtractorTrait, as_raw_mut_ChiHistogramCostExtractor }
 	
 	impl ChiHistogramCostExtractor {
 	}
@@ -447,6 +459,8 @@ pub mod shape {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { EMDHistogramCostExtractor, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::shape::HistogramCostExtractorTraitConst for EMDHistogramCostExtractor {
 		#[inline] fn as_raw_HistogramCostExtractor(&self) -> *const c_void { self.as_raw() }
 	}
@@ -455,6 +469,8 @@ pub mod shape {
 		#[inline] fn as_raw_mut_HistogramCostExtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { EMDHistogramCostExtractor, crate::shape::HistogramCostExtractorTraitConst, as_raw_HistogramCostExtractor, crate::shape::HistogramCostExtractorTrait, as_raw_mut_HistogramCostExtractor }
+	
 	impl crate::shape::EMDHistogramCostExtractorTraitConst for EMDHistogramCostExtractor {
 		#[inline] fn as_raw_EMDHistogramCostExtractor(&self) -> *const c_void { self.as_raw() }
 	}
@@ -462,6 +478,8 @@ pub mod shape {
 	impl crate::shape::EMDHistogramCostExtractorTrait for EMDHistogramCostExtractor {
 		#[inline] fn as_raw_mut_EMDHistogramCostExtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { EMDHistogramCostExtractor, crate::shape::EMDHistogramCostExtractorTraitConst, as_raw_EMDHistogramCostExtractor, crate::shape::EMDHistogramCostExtractorTrait, as_raw_mut_EMDHistogramCostExtractor }
 	
 	impl EMDHistogramCostExtractor {
 	}
@@ -514,6 +532,8 @@ pub mod shape {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { EMDL1HistogramCostExtractor, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::shape::HistogramCostExtractorTraitConst for EMDL1HistogramCostExtractor {
 		#[inline] fn as_raw_HistogramCostExtractor(&self) -> *const c_void { self.as_raw() }
 	}
@@ -522,6 +542,8 @@ pub mod shape {
 		#[inline] fn as_raw_mut_HistogramCostExtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { EMDL1HistogramCostExtractor, crate::shape::HistogramCostExtractorTraitConst, as_raw_HistogramCostExtractor, crate::shape::HistogramCostExtractorTrait, as_raw_mut_HistogramCostExtractor }
+	
 	impl crate::shape::EMDL1HistogramCostExtractorTraitConst for EMDL1HistogramCostExtractor {
 		#[inline] fn as_raw_EMDL1HistogramCostExtractor(&self) -> *const c_void { self.as_raw() }
 	}
@@ -529,6 +551,8 @@ pub mod shape {
 	impl crate::shape::EMDL1HistogramCostExtractorTrait for EMDL1HistogramCostExtractor {
 		#[inline] fn as_raw_mut_EMDL1HistogramCostExtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { EMDL1HistogramCostExtractor, crate::shape::EMDL1HistogramCostExtractorTraitConst, as_raw_EMDL1HistogramCostExtractor, crate::shape::EMDL1HistogramCostExtractorTrait, as_raw_mut_EMDL1HistogramCostExtractor }
 	
 	impl EMDL1HistogramCostExtractor {
 	}
@@ -634,6 +658,8 @@ pub mod shape {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { HausdorffDistanceExtractor, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::shape::ShapeDistanceExtractorTraitConst for HausdorffDistanceExtractor {
 		#[inline] fn as_raw_ShapeDistanceExtractor(&self) -> *const c_void { self.as_raw() }
 	}
@@ -642,6 +668,8 @@ pub mod shape {
 		#[inline] fn as_raw_mut_ShapeDistanceExtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { HausdorffDistanceExtractor, crate::shape::ShapeDistanceExtractorTraitConst, as_raw_ShapeDistanceExtractor, crate::shape::ShapeDistanceExtractorTrait, as_raw_mut_ShapeDistanceExtractor }
+	
 	impl crate::shape::HausdorffDistanceExtractorTraitConst for HausdorffDistanceExtractor {
 		#[inline] fn as_raw_HausdorffDistanceExtractor(&self) -> *const c_void { self.as_raw() }
 	}
@@ -649,6 +677,8 @@ pub mod shape {
 	impl crate::shape::HausdorffDistanceExtractorTrait for HausdorffDistanceExtractor {
 		#[inline] fn as_raw_mut_HausdorffDistanceExtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { HausdorffDistanceExtractor, crate::shape::HausdorffDistanceExtractorTraitConst, as_raw_HausdorffDistanceExtractor, crate::shape::HausdorffDistanceExtractorTrait, as_raw_mut_HausdorffDistanceExtractor }
 	
 	impl HausdorffDistanceExtractor {
 	}
@@ -694,7 +724,7 @@ pub mod shape {
 		fn as_raw_mut_HistogramCostExtractor(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn build_cost_matrix(&mut self, descriptors1: &impl core::ToInputArray, descriptors2: &impl core::ToInputArray, cost_matrix: &mut impl core::ToOutputArray) -> Result<()> {
+		fn build_cost_matrix(&mut self, descriptors1: &impl ToInputArray, descriptors2: &impl ToInputArray, cost_matrix: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(descriptors1);
 			input_array_arg!(descriptors2);
 			output_array_arg!(cost_matrix);
@@ -749,6 +779,8 @@ pub mod shape {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { HistogramCostExtractor, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::shape::HistogramCostExtractorTraitConst for HistogramCostExtractor {
 		#[inline] fn as_raw_HistogramCostExtractor(&self) -> *const c_void { self.as_raw() }
 	}
@@ -756,6 +788,8 @@ pub mod shape {
 	impl crate::shape::HistogramCostExtractorTrait for HistogramCostExtractor {
 		#[inline] fn as_raw_mut_HistogramCostExtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { HistogramCostExtractor, crate::shape::HistogramCostExtractorTraitConst, as_raw_HistogramCostExtractor, crate::shape::HistogramCostExtractorTrait, as_raw_mut_HistogramCostExtractor }
 	
 	impl HistogramCostExtractor {
 	}
@@ -832,6 +866,8 @@ pub mod shape {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { NormHistogramCostExtractor, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::shape::HistogramCostExtractorTraitConst for NormHistogramCostExtractor {
 		#[inline] fn as_raw_HistogramCostExtractor(&self) -> *const c_void { self.as_raw() }
 	}
@@ -840,6 +876,8 @@ pub mod shape {
 		#[inline] fn as_raw_mut_HistogramCostExtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { NormHistogramCostExtractor, crate::shape::HistogramCostExtractorTraitConst, as_raw_HistogramCostExtractor, crate::shape::HistogramCostExtractorTrait, as_raw_mut_HistogramCostExtractor }
+	
 	impl crate::shape::NormHistogramCostExtractorTraitConst for NormHistogramCostExtractor {
 		#[inline] fn as_raw_NormHistogramCostExtractor(&self) -> *const c_void { self.as_raw() }
 	}
@@ -847,6 +885,8 @@ pub mod shape {
 	impl crate::shape::NormHistogramCostExtractorTrait for NormHistogramCostExtractor {
 		#[inline] fn as_raw_mut_NormHistogramCostExtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { NormHistogramCostExtractor, crate::shape::NormHistogramCostExtractorTraitConst, as_raw_NormHistogramCostExtractor, crate::shape::NormHistogramCostExtractorTrait, as_raw_mut_NormHistogramCostExtractor }
 	
 	impl NormHistogramCostExtractor {
 	}
@@ -940,7 +980,7 @@ pub mod shape {
 		}
 		
 		#[inline]
-		fn get_images(&self, image1: &mut impl core::ToOutputArray, image2: &mut impl core::ToOutputArray) -> Result<()> {
+		fn get_images(&self, image1: &mut impl ToOutputArray, image2: &mut impl ToOutputArray) -> Result<()> {
 			output_array_arg!(image1);
 			output_array_arg!(image2);
 			return_send!(via ocvrs_return);
@@ -1114,7 +1154,7 @@ pub mod shape {
 		/// * image1: Image corresponding to the shape defined by contours1.
 		/// * image2: Image corresponding to the shape defined by contours2.
 		#[inline]
-		fn set_images(&mut self, image1: &impl core::ToInputArray, image2: &impl core::ToInputArray) -> Result<()> {
+		fn set_images(&mut self, image1: &impl ToInputArray, image2: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(image1);
 			input_array_arg!(image2);
 			return_send!(via ocvrs_return);
@@ -1207,6 +1247,8 @@ pub mod shape {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { ShapeContextDistanceExtractor, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::shape::ShapeDistanceExtractorTraitConst for ShapeContextDistanceExtractor {
 		#[inline] fn as_raw_ShapeDistanceExtractor(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1215,6 +1257,8 @@ pub mod shape {
 		#[inline] fn as_raw_mut_ShapeDistanceExtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { ShapeContextDistanceExtractor, crate::shape::ShapeDistanceExtractorTraitConst, as_raw_ShapeDistanceExtractor, crate::shape::ShapeDistanceExtractorTrait, as_raw_mut_ShapeDistanceExtractor }
+	
 	impl crate::shape::ShapeContextDistanceExtractorTraitConst for ShapeContextDistanceExtractor {
 		#[inline] fn as_raw_ShapeContextDistanceExtractor(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1222,6 +1266,8 @@ pub mod shape {
 	impl crate::shape::ShapeContextDistanceExtractorTrait for ShapeContextDistanceExtractor {
 		#[inline] fn as_raw_mut_ShapeContextDistanceExtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { ShapeContextDistanceExtractor, crate::shape::ShapeContextDistanceExtractorTraitConst, as_raw_ShapeContextDistanceExtractor, crate::shape::ShapeContextDistanceExtractorTrait, as_raw_mut_ShapeContextDistanceExtractor }
 	
 	impl ShapeContextDistanceExtractor {
 	}
@@ -1254,7 +1300,7 @@ pub mod shape {
 		/// * contour1: Contour defining first shape.
 		/// * contour2: Contour defining second shape.
 		#[inline]
-		fn compute_distance(&mut self, contour1: &impl core::ToInputArray, contour2: &impl core::ToInputArray) -> Result<f32> {
+		fn compute_distance(&mut self, contour1: &impl ToInputArray, contour2: &impl ToInputArray) -> Result<f32> {
 			input_array_arg!(contour1);
 			input_array_arg!(contour2);
 			return_send!(via ocvrs_return);
@@ -1293,6 +1339,8 @@ pub mod shape {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { ShapeDistanceExtractor, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::shape::ShapeDistanceExtractorTraitConst for ShapeDistanceExtractor {
 		#[inline] fn as_raw_ShapeDistanceExtractor(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1300,6 +1348,8 @@ pub mod shape {
 	impl crate::shape::ShapeDistanceExtractorTrait for ShapeDistanceExtractor {
 		#[inline] fn as_raw_mut_ShapeDistanceExtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { ShapeDistanceExtractor, crate::shape::ShapeDistanceExtractorTraitConst, as_raw_ShapeDistanceExtractor, crate::shape::ShapeDistanceExtractorTrait, as_raw_mut_ShapeDistanceExtractor }
 	
 	impl ShapeDistanceExtractor {
 	}
@@ -1336,7 +1386,7 @@ pub mod shape {
 		/// * border_mode: BORDER_CONSTANT
 		/// * border_value: Scalar()
 		#[inline]
-		fn warp_image(&self, transforming_image: &impl core::ToInputArray, output: &mut impl core::ToOutputArray, flags: i32, border_mode: i32, border_value: core::Scalar) -> Result<()> {
+		fn warp_image(&self, transforming_image: &impl ToInputArray, output: &mut impl ToOutputArray, flags: i32, border_mode: i32, border_value: core::Scalar) -> Result<()> {
 			input_array_arg!(transforming_image);
 			output_array_arg!(output);
 			return_send!(via ocvrs_return);
@@ -1361,7 +1411,7 @@ pub mod shape {
 		/// * border_mode: BORDER_CONSTANT
 		/// * border_value: Scalar()
 		#[inline]
-		fn warp_image_def(&self, transforming_image: &impl core::ToInputArray, output: &mut impl core::ToOutputArray) -> Result<()> {
+		fn warp_image_def(&self, transforming_image: &impl ToInputArray, output: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(transforming_image);
 			output_array_arg!(output);
 			return_send!(via ocvrs_return);
@@ -1384,7 +1434,7 @@ pub mod shape {
 		/// * targetShape: Contour defining second shape (Target).
 		/// * matches: Standard vector of Matches between points.
 		#[inline]
-		fn estimate_transformation(&mut self, transforming_shape: &impl core::ToInputArray, target_shape: &impl core::ToInputArray, matches: &mut core::Vector<core::DMatch>) -> Result<()> {
+		fn estimate_transformation(&mut self, transforming_shape: &impl ToInputArray, target_shape: &impl ToInputArray, matches: &mut core::Vector<core::DMatch>) -> Result<()> {
 			input_array_arg!(transforming_shape);
 			input_array_arg!(target_shape);
 			return_send!(via ocvrs_return);
@@ -1403,7 +1453,7 @@ pub mod shape {
 		/// ## C++ default parameters
 		/// * output: noArray()
 		#[inline]
-		fn apply_transformation(&mut self, input: &impl core::ToInputArray, output: &mut impl core::ToOutputArray) -> Result<f32> {
+		fn apply_transformation(&mut self, input: &impl ToInputArray, output: &mut impl ToOutputArray) -> Result<f32> {
 			input_array_arg!(input);
 			output_array_arg!(output);
 			return_send!(via ocvrs_return);
@@ -1423,7 +1473,7 @@ pub mod shape {
 		/// This alternative version of [ShapeTransformerTrait::apply_transformation] function uses the following default values for its arguments:
 		/// * output: noArray()
 		#[inline]
-		fn apply_transformation_def(&mut self, input: &impl core::ToInputArray) -> Result<f32> {
+		fn apply_transformation_def(&mut self, input: &impl ToInputArray) -> Result<f32> {
 			input_array_arg!(input);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ShapeTransformer_applyTransformation_const__InputArrayR(self.as_raw_mut_ShapeTransformer(), input.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -1458,6 +1508,8 @@ pub mod shape {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { ShapeTransformer, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::shape::ShapeTransformerTraitConst for ShapeTransformer {
 		#[inline] fn as_raw_ShapeTransformer(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1465,6 +1517,8 @@ pub mod shape {
 	impl crate::shape::ShapeTransformerTrait for ShapeTransformer {
 		#[inline] fn as_raw_mut_ShapeTransformer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { ShapeTransformer, crate::shape::ShapeTransformerTraitConst, as_raw_ShapeTransformer, crate::shape::ShapeTransformerTrait, as_raw_mut_ShapeTransformer }
 	
 	impl ShapeTransformer {
 	}
@@ -1545,6 +1599,8 @@ pub mod shape {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { ThinPlateSplineShapeTransformer, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::shape::ShapeTransformerTraitConst for ThinPlateSplineShapeTransformer {
 		#[inline] fn as_raw_ShapeTransformer(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1553,6 +1609,8 @@ pub mod shape {
 		#[inline] fn as_raw_mut_ShapeTransformer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { ThinPlateSplineShapeTransformer, crate::shape::ShapeTransformerTraitConst, as_raw_ShapeTransformer, crate::shape::ShapeTransformerTrait, as_raw_mut_ShapeTransformer }
+	
 	impl crate::shape::ThinPlateSplineShapeTransformerTraitConst for ThinPlateSplineShapeTransformer {
 		#[inline] fn as_raw_ThinPlateSplineShapeTransformer(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1560,6 +1618,8 @@ pub mod shape {
 	impl crate::shape::ThinPlateSplineShapeTransformerTrait for ThinPlateSplineShapeTransformer {
 		#[inline] fn as_raw_mut_ThinPlateSplineShapeTransformer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { ThinPlateSplineShapeTransformer, crate::shape::ThinPlateSplineShapeTransformerTraitConst, as_raw_ThinPlateSplineShapeTransformer, crate::shape::ThinPlateSplineShapeTransformerTrait, as_raw_mut_ThinPlateSplineShapeTransformer }
 	
 	impl ThinPlateSplineShapeTransformer {
 	}

@@ -72,14 +72,14 @@ pub mod aruco {
 	/// * flags: 0
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
 	#[inline]
-	pub fn calibrate_camera_aruco_def(corners: &impl core::ToInputArray, ids: &impl core::ToInputArray, counter: &impl core::ToInputArray, board: &core::Ptr<crate::objdetect::Board>, image_size: core::Size, camera_matrix: &mut impl core::ToInputOutputArray, dist_coeffs: &mut impl core::ToInputOutputArray) -> Result<f64> {
+	pub fn calibrate_camera_aruco_def(corners: &impl ToInputArray, ids: &impl ToInputArray, counter: &impl ToInputArray, board: &core::Ptr<crate::objdetect::Board>, image_size: core::Size, camera_matrix: &mut impl ToInputOutputArray, dist_coeffs: &mut impl ToInputOutputArray) -> Result<f64> {
 		input_array_arg!(corners);
 		input_array_arg!(ids);
 		input_array_arg!(counter);
 		input_output_array_arg!(camera_matrix);
 		input_output_array_arg!(dist_coeffs);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_aruco_calibrateCameraAruco_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_PtrLBoardGR_Size_const__InputOutputArrayR_const__InputOutputArrayR(corners.as_raw__InputArray(), ids.as_raw__InputArray(), counter.as_raw__InputArray(), board.as_raw_PtrOfBoard(), image_size.opencv_as_extern(), camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_aruco_calibrateCameraAruco_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_PtrLBoardGR_Size_const__InputOutputArrayR_const__InputOutputArrayR(corners.as_raw__InputArray(), ids.as_raw__InputArray(), counter.as_raw__InputArray(), board.as_raw_PtrOfBoard(), &image_size, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -125,7 +125,7 @@ pub mod aruco {
 	/// * flags: 0
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
 	#[inline]
-	pub fn calibrate_camera_aruco_extended_def(corners: &impl core::ToInputArray, ids: &impl core::ToInputArray, counter: &impl core::ToInputArray, board: &core::Ptr<crate::objdetect::Board>, image_size: core::Size, camera_matrix: &mut impl core::ToInputOutputArray, dist_coeffs: &mut impl core::ToInputOutputArray, rvecs: &mut impl core::ToOutputArray, tvecs: &mut impl core::ToOutputArray, std_deviations_intrinsics: &mut impl core::ToOutputArray, std_deviations_extrinsics: &mut impl core::ToOutputArray, per_view_errors: &mut impl core::ToOutputArray) -> Result<f64> {
+	pub fn calibrate_camera_aruco_extended_def(corners: &impl ToInputArray, ids: &impl ToInputArray, counter: &impl ToInputArray, board: &core::Ptr<crate::objdetect::Board>, image_size: core::Size, camera_matrix: &mut impl ToInputOutputArray, dist_coeffs: &mut impl ToInputOutputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray, std_deviations_intrinsics: &mut impl ToOutputArray, std_deviations_extrinsics: &mut impl ToOutputArray, per_view_errors: &mut impl ToOutputArray) -> Result<f64> {
 		input_array_arg!(corners);
 		input_array_arg!(ids);
 		input_array_arg!(counter);
@@ -137,7 +137,7 @@ pub mod aruco {
 		output_array_arg!(std_deviations_extrinsics);
 		output_array_arg!(per_view_errors);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_aruco_calibrateCameraAruco_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_PtrLBoardGR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(corners.as_raw__InputArray(), ids.as_raw__InputArray(), counter.as_raw__InputArray(), board.as_raw_PtrOfBoard(), image_size.opencv_as_extern(), camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), std_deviations_intrinsics.as_raw__OutputArray(), std_deviations_extrinsics.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_aruco_calibrateCameraAruco_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_PtrLBoardGR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(corners.as_raw__InputArray(), ids.as_raw__InputArray(), counter.as_raw__InputArray(), board.as_raw_PtrOfBoard(), &image_size, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), std_deviations_intrinsics.as_raw__OutputArray(), std_deviations_extrinsics.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -182,7 +182,7 @@ pub mod aruco {
 	/// * flags: 0
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
 	#[inline]
-	pub fn calibrate_camera_aruco_extended(corners: &impl core::ToInputArray, ids: &impl core::ToInputArray, counter: &impl core::ToInputArray, board: &core::Ptr<crate::objdetect::Board>, image_size: core::Size, camera_matrix: &mut impl core::ToInputOutputArray, dist_coeffs: &mut impl core::ToInputOutputArray, rvecs: &mut impl core::ToOutputArray, tvecs: &mut impl core::ToOutputArray, std_deviations_intrinsics: &mut impl core::ToOutputArray, std_deviations_extrinsics: &mut impl core::ToOutputArray, per_view_errors: &mut impl core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
+	pub fn calibrate_camera_aruco_extended(corners: &impl ToInputArray, ids: &impl ToInputArray, counter: &impl ToInputArray, board: &core::Ptr<crate::objdetect::Board>, image_size: core::Size, camera_matrix: &mut impl ToInputOutputArray, dist_coeffs: &mut impl ToInputOutputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray, std_deviations_intrinsics: &mut impl ToOutputArray, std_deviations_extrinsics: &mut impl ToOutputArray, per_view_errors: &mut impl ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
 		input_array_arg!(corners);
 		input_array_arg!(ids);
 		input_array_arg!(counter);
@@ -194,7 +194,7 @@ pub mod aruco {
 		output_array_arg!(std_deviations_extrinsics);
 		output_array_arg!(per_view_errors);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_aruco_calibrateCameraAruco_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_PtrLBoardGR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_const_TermCriteriaR(corners.as_raw__InputArray(), ids.as_raw__InputArray(), counter.as_raw__InputArray(), board.as_raw_PtrOfBoard(), image_size.opencv_as_extern(), camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), std_deviations_intrinsics.as_raw__OutputArray(), std_deviations_extrinsics.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, &criteria, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_aruco_calibrateCameraAruco_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_PtrLBoardGR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_const_TermCriteriaR(corners.as_raw__InputArray(), ids.as_raw__InputArray(), counter.as_raw__InputArray(), board.as_raw_PtrOfBoard(), &image_size, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), std_deviations_intrinsics.as_raw__OutputArray(), std_deviations_extrinsics.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, &criteria, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -245,7 +245,7 @@ pub mod aruco {
 	/// * flags: 0
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
 	#[inline]
-	pub fn calibrate_camera_aruco(corners: &impl core::ToInputArray, ids: &impl core::ToInputArray, counter: &impl core::ToInputArray, board: &core::Ptr<crate::objdetect::Board>, image_size: core::Size, camera_matrix: &mut impl core::ToInputOutputArray, dist_coeffs: &mut impl core::ToInputOutputArray, rvecs: &mut impl core::ToOutputArray, tvecs: &mut impl core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
+	pub fn calibrate_camera_aruco(corners: &impl ToInputArray, ids: &impl ToInputArray, counter: &impl ToInputArray, board: &core::Ptr<crate::objdetect::Board>, image_size: core::Size, camera_matrix: &mut impl ToInputOutputArray, dist_coeffs: &mut impl ToInputOutputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
 		input_array_arg!(corners);
 		input_array_arg!(ids);
 		input_array_arg!(counter);
@@ -254,7 +254,7 @@ pub mod aruco {
 		output_array_arg!(rvecs);
 		output_array_arg!(tvecs);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_aruco_calibrateCameraAruco_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_PtrLBoardGR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_const_TermCriteriaR(corners.as_raw__InputArray(), ids.as_raw__InputArray(), counter.as_raw__InputArray(), board.as_raw_PtrOfBoard(), image_size.opencv_as_extern(), camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, &criteria, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_aruco_calibrateCameraAruco_const__InputArrayR_const__InputArrayR_const__InputArrayR_const_PtrLBoardGR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_const_TermCriteriaR(corners.as_raw__InputArray(), ids.as_raw__InputArray(), counter.as_raw__InputArray(), board.as_raw_PtrOfBoard(), &image_size, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, &criteria, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -269,13 +269,13 @@ pub mod aruco {
 	/// * flags: 0
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
 	#[inline]
-	pub fn calibrate_camera_charuco_def(charuco_corners: &impl core::ToInputArray, charuco_ids: &impl core::ToInputArray, board: &core::Ptr<crate::objdetect::CharucoBoard>, image_size: core::Size, camera_matrix: &mut impl core::ToInputOutputArray, dist_coeffs: &mut impl core::ToInputOutputArray) -> Result<f64> {
+	pub fn calibrate_camera_charuco_def(charuco_corners: &impl ToInputArray, charuco_ids: &impl ToInputArray, board: &core::Ptr<crate::objdetect::CharucoBoard>, image_size: core::Size, camera_matrix: &mut impl ToInputOutputArray, dist_coeffs: &mut impl ToInputOutputArray) -> Result<f64> {
 		input_array_arg!(charuco_corners);
 		input_array_arg!(charuco_ids);
 		input_output_array_arg!(camera_matrix);
 		input_output_array_arg!(dist_coeffs);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_aruco_calibrateCameraCharuco_const__InputArrayR_const__InputArrayR_const_PtrLCharucoBoardGR_Size_const__InputOutputArrayR_const__InputOutputArrayR(charuco_corners.as_raw__InputArray(), charuco_ids.as_raw__InputArray(), board.as_raw_PtrOfCharucoBoard(), image_size.opencv_as_extern(), camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_aruco_calibrateCameraCharuco_const__InputArrayR_const__InputArrayR_const_PtrLCharucoBoardGR_Size_const__InputOutputArrayR_const__InputOutputArrayR(charuco_corners.as_raw__InputArray(), charuco_ids.as_raw__InputArray(), board.as_raw_PtrOfCharucoBoard(), &image_size, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -319,7 +319,7 @@ pub mod aruco {
 	/// * flags: 0
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
 	#[inline]
-	pub fn calibrate_camera_charuco_extended_def(charuco_corners: &impl core::ToInputArray, charuco_ids: &impl core::ToInputArray, board: &core::Ptr<crate::objdetect::CharucoBoard>, image_size: core::Size, camera_matrix: &mut impl core::ToInputOutputArray, dist_coeffs: &mut impl core::ToInputOutputArray, rvecs: &mut impl core::ToOutputArray, tvecs: &mut impl core::ToOutputArray, std_deviations_intrinsics: &mut impl core::ToOutputArray, std_deviations_extrinsics: &mut impl core::ToOutputArray, per_view_errors: &mut impl core::ToOutputArray) -> Result<f64> {
+	pub fn calibrate_camera_charuco_extended_def(charuco_corners: &impl ToInputArray, charuco_ids: &impl ToInputArray, board: &core::Ptr<crate::objdetect::CharucoBoard>, image_size: core::Size, camera_matrix: &mut impl ToInputOutputArray, dist_coeffs: &mut impl ToInputOutputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray, std_deviations_intrinsics: &mut impl ToOutputArray, std_deviations_extrinsics: &mut impl ToOutputArray, per_view_errors: &mut impl ToOutputArray) -> Result<f64> {
 		input_array_arg!(charuco_corners);
 		input_array_arg!(charuco_ids);
 		input_output_array_arg!(camera_matrix);
@@ -330,7 +330,7 @@ pub mod aruco {
 		output_array_arg!(std_deviations_extrinsics);
 		output_array_arg!(per_view_errors);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_aruco_calibrateCameraCharuco_const__InputArrayR_const__InputArrayR_const_PtrLCharucoBoardGR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(charuco_corners.as_raw__InputArray(), charuco_ids.as_raw__InputArray(), board.as_raw_PtrOfCharucoBoard(), image_size.opencv_as_extern(), camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), std_deviations_intrinsics.as_raw__OutputArray(), std_deviations_extrinsics.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_aruco_calibrateCameraCharuco_const__InputArrayR_const__InputArrayR_const_PtrLCharucoBoardGR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(charuco_corners.as_raw__InputArray(), charuco_ids.as_raw__InputArray(), board.as_raw_PtrOfCharucoBoard(), &image_size, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), std_deviations_intrinsics.as_raw__OutputArray(), std_deviations_extrinsics.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -373,7 +373,7 @@ pub mod aruco {
 	/// * flags: 0
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
 	#[inline]
-	pub fn calibrate_camera_charuco_extended(charuco_corners: &impl core::ToInputArray, charuco_ids: &impl core::ToInputArray, board: &core::Ptr<crate::objdetect::CharucoBoard>, image_size: core::Size, camera_matrix: &mut impl core::ToInputOutputArray, dist_coeffs: &mut impl core::ToInputOutputArray, rvecs: &mut impl core::ToOutputArray, tvecs: &mut impl core::ToOutputArray, std_deviations_intrinsics: &mut impl core::ToOutputArray, std_deviations_extrinsics: &mut impl core::ToOutputArray, per_view_errors: &mut impl core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
+	pub fn calibrate_camera_charuco_extended(charuco_corners: &impl ToInputArray, charuco_ids: &impl ToInputArray, board: &core::Ptr<crate::objdetect::CharucoBoard>, image_size: core::Size, camera_matrix: &mut impl ToInputOutputArray, dist_coeffs: &mut impl ToInputOutputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray, std_deviations_intrinsics: &mut impl ToOutputArray, std_deviations_extrinsics: &mut impl ToOutputArray, per_view_errors: &mut impl ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
 		input_array_arg!(charuco_corners);
 		input_array_arg!(charuco_ids);
 		input_output_array_arg!(camera_matrix);
@@ -384,7 +384,7 @@ pub mod aruco {
 		output_array_arg!(std_deviations_extrinsics);
 		output_array_arg!(per_view_errors);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_aruco_calibrateCameraCharuco_const__InputArrayR_const__InputArrayR_const_PtrLCharucoBoardGR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_const_TermCriteriaR(charuco_corners.as_raw__InputArray(), charuco_ids.as_raw__InputArray(), board.as_raw_PtrOfCharucoBoard(), image_size.opencv_as_extern(), camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), std_deviations_intrinsics.as_raw__OutputArray(), std_deviations_extrinsics.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, &criteria, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_aruco_calibrateCameraCharuco_const__InputArrayR_const__InputArrayR_const_PtrLCharucoBoardGR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int_const_TermCriteriaR(charuco_corners.as_raw__InputArray(), charuco_ids.as_raw__InputArray(), board.as_raw_PtrOfCharucoBoard(), &image_size, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), std_deviations_intrinsics.as_raw__OutputArray(), std_deviations_extrinsics.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, &criteria, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -398,7 +398,7 @@ pub mod aruco {
 	/// * flags: 0
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
 	#[inline]
-	pub fn calibrate_camera_charuco(charuco_corners: &impl core::ToInputArray, charuco_ids: &impl core::ToInputArray, board: &core::Ptr<crate::objdetect::CharucoBoard>, image_size: core::Size, camera_matrix: &mut impl core::ToInputOutputArray, dist_coeffs: &mut impl core::ToInputOutputArray, rvecs: &mut impl core::ToOutputArray, tvecs: &mut impl core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
+	pub fn calibrate_camera_charuco(charuco_corners: &impl ToInputArray, charuco_ids: &impl ToInputArray, board: &core::Ptr<crate::objdetect::CharucoBoard>, image_size: core::Size, camera_matrix: &mut impl ToInputOutputArray, dist_coeffs: &mut impl ToInputOutputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
 		input_array_arg!(charuco_corners);
 		input_array_arg!(charuco_ids);
 		input_output_array_arg!(camera_matrix);
@@ -406,7 +406,7 @@ pub mod aruco {
 		output_array_arg!(rvecs);
 		output_array_arg!(tvecs);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_aruco_calibrateCameraCharuco_const__InputArrayR_const__InputArrayR_const_PtrLCharucoBoardGR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_const_TermCriteriaR(charuco_corners.as_raw__InputArray(), charuco_ids.as_raw__InputArray(), board.as_raw_PtrOfCharucoBoard(), image_size.opencv_as_extern(), camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, &criteria, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_aruco_calibrateCameraCharuco_const__InputArrayR_const__InputArrayR_const_PtrLCharucoBoardGR_Size_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_const_TermCriteriaR(charuco_corners.as_raw__InputArray(), charuco_ids.as_raw__InputArray(), board.as_raw_PtrOfCharucoBoard(), &image_size, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, &criteria, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -445,7 +445,7 @@ pub mod aruco {
 	/// * dictionary: makePtr<Dictionary>(getPredefinedDictionary(PredefinedDictionaryType::DICT_4X4_50))
 	#[deprecated = "Use CharucoDetector::detectDiamonds"]
 	#[inline]
-	pub fn detect_charuco_diamond_def(image: &impl core::ToInputArray, marker_corners: &impl core::ToInputArray, marker_ids: &impl core::ToInputArray, square_marker_length_rate: f32, diamond_corners: &mut impl core::ToOutputArray, diamond_ids: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn detect_charuco_diamond_def(image: &impl ToInputArray, marker_corners: &impl ToInputArray, marker_ids: &impl ToInputArray, square_marker_length_rate: f32, diamond_corners: &mut impl ToOutputArray, diamond_ids: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(image);
 		input_array_arg!(marker_corners);
 		input_array_arg!(marker_ids);
@@ -490,7 +490,7 @@ pub mod aruco {
 	/// * dictionary: makePtr<Dictionary>(getPredefinedDictionary(PredefinedDictionaryType::DICT_4X4_50))
 	#[deprecated = "Use CharucoDetector::detectDiamonds"]
 	#[inline]
-	pub fn detect_charuco_diamond(image: &impl core::ToInputArray, marker_corners: &impl core::ToInputArray, marker_ids: &impl core::ToInputArray, square_marker_length_rate: f32, diamond_corners: &mut impl core::ToOutputArray, diamond_ids: &mut impl core::ToOutputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, mut dictionary: core::Ptr<crate::objdetect::Dictionary>) -> Result<()> {
+	pub fn detect_charuco_diamond(image: &impl ToInputArray, marker_corners: &impl ToInputArray, marker_ids: &impl ToInputArray, square_marker_length_rate: f32, diamond_corners: &mut impl ToOutputArray, diamond_ids: &mut impl ToOutputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, mut dictionary: core::Ptr<crate::objdetect::Dictionary>) -> Result<()> {
 		input_array_arg!(image);
 		input_array_arg!(marker_corners);
 		input_array_arg!(marker_ids);
@@ -515,7 +515,7 @@ pub mod aruco {
 	/// * rejected_img_points: noArray()
 	#[deprecated = "Use class ArucoDetector::detectMarkers"]
 	#[inline]
-	pub fn detect_markers_def(image: &impl core::ToInputArray, dictionary: &core::Ptr<crate::objdetect::Dictionary>, corners: &mut impl core::ToOutputArray, ids: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn detect_markers_def(image: &impl ToInputArray, dictionary: &core::Ptr<crate::objdetect::Dictionary>, corners: &mut impl ToOutputArray, ids: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(image);
 		output_array_arg!(corners);
 		output_array_arg!(ids);
@@ -535,7 +535,7 @@ pub mod aruco {
 	/// * rejected_img_points: noArray()
 	#[deprecated = "Use class ArucoDetector::detectMarkers"]
 	#[inline]
-	pub fn detect_markers(image: &impl core::ToInputArray, dictionary: &core::Ptr<crate::objdetect::Dictionary>, corners: &mut impl core::ToOutputArray, ids: &mut impl core::ToOutputArray, parameters: &core::Ptr<crate::objdetect::DetectorParameters>, rejected_img_points: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn detect_markers(image: &impl ToInputArray, dictionary: &core::Ptr<crate::objdetect::Dictionary>, corners: &mut impl ToOutputArray, ids: &mut impl ToOutputArray, parameters: &core::Ptr<crate::objdetect::DetectorParameters>, rejected_img_points: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(image);
 		output_array_arg!(corners);
 		output_array_arg!(ids);
@@ -566,10 +566,10 @@ pub mod aruco {
 	/// * margin_size: 0
 	/// * border_bits: 1
 	#[inline]
-	pub fn draw_charuco_diamond_def(dictionary: &core::Ptr<crate::objdetect::Dictionary>, ids: core::Vec4i, square_length: i32, marker_length: i32, img: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn draw_charuco_diamond_def(dictionary: &core::Ptr<crate::objdetect::Dictionary>, ids: core::Vec4i, square_length: i32, marker_length: i32, img: &mut impl ToOutputArray) -> Result<()> {
 		output_array_arg!(img);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_aruco_drawCharucoDiamond_const_PtrLDictionaryGR_Vec4i_int_int_const__OutputArrayR(dictionary.as_raw_PtrOfDictionary(), ids.opencv_as_extern(), square_length, marker_length, img.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_aruco_drawCharucoDiamond_const_PtrLDictionaryGR_Vec4i_int_int_const__OutputArrayR(dictionary.as_raw_PtrOfDictionary(), &ids, square_length, marker_length, img.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -593,10 +593,10 @@ pub mod aruco {
 	/// * margin_size: 0
 	/// * border_bits: 1
 	#[inline]
-	pub fn draw_charuco_diamond(dictionary: &core::Ptr<crate::objdetect::Dictionary>, ids: core::Vec4i, square_length: i32, marker_length: i32, img: &mut impl core::ToOutputArray, margin_size: i32, border_bits: i32) -> Result<()> {
+	pub fn draw_charuco_diamond(dictionary: &core::Ptr<crate::objdetect::Dictionary>, ids: core::Vec4i, square_length: i32, marker_length: i32, img: &mut impl ToOutputArray, margin_size: i32, border_bits: i32) -> Result<()> {
 		output_array_arg!(img);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_aruco_drawCharucoDiamond_const_PtrLDictionaryGR_Vec4i_int_int_const__OutputArrayR_int_int(dictionary.as_raw_PtrOfDictionary(), ids.opencv_as_extern(), square_length, marker_length, img.as_raw__OutputArray(), margin_size, border_bits, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_aruco_drawCharucoDiamond_const_PtrLDictionaryGR_Vec4i_int_int_const__OutputArrayR_int_int(dictionary.as_raw_PtrOfDictionary(), &ids, square_length, marker_length, img.as_raw__OutputArray(), margin_size, border_bits, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -607,10 +607,10 @@ pub mod aruco {
 	/// **Deprecated**: Use Board::generateImage
 	#[deprecated = "Use Board::generateImage"]
 	#[inline]
-	pub fn draw_planar_board(board: &core::Ptr<crate::objdetect::Board>, out_size: core::Size, img: &mut impl core::ToOutputArray, margin_size: i32, border_bits: i32) -> Result<()> {
+	pub fn draw_planar_board(board: &core::Ptr<crate::objdetect::Board>, out_size: core::Size, img: &mut impl ToOutputArray, margin_size: i32, border_bits: i32) -> Result<()> {
 		output_array_arg!(img);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_aruco_drawPlanarBoard_const_PtrLBoardGR_Size_const__OutputArrayR_int_int(board.as_raw_PtrOfBoard(), out_size.opencv_as_extern(), img.as_raw__OutputArray(), margin_size, border_bits, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_aruco_drawPlanarBoard_const_PtrLBoardGR_Size_const__OutputArrayR_int_int(board.as_raw_PtrOfBoard(), &out_size, img.as_raw__OutputArray(), margin_size, border_bits, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -624,7 +624,7 @@ pub mod aruco {
 	/// * use_extrinsic_guess: false
 	#[deprecated = "Use cv::solvePnP"]
 	#[inline]
-	pub fn estimate_pose_board_def(corners: &impl core::ToInputArray, ids: &impl core::ToInputArray, board: &core::Ptr<crate::objdetect::Board>, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, rvec: &mut impl core::ToInputOutputArray, tvec: &mut impl core::ToInputOutputArray) -> Result<i32> {
+	pub fn estimate_pose_board_def(corners: &impl ToInputArray, ids: &impl ToInputArray, board: &core::Ptr<crate::objdetect::Board>, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvec: &mut impl ToInputOutputArray, tvec: &mut impl ToInputOutputArray) -> Result<i32> {
 		input_array_arg!(corners);
 		input_array_arg!(ids);
 		input_array_arg!(camera_matrix);
@@ -645,7 +645,7 @@ pub mod aruco {
 	/// * use_extrinsic_guess: false
 	#[deprecated = "Use cv::solvePnP"]
 	#[inline]
-	pub fn estimate_pose_board(corners: &impl core::ToInputArray, ids: &impl core::ToInputArray, board: &core::Ptr<crate::objdetect::Board>, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, rvec: &mut impl core::ToInputOutputArray, tvec: &mut impl core::ToInputOutputArray, use_extrinsic_guess: bool) -> Result<i32> {
+	pub fn estimate_pose_board(corners: &impl ToInputArray, ids: &impl ToInputArray, board: &core::Ptr<crate::objdetect::Board>, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvec: &mut impl ToInputOutputArray, tvec: &mut impl ToInputOutputArray, use_extrinsic_guess: bool) -> Result<i32> {
 		input_array_arg!(corners);
 		input_array_arg!(ids);
 		input_array_arg!(camera_matrix);
@@ -683,7 +683,7 @@ pub mod aruco {
 	/// This alternative version of [estimate_pose_charuco_board] function uses the following default values for its arguments:
 	/// * use_extrinsic_guess: false
 	#[inline]
-	pub fn estimate_pose_charuco_board_def(charuco_corners: &impl core::ToInputArray, charuco_ids: &impl core::ToInputArray, board: &core::Ptr<crate::objdetect::CharucoBoard>, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, rvec: &mut impl core::ToInputOutputArray, tvec: &mut impl core::ToInputOutputArray) -> Result<bool> {
+	pub fn estimate_pose_charuco_board_def(charuco_corners: &impl ToInputArray, charuco_ids: &impl ToInputArray, board: &core::Ptr<crate::objdetect::CharucoBoard>, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvec: &mut impl ToInputOutputArray, tvec: &mut impl ToInputOutputArray) -> Result<bool> {
 		input_array_arg!(charuco_corners);
 		input_array_arg!(charuco_ids);
 		input_array_arg!(camera_matrix);
@@ -720,7 +720,7 @@ pub mod aruco {
 	/// ## C++ default parameters
 	/// * use_extrinsic_guess: false
 	#[inline]
-	pub fn estimate_pose_charuco_board(charuco_corners: &impl core::ToInputArray, charuco_ids: &impl core::ToInputArray, board: &core::Ptr<crate::objdetect::CharucoBoard>, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, rvec: &mut impl core::ToInputOutputArray, tvec: &mut impl core::ToInputOutputArray, use_extrinsic_guess: bool) -> Result<bool> {
+	pub fn estimate_pose_charuco_board(charuco_corners: &impl ToInputArray, charuco_ids: &impl ToInputArray, board: &core::Ptr<crate::objdetect::CharucoBoard>, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvec: &mut impl ToInputOutputArray, tvec: &mut impl ToInputOutputArray, use_extrinsic_guess: bool) -> Result<bool> {
 		input_array_arg!(charuco_corners);
 		input_array_arg!(charuco_ids);
 		input_array_arg!(camera_matrix);
@@ -743,7 +743,7 @@ pub mod aruco {
 	/// * estimate_parameters: makePtr<EstimateParameters>()
 	#[deprecated = "Use cv::solvePnP"]
 	#[inline]
-	pub fn estimate_pose_single_markers_def(corners: &impl core::ToInputArray, marker_length: f32, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, rvecs: &mut impl core::ToOutputArray, tvecs: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn estimate_pose_single_markers_def(corners: &impl ToInputArray, marker_length: f32, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(corners);
 		input_array_arg!(camera_matrix);
 		input_array_arg!(dist_coeffs);
@@ -764,7 +764,7 @@ pub mod aruco {
 	/// * estimate_parameters: makePtr<EstimateParameters>()
 	#[deprecated = "Use cv::solvePnP"]
 	#[inline]
-	pub fn estimate_pose_single_markers(corners: &impl core::ToInputArray, marker_length: f32, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, rvecs: &mut impl core::ToOutputArray, tvecs: &mut impl core::ToOutputArray, obj_points: &mut impl core::ToOutputArray, estimate_parameters: &core::Ptr<crate::aruco::EstimateParameters>) -> Result<()> {
+	pub fn estimate_pose_single_markers(corners: &impl ToInputArray, marker_length: f32, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray, obj_points: &mut impl ToOutputArray, estimate_parameters: &core::Ptr<crate::aruco::EstimateParameters>) -> Result<()> {
 		input_array_arg!(corners);
 		input_array_arg!(camera_matrix);
 		input_array_arg!(dist_coeffs);
@@ -783,7 +783,7 @@ pub mod aruco {
 	/// **Deprecated**: Use Board::matchImagePoints
 	#[deprecated = "Use Board::matchImagePoints"]
 	#[inline]
-	pub fn get_board_object_and_image_points(board: &core::Ptr<crate::objdetect::Board>, detected_corners: &impl core::ToInputArray, detected_ids: &impl core::ToInputArray, obj_points: &mut impl core::ToOutputArray, img_points: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn get_board_object_and_image_points(board: &core::Ptr<crate::objdetect::Board>, detected_corners: &impl ToInputArray, detected_ids: &impl ToInputArray, obj_points: &mut impl ToOutputArray, img_points: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(detected_corners);
 		input_array_arg!(detected_ids);
 		output_array_arg!(obj_points);
@@ -829,7 +829,7 @@ pub mod aruco {
 	/// * min_markers: 2
 	#[deprecated = "Use CharucoDetector::detectBoard"]
 	#[inline]
-	pub fn interpolate_corners_charuco_def(marker_corners: &impl core::ToInputArray, marker_ids: &impl core::ToInputArray, image: &impl core::ToInputArray, board: &core::Ptr<crate::objdetect::CharucoBoard>, charuco_corners: &mut impl core::ToOutputArray, charuco_ids: &mut impl core::ToOutputArray) -> Result<i32> {
+	pub fn interpolate_corners_charuco_def(marker_corners: &impl ToInputArray, marker_ids: &impl ToInputArray, image: &impl ToInputArray, board: &core::Ptr<crate::objdetect::CharucoBoard>, charuco_corners: &mut impl ToOutputArray, charuco_ids: &mut impl ToOutputArray) -> Result<i32> {
 		input_array_arg!(marker_corners);
 		input_array_arg!(marker_ids);
 		input_array_arg!(image);
@@ -875,7 +875,7 @@ pub mod aruco {
 	/// * min_markers: 2
 	#[deprecated = "Use CharucoDetector::detectBoard"]
 	#[inline]
-	pub fn interpolate_corners_charuco(marker_corners: &impl core::ToInputArray, marker_ids: &impl core::ToInputArray, image: &impl core::ToInputArray, board: &core::Ptr<crate::objdetect::CharucoBoard>, charuco_corners: &mut impl core::ToOutputArray, charuco_ids: &mut impl core::ToOutputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, min_markers: i32) -> Result<i32> {
+	pub fn interpolate_corners_charuco(marker_corners: &impl ToInputArray, marker_ids: &impl ToInputArray, image: &impl ToInputArray, board: &core::Ptr<crate::objdetect::CharucoBoard>, charuco_corners: &mut impl ToOutputArray, charuco_ids: &mut impl ToOutputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, min_markers: i32) -> Result<i32> {
 		input_array_arg!(marker_corners);
 		input_array_arg!(marker_ids);
 		input_array_arg!(image);
@@ -905,7 +905,7 @@ pub mod aruco {
 	/// * parameters: makePtr<DetectorParameters>()
 	#[deprecated = "Use class ArucoDetector::refineDetectedMarkers"]
 	#[inline]
-	pub fn refine_detected_markers_def(image: &impl core::ToInputArray, board: &core::Ptr<crate::objdetect::Board>, detected_corners: &mut impl core::ToInputOutputArray, detected_ids: &mut impl core::ToInputOutputArray, rejected_corners: &mut impl core::ToInputOutputArray) -> Result<()> {
+	pub fn refine_detected_markers_def(image: &impl ToInputArray, board: &core::Ptr<crate::objdetect::Board>, detected_corners: &mut impl ToInputOutputArray, detected_ids: &mut impl ToInputOutputArray, rejected_corners: &mut impl ToInputOutputArray) -> Result<()> {
 		input_array_arg!(image);
 		input_output_array_arg!(detected_corners);
 		input_output_array_arg!(detected_ids);
@@ -931,7 +931,7 @@ pub mod aruco {
 	/// * parameters: makePtr<DetectorParameters>()
 	#[deprecated = "Use class ArucoDetector::refineDetectedMarkers"]
 	#[inline]
-	pub fn refine_detected_markers(image: &impl core::ToInputArray, board: &core::Ptr<crate::objdetect::Board>, detected_corners: &mut impl core::ToInputOutputArray, detected_ids: &mut impl core::ToInputOutputArray, rejected_corners: &mut impl core::ToInputOutputArray, camera_matrix: &impl core::ToInputArray, dist_coeffs: &impl core::ToInputArray, min_rep_distance: f32, error_correction_rate: f32, check_all_orders: bool, recovered_idxs: &mut impl core::ToOutputArray, parameters: &core::Ptr<crate::objdetect::DetectorParameters>) -> Result<()> {
+	pub fn refine_detected_markers(image: &impl ToInputArray, board: &core::Ptr<crate::objdetect::Board>, detected_corners: &mut impl ToInputOutputArray, detected_ids: &mut impl ToInputOutputArray, rejected_corners: &mut impl ToInputOutputArray, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, min_rep_distance: f32, error_correction_rate: f32, check_all_orders: bool, recovered_idxs: &mut impl ToOutputArray, parameters: &core::Ptr<crate::objdetect::DetectorParameters>) -> Result<()> {
 		input_array_arg!(image);
 		input_output_array_arg!(detected_corners);
 		input_output_array_arg!(detected_ids);
@@ -950,7 +950,7 @@ pub mod aruco {
 	/// **Deprecated**: Use CharucoBoard::checkCharucoCornersCollinear
 	#[deprecated = "Use CharucoBoard::checkCharucoCornersCollinear"]
 	#[inline]
-	pub fn test_charuco_corners_collinear(board: &core::Ptr<crate::objdetect::CharucoBoard>, charuco_ids: &impl core::ToInputArray) -> Result<bool> {
+	pub fn test_charuco_corners_collinear(board: &core::Ptr<crate::objdetect::CharucoBoard>, charuco_ids: &impl ToInputArray) -> Result<bool> {
 		input_array_arg!(charuco_ids);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_aruco_testCharucoCornersCollinear_const_PtrLCharucoBoardGR_const__InputArrayR(board.as_raw_PtrOfCharucoBoard(), charuco_ids.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -1041,6 +1041,8 @@ pub mod aruco {
 	impl crate::aruco::EstimateParametersTrait for EstimateParameters {
 		#[inline] fn as_raw_mut_EstimateParameters(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { EstimateParameters, crate::aruco::EstimateParametersTraitConst, as_raw_EstimateParameters, crate::aruco::EstimateParametersTrait, as_raw_mut_EstimateParameters }
 	
 	impl EstimateParameters {
 		#[inline]

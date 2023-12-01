@@ -328,7 +328,7 @@ pub mod cudacodec {
 	/// *   This function demonstrates how to map the luma histogram back so that it is equivalent to the result obtained from cuda::calcHist()
 	/// if the returned frame was colorFormat::GRAY.
 	#[inline]
-	pub fn map_hist(hist: &core::GpuMat, hist_full: &mut core::Mat) -> Result<()> {
+	pub fn map_hist(hist: &impl core::GpuMatTraitConst, hist_full: &mut impl core::MatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cudacodec_MapHist_const_GpuMatR_MatR(hist.as_raw_GpuMat(), hist_full.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -376,7 +376,7 @@ pub mod cudacodec {
 	#[inline]
 	pub fn create_video_reader_1(source: &core::Ptr<crate::cudacodec::CUDA_RawVideoSource>, params: crate::cudacodec::CUDA_VideoReaderInitParams) -> Result<core::Ptr<crate::cudacodec::CUDA_VideoReader>> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cudacodec_createVideoReader_const_PtrLRawVideoSourceGR_const_VideoReaderInitParams(source.as_raw_PtrOfCUDA_RawVideoSource(), params.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cudacodec_createVideoReader_const_PtrLRawVideoSourceGR_const_VideoReaderInitParams(source.as_raw_PtrOfCUDA_RawVideoSource(), &params, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudacodec::CUDA_VideoReader>::opencv_from_extern(ret) };
@@ -429,7 +429,7 @@ pub mod cudacodec {
 	pub fn create_video_reader(filename: &str, source_params: &core::Vector<i32>, params: crate::cudacodec::CUDA_VideoReaderInitParams) -> Result<core::Ptr<crate::cudacodec::CUDA_VideoReader>> {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cudacodec_createVideoReader_const_StringR_const_vectorLintGR_const_VideoReaderInitParams(filename.opencv_as_extern(), source_params.as_raw_VectorOfi32(), params.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cudacodec_createVideoReader_const_StringR_const_vectorLintGR_const_VideoReaderInitParams(filename.opencv_as_extern(), source_params.as_raw_VectorOfi32(), &params, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudacodec::CUDA_VideoReader>::opencv_from_extern(ret) };
@@ -458,7 +458,7 @@ pub mod cudacodec {
 	pub fn create_video_writer_def(file_name: &str, frame_size: core::Size) -> Result<core::Ptr<crate::cudacodec::CUDA_VideoWriter>> {
 		extern_container_arg!(file_name);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cudacodec_createVideoWriter_const_StringR_const_Size(file_name.opencv_as_extern(), frame_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cudacodec_createVideoWriter_const_StringR_const_Size(file_name.opencv_as_extern(), &frame_size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudacodec::CUDA_VideoWriter>::opencv_from_extern(ret) };
@@ -483,10 +483,10 @@ pub mod cudacodec {
 	/// * encoder_callback: 0
 	/// * stream: cuda::Stream::Null()
 	#[inline]
-	pub fn create_video_writer(file_name: &str, frame_size: core::Size, codec: crate::cudacodec::CUDA_Codec, fps: f64, color_format: crate::cudacodec::CUDA_ColorFormat, mut encoder_callback: core::Ptr<crate::cudacodec::CUDA_EncoderCallback>, stream: &core::Stream) -> Result<core::Ptr<crate::cudacodec::CUDA_VideoWriter>> {
+	pub fn create_video_writer(file_name: &str, frame_size: core::Size, codec: crate::cudacodec::CUDA_Codec, fps: f64, color_format: crate::cudacodec::CUDA_ColorFormat, mut encoder_callback: core::Ptr<crate::cudacodec::CUDA_EncoderCallback>, stream: &impl core::StreamTraitConst) -> Result<core::Ptr<crate::cudacodec::CUDA_VideoWriter>> {
 		extern_container_arg!(file_name);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cudacodec_createVideoWriter_const_StringR_const_Size_const_Codec_const_double_const_ColorFormat_PtrLEncoderCallbackG_const_StreamR(file_name.opencv_as_extern(), frame_size.opencv_as_extern(), codec, fps, color_format, encoder_callback.as_raw_mut_PtrOfCUDA_EncoderCallback(), stream.as_raw_Stream(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cudacodec_createVideoWriter_const_StringR_const_Size_const_Codec_const_double_const_ColorFormat_PtrLEncoderCallbackG_const_StreamR(file_name.opencv_as_extern(), &frame_size, codec, fps, color_format, encoder_callback.as_raw_mut_PtrOfCUDA_EncoderCallback(), stream.as_raw_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudacodec::CUDA_VideoWriter>::opencv_from_extern(ret) };
@@ -513,7 +513,7 @@ pub mod cudacodec {
 	pub fn create_video_writer_1_def(file_name: &str, frame_size: core::Size, codec: crate::cudacodec::CUDA_Codec, fps: f64, color_format: crate::cudacodec::CUDA_ColorFormat, params: crate::cudacodec::CUDA_EncoderParams) -> Result<core::Ptr<crate::cudacodec::CUDA_VideoWriter>> {
 		extern_container_arg!(file_name);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cudacodec_createVideoWriter_const_StringR_const_Size_const_Codec_const_double_const_ColorFormat_const_EncoderParamsR(file_name.opencv_as_extern(), frame_size.opencv_as_extern(), codec, fps, color_format, &params, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cudacodec_createVideoWriter_const_StringR_const_Size_const_Codec_const_double_const_ColorFormat_const_EncoderParamsR(file_name.opencv_as_extern(), &frame_size, codec, fps, color_format, &params, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudacodec::CUDA_VideoWriter>::opencv_from_extern(ret) };
@@ -536,10 +536,10 @@ pub mod cudacodec {
 	/// * encoder_callback: 0
 	/// * stream: cuda::Stream::Null()
 	#[inline]
-	pub fn create_video_writer_1(file_name: &str, frame_size: core::Size, codec: crate::cudacodec::CUDA_Codec, fps: f64, color_format: crate::cudacodec::CUDA_ColorFormat, params: crate::cudacodec::CUDA_EncoderParams, mut encoder_callback: core::Ptr<crate::cudacodec::CUDA_EncoderCallback>, stream: &core::Stream) -> Result<core::Ptr<crate::cudacodec::CUDA_VideoWriter>> {
+	pub fn create_video_writer_1(file_name: &str, frame_size: core::Size, codec: crate::cudacodec::CUDA_Codec, fps: f64, color_format: crate::cudacodec::CUDA_ColorFormat, params: crate::cudacodec::CUDA_EncoderParams, mut encoder_callback: core::Ptr<crate::cudacodec::CUDA_EncoderCallback>, stream: &impl core::StreamTraitConst) -> Result<core::Ptr<crate::cudacodec::CUDA_VideoWriter>> {
 		extern_container_arg!(file_name);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cudacodec_createVideoWriter_const_StringR_const_Size_const_Codec_const_double_const_ColorFormat_const_EncoderParamsR_PtrLEncoderCallbackG_const_StreamR(file_name.opencv_as_extern(), frame_size.opencv_as_extern(), codec, fps, color_format, &params, encoder_callback.as_raw_mut_PtrOfCUDA_EncoderCallback(), stream.as_raw_Stream(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cudacodec_createVideoWriter_const_StringR_const_Size_const_Codec_const_double_const_ColorFormat_const_EncoderParamsR_PtrLEncoderCallbackG_const_StreamR(file_name.opencv_as_extern(), &frame_size, codec, fps, color_format, &params, encoder_callback.as_raw_mut_PtrOfCUDA_EncoderCallback(), stream.as_raw_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudacodec::CUDA_VideoWriter>::opencv_from_extern(ret) };
@@ -632,6 +632,8 @@ pub mod cudacodec {
 	impl crate::cudacodec::CUDA_EncoderCallbackTrait for CUDA_EncoderCallback {
 		#[inline] fn as_raw_mut_CUDA_EncoderCallback(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { CUDA_EncoderCallback, crate::cudacodec::CUDA_EncoderCallbackTraitConst, as_raw_CUDA_EncoderCallback, crate::cudacodec::CUDA_EncoderCallbackTrait, as_raw_mut_CUDA_EncoderCallback }
 	
 	impl CUDA_EncoderCallback {
 	}
@@ -765,7 +767,7 @@ pub mod cudacodec {
 		/// ## Parameters
 		/// * extraData: 1D cv::Mat containing the extra data if it exists.
 		#[inline]
-		fn get_extra_data(&self, extra_data: &mut core::Mat) -> Result<()> {
+		fn get_extra_data(&self, extra_data: &mut impl core::MatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_RawVideoSource_getExtraData_const_MatR(self.as_raw_CUDA_RawVideoSource(), extra_data.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -819,10 +821,10 @@ pub mod cudacodec {
 		/// * data: Pointer to frame data.
 		/// * size: Size in bytes of current frame.
 		#[inline]
-		fn get_next_packet(&mut self, data: &mut &mut u8, size: &mut size_t) -> Result<bool> {
+		unsafe fn get_next_packet(&mut self, data: *mut *mut u8, size: &mut size_t) -> Result<bool> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cudacodec_RawVideoSource_getNextPacket_unsigned_charXX_size_tX(self.as_raw_mut_CUDA_RawVideoSource(), data as *mut  _ as *mut  *mut  _, size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			{ sys::cv_cudacodec_RawVideoSource_getNextPacket_unsigned_charXX_size_tX(self.as_raw_mut_CUDA_RawVideoSource(), data, size, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -864,6 +866,8 @@ pub mod cudacodec {
 	impl crate::cudacodec::CUDA_RawVideoSourceTrait for CUDA_RawVideoSource {
 		#[inline] fn as_raw_mut_CUDA_RawVideoSource(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { CUDA_RawVideoSource, crate::cudacodec::CUDA_RawVideoSourceTraitConst, as_raw_CUDA_RawVideoSource, crate::cudacodec::CUDA_RawVideoSourceTrait, as_raw_mut_CUDA_RawVideoSource }
 	
 	impl CUDA_RawVideoSource {
 	}
@@ -907,7 +911,7 @@ pub mod cudacodec {
 		/// ## C++ default parameters
 		/// * idx: static_cast<size_t>(VideoReaderProps::PROP_DECODED_FRAME_IDX)
 		#[inline]
-		fn retrieve(&self, frame: &mut impl core::ToOutputArray, idx: size_t) -> Result<bool> {
+		fn retrieve(&self, frame: &mut impl ToOutputArray, idx: size_t) -> Result<bool> {
 			output_array_arg!(frame);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoReader_retrieve_const_const__OutputArrayR_const_size_t(self.as_raw_CUDA_VideoReader(), frame.as_raw__OutputArray(), idx, ocvrs_return.as_mut_ptr()) };
@@ -934,7 +938,7 @@ pub mod cudacodec {
 		/// This alternative version of [CUDA_VideoReaderTraitConst::retrieve] function uses the following default values for its arguments:
 		/// * idx: static_cast<size_t>(VideoReaderProps::PROP_DECODED_FRAME_IDX)
 		#[inline]
-		fn retrieve_def(&self, frame: &mut impl core::ToOutputArray) -> Result<bool> {
+		fn retrieve_def(&self, frame: &mut impl ToOutputArray) -> Result<bool> {
 			output_array_arg!(frame);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoReader_retrieve_const_const__OutputArrayR(self.as_raw_CUDA_VideoReader(), frame.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
@@ -956,7 +960,7 @@ pub mod cudacodec {
 		/// The method returns data associated with the current video source since the last call to grab() or the creation of the VideoReader. If no data is present
 		/// the method returns false and the function returns an empty image.
 		#[inline]
-		fn retrieve_1(&self, frame: &mut core::Mat, idx: size_t) -> Result<bool> {
+		fn retrieve_1(&self, frame: &mut impl core::MatTrait, idx: size_t) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoReader_retrieve_const_MatR_const_size_t(self.as_raw_CUDA_VideoReader(), frame.as_raw_mut_Mat(), idx, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -974,7 +978,7 @@ pub mod cudacodec {
 		/// The method returns data associated with the current video source since the last call to grab(). If no data is present
 		/// the method returns false and the function returns an empty image.
 		#[inline]
-		fn retrieve_2(&self, frame: &mut core::GpuMat) -> Result<bool> {
+		fn retrieve_2(&self, frame: &mut impl core::GpuMatTrait) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoReader_retrieve_const_GpuMatR(self.as_raw_CUDA_VideoReader(), frame.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1062,7 +1066,7 @@ pub mod cudacodec {
 		/// ## C++ default parameters
 		/// * stream: cuda::Stream::Null()
 		#[inline]
-		fn next_frame(&mut self, frame: &mut core::GpuMat, stream: &mut core::Stream) -> Result<bool> {
+		fn next_frame(&mut self, frame: &mut impl core::GpuMatTrait, stream: &mut impl core::StreamTrait) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoReader_nextFrame_GpuMatR_StreamR(self.as_raw_mut_CUDA_VideoReader(), frame.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1085,7 +1089,7 @@ pub mod cudacodec {
 		/// This alternative version of [CUDA_VideoReaderTrait::next_frame] function uses the following default values for its arguments:
 		/// * stream: cuda::Stream::Null()
 		#[inline]
-		fn next_frame_def(&mut self, frame: &mut core::GpuMat) -> Result<bool> {
+		fn next_frame_def(&mut self, frame: &mut impl core::GpuMatTrait) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoReader_nextFrame_GpuMatR(self.as_raw_mut_CUDA_VideoReader(), frame.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1111,7 +1115,7 @@ pub mod cudacodec {
 		/// ## C++ default parameters
 		/// * stream: cuda::Stream::Null()
 		#[inline]
-		fn next_frame_with_hist(&mut self, frame: &mut core::GpuMat, histogram: &mut core::GpuMat, stream: &mut core::Stream) -> Result<bool> {
+		fn next_frame_with_hist(&mut self, frame: &mut impl core::GpuMatTrait, histogram: &mut impl core::GpuMatTrait, stream: &mut impl core::StreamTrait) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoReader_nextFrame_GpuMatR_GpuMatR_StreamR(self.as_raw_mut_CUDA_VideoReader(), frame.as_raw_mut_GpuMat(), histogram.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1138,7 +1142,7 @@ pub mod cudacodec {
 		/// This alternative version of [CUDA_VideoReaderTrait::next_frame_with_hist] function uses the following default values for its arguments:
 		/// * stream: cuda::Stream::Null()
 		#[inline]
-		fn next_frame_with_hist_def(&mut self, frame: &mut core::GpuMat, histogram: &mut core::GpuMat) -> Result<bool> {
+		fn next_frame_with_hist_def(&mut self, frame: &mut impl core::GpuMatTrait, histogram: &mut impl core::GpuMatTrait) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoReader_nextFrame_GpuMatR_GpuMatR(self.as_raw_mut_CUDA_VideoReader(), frame.as_raw_mut_GpuMat(), histogram.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1162,7 +1166,7 @@ pub mod cudacodec {
 		/// ## C++ default parameters
 		/// * stream: cuda::Stream::Null()
 		#[inline]
-		fn grab(&mut self, stream: &mut core::Stream) -> Result<bool> {
+		fn grab(&mut self, stream: &mut impl core::StreamTrait) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoReader_grab_StreamR(self.as_raw_mut_CUDA_VideoReader(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1271,6 +1275,8 @@ pub mod cudacodec {
 		#[inline] fn as_raw_mut_CUDA_VideoReader(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { CUDA_VideoReader, crate::cudacodec::CUDA_VideoReaderTraitConst, as_raw_CUDA_VideoReader, crate::cudacodec::CUDA_VideoReaderTrait, as_raw_mut_CUDA_VideoReader }
+	
 	impl CUDA_VideoReader {
 	}
 	
@@ -1355,7 +1361,7 @@ pub mod cudacodec {
 		/// The method encodes the specified image to a video stream. The image must have the same size and the same
 		/// surface format as has been specified when opening the video writer.
 		#[inline]
-		fn write(&mut self, frame: &impl core::ToInputArray) -> Result<()> {
+		fn write(&mut self, frame: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(frame);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoWriter_write_const__InputArrayR(self.as_raw_mut_CUDA_VideoWriter(), frame.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -1408,6 +1414,8 @@ pub mod cudacodec {
 	impl crate::cudacodec::CUDA_VideoWriterTrait for CUDA_VideoWriter {
 		#[inline] fn as_raw_mut_CUDA_VideoWriter(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { CUDA_VideoWriter, crate::cudacodec::CUDA_VideoWriterTraitConst, as_raw_CUDA_VideoWriter, crate::cudacodec::CUDA_VideoWriterTrait, as_raw_mut_CUDA_VideoWriter }
 	
 	impl CUDA_VideoWriter {
 	}

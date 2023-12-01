@@ -105,7 +105,7 @@ pub mod cudafeatures2d {
 		/// ## C++ default parameters
 		/// * mask: noArray()
 		#[inline]
-		fn match_(&mut self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::DMatch>, mask: &impl core::ToInputArray) -> Result<()> {
+		fn match_(&mut self, query_descriptors: &impl ToInputArray, train_descriptors: &impl ToInputArray, matches: &mut core::Vector<core::DMatch>, mask: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			input_array_arg!(train_descriptors);
 			input_array_arg!(mask);
@@ -137,7 +137,7 @@ pub mod cudafeatures2d {
 		/// This alternative version of [CUDA_DescriptorMatcherTrait::match_] function uses the following default values for its arguments:
 		/// * mask: noArray()
 		#[inline]
-		fn match__def(&mut self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::DMatch>) -> Result<()> {
+		fn match__def(&mut self, query_descriptors: &impl ToInputArray, train_descriptors: &impl ToInputArray, matches: &mut core::Vector<core::DMatch>) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			input_array_arg!(train_descriptors);
 			return_send!(via ocvrs_return);
@@ -169,7 +169,7 @@ pub mod cudafeatures2d {
 		/// ## C++ default parameters
 		/// * masks: std::vector<GpuMat>()
 		#[inline]
-		fn match__1(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::DMatch>, masks: &core::Vector<core::GpuMat>) -> Result<()> {
+		fn match__1(&mut self, query_descriptors: &impl ToInputArray, matches: &mut core::Vector<core::DMatch>, masks: &core::Vector<core::GpuMat>) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_match_const__InputArrayR_vectorLDMatchGR_const_vectorLGpuMatGR(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfDMatch(), masks.as_raw_VectorOfGpuMat(), ocvrs_return.as_mut_ptr()) };
@@ -184,7 +184,7 @@ pub mod cudafeatures2d {
 		/// This alternative version of [CUDA_DescriptorMatcherTrait::match_] function uses the following default values for its arguments:
 		/// * masks: std::vector<GpuMat>()
 		#[inline]
-		fn match__def_1(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::DMatch>) -> Result<()> {
+		fn match__def_1(&mut self, query_descriptors: &impl ToInputArray, matches: &mut core::Vector<core::DMatch>) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_match_const__InputArrayR_vectorLDMatchGR(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfDMatch(), ocvrs_return.as_mut_ptr()) };
@@ -215,7 +215,7 @@ pub mod cudafeatures2d {
 		/// * mask: noArray()
 		/// * stream: Stream::Null()
 		#[inline]
-		fn match_async(&mut self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+		fn match_async(&mut self, query_descriptors: &impl ToInputArray, train_descriptors: &impl ToInputArray, matches: &mut impl ToOutputArray, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			input_array_arg!(train_descriptors);
 			output_array_arg!(matches);
@@ -250,7 +250,7 @@ pub mod cudafeatures2d {
 		/// * mask: noArray()
 		/// * stream: Stream::Null()
 		#[inline]
-		fn match_async_def(&mut self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut impl core::ToOutputArray) -> Result<()> {
+		fn match_async_def(&mut self, query_descriptors: &impl ToInputArray, train_descriptors: &impl ToInputArray, matches: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			input_array_arg!(train_descriptors);
 			output_array_arg!(matches);
@@ -285,7 +285,7 @@ pub mod cudafeatures2d {
 		/// * masks: std::vector<GpuMat>()
 		/// * stream: Stream::Null()
 		#[inline]
-		fn match_async_1(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut impl core::ToOutputArray, masks: &core::Vector<core::GpuMat>, stream: &mut core::Stream) -> Result<()> {
+		fn match_async_1(&mut self, query_descriptors: &impl ToInputArray, matches: &mut impl ToOutputArray, masks: &core::Vector<core::GpuMat>, stream: &mut impl core::StreamTrait) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			output_array_arg!(matches);
 			return_send!(via ocvrs_return);
@@ -302,7 +302,7 @@ pub mod cudafeatures2d {
 		/// * masks: std::vector<GpuMat>()
 		/// * stream: Stream::Null()
 		#[inline]
-		fn match_async_def_1(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut impl core::ToOutputArray) -> Result<()> {
+		fn match_async_def_1(&mut self, query_descriptors: &impl ToInputArray, matches: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			output_array_arg!(matches);
 			return_send!(via ocvrs_return);
@@ -321,7 +321,7 @@ pub mod cudafeatures2d {
 		/// * gpu_matches: Matches, returned from DescriptorMatcher::matchAsync.
 		/// * matches: Vector of DMatch objects.
 		#[inline]
-		fn match_convert(&mut self, gpu_matches: &impl core::ToInputArray, matches: &mut core::Vector<core::DMatch>) -> Result<()> {
+		fn match_convert(&mut self, gpu_matches: &impl ToInputArray, matches: &mut core::Vector<core::DMatch>) -> Result<()> {
 			input_array_arg!(gpu_matches);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_matchConvert_const__InputArrayR_vectorLDMatchGR(self.as_raw_mut_CUDA_DescriptorMatcher(), gpu_matches.as_raw__InputArray(), matches.as_raw_mut_VectorOfDMatch(), ocvrs_return.as_mut_ptr()) };
@@ -353,7 +353,7 @@ pub mod cudafeatures2d {
 		/// * mask: noArray()
 		/// * compact_result: false
 		#[inline]
-		fn knn_match(&mut self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32, mask: &impl core::ToInputArray, compact_result: bool) -> Result<()> {
+		fn knn_match(&mut self, query_descriptors: &impl ToInputArray, train_descriptors: &impl ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32, mask: &impl ToInputArray, compact_result: bool) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			input_array_arg!(train_descriptors);
 			input_array_arg!(mask);
@@ -388,7 +388,7 @@ pub mod cudafeatures2d {
 		/// * mask: noArray()
 		/// * compact_result: false
 		#[inline]
-		fn knn_match_def(&mut self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32) -> Result<()> {
+		fn knn_match_def(&mut self, query_descriptors: &impl ToInputArray, train_descriptors: &impl ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			input_array_arg!(train_descriptors);
 			return_send!(via ocvrs_return);
@@ -423,7 +423,7 @@ pub mod cudafeatures2d {
 		/// * masks: std::vector<GpuMat>()
 		/// * compact_result: false
 		#[inline]
-		fn knn_match_1(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32, masks: &core::Vector<core::GpuMat>, compact_result: bool) -> Result<()> {
+		fn knn_match_1(&mut self, query_descriptors: &impl ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32, masks: &core::Vector<core::GpuMat>, compact_result: bool) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_knnMatch_const__InputArrayR_vectorLvectorLDMatchGGR_int_const_vectorLGpuMatGR_bool(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), k, masks.as_raw_VectorOfGpuMat(), compact_result, ocvrs_return.as_mut_ptr()) };
@@ -439,7 +439,7 @@ pub mod cudafeatures2d {
 		/// * masks: std::vector<GpuMat>()
 		/// * compact_result: false
 		#[inline]
-		fn knn_match_def_1(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32) -> Result<()> {
+		fn knn_match_def_1(&mut self, query_descriptors: &impl ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, k: i32) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_knnMatch_const__InputArrayR_vectorLvectorLDMatchGGR_int(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), k, ocvrs_return.as_mut_ptr()) };
@@ -470,7 +470,7 @@ pub mod cudafeatures2d {
 		/// * mask: noArray()
 		/// * stream: Stream::Null()
 		#[inline]
-		fn knn_match_async(&mut self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut impl core::ToOutputArray, k: i32, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+		fn knn_match_async(&mut self, query_descriptors: &impl ToInputArray, train_descriptors: &impl ToInputArray, matches: &mut impl ToOutputArray, k: i32, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			input_array_arg!(train_descriptors);
 			output_array_arg!(matches);
@@ -505,7 +505,7 @@ pub mod cudafeatures2d {
 		/// * mask: noArray()
 		/// * stream: Stream::Null()
 		#[inline]
-		fn knn_match_async_def(&mut self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut impl core::ToOutputArray, k: i32) -> Result<()> {
+		fn knn_match_async_def(&mut self, query_descriptors: &impl ToInputArray, train_descriptors: &impl ToInputArray, matches: &mut impl ToOutputArray, k: i32) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			input_array_arg!(train_descriptors);
 			output_array_arg!(matches);
@@ -540,7 +540,7 @@ pub mod cudafeatures2d {
 		/// * masks: std::vector<GpuMat>()
 		/// * stream: Stream::Null()
 		#[inline]
-		fn knn_match_async_1(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut impl core::ToOutputArray, k: i32, masks: &core::Vector<core::GpuMat>, stream: &mut core::Stream) -> Result<()> {
+		fn knn_match_async_1(&mut self, query_descriptors: &impl ToInputArray, matches: &mut impl ToOutputArray, k: i32, masks: &core::Vector<core::GpuMat>, stream: &mut impl core::StreamTrait) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			output_array_arg!(matches);
 			return_send!(via ocvrs_return);
@@ -557,7 +557,7 @@ pub mod cudafeatures2d {
 		/// * masks: std::vector<GpuMat>()
 		/// * stream: Stream::Null()
 		#[inline]
-		fn knn_match_async_def_1(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut impl core::ToOutputArray, k: i32) -> Result<()> {
+		fn knn_match_async_def_1(&mut self, query_descriptors: &impl ToInputArray, matches: &mut impl ToOutputArray, k: i32) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			output_array_arg!(matches);
 			return_send!(via ocvrs_return);
@@ -582,7 +582,7 @@ pub mod cudafeatures2d {
 		/// ## C++ default parameters
 		/// * compact_result: false
 		#[inline]
-		fn knn_match_convert(&mut self, gpu_matches: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, compact_result: bool) -> Result<()> {
+		fn knn_match_convert(&mut self, gpu_matches: &impl ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, compact_result: bool) -> Result<()> {
 			input_array_arg!(gpu_matches);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_knnMatchConvert_const__InputArrayR_vectorLvectorLDMatchGGR_bool(self.as_raw_mut_CUDA_DescriptorMatcher(), gpu_matches.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), compact_result, ocvrs_return.as_mut_ptr()) };
@@ -607,7 +607,7 @@ pub mod cudafeatures2d {
 		/// This alternative version of [CUDA_DescriptorMatcherTrait::knn_match_convert] function uses the following default values for its arguments:
 		/// * compact_result: false
 		#[inline]
-		fn knn_match_convert_def(&mut self, gpu_matches: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>) -> Result<()> {
+		fn knn_match_convert_def(&mut self, gpu_matches: &impl ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>) -> Result<()> {
 			input_array_arg!(gpu_matches);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_knnMatchConvert_const__InputArrayR_vectorLvectorLDMatchGGR(self.as_raw_mut_CUDA_DescriptorMatcher(), gpu_matches.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), ocvrs_return.as_mut_ptr()) };
@@ -640,7 +640,7 @@ pub mod cudafeatures2d {
 		/// * mask: noArray()
 		/// * compact_result: false
 		#[inline]
-		fn radius_match(&mut self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32, mask: &impl core::ToInputArray, compact_result: bool) -> Result<()> {
+		fn radius_match(&mut self, query_descriptors: &impl ToInputArray, train_descriptors: &impl ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32, mask: &impl ToInputArray, compact_result: bool) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			input_array_arg!(train_descriptors);
 			input_array_arg!(mask);
@@ -676,7 +676,7 @@ pub mod cudafeatures2d {
 		/// * mask: noArray()
 		/// * compact_result: false
 		#[inline]
-		fn radius_match_def(&mut self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32) -> Result<()> {
+		fn radius_match_def(&mut self, query_descriptors: &impl ToInputArray, train_descriptors: &impl ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			input_array_arg!(train_descriptors);
 			return_send!(via ocvrs_return);
@@ -712,7 +712,7 @@ pub mod cudafeatures2d {
 		/// * masks: std::vector<GpuMat>()
 		/// * compact_result: false
 		#[inline]
-		fn radius_match_1(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32, masks: &core::Vector<core::GpuMat>, compact_result: bool) -> Result<()> {
+		fn radius_match_1(&mut self, query_descriptors: &impl ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32, masks: &core::Vector<core::GpuMat>, compact_result: bool) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_radiusMatch_const__InputArrayR_vectorLvectorLDMatchGGR_float_const_vectorLGpuMatGR_bool(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), max_distance, masks.as_raw_VectorOfGpuMat(), compact_result, ocvrs_return.as_mut_ptr()) };
@@ -728,7 +728,7 @@ pub mod cudafeatures2d {
 		/// * masks: std::vector<GpuMat>()
 		/// * compact_result: false
 		#[inline]
-		fn radius_match_def_1(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32) -> Result<()> {
+		fn radius_match_def_1(&mut self, query_descriptors: &impl ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, max_distance: f32) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_radiusMatch_const__InputArrayR_vectorLvectorLDMatchGGR_float(self.as_raw_mut_CUDA_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), max_distance, ocvrs_return.as_mut_ptr()) };
@@ -760,7 +760,7 @@ pub mod cudafeatures2d {
 		/// * mask: noArray()
 		/// * stream: Stream::Null()
 		#[inline]
-		fn radius_match_async(&mut self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut impl core::ToOutputArray, max_distance: f32, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+		fn radius_match_async(&mut self, query_descriptors: &impl ToInputArray, train_descriptors: &impl ToInputArray, matches: &mut impl ToOutputArray, max_distance: f32, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			input_array_arg!(train_descriptors);
 			output_array_arg!(matches);
@@ -796,7 +796,7 @@ pub mod cudafeatures2d {
 		/// * mask: noArray()
 		/// * stream: Stream::Null()
 		#[inline]
-		fn radius_match_async_def(&mut self, query_descriptors: &impl core::ToInputArray, train_descriptors: &impl core::ToInputArray, matches: &mut impl core::ToOutputArray, max_distance: f32) -> Result<()> {
+		fn radius_match_async_def(&mut self, query_descriptors: &impl ToInputArray, train_descriptors: &impl ToInputArray, matches: &mut impl ToOutputArray, max_distance: f32) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			input_array_arg!(train_descriptors);
 			output_array_arg!(matches);
@@ -832,7 +832,7 @@ pub mod cudafeatures2d {
 		/// * masks: std::vector<GpuMat>()
 		/// * stream: Stream::Null()
 		#[inline]
-		fn radius_match_async_1(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut impl core::ToOutputArray, max_distance: f32, masks: &core::Vector<core::GpuMat>, stream: &mut core::Stream) -> Result<()> {
+		fn radius_match_async_1(&mut self, query_descriptors: &impl ToInputArray, matches: &mut impl ToOutputArray, max_distance: f32, masks: &core::Vector<core::GpuMat>, stream: &mut impl core::StreamTrait) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			output_array_arg!(matches);
 			return_send!(via ocvrs_return);
@@ -849,7 +849,7 @@ pub mod cudafeatures2d {
 		/// * masks: std::vector<GpuMat>()
 		/// * stream: Stream::Null()
 		#[inline]
-		fn radius_match_async_def_1(&mut self, query_descriptors: &impl core::ToInputArray, matches: &mut impl core::ToOutputArray, max_distance: f32) -> Result<()> {
+		fn radius_match_async_def_1(&mut self, query_descriptors: &impl ToInputArray, matches: &mut impl ToOutputArray, max_distance: f32) -> Result<()> {
 			input_array_arg!(query_descriptors);
 			output_array_arg!(matches);
 			return_send!(via ocvrs_return);
@@ -874,7 +874,7 @@ pub mod cudafeatures2d {
 		/// ## C++ default parameters
 		/// * compact_result: false
 		#[inline]
-		fn radius_match_convert(&mut self, gpu_matches: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, compact_result: bool) -> Result<()> {
+		fn radius_match_convert(&mut self, gpu_matches: &impl ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>, compact_result: bool) -> Result<()> {
 			input_array_arg!(gpu_matches);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_radiusMatchConvert_const__InputArrayR_vectorLvectorLDMatchGGR_bool(self.as_raw_mut_CUDA_DescriptorMatcher(), gpu_matches.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), compact_result, ocvrs_return.as_mut_ptr()) };
@@ -899,7 +899,7 @@ pub mod cudafeatures2d {
 		/// This alternative version of [CUDA_DescriptorMatcherTrait::radius_match_convert] function uses the following default values for its arguments:
 		/// * compact_result: false
 		#[inline]
-		fn radius_match_convert_def(&mut self, gpu_matches: &impl core::ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>) -> Result<()> {
+		fn radius_match_convert_def(&mut self, gpu_matches: &impl ToInputArray, matches: &mut core::Vector<core::Vector<core::DMatch>>) -> Result<()> {
 			input_array_arg!(gpu_matches);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DescriptorMatcher_radiusMatchConvert_const__InputArrayR_vectorLvectorLDMatchGGR(self.as_raw_mut_CUDA_DescriptorMatcher(), gpu_matches.as_raw__InputArray(), matches.as_raw_mut_VectorOfVectorOfDMatch(), ocvrs_return.as_mut_ptr()) };
@@ -937,6 +937,8 @@ pub mod cudafeatures2d {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { CUDA_DescriptorMatcher, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::cudafeatures2d::CUDA_DescriptorMatcherTraitConst for CUDA_DescriptorMatcher {
 		#[inline] fn as_raw_CUDA_DescriptorMatcher(&self) -> *const c_void { self.as_raw() }
 	}
@@ -944,6 +946,8 @@ pub mod cudafeatures2d {
 	impl crate::cudafeatures2d::CUDA_DescriptorMatcherTrait for CUDA_DescriptorMatcher {
 		#[inline] fn as_raw_mut_CUDA_DescriptorMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { CUDA_DescriptorMatcher, crate::cudafeatures2d::CUDA_DescriptorMatcherTraitConst, as_raw_CUDA_DescriptorMatcher, crate::cudafeatures2d::CUDA_DescriptorMatcherTrait, as_raw_mut_CUDA_DescriptorMatcher }
 	
 	impl CUDA_DescriptorMatcher {
 		/// Brute-force descriptor matcher.
@@ -1068,6 +1072,8 @@ pub mod cudafeatures2d {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { CUDA_FastFeatureDetector, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::features2d::Feature2DTraitConst for CUDA_FastFeatureDetector {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1075,6 +1081,8 @@ pub mod cudafeatures2d {
 	impl crate::features2d::Feature2DTrait for CUDA_FastFeatureDetector {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { CUDA_FastFeatureDetector, crate::features2d::Feature2DTraitConst, as_raw_Feature2D, crate::features2d::Feature2DTrait, as_raw_mut_Feature2D }
 	
 	impl crate::cudafeatures2d::CUDA_Feature2DAsyncTraitConst for CUDA_FastFeatureDetector {
 		#[inline] fn as_raw_CUDA_Feature2DAsync(&self) -> *const c_void { self.as_raw() }
@@ -1084,6 +1092,8 @@ pub mod cudafeatures2d {
 		#[inline] fn as_raw_mut_CUDA_Feature2DAsync(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { CUDA_FastFeatureDetector, crate::cudafeatures2d::CUDA_Feature2DAsyncTraitConst, as_raw_CUDA_Feature2DAsync, crate::cudafeatures2d::CUDA_Feature2DAsyncTrait, as_raw_mut_CUDA_Feature2DAsync }
+	
 	impl crate::cudafeatures2d::CUDA_FastFeatureDetectorTraitConst for CUDA_FastFeatureDetector {
 		#[inline] fn as_raw_CUDA_FastFeatureDetector(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1091,6 +1101,8 @@ pub mod cudafeatures2d {
 	impl crate::cudafeatures2d::CUDA_FastFeatureDetectorTrait for CUDA_FastFeatureDetector {
 		#[inline] fn as_raw_mut_CUDA_FastFeatureDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { CUDA_FastFeatureDetector, crate::cudafeatures2d::CUDA_FastFeatureDetectorTraitConst, as_raw_CUDA_FastFeatureDetector, crate::cudafeatures2d::CUDA_FastFeatureDetectorTrait, as_raw_mut_CUDA_FastFeatureDetector }
 	
 	impl CUDA_FastFeatureDetector {
 		pub const LOCATION_ROW: i32 = 0;
@@ -1167,7 +1179,7 @@ pub mod cudafeatures2d {
 		/// * mask: noArray()
 		/// * stream: Stream::Null()
 		#[inline]
-		fn detect_async(&mut self, image: &impl core::ToInputArray, keypoints: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+		fn detect_async(&mut self, image: &impl ToInputArray, keypoints: &mut impl ToOutputArray, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 			input_array_arg!(image);
 			output_array_arg!(keypoints);
 			input_array_arg!(mask);
@@ -1192,7 +1204,7 @@ pub mod cudafeatures2d {
 		/// * mask: noArray()
 		/// * stream: Stream::Null()
 		#[inline]
-		fn detect_async_def(&mut self, image: &impl core::ToInputArray, keypoints: &mut impl core::ToOutputArray) -> Result<()> {
+		fn detect_async_def(&mut self, image: &impl ToInputArray, keypoints: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(image);
 			output_array_arg!(keypoints);
 			return_send!(via ocvrs_return);
@@ -1213,7 +1225,7 @@ pub mod cudafeatures2d {
 		/// ## C++ default parameters
 		/// * stream: Stream::Null()
 		#[inline]
-		fn compute_async(&mut self, image: &impl core::ToInputArray, keypoints: &mut impl core::ToOutputArray, descriptors: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		fn compute_async(&mut self, image: &impl ToInputArray, keypoints: &mut impl ToOutputArray, descriptors: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 			input_array_arg!(image);
 			output_array_arg!(keypoints);
 			output_array_arg!(descriptors);
@@ -1236,7 +1248,7 @@ pub mod cudafeatures2d {
 		/// This alternative version of [CUDA_Feature2DAsyncTrait::compute_async] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
 		#[inline]
-		fn compute_async_def(&mut self, image: &impl core::ToInputArray, keypoints: &mut impl core::ToOutputArray, descriptors: &mut impl core::ToOutputArray) -> Result<()> {
+		fn compute_async_def(&mut self, image: &impl ToInputArray, keypoints: &mut impl ToOutputArray, descriptors: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(image);
 			output_array_arg!(keypoints);
 			output_array_arg!(descriptors);
@@ -1253,7 +1265,7 @@ pub mod cudafeatures2d {
 		/// * use_provided_keypoints: false
 		/// * stream: Stream::Null()
 		#[inline]
-		fn detect_and_compute_async(&mut self, image: &impl core::ToInputArray, mask: &impl core::ToInputArray, keypoints: &mut impl core::ToOutputArray, descriptors: &mut impl core::ToOutputArray, use_provided_keypoints: bool, stream: &mut core::Stream) -> Result<()> {
+		fn detect_and_compute_async(&mut self, image: &impl ToInputArray, mask: &impl ToInputArray, keypoints: &mut impl ToOutputArray, descriptors: &mut impl ToOutputArray, use_provided_keypoints: bool, stream: &mut impl core::StreamTrait) -> Result<()> {
 			input_array_arg!(image);
 			input_array_arg!(mask);
 			output_array_arg!(keypoints);
@@ -1272,7 +1284,7 @@ pub mod cudafeatures2d {
 		/// * use_provided_keypoints: false
 		/// * stream: Stream::Null()
 		#[inline]
-		fn detect_and_compute_async_def(&mut self, image: &impl core::ToInputArray, mask: &impl core::ToInputArray, keypoints: &mut impl core::ToOutputArray, descriptors: &mut impl core::ToOutputArray) -> Result<()> {
+		fn detect_and_compute_async_def(&mut self, image: &impl ToInputArray, mask: &impl ToInputArray, keypoints: &mut impl ToOutputArray, descriptors: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(image);
 			input_array_arg!(mask);
 			output_array_arg!(keypoints);
@@ -1286,7 +1298,7 @@ pub mod cudafeatures2d {
 		
 		/// Converts keypoints array from internal representation to standard vector.
 		#[inline]
-		fn convert(&mut self, gpu_keypoints: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>) -> Result<()> {
+		fn convert(&mut self, gpu_keypoints: &impl ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>) -> Result<()> {
 			input_array_arg!(gpu_keypoints);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_Feature2DAsync_convert_const__InputArrayR_vectorLKeyPointGR(self.as_raw_mut_CUDA_Feature2DAsync(), gpu_keypoints.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), ocvrs_return.as_mut_ptr()) };
@@ -1321,6 +1333,8 @@ pub mod cudafeatures2d {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { CUDA_Feature2DAsync, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::features2d::Feature2DTraitConst for CUDA_Feature2DAsync {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1329,6 +1343,8 @@ pub mod cudafeatures2d {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { CUDA_Feature2DAsync, crate::features2d::Feature2DTraitConst, as_raw_Feature2D, crate::features2d::Feature2DTrait, as_raw_mut_Feature2D }
+	
 	impl crate::cudafeatures2d::CUDA_Feature2DAsyncTraitConst for CUDA_Feature2DAsync {
 		#[inline] fn as_raw_CUDA_Feature2DAsync(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1336,6 +1352,8 @@ pub mod cudafeatures2d {
 	impl crate::cudafeatures2d::CUDA_Feature2DAsyncTrait for CUDA_Feature2DAsync {
 		#[inline] fn as_raw_mut_CUDA_Feature2DAsync(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { CUDA_Feature2DAsync, crate::cudafeatures2d::CUDA_Feature2DAsyncTraitConst, as_raw_CUDA_Feature2DAsync, crate::cudafeatures2d::CUDA_Feature2DAsyncTrait, as_raw_mut_CUDA_Feature2DAsync }
 	
 	impl CUDA_Feature2DAsync {
 	}
@@ -1575,6 +1593,8 @@ pub mod cudafeatures2d {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { CUDA_ORB, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::features2d::Feature2DTraitConst for CUDA_ORB {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1582,6 +1602,8 @@ pub mod cudafeatures2d {
 	impl crate::features2d::Feature2DTrait for CUDA_ORB {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { CUDA_ORB, crate::features2d::Feature2DTraitConst, as_raw_Feature2D, crate::features2d::Feature2DTrait, as_raw_mut_Feature2D }
 	
 	impl crate::cudafeatures2d::CUDA_Feature2DAsyncTraitConst for CUDA_ORB {
 		#[inline] fn as_raw_CUDA_Feature2DAsync(&self) -> *const c_void { self.as_raw() }
@@ -1591,6 +1613,8 @@ pub mod cudafeatures2d {
 		#[inline] fn as_raw_mut_CUDA_Feature2DAsync(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { CUDA_ORB, crate::cudafeatures2d::CUDA_Feature2DAsyncTraitConst, as_raw_CUDA_Feature2DAsync, crate::cudafeatures2d::CUDA_Feature2DAsyncTrait, as_raw_mut_CUDA_Feature2DAsync }
+	
 	impl crate::cudafeatures2d::CUDA_ORBTraitConst for CUDA_ORB {
 		#[inline] fn as_raw_CUDA_ORB(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1598,6 +1622,8 @@ pub mod cudafeatures2d {
 	impl crate::cudafeatures2d::CUDA_ORBTrait for CUDA_ORB {
 		#[inline] fn as_raw_mut_CUDA_ORB(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { CUDA_ORB, crate::cudafeatures2d::CUDA_ORBTraitConst, as_raw_CUDA_ORB, crate::cudafeatures2d::CUDA_ORBTrait, as_raw_mut_CUDA_ORB }
 	
 	impl CUDA_ORB {
 		pub const X_ROW: i32 = 0;

@@ -472,7 +472,7 @@ pub mod ml {
 	pub type ANN_MLP_ANNEAL = crate::ml::ANN_MLP;
 	/// Creates test set
 	#[inline]
-	pub fn create_concentric_spheres_test_set(nsamples: i32, nfeatures: i32, nclasses: i32, samples: &mut impl core::ToOutputArray, responses: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn create_concentric_spheres_test_set(nsamples: i32, nfeatures: i32, nclasses: i32, samples: &mut impl ToOutputArray, responses: &mut impl ToOutputArray) -> Result<()> {
 		output_array_arg!(samples);
 		output_array_arg!(responses);
 		return_send!(via ocvrs_return);
@@ -490,7 +490,7 @@ pub mod ml {
 	/// * nsamples: returned samples count
 	/// * samples: returned samples array
 	#[inline]
-	pub fn rand_mv_normal(mean: &impl core::ToInputArray, cov: &impl core::ToInputArray, nsamples: i32, samples: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn rand_mv_normal(mean: &impl ToInputArray, cov: &impl ToInputArray, nsamples: i32, samples: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(mean);
 		input_array_arg!(cov);
 		output_array_arg!(samples);
@@ -788,7 +788,7 @@ pub mod ml {
 		/// ## See also
 		/// getLayerSizes
 		#[inline]
-		fn set_layer_sizes(&mut self, _layer_sizes: &impl core::ToInputArray) -> Result<()> {
+		fn set_layer_sizes(&mut self, _layer_sizes: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(_layer_sizes);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_setLayerSizes_const__InputArrayR(self.as_raw_mut_ANN_MLP(), _layer_sizes.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -806,7 +806,7 @@ pub mod ml {
 		#[inline]
 		fn set_term_criteria(&mut self, val: core::TermCriteria) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ml_ANN_MLP_setTermCriteria_TermCriteria(self.as_raw_mut_ANN_MLP(), val.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ml_ANN_MLP_setTermCriteria_TermCriteria(self.as_raw_mut_ANN_MLP(), &val, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -959,7 +959,7 @@ pub mod ml {
 		
 		/// Set/initialize anneal RNG
 		#[inline]
-		fn set_anneal_energy_rng(&mut self, rng: &core::RNG) -> Result<()> {
+		fn set_anneal_energy_rng(&mut self, rng: &impl core::RNGTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_ANN_MLP_setAnnealEnergyRNG_const_RNGR(self.as_raw_mut_ANN_MLP(), rng.as_raw_RNG(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1003,6 +1003,8 @@ pub mod ml {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { ANN_MLP, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::ml::StatModelTraitConst for ANN_MLP {
 		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1011,6 +1013,8 @@ pub mod ml {
 		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { ANN_MLP, crate::ml::StatModelTraitConst, as_raw_StatModel, crate::ml::StatModelTrait, as_raw_mut_StatModel }
+	
 	impl crate::ml::ANN_MLPTraitConst for ANN_MLP {
 		#[inline] fn as_raw_ANN_MLP(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1018,6 +1022,8 @@ pub mod ml {
 	impl crate::ml::ANN_MLPTrait for ANN_MLP {
 		#[inline] fn as_raw_mut_ANN_MLP(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { ANN_MLP, crate::ml::ANN_MLPTraitConst, as_raw_ANN_MLP, crate::ml::ANN_MLPTrait, as_raw_mut_ANN_MLP }
 	
 	impl ANN_MLP {
 		/// Creates empty model
@@ -1184,6 +1190,8 @@ pub mod ml {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Boost, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::ml::DTreesTraitConst for Boost {
 		#[inline] fn as_raw_DTrees(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1191,6 +1199,8 @@ pub mod ml {
 	impl crate::ml::DTreesTrait for Boost {
 		#[inline] fn as_raw_mut_DTrees(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { Boost, crate::ml::DTreesTraitConst, as_raw_DTrees, crate::ml::DTreesTrait, as_raw_mut_DTrees }
 	
 	impl crate::ml::StatModelTraitConst for Boost {
 		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.as_raw() }
@@ -1200,6 +1210,8 @@ pub mod ml {
 		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Boost, crate::ml::StatModelTraitConst, as_raw_StatModel, crate::ml::StatModelTrait, as_raw_mut_StatModel }
+	
 	impl crate::ml::BoostTraitConst for Boost {
 		#[inline] fn as_raw_Boost(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1207,6 +1219,8 @@ pub mod ml {
 	impl crate::ml::BoostTrait for Boost {
 		#[inline] fn as_raw_mut_Boost(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { Boost, crate::ml::BoostTraitConst, as_raw_Boost, crate::ml::BoostTrait, as_raw_mut_Boost }
 	
 	impl Boost {
 		/// Creates the empty model.
@@ -1640,7 +1654,7 @@ pub mod ml {
 		/// ## See also
 		/// setPriors getPriors
 		#[inline]
-		fn set_priors(&mut self, val: &core::Mat) -> Result<()> {
+		fn set_priors(&mut self, val: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_DTrees_setPriors_const_MatR(self.as_raw_mut_DTrees(), val.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1681,6 +1695,8 @@ pub mod ml {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { DTrees, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::ml::StatModelTraitConst for DTrees {
 		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1689,6 +1705,8 @@ pub mod ml {
 		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { DTrees, crate::ml::StatModelTraitConst, as_raw_StatModel, crate::ml::StatModelTrait, as_raw_mut_StatModel }
+	
 	impl crate::ml::DTreesTraitConst for DTrees {
 		#[inline] fn as_raw_DTrees(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1696,6 +1714,8 @@ pub mod ml {
 	impl crate::ml::DTreesTrait for DTrees {
 		#[inline] fn as_raw_mut_DTrees(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { DTrees, crate::ml::DTreesTraitConst, as_raw_DTrees, crate::ml::DTreesTrait, as_raw_mut_DTrees }
 	
 	impl DTrees {
 		/// Creates the empty model
@@ -1919,6 +1939,8 @@ pub mod ml {
 		#[inline] fn as_raw_mut_DTrees_Node(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { DTrees_Node, crate::ml::DTrees_NodeTraitConst, as_raw_DTrees_Node, crate::ml::DTrees_NodeTrait, as_raw_mut_DTrees_Node }
+	
 	impl DTrees_Node {
 		#[inline]
 		pub fn default() -> Result<crate::ml::DTrees_Node> {
@@ -2097,6 +2119,8 @@ pub mod ml {
 		#[inline] fn as_raw_mut_DTrees_Split(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { DTrees_Split, crate::ml::DTrees_SplitTraitConst, as_raw_DTrees_Split, crate::ml::DTrees_SplitTrait, as_raw_mut_DTrees_Split }
+	
 	impl DTrees_Split {
 		#[inline]
 		pub fn default() -> Result<crate::ml::DTrees_Split> {
@@ -2223,7 +2247,7 @@ pub mod ml {
 		/// * results: noArray()
 		/// * flags: 0
 		#[inline]
-		fn predict(&self, samples: &impl core::ToInputArray, results: &mut impl core::ToOutputArray, flags: i32) -> Result<f32> {
+		fn predict(&self, samples: &impl ToInputArray, results: &mut impl ToOutputArray, flags: i32) -> Result<f32> {
 			input_array_arg!(samples);
 			output_array_arg!(results);
 			return_send!(via ocvrs_return);
@@ -2246,7 +2270,7 @@ pub mod ml {
 		/// * results: noArray()
 		/// * flags: 0
 		#[inline]
-		fn predict_def(&self, samples: &impl core::ToInputArray) -> Result<f32> {
+		fn predict_def(&self, samples: &impl ToInputArray) -> Result<f32> {
 			input_array_arg!(samples);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_EM_predict_const_const__InputArrayR(self.as_raw_EM(), samples.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -2268,7 +2292,7 @@ pub mod ml {
 		/// the sample. First element is an index of the most probable mixture component for the given
 		/// sample.
 		#[inline]
-		fn predict2(&self, sample: &impl core::ToInputArray, probs: &mut impl core::ToOutputArray) -> Result<core::Vec2d> {
+		fn predict2(&self, sample: &impl ToInputArray, probs: &mut impl ToOutputArray) -> Result<core::Vec2d> {
 			input_array_arg!(sample);
 			output_array_arg!(probs);
 			return_send!(via ocvrs_return);
@@ -2361,7 +2385,7 @@ pub mod ml {
 		/// * labels: noArray()
 		/// * probs: noArray()
 		#[inline]
-		fn train_em(&mut self, samples: &impl core::ToInputArray, log_likelihoods: &mut impl core::ToOutputArray, labels: &mut impl core::ToOutputArray, probs: &mut impl core::ToOutputArray) -> Result<bool> {
+		fn train_em(&mut self, samples: &impl ToInputArray, log_likelihoods: &mut impl ToOutputArray, labels: &mut impl ToOutputArray, probs: &mut impl ToOutputArray) -> Result<bool> {
 			input_array_arg!(samples);
 			output_array_arg!(log_likelihoods);
 			output_array_arg!(labels);
@@ -2408,7 +2432,7 @@ pub mod ml {
 		/// * labels: noArray()
 		/// * probs: noArray()
 		#[inline]
-		fn train_em_def(&mut self, samples: &impl core::ToInputArray) -> Result<bool> {
+		fn train_em_def(&mut self, samples: &impl ToInputArray) -> Result<bool> {
 			input_array_arg!(samples);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_EM_trainEM_const__InputArrayR(self.as_raw_mut_EM(), samples.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -2452,7 +2476,7 @@ pub mod ml {
 		/// * labels: noArray()
 		/// * probs: noArray()
 		#[inline]
-		fn train_e(&mut self, samples: &impl core::ToInputArray, means0: &impl core::ToInputArray, covs0: &impl core::ToInputArray, weights0: &impl core::ToInputArray, log_likelihoods: &mut impl core::ToOutputArray, labels: &mut impl core::ToOutputArray, probs: &mut impl core::ToOutputArray) -> Result<bool> {
+		fn train_e(&mut self, samples: &impl ToInputArray, means0: &impl ToInputArray, covs0: &impl ToInputArray, weights0: &impl ToInputArray, log_likelihoods: &mut impl ToOutputArray, labels: &mut impl ToOutputArray, probs: &mut impl ToOutputArray) -> Result<bool> {
 			input_array_arg!(samples);
 			input_array_arg!(means0);
 			input_array_arg!(covs0);
@@ -2503,7 +2527,7 @@ pub mod ml {
 		/// * labels: noArray()
 		/// * probs: noArray()
 		#[inline]
-		fn train_e_def(&mut self, samples: &impl core::ToInputArray, means0: &impl core::ToInputArray) -> Result<bool> {
+		fn train_e_def(&mut self, samples: &impl ToInputArray, means0: &impl ToInputArray) -> Result<bool> {
 			input_array_arg!(samples);
 			input_array_arg!(means0);
 			return_send!(via ocvrs_return);
@@ -2537,7 +2561,7 @@ pub mod ml {
 		/// * labels: noArray()
 		/// * probs: noArray()
 		#[inline]
-		fn train_m(&mut self, samples: &impl core::ToInputArray, probs0: &impl core::ToInputArray, log_likelihoods: &mut impl core::ToOutputArray, labels: &mut impl core::ToOutputArray, probs: &mut impl core::ToOutputArray) -> Result<bool> {
+		fn train_m(&mut self, samples: &impl ToInputArray, probs0: &impl ToInputArray, log_likelihoods: &mut impl ToOutputArray, labels: &mut impl ToOutputArray, probs: &mut impl ToOutputArray) -> Result<bool> {
 			input_array_arg!(samples);
 			input_array_arg!(probs0);
 			output_array_arg!(log_likelihoods);
@@ -2575,7 +2599,7 @@ pub mod ml {
 		/// * labels: noArray()
 		/// * probs: noArray()
 		#[inline]
-		fn train_m_def(&mut self, samples: &impl core::ToInputArray, probs0: &impl core::ToInputArray) -> Result<bool> {
+		fn train_m_def(&mut self, samples: &impl ToInputArray, probs0: &impl ToInputArray) -> Result<bool> {
 			input_array_arg!(samples);
 			input_array_arg!(probs0);
 			return_send!(via ocvrs_return);
@@ -2613,6 +2637,8 @@ pub mod ml {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { EM, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::ml::StatModelTraitConst for EM {
 		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2621,6 +2647,8 @@ pub mod ml {
 		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { EM, crate::ml::StatModelTraitConst, as_raw_StatModel, crate::ml::StatModelTrait, as_raw_mut_StatModel }
+	
 	impl crate::ml::EMTraitConst for EM {
 		#[inline] fn as_raw_EM(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2628,6 +2656,8 @@ pub mod ml {
 	impl crate::ml::EMTrait for EM {
 		#[inline] fn as_raw_mut_EM(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { EM, crate::ml::EMTraitConst, as_raw_EM, crate::ml::EMTrait, as_raw_mut_EM }
 	
 	impl EM {
 		/// Creates empty %EM model.
@@ -2788,7 +2818,7 @@ pub mod ml {
 		/// * neighbor_responses: noArray()
 		/// * dist: noArray()
 		#[inline]
-		fn find_nearest(&self, samples: &impl core::ToInputArray, k: i32, results: &mut impl core::ToOutputArray, neighbor_responses: &mut impl core::ToOutputArray, dist: &mut impl core::ToOutputArray) -> Result<f32> {
+		fn find_nearest(&self, samples: &impl ToInputArray, k: i32, results: &mut impl ToOutputArray, neighbor_responses: &mut impl ToOutputArray, dist: &mut impl ToOutputArray) -> Result<f32> {
 			input_array_arg!(samples);
 			output_array_arg!(results);
 			output_array_arg!(neighbor_responses);
@@ -2832,7 +2862,7 @@ pub mod ml {
 		/// * neighbor_responses: noArray()
 		/// * dist: noArray()
 		#[inline]
-		fn find_nearest_def(&self, samples: &impl core::ToInputArray, k: i32, results: &mut impl core::ToOutputArray) -> Result<f32> {
+		fn find_nearest_def(&self, samples: &impl ToInputArray, k: i32, results: &mut impl ToOutputArray) -> Result<f32> {
 			input_array_arg!(samples);
 			output_array_arg!(results);
 			return_send!(via ocvrs_return);
@@ -2924,6 +2954,8 @@ pub mod ml {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { KNearest, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::ml::StatModelTraitConst for KNearest {
 		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2932,6 +2964,8 @@ pub mod ml {
 		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { KNearest, crate::ml::StatModelTraitConst, as_raw_StatModel, crate::ml::StatModelTrait, as_raw_mut_StatModel }
+	
 	impl crate::ml::KNearestTraitConst for KNearest {
 		#[inline] fn as_raw_KNearest(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2939,6 +2973,8 @@ pub mod ml {
 	impl crate::ml::KNearestTrait for KNearest {
 		#[inline] fn as_raw_mut_KNearest(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { KNearest, crate::ml::KNearestTraitConst, as_raw_KNearest, crate::ml::KNearestTrait, as_raw_mut_KNearest }
 	
 	impl KNearest {
 		/// Creates the empty model
@@ -3076,7 +3112,7 @@ pub mod ml {
 		/// * results: noArray()
 		/// * flags: 0
 		#[inline]
-		fn predict(&self, samples: &impl core::ToInputArray, results: &mut impl core::ToOutputArray, flags: i32) -> Result<f32> {
+		fn predict(&self, samples: &impl ToInputArray, results: &mut impl ToOutputArray, flags: i32) -> Result<f32> {
 			input_array_arg!(samples);
 			output_array_arg!(results);
 			return_send!(via ocvrs_return);
@@ -3099,7 +3135,7 @@ pub mod ml {
 		/// * results: noArray()
 		/// * flags: 0
 		#[inline]
-		fn predict_def(&self, samples: &impl core::ToInputArray) -> Result<f32> {
+		fn predict_def(&self, samples: &impl ToInputArray) -> Result<f32> {
 			input_array_arg!(samples);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_LogisticRegression_predict_const_const__InputArrayR(self.as_raw_LogisticRegression(), samples.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -3196,7 +3232,7 @@ pub mod ml {
 		#[inline]
 		fn set_term_criteria(&mut self, val: core::TermCriteria) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ml_LogisticRegression_setTermCriteria_TermCriteria(self.as_raw_mut_LogisticRegression(), val.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ml_LogisticRegression_setTermCriteria_TermCriteria(self.as_raw_mut_LogisticRegression(), &val, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -3230,6 +3266,8 @@ pub mod ml {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { LogisticRegression, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::ml::StatModelTraitConst for LogisticRegression {
 		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3238,6 +3276,8 @@ pub mod ml {
 		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { LogisticRegression, crate::ml::StatModelTraitConst, as_raw_StatModel, crate::ml::StatModelTrait, as_raw_mut_StatModel }
+	
 	impl crate::ml::LogisticRegressionTraitConst for LogisticRegression {
 		#[inline] fn as_raw_LogisticRegression(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3245,6 +3285,8 @@ pub mod ml {
 	impl crate::ml::LogisticRegressionTrait for LogisticRegression {
 		#[inline] fn as_raw_mut_LogisticRegression(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { LogisticRegression, crate::ml::LogisticRegressionTraitConst, as_raw_LogisticRegression, crate::ml::LogisticRegressionTrait, as_raw_mut_LogisticRegression }
 	
 	impl LogisticRegression {
 		/// Creates empty model.
@@ -3337,7 +3379,7 @@ pub mod ml {
 		/// ## C++ default parameters
 		/// * flags: 0
 		#[inline]
-		fn predict_prob(&self, inputs: &impl core::ToInputArray, outputs: &mut impl core::ToOutputArray, output_probs: &mut impl core::ToOutputArray, flags: i32) -> Result<f32> {
+		fn predict_prob(&self, inputs: &impl ToInputArray, outputs: &mut impl ToOutputArray, output_probs: &mut impl ToOutputArray, flags: i32) -> Result<f32> {
 			input_array_arg!(inputs);
 			output_array_arg!(outputs);
 			output_array_arg!(output_probs);
@@ -3360,7 +3402,7 @@ pub mod ml {
 		/// This alternative version of [NormalBayesClassifierTraitConst::predict_prob] function uses the following default values for its arguments:
 		/// * flags: 0
 		#[inline]
-		fn predict_prob_def(&self, inputs: &impl core::ToInputArray, outputs: &mut impl core::ToOutputArray, output_probs: &mut impl core::ToOutputArray) -> Result<f32> {
+		fn predict_prob_def(&self, inputs: &impl ToInputArray, outputs: &mut impl ToOutputArray, output_probs: &mut impl ToOutputArray) -> Result<f32> {
 			input_array_arg!(inputs);
 			output_array_arg!(outputs);
 			output_array_arg!(output_probs);
@@ -3405,6 +3447,8 @@ pub mod ml {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { NormalBayesClassifier, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::ml::StatModelTraitConst for NormalBayesClassifier {
 		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3413,6 +3457,8 @@ pub mod ml {
 		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { NormalBayesClassifier, crate::ml::StatModelTraitConst, as_raw_StatModel, crate::ml::StatModelTrait, as_raw_mut_StatModel }
+	
 	impl crate::ml::NormalBayesClassifierTraitConst for NormalBayesClassifier {
 		#[inline] fn as_raw_NormalBayesClassifier(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3420,6 +3466,8 @@ pub mod ml {
 	impl crate::ml::NormalBayesClassifierTrait for NormalBayesClassifier {
 		#[inline] fn as_raw_mut_NormalBayesClassifier(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { NormalBayesClassifier, crate::ml::NormalBayesClassifierTraitConst, as_raw_NormalBayesClassifier, crate::ml::NormalBayesClassifierTrait, as_raw_mut_NormalBayesClassifier }
 	
 	impl NormalBayesClassifier {
 		/// Creates empty model
@@ -3589,6 +3637,8 @@ pub mod ml {
 		#[inline] fn as_raw_mut_ParamGrid(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { ParamGrid, crate::ml::ParamGridTraitConst, as_raw_ParamGrid, crate::ml::ParamGridTrait, as_raw_mut_ParamGrid }
+	
 	impl ParamGrid {
 		/// Default constructor
 		#[inline]
@@ -3742,7 +3792,7 @@ pub mod ml {
 		/// * results: Array where the result of the calculation will be written.
 		/// * flags: Flags for defining the type of RTrees.
 		#[inline]
-		fn get_votes(&self, samples: &impl core::ToInputArray, results: &mut impl core::ToOutputArray, flags: i32) -> Result<()> {
+		fn get_votes(&self, samples: &impl ToInputArray, results: &mut impl ToOutputArray, flags: i32) -> Result<()> {
 			input_array_arg!(samples);
 			output_array_arg!(results);
 			return_send!(via ocvrs_return);
@@ -3841,6 +3891,8 @@ pub mod ml {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { RTrees, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::ml::DTreesTraitConst for RTrees {
 		#[inline] fn as_raw_DTrees(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3848,6 +3900,8 @@ pub mod ml {
 	impl crate::ml::DTreesTrait for RTrees {
 		#[inline] fn as_raw_mut_DTrees(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { RTrees, crate::ml::DTreesTraitConst, as_raw_DTrees, crate::ml::DTreesTrait, as_raw_mut_DTrees }
 	
 	impl crate::ml::StatModelTraitConst for RTrees {
 		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.as_raw() }
@@ -3857,6 +3911,8 @@ pub mod ml {
 		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { RTrees, crate::ml::StatModelTraitConst, as_raw_StatModel, crate::ml::StatModelTrait, as_raw_mut_StatModel }
+	
 	impl crate::ml::RTreesTraitConst for RTrees {
 		#[inline] fn as_raw_RTrees(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3864,6 +3920,8 @@ pub mod ml {
 	impl crate::ml::RTreesTrait for RTrees {
 		#[inline] fn as_raw_mut_RTrees(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { RTrees, crate::ml::RTreesTraitConst, as_raw_RTrees, crate::ml::RTreesTrait, as_raw_mut_RTrees }
 	
 	impl RTrees {
 		/// Creates the empty model.
@@ -4126,7 +4184,7 @@ pub mod ml {
 		/// The method returns rho parameter of the decision function, a scalar subtracted from the weighted
 		/// sum of kernel responses.
 		#[inline]
-		fn get_decision_function(&self, i: i32, alpha: &mut impl core::ToOutputArray, svidx: &mut impl core::ToOutputArray) -> Result<f64> {
+		fn get_decision_function(&self, i: i32, alpha: &mut impl ToOutputArray, svidx: &mut impl ToOutputArray) -> Result<f64> {
 			output_array_arg!(alpha);
 			output_array_arg!(svidx);
 			return_send!(via ocvrs_return);
@@ -4241,7 +4299,7 @@ pub mod ml {
 		/// ## See also
 		/// setClassWeights getClassWeights
 		#[inline]
-		fn set_class_weights(&mut self, val: &core::Mat) -> Result<()> {
+		fn set_class_weights(&mut self, val: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_setClassWeights_const_MatR(self.as_raw_mut_SVM(), val.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4331,7 +4389,7 @@ pub mod ml {
 		/// * degree_grid: getDefaultGrid(DEGREE)
 		/// * balanced: false
 		#[inline]
-		fn train_auto(&mut self, data: &core::Ptr<crate::ml::TrainData>, k_fold: i32, mut cgrid: crate::ml::ParamGrid, mut gamma_grid: crate::ml::ParamGrid, mut p_grid: crate::ml::ParamGrid, mut nu_grid: crate::ml::ParamGrid, mut coeff_grid: crate::ml::ParamGrid, mut degree_grid: crate::ml::ParamGrid, balanced: bool) -> Result<bool> {
+		fn train_auto(&mut self, data: &core::Ptr<crate::ml::TrainData>, k_fold: i32, mut cgrid: impl crate::ml::ParamGridTrait, mut gamma_grid: impl crate::ml::ParamGridTrait, mut p_grid: impl crate::ml::ParamGridTrait, mut nu_grid: impl crate::ml::ParamGridTrait, mut coeff_grid: impl crate::ml::ParamGridTrait, mut degree_grid: impl crate::ml::ParamGridTrait, balanced: bool) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_SVM_trainAuto_const_PtrLTrainDataGR_int_ParamGrid_ParamGrid_ParamGrid_ParamGrid_ParamGrid_ParamGrid_bool(self.as_raw_mut_SVM(), data.as_raw_PtrOfTrainData(), k_fold, cgrid.as_raw_mut_ParamGrid(), gamma_grid.as_raw_mut_ParamGrid(), p_grid.as_raw_mut_ParamGrid(), nu_grid.as_raw_mut_ParamGrid(), coeff_grid.as_raw_mut_ParamGrid(), degree_grid.as_raw_mut_ParamGrid(), balanced, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -4432,7 +4490,7 @@ pub mod ml {
 		/// * degree_grid: SVM::getDefaultGridPtr(SVM::DEGREE)
 		/// * balanced: false
 		#[inline]
-		fn train_auto_with_data(&mut self, samples: &impl core::ToInputArray, layout: i32, responses: &impl core::ToInputArray, k_fold: i32, mut cgrid: core::Ptr<crate::ml::ParamGrid>, mut gamma_grid: core::Ptr<crate::ml::ParamGrid>, mut p_grid: core::Ptr<crate::ml::ParamGrid>, mut nu_grid: core::Ptr<crate::ml::ParamGrid>, mut coeff_grid: core::Ptr<crate::ml::ParamGrid>, mut degree_grid: core::Ptr<crate::ml::ParamGrid>, balanced: bool) -> Result<bool> {
+		fn train_auto_with_data(&mut self, samples: &impl ToInputArray, layout: i32, responses: &impl ToInputArray, k_fold: i32, mut cgrid: core::Ptr<crate::ml::ParamGrid>, mut gamma_grid: core::Ptr<crate::ml::ParamGrid>, mut p_grid: core::Ptr<crate::ml::ParamGrid>, mut nu_grid: core::Ptr<crate::ml::ParamGrid>, mut coeff_grid: core::Ptr<crate::ml::ParamGrid>, mut degree_grid: core::Ptr<crate::ml::ParamGrid>, balanced: bool) -> Result<bool> {
 			input_array_arg!(samples);
 			input_array_arg!(responses);
 			return_send!(via ocvrs_return);
@@ -4482,7 +4540,7 @@ pub mod ml {
 		/// * degree_grid: SVM::getDefaultGridPtr(SVM::DEGREE)
 		/// * balanced: false
 		#[inline]
-		fn train_auto_with_data_def(&mut self, samples: &impl core::ToInputArray, layout: i32, responses: &impl core::ToInputArray) -> Result<bool> {
+		fn train_auto_with_data_def(&mut self, samples: &impl ToInputArray, layout: i32, responses: &impl ToInputArray) -> Result<bool> {
 			input_array_arg!(samples);
 			input_array_arg!(responses);
 			return_send!(via ocvrs_return);
@@ -4520,6 +4578,8 @@ pub mod ml {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { SVM, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::ml::StatModelTraitConst for SVM {
 		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.as_raw() }
 	}
@@ -4528,6 +4588,8 @@ pub mod ml {
 		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { SVM, crate::ml::StatModelTraitConst, as_raw_StatModel, crate::ml::StatModelTrait, as_raw_mut_StatModel }
+	
 	impl crate::ml::SVMTraitConst for SVM {
 		#[inline] fn as_raw_SVM(&self) -> *const c_void { self.as_raw() }
 	}
@@ -4535,6 +4597,8 @@ pub mod ml {
 	impl crate::ml::SVMTrait for SVM {
 		#[inline] fn as_raw_mut_SVM(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { SVM, crate::ml::SVMTraitConst, as_raw_SVM, crate::ml::SVMTrait, as_raw_mut_SVM }
 	
 	impl SVM {
 		/// Generates a grid for %SVM parameters.
@@ -4671,6 +4735,8 @@ pub mod ml {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { SVM_Kernel, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::ml::SVM_KernelTraitConst for SVM_Kernel {
 		#[inline] fn as_raw_SVM_Kernel(&self) -> *const c_void { self.as_raw() }
 	}
@@ -4678,6 +4744,8 @@ pub mod ml {
 	impl crate::ml::SVM_KernelTrait for SVM_Kernel {
 		#[inline] fn as_raw_mut_SVM_Kernel(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { SVM_Kernel, crate::ml::SVM_KernelTraitConst, as_raw_SVM_Kernel, crate::ml::SVM_KernelTrait, as_raw_mut_SVM_Kernel }
 	
 	impl SVM_Kernel {
 	}
@@ -5004,6 +5072,8 @@ pub mod ml {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { SVMSGD, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::ml::StatModelTraitConst for SVMSGD {
 		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.as_raw() }
 	}
@@ -5012,6 +5082,8 @@ pub mod ml {
 		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { SVMSGD, crate::ml::StatModelTraitConst, as_raw_StatModel, crate::ml::StatModelTrait, as_raw_mut_StatModel }
+	
 	impl crate::ml::SVMSGDTraitConst for SVMSGD {
 		#[inline] fn as_raw_SVMSGD(&self) -> *const c_void { self.as_raw() }
 	}
@@ -5019,6 +5091,8 @@ pub mod ml {
 	impl crate::ml::SVMSGDTrait for SVMSGD {
 		#[inline] fn as_raw_mut_SVMSGD(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { SVMSGD, crate::ml::SVMSGDTraitConst, as_raw_SVMSGD, crate::ml::SVMSGDTrait, as_raw_mut_SVMSGD }
 	
 	impl SVMSGD {
 		/// Creates empty model.
@@ -5153,7 +5227,7 @@ pub mod ml {
 		/// The method uses StatModel::predict to compute the error. For regression models the error is
 		/// computed as RMS, for classifiers - as a percent of missclassified samples (0%-100%).
 		#[inline]
-		fn calc_error(&self, data: &core::Ptr<crate::ml::TrainData>, test: bool, resp: &mut impl core::ToOutputArray) -> Result<f32> {
+		fn calc_error(&self, data: &core::Ptr<crate::ml::TrainData>, test: bool, resp: &mut impl ToOutputArray) -> Result<f32> {
 			output_array_arg!(resp);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_StatModel_calcError_const_const_PtrLTrainDataGR_bool_const__OutputArrayR(self.as_raw_StatModel(), data.as_raw_PtrOfTrainData(), test, resp.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
@@ -5173,7 +5247,7 @@ pub mod ml {
 		/// * results: noArray()
 		/// * flags: 0
 		#[inline]
-		fn predict(&self, samples: &impl core::ToInputArray, results: &mut impl core::ToOutputArray, flags: i32) -> Result<f32> {
+		fn predict(&self, samples: &impl ToInputArray, results: &mut impl ToOutputArray, flags: i32) -> Result<f32> {
 			input_array_arg!(samples);
 			output_array_arg!(results);
 			return_send!(via ocvrs_return);
@@ -5195,7 +5269,7 @@ pub mod ml {
 		/// * results: noArray()
 		/// * flags: 0
 		#[inline]
-		fn predict_def(&self, samples: &impl core::ToInputArray) -> Result<f32> {
+		fn predict_def(&self, samples: &impl ToInputArray) -> Result<f32> {
 			input_array_arg!(samples);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_StatModel_predict_const_const__InputArrayR(self.as_raw_StatModel(), samples.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -5256,7 +5330,7 @@ pub mod ml {
 		/// * layout: See ml::SampleTypes.
 		/// * responses: vector of responses associated with the training samples.
 		#[inline]
-		fn train(&mut self, samples: &impl core::ToInputArray, layout: i32, responses: &impl core::ToInputArray) -> Result<bool> {
+		fn train(&mut self, samples: &impl ToInputArray, layout: i32, responses: &impl ToInputArray) -> Result<bool> {
 			input_array_arg!(samples);
 			input_array_arg!(responses);
 			return_send!(via ocvrs_return);
@@ -5292,6 +5366,8 @@ pub mod ml {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { StatModel, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::ml::StatModelTraitConst for StatModel {
 		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.as_raw() }
 	}
@@ -5299,6 +5375,8 @@ pub mod ml {
 	impl crate::ml::StatModelTrait for StatModel {
 		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { StatModel, crate::ml::StatModelTraitConst, as_raw_StatModel, crate::ml::StatModelTrait, as_raw_mut_StatModel }
 	
 	impl StatModel {
 	}
@@ -5392,7 +5470,7 @@ pub mod ml {
 		}
 		
 		#[inline]
-		fn get_sample(&self, var_idx: &impl core::ToInputArray, sidx: i32, buf: &mut f32) -> Result<()> {
+		fn get_sample(&self, var_idx: &impl ToInputArray, sidx: i32, buf: &mut f32) -> Result<()> {
 			input_array_arg!(var_idx);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getSample_const_const__InputArrayR_int_floatX(self.as_raw_TrainData(), var_idx.as_raw__InputArray(), sidx, buf, ocvrs_return.as_mut_ptr()) };
@@ -5635,7 +5713,7 @@ pub mod ml {
 		}
 		
 		#[inline]
-		fn get_values(&self, vi: i32, sidx: &impl core::ToInputArray, values: &mut f32) -> Result<()> {
+		fn get_values(&self, vi: i32, sidx: &impl ToInputArray, values: &mut f32) -> Result<()> {
 			input_array_arg!(sidx);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getValues_const_int_const__InputArrayR_floatX(self.as_raw_TrainData(), vi, sidx.as_raw__InputArray(), values, ocvrs_return.as_mut_ptr()) };
@@ -5645,7 +5723,7 @@ pub mod ml {
 		}
 		
 		#[inline]
-		fn get_norm_cat_values(&self, vi: i32, sidx: &impl core::ToInputArray, values: &mut i32) -> Result<()> {
+		fn get_norm_cat_values(&self, vi: i32, sidx: &impl ToInputArray, values: &mut i32) -> Result<()> {
 			input_array_arg!(sidx);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getNormCatValues_const_int_const__InputArrayR_intX(self.as_raw_TrainData(), vi, sidx.as_raw__InputArray(), values, ocvrs_return.as_mut_ptr()) };
@@ -5847,6 +5925,8 @@ pub mod ml {
 		#[inline] fn as_raw_mut_TrainData(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { TrainData, crate::ml::TrainDataTraitConst, as_raw_TrainData, crate::ml::TrainDataTrait, as_raw_mut_TrainData }
+	
 	impl TrainData {
 		#[inline]
 		pub fn missing_value() -> Result<f32> {
@@ -5862,7 +5942,7 @@ pub mod ml {
 		/// * vec: input vector (supported types: CV_32S, CV_32F, CV_64F)
 		/// * idx: 1D index vector
 		#[inline]
-		pub fn get_sub_vector(vec: &core::Mat, idx: &core::Mat) -> Result<core::Mat> {
+		pub fn get_sub_vector(vec: &impl core::MatTraitConst, idx: &impl core::MatTraitConst) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getSubVector_const_MatR_const_MatR(vec.as_raw_Mat(), idx.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -5877,7 +5957,7 @@ pub mod ml {
 		/// * idx: 1D index vector
 		/// * layout: specifies to extract rows (cv::ml::ROW_SAMPLES) or to extract columns (cv::ml::COL_SAMPLES)
 		#[inline]
-		pub fn get_sub_matrix(matrix: &core::Mat, idx: &core::Mat, layout: i32) -> Result<core::Mat> {
+		pub fn get_sub_matrix(matrix: &impl core::MatTraitConst, idx: &impl core::MatTraitConst, layout: i32) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ml_TrainData_getSubMatrix_const_MatR_const_MatR_int(matrix.as_raw_Mat(), idx.as_raw_Mat(), layout, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -6010,7 +6090,7 @@ pub mod ml {
 		/// * sample_weights: noArray()
 		/// * var_type: noArray()
 		#[inline]
-		pub fn create(samples: &impl core::ToInputArray, layout: i32, responses: &impl core::ToInputArray, var_idx: &impl core::ToInputArray, sample_idx: &impl core::ToInputArray, sample_weights: &impl core::ToInputArray, var_type: &impl core::ToInputArray) -> Result<core::Ptr<crate::ml::TrainData>> {
+		pub fn create(samples: &impl ToInputArray, layout: i32, responses: &impl ToInputArray, var_idx: &impl ToInputArray, sample_idx: &impl ToInputArray, sample_weights: &impl ToInputArray, var_type: &impl ToInputArray) -> Result<core::Ptr<crate::ml::TrainData>> {
 			input_array_arg!(samples);
 			input_array_arg!(responses);
 			input_array_arg!(var_idx);
@@ -6052,7 +6132,7 @@ pub mod ml {
 		/// * sample_weights: noArray()
 		/// * var_type: noArray()
 		#[inline]
-		pub fn create_def(samples: &impl core::ToInputArray, layout: i32, responses: &impl core::ToInputArray) -> Result<core::Ptr<crate::ml::TrainData>> {
+		pub fn create_def(samples: &impl ToInputArray, layout: i32, responses: &impl ToInputArray) -> Result<core::Ptr<crate::ml::TrainData>> {
 			input_array_arg!(samples);
 			input_array_arg!(responses);
 			return_send!(via ocvrs_return);
