@@ -110,12 +110,8 @@ impl TypeRefExt for TypeRef<'_, '_> {
 	/// Return a lightweight lowercase type representation, might not be precise. For example it's used for operator bindings so
 	/// that `operator &` on 2 `Mat`s translates into `and_mat_mat()`.
 	fn rust_simple_name(&self) -> String {
-		let maybe_ptr = self.as_pointer().or_else(|| self.as_reference());
-		let type_ref = if let Some(inner) = maybe_ptr.as_ref() {
-			inner
-		} else {
-			self
-		};
+		let maybe_ptr = self.as_pointer_reference_move();
+		let type_ref = maybe_ptr.as_ref().unwrap_or(self);
 		type_ref.rust_name(NameStyle::Declaration).to_lowercase()
 	}
 
@@ -177,7 +173,7 @@ impl TypeRefExt for TypeRef<'_, '_> {
 			self.rust_name(NameStyle::ref_())
 		};
 		let cnst = Constness::from_is_mut(
-			self.is_by_move()
+			self.as_by_move().is_some()
 				|| self.extern_pass_kind().is_by_void_ptr()
 					&& self.constness().is_mut()
 					&& !self.as_pointer().is_some()
@@ -271,7 +267,7 @@ impl TypeRefExt for TypeRef<'_, '_> {
 				Dir::Out(_) => format!("&mut {name}_via"),
 			}
 		} else if self.as_reference().map_or(false, |inner| {
-			(inner.as_simple_class().is_some() || inner.is_enum()) && (inner.constness().is_const() || self.is_by_move())
+			(inner.as_simple_class().is_some() || inner.is_enum()) && (inner.constness().is_const() || self.as_by_move().is_some())
 		}) {
 			format!("&{cnst}{name}", cnst = constness.rust_qual())
 		} else if self.as_simple_class().is_some() {
@@ -449,10 +445,6 @@ impl TypeRefExt for TypeRef<'_, '_> {
 		}
 	}
 
-	// fn rust_lifetimes(&self) -> impl Iterator<Item = Lifetime> {
-	// 	Lifetime::explicit().into_iter().take(self.rust_lifetime_count())
-	// }
-
 	fn cpp_self_func_decl(&self, method_constness: Constness) -> String {
 		let mut self_with_constness = self.with_inherent_constness(method_constness);
 		if self.extern_pass_kind().is_by_ptr() {
@@ -518,7 +510,7 @@ impl TypeRefExt for TypeRef<'_, '_> {
 			}
 			Some(Dir::In(StrType::CharPtr(_))) | None => {}
 		}
-		if self.is_by_move() {
+		if self.as_by_move().is_some() {
 			return format!("std::move(*{name})").into();
 		}
 		if self.extern_pass_kind().is_by_ptr() {

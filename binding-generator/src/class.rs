@@ -501,7 +501,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 								arguments: Rc::new([Field::new_desc(FieldDesc {
 									cpp_fullname: "val".into(),
 									type_ref: fld_type_ref.with_inherent_constness(Constness::Const),
-									type_hint: TypeRefTypeHint::None,
+									type_ref_type_hint: TypeRefTypeHint::None,
 									default_value: fld.default_value().map(|v| v.into()),
 								})]),
 								return_kind: ReturnKind::InfallibleNaked,

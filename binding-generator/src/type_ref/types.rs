@@ -1,33 +1,9 @@
-use clang::Type;
 use std::borrow::Cow;
 use std::fmt;
 
-use crate::function::Function;
-use crate::smart_ptr::SmartPtr;
-use crate::tuple::Tuple;
-use crate::type_ref::TypeRef;
-use crate::vector::Vector;
-use crate::{Class, Enum, Typedef};
+use clang::Type;
 
-#[derive(Clone, Debug, PartialEq)]
-pub enum TypeRefKind<'tu, 'ge> {
-	/// (rust name, cpp name)
-	Primitive(&'static str, &'static str),
-	/// (element type, array size)
-	Array(TypeRef<'tu, 'ge>, Option<usize>),
-	StdVector(Vector<'tu, 'ge>),
-	StdTuple(Tuple<'tu, 'ge>),
-	Pointer(TypeRef<'tu, 'ge>),
-	Reference(TypeRef<'tu, 'ge>),
-	RValueReference(TypeRef<'tu, 'ge>),
-	SmartPtr(SmartPtr<'tu, 'ge>),
-	Class(Class<'tu, 'ge>),
-	Enum(Enum<'tu>),
-	Function(Function<'tu, 'ge>),
-	Typedef(Typedef<'tu, 'ge>),
-	Generic(String),
-	Ignored,
-}
+use crate::type_ref::TypeRef;
 
 #[derive(Clone, Debug, PartialEq)]
 pub enum TypeRefTypeHint {

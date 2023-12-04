@@ -20,7 +20,7 @@ use crate::{constant, DefaultElement, Element, GeneratorEnv, StrExt};
 pub enum Field<'tu, 'ge> {
 	Clang {
 		entity: Entity<'tu>,
-		type_hint: TypeRefTypeHint,
+		type_ref_type_hint: TypeRefTypeHint,
 		gen_env: &'ge GeneratorEnv<'tu>,
 	},
 	Desc(Rc<FieldDesc<'tu, 'ge>>),
@@ -31,10 +31,10 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 		Self::new_ext(entity, TypeRefTypeHint::None, gen_env)
 	}
 
-	pub fn new_ext(entity: Entity<'tu>, type_hint: TypeRefTypeHint, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
+	pub fn new_ext(entity: Entity<'tu>, type_ref_type_hint: TypeRefTypeHint, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
 		Self::Clang {
 			entity,
-			type_hint,
+			type_ref_type_hint,
 			gen_env,
 		}
 	}
@@ -43,26 +43,26 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 		Self::Desc(Rc::new(desc))
 	}
 
-	pub fn type_hint(&self) -> &TypeRefTypeHint {
+	pub fn type_ref_type_hint(&self) -> &TypeRefTypeHint {
 		match self {
-			Self::Clang { type_hint, .. } => type_hint,
-			Self::Desc(desc) => &desc.type_hint,
+			Self::Clang { type_ref_type_hint, .. } => type_ref_type_hint,
+			Self::Desc(desc) => &desc.type_ref_type_hint,
 		}
 	}
 
-	pub fn set_type_hint(&mut self, type_ref_type_hint: TypeRefTypeHint) {
+	pub fn set_type_ref_type_hint(&mut self, type_ref_type_hint: TypeRefTypeHint) {
 		match self {
 			Self::Clang {
-				type_hint: self_type_hint,
+				type_ref_type_hint: self_type_ref_type_hint,
 				..
 			} => {
-				if *self_type_hint != type_ref_type_hint {
-					*self_type_hint = type_ref_type_hint;
+				if *self_type_ref_type_hint != type_ref_type_hint {
+					*self_type_ref_type_hint = type_ref_type_hint;
 				}
 			}
 			Self::Desc(desc) => {
-				if desc.type_hint != type_ref_type_hint {
-					Rc::make_mut(desc).type_hint = type_ref_type_hint;
+				if desc.type_ref_type_hint != type_ref_type_hint {
+					Rc::make_mut(desc).type_ref_type_hint = type_ref_type_hint;
 				}
 			}
 		}
@@ -72,11 +72,11 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 		match self {
 			Self::Clang {
 				entity,
-				type_hint,
+				type_ref_type_hint,
 				gen_env,
 				..
 			} => {
-				let type_hint = type_hint.clone().something_or_else(|| {
+				let type_ref_type_hint = type_ref_type_hint.clone().something_or_else(|| {
 					let default_value_string = self
 						.default_value()
 						.map_or(false, |def| def.contains(|c| c == '"' || c == '\''));
@@ -88,7 +88,7 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 				});
 				Cow::Owned(TypeRef::new_ext(
 					entity.get_type().expect("Can't get type"),
-					type_hint,
+					type_ref_type_hint,
 					Some(*entity),
 					gen_env,
 				))
@@ -167,7 +167,7 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 	}
 
 	pub fn as_slice_len(&self) -> Option<(&str, usize)> {
-		if let TypeRefTypeHint::LenForSlice(ptr_arg, len_div) = self.type_hint() {
+		if let TypeRefTypeHint::LenForSlice(ptr_arg, len_div) = self.type_ref_type_hint() {
 			Some((ptr_arg.as_str(), *len_div))
 		} else {
 			None
@@ -232,7 +232,7 @@ impl fmt::Debug for Field<'_, '_> {
 			Self::Desc(_) => "Field::Desc",
 		})
 		.field("cpp_fullname", &self.cpp_name(CppNameStyle::Reference))
-		.field("type_hint", &self.type_hint())
+		.field("type_ref_type_hint", &self.type_ref_type_hint())
 		.field("type_ref", &self.type_ref())
 		.field("default_value", &self.default_value())
 		.finish()
@@ -243,7 +243,7 @@ impl fmt::Debug for Field<'_, '_> {
 pub struct FieldDesc<'tu, 'ge> {
 	pub cpp_fullname: Rc<str>,
 	pub type_ref: TypeRef<'tu, 'ge>,
-	pub type_hint: TypeRefTypeHint,
+	pub type_ref_type_hint: TypeRefTypeHint,
 	pub default_value: Option<Rc<str>>,
 }
 
@@ -252,7 +252,7 @@ impl<'tu, 'ge> FieldDesc<'tu, 'ge> {
 		Self {
 			cpp_fullname: name.into(),
 			type_ref,
-			type_hint: TypeRefTypeHint::None,
+			type_ref_type_hint: TypeRefTypeHint::None,
 			default_value: None,
 		}
 	}

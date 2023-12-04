@@ -106,7 +106,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 						Field::new_desc(FieldDesc {
 							cpp_fullname: arg.cpp_name(CppNameStyle::Reference).into(),
 							type_ref,
-							type_hint: TypeRefTypeHint::None,
+							type_ref_type_hint: TypeRefTypeHint::None,
 							default_value: arg.default_value().map(|v| v.into()),
 						})
 					},
@@ -491,7 +491,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 	pub fn arguments(&self) -> Cow<[Field<'tu, 'ge>]> {
 		match self {
 			&Self::Clang { entity, gen_env, .. } => {
-				let type_hints = settings::ARGUMENT_OVERRIDE.get(&self.func_id());
+				let arg_overrides = settings::ARGUMENT_OVERRIDE.get(&self.func_id());
 				let mut slice_arg_idx = None;
 				let mut slice_len_arg_idx = None;
 				let mut out = self
@@ -499,9 +499,10 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 					.into_iter()
 					.enumerate()
 					.map(|(idx, a)| {
-						let type_hint = type_hints.and_then(|o| a.get_name().and_then(|arg_name| o.get(arg_name.as_str())));
-						if let Some(type_hint) = type_hint {
-							return Field::new_ext(a, type_hint.clone(), gen_env);
+						if let Some(func_arg_override) = arg_overrides {
+							if let Some(type_hint) = a.get_name().and_then(|arg_name| func_arg_override.get(arg_name.as_str())) {
+								return Field::new_ext(a, type_hint.clone(), gen_env);
+							}
 						}
 						let out = Field::new(a, gen_env);
 						if slice_arg_idx.is_none() && out.can_be_slice_arg() {
@@ -516,14 +517,14 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 				if let (Some(slice_arg_idx), Some(slice_len_arg_idx)) = (slice_arg_idx, slice_len_arg_idx) {
 					let slice_arg = &mut out[slice_arg_idx];
 					let slice_arg_name = slice_arg.rust_name(NameStyle::ref_()).into_owned();
-					slice_arg.set_type_hint(TypeRefTypeHint::Slice);
+					slice_arg.set_type_ref_type_hint(TypeRefTypeHint::Slice);
 					let slice_len_arg = &mut out[slice_len_arg_idx];
 					let divisor = if slice_len_arg.cpp_name(CppNameStyle::Declaration).contains("pair") {
 						2
 					} else {
 						1
 					};
-					slice_len_arg.set_type_hint(TypeRefTypeHint::LenForSlice(slice_arg_name, divisor));
+					slice_len_arg.set_type_ref_type_hint(TypeRefTypeHint::LenForSlice(slice_arg_name, divisor));
 				}
 				out.into()
 			}

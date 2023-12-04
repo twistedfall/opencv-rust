@@ -1,5 +1,6 @@
-use once_cell::sync::Lazy;
 use std::collections::HashMap;
+
+use once_cell::sync::Lazy;
 
 use crate::type_ref::TypeRefTypeHint;
 use crate::FuncId;

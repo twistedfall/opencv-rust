@@ -101,7 +101,7 @@ fn cast_base() -> Result<()> {
 	use opencv::features2d::BFMatcher;
 
 	let m = BFMatcher::new_def()?;
-	assert!(<dyn AlgorithmTrait>::empty(&m)?);
+	assert!(AlgorithmTraitConst::empty(&m)?);
 	assert_eq!("my_object", &m.get_default_name()?);
 	let a = Algorithm::from(m);
 	assert!(a.empty()?);

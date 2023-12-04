@@ -232,13 +232,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			.into_iter()
 			.map(|f| {
 				let type_ref = f.type_ref();
-				let mut typ = type_ref.rust_name(NameStyle::ref_());
-				// hack for converting the references to array types in struct definitions
-				if type_ref.as_fixed_array().is_some() {
-					if let Some(new_typ) = typ.strip_prefix("&mut ") {
-						typ = new_typ.to_string().into()
-					}
-				}
+				let typ = type_ref.rust_name(NameStyle::ref_());
 				SIMPLE_FIELD_TPL.interpolate(&HashMap::from([
 					("doc_comment", Cow::Owned(f.rendered_doc_comment("///", opencv_version))),
 					("visibility", "pub ".into()),

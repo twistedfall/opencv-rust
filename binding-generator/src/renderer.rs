@@ -38,7 +38,8 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 		} else {
 			(format!(" {}", self.name), format!(" {}{}", cnst, self.name))
 		};
-		match type_ref.kind().as_ref() {
+		let kind = type_ref.kind();
+		match kind.as_ref() {
 			TypeRefKind::Primitive(_, cpp) => {
 				format!("{cnst}{cpp}{space_name}")
 			}
@@ -97,7 +98,7 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 			}
 			TypeRefKind::Class(cls) => {
 				let mut out = cls.cpp_name(self.name_style).into_owned();
-				if !type_ref.is_std_string() {
+				if !kind.is_std_string(type_ref.type_hint()) {
 					// fixme prevents emission of std::string<char>
 					out += &render_cpp_tpl(self, type_ref);
 				}
