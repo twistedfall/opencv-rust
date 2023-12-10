@@ -92,7 +92,8 @@ fn visit_cv_namespace<'tu>(ns: Entity<'tu>, visitor: &mut impl EntityWalkerVisit
 			| EntityKind::FunctionTemplate
 			| EntityKind::UsingDeclaration
 			| EntityKind::UsingDirective
-			| EntityKind::TypeAliasTemplateDecl => {
+			| EntityKind::TypeAliasTemplateDecl
+			| EntityKind::LinkageSpec => {
 				/* ignoring */
 				WalkAction::Continue
 			}

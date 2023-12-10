@@ -1,3 +1,6 @@
+* 0.88.2
+   * Fix build with clang 17 (fixes https://github.com/twistedfall/opencv-rust/issues/519)
+
 * 0.88.1
   * Generate `Vector<Vector<Point2d>>` bindings for `ccalib` module.
 
