@@ -135,9 +135,7 @@ BUILD_FLAGS="
 
 sudo apt-get -y install build-essential cmake
 
-non_static_version=${OPENCV_VERSION%-static}
-if [[ "$non_static_version" != "$OPENCV_VERSION" ]]; then # static build
-	OPENCV_VERSION="$non_static_version"
+if [[ "${OPENCV_LINKAGE:-dynamic}" == "static" ]]; then # static build
 	BUILD_FLAGS="$BUILD_FLAGS
 	-D BUILD_JPEG=ON
 	-D BUILD_OPENJPEG=ON
@@ -261,29 +259,26 @@ else # dynamic build
 	esac
 fi
 
+dist_dir="$HOME/dist/"
 base_dir="$HOME/build/opencv/"
-mkdir -p "$base_dir"
-
-opencv_dist="$base_dir/opencv-$OPENCV_VERSION.tar.gz"
-if [ ! -f "$opencv_dist" ]; then
-	curl -L "https://github.com/opencv/opencv/archive/$OPENCV_VERSION.tar.gz" -o "$opencv_dist"
-fi
-tar -xzf "$opencv_dist" -C "$base_dir"
-
-opencv_contrib_dist="$base_dir/opencv_contrib-$OPENCV_VERSION.tar.gz"
-if [ ! -f "$opencv_contrib_dist" ]; then
-	curl -L "https://github.com/opencv/opencv_contrib/archive/$OPENCV_VERSION.tar.gz" -o "$opencv_contrib_dist"
-fi
-tar -xzf "$opencv_contrib_dist" -C "$base_dir"
-
 build_dir="$base_dir/opencv-$OPENCV_VERSION-build/"
-mkdir -p "$build_dir"
+mkdir -p "$dist_dir" "$base_dir" "$build_dir"
+
+opencv_src="$dist_dir/opencv-$OPENCV_VERSION"
+if [ ! -d "$opencv_src" ]; then
+	curl -L "https://github.com/opencv/opencv/archive/$OPENCV_VERSION.tar.gz" | tar -xz -C "$dist_dir"
+fi
+
+opencv_contrib_src="$dist_dir/opencv_contrib-$OPENCV_VERSION"
+if [ ! -d "$opencv_contrib_src" ]; then
+	curl -L "https://github.com/opencv/opencv_contrib/archive/$OPENCV_VERSION.tar.gz" | tar -xz -C "$dist_dir"
+fi
 
 pushd "$build_dir" > /dev/null
 cmake $BUILD_FLAGS \
 	-D CMAKE_INSTALL_PREFIX=/usr \
-	-D OPENCV_EXTRA_MODULES_PATH="$base_dir/opencv_contrib-$OPENCV_VERSION/modules" \
-	"$base_dir/opencv-$OPENCV_VERSION"
+	-D OPENCV_EXTRA_MODULES_PATH="$opencv_contrib_src/modules" \
+	"$opencv_src"
 make -j"$(nproc)"
 sudo make -j"$(nproc)" install
 popd > /dev/null

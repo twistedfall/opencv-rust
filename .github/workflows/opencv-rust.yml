@@ -16,28 +16,37 @@ jobs:
         os-image:
           - ubuntu-22.04
           - macos-12
-        version:
-          - opencv: 3.4.19
-          - opencv: 4.8.1
-        exclude:
-          - os-image: macos-12
-            version:
-              opencv: 3.4.20
+        opencv-version:
+          - 3.4.20
+          - 4.8.1
+        linkage:
+          - dynamic
         include:
           - os-image: ubuntu-22.04
-            version:
-              opencv: 4.8.1-static
+            opencv-version: 4.8.1
+            linkage: static
     runs-on: ${{ matrix.os-image }}
     env:
       Atlas_ROOT_DIR: /usr/include/ # for cmake to find lapacke.h
-      OPENCV_VERSION: ${{ matrix.version.opencv }}
+      OPENCV_VERSION: ${{ matrix.opencv-version }}
+      OPENCV_LINKAGE: ${{ matrix.linkage }}
+      SCCACHE_GHA_ENABLED: "true"
+      RUSTC_WRAPPER: "sccache"
+      CMAKE_C_COMPILER_LAUNCHER: "sccache"
+      CMAKE_CXX_COMPILER_LAUNCHER: "sccache"
     steps:
       - uses: actions/checkout@v3
       - uses: dtolnay/rust-toolchain@stable
+      - uses: mozilla-actions/sccache-action@v0.0.3
+      - uses: actions/cache@v3
+        with:
+          path: ~/dist
+          key: dist-${{ matrix.opencv-version }}
+
       - uses: actions/cache@v3
         with:
           path: ~/build
-          key: src-${{ matrix.version.opencv }}-${{ matrix.os-image }}
+          key: build-${{ matrix.opencv-version }}-${{ matrix.linkage }}-${{ matrix.os-image }}
 
       - name: Install dependencies
         env:
@@ -58,18 +67,21 @@ jobs:
         os-image:
           - ubuntu-22.04
           - windows-2022
-        version:
-          - vcpkg: 2023.10.19
+        vcpkg-version:
+          - 2023.11.20
     runs-on: ${{ matrix.os-image }}
     env:
-      VCPKG_VERSION: ${{ matrix.version.vcpkg }}
+      VCPKG_VERSION: ${{ matrix.vcpkg-version }}
+      SCCACHE_GHA_ENABLED: "true"
+      RUSTC_WRAPPER: "sccache"
     steps:
       - uses: actions/checkout@v3
       - uses: dtolnay/rust-toolchain@stable
+      - uses: mozilla-actions/sccache-action@v0.0.3
       - uses: actions/cache@v3
         with:
           path: ~/build
-          key: vcpkg-${{ matrix.version.vcpkg }}-${{ matrix.os-image }}
+          key: vcpkg-${{ matrix.vcpkg-version }}-${{ matrix.os-image }}
 
       - name: Install dependencies
         env:
@@ -91,11 +103,9 @@ jobs:
           - macos-12
           - windows-2022
         version:
-          - branch: 3.4
-            opencv: 3.4.16
+          - opencv: 3.4.16
             brew: "@3"
-          - branch: 4
-            opencv: 4.7.0
+          - opencv: 4.8.1
             brew: "@4"
         include:
           - os-image: ubuntu-22.04
@@ -104,13 +114,20 @@ jobs:
           - os-image: ubuntu-20.04
             version:
               opencv: 4.2.0
+        exclude:
+          - os-image: macos-12 # brew@3 is broken as of 2023-12-05, requires libceres.3.dylib, but only 2 and 4 are available
+            version:
+              brew: "@3"
     runs-on: ${{ matrix.os-image }}
     env:
       OPENCV_VERSION: ${{ matrix.version.opencv }}
       BREW_OPENCV_VERSION: ${{ matrix.version.brew }}
+      SCCACHE_GHA_ENABLED: "true"
+      RUSTC_WRAPPER: "sccache"
     steps:
       - uses: actions/checkout@v3
       - uses: dtolnay/rust-toolchain@stable
+      - uses: mozilla-actions/sccache-action@v0.0.3
 
       - name: Install dependencies
         env:
@@ -138,12 +155,23 @@ jobs:
     runs-on: ubuntu-20.04
     env:
       OPENCV_VERSION: 4.8.1
+      SCCACHE_GHA_ENABLED: "true"
+      RUSTC_WRAPPER: "sccache"
+      CMAKE_C_COMPILER_LAUNCHER: "sccache"
+      CMAKE_CXX_COMPILER_LAUNCHER: "sccache"
     steps:
       - uses: actions/checkout@v3
+      - uses: mozilla-actions/sccache-action@v0.0.3
+
+      - uses: actions/cache@v3
+        with:
+          path: ~/dist
+          key: dist-${{ env.OPENCV_VERSION }}
+
       - uses: actions/cache@v3
         with:
           path: ~/build
-          key: src-${{ env.OPENCV_VERSION }}-ubuntu-20.04
+          key: build-${{ env.OPENCV_VERSION }}-ubuntu-20.04
 
       - name: Get MSRV package metadata
         id: metadata

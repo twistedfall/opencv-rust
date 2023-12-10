@@ -9,7 +9,6 @@ if [[ "$OS_FAMILY" == "Linux" ]]; then
 	sudo rm -rf /usr/share/dotnet
 	sudo rm -rf /opt/ghc
 	sudo rm -rf "/usr/local/share/boost"
-	sudo rm -rf "$AGENT_TOOLSDIRECTORY"
 	if [[ "${VCPKG_VERSION:-}" != "" ]]; then # vcpkg build
 		"$ci_dir/install-ubuntu-vcpkg.sh"
 	else

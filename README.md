@@ -111,7 +111,7 @@ Static linking to OpenCV is supported and tested at least on Linux. For some hin
 please check this [comment](https://github.com/twistedfall/opencv-rust/issues/364#issuecomment-1308794985). Also,
 you can get some information on how to perform the build in CI scripts:
 [install-ubuntu.sh](https://github.com/twistedfall/opencv-rust/blob/master/ci/install-ubuntu.sh) and
-[script.sh](https://github.com/twistedfall/opencv-rust/blob/master/ci/script.sh), search for `non_static_version` variable.
+[script.sh](https://github.com/twistedfall/opencv-rust/blob/master/ci/script.sh), search for `"static"` string.
 
 ### Crosscompilation
 
