@@ -22,6 +22,8 @@ pub enum TypeRefTypeHint {
 	CharPtrSingleChar,
 	/// render a reference to a primitive type as a raw Rust pointer
 	PrimitivePtrAsRaw,
+	/// Adds a length to an unsized array
+	AddArrayLength(usize),
 }
 
 impl TypeRefTypeHint {

@@ -2,9 +2,8 @@
 
 use std::ffi::c_void;
 
-use opencv::core::{Mat_AUTO_STEP, Point, Point2f, Rect, Size, Vec2f, Vec3b};
+use opencv::core::{Mat_AUTO_STEP, Point, Point2f, Rect, RotatedRect, Size, Size2f, Vec2f, Vec3b, Vector};
 use opencv::prelude::*;
-use opencv::types::VectorOfPoint;
 use opencv::{imgproc, Result};
 
 #[test]
@@ -24,7 +23,7 @@ fn min_enclosing() -> Result<()> {
 
 #[test]
 fn ellipse() -> Result<()> {
-	let mut pts = VectorOfPoint::new();
+	let mut pts = Vector::<Point>::new();
 	imgproc::ellipse_2_poly(Point::new(100, 100), Size::new(200, 200), 0, 45, 90, 10, &mut pts)?;
 	assert_eq!(6, pts.len());
 	assert_eq!(Point::new(241, 241), pts.get(0)?);
@@ -89,6 +88,23 @@ fn call_def() -> Result<()> {
 	let mut mat_def = Mat::new_rows_cols_with_default(3, 3, Vec3b::opencv_type(), Vec3b::all(0).into())?;
 	imgproc::rectangle_def(&mut mat_def, rect, (255, 0, 0).into())?;
 	assert_eq!(mat_def.data_typed::<Vec3b>()?, mat_full.data_typed()?);
+
+	Ok(())
+}
+
+#[test]
+fn box_points() -> Result<()> {
+	let rect = RotatedRect::new(Point2f::new(100., 100.), Size2f::new(100., 100.), 90.)?;
+
+	let mut pts = Mat::default();
+	imgproc::box_points(rect, &mut pts)?;
+	let pts = pts.reshape_def(Point2f::opencv_channels())?;
+
+	assert_eq!(Size::new(1, 4), pts.size()?);
+	assert_eq!(Point2f::new(50., 50.), *pts.at(0)?);
+	assert_eq!(Point2f::new(150., 50.), *pts.at(1)?);
+	assert_eq!(Point2f::new(150., 150.), *pts.at(2)?);
+	assert_eq!(Point2f::new(50., 150.), *pts.at(3)?);
 
 	Ok(())
 }

@@ -45,7 +45,7 @@ elif [[ "$OS_FAMILY" == "Linux" ]]; then
 	fi
 fi
 
-if [[ "${OPENCV_VERSION:-}" == "4.5.4" || "${OPENCV_VERSION:-}" == "4.2.0" || "${OPENCV_VERSION:-}" == "3.4.16" ]]; then
+if [[ "${OPENCV_VERSION:-}" == "4.5.4" || "${OPENCV_VERSION:-}" == "4.2.0" || "${OPENCV_VERSION:-}" == "3.4.16" || "${OPENCV_VERSION:-}" == "3.4.20" ]]; then
 	rm -vf tests/*4_5_4_norun.rs
 fi
 

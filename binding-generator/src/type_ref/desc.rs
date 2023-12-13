@@ -477,15 +477,23 @@ impl<'tu> ClangTypeExt<'tu> for Type<'tu> {
 					}
 				}
 
-				TypeKind::ConstantArray | TypeKind::IncompleteArray => TypeRefKind::Array(
-					TypeRef::new_ext(
-						self.get_element_type().expect("Can't get array element type"),
-						type_hint,
-						None,
-						gen_env,
-					),
-					self.get_size(),
-				),
+				TypeKind::ConstantArray | TypeKind::IncompleteArray => {
+					let mut size = self.get_size();
+					if size.is_none() {
+						if let TypeRefTypeHint::AddArrayLength(force_size) = type_hint {
+							size = Some(force_size);
+						}
+					}
+					TypeRefKind::Array(
+						TypeRef::new_ext(
+							self.get_element_type().expect("Can't get array element type"),
+							type_hint,
+							None,
+							gen_env,
+						),
+						size,
+					)
+				}
 
 				TypeKind::MemberPointer | TypeKind::DependentSizedArray | TypeKind::Half => TypeRefKind::Ignored,
 

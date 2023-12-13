@@ -1,9 +1,6 @@
-use opencv::{
-	core::{self, Moments, Point2f, RotatedRect, Scalar, Size2f, Vec3b, CV_32S, CV_64F, CV_8U, CV_MAKETYPE},
-	prelude::*,
-	types::VectorOfMat,
-	Result,
-};
+use opencv::core::{Moments, Point2f, RotatedRect, Scalar, Size2f, Vec3b, Vector, CV_32S, CV_64F, CV_8U, CV_MAKETYPE};
+use opencv::prelude::*;
+use opencv::{core, Result};
 
 #[test]
 fn make_type() {
@@ -37,12 +34,13 @@ fn rotated_rect() -> Result<()> {
 	assert_eq!(Point2f::new(150., 50.), pts[1]);
 	assert_eq!(Point2f::new(150., 150.), pts[2]);
 	assert_eq!(Point2f::new(50., 150.), pts[3]);
+
 	Ok(())
 }
 
 #[test]
 fn in_range() -> Result<()> {
-	let mut cs = VectorOfMat::new();
+	let mut cs = Vector::<Mat>::new();
 	cs.push(Mat::from_slice_2d(&[&[1., 2., 3.], &[4., 5., 6.], &[7., 8., 9.]])?);
 	cs.push(Mat::from_slice_2d(&[&[11., 12., 13.], &[14., 15., 16.], &[17., 18., 19.]])?);
 	let mut m = Mat::default();

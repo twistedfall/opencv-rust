@@ -54,7 +54,6 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		("cv_CommandLineParser_get_int_const_int_bool", "+_i32_idx"),
 		("cv_CommandLineParser_get_uint64_t_const_const_StringR_bool", "+_u64"),
 		("cv_CommandLineParser_get_uint64_t_const_int_bool", "+_u64_idx"),
-		("cv_cuda_GpuMat_ptr_int", "+_mut"),
 		("cv_DMatch_DMatch_int_int_int_float", "new_index"),
 		("cv_FileStorage_write_const_StringR_const_MatR", "+_mat"),
 		("cv_FileStorage_write_const_StringR_const_StringR", "+_str"),
@@ -143,6 +142,7 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		("cv_RNG_uniform_float_float", "+_f32"),
 		("cv_Range_Range_int_int", "new"),
 		("cv_RotatedRect_RotatedRect_const_Point2fR_const_Point2fR_const_Point2fR", "for_points"),
+		("cv_RotatedRect_points_const_vectorLPoint2fGR", "+_vec"),
 		("cv_SVD_backSubst_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__OutputArrayR", "+_multi"),
 		("cv_SVD_compute_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_int", "+_ext"),
 		("cv_SparseMat_SparseMat_const_MatR", "from_mat"),
@@ -243,6 +243,7 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		("cv_cuda_GpuMat_GpuMat_int_int_int_Scalar_AllocatorX", "+_rows_cols_with_default"),
 		("cv_cuda_GpuMat_GpuMat_int_int_int_voidX_size_t", "+_rows_cols_with_data"),
 		("cv_cuda_GpuMat_download_const_const__OutputArrayR_StreamR", "+_async"),
+		("cv_cuda_GpuMat_ptr_int", "+_mut"),
 		("cv_cuda_GpuMat_upload_const__InputArrayR_StreamR", "+_async"),
 		("cv_directx_getTypeFromD3DFORMAT_const_int", "get_type_from_d3d_format"),
 		("cv_divide_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_int", "+2"),
@@ -398,9 +399,9 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		("cv_findContours_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_int_Point", "+_with_hierarchy"), // 4.x
 		("cv_findContours_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_int_Point", "+_with_hierarchy"), // 3.2 3.4
 		("cv_floodFill_const__InputOutputArrayR_const__InputOutputArrayR_Point_Scalar_RectX_Scalar_Scalar_int", "+_mask"),
-		("cv_getAffineTransform_const_Point2fX_const_Point2fX", "+_slice"),
-		("cv_getPerspectiveTransform_const_Point2fX_const_Point2fX", "+_slice"), // 3.2 3.4
-		("cv_getPerspectiveTransform_const_Point2fX_const_Point2fX_int", "+_slice"), // 4.x
+		("cv_getAffineTransform_const_Point2fXX_const_Point2fXX", "+_slice"),
+		("cv_getPerspectiveTransform_const_Point2fXX_const_Point2fXX", "+_slice"), // 3.2 3.4
+		("cv_getPerspectiveTransform_const_Point2fXX_const_Point2fXX_int", "+_slice"), // 4.x
 		("cv_getRotationMatrix2D__Point2f_double_double", "get_rotation_matrix_2d_matx"),
 		("cv_goodFeaturesToTrack_const__InputArrayR_const__OutputArrayR_int_double_double_const__InputArrayR_int_int_bool_double", "+_with_gradient"),
 

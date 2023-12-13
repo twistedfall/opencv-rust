@@ -115,7 +115,7 @@ pub fn main() -> Result<()> {
 				for pt in &quadrangle {
 					quadrangle_2f.push(Point2f::new(pt.x as f32, pt.y as f32))
 				}
-				let cropped = four_points_transform(rec_input.as_ref().unwrap_or(&frame), quadrangle_2f.as_slice())?;
+				let cropped = four_points_transform(rec_input.as_ref().unwrap_or(&frame), quadrangle_2f.as_slice().try_into()?)?;
 				let recognition_result = recognizer.recognize(&cropped)?;
 				println!("Recognition result: {recognition_result}");
 				imgproc::put_text(
@@ -140,7 +140,7 @@ pub fn main() -> Result<()> {
 	Ok(())
 }
 
-fn four_points_transform(frame: &Mat, vertices: &[Point2f]) -> Result<Mat> {
+fn four_points_transform(frame: &Mat, vertices: &[Point2f; 4]) -> Result<Mat> {
 	let output_size = Size::new(100, 32);
 	let target_vertices = [
 		Point2f::new(0., (output_size.height - 1) as f32),
