@@ -52,6 +52,7 @@ impl<'tu> EntityWalkerExt<'tu> for Entity<'tu> {
 							| EntityKind::ClassTemplate
 							| EntityKind::ClassDecl
 							| EntityKind::Destructor
+							| EntityKind::LinkageSpec
 							| EntityKind::VarDecl => WalkAction::Continue,
 							_ => {
 								unreachable!("Unsupported decl for file: {:#?}", root_decl)
