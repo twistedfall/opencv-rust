@@ -2,7 +2,7 @@ use std::ffi::c_void;
 
 use matches::assert_matches;
 
-use opencv::core::{MatConstIterator, Point, Point2d, Rect, Scalar, Size, Vec2b, Vec2s, Vec3d, Vec3f, Vec4w};
+use opencv::core::{MatConstIterator, MatIter, Point, Point2d, Rect, Scalar, Size, Vec2b, Vec2s, Vec3d, Vec3f, Vec4w};
 use opencv::prelude::*;
 use opencv::types::{VectorOfMat, VectorOfi32};
 use opencv::{core, Error, Result};
@@ -658,7 +658,7 @@ fn mat_from_matexpr() -> Result<()> {
 }
 
 #[test]
-fn mat_iterator() -> Result<()> {
+fn mat_const_iterator() -> Result<()> {
 	{
 		let mat = Mat::from_slice(&[1, 2, 3, 4])?;
 		let mut iter = MatConstIterator::over(&mat)?;
@@ -700,6 +700,11 @@ fn mat_iterator() -> Result<()> {
 		assert!(!iter.has_elements());
 	}
 
+	Ok(())
+}
+
+#[test]
+fn mat_iterator() -> Result<()> {
 	{
 		let mat = Mat::from_slice_2d(&[[1, 2], [3, 4]])?;
 		for (pos, x) in mat.iter::<i32>()? {
@@ -711,6 +716,49 @@ fn mat_iterator() -> Result<()> {
 				_ => panic!("Too many elements"),
 			}
 		}
+		for (pos, x) in MatIter::<i32>::new(MatConstIterator::with_start(&mat, Point::new(1, 0))?)? {
+			match pos {
+				Point { x: 1, y: 0 } => assert_eq!(x, 2),
+				Point { x: 0, y: 1 } => assert_eq!(x, 3),
+				Point { x: 1, y: 1 } => assert_eq!(x, 4),
+				_ => panic!("Too many elements"),
+			}
+		}
+	}
+
+	{
+		let mat = Mat::from_slice_2d(&[[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]])?;
+		let roi = Mat::roi(&mat, Rect::new(1, 1, 2, 2))?;
+		for (pos, x) in roi.iter::<i32>()? {
+			dbg!(&pos);
+			match pos {
+				Point { x: 0, y: 0 } => assert_eq!(x, 6),
+				Point { x: 1, y: 0 } => assert_eq!(x, 7),
+				Point { x: 0, y: 1 } => assert_eq!(x, 10),
+				Point { x: 1, y: 1 } => assert_eq!(x, 11),
+				_ => panic!("Too many elements"),
+			}
+		}
+	}
+
+	{
+		let mut mat = Mat::from_slice_2d(&[[1, 2], [3, 4]])?;
+		for (pos, x) in mat.iter_mut::<i32>()? {
+			*x *= pos.x + pos.y;
+		}
+		assert_eq!([0, 2, 3, 8], mat.data_typed::<i32>()?);
+	}
+
+	{
+		let mat = Mat::from_slice_2d(&[[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]])?;
+		let mut roi = Mat::roi(&mat, Rect::new(1, 1, 2, 2))?;
+		for (pos, x) in roi.iter_mut::<i32>()? {
+			*x += pos.x + pos.y;
+		}
+		assert_eq!(
+			[1, 2, 3, 4, 5, 6, 8, 8, 9, 11, 13, 12, 13, 14, 15, 16],
+			mat.data_typed::<i32>()?
+		);
 	}
 
 	{

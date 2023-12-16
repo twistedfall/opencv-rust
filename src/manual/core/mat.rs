@@ -209,21 +209,28 @@ impl Mat {
 		self.try_into()
 	}
 
-	/// Returns iterator over Mat elements and their positions
+	/// Returns an iterator over `Mat` elements and their positions
 	#[inline]
 	pub fn iter<T: DataType>(&self) -> Result<MatIter<T>> {
-		match_format::<T>(self.typ())?;
-		Ok(if self.empty() {
-			MatIter {
+		MatConstIterator::over(self).map_or(
+			Ok(MatIter {
 				iter: None,
 				_d: PhantomData,
-			}
-		} else {
-			MatIter {
-				iter: Some(MatConstIterator::over(self)?),
+			}),
+			MatIter::new,
+		)
+	}
+
+	/// Returns a mutable iterator over `Mat` elements and their positions
+	#[inline]
+	pub fn iter_mut<T: DataType>(&mut self) -> Result<MatIterMut<T>> {
+		MatConstIterator::over(self).map_or(
+			Ok(MatIterMut {
+				iter: None,
 				_d: PhantomData,
-			}
-		})
+			}),
+			MatIterMut::new,
+		)
 	}
 }
 
@@ -232,16 +239,60 @@ pub struct MatIter<'m, T> {
 	_d: PhantomData<&'m T>,
 }
 
+impl<'m, T: DataType> MatIter<'m, T> {
+	pub fn new(iter: MatConstIterator) -> Result<Self> {
+		match_format::<T>(iter.typ())?;
+		Ok(Self {
+			iter: Some(iter),
+			_d: PhantomData,
+		})
+	}
+}
+
 impl<T: DataType> Iterator for MatIter<'_, T> {
 	type Item = (Point, T);
 
 	fn next(&mut self) -> Option<Self::Item> {
 		self.iter.as_mut().and_then(|iter| {
 			if iter.has_elements() {
-				let cur = iter.current().ok()?;
-				let out = (iter.pos().ok()?, *cur);
+				// the type is checked by the `MatIter::new()` and we ensure there are still elements by calling `has_elements()`
+				let cur = *unsafe { convert_ptr(iter.ptr()) };
+				let pos = iter.pos().ok()?;
 				iter.seek(1, true).ok()?;
-				Some(out)
+				Some((pos, cur))
+			} else {
+				None
+			}
+		})
+	}
+}
+
+pub struct MatIterMut<'m, T> {
+	iter: Option<MatConstIterator>,
+	_d: PhantomData<&'m mut T>,
+}
+
+impl<'m, T: DataType> MatIterMut<'m, T> {
+	pub fn new(iter: MatConstIterator) -> Result<Self> {
+		match_format::<T>(iter.typ())?;
+		Ok(Self {
+			iter: Some(iter),
+			_d: PhantomData,
+		})
+	}
+}
+
+impl<'m, T: DataType> Iterator for MatIterMut<'m, T> {
+	type Item = (Point, &'m mut T);
+
+	fn next(&mut self) -> Option<Self::Item> {
+		self.iter.as_mut().and_then(|iter| {
+			if iter.has_elements() {
+				// the type is checked by the `MatIterMut::new()` and we ensure there are still elements by calling `has_elements()`
+				let cur = unsafe { convert_ptr_mut(iter.ptr().cast_mut()) };
+				let pos = iter.pos().ok()?;
+				iter.seek(1, true).ok()?;
+				Some((pos, cur))
 			} else {
 				None
 			}
@@ -599,7 +650,20 @@ pub trait MatConstIteratorTraitManual: MatConstIteratorTrait {
 	fn current<T: DataType>(&self) -> Result<&T> {
 		match_format::<T>(self.typ())?;
 		if self.has_elements() {
-			self.try_deref().map(|ptr| unsafe { convert_ptr(ptr) })
+			Ok(unsafe { convert_ptr(self.ptr()) })
+		} else {
+			Err(Error::new(
+				core::StsOutOfRange,
+				"MatConstIterator doesn't have any more elements",
+			))
+		}
+	}
+
+	#[inline]
+	fn current_mut<T: DataType>(&mut self) -> Result<&mut T> {
+		match_format::<T>(self.typ())?;
+		if self.has_elements() {
+			Ok(unsafe { convert_ptr_mut(self.ptr().cast_mut()) })
 		} else {
 			Err(Error::new(
 				core::StsOutOfRange,
