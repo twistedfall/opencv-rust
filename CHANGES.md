@@ -1,3 +1,6 @@
+* 0.88.3
+   * Add `Mat::iter_mut()` and improve `Mat` iteration performance.
+
 * 0.88.2
    * Fix build with clang 17 (fixes https://github.com/twistedfall/opencv-rust/issues/519)
 
