@@ -1,3 +1,6 @@
+* 0.88.4
+  * More fixes for clang 17 (kudos to PaulWagener).
+
 * 0.88.3
    * Add `Mat::iter_mut()` and improve `Mat` iteration performance.
 
