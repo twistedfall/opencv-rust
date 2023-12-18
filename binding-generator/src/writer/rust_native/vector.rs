@@ -6,7 +6,6 @@ use once_cell::sync::Lazy;
 use crate::class::ClassDesc;
 use crate::field::{Field, FieldDesc};
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
-use crate::settings::ArgOverride;
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle, TypeRefDesc, TypeRefTypeHint};
 use crate::writer::rust_native::RustStringExt;
 use crate::{settings, Class, CompiledInterpolation, Func, IteratorExt, StrExt, TypeRef, Vector};
@@ -482,7 +481,7 @@ fn method_data<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<'t
 		FuncCppBody::Auto,
 		FuncRustBody::Auto,
 		TypeRef::new_pointer(element_type.with_inherent_constness(Constness::Const))
-			.with_type_hint(TypeRefTypeHint::ArgOverride(ArgOverride::CharPtrNotString)),
+			.with_type_hint(TypeRefTypeHint::CharPtrSingleChar),
 	))
 }
 
@@ -497,7 +496,7 @@ fn method_data_mut<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRe
 		FuncCppBody::ManualCall("instance->data()".into()),
 		FuncRustBody::Auto,
 		TypeRef::new_pointer(element_type.with_inherent_constness(Constness::Mut))
-			.with_type_hint(TypeRefTypeHint::ArgOverride(ArgOverride::CharPtrNotString)),
+			.with_type_hint(TypeRefTypeHint::CharPtrSingleChar),
 	))
 }
 

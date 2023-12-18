@@ -14,7 +14,7 @@ use crate::{reserved_rename, settings, Class, CompiledInterpolation, Element, Fu
 use super::comment::{render_ref, RenderComment};
 use super::element::{DefaultRustNativeElement, RustElement};
 use super::type_ref::TypeRefExt;
-use super::{comment, disambiguate_single_name, rust_disambiguate_names, RustNativeGeneratedElement};
+use super::{comment, rust_disambiguate_names, RustNativeGeneratedElement};
 
 pub trait FuncExt<'tu, 'ge> {
 	fn companion_func_default_args(&self) -> Option<Func<'tu, 'ge>>;
@@ -441,7 +441,6 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		let mut decl_args = Vec::with_capacity(args.len());
 		let mut pre_call_args = Vec::with_capacity(args.len());
 		let mut post_call_args = Vec::with_capacity(args.len());
-		let mut cleanup_args = Vec::with_capacity(args.len());
 		if let Some(cls) = kind.as_instance_method() {
 			decl_args.push(cls.type_ref().cpp_self_func_decl(constness));
 		}
@@ -450,7 +449,6 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 			decl_args.push(arg_type_ref.cpp_arg_func_decl(name));
 			pre_post_arg_handle(arg_type_ref.cpp_arg_pre_call(name), &mut pre_call_args);
 			pre_post_arg_handle(arg_type_ref.cpp_arg_post_call(name), &mut post_call_args);
-			pre_post_arg_handle(arg_type_ref.cpp_arg_cleanup(name), &mut cleanup_args);
 		}
 
 		// return
@@ -480,16 +478,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		} else {
 			"void".into()
 		};
-		let mut rets = disambiguate_single_name("ret");
-		let ret_name = rets.next().expect("Endless iterator returned nothing");
-		let (ret, ret_cast) = cpp_return_map(&return_type_ref, &ret_name, kind.as_constructor().is_some());
-		let ret = if cleanup_args.is_empty() {
-			ret
-		} else {
-			let ret_name = rets.next().expect("Endless iterator returned nothing");
-			pre_post_arg_handle(format!("{cpp_extern_return} {ret_name} = {ret}"), &mut post_call_args);
-			ret_name.into()
-		};
+		let (ret, ret_cast) = cpp_return_map(&return_type_ref, "ret", kind.as_constructor().is_some());
 
 		// exception handling
 		let func_try = if return_kind.is_infallible() {
@@ -518,7 +507,6 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 			("pre_call_args", pre_call_args.join("\n").into()),
 			("call", cpp_call(self, &kind, &args, &return_type_ref).into()),
 			("post_call_args", post_call_args.join("\n").into()),
-			("cleanup_args", cleanup_args.join("\n").into()),
 			(
 				"return",
 				cpp_return(
@@ -829,21 +817,15 @@ pub fn cpp_return_map<'f>(return_type: &TypeRef, name: &'f str, is_constructor: 
 			StrType::StdString(StrEnc::Text) | StrType::CvString(StrEnc::Text) => {
 				format!("ocvrs_create_string({name}.c_str())").into()
 			}
-			StrType::CharPtr => format!("ocvrs_create_string({name})").into(),
 			StrType::StdString(StrEnc::Binary) => format!("ocvrs_create_byte_string({name}.data(), {name}.size())").into(),
 			StrType::CvString(StrEnc::Binary) => format!("ocvrs_create_byte_string({name}.begin(), {name}.size())").into(),
+			StrType::CharPtr(StrEnc::Text) => format!("ocvrs_create_string({name})").into(),
+			StrType::CharPtr(StrEnc::Binary) => panic!("Returning a byte string via char* is not supported yet"),
 		};
 		(str_mk, false)
 	} else if return_type.extern_pass_kind().is_by_void_ptr() && !is_constructor {
 		let out = return_type.source().as_class().filter(|cls| cls.is_abstract()).map_or_else(
-			|| {
-				format!(
-					"new {typ}({name})",
-					typ = return_type.cpp_name(CppNameStyle::Reference),
-					name = name
-				)
-				.into()
-			},
+			|| format!("new {typ}({name})", typ = return_type.cpp_name(CppNameStyle::Reference)).into(),
 			|_| name.into(),
 		);
 		(out, false)

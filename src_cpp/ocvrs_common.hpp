@@ -12,6 +12,8 @@
 	#define CV_DNN_DONT_ADD_EXPERIMENTAL_NS
 	#define CV_DNN_DONT_ADD_INLINE_NS
 #endif
+
+#include <memory>
 #include <opencv2/core.hpp>
 
 #define OCVRS_ONLY_DEPENDENT_TYPES

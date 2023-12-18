@@ -15,12 +15,12 @@ use crate::debug::{DefinitionLocation, LocationName};
 use crate::element::ExcludeKind;
 use crate::entity::WalkAction;
 use crate::field::FieldDesc;
-use crate::settings::{ArgOverride, TypeRefFactory, RETURN_HINT};
+use crate::settings::{TypeRefFactory, RETURN_HINT};
 use crate::type_ref::{Constness, CppNameStyle, TypeRefDesc, TypeRefTypeHint};
 use crate::writer::rust_native::element::RustElement;
 use crate::{
-	settings, Class, DefaultElement, Element, EntityExt, Field, FieldTypeHint, GeneratedType, GeneratorEnv, IteratorExt,
-	NameDebug, NameStyle, StrExt, StringExt, TypeRef,
+	settings, Class, DefaultElement, Element, EntityExt, Field, GeneratedType, GeneratorEnv, IteratorExt, NameDebug, NameStyle,
+	StrExt, StringExt, TypeRef,
 };
 pub use func_id::FuncId;
 pub use kind::{FuncKind, OperatorKind, ReturnKind};
@@ -106,7 +106,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 						Field::new_desc(FieldDesc {
 							cpp_fullname: arg.cpp_name(CppNameStyle::Reference).into(),
 							type_ref,
-							type_hint: FieldTypeHint::None,
+							type_hint: TypeRefTypeHint::None,
 							default_value: arg.default_value().map(|v| v.into()),
 						})
 					},
@@ -445,23 +445,16 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 				| FuncKind::GenericFunction
 				| FuncKind::FunctionOperator(..)
 				| FuncKind::InstanceOperator(..) => {
-					let mut out = TypeRef::new_ext(
-						entity.get_result_type().expect("Can't get return type"),
-						TypeRefTypeHint::PrimitiveRefAsPointer,
-						None,
-						gen_env,
-					);
-					if let Some(over) = settings::ARGUMENT_OVERRIDE
+					let mut out = TypeRef::new(entity.get_result_type().expect("Can't get return type"), gen_env);
+					if let Some(type_hint) = settings::ARGUMENT_OVERRIDE
 						.get(&self.func_id())
 						.and_then(|x| x.get(RETURN_HINT))
 					{
-						out = out.with_type_hint(TypeRefTypeHint::ArgOverride(over.clone()))
+						out.set_type_hint(type_hint.clone());
+					} else if !out.is_char_ptr_string() {
+						out.set_type_hint(TypeRefTypeHint::PrimitivePtrAsRaw);
 					}
-					if let Some(type_ref) = out.as_reference() {
-						type_ref
-					} else {
-						out
-					}
+					out.as_reference().unwrap_or(out)
 				}
 			},
 			Self::Desc(desc) => desc.return_type_ref.clone(),
@@ -498,7 +491,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 	pub fn arguments(&self) -> Cow<[Field<'tu, 'ge>]> {
 		match self {
 			&Self::Clang { entity, gen_env, .. } => {
-				let arg_overrides = settings::ARGUMENT_OVERRIDE.get(&self.func_id());
+				let type_hints = settings::ARGUMENT_OVERRIDE.get(&self.func_id());
 				let mut slice_arg_idx = None;
 				let mut slice_len_arg_idx = None;
 				let mut out = self
@@ -506,9 +499,9 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 					.into_iter()
 					.enumerate()
 					.map(|(idx, a)| {
-						let arg_override = arg_overrides.and_then(|o| a.get_name().and_then(|arg_name| o.get(arg_name.as_str())));
-						if let Some(arg_override) = arg_override {
-							return Field::new_ext(a, FieldTypeHint::ArgOverride(arg_override.clone()), gen_env);
+						let type_hint = type_hints.and_then(|o| a.get_name().and_then(|arg_name| o.get(arg_name.as_str())));
+						if let Some(type_hint) = type_hint {
+							return Field::new_ext(a, type_hint.clone(), gen_env);
 						}
 						let out = Field::new(a, gen_env);
 						if slice_arg_idx.is_none() && out.can_be_slice_arg() {
@@ -523,14 +516,14 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 				if let (Some(slice_arg_idx), Some(slice_len_arg_idx)) = (slice_arg_idx, slice_len_arg_idx) {
 					let slice_arg = &mut out[slice_arg_idx];
 					let slice_arg_name = slice_arg.rust_name(NameStyle::ref_()).into_owned();
-					slice_arg.set_type_hint(FieldTypeHint::ArgOverride(ArgOverride::Slice));
+					slice_arg.set_type_hint(TypeRefTypeHint::Slice);
 					let slice_len_arg = &mut out[slice_len_arg_idx];
 					let divisor = if slice_len_arg.cpp_name(CppNameStyle::Declaration).contains("pair") {
 						2
 					} else {
 						1
 					};
-					slice_len_arg.set_type_hint(FieldTypeHint::ArgOverride(ArgOverride::LenForSlice(slice_arg_name, divisor)));
+					slice_len_arg.set_type_hint(TypeRefTypeHint::LenForSlice(slice_arg_name, divisor));
 				}
 				out.into()
 			}

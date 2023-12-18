@@ -7,7 +7,6 @@ use regex::bytes::{Captures, Regex};
 
 use crate::class::ClassDesc;
 use crate::function::Function;
-use crate::settings::ArgOverride;
 use crate::smart_ptr::{SmartPtr, SmartPtrDesc};
 use crate::tuple::Tuple;
 use crate::type_ref::{Constness, TemplateArg, TypeRef, TypeRefKind, TypeRefTypeHint};
@@ -383,10 +382,7 @@ impl<'tu> ClangTypeExt<'tu> for Type<'tu> {
 				let pointee_typeref = TypeRef::new_ext(pointee, type_hint.clone(), parent_entity, gen_env);
 				if pointee_typeref.as_function().is_some() {
 					pointee_typeref.kind().into_owned()
-				} else if matches!(
-					type_hint,
-					TypeRefTypeHint::ArgOverride(ArgOverride::Slice | ArgOverride::NullableSlice)
-				) {
+				} else if matches!(type_hint, TypeRefTypeHint::Slice | TypeRefTypeHint::NullableSlice) {
 					TypeRefKind::Array(pointee_typeref, None)
 				} else {
 					TypeRefKind::Pointer(pointee_typeref)

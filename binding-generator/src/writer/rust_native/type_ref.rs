@@ -2,7 +2,7 @@ use std::borrow::Cow;
 use std::fmt;
 use std::fmt::Write;
 
-use crate::type_ref::{Constness, Dir, ExternDir, FishStyle, NameStyle, StrEnc, StrType, TypeRef, TypeRefKind};
+use crate::type_ref::{Constness, Dir, ExternDir, FishStyle, NameStyle, StrEnc, StrType, TypeRef, TypeRefKind, TypeRefTypeHint};
 use crate::writer::rust_native::class::ClassExt;
 use crate::{IteratorExt, StringExt};
 
@@ -42,7 +42,6 @@ pub trait TypeRefExt {
 	fn cpp_arg_pre_call(&self, name: &str) -> String;
 	fn cpp_arg_func_call<'a>(&self, name: impl Into<Cow<'a, str>>) -> Cow<'a, str>;
 	fn cpp_arg_post_call(&self, name: &str) -> String;
-	fn cpp_arg_cleanup(&self, name: &str) -> String;
 }
 
 impl TypeRefExt for TypeRef<'_, '_> {
@@ -143,12 +142,18 @@ impl TypeRefExt for TypeRef<'_, '_> {
 	fn rust_arg_func_decl(&self, name: &str) -> String {
 		let typ = if let Some(dir) = self.as_string() {
 			match dir {
-				Dir::In(StrType::StdString(StrEnc::Text) | StrType::CvString(StrEnc::Text) | StrType::CharPtr) => "&str".into(),
-				Dir::In(StrType::StdString(StrEnc::Binary) | StrType::CvString(StrEnc::Binary)) => "&[u8]".into(),
-				Dir::Out(StrType::StdString(StrEnc::Text) | StrType::CvString(StrEnc::Text) | StrType::CharPtr) => {
-					"&mut String".into()
+				Dir::In(str_type) => if str_type.is_binary() {
+					"&[u8]"
+				} else {
+					"&str"
 				}
-				Dir::Out(StrType::StdString(StrEnc::Binary) | StrType::CvString(StrEnc::Binary)) => "&mut Vec<u8>".into(),
+				.into(),
+				Dir::Out(str_type) => if str_type.is_binary() {
+					"&mut Vec<u8>"
+				} else {
+					"&mut String"
+				}
+				.into(),
 			}
 		} else if self.is_input_array() {
 			"&impl core::ToInputArray".into()
@@ -367,7 +372,7 @@ impl TypeRefExt for TypeRef<'_, '_> {
 					typ = elem.rust_extern(ExternDir::Contained),
 				)
 			} else {
-				let typ = if matches!(elem.as_string(), Some(Dir::Out(StrType::CharPtr))) {
+				let typ = if matches!(elem.as_string(), Some(Dir::Out(StrType::CharPtr(_)))) {
 					// kind of special casing for cv_startLoop_int__X__int__charXX__int_charXX, without that
 					// argv is treated as array of output arguments and it doesn't seem to be meant this way
 					format!("*{cnst}c_char", cnst = elem.inherent_constness().rust_qual_ptr()).into()
@@ -471,8 +476,17 @@ impl TypeRefExt for TypeRef<'_, '_> {
 			Some(Dir::Out(StrType::CvString(_))) => {
 				format!("cv::String {name}_out")
 			}
-			Some(Dir::Out(StrType::CharPtr)) => {
-				format!("char* {name}_out = new char[1024]()")
+			Some(Dir::Out(StrType::CharPtr(str_enc))) => {
+				let len = if matches!(str_enc, StrEnc::Binary) {
+					if let TypeRefTypeHint::StringAsBytes(Some(len_arg_name)) = self.type_hint() {
+						len_arg_name.as_str()
+					} else {
+						"1024"
+					}
+				} else {
+					"1024"
+				};
+				format!("std::unique_ptr<char[]> {name}_out = std::make_unique<char[]>({len})")
 			}
 			Some(Dir::In(_)) | None => "".to_string(),
 		}
@@ -483,12 +497,18 @@ impl TypeRefExt for TypeRef<'_, '_> {
 
 		match self.as_string() {
 			Some(Dir::Out(str_type)) => {
-				let ptr = if str_type != StrType::CharPtr && self.as_pointer().is_some() {
-					"&"
-				} else {
-					""
-				};
-				return format!("{ptr}{name}_out").into();
+				return match str_type {
+					StrType::StdString(_) | StrType::CvString(_) => {
+						let ptr = if self.as_pointer().is_some() {
+							"&"
+						} else {
+							""
+						};
+						format!("{ptr}{name}_out")
+					}
+					StrType::CharPtr(_) => format!("{name}_out.get()"),
+				}
+				.into();
 			}
 			Some(Dir::In(StrType::StdString(_))) => {
 				return format!("std::string({name})").into();
@@ -496,7 +516,7 @@ impl TypeRefExt for TypeRef<'_, '_> {
 			Some(Dir::In(StrType::CvString(_))) => {
 				return format!("cv::String({name})").into();
 			}
-			Some(Dir::In(StrType::CharPtr)) | None => {}
+			Some(Dir::In(StrType::CharPtr(_))) | None => {}
 		}
 		if self.is_by_move() {
 			return format!("std::move(*{name})").into();
@@ -519,27 +539,24 @@ impl TypeRefExt for TypeRef<'_, '_> {
 			Some(Dir::Out(StrType::StdString(StrEnc::Text) | StrType::CvString(StrEnc::Text))) => {
 				format!("*{name} = ocvrs_create_string({name}_out.c_str())")
 			}
-			Some(Dir::Out(StrType::CharPtr)) => {
-				format!("*{name} = ocvrs_create_string({name}_out)")
-			}
 			Some(Dir::Out(StrType::StdString(StrEnc::Binary))) => {
 				format!("*{name} = ocvrs_create_byte_string({name}_out.data(), {name}_out.size())")
 			}
 			Some(Dir::Out(StrType::CvString(StrEnc::Binary))) => {
 				format!("*{name} = ocvrs_create_byte_string({name}_out.begin(), {name}_out.size())")
 			}
+			Some(Dir::Out(StrType::CharPtr(StrEnc::Text))) => {
+				format!("*{name} = ocvrs_create_string({name}_out.get())")
+			}
+			Some(Dir::Out(StrType::CharPtr(StrEnc::Binary))) => {
+				if let TypeRefTypeHint::StringAsBytes(Some(len_arg_name)) = self.type_hint() {
+					format!("*{name} = ocvrs_create_byte_string({name}_out.get(), {len_arg_name})")
+				} else {
+					panic!("Output argument of type `char*` with binary encoding must have `len` argument specified")
+				}
+			}
 			Some(Dir::In(_)) | None => "".to_string(),
 		}
-	}
-
-	// we need cleanup as a separate step from post_call because in cv_ocl_convertTypeStr_int_int_int_charX the
-	// return value is actually one of the arguments and if we free it (in post_call phase) before converting
-	// to string (in return statement) it will result in UB
-	fn cpp_arg_cleanup(&self, name: &str) -> String {
-		if let Some(Dir::Out(StrType::CharPtr)) = self.as_string() {
-			return format!("delete[] {name}_out");
-		}
-		"".to_string()
 	}
 }
 

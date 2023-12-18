@@ -28,7 +28,7 @@ pub use element::{is_opencv_path, opencv_module_from_path, DefaultElement, Eleme
 use entity::dbg_clang_entity;
 pub use entity::{EntityExt, WalkAction, WalkResult};
 pub use enumeration::Enum;
-use field::{Field, FieldTypeHint};
+use field::Field;
 pub use func::{Func, FuncId, FuncTypeHint};
 use function::Function;
 pub use generator::{GeneratedType, Generator, GeneratorVisitor};

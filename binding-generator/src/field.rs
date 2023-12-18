@@ -11,22 +11,16 @@ use clang::{Entity, EntityKind, EntityVisitResult};
 use crate::comment::strip_doxygen_comment_markers;
 use crate::debug::{DefinitionLocation, LocationName, NameDebug};
 use crate::element::ExcludeKind;
-use crate::settings::{ArgOverride, ARGUMENT_NAMES_USERDATA};
+use crate::settings::ARGUMENT_NAMES_USERDATA;
 use crate::type_ref::{Constness, CppNameStyle, TypeRef, TypeRefKind, TypeRefTypeHint};
 use crate::{constant, DefaultElement, Element, GeneratorEnv, StrExt};
-
-#[derive(Clone, Debug, PartialEq)]
-pub enum FieldTypeHint {
-	None,
-	ArgOverride(ArgOverride),
-}
 
 /// Represents a field of a struct or a class or a function argument. Basically a name + type.
 #[derive(Clone)]
 pub enum Field<'tu, 'ge> {
 	Clang {
 		entity: Entity<'tu>,
-		type_hint: FieldTypeHint,
+		type_hint: TypeRefTypeHint,
 		gen_env: &'ge GeneratorEnv<'tu>,
 	},
 	Desc(Rc<FieldDesc<'tu, 'ge>>),
@@ -34,10 +28,10 @@ pub enum Field<'tu, 'ge> {
 
 impl<'tu, 'ge> Field<'tu, 'ge> {
 	pub fn new(entity: Entity<'tu>, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
-		Self::new_ext(entity, FieldTypeHint::None, gen_env)
+		Self::new_ext(entity, TypeRefTypeHint::None, gen_env)
 	}
 
-	pub fn new_ext(entity: Entity<'tu>, type_hint: FieldTypeHint, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
+	pub fn new_ext(entity: Entity<'tu>, type_hint: TypeRefTypeHint, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
 		Self::Clang {
 			entity,
 			type_hint,
@@ -49,20 +43,28 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 		Self::Desc(Rc::new(desc))
 	}
 
-	pub fn type_hint(&self) -> &FieldTypeHint {
+	pub fn type_hint(&self) -> &TypeRefTypeHint {
 		match self {
 			Self::Clang { type_hint, .. } => type_hint,
 			Self::Desc(desc) => &desc.type_hint,
 		}
 	}
 
-	pub fn set_type_hint(&mut self, type_hint: FieldTypeHint) {
+	pub fn set_type_hint(&mut self, type_ref_type_hint: TypeRefTypeHint) {
 		match self {
 			Self::Clang {
-				type_hint: old_type_hint,
+				type_hint: self_type_hint,
 				..
-			} => *old_type_hint = type_hint,
-			Self::Desc(desc) => Rc::make_mut(desc).type_hint = type_hint,
+			} => {
+				if *self_type_hint != type_ref_type_hint {
+					*self_type_hint = type_ref_type_hint;
+				}
+			}
+			Self::Desc(desc) => {
+				if desc.type_hint != type_ref_type_hint {
+					Rc::make_mut(desc).type_hint = type_ref_type_hint;
+				}
+			}
 		}
 	}
 
@@ -74,19 +76,16 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 				gen_env,
 				..
 			} => {
-				let type_hint = match type_hint {
-					FieldTypeHint::ArgOverride(over) => TypeRefTypeHint::ArgOverride(over.clone()),
-					_ => {
-						let default_value_string = self
-							.default_value()
-							.map_or(false, |def| def.contains(|c| c == '"' || c == '\''));
-						if default_value_string {
-							TypeRefTypeHint::ArgOverride(ArgOverride::CharAsRustChar)
-						} else {
-							TypeRefTypeHint::None
-						}
+				let type_hint = type_hint.clone().something_or_else(|| {
+					let default_value_string = self
+						.default_value()
+						.map_or(false, |def| def.contains(|c| c == '"' || c == '\''));
+					if default_value_string {
+						TypeRefTypeHint::CharAsRustChar
+					} else {
+						TypeRefTypeHint::None
 					}
-				};
+				});
 				Cow::Owned(TypeRef::new_ext(
 					entity.get_type().expect("Can't get type"),
 					type_hint,
@@ -168,7 +167,7 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 	}
 
 	pub fn as_slice_len(&self) -> Option<(&str, usize)> {
-		if let FieldTypeHint::ArgOverride(ArgOverride::LenForSlice(ptr_arg, len_div)) = self.type_hint() {
+		if let TypeRefTypeHint::LenForSlice(ptr_arg, len_div) = self.type_hint() {
 			Some((ptr_arg.as_str(), *len_div))
 		} else {
 			None
@@ -244,7 +243,7 @@ impl fmt::Debug for Field<'_, '_> {
 pub struct FieldDesc<'tu, 'ge> {
 	pub cpp_fullname: Rc<str>,
 	pub type_ref: TypeRef<'tu, 'ge>,
-	pub type_hint: FieldTypeHint,
+	pub type_hint: TypeRefTypeHint,
 	pub default_value: Option<Rc<str>>,
 }
 
@@ -253,7 +252,7 @@ impl<'tu, 'ge> FieldDesc<'tu, 'ge> {
 		Self {
 			cpp_fullname: name.into(),
 			type_ref,
-			type_hint: FieldTypeHint::None,
+			type_hint: TypeRefTypeHint::None,
 			default_value: None,
 		}
 	}

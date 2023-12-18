@@ -12,7 +12,7 @@ use crate::comment::strip_doxygen_comment_markers;
 use crate::debug::{DefinitionLocation, LocationName};
 use crate::element::ExcludeKind;
 use crate::entity::{WalkAction, WalkResult};
-use crate::field::{FieldDesc, FieldTypeHint};
+use crate::field::FieldDesc;
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, FuncRustExtern, ReturnKind};
 use crate::type_ref::{Constness, CppNameStyle, StrEnc, StrType, TypeRef, TypeRefDesc, TypeRefTypeHint};
 use crate::writer::rust_native::element::RustElement;
@@ -406,10 +406,10 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 				out.extend(fields.flat_map(|fld| {
 					iter::from_fn({
 						let doc_comment = Rc::from(fld.doc_comment());
-						let fld_type_ref = fld
-							.type_ref()
-							.into_owned()
-							.with_type_hint(TypeRefTypeHint::PrimitiveRefAsPointer);
+						let mut fld_type_ref = fld.type_ref().into_owned();
+						if !fld_type_ref.is_char_ptr_string() {
+							fld_type_ref.set_type_hint(TypeRefTypeHint::PrimitivePtrAsRaw);
+						}
 						let fld_type_ref_return_as_naked = fld_type_ref.return_as_naked();
 						let fld_const = fld.constness();
 						let passed_by_ref = fld_type_ref.can_return_as_direct_reference();
@@ -501,7 +501,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 								arguments: Rc::new([Field::new_desc(FieldDesc {
 									cpp_fullname: "val".into(),
 									type_ref: fld_type_ref.with_inherent_constness(Constness::Const),
-									type_hint: FieldTypeHint::None,
+									type_hint: TypeRefTypeHint::None,
 									default_value: fld.default_value().map(|v| v.into()),
 								})]),
 								return_kind: ReturnKind::InfallibleNaked,
