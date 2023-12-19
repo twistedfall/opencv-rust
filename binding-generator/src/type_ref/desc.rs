@@ -3,7 +3,7 @@ use std::rc::Rc;
 use clang::{Entity, EntityKind, Type, TypeKind};
 use once_cell::sync::Lazy;
 use once_cell::unsync::Lazy as UnsyncLazy;
-use regex::{Captures, Regex};
+use regex::bytes::{Captures, Regex};
 
 use crate::class::ClassDesc;
 use crate::function::Function;
@@ -525,7 +525,8 @@ impl<'tu> ClangTypeExt<'tu> for Type<'tu> {
 					.get_declaration()
 					.and_then(|d| d.get_display_name())
 					.unwrap_or_else(|| self.get_display_name());
-				let generic_args: UnsyncLazy<Option<Captures>, _> = UnsyncLazy::new(|| TYPE_EXTRACT.captures(&display_name));
+				let generic_args: UnsyncLazy<Option<Captures>, _> =
+					UnsyncLazy::new(|| TYPE_EXTRACT.captures(display_name.as_bytes()));
 				args
 					.into_iter()
 					.enumerate()
@@ -534,7 +535,9 @@ impl<'tu> ClangTypeExt<'tu> for Type<'tu> {
 							TemplateArg::Typename(TypeRef::new(type_ref, gen_env))
 						} else {
 							if let Some(generic_args) = &*generic_args {
-								generic_args.get(i + 1).map(|m| TemplateArg::Constant(m.as_str().to_string()))
+								generic_args
+									.get(i + 1)
+									.map(|m| TemplateArg::Constant(String::from_utf8_lossy(m.as_bytes()).into_owned()))
 							} else {
 								None
 							}

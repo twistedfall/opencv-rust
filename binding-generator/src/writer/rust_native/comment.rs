@@ -3,7 +3,7 @@ use std::fmt::Write;
 
 use once_cell::sync::Lazy;
 use percent_encoding::{utf8_percent_encode, NON_ALPHANUMERIC};
-use regex::Regex;
+use regex::bytes::Regex;
 
 use crate::field::Field;
 use crate::func::FuncKind;

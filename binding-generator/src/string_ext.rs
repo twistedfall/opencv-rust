@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use std::iter;
 
 use once_cell::sync::Lazy;
-use regex::{CaptureLocations, Regex};
+use regex::bytes::{CaptureLocations, Regex};
 
 use crate::CppNameStyle;
 
@@ -124,7 +124,7 @@ impl StringExt for String {
 			})
 		} else {
 			let mut count = 0;
-			while let Some((start_idx, end_idx)) = from.find_at(self, idx).map(|m| (m.start(), m.end())) {
+			while let Some((start_idx, end_idx)) = from.find_at(self.as_bytes(), idx).map(|m| (m.start(), m.end())) {
 				if start_idx == end_idx {
 					return false;
 				}
@@ -152,7 +152,10 @@ impl StringExt for String {
 		let mut idx = 0;
 		let mut caps = from.capture_locations();
 		let mut count = 0;
-		while let Some((start_idx, end_idx)) = from.captures_read_at(&mut caps, self, idx).map(|m| (m.start(), m.end())) {
+		while let Some((start_idx, end_idx)) = from
+			.captures_read_at(&mut caps, self.as_bytes(), idx)
+			.map(|m| (m.start(), m.end()))
+		{
 			if start_idx == end_idx {
 				return false;
 			}
@@ -471,7 +474,7 @@ impl StrExt for str {
 			for line in tpl.lines() {
 				let line = &line[common_indent_len.min(line.len())..];
 				let mut last_idx = 0;
-				for cap in VARS.captures_iter(line) {
+				for cap in VARS.captures_iter(line.as_bytes()) {
 					if let (Some(whole), Some(var)) = (cap.get(0), cap.get(1)) {
 						if last_idx == 0 {
 							elems.push(Compiled::IntpLineStart(&line[last_idx..whole.start()]));
@@ -479,7 +482,7 @@ impl StrExt for str {
 							elems.push(Compiled::IntpLiteral(&line[last_idx..whole.start()]));
 						}
 						last_idx = whole.end();
-						elems.push(Compiled::Var(var.as_str()));
+						elems.push(Compiled::Var(&line[var.start()..var.end()]));
 					}
 				}
 				if last_idx == 0 {
