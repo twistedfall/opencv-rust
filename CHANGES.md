@@ -1,3 +1,6 @@
+* 0.88.5
+  * Adjust to the upcoming changes in OpenCV (fixes https://github.com/twistedfall/opencv-rust/issues/518).
+
 * 0.88.4
   * More fixes for clang 17 (kudos to PaulWagener).
 
