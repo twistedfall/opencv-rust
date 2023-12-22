@@ -1,4 +1,5 @@
 use std::ffi::c_void;
+use std::mem;
 
 use matches::assert_matches;
 
@@ -32,7 +33,7 @@ fn mat_create() -> Result<()> {
 	assert_eq!(7, *mat.at_2d::<u16>(0, 0)?);
 	assert_eq!(7, *mat.at_2d::<u16>(3, 3)?);
 	assert_eq!(7, *mat.at_2d::<u16>(9, 9)?);
-	mat.release()?;
+	unsafe { mat.release()? };
 	assert!(!mat.is_allocated());
 	assert!(mat.data().is_null());
 	assert_eq!(Size::new(0, 0), mat.size()?);
@@ -172,8 +173,8 @@ fn mat_at_1d() -> Result<()> {
 	let s: Vec<Vec<f32>> = vec![vec![1., 2., 3.], vec![4., 5., 6.], vec![7., 8., 9.]];
 
 	{
-		let mat = Mat::from_slice_2d(&s)?;
-		let mut mat = mat.reshape(1, 1)?;
+		let mut mat = Mat::from_slice_2d(&s)?;
+		let mut mat = mat.reshape_mut(1, 1)?;
 		assert_eq!(1, mat.rows());
 		assert_eq!(9, mat.cols());
 		assert_matches!(
@@ -212,8 +213,8 @@ fn mat_at_1d() -> Result<()> {
 	}
 
 	{
-		let mat = Mat::from_slice_2d(&s)?;
-		let mut mat = mat.reshape(1, 9)?;
+		let mut mat = Mat::from_slice_2d(&s)?;
+		let mut mat = mat.reshape_mut(1, 9)?;
 		assert_eq!(9, mat.rows());
 		assert_eq!(1, mat.cols());
 		assert_matches!(
@@ -469,7 +470,7 @@ fn mat_vec() -> Result<()> {
 fn mat_continuous() -> Result<()> {
 	let s: Vec<Vec<f32>> = vec![vec![1., 2., 3.], vec![4., 5., 6.], vec![7., 8., 9.]];
 
-	let mat = Mat::from_slice_2d(&s)?;
+	let mut mat = Mat::from_slice_2d(&s)?;
 
 	{
 		let sub_mat_non_cont = Mat::roi(&mat, Rect::new(1, 1, 2, 2))?;
@@ -521,7 +522,7 @@ fn mat_continuous() -> Result<()> {
 	}
 
 	{
-		let mut sub_mat_non_cont = Mat::roi(&mat, Rect::new(1, 1, 1, 2))?;
+		let mut sub_mat_non_cont = Mat::roi_mut(&mut mat, Rect::new(1, 1, 1, 2))?;
 		assert!(!sub_mat_non_cont.is_continuous());
 		assert_matches!(
 			sub_mat_non_cont.data_typed::<f32>(),
@@ -774,8 +775,8 @@ fn mat_iterator() -> Result<()> {
 	}
 
 	{
-		let mat = Mat::from_slice_2d(&[[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]])?;
-		let mut roi = Mat::roi(&mat, Rect::new(1, 1, 2, 2))?;
+		let mut mat = Mat::from_slice_2d(&[[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]])?;
+		let mut roi = Mat::roi_mut(&mut mat, Rect::new(1, 1, 2, 2))?;
 		for (pos, x) in roi.iter_mut::<i32>()? {
 			*x += pos.x + pos.y;
 		}
@@ -804,6 +805,61 @@ fn mat_locate_roi() -> Result<()> {
 	roi.locate_roi(&mut sz, &mut ofs)?;
 	assert_eq!(sz, Size::new(4, 1));
 	assert_eq!(ofs, Point::new(1, 0));
+	Ok(())
+}
+
+#[test]
+fn mat_roi() -> Result<()> {
+	let mut mat = Mat::from_slice(&[1, 2, 3, 4])?;
+	let roi = Mat::roi(&mat, Rect::new(1, 0, 2, 1))?;
+	assert_eq!(2, *roi.at(0)?);
+	assert_eq!(3, *roi.at(1)?);
+
+	let roi = mat.roi(Rect::new(1, 0, 2, 1))?;
+	assert_eq!(2, *roi.at(0)?);
+	assert_eq!(3, *roi.at(1)?);
+
+	let mut roi = Mat::roi_mut(&mut mat, Rect::new(1, 0, 2, 1))?;
+	assert_eq!(2, *roi.at(0)?);
+	assert_eq!(3, *roi.at(1)?);
+	*roi.at_mut(0)? = 10;
+	*roi.at_mut(1)? = 11;
+	assert_eq!(&[1, 10, 11, 4], mat.data_typed::<i32>()?);
+
+	let mut roi = mat.roi_mut(Rect::new(1, 0, 2, 1))?;
+	assert_eq!(10, *roi.at(0)?);
+	assert_eq!(11, *roi.at(1)?);
+	*roi.at_mut(0)? = 20;
+	*roi.at_mut(1)? = 21;
+	assert_eq!(&[1, 20, 21, 4], mat.data_typed::<i32>()?);
+
+	Ok(())
+}
+
+#[test]
+fn mat_roi_2() -> Result<()> {
+	let mut mat = Mat::from_slice(&[1, 2, 3, 4])?;
+	let (mut roi1, mut roi2) = Mat::roi_2_mut(&mut mat, Rect::new(0, 0, 2, 1), Rect::new(2, 0, 2, 1))?;
+	assert_eq!(1, *roi1.at(0)?);
+	assert_eq!(2, *roi1.at(1)?);
+	assert_eq!(3, *roi2.at(0)?);
+	assert_eq!(4, *roi2.at(1)?);
+
+	mem::swap(roi1.at_mut::<i32>(0)?, roi2.at_mut::<i32>(0)?);
+	mem::swap(roi1.at_mut::<i32>(1)?, roi2.at_mut::<i32>(1)?);
+	assert_eq!(3, *mat.at(0)?);
+	assert_eq!(4, *mat.at(1)?);
+	assert_eq!(1, *mat.at(2)?);
+	assert_eq!(2, *mat.at(3)?);
+
+	assert_matches!(
+		Mat::roi_2_mut(&mut mat, Rect::new(0, 0, 3, 1), Rect::new(2, 0, 2, 1)),
+		Err(Error {
+			code: core::StsBadArg,
+			..
+		})
+	);
+
 	Ok(())
 }
 
@@ -980,5 +1036,19 @@ fn mat_custom_data_type() -> Result<()> {
 	let data = m.data_typed::<A>()?;
 	assert!(!data.is_empty());
 	assert!(data.iter().all(|el| el.a == -10 && el.b == 20));
+	Ok(())
+}
+
+#[test]
+fn mat_reshape() -> Result<()> {
+	let mut mat = Mat::from_slice(&[1, 2, 3, 4, 5, 6])?;
+
+	let mut mat2 = mat.reshape_mut(1, 2)?;
+	assert_eq!(mat2.cols(), 3);
+	assert_eq!(mat2.rows(), 2);
+	*mat2.at_2d_mut(1, 0)? = 10;
+
+	assert_eq!(&[1, 2, 3, 10, 5, 6], mat2.data_typed::<i32>()?);
+
 	Ok(())
 }

@@ -12,11 +12,15 @@ pub static FUNC_EXCLUDE: Lazy<HashSet<&str>> = Lazy::new(|| {
 		"cv_Mat_at_const_VecLint__cnGR", // fixme: due to FuncId only taking into account arg name we generate extra Mat::at with VecN args
 		"cv_Mat_at_const_const_VecLint__cnGR", // fixme: due to FuncId only taking into account arg name we generate extra Mat::at with VecN args
 		"cv_Mat_copySize_const_MatR",          // internal function
+		"cv_Mat_operator___const_const_RangeX", // duplicate of cv_Mat_operator___const_const_vectorLRangeGR, but with pointers
 		"cv_Mat_propStep_const_MatStep",       // MatStep type prevents assignment
 		"cv_Mat_push_back__const_voidX",       // internal method
+		"cv_Mat_operatorST_const_MatR",        // unsafe with the safe version that moves
 		"cv_UMat_UMat_const_UMatR_const_RangeX", // duplicate of cv_UMat_UMat_UMat_VectorOfRange, but with pointers
 		"cv_UMat_copySize_const_UMatR",        // internal function
+		"cv_UMat_operator___const_const_RangeX", // duplicate of cv_UMat_operator___const_const_vectorLRangeGR, but with pointers
 		"cv_UMat_propStep_const_MatStep",      // MatStep type prevents assignment
+		"cv_RNG_MT19937_operator__",           // the same as calling to_u32() or next()
 		"cv_addImpl_int_const_charX",
 		"cv_calcCovarMatrix_const_MatX_int_MatR_MatR_int_int", // duplicate of cv_calcCovarMatrix_const__InputArrayR_const__OutputArrayR_const__InputOutputArrayR_int_int, but with pointers
 		"cv_cv_abs_short",
@@ -33,6 +37,7 @@ pub static FUNC_EXCLUDE: Lazy<HashSet<&str>> = Lazy::new(|| {
 		"cv_setUseCollection_bool",
 		"cv_useCollection",
 		"cv_vconcat_const_MatX_size_t_const__OutputArrayR", // duplicate of cv_vconcat_VectorOfMat_Mat, but with pointers
+		"cv_Mat_Mat_MatRR",                                 // Mat::copy that takes arg by value
 		// ### cudaimgproc ###
 		"cv_cuda_histEven_const__InputArrayR_GpuMatXX_intXX_intXX_intXX_StreamR", // slice of boxed objects
 		"cv_cuda_histRange_const__InputArrayR_GpuMatXX_const_GpuMatXX_StreamR",   // slice of boxed objects

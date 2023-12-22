@@ -3,11 +3,12 @@ use std::ffi::c_void;
 use std::fmt;
 use std::marker::PhantomData;
 
+use crate::boxed_ref::{BoxedRef, BoxedRefMut};
 use crate::core::{
 	Mat, MatTrait, MatTraitConst, MatTraitConstManual, MatTraitManual, ToInputArray, ToInputOutputArray, ToOutputArray,
 	_InputArray, _InputOutputArray, _OutputArray,
 };
-use crate::traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer, OpenCVTypeExternContainerMove};
+use crate::traits::Boxed;
 use crate::{Error, Result};
 
 use super::{match_dims, match_format, match_is_continuous, match_total, DataType};
@@ -130,63 +131,22 @@ impl<T> Boxed for Mat_<T> {
 
 impl<T> ToInputArray for Mat_<T> {
 	#[inline]
-	fn input_array(&self) -> Result<_InputArray> {
+	fn input_array(&self) -> Result<BoxedRef<_InputArray>> {
 		self.inner.input_array()
 	}
 }
 
 impl<T> ToOutputArray for Mat_<T> {
 	#[inline]
-	fn output_array(&mut self) -> Result<_OutputArray> {
+	fn output_array(&mut self) -> Result<BoxedRefMut<_OutputArray>> {
 		self.inner.output_array()
 	}
 }
 
 impl<T> ToInputOutputArray for Mat_<T> {
 	#[inline]
-	fn input_output_array(&mut self) -> Result<_InputOutputArray> {
+	fn input_output_array(&mut self) -> Result<BoxedRefMut<_InputOutputArray>> {
 		self.inner.input_output_array()
-	}
-}
-
-impl<T> OpenCVType<'_> for Mat_<T> {
-	type Arg = Self;
-	type ExternReceive = *mut c_void;
-
-	#[inline]
-	unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self {
-		Self::from_raw(s)
-	}
-}
-
-impl<T> OpenCVTypeArg<'_> for Mat_<T> {
-	type ExternContainer = Self;
-
-	#[inline]
-	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
-		self
-	}
-}
-
-impl<T> OpenCVTypeExternContainer for Mat_<T> {
-	type ExternSend = *const c_void;
-	type ExternSendMut = *mut c_void;
-
-	#[inline]
-	fn opencv_as_extern(&self) -> Self::ExternSend {
-		self.as_raw()
-	}
-
-	#[inline]
-	fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
-		self.as_raw_mut()
-	}
-}
-
-impl<T> OpenCVTypeExternContainerMove for Mat_<T> {
-	#[inline]
-	fn opencv_into_extern(self) -> Self::ExternSendMut {
-		self.into_raw()
 	}
 }
 

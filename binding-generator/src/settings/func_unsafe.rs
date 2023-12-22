@@ -46,3 +46,6 @@ pub static FUNC_UNSAFE: Lazy<HashSet<FuncId>> = Lazy::new(|| {
 		FuncId::new_mut("cv::cuda::GpuMat::setDefaultAllocator", ["allocator"]), // fixme, should take 'static
 	])
 });
+
+// fixme, covers mat from gpumat which it shouldn't
+// FuncId::new_mut("cv::Mat::Mat", ["m"]),

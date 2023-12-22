@@ -1,5 +1,7 @@
 use std::ffi::c_void;
 
+use crate::traits::{OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer, OpenCVTypeExternContainerMove};
+
 /// Trait for structures that are created on the C++ side, usually only the raw void pointer is stored to point to the allocated
 /// data on the heap.
 pub trait Boxed: Sized {
@@ -27,70 +29,69 @@ pub trait Boxed: Sized {
 	fn as_raw_mut(&mut self) -> *mut c_void;
 }
 
+impl<T: Boxed> OpenCVTypeArg<'_> for T {
+	type ExternContainer = Self;
+
+	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
+		self
+	}
+}
+
+impl<T: Boxed> OpenCVTypeExternContainer for T {
+	type ExternSend = *const c_void;
+	type ExternSendMut = *mut c_void;
+
+	#[inline]
+	fn opencv_as_extern(&self) -> Self::ExternSend {
+		self.as_raw()
+	}
+
+	#[inline]
+	fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
+		self.as_raw_mut()
+	}
+}
+
+impl<T: Boxed> OpenCVType<'_> for T {
+	type Arg = Self;
+	type ExternReceive = *mut c_void;
+
+	#[inline]
+	unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self {
+		Self::from_raw(s)
+	}
+}
+
+impl<T: Boxed> OpenCVTypeExternContainerMove for T {
+	#[inline]
+	fn opencv_into_extern(self) -> Self::ExternSendMut {
+		self.into_raw()
+	}
+}
+
 #[doc(hidden)]
 #[macro_export]
 macro_rules! opencv_type_boxed {
 	($type: ty) => {
 		impl $crate::traits::Boxed for $type {
 			#[inline]
-			unsafe fn from_raw(ptr: *mut ::std::ffi::c_void) -> Self {
+			unsafe fn from_raw(ptr: extern_receive!($type)) -> Self {
 				Self { ptr }
 			}
 
 			#[inline]
-			fn into_raw(self) -> *mut ::std::ffi::c_void {
+			fn into_raw(self) -> extern_send!(mut $type) {
 				::std::mem::ManuallyDrop::new(self).ptr
 			}
 
 			#[inline]
-			fn as_raw(&self) -> *const ::std::ffi::c_void {
+			fn as_raw(&self) -> extern_send!($type) {
 				self.ptr
 			}
 
 			#[inline]
-			fn as_raw_mut(&mut self) -> *mut ::std::ffi::c_void {
+			fn as_raw_mut(&mut self) -> extern_send!(mut $type) {
 				self.ptr
-			}
-		}
-
-		impl $crate::traits::OpenCVType<'_> for $type {
-			type Arg = Self;
-			type ExternReceive = *mut ::std::ffi::c_void;
-
-			#[inline]
-			unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self {
-				Self::from_raw(s)
-			}
-		}
-
-		impl $crate::traits::OpenCVTypeArg<'_> for $type {
-			type ExternContainer = Self;
-
-			#[inline]
-			fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
-				self
-			}
-		}
-
-		impl $crate::traits::OpenCVTypeExternContainer for $type {
-			type ExternSend = *const ::std::ffi::c_void;
-			type ExternSendMut = *mut ::std::ffi::c_void;
-
-			#[inline]
-			fn opencv_as_extern(&self) -> Self::ExternSend {
-				self.as_raw()
-			}
-
-			#[inline]
-			fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
-				self.as_raw_mut()
-			}
-		}
-
-		impl $crate::traits::OpenCVTypeExternContainerMove for $type {
-			#[inline]
-			fn opencv_into_extern(self) -> Self::ExternSendMut {
-				self.into_raw()
 			}
 		}
 	};

@@ -13,18 +13,19 @@ pub use func_id::FuncId;
 pub use kind::{FuncKind, OperatorKind, ReturnKind};
 use slice_arg_finder::SliceArgFinder;
 
+use crate::{
+	Class, debug, DefaultElement, Element, EntityExt, Field, GeneratedType, GeneratorEnv, IteratorExt, NameDebug, NameStyle,
+	settings, StrExt, StringExt, TypeRef,
+};
 use crate::comment::strip_doxygen_comment_markers;
 use crate::debug::{DefinitionLocation, LocationName};
 use crate::element::ExcludeKind;
 use crate::entity::WalkAction;
 use crate::field::FieldDesc;
-use crate::settings::{TypeRefFactory, RETURN_HINT};
+use crate::settings::{ARG_OVERRIDE_SELF, TypeRefFactory};
 use crate::type_ref::{Constness, CppNameStyle, TypeRefDesc, TypeRefTypeHint};
 use crate::writer::rust_native::element::RustElement;
-use crate::{
-	debug, settings, Class, DefaultElement, Element, EntityExt, Field, GeneratedType, GeneratorEnv, IteratorExt, NameDebug,
-	NameStyle, StrExt, StringExt, TypeRef,
-};
+use crate::writer::rust_native::type_ref::TypeRefExt;
 
 mod desc;
 mod func_id;
@@ -88,7 +89,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 
 	pub fn specialize(self, spec: &HashMap<&str, TypeRefFactory>) -> Self {
 		let specialized = |type_ref: &TypeRef| -> Option<TypeRef<'static, 'static>> {
-			if type_ref.is_generic() {
+			if type_ref.kind().is_generic() {
 				spec
 					.get(type_ref.source().cpp_name(CppNameStyle::Declaration).as_ref())
 					.map(|spec_type| type_ref.map(|_| spec_type().with_inherent_constness(type_ref.constness())))
@@ -108,7 +109,6 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 						Field::new_desc(FieldDesc {
 							cpp_fullname: arg.cpp_name(CppNameStyle::Reference).into(),
 							type_ref,
-							type_ref_type_hint: TypeRefTypeHint::None,
 							default_value: arg.default_value().map(|v| v.into()),
 						})
 					},
@@ -126,15 +126,16 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			.map(|s| s().cpp_name(CppNameStyle::Reference).into_owned())
 			.join(", ");
 		let mut desc = self.to_desc(InheritConfig::empty().kind().arguments().return_type_ref());
-		desc.kind = kind;
-		desc.type_hint = FuncTypeHint::Specialized;
-		desc.arguments = arguments;
-		desc.return_type_ref = specialized(&return_type_ref).unwrap_or(return_type_ref);
-		desc.cpp_body = FuncCppBody::ManualCall(format!("{{{{name}}}}<{generic}>({{{{args}}}})").into());
-		Self::new_desc(desc)
+		let desc_mut = Rc::make_mut(&mut desc);
+		desc_mut.kind = kind;
+		desc_mut.type_hint = FuncTypeHint::Specialized;
+		desc_mut.arguments = arguments;
+		desc_mut.return_type_ref = specialized(&return_type_ref).unwrap_or(return_type_ref);
+		desc_mut.cpp_body = FuncCppBody::ManualCall(format!("{{{{name}}}}<{generic}>({{{{args}}}})").into());
+		Self::Desc(desc)
 	}
 
-	pub(crate) fn to_desc(&self, skip_config: InheritConfig) -> FuncDesc<'tu, 'ge> {
+	pub(crate) fn to_desc(&self, skip_config: InheritConfig) -> Rc<FuncDesc<'tu, 'ge>> {
 		match self {
 			Func::Clang { .. } => {
 				let kind = if skip_config.kind {
@@ -167,7 +168,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 				} else {
 					self.file_line_name().location
 				};
-				FuncDesc {
+				Rc::new(FuncDesc {
 					kind,
 					type_hint: FuncTypeHint::None,
 					constness: self.constness(),
@@ -183,7 +184,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 					cpp_body: FuncCppBody::Auto,
 					rust_body: FuncRustBody::Auto,
 					rust_extern_definition: FuncRustExtern::Auto,
-				}
+				})
 			}
 			Func::Desc(desc) => {
 				let kind = if skip_config.kind {
@@ -201,23 +202,12 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 				} else {
 					desc.def_loc.clone()
 				};
-				FuncDesc {
-					kind,
-					type_hint: FuncTypeHint::None,
-					constness: desc.constness,
-					return_kind: desc.return_kind,
-					cpp_name: Rc::clone(&desc.cpp_name),
-					rust_custom_leafname: desc.rust_custom_leafname.as_ref().map(Rc::clone),
-					rust_module: Rc::clone(&desc.rust_module),
-					doc_comment: Rc::clone(&desc.doc_comment),
-					def_loc,
-					rust_generic_decls: Rc::new([]),
-					arguments: Rc::clone(&desc.arguments),
-					return_type_ref,
-					cpp_body: FuncCppBody::Auto,
-					rust_body: FuncRustBody::Auto,
-					rust_extern_definition: FuncRustExtern::Auto,
-				}
+				let mut desc = Rc::clone(desc);
+				let desc_mut = Rc::make_mut(&mut desc);
+				desc_mut.kind = kind;
+				desc_mut.return_type_ref = return_type_ref;
+				desc_mut.def_loc = def_loc;
+				desc
 			}
 		}
 	}
@@ -249,8 +239,8 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			Func::Clang { .. } => {
 				if inherit_config.any_enabled() {
 					let mut desc = self.to_desc(inherit_config);
-					transfer(&mut desc, ancestor, inherit_config);
-					Self::new_desc(desc);
+					transfer(Rc::make_mut(&mut desc), ancestor, inherit_config);
+					*self = Func::Desc(desc);
 				}
 			}
 			Func::Desc(desc) => transfer(Rc::make_mut(desc), ancestor, inherit_config),
@@ -383,7 +373,8 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 					Some(ExceptionSpecification::BasicNoexcept) | Some(ExceptionSpecification::Unevaluated)
 				) || settings::FORCE_INFALLIBLE.contains(&self.func_id());
 				if is_infallible {
-					if self.return_type_ref().return_as_naked() {
+					let return_type_ref = self.return_type_ref();
+					if return_type_ref.kind().return_as_naked(return_type_ref.type_hint()) {
 						ReturnKind::InfallibleNaked
 					} else {
 						ReturnKind::InfallibleViaArg
@@ -399,10 +390,10 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 	pub fn safety(&self) -> Safety {
 		Safety::from_unsafe(
 			settings::FUNC_UNSAFE.contains(&self.func_id())
-				|| self
-					.arguments()
-					.iter()
-					.any(|a| a.type_ref().is_rust_by_ptr() && !a.is_user_data()),
+				|| self.arguments().iter().any(|a| {
+					let type_ref = a.type_ref();
+					type_ref.kind().is_rust_by_ptr(type_ref.type_hint()) && !a.is_user_data()
+				}),
 		)
 	}
 
@@ -416,7 +407,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 	pub fn is_clone(&self) -> bool {
 		if self.cpp_name(CppNameStyle::Declaration) == "clone" {
 			if let Some(c) = self.kind().as_instance_method() {
-				!self.has_arguments() && self.return_type_ref().as_class().map_or(false, |r| r == *c)
+				!self.has_arguments() && self.return_type_ref().kind().as_class().map_or(false, |r| r.as_ref() == c)
 			} else {
 				false
 			}
@@ -434,31 +425,45 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 
 	pub fn return_type_ref(&self) -> TypeRef<'tu, 'ge> {
 		match self {
-			&Self::Clang { entity, gen_env, .. } => match self.kind().as_ref() {
-				FuncKind::Constructor(cls) => cls.type_ref(),
-				// `operator =` returns a reference to the `self` value and it's quite cumbersome to handle correctly
-				FuncKind::InstanceOperator(_, OperatorKind::Set) => TypeRefDesc::void(),
-				FuncKind::Function
-				| FuncKind::InstanceMethod(..)
-				| FuncKind::StaticMethod(..)
-				| FuncKind::FieldAccessor(..)
-				| FuncKind::ConversionMethod(..)
-				| FuncKind::GenericInstanceMethod(..)
-				| FuncKind::GenericFunction
-				| FuncKind::FunctionOperator(..)
-				| FuncKind::InstanceOperator(..) => {
-					let mut out = TypeRef::new(entity.get_result_type().expect("Can't get return type"), gen_env);
-					if let Some(type_hint) = settings::ARGUMENT_OVERRIDE
-						.get(&self.func_id())
-						.and_then(|x| x.get(RETURN_HINT))
-					{
-						out.set_type_hint(type_hint.clone());
-					} else if !out.is_char_ptr_string() {
-						out.set_type_hint(TypeRefTypeHint::PrimitivePtrAsRaw);
+			&Self::Clang { entity, gen_env, .. } => {
+				let mut out = match self.kind().as_ref() {
+					FuncKind::Constructor(cls) => cls.type_ref(),
+					// `operator =` returns a reference to the `self` value and it's quite cumbersome to handle correctly
+					FuncKind::InstanceOperator(_, OperatorKind::Set) => TypeRefDesc::void(),
+					FuncKind::Function
+					| FuncKind::InstanceMethod(..)
+					| FuncKind::StaticMethod(..)
+					| FuncKind::FieldAccessor(..)
+					| FuncKind::ConversionMethod(..)
+					| FuncKind::GenericInstanceMethod(..)
+					| FuncKind::GenericFunction
+					| FuncKind::FunctionOperator(..)
+					| FuncKind::InstanceOperator(..) => {
+						let out = TypeRef::new(entity.get_result_type().expect("Can't get return type"), gen_env);
+						out.kind().as_reference().map(|cow| cow.into_owned()).unwrap_or(out)
 					}
-					out.as_reference().unwrap_or(out)
+				};
+				if let Some(return_hint) = settings::RETURN_OVERRIDE.get(&self.func_id()) {
+					out.set_type_hint(return_hint.clone());
+					// if we're returning a BoxedRef then assign its mutability to the mutability of the borrowed argument
+					if let Some((borrow_arg_name, _)) = return_hint.as_boxed_as_ref() {
+						let borrow_arg_constness = if borrow_arg_name == ARG_OVERRIDE_SELF {
+							self.constness()
+						} else {
+							self
+								.arguments()
+								.iter()
+								.find(|arg| arg.cpp_name(CppNameStyle::Declaration) == *borrow_arg_name)
+								.map(|arg| arg.type_ref().constness())
+								.unwrap_or_else(|| panic!("BoxedAsRef refers to the non-existent argument name: {}", borrow_arg_name))
+						};
+						out.set_inherent_constness(borrow_arg_constness);
+					}
+				} else if !out.kind().is_char_ptr_string(out.type_hint()) {
+					out.set_type_hint(TypeRefTypeHint::PrimitivePtrAsRaw);
 				}
-			},
+				out
+			}
 			Self::Desc(desc) => desc.return_type_ref.clone(),
 		}
 	}
@@ -700,7 +705,12 @@ impl<'me> NameDebug<'me> for &'me Func<'_, '_> {
 	{
 		if *debug::EMIT_DEBUG {
 			let LocationName { location, name } = self.file_line_name();
-			format!("// {name} {func_id:?} {location}", func_id = self.func_id())
+			let render_lanes = self
+				.arguments()
+				.iter()
+				.map(|a| format!("{:?}", a.type_ref().render_lane()))
+				.join(", ");
+			format!("// {name}({render_lanes}) {func_id:?} {location}", func_id = self.func_id())
 		} else {
 			"".to_string()
 		}

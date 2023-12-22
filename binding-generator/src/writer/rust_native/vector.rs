@@ -3,16 +3,17 @@ use std::collections::HashMap;
 
 use once_cell::sync::Lazy;
 
+use crate::{Class, CompiledInterpolation, Func, IteratorExt, settings, StrExt, TypeRef, Vector};
 use crate::class::ClassDesc;
 use crate::field::{Field, FieldDesc};
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
+use crate::settings::ARG_OVERRIDE_SELF;
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle, TypeRefDesc, TypeRefTypeHint};
 use crate::writer::rust_native::RustStringExt;
-use crate::{settings, Class, CompiledInterpolation, Func, IteratorExt, StrExt, TypeRef, Vector};
 
 use super::element::RustElement;
-use super::type_ref::TypeRefExt;
 use super::RustNativeGeneratedElement;
+use super::type_ref::{Lifetime, TypeRefExt};
 
 impl RustElement for Vector<'_, '_> {
 	fn rust_module(&self) -> Cow<str> {
@@ -33,9 +34,9 @@ impl RustElement for Vector<'_, '_> {
 
 	fn rust_leafname(&self, fish_style: FishStyle) -> Cow<str> {
 		let mut inner_typ = self.element_type();
-		if let Some(inner) = inner_typ.as_pointer() {
+		if let Some(inner) = inner_typ.kind().as_pointer() {
 			// fixme, implement references properly, use MatRef/Mut type
-			inner_typ = inner;
+			inner_typ = inner.into_owned();
 		}
 		format!(
 			"Vector{fish}<{typ}>",
@@ -81,6 +82,8 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 
 		let mut inter_vars = HashMap::from([
 			("rust_localalias", rust_localalias.clone()),
+			("rust_as_raw_const", vec_type_ref.rust_as_raw_name(Constness::Const).into()),
+			("rust_as_raw_mut", vec_type_ref.rust_as_raw_name(Constness::Mut).into()),
 			("rust_full", self.rust_name(NameStyle::ref_())),
 			("inner_rust_full", element_type.rust_name(NameStyle::ref_())),
 		]);
@@ -89,7 +92,8 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		// Generate only the basic type alias and as_raw* methods for char, the rest will be handled by the generated Vector<u8> and
 		// Vector<i8> to handle the dualistic nature of C++ char on different platforms, see also `TypeRef::generated_types()`
 		// in binding-generator/src/type_ref.rs
-		if !element_type.base().is_char() {
+		if !element_type.base().kind().is_char() {
+			let element_kind = element_type.kind();
 			let vector_class = vector_class(&vec_type_ref);
 
 			let extern_new = method_new(vector_class.clone(), vec_type_ref.clone()).identifier();
@@ -100,7 +104,7 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 			let extern_shrink_to_fit = method_shrink_to_fit(vector_class.clone()).identifier();
 			let extern_reserve = method_reserve(vector_class.clone()).identifier();
 			let extern_remove = method_remove(vector_class.clone()).identifier();
-			let extern_swap = method_swap(vector_class.clone(), element_type.is_bool()).identifier();
+			let extern_swap = method_swap(vector_class.clone(), element_kind.is_bool()).identifier();
 			let extern_clear = method_clear(vector_class.clone()).identifier();
 			let extern_get = method_get(vector_class.clone(), element_type.clone()).identifier();
 			let extern_set = method_set(vector_class.clone(), element_type.clone()).identifier();
@@ -129,7 +133,7 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 			} else {
 				impls += &EXTERN_TPL.interpolate(&inter_vars);
 
-				if element_type.is_copy() && !element_type.is_bool() {
+				if element_kind.is_copy(element_type.type_hint()) && !element_kind.is_bool() {
 					let extern_clone = method_clone(vector_class.clone(), vec_type_ref.clone()).identifier();
 					let extern_data = method_data(vector_class.clone(), element_type.clone()).identifier();
 					let extern_data_mut = method_data_mut(vector_class.clone(), element_type.clone()).identifier();
@@ -144,7 +148,7 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 				} else {
 					inter_vars.insert(
 						"clone",
-						if element_type.is_clone() {
+						if element_kind.is_clone(element_type.type_hint()) {
 							"clone "
 						} else {
 							""
@@ -198,8 +202,9 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 fn extern_functions<'tu, 'ge>(vec: &Vector<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
 	let element_type = vec.element_type();
 	let mut out = Vec::with_capacity(7);
-	if !element_type.base().is_char() {
-		let element_is_bool = element_type.is_bool();
+	if !element_type.base().kind().is_char() {
+		let element_kind = element_type.kind();
+		let element_is_bool = element_kind.is_bool();
 		let vec_type_ref = vec.type_ref();
 		let vector_class = vector_class(&vec_type_ref);
 		out.extend([
@@ -218,7 +223,7 @@ fn extern_functions<'tu, 'ge>(vec: &Vector<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
 			method_get(vector_class.clone(), element_type.clone()),
 			method_set(vector_class.clone(), element_type.clone()),
 		]);
-		if element_type.is_copy() && !element_is_bool {
+		if element_kind.is_copy(element_type.type_hint()) && !element_is_bool {
 			out.push(method_clone(vector_class.clone(), vec_type_ref.clone()));
 			out.push(method_data(vector_class.clone(), element_type.clone()));
 			out.push(method_data_mut(vector_class.clone(), element_type.clone()));
@@ -449,7 +454,13 @@ fn method_set<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<'tu
 				element_type.clone().with_inherent_constness(Constness::Const),
 			)),
 		],
-		FuncCppBody::ManualCall(format!("(*instance)[index] = {}", element_type.cpp_arg_func_call("val")).into()),
+		FuncCppBody::ManualCall(
+			format!(
+				"(*instance)[index] = {}",
+				element_type.render_lane().to_dyn().cpp_arg_func_call("val")
+			)
+			.into(),
+		),
 		FuncRustBody::Auto,
 		TypeRefDesc::void(),
 	))
@@ -529,7 +540,9 @@ fn method_input_array<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge>
 		vec![],
 		FuncCppBody::ManualCall("cv::_InputArray(*instance)".into()),
 		FuncRustBody::Auto,
-		TypeRefDesc::cv_input_array(),
+		TypeRefDesc::cv_input_array()
+			.with_inherent_constness(Constness::Const)
+			.with_type_hint(TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided)),
 	))
 }
 
@@ -543,7 +556,9 @@ fn method_output_array<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge
 		vec![],
 		FuncCppBody::ManualCall("cv::_OutputArray(*instance)".into()),
 		FuncRustBody::Auto,
-		TypeRefDesc::cv_output_array(),
+		TypeRefDesc::cv_output_array()
+			.with_inherent_constness(Constness::Mut)
+			.with_type_hint(TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided)),
 	))
 }
 
@@ -557,6 +572,8 @@ fn method_input_output_array<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'t
 		vec![],
 		FuncCppBody::ManualCall("cv::_InputOutputArray(*instance)".into()),
 		FuncRustBody::Auto,
-		TypeRefDesc::cv_input_output_array(),
+		TypeRefDesc::cv_input_output_array()
+			.with_inherent_constness(Constness::Mut)
+			.with_type_hint(TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided)),
 	))
 }

@@ -9,7 +9,6 @@ pub use iter::{VectorIterator, VectorRefIterator};
 pub use vector_extern::{VectorElement, VectorExtern, VectorExternCopyNonBool};
 
 use crate::platform_types::size_t;
-use crate::traits::OpenCVTypeExternContainerMove;
 use crate::traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer};
 use crate::Result;
 
@@ -339,59 +338,6 @@ where
 	#[inline]
 	fn as_raw_mut(&mut self) -> *mut c_void {
 		self.ptr
-	}
-}
-
-impl<T: VectorElement> OpenCVType<'_> for Vector<T>
-where
-	Self: VectorExtern<T>,
-{
-	type Arg = Self;
-	type ExternReceive = *mut c_void;
-
-	#[inline]
-	unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self {
-		Self::from_raw(s)
-	}
-}
-
-impl<T: VectorElement> OpenCVTypeArg<'_> for Vector<T>
-where
-	Self: VectorExtern<T>,
-{
-	type ExternContainer = Self;
-
-	#[inline]
-	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
-		self
-	}
-}
-
-impl<T: VectorElement> OpenCVTypeExternContainer for Vector<T>
-where
-	Self: VectorExtern<T>,
-{
-	type ExternSend = *const c_void;
-	type ExternSendMut = *mut c_void;
-
-	#[inline]
-	fn opencv_as_extern(&self) -> Self::ExternSend {
-		self.as_raw()
-	}
-
-	#[inline]
-	fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
-		self.as_raw_mut()
-	}
-}
-
-impl<T: VectorElement> OpenCVTypeExternContainerMove for Vector<T>
-where
-	Self: VectorExtern<T>,
-{
-	#[inline]
-	fn opencv_into_extern(self) -> Self::ExternSendMut {
-		self.into_raw()
 	}
 }
 

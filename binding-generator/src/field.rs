@@ -5,15 +5,15 @@ use std::borrow::Cow;
 use std::fmt;
 use std::rc::Rc;
 
-use clang::token::TokenKind;
 use clang::{Entity, EntityKind, EntityVisitResult};
+use clang::token::TokenKind;
 
+use crate::{constant, DefaultElement, Element, GeneratorEnv, StrExt};
 use crate::comment::strip_doxygen_comment_markers;
 use crate::debug::{DefinitionLocation, LocationName, NameDebug};
 use crate::element::ExcludeKind;
 use crate::settings::{ARGUMENT_NAMES_MULTIPLE_SLICE, ARGUMENT_NAMES_NOT_SLICE, ARGUMENT_NAMES_USERDATA};
 use crate::type_ref::{Constness, CppNameStyle, TypeRef, TypeRefKind, TypeRefTypeHint};
-use crate::{constant, DefaultElement, Element, GeneratorEnv, StrExt};
 
 /// Represents a field of a struct or a class or a function argument. Basically a name + type.
 #[derive(Clone)]
@@ -43,10 +43,21 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 		Self::Desc(Rc::new(desc))
 	}
 
+	pub(crate) fn to_desc(&self) -> Rc<FieldDesc<'tu, 'ge>> {
+		match self {
+			Self::Clang { type_ref_type_hint, .. } => Rc::new(FieldDesc {
+				cpp_fullname: self.cpp_name(CppNameStyle::Reference).into(),
+				type_ref: self.type_ref().into_owned().with_type_hint(type_ref_type_hint.clone()), // todo: add an option to avoid inheriting type_ref
+				default_value: self.default_value().map(Rc::from),
+			}),
+			Self::Desc(desc) => Rc::clone(desc),
+		}
+	}
+
 	pub fn type_ref_type_hint(&self) -> &TypeRefTypeHint {
 		match self {
 			Self::Clang { type_ref_type_hint, .. } => type_ref_type_hint,
-			Self::Desc(desc) => &desc.type_ref_type_hint,
+			Self::Desc(desc) => desc.type_ref.type_hint(),
 		}
 	}
 
@@ -61,8 +72,8 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 				}
 			}
 			Self::Desc(desc) => {
-				if desc.type_ref_type_hint != type_ref_type_hint {
-					Rc::make_mut(desc).type_ref_type_hint = type_ref_type_hint;
+				if *desc.type_ref.type_hint() != type_ref_type_hint {
+					Rc::make_mut(desc).type_ref.set_type_hint(type_ref_type_hint);
 				}
 			}
 		}
@@ -97,9 +108,15 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 		}
 	}
 
+	pub fn with_type_ref(&self, type_ref: TypeRef<'tu, 'ge>) -> Self {
+		let mut desc = self.to_desc();
+		Rc::make_mut(&mut desc).type_ref = type_ref;
+		Self::Desc(desc)
+	}
+
 	pub fn constness(&self) -> Constness {
 		let type_ref = self.type_ref();
-		match type_ref.canonical().kind().as_ref() {
+		match type_ref.kind().canonical().as_ref() {
 			TypeRefKind::Array(_, _) | TypeRefKind::SmartPtr(_) => Constness::Mut,
 			TypeRefKind::Pointer(pointee) | TypeRefKind::Reference(pointee) => pointee.constness(),
 			TypeRefKind::Primitive(_, _)
@@ -149,14 +166,15 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 
 	/// whether argument is used for passing user data to callback
 	pub fn is_user_data(&self) -> bool {
-		ARGUMENT_NAMES_USERDATA.contains(self.cpp_name(CppNameStyle::Declaration).as_ref()) && self.type_ref().is_void_ptr()
+		ARGUMENT_NAMES_USERDATA.contains(self.cpp_name(CppNameStyle::Declaration).as_ref()) && self.type_ref().kind().is_void_ptr()
 	}
 
 	pub fn slice_arg_eligibility(&self) -> SliceArgEligibility {
 		self
 			.type_ref()
+			.kind()
 			.as_pointer()
-			.filter(|inner| inner.is_copy())
+			.filter(|inner| inner.kind().is_copy(inner.type_hint()))
 			.map_or(SliceArgEligibility::NotEligible, |_| {
 				let name = self.cpp_name(CppNameStyle::Declaration);
 				if ARGUMENT_NAMES_NOT_SLICE.contains(name.as_ref()) {
@@ -173,6 +191,7 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 		let name = self.cpp_name(CppNameStyle::Declaration);
 		let type_ref = self.type_ref();
 		type_ref
+			.kind()
 			.as_primitive()
 			.map_or(false, |(_, cpp)| cpp == "int" || cpp == "size_t")
 			&& (name.ends_with('s') && name.contains('n') && name != "thickness" // fixme: have to exclude thickness
@@ -180,14 +199,6 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 				|| name == "size"
 				|| name.ends_with("Size")
 				|| name == "len")
-	}
-
-	pub fn as_slice_len(&self) -> Option<(&[String], usize)> {
-		if let TypeRefTypeHint::LenForSlice(ptr_arg, len_div) = self.type_ref_type_hint() {
-			Some((ptr_arg.as_slice(), *len_div))
-		} else {
-			None
-		}
 	}
 }
 
@@ -259,7 +270,6 @@ impl fmt::Debug for Field<'_, '_> {
 pub struct FieldDesc<'tu, 'ge> {
 	pub cpp_fullname: Rc<str>,
 	pub type_ref: TypeRef<'tu, 'ge>,
-	pub type_ref_type_hint: TypeRefTypeHint,
 	pub default_value: Option<Rc<str>>,
 }
 
@@ -268,7 +278,6 @@ impl<'tu, 'ge> FieldDesc<'tu, 'ge> {
 		Self {
 			cpp_fullname: name.into(),
 			type_ref,
-			type_ref_type_hint: TypeRefTypeHint::None,
 			default_value: None,
 		}
 	}

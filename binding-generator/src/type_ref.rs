@@ -1,3 +1,4 @@
+use Cow::{Borrowed, Owned};
 use std::borrow::Cow;
 use std::fmt;
 use std::rc::Rc;
@@ -5,18 +6,19 @@ use std::rc::Rc;
 use clang::{Entity, Type};
 
 pub use desc::{ClangTypeExt, TypeRefDesc};
-pub use kind::TypeRefKind;
+pub use kind::{InputOutputArrayKind, TypeRefKind};
 pub use types::{
-	dbg_clang_type, Constness, CppNameStyle, Dir, ExternDir, ExternPassKind, FishStyle, NameStyle, StrEnc, StrType, TemplateArg,
+	Constness, CppNameStyle, dbg_clang_type, Dir, ExternDir, FishStyle, NameStyle, Nullability, StrEnc, StrType, TemplateArg,
 	TypeRefTypeHint,
 };
 
+use crate::{AbstractRefWrapper, ClassSimplicity, ExportConfig, settings};
+use crate::{Class, Element, GeneratedType, GeneratorEnv, SmartPtr, StringExt, Vector};
 use crate::class::{ClassDesc, TemplateKind};
 use crate::element::ExcludeKind;
 use crate::renderer::{CppExternReturnRenderer, CppRenderer, TypeRefRenderer};
 use crate::vector::VectorDesc;
-use crate::{settings, AbstractRefWrapper, ClassSimplicity, ExportConfig};
-use crate::{Class, Element, Function, GeneratedType, GeneratorEnv, SmartPtr, StringExt, Tuple, Typedef, Vector};
+use crate::writer::rust_native::type_ref::TypeRefExt;
 
 mod desc;
 mod kind;
@@ -59,35 +61,35 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	}
 
 	pub fn new_pointer(inner: TypeRef<'tu, 'ge>) -> Self {
-		Self::new_desc(TypeRefDesc::new(TypeRefKind::Pointer(inner)))
+		Self::new_desc(TypeRefDesc::new(TypeRefKind::Pointer(inner), Constness::Mut))
 	}
 
 	pub fn new_reference(inner: TypeRef<'tu, 'ge>) -> Self {
-		Self::new_desc(TypeRefDesc::new(TypeRefKind::Reference(inner)))
+		Self::new_desc(TypeRefDesc::new(TypeRefKind::Reference(inner), Constness::Mut))
 	}
 
 	pub fn new_rvalue_reference(inner: TypeRef<'tu, 'ge>) -> Self {
-		Self::new_desc(TypeRefDesc::new(TypeRefKind::RValueReference(inner)))
+		Self::new_desc(TypeRefDesc::new(TypeRefKind::RValueReference(inner), Constness::Mut))
 	}
 
 	pub fn new_class(cls: Class<'tu, 'ge>) -> Self {
-		Self::new_desc(TypeRefDesc::new(TypeRefKind::Class(cls)))
+		Self::new_desc(TypeRefDesc::new(TypeRefKind::Class(cls), Constness::Mut))
 	}
 
 	pub fn new_array(inner: TypeRef<'tu, 'ge>, size: Option<usize>) -> Self {
-		Self::new_desc(TypeRefDesc::new(TypeRefKind::Array(inner, size)))
+		Self::new_desc(TypeRefDesc::new(TypeRefKind::Array(inner, size), Constness::Mut))
 	}
 
 	pub fn new_vector(vector: Vector<'tu, 'ge>) -> Self {
-		Self::new_desc(TypeRefDesc::new(TypeRefKind::StdVector(vector)))
+		Self::new_desc(TypeRefDesc::new(TypeRefKind::StdVector(vector), Constness::Mut))
 	}
 
 	pub fn new_smartptr(smart_ptr: SmartPtr<'tu, 'ge>) -> Self {
-		Self::new_desc(TypeRefDesc::new(TypeRefKind::SmartPtr(smart_ptr)))
+		Self::new_desc(TypeRefDesc::new(TypeRefKind::SmartPtr(smart_ptr), Constness::Mut))
 	}
 
 	pub fn new_generic(name: impl Into<String>) -> Self {
-		Self::new_desc(TypeRefDesc::new(TypeRefKind::Generic(name.into())))
+		Self::new_desc(TypeRefDesc::new(TypeRefKind::Generic(name.into()), Constness::Mut))
 	}
 
 	/// Create a [TypeRef] from a textual C++ representation
@@ -95,9 +97,13 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	/// Correctness may vary, very few [TypeRefKind]s are supported.
 	pub fn guess(cpp_refname: &str, rust_module: impl Into<Rc<str>>) -> Self {
 		if let Some(element_cpprefname) = cpp_refname.strip_prefix("std::vector<").and_then(|s| s.strip_suffix('>')) {
-			TypeRef::new_desc(TypeRefDesc::new(TypeRefKind::StdVector(Vector::new_desc(VectorDesc::new(
-				Self::guess(element_cpprefname, rust_module),
-			)))))
+			TypeRef::new_desc(TypeRefDesc::new(
+				TypeRefKind::StdVector(Vector::new_desc(VectorDesc::new(Self::guess(
+					element_cpprefname,
+					rust_module,
+				)))),
+				Constness::Mut,
+			))
 		} else if let Some(primitive_typeref) = TypeRefDesc::try_primitive(cpp_refname) {
 			primitive_typeref
 		} else {
@@ -126,58 +132,23 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 	}
 
+	pub fn with_type_hint(self, type_hint: TypeRefTypeHint) -> Self {
+		let mut out = self;
+		out.set_type_hint(type_hint);
+		out
+	}
+
 	pub fn set_type_hint(&mut self, type_hint: TypeRefTypeHint) {
-		match self {
-			Self::Clang {
-				type_hint: self_type_hint,
-				..
-			} => {
-				if *self_type_hint != type_hint {
-					*self_type_hint = type_hint;
-				}
-			}
-			Self::Desc(desc) => {
-				if desc.type_hint != type_hint {
+		if *self.type_hint() != type_hint {
+			match self {
+				Self::Clang {
+					type_hint: old_type_hint,
+					..
+				} => *old_type_hint = type_hint,
+				Self::Desc(ref mut desc) => {
 					Rc::make_mut(desc).type_hint = type_hint;
 				}
 			}
-		}
-	}
-
-	pub fn with_type_hint(mut self, type_hint: TypeRefTypeHint) -> Self {
-		self.set_type_hint(type_hint);
-		self
-	}
-
-	pub fn with_inherent_constness(&self, constness: Constness) -> Self {
-		if self.inherent_constness() != constness {
-			match self {
-				Self::Clang {
-					type_ref,
-					type_hint,
-					parent_entity,
-					gen_env,
-				} => Self::new_desc(TypeRefDesc {
-					kind: type_ref.kind(type_hint.clone(), *parent_entity, gen_env),
-					inherent_constness: constness,
-					type_hint: type_hint.clone(),
-					template_specialization_args: type_ref.template_specialization_args(gen_env).into(),
-				}),
-				Self::Desc(desc) => {
-					let mut desc = (**desc).clone();
-					desc.inherent_constness = constness;
-					Self::Desc(Rc::new(desc))
-				}
-			}
-		} else {
-			self.clone()
-		}
-	}
-
-	pub fn clang_type(&self) -> Option<Type<'tu>> {
-		match self {
-			&TypeRef::Clang { type_ref, .. } => Some(type_ref),
-			TypeRef::Desc(_) => None,
 		}
 	}
 
@@ -188,8 +159,8 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 				type_hint,
 				parent_entity,
 				gen_env,
-			} => Cow::Owned(type_ref.kind(type_hint.clone(), *parent_entity, gen_env)),
-			Self::Desc(desc) => Cow::Borrowed(&desc.kind),
+			} => Owned(type_ref.kind(type_hint.clone(), *parent_entity, gen_env)),
+			Self::Desc(desc) => Borrowed(&desc.kind),
 		}
 	}
 
@@ -203,30 +174,34 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 
 	/// Like canonical(), but also removes indirection by pointer and reference
 	pub fn source(&self) -> TypeRef<'tu, 'ge> {
-		let canonical = self.canonical();
-		match canonical.kind().as_ref() {
+		match self.kind().as_ref() {
 			TypeRefKind::Pointer(inner) | TypeRefKind::Reference(inner) | TypeRefKind::RValueReference(inner) => inner.source(),
-			_ => canonical,
+			TypeRefKind::Typedef(tdef) => tdef.underlying_type_ref().source(),
+			_ => self.clone(),
 		}
 	}
 
 	/// Like source(), but also removes indirection by `Ptr`
 	pub fn source_smart(&self) -> TypeRef<'tu, 'ge> {
-		let source = self.source();
-		match source.kind().as_ref() {
+		match self.kind().as_ref() {
+			TypeRefKind::Pointer(inner) | TypeRefKind::Reference(inner) | TypeRefKind::RValueReference(inner) => {
+				inner.source_smart()
+			}
+			TypeRefKind::Typedef(tdef) => tdef.underlying_type_ref().source_smart(),
 			TypeRefKind::SmartPtr(ptr) => ptr.pointee().source_smart(),
-			_ => source,
+			_ => self.clone(),
 		}
 	}
 
 	/// Like source(), but digs down to the elements of arrays
 	pub fn base(&self) -> TypeRef<'tu, 'ge> {
-		let source = self.source();
-		match source.kind().as_ref() {
+		match self.kind().as_ref() {
+			TypeRefKind::Pointer(inner) | TypeRefKind::Reference(inner) | TypeRefKind::RValueReference(inner) => inner.base(),
+			TypeRefKind::Typedef(tdef) => tdef.underlying_type_ref().base(),
 			TypeRefKind::Array(inner, ..) => inner.base(),
 			TypeRefKind::StdVector(vec) => vec.element_type().base(),
 			TypeRefKind::SmartPtr(ptr) => ptr.pointee().base(),
-			_ => source,
+			_ => self.clone(),
 		}
 	}
 
@@ -237,7 +212,18 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 			TypeRefKind::Pointer(inner) => TypeRef::new_pointer(inner.map(f)),
 			TypeRefKind::Reference(inner) => TypeRef::new_reference(inner.map(f)),
 			TypeRefKind::RValueReference(inner) => TypeRef::new_rvalue_reference(inner.map(f)),
-			TypeRefKind::Array(element, size) => TypeRef::new_desc(TypeRefDesc::new(TypeRefKind::Array(element.map(f), *size))),
+			TypeRefKind::Array(element, size) => {
+				TypeRef::new_desc(TypeRefDesc::new(TypeRefKind::Array(element.map(f), *size), self.constness()))
+			}
+			_ => f(self),
+		}
+	}
+
+	/// Map the contained TypeRef inside `Pointer` and `Reference` variants, useful for changing constness
+	pub fn map_ptr_ref<'otu, 'oge>(&self, f: impl FnOnce(&TypeRef<'tu, 'ge>) -> TypeRef<'otu, 'oge>) -> TypeRef<'otu, 'oge> {
+		match self.kind().as_ref() {
+			TypeRefKind::Pointer(inner) => TypeRef::new_pointer(inner.map(f)),
+			TypeRefKind::Reference(inner) => TypeRef::new_reference(inner.map(f)),
 			_ => f(self),
 		}
 	}
@@ -255,7 +241,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 			TypeRefKind::Generic(_) | TypeRefKind::Ignored => ExcludeKind::Ignored,
 			TypeRefKind::StdVector(vec) => vec.exclude_kind(),
 			TypeRefKind::StdTuple(tuple) => tuple.exclude_kind(),
-			TypeRefKind::Array(inner, ..) => ExcludeKind::Included.with_is_ignored(|| !inner.is_copy()),
+			TypeRefKind::Array(inner, ..) => ExcludeKind::Included.with_is_ignored(|| !inner.kind().is_copy(inner.type_hint())),
 			TypeRefKind::Pointer(inner) | TypeRefKind::Reference(inner) | TypeRefKind::RValueReference(inner) => {
 				inner.exclude_kind()
 			}
@@ -274,10 +260,6 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 			TypeRefKind::Class(cls) => cls.template_kind(),
 			_ => TemplateKind::No,
 		}
-	}
-
-	pub fn is_generic(&self) -> bool {
-		matches!(self.base().kind().as_ref(), TypeRefKind::Generic(..))
 	}
 
 	pub fn constness(&self) -> Constness {
@@ -307,296 +289,33 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 	}
 
-	/// Returns Some((rust_name, cpp_name)) if canonical kind is primitive, None otherwise
-	pub fn as_primitive(&self) -> Option<(&'static str, &'static str)> {
-		match self.canonical().kind().as_ref() {
-			TypeRefKind::Primitive(rust, cpp) => Some((rust, cpp)),
-			_ => None,
-		}
-	}
-
-	pub fn is_enum(&self) -> bool {
-		matches!(self.canonical().kind().as_ref(), TypeRefKind::Enum(..))
-	}
-
-	pub fn as_string(&self) -> Option<Dir<StrType>> {
-		self.canonical().kind().as_string(self.type_hint())
-	}
-
-	pub fn is_std_string(&self) -> bool {
-		self.canonical().kind().is_std_string(self.type_hint())
-	}
-
-	pub fn is_cv_string(&self) -> bool {
-		self.canonical().kind().is_cv_string(self.type_hint())
-	}
-
-	pub fn is_char_ptr_string(&self) -> bool {
-		self.canonical().kind().is_char_ptr_string(self.type_hint())
-	}
-
-	pub fn is_input_array(&self) -> bool {
-		match self.kind().as_ref() {
-			TypeRefKind::Reference(inner) => inner.is_input_array(),
-			TypeRefKind::Class(cls) => cls.cpp_name(CppNameStyle::Reference) == "cv::_InputArray",
-			TypeRefKind::Typedef(tdef) => {
-				let cpp_refname = tdef.cpp_name(CppNameStyle::Reference);
-				cpp_refname == "cv::InputArray" || cpp_refname == "cv::InputArrayOfArrays"
-			}
-			_ => false,
-		}
-	}
-
-	pub fn is_output_array(&self) -> bool {
-		match self.kind().as_ref() {
-			TypeRefKind::Reference(inner) => inner.is_output_array(),
-			TypeRefKind::Class(cls) => cls.cpp_name(CppNameStyle::Reference) == "cv::_OutputArray",
-			TypeRefKind::Typedef(tdef) => {
-				let cpp_refname = tdef.cpp_name(CppNameStyle::Reference);
-				cpp_refname == "cv::OutputArray" || cpp_refname == "cv::OutputArrayOfArrays"
-			}
-			_ => false,
-		}
-	}
-
-	pub fn is_input_output_array(&self) -> bool {
-		match self.kind().as_ref() {
-			TypeRefKind::Reference(inner) => inner.is_input_output_array(),
-			TypeRefKind::Class(cls) => cls.cpp_name(CppNameStyle::Reference) == "cv::_InputOutputArray",
-			TypeRefKind::Typedef(tdef) => {
-				let cpp_refname = tdef.cpp_name(CppNameStyle::Reference);
-				cpp_refname == "cv::InputOutputArray" || cpp_refname == "cv::InputOutputArrayOfArrays"
-			}
-			_ => false,
-		}
-	}
-
-	pub fn is_void(&self) -> bool {
-		matches!(self.as_primitive(), Some((_, "void")))
-	}
-
-	pub fn is_bool(&self) -> bool {
-		matches!(self.as_primitive(), Some((_, "bool")))
-	}
-
-	pub fn is_char(&self) -> bool {
-		matches!(self.as_primitive(), Some((_, "char")))
-	}
-
-	pub fn is_rust_char(&self) -> bool {
-		matches!(self.type_hint(), TypeRefTypeHint::CharAsRustChar) && self.is_char()
-	}
-
-	pub fn is_void_ptr(&self) -> bool {
-		self.as_pointer().map_or(false, |inner| inner.is_void())
-	}
-
-	pub fn is_size_t(&self) -> bool {
-		self.as_primitive().map_or(false, |(_, cpp)| cpp == "size_t")
-	}
-
-	/// Returns true if the type is a slice (judging by the type_hint) and its element is C++ `void`
-	///
-	/// We want to present such cases as `&[u8]` on the Rust side.
-	pub fn is_void_slice(&self) -> bool {
-		self.as_variable_array().map_or(false, |inner| inner.is_void()) && matches!(self.type_hint(), TypeRefTypeHint::Slice)
-	}
-
-	pub fn as_pointer(&self) -> Option<TypeRef<'tu, 'ge>> {
-		if let TypeRefKind::Pointer(out) = self.canonical().kind().into_owned() {
-			Some(out)
-		} else {
-			None
-		}
-	}
-
-	pub fn as_reference(&self) -> Option<TypeRef<'tu, 'ge>> {
-		if let TypeRefKind::Reference(out) | TypeRefKind::RValueReference(out) = self.canonical().kind().into_owned() {
-			Some(out)
-		} else {
-			None
-		}
-	}
-
-	/// Some with inner type for types whose values are moved as per C++ function specification (denoted with &&)
-	pub fn as_by_move(&self) -> Option<TypeRef<'tu, 'ge>> {
-		if let TypeRefKind::RValueReference(inner) = self.canonical().kind().into_owned() {
-			Some(inner)
-		} else {
-			None
-		}
-	}
-
-	pub fn as_pointer_reference_move(&self) -> Option<TypeRef<'tu, 'ge>> {
-		match self.canonical().kind().into_owned() {
-			TypeRefKind::Pointer(inner) | TypeRefKind::Reference(inner) | TypeRefKind::RValueReference(inner) => Some(inner),
-			TypeRefKind::Primitive(_, _)
-			| TypeRefKind::Array(_, _)
-			| TypeRefKind::StdVector(_)
-			| TypeRefKind::StdTuple(_)
-			| TypeRefKind::SmartPtr(_)
-			| TypeRefKind::Class(_)
-			| TypeRefKind::Enum(_)
-			| TypeRefKind::Function(_)
-			| TypeRefKind::Typedef(_)
-			| TypeRefKind::Generic(_)
-			| TypeRefKind::Ignored => None,
-		}
-	}
-
-	pub fn is_copy(&self) -> bool {
-		match self.canonical().kind().as_ref() {
-			TypeRefKind::Primitive(_, _) | TypeRefKind::Enum(_) => true,
-			TypeRefKind::Class(cls) if cls.kind().is_simple() => true,
-			kind => kind.is_char_ptr_string(self.type_hint()),
-		}
-	}
-
-	pub fn is_clone(&self) -> bool {
-		self.is_copy()
-			|| match self.kind().as_ref() {
-				TypeRefKind::StdVector(vec) => vec.element_type().is_clone(),
-				TypeRefKind::Class(cls) => cls.has_explicit_clone() || cls.has_implicit_clone(),
-				_ => false,
-			}
-	}
-
-	/// True if a `TypeRef` has `std::fmt::Debug` implementation
-	pub fn is_debug(&self) -> bool {
-		match self.kind().as_ref() {
-			TypeRefKind::Primitive(..) | TypeRefKind::Class(_) | TypeRefKind::Enum(_) | TypeRefKind::SmartPtr(_) => true,
-			TypeRefKind::Array(elem, _) => elem.is_debug(),
-			TypeRefKind::StdVector(vec) => vec.element_type().is_debug(),
-			TypeRefKind::StdTuple(tuple) => tuple.elements().into_iter().all(|e| e.is_debug()),
-			TypeRefKind::Pointer(inner) | TypeRefKind::Reference(inner) | TypeRefKind::RValueReference(inner) => inner.is_debug(),
-			TypeRefKind::Function(_) | TypeRefKind::Generic(_) | TypeRefKind::Ignored => false,
-			TypeRefKind::Typedef(tdef) => tdef.underlying_type_ref().is_debug(),
-		}
-	}
-
-	pub fn is_nullable(&self) -> bool {
-		matches!(self.type_hint(), TypeRefTypeHint::NullableSlice | TypeRefTypeHint::Nullable)
-	}
-
-	pub fn as_smart_ptr(&self) -> Option<SmartPtr<'tu, 'ge>> {
-		if let TypeRefKind::SmartPtr(out) = self.canonical().kind().into_owned() {
-			Some(out)
-		} else {
-			None
-		}
-	}
-
-	pub fn as_class(&self) -> Option<Class<'tu, 'ge>> {
-		if let TypeRefKind::Class(out) = self.canonical().kind().into_owned() {
-			Some(out)
-		} else {
-			None
-		}
-	}
-
-	pub fn as_simple_class(&self) -> Option<Class<'tu, 'ge>> {
-		match self.canonical().kind().into_owned() {
-			TypeRefKind::Class(out) if out.kind().is_simple() => Some(out),
-			_ => None,
-		}
-	}
-
-	pub fn as_abstract_class_ptr(&self) -> Option<(TypeRef<'tu, 'ge>, Class<'tu, 'ge>)> {
-		if let Some(pointee) = self.as_pointer() {
-			if let Some(class) = pointee.as_class() {
-				if class.is_abstract() {
-					return Some((pointee, class));
+	pub fn set_inherent_constness(&mut self, constness: Constness) {
+		if self.inherent_constness() != constness {
+			match self {
+				Self::Clang {
+					type_ref,
+					type_hint,
+					parent_entity,
+					gen_env,
+				} => {
+					*self = Self::new_desc(TypeRefDesc {
+						kind: type_ref.kind(type_hint.clone(), *parent_entity, gen_env),
+						inherent_constness: constness,
+						type_hint: type_hint.clone(),
+						template_specialization_args: type_ref.template_specialization_args(gen_env).into(),
+					})
+				}
+				Self::Desc(desc) => {
+					Rc::make_mut(desc).inherent_constness = constness;
 				}
 			}
 		}
-		None
 	}
 
-	pub fn as_array(&self) -> Option<(TypeRef<'tu, 'ge>, Option<usize>)> {
-		if let TypeRefKind::Array(elem, size) = self.canonical().kind().into_owned() {
-			Some((elem, size))
-		} else {
-			None
-		}
-	}
-
-	pub fn as_variable_array(&self) -> Option<TypeRef<'tu, 'ge>> {
-		if let Some((elem, None)) = self.as_array() {
-			Some(elem)
-		} else {
-			None
-		}
-	}
-
-	pub fn as_fixed_array(&self) -> Option<(TypeRef<'tu, 'ge>, usize)> {
-		if let Some((elem, Some(size))) = self.as_array() {
-			Some((elem, size))
-		} else {
-			None
-		}
-	}
-
-	pub fn as_string_array(&self) -> Option<(TypeRef<'tu, 'ge>, Option<usize>)> {
-		if let Some((elem, size)) = self.as_array() {
-			if elem.as_string().is_some() {
-				return Some((elem, size));
-			}
-		}
-		None
-	}
-
-	pub fn as_vector(&self) -> Option<Vector<'tu, 'ge>> {
-		if let TypeRefKind::StdVector(out) = self.canonical().kind().into_owned() {
-			Some(out)
-		} else {
-			None
-		}
-	}
-
-	pub fn as_tuple(&self) -> Option<Tuple<'tu, 'ge>> {
-		if let TypeRefKind::StdTuple(out) = self.canonical().kind().into_owned() {
-			Some(out)
-		} else {
-			None
-		}
-	}
-
-	pub fn as_function(&self) -> Option<Function<'tu, 'ge>> {
-		match self.canonical().kind().into_owned() {
-			TypeRefKind::Function(out) => Some(out),
-			_ => None,
-		}
-	}
-
-	pub fn as_typedef(&self) -> Option<Typedef<'tu, 'ge>> {
-		match self.kind().into_owned() {
-			TypeRefKind::Typedef(out) => Some(out),
-			_ => None,
-		}
-	}
-
-	pub fn extern_pass_kind(&self) -> ExternPassKind {
-		match self.canonical().kind().as_ref() {
-			TypeRefKind::Class(inner) if !inner.string_type().is_some() => {
-				if inner.kind().is_boxed() {
-					ExternPassKind::ByVoidPtr
-				} else {
-					ExternPassKind::ByPtr
-				}
-			}
-			TypeRefKind::Pointer(inner) | TypeRefKind::Reference(inner) | TypeRefKind::RValueReference(inner) => {
-				inner.extern_pass_kind()
-			}
-			TypeRefKind::SmartPtr(_) | TypeRefKind::StdVector(_) | TypeRefKind::StdTuple(_) => ExternPassKind::ByVoidPtr,
-			TypeRefKind::Primitive(_, _)
-			| TypeRefKind::Array(_, _)
-			| TypeRefKind::Class(_)
-			| TypeRefKind::Enum(_)
-			| TypeRefKind::Function(_)
-			| TypeRefKind::Typedef(_)
-			| TypeRefKind::Generic(_)
-			| TypeRefKind::Ignored => ExternPassKind::AsIs,
-		}
+	pub fn with_inherent_constness(&self, constness: Constness) -> Self {
+		let mut out = self.clone();
+		out.set_inherent_constness(constness);
+		out
 	}
 
 	pub fn is_data_type(&self) -> bool {
@@ -606,77 +325,9 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	/// Returns true if self is a data type or it's a vector with the element being a data type
 	pub fn is_element_data_type(&self) -> bool {
 		self
+			.kind()
 			.as_vector()
 			.map_or_else(|| self.is_data_type(), |vec| vec.element_type().is_data_type())
-	}
-
-	/// True for types that can be returned via C++ `return`, otherwise they are returned through an argument
-	///
-	/// Some types especially larger `struct`s are not safe to just `return` over the FFI boundary because compilers don't always
-	/// agree on how exactly those should be returned. So only designated simpler and shorter types are returned this way. For
-	/// all other cases the return is passed through an additional argument.
-	pub fn return_as_naked(&self) -> bool {
-		match self.kind().as_ref() {
-			TypeRefKind::Primitive(..) | TypeRefKind::Pointer(_) => true,
-			TypeRefKind::Array(elem, _) => elem.is_copy(),
-			_ => self.extern_pass_kind().is_by_void_ptr() || self.as_string().is_some(),
-		}
-	}
-
-	/// True for types that can be returned as direct reference to the underlying data that's allocated on C++ side
-	pub fn can_return_as_direct_reference(&self) -> bool {
-		match self.canonical().kind().as_ref() {
-			TypeRefKind::Array(elem, _) => elem.is_copy(),
-			TypeRefKind::Pointer(inner) => match inner.canonical().kind().as_ref() {
-				TypeRefKind::Primitive(_, cpp) => *cpp != "void",
-				TypeRefKind::Enum(_) => true,
-				TypeRefKind::Class(cls) => cls.kind().is_simple(),
-				TypeRefKind::Array(_, _)
-				| TypeRefKind::StdVector(_)
-				| TypeRefKind::StdTuple(_)
-				| TypeRefKind::Pointer(_)
-				| TypeRefKind::Reference(_)
-				| TypeRefKind::RValueReference(_)
-				| TypeRefKind::SmartPtr(_)
-				| TypeRefKind::Function(_)
-				| TypeRefKind::Typedef(_)
-				| TypeRefKind::Generic(_)
-				| TypeRefKind::Ignored => false,
-			},
-			TypeRefKind::Primitive(_, _)
-			| TypeRefKind::StdVector(_)
-			| TypeRefKind::StdTuple(_)
-			| TypeRefKind::Reference(_)
-			| TypeRefKind::RValueReference(_)
-			| TypeRefKind::SmartPtr(_)
-			| TypeRefKind::Class(_)
-			| TypeRefKind::Enum(_)
-			| TypeRefKind::Function(_)
-			| TypeRefKind::Typedef(_)
-			| TypeRefKind::Generic(_)
-			| TypeRefKind::Ignored => false,
-		}
-	}
-
-	/// True for types that can be exposed as Rust pointer
-	///
-	/// Currently a pointer to a primitive type with the exception of `char *`
-	fn can_rust_by_ptr(&self) -> bool {
-		self
-			.as_pointer()
-			.map_or(false, |inner| inner.as_primitive().is_some() && !self.as_string().is_some())
-	}
-
-	/// True for types that get passed in Rust by pointer as opposed to a reference or an owned value
-	pub fn is_rust_by_ptr(&self) -> bool {
-		self.is_void_ptr()
-			|| self.as_pointer().and_then(|inner| inner.as_primitive()).map_or(false, |(_, cpp)| cpp == "unsigned char")
-			// todo: support receiving slices for CUDA_RawVideoSourceTrait::get_next_packet
-			|| self
-				.as_pointer()
-				.and_then(|inner| inner.as_pointer())
-				.map_or(false, |inner| inner.is_copy())
-			|| matches!(self.type_hint(), TypeRefTypeHint::PrimitivePtrAsRaw) && self.can_rust_by_ptr()
 	}
 
 	pub fn template_specialization_args(&self) -> Cow<[TemplateArg<'tu, 'ge>]> {
@@ -694,7 +345,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 					TypeRefKind::StdVector(vec) => {
 						let mut out = vec.generated_types();
 						let element_type = vec.element_type();
-						if let Some(Dir::In(str_type)) = element_type.as_string() {
+						if let Some((Dir::In, str_type)) = element_type.kind().as_string(element_type.type_hint()) {
 							// implement workaround for race when type with std::string gets generated first
 							// we only want vector<cv::String> because it's more compatible across OpenCV versions
 							if matches!(str_type, StrType::StdString(_)) {
@@ -705,15 +356,11 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 								//   cv::String is an typedef to std::string and it would lead to duplicate definition error
 								// That's why we try to resolve both types and check if they are the same, if they are we only generate
 								// vector<std::string> if not - both.
-								out.push(GeneratedType::Vector(
-									TypeRefDesc::vector_of_cv_string()
-										.as_vector()
-										.expect("Not possible unless something is terribly broken"),
-								));
+								out.push(GeneratedType::Vector(VectorDesc::vector_of_cv_string()));
 							} else {
 								out.push(GeneratedType::Vector(vec))
 							}
-						} else if element_type.base().is_char() {
+						} else if element_type.base().kind().is_char() {
 							out.reserve(3);
 							// C++ char can be signed or unsigned based on the platform and that can lead to duplicate definitions when
 							// we generate Vector<u8> together with Vector<c_char>
@@ -734,7 +381,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 					TypeRefKind::Typedef(typedef) => typedef.generated_types(),
 					_ => {
 						let mut out = vec![];
-						if self.as_abstract_class_ptr().is_some() {
+						if self.kind().as_abstract_class_ptr().is_some() {
 							out.push(GeneratedType::AbstractRefWrapper(AbstractRefWrapper::new(self.clone())))
 						}
 						out
@@ -761,41 +408,12 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		CppRenderer::new(name_style, name, extern_types).render(self)
 	}
 
-	pub fn cpp_extern(&self) -> Cow<str> {
-		self.cpp_extern_with_name("")
-	}
-
-	pub fn cpp_extern_with_name(&self, name: &str) -> Cow<str> {
-		let space_name = if name.is_empty() {
-			"".to_string()
-		} else {
-			format!(" {name}")
-		};
-		if let Some(dir) = self.as_string() {
-			match dir {
-				Dir::In(_) => format!("{cnst}char*{name}", cnst = Constness::Const.cpp_qual(), name = space_name).into(),
-				Dir::Out(_) => format!("{cnst}void*{name}", cnst = self.constness().cpp_qual(), name = space_name).into(),
-			}
-		} else if self.extern_pass_kind().is_by_void_ptr() {
-			if self.as_pointer_reference_move().is_some() {
-				self.cpp_name_ext(CppNameStyle::Reference, name, true)
-			} else {
-				TypeRef::new_pointer(self.with_inherent_constness(self.constness()))
-					.cpp_name_ext(CppNameStyle::Reference, name, true)
-					.into_owned()
-					.into()
-			}
-		} else {
-			self.cpp_name_ext(CppNameStyle::Reference, name, true)
-		}
-	}
-
 	pub fn cpp_extern_return(&self) -> Cow<str> {
 		CppExternReturnRenderer.render(self)
 	}
 
 	pub fn cpp_extern_return_fallible(&self) -> Cow<str> {
-		if self.is_void() {
+		if self.kind().is_void() {
 			"ResultVoid".into()
 		} else {
 			format!("Result<{ext}>", ext = self.cpp_extern_return()).into()
@@ -811,24 +429,22 @@ impl PartialEq for TypeRef<'_, '_> {
 
 impl fmt::Debug for TypeRef<'_, '_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		let kind = self.kind();
 		let mut props = vec![];
 		if self.template_kind().is_template() {
 			props.push("template");
 		}
-		if self.is_generic() {
+		if kind.is_generic() {
 			props.push("generic");
 		}
-		if self.as_primitive().is_some() {
+		if kind.as_primitive().is_some() {
 			props.push("primitive");
 		}
-		if self.is_enum() {
-			props.push("enum");
-		}
-		if let Some(str_type) = self.as_string() {
+		if let Some((dir, str_type)) = kind.as_string(self.type_hint()) {
 			props.push("string");
-			let str_type = match str_type {
-				Dir::In(str_type) => str_type,
-				Dir::Out(str_type) => {
+			let str_type = match dir {
+				Dir::In => str_type,
+				Dir::Out => {
 					props.push("output_string");
 					str_type
 				}
@@ -854,37 +470,25 @@ impl fmt::Debug for TypeRef<'_, '_> {
 				}
 			}
 		}
-		if self.is_input_array() {
-			props.push("input_array");
-		}
-		if self.is_output_array() {
-			props.push("output_array");
-		}
-		if self.is_input_output_array() {
-			props.push("input_output_array");
-		}
-		if self.as_by_move().is_some() {
+		if kind.as_by_move().is_some() {
 			props.push("by_move");
 		}
-		if self.is_copy() {
+		if kind.is_copy(self.type_hint()) {
 			props.push("copy");
 		}
-		if self.is_clone() {
+		if kind.is_clone(self.type_hint()) {
 			props.push("clone");
 		}
-		if self.is_debug() {
+		if kind.is_debug() {
 			props.push("debug");
-		}
-		if self.is_nullable() {
-			props.push("nullable");
 		}
 		if self.is_data_type() {
 			props.push("data_type");
 		}
-		if self.return_as_naked() {
+		if kind.return_as_naked(self.type_hint()) {
 			props.push("return_naked");
 		}
-		if self.is_rust_by_ptr() {
+		if kind.is_rust_by_ptr(self.type_hint()) {
 			props.push("rust_by_ptr");
 		}
 		let props = props.join(", ");
@@ -894,12 +498,13 @@ impl fmt::Debug for TypeRef<'_, '_> {
 		});
 		dbg.field("cpp_full", &self.cpp_name(CppNameStyle::Reference))
 			.field("props", &props)
+			.field("render_lane", &self.render_lane())
 			.field("kind", &self.kind())
+			.field("extern_pass_kind", &self.kind().extern_pass_kind())
 			.field("type_hint", &self.type_hint())
 			.field("exclude_kind", &self.exclude_kind())
 			.field("constness", &self.constness())
 			.field("inherent_constness", &self.inherent_constness())
-			.field("extern_pass_kind", &self.extern_pass_kind())
 			.field("template_types", &self.template_specialization_args())
 			.finish()
 	}

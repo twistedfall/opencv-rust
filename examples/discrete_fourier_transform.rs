@@ -38,13 +38,17 @@ fn main() -> opencv::Result<()> {
 	magI = magI_tmp;
 	let mut magI_log = Mat::default();
 	core::log(&magI, &mut magI_log)?;
-	magI = Mat::roi(&magI_log, Rect::new(0, 0, magI_log.cols() & -2, magI_log.rows() & -2))?;
+	let magI_log_rect = Rect::new(0, 0, magI_log.cols() & -2, magI_log.rows() & -2);
+	let mut magI = Mat::roi_mut(&mut magI_log, magI_log_rect)?;
 	let cx = magI.cols() / 2;
 	let cy = magI.rows() / 2;
-	let mut q0 = Mat::roi(&magI, Rect::new(0, 0, cx, cy))?;
-	let mut q1 = Mat::roi(&magI, Rect::new(cx, 0, cx, cy))?;
-	let mut q2 = Mat::roi(&magI, Rect::new(0, cy, cx, cy))?;
-	let mut q3 = Mat::roi(&magI, Rect::new(cx, cy, cx, cy))?;
+	let (mut top, mut bottom) = Mat::roi_2_mut(
+		&mut magI,
+		Rect::new(0, 0, magI_log_rect.width, cy),
+		Rect::new(cx, 0, magI_log_rect.width, cy),
+	)?;
+	let (mut q0, mut q1) = Mat::roi_2_mut(&mut top, Rect::new(0, 0, cx, cy), Rect::new(cx, 0, cx, cy))?;
+	let (mut q2, mut q3) = Mat::roi_2_mut(&mut bottom, Rect::new(0, 0, cx, cy), Rect::new(cx, 0, cx, cy))?;
 	let mut tmp = Mat::default();
 	q0.copy_to(&mut tmp)?;
 	q3.copy_to(&mut q0)?;

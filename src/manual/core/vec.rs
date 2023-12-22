@@ -3,6 +3,7 @@ use std::ops::{Deref, DerefMut, MulAssign};
 
 use num_traits::{Float, NumCast, ToPrimitive};
 
+use crate::boxed_ref::{BoxedRef, BoxedRefMut};
 use crate::core::{ToInputArray, ToInputOutputArray, ToOutputArray, _InputArray, _InputOutputArray, _OutputArray};
 use crate::traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer};
 use crate::{extern_receive, extern_send, sys, Result};
@@ -165,10 +166,10 @@ where
 	Self: VecExtern,
 {
 	#[inline]
-	fn input_array(&self) -> Result<_InputArray> {
+	fn input_array(&self) -> Result<BoxedRef<_InputArray>> {
 		unsafe { self.extern_input_array() }
 			.into_result()
-			.map(|ptr| unsafe { _InputArray::from_raw(ptr) })
+			.map(|ptr| unsafe { _InputArray::from_raw(ptr) }.into())
 	}
 }
 
@@ -177,7 +178,7 @@ where
 	VecN<T, N>: VecExtern,
 {
 	#[inline]
-	fn input_array(&self) -> Result<_InputArray> {
+	fn input_array(&self) -> Result<BoxedRef<_InputArray>> {
 		(*self).input_array()
 	}
 }
@@ -187,10 +188,10 @@ where
 	Self: VecExtern,
 {
 	#[inline]
-	fn output_array(&mut self) -> Result<_OutputArray> {
+	fn output_array(&mut self) -> Result<BoxedRefMut<_OutputArray>> {
 		unsafe { self.extern_output_array() }
 			.into_result()
-			.map(|ptr| unsafe { _OutputArray::from_raw(ptr) })
+			.map(|ptr| unsafe { _OutputArray::from_raw(ptr) }.into())
 	}
 }
 
@@ -199,7 +200,7 @@ where
 	VecN<T, N>: VecExtern,
 {
 	#[inline]
-	fn output_array(&mut self) -> Result<_OutputArray> {
+	fn output_array(&mut self) -> Result<BoxedRefMut<_OutputArray>> {
 		(*self).output_array()
 	}
 }
@@ -209,10 +210,10 @@ where
 	Self: VecExtern,
 {
 	#[inline]
-	fn input_output_array(&mut self) -> Result<_InputOutputArray> {
+	fn input_output_array(&mut self) -> Result<BoxedRefMut<_InputOutputArray>> {
 		unsafe { self.extern_input_output_array() }
 			.into_result()
-			.map(|ptr| unsafe { _InputOutputArray::from_raw(ptr) })
+			.map(|ptr| unsafe { _InputOutputArray::from_raw(ptr) }.into())
 	}
 }
 
@@ -221,7 +222,7 @@ where
 	VecN<T, N>: VecExtern,
 {
 	#[inline]
-	fn input_output_array(&mut self) -> Result<_InputOutputArray> {
+	fn input_output_array(&mut self) -> Result<BoxedRefMut<_InputOutputArray>> {
 		(*self).input_output_array()
 	}
 }

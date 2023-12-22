@@ -4,6 +4,7 @@ use std::fmt;
 use clang::Type;
 
 use crate::type_ref::TypeRef;
+use crate::writer::rust_native::type_ref::Lifetime;
 
 #[derive(Clone, Debug, PartialEq)]
 pub enum TypeRefTypeHint {
@@ -24,6 +25,12 @@ pub enum TypeRefTypeHint {
 	PrimitivePtrAsRaw,
 	/// Adds a length to an unsized array
 	AddArrayLength(usize),
+	/// Return boxed class as a wrapped reference to maintain lifetime connection to the source boxed object
+	/// (cpp_name(Declaration), lifetime)
+	BoxedAsRef(&'static str, Lifetime),
+	/// Make sure to pass TraitClass as a concrete type, not as a trait object, it's used for property setters as we don't want
+	/// to be able to use `BoxedRef` there.
+	TraitClassConcrete,
 }
 
 impl TypeRefTypeHint {
@@ -31,6 +38,38 @@ impl TypeRefTypeHint {
 		match self {
 			Self::None => f(),
 			other => other,
+		}
+	}
+
+	pub fn nullability(&self) -> Nullability {
+		match self {
+			TypeRefTypeHint::Nullable | TypeRefTypeHint::NullableSlice => Nullability::Nullable,
+			TypeRefTypeHint::None
+			| TypeRefTypeHint::Slice
+			| TypeRefTypeHint::LenForSlice(_, _)
+			| TypeRefTypeHint::StringAsBytes(_)
+			| TypeRefTypeHint::CharAsRustChar
+			| TypeRefTypeHint::CharPtrSingleChar
+			| TypeRefTypeHint::PrimitivePtrAsRaw
+			| TypeRefTypeHint::AddArrayLength(_)
+			| TypeRefTypeHint::BoxedAsRef(_, _)
+			| TypeRefTypeHint::TraitClassConcrete => Nullability::NotNullable,
+		}
+	}
+
+	pub fn as_slice_len(&self) -> Option<(&[String], usize)> {
+		if let TypeRefTypeHint::LenForSlice(ptr_arg, len_div) = self {
+			Some((ptr_arg, *len_div))
+		} else {
+			None
+		}
+	}
+
+	pub fn as_boxed_as_ref(&self) -> Option<(&'static str, Lifetime)> {
+		if let TypeRefTypeHint::BoxedAsRef(cpp_name, lifetime) = self {
+			Some((cpp_name, *lifetime))
+		} else {
+			None
 		}
 	}
 }
@@ -187,30 +226,17 @@ pub enum StrEnc {
 }
 
 #[derive(Clone, Copy, Debug)]
-pub enum Dir<T> {
-	In(T),
-	Out(T),
+pub enum Dir {
+	In,
+	Out,
 }
 
-impl<T> Dir<T> {
-	pub fn with_out_dir(self, is_out_dir: bool) -> Self {
-		let inner = self.inner();
+impl Dir {
+	pub fn from_out_dir(is_out_dir: bool) -> Self {
 		if is_out_dir {
-			Self::Out(inner)
+			Self::Out
 		} else {
-			Self::In(inner)
-		}
-	}
-
-	pub fn inner(self) -> T {
-		match self {
-			Self::In(inner) | Self::Out(inner) => inner,
-		}
-	}
-
-	pub fn inner_mut(&mut self) -> &mut T {
-		match self {
-			Self::In(inner) | Self::Out(inner) => inner,
+			Self::In
 		}
 	}
 }
@@ -221,30 +247,6 @@ pub enum ExternDir {
 	Contained,
 	ToCpp,
 	FromCpp,
-}
-
-#[derive(Clone, Copy, Debug)]
-pub enum ExternPassKind {
-	AsIs,
-	ByPtr,
-	/// Value of the type needs to be passed by pointer to a heap-allocated object to and from the C++ side
-	ByVoidPtr,
-}
-
-impl ExternPassKind {
-	pub fn is_by_ptr(&self) -> bool {
-		match self {
-			ExternPassKind::AsIs => false,
-			ExternPassKind::ByPtr | ExternPassKind::ByVoidPtr => true,
-		}
-	}
-
-	pub fn is_by_void_ptr(&self) -> bool {
-		match self {
-			ExternPassKind::AsIs | ExternPassKind::ByPtr => false,
-			ExternPassKind::ByVoidPtr => true,
-		}
-	}
 }
 
 #[derive(Clone, Copy, Debug, Hash, PartialEq, Eq)]
@@ -295,6 +297,15 @@ impl Constness {
 		}
 	}
 
+	/// Returns `""` or `"_mut"`, for usage within Rust function names, e.g. `as_raw_mut`
+	pub fn rust_function_name_qual(self) -> &'static str {
+		if self.is_const() {
+			""
+		} else {
+			"_mut"
+		}
+	}
+
 	/// Returns `"const "` or `"mut "`, for usage with Rust pointers, e.g. `*const T`
 	pub fn rust_qual_ptr(self) -> &'static str {
 		if self.is_const() {
@@ -318,6 +329,21 @@ impl Constness {
 			"const "
 		} else {
 			""
+		}
+	}
+}
+
+#[derive(Clone, Copy, Debug, Hash, PartialEq, Eq)]
+pub enum Nullability {
+	NotNullable,
+	Nullable,
+}
+
+impl Nullability {
+	pub fn is_nullable(self) -> bool {
+		match self {
+			Self::NotNullable => false,
+			Self::Nullable => true,
 		}
 	}
 }

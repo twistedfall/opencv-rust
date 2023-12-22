@@ -1,13 +1,17 @@
+use std::{fmt, iter};
 use std::borrow::Cow;
 use std::collections::HashSet;
 use std::hash::{Hash, Hasher};
 use std::rc::Rc;
-use std::{fmt, iter};
 
 use clang::{Accessibility, Entity, EntityKind};
 
 pub use desc::ClassDesc;
 
+use crate::{
+	ClassSimplicity, Const, DefaultElement, Element, EntityExt, Enum, Field, Func, FuncTypeHint, GeneratedType, GeneratorEnv,
+	NameDebug, settings, StrExt,
+};
 use crate::comment::strip_doxygen_comment_markers;
 use crate::debug::{DefinitionLocation, LocationName};
 use crate::element::ExcludeKind;
@@ -16,10 +20,6 @@ use crate::field::FieldDesc;
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, FuncRustExtern, ReturnKind};
 use crate::type_ref::{Constness, CppNameStyle, StrEnc, StrType, TypeRef, TypeRefDesc, TypeRefTypeHint};
 use crate::writer::rust_native::element::RustElement;
-use crate::{
-	settings, ClassSimplicity, Const, DefaultElement, Element, EntityExt, Enum, Field, Func, FuncTypeHint, GeneratedType,
-	GeneratorEnv, NameDebug, StrExt,
-};
 
 mod desc;
 
@@ -64,7 +64,10 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 			&& !self.has_descendants()
 			&& !self.has_bases()
 			&& !self
-				.for_each_field(|field| WalkAction::continue_until(!field.type_ref().is_copy()))
+				.for_each_field(|field| {
+					let type_ref = field.type_ref();
+					WalkAction::continue_until(!type_ref.kind().is_copy(type_ref.type_hint()))
+				})
 				.is_interrupted()
 	}
 
@@ -315,7 +318,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		}
 	}
 
-	pub fn methods(&self, constness_filter: Option<Constness>) -> Vec<Func<'tu, 'ge>> {
+	pub fn methods(&self) -> Vec<Func<'tu, 'ge>> {
 		let mut out = Vec::with_capacity(32);
 		self.for_each_method(|func| {
 			let func = if let Some(func_fact) = settings::FUNC_REPLACE.get(&func.func_id()) {
@@ -323,17 +326,15 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 			} else {
 				func
 			};
-			if constness_filter.map_or(true, |c| c == func.constness()) {
-				if func.is_generic() {
-					if let Some(specs) = settings::FUNC_SPECIALIZE.get(&func.func_id()) {
-						for spec in specs {
-							out.push(func.clone().specialize(spec));
-						}
-						return WalkAction::Continue;
+			if func.is_generic() {
+				if let Some(specs) = settings::FUNC_SPECIALIZE.get(&func.func_id()) {
+					for spec in specs {
+						out.push(func.clone().specialize(spec));
 					}
+					return WalkAction::Continue;
 				}
-				out.push(func);
 			}
+			out.push(func);
 			WalkAction::Continue
 		});
 		let rust_module = match self {
@@ -342,11 +343,9 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		};
 		for inject_func_fact in settings::FUNC_INJECT.get(rust_module).into_iter().flatten() {
 			let inject_func: Func = inject_func_fact();
-			if constness_filter.map_or(true, |c| c == inject_func.constness()) {
-				if let Some(cls) = inject_func.kind().as_class_method() {
-					if cls == self {
-						out.push(inject_func);
-					}
+			if let Some(cls) = inject_func.kind().as_class_method() {
+				if cls == self {
+					out.push(inject_func);
 				}
 			}
 		}
@@ -407,12 +406,20 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 					iter::from_fn({
 						let doc_comment = Rc::from(fld.doc_comment());
 						let mut fld_type_ref = fld.type_ref().into_owned();
-						if !fld_type_ref.is_char_ptr_string() {
+						let fld_type_kind = fld_type_ref.kind();
+						if fld_type_kind
+							.as_pointer()
+							.map_or(false, |inner| inner.kind().as_primitive().is_some())
+							&& !fld_type_kind.is_char_ptr_string(fld_type_ref.type_hint())
+						{
 							fld_type_ref.set_type_hint(TypeRefTypeHint::PrimitivePtrAsRaw);
+						} else if fld_type_kind.as_class().map_or(false, |cls| cls.is_trait()) {
+							fld_type_ref.set_type_hint(TypeRefTypeHint::TraitClassConcrete);
 						}
-						let fld_type_ref_return_as_naked = fld_type_ref.return_as_naked();
+						let fld_type_kind = fld_type_ref.kind();
+						let fld_type_ref_return_as_naked = fld_type_kind.return_as_naked(fld_type_ref.type_hint());
 						let fld_const = fld.constness();
-						let passed_by_ref = fld_type_ref.can_return_as_direct_reference();
+						let passed_by_ref = fld_type_kind.can_return_as_direct_reference();
 						let (mut read_const_yield, mut read_mut_yield) = if passed_by_ref && fld_const.is_mut() {
 							let read_const_func = if constness_filter.map_or(true, |c| c.is_const()) {
 								Some(Func::new_desc(FuncDesc {
@@ -484,7 +491,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 						};
 						let mut write_yield = if constness_filter.map_or(true, |c| c.is_mut())
 							&& !fld_type_ref.constness().is_const()
-							&& !fld_type_ref.as_fixed_array().is_some()
+							&& !fld_type_kind.as_fixed_array().is_some()
 						{
 							let cpp_name = fld.cpp_name(CppNameStyle::Declaration);
 							let (first_letter, rest) = cpp_name.split_at(1);
@@ -501,7 +508,6 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 								arguments: Rc::new([Field::new_desc(FieldDesc {
 									cpp_fullname: "val".into(),
 									type_ref: fld_type_ref.with_inherent_constness(Constness::Const),
-									type_ref_type_hint: TypeRefTypeHint::None,
 									default_value: fld.default_value().map(|v| v.into()),
 								})]),
 								return_kind: ReturnKind::InfallibleNaked,
@@ -559,7 +565,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 			.flat_map(|f| f.type_ref().generated_types())
 			.chain(
 				self
-					.methods(None)
+					.methods()
 					.into_iter()
 					.filter(|m| m.exclude_kind().is_included())
 					.flat_map(|m| m.generated_types()),

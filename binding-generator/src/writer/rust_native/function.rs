@@ -1,11 +1,11 @@
 use std::borrow::Cow;
 
-use crate::function::Function;
-use crate::type_ref::ExternDir;
 use crate::{IteratorExt, NameStyle};
+use crate::function::Function;
+use crate::type_ref::{ExternDir, Nullability};
 
 use super::element::RustElement;
-use super::type_ref::TypeRefExt;
+use super::type_ref::{NullabilityExt, TypeRefExt};
 
 impl RustElement for Function<'_, '_> {
 	fn rust_module(&self) -> Cow<str> {
@@ -22,12 +22,15 @@ impl RustElement for Function<'_, '_> {
 				.filter(|(idx, _)| *idx != userdata_idx)
 				.map(|(_, arg)| arg.type_ref().rust_extern(ExternDir::Contained).into_owned())
 				.join(", ");
-			format!(
-				"Option{fish}<Box{fish}<dyn FnMut({args}) -> {ret} + Send + Sync + 'static>>",
-				fish = style.turbo_fish_style().rust_qual(),
-				ret = ret.rust_extern(ExternDir::Contained),
+			Nullability::Nullable.rust_wrap_nullable_decl(
+				format!(
+					"Box{fish}<dyn FnMut({args}) -> {ret} + Send + Sync + 'static>",
+					fish = style.rust_turbo_fish_qual(),
+					ret = ret.rust_extern(ExternDir::Contained),
+				)
+				.into(),
+				style,
 			)
-			.into()
 		} else {
 			self.rust_extern()
 		}
@@ -50,11 +53,14 @@ impl<'tu, 'ge> FunctionExt<'tu, 'ge> for Function<'tu, 'ge> {
 			.map(|a| a.type_ref().rust_extern(ExternDir::Contained).into_owned())
 			.join(", ");
 		let ret = self.return_type();
-		format!(
-			r#"Option<unsafe extern "C" fn({args}) -> {ret}>"#,
-			args = args,
-			ret = ret.rust_extern(ExternDir::Contained)
+		Nullability::Nullable.rust_wrap_nullable_decl(
+			format!(
+				r#"unsafe extern "C" fn({args}) -> {ret}"#,
+				args = args,
+				ret = ret.rust_extern(ExternDir::Contained)
+			)
+			.into(),
+			NameStyle::decl(),
 		)
-		.into()
 	}
 }

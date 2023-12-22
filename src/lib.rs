@@ -10,7 +10,7 @@ mod templ;
 pub mod error;
 mod manual;
 mod opencv;
-mod traits;
+pub mod traits;
 
 pub mod prelude {
 	#[cfg(ocvrs_has_module_core)]
@@ -35,15 +35,18 @@ pub(crate) mod mod_prelude_sys {
 
 /// Prelude for generated modules and types
 pub(crate) mod mod_prelude {
+	pub use crate::boxed_ref::{BoxedRef, BoxedRefMut};
+	pub use crate::core::{ToInputArray, ToInputOutputArray, ToOutputArray};
 	pub use crate::hub_prelude::*;
 	pub use crate::mod_prelude_sys::*;
 	pub use crate::{
-		boxed_cast_base, boxed_cast_descendant, extern_arg_send, extern_container_send, extern_receive, extern_send,
+		boxed_cast_base, boxed_cast_descendant, boxed_ref, extern_arg_send, extern_container_send, extern_receive, extern_send,
 		input_array_ref_forward, opencv_type_boxed, opencv_type_enum, opencv_type_simple, output_array_ref_forward, ptr_cast_base,
 		ptr_extern, ptr_extern_ctor, tuple_extern, vector_copy_non_bool, vector_extern, vector_non_copy_or_bool, Result,
 	};
 }
 
+pub mod boxed_ref;
 mod cond_macros;
 #[cfg(test)]
 mod test;

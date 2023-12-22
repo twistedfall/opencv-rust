@@ -16,5 +16,4 @@ impl From<Unit> for () {
 }
 
 input_output_array! { types::VectorOfMat, from_mat_vec, from_mat_vec_mut }
-
 input_output_array! { types::VectorOfUMat, from_umat_vec, from_umat_vec_mut }

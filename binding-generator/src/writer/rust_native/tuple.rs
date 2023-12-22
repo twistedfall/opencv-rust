@@ -3,16 +3,16 @@ use std::collections::{HashMap, HashSet};
 
 use once_cell::sync::Lazy;
 
+use crate::{Class, CompiledInterpolation, CppNameStyle, EntityElement, Func, IteratorExt, NameStyle, StrExt, Tuple, TypeRef};
 use crate::class::ClassDesc;
 use crate::field::{Field, FieldDesc};
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
 use crate::type_ref::{Constness, FishStyle};
-use crate::{Class, CompiledInterpolation, CppNameStyle, EntityElement, Func, IteratorExt, NameStyle, StrExt, Tuple, TypeRef};
 
 use super::disambiguate_single_name;
 use super::element::{DefaultRustNativeElement, RustElement};
-use super::type_ref::TypeRefExt;
 use super::RustNativeGeneratedElement;
+use super::type_ref::TypeRefExt;
 
 impl RustElement for Tuple<'_, '_> {
 	fn rust_module(&self) -> Cow<str> {
@@ -64,11 +64,13 @@ impl RustNativeGeneratedElement for Tuple<'_, '_> {
 				)
 			})
 			.join(",\n");
-		let new_extern = method_new(type_ref, &elements).identifier();
+		let new_extern = method_new(type_ref.clone(), &elements).identifier();
 		let delete_extern = FuncDesc::method_delete(tuple_desc).identifier();
 
 		RUST_TPL.interpolate(&HashMap::from([
 			("rust_localalias", rust_localalias),
+			("rust_as_raw_const", type_ref.rust_as_raw_name(Constness::Const).into()),
+			("rust_as_raw_mut", type_ref.rust_as_raw_name(Constness::Mut).into()),
 			("rust_full", self.rust_name(NameStyle::ref_())),
 			("inner_rust_full", self.rust_inner().into()),
 			("getters", getters.into()),

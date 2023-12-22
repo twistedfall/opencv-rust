@@ -6,7 +6,8 @@ use std::{fmt, ptr, slice};
 
 pub use mat_::*;
 
-use crate::core::{MatConstIterator, MatExpr, MatSize, Point, Scalar, UMat};
+use crate::boxed_ref::BoxedRefMut;
+use crate::core::{MatConstIterator, MatExpr, MatSize, Point, Rect, Scalar, UMat};
 use crate::prelude::*;
 use crate::{core, input_output_array, Error, Result};
 
@@ -199,38 +200,6 @@ impl Mat {
 			)
 		}?
 		.try_clone()
-	}
-
-	#[inline]
-	pub fn try_into_typed<T: DataType>(self) -> Result<Mat_<T>>
-	where
-		Self: Sized,
-	{
-		self.try_into()
-	}
-
-	/// Returns an iterator over `Mat` elements and their positions
-	#[inline]
-	pub fn iter<T: DataType>(&self) -> Result<MatIter<T>> {
-		MatConstIterator::over(self).map_or(
-			Ok(MatIter {
-				iter: None,
-				_d: PhantomData,
-			}),
-			MatIter::new,
-		)
-	}
-
-	/// Returns a mutable iterator over `Mat` elements and their positions
-	#[inline]
-	pub fn iter_mut<T: DataType>(&mut self) -> Result<MatIterMut<T>> {
-		MatConstIterator::over(self).map_or(
-			Ok(MatIterMut {
-				iter: None,
-				_d: PhantomData,
-			}),
-			MatIterMut::new,
-		)
 	}
 }
 
@@ -504,6 +473,30 @@ pub trait MatTraitConstManual: MatTraitConst {
 			}
 		})
 	}
+
+	/// Returns an iterator over `Mat` elements and their positions
+	#[inline]
+	fn iter<T: DataType>(&self) -> Result<MatIter<T>>
+	where
+		Self: Sized,
+	{
+		MatConstIterator::over(self).map_or(
+			Ok(MatIter {
+				iter: None,
+				_d: PhantomData,
+			}),
+			MatIter::new,
+		)
+	}
+
+	#[inline]
+	fn try_into_typed<T: DataType>(self) -> Result<Mat_<T>>
+	where
+		Self: Sized,
+		Mat_<T>: TryFrom<Self, Error = Error>,
+	{
+		self.try_into()
+	}
 }
 
 pub trait MatTraitManual: MatTraitConstManual + MatTrait {
@@ -586,6 +579,36 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 	unsafe fn data_typed_unchecked_mut<T: DataType>(&mut self) -> Result<&mut [T]> {
 		let total = self.total();
 		Ok(slice::from_raw_parts_mut(self.data_mut().cast::<T>(), total))
+	}
+
+	/// Returns a mutable iterator over `Mat` elements and their positions
+	#[inline]
+	fn iter_mut<T: DataType>(&mut self) -> Result<MatIterMut<T>>
+	where
+		Self: Sized,
+	{
+		MatConstIterator::over(self).map_or(
+			Ok(MatIterMut {
+				iter: None,
+				_d: PhantomData,
+			}),
+			MatIterMut::new,
+		)
+	}
+}
+
+impl Mat {
+	/// Returns 2 mutable ROIs into a single `Mat` as long as they do not intersect
+	pub fn roi_2_mut<MAT: MatTrait>(m: &mut MAT, roi1: Rect, roi2: Rect) -> Result<(BoxedRefMut<Mat>, BoxedRefMut<Mat>)> {
+		if (roi1 & roi2).empty() {
+			// safe because we made sure that the interest areas do not intersect
+			let m2 = unsafe { (m as *mut MAT).as_mut().expect("Can't fail") };
+			let out1 = Mat::roi_mut(m, roi1)?;
+			let out2 = Mat::roi_mut(m2, roi2)?;
+			Ok((out1, out2))
+		} else {
+			Err(Error::new(core::StsBadArg, "ROIs must not intersect"))
+		}
 	}
 }
 

@@ -4,16 +4,16 @@ use std::iter;
 
 use once_cell::sync::Lazy;
 
+use crate::{Class, CompiledInterpolation, Element, Func, IteratorExt, NamePool, settings, StrExt};
 use crate::class::ClassKind;
 use crate::debug::NameDebug;
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
 use crate::type_ref::{Constness, CppNameStyle, ExternDir, FishStyle, NameStyle, TypeRef};
 use crate::writer::rust_native::func::{cpp_return_map, FuncExt};
-use crate::{settings, Class, CompiledInterpolation, Element, Func, IteratorExt, NamePool, StrExt};
 
 use super::element::{DefaultRustNativeElement, RustElement};
-use super::type_ref::TypeRefExt;
 use super::RustNativeGeneratedElement;
+use super::type_ref::TypeRefExt;
 
 fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 	static BOXED_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/class/boxed.tpl.rs").compile_interpolation());
@@ -66,13 +66,37 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			c.field_methods(
 				fields.iter().filter(|f| f.exclude_kind().is_included()),
 				Some(Constness::Const),
-			),
-			c.field_methods(fields.iter().filter(|f| f.exclude_kind().is_included()), Some(Constness::Mut)),
+			)
+			.into_iter()
+			.filter(|f| f.exclude_kind().is_included())
+			.collect(),
+			c.field_methods(fields.iter().filter(|f| f.exclude_kind().is_included()), Some(Constness::Mut))
+				.into_iter()
+				.filter(|f| f.exclude_kind().is_included())
+				.collect(),
 		)
 	};
 	let mut field_const_methods = const_methods.clone();
-	const_methods.extend(c.methods(Some(Constness::Const)));
-	mut_methods.extend(c.methods(Some(Constness::Mut)));
+	let methods = c.methods();
+
+	let needs_default_ctor = needs_default_ctor(class_kind, c, methods.iter());
+
+	// make some more room for companion funcs
+	const_methods.reserve(methods.len());
+	mut_methods.reserve(methods.len());
+	methods.into_iter().filter(|m| m.exclude_kind().is_included()).for_each(|m| {
+		let companion_funcs = m.companion_functions().into_iter().filter(|f| f.exclude_kind().is_included());
+		match m.constness() {
+			Constness::Const => const_methods.push(m),
+			Constness::Mut => mut_methods.push(m),
+		};
+		for f in companion_funcs {
+			match f.constness() {
+				Constness::Const => const_methods.push(f),
+				Constness::Mut => mut_methods.push(f),
+			};
+		}
+	});
 	let method_count = const_methods.len() + mut_methods.len();
 	if is_trait {
 		let bases = c.bases();
@@ -116,8 +140,9 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 				"rust_trait_local_const",
 				c.rust_trait_name(NameStyle::decl(), Constness::Const),
 			),
-			("rust_local", type_ref.rust_name(NameStyle::decl())),
-			("rust_name_ref", type_ref.rust_name(NameStyle::ref_())),
+			("rust_as_raw_const", c.rust_as_raw_name(Constness::Const).into()),
+			("rust_as_raw_mut", c.rust_as_raw_name(Constness::Mut).into()),
+			("rust_name_ref", c.rust_name(NameStyle::ref_())),
 			(
 				"rust_extern_const",
 				type_ref
@@ -142,6 +167,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 		let extern_implicit_clone = method_implicit_clone(c.clone(), type_ref.clone()).identifier();
 		IMPL_IMPLICIT_CLONE_TPL.interpolate(&HashMap::from([
 			("rust_local", rust_local.as_ref()),
+			("rust_as_raw_const", &c.rust_as_raw_name(Constness::Const)),
 			("extern_implicit_clone", &extern_implicit_clone),
 		]))
 	} else {
@@ -202,7 +228,8 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 					base.rust_trait_name(NameStyle::ref_(), Constness::Const),
 				),
 				("rust_local", type_ref.rust_name(NameStyle::decl())),
-				("base_rust_local", base_type_ref.rust_name(NameStyle::decl())),
+				("rust_as_raw_const", base.rust_as_raw_name(Constness::Const).into()),
+				("rust_as_raw_mut", base.rust_as_raw_name(Constness::Mut).into()),
 				(
 					"base_rust_extern_const",
 					base_type_ref
@@ -237,19 +264,15 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 		vec![]
 	};
 
-	let mut inherent_methods = String::with_capacity(512 * (const_methods.len() + mut_methods.len()));
+	let mut inherent_methods = String::with_capacity(512 * (method_count));
 	let mut inherent_methods_pool = NamePool::with_capacity(method_count);
 
 	let mut needs_default_impl = false;
-	if let Some(def_cons) = mut_methods
-		.iter()
-		.find(|m| m.is_default_constructor() && m.exclude_kind().is_included())
-	{
+	if let Some(def_cons) = mut_methods.iter().find(|m| m.is_default_constructor()) {
 		if def_cons.return_kind().is_infallible() {
 			needs_default_impl = true;
 		}
 	}
-	let needs_default_ctor = needs_default_ctor(class_kind, c, const_methods.iter().chain(&mut_methods));
 	if needs_default_ctor {
 		let extern_default_new = method_default_new(c.clone(), type_ref.clone()).identifier();
 		inherent_methods.push_str(&DEFAULT_CTOR.interpolate(&HashMap::from([("extern_default_new", extern_default_new)])));
@@ -330,29 +353,22 @@ where
 	'tu: 'ge,
 	'ge: 'f,
 {
-	let fns = fns.filter(|f| f.exclude_kind().is_included());
-	fns.flat_map(move |func| {
-		let companion_funcs = func.companion_functions();
-		let mut funcs = Vec::with_capacity(companion_funcs.len() + 1);
-		funcs.push(Cow::Borrowed(func));
-		funcs.extend(companion_funcs.into_iter().map(Cow::Owned));
-		for func in &mut funcs {
-			let mut name = func.rust_leafname(FishStyle::No);
-			if name_pool.make_unique_name(&mut name).is_changed() {
-				let name = name.into();
-				func.to_mut().set_rust_custom_leafname(Some(name));
-			}
+	fns.map(move |func| {
+		let mut func = Cow::Borrowed(func);
+		let mut name = func.rust_leafname(FishStyle::No);
+		if name_pool.make_unique_name(&mut name).is_changed() {
+			let name = name.into();
+			func.to_mut().set_rust_custom_leafname(Some(name));
 		}
-		funcs
+		func.gen_rust(opencv_version)
 	})
-	.map(|f| f.gen_rust(opencv_version))
 	.join("")
 }
 
 pub fn rust_generate_debug_fields(field_const_methods: Vec<Func>) -> String {
 	field_const_methods
 		.into_iter()
-		.filter(|f| f.exclude_kind().is_included() && f.return_type_ref().is_debug())
+		.filter(|f| f.exclude_kind().is_included() && f.return_type_ref().kind().is_debug())
 		.filter_map(|f| {
 			f.kind().as_field_accessor().map(|(cls, _)| {
 				format!(
@@ -431,7 +447,7 @@ impl RustNativeGeneratedElement for Class<'_, '_> {
 }
 
 fn extern_functions<'tu, 'ge>(c: &Class<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
-	let methods = c.methods(None);
+	let methods = c.methods();
 
 	let needs_default_ctor = needs_default_ctor(c.kind(), c, methods.iter());
 
@@ -562,6 +578,7 @@ fn method_cast_to_descendant<'tu, 'ge>(class: Class<'tu, 'ge>, descendant_class:
 
 pub trait ClassExt {
 	fn rust_trait_name(&self, style: NameStyle, constness: Constness) -> Cow<str>;
+	fn rust_as_raw_name(&self, constness: Constness) -> String;
 }
 
 impl ClassExt for Class<'_, '_> {
@@ -575,5 +592,13 @@ impl ClassExt for Class<'_, '_> {
 			}
 		}
 		out
+	}
+
+	fn rust_as_raw_name(&self, constness: Constness) -> String {
+		format!(
+			"as_raw{const_qual}_{name}",
+			const_qual = constness.rust_function_name_qual(),
+			name = self.rust_name(NameStyle::Declaration)
+		)
 	}
 }

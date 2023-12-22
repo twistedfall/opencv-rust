@@ -49,7 +49,7 @@ impl<'tu> EntityWalkerVisitor<'tu> for FunctionFinder<'tu, '_> {
 			| EntityKind::StructDecl => {
 				let c = Class::new(entity, &self.gen_env);
 				if !c.template_kind().is_template() {
-					c.methods(None).into_iter().for_each(|f| self.update_used_func(&f));
+					c.methods().into_iter().for_each(|f| self.update_used_func(&f));
 					let fields = c.fields();
 					c.field_methods(fields.iter(), None)
 						.into_iter()

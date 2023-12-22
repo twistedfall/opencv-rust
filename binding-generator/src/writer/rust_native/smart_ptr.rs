@@ -3,6 +3,7 @@ use std::collections::HashMap;
 
 use once_cell::sync::Lazy;
 
+use crate::{Class, CompiledInterpolation, Element, Func, IteratorExt, SmartPtr, StrExt};
 use crate::class::ClassDesc;
 use crate::field::{Field, FieldDesc};
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
@@ -10,12 +11,11 @@ use crate::smart_ptr::SmartPtrDesc;
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle, TypeRef, TypeRefKind};
 use crate::writer::rust_native::class::rust_generate_debug_fields;
 use crate::writer::rust_native::RustStringExt;
-use crate::{Class, CompiledInterpolation, Element, Func, IteratorExt, SmartPtr, StrExt};
 
 use super::class::ClassExt;
 use super::element::{DefaultRustNativeElement, RustElement};
-use super::type_ref::TypeRefExt;
 use super::RustNativeGeneratedElement;
+use super::type_ref::TypeRefExt;
 
 impl RustElement for SmartPtr<'_, '_> {
 	fn rust_module(&self) -> Cow<str> {
@@ -79,6 +79,7 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		let rust_localalias = self.rust_localalias();
 		let rust_full = self.rust_name(NameStyle::ref_());
 		let pointee_type = self.pointee();
+		let pointee_kind = pointee_type.kind();
 		let type_ref = self.type_ref();
 		let smartptr_class = smartptr_class(&type_ref);
 
@@ -90,6 +91,8 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 
 		let mut inter_vars = HashMap::from([
 			("rust_localalias", rust_localalias.clone()),
+			("rust_as_raw_const", type_ref.rust_as_raw_name(Constness::Const).into()),
+			("rust_as_raw_mut", type_ref.rust_as_raw_name(Constness::Mut).into()),
 			("rust_full", rust_full.clone()),
 			(
 				"inner_rust_full",
@@ -101,9 +104,10 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		]);
 
 		let mut impls = String::new();
-		if let Some(cls) = pointee_type.as_class().filter(Class::is_trait) {
+		if let Some(cls) = pointee_kind.as_class().filter(|cls| cls.is_trait()) {
 			inter_vars.extend([
-				("base_rust_local", cls.rust_name(NameStyle::decl()).into_owned().into()),
+				("base_rust_as_raw_const", cls.rust_as_raw_name(Constness::Const).into()),
+				("base_rust_as_raw_mut", cls.rust_as_raw_name(Constness::Mut).into()),
 				(
 					"base_rust_full_mut",
 					cls.rust_trait_name(NameStyle::ref_(), Constness::Mut).into_owned().into(),
@@ -122,7 +126,8 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 			for base in all_bases(&cls) {
 				let base_rust_local = base.rust_name(NameStyle::decl());
 				inter_vars.extend([
-					("base_rust_local", base_rust_local.clone().into_owned().into()),
+					("base_rust_as_raw_const", base.rust_as_raw_name(Constness::Const).into()),
+					("base_rust_as_raw_mut", base.rust_as_raw_name(Constness::Mut).into()),
 					(
 						"base_rust_full_mut",
 						base.rust_trait_name(NameStyle::ref_(), Constness::Mut).into_owned().into(),
@@ -152,7 +157,7 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 				("debug_fields", &debug_fields),
 			]));
 		};
-		if gen_ctor(&pointee_type) {
+		if gen_ctor(&pointee_kind) {
 			let extern_new = method_new(smartptr_class, type_ref, pointee_type).identifier();
 			inter_vars.insert("extern_new", extern_new.into());
 			inter_vars.insert("ctor", CTOR_TPL.interpolate(&inter_vars).into());
@@ -177,6 +182,7 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 fn extern_functions<'tu, 'ge>(ptr: &SmartPtr<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
 	let type_ref = ptr.type_ref();
 	let pointee_type = ptr.pointee();
+	let pointee_kind = pointee_type.kind();
 	let smartptr_class = smartptr_class(&type_ref);
 
 	let mut out = Vec::with_capacity(6);
@@ -189,7 +195,7 @@ fn extern_functions<'tu, 'ge>(ptr: &SmartPtr<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
 		pointee_type.with_inherent_constness(Constness::Mut),
 	));
 	out.push(FuncDesc::method_delete(smartptr_class.clone()));
-	if let Some(cls) = pointee_type.as_class().filter(Class::is_trait) {
+	if let Some(cls) = pointee_kind.as_class().filter(|cls| cls.is_trait()) {
 		for base in all_bases(&cls) {
 			out.push(method_cast_to_base(
 				smartptr_class.clone(),
@@ -198,14 +204,14 @@ fn extern_functions<'tu, 'ge>(ptr: &SmartPtr<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
 			));
 		}
 	}
-	if gen_ctor(&pointee_type) {
+	if gen_ctor(&pointee_kind) {
 		out.push(method_new(smartptr_class, type_ref, pointee_type));
 	}
 	out
 }
 
-fn gen_ctor(pointee_type: &TypeRef) -> bool {
-	match pointee_type.canonical().kind().as_ref() {
+fn gen_ctor(pointee_kind: &TypeRefKind) -> bool {
+	match pointee_kind.canonical().as_ref() {
 		TypeRefKind::Primitive(_, _) => true,
 		TypeRefKind::Class(cls) => !cls.is_abstract(),
 		_ => false,
@@ -258,8 +264,9 @@ fn method_new<'tu, 'ge>(
 	smartptr_type_ref: TypeRef<'tu, 'ge>,
 	pointee_type: TypeRef<'tu, 'ge>,
 ) -> Func<'tu, 'ge> {
-	let val = if pointee_type.is_copy() {
-		if pointee_type.as_simple_class().is_some() {
+	let pointee_kind = pointee_type.kind();
+	let val = if pointee_kind.is_copy(pointee_type.type_hint()) {
+		if pointee_kind.as_simple_class().is_some() {
 			panic!("Ptr with simple class is not supported");
 		} else {
 			format!("new {typ}(val)", typ = pointee_type.cpp_name(CppNameStyle::Reference)).into()
@@ -308,7 +315,7 @@ fn method_get_inner_ptr<'tu, 'ge>(smartptr_class: Class<'tu, 'ge>, pointee_type:
 	// if the pointee type is actually const make sure to also generate a const function, needed for
 	// Ptr<const cv::optflow::PCAPrior*>
 	let constness = pointee_type.constness();
-	let return_type_ref = if pointee_type.extern_pass_kind().is_by_ptr() {
+	let return_type_ref = if pointee_type.kind().extern_pass_kind().is_by_ptr() {
 		pointee_type
 	} else {
 		TypeRef::new_pointer(pointee_type)

@@ -3,9 +3,10 @@ use std::collections::HashMap;
 use once_cell::sync::Lazy;
 
 use crate::type_ref::TypeRefTypeHint;
+use crate::writer::rust_native::type_ref::Lifetime;
 use crate::FuncId;
 
-pub const RETURN_HINT: &str = "return";
+pub const ARG_OVERRIDE_SELF: &str = "this";
 
 pub static ARGUMENT_OVERRIDE: Lazy<HashMap<FuncId, HashMap<&str, TypeRefTypeHint>>> = Lazy::new(|| {
 	HashMap::from([
@@ -108,36 +109,6 @@ pub static ARGUMENT_OVERRIDE: Lazy<HashMap<FuncId, HashMap<&str, TypeRefTypeHint
 			HashMap::from([("decoded_info", TypeRefTypeHint::StringAsBytes(None))]),
 		),
 		(
-			FuncId::new_mut("cv::QRCodeDetector::decode", ["img", "points", "straight_qrcode"]),
-			HashMap::from([(RETURN_HINT, TypeRefTypeHint::StringAsBytes(None))]),
-		),
-		(
-			FuncId::new_mut("cv::QRCodeDetector::decodeCurved", ["img", "points", "straight_qrcode"]),
-			HashMap::from([(RETURN_HINT, TypeRefTypeHint::StringAsBytes(None))]),
-		),
-		(
-			FuncId::new_mut("cv::QRCodeDetector::detectAndDecode", ["img", "points", "straight_qrcode"]),
-			HashMap::from([(RETURN_HINT, TypeRefTypeHint::StringAsBytes(None))]),
-		),
-		(
-			FuncId::new_mut(
-				"cv::QRCodeDetector::detectAndDecodeCurved",
-				["img", "points", "straight_qrcode"],
-			),
-			HashMap::from([(RETURN_HINT, TypeRefTypeHint::StringAsBytes(None))]),
-		),
-		(
-			FuncId::new_const("cv::GraphicalCodeDetector::decode", ["img", "points", "straight_code"]),
-			HashMap::from([(RETURN_HINT, TypeRefTypeHint::StringAsBytes(None))]),
-		),
-		(
-			FuncId::new_const(
-				"cv::GraphicalCodeDetector::detectAndDecode",
-				["img", "points", "straight_code"],
-			),
-			HashMap::from([(RETURN_HINT, TypeRefTypeHint::StringAsBytes(None))]),
-		),
-		(
 			FuncId::new_mut(
 				"cv::getOptimalNewCameraMatrix",
 				[
@@ -172,6 +143,235 @@ pub static ARGUMENT_OVERRIDE: Lazy<HashMap<FuncId, HashMap<&str, TypeRefTypeHint
 		(
 			FuncId::new_const("cv::MatConstIterator::pos", ["_idx"]),
 			HashMap::from([("_idx", TypeRefTypeHint::PrimitivePtrAsRaw)]),
+		),
+	])
+});
+
+pub static RETURN_OVERRIDE: Lazy<HashMap<FuncId, TypeRefTypeHint>> = Lazy::new(|| {
+	HashMap::from([
+		// todo MatExpr?
+		// todo Mat::set_matexpr unsafe
+		// Mat
+		(
+			FuncId::new_mut("cv::Mat::Mat", ["m"]),
+			TypeRefTypeHint::BoxedAsRef("m", Lifetime::Elided),
+		),
+		(
+			FuncId::new_mut("cv::Mat::Mat", ["m", "roi"]),
+			TypeRefTypeHint::BoxedAsRef("m", Lifetime::Elided),
+		),
+		(
+			FuncId::new_mut("cv::Mat::Mat", ["m", "ranges"]),
+			TypeRefTypeHint::BoxedAsRef("m", Lifetime::Custom("boxed")),
+		),
+		(
+			FuncId::new_mut("cv::Mat::Mat", ["m", "rowRange", "colRange"]),
+			TypeRefTypeHint::BoxedAsRef("m", Lifetime::Custom("boxed")),
+		),
+		(
+			FuncId::new_const("cv::Mat::reshape", ["cn", "rows"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::Mat::reshape", ["cn", "newndims", "newsz"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::Mat::reshape", ["cn", "newshape"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::Mat::row", ["y"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::Mat::col", ["x"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::Mat::rowRange", ["startrow", "endrow"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::Mat::rowRange", ["r"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::Mat::colRange", ["startcol", "endcol"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::Mat::colRange", ["r"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::Mat::diag", ["d"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::Mat::operator()", ["roi"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::Mat::operator()", ["rowRange", "colRange"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::Mat::operator()", ["ranges"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		// GpuMatND
+		(
+			FuncId::new_const("cv::cuda::GpuMatND::createGpuMatHeader", ["idx", "rowRange", "colRange"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::cuda::GpuMatND::createGpuMatHeader", []),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::cuda::GpuMatND::operator()", ["idx", "rowRange", "colRange"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::cuda::GpuMatND::operator()", ["ranges"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		// GpuMat
+		(
+			FuncId::new_mut("cv::cuda::GpuMat::GpuMat", ["m", "rowRange", "colRange"]),
+			TypeRefTypeHint::BoxedAsRef("m", Lifetime::Elided),
+		),
+		(
+			FuncId::new_mut("cv::cuda::GpuMat::GpuMat", ["m", "roi"]),
+			TypeRefTypeHint::BoxedAsRef("m", Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::cuda::GpuMat::row", ["y"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::cuda::GpuMat::col", ["x"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::cuda::GpuMat::rowRange", ["startrow", "endrow"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::cuda::GpuMat::rowRange", ["r"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::cuda::GpuMat::colRange", ["startcol", "endcol"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::cuda::GpuMat::colRange", ["r"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::cuda::GpuMat::reshape", ["cn", "rows"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::cuda::GpuMat::operator()", ["rowRange", "colRange"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::cuda::GpuMat::operator()", ["roi"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		// UMat
+		(
+			FuncId::new_mut("cv::UMat::UMat", ["m", "rowRange", "colRange"]),
+			TypeRefTypeHint::BoxedAsRef("m", Lifetime::Custom("boxed")),
+		),
+		(
+			FuncId::new_mut("cv::UMat::UMat", ["m", "roi"]),
+			TypeRefTypeHint::BoxedAsRef("m", Lifetime::Elided),
+		),
+		(
+			FuncId::new_mut("cv::UMat::UMat", ["m", "ranges"]),
+			TypeRefTypeHint::BoxedAsRef("m", Lifetime::Custom("boxed")),
+		),
+		(
+			FuncId::new_const("cv::UMat::row", ["y"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::UMat::col", ["x"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::UMat::rowRange", ["startrow", "endrow"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::UMat::rowRange", ["r"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::UMat::colRange", ["startcol", "endcol"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::UMat::colRange", ["r"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::UMat::diag", ["d"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::UMat::reshape", ["cn", "rows"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::UMat::reshape", ["cn", "newndims", "newsz"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::UMat::operator()", ["rowRange", "colRange"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::UMat::operator()", ["roi"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_const("cv::UMat::operator()", ["ranges"]),
+			TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided),
+		),
+		(
+			FuncId::new_mut("cv::QRCodeDetector::decode", ["img", "points", "straight_qrcode"]),
+			TypeRefTypeHint::StringAsBytes(None),
+		),
+		(
+			FuncId::new_mut("cv::QRCodeDetector::decodeCurved", ["img", "points", "straight_qrcode"]),
+			TypeRefTypeHint::StringAsBytes(None),
+		),
+		(
+			FuncId::new_mut("cv::QRCodeDetector::detectAndDecode", ["img", "points", "straight_qrcode"]),
+			TypeRefTypeHint::StringAsBytes(None),
+		),
+		(
+			FuncId::new_mut(
+				"cv::QRCodeDetector::detectAndDecodeCurved",
+				["img", "points", "straight_qrcode"],
+			),
+			TypeRefTypeHint::StringAsBytes(None),
+		),
+		(
+			FuncId::new_const("cv::GraphicalCodeDetector::decode", ["img", "points", "straight_code"]),
+			TypeRefTypeHint::StringAsBytes(None),
+		),
+		(
+			FuncId::new_const(
+				"cv::GraphicalCodeDetector::detectAndDecode",
+				["img", "points", "straight_code"],
+			),
+			TypeRefTypeHint::StringAsBytes(None),
 		),
 	])
 });

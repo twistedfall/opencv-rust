@@ -1,7 +1,5 @@
-use crate::{
-	core::{GpuMat, HostMem},
-	input_output_array, Result,
-};
+use crate::core::{GpuMat, HostMem};
+use crate::{input_output_array, Result};
 
 impl GpuMat {
 	#[inline]

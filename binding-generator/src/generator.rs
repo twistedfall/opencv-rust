@@ -3,18 +3,18 @@ use std::fs::File;
 use std::io::BufReader;
 use std::path::{Path, PathBuf};
 
-use clang::diagnostic::{Diagnostic, Severity};
 use clang::{Clang, Entity, EntityKind, Index};
+use clang::diagnostic::{Diagnostic, Severity};
 use dunce::canonicalize;
 
+use crate::{
+	AbstractRefWrapper, Class, ClassSimplicity, Const, Element, EntityExt, EntityWalkerExt, EntityWalkerVisitor, Enum,
+	Func, GeneratorEnv, get_definition_text, line_reader, LineReaderAction, settings, SmartPtr, Tuple, Typedef, Vector,
+};
 use crate::entity::WalkAction;
 use crate::type_ref::{CppNameStyle, FishStyle, TypeRef, TypeRefKind};
 use crate::typedef::NewTypedefResult;
 use crate::writer::rust_native::element::RustElement;
-use crate::{
-	get_definition_text, line_reader, settings, AbstractRefWrapper, Class, ClassSimplicity, Const, Element, EntityExt,
-	EntityWalkerExt, EntityWalkerVisitor, Enum, Func, GeneratorEnv, LineReaderAction, SmartPtr, Tuple, Typedef, Vector,
-};
 
 #[derive(Debug)]
 pub enum GeneratedType<'tu, 'ge> {
@@ -269,7 +269,7 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 						|| type_ref.is_data_type()
 						|| {
 						let underlying_type = typedef.underlying_type_ref();
-						underlying_type.as_function().is_some()
+						underlying_type.kind().is_function()
 							|| !underlying_type.exclude_kind().is_ignored()
 							|| underlying_type.template_kind().as_template_specialization().map_or(false, |templ| {
 							settings::IMPLEMENTED_GENERICS.contains(templ.cpp_name(CppNameStyle::Reference).as_ref())

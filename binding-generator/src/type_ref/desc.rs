@@ -23,10 +23,10 @@ pub struct TypeRefDesc<'tu, 'ge> {
 }
 
 impl<'tu, 'ge> TypeRefDesc<'tu, 'ge> {
-	pub fn new(kind: TypeRefKind<'tu, 'ge>) -> Self {
+	pub fn new(kind: TypeRefKind<'tu, 'ge>, inherent_constness: Constness) -> Self {
 		Self {
 			kind,
-			inherent_constness: Constness::Mut,
+			inherent_constness,
 			type_hint: TypeRefTypeHint::None,
 			template_specialization_args: Rc::new([]),
 		}
@@ -63,7 +63,7 @@ impl<'tu, 'ge> TypeRefDesc<'tu, 'ge> {
 					.get(cpp_name)
 					.map(|(rust, cpp)| TypeRefKind::Primitive(rust, cpp))
 			})
-			.map(|type_ref_kind| TypeRef::new_desc(TypeRefDesc::new(type_ref_kind)))
+			.map(|type_ref_kind| TypeRef::new_desc(TypeRefDesc::new(type_ref_kind, Constness::Mut)))
 	}
 
 	pub fn void() -> TypeRef<'tu, 'ge> {
@@ -222,7 +222,7 @@ impl<'tu, 'ge> TypeRefDesc<'tu, 'ge> {
 
 	/// `std::vector<cv::String>`
 	pub fn vector_of_cv_string() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(TypeRefDesc::cv_string())))
+		TypeRef::new_vector(VectorDesc::vector_of_cv_string())
 	}
 
 	/// `std::vector<cv::Vec2f>`
@@ -372,8 +372,9 @@ impl<'tu> ClangTypeExt<'tu> for Type<'tu> {
 				TypeKind::Pointer => {
 					let pointee = self.get_pointee_type().expect("No pointee type for pointer");
 					let pointee_typeref = TypeRef::new_ext(pointee, type_hint, parent_entity, gen_env);
-					if pointee_typeref.as_function().is_some() {
-						pointee_typeref.kind().into_owned()
+					let pointee_kind = pointee_typeref.kind();
+					if pointee_kind.is_function() {
+						pointee_kind.into_owned()
 					} else if matches!(
 						pointee_typeref.type_hint(),
 						TypeRefTypeHint::Slice | TypeRefTypeHint::NullableSlice

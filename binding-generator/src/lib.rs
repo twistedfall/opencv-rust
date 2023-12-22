@@ -13,6 +13,8 @@
 
 #![allow(clippy::nonminimal_bool)] // pattern `!type_ref.as_vector().is_some()` used for more clarity
 
+extern crate core;
+
 use std::borrow::Cow;
 use std::fs::File;
 use std::io::{BufRead, Read, Seek, SeekFrom};
@@ -22,14 +24,13 @@ use clang::Entity;
 pub use abstract_ref_wrapper::AbstractRefWrapper;
 pub use class::Class;
 pub use constant::Const;
-pub use element::{is_opencv_path, opencv_module_from_path, DefaultElement, Element, EntityElement};
+pub use element::{DefaultElement, Element, EntityElement, is_opencv_path, opencv_module_from_path};
+pub use entity::{EntityExt, WalkAction, WalkResult};
 #[allow(unused)]
 use entity::dbg_clang_entity;
-pub use entity::{EntityExt, WalkAction, WalkResult};
 pub use enumeration::Enum;
 use field::Field;
 pub use func::{Func, FuncId, FuncTypeHint};
-use function::Function;
 pub use generator::{GeneratedType, Generator, GeneratorVisitor};
 pub use generator_env::{ClassSimplicity, ExportConfig, GeneratorEnv};
 pub use iterator_ext::IteratorExt;
@@ -38,10 +39,10 @@ use name_pool::NamePool;
 use smart_ptr::SmartPtr;
 pub use string_ext::{CompiledInterpolation, StrExt, StringExt};
 use tuple::Tuple;
+pub use type_ref::{CppNameStyle, NameStyle};
 #[allow(unused)]
 use type_ref::dbg_clang_type;
 use type_ref::TypeRef;
-pub use type_ref::{CppNameStyle, NameStyle};
 pub use typedef::Typedef;
 use vector::Vector;
 pub use walker::{EntityWalkerExt, EntityWalkerVisitor};

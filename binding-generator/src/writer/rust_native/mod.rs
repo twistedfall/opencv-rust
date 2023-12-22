@@ -1,9 +1,9 @@
+use std::{fs, iter};
 use std::collections::HashMap;
 use std::fmt::Debug;
 use std::fs::{File, OpenOptions};
 use std::io::{ErrorKind, Write};
 use std::path::{Path, PathBuf};
-use std::{fs, iter};
 
 use dunce::canonicalize;
 use once_cell::sync::Lazy;
@@ -14,14 +14,14 @@ use element::{RustElement, RustNativeGeneratedElement};
 use func::FuncExt;
 pub use string_ext::RustStringExt;
 
+use crate::{
+	Class, CompiledInterpolation, Const, Element, Enum, Func, GeneratedType, GeneratorVisitor, IteratorExt, opencv_module_from_path,
+	settings, StrExt, Typedef,
+};
 use crate::comment::strip_doxygen_comment_markers;
 use crate::field::Field;
 use crate::name_pool::NamePool;
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle};
-use crate::{
-	opencv_module_from_path, settings, Class, CompiledInterpolation, Const, Element, Enum, Func, GeneratedType, GeneratorVisitor,
-	IteratorExt, StrExt, Typedef,
-};
 
 mod abstract_ref_wrapper;
 mod class;
