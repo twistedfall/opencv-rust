@@ -15,7 +15,7 @@ pub mod ml {
 		pub use { super::ParamGridTraitConst, super::ParamGridTrait, super::TrainDataTraitConst, super::TrainDataTrait, super::StatModelTraitConst, super::StatModelTrait, super::NormalBayesClassifierTraitConst, super::NormalBayesClassifierTrait, super::KNearestTraitConst, super::KNearestTrait, super::SVM_KernelTraitConst, super::SVM_KernelTrait, super::SVMTraitConst, super::SVMTrait, super::EMTraitConst, super::EMTrait, super::DTrees_NodeTraitConst, super::DTrees_NodeTrait, super::DTrees_SplitTraitConst, super::DTrees_SplitTrait, super::DTreesTraitConst, super::DTreesTrait, super::RTreesTraitConst, super::RTreesTrait, super::BoostTraitConst, super::BoostTrait, super::ANN_MLPTraitConst, super::ANN_MLPTrait, super::LogisticRegressionTraitConst, super::LogisticRegressionTrait, super::SVMSGDTraitConst, super::SVMSGDTrait };
 	}
 	
-	/// The simulated annealing algorithm. See [Kirkpatrick83](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Kirkpatrick83) for details.
+	/// The simulated annealing algorithm. See [Kirkpatrick83](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Kirkpatrick83) for details.
 	pub const ANN_MLP_ANNEAL: i32 = 2;
 	/// The back-propagation algorithm.
 	pub const ANN_MLP_BACKPROP: i32 = 0;
@@ -37,7 +37,7 @@ pub mod ml {
 	pub const ANN_MLP_NO_OUTPUT_SCALE: i32 = 4;
 	/// ReLU function: ![inline formula](https://latex.codecogs.com/png.latex?f%28x%29%3Dmax%280%2Cx%29)
 	pub const ANN_MLP_RELU: i32 = 3;
-	/// The RPROP algorithm. See [RPROP93](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_RPROP93) for details.
+	/// The RPROP algorithm. See [RPROP93](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_RPROP93) for details.
 	pub const ANN_MLP_RPROP: i32 = 1;
 	/// Symmetrical sigmoid: ![inline formula](https://latex.codecogs.com/png.latex?f%28x%29%3D%5Cbeta%2A%281%2De%5E%7B%2D%5Calpha%20x%7D%29%2F%281%2Be%5E%7B%2D%5Calpha%20x%7D%29)
 	/// 
@@ -139,7 +139,7 @@ pub mod ml {
 	/// the decision boundary) is used instead of C.
 	pub const SVM_NU_SVC: i32 = 101;
 	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cnu)-Support Vector Regression. ![inline formula](https://latex.codecogs.com/png.latex?%5Cnu) is used instead of p.
-	/// See [LibSVM](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_LibSVM) for details.
+	/// See [LibSVM](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_LibSVM) for details.
 	pub const SVM_NU_SVR: i32 = 104;
 	/// Distribution Estimation (One-class %SVM). All the training data are from
 	/// the same class, %SVM builds a boundary that separates the class from the rest of the feature
@@ -217,9 +217,9 @@ pub mod ml {
 	pub enum ANN_MLP_TrainingMethods {
 		/// The back-propagation algorithm.
 		BACKPROP = 0,
-		/// The RPROP algorithm. See [RPROP93](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_RPROP93) for details.
+		/// The RPROP algorithm. See [RPROP93](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_RPROP93) for details.
 		RPROP = 1,
-		/// The simulated annealing algorithm. See [Kirkpatrick83](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Kirkpatrick83) for details.
+		/// The simulated annealing algorithm. See [Kirkpatrick83](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Kirkpatrick83) for details.
 		ANNEAL = 2,
 	}
 	
@@ -362,7 +362,7 @@ pub mod ml {
 	/// SVM::C_SVC SVMs have been trained (one against rest) with auto_train. Evaluation on three
 	/// different kernels (SVM::CHI2, SVM::INTER, SVM::RBF). The color depicts the class with max score.
 	/// Bright means max-score \> 0, dark means max-score \< 0.
-	/// ![image](https://docs.opencv.org/4.8.1/SVM_Comparison.png)
+	/// ![image](https://docs.opencv.org/4.9.0/SVM_Comparison.png)
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum SVM_KernelTypes {
@@ -422,7 +422,7 @@ pub mod ml {
 		/// penalty multiplier C is used.
 		EPS_SVR = 103,
 		/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cnu)-Support Vector Regression. ![inline formula](https://latex.codecogs.com/png.latex?%5Cnu) is used instead of p.
-		/// See [LibSVM](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_LibSVM) for details.
+		/// See [LibSVM](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_LibSVM) for details.
 		NU_SVR = 104,
 	}
 	
@@ -4914,7 +4914,7 @@ pub mod ml {
 	/// Stochastic Gradient Descent SVM classifier
 	/// 
 	/// SVMSGD provides a fast and easy-to-use implementation of the SVM classifier using the Stochastic Gradient Descent approach,
-	/// as presented in [bottou2010large](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_bottou2010large).
+	/// as presented in [bottou2010large](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_bottou2010large).
 	/// 
 	/// The classifier has following parameters:
 	/// - model type,
@@ -4937,7 +4937,7 @@ pub mod ml {
 	/// - \ref ASGD is Average Stochastic Gradient Descent SVM Classifier. ASGD classifier averages weights vector on each step of algorithm by the formula
 	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cwidehat%7Bw%7D%5F%7Bt%2B1%7D%20%3D%20%5Cfrac%7Bt%7D%7B1%2Bt%7D%5Cwidehat%7Bw%7D%5F%7Bt%7D%20%2B%20%5Cfrac%7B1%7D%7B1%2Bt%7Dw%5F%7Bt%2B1%7D)
 	/// 
-	/// The recommended model type is ASGD (following [bottou2010large](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_bottou2010large)).
+	/// The recommended model type is ASGD (following [bottou2010large](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_bottou2010large)).
 	/// 
 	/// The margin type may have one of the following values: \ref SOFT_MARGIN or \ref HARD_MARGIN.
 	/// 

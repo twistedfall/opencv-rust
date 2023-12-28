@@ -4,7 +4,7 @@ pub mod flann {
 	//! This section documents OpenCV's interface to the FLANN library. FLANN (Fast Library for Approximate
 	//! Nearest Neighbors) is a library that contains a collection of algorithms optimized for fast nearest
 	//! neighbor search in large datasets and for high dimensional features. More information about FLANN
-	//! can be found in [Muja2009](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Muja2009) .
+	//! can be found in [Muja2009](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Muja2009) .
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
 		pub use { super::IndexParamsTraitConst, super::IndexParamsTrait, super::KDTreeIndexParamsTraitConst, super::KDTreeIndexParamsTrait, super::LinearIndexParamsTraitConst, super::LinearIndexParamsTrait, super::CompositeIndexParamsTraitConst, super::CompositeIndexParamsTrait, super::AutotunedIndexParamsTraitConst, super::AutotunedIndexParamsTrait, super::HierarchicalClusteringIndexParamsTraitConst, super::HierarchicalClusteringIndexParamsTrait, super::KMeansIndexParamsTraitConst, super::KMeansIndexParamsTrait, super::LshIndexParamsTraitConst, super::LshIndexParamsTrait, super::SavedIndexParamsTraitConst, super::SavedIndexParamsTrait, super::SearchParamsTraitConst, super::SearchParamsTrait, super::IndexTraitConst, super::IndexTrait };

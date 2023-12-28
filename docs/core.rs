@@ -172,12 +172,15 @@ pub mod core {
 	pub const CPU_AVX_512VPOPCNTDQ: i32 = 25;
 	pub const CPU_FMA3: i32 = 12;
 	pub const CPU_FP16: i32 = 9;
-	pub const CPU_LASX: i32 = 230;
+	pub const CPU_LASX: i32 = 231;
+	pub const CPU_LSX: i32 = 230;
 	pub const CPU_MAX_FEATURE: i32 = 512;
 	pub const CPU_MMX: i32 = 1;
 	pub const CPU_MSA: i32 = 150;
 	pub const CPU_NEON: i32 = 100;
+	pub const CPU_NEON_BF16: i32 = 103;
 	pub const CPU_NEON_DOTPROD: i32 = 101;
+	pub const CPU_NEON_FP16: i32 = 102;
 	pub const CPU_POPCNT: i32 = 8;
 	pub const CPU_RISCVV: i32 = 170;
 	pub const CPU_RVV: i32 = 210;
@@ -284,11 +287,14 @@ pub mod core {
 	pub const CV_CPU_AVX_512VPOPCNTDQ: i32 = 25;
 	pub const CV_CPU_FMA3: i32 = 12;
 	pub const CV_CPU_FP16: i32 = 9;
-	pub const CV_CPU_LASX: i32 = 230;
+	pub const CV_CPU_LASX: i32 = 231;
+	pub const CV_CPU_LSX: i32 = 230;
 	pub const CV_CPU_MMX: i32 = 1;
 	pub const CV_CPU_MSA: i32 = 150;
 	pub const CV_CPU_NEON: i32 = 100;
+	pub const CV_CPU_NEON_BF16: i32 = 103;
 	pub const CV_CPU_NEON_DOTPROD: i32 = 101;
+	pub const CV_CPU_NEON_FP16: i32 = 102;
 	pub const CV_CPU_NONE: i32 = 0;
 	pub const CV_CPU_POPCNT: i32 = 8;
 	pub const CV_CPU_RISCVV: i32 = 170;
@@ -356,6 +362,7 @@ pub mod core {
 	pub const CV_LOG_LEVEL_VERBOSE: i32 = 6;
 	pub const CV_LOG_LEVEL_WARN: i32 = 3;
 	pub const CV_LOG_STRIP_LEVEL: i32 = CV_LOG_LEVEL_VERBOSE;
+	pub const CV_LSX: i32 = 0;
 	pub const CV_MAJOR_VERSION: i32 = CV_VERSION_MAJOR;
 	pub const CV_MAT_CN_MASK: i32 = ((CV_CN_MAX-1)<<CV_CN_SHIFT);
 	pub const CV_MAT_CONT_FLAG: i32 = (1<<CV_MAT_CONT_FLAG_SHIFT);
@@ -380,10 +387,10 @@ pub mod core {
 	pub const CV_SUBMAT_FLAG: i32 = (1<<CV_SUBMAT_FLAG_SHIFT);
 	pub const CV_SUBMAT_FLAG_SHIFT: i32 = 15;
 	pub const CV_SUBMINOR_VERSION: i32 = CV_VERSION_REVISION;
-	pub const CV_VERSION: &str = "4.8.1";
+	pub const CV_VERSION: &str = "4.9.0";
 	pub const CV_VERSION_MAJOR: i32 = 4;
-	pub const CV_VERSION_MINOR: i32 = 8;
-	pub const CV_VERSION_REVISION: i32 = 1;
+	pub const CV_VERSION_MINOR: i32 = 9;
+	pub const CV_VERSION_REVISION: i32 = 0;
 	pub const CV_VERSION_STATUS: &str = "";
 	pub const CV_VSX: i32 = 0;
 	pub const CV_VSX3: i32 = 0;
@@ -1149,12 +1156,15 @@ pub mod core {
 		CPU_AVX_5124FMAPS = 27,
 		CPU_NEON = 100,
 		CPU_NEON_DOTPROD = 101,
+		CPU_NEON_FP16 = 102,
+		CPU_NEON_BF16 = 103,
 		CPU_MSA = 150,
 		CPU_RISCVV = 170,
 		CPU_VSX = 200,
 		CPU_VSX3 = 201,
 		CPU_RVV = 210,
-		CPU_LASX = 230,
+		CPU_LSX = 230,
+		CPU_LASX = 231,
 		/// Skylake-X with AVX-512F/CD/BW/DQ/VL
 		CPU_AVX512_SKX = 256,
 		/// Common instructions AVX-512F/CD for all CPUs that support AVX-512
@@ -2278,6 +2288,10 @@ pub mod core {
 	/// 
 	/// Note: Saturation is not applied when the arrays have the depth CV_32S.
 	/// You may even get a negative value in the case of overflow.
+	/// 
+	/// Note: (Python) Be careful to difference behaviour between src1/src2 are single number and they are tuple/array.
+	/// `absdiff(src,X)` means `absdiff(src,(X,X,X,X))`.
+	/// `absdiff(src,(X,))` means `absdiff(src,(X,0,0,0))`.
 	/// ## Parameters
 	/// * src1: first input array or a scalar.
 	/// * src2: second input array or a scalar.
@@ -2406,6 +2420,10 @@ pub mod core {
 	/// 
 	/// Note: Saturation is not applied when the output array has the depth CV_32S. You may even get
 	/// result of an incorrect sign in the case of overflow.
+	/// 
+	/// Note: (Python) Be careful to difference behaviour between src1/src2 are single number and they are tuple/array.
+	/// `add(src,X)` means `add(src,(X,X,X,X))`.
+	/// `add(src,(X,))` means `add(src,(X,0,0,0))`.
 	/// ## Parameters
 	/// * src1: first input array or a scalar.
 	/// * src2: second input array or a scalar.
@@ -2462,6 +2480,10 @@ pub mod core {
 	/// 
 	/// Note: Saturation is not applied when the output array has the depth CV_32S. You may even get
 	/// result of an incorrect sign in the case of overflow.
+	/// 
+	/// Note: (Python) Be careful to difference behaviour between src1/src2 are single number and they are tuple/array.
+	/// `add(src,X)` means `add(src,(X,X,X,X))`.
+	/// `add(src,(X,))` means `add(src,(X,0,0,0))`.
 	/// ## Parameters
 	/// * src1: first input array or a scalar.
 	/// * src2: second input array or a scalar.
@@ -2867,6 +2889,23 @@ pub mod core {
 	pub fn border_interpolate(p: i32, len: i32, border_type: i32) -> Result<i32> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_borderInterpolate_int_int_int(p, len, border_type, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Broadcast the given Mat to the given shape.
+	/// ## Parameters
+	/// * src: input array
+	/// * shape: target shape. Should be a list of CV_32S numbers. Note that negative values are not supported.
+	/// * dst: output array that has the given shape
+	#[inline]
+	pub fn broadcast(src: &impl core::ToInputArray, shape: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		input_array_arg!(shape);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_broadcast_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), shape.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -4456,6 +4495,10 @@ pub mod core {
 	/// 
 	/// Note: Saturation is not applied when the output array has the depth CV_32S. You may even get
 	/// result of an incorrect sign in the case of overflow.
+	/// 
+	/// Note: (Python) Be careful to difference behaviour between src1/src2 are single number and they are tuple/array.
+	/// `divide(src,X)` means `divide(src,(X,X,X,X))`.
+	/// `divide(src,(X,))` means `divide(src,(X,0,0,0))`.
 	/// ## Parameters
 	/// * src1: first input array.
 	/// * src2: second input array of the same size and type as src1.
@@ -4501,6 +4544,10 @@ pub mod core {
 	/// 
 	/// Note: Saturation is not applied when the output array has the depth CV_32S. You may even get
 	/// result of an incorrect sign in the case of overflow.
+	/// 
+	/// Note: (Python) Be careful to difference behaviour between src1/src2 are single number and they are tuple/array.
+	/// `divide(src,X)` means `divide(src,(X,X,X,X))`.
+	/// `divide(src,(X,))` means `divide(src,(X,0,0,0))`.
 	/// ## Parameters
 	/// * src1: first input array.
 	/// * src2: second input array of the same size and type as src1.
@@ -4561,6 +4608,10 @@ pub mod core {
 	/// 
 	/// Note: Saturation is not applied when the output array has the depth CV_32S. You may even get
 	/// result of an incorrect sign in the case of overflow.
+	/// 
+	/// Note: (Python) Be careful to difference behaviour between src1/src2 are single number and they are tuple/array.
+	/// `divide(src,X)` means `divide(src,(X,X,X,X))`.
+	/// `divide(src,(X,))` means `divide(src,(X,0,0,0))`.
 	/// ## Parameters
 	/// * src1: first input array.
 	/// * src2: second input array of the same size and type as src1.
@@ -6163,7 +6214,7 @@ pub mod core {
 	/// advanced way, use cv::mixChannels.
 	/// 
 	/// The following example shows how to merge 3 single channel matrices into a single 3-channel matrix.
-	/// [example](https://github.com/opencv/opencv/blob/4.8.1/samples/cpp/tutorial_code/snippets/core_merge.cpp#L1)
+	/// [example](https://github.com/opencv/opencv/blob/4.9.0/samples/cpp/tutorial_code/snippets/core_merge.cpp#L1)
 	/// 
 	/// ## Parameters
 	/// * mv: input array of matrices to be merged; all the matrices in mv must have the same
@@ -6226,7 +6277,7 @@ pub mod core {
 	pub fn min_max_idx_def(src: &impl core::ToInputArray, min_val: Option<&mut f64>) -> Result<()> {
 		input_array_arg!(src);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_minMaxIdx_const__InputArrayR_doubleX(src.as_raw__InputArray(), min_val.map_or(::core::ptr::null_mut(), |min_val| min_val as *mut _), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_minMaxIdx_const__InputArrayR_doubleX(src.as_raw__InputArray(), min_val.map_or(::core::ptr::null_mut(), |x| x), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -6267,7 +6318,7 @@ pub mod core {
 		input_array_arg!(src);
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_minMaxIdx_const__InputArrayR_doubleX_doubleX_intX_intX_const__InputArrayR(src.as_raw__InputArray(), min_val.map_or(::core::ptr::null_mut(), |min_val| min_val as *mut _), max_val.map_or(::core::ptr::null_mut(), |max_val| max_val as *mut _), min_idx.map_or(::core::ptr::null_mut(), |min_idx| min_idx as *mut _), max_idx.map_or(::core::ptr::null_mut(), |max_idx| max_idx as *mut _), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_minMaxIdx_const__InputArrayR_doubleX_doubleX_intX_intX_const__InputArrayR(src.as_raw__InputArray(), min_val.map_or(::core::ptr::null_mut(), |x| x), max_val.map_or(::core::ptr::null_mut(), |x| x), min_idx.map_or(::core::ptr::null_mut(), |x| x), max_idx.map_or(::core::ptr::null_mut(), |x| x), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -6290,7 +6341,7 @@ pub mod core {
 	#[inline]
 	pub fn min_max_loc_sparse_def(a: &core::SparseMat, min_val: Option<&mut f64>, max_val: Option<&mut f64>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_minMaxLoc_const_SparseMatR_doubleX_doubleX(a.as_raw_SparseMat(), min_val.map_or(::core::ptr::null_mut(), |min_val| min_val as *mut _), max_val.map_or(::core::ptr::null_mut(), |max_val| max_val as *mut _), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_minMaxLoc_const_SparseMatR_doubleX_doubleX(a.as_raw_SparseMat(), min_val.map_or(::core::ptr::null_mut(), |x| x), max_val.map_or(::core::ptr::null_mut(), |x| x), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -6332,7 +6383,7 @@ pub mod core {
 	#[inline]
 	pub fn min_max_loc_sparse(a: &core::SparseMat, min_val: Option<&mut f64>, max_val: Option<&mut f64>, min_idx: Option<&mut i32>, max_idx: Option<&mut i32>) -> Result<()> {
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_minMaxLoc_const_SparseMatR_doubleX_doubleX_intX_intX(a.as_raw_SparseMat(), min_val.map_or(::core::ptr::null_mut(), |min_val| min_val as *mut _), max_val.map_or(::core::ptr::null_mut(), |max_val| max_val as *mut _), min_idx.map_or(::core::ptr::null_mut(), |min_idx| min_idx as *mut _), max_idx.map_or(::core::ptr::null_mut(), |max_idx| max_idx as *mut _), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_minMaxLoc_const_SparseMatR_doubleX_doubleX_intX_intX(a.as_raw_SparseMat(), min_val.map_or(::core::ptr::null_mut(), |x| x), max_val.map_or(::core::ptr::null_mut(), |x| x), min_idx.map_or(::core::ptr::null_mut(), |x| x), max_idx.map_or(::core::ptr::null_mut(), |x| x), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -6368,7 +6419,7 @@ pub mod core {
 	pub fn min_max_loc_def(src: &impl core::ToInputArray, min_val: Option<&mut f64>) -> Result<()> {
 		input_array_arg!(src);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_minMaxLoc_const__InputArrayR_doubleX(src.as_raw__InputArray(), min_val.map_or(::core::ptr::null_mut(), |min_val| min_val as *mut _), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_minMaxLoc_const__InputArrayR_doubleX(src.as_raw__InputArray(), min_val.map_or(::core::ptr::null_mut(), |x| x), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -6404,7 +6455,7 @@ pub mod core {
 		input_array_arg!(src);
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_minMaxLoc_const__InputArrayR_doubleX_doubleX_PointX_PointX_const__InputArrayR(src.as_raw__InputArray(), min_val.map_or(::core::ptr::null_mut(), |min_val| min_val as *mut _), max_val.map_or(::core::ptr::null_mut(), |max_val| max_val as *mut _), min_loc.map_or(::core::ptr::null_mut(), |min_loc| min_loc as *mut _), max_loc.map_or(::core::ptr::null_mut(), |max_loc| max_loc as *mut _), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_minMaxLoc_const__InputArrayR_doubleX_doubleX_PointX_PointX_const__InputArrayR(src.as_raw__InputArray(), min_val.map_or(::core::ptr::null_mut(), |x| x), max_val.map_or(::core::ptr::null_mut(), |x| x), min_loc.map_or(::core::ptr::null_mut(), |x| x), max_loc.map_or(::core::ptr::null_mut(), |x| x), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -6824,6 +6875,10 @@ pub mod core {
 	/// Note: Saturation is not applied when the output array has the depth
 	/// CV_32S. You may even get result of an incorrect sign in the case of
 	/// overflow.
+	/// 
+	/// Note: (Python) Be careful to difference behaviour between src1/src2 are single number and they are tuple/array.
+	/// `multiply(src,X)` means `multiply(src,(X,X,X,X))`.
+	/// `multiply(src,(X,))` means `multiply(src,(X,0,0,0))`.
 	/// ## Parameters
 	/// * src1: first input array.
 	/// * src2: second input array of the same size and the same type as src1.
@@ -6864,6 +6919,10 @@ pub mod core {
 	/// Note: Saturation is not applied when the output array has the depth
 	/// CV_32S. You may even get result of an incorrect sign in the case of
 	/// overflow.
+	/// 
+	/// Note: (Python) Be careful to difference behaviour between src1/src2 are single number and they are tuple/array.
+	/// `multiply(src,X)` means `multiply(src,(X,X,X,X))`.
+	/// `multiply(src,(X,))` means `multiply(src,(X,0,0,0))`.
 	/// ## Parameters
 	/// * src1: first input array.
 	/// * src2: second input array of the same size and the same type as src1.
@@ -6941,7 +7000,7 @@ pub mod core {
 	/// \f}
 	/// The following graphic shows all values for the three norm functions ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F1%7D%2C%20%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F2%7D) and ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F%5Cinfty%7D).
 	/// It is notable that the ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B1%7D%20) norm forms the upper and the ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B%5Cinfty%7D%20) norm forms the lower border for the example function ![inline formula](https://latex.codecogs.com/png.latex?%20r%28x%29%20).
-	/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/4.8.1/NormTypes_OneArray_1-2-INF.png)
+	/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/4.9.0/NormTypes_OneArray_1-2-INF.png)
 	/// 
 	/// When the mask parameter is specified and it is not empty, the norm is
 	/// 
@@ -7046,7 +7105,7 @@ pub mod core {
 	/// \f}
 	/// The following graphic shows all values for the three norm functions ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F1%7D%2C%20%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F2%7D) and ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F%5Cinfty%7D).
 	/// It is notable that the ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B1%7D%20) norm forms the upper and the ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B%5Cinfty%7D%20) norm forms the lower border for the example function ![inline formula](https://latex.codecogs.com/png.latex?%20r%28x%29%20).
-	/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/4.8.1/NormTypes_OneArray_1-2-INF.png)
+	/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/4.9.0/NormTypes_OneArray_1-2-INF.png)
 	/// 
 	/// When the mask parameter is specified and it is not empty, the norm is
 	/// 
@@ -8601,7 +8660,7 @@ pub mod core {
 		Ok(ret)
 	}
 	
-	/// converts NaNs to the given number
+	/// Replaces NaNs by given number
 	/// ## Parameters
 	/// * a: input/output matrix (CV_32F type).
 	/// * val: value to convert the NaNs
@@ -8619,7 +8678,7 @@ pub mod core {
 		Ok(ret)
 	}
 	
-	/// converts NaNs to the given number
+	/// Replaces NaNs by given number
 	/// ## Parameters
 	/// * a: input/output matrix (CV_32F type).
 	/// * val: value to convert the NaNs
@@ -9075,8 +9134,8 @@ pub mod core {
 	/// 
 	/// mainly useful for language bindings
 	/// ## Parameters
-	/// * rect1: First rectangle
-	/// * rect2: Second rectangle
+	/// * a: First rectangle
+	/// * b: Second rectangle
 	/// ## Returns
 	/// the area of the intersection
 	#[inline]
@@ -9220,10 +9279,10 @@ pub mod core {
 	/// And multi-channel arrays are also supported in these two reduction modes.
 	/// 
 	/// The following code demonstrates its usage for a single channel matrix.
-	/// [example](https://github.com/opencv/opencv/blob/4.8.1/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
+	/// [example](https://github.com/opencv/opencv/blob/4.9.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
 	/// 
 	/// And the following code demonstrates its usage for a two-channel matrix.
-	/// [example2](https://github.com/opencv/opencv/blob/4.8.1/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
+	/// [example2](https://github.com/opencv/opencv/blob/4.9.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
 	/// 
 	/// ## Parameters
 	/// * src: input 2D matrix.
@@ -9260,10 +9319,10 @@ pub mod core {
 	/// And multi-channel arrays are also supported in these two reduction modes.
 	/// 
 	/// The following code demonstrates its usage for a single channel matrix.
-	/// [example](https://github.com/opencv/opencv/blob/4.8.1/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
+	/// [example](https://github.com/opencv/opencv/blob/4.9.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
 	/// 
 	/// And the following code demonstrates its usage for a two-channel matrix.
-	/// [example2](https://github.com/opencv/opencv/blob/4.8.1/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
+	/// [example2](https://github.com/opencv/opencv/blob/4.9.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
 	/// 
 	/// ## Parameters
 	/// * src: input 2D matrix.
@@ -10002,7 +10061,7 @@ pub mod core {
 	/// mixChannels .
 	/// 
 	/// The following example demonstrates how to split a 3-channel matrix into 3 single channel matrices.
-	/// [example](https://github.com/opencv/opencv/blob/4.8.1/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
+	/// [example](https://github.com/opencv/opencv/blob/4.9.0/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
 	/// 
 	/// ## Parameters
 	/// * src: input multi-channel array.
@@ -10027,7 +10086,7 @@ pub mod core {
 	/// mixChannels .
 	/// 
 	/// The following example demonstrates how to split a 3-channel matrix into 3 single channel matrices.
-	/// [example](https://github.com/opencv/opencv/blob/4.8.1/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
+	/// [example](https://github.com/opencv/opencv/blob/4.9.0/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
 	/// 
 	/// ## Parameters
 	/// * src: input multi-channel array.
@@ -10102,6 +10161,10 @@ pub mod core {
 	/// 
 	/// Note: Saturation is not applied when the output array has the depth CV_32S. You may even get
 	/// result of an incorrect sign in the case of overflow.
+	/// 
+	/// Note: (Python) Be careful to difference behaviour between src1/src2 are single number and they are tuple/array.
+	/// `subtract(src,X)` means `subtract(src,(X,X,X,X))`.
+	/// `subtract(src,(X,))` means `subtract(src,(X,0,0,0))`.
 	/// ## Parameters
 	/// * src1: first input array or a scalar.
 	/// * src2: second input array or a scalar.
@@ -10159,6 +10222,10 @@ pub mod core {
 	/// 
 	/// Note: Saturation is not applied when the output array has the depth CV_32S. You may even get
 	/// result of an incorrect sign in the case of overflow.
+	/// 
+	/// Note: (Python) Be careful to difference behaviour between src1/src2 are single number and they are tuple/array.
+	/// `subtract(src,X)` means `subtract(src,(X,X,X,X))`.
+	/// `subtract(src,(X,))` means `subtract(src,(X,0,0,0))`.
 	/// ## Parameters
 	/// * src1: first input array or a scalar.
 	/// * src2: second input array or a scalar.
@@ -10821,6 +10888,8 @@ pub mod core {
 		Ok(ret)
 	}
 	
+	/// @cond IGNORED
+	/// 
 	/// ## Note
 	/// This alternative version of [test_overload_resolution] function uses the following default values for its arguments:
 	/// * point: Point(42,24)
@@ -10834,6 +10903,8 @@ pub mod core {
 		Ok(ret)
 	}
 	
+	/// @cond IGNORED
+	/// 
 	/// ## C++ default parameters
 	/// * point: Point(42,24)
 	#[inline]
@@ -11337,7 +11408,7 @@ pub mod core {
 	/// etc.).
 	/// 
 	/// Here is example of SimpleBlobDetector use in your application via Algorithm interface:
-	/// [Algorithm](https://github.com/opencv/opencv/blob/4.8.1/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+	/// [Algorithm](https://github.com/opencv/opencv/blob/4.9.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 	pub struct Algorithm {
 		ptr: *mut c_void
 	}
@@ -16888,10 +16959,10 @@ pub mod core {
 		///        that an element may have multiple channels.
 		/// 
 		/// The following code demonstrates its usage for a 2-d matrix:
-		/// [example-2d](https://github.com/opencv/opencv/blob/4.8.1/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
+		/// [example-2d](https://github.com/opencv/opencv/blob/4.9.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
 		/// 
 		/// The following code demonstrates its usage for a 3-d matrix:
-		/// [example-3d](https://github.com/opencv/opencv/blob/4.8.1/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
+		/// [example-3d](https://github.com/opencv/opencv/blob/4.9.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
 		/// 
 		/// ## C++ default parameters
 		/// * depth: -1
@@ -16922,10 +16993,10 @@ pub mod core {
 		///        that an element may have multiple channels.
 		/// 
 		/// The following code demonstrates its usage for a 2-d matrix:
-		/// [example-2d](https://github.com/opencv/opencv/blob/4.8.1/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
+		/// [example-2d](https://github.com/opencv/opencv/blob/4.9.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
 		/// 
 		/// The following code demonstrates its usage for a 3-d matrix:
-		/// [example-3d](https://github.com/opencv/opencv/blob/4.8.1/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
+		/// [example-3d](https://github.com/opencv/opencv/blob/4.9.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
 		/// 
 		/// ## Note
 		/// This alternative version of [MatTraitConst::check_vector] function uses the following default values for its arguments:
@@ -22732,8 +22803,8 @@ pub mod core {
 	/// [size2f] structure) and the rotation angle in degrees.
 	/// 
 	/// The sample below demonstrates how to use RotatedRect:
-	/// [RotatedRect_demo](https://github.com/opencv/opencv/blob/4.8.1/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
-	/// ![image](https://docs.opencv.org/4.8.1/rotatedrect.png)
+	/// [RotatedRect_demo](https://github.com/opencv/opencv/blob/4.9.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+	/// ![image](https://docs.opencv.org/4.9.0/rotatedrect.png)
 	/// ## See also
 	/// CamShift, fitEllipse, minAreaRect, CvBox2D
 	#[repr(C)]
@@ -24834,10 +24905,10 @@ pub mod core {
 	/// 
 	/// The class computes passing time by counting the number of ticks per second. That is, the following code computes the
 	/// execution time in seconds:
-	/// [TickMeter_total](https://github.com/opencv/opencv/blob/4.8.1/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+	/// [TickMeter_total](https://github.com/opencv/opencv/blob/4.9.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 	/// 
 	/// It is also possible to compute the average time over multiple runs:
-	/// [TickMeter_average](https://github.com/opencv/opencv/blob/4.8.1/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+	/// [TickMeter_average](https://github.com/opencv/opencv/blob/4.9.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 	/// ## See also
 	/// getTickCount, getTickFrequency
 	pub struct TickMeter {
@@ -29399,9 +29470,19 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// bindings overload which copies the GpuMat content to device memory (Blocking call)
+		#[inline]
+		fn copy_to_1(&self, dst: &mut core::GpuMat) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_copyTo_const_GpuMatR(self.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// copies the GpuMat content to device memory (Non-Blocking call)
 		#[inline]
-		fn copy_to_1(&self, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		fn copy_to_2(&self, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_copyTo_const_const__OutputArrayR_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
@@ -29410,9 +29491,19 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// bindings overload which copies the GpuMat content to device memory (Non-Blocking call)
+		#[inline]
+		fn copy_to_3(&self, dst: &mut core::GpuMat, stream: &mut core::Stream) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_copyTo_const_GpuMatR_StreamR(self.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// copies those GpuMat elements to "m" that are marked with non-zero mask elements (Blocking call)
 		#[inline]
-		fn copy_to_2(&self, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray) -> Result<()> {
+		fn copy_to_4(&self, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray) -> Result<()> {
 			output_array_arg!(dst);
 			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
@@ -29422,13 +29513,33 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// bindings overload which copies those GpuMat elements to "m" that are marked with non-zero mask elements (Blocking call)
+		#[inline]
+		fn copy_to_5(&self, dst: &mut core::GpuMat, mask: &mut core::GpuMat) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_copyTo_const_GpuMatR_GpuMatR(self.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), mask.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// copies those GpuMat elements to "m" that are marked with non-zero mask elements (Non-Blocking call)
 		#[inline]
-		fn copy_to_3(&self, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
+		fn copy_to_6(&self, dst: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, stream: &mut core::Stream) -> Result<()> {
 			output_array_arg!(dst);
 			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_copyTo_const_const__OutputArrayR_const__InputArrayR_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// bindings overload which copies those GpuMat elements to "m" that are marked with non-zero mask elements (Non-Blocking call)
+		#[inline]
+		fn copy_to_7(&self, dst: &mut core::GpuMat, mask: &mut core::GpuMat, stream: &mut core::Stream) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_copyTo_const_GpuMatR_GpuMatR_StreamR(self.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), mask.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -29456,12 +29567,22 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// bindings overload which converts GpuMat to another datatype (Non-Blocking call)
+		#[inline]
+		fn convert_to_2(&self, dst: &mut core::GpuMat, rtype: i32, stream: &mut core::Stream) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_convertTo_const_GpuMatR_int_StreamR(self.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), rtype, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// converts GpuMat to another datatype with scaling (Blocking call)
 		/// 
 		/// ## C++ default parameters
 		/// * beta: 0.0
 		#[inline]
-		fn convert_to_2(&self, dst: &mut impl core::ToOutputArray, rtype: i32, alpha: f64, beta: f64) -> Result<()> {
+		fn convert_to_3(&self, dst: &mut impl core::ToOutputArray, rtype: i32, alpha: f64, beta: f64) -> Result<()> {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_convertTo_const_const__OutputArrayR_int_double_double(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), rtype, alpha, beta, ocvrs_return.as_mut_ptr()) };
@@ -29485,9 +29606,38 @@ pub mod core {
 			Ok(ret)
 		}
 		
+		/// bindings overload which converts GpuMat to another datatype with scaling(Blocking call)
+		/// 
+		/// ## C++ default parameters
+		/// * alpha: 1.0
+		/// * beta: 0.0
+		#[inline]
+		fn convert_to_4(&self, dst: &mut core::GpuMat, rtype: i32, alpha: f64, beta: f64) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_convertTo_const_GpuMatR_int_double_double(self.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), rtype, alpha, beta, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// bindings overload which converts GpuMat to another datatype with scaling(Blocking call)
+		/// 
+		/// ## Note
+		/// This alternative version of [GpuMatTraitConst::convert_to] function uses the following default values for its arguments:
+		/// * alpha: 1.0
+		/// * beta: 0.0
+		#[inline]
+		fn convert_to_def_1(&self, dst: &mut core::GpuMat, rtype: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_convertTo_const_GpuMatR_int(self.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), rtype, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// converts GpuMat to another datatype with scaling (Non-Blocking call)
 		#[inline]
-		fn convert_to_3(&self, dst: &mut impl core::ToOutputArray, rtype: i32, alpha: f64, stream: &mut core::Stream) -> Result<()> {
+		fn convert_to_5(&self, dst: &mut impl core::ToOutputArray, rtype: i32, alpha: f64, stream: &mut core::Stream) -> Result<()> {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_convertTo_const_const__OutputArrayR_int_double_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), rtype, alpha, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
@@ -29498,10 +29648,20 @@ pub mod core {
 		
 		/// converts GpuMat to another datatype with scaling (Non-Blocking call)
 		#[inline]
-		fn convert_to_4(&self, dst: &mut impl core::ToOutputArray, rtype: i32, alpha: f64, beta: f64, stream: &mut core::Stream) -> Result<()> {
+		fn convert_to_6(&self, dst: &mut impl core::ToOutputArray, rtype: i32, alpha: f64, beta: f64, stream: &mut core::Stream) -> Result<()> {
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_GpuMat_convertTo_const_const__OutputArrayR_int_double_double_StreamR(self.as_raw_GpuMat(), dst.as_raw__OutputArray(), rtype, alpha, beta, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// bindings overload which converts GpuMat to another datatype with scaling (Non-Blocking call)
+		#[inline]
+		fn convert_to_7(&self, dst: &mut core::GpuMat, rtype: i32, alpha: f64, beta: f64, stream: &mut core::Stream) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_convertTo_const_GpuMatR_int_double_double_StreamR(self.as_raw_GpuMat(), dst.as_raw_mut_GpuMat(), rtype, alpha, beta, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)

@@ -7159,73 +7159,68 @@ pub mod gapi {
 		
 	}
 	
-	/// \addtogroup gapi_main_classes
+	/// GComputation class represents a captured computation
+	/// graph. GComputation objects form boundaries for expression code
+	/// user writes with G-API, allowing to compile and execute it.
 	/// 
-	///  G-API classes for constructed and compiled graphs.
-	/// /
+	/// G-API computations are defined with input/output data
+	/// objects. G-API will track automatically which operations connect
+	/// specified outputs to the inputs, forming up a call graph to be
+	/// executed. The below example expresses calculation of Sobel operator
+	/// for edge detection (![inline formula](https://latex.codecogs.com/png.latex?G%20%3D%20%5Csqrt%7BG%5Fx%5E2%20%2B%20G%5Fy%5E2%7D)):
 	/// 
-	///  GComputation class represents a captured computation
-	///  graph. GComputation objects form boundaries for expression code
-	///  user writes with G-API, allowing to compile and execute it.
+	/// [graph_def](https://github.com/opencv/opencv_contrib/blob/4.9.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
 	/// 
-	///  G-API computations are defined with input/output data
-	///  objects. G-API will track automatically which operations connect
-	///  specified outputs to the inputs, forming up a call graph to be
-	///  executed. The below example expresses calculation of Sobel operator
-	///  for edge detection (![inline formula](https://latex.codecogs.com/png.latex?G%20%3D%20%5Csqrt%7BG%5Fx%5E2%20%2B%20G%5Fy%5E2%7D)):
+	/// Full pipeline can be now captured with this object declaration:
 	/// 
-	///  [graph_def](https://github.com/opencv/opencv_contrib/blob/4.8.1/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+	/// [graph_cap_full](https://github.com/opencv/opencv_contrib/blob/4.9.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
 	/// 
-	///  Full pipeline can be now captured with this object declaration:
+	/// Input/output data objects on which a call graph should be
+	/// reconstructed are passed using special wrappers cv::GIn and
+	/// cv::GOut. G-API will track automatically which operations form a
+	/// path from inputs to outputs and build the execution graph appropriately.
 	/// 
-	///  [graph_cap_full](https://github.com/opencv/opencv_contrib/blob/4.8.1/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+	/// Note that cv::GComputation doesn't take ownership on data objects
+	/// it is defined. Moreover, multiple GComputation objects may be
+	/// defined on the same expressions, e.g. a smaller pipeline which
+	/// expects that image gradients are already pre-calculated may be
+	/// defined like this:
 	/// 
-	///  Input/output data objects on which a call graph should be
-	///  reconstructed are passed using special wrappers cv::GIn and
-	///  cv::GOut. G-API will track automatically which operations form a
-	///  path from inputs to outputs and build the execution graph appropriately.
+	/// [graph_cap_sub](https://github.com/opencv/opencv_contrib/blob/4.9.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
 	/// 
-	///  Note that cv::GComputation doesn't take ownership on data objects
-	///  it is defined. Moreover, multiple GComputation objects may be
-	///  defined on the same expressions, e.g. a smaller pipeline which
-	///  expects that image gradients are already pre-calculated may be
-	///  defined like this:
+	/// The resulting graph would expect two inputs and produce one
+	/// output. In this case, it doesn't matter if gx/gy data objects are
+	/// results of cv::gapi::Sobel operators -- G-API will stop unrolling
+	/// expressions and building the underlying graph one reaching this
+	/// data objects.
 	/// 
-	///  [graph_cap_sub](https://github.com/opencv/opencv_contrib/blob/4.8.1/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+	/// The way how GComputation is defined is important as its definition
+	/// specifies graph _protocol_ -- the way how the graph should be
+	/// used. Protocol is defined by number of inputs, number of outputs,
+	/// and shapes of inputs and outputs.
 	/// 
-	///  The resulting graph would expect two inputs and produce one
-	///  output. In this case, it doesn't matter if gx/gy data objects are
-	///  results of cv::gapi::Sobel operators -- G-API will stop unrolling
-	///  expressions and building the underlying graph one reaching this
-	///  data objects.
+	/// In the above example, sobelEdge expects one Mat on input and
+	/// produces one Mat; while sobelEdgeSub expects two Mats on input and
+	/// produces one Mat. GComputation's protocol defines how other
+	/// computation methods should be used -- cv::GComputation::compile() and
+	/// cv::GComputation::apply(). For example, if a graph is defined on
+	/// two GMat inputs, two cv::Mat objects have to be passed to apply()
+	/// for execution. GComputation checks protocol correctness in runtime
+	/// so passing a different number of objects in apply() or passing
+	/// cv::Scalar instead of cv::Mat there would compile well as a C++
+	/// source but raise an exception in run-time. G-API also comes with a
+	/// typed wrapper cv::GComputationT<> which introduces this type-checking in
+	/// compile-time.
 	/// 
-	///  The way how GComputation is defined is important as its definition
-	///  specifies graph _protocol_ -- the way how the graph should be
-	///  used. Protocol is defined by number of inputs, number of outputs,
-	///  and shapes of inputs and outputs.
+	/// cv::GComputation itself is a thin object which just captures what
+	/// the graph is. The compiled graph (which actually process data) is
+	/// represented by class GCompiled. Use compile() method to generate a
+	/// compiled graph with given compile options. cv::GComputation can
+	/// also be used to process data with implicit graph compilation
+	/// on-the-fly, see apply() for details.
 	/// 
-	///  In the above example, sobelEdge expects one Mat on input and
-	///  produces one Mat; while sobelEdgeSub expects two Mats on input and
-	///  produces one Mat. GComputation's protocol defines how other
-	///  computation methods should be used -- cv::GComputation::compile() and
-	///  cv::GComputation::apply(). For example, if a graph is defined on
-	///  two GMat inputs, two cv::Mat objects have to be passed to apply()
-	///  for execution. GComputation checks protocol correctness in runtime
-	///  so passing a different number of objects in apply() or passing
-	///  cv::Scalar instead of cv::Mat there would compile well as a C++
-	///  source but raise an exception in run-time. G-API also comes with a
-	///  typed wrapper cv::GComputationT<> which introduces this type-checking in
-	///  compile-time.
-	/// 
-	///  cv::GComputation itself is a thin object which just captures what
-	///  the graph is. The compiled graph (which actually process data) is
-	///  represented by class GCompiled. Use compile() method to generate a
-	///  compiled graph with given compile options. cv::GComputation can
-	///  also be used to process data with implicit graph compilation
-	///  on-the-fly, see apply() for details.
-	/// 
-	///  GComputation is a reference-counted object -- once defined, all its
-	///  copies will refer to the same instance.
+	/// GComputation is a reference-counted object -- once defined, all its
+	/// copies will refer to the same instance.
 	/// ## See also
 	/// GCompiled
 	pub struct GComputation {
@@ -8003,41 +7998,17 @@ pub mod gapi {
 	
 	}
 	
-	/// \addtogroup gapi_data_objects
+	/// GMat class represents image or tensor data in the
+	/// graph.
 	/// 
-	///  G-API data objects used to build G-API expressions.
+	/// GMat doesn't store any data itself, instead it describes a
+	/// functional relationship between operations consuming and producing
+	/// GMat objects.
 	/// 
-	///  These objects do not own any particular data (except compile-time
-	///  associated values like with cv::GScalar or `cv::GArray<T>`) and are
-	///  used only to construct graphs.
-	/// 
-	///  Every graph in G-API starts and ends with data objects.
-	/// 
-	///  Once constructed and compiled, G-API operates with regular host-side
-	///  data instead. Refer to the below table to find the mapping between
-	///  G-API and regular data types when passing input and output data
-	///  structures to G-API:
-	/// 
-	///    G-API data type    | I/O data type
-	///    ------------------ | -------------
-	///    cv::GMat           | cv::Mat, cv::UMat, cv::RMat
-	///    cv::GScalar        | cv::Scalar
-	///    `cv::GArray<T>`    | std::vector<T>
-	///    `cv::GOpaque<T>`   | T
-	///    cv::GFrame         | cv::MediaFrame
-	/// /
-	/// 
-	///  GMat class represents image or tensor data in the
-	///  graph.
-	/// 
-	///  GMat doesn't store any data itself, instead it describes a
-	///  functional relationship between operations consuming and producing
-	///  GMat objects.
-	/// 
-	///  GMat is a virtual counterpart of Mat and UMat, but it
-	///  doesn't mean G-API use Mat or UMat objects internally to represent
-	///  GMat objects -- the internal data representation may be
-	///  backend-specific or optimized out at all.
+	/// GMat is a virtual counterpart of Mat and UMat, but it
+	/// doesn't mean G-API use Mat or UMat objects internally to represent
+	/// GMat objects -- the internal data representation may be
+	/// backend-specific or optimized out at all.
 	/// ## See also
 	/// Mat, GMatDesc
 	pub struct GMat {
@@ -8776,7 +8747,7 @@ pub mod gapi {
 		/// This constructor overload is not marked `explicit` and can be
 		/// used in G-API expression code like this:
 		/// 
-		/// [gscalar_implicit](https://github.com/opencv/opencv_contrib/blob/4.8.1/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+		/// [gscalar_implicit](https://github.com/opencv/opencv_contrib/blob/4.9.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
 		/// 
 		/// Here operator+(GMat,GScalar) is used to wrap cv::gapi::addC()
 		/// and a value-initialized GScalar is created on the fly.
@@ -9308,24 +9279,18 @@ pub mod gapi {
 	
 	}
 	
-	/// \addtogroup gapi_data_structures
+	/// cv::MediaFrame class represents an image/media frame
+	/// obtained from an external source.
 	/// 
-	///  Extra G-API data structures used to pass input/output data
-	///  to the graph for processing.
-	/// /
-	/// 
-	///  cv::MediaFrame class represents an image/media frame
-	///  obtained from an external source.
-	/// 
-	///  cv::MediaFrame represents image data as specified in
-	///  cv::MediaFormat. cv::MediaFrame is designed to be a thin wrapper over some
-	///  external memory of buffer; the class itself provides an uniform
-	///  interface over such types of memory. cv::MediaFrame wraps data from
-	///  a camera driver or from a media codec and provides an abstraction
-	///  layer over this memory to G-API. MediaFrame defines a compact interface
-	///  to access and manage the underlying data; the implementation is
-	///  fully defined by the associated Adapter (which is usually
-	///  user-defined).
+	/// cv::MediaFrame represents image data as specified in
+	/// cv::MediaFormat. cv::MediaFrame is designed to be a thin wrapper over some
+	/// external memory of buffer; the class itself provides an uniform
+	/// interface over such types of memory. cv::MediaFrame wraps data from
+	/// a camera driver or from a media codec and provides an abstraction
+	/// layer over this memory to G-API. MediaFrame defines a compact interface
+	/// to access and manage the underlying data; the implementation is
+	/// fully defined by the associated Adapter (which is usually
+	/// user-defined).
 	/// ## See also
 	/// cv::RMat
 	pub struct MediaFrame {

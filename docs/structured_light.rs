@@ -11,10 +11,10 @@ pub mod structured_light {
 	//! case, a set of patterns  are successively projected onto the measuring surface.
 	//! The codeword for a given pixel is usually formed by  the sequence of illuminance values for that
 	//! pixel across the projected patterns. Thus, the codification is called  temporal because the bits
-	//! of the codewords are multiplexed in time [pattern](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_pattern) .
+	//! of the codewords are multiplexed in time [pattern](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_pattern) .
 	//! 
 	//! In this module a time-multiplexing coding strategy based on Gray encoding is implemented following the
-	//! (stereo) approach described in 3DUNDERWORLD algorithm [UNDERWORLD](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_UNDERWORLD) .
+	//! (stereo) approach described in 3DUNDERWORLD algorithm [UNDERWORLD](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_UNDERWORLD) .
 	//! For more details, see [tutorial_structured_light].
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
@@ -121,7 +121,7 @@ pub mod structured_light {
 		
 	}
 	
-	/// Class implementing the Gray-code pattern, based on [UNDERWORLD](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_UNDERWORLD).
+	/// Class implementing the Gray-code pattern, based on [UNDERWORLD](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_UNDERWORLD).
 	/// 
 	/// The generation of the pattern images is performed with Gray encoding using the traditional white and black colors.
 	/// 
@@ -451,7 +451,7 @@ pub mod structured_light {
 	}
 	
 	/// Class implementing Fourier transform profilometry (FTP) , phase-shifting profilometry (PSP)
-	/// and Fourier-assisted phase-shifting profilometry (FAPS) based on [faps](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_faps).
+	/// and Fourier-assisted phase-shifting profilometry (FAPS) based on [faps](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_faps).
 	/// 
 	/// This class generates sinusoidal patterns that can be used with FTP, PSP and FAPS.
 	pub struct SinusoidalPattern {

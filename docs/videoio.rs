@@ -18,7 +18,7 @@ pub mod videoio {
 		pub use { super::VideoCaptureTraitConst, super::VideoCaptureTrait, super::VideoWriterTraitConst, super::VideoWriterTrait };
 	}
 	
-	/// Android - not used
+	/// MediaNDK (API Level 21+) and NDK Camera (API level 24+) for Android
 	pub const CAP_ANDROID: i32 = 1000;
 	/// Auto detect == 0
 	pub const CAP_ANY: i32 = 0;
@@ -65,7 +65,7 @@ pub mod videoio {
 	pub const CAP_INTEL_MFX: i32 = 2300;
 	/// Microsoft Media Foundation (via videoInput). See platform specific notes above.
 	pub const CAP_MSMF: i32 = 1400;
-	/// For Orbbec 3D-Sensor device/module (Astra+, Femto)
+	/// For Orbbec 3D-Sensor device/module (Astra+, Femto, Astra2, Gemini2, Gemini2L, Gemini2XL, Femto Mega) attention: Astra2, Gemini2, and Gemini2L cameras currently only support Windows and Linux kernel versions no higher than 4.15, and higher versions of Linux kernel may have exceptions.
 	pub const CAP_OBSENSOR: i32 = 2600;
 	/// Data given from BGR stream generator
 	pub const CAP_OBSENSOR_BGR_IMAGE: i32 = 1;
@@ -282,7 +282,7 @@ pub mod videoio {
 	pub const CAP_PROP_PAN: i32 = 33;
 	/// Relative position of the video file: 0=start of the film, 1=end of the film.
 	pub const CAP_PROP_POS_AVI_RATIO: i32 = 2;
-	/// 0-based index of the frame to be decoded/captured next.
+	/// 0-based index of the frame to be decoded/captured next. When the index i is set in RAW mode (CAP_PROP_FORMAT == -1) this will seek to the key frame k, where k <= i.
 	pub const CAP_PROP_POS_FRAMES: i32 = 1;
 	/// Current position of the video file in milliseconds.
 	pub const CAP_PROP_POS_MSEC: i32 = 0;
@@ -316,6 +316,7 @@ pub mod videoio {
 	pub const CAP_PROP_SHARPNESS: i32 = 20;
 	/// Exposure speed. Can be readonly, depends on camera program.
 	pub const CAP_PROP_SPEED: i32 = 17007;
+	/// (read-only) time in microseconds since Jan 1 1970 when stream was opened. Applicable for FFmpeg backend only. Useful for RTSP and other live streams
 	pub const CAP_PROP_STREAM_OPEN_TIME_USEC: i32 = 55;
 	pub const CAP_PROP_TEMPERATURE: i32 = 23;
 	pub const CAP_PROP_TILT: i32 = 34;
@@ -690,8 +691,8 @@ pub mod videoio {
 	/// XINE engine (Linux)
 	pub const CAP_XINE: i32 = 2400;
 	pub const CV__CAP_PROP_LATEST: i32 = 71;
-	pub const CV__VIDEOWRITER_PROP_LATEST: i32 = 9;
-	/// Defaults to CV_8U.
+	pub const CV__VIDEOWRITER_PROP_LATEST: i32 = 12;
+	/// Defaults to \ref CV_8U.
 	pub const VIDEOWRITER_PROP_DEPTH: i32 = 5;
 	/// (Read-only): Size of just encoded video frame. Note that the encoding order may be different from representation order.
 	pub const VIDEOWRITER_PROP_FRAMEBYTES: i32 = 2;
@@ -704,10 +705,16 @@ pub mod videoio {
 	/// If it is not zero, the encoder will expect and encode color frames, otherwise it
 	/// will work with grayscale frames.
 	pub const VIDEOWRITER_PROP_IS_COLOR: i32 = 4;
+	/// Set to non-zero to signal that the following frames are key frames or zero if not, when encapsulating raw video (\ref VIDEOWRITER_PROP_RAW_VIDEO != 0). FFMpeg backend only.
+	pub const VIDEOWRITER_PROP_KEY_FLAG: i32 = 11;
+	/// (**open-only**) Set the key frame interval using raw video encapsulation (\ref VIDEOWRITER_PROP_RAW_VIDEO != 0). Defaults to 1 when not set. FFMpeg backend only.
+	pub const VIDEOWRITER_PROP_KEY_INTERVAL: i32 = 10;
 	/// Number of stripes for parallel encoding. -1 for auto detection.
 	pub const VIDEOWRITER_PROP_NSTRIPES: i32 = 3;
 	/// Current quality (0..100%) of the encoded videostream. Can be adjusted dynamically in some codecs.
 	pub const VIDEOWRITER_PROP_QUALITY: i32 = 1;
+	/// (**open-only**) Set to non-zero to enable encapsulation of an encoded raw video stream. Each raw encoded video frame should be passed to VideoWriter::write() as single row or column of a \ref CV_8UC1 Mat. \note If the key frame interval is not 1 then it must be manually specified by the user. This can either be performed during initialization passing \ref VIDEOWRITER_PROP_KEY_INTERVAL as one of the extra encoder params  to \ref VideoWriter::VideoWriter(const String &, int, double, const Size &, const std::vector< int > &params) or afterwards by setting the \ref VIDEOWRITER_PROP_KEY_FLAG with \ref VideoWriter::set() before writing each frame. FFMpeg backend only.
+	pub const VIDEOWRITER_PROP_RAW_VIDEO: i32 = 9;
 	/// Prefer to use H/W acceleration. If no one supported, then fallback to software processing.
 	/// 
 	/// Note: H/W acceleration may require special configuration of used environment.
@@ -803,7 +810,7 @@ pub mod videoio {
 		CAP_OPENNI = 900,
 		/// OpenNI (for Asus Xtion)
 		CAP_OPENNI_ASUS = 910,
-		/// Android - not used
+		/// MediaNDK (API Level 21+) and NDK Camera (API level 24+) for Android
 		CAP_ANDROID = 1000,
 		/// XIMEA Camera API
 		CAP_XIAPI = 1100,
@@ -844,7 +851,7 @@ pub mod videoio {
 		CAP_XINE = 2400,
 		/// uEye Camera API
 		CAP_UEYE = 2500,
-		/// For Orbbec 3D-Sensor device/module (Astra+, Femto)
+		/// For Orbbec 3D-Sensor device/module (Astra+, Femto, Astra2, Gemini2, Gemini2L, Gemini2XL, Femto Mega) attention: Astra2, Gemini2, and Gemini2L cameras currently only support Windows and Linux kernel versions no higher than 4.15, and higher versions of Linux kernel may have exceptions.
 		CAP_OBSENSOR = 2600,
 	}
 	
@@ -901,7 +908,7 @@ pub mod videoio {
 	pub enum VideoCaptureProperties {
 		/// Current position of the video file in milliseconds.
 		CAP_PROP_POS_MSEC = 0,
-		/// 0-based index of the frame to be decoded/captured next.
+		/// 0-based index of the frame to be decoded/captured next. When the index i is set in RAW mode (CAP_PROP_FORMAT == -1) this will seek to the key frame k, where k <= i.
 		CAP_PROP_POS_FRAMES = 1,
 		/// Relative position of the video file: 0=start of the film, 1=end of the film.
 		CAP_PROP_POS_AVI_RATIO = 2,
@@ -991,6 +998,7 @@ pub mod videoio {
 		CAP_PROP_OPEN_TIMEOUT_MSEC = 53,
 		/// (**open-only**) timeout in milliseconds for reading from a video capture (applicable for FFmpeg and GStreamer back-ends only)
 		CAP_PROP_READ_TIMEOUT_MSEC = 54,
+		/// (read-only) time in microseconds since Jan 1 1970 when stream was opened. Applicable for FFmpeg backend only. Useful for RTSP and other live streams
 		CAP_PROP_STREAM_OPEN_TIME_USEC = 55,
 		/// (read-only) Number of video channels
 		CAP_PROP_VIDEO_TOTAL_CHANNELS = 56,
@@ -1042,7 +1050,7 @@ pub mod videoio {
 		/// If it is not zero, the encoder will expect and encode color frames, otherwise it
 		/// will work with grayscale frames.
 		VIDEOWRITER_PROP_IS_COLOR = 4,
-		/// Defaults to CV_8U.
+		/// Defaults to \ref CV_8U.
 		VIDEOWRITER_PROP_DEPTH = 5,
 		/// (**open-only**) Hardware acceleration type (see #VideoAccelerationType). Setting supported only via `params` parameter in VideoWriter constructor / .open() method. Default value is backend-specific.
 		VIDEOWRITER_PROP_HW_ACCELERATION = 6,
@@ -1050,7 +1058,13 @@ pub mod videoio {
 		VIDEOWRITER_PROP_HW_DEVICE = 7,
 		/// (**open-only**) If non-zero, create new OpenCL context and bind it to current thread. The OpenCL context created with Video Acceleration context attached it (if not attached yet) for optimized GPU data copy between cv::UMat and HW accelerated encoder.
 		VIDEOWRITER_PROP_HW_ACCELERATION_USE_OPENCL = 8,
-		CV__VIDEOWRITER_PROP_LATEST = 9,
+		/// (**open-only**) Set to non-zero to enable encapsulation of an encoded raw video stream. Each raw encoded video frame should be passed to VideoWriter::write() as single row or column of a \ref CV_8UC1 Mat. \note If the key frame interval is not 1 then it must be manually specified by the user. This can either be performed during initialization passing \ref VIDEOWRITER_PROP_KEY_INTERVAL as one of the extra encoder params  to \ref VideoWriter::VideoWriter(const String &, int, double, const Size &, const std::vector< int > &params) or afterwards by setting the \ref VIDEOWRITER_PROP_KEY_FLAG with \ref VideoWriter::set() before writing each frame. FFMpeg backend only.
+		VIDEOWRITER_PROP_RAW_VIDEO = 9,
+		/// (**open-only**) Set the key frame interval using raw video encapsulation (\ref VIDEOWRITER_PROP_RAW_VIDEO != 0). Defaults to 1 when not set. FFMpeg backend only.
+		VIDEOWRITER_PROP_KEY_INTERVAL = 10,
+		/// Set to non-zero to signal that the following frames are key frames or zero if not, when encapsulating raw video (\ref VIDEOWRITER_PROP_RAW_VIDEO != 0). FFMpeg backend only.
+		VIDEOWRITER_PROP_KEY_FLAG = 11,
+		CV__VIDEOWRITER_PROP_LATEST = 12,
 	}
 	
 	opencv_type_enum! { crate::videoio::VideoWriterProperties }
@@ -2104,7 +2118,7 @@ pub mod videoio {
 		/// VideoWriter::fourcc('P','I','M','1') is a MPEG-1 codec, VideoWriter::fourcc('M','J','P','G')
 		/// is a motion-jpeg codec etc. List of codes can be obtained at
 		/// [MSDN](https://docs.microsoft.com/en-us/windows/win32/medfound/video-fourccs) page
-		/// or with this [archived page](https://web.archive.org/web/20220316062600/http://www.fourcc.org/codecs.php)
+		/// or with this [page](https://fourcc.org/codecs.php)
 		/// of the fourcc site for a more complete list). FFMPEG backend with MP4 container natively uses
 		/// other values as fourcc code: see [ObjectType](http://mp4ra.org/#/codecs),
 		/// so you may receive a warning message from OpenCV about fourcc code conversion.
@@ -2120,6 +2134,9 @@ pub mod videoio {
 		/// - Most codecs are lossy. If you want lossless video file you need to use a lossless codecs
 		///   (eg. FFMPEG FFV1, Huffman HFYU, Lagarith LAGS, etc...)
 		/// - If FFMPEG is enabled, using `codec=0; fps=0;` you can create an uncompressed (raw) video file.
+		/// - If FFMPEG is used, we allow frames of odd width or height, but in this case we truncate
+		///   the rightmost column/the bottom row. Probably, this should be handled more elegantly,
+		///   but some internal functions inside FFMPEG swscale require even width/height.
 		/// 
 		/// ## C++ default parameters
 		/// * is_color: true
@@ -2141,7 +2158,7 @@ pub mod videoio {
 		/// VideoWriter::fourcc('P','I','M','1') is a MPEG-1 codec, VideoWriter::fourcc('M','J','P','G')
 		/// is a motion-jpeg codec etc. List of codes can be obtained at
 		/// [MSDN](https://docs.microsoft.com/en-us/windows/win32/medfound/video-fourccs) page
-		/// or with this [archived page](https://web.archive.org/web/20220316062600/http://www.fourcc.org/codecs.php)
+		/// or with this [page](https://fourcc.org/codecs.php)
 		/// of the fourcc site for a more complete list). FFMPEG backend with MP4 container natively uses
 		/// other values as fourcc code: see [ObjectType](http://mp4ra.org/#/codecs),
 		/// so you may receive a warning message from OpenCV about fourcc code conversion.
@@ -2157,6 +2174,9 @@ pub mod videoio {
 		/// - Most codecs are lossy. If you want lossless video file you need to use a lossless codecs
 		///   (eg. FFMPEG FFV1, Huffman HFYU, Lagarith LAGS, etc...)
 		/// - If FFMPEG is enabled, using `codec=0; fps=0;` you can create an uncompressed (raw) video file.
+		/// - If FFMPEG is used, we allow frames of odd width or height, but in this case we truncate
+		///   the rightmost column/the bottom row. Probably, this should be handled more elegantly,
+		///   but some internal functions inside FFMPEG swscale require even width/height.
 		/// 
 		/// ## Note
 		/// This alternative version of [new] function uses the following default values for its arguments:

@@ -1,7 +1,7 @@
 pub mod rapid {
 	//! # silhouette based 3D object tracking
 	//! 
-	//! implements "RAPID-a video rate object tracker" [harris1990rapid](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_harris1990rapid) with the dynamic control point extraction of [drummond2002real](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_drummond2002real)
+	//! implements "RAPID-a video rate object tracker" [harris1990rapid](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_harris1990rapid) with the dynamic control point extraction of [drummond2002real](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_drummond2002real)
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
 		pub use { super::Rapid_TrackerTraitConst, super::Rapid_TrackerTrait, super::Rapid_RapidTraitConst, super::Rapid_RapidTrait, super::Rapid_OLSTrackerTraitConst, super::Rapid_OLSTrackerTrait, super::Rapid_GOSTrackerTraitConst, super::Rapid_GOSTrackerTrait };
@@ -163,7 +163,7 @@ pub mod rapid {
 	
 	/// Extract control points from the projected silhouette of a mesh
 	/// 
-	/// see [drummond2002real](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_drummond2002real) Sec 2.1, Step b
+	/// see [drummond2002real](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_drummond2002real) Sec 2.1, Step b
 	/// ## Parameters
 	/// * num: number of control points
 	/// * len: search radius (used to restrict the ROI)
@@ -254,7 +254,7 @@ pub mod rapid {
 		Ok(ret)
 	}
 	
-	/// High level function to execute a single rapid [harris1990rapid](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_harris1990rapid) iteration
+	/// High level function to execute a single rapid [harris1990rapid](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_harris1990rapid) iteration
 	/// 
 	/// 1. [extractControlPoints]
 	/// 2. [extractLineBundle]
@@ -293,7 +293,7 @@ pub mod rapid {
 		Ok(ret)
 	}
 	
-	/// High level function to execute a single rapid [harris1990rapid](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_harris1990rapid) iteration
+	/// High level function to execute a single rapid [harris1990rapid](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_harris1990rapid) iteration
 	/// 
 	/// 1. [extractControlPoints]
 	/// 2. [extractLineBundle]
@@ -343,7 +343,7 @@ pub mod rapid {
 	
 	}
 	
-	/// implements "Global optimal searching for textureless 3D object tracking" [wang2015global](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_wang2015global)
+	/// implements "Global optimal searching for textureless 3D object tracking" [wang2015global](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_wang2015global)
 	pub struct Rapid_GOSTracker {
 		ptr: *mut c_void
 	}
@@ -442,7 +442,7 @@ pub mod rapid {
 	}
 	
 	/// implements "Optimal local searching for fast and robust textureless 3D object tracking in highly
-	/// cluttered backgrounds" [seo2013optimal](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_seo2013optimal)
+	/// cluttered backgrounds" [seo2013optimal](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_seo2013optimal)
 	pub struct Rapid_OLSTracker {
 		ptr: *mut c_void
 	}

@@ -379,10 +379,10 @@ pub mod stereo {
 	/// that are not previously computed. New matches are stored in the seed priority queue and used as seeds.
 	/// The propagation process ends when no additional matches can be retrieved.
 	/// ## See also
-	/// This code represents the work presented in [Stoyanov2010](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Stoyanov2010).
-	/// If this code is useful for your work please cite [Stoyanov2010](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Stoyanov2010).
+	/// This code represents the work presented in [Stoyanov2010](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Stoyanov2010).
+	/// If this code is useful for your work please cite [Stoyanov2010](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Stoyanov2010).
 	/// 
-	/// Also the original growing scheme idea is described in [Lhuillier2000](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Lhuillier2000)
+	/// Also the original growing scheme idea is described in [Lhuillier2000](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Lhuillier2000)
 	pub struct QuasiDenseStereo {
 		ptr: *mut c_void
 	}

@@ -198,7 +198,7 @@ pub mod cudacodec {
 	/// Deinterlacing mode used by decoder.
 	/// ## Parameters
 	/// * Weave: Weave both fields (no deinterlacing). For progressive content and for content that doesn't need deinterlacing.
-	/// Bob Drop one field.
+	/// * Bob: Drop one field.
 	/// * Adaptive: Adaptive deinterlacing needs more video memory than other deinterlacing modes.
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -318,6 +318,24 @@ pub mod cudacodec {
 	
 	opencv_type_enum! { crate::cudacodec::CUDA_VideoReaderProps }
 	
+	/// Utility function demonstrating how to map the luma histogram when FormatInfo::videoFullRangeFlag == false
+	/// ## Parameters
+	/// * hist: Luma histogram \a hist returned from VideoReader::nextFrame(GpuMat& frame, GpuMat& hist, Stream& stream).
+	/// * histFull: Host histogram equivelent to downloading \a hist after calling cuda::calcHist(InputArray frame, OutputArray hist, Stream& stream).
+	/// 
+	/// 
+	/// Note:
+	/// *   This function demonstrates how to map the luma histogram back so that it is equivalent to the result obtained from cuda::calcHist()
+	/// if the returned frame was colorFormat::GRAY.
+	#[inline]
+	pub fn map_hist(hist: &core::GpuMat, hist_full: &mut core::Mat) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_MapHist_const_GpuMatR_MatR(hist.as_raw_GpuMat(), hist_full.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// @overload
 	/// ## Parameters
 	/// * source: RAW video source implemented by user.
@@ -421,9 +439,9 @@ pub mod cudacodec {
 	/// Creates video writer.
 	/// 
 	/// ## Parameters
-	/// * fileName: Name of the output video file. Only raw h264 or hevc files are supported.
+	/// * fileName: Name of the output video file.
 	/// * frameSize: Size of the input video frames.
-	/// * codec: Codec.
+	/// * codec: Supports Codec::H264 and Codec::HEVC.
 	/// * fps: Framerate of the created video stream.
 	/// * colorFormat: OpenCv color format of the frames to be encoded.
 	/// * encoderCallback: Callbacks for video encoder. See cudacodec::EncoderCallback. Required for working with the encoded video stream.
@@ -435,7 +453,7 @@ pub mod cudacodec {
 	/// * fps: 25.0
 	/// * color_format: ColorFormat::BGR
 	/// * encoder_callback: 0
-	/// * stream: Stream::Null()
+	/// * stream: cuda::Stream::Null()
 	#[inline]
 	pub fn create_video_writer_def(file_name: &str, frame_size: core::Size) -> Result<core::Ptr<crate::cudacodec::CUDA_VideoWriter>> {
 		extern_container_arg!(file_name);
@@ -450,9 +468,9 @@ pub mod cudacodec {
 	/// Creates video writer.
 	/// 
 	/// ## Parameters
-	/// * fileName: Name of the output video file. Only raw h264 or hevc files are supported.
+	/// * fileName: Name of the output video file.
 	/// * frameSize: Size of the input video frames.
-	/// * codec: Codec.
+	/// * codec: Supports Codec::H264 and Codec::HEVC.
 	/// * fps: Framerate of the created video stream.
 	/// * colorFormat: OpenCv color format of the frames to be encoded.
 	/// * encoderCallback: Callbacks for video encoder. See cudacodec::EncoderCallback. Required for working with the encoded video stream.
@@ -463,7 +481,7 @@ pub mod cudacodec {
 	/// * fps: 25.0
 	/// * color_format: ColorFormat::BGR
 	/// * encoder_callback: 0
-	/// * stream: Stream::Null()
+	/// * stream: cuda::Stream::Null()
 	#[inline]
 	pub fn create_video_writer(file_name: &str, frame_size: core::Size, codec: crate::cudacodec::CUDA_Codec, fps: f64, color_format: crate::cudacodec::CUDA_ColorFormat, mut encoder_callback: core::Ptr<crate::cudacodec::CUDA_EncoderCallback>, stream: &core::Stream) -> Result<core::Ptr<crate::cudacodec::CUDA_VideoWriter>> {
 		extern_container_arg!(file_name);
@@ -478,9 +496,9 @@ pub mod cudacodec {
 	/// Creates video writer.
 	/// 
 	/// ## Parameters
-	/// * fileName: Name of the output video file. Only raw h264 or hevc files are supported.
+	/// * fileName: Name of the output video file.
 	/// * frameSize: Size of the input video frames.
-	/// * codec: Codec.
+	/// * codec: Supports Codec::H264 and Codec::HEVC.
 	/// * fps: Framerate of the created video stream.
 	/// * colorFormat: OpenCv color format of the frames to be encoded.
 	/// * params: Additional encoding parameters.
@@ -490,7 +508,7 @@ pub mod cudacodec {
 	/// ## Note
 	/// This alternative version of [create_video_writer_1] function uses the following default values for its arguments:
 	/// * encoder_callback: 0
-	/// * stream: Stream::Null()
+	/// * stream: cuda::Stream::Null()
 	#[inline]
 	pub fn create_video_writer_1_def(file_name: &str, frame_size: core::Size, codec: crate::cudacodec::CUDA_Codec, fps: f64, color_format: crate::cudacodec::CUDA_ColorFormat, params: crate::cudacodec::CUDA_EncoderParams) -> Result<core::Ptr<crate::cudacodec::CUDA_VideoWriter>> {
 		extern_container_arg!(file_name);
@@ -505,9 +523,9 @@ pub mod cudacodec {
 	/// Creates video writer.
 	/// 
 	/// ## Parameters
-	/// * fileName: Name of the output video file. Only raw h264 or hevc files are supported.
+	/// * fileName: Name of the output video file.
 	/// * frameSize: Size of the input video frames.
-	/// * codec: Codec.
+	/// * codec: Supports Codec::H264 and Codec::HEVC.
 	/// * fps: Framerate of the created video stream.
 	/// * colorFormat: OpenCv color format of the frames to be encoded.
 	/// * params: Additional encoding parameters.
@@ -516,7 +534,7 @@ pub mod cudacodec {
 	/// 
 	/// ## C++ default parameters
 	/// * encoder_callback: 0
-	/// * stream: Stream::Null()
+	/// * stream: cuda::Stream::Null()
 	#[inline]
 	pub fn create_video_writer_1(file_name: &str, frame_size: core::Size, codec: crate::cudacodec::CUDA_Codec, fps: f64, color_format: crate::cudacodec::CUDA_ColorFormat, params: crate::cudacodec::CUDA_EncoderParams, mut encoder_callback: core::Ptr<crate::cudacodec::CUDA_EncoderCallback>, stream: &core::Stream) -> Result<core::Ptr<crate::cudacodec::CUDA_VideoWriter>> {
 		extern_container_arg!(file_name);
@@ -569,9 +587,9 @@ pub mod cudacodec {
 		/// ## Parameters
 		/// * vPacket: The raw bitstream for one or more frames.
 		#[inline]
-		fn on_encoded(&mut self, mut v_packet: core::Vector<core::Vector<u8>>) -> Result<()> {
+		fn on_encoded(&mut self, v_packet: &core::Vector<core::Vector<u8>>) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cudacodec_EncoderCallback_onEncoded_vectorLvectorLuint8_tGG(self.as_raw_mut_CUDA_EncoderCallback(), v_packet.as_raw_mut_VectorOfVectorOfu8(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cudacodec_EncoderCallback_onEncoded_const_vectorLvectorLuint8_tGGR(self.as_raw_mut_CUDA_EncoderCallback(), v_packet.as_raw_VectorOfVectorOfu8(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -635,15 +653,18 @@ pub mod cudacodec {
 		pub encoding_profile: crate::cudacodec::CUDA_EncodeProfile,
 		pub rate_control_mode: crate::cudacodec::CUDA_EncodeParamsRcMode,
 		pub multi_pass_encoding: crate::cudacodec::CUDA_EncodeMultiPass,
-		/// QP's for ENC_PARAMS_RC_CONSTQP.
+		/// QP's for \ref ENC_PARAMS_RC_CONSTQP.
 		pub const_qp: crate::cudacodec::CUDA_EncodeQp,
-		/// target bitrate for ENC_PARAMS_RC_VBR and ENC_PARAMS_RC_CBR.
+		/// target bitrate for \ref ENC_PARAMS_RC_VBR and \ref ENC_PARAMS_RC_CBR.
 		pub average_bit_rate: i32,
-		/// upper bound on bitrate for ENC_PARAMS_RC_VBR and ENC_PARAMS_RC_CONSTQP.
+		/// upper bound on bitrate for \ref ENC_PARAMS_RC_VBR and \ref ENC_PARAMS_RC_CONSTQP.
 		pub max_bit_rate: i32,
-		/// value 0 - 51 where video quality decreases as targetQuality increases, used with ENC_PARAMS_RC_VBR.
+		/// value 0 - 51 where video quality decreases as targetQuality increases, used with \ref ENC_PARAMS_RC_VBR.
 		pub target_quality: u8,
+		/// the number of pictures in one GOP, ensuring \ref idrPeriod >= \ref gopLength.
 		pub gop_length: i32,
+		/// IDR interval, ensuring \ref idrPeriod >= \ref gopLength.
+		pub idr_period: i32,
 	}
 	
 	opencv_type_simple! { crate::cudacodec::CUDA_EncoderParams }
@@ -693,6 +714,12 @@ pub mod cudacodec {
 		pub target_roi: core::Rect,
 		/// Output value indicating if the black level, luma and chroma of the source are represented using the full or limited range (AKA TV or "analogue" range) of values as defined in Annex E of the ITU-T Specification.  Internally the conversion from NV12 to BGR obeys ITU 709.
 		pub video_full_range_flag: bool,
+		/// Flag requesting histogram output if supported. Exception will be thrown when requested but not supported.
+		pub enable_histogram: bool,
+		/// Bit depth of histogram bins if histogram output is requested and supported.
+		pub n_counter_bit_depth: i32,
+		/// Max number of histogram bins if histogram output is requested and supported.
+		pub n_max_histogram_bins: i32,
 	}
 	
 	opencv_type_simple! { crate::cudacodec::CUDA_FormatInfo }
@@ -759,6 +786,22 @@ pub mod cudacodec {
 		fn get(&self, property_id: i32, property_val: &mut f64) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_RawVideoSource_get_const_const_int_doubleR(self.as_raw_CUDA_RawVideoSource(), property_id, property_val, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Retrieve the index of the first frame that will returned after construction.
+		/// 
+		/// ## Returns
+		/// index of the index of the first frame that will returned after construction.
+		/// 
+		/// 
+		/// Note: To reduce the decoding overhead when initializing VideoReader to start its decoding from frame N, RawVideoSource should seek to the first valid key frame less than or equal to N and return that index here.
+		#[inline]
+		fn get_first_frame_idx(&self) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cudacodec_RawVideoSource_getFirstFrameIdx_const(self.as_raw_CUDA_RawVideoSource(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1017,7 +1060,7 @@ pub mod cudacodec {
 		/// The method throws an Exception if error occurs.
 		/// 
 		/// ## C++ default parameters
-		/// * stream: Stream::Null()
+		/// * stream: cuda::Stream::Null()
 		#[inline]
 		fn next_frame(&mut self, frame: &mut core::GpuMat, stream: &mut core::Stream) -> Result<bool> {
 			return_send!(via ocvrs_return);
@@ -1040,11 +1083,64 @@ pub mod cudacodec {
 		/// 
 		/// ## Note
 		/// This alternative version of [CUDA_VideoReaderTrait::next_frame] function uses the following default values for its arguments:
-		/// * stream: Stream::Null()
+		/// * stream: cuda::Stream::Null()
 		#[inline]
 		fn next_frame_def(&mut self, frame: &mut core::GpuMat) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoReader_nextFrame_GpuMatR(self.as_raw_mut_CUDA_VideoReader(), frame.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Grabs, decodes and returns the next video frame and frame luma histogram.
+		/// 
+		/// ## Parameters
+		/// * frame:[out] The video frame.
+		/// * histogram:[out] Histogram of the luma component of the encoded frame, see note.
+		/// * stream: Stream for the asynchronous version.
+		/// ## Returns
+		/// `false` if no frames have been grabbed.
+		/// 
+		/// If no frames have been grabbed (there are no more frames in video file), the methods return false.
+		/// The method throws an Exception if error occurs.
+		/// 
+		/// 
+		/// Note: Histogram data is collected by NVDEC during the decoding process resulting in zero performance penalty. NVDEC computes the histogram data for only the luma component of decoded output, not on post-processed frame(i.e. when scaling, cropping, etc. applied).  If the source is encoded using a limited range of luma values (FormatInfo::videoFullRangeFlag == false) then the histogram bin values will correspond to to this limited range of values and will need to be mapped to contain the same output as cuda::calcHist().  The MapHist() utility function can be used to perform this mapping on the host if required.
+		/// 
+		/// ## C++ default parameters
+		/// * stream: cuda::Stream::Null()
+		#[inline]
+		fn next_frame_with_hist(&mut self, frame: &mut core::GpuMat, histogram: &mut core::GpuMat, stream: &mut core::Stream) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cudacodec_VideoReader_nextFrame_GpuMatR_GpuMatR_StreamR(self.as_raw_mut_CUDA_VideoReader(), frame.as_raw_mut_GpuMat(), histogram.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Grabs, decodes and returns the next video frame and frame luma histogram.
+		/// 
+		/// ## Parameters
+		/// * frame:[out] The video frame.
+		/// * histogram:[out] Histogram of the luma component of the encoded frame, see note.
+		/// * stream: Stream for the asynchronous version.
+		/// ## Returns
+		/// `false` if no frames have been grabbed.
+		/// 
+		/// If no frames have been grabbed (there are no more frames in video file), the methods return false.
+		/// The method throws an Exception if error occurs.
+		/// 
+		/// 
+		/// Note: Histogram data is collected by NVDEC during the decoding process resulting in zero performance penalty. NVDEC computes the histogram data for only the luma component of decoded output, not on post-processed frame(i.e. when scaling, cropping, etc. applied).  If the source is encoded using a limited range of luma values (FormatInfo::videoFullRangeFlag == false) then the histogram bin values will correspond to to this limited range of values and will need to be mapped to contain the same output as cuda::calcHist().  The MapHist() utility function can be used to perform this mapping on the host if required.
+		/// 
+		/// ## Note
+		/// This alternative version of [CUDA_VideoReaderTrait::next_frame_with_hist] function uses the following default values for its arguments:
+		/// * stream: cuda::Stream::Null()
+		#[inline]
+		fn next_frame_with_hist_def(&mut self, frame: &mut core::GpuMat, histogram: &mut core::GpuMat) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cudacodec_VideoReader_nextFrame_GpuMatR_GpuMatR(self.as_raw_mut_CUDA_VideoReader(), frame.as_raw_mut_GpuMat(), histogram.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1064,7 +1160,7 @@ pub mod cudacodec {
 		/// retrieve() can be called following grab() to retrieve all the data associated with the current video source since the last call to grab() or the creation of the VideoReader.
 		/// 
 		/// ## C++ default parameters
-		/// * stream: Stream::Null()
+		/// * stream: cuda::Stream::Null()
 		#[inline]
 		fn grab(&mut self, stream: &mut core::Stream) -> Result<bool> {
 			return_send!(via ocvrs_return);
@@ -1089,7 +1185,7 @@ pub mod cudacodec {
 		/// 
 		/// ## Note
 		/// This alternative version of [CUDA_VideoReaderTrait::grab] function uses the following default values for its arguments:
-		/// * stream: Stream::Null()
+		/// * stream: cuda::Stream::Null()
 		#[inline]
 		fn grab_def(&mut self) -> Result<bool> {
 			return_send!(via ocvrs_return);
@@ -1142,15 +1238,15 @@ pub mod cudacodec {
 		
 	}
 	
-	/// Video reader interface.
+	/// Video reader interface, see createVideoReader().
 	/// 
-	/// Available when built with WITH_NVCUVID=ON while Nvidia's Video Codec SDK is installed.
+	/// Available if Nvidia's Video Codec SDK is installed.
 	/// 
 	/// Decoding support is dependent on the GPU, refer to the Nvidia Video Codec SDK Video Encode and Decode GPU Support Matrix for details.
 	/// 
 	/// 
 	/// Note:
-	///    *   An example on how to use the videoReader class can be found at
+	///    *   An example on how to use the VideoReader interface can be found at
 	///        opencv_source_code/samples/gpu/video_reader.cpp
 	pub struct CUDA_VideoReader {
 		ptr: *mut c_void
@@ -1201,6 +1297,8 @@ pub mod cudacodec {
 	/// * srcRoi: Region of interest (x/width should be multiples of 4 and y/height multiples of 2) decoded from video source, defaults to the full frame.
 	/// * targetRoi: Region of interest (x/width should be multiples of 4 and y/height multiples of 2) within the output frame to copy and resize the decoded frame to,
 	/// defaults to the full frame.
+	/// * enableHistogram: Request output of decoded luma histogram \a hist from VideoReader::nextFrame(GpuMat& frame, GpuMat& hist, Stream& stream), if hardware supported.
+	/// * firstFrameIdx: Index of the first frame to seek to on initialization of the VideoReader.
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq)]
 	pub struct CUDA_VideoReaderInitParams {
@@ -1211,6 +1309,8 @@ pub mod cudacodec {
 		pub target_sz: core::Size,
 		pub src_roi: core::Rect,
 		pub target_roi: core::Rect,
+		pub enable_histogram: bool,
+		pub first_frame_idx: i32,
 	}
 	
 	opencv_type_simple! { crate::cudacodec::CUDA_VideoReaderInitParams }
@@ -1276,15 +1376,15 @@ pub mod cudacodec {
 		
 	}
 	
-	/// Video writer interface.
+	/// Video writer interface, see createVideoWriter().
 	/// 
-	/// Available when built with WITH_NVCUVENC=ON while Nvidia's Video Codec SDK is installed.
+	/// Available if Nvidia's Video Codec SDK is installed.
 	/// 
-	/// Encoding support is dependent on the GPU, refer to the Nvidia Video Codec SDK Video Encode and Decode GPU Support Matrix for details.
+	/// Only Codec::H264 and Codec::HEVC are supported with encoding support dependent on the GPU, refer to the Nvidia Video Codec SDK Video Encode and Decode GPU Support Matrix for details.
 	/// 
 	/// 
 	/// Note:
-	///    *   An example on how to use the videoWriter class can be found at
+	///    *   An example on how to use the VideoWriter class can be found at
 	///        opencv_source_code/samples/gpu/video_writer.cpp
 	pub struct CUDA_VideoWriter {
 		ptr: *mut c_void

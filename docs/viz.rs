@@ -2716,7 +2716,7 @@ pub mod viz {
 	impl WCameraPosition {
 		/// Creates camera coordinate frame at the origin.
 		/// 
-		/// ![Camera coordinate frame](https://docs.opencv.org/4.8.1/cpw1.png)
+		/// ![Camera coordinate frame](https://docs.opencv.org/4.9.0/cpw1.png)
 		/// 
 		/// ## C++ default parameters
 		/// * scale: 1.0
@@ -2732,7 +2732,7 @@ pub mod viz {
 		
 		/// Creates camera coordinate frame at the origin.
 		/// 
-		/// ![Camera coordinate frame](https://docs.opencv.org/4.8.1/cpw1.png)
+		/// ![Camera coordinate frame](https://docs.opencv.org/4.9.0/cpw1.png)
 		/// 
 		/// ## Note
 		/// This alternative version of [new] function uses the following default values for its arguments:
@@ -2755,7 +2755,7 @@ pub mod viz {
 		/// 
 		/// Creates viewing frustum of the camera based on its intrinsic matrix K.
 		/// 
-		/// ![Camera viewing frustum](https://docs.opencv.org/4.8.1/cpw2.png)
+		/// ![Camera viewing frustum](https://docs.opencv.org/4.9.0/cpw2.png)
 		/// 
 		/// ## C++ default parameters
 		/// * scale: 1.0
@@ -2778,7 +2778,7 @@ pub mod viz {
 		/// 
 		/// Creates viewing frustum of the camera based on its intrinsic matrix K.
 		/// 
-		/// ![Camera viewing frustum](https://docs.opencv.org/4.8.1/cpw2.png)
+		/// ![Camera viewing frustum](https://docs.opencv.org/4.9.0/cpw2.png)
 		/// 
 		/// ## Note
 		/// This alternative version of [new] function uses the following default values for its arguments:
@@ -2802,7 +2802,7 @@ pub mod viz {
 		/// 
 		/// Creates viewing frustum of the camera based on its field of view fov.
 		/// 
-		/// ![Camera viewing frustum](https://docs.opencv.org/4.8.1/cpw2.png)
+		/// ![Camera viewing frustum](https://docs.opencv.org/4.9.0/cpw2.png)
 		/// 
 		/// ## C++ default parameters
 		/// * scale: 1.0
@@ -2825,7 +2825,7 @@ pub mod viz {
 		/// 
 		/// Creates viewing frustum of the camera based on its field of view fov.
 		/// 
-		/// ![Camera viewing frustum](https://docs.opencv.org/4.8.1/cpw2.png)
+		/// ![Camera viewing frustum](https://docs.opencv.org/4.9.0/cpw2.png)
 		/// 
 		/// ## Note
 		/// This alternative version of [new] function uses the following default values for its arguments:
@@ -2852,7 +2852,7 @@ pub mod viz {
 		/// Creates viewing frustum of the camera based on its intrinsic matrix K, and displays image on
 		/// the far end plane.
 		/// 
-		/// ![Camera viewing frustum with image](https://docs.opencv.org/4.8.1/cpw3.png)
+		/// ![Camera viewing frustum with image](https://docs.opencv.org/4.9.0/cpw3.png)
 		/// 
 		/// ## C++ default parameters
 		/// * scale: 1.0
@@ -2879,7 +2879,7 @@ pub mod viz {
 		/// Creates viewing frustum of the camera based on its intrinsic matrix K, and displays image on
 		/// the far end plane.
 		/// 
-		/// ![Camera viewing frustum with image](https://docs.opencv.org/4.8.1/cpw3.png)
+		/// ![Camera viewing frustum with image](https://docs.opencv.org/4.9.0/cpw3.png)
 		/// 
 		/// ## Note
 		/// This alternative version of [new] function uses the following default values for its arguments:
@@ -2907,7 +2907,7 @@ pub mod viz {
 		/// Creates viewing frustum of the camera based on its intrinsic matrix K, and displays image on
 		/// the far end plane.
 		/// 
-		/// ![Camera viewing frustum with image](https://docs.opencv.org/4.8.1/cpw3.png)
+		/// ![Camera viewing frustum with image](https://docs.opencv.org/4.9.0/cpw3.png)
 		/// 
 		/// ## C++ default parameters
 		/// * scale: 1.0
@@ -2934,7 +2934,7 @@ pub mod viz {
 		/// Creates viewing frustum of the camera based on its intrinsic matrix K, and displays image on
 		/// the far end plane.
 		/// 
-		/// ![Camera viewing frustum with image](https://docs.opencv.org/4.8.1/cpw3.png)
+		/// ![Camera viewing frustum with image](https://docs.opencv.org/4.9.0/cpw3.png)
 		/// 
 		/// ## Note
 		/// This alternative version of [new] function uses the following default values for its arguments:
@@ -3903,7 +3903,7 @@ pub mod viz {
 		/// * wire_frame: If true, cube is represented as wireframe.
 		/// * color: Color of the cube.
 		/// 
-		/// ![Cube Widget](https://docs.opencv.org/4.8.1/cube_widget.png)
+		/// ![Cube Widget](https://docs.opencv.org/4.9.0/cube_widget.png)
 		/// 
 		/// ## C++ default parameters
 		/// * min_point: Vec3d::all(-0.5)
@@ -3928,7 +3928,7 @@ pub mod viz {
 		/// * wire_frame: If true, cube is represented as wireframe.
 		/// * color: Color of the cube.
 		/// 
-		/// ![Cube Widget](https://docs.opencv.org/4.8.1/cube_widget.png)
+		/// ![Cube Widget](https://docs.opencv.org/4.9.0/cube_widget.png)
 		/// 
 		/// ## Note
 		/// This alternative version of [new] function uses the following default values for its arguments:

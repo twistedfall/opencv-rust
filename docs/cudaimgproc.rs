@@ -2,6 +2,7 @@ pub mod cudaimgproc {
 	//! # Image Processing
 	//!    # Color space processing
 	//!    # Histogram Calculation
+	//!    # Structural Analysis and Shape Descriptors
 	//!    # Hough Transform
 	//!    # Feature Detection
 	use crate::{mod_prelude::*, core, sys, types};
@@ -22,9 +23,9 @@ pub mod cudaimgproc {
 	pub const CUDA_ALPHA_PREMUL: i32 = 12;
 	pub const CUDA_ALPHA_XOR: i32 = 4;
 	pub const CUDA_ALPHA_XOR_PREMUL: i32 = 10;
-	/// BKE [Allegretti2019](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
+	/// BKE [Allegretti2019](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
 	pub const CUDA_CCL_BKE: i32 = 0;
-	/// BKE [Allegretti2019](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
+	/// BKE [Allegretti2019](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
 	pub const CUDA_CCL_DEFAULT: i32 = -1;
 	/// Bayer Demosaicing (Malvar, He, and Cutler)
 	pub const CUDA_COLOR_BayerBG2BGR_MHT: i32 = 256;
@@ -50,6 +51,9 @@ pub mod cudaimgproc {
 	pub const CUDA_COLOR_BayerRG2GRAY_MHT: i32 = 262;
 	/// Bayer Demosaicing (Malvar, He, and Cutler)
 	pub const CUDA_COLOR_BayerRG2RGB_MHT: i32 = 256;
+	pub const CUDA_FIRST_ORDER_MOMENTS: i32 = 1;
+	pub const CUDA_SECOND_ORDER_MOMENTS: i32 = 2;
+	pub const CUDA_THIRD_ORDER_MOMENTS: i32 = 3;
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum CUDA_AlphaCompTypes {
@@ -74,9 +78,9 @@ pub mod cudaimgproc {
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum CUDA_ConnectedComponentsAlgorithmsTypes {
-		/// BKE [Allegretti2019](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
+		/// BKE [Allegretti2019](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
 		CCL_DEFAULT = -1,
-		/// BKE [Allegretti2019](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
+		/// BKE [Allegretti2019](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
 		CCL_BKE = 0,
 	}
 	
@@ -116,6 +120,21 @@ pub mod cudaimgproc {
 	}
 	
 	opencv_type_enum! { crate::cudaimgproc::CUDA_DemosaicTypes }
+	
+	/// Order of image moments.
+	/// ## Parameters
+	/// * FIRST_ORDER_MOMENTS: First order moments
+	/// * SECOND_ORDER_MOMENTS: Second order moments.
+	/// * THIRD_ORDER_MOMENTS: Third order moments.
+	#[repr(C)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum CUDA_MomentsOrder {
+		FIRST_ORDER_MOMENTS = 1,
+		SECOND_ORDER_MOMENTS = 2,
+		THIRD_ORDER_MOMENTS = 3,
+	}
+	
+	opencv_type_enum! { crate::cudaimgproc::CUDA_MomentsOrder }
 	
 	/// Composites two images using alpha opacity values contained in each image.
 	/// 
@@ -432,7 +451,7 @@ pub mod cudaimgproc {
 	/// ltype specifies the output label image type, an important consideration based on the total
 	/// number of labels or alternatively the total number of pixels in the source image.
 	/// ccltype specifies the connected components labeling algorithm to use, currently
-	/// BKE [Allegretti2019](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Allegretti2019) is supported, see the [connected_components_algorithms_types]
+	/// BKE [Allegretti2019](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Allegretti2019) is supported, see the [connected_components_algorithms_types]
 	/// for details. Note that labels in the output are not required to be sequential.
 	/// 
 	/// ## Parameters
@@ -476,7 +495,7 @@ pub mod cudaimgproc {
 	/// ltype specifies the output label image type, an important consideration based on the total
 	/// number of labels or alternatively the total number of pixels in the source image.
 	/// ccltype specifies the connected components labeling algorithm to use, currently
-	/// BKE [Allegretti2019](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Allegretti2019) is supported, see the [connected_components_algorithms_types]
+	/// BKE [Allegretti2019](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Allegretti2019) is supported, see the [connected_components_algorithms_types]
 	/// for details. Note that labels in the output are not required to be sequential.
 	/// 
 	/// ## Parameters
@@ -591,7 +610,7 @@ pub mod cudaimgproc {
 		Ok(ret)
 	}
 	
-	/// Creates implementation for generalized hough transform from [Ballard1981](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Ballard1981) .
+	/// Creates implementation for generalized hough transform from [Ballard1981](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Ballard1981) .
 	#[inline]
 	pub fn create_generalized_hough_ballard() -> Result<core::Ptr<crate::imgproc::GeneralizedHoughBallard>> {
 		return_send!(via ocvrs_return);
@@ -602,7 +621,7 @@ pub mod cudaimgproc {
 		Ok(ret)
 	}
 	
-	/// Creates implementation for generalized hough transform from [Guil1999](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Guil1999) .
+	/// Creates implementation for generalized hough transform from [Guil1999](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Guil1999) .
 	#[inline]
 	pub fn create_generalized_hough_guil() -> Result<core::Ptr<crate::imgproc::GeneralizedHoughGuil>> {
 		return_send!(via ocvrs_return);
@@ -1094,7 +1113,7 @@ pub mod cudaimgproc {
 	///    > -   COLOR_BayerBG2GRAY , COLOR_BayerGB2GRAY , COLOR_BayerRG2GRAY , COLOR_BayerGR2GRAY
 	///    > -   COLOR_BayerBG2BGR , COLOR_BayerGB2BGR , COLOR_BayerRG2BGR , COLOR_BayerGR2BGR
 	/// 
-	/// *   Demosaicing using Malvar-He-Cutler algorithm ([MHT2011](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_MHT2011))
+	/// *   Demosaicing using Malvar-He-Cutler algorithm ([MHT2011](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_MHT2011))
 	/// 
 	///    > -   COLOR_BayerBG2GRAY_MHT , COLOR_BayerGB2GRAY_MHT , COLOR_BayerRG2GRAY_MHT ,
 	///    >     COLOR_BayerGR2GRAY_MHT
@@ -1135,7 +1154,7 @@ pub mod cudaimgproc {
 	///    > -   COLOR_BayerBG2GRAY , COLOR_BayerGB2GRAY , COLOR_BayerRG2GRAY , COLOR_BayerGR2GRAY
 	///    > -   COLOR_BayerBG2BGR , COLOR_BayerGB2BGR , COLOR_BayerRG2BGR , COLOR_BayerGR2BGR
 	/// 
-	/// *   Demosaicing using Malvar-He-Cutler algorithm ([MHT2011](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_MHT2011))
+	/// *   Demosaicing using Malvar-He-Cutler algorithm ([MHT2011](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_MHT2011))
 	/// 
 	///    > -   COLOR_BayerBG2GRAY_MHT , COLOR_BayerGB2GRAY_MHT , COLOR_BayerRG2GRAY_MHT ,
 	///    >     COLOR_BayerGR2GRAY_MHT
@@ -1558,6 +1577,196 @@ pub mod cudaimgproc {
 		Ok(ret)
 	}
 	
+	/// Calculates all of the moments up to the 3rd order of a rasterized shape.
+	/// 
+	/// The function computes moments, up to the 3rd order, of a rasterized shape. The
+	/// results are returned in the structure cv::Moments.
+	/// 
+	/// ## Parameters
+	/// * src: Raster image (single-channel 2D array).
+	/// * binaryImage: If it is true, all non-zero image pixels are treated as 1's.
+	/// * order: Order of largest moments to calculate with lower order moments requiring less computation.
+	/// * momentsType: Precision to use when calculating moments. Available types are `CV_32F` and `CV_64F` with the performance of `CV_32F` an order of magnitude greater than `CV_64F`. If the image is small the accuracy from `CV_32F` can be equal or very close to `CV_64F`.
+	/// 
+	/// 
+	/// Note: For maximum performance use the asynchronous version cuda::spatialMoments() as this version interally allocates and deallocates both GpuMat and HostMem to respectively perform the calculation on the device and download the result to the host.
+	/// The costly HostMem allocation cannot be avoided however the GpuMat device allocation can be by using BufferPool, e.g.
+	/// ```
+	///    setBufferPoolUsage(true);
+	///    setBufferPoolConfig(getDevice(), numMoments(order) * ((momentsType == CV_64F) ? sizeof(double) : sizeof(float)), 1);
+	/// ```
+	/// see the \a CUDA_TEST_P(Moments, Accuracy) test inside opencv_contrib_source_code/modules/cudaimgproc/test/test_moments.cpp for an example.
+	/// ## Returns
+	/// cv::Moments.
+	/// ## See also
+	/// cuda::spatialMoments
+	/// 
+	/// ## Note
+	/// This alternative version of [moments] function uses the following default values for its arguments:
+	/// * binary_image: false
+	/// * order: MomentsOrder::THIRD_ORDER_MOMENTS
+	/// * moments_type: CV_64F
+	#[inline]
+	pub fn moments_def(src: &impl core::ToInputArray) -> Result<core::Moments> {
+		input_array_arg!(src);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_moments_const__InputArrayR(src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Calculates all of the moments up to the 3rd order of a rasterized shape.
+	/// 
+	/// The function computes moments, up to the 3rd order, of a rasterized shape. The
+	/// results are returned in the structure cv::Moments.
+	/// 
+	/// ## Parameters
+	/// * src: Raster image (single-channel 2D array).
+	/// * binaryImage: If it is true, all non-zero image pixels are treated as 1's.
+	/// * order: Order of largest moments to calculate with lower order moments requiring less computation.
+	/// * momentsType: Precision to use when calculating moments. Available types are `CV_32F` and `CV_64F` with the performance of `CV_32F` an order of magnitude greater than `CV_64F`. If the image is small the accuracy from `CV_32F` can be equal or very close to `CV_64F`.
+	/// 
+	/// 
+	/// Note: For maximum performance use the asynchronous version cuda::spatialMoments() as this version interally allocates and deallocates both GpuMat and HostMem to respectively perform the calculation on the device and download the result to the host.
+	/// The costly HostMem allocation cannot be avoided however the GpuMat device allocation can be by using BufferPool, e.g.
+	/// ```
+	///    setBufferPoolUsage(true);
+	///    setBufferPoolConfig(getDevice(), numMoments(order) * ((momentsType == CV_64F) ? sizeof(double) : sizeof(float)), 1);
+	/// ```
+	/// see the \a CUDA_TEST_P(Moments, Accuracy) test inside opencv_contrib_source_code/modules/cudaimgproc/test/test_moments.cpp for an example.
+	/// ## Returns
+	/// cv::Moments.
+	/// ## See also
+	/// cuda::spatialMoments
+	/// 
+	/// ## C++ default parameters
+	/// * binary_image: false
+	/// * order: MomentsOrder::THIRD_ORDER_MOMENTS
+	/// * moments_type: CV_64F
+	#[inline]
+	pub fn moments(src: &impl core::ToInputArray, binary_image: bool, order: crate::cudaimgproc::CUDA_MomentsOrder, moments_type: i32) -> Result<core::Moments> {
+		input_array_arg!(src);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_moments_const__InputArrayR_const_bool_const_MomentsOrder_const_int(src.as_raw__InputArray(), binary_image, order, moments_type, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Returns the number of image moments less than or equal to the largest image moments \a order.
+	/// ## Parameters
+	/// * order: Order of largest moments to calculate with lower order moments requiring less computation.
+	/// ## Returns
+	/// number of image moments.
+	/// ## See also
+	/// cuda::moments, cuda::spatialMoments, cuda::MomentsOrder
+	#[inline]
+	pub fn num_moments(order: crate::cudaimgproc::CUDA_MomentsOrder) -> Result<i32> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_numMoments_const_MomentsOrder(order, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Calculates all of the spatial moments up to the 3rd order of a rasterized shape.
+	/// 
+	/// Asynchronous version of cuda::moments() which only calculates the spatial (not centralized or normalized) moments, up to the 3rd order, of a rasterized shape.
+	/// Each moment is returned as a column entry in the 1D \a moments array.
+	/// 
+	/// ## Parameters
+	/// * src: Raster image (single-channel 2D array).
+	/// * moments:[out] 1D array with each column entry containing a spatial image moment.
+	/// * binaryImage: If it is true, all non-zero image pixels are treated as 1's.
+	/// * order: Order of largest moments to calculate with lower order moments requiring less computation.
+	/// * momentsType: Precision to use when calculating moments. Available types are `CV_32F` and `CV_64F` with the performance of `CV_32F` an order of magnitude greater than `CV_64F`. If the image is small the accuracy from `CV_32F` can be equal or very close to `CV_64F`.
+	/// * stream: Stream for the asynchronous version.
+	/// 
+	/// 
+	/// Note: For maximum performance pre-allocate a 1D GpuMat for \a moments of the correct type and size large enough to store the all the image moments of up to the desired \a order. e.g. With \a order === MomentsOrder::SECOND_ORDER_MOMENTS and \a momentsType == `CV_32F` \a moments can be allocated as
+	/// ```
+	/// GpuMat momentsDevice(1,numMoments(MomentsOrder::SECOND_ORDER_MOMENTS),CV_32F)
+	/// ```
+	/// The central and normalized moments can easily be calculated on the host by downloading the \a moments array and using the cv::Moments constructor. e.g.
+	/// ```
+	/// HostMem momentsHostMem(1, numMoments(MomentsOrder::SECOND_ORDER_MOMENTS), CV_32F);
+	/// momentsDevice.download(momentsHostMem, stream);
+	/// stream.waitForCompletion();
+	/// Mat momentsMat = momentsHostMem.createMatHeader();
+	/// cv::Moments cvMoments(momentsMat.at<float>(0), momentsMat.at<float>(1), momentsMat.at<float>(2), momentsMat.at<float>(3), momentsMat.at<float>(4), momentsMat.at<float>(5), momentsMat.at<float>(6), momentsMat.at<float>(7), momentsMat.at<float>(8), momentsMat.at<float>(9));
+	/// ```
+	/// see the \a CUDA_TEST_P(Moments, Async) test inside opencv_contrib_source_code/modules/cudaimgproc/test/test_moments.cpp for an example.
+	/// ## Returns
+	/// cv::Moments.
+	/// ## See also
+	/// cuda::moments
+	/// 
+	/// ## Note
+	/// This alternative version of [spatial_moments] function uses the following default values for its arguments:
+	/// * binary_image: false
+	/// * order: MomentsOrder::THIRD_ORDER_MOMENTS
+	/// * moments_type: CV_64F
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn spatial_moments_def(src: &impl core::ToInputArray, moments: &mut impl core::ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(moments);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_spatialMoments_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), moments.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Calculates all of the spatial moments up to the 3rd order of a rasterized shape.
+	/// 
+	/// Asynchronous version of cuda::moments() which only calculates the spatial (not centralized or normalized) moments, up to the 3rd order, of a rasterized shape.
+	/// Each moment is returned as a column entry in the 1D \a moments array.
+	/// 
+	/// ## Parameters
+	/// * src: Raster image (single-channel 2D array).
+	/// * moments:[out] 1D array with each column entry containing a spatial image moment.
+	/// * binaryImage: If it is true, all non-zero image pixels are treated as 1's.
+	/// * order: Order of largest moments to calculate with lower order moments requiring less computation.
+	/// * momentsType: Precision to use when calculating moments. Available types are `CV_32F` and `CV_64F` with the performance of `CV_32F` an order of magnitude greater than `CV_64F`. If the image is small the accuracy from `CV_32F` can be equal or very close to `CV_64F`.
+	/// * stream: Stream for the asynchronous version.
+	/// 
+	/// 
+	/// Note: For maximum performance pre-allocate a 1D GpuMat for \a moments of the correct type and size large enough to store the all the image moments of up to the desired \a order. e.g. With \a order === MomentsOrder::SECOND_ORDER_MOMENTS and \a momentsType == `CV_32F` \a moments can be allocated as
+	/// ```
+	/// GpuMat momentsDevice(1,numMoments(MomentsOrder::SECOND_ORDER_MOMENTS),CV_32F)
+	/// ```
+	/// The central and normalized moments can easily be calculated on the host by downloading the \a moments array and using the cv::Moments constructor. e.g.
+	/// ```
+	/// HostMem momentsHostMem(1, numMoments(MomentsOrder::SECOND_ORDER_MOMENTS), CV_32F);
+	/// momentsDevice.download(momentsHostMem, stream);
+	/// stream.waitForCompletion();
+	/// Mat momentsMat = momentsHostMem.createMatHeader();
+	/// cv::Moments cvMoments(momentsMat.at<float>(0), momentsMat.at<float>(1), momentsMat.at<float>(2), momentsMat.at<float>(3), momentsMat.at<float>(4), momentsMat.at<float>(5), momentsMat.at<float>(6), momentsMat.at<float>(7), momentsMat.at<float>(8), momentsMat.at<float>(9));
+	/// ```
+	/// see the \a CUDA_TEST_P(Moments, Async) test inside opencv_contrib_source_code/modules/cudaimgproc/test/test_moments.cpp for an example.
+	/// ## Returns
+	/// cv::Moments.
+	/// ## See also
+	/// cuda::moments
+	/// 
+	/// ## C++ default parameters
+	/// * binary_image: false
+	/// * order: MomentsOrder::THIRD_ORDER_MOMENTS
+	/// * moments_type: CV_64F
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn spatial_moments(src: &impl core::ToInputArray, moments: &mut impl core::ToOutputArray, binary_image: bool, order: crate::cudaimgproc::CUDA_MomentsOrder, moments_type: i32, stream: &mut core::Stream) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(moments);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_spatialMoments_const__InputArrayR_const__OutputArrayR_const_bool_const_MomentsOrder_const_int_StreamR(src.as_raw__InputArray(), moments.as_raw__OutputArray(), binary_image, order, moments_type, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// Exchanges the color channels of an image in-place.
 	/// 
 	/// ## Parameters
@@ -1735,7 +1944,7 @@ pub mod cudaimgproc {
 	pub trait CUDA_CannyEdgeDetectorTrait: core::AlgorithmTrait + crate::cudaimgproc::CUDA_CannyEdgeDetectorTraitConst {
 		fn as_raw_mut_CUDA_CannyEdgeDetector(&mut self) -> *mut c_void;
 	
-		/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
+		/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
 		/// 
 		/// ## Parameters
 		/// * image: Single-channel 8-bit input image.
@@ -1755,7 +1964,7 @@ pub mod cudaimgproc {
 			Ok(ret)
 		}
 		
-		/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
+		/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
 		/// 
 		/// ## Parameters
 		/// * image: Single-channel 8-bit input image.
@@ -1776,7 +1985,7 @@ pub mod cudaimgproc {
 			Ok(ret)
 		}
 		
-		/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
+		/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
 		/// 
 		/// ## Parameters
 		/// * image: Single-channel 8-bit input image.
