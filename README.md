@@ -9,6 +9,8 @@ Experimental Rust bindings for OpenCV 3 and 4.
 The API is usable, but unstable and not very battle-tested; use at your own risk.
 
 [Changelog](https://github.com/twistedfall/opencv-rust/blob/master/CHANGES.md)
+[Troubleshooting](https://github.com/twistedfall/opencv-rust/blob/master/TROUBLESHOOTING.md)
+[Support the project](https://github.com/sponsors/twistedfall)
 
 ## Quickstart
 
@@ -27,203 +29,13 @@ use opencv::prelude::*;
 
 ## Getting OpenCV
 
-### Linux
-
-#### Arch Linux:
-
-OpenCV package in Arch is suitable for this:
-
-`pacman -S clang qt6-base opencv`
-
-and additionally to support more OpenCV modules:
-
-`pacman -S vtk glew fmt openmpi`
-
-#### Ubuntu:
-
-`apt install libopencv-dev clang libclang-dev`
-
-#### Opensuse:
-
-`zypper install opencv-devel clang-devel gcc-c++`
-
-#### Other Linux:
-You have several options of getting the OpenCV library:
-
-* install it from the repository, make sure to install `-dev` packages because they contain headers necessary
-  for the crate build (also check that your package contains `pkg_config` or `cmake` files).
-
-* build OpenCV manually and set up the following environment variables prior to building the project with
-  `opencv` crate:
-  * `PKG_CONFIG_PATH` for the location of `*.pc` files or `OpenCV_DIR` for the location of `*.cmake` files
-  * `LD_LIBRARY_PATH` for where to look for the installed `*.so` files during runtime
-
-Additionally, please make sure to install `clang` package or its derivative that contains `libclang.so` and
-`clang` binary.
-  * Gentoo, Fedora: `clang`
-  * Debian, Ubuntu: `clang` and `libclang-dev`
-
-### Windows package
-
-Installing OpenCV is easy through the following sources:
-
-* from [chocolatey](https://chocolatey.org), also install `llvm` package, it's required for building:
-  ```shell script
-  choco install llvm opencv
-  ```
-  also set `OPENCV_LINK_LIBS`, `OPENCV_LINK_PATHS` and `OPENCV_INCLUDE_PATHS` environment variables (see below
-  for details).
-
-  Also, check the user guides [here](https://github.com/twistedfall/opencv-rust/issues/118#issuecomment-619608278)
-  and [here](https://github.com/twistedfall/opencv-rust/issues/113#issue-596076777).
-
-* from [vcpkg](https://docs.microsoft.com/en-us/cpp/build/vcpkg), also install `llvm` package,
-  necessary for building:
-  ```shell script
-  vcpkg install llvm opencv4[contrib,nonfree]
-  ```
-  You most probably want to set environment variable `VCPKGRS_DYNAMIC` to "1" unless you're specifically
-  targeting a static build.
-
-### macOS package
-
-Get OpenCV from homebrew:
-
-* [homebrew](https://brew.sh):
-  ```shell script
-  brew install opencv
-  ```
-  You will also need a working C++ compiler and libclang, you can install Command Line Tools (`xcode-select
-  --install`), XCode (from AppStore) or `llvm` (from Brew). You most probably need to also check the item 7 of the
-  troubleshooting below.
-
-### Manual build
-
-You can of course always compile OpenCV of the version you prefer manually. This is also supported, but it
-requires some additional configuration.
-
-You need to set up the following environment variables to point to the installed files of your OpenCV build:
-`OPENCV_LINK_LIBS`, `OPENCV_LINK_PATHS` and `OPENCV_INCLUDE_PATHS` (see below for details).
-
-### Static build
-
-Static linking to OpenCV is supported and tested at least on Linux. For some hints on building OpenCV statically
-please check this [comment](https://github.com/twistedfall/opencv-rust/issues/364#issuecomment-1308794985). Also,
-you can get some information on how to perform the build in CI scripts:
-[install-ubuntu.sh](https://github.com/twistedfall/opencv-rust/blob/master/ci/install-ubuntu.sh) and
-[script.sh](https://github.com/twistedfall/opencv-rust/blob/master/ci/script.sh), search for `"static"` string.
-
-### Crosscompilation
-
-Cross-compilation is supported to at least some extent. The ability to crosscompile projects using `opencv` from x86-64
-Linux host machine to Raspberry Pi is tested regularly. Cross-compilation is notoriously difficult to set up, so you can
-use this example [rpi-xcompile.Dockerfile](https://github.com/twistedfall/opencv-rust/blob/master/tools/docker/rpi-xcompile.Dockerfile).
-
-```shell
-docker build -t rpi-xcompile -f tools/docker/rpi-xcompile.Dockerfile tools
-```
-
-Building this image requries `qemu-arm` to be present on the host system and the corresponding `binfmt-misc` set up 
-- see e.g. https://wiki.debian.org/QemuUserEmulation, only `Installing packages` should be enough for debian-based distros,
-- for opensuse, install `qemu-linux-user` via zypper to set up the host correctly.
-
-After the successful build you will have an image configured for cross-compilation to Raspberry Pi. It will contain the
-sample build script `/usr/local/bin/cargo-xbuild` that you can check for the correct environment setup and the specific
-command line arguments to use when crosscompiling the project inside the container created from that image.
+See [https://github.com/twistedfall/opencv-rust/blob/master/INSTALL.md](INSTALL.md) for instructions on how to install required
+system dependencies.
 
 ## Troubleshooting
 
-1. One of the common problems is link errors in the end of the build.
-
-   Be sure to set up the relevant environment variables that will allow the linker to find the libraries it
-   needs (see below).
-
-2. You're getting runtime errors like:
-   ```
-   thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: Error { code: -215, message: "OpenCV(4.2.0) /build/opencv/src/opencv-4.2.0/modules/highgui/src/window.cpp:384: error: (-215:Assertion failed) size.width>0 && size.height>0 in function \'imshow\'\n" }', src/libcore/result.rs:1188:5
-   ```
-   ```
-   thread 'extraction::tests::test_contour_matching' panicked at 'called `Result::unwrap()` on an `Err` value: Error { code: -215, message: "OpenCV(4.1.1) /tmp/opencv-20190908-41416-17rm3ol/opencv-4.1.1/modules/core/src/matrix_wrap.cpp:79: error: (-215:Assertion failed) 0 <= i && i < (int)vv.size() in function \'getMat_\'\n" }', src/libcore/result.rs:1165:5
-   ```
-
-   These errors (note the .cpp source file and `Error` return value) are coming from OpenCV itself, not from
-   the crate. It means that you're using the OpenCV API incorrectly, e.g. passing incompatible or unexpected
-   arguments. Please refer to the OpenCV documentation for details.
-
-3. You're getting errors that methods don't exist or not implemented for specific `struct`s, but you can see
-   them in the documentation and in the crate source.
-
-   Be sure to import ```use opencv::prelude::*;```. The crate contains a lot of traits that need to be imported
-   first.
-
-4. On Windows, you're getting the `(exit code: 0xc0000135, STATUS_DLL_NOT_FOUND)` error when running the
-   compiled binary.
-
-   That often means that Windows can't find the OpenCV library dll. Be sure to set up `PATH` environment
-   variable correctly or copy the dll next to the binary you're trying to run. Check
-   [that](https://github.com/twistedfall/opencv-rust/issues/118#issuecomment-619608278) guide too.
-
-5. On Windows with VCPKG you're getting a lot of linking errors in multiple files like in
-   [this issue](https://github.com/twistedfall/opencv-rust/issues/161).
-
-   Unless you're doing a very specific build, you want to have environment variable `VCPKGRS_DYNAMIC` set to
-   "1".
-
-6. On Windows with OpenCV 4.6.0 you're getting linking errors related to `img_hash` module like in
-   [this issue](https://github.com/twistedfall/opencv-rust/issues/360).
-
-   Be sure to add `opencv_img_hash460` to your `OPENCV_LINK_LIBS` environment variable because it's being built as a separate
-   file.
-
-7. On macOS you're getting the `dyld: Library not loaded: @rpath/libclang.dylib` error during the build process.
-
-   OS can't find `libclang.dylib` dynamic library because it resides in a non-standard path, set up
-   the `DYLD_FALLBACK_LIBRARY_PATH` environment variable to point to the path where libclang.dylib can be
-   found, e.g. for Command Line Tools:
-   ```
-   export DYLD_FALLBACK_LIBRARY_PATH="$(xcode-select --print-path)/usr/lib/"
-   ```
-
-   or XCode:
-   ```
-   export DYLD_FALLBACK_LIBRARY_PATH="$(xcode-select --print-path)/Toolchains/XcodeDefault.xctoolchain/usr/lib/"
-   ```
-
-   You might be running into the issue on the recent macOS versions where this environment variable remains empty after setting,
-   please check [this issue](https://github.com/twistedfall/opencv-rust/issues/343) for some workarounds.
-
-8. You're getting the ```a `libclang` shared library is not loaded on this thread``` error during crate build.
-
-   Enable the `clang-runtime` feature. The reason for the issue is that some `clang-sys` crate can either link to the
-   corresponding dynamic library statically or load it at runtime based on whether its feature `runtime` is enabled.
-   If enabled this crate feature applies to all crates that depend on `clang-sys` even if they didn't explicitly enable that
-   feature themselves (at least with Rust `edition` before 2021 and Cargo `resolver` before 2).
-
-9. You're getting `'limits' file not found` error during crate build.
-
-   This error is caused by the missing/invalid installation of C++ standard library (e.g. libstdc++ for GCC). To fix this make
-   sure that the toolchain you're using has the corresponding C++ standard library. The toolchain is used through `libclang`, so
-   to get useful diagnostic info run:
-   ```shell
-   clang -E -x c++ - -v
-   ```
-   Look for `Selected GCC installation` and `#include <...> search starts here` to get the sense of what system toolchain is used
-   by clang. Refer to this [issue](https://github.com/twistedfall/opencv-rust/issues/322) for more fixes and workarounds.
-
-## Reporting issues
-
-If you still have trouble using the crate after going through the Troubleshooting steps please fill free to
-report it to the [bugtracker](https://github.com/twistedfall/opencv-rust/issues).
-
-When reporting an issue please state:
-
-1. Operating system
-2. The way you installed OpenCV: package, official binary distribution, manual compilation, etc.
-3. OpenCV version
-4. Attach the full output of the following command from your project directory:
-   ```shell script
-   RUST_BACKTRACE=full cargo build -vv
-   ```
+See [https://github.com/twistedfall/opencv-rust/blob/master/TROUBLESHOOTING.md](TROUBLESHOOTING.md) for some common issues and
+their solutions.
 
 ## Environment variables
 
