@@ -9519,9 +9519,9 @@ pub mod dnn {
 		
 		#[inline]
 		fn input_name_to_index(&mut self, input_name: &str) -> Result<i32> {
-			extern_container_arg!(mut input_name);
+			extern_container_arg!(input_name);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_dnn_LSTMLayer_inputNameToIndex_String(self.as_raw_mut_LSTMLayer(), input_name.opencv_as_extern_mut(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_dnn_LSTMLayer_inputNameToIndex_String(self.as_raw_mut_LSTMLayer(), input_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -9907,9 +9907,9 @@ pub mod dnn {
 		/// This method maps label of input blob to its index into input vector.
 		#[inline]
 		fn input_name_to_index(&mut self, input_name: &str) -> Result<i32> {
-			extern_container_arg!(mut input_name);
+			extern_container_arg!(input_name);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_dnn_Layer_inputNameToIndex_String(self.as_raw_mut_Layer(), input_name.opencv_as_extern_mut(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_dnn_Layer_inputNameToIndex_String(self.as_raw_mut_Layer(), input_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -12286,10 +12286,10 @@ pub mod dnn {
 		/// setNetInputs(), Layer::inputNameToIndex(), Layer::outputNameToIndex()
 		#[inline]
 		fn connect_first_second(&mut self, out_pin: &str, inp_pin: &str) -> Result<()> {
-			extern_container_arg!(mut out_pin);
-			extern_container_arg!(mut inp_pin);
+			extern_container_arg!(out_pin);
+			extern_container_arg!(inp_pin);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_dnn_Net_connect_String_String(self.as_raw_mut_Net(), out_pin.opencv_as_extern_mut(), inp_pin.opencv_as_extern_mut(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_dnn_Net_connect_String_String(self.as_raw_mut_Net(), out_pin.opencv_as_extern(), inp_pin.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)

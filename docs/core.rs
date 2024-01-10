@@ -5282,9 +5282,9 @@ pub mod core {
 	/// * recursive: false
 	#[inline]
 	pub fn glob_def(pattern: &str, result: &mut core::Vector<String>) -> Result<()> {
-		extern_container_arg!(mut pattern);
+		extern_container_arg!(pattern);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_glob_String_vectorLStringGR(pattern.opencv_as_extern_mut(), result.as_raw_mut_VectorOfString(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_glob_String_vectorLStringGR(pattern.opencv_as_extern(), result.as_raw_mut_VectorOfString(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -5294,9 +5294,9 @@ pub mod core {
 	/// * recursive: false
 	#[inline]
 	pub fn glob(pattern: &str, result: &mut core::Vector<String>, recursive: bool) -> Result<()> {
-		extern_container_arg!(mut pattern);
+		extern_container_arg!(pattern);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_glob_String_vectorLStringGR_bool(pattern.opencv_as_extern_mut(), result.as_raw_mut_VectorOfString(), recursive, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_glob_String_vectorLStringGR_bool(pattern.opencv_as_extern(), result.as_raw_mut_VectorOfString(), recursive, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)

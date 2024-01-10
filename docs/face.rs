@@ -170,10 +170,10 @@ pub mod face {
 	/// 
 	#[inline]
 	pub fn load_dataset_list(image_list: &str, annotation_list: &str, images: &mut core::Vector<String>, annotations: &mut core::Vector<String>) -> Result<bool> {
-		extern_container_arg!(mut image_list);
-		extern_container_arg!(mut annotation_list);
+		extern_container_arg!(image_list);
+		extern_container_arg!(annotation_list);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_face_loadDatasetList_String_String_vectorLStringGR_vectorLStringGR(image_list.opencv_as_extern_mut(), annotation_list.opencv_as_extern_mut(), images.as_raw_mut_VectorOfString(), annotations.as_raw_mut_VectorOfString(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_face_loadDatasetList_String_String_vectorLStringGR_vectorLStringGR(image_list.opencv_as_extern(), annotation_list.opencv_as_extern(), images.as_raw_mut_VectorOfString(), annotations.as_raw_mut_VectorOfString(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -212,10 +212,10 @@ pub mod face {
 	/// * offset: 0.0f
 	#[inline]
 	pub fn load_face_points_def(filename: &str, points: &mut impl core::ToOutputArray) -> Result<bool> {
-		extern_container_arg!(mut filename);
+		extern_container_arg!(filename);
 		output_array_arg!(points);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_face_loadFacePoints_String_const__OutputArrayR(filename.opencv_as_extern_mut(), points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_face_loadFacePoints_String_const__OutputArrayR(filename.opencv_as_extern(), points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -253,10 +253,10 @@ pub mod face {
 	/// * offset: 0.0f
 	#[inline]
 	pub fn load_face_points(filename: &str, points: &mut impl core::ToOutputArray, offset: f32) -> Result<bool> {
-		extern_container_arg!(mut filename);
+		extern_container_arg!(filename);
 		output_array_arg!(points);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_face_loadFacePoints_String_const__OutputArrayR_float(filename.opencv_as_extern_mut(), points.as_raw__OutputArray(), offset, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_face_loadFacePoints_String_const__OutputArrayR_float(filename.opencv_as_extern(), points.as_raw__OutputArray(), offset, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -307,11 +307,11 @@ pub mod face {
 	/// * offset: 0.0f
 	#[inline]
 	pub fn load_training_data_1_def(image_list: &str, ground_truth: &str, images: &mut core::Vector<String>, face_points: &mut impl core::ToOutputArray) -> Result<bool> {
-		extern_container_arg!(mut image_list);
-		extern_container_arg!(mut ground_truth);
+		extern_container_arg!(image_list);
+		extern_container_arg!(ground_truth);
 		output_array_arg!(face_points);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_face_loadTrainingData_String_String_vectorLStringGR_const__OutputArrayR(image_list.opencv_as_extern_mut(), ground_truth.opencv_as_extern_mut(), images.as_raw_mut_VectorOfString(), face_points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_face_loadTrainingData_String_String_vectorLStringGR_const__OutputArrayR(image_list.opencv_as_extern(), ground_truth.opencv_as_extern(), images.as_raw_mut_VectorOfString(), face_points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -361,11 +361,11 @@ pub mod face {
 	/// * offset: 0.0f
 	#[inline]
 	pub fn load_training_data_1(image_list: &str, ground_truth: &str, images: &mut core::Vector<String>, face_points: &mut impl core::ToOutputArray, offset: f32) -> Result<bool> {
-		extern_container_arg!(mut image_list);
-		extern_container_arg!(mut ground_truth);
+		extern_container_arg!(image_list);
+		extern_container_arg!(ground_truth);
 		output_array_arg!(face_points);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_face_loadTrainingData_String_String_vectorLStringGR_const__OutputArrayR_float(image_list.opencv_as_extern_mut(), ground_truth.opencv_as_extern_mut(), images.as_raw_mut_VectorOfString(), face_points.as_raw__OutputArray(), offset, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_face_loadTrainingData_String_String_vectorLStringGR_const__OutputArrayR_float(image_list.opencv_as_extern(), ground_truth.opencv_as_extern(), images.as_raw_mut_VectorOfString(), face_points.as_raw__OutputArray(), offset, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -405,10 +405,10 @@ pub mod face {
 	/// * offset: 0.0f
 	#[inline]
 	pub fn load_training_data_def(filename: &str, images: &mut core::Vector<String>, face_points: &mut impl core::ToOutputArray) -> Result<bool> {
-		extern_container_arg!(mut filename);
+		extern_container_arg!(filename);
 		output_array_arg!(face_points);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_face_loadTrainingData_String_vectorLStringGR_const__OutputArrayR(filename.opencv_as_extern_mut(), images.as_raw_mut_VectorOfString(), face_points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_face_loadTrainingData_String_vectorLStringGR_const__OutputArrayR(filename.opencv_as_extern(), images.as_raw_mut_VectorOfString(), face_points.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -447,10 +447,10 @@ pub mod face {
 	/// * offset: 0.0f
 	#[inline]
 	pub fn load_training_data(filename: &str, images: &mut core::Vector<String>, face_points: &mut impl core::ToOutputArray, delim: char, offset: f32) -> Result<bool> {
-		extern_container_arg!(mut filename);
+		extern_container_arg!(filename);
 		output_array_arg!(face_points);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_face_loadTrainingData_String_vectorLStringGR_const__OutputArrayR_char_float(filename.opencv_as_extern_mut(), images.as_raw_mut_VectorOfString(), face_points.as_raw__OutputArray(), u8::try_from(delim)? as c_char, offset, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_face_loadTrainingData_String_vectorLStringGR_const__OutputArrayR_char_float(filename.opencv_as_extern(), images.as_raw_mut_VectorOfString(), face_points.as_raw__OutputArray(), u8::try_from(delim)? as c_char, offset, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -940,9 +940,9 @@ pub mod face {
 		/// * max_sz: Size()
 		#[inline]
 		pub fn new(cascade_model: &str, sf: f64, min_n: i32, min_sz: core::Size, max_sz: core::Size) -> Result<crate::face::CParams> {
-			extern_container_arg!(mut cascade_model);
+			extern_container_arg!(cascade_model);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_face_CParams_CParams_String_double_int_Size_Size(cascade_model.opencv_as_extern_mut(), sf, min_n, min_sz.opencv_as_extern(), max_sz.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_face_CParams_CParams_String_double_int_Size_Size(cascade_model.opencv_as_extern(), sf, min_n, min_sz.opencv_as_extern(), max_sz.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::face::CParams::opencv_from_extern(ret) };
@@ -957,9 +957,9 @@ pub mod face {
 		/// * max_sz: Size()
 		#[inline]
 		pub fn new_def(cascade_model: &str) -> Result<crate::face::CParams> {
-			extern_container_arg!(mut cascade_model);
+			extern_container_arg!(cascade_model);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_face_CParams_CParams_String(cascade_model.opencv_as_extern_mut(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_face_CParams_CParams_String(cascade_model.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::face::CParams::opencv_from_extern(ret) };
@@ -1719,9 +1719,9 @@ pub mod face {
 		/// 
 		#[inline]
 		fn load_model(&mut self, model: &str) -> Result<()> {
-			extern_container_arg!(mut model);
+			extern_container_arg!(model);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_face_Facemark_loadModel_String(self.as_raw_mut_Facemark(), model.opencv_as_extern_mut(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_face_Facemark_loadModel_String(self.as_raw_mut_Facemark(), model.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -2692,10 +2692,10 @@ pub mod face {
 		/// * model_filename: "face_landmarks.dat"
 		#[inline]
 		fn training(&mut self, images: &mut core::Vector<core::Mat>, landmarks: &mut core::Vector<core::Vector<core::Point2f>>, configfile: &str, scale: core::Size, model_filename: &str) -> Result<bool> {
-			extern_container_arg!(mut configfile);
-			extern_container_arg!(mut model_filename);
+			extern_container_arg!(configfile);
+			extern_container_arg!(model_filename);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_face_FacemarkKazemi_training_vectorLMatGR_vectorLvectorLPoint2fGGR_string_Size_string(self.as_raw_mut_FacemarkKazemi(), images.as_raw_mut_VectorOfMat(), landmarks.as_raw_mut_VectorOfVectorOfPoint2f(), configfile.opencv_as_extern_mut(), scale.opencv_as_extern(), model_filename.opencv_as_extern_mut(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_face_FacemarkKazemi_training_vectorLMatGR_vectorLvectorLPoint2fGGR_string_Size_string(self.as_raw_mut_FacemarkKazemi(), images.as_raw_mut_VectorOfMat(), landmarks.as_raw_mut_VectorOfVectorOfPoint2f(), configfile.opencv_as_extern(), scale.opencv_as_extern(), model_filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -2717,9 +2717,9 @@ pub mod face {
 		/// * model_filename: "face_landmarks.dat"
 		#[inline]
 		fn training_def(&mut self, images: &mut core::Vector<core::Mat>, landmarks: &mut core::Vector<core::Vector<core::Point2f>>, configfile: &str, scale: core::Size) -> Result<bool> {
-			extern_container_arg!(mut configfile);
+			extern_container_arg!(configfile);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_face_FacemarkKazemi_training_vectorLMatGR_vectorLvectorLPoint2fGGR_string_Size(self.as_raw_mut_FacemarkKazemi(), images.as_raw_mut_VectorOfMat(), landmarks.as_raw_mut_VectorOfVectorOfPoint2f(), configfile.opencv_as_extern_mut(), scale.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_face_FacemarkKazemi_training_vectorLMatGR_vectorLvectorLPoint2fGGR_string_Size(self.as_raw_mut_FacemarkKazemi(), images.as_raw_mut_VectorOfMat(), landmarks.as_raw_mut_VectorOfVectorOfPoint2f(), configfile.opencv_as_extern(), scale.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)

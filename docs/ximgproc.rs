@@ -2595,10 +2595,10 @@ pub mod ximgproc {
 	/// @result returns zero if successfully read the ground truth
 	#[inline]
 	pub fn read_gt(src_path: &str, dst: &mut impl core::ToOutputArray) -> Result<i32> {
-		extern_container_arg!(mut src_path);
+		extern_container_arg!(src_path);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_ximgproc_readGT_String_const__OutputArrayR(src_path.opencv_as_extern_mut(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_ximgproc_readGT_String_const__OutputArrayR(src_path.opencv_as_extern(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)

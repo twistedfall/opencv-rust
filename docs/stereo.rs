@@ -243,9 +243,9 @@ pub mod stereo {
 		/// loadParameters
 		#[inline]
 		fn load_parameters(&mut self, filepath: &str) -> Result<i32> {
-			extern_container_arg!(mut filepath);
+			extern_container_arg!(filepath);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_stereo_QuasiDenseStereo_loadParameters_String(self.as_raw_mut_QuasiDenseStereo(), filepath.opencv_as_extern_mut(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_stereo_QuasiDenseStereo_loadParameters_String(self.as_raw_mut_QuasiDenseStereo(), filepath.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -263,9 +263,9 @@ pub mod stereo {
 		/// loadParameters
 		#[inline]
 		fn save_parameters(&mut self, filepath: &str) -> Result<i32> {
-			extern_container_arg!(mut filepath);
+			extern_container_arg!(filepath);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_stereo_QuasiDenseStereo_saveParameters_String(self.as_raw_mut_QuasiDenseStereo(), filepath.opencv_as_extern_mut(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_stereo_QuasiDenseStereo_saveParameters_String(self.as_raw_mut_QuasiDenseStereo(), filepath.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -411,9 +411,9 @@ pub mod stereo {
 		/// * param_filepath: cv::String()
 		#[inline]
 		pub fn create(mono_img_size: core::Size, param_filepath: &str) -> Result<core::Ptr<crate::stereo::QuasiDenseStereo>> {
-			extern_container_arg!(mut param_filepath);
+			extern_container_arg!(param_filepath);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_stereo_QuasiDenseStereo_create_Size_String(mono_img_size.opencv_as_extern(), param_filepath.opencv_as_extern_mut(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_stereo_QuasiDenseStereo_create_Size_String(mono_img_size.opencv_as_extern(), param_filepath.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::stereo::QuasiDenseStereo>::opencv_from_extern(ret) };

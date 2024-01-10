@@ -1417,9 +1417,9 @@ pub mod stitching {
 	impl PyRotationWarper {
 		#[inline]
 		pub fn new(typ: &str, scale: f32) -> Result<crate::stitching::PyRotationWarper> {
-			extern_container_arg!(mut typ);
+			extern_container_arg!(typ);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_PyRotationWarper_PyRotationWarper_String_float(typ.opencv_as_extern_mut(), scale, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_PyRotationWarper_PyRotationWarper_String_float(typ.opencv_as_extern(), scale, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::stitching::PyRotationWarper::opencv_from_extern(ret) };
@@ -5515,9 +5515,9 @@ pub mod stitching {
 		
 		#[inline]
 		fn set_cost_function_1(&mut self, val: &str) -> Result<()> {
-			extern_container_arg!(mut val);
+			extern_container_arg!(val);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_DpSeamFinder_setCostFunction_String(self.as_raw_mut_Detail_DpSeamFinder(), val.opencv_as_extern_mut(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_detail_DpSeamFinder_setCostFunction_String(self.as_raw_mut_Detail_DpSeamFinder(), val.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -5593,9 +5593,9 @@ pub mod stitching {
 		
 		#[inline]
 		pub fn new_1(cost_func: &str) -> Result<crate::stitching::Detail_DpSeamFinder> {
-			extern_container_arg!(mut cost_func);
+			extern_container_arg!(cost_func);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_DpSeamFinder_DpSeamFinder_String(cost_func.opencv_as_extern_mut(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_detail_DpSeamFinder_DpSeamFinder_String(cost_func.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::stitching::Detail_DpSeamFinder::opencv_from_extern(ret) };
@@ -6660,9 +6660,9 @@ pub mod stitching {
 		/// * bad_region_penalty: 1000.f
 		#[inline]
 		pub fn new_1(cost_type: &str, terminal_cost: f32, bad_region_penalty: f32) -> Result<crate::stitching::Detail_GraphCutSeamFinder> {
-			extern_container_arg!(mut cost_type);
+			extern_container_arg!(cost_type);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_GraphCutSeamFinder_GraphCutSeamFinder_String_float_float(cost_type.opencv_as_extern_mut(), terminal_cost, bad_region_penalty, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_detail_GraphCutSeamFinder_GraphCutSeamFinder_String_float_float(cost_type.opencv_as_extern(), terminal_cost, bad_region_penalty, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::stitching::Detail_GraphCutSeamFinder::opencv_from_extern(ret) };
@@ -6675,9 +6675,9 @@ pub mod stitching {
 		/// * bad_region_penalty: 1000.f
 		#[inline]
 		pub fn new_def_1(cost_type: &str) -> Result<crate::stitching::Detail_GraphCutSeamFinder> {
-			extern_container_arg!(mut cost_type);
+			extern_container_arg!(cost_type);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_GraphCutSeamFinder_GraphCutSeamFinder_String(cost_type.opencv_as_extern_mut(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_detail_GraphCutSeamFinder_GraphCutSeamFinder_String(cost_type.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::stitching::Detail_GraphCutSeamFinder::opencv_from_extern(ret) };
