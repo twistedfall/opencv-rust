@@ -1,3 +1,6 @@
+* 0.88.7
+  * Improve handling of input strings (fixes https://github.com/twistedfall/opencv-rust/issues/534)
+
 * 0.88.6
   * Regenerate documentation with OpenCV 4.9.0
 
