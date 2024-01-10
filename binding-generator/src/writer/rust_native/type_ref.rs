@@ -194,27 +194,20 @@ impl TypeRefExt for TypeRef<'_, '_> {
 	}
 
 	fn rust_arg_pre_call(&self, name: &str, is_function_infallible: bool) -> String {
-		let extern_container_arg = || {
-			let mut flags = vec![];
-			if is_function_infallible {
-				flags.push("nofail")
-			}
-			if self.constness().is_mut() {
-				flags.push("mut")
-			}
-			let mut flags = flags.join(" ");
-			if !flags.is_empty() {
-				flags.push(' ');
-			}
-			format!("extern_container_arg!({flags}{name})")
-		};
-
 		if let Some(dir) = self.as_string() {
 			return match dir {
-				Dir::In(_) => extern_container_arg(),
-				Dir::Out(_) => {
-					format!("string_arg_output_send!(via {name}_via)")
+				Dir::In(_) => {
+					let mut flags = vec![];
+					if is_function_infallible {
+						flags.push("nofail")
+					}
+					let mut flags = flags.join(" ");
+					if !flags.is_empty() {
+						flags.push(' ');
+					}
+					format!("extern_container_arg!({flags}{name})")
 				}
+				Dir::Out(_) => format!("string_arg_output_send!(via {name}_via)"),
 			};
 		} else if self.is_input_array() {
 			return format!("input_array_arg!({name})");
@@ -258,11 +251,7 @@ impl TypeRefExt for TypeRef<'_, '_> {
 		if let Some(dir) = self.as_string() {
 			match dir {
 				Dir::In(_) => {
-					if constness.is_const() {
-						format!("{name}.opencv_as_extern()")
-					} else {
-						format!("{name}.opencv_as_extern_mut()")
-					}
+					format!("{name}.opencv_as_extern()")
 				}
 				Dir::Out(_) => format!("&mut {name}_via"),
 			}
@@ -344,7 +333,7 @@ impl TypeRefExt for TypeRef<'_, '_> {
 		if let Some(arg_dir) = self.as_string() {
 			match dir {
 				ExternDir::ToCpp | ExternDir::Contained => match arg_dir {
-					Dir::In(_) => format!("*{cnst}c_char", cnst = constness.rust_qual_ptr()).into(),
+					Dir::In(_) => format!("*{cnst}c_char", cnst = Constness::Const.rust_qual_ptr()).into(),
 					Dir::Out(_) => "*mut *mut c_void".into(),
 				},
 				ExternDir::FromCpp => "*mut c_void".into(),

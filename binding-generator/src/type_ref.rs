@@ -764,7 +764,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		};
 		if let Some(dir) = self.as_string() {
 			match dir {
-				Dir::In(_) => format!("{cnst}char*{name}", cnst = self.constness().cpp_qual(), name = space_name).into(),
+				Dir::In(_) => format!("{cnst}char*{name}", cnst = Constness::Const.cpp_qual(), name = space_name).into(),
 				Dir::Out(_) => format!("{cnst}void*{name}", cnst = self.constness().cpp_qual(), name = space_name).into(),
 			}
 		} else if self.extern_pass_kind().is_by_void_ptr() {
