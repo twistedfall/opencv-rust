@@ -29,12 +29,12 @@ use opencv::prelude::*;
 
 ## Getting OpenCV
 
-See [https://github.com/twistedfall/opencv-rust/blob/master/INSTALL.md](INSTALL.md) for instructions on how to install required
+See [INSTALL.md](https://github.com/twistedfall/opencv-rust/blob/master/INSTALL.md) for instructions on how to install required
 system dependencies.
 
 ## Troubleshooting
 
-See [https://github.com/twistedfall/opencv-rust/blob/master/TROUBLESHOOTING.md](TROUBLESHOOTING.md) for some common issues and
+See [TROUBLESHOOTING.md](https://github.com/twistedfall/opencv-rust/blob/master/TROUBLESHOOTING.md) for some common issues and
 their solutions.
 
 ## Environment variables
