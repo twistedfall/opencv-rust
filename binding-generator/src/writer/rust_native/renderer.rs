@@ -19,7 +19,7 @@ fn render_rust_tpl<'a>(renderer: impl TypeRefRenderer<'a>, type_ref: &TypeRef, f
 		let generic_types = generic_types
 			.iter()
 			.filter_map(|t| match t {
-				TemplateArg::Typename(type_ref) => Some(type_ref.render(renderer.recurse())),
+				TemplateArg::Typename(type_ref) => Some(renderer.recurse().render(type_ref)),
 				TemplateArg::Constant(literal) => {
 					if const_generics_implemented {
 						Some(literal.into())
@@ -86,7 +86,7 @@ impl TypeRefRenderer<'_> for RustRenderer {
 		match type_ref.kind().into_owned() {
 			TypeRefKind::Primitive(rust, _) => rust.into(),
 			TypeRefKind::Array(elem, size) => {
-				let typ = type_ref.format_as_array(&elem.render(self.recurse()), size);
+				let typ = type_ref.format_as_array(&self.recurse().render(&elem), size);
 				self.wrap_nullable(type_ref, typ.into())
 			}
 			TypeRefKind::StdVector(vec) => vec.rust_name(self.name_style).into_owned().into(),
@@ -97,13 +97,13 @@ impl TypeRefRenderer<'_> for RustRenderer {
 				// const references to simple classes are passed by value for performance
 				// fixme: it kind of works now, but probably it's not the best idea
 				//  because some functions can potentially save the pointer to the value, but it will be destroyed after function call
-				inner.render(self.recurse()).into_owned().into()
+				self.recurse().render(&inner).into_owned().into()
 			}
 			TypeRefKind::Pointer(inner) if self.rust_by_ptr => {
 				let typ = if inner.is_void() {
 					"c_void".into()
 				} else {
-					inner.render(self.recurse())
+					self.recurse().render(&inner)
 				};
 				format!("*{cnst}{typ}", cnst = type_ref.constness().rust_qual_ptr()).into()
 			}
@@ -112,11 +112,11 @@ impl TypeRefRenderer<'_> for RustRenderer {
 					"&{lt: <}{cnst}{typ}",
 					cnst = type_ref.constness().rust_qual(),
 					lt = self.lifetime,
-					typ = inner.render(self.recurse())
+					typ = self.recurse().render(&inner)
 				);
 				self.wrap_nullable(type_ref, typ.into())
 			}
-			TypeRefKind::RValueReference(inner) => inner.render(self.recurse()).into_owned().into(),
+			TypeRefKind::RValueReference(inner) => self.recurse().render(&inner).into_owned().into(),
 			TypeRefKind::SmartPtr(ptr) => {
 				let typ = ptr.rust_name(self.name_style).into_owned();
 				self.wrap_nullable(type_ref, typ.into())

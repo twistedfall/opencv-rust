@@ -149,7 +149,7 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 
 	/// whether argument is used for passing user data to callback
 	pub fn is_user_data(&self) -> bool {
-		self.type_ref().is_void_ptr() && ARGUMENT_NAMES_USERDATA.contains(self.cpp_name(CppNameStyle::Declaration).as_ref())
+		ARGUMENT_NAMES_USERDATA.contains(self.cpp_name(CppNameStyle::Declaration).as_ref()) && self.type_ref().is_void_ptr()
 	}
 
 	pub fn can_be_slice_arg(&self) -> bool {

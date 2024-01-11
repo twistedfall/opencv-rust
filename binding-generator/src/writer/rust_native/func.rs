@@ -334,14 +334,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 			("debug", &self.get_debug()),
 			("attributes", &attributes.join("\n")),
 			("visibility", visibility),
-			(
-				"unsafety_decl",
-				if safety.is_safe() {
-					""
-				} else {
-					"unsafe "
-				},
-			),
+			("unsafety_decl", safety.rust_func_safety_qual()),
 			("name", name.as_ref()),
 			("generic_decl", &rust_generic_decl(self)),
 			("decl_args", &decl_args.join(", ")),
@@ -459,19 +452,14 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		} else {
 			return_type_ref.cpp_extern_return_fallible()
 		};
-		let mut_ret_wrapper_full = if return_kind.is_infallible() {
-			return_type_ref
-				.with_inherent_constness(Constness::Mut)
-				.cpp_extern_return()
-				.into_owned()
+		let return_type_ref_mut = return_type_ref.with_inherent_constness(Constness::Mut);
+		let ret_wrapper_full_mut = if return_kind.is_infallible() {
+			return_type_ref_mut.cpp_extern_return()
 		} else {
-			return_type_ref
-				.with_inherent_constness(Constness::Mut)
-				.cpp_extern_return_fallible()
-				.into_owned()
+			return_type_ref_mut.cpp_extern_return_fallible()
 		};
 		if !return_kind.is_naked() {
-			decl_args.push(format!("{mut_ret_wrapper_full}* {ocv_ret_name}"));
+			decl_args.push(format!("{ret_wrapper_full_mut}* {ocv_ret_name}"));
 		}
 		let return_spec = if return_kind.is_naked() {
 			Cow::Borrowed(ret_full.as_ref())
@@ -527,7 +515,7 @@ fn pre_post_arg_handle(mut arg: String, args: &mut Vec<String>) {
 
 fn rust_call(
 	f: &Func,
-	safety: Safety,
+	func_safety: Safety,
 	constness: Constness,
 	as_instance_method: Option<&Class>,
 	identifier: &str,
@@ -574,19 +562,11 @@ fn rust_call(
 	}
 	let tpl = match f.rust_body() {
 		FuncRustBody::Auto => Cow::Borrowed(&*CALL_TPL),
-		FuncRustBody::ManualCall(body) => Cow::Owned(body.compile_interpolation()),
-		FuncRustBody::ManualCallReturn(body) => Cow::Owned(body.compile_interpolation()),
+		FuncRustBody::ManualCall(body) | FuncRustBody::ManualCallReturn(body) => Cow::Owned(body.compile_interpolation()),
 	};
 	tpl.interpolate(&HashMap::from([
 		("ret_receive", ret_receive),
-		(
-			"unsafety_call",
-			if safety.is_safe() {
-				"unsafe "
-			} else {
-				""
-			},
-		),
+		("unsafety_call", func_safety.rust_block_safety_qual()),
 		("identifier", identifier),
 		("name", func_name),
 		("call_args", &call_args.join(", ")),
@@ -644,11 +624,7 @@ fn rust_return_map(
 	return_kind: ReturnKind,
 	is_static_func: bool,
 ) -> Cow<'static, str> {
-	let unsafety_call = if context_safety.is_safe() {
-		"unsafe "
-	} else {
-		""
-	};
+	let unsafety_call = context_safety.rust_block_safety_qual();
 	if return_type.as_string().is_some() || return_type.extern_pass_kind().is_by_void_ptr() {
 		format!(
 			"{unsafety_call}{{ {typ}::opencv_from_extern({ret_name}) }}",

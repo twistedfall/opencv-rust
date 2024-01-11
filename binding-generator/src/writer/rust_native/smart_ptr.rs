@@ -102,15 +102,17 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 
 		let mut impls = String::new();
 		if let Some(cls) = pointee_type.as_class().filter(Class::is_trait) {
-			inter_vars.insert("base_rust_local", cls.rust_name(NameStyle::decl()).into_owned().into());
-			inter_vars.insert(
-				"base_rust_full",
-				cls.rust_trait_name(NameStyle::ref_(), Constness::Mut).into_owned().into(),
-			);
-			inter_vars.insert(
-				"base_const_rust_full",
-				cls.rust_trait_name(NameStyle::ref_(), Constness::Const).into_owned().into(),
-			);
+			inter_vars.extend([
+				("base_rust_local", cls.rust_name(NameStyle::decl()).into_owned().into()),
+				(
+					"base_rust_full_mut",
+					cls.rust_trait_name(NameStyle::ref_(), Constness::Mut).into_owned().into(),
+				),
+				(
+					"base_rust_full_const",
+					cls.rust_trait_name(NameStyle::ref_(), Constness::Const).into_owned().into(),
+				),
+			]);
 			impls += &TRAIT_RAW_TPL.interpolate(&inter_vars);
 			let fields = cls.fields();
 			let mut field_const_methods = cls.field_methods(
@@ -119,17 +121,20 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 			);
 			for base in all_bases(&cls) {
 				let base_rust_local = base.rust_name(NameStyle::decl());
-				inter_vars.insert("base_rust_local", base_rust_local.clone().into_owned().into());
-				inter_vars.insert(
-					"base_rust_full",
-					base.rust_trait_name(NameStyle::ref_(), Constness::Mut).into_owned().into(),
-				);
-				inter_vars.insert(
-					"base_const_rust_full",
-					base.rust_trait_name(NameStyle::ref_(), Constness::Const).into_owned().into(),
-				);
-				inter_vars.insert("base_rust_full_ref", base.rust_name(NameStyle::ref_()).into_owned().into());
+				inter_vars.extend([
+					("base_rust_local", base_rust_local.clone().into_owned().into()),
+					(
+						"base_rust_full_mut",
+						base.rust_trait_name(NameStyle::ref_(), Constness::Mut).into_owned().into(),
+					),
+					(
+						"base_rust_full_const",
+						base.rust_trait_name(NameStyle::ref_(), Constness::Const).into_owned().into(),
+					),
+					("base_rust_full_ref", base.rust_name(NameStyle::ref_()).into_owned().into()),
+				]);
 				impls += &TRAIT_RAW_TPL.interpolate(&inter_vars);
+
 				let extern_cast_to_base = method_cast_to_base(smartptr_class.clone(), base.type_ref(), &base_rust_local).identifier();
 				inter_vars.insert("extern_cast_to_base", extern_cast_to_base.into());
 				impls += &BASE_CAST_TPL.interpolate(&inter_vars);

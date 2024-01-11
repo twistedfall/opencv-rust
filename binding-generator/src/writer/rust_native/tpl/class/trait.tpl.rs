@@ -7,7 +7,7 @@ pub trait {{rust_trait_local_const}}{{trait_bases_const}} {
 }
 
 /// Mutable methods for [{{rust_name_ref}}]
-pub trait {{rust_trait_local}}{{trait_bases_mut}} {
+pub trait {{rust_trait_local_mut}}{{trait_bases_mut}} {
 	fn as_raw_mut_{{rust_local}}(&mut self) -> {{rust_extern_mut}};
 
 	{{trait_mut_methods}}

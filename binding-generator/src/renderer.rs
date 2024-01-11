@@ -46,23 +46,23 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 			TypeRefKind::Array(inner, size) => {
 				if let Some(size) = size {
 					if self.name.is_empty() {
-						format!("{cnst}{typ}**", typ = inner.render(self.recurse()))
+						format!("{cnst}{typ}**", typ = self.recurse().render(inner))
 					} else {
 						format!(
 							"{cnst}{typ}(*{name})[{size}]",
-							typ = inner.render(self.recurse()),
+							typ = self.recurse().render(inner),
 							name = self.name
 						)
 					}
 				} else {
-					format!("{typ}*{space_name}", typ = inner.render(self.recurse()))
+					format!("{typ}*{space_name}", typ = self.recurse().render(inner))
 				}
 			}
 			TypeRefKind::StdVector(vec) => {
 				format!(
 					"{cnst}{vec_type}<{elem_type}>{space_name}",
 					vec_type = vec.cpp_name(self.name_style),
-					elem_type = vec.element_type().render(self.recurse()),
+					elem_type = self.recurse().render(&vec.element_type()),
 				)
 			}
 			TypeRefKind::StdTuple(tuple) => {
@@ -75,25 +75,25 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 						// but it changes the function identifier generation
 						let mut renderer = self.recurse();
 						renderer.name_style = CppNameStyle::Reference;
-						tref.render(renderer)
+						renderer.render(tref)
 					})
 					.join(", ");
 				format!("{cnst}{typ}<{elem_types}>{space_name}", typ = tuple.cpp_name(self.name_style))
 			}
 			TypeRefKind::Reference(inner) if !self.extern_types => {
-				format!("{typ}&{name}", typ = inner.render(self.recurse()), name = space_const_name)
+				format!("{typ}&{name}", typ = self.recurse().render(inner), name = space_const_name)
 			}
 			TypeRefKind::RValueReference(inner) if !self.extern_types => {
-				format!("{typ}&&{name}", typ = inner.render(self.recurse()), name = space_const_name)
+				format!("{typ}&&{name}", typ = self.recurse().render(inner), name = space_const_name)
 			}
 			TypeRefKind::Pointer(inner) | TypeRefKind::Reference(inner) | TypeRefKind::RValueReference(inner) => {
-				format!("{typ}*{space_const_name}", typ = inner.render(self.recurse()))
+				format!("{typ}*{space_const_name}", typ = self.recurse().render(inner))
 			}
 			TypeRefKind::SmartPtr(ptr) => {
 				format!(
 					"{cnst}{ptr_type}<{inner_type}>{space_name}",
 					ptr_type = ptr.cpp_name(self.name_style),
-					inner_type = ptr.pointee().render(self.recurse()),
+					inner_type = self.recurse().render(&ptr.pointee()),
 				)
 			}
 			TypeRefKind::Class(cls) => {
@@ -111,7 +111,7 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 				let underlying_type = tdef.underlying_type_ref();
 				let typ = if underlying_type.as_reference().is_some() {
 					// references can't be used in lvalue position
-					underlying_type.render(self.recurse())
+					self.recurse().render(&underlying_type)
 				} else {
 					tdef.cpp_name(self.name_style).into_owned().into()
 				};
@@ -176,7 +176,7 @@ fn render_cpp_tpl<'a>(renderer: impl TypeRefRenderer<'a>, type_ref: &TypeRef) ->
 		let generic_types = generic_types
 			.iter()
 			.filter_map(|t| match t {
-				TemplateArg::Typename(type_ref) => Some(type_ref.render(renderer.recurse())),
+				TemplateArg::Typename(type_ref) => Some(renderer.recurse().render(type_ref)),
 				TemplateArg::Constant(literal) => Some(literal.into()),
 				TemplateArg::Unknown => None,
 			})

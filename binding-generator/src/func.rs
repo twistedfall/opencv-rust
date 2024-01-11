@@ -736,6 +736,22 @@ impl Safety {
 			Self::Unsafe => false,
 		}
 	}
+
+	/// Returns `""` or `"unsafe "`, for usage for unsafe blocks within functions with `self` safety
+	pub fn rust_block_safety_qual(self) -> &'static str {
+		match self {
+			Safety::Safe => "unsafe ",
+			Safety::Unsafe => "",
+		}
+	}
+
+	/// Returns `""` or `"unsafe "`, for usage as function declaration specifier
+	pub fn rust_func_safety_qual(self) -> &'static str {
+		match self {
+			Safety::Safe => "",
+			Safety::Unsafe => "unsafe ",
+		}
+	}
 }
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq)]

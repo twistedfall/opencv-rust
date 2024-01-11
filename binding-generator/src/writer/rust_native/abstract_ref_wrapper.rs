@@ -28,8 +28,8 @@ impl RustNativeGeneratedElement for AbstractRefWrapper<'_, '_> {
 		let cls = type_ref.as_class().expect("Can only make an abstract ref to a class");
 		RUST.interpolate(&HashMap::from([
 			("rust_full", cls.rust_name(NameStyle::ref_())),
-			("rust_const_trait", cls.rust_trait_name(NameStyle::ref_(), Constness::Const)),
-			("rust_mut_trait", cls.rust_trait_name(NameStyle::ref_(), Constness::Mut)),
+			("rust_trait_const", cls.rust_trait_name(NameStyle::ref_(), Constness::Const)),
+			("rust_trait_mut", cls.rust_trait_name(NameStyle::ref_(), Constness::Mut)),
 			("rust_local", type_ref.rust_name(NameStyle::decl())),
 		]))
 	}

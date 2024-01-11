@@ -48,9 +48,6 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 	static DESCENDANT_CAST_TPL: Lazy<CompiledInterpolation> =
 		Lazy::new(|| include_str!("tpl/class/descendant_cast.tpl.rs").compile_interpolation());
 
-	static SIMPLE_BASE_TPL: Lazy<CompiledInterpolation> =
-		Lazy::new(|| include_str!("tpl/class/simple_base.tpl.rs").compile_interpolation());
-
 	static TRAIT_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/class/trait.tpl.rs").compile_interpolation());
 
 	let type_ref = c.type_ref();
@@ -114,7 +111,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 
 		out = TRAIT_TPL.interpolate(&HashMap::from([
 			("debug", c.get_debug().into()),
-			("rust_trait_local", c.rust_trait_name(NameStyle::decl(), Constness::Mut)),
+			("rust_trait_local_mut", c.rust_trait_name(NameStyle::decl(), Constness::Mut)),
 			(
 				"rust_trait_local_const",
 				c.rust_trait_name(NameStyle::decl(), Constness::Const),
@@ -170,7 +167,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			let extern_cast_to_base = method_cast_to_base(c.clone(), b.clone()).identifier();
 			impls += &BASE_CAST_TPL.interpolate(&HashMap::from([
 				("rust_local", rust_local.as_ref()),
-				("base_rust_full", base_full.as_ref()),
+				("base_rust_full_mut", base_full.as_ref()),
 				("extern_cast_to_base", &extern_cast_to_base),
 			]));
 		}
@@ -198,15 +195,10 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 		.into_iter()
 		.map(|base| {
 			let base_type_ref = base.type_ref();
-			let tpl = if class_kind.is_simple() {
-				&SIMPLE_BASE_TPL
-			} else {
-				&BASE_TPL
-			};
-			tpl.interpolate(&HashMap::from([
-				("base_rust_full", base.rust_trait_name(NameStyle::ref_(), Constness::Mut)),
+			BASE_TPL.interpolate(&HashMap::from([
+				("base_rust_full_mut", base.rust_trait_name(NameStyle::ref_(), Constness::Mut)),
 				(
-					"base_const_rust_full",
+					"base_rust_full_const",
 					base.rust_trait_name(NameStyle::ref_(), Constness::Const),
 				),
 				("rust_local", type_ref.rust_name(NameStyle::decl())),

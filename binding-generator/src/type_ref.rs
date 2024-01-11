@@ -739,17 +739,12 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		out.into()
 	}
 
-	#[inline]
-	pub fn render<'a>(&self, renderer: impl TypeRefRenderer<'a>) -> Cow<str> {
-		renderer.render(self)
-	}
-
 	pub fn cpp_name(&self, name_style: CppNameStyle) -> Cow<str> {
 		self.cpp_name_ext(name_style, "", true)
 	}
 
 	pub fn cpp_name_ext(&self, name_style: CppNameStyle, name: &str, extern_types: bool) -> Cow<str> {
-		self.render(CppRenderer::new(name_style, name, extern_types))
+		CppRenderer::new(name_style, name, extern_types).render(self)
 	}
 
 	pub fn cpp_extern(&self) -> Cow<str> {
@@ -782,7 +777,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	}
 
 	pub fn cpp_extern_return(&self) -> Cow<str> {
-		self.render(CppExternReturnRenderer)
+		CppExternReturnRenderer.render(self)
 	}
 
 	pub fn cpp_extern_return_fallible(&self) -> Cow<str> {

@@ -2,6 +2,7 @@ use std::borrow::Cow;
 use std::fmt;
 use std::fmt::Write;
 
+use crate::renderer::TypeRefRenderer;
 use crate::type_ref::{Constness, Dir, ExternDir, FishStyle, NameStyle, StrEnc, StrType, TypeRef, TypeRefKind, TypeRefTypeHint};
 use crate::writer::rust_native::class::ClassExt;
 use crate::{IteratorExt, StringExt};
@@ -19,6 +20,11 @@ pub trait TypeRefExt {
 
 	fn rust_safe_id(&self, add_const: bool) -> Cow<str>;
 	fn rust_module(&self) -> Cow<str>;
+
+	/// For when a type needs to be part of the user-visible Rust method name
+	///
+	/// Return a lightweight lowercase type representation, might not be precise. For example it's used for operator bindings so
+	/// that `operator &` on 2 `Mat`s translates into `and_mat_mat()`.
 	fn rust_simple_name(&self) -> String;
 	fn rust_name(&self, name_style: NameStyle) -> Cow<str>;
 	fn rust_name_ext(&self, name_style: NameStyle, lifetime: Lifetime) -> Cow<str>;
@@ -105,10 +111,6 @@ impl TypeRefExt for TypeRef<'_, '_> {
 		}
 	}
 
-	/// For when a type needs to be part of the user-visible Rust method name
-	///
-	/// Return a lightweight lowercase type representation, might not be precise. For example it's used for operator bindings so
-	/// that `operator &` on 2 `Mat`s translates into `and_mat_mat()`.
 	fn rust_simple_name(&self) -> String {
 		let maybe_ptr = self.as_pointer_reference_move();
 		let type_ref = maybe_ptr.as_ref().unwrap_or(self);
@@ -120,7 +122,7 @@ impl TypeRefExt for TypeRef<'_, '_> {
 	}
 
 	fn rust_name_ext(&self, name_style: NameStyle, lifetime: Lifetime) -> Cow<str> {
-		self.render(RustRenderer::new(name_style, lifetime, self.is_rust_by_ptr()))
+		RustRenderer::new(name_style, lifetime, self.is_rust_by_ptr()).render(self)
 	}
 
 	fn rust_self_func_decl(&self, method_constness: Constness) -> String {
@@ -223,19 +225,22 @@ impl TypeRefExt for TypeRef<'_, '_> {
 			};
 		} else if let Some(func) = self.as_function() {
 			let args = rust_disambiguate_names(func.arguments()).collect::<Vec<_>>();
-			if let Some((userdata_name, _)) = args.iter().find(|(_, f)| f.is_user_data()).cloned() {
-				let ret = func.return_type();
+			if let Some((userdata_name, _)) = args.iter().find(|(_, arg)| arg.is_user_data()) {
 				let tramp_args = args
-					.into_iter()
-					.map(|(name, a)| a.type_ref().rust_extern_arg_func_decl(&name))
+					.iter()
+					.map(|(name, arg)| (name == userdata_name, arg.type_ref().rust_extern_arg_func_decl(name)))
+					.collect::<Vec<_>>();
+				let fw_args = tramp_args
+					.iter()
+					.filter(|(is_user_data, _)| !is_user_data)
+					.map(|(_, decl)| decl)
 					.join(", ");
-				let fw_args = rust_disambiguate_names(func.rust_arguments())
-					.map(|(name, a)| a.type_ref().rust_extern_arg_func_decl(&name))
-					.join(", ");
+				let ret = func.return_type();
 				return format!(
 					"callback_arg!({name}_trampoline({tramp_args}) -> {tramp_ret} => {userdata_name} in callbacks => {name}({fw_args}) -> {fw_ret})",
-					tramp_ret=ret.rust_extern(ExternDir::FromCpp),
-					fw_ret=ret.rust_extern(ExternDir::FromCpp),
+					tramp_args = tramp_args.iter().map(|(_, decl)| decl).join(", "),
+					tramp_ret = ret.rust_extern(ExternDir::FromCpp),
+					fw_ret = ret.rust_extern(ExternDir::FromCpp),
 				);
 			}
 		}

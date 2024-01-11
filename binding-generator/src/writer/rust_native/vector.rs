@@ -125,8 +125,7 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 			]);
 
 			if settings::PREVENT_VECTOR_TYPEDEF_GENERATION.contains(element_type.cpp_name(CppNameStyle::Reference).as_ref()) {
-				inter_vars.insert("extern", "".into());
-				inter_vars.insert("additional_methods", "".into());
+				inter_vars.extend([("extern", "".into()), ("additional_methods", "".into())]);
 			} else {
 				impls += &EXTERN_TPL.interpolate(&inter_vars);
 

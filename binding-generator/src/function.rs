@@ -33,10 +33,6 @@ impl<'tu, 'ge> Function<'tu, 'ge> {
 		out
 	}
 
-	pub fn has_userdata(&self) -> bool {
-		self.arguments().into_iter().any(|f| f.is_user_data())
-	}
-
 	pub fn return_type(&self) -> TypeRef<'tu, 'ge> {
 		TypeRef::new(self.type_ref.get_result_type().expect("Can't get result type"), self.gen_env)
 	}
