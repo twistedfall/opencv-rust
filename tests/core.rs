@@ -59,13 +59,16 @@ fn file_storage() -> Result<()> {
 	use opencv::core::{FileStorage, FileStorage_Mode};
 
 	{
-		let mut st = FileStorage::new_def(".yml", FileStorage_Mode::WRITE as i32 | FileStorage_Mode::MEMORY as i32)?;
+		let mut st = FileStorage::new_def(
+			".yml",
+			i32::from(FileStorage_Mode::WRITE) | i32::from(FileStorage_Mode::MEMORY),
+		)?;
 		st.write_i32("test_int", 98)?;
 		core::write_f64(&mut st, "test_double", 123.45)?;
 		st.write_str("test_str", "test string")?;
 		let serialized = st.release_and_get_string()?;
 
-		let st = FileStorage::new_def(&serialized, FileStorage_Mode::MEMORY as _)?;
+		let st = FileStorage::new_def(&serialized, FileStorage_Mode::MEMORY.into())?;
 		let int_node = st.get("test_int")?;
 		assert!(int_node.is_int()?);
 		assert_eq!(98, int_node.to_i32()?);

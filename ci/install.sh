@@ -9,7 +9,6 @@ if [[ "$OS_FAMILY" == "Linux" ]]; then
 	sudo rm -rf /usr/share/dotnet
 	sudo rm -rf /opt/ghc
 	sudo rm -rf "/usr/local/share/boost"
-	sudo rm -rf "$AGENT_TOOLSDIRECTORY"
 	if [[ "${VCPKG_VERSION:-}" != "" ]]; then # vcpkg build
 		"$ci_dir/install-ubuntu-vcpkg.sh"
 	else
@@ -22,7 +21,7 @@ elif [[ "$OS_FAMILY" == "macOS" ]]; then
 		"$ci_dir/install-macos-framework.sh"
 	fi
 elif [[ "$OS_FAMILY" == "Windows" ]]; then
-	export CHOCO_LLVM_VERSION=16.0.6
+	export CHOCO_LLVM_VERSION=17.0.6
 	if [[ "${VCPKG_VERSION:-}" != "" ]]; then # vcpkg build
 		"$ci_dir/install-windows-vcpkg.sh"
 	else # chocolatey build

@@ -9,7 +9,7 @@ use crate::traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer,
 mod ptr_extern;
 mod ptr_f32;
 
-/// This is similar to Rust `Box`, but handled by the C++. Some OpenCV functions insist on accepting `Ptr` instead of a heap
+/// This is similar to Rust `Arc`, but handled by the C++. Some OpenCV functions insist on accepting `Ptr` instead of a heap
 /// allocated object so we need to satisfy those.
 ///
 /// [docs.opencv.org 3.x](https://docs.opencv.org/3.4/d0/de7/structcv_1_1Ptr.html)

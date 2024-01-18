@@ -39,8 +39,6 @@ static TARGET_ENV_MSVC: Lazy<bool> =
 	Lazy::new(|| env::var("CARGO_CFG_TARGET_ENV").map_or(false, |target_env| target_env == "msvc"));
 static TARGET_VENDOR_APPLE: Lazy<bool> =
 	Lazy::new(|| env::var("CARGO_CFG_TARGET_VENDOR").map_or(false, |target_vendor| target_vendor == "apple"));
-static TARGET_OS_WINDOWS: Lazy<bool> =
-	Lazy::new(|| env::var("CARGO_CFG_TARGET_OS").map_or(false, |target_os| target_os == "windows"));
 
 static OPENCV_BRANCH_32: Lazy<VersionReq> =
 	Lazy::new(|| VersionReq::parse("~3.2").expect("Can't parse OpenCV 3.2 version requirement"));
@@ -233,6 +231,7 @@ fn build_compiler(opencv: &Library) -> cc::Build {
 		.flag_if_supported("-Wno-unused-parameter") // unused parameter ‘src’ in virtual void cv::dnn::dnn4_v20211004::ActivationLayer::forwardSlice(const float*, float*, int, size_t, int, int) const
 		.flag_if_supported("-Wno-sign-compare") // comparison of integer expressions of different signedness: ‘size_t’ {aka ‘long unsigned int’} and ‘int’ in bool cv::dnn::dnn4_v20211004::isAllOnes(const MatShape&, int, int)
 		.flag_if_supported("-Wno-comment") // multi-line comment in include/opencv4/opencv2/mcc/ccm.hpp:73:25
+		.flag_if_supported("-Wunused-but-set-variable") // /usr/local/Cellar/opencv@3/3.4.16_10.reinstall/include/opencv2/flann/index_testing.h:249:11: warning: variable 'p1' set but not used
 		// crate warnings
 		.flag_if_supported("-Wno-unused-variable") // ‘cv::CV_VERSION_OCVRS_OVERRIDE’ defined but not used
 		.flag_if_supported("-Wno-ignored-qualifiers") // type qualifiers ignored on function return type in const size_t cv_MatStep_operator___const_int(const cv::MatStep* instance, int i)

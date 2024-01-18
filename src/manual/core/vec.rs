@@ -32,8 +32,7 @@ impl<T, const N: usize> VecN<T, N> {
 	}
 
 	#[inline]
-	// todo: make const when MSRV allows 1.61?
-	pub fn all(v0: T) -> Self
+	pub const fn all(v0: T) -> Self
 	where
 		T: Copy,
 	{

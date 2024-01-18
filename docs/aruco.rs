@@ -15,7 +15,7 @@ pub mod aruco {
 	/// (markerLength/2, -markerLength/2, 0), (-markerLength/2, -markerLength/2, 0).
 	/// 
 	/// These pattern points define this coordinate system:
-	/// ![Image with axes drawn](https://docs.opencv.org/4.8.1/singlemarkersaxes2.jpg)
+	/// ![Image with axes drawn](https://docs.opencv.org/4.9.0/singlemarkersaxes2.jpg)
 	pub const ARUCO_CCW_CENTER: i32 = 0;
 	/// The marker coordinate system is centered on the top-left corner of the marker.
 	/// 
@@ -24,7 +24,7 @@ pub mod aruco {
 	/// (markerLength, markerLength, 0), (0, markerLength, 0).
 	/// 
 	/// These pattern points define this coordinate system:
-	/// ![Image with axes drawn](https://docs.opencv.org/4.8.1/singlemarkersaxes.jpg)
+	/// ![Image with axes drawn](https://docs.opencv.org/4.9.0/singlemarkersaxes.jpg)
 	/// 
 	/// These pattern dots are convenient to use with a chessboard/ChArUco board.
 	pub const ARUCO_CW_TOP_LEFT_CORNER: i32 = 1;
@@ -45,7 +45,7 @@ pub mod aruco {
 		/// (markerLength/2, -markerLength/2, 0), (-markerLength/2, -markerLength/2, 0).
 		/// 
 		/// These pattern points define this coordinate system:
-		/// ![Image with axes drawn](https://docs.opencv.org/4.8.1/singlemarkersaxes2.jpg)
+		/// ![Image with axes drawn](https://docs.opencv.org/4.9.0/singlemarkersaxes2.jpg)
 		ARUCO_CCW_CENTER = 0,
 		/// The marker coordinate system is centered on the top-left corner of the marker.
 		/// 
@@ -54,7 +54,7 @@ pub mod aruco {
 		/// (markerLength, markerLength, 0), (0, markerLength, 0).
 		/// 
 		/// These pattern points define this coordinate system:
-		/// ![Image with axes drawn](https://docs.opencv.org/4.8.1/singlemarkersaxes.jpg)
+		/// ![Image with axes drawn](https://docs.opencv.org/4.9.0/singlemarkersaxes.jpg)
 		/// 
 		/// These pattern dots are convenient to use with a chessboard/ChArUco board.
 		ARUCO_CW_TOP_LEFT_CORNER = 1,
@@ -991,19 +991,19 @@ pub mod aruco {
 	
 		#[inline]
 		fn set_pattern(&mut self, val: crate::aruco::PatternPositionType) {
-			let ret = unsafe { sys::cv_aruco_EstimateParameters_propPattern_PatternPositionType(self.as_raw_mut_EstimateParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_EstimateParameters_propPattern_const_PatternPositionType(self.as_raw_mut_EstimateParameters(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_use_extrinsic_guess(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_aruco_EstimateParameters_propUseExtrinsicGuess_bool(self.as_raw_mut_EstimateParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_EstimateParameters_propUseExtrinsicGuess_const_bool(self.as_raw_mut_EstimateParameters(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_solve_pnp_method(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_EstimateParameters_propSolvePnPMethod_int(self.as_raw_mut_EstimateParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_EstimateParameters_propSolvePnPMethod_const_int(self.as_raw_mut_EstimateParameters(), val) };
 			ret
 		}
 		

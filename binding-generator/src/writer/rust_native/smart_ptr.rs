@@ -84,9 +84,9 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 
 		let extern_delete = FuncDesc::method_delete(smartptr_class.clone()).identifier();
 		let extern_get_inner_ptr =
-			method_get_inner_ptr(smartptr_class.clone(), pointee_type.clone(), Constness::Const).identifier();
+			method_get_inner_ptr(smartptr_class.clone(), pointee_type.with_inherent_constness(Constness::Const)).identifier();
 		let extern_get_inner_ptr_mut =
-			method_get_inner_ptr(smartptr_class.clone(), pointee_type.clone(), Constness::Mut).identifier();
+			method_get_inner_ptr(smartptr_class.clone(), pointee_type.with_inherent_constness(Constness::Mut)).identifier();
 
 		let mut inter_vars = HashMap::from([
 			("rust_localalias", rust_localalias.clone()),
@@ -169,7 +169,6 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 	}
 }
 
-#[inline]
 fn extern_functions<'tu, 'ge>(ptr: &SmartPtr<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
 	let type_ref = ptr.type_ref();
 	let pointee_type = ptr.pointee();
@@ -178,13 +177,11 @@ fn extern_functions<'tu, 'ge>(ptr: &SmartPtr<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
 	let mut out = Vec::with_capacity(6);
 	out.push(method_get_inner_ptr(
 		smartptr_class.clone(),
-		pointee_type.clone(),
-		Constness::Const,
+		pointee_type.with_inherent_constness(Constness::Const),
 	));
 	out.push(method_get_inner_ptr(
 		smartptr_class.clone(),
-		pointee_type.clone(),
-		Constness::Mut,
+		pointee_type.with_inherent_constness(Constness::Mut),
 	));
 	out.push(FuncDesc::method_delete(smartptr_class.clone()));
 	if let Some(cls) = pointee_type.as_class().filter(Class::is_trait) {
@@ -302,34 +299,20 @@ fn method_cast_to_base<'tu, 'ge>(
 	))
 }
 
-fn method_get_inner_ptr<'tu, 'ge>(
-	smartptr_class: Class<'tu, 'ge>,
-	pointee_type: TypeRef<'tu, 'ge>,
-	constness: Constness,
-) -> Func<'tu, 'ge> {
-	let pointee_type = if constness.is_const() {
-		pointee_type.with_constness(constness)
-	} else {
-		pointee_type
-	};
+fn method_get_inner_ptr<'tu, 'ge>(smartptr_class: Class<'tu, 'ge>, pointee_type: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
 	// if the pointee type is actually const make sure to also generate a const function, needed for
 	// Ptr<const cv::optflow::PCAPrior*>
-	let pointee_type_constness = pointee_type.constness();
+	let constness = pointee_type.constness();
 	let return_type_ref = if pointee_type.extern_pass_kind().is_by_ptr() {
 		pointee_type
 	} else {
 		TypeRef::new_pointer(pointee_type)
 	};
-	let name_suffix = if constness.is_mut() {
-		"Mut"
-	} else {
-		""
-	};
 	Func::new_desc(FuncDesc::new(
 		FuncKind::InstanceMethod(smartptr_class),
-		pointee_type_constness,
+		constness,
 		ReturnKind::InfallibleNaked,
-		format!("getInnerPtr{name_suffix}"),
+		format!("getInnerPtr{}", constness.rust_name_qual()),
 		"<unused>",
 		vec![],
 		FuncCppBody::ManualCallReturn("return instance->get();".into()),

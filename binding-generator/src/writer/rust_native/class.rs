@@ -112,13 +112,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			opencv_version,
 		);
 
-		let rust_local = type_ref.rust_name(NameStyle::ref_());
-		let const_trait_comment = format!("/// Constant methods for [{rust_local}]").into();
-		let mut_trait_comment = format!("/// Mutable methods for [{rust_local}]").into();
-
 		out = TRAIT_TPL.interpolate(&HashMap::from([
-			("const_trait_comment", const_trait_comment),
-			("mut_trait_comment", mut_trait_comment),
 			("debug", c.get_debug().into()),
 			("rust_trait_local", c.rust_trait_name(NameStyle::decl(), Constness::Mut)),
 			(
@@ -126,13 +120,16 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 				c.rust_trait_name(NameStyle::decl(), Constness::Const),
 			),
 			("rust_local", type_ref.rust_name(NameStyle::decl())),
+			("rust_name_ref", type_ref.rust_name(NameStyle::ref_())),
 			(
 				"rust_extern_const",
-				type_ref.with_constness(Constness::Const).rust_extern(ExternDir::ToCpp),
+				type_ref
+					.with_inherent_constness(Constness::Const)
+					.rust_extern(ExternDir::ToCpp),
 			),
 			(
 				"rust_extern_mut",
-				type_ref.with_constness(Constness::Mut).rust_extern(ExternDir::ToCpp),
+				type_ref.with_inherent_constness(Constness::Mut).rust_extern(ExternDir::ToCpp),
 			),
 			("trait_bases_const", trait_bases_const.into()),
 			("trait_bases_mut", trait_bases_mut.into()),
@@ -216,11 +213,15 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 				("base_rust_local", base_type_ref.rust_name(NameStyle::decl())),
 				(
 					"base_rust_extern_const",
-					base_type_ref.with_constness(Constness::Const).rust_extern(ExternDir::ToCpp),
+					base_type_ref
+						.with_inherent_constness(Constness::Const)
+						.rust_extern(ExternDir::ToCpp),
 				),
 				(
 					"base_rust_extern_mut",
-					base_type_ref.with_constness(Constness::Mut).rust_extern(ExternDir::ToCpp),
+					base_type_ref
+						.with_inherent_constness(Constness::Mut)
+						.rust_extern(ExternDir::ToCpp),
 				),
 			]))
 		})
@@ -231,13 +232,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			.into_iter()
 			.map(|f| {
 				let type_ref = f.type_ref();
-				let mut typ = type_ref.rust_name(NameStyle::ref_());
-				// hack for converting the references to array types in struct definitions
-				if type_ref.as_fixed_array().is_some() {
-					if let Some(new_typ) = typ.strip_prefix("&mut ") {
-						typ = new_typ.to_string().into()
-					}
-				}
+				let typ = type_ref.rust_name(NameStyle::ref_());
 				SIMPLE_FIELD_TPL.interpolate(&HashMap::from([
 					("doc_comment", Cow::Owned(f.rendered_doc_comment("///", opencv_version))),
 					("visibility", "pub ".into()),
@@ -308,11 +303,13 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 		("rust_full", c.rust_name(NameStyle::ref_())),
 		(
 			"rust_extern_const",
-			type_ref.with_constness(Constness::Const).rust_extern(ExternDir::ToCpp),
+			type_ref
+				.with_inherent_constness(Constness::Const)
+				.rust_extern(ExternDir::ToCpp),
 		),
 		(
 			"rust_extern_mut",
-			type_ref.with_constness(Constness::Mut).rust_extern(ExternDir::ToCpp),
+			type_ref.with_inherent_constness(Constness::Mut).rust_extern(ExternDir::ToCpp),
 		),
 		("extern_delete", extern_delete.into()),
 		("fields", fields.join("").into()),
@@ -441,7 +438,6 @@ impl RustNativeGeneratedElement for Class<'_, '_> {
 	}
 }
 
-#[inline]
 fn extern_functions<'tu, 'ge>(c: &Class<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
 	let methods = c.methods(None);
 

@@ -39,14 +39,13 @@ elif [[ "$OS_FAMILY" == "Linux" ]]; then
 		echo "=== Installed vcpkg packages:"
 		"$VCPKG_ROOT/vcpkg" list
 	else
-		non_static_version=${OPENCV_VERSION%-static}
-		if [[ "$non_static_version" != "$OPENCV_VERSION" ]]; then # static build
+		if [[ "${OPENCV_LINKAGE:-dynamic}" == "static" ]]; then # static build
 			export OPENCV_LINK_LIBS=opencv_highgui,opencv_objdetect,opencv_dnn,opencv_videostab,opencv_calib3d,opencv_features2d,opencv_stitching,opencv_flann,opencv_videoio,opencv_rgbd,opencv_aruco,opencv_video,opencv_ml,opencv_imgcodecs,opencv_imgproc,opencv_core,ittnotify,tbb,liblibwebp,liblibtiff,liblibjpeg-turbo,liblibpng,liblibopenjp2,ippiw,ippicv,liblibprotobuf,quirc,zlib
 		fi
 	fi
 fi
 
-if [[ "${OPENCV_VERSION:-}" == "4.5.4" || "${OPENCV_VERSION:-}" == "4.2.0" ||"${OPENCV_VERSION:-}" == "3.4.16" ]]; then
+if [[ "${OPENCV_VERSION:-}" == "4.5.4" || "${OPENCV_VERSION:-}" == "4.2.0" || "${OPENCV_VERSION:-}" == "3.4.16" ]]; then
 	rm -vf tests/*4_5_4_norun.rs
 fi
 

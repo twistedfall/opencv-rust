@@ -228,7 +228,7 @@ pub mod cudaoptflow {
 		
 	}
 	
-	/// Class computing the optical flow for two images using Brox et al Optical Flow algorithm ([Brox2004](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Brox2004)).
+	/// Class computing the optical flow for two images using Brox et al Optical Flow algorithm ([Brox2004](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Brox2004)).
 	pub struct CUDA_BroxOpticalFlow {
 		ptr: *mut c_void
 	}

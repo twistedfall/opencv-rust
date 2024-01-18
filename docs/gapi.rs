@@ -6037,7 +6037,7 @@ pub mod gapi {
 		/// * val: detail::ArgKind::OPAQUE_VAL
 		#[inline]
 		fn set_kind(&mut self, val: crate::gapi::Detail_ArgKind) {
-			let ret = unsafe { sys::cv_GArg_propKind_ArgKind(self.as_raw_mut_GArg(), val) };
+			let ret = unsafe { sys::cv_GArg_propKind_const_ArgKind(self.as_raw_mut_GArg(), val) };
 			ret
 		}
 		
@@ -6045,7 +6045,7 @@ pub mod gapi {
 		/// * val: detail::OpaqueKind::CV_UNKNOWN
 		#[inline]
 		fn set_opaque_kind(&mut self, val: crate::gapi::Detail_OpaqueKind) {
-			let ret = unsafe { sys::cv_GArg_propOpaque_kind_OpaqueKind(self.as_raw_mut_GArg(), val) };
+			let ret = unsafe { sys::cv_GArg_propOpaque_kind_const_OpaqueKind(self.as_raw_mut_GArg(), val) };
 			ret
 		}
 		
@@ -6376,8 +6376,8 @@ pub mod gapi {
 	
 		#[inline]
 		fn set_tag(&mut self, val: &str) {
-			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_GCompileArg_propTag_string(self.as_raw_mut_GCompileArg(), val.opencv_as_extern_mut()) };
+			extern_container_arg!(nofail val);
+			let ret = unsafe { sys::cv_GCompileArg_propTag_const_string(self.as_raw_mut_GCompileArg(), val.opencv_as_extern()) };
 			ret
 		}
 		
@@ -7159,73 +7159,68 @@ pub mod gapi {
 		
 	}
 	
-	/// \addtogroup gapi_main_classes
+	/// GComputation class represents a captured computation
+	/// graph. GComputation objects form boundaries for expression code
+	/// user writes with G-API, allowing to compile and execute it.
 	/// 
-	///  G-API classes for constructed and compiled graphs.
-	/// /
+	/// G-API computations are defined with input/output data
+	/// objects. G-API will track automatically which operations connect
+	/// specified outputs to the inputs, forming up a call graph to be
+	/// executed. The below example expresses calculation of Sobel operator
+	/// for edge detection (![inline formula](https://latex.codecogs.com/png.latex?G%20%3D%20%5Csqrt%7BG%5Fx%5E2%20%2B%20G%5Fy%5E2%7D)):
 	/// 
-	///  GComputation class represents a captured computation
-	///  graph. GComputation objects form boundaries for expression code
-	///  user writes with G-API, allowing to compile and execute it.
+	/// [graph_def](https://github.com/opencv/opencv_contrib/blob/4.9.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
 	/// 
-	///  G-API computations are defined with input/output data
-	///  objects. G-API will track automatically which operations connect
-	///  specified outputs to the inputs, forming up a call graph to be
-	///  executed. The below example expresses calculation of Sobel operator
-	///  for edge detection (![inline formula](https://latex.codecogs.com/png.latex?G%20%3D%20%5Csqrt%7BG%5Fx%5E2%20%2B%20G%5Fy%5E2%7D)):
+	/// Full pipeline can be now captured with this object declaration:
 	/// 
-	///  [graph_def](https://github.com/opencv/opencv_contrib/blob/4.8.1/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+	/// [graph_cap_full](https://github.com/opencv/opencv_contrib/blob/4.9.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
 	/// 
-	///  Full pipeline can be now captured with this object declaration:
+	/// Input/output data objects on which a call graph should be
+	/// reconstructed are passed using special wrappers cv::GIn and
+	/// cv::GOut. G-API will track automatically which operations form a
+	/// path from inputs to outputs and build the execution graph appropriately.
 	/// 
-	///  [graph_cap_full](https://github.com/opencv/opencv_contrib/blob/4.8.1/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+	/// Note that cv::GComputation doesn't take ownership on data objects
+	/// it is defined. Moreover, multiple GComputation objects may be
+	/// defined on the same expressions, e.g. a smaller pipeline which
+	/// expects that image gradients are already pre-calculated may be
+	/// defined like this:
 	/// 
-	///  Input/output data objects on which a call graph should be
-	///  reconstructed are passed using special wrappers cv::GIn and
-	///  cv::GOut. G-API will track automatically which operations form a
-	///  path from inputs to outputs and build the execution graph appropriately.
+	/// [graph_cap_sub](https://github.com/opencv/opencv_contrib/blob/4.9.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
 	/// 
-	///  Note that cv::GComputation doesn't take ownership on data objects
-	///  it is defined. Moreover, multiple GComputation objects may be
-	///  defined on the same expressions, e.g. a smaller pipeline which
-	///  expects that image gradients are already pre-calculated may be
-	///  defined like this:
+	/// The resulting graph would expect two inputs and produce one
+	/// output. In this case, it doesn't matter if gx/gy data objects are
+	/// results of cv::gapi::Sobel operators -- G-API will stop unrolling
+	/// expressions and building the underlying graph one reaching this
+	/// data objects.
 	/// 
-	///  [graph_cap_sub](https://github.com/opencv/opencv_contrib/blob/4.8.1/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+	/// The way how GComputation is defined is important as its definition
+	/// specifies graph _protocol_ -- the way how the graph should be
+	/// used. Protocol is defined by number of inputs, number of outputs,
+	/// and shapes of inputs and outputs.
 	/// 
-	///  The resulting graph would expect two inputs and produce one
-	///  output. In this case, it doesn't matter if gx/gy data objects are
-	///  results of cv::gapi::Sobel operators -- G-API will stop unrolling
-	///  expressions and building the underlying graph one reaching this
-	///  data objects.
+	/// In the above example, sobelEdge expects one Mat on input and
+	/// produces one Mat; while sobelEdgeSub expects two Mats on input and
+	/// produces one Mat. GComputation's protocol defines how other
+	/// computation methods should be used -- cv::GComputation::compile() and
+	/// cv::GComputation::apply(). For example, if a graph is defined on
+	/// two GMat inputs, two cv::Mat objects have to be passed to apply()
+	/// for execution. GComputation checks protocol correctness in runtime
+	/// so passing a different number of objects in apply() or passing
+	/// cv::Scalar instead of cv::Mat there would compile well as a C++
+	/// source but raise an exception in run-time. G-API also comes with a
+	/// typed wrapper cv::GComputationT<> which introduces this type-checking in
+	/// compile-time.
 	/// 
-	///  The way how GComputation is defined is important as its definition
-	///  specifies graph _protocol_ -- the way how the graph should be
-	///  used. Protocol is defined by number of inputs, number of outputs,
-	///  and shapes of inputs and outputs.
+	/// cv::GComputation itself is a thin object which just captures what
+	/// the graph is. The compiled graph (which actually process data) is
+	/// represented by class GCompiled. Use compile() method to generate a
+	/// compiled graph with given compile options. cv::GComputation can
+	/// also be used to process data with implicit graph compilation
+	/// on-the-fly, see apply() for details.
 	/// 
-	///  In the above example, sobelEdge expects one Mat on input and
-	///  produces one Mat; while sobelEdgeSub expects two Mats on input and
-	///  produces one Mat. GComputation's protocol defines how other
-	///  computation methods should be used -- cv::GComputation::compile() and
-	///  cv::GComputation::apply(). For example, if a graph is defined on
-	///  two GMat inputs, two cv::Mat objects have to be passed to apply()
-	///  for execution. GComputation checks protocol correctness in runtime
-	///  so passing a different number of objects in apply() or passing
-	///  cv::Scalar instead of cv::Mat there would compile well as a C++
-	///  source but raise an exception in run-time. G-API also comes with a
-	///  typed wrapper cv::GComputationT<> which introduces this type-checking in
-	///  compile-time.
-	/// 
-	///  cv::GComputation itself is a thin object which just captures what
-	///  the graph is. The compiled graph (which actually process data) is
-	///  represented by class GCompiled. Use compile() method to generate a
-	///  compiled graph with given compile options. cv::GComputation can
-	///  also be used to process data with implicit graph compilation
-	///  on-the-fly, see apply() for details.
-	/// 
-	///  GComputation is a reference-counted object -- once defined, all its
-	///  copies will refer to the same instance.
+	/// GComputation is a reference-counted object -- once defined, all its
+	/// copies will refer to the same instance.
 	/// ## See also
 	/// GCompiled
 	pub struct GComputation {
@@ -7570,13 +7565,13 @@ pub mod gapi {
 	
 		#[inline]
 		fn set_fmt(&mut self, val: crate::gapi::MediaFormat) {
-			let ret = unsafe { sys::cv_GFrameDesc_propFmt_MediaFormat(self.as_raw_mut_GFrameDesc(), val) };
+			let ret = unsafe { sys::cv_GFrameDesc_propFmt_const_MediaFormat(self.as_raw_mut_GFrameDesc(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_size(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_GFrameDesc_propSize_Size(self.as_raw_mut_GFrameDesc(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_GFrameDesc_propSize_const_Size(self.as_raw_mut_GFrameDesc(), val.opencv_as_extern()) };
 			ret
 		}
 		
@@ -7666,33 +7661,33 @@ pub mod gapi {
 	
 		#[inline]
 		fn set_name(&mut self, val: &str) {
-			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_GKernel_propName_string(self.as_raw_mut_GKernel(), val.opencv_as_extern_mut()) };
+			extern_container_arg!(nofail val);
+			let ret = unsafe { sys::cv_GKernel_propName_const_string(self.as_raw_mut_GKernel(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_tag(&mut self, val: &str) {
-			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_GKernel_propTag_string(self.as_raw_mut_GKernel(), val.opencv_as_extern_mut()) };
+			extern_container_arg!(nofail val);
+			let ret = unsafe { sys::cv_GKernel_propTag_const_string(self.as_raw_mut_GKernel(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_out_shapes(&mut self, mut val: crate::gapi::GShapes) {
-			let ret = unsafe { sys::cv_GKernel_propOutShapes_GShapes(self.as_raw_mut_GKernel(), val.as_raw_mut_VectorOfGShape()) };
+		fn set_out_shapes(&mut self, val: crate::gapi::GShapes) {
+			let ret = unsafe { sys::cv_GKernel_propOutShapes_const_GShapes(self.as_raw_mut_GKernel(), val.as_raw_VectorOfGShape()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_in_kinds(&mut self, mut val: crate::gapi::GKinds) {
-			let ret = unsafe { sys::cv_GKernel_propInKinds_GKinds(self.as_raw_mut_GKernel(), val.as_raw_mut_VectorOfDetail_OpaqueKind()) };
+		fn set_in_kinds(&mut self, val: crate::gapi::GKinds) {
+			let ret = unsafe { sys::cv_GKernel_propInKinds_const_GKinds(self.as_raw_mut_GKernel(), val.as_raw_VectorOfDetail_OpaqueKind()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_out_kinds(&mut self, mut val: crate::gapi::GKinds) {
-			let ret = unsafe { sys::cv_GKernel_propOutKinds_GKinds(self.as_raw_mut_GKernel(), val.as_raw_mut_VectorOfDetail_OpaqueKind()) };
+		fn set_out_kinds(&mut self, val: crate::gapi::GKinds) {
+			let ret = unsafe { sys::cv_GKernel_propOutKinds_const_GKinds(self.as_raw_mut_GKernel(), val.as_raw_VectorOfDetail_OpaqueKind()) };
 			ret
 		}
 		
@@ -7755,8 +7750,8 @@ pub mod gapi {
 		fn as_raw_mut_GKernelImpl(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn set_opaque(&mut self, mut val: crate::gapi::any) {
-			let ret = unsafe { sys::cv_GKernelImpl_propOpaque_any(self.as_raw_mut_GKernelImpl(), val.as_raw_mut_any()) };
+		fn set_opaque(&mut self, val: crate::gapi::any) {
+			let ret = unsafe { sys::cv_GKernelImpl_propOpaque_const_any(self.as_raw_mut_GKernelImpl(), val.as_raw_any()) };
 			ret
 		}
 		
@@ -8003,41 +7998,17 @@ pub mod gapi {
 	
 	}
 	
-	/// \addtogroup gapi_data_objects
+	/// GMat class represents image or tensor data in the
+	/// graph.
 	/// 
-	///  G-API data objects used to build G-API expressions.
+	/// GMat doesn't store any data itself, instead it describes a
+	/// functional relationship between operations consuming and producing
+	/// GMat objects.
 	/// 
-	///  These objects do not own any particular data (except compile-time
-	///  associated values like with cv::GScalar or `cv::GArray<T>`) and are
-	///  used only to construct graphs.
-	/// 
-	///  Every graph in G-API starts and ends with data objects.
-	/// 
-	///  Once constructed and compiled, G-API operates with regular host-side
-	///  data instead. Refer to the below table to find the mapping between
-	///  G-API and regular data types when passing input and output data
-	///  structures to G-API:
-	/// 
-	///    G-API data type    | I/O data type
-	///    ------------------ | -------------
-	///    cv::GMat           | cv::Mat, cv::UMat, cv::RMat
-	///    cv::GScalar        | cv::Scalar
-	///    `cv::GArray<T>`    | std::vector<T>
-	///    `cv::GOpaque<T>`   | T
-	///    cv::GFrame         | cv::MediaFrame
-	/// /
-	/// 
-	///  GMat class represents image or tensor data in the
-	///  graph.
-	/// 
-	///  GMat doesn't store any data itself, instead it describes a
-	///  functional relationship between operations consuming and producing
-	///  GMat objects.
-	/// 
-	///  GMat is a virtual counterpart of Mat and UMat, but it
-	///  doesn't mean G-API use Mat or UMat objects internally to represent
-	///  GMat objects -- the internal data representation may be
-	///  backend-specific or optimized out at all.
+	/// GMat is a virtual counterpart of Mat and UMat, but it
+	/// doesn't mean G-API use Mat or UMat objects internally to represent
+	/// GMat objects -- the internal data representation may be
+	/// backend-specific or optimized out at all.
 	/// ## See also
 	/// Mat, GMatDesc
 	pub struct GMat {
@@ -8267,31 +8238,31 @@ pub mod gapi {
 	
 		#[inline]
 		fn set_depth(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_GMatDesc_propDepth_int(self.as_raw_mut_GMatDesc(), val) };
+			let ret = unsafe { sys::cv_GMatDesc_propDepth_const_int(self.as_raw_mut_GMatDesc(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_chan(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_GMatDesc_propChan_int(self.as_raw_mut_GMatDesc(), val) };
+			let ret = unsafe { sys::cv_GMatDesc_propChan_const_int(self.as_raw_mut_GMatDesc(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_size(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_GMatDesc_propSize_Size(self.as_raw_mut_GMatDesc(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_GMatDesc_propSize_const_Size(self.as_raw_mut_GMatDesc(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_planar(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_GMatDesc_propPlanar_bool(self.as_raw_mut_GMatDesc(), val) };
+			let ret = unsafe { sys::cv_GMatDesc_propPlanar_const_bool(self.as_raw_mut_GMatDesc(), val) };
 			ret
 		}
 		
 		#[inline]
-		fn set_dims(&mut self, mut val: core::Vector<i32>) {
-			let ret = unsafe { sys::cv_GMatDesc_propDims_vectorLintG(self.as_raw_mut_GMatDesc(), val.as_raw_mut_VectorOfi32()) };
+		fn set_dims(&mut self, val: core::Vector<i32>) {
+			let ret = unsafe { sys::cv_GMatDesc_propDims_const_vectorLintG(self.as_raw_mut_GMatDesc(), val.as_raw_VectorOfi32()) };
 			ret
 		}
 		
@@ -8776,7 +8747,7 @@ pub mod gapi {
 		/// This constructor overload is not marked `explicit` and can be
 		/// used in G-API expression code like this:
 		/// 
-		/// [gscalar_implicit](https://github.com/opencv/opencv_contrib/blob/4.8.1/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+		/// [gscalar_implicit](https://github.com/opencv/opencv_contrib/blob/4.9.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
 		/// 
 		/// Here operator+(GMat,GScalar) is used to wrap cv::gapi::addC()
 		/// and a value-initialized GScalar is created on the fly.
@@ -9134,8 +9105,8 @@ pub mod gapi {
 	
 		#[inline]
 		fn set_description(&mut self, val: &str) {
-			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_GTransform_propDescription_string(self.as_raw_mut_GTransform(), val.opencv_as_extern_mut()) };
+			extern_container_arg!(nofail val);
+			let ret = unsafe { sys::cv_GTransform_propDescription_const_string(self.as_raw_mut_GTransform(), val.opencv_as_extern()) };
 			ret
 		}
 		
@@ -9204,13 +9175,13 @@ pub mod gapi {
 	
 		#[inline]
 		fn set_shape(&mut self, val: crate::gapi::GShape) {
-			let ret = unsafe { sys::cv_GTypeInfo_propShape_GShape(self.as_raw_mut_GTypeInfo(), val) };
+			let ret = unsafe { sys::cv_GTypeInfo_propShape_const_GShape(self.as_raw_mut_GTypeInfo(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_kind(&mut self, val: crate::gapi::Detail_OpaqueKind) {
-			let ret = unsafe { sys::cv_GTypeInfo_propKind_OpaqueKind(self.as_raw_mut_GTypeInfo(), val) };
+			let ret = unsafe { sys::cv_GTypeInfo_propKind_const_OpaqueKind(self.as_raw_mut_GTypeInfo(), val) };
 			ret
 		}
 		
@@ -9308,24 +9279,18 @@ pub mod gapi {
 	
 	}
 	
-	/// \addtogroup gapi_data_structures
+	/// cv::MediaFrame class represents an image/media frame
+	/// obtained from an external source.
 	/// 
-	///  Extra G-API data structures used to pass input/output data
-	///  to the graph for processing.
-	/// /
-	/// 
-	///  cv::MediaFrame class represents an image/media frame
-	///  obtained from an external source.
-	/// 
-	///  cv::MediaFrame represents image data as specified in
-	///  cv::MediaFormat. cv::MediaFrame is designed to be a thin wrapper over some
-	///  external memory of buffer; the class itself provides an uniform
-	///  interface over such types of memory. cv::MediaFrame wraps data from
-	///  a camera driver or from a media codec and provides an abstraction
-	///  layer over this memory to G-API. MediaFrame defines a compact interface
-	///  to access and manage the underlying data; the implementation is
-	///  fully defined by the associated Adapter (which is usually
-	///  user-defined).
+	/// cv::MediaFrame represents image data as specified in
+	/// cv::MediaFormat. cv::MediaFrame is designed to be a thin wrapper over some
+	/// external memory of buffer; the class itself provides an uniform
+	/// interface over such types of memory. cv::MediaFrame wraps data from
+	/// a camera driver or from a media codec and provides an abstraction
+	/// layer over this memory to G-API. MediaFrame defines a compact interface
+	/// to access and manage the underlying data; the implementation is
+	/// fully defined by the associated Adapter (which is usually
+	/// user-defined).
 	/// ## See also
 	/// cv::RMat
 	pub struct MediaFrame {
@@ -10193,6 +10158,13 @@ pub mod gapi {
 		fn as_raw_Scalar(&self) -> *const c_void;
 	
 		#[inline]
+		fn val(&self) -> &[f64; 4] {
+			let ret = unsafe { sys::cv_gapi_own_Scalar_propVal_const(self.as_raw_Scalar()) };
+			let ret = unsafe { ret.as_ref() }.expect("Function returned null pointer");
+			ret
+		}
+		
+		#[inline]
 		fn get(&self, i: i32) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_gapi_own_Scalar_operator___const_int(self.as_raw_Scalar(), i, ocvrs_return.as_mut_ptr()) };
@@ -10208,7 +10180,7 @@ pub mod gapi {
 		fn as_raw_mut_Scalar(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn val(&mut self) -> &mut [f64; 4] {
+		fn val_mut(&mut self) -> &mut [f64; 4] {
 			let ret = unsafe { sys::cv_gapi_own_Scalar_propVal(self.as_raw_mut_Scalar()) };
 			let ret = unsafe { ret.as_mut() }.expect("Function returned null pointer");
 			ret
@@ -10309,6 +10281,7 @@ pub mod gapi {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Scalar")
+				.field("val", &crate::gapi::ScalarTraitConst::val(self))
 				.finish()
 		}
 	}
@@ -10377,8 +10350,8 @@ pub mod gapi {
 		fn as_raw_mut_use_only(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn set_pkg(&mut self, mut val: crate::gapi::GKernelPackage) {
-			let ret = unsafe { sys::cv_gapi_use_only_propPkg_GKernelPackage(self.as_raw_mut_use_only(), val.as_raw_mut_GKernelPackage()) };
+		fn set_pkg(&mut self, val: crate::gapi::GKernelPackage) {
+			let ret = unsafe { sys::cv_gapi_use_only_propPkg_const_GKernelPackage(self.as_raw_mut_use_only(), val.as_raw_GKernelPackage()) };
 			ret
 		}
 		
@@ -10612,21 +10585,21 @@ pub mod gapi {
 		/// The bottom-left corner of the image
 		#[inline]
 		fn set_org(&mut self, val: core::Point) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Image_propOrg_Point(self.as_raw_mut_Image(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Image_propOrg_const_Point(self.as_raw_mut_Image(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// Image to draw
 		#[inline]
-		fn set_img(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Image_propImg_Mat(self.as_raw_mut_Image(), val.as_raw_mut_Mat()) };
+		fn set_img(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_gapi_wip_draw_Image_propImg_const_Mat(self.as_raw_mut_Image(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// Alpha channel for image to draw (same size and number of channels)
 		#[inline]
-		fn set_alpha(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Image_propAlpha_Mat(self.as_raw_mut_Image(), val.as_raw_mut_Mat()) };
+		fn set_alpha(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_gapi_wip_draw_Image_propAlpha_const_Mat(self.as_raw_mut_Image(), val.as_raw_Mat()) };
 			ret
 		}
 		
@@ -10891,36 +10864,36 @@ pub mod gapi {
 	
 		/// Points to connect
 		#[inline]
-		fn set_points(&mut self, mut val: core::Vector<core::Point>) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_propPoints_vectorLPointG(self.as_raw_mut_Poly(), val.as_raw_mut_VectorOfPoint()) };
+		fn set_points(&mut self, val: core::Vector<core::Point>) {
+			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_propPoints_const_vectorLPointG(self.as_raw_mut_Poly(), val.as_raw_VectorOfPoint()) };
 			ret
 		}
 		
 		/// The line color
 		#[inline]
 		fn set_color(&mut self, val: core::Scalar) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_propColor_Scalar(self.as_raw_mut_Poly(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_propColor_const_Scalar(self.as_raw_mut_Poly(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// The thickness of line
 		#[inline]
 		fn set_thick(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_propThick_int(self.as_raw_mut_Poly(), val) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_propThick_const_int(self.as_raw_mut_Poly(), val) };
 			ret
 		}
 		
 		/// The Type of the line. See #LineTypes
 		#[inline]
 		fn set_lt(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_propLt_int(self.as_raw_mut_Poly(), val) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_propLt_const_int(self.as_raw_mut_Poly(), val) };
 			ret
 		}
 		
 		/// The number of fractional bits in the point coordinate
 		#[inline]
 		fn set_shift(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_propShift_int(self.as_raw_mut_Poly(), val) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_propShift_const_int(self.as_raw_mut_Poly(), val) };
 			ret
 		}
 		
@@ -11193,57 +11166,57 @@ pub mod gapi {
 		/// The text string to be drawn
 		#[inline]
 		fn set_text(&mut self, val: &str) {
-			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propText_string(self.as_raw_mut_Text(), val.opencv_as_extern_mut()) };
+			extern_container_arg!(nofail val);
+			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propText_const_string(self.as_raw_mut_Text(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// The bottom-left corner of the text string in the image
 		#[inline]
 		fn set_org(&mut self, val: core::Point) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propOrg_Point(self.as_raw_mut_Text(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propOrg_const_Point(self.as_raw_mut_Text(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// The font type, see #HersheyFonts
 		#[inline]
 		fn set_ff(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propFf_int(self.as_raw_mut_Text(), val) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propFf_const_int(self.as_raw_mut_Text(), val) };
 			ret
 		}
 		
 		/// The font scale factor that is multiplied by the font-specific base size
 		#[inline]
 		fn set_fs(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propFs_double(self.as_raw_mut_Text(), val) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propFs_const_double(self.as_raw_mut_Text(), val) };
 			ret
 		}
 		
 		/// The text color
 		#[inline]
 		fn set_color(&mut self, val: core::Scalar) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propColor_Scalar(self.as_raw_mut_Text(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propColor_const_Scalar(self.as_raw_mut_Text(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// The thickness of the lines used to draw a text
 		#[inline]
 		fn set_thick(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propThick_int(self.as_raw_mut_Text(), val) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propThick_const_int(self.as_raw_mut_Text(), val) };
 			ret
 		}
 		
 		/// The line type. See #LineTypes
 		#[inline]
 		fn set_lt(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propLt_int(self.as_raw_mut_Text(), val) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propLt_const_int(self.as_raw_mut_Text(), val) };
 			ret
 		}
 		
 		/// When true, the image data origin is at the bottom-left corner. Otherwise, it is at the top-left corner
 		#[inline]
 		fn set_bottom_left_origin(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propBottom_left_origin_bool(self.as_raw_mut_Text(), val) };
+			let ret = unsafe { sys::cv_gapi_wip_draw_Text_propBottom_left_origin_const_bool(self.as_raw_mut_Text(), val) };
 			ret
 		}
 		

@@ -6,7 +6,6 @@ use once_cell::sync::Lazy;
 use crate::class::ClassDesc;
 use crate::field::{Field, FieldDesc};
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
-use crate::settings::ArgOverride;
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle, TypeRefDesc, TypeRefTypeHint};
 use crate::writer::rust_native::RustStringExt;
 use crate::{settings, Class, CompiledInterpolation, Func, IteratorExt, StrExt, TypeRef, Vector};
@@ -197,7 +196,6 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 	}
 }
 
-#[inline]
 fn extern_functions<'tu, 'ge>(vec: &Vector<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
 	let element_type = vec.element_type();
 	let mut out = Vec::with_capacity(7);
@@ -399,7 +397,7 @@ fn method_push<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<'t
 		"core",
 		vec![Field::new_desc(FieldDesc::new(
 			"val",
-			element_type.with_constness(Constness::Const),
+			element_type.with_inherent_constness(Constness::Const),
 		))],
 		FuncCppBody::ManualCall("instance->push_back({{args}})".into()),
 		FuncRustBody::Auto,
@@ -416,7 +414,7 @@ fn method_insert<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<
 		"core",
 		vec![
 			Field::new_desc(FieldDesc::new("index", TypeRefDesc::size_t())),
-			Field::new_desc(FieldDesc::new("val", element_type.with_constness(Constness::Const))),
+			Field::new_desc(FieldDesc::new("val", element_type.with_inherent_constness(Constness::Const))),
 		],
 		FuncCppBody::ManualCall("instance->insert(instance->begin() + {{args}})".into()),
 		FuncRustBody::Auto,
@@ -447,7 +445,10 @@ fn method_set<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<'tu
 		"core",
 		vec![
 			Field::new_desc(FieldDesc::new("index", TypeRefDesc::size_t())),
-			Field::new_desc(FieldDesc::new("val", element_type.clone().with_constness(Constness::Const))),
+			Field::new_desc(FieldDesc::new(
+				"val",
+				element_type.clone().with_inherent_constness(Constness::Const),
+			)),
 		],
 		FuncCppBody::ManualCall(format!("(*instance)[index] = {}", element_type.cpp_arg_func_call("val")).into()),
 		FuncRustBody::Auto,
@@ -479,8 +480,8 @@ fn method_data<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<'t
 		vec![],
 		FuncCppBody::Auto,
 		FuncRustBody::Auto,
-		TypeRef::new_pointer(element_type.with_constness(Constness::Const))
-			.with_type_hint(TypeRefTypeHint::ArgOverride(ArgOverride::CharPtrNotString)),
+		TypeRef::new_pointer(element_type.with_inherent_constness(Constness::Const))
+			.with_type_hint(TypeRefTypeHint::CharPtrSingleChar),
 	))
 }
 
@@ -494,8 +495,8 @@ fn method_data_mut<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRe
 		vec![],
 		FuncCppBody::ManualCall("instance->data()".into()),
 		FuncRustBody::Auto,
-		TypeRef::new_pointer(element_type.with_constness(Constness::Mut))
-			.with_type_hint(TypeRefTypeHint::ArgOverride(ArgOverride::CharPtrNotString)),
+		TypeRef::new_pointer(element_type.with_inherent_constness(Constness::Mut))
+			.with_type_hint(TypeRefTypeHint::CharPtrSingleChar),
 	))
 }
 
@@ -509,7 +510,7 @@ fn method_from_slice<'tu, 'ge>(vec_type_ref: TypeRef<'tu, 'ge>, element_type: Ty
 		vec![
 			Field::new_desc(FieldDesc::new(
 				"data",
-				TypeRef::new_pointer(element_type.with_constness(Constness::Const)),
+				TypeRef::new_pointer(element_type.with_inherent_constness(Constness::Const)),
 			)),
 			Field::new_desc(FieldDesc::new("len", TypeRefDesc::size_t())),
 		],

@@ -437,8 +437,8 @@ pub mod imgcodecs {
 	/// 
 	/// ## Overloaded parameters
 	/// 
-	/// * buf: 
-	/// * flags: 
+	/// * buf: Input array or vector of bytes.
+	/// * flags: The same flags as in cv::imread, see cv::ImreadModes.
 	/// * dst: The optional output placeholder for the decoded matrix. It can save the image
 	/// reallocations when the function is called repeatedly for images of the same size.
 	#[inline]
@@ -465,11 +465,43 @@ pub mod imgcodecs {
 	/// * buf: Input array or vector of bytes.
 	/// * flags: The same flags as in cv::imread, see cv::ImreadModes.
 	/// * mats: A vector of Mat objects holding each page, if more than one.
+	/// * range: A continuous selection of pages.
+	/// 
+	/// ## Note
+	/// This alternative version of [imdecodemulti] function uses the following default values for its arguments:
+	/// * range: Range::all()
 	#[inline]
-	pub fn imdecodemulti(buf: &impl core::ToInputArray, flags: i32, mats: &mut core::Vector<core::Mat>) -> Result<bool> {
+	pub fn imdecodemulti_def(buf: &impl core::ToInputArray, flags: i32, mats: &mut core::Vector<core::Mat>) -> Result<bool> {
 		input_array_arg!(buf);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imdecodemulti_const__InputArrayR_int_vectorLMatGR(buf.as_raw__InputArray(), flags, mats.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Reads a multi-page image from a buffer in memory.
+	/// 
+	/// The function imdecodemulti reads a multi-page image from the specified buffer in the memory. If the buffer is too short or
+	/// contains invalid data, the function returns false.
+	/// 
+	/// See cv::imreadmulti for the list of supported formats and flags description.
+	/// 
+	/// 
+	/// Note: In the case of color images, the decoded images will have the channels stored in **B G R** order.
+	/// ## Parameters
+	/// * buf: Input array or vector of bytes.
+	/// * flags: The same flags as in cv::imread, see cv::ImreadModes.
+	/// * mats: A vector of Mat objects holding each page, if more than one.
+	/// * range: A continuous selection of pages.
+	/// 
+	/// ## C++ default parameters
+	/// * range: Range::all()
+	#[inline]
+	pub fn imdecodemulti(buf: &impl core::ToInputArray, flags: i32, mats: &mut core::Vector<core::Mat>, range: &core::Range) -> Result<bool> {
+		input_array_arg!(buf);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_imdecodemulti_const__InputArrayR_int_vectorLMatGR_const_RangeR(buf.as_raw__InputArray(), flags, mats.as_raw_mut_VectorOfMat(), range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)

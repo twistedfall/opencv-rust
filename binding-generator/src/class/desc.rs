@@ -54,6 +54,11 @@ impl<'tu, 'ge> ClassDesc<'tu, 'ge> {
 		Class::new_desc(Self::simple("cv::Point", "core"))
 	}
 
+	/// `cv::Point2f`
+	pub fn cv_point2f() -> Class<'tu, 'ge> {
+		Class::new_desc(Self::simple("cv::Point2f", "core"))
+	}
+
 	/// `cv::Point2d`
 	pub fn cv_point2d() -> Class<'tu, 'ge> {
 		Class::new_desc(Self::simple("cv::Point2d", "core"))

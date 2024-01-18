@@ -1,3 +1,35 @@
+* 0.88.7
+  * Improve handling of input strings (fixes https://github.com/twistedfall/opencv-rust/issues/534)
+
+* 0.88.6
+  * Regenerate documentation with OpenCV 4.9.0
+
+* 0.88.5
+  * Adjust to the upcoming changes in OpenCV (fixes https://github.com/twistedfall/opencv-rust/issues/518).
+
+* 0.88.4
+  * More fixes for clang 17 (kudos to PaulWagener).
+
+* 0.88.3
+   * Add `Mat::iter_mut()` and improve `Mat` iteration performance.
+
+* 0.88.2
+   * Fix build with clang 17 (fixes https://github.com/twistedfall/opencv-rust/issues/519)
+
+* 0.88.1
+  * Generate `Vector<Vector<Point2d>>` bindings for `ccalib` module.
+
+* 0.88.0
+  * Detect more cases where a Rust slice can be passed to an OpenCV function.
+  * Generate both const and mut property readers where possible. Previously only mut readers were generated.
+  * Rename some more automatically named functions.
+  * Add conversion from an enum into a `i32`.
+  * Bump minimum supported Rust version to 1.65.
+  * Generate additional `Vector` bindings for `ccalib` module.
+
+* 0.87.0
+  * This version is skipped due to the release process gone wrong.
+
 * 0.86.1
   * Provide a clearer message for the case when `libclang` can't be loaded.
 

@@ -41,17 +41,36 @@ pub mod freetype {
 	
 		/// Load font data.
 		/// 
-		/// The function loadFontData loads font data.
+		/// The function loadFontData loads font data from file.
 		/// 
 		/// ## Parameters
 		/// * fontFileName: FontFile Name
 		/// * idx: face_index to select a font faces in a single file.
 		#[inline]
 		fn load_font_data(&mut self, font_file_name: &str, idx: i32) -> Result<()> {
-			extern_container_arg!(mut font_file_name);
+			extern_container_arg!(font_file_name);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_freetype_FreeType2_loadFontData_String_int(self.as_raw_mut_FreeType2(), font_file_name.opencv_as_extern_mut(), idx, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_freetype_FreeType2_loadFontData_String_int(self.as_raw_mut_FreeType2(), font_file_name.opencv_as_extern(), idx, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Load font data.
+		/// 
+		/// The function loadFontData loads font data from memory.
+		/// The data is not copied, the user needs to make sure the data lives at least as long as FreeType2.
+		/// After the FreeType2 object is destroyed, the buffer can be safely deallocated.
+		/// 
+		/// ## Parameters
+		/// * pBuf: pointer to buffer containing font data
+		/// * bufSize: size of buffer
+		/// * idx: face_index to select a font faces in a single file.
+		#[inline]
+		unsafe fn load_font_data_1(&mut self, p_buf: *mut c_char, buf_size: size_t, idx: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_freetype_FreeType2_loadFontData_charX_size_t_int(self.as_raw_mut_FreeType2(), p_buf, buf_size, idx, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}

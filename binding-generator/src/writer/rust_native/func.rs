@@ -14,7 +14,7 @@ use crate::{reserved_rename, settings, Class, CompiledInterpolation, Element, Fu
 use super::comment::{render_ref, RenderComment};
 use super::element::{DefaultRustNativeElement, RustElement};
 use super::type_ref::TypeRefExt;
-use super::{comment, disambiguate_single_name, rust_disambiguate_names, RustNativeGeneratedElement};
+use super::{comment, rust_disambiguate_names, RustNativeGeneratedElement};
 
 pub trait FuncExt<'tu, 'ge> {
 	fn companion_func_default_args(&self) -> Option<Func<'tu, 'ge>>;
@@ -56,23 +56,22 @@ impl<'tu, 'ge> FuncExt<'tu, 'ge> for Func<'tu, 'ge> {
 				"## Note\nThis alternative version of [{refr}] function uses the following default values for its arguments:\n{default_args}",
 				refr = render_ref(self, Some(&original_rust_leafname))
 			)
-			.expect("Write to String doesn't fail");
-			let desc = match self.clone() {
+			.expect("Impossible");
+			let out = match self.clone() {
 				Func::Clang { .. } => {
 					let mut desc = self.to_desc(InheritConfig::empty().doc_comment().arguments());
 					desc.rust_custom_leafname = Some(rust_leafname.into());
 					desc.arguments = args_without_def.into();
 					desc.doc_comment = doc_comment.into();
-					desc
+					Self::new_desc(desc)
 				}
-				Func::Desc(desc) => {
-					let mut desc = Rc::try_unwrap(desc).unwrap_or_else(|desc| desc.as_ref().clone());
-					desc.arguments = args_without_def.into();
-					desc.rust_custom_leafname = Some(rust_leafname.into());
-					desc
+				Func::Desc(mut desc) => {
+					let desc_ref = Rc::make_mut(&mut desc);
+					desc_ref.arguments = args_without_def.into();
+					desc_ref.rust_custom_leafname = Some(rust_leafname.into());
+					Self::Desc(desc)
 				}
 			};
-			let out = Self::new_desc(desc);
 			if out.exclude_kind().is_included() {
 				Some(out)
 			} else {
@@ -120,7 +119,7 @@ impl RustElement for Func<'_, '_> {
 		let cpp_name = match self {
 			&Self::Clang { entity, gen_env, .. } => {
 				if let Some(name) = gen_env.get_rename_config(entity).map(|c| &c.rename) {
-					name.into()
+					name.as_ref().into()
 				} else {
 					self.cpp_name(CppNameStyle::Declaration)
 				}
@@ -133,8 +132,7 @@ impl RustElement for Func<'_, '_> {
 			let kind = self.kind();
 			if let Some(cls) = kind.as_constructor() {
 				let args = self.arguments();
-				#[allow(clippy::never_loop)] // fixme use named block when MSRV is 1.65
-				'ctor_name: loop {
+				'ctor_name: {
 					if args.is_empty() {
 						break 'ctor_name "default";
 					} else if args.len() == 1 {
@@ -152,7 +150,7 @@ impl RustElement for Func<'_, '_> {
 							}
 						}
 					}
-					break 'ctor_name "new";
+					"new"
 				}
 				.into()
 			} else if kind.as_conversion_method().is_some() {
@@ -316,9 +314,9 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 			return_type_func_decl = format!("Result<{return_type_func_decl}>").into()
 		};
 		let return_type_func_decl = if return_type_func_decl == "()" {
-			Cow::Borrowed("")
+			String::new()
 		} else {
-			format!(" -> {return_type_func_decl}").into()
+			format!(" -> {return_type_func_decl}")
 		};
 		let (ret_pre_call, ret_handle, ret_stmt) = rust_return(self, &return_type_ref, return_kind, safety, is_static_func);
 		let mut attributes = Vec::with_capacity(2);
@@ -347,7 +345,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 			("name", name.as_ref()),
 			("generic_decl", &rust_generic_decl(self)),
 			("decl_args", &decl_args.join(", ")),
-			("rv_rust_full", return_type_func_decl.as_ref()),
+			("rv_rust_full", &return_type_func_decl),
 			("pre_call_args", &pre_call_args.join("\n")),
 			("return_pre_call", ret_pre_call),
 			(
@@ -443,7 +441,6 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		let mut decl_args = Vec::with_capacity(args.len());
 		let mut pre_call_args = Vec::with_capacity(args.len());
 		let mut post_call_args = Vec::with_capacity(args.len());
-		let mut cleanup_args = Vec::with_capacity(args.len());
 		if let Some(cls) = kind.as_instance_method() {
 			decl_args.push(cls.type_ref().cpp_self_func_decl(constness));
 		}
@@ -452,7 +449,6 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 			decl_args.push(arg_type_ref.cpp_arg_func_decl(name));
 			pre_post_arg_handle(arg_type_ref.cpp_arg_pre_call(name), &mut pre_call_args);
 			pre_post_arg_handle(arg_type_ref.cpp_arg_post_call(name), &mut post_call_args);
-			pre_post_arg_handle(arg_type_ref.cpp_arg_cleanup(name), &mut cleanup_args);
 		}
 
 		// return
@@ -465,12 +461,12 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		};
 		let mut_ret_wrapper_full = if return_kind.is_infallible() {
 			return_type_ref
-				.with_constness(Constness::Mut)
+				.with_inherent_constness(Constness::Mut)
 				.cpp_extern_return()
 				.into_owned()
 		} else {
 			return_type_ref
-				.with_constness(Constness::Mut)
+				.with_inherent_constness(Constness::Mut)
 				.cpp_extern_return_fallible()
 				.into_owned()
 		};
@@ -482,16 +478,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		} else {
 			"void".into()
 		};
-		let mut rets = disambiguate_single_name("ret");
-		let ret_name = rets.next().expect("Endless iterator returned nothing");
-		let (ret, ret_cast) = cpp_return_map(&return_type_ref, &ret_name, kind.as_constructor().is_some());
-		let ret = if cleanup_args.is_empty() {
-			ret
-		} else {
-			let ret_name = rets.next().expect("Endless iterator returned nothing");
-			pre_post_arg_handle(format!("{cpp_extern_return} {ret_name} = {ret}"), &mut post_call_args);
-			ret_name.into()
-		};
+		let (ret, ret_cast) = cpp_return_map(&return_type_ref, "ret", kind.as_constructor().is_some());
 
 		// exception handling
 		let func_try = if return_kind.is_infallible() {
@@ -502,12 +489,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		let catch = if return_kind.is_infallible() {
 			"".into()
 		} else {
-			let typ = if mut_ret_wrapper_full.contains(',') {
-				format!("OCVRS_TYPE({mut_ret_wrapper_full})")
-			} else {
-				mut_ret_wrapper_full
-			};
-			format!("}} OCVRS_CATCH({typ}, {ocv_ret_name});").into()
+			format!("}} OCVRS_CATCH({ocv_ret_name});").into()
 		};
 
 		TPL.interpolate(&HashMap::from([
@@ -520,7 +502,6 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 			("pre_call_args", pre_call_args.join("\n").into()),
 			("call", cpp_call(self, &kind, &args, &return_type_ref).into()),
 			("post_call_args", post_call_args.join("\n").into()),
-			("cleanup_args", cleanup_args.join("\n").into()),
 			(
 				"return",
 				cpp_return(
@@ -571,10 +552,16 @@ fn rust_call(
 	for (name, arg) in args {
 		let arg_type_ref = arg.type_ref();
 		if let Some((slice_arg, len_div)) = arg.as_slice_len() {
-			let slice_call = if len_div > 1 {
-				format!("({slice_arg}.len() / {len_div}) as _")
+			let slice_call = if arg_type_ref.is_size_t() {
+				if len_div > 1 {
+					format!("{slice_arg}.len() / {len_div}")
+				} else {
+					format!("{slice_arg}.len()")
+				}
+			} else if len_div > 1 {
+				format!("({slice_arg}.len() / {len_div}).try_into()?")
 			} else {
-				format!("{slice_arg}.len() as _")
+				format!("{slice_arg}.len().try_into()?")
 			};
 			call_args.push(slice_call);
 		} else {
@@ -825,21 +812,15 @@ pub fn cpp_return_map<'f>(return_type: &TypeRef, name: &'f str, is_constructor: 
 			StrType::StdString(StrEnc::Text) | StrType::CvString(StrEnc::Text) => {
 				format!("ocvrs_create_string({name}.c_str())").into()
 			}
-			StrType::CharPtr => format!("ocvrs_create_string({name})").into(),
 			StrType::StdString(StrEnc::Binary) => format!("ocvrs_create_byte_string({name}.data(), {name}.size())").into(),
 			StrType::CvString(StrEnc::Binary) => format!("ocvrs_create_byte_string({name}.begin(), {name}.size())").into(),
+			StrType::CharPtr(StrEnc::Text) => format!("ocvrs_create_string({name})").into(),
+			StrType::CharPtr(StrEnc::Binary) => panic!("Returning a byte string via char* is not supported yet"),
 		};
 		(str_mk, false)
 	} else if return_type.extern_pass_kind().is_by_void_ptr() && !is_constructor {
 		let out = return_type.source().as_class().filter(|cls| cls.is_abstract()).map_or_else(
-			|| {
-				format!(
-					"new {typ}({name})",
-					typ = return_type.cpp_name(CppNameStyle::Reference),
-					name = name
-				)
-				.into()
-			},
+			|| format!("new {typ}({name})", typ = return_type.cpp_name(CppNameStyle::Reference)).into(),
 			|_| name.into(),
 		);
 		(out, false)

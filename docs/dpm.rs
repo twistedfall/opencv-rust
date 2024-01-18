@@ -5,7 +5,7 @@ pub mod dpm {
 	//! ---------------------------------------------------------------
 	//! 
 	//! The object detector described below has been initially proposed by P.F. Felzenszwalb in
-	//! [Felzenszwalb2010a](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Felzenszwalb2010a) . It is based on a Dalal-Triggs detector that uses a single filter on histogram
+	//! [Felzenszwalb2010a](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Felzenszwalb2010a) . It is based on a Dalal-Triggs detector that uses a single filter on histogram
 	//! of oriented gradients (HOG) features to represent an object category. This detector uses a sliding
 	//! window approach, where a filter is applied at all positions and scales of an image. The first
 	//! innovation is enriching the Dalal-Triggs model using a star-structured part-based model defined by a
@@ -21,7 +21,7 @@ pub mod dpm {
 	//! location.
 	//! 
 	//! The detector was dramatically speeded-up with cascade algorithm proposed by P.F. Felzenszwalb in
-	//! [Felzenszwalb2010b](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Felzenszwalb2010b) . The algorithm prunes partial hypotheses using thresholds on their scores.The
+	//! [Felzenszwalb2010b](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Felzenszwalb2010b) . The algorithm prunes partial hypotheses using thresholds on their scores.The
 	//! basic idea of the algorithm is to use a hierarchy of models defined by an ordering of the original
 	//! model's parts. For a model with (n+1) parts, including the root, a sequence of (n+1) models is
 	//! obtained. The i-th model in this sequence is defined by the first i parts from the original model.
@@ -200,19 +200,19 @@ pub mod dpm {
 	
 		#[inline]
 		fn set_rect(&mut self, val: core::Rect) {
-			let ret = unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_propRect_Rect(self.as_raw_mut_DPMDetector_ObjectDetection(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_propRect_const_Rect(self.as_raw_mut_DPMDetector_ObjectDetection(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_score(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_propScore_float(self.as_raw_mut_DPMDetector_ObjectDetection(), val) };
+			let ret = unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_propScore_const_float(self.as_raw_mut_DPMDetector_ObjectDetection(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_class_id(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_propClassID_int(self.as_raw_mut_DPMDetector_ObjectDetection(), val) };
+			let ret = unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_propClassID_const_int(self.as_raw_mut_DPMDetector_ObjectDetection(), val) };
 			ret
 		}
 		

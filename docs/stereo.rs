@@ -221,7 +221,7 @@ pub mod stereo {
 	
 		#[inline]
 		fn set_param(&mut self, val: crate::stereo::PropagationParameters) {
-			let ret = unsafe { sys::cv_stereo_QuasiDenseStereo_propParam_PropagationParameters(self.as_raw_mut_QuasiDenseStereo(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_stereo_QuasiDenseStereo_propParam_const_PropagationParameters(self.as_raw_mut_QuasiDenseStereo(), val.opencv_as_extern()) };
 			ret
 		}
 		
@@ -243,9 +243,9 @@ pub mod stereo {
 		/// loadParameters
 		#[inline]
 		fn load_parameters(&mut self, filepath: &str) -> Result<i32> {
-			extern_container_arg!(mut filepath);
+			extern_container_arg!(filepath);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_stereo_QuasiDenseStereo_loadParameters_String(self.as_raw_mut_QuasiDenseStereo(), filepath.opencv_as_extern_mut(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_stereo_QuasiDenseStereo_loadParameters_String(self.as_raw_mut_QuasiDenseStereo(), filepath.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -263,9 +263,9 @@ pub mod stereo {
 		/// loadParameters
 		#[inline]
 		fn save_parameters(&mut self, filepath: &str) -> Result<i32> {
-			extern_container_arg!(mut filepath);
+			extern_container_arg!(filepath);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_stereo_QuasiDenseStereo_saveParameters_String(self.as_raw_mut_QuasiDenseStereo(), filepath.opencv_as_extern_mut(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_stereo_QuasiDenseStereo_saveParameters_String(self.as_raw_mut_QuasiDenseStereo(), filepath.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -379,10 +379,10 @@ pub mod stereo {
 	/// that are not previously computed. New matches are stored in the seed priority queue and used as seeds.
 	/// The propagation process ends when no additional matches can be retrieved.
 	/// ## See also
-	/// This code represents the work presented in [Stoyanov2010](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Stoyanov2010).
-	/// If this code is useful for your work please cite [Stoyanov2010](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Stoyanov2010).
+	/// This code represents the work presented in [Stoyanov2010](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Stoyanov2010).
+	/// If this code is useful for your work please cite [Stoyanov2010](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Stoyanov2010).
 	/// 
-	/// Also the original growing scheme idea is described in [Lhuillier2000](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Lhuillier2000)
+	/// Also the original growing scheme idea is described in [Lhuillier2000](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Lhuillier2000)
 	pub struct QuasiDenseStereo {
 		ptr: *mut c_void
 	}
@@ -411,9 +411,9 @@ pub mod stereo {
 		/// * param_filepath: cv::String()
 		#[inline]
 		pub fn create(mono_img_size: core::Size, param_filepath: &str) -> Result<core::Ptr<crate::stereo::QuasiDenseStereo>> {
-			extern_container_arg!(mut param_filepath);
+			extern_container_arg!(param_filepath);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_stereo_QuasiDenseStereo_create_Size_String(mono_img_size.opencv_as_extern(), param_filepath.opencv_as_extern_mut(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_stereo_QuasiDenseStereo_create_Size_String(mono_img_size.opencv_as_extern(), param_filepath.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::stereo::QuasiDenseStereo>::opencv_from_extern(ret) };

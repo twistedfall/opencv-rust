@@ -3,7 +3,7 @@ pub mod superres {
 	//! 
 	//! The Super Resolution module contains a set of functions and classes that can be used to solve the
 	//! problem of resolution enhancement. There are a few methods implemented, most of them are described in
-	//! the papers [Farsiu03](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Farsiu03) and [Mitzel09](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Mitzel09) .
+	//! the papers [Farsiu03](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Farsiu03) and [Mitzel09](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Mitzel09) .
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
 		pub use { super::SuperRes_DenseOpticalFlowExtTraitConst, super::SuperRes_DenseOpticalFlowExtTrait, super::SuperRes_FarnebackOpticalFlowTraitConst, super::SuperRes_FarnebackOpticalFlowTrait, super::SuperRes_DualTVL1OpticalFlowTraitConst, super::SuperRes_DualTVL1OpticalFlowTrait, super::SuperRes_BroxOpticalFlowTraitConst, super::SuperRes_BroxOpticalFlowTrait, super::SuperRes_PyrLKOpticalFlowTraitConst, super::SuperRes_PyrLKOpticalFlowTrait, super::SuperRes_FrameSourceTraitConst, super::SuperRes_FrameSourceTrait, super::SuperRes_SuperResolutionTraitConst, super::SuperRes_SuperResolutionTrait };
@@ -128,8 +128,8 @@ pub mod superres {
 	
 	/// Create Bilateral TV-L1 Super Resolution.
 	/// 
-	/// This class implements Super Resolution algorithm described in the papers [Farsiu03](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Farsiu03) and
-	/// [Mitzel09](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Mitzel09) .
+	/// This class implements Super Resolution algorithm described in the papers [Farsiu03](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Farsiu03) and
+	/// [Mitzel09](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Mitzel09) .
 	/// 
 	/// Here are important members of the class that control the algorithm, which you can set after
 	/// constructing the class instance:

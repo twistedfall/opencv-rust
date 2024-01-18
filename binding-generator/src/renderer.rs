@@ -32,22 +32,27 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 	type Recursed = Self;
 
 	fn render<'t>(self, type_ref: &'t TypeRef) -> Cow<'t, str> {
-		let cnst = type_ref.clang_constness().cpp_qual();
+		let cnst = type_ref.inherent_constness().cpp_qual();
 		let (space_name, space_const_name) = if self.name.is_empty() {
 			("".to_string(), "".to_string())
 		} else {
 			(format!(" {}", self.name), format!(" {}{}", cnst, self.name))
 		};
-		match type_ref.kind().as_ref() {
+		let kind = type_ref.kind();
+		match kind.as_ref() {
 			TypeRefKind::Primitive(_, cpp) => {
 				format!("{cnst}{cpp}{space_name}")
 			}
 			TypeRefKind::Array(inner, size) => {
 				if let Some(size) = size {
 					if self.name.is_empty() {
-						format!("{typ}**", typ = inner.render(self.recurse()))
+						format!("{cnst}{typ}**", typ = inner.render(self.recurse()))
 					} else {
-						format!("{typ}(*{name})[{size}]", typ = inner.render(self.recurse()), name = self.name)
+						format!(
+							"{cnst}{typ}(*{name})[{size}]",
+							typ = inner.render(self.recurse()),
+							name = self.name
+						)
 					}
 				} else {
 					format!("{typ}*{space_name}", typ = inner.render(self.recurse()))
@@ -93,7 +98,7 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 			}
 			TypeRefKind::Class(cls) => {
 				let mut out = cls.cpp_name(self.name_style).into_owned();
-				if !type_ref.is_std_string() {
+				if !kind.is_std_string(type_ref.type_hint()) {
 					// fixme prevents emission of std::string<char>
 					out += &render_cpp_tpl(self, type_ref);
 				}

@@ -59,7 +59,7 @@ pub mod surface_matching {
 	//! ----------------------------------------------
 	//! 
 	//! The state of the algorithms in order to achieve the task 3D matching is heavily based on
-	//! [drost2010](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_drost2010), which is one of the first and main practical methods presented in this area. The
+	//! [drost2010](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_drost2010), which is one of the first and main practical methods presented in this area. The
 	//! approach is composed of extracting 3D feature points randomly from depth images or generic point
 	//! clouds, indexing them and later in runtime querying them efficiently. Only the 3D structure is
 	//! considered, and a trivial hash table is used for feature queries.
@@ -69,7 +69,7 @@ pub mod surface_matching {
 	//! methods (Typically for such algorithms training on a CAD model is not needed, and a point cloud
 	//! would be sufficient). Below is the outline of the entire algorithm:
 	//! 
-	//! ![Outline of the Algorithm](https://docs.opencv.org/4.8.1/outline.jpg)
+	//! ![Outline of the Algorithm](https://docs.opencv.org/4.9.0/outline.jpg)
 	//! 
 	//! As explained, the algorithm relies on the extraction and indexing of point pair features, which are
 	//! defined as follows:
@@ -218,7 +218,7 @@ pub mod surface_matching {
 	//! increase the speed. However this is not an optimality guarantee and many times causes wrong points
 	//! to be matched. Luckily the assignments are corrected over iterations.
 	//! 
-	//! To overcome some of the limitations, Picky ICP [pickyicp](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_pickyicp) and BC-ICP (ICP using bi-unique
+	//! To overcome some of the limitations, Picky ICP [pickyicp](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_pickyicp) and BC-ICP (ICP using bi-unique
 	//! correspondences) are two well-known methods. Picky ICP first finds the correspondences in the
 	//! old-fashioned way and then among the resulting corresponding pairs, if more than one scene point
 	//! ![inline formula](https://latex.codecogs.com/png.latex?p%5Fi) is assigned to the same model point ![inline formula](https://latex.codecogs.com/png.latex?m%5Fj), it selects ![inline formula](https://latex.codecogs.com/png.latex?p%5Fi) that corresponds to the minimum
@@ -245,7 +245,7 @@ pub mod surface_matching {
 	//! 
 	//! ### Error Metric
 	//! 
-	//! As described in , a linearization of point to plane as in [koklimlow](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_koklimlow) error metric is used. This
+	//! As described in , a linearization of point to plane as in [koklimlow](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_koklimlow) error metric is used. This
 	//! both speeds up the registration process and improves convergence.
 	//! 
 	//! ### Minimization
@@ -294,11 +294,11 @@ pub mod surface_matching {
 	//! This section is dedicated to the results of surface matching (point-pair-feature matching and a
 	//! following ICP refinement):
 	//! 
-	//! ![Several matches of a single frog model using ppf + icp](https://docs.opencv.org/4.8.1/gsoc_forg_matches.jpg)
+	//! ![Several matches of a single frog model using ppf + icp](https://docs.opencv.org/4.9.0/gsoc_forg_matches.jpg)
 	//! 
 	//! Matches of different models for Mian dataset is presented below:
 	//! 
-	//! ![Matches of different models for Mian dataset](https://docs.opencv.org/4.8.1/snapshot27.jpg)
+	//! ![Matches of different models for Mian dataset](https://docs.opencv.org/4.9.0/snapshot27.jpg)
 	//! 
 	//! You might checkout the video on [youTube here](http://www.youtube.com/watch?v=uFnqLFznuZU).
 	//! 
@@ -322,8 +322,8 @@ pub mod surface_matching {
 	//! quadratically increased as the complexity is O(N\^2). This is especially a concern for 32 bit
 	//! systems, where large models can easily overshoot the available memory. Typically, values in the
 	//! range of 0.025 - 0.05 seem adequate for most of the applications, where the default value is 0.03.
-	//! (Note that there is a difference in this paremeter with the one presented in [drost2010](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_drost2010) . In
-	//! [drost2010](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_drost2010) a uniform cuboid is used for quantization and model diameter is used for reference of
+	//! (Note that there is a difference in this paremeter with the one presented in [drost2010](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_drost2010) . In
+	//! [drost2010](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_drost2010) a uniform cuboid is used for quantization and model diameter is used for reference of
 	//! sampling. In my implementation, the cuboid is a rectangular prism, and each dimension is quantized
 	//! independently. I do not take reference from the diameter but along the individual dimensions.
 	//! 
@@ -805,49 +805,49 @@ pub mod surface_matching {
 	
 		#[inline]
 		fn set_alpha(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propAlpha_double(self.as_raw_mut_Pose3D(), val) };
+			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propAlpha_const_double(self.as_raw_mut_Pose3D(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_residual(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propResidual_double(self.as_raw_mut_Pose3D(), val) };
+			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propResidual_const_double(self.as_raw_mut_Pose3D(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_model_index(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propModelIndex_size_t(self.as_raw_mut_Pose3D(), val) };
+			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propModelIndex_const_size_t(self.as_raw_mut_Pose3D(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_num_votes(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propNumVotes_size_t(self.as_raw_mut_Pose3D(), val) };
+			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propNumVotes_const_size_t(self.as_raw_mut_Pose3D(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_pose(&mut self, val: core::Matx44d) {
-			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propPose_Matx44d(self.as_raw_mut_Pose3D(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propPose_const_Matx44d(self.as_raw_mut_Pose3D(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_angle(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propAngle_double(self.as_raw_mut_Pose3D(), val) };
+			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propAngle_const_double(self.as_raw_mut_Pose3D(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_t(&mut self, val: core::Vec3d) {
-			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propT_Vec3d(self.as_raw_mut_Pose3D(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propT_const_Vec3d(self.as_raw_mut_Pose3D(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_q(&mut self, val: core::Vec4d) {
-			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propQ_Vec4d(self.as_raw_mut_Pose3D(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_ppf_match_3d_Pose3D_propQ_const_Vec4d(self.as_raw_mut_Pose3D(), val.opencv_as_extern()) };
 			ret
 		}
 		
@@ -1046,20 +1046,20 @@ pub mod surface_matching {
 		fn as_raw_mut_PoseCluster3D(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn set_pose_list(&mut self, mut val: core::Vector<crate::surface_matching::Pose3DPtr>) {
-			let ret = unsafe { sys::cv_ppf_match_3d_PoseCluster3D_propPoseList_vectorLPose3DPtrG(self.as_raw_mut_PoseCluster3D(), val.as_raw_mut_VectorOfPose3DPtr()) };
+		fn set_pose_list(&mut self, val: core::Vector<crate::surface_matching::Pose3DPtr>) {
+			let ret = unsafe { sys::cv_ppf_match_3d_PoseCluster3D_propPoseList_const_vectorLPose3DPtrG(self.as_raw_mut_PoseCluster3D(), val.as_raw_VectorOfPose3DPtr()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_num_votes(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_ppf_match_3d_PoseCluster3D_propNumVotes_size_t(self.as_raw_mut_PoseCluster3D(), val) };
+			let ret = unsafe { sys::cv_ppf_match_3d_PoseCluster3D_propNumVotes_const_size_t(self.as_raw_mut_PoseCluster3D(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_id(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ppf_match_3d_PoseCluster3D_propId_int(self.as_raw_mut_PoseCluster3D(), val) };
+			let ret = unsafe { sys::cv_ppf_match_3d_PoseCluster3D_propId_const_int(self.as_raw_mut_PoseCluster3D(), val) };
 			ret
 		}
 		

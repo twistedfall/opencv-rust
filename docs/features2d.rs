@@ -196,7 +196,7 @@ pub mod features2d {
 	/// For non-Intel platforms, there is a tree optimised variant of AGAST with same numerical results.
 	/// The 32-bit binary tree tables were generated automatically from original code using perl script.
 	/// The perl script and examples of tree generation are placed in features2d/doc folder.
-	/// Detects corners using the AGAST algorithm by [mair2010_agast](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_mair2010_agast) .
+	/// Detects corners using the AGAST algorithm by [mair2010_agast](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_mair2010_agast) .
 	/// 
 	/// ## Overloaded parameters
 	/// 
@@ -228,7 +228,7 @@ pub mod features2d {
 	/// For non-Intel platforms, there is a tree optimised variant of AGAST with same numerical results.
 	/// The 32-bit binary tree tables were generated automatically from original code using perl script.
 	/// The perl script and examples of tree generation are placed in features2d/doc folder.
-	/// Detects corners using the AGAST algorithm by [mair2010_agast](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_mair2010_agast) .
+	/// Detects corners using the AGAST algorithm by [mair2010_agast](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_mair2010_agast) .
 	#[inline]
 	pub fn agast_with_type(image: &impl core::ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, threshold: i32, nonmax_suppression: bool, typ: crate::features2d::AgastFeatureDetector_DetectorType) -> Result<()> {
 		input_array_arg!(image);
@@ -267,7 +267,7 @@ pub mod features2d {
 	/// FastFeatureDetector::TYPE_9_16, FastFeatureDetector::TYPE_7_12,
 	/// FastFeatureDetector::TYPE_5_8
 	/// 
-	/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Rosten06) .
+	/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Rosten06) .
 	/// 
 	/// 
 	/// Note: In Python API, types are given as cv.FAST_FEATURE_DETECTOR_TYPE_5_8,
@@ -301,7 +301,7 @@ pub mod features2d {
 	/// FastFeatureDetector::TYPE_9_16, FastFeatureDetector::TYPE_7_12,
 	/// FastFeatureDetector::TYPE_5_8
 	/// 
-	/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Rosten06) .
+	/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Rosten06) .
 	/// 
 	/// 
 	/// Note: In Python API, types are given as cv.FAST_FEATURE_DETECTOR_TYPE_5_8,
@@ -693,6 +693,15 @@ pub mod features2d {
 			Ok(ret)
 		}
 		
+		#[inline]
+		fn get_max_points(&self) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_AKAZE_getMaxPoints_const(self.as_raw_AKAZE(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	/// Mutable methods for [crate::features2d::AKAZE]
@@ -762,9 +771,18 @@ pub mod features2d {
 			Ok(ret)
 		}
 		
+		#[inline]
+		fn set_max_points(&mut self, max_points: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_AKAZE_setMaxPoints_int(self.as_raw_mut_AKAZE(), max_points, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
-	/// Class implementing the AKAZE keypoint detector and descriptor extractor, described in [ANB13](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_ANB13).
+	/// Class implementing the AKAZE keypoint detector and descriptor extractor, described in [ANB13](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_ANB13).
 	/// 
 	/// @details AKAZE descriptors can only be used with KAZE or AKAZE keypoints. This class is thread-safe.
 	/// 
@@ -833,6 +851,9 @@ pub mod features2d {
 		/// * nOctaveLayers: Default number of sublevels per scale level
 		/// * diffusivity: Diffusivity type. DIFF_PM_G1, DIFF_PM_G2, DIFF_WEICKERT or
 		/// DIFF_CHARBONNIER
+		/// * max_points: Maximum amount of returned points. In case if image contains
+		/// more features, then the features with highest response are returned.
+		/// Negative value means no limitation.
 		/// 
 		/// ## C++ default parameters
 		/// * descriptor_type: AKAZE::DESCRIPTOR_MLDB
@@ -842,10 +863,11 @@ pub mod features2d {
 		/// * n_octaves: 4
 		/// * n_octave_layers: 4
 		/// * diffusivity: KAZE::DIFF_PM_G2
+		/// * max_points: -1
 		#[inline]
-		pub fn create(descriptor_type: crate::features2d::AKAZE_DescriptorType, descriptor_size: i32, descriptor_channels: i32, threshold: f32, n_octaves: i32, n_octave_layers: i32, diffusivity: crate::features2d::KAZE_DiffusivityType) -> Result<core::Ptr<crate::features2d::AKAZE>> {
+		pub fn create(descriptor_type: crate::features2d::AKAZE_DescriptorType, descriptor_size: i32, descriptor_channels: i32, threshold: f32, n_octaves: i32, n_octave_layers: i32, diffusivity: crate::features2d::KAZE_DiffusivityType, max_points: i32) -> Result<core::Ptr<crate::features2d::AKAZE>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_AKAZE_create_DescriptorType_int_int_float_int_int_DiffusivityType(descriptor_type, descriptor_size, descriptor_channels, threshold, n_octaves, n_octave_layers, diffusivity, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_AKAZE_create_DescriptorType_int_int_float_int_int_DiffusivityType_int(descriptor_type, descriptor_size, descriptor_channels, threshold, n_octaves, n_octave_layers, diffusivity, max_points, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::features2d::AKAZE>::opencv_from_extern(ret) };
@@ -864,6 +886,9 @@ pub mod features2d {
 		/// * nOctaveLayers: Default number of sublevels per scale level
 		/// * diffusivity: Diffusivity type. DIFF_PM_G1, DIFF_PM_G2, DIFF_WEICKERT or
 		/// DIFF_CHARBONNIER
+		/// * max_points: Maximum amount of returned points. In case if image contains
+		/// more features, then the features with highest response are returned.
+		/// Negative value means no limitation.
 		/// 
 		/// ## Note
 		/// This alternative version of [AKAZE::create] function uses the following default values for its arguments:
@@ -874,6 +899,7 @@ pub mod features2d {
 		/// * n_octaves: 4
 		/// * n_octave_layers: 4
 		/// * diffusivity: KAZE::DIFF_PM_G2
+		/// * max_points: -1
 		#[inline]
 		pub fn create_def() -> Result<core::Ptr<crate::features2d::AKAZE>> {
 			return_send!(via ocvrs_return);
@@ -939,7 +965,7 @@ pub mod features2d {
 	}
 	
 	/// Class for implementing the wrapper which makes detectors and extractors to be affine invariant,
-	/// described as ASIFT in [YM11](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_YM11) .
+	/// described as ASIFT in [YM11](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_YM11) .
 	pub struct AffineFeature {
 		ptr: *mut c_void
 	}
@@ -1977,7 +2003,7 @@ pub mod features2d {
 		
 	}
 	
-	/// Class implementing the BRISK keypoint detector and descriptor extractor, described in [LCS11](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_LCS11) .
+	/// Class implementing the BRISK keypoint detector and descriptor extractor, described in [LCS11](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_LCS11) .
 	pub struct BRISK {
 		ptr: *mut c_void
 	}
@@ -3974,7 +4000,7 @@ pub mod features2d {
 		
 	}
 	
-	/// Class implementing the KAZE keypoint detector and descriptor extractor, described in [ABD12](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_ABD12) .
+	/// Class implementing the KAZE keypoint detector and descriptor extractor, described in [ABD12](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_ABD12) .
 	/// 
 	/// 
 	/// Note: AKAZE descriptor can only be used with KAZE or AKAZE keypoints .. [ABD12] KAZE Features. Pablo
@@ -4453,10 +4479,10 @@ pub mod features2d {
 	/// 
 	/// - there are two different implementation of %MSER: one for grey image, one for color image
 	/// 
-	/// - the grey image algorithm is taken from: [nister2008linear](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_nister2008linear) ;  the paper claims to be faster
+	/// - the grey image algorithm is taken from: [nister2008linear](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_nister2008linear) ;  the paper claims to be faster
 	/// than union-find method; it actually get 1.5~2m/s on my centrino L7200 1.2GHz laptop.
 	/// 
-	/// - the color image algorithm is taken from: [forssen2007maximally](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_forssen2007maximally) ; it should be much slower
+	/// - the color image algorithm is taken from: [forssen2007maximally](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_forssen2007maximally) ; it should be much slower
 	/// than grey image method ( 3~4 times )
 	/// 
 	/// - (Python) A complete example showing the use of the %MSER detector can be found at samples/python/mser.py
@@ -4767,7 +4793,7 @@ pub mod features2d {
 	
 	/// Class implementing the ORB (*oriented BRIEF*) keypoint detector and descriptor extractor
 	/// 
-	/// described in [RRKB11](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_RRKB11) . The algorithm uses FAST in pyramids to detect stable keypoints, selects
+	/// described in [RRKB11](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_RRKB11) . The algorithm uses FAST in pyramids to detect stable keypoints, selects
 	/// the strongest features using FAST or Harris response, finds their orientation using first-order
 	/// moments and computes the descriptors using BRIEF (where the coordinates of random point pairs (or
 	/// k-tuples) are rotated according to the measured orientation).
@@ -5044,7 +5070,7 @@ pub mod features2d {
 	}
 	
 	/// Class for extracting keypoints and computing descriptors using the Scale Invariant Feature Transform
-	/// (SIFT) algorithm by D. Lowe [Lowe04](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Lowe04) .
+	/// (SIFT) algorithm by D. Lowe [Lowe04](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Lowe04) .
 	pub struct SIFT {
 		ptr: *mut c_void
 	}

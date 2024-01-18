@@ -2,7 +2,7 @@ use std::ffi::c_void;
 
 use matches::assert_matches;
 
-use opencv::core::{MatConstIterator, Point, Point2d, Rect, Scalar, Size, Vec2b, Vec2s, Vec3d, Vec3f, Vec4w};
+use opencv::core::{MatConstIterator, MatIter, Point, Point2d, Rect, Scalar, Size, Vec2b, Vec2s, Vec3d, Vec3f, Vec4w};
 use opencv::prelude::*;
 use opencv::types::{VectorOfMat, VectorOfi32};
 use opencv::{core, Error, Result};
@@ -83,9 +83,9 @@ fn mat_for_rows_and_cols() -> Result<()> {
 	assert_eq!(400, mat.mat_size()[0]);
 	assert_eq!(300, mat.mat_size()[1]);
 	assert_eq!(2, mat.dims());
-	assert_eq!(2, mat.mat_step().len());
-	assert_eq!(7200, mat.mat_step()[0]);
-	assert_eq!(24, mat.mat_step()[1]);
+	assert_eq!(2, mat.mat_step().buf().len());
+	assert_eq!(7200, mat.mat_step().buf()[0]);
+	assert_eq!(24, mat.mat_step().buf()[1]);
 	assert_eq!(24, mat.elem_size()?);
 	assert_eq!(8, mat.elem_size1());
 	assert_eq!(900, mat.step1(0)?);
@@ -577,13 +577,13 @@ fn mat_from_data() -> Result<()> {
 		let src = unsafe {
 			Mat::new_rows_cols_with_data(
 				1,
-				PIXEL.len() as _,
+				PIXEL.len().try_into()?,
 				u8::opencv_type(),
-				bytes.as_mut_ptr() as *mut c_void,
+				bytes.as_mut_ptr().cast::<c_void>(),
 				core::Mat_AUTO_STEP,
 			)?
 		};
-		assert_eq!(Size::new(PIXEL.len() as _, 1), src.size()?);
+		assert_eq!(Size::new(PIXEL.len().try_into()?, 1), src.size()?);
 		assert_eq!(PIXEL.len(), src.total());
 		let row = src.at_row::<u8>(0)?;
 		assert_eq!(0x89, row[0]);
@@ -594,7 +594,7 @@ fn mat_from_data() -> Result<()> {
 	}
 
 	{
-		let src = unsafe { Mat::new_nd_with_data(&[3, 5, 6], u8::opencv_type(), bytes.as_mut_ptr() as *mut c_void, None)? };
+		let src = unsafe { Mat::new_nd_with_data(&[3, 5, 6], u8::opencv_type(), bytes.as_mut_ptr().cast::<c_void>(), None)? };
 		assert_eq!(Size::new(5, 3), src.size()?);
 		assert_eq!(PIXEL.len(), src.total());
 		assert_eq!(0x89, *src.at_3d::<u8>(0, 0, 0)?);
@@ -609,9 +609,9 @@ fn mat_from_data() -> Result<()> {
 		let mut mat = unsafe {
 			Mat::new_rows_cols_with_data(
 				1,
-				bytes.len() as i32,
+				bytes.len().try_into()?,
 				u8::opencv_type(),
-				bytes.as_mut_ptr() as *mut c_void,
+				bytes.as_mut_ptr().cast::<c_void>(),
 				core::Mat_AUTO_STEP,
 			)?
 		};
@@ -658,7 +658,7 @@ fn mat_from_matexpr() -> Result<()> {
 }
 
 #[test]
-fn mat_iterator() -> Result<()> {
+fn mat_const_iterator() -> Result<()> {
 	{
 		let mat = Mat::from_slice(&[1, 2, 3, 4])?;
 		let mut iter = MatConstIterator::over(&mat)?;
@@ -700,6 +700,11 @@ fn mat_iterator() -> Result<()> {
 		assert!(!iter.has_elements());
 	}
 
+	Ok(())
+}
+
+#[test]
+fn mat_iterator() -> Result<()> {
 	{
 		let mat = Mat::from_slice_2d(&[[1, 2], [3, 4]])?;
 		for (pos, x) in mat.iter::<i32>()? {
@@ -711,10 +716,53 @@ fn mat_iterator() -> Result<()> {
 				_ => panic!("Too many elements"),
 			}
 		}
+		for (pos, x) in MatIter::<i32>::new(MatConstIterator::with_start(&mat, Point::new(1, 0))?)? {
+			match pos {
+				Point { x: 1, y: 0 } => assert_eq!(x, 2),
+				Point { x: 0, y: 1 } => assert_eq!(x, 3),
+				Point { x: 1, y: 1 } => assert_eq!(x, 4),
+				_ => panic!("Too many elements"),
+			}
+		}
+	}
+
+	{
+		let mat = Mat::from_slice_2d(&[[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]])?;
+		let roi = Mat::roi(&mat, Rect::new(1, 1, 2, 2))?;
+		for (pos, x) in roi.iter::<i32>()? {
+			match pos {
+				Point { x: 0, y: 0 } => assert_eq!(x, 6),
+				Point { x: 1, y: 0 } => assert_eq!(x, 7),
+				Point { x: 0, y: 1 } => assert_eq!(x, 10),
+				Point { x: 1, y: 1 } => assert_eq!(x, 11),
+				_ => panic!("Too many elements"),
+			}
+		}
+	}
+
+	{
+		let mut mat = Mat::from_slice_2d(&[[1, 2], [3, 4]])?;
+		for (pos, x) in mat.iter_mut::<i32>()? {
+			*x *= pos.x + pos.y;
+		}
+		assert_eq!([0, 2, 3, 8], mat.data_typed::<i32>()?);
+	}
+
+	{
+		let mat = Mat::from_slice_2d(&[[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16]])?;
+		let mut roi = Mat::roi(&mat, Rect::new(1, 1, 2, 2))?;
+		for (pos, x) in roi.iter_mut::<i32>()? {
+			*x += pos.x + pos.y;
+		}
+		assert_eq!(
+			[1, 2, 3, 4, 5, 6, 8, 8, 9, 11, 13, 12, 13, 14, 15, 16],
+			mat.data_typed::<i32>()?
+		);
 	}
 
 	{
 		let mat = Mat::from_slice::<u8>(&[])?;
+		#[allow(clippy::never_loop)]
 		for _ in mat.iter::<u8>()? {
 			panic!("Mat must be empty");
 		}

@@ -4,6 +4,7 @@ use std::fmt;
 use std::fs::File;
 use std::io::{BufRead, BufReader, Read, Seek, SeekFrom};
 use std::path::{Path, PathBuf};
+use std::rc::Rc;
 
 use clang::{Entity, EntityKind, EntityVisitResult};
 
@@ -81,7 +82,7 @@ impl ExportConfig {
 }
 
 pub struct RenameConfig {
-	pub rename: String,
+	pub rename: Rc<str>,
 }
 
 #[derive(Eq, PartialEq, Hash)]
@@ -201,7 +202,7 @@ impl<'tu> GeneratorEnv<'tu> {
 				.get_end()
 				.get_spelling_location();
 			let path = l.file.expect("Can't get exported macro file").get_path();
-			let mut f = BufReader::new(File::open(&path).expect("Can't open export macro file"));
+			let mut f = BufReader::new(File::open(path).expect("Can't open export macro file"));
 			f.seek(SeekFrom::Start(u64::from(l.offset)))
 				.expect("Can't seek export macro file");
 			let mut line_offset = 0;
@@ -218,16 +219,15 @@ impl<'tu> GeneratorEnv<'tu> {
 			}
 			(l, line_offset)
 		} else {
-			let loc = if let Some(range) = entity.get_range() {
-				range.get_start().get_spelling_location()
-			} else {
-				// for some reason Apple libclang on macos has problems with get_range() on FacemarkLBF::Params::pupils
-				// see https://github.com/twistedfall/opencv-rust/issues/159#issuecomment-668234058
-				entity
-					.get_location()
-					.expect("Can't get entity location")
-					.get_spelling_location()
-			};
+			let loc = entity
+				.get_range()
+				.map_or_else(
+					// for some reason Apple libclang on macos has problems with get_range() on FacemarkLBF::Params::pupils
+					// see https://github.com/twistedfall/opencv-rust/issues/159#issuecomment-668234058
+					|| entity.get_location().expect("Can't get entity location"),
+					|range| range.get_start(),
+				)
+				.get_spelling_location();
 			(loc, 0)
 		};
 		ExportIdx {
@@ -278,7 +278,7 @@ impl<'tu> GeneratorEnv<'tu> {
 		self
 			.rename_map
 			.entry(key)
-			.or_insert_with(|| RenameConfig { rename: String::new() })
+			.or_insert_with(|| RenameConfig { rename: Rc::from("") })
 	}
 
 	pub fn get_rename_config(&self, entity: Entity) -> Option<&RenameConfig> {

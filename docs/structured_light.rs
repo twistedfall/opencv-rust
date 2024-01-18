@@ -11,10 +11,10 @@ pub mod structured_light {
 	//! case, a set of patterns  are successively projected onto the measuring surface.
 	//! The codeword for a given pixel is usually formed by  the sequence of illuminance values for that
 	//! pixel across the projected patterns. Thus, the codification is called  temporal because the bits
-	//! of the codewords are multiplexed in time [pattern](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_pattern) .
+	//! of the codewords are multiplexed in time [pattern](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_pattern) .
 	//! 
 	//! In this module a time-multiplexing coding strategy based on Gray encoding is implemented following the
-	//! (stereo) approach described in 3DUNDERWORLD algorithm [UNDERWORLD](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_UNDERWORLD) .
+	//! (stereo) approach described in 3DUNDERWORLD algorithm [UNDERWORLD](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_UNDERWORLD) .
 	//! For more details, see [tutorial_structured_light].
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
@@ -121,7 +121,7 @@ pub mod structured_light {
 		
 	}
 	
-	/// Class implementing the Gray-code pattern, based on [UNDERWORLD](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_UNDERWORLD).
+	/// Class implementing the Gray-code pattern, based on [UNDERWORLD](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_UNDERWORLD).
 	/// 
 	/// The generation of the pattern images is performed with Gray encoding using the traditional white and black colors.
 	/// 
@@ -255,13 +255,13 @@ pub mod structured_light {
 	
 		#[inline]
 		fn set_width(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_structured_light_GrayCodePattern_Params_propWidth_int(self.as_raw_mut_GrayCodePattern_Params(), val) };
+			let ret = unsafe { sys::cv_structured_light_GrayCodePattern_Params_propWidth_const_int(self.as_raw_mut_GrayCodePattern_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_height(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_structured_light_GrayCodePattern_Params_propHeight_int(self.as_raw_mut_GrayCodePattern_Params(), val) };
+			let ret = unsafe { sys::cv_structured_light_GrayCodePattern_Params_propHeight_const_int(self.as_raw_mut_GrayCodePattern_Params(), val) };
 			ret
 		}
 		
@@ -451,7 +451,7 @@ pub mod structured_light {
 	}
 	
 	/// Class implementing Fourier transform profilometry (FTP) , phase-shifting profilometry (PSP)
-	/// and Fourier-assisted phase-shifting profilometry (FAPS) based on [faps](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_faps).
+	/// and Fourier-assisted phase-shifting profilometry (FAPS) based on [faps](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_faps).
 	/// 
 	/// This class generates sinusoidal patterns that can be used with FTP, PSP and FAPS.
 	pub struct SinusoidalPattern {
@@ -608,55 +608,55 @@ pub mod structured_light {
 	
 		#[inline]
 		fn set_width(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propWidth_int(self.as_raw_mut_SinusoidalPattern_Params(), val) };
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propWidth_const_int(self.as_raw_mut_SinusoidalPattern_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_height(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propHeight_int(self.as_raw_mut_SinusoidalPattern_Params(), val) };
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propHeight_const_int(self.as_raw_mut_SinusoidalPattern_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_nbr_of_periods(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propNbrOfPeriods_int(self.as_raw_mut_SinusoidalPattern_Params(), val) };
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propNbrOfPeriods_const_int(self.as_raw_mut_SinusoidalPattern_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_shift_value(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propShiftValue_float(self.as_raw_mut_SinusoidalPattern_Params(), val) };
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propShiftValue_const_float(self.as_raw_mut_SinusoidalPattern_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_method_id(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propMethodId_int(self.as_raw_mut_SinusoidalPattern_Params(), val) };
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propMethodId_const_int(self.as_raw_mut_SinusoidalPattern_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_nbr_of_pixels_between_markers(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propNbrOfPixelsBetweenMarkers_int(self.as_raw_mut_SinusoidalPattern_Params(), val) };
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propNbrOfPixelsBetweenMarkers_const_int(self.as_raw_mut_SinusoidalPattern_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_horizontal(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propHorizontal_bool(self.as_raw_mut_SinusoidalPattern_Params(), val) };
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propHorizontal_const_bool(self.as_raw_mut_SinusoidalPattern_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_set_markers(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propSetMarkers_bool(self.as_raw_mut_SinusoidalPattern_Params(), val) };
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propSetMarkers_const_bool(self.as_raw_mut_SinusoidalPattern_Params(), val) };
 			ret
 		}
 		
 		#[inline]
-		fn set_markers_location(&mut self, mut val: core::Vector<core::Point2f>) {
-			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propMarkersLocation_vectorLPoint2fG(self.as_raw_mut_SinusoidalPattern_Params(), val.as_raw_mut_VectorOfPoint2f()) };
+		fn set_markers_location(&mut self, val: core::Vector<core::Point2f>) {
+			let ret = unsafe { sys::cv_structured_light_SinusoidalPattern_Params_propMarkersLocation_const_vectorLPoint2fG(self.as_raw_mut_SinusoidalPattern_Params(), val.as_raw_VectorOfPoint2f()) };
 			ret
 		}
 		

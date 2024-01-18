@@ -15,7 +15,7 @@ pub mod highgui {
 	//!    # OpenGL support
 	//!    # Qt New Functions
 	//! 
-	//!    ![image](https://docs.opencv.org/4.8.1/qtgui.png)
+	//!    ![image](https://docs.opencv.org/4.9.0/qtgui.png)
 	//! 
 	//!    This figure explains new functionality implemented with Qt\* GUI. The new GUI provides a statusbar,
 	//!    a toolbar, and a control panel. The control panel can have trackbars and buttonbars attached to it.
@@ -567,9 +567,7 @@ pub mod highgui {
 	/// displayed in the specified window winname.
 	/// 
 	/// 
-	/// Note:
-	/// 
-	/// [__Qt Backend Only__] winname can be empty if the trackbar should be attached to the
+	/// Note: [__Qt Backend Only__] winname can be empty if the trackbar should be attached to the
 	/// control panel.
 	/// 
 	/// Clicking the label of each trackbar enables editing the trackbar values manually.
@@ -597,7 +595,7 @@ pub mod highgui {
 		callback_arg!(on_change_trampoline(pos: i32, userdata: *mut c_void) -> () => userdata in callbacks => on_change(pos: i32) -> ());
 		userdata_arg!(userdata in callbacks => on_change);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_createTrackbar_const_StringR_const_StringR_intX_int_TrackbarCallback_voidX(trackbarname.opencv_as_extern(), winname.opencv_as_extern(), value.map_or(::core::ptr::null_mut(), |value| value as *mut _), count, on_change_trampoline, userdata, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_createTrackbar_const_StringR_const_StringR_intX_int_TrackbarCallback_voidX(trackbarname.opencv_as_extern(), winname.opencv_as_extern(), value.map_or(::core::ptr::null_mut(), |x| x), count, on_change_trampoline, userdata, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -829,9 +827,7 @@ pub mod highgui {
 	/// left scrolling, respectively.
 	/// 
 	/// 
-	/// Note:
-	/// 
-	/// Mouse-wheel events are currently supported only on Windows and Cocoa
+	/// Note: Mouse-wheel events are currently supported only on Windows and Cocoa.
 	/// 
 	/// ## Parameters
 	/// * flags: The mouse callback flags parameter.
@@ -849,9 +845,7 @@ pub mod highgui {
 	/// The function returns the current position of the specified trackbar.
 	/// 
 	/// 
-	/// Note:
-	/// 
-	/// [__Qt Backend Only__] winname can be empty if the trackbar is attached to the control
+	/// Note: [__Qt Backend Only__] winname can be empty if the trackbar is attached to the control
 	/// panel.
 	/// 
 	/// ## Parameters
@@ -935,11 +929,7 @@ pub mod highgui {
 	/// press (suitable for displaying a video frame-by-frame). To remove the window, use cv::destroyWindow.
 	/// 
 	/// 
-	/// Note:
-	/// 
-	/// [__Windows Backend Only__] Pressing Ctrl+C will copy the image to the clipboard.
-	/// 
-	/// [__Windows Backend Only__] Pressing Ctrl+S will show a dialog to save the image.
+	/// Note: [__Windows Backend Only__] Pressing Ctrl+C will copy the image to the clipboard. Pressing Ctrl+S will show a dialog to save the image.
 	/// 
 	/// ## Parameters
 	/// * winname: Name of the window.
@@ -1000,9 +990,7 @@ pub mod highgui {
 	/// resources and windows of the application are closed automatically by the operating system upon exit.
 	/// 
 	/// 
-	/// Note:
-	/// 
-	/// Qt backend supports additional flags:
+	/// Note: Qt backend supports additional flags:
 	///  *   **WINDOW_NORMAL or WINDOW_AUTOSIZE:** WINDOW_NORMAL enables you to resize the
 	///      window, whereas WINDOW_AUTOSIZE adjusts automatically the window size to fit the
 	///      displayed image (see imshow ), and you cannot change the window size manually.
@@ -1041,9 +1029,7 @@ pub mod highgui {
 	/// resources and windows of the application are closed automatically by the operating system upon exit.
 	/// 
 	/// 
-	/// Note:
-	/// 
-	/// Qt backend supports additional flags:
+	/// Note: Qt backend supports additional flags:
 	///  *   **WINDOW_NORMAL or WINDOW_AUTOSIZE:** WINDOW_NORMAL enables you to resize the
 	///      window, whereas WINDOW_AUTOSIZE adjusts automatically the window size to fit the
 	///      displayed image (see imshow ), and you cannot change the window size manually.
@@ -1094,10 +1080,8 @@ pub mod highgui {
 	/// Resizes the window to the specified size
 	/// 
 	/// 
-	/// Note:
-	/// 
-	/// *   The specified window size is for the image area. Toolbars are not counted.
-	/// *   Only windows created without cv::WINDOW_AUTOSIZE flag can be resized.
+	/// Note: The specified window size is for the image area. Toolbars are not counted.
+	/// Only windows created without cv::WINDOW_AUTOSIZE flag can be resized.
 	/// 
 	/// ## Parameters
 	/// * winname: Window name.
@@ -1121,10 +1105,8 @@ pub mod highgui {
 	/// Resizes the window to the specified size
 	/// 
 	/// 
-	/// Note:
-	/// 
-	/// *   The specified window size is for the image area. Toolbars are not counted.
-	/// *   Only windows created without cv::WINDOW_AUTOSIZE flag can be resized.
+	/// Note: The specified window size is for the image area. Toolbars are not counted.
+	/// Only windows created without cv::WINDOW_AUTOSIZE flag can be resized.
 	/// 
 	/// ## Parameters
 	/// * winname: Window name.
@@ -1446,9 +1428,7 @@ pub mod highgui {
 	/// The function sets the maximum position of the specified trackbar in the specified window.
 	/// 
 	/// 
-	/// Note:
-	/// 
-	/// [__Qt Backend Only__] winname can be empty if the trackbar is attached to the control
+	/// Note: [__Qt Backend Only__] winname can be empty if the trackbar is attached to the control
 	/// panel.
 	/// 
 	/// ## Parameters
@@ -1471,9 +1451,7 @@ pub mod highgui {
 	/// The function sets the minimum position of the specified trackbar in the specified window.
 	/// 
 	/// 
-	/// Note:
-	/// 
-	/// [__Qt Backend Only__] winname can be empty if the trackbar is attached to the control
+	/// Note: [__Qt Backend Only__] winname can be empty if the trackbar is attached to the control
 	/// panel.
 	/// 
 	/// ## Parameters
@@ -1496,9 +1474,7 @@ pub mod highgui {
 	/// The function sets the position of the specified trackbar in the specified window.
 	/// 
 	/// 
-	/// Note:
-	/// 
-	/// [__Qt Backend Only__] winname can be empty if the trackbar is attached to the control
+	/// Note: [__Qt Backend Only__] winname can be empty if the trackbar is attached to the control
 	/// panel.
 	/// 
 	/// ## Parameters
@@ -1627,9 +1603,7 @@ pub mod highgui {
 	/// Similar to #waitKey, but returns full key code.
 	/// 
 	/// 
-	/// Note:
-	/// 
-	/// Key code is implementation specific and depends on used backend: QT/GTK/Win32/etc
+	/// Note: Key code is implementation specific and depends on used backend: QT/GTK/Win32/etc
 	/// 
 	/// ## Note
 	/// This alternative version of [wait_key_ex] function uses the following default values for its arguments:
@@ -1646,9 +1620,7 @@ pub mod highgui {
 	/// Similar to #waitKey, but returns full key code.
 	/// 
 	/// 
-	/// Note:
-	/// 
-	/// Key code is implementation specific and depends on used backend: QT/GTK/Win32/etc
+	/// Note: Key code is implementation specific and depends on used backend: QT/GTK/Win32/etc
 	/// 
 	/// ## C++ default parameters
 	/// * delay: 0
@@ -1789,54 +1761,54 @@ pub mod highgui {
 		/// Color of the font. Scalar(blue_component, green_component, red_component[, alpha_component])
 		#[inline]
 		fn set_color(&mut self, val: core::Scalar) {
-			let ret = unsafe { sys::cv_QtFont_propColor_Scalar(self.as_raw_mut_QtFont(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_QtFont_propColor_const_Scalar(self.as_raw_mut_QtFont(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// See cv::QtFontStyles
 		#[inline]
 		fn set_font_face(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_QtFont_propFont_face_int(self.as_raw_mut_QtFont(), val) };
+			let ret = unsafe { sys::cv_QtFont_propFont_face_const_int(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_hscale(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_QtFont_propHscale_float(self.as_raw_mut_QtFont(), val) };
+			let ret = unsafe { sys::cv_QtFont_propHscale_const_float(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_vscale(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_QtFont_propVscale_float(self.as_raw_mut_QtFont(), val) };
+			let ret = unsafe { sys::cv_QtFont_propVscale_const_float(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
 		
 		/// slope coefficient: 0 - normal, >0 - italic
 		#[inline]
 		fn set_shear(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_QtFont_propShear_float(self.as_raw_mut_QtFont(), val) };
+			let ret = unsafe { sys::cv_QtFont_propShear_const_float(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
 		
 		/// See cv::QtFontWeights
 		#[inline]
 		fn set_thickness(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_QtFont_propThickness_int(self.as_raw_mut_QtFont(), val) };
+			let ret = unsafe { sys::cv_QtFont_propThickness_const_int(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
 		
 		/// horizontal interval between letters
 		#[inline]
 		fn set_dx(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_QtFont_propDx_float(self.as_raw_mut_QtFont(), val) };
+			let ret = unsafe { sys::cv_QtFont_propDx_const_float(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
 		
 		/// PointSize
 		#[inline]
 		fn set_line_type(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_QtFont_propLine_type_int(self.as_raw_mut_QtFont(), val) };
+			let ret = unsafe { sys::cv_QtFont_propLine_type_const_int(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
 		

@@ -2,7 +2,7 @@ use std::borrow::Cow;
 use std::fmt::Write;
 
 use crate::renderer::TypeRefRenderer;
-use crate::type_ref::{CppNameStyle, Dir, FishStyle, NameStyle, StrEnc, StrType, TemplateArg, TypeRef, TypeRefKind};
+use crate::type_ref::{CppNameStyle, FishStyle, NameStyle, TemplateArg, TypeRef, TypeRefKind};
 use crate::writer::rust_native::element::RustElement;
 use crate::writer::rust_native::type_ref::TypeRefExt;
 use crate::{settings, Element};
@@ -60,12 +60,7 @@ impl RustRenderer {
 
 	fn wrap_nullable<'a>(&self, type_ref: &TypeRef, typ: Cow<'a, str>) -> Cow<'a, str> {
 		if type_ref.is_nullable() {
-			format!(
-				"Option{fish}<{typ}>",
-				fish = self.name_style.rust_turbo_fish_qual(),
-				typ = typ
-			)
-			.into()
+			format!("Option{fish}<{typ}>", fish = self.name_style.rust_turbo_fish_qual()).into()
 		} else {
 			typ
 		}
@@ -77,19 +72,12 @@ impl TypeRefRenderer<'_> for RustRenderer {
 
 	fn render<'t>(self, type_ref: &'t TypeRef) -> Cow<'t, str> {
 		if let Some(str_type) = type_ref.as_string() {
-			#[allow(clippy::if_same_then_else)]
-			return if matches!(
-				str_type,
-				Dir::In(StrType::StdString(StrEnc::Binary) | StrType::CvString(StrEnc::Binary))
-					| Dir::Out(StrType::StdString(StrEnc::Binary) | StrType::CvString(StrEnc::Binary))
-			) {
+			return if str_type.inner().is_binary() {
 				if self.name_style.turbo_fish_style().is_turbo() {
 					"Vec::<u8>"
 				} else {
 					"Vec<u8>"
 				}
-			} else if type_ref.constness().is_const() {
-				"String" // todo implement receiving const str's
 			} else {
 				"String"
 			}
@@ -117,7 +105,7 @@ impl TypeRefRenderer<'_> for RustRenderer {
 				} else {
 					inner.render(self.recurse())
 				};
-				format!("*{cnst}{typ}", cnst = type_ref.constness().rust_qual_ptr(), typ = typ).into()
+				format!("*{cnst}{typ}", cnst = type_ref.constness().rust_qual_ptr()).into()
 			}
 			TypeRefKind::Pointer(inner) | TypeRefKind::Reference(inner) => {
 				let typ = format!(

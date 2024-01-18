@@ -55,8 +55,7 @@ impl<T> Rect_<T> {
 	}
 
 	#[inline]
-	// todo: make const when MSRV allows 1.61?
-	pub fn tl(&self) -> Point_<T>
+	pub const fn tl(&self) -> Point_<T>
 	where
 		T: Copy,
 	{
@@ -72,8 +71,7 @@ impl<T> Rect_<T> {
 	}
 
 	#[inline]
-	// todo: make const when MSRV allows 1.61?
-	pub fn size(&self) -> Size_<T>
+	pub const fn size(&self) -> Size_<T>
 	where
 		T: Copy,
 	{

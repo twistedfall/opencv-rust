@@ -1,6 +1,6 @@
-project(OpenCVProbe)
-
 cmake_minimum_required(VERSION 3.0)
+
+project(OpenCVProbe)
 
 find_package(${OCVRS_PACKAGE_NAME} REQUIRED)
 

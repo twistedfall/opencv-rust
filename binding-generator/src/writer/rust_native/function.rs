@@ -19,13 +19,13 @@ impl RustElement for Function<'_, '_> {
 			let args = self
 				.rust_arguments()
 				.into_iter()
-				.map(|a| a.type_ref().rust_extern(ExternDir::Pure).into_owned())
+				.map(|a| a.type_ref().rust_extern(ExternDir::Contained).into_owned())
 				.join(", ");
 			format!(
 				"Option{fish}<Box{fish}<dyn FnMut({args}) -> {ret} + Send + Sync + 'static>>",
 				fish = style.turbo_fish_style().rust_qual(),
 				args = args,
-				ret = ret.rust_extern(ExternDir::Pure),
+				ret = ret.rust_extern(ExternDir::Contained),
 			)
 			.into()
 		} else {
@@ -53,13 +53,13 @@ impl<'tu, 'ge> FunctionExt<'tu, 'ge> for Function<'tu, 'ge> {
 		let args = self
 			.arguments()
 			.into_iter()
-			.map(|a| a.type_ref().rust_extern(ExternDir::Pure).into_owned())
+			.map(|a| a.type_ref().rust_extern(ExternDir::Contained).into_owned())
 			.join(", ");
 		let ret = self.return_type();
 		format!(
 			r#"Option<unsafe extern "C" fn({args}) -> {ret}>"#,
 			args = args,
-			ret = ret.rust_extern(ExternDir::Pure)
+			ret = ret.rust_extern(ExternDir::Contained)
 		)
 		.into()
 	}

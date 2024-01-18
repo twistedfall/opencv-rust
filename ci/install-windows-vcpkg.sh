@@ -25,6 +25,7 @@ echo "set(VCPKG_BUILD_TYPE release)" >> triplets/community/x64-windows-static-md
 export VCPKG_DEFAULT_TRIPLET=x64-windows
 #./vcpkg install llvm  # takes very long time
 choco install -y llvm --version "$CHOCO_LLVM_VERSION"
-
-./vcpkg install --recurse "opencv[contrib,nonfree]"
+./vcpkg install --clean-after-build --recurse "opencv[contrib,nonfree]"
+# remove build artifacts to save CI cache space
+rm -rf "$VCPKG_ROOT/downloads" "$VCPKG_ROOT/buildtrees" "$VCPKG_ROOT/packages"
 popd

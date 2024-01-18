@@ -91,7 +91,6 @@ impl RustNativeGeneratedElement for Tuple<'_, '_> {
 	}
 }
 
-#[inline]
 fn extern_functions<'tu, 'ge>(tuple: &Tuple<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
 	let type_ref = tuple.type_ref();
 	let elements = tuple.elements();

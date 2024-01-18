@@ -109,8 +109,7 @@ pub struct Matx<T, A: SizedArray<T>> {
 
 impl<T, A: SizedArray<T>> Matx<T, A> {
 	#[inline]
-	// todo: make const when MSRV allows 1.61?
-	pub fn from_array(s: A::Storage) -> Self {
+	pub const fn from_array(s: A::Storage) -> Self {
 		Self { val: s }
 	}
 }

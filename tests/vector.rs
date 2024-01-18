@@ -1,5 +1,5 @@
 use std::any::TypeId;
-use std::os::raw::c_char;
+use std::ffi::c_char;
 
 use matches::assert_matches;
 
@@ -48,7 +48,7 @@ fn boxed() -> Result<()> {
 		let mut m = Mat::new_rows_cols_with_default(10, 10, Vec3b::opencv_type(), 0.into())?;
 		let mut ps = VectorOfMat::new();
 		assert_eq!(ps.len(), 0);
-		let mut p1 = unsafe { Mat::new_rows_cols(3, 2, i32::opencv_type()) }?;
+		let mut p1 = Mat::new_rows_cols_with_default(3, 2, i32::opencv_type(), 0.into())?;
 		p1.at_row_mut::<i32>(0)?.copy_from_slice(&[0, 0]);
 		p1.at_row_mut::<i32>(1)?.copy_from_slice(&[0, 9]);
 		p1.at_row_mut::<i32>(2)?.copy_from_slice(&[9, 9]);
@@ -503,6 +503,7 @@ fn iter() -> Result<()> {
 
 	{
 		let vec = VectorOfMat::from_iter(vec![]);
+		#[allow(clippy::never_loop)]
 		for _ in vec {
 			panic!("iterator must not yield any elements")
 		}

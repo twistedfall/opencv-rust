@@ -15,7 +15,7 @@ pub mod ml {
 		pub use { super::ParamGridTraitConst, super::ParamGridTrait, super::TrainDataTraitConst, super::TrainDataTrait, super::StatModelTraitConst, super::StatModelTrait, super::NormalBayesClassifierTraitConst, super::NormalBayesClassifierTrait, super::KNearestTraitConst, super::KNearestTrait, super::SVM_KernelTraitConst, super::SVM_KernelTrait, super::SVMTraitConst, super::SVMTrait, super::EMTraitConst, super::EMTrait, super::DTrees_NodeTraitConst, super::DTrees_NodeTrait, super::DTrees_SplitTraitConst, super::DTrees_SplitTrait, super::DTreesTraitConst, super::DTreesTrait, super::RTreesTraitConst, super::RTreesTrait, super::BoostTraitConst, super::BoostTrait, super::ANN_MLPTraitConst, super::ANN_MLPTrait, super::LogisticRegressionTraitConst, super::LogisticRegressionTrait, super::SVMSGDTraitConst, super::SVMSGDTrait };
 	}
 	
-	/// The simulated annealing algorithm. See [Kirkpatrick83](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Kirkpatrick83) for details.
+	/// The simulated annealing algorithm. See [Kirkpatrick83](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Kirkpatrick83) for details.
 	pub const ANN_MLP_ANNEAL: i32 = 2;
 	/// The back-propagation algorithm.
 	pub const ANN_MLP_BACKPROP: i32 = 0;
@@ -37,7 +37,7 @@ pub mod ml {
 	pub const ANN_MLP_NO_OUTPUT_SCALE: i32 = 4;
 	/// ReLU function: ![inline formula](https://latex.codecogs.com/png.latex?f%28x%29%3Dmax%280%2Cx%29)
 	pub const ANN_MLP_RELU: i32 = 3;
-	/// The RPROP algorithm. See [RPROP93](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_RPROP93) for details.
+	/// The RPROP algorithm. See [RPROP93](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_RPROP93) for details.
 	pub const ANN_MLP_RPROP: i32 = 1;
 	/// Symmetrical sigmoid: ![inline formula](https://latex.codecogs.com/png.latex?f%28x%29%3D%5Cbeta%2A%281%2De%5E%7B%2D%5Calpha%20x%7D%29%2F%281%2Be%5E%7B%2D%5Calpha%20x%7D%29)
 	/// 
@@ -139,7 +139,7 @@ pub mod ml {
 	/// the decision boundary) is used instead of C.
 	pub const SVM_NU_SVC: i32 = 101;
 	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cnu)-Support Vector Regression. ![inline formula](https://latex.codecogs.com/png.latex?%5Cnu) is used instead of p.
-	/// See [LibSVM](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_LibSVM) for details.
+	/// See [LibSVM](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_LibSVM) for details.
 	pub const SVM_NU_SVR: i32 = 104;
 	/// Distribution Estimation (One-class %SVM). All the training data are from
 	/// the same class, %SVM builds a boundary that separates the class from the rest of the feature
@@ -217,9 +217,9 @@ pub mod ml {
 	pub enum ANN_MLP_TrainingMethods {
 		/// The back-propagation algorithm.
 		BACKPROP = 0,
-		/// The RPROP algorithm. See [RPROP93](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_RPROP93) for details.
+		/// The RPROP algorithm. See [RPROP93](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_RPROP93) for details.
 		RPROP = 1,
-		/// The simulated annealing algorithm. See [Kirkpatrick83](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Kirkpatrick83) for details.
+		/// The simulated annealing algorithm. See [Kirkpatrick83](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Kirkpatrick83) for details.
 		ANNEAL = 2,
 	}
 	
@@ -362,7 +362,7 @@ pub mod ml {
 	/// SVM::C_SVC SVMs have been trained (one against rest) with auto_train. Evaluation on three
 	/// different kernels (SVM::CHI2, SVM::INTER, SVM::RBF). The color depicts the class with max score.
 	/// Bright means max-score \> 0, dark means max-score \< 0.
-	/// ![image](https://docs.opencv.org/4.8.1/SVM_Comparison.png)
+	/// ![image](https://docs.opencv.org/4.9.0/SVM_Comparison.png)
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum SVM_KernelTypes {
@@ -422,7 +422,7 @@ pub mod ml {
 		/// penalty multiplier C is used.
 		EPS_SVR = 103,
 		/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cnu)-Support Vector Regression. ![inline formula](https://latex.codecogs.com/png.latex?%5Cnu) is used instead of p.
-		/// See [LibSVM](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_LibSVM) for details.
+		/// See [LibSVM](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_LibSVM) for details.
 		NU_SVR = 104,
 	}
 	
@@ -1845,7 +1845,7 @@ pub mod ml {
 		/// function value in case of regression.
 		#[inline]
 		fn set_value(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_ml_DTrees_Node_propValue_double(self.as_raw_mut_DTrees_Node(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Node_propValue_const_double(self.as_raw_mut_DTrees_Node(), val) };
 			ret
 		}
 		
@@ -1853,28 +1853,28 @@ pub mod ml {
 		/// node. It is used internally in classification trees and tree ensembles.
 		#[inline]
 		fn set_class_idx(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ml_DTrees_Node_propClassIdx_int(self.as_raw_mut_DTrees_Node(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Node_propClassIdx_const_int(self.as_raw_mut_DTrees_Node(), val) };
 			ret
 		}
 		
 		/// Index of the parent node
 		#[inline]
 		fn set_parent(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ml_DTrees_Node_propParent_int(self.as_raw_mut_DTrees_Node(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Node_propParent_const_int(self.as_raw_mut_DTrees_Node(), val) };
 			ret
 		}
 		
 		/// Index of the left child node
 		#[inline]
 		fn set_left(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ml_DTrees_Node_propLeft_int(self.as_raw_mut_DTrees_Node(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Node_propLeft_const_int(self.as_raw_mut_DTrees_Node(), val) };
 			ret
 		}
 		
 		/// Index of right child node
 		#[inline]
 		fn set_right(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ml_DTrees_Node_propRight_int(self.as_raw_mut_DTrees_Node(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Node_propRight_const_int(self.as_raw_mut_DTrees_Node(), val) };
 			ret
 		}
 		
@@ -1882,14 +1882,14 @@ pub mod ml {
 		/// case of missing values.
 		#[inline]
 		fn set_default_dir(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ml_DTrees_Node_propDefaultDir_int(self.as_raw_mut_DTrees_Node(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Node_propDefaultDir_const_int(self.as_raw_mut_DTrees_Node(), val) };
 			ret
 		}
 		
 		/// Index of the first split
 		#[inline]
 		fn set_split(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ml_DTrees_Node_propSplit_int(self.as_raw_mut_DTrees_Node(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Node_propSplit_const_int(self.as_raw_mut_DTrees_Node(), val) };
 			ret
 		}
 		
@@ -2017,7 +2017,7 @@ pub mod ml {
 		/// Index of variable on which the split is created.
 		#[inline]
 		fn set_var_idx(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ml_DTrees_Split_propVarIdx_int(self.as_raw_mut_DTrees_Split(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Split_propVarIdx_const_int(self.as_raw_mut_DTrees_Split(), val) };
 			ret
 		}
 		
@@ -2025,21 +2025,21 @@ pub mod ml {
 		/// branches are exchanged in the rule expressions below).
 		#[inline]
 		fn set_inversed(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_ml_DTrees_Split_propInversed_bool(self.as_raw_mut_DTrees_Split(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Split_propInversed_const_bool(self.as_raw_mut_DTrees_Split(), val) };
 			ret
 		}
 		
 		/// The split quality, a positive number. It is used to choose the best split.
 		#[inline]
 		fn set_quality(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_ml_DTrees_Split_propQuality_float(self.as_raw_mut_DTrees_Split(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Split_propQuality_const_float(self.as_raw_mut_DTrees_Split(), val) };
 			ret
 		}
 		
 		/// Index of the next split in the list of splits for the node
 		#[inline]
 		fn set_next(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ml_DTrees_Split_propNext_int(self.as_raw_mut_DTrees_Split(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Split_propNext_const_int(self.as_raw_mut_DTrees_Split(), val) };
 			ret
 		}
 		
@@ -2053,7 +2053,7 @@ pub mod ml {
 		/// 
 		#[inline]
 		fn set_c(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_ml_DTrees_Split_propC_float(self.as_raw_mut_DTrees_Split(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Split_propC_const_float(self.as_raw_mut_DTrees_Split(), val) };
 			ret
 		}
 		
@@ -2067,7 +2067,7 @@ pub mod ml {
 		/// 
 		#[inline]
 		fn set_subset_ofs(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ml_DTrees_Split_propSubsetOfs_int(self.as_raw_mut_DTrees_Split(), val) };
+			let ret = unsafe { sys::cv_ml_DTrees_Split_propSubsetOfs_const_int(self.as_raw_mut_DTrees_Split(), val) };
 			ret
 		}
 		
@@ -3536,14 +3536,14 @@ pub mod ml {
 		/// Minimum value of the statmodel parameter. Default value is 0.
 		#[inline]
 		fn set_min_val(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_ml_ParamGrid_propMinVal_double(self.as_raw_mut_ParamGrid(), val) };
+			let ret = unsafe { sys::cv_ml_ParamGrid_propMinVal_const_double(self.as_raw_mut_ParamGrid(), val) };
 			ret
 		}
 		
 		/// Maximum value of the statmodel parameter. Default value is 0.
 		#[inline]
 		fn set_max_val(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_ml_ParamGrid_propMaxVal_double(self.as_raw_mut_ParamGrid(), val) };
+			let ret = unsafe { sys::cv_ml_ParamGrid_propMaxVal_const_double(self.as_raw_mut_ParamGrid(), val) };
 			ret
 		}
 		
@@ -3556,7 +3556,7 @@ pub mod ml {
 		/// The grid is logarithmic, so logStep must always be greater than 1. Default value is 1.
 		#[inline]
 		fn set_log_step(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_ml_ParamGrid_propLogStep_double(self.as_raw_mut_ParamGrid(), val) };
+			let ret = unsafe { sys::cv_ml_ParamGrid_propLogStep_const_double(self.as_raw_mut_ParamGrid(), val) };
 			ret
 		}
 		
@@ -4914,7 +4914,7 @@ pub mod ml {
 	/// Stochastic Gradient Descent SVM classifier
 	/// 
 	/// SVMSGD provides a fast and easy-to-use implementation of the SVM classifier using the Stochastic Gradient Descent approach,
-	/// as presented in [bottou2010large](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_bottou2010large).
+	/// as presented in [bottou2010large](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_bottou2010large).
 	/// 
 	/// The classifier has following parameters:
 	/// - model type,
@@ -4937,7 +4937,7 @@ pub mod ml {
 	/// - \ref ASGD is Average Stochastic Gradient Descent SVM Classifier. ASGD classifier averages weights vector on each step of algorithm by the formula
 	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cwidehat%7Bw%7D%5F%7Bt%2B1%7D%20%3D%20%5Cfrac%7Bt%7D%7B1%2Bt%7D%5Cwidehat%7Bw%7D%5F%7Bt%7D%20%2B%20%5Cfrac%7B1%7D%7B1%2Bt%7Dw%5F%7Bt%2B1%7D)
 	/// 
-	/// The recommended model type is ASGD (following [bottou2010large](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_bottou2010large)).
+	/// The recommended model type is ASGD (following [bottou2010large](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_bottou2010large)).
 	/// 
 	/// The margin type may have one of the following values: \ref SOFT_MARGIN or \ref HARD_MARGIN.
 	/// 

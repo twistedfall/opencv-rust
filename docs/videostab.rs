@@ -3,7 +3,7 @@ pub mod videostab {
 	//! 
 	//! The video stabilization module contains a set of functions and classes that can be used to solve the
 	//! problem of video stabilization. There are a few methods implemented, most of them are described in
-	//! the papers [OF06](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_OF06) and [G11](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_G11) . However, there are some extensions and deviations from the original
+	//! the papers [OF06](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_OF06) and [G11](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_G11) . However, there are some extensions and deviations from the original
 	//! paper methods.
 	//! 
 	//! ### References
@@ -21,7 +21,7 @@ pub mod videostab {
 	//! 
 	//!          # Fast Marching Method
 	//! 
-	//! The Fast Marching Method [Telea04](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Telea04) is used in of the video stabilization routines to do motion and
+	//! The Fast Marching Method [Telea04](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Telea04) is used in of the video stabilization routines to do motion and
 	//! color inpainting. The method is implemented is a flexible way and it's made public for other users.
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
@@ -4145,28 +4145,28 @@ pub mod videostab {
 		/// subset size
 		#[inline]
 		fn set_size(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_videostab_RansacParams_propSize_int(self.as_raw_mut_RansacParams(), val) };
+			let ret = unsafe { sys::cv_videostab_RansacParams_propSize_const_int(self.as_raw_mut_RansacParams(), val) };
 			ret
 		}
 		
 		/// max error to classify as inlier
 		#[inline]
 		fn set_thresh(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_videostab_RansacParams_propThresh_float(self.as_raw_mut_RansacParams(), val) };
+			let ret = unsafe { sys::cv_videostab_RansacParams_propThresh_const_float(self.as_raw_mut_RansacParams(), val) };
 			ret
 		}
 		
 		/// max outliers ratio
 		#[inline]
 		fn set_eps(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_videostab_RansacParams_propEps_float(self.as_raw_mut_RansacParams(), val) };
+			let ret = unsafe { sys::cv_videostab_RansacParams_propEps_const_float(self.as_raw_mut_RansacParams(), val) };
 			ret
 		}
 		
 		/// probability of success
 		#[inline]
 		fn set_prob(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_videostab_RansacParams_propProb_float(self.as_raw_mut_RansacParams(), val) };
+			let ret = unsafe { sys::cv_videostab_RansacParams_propProb_const_float(self.as_raw_mut_RansacParams(), val) };
 			ret
 		}
 		

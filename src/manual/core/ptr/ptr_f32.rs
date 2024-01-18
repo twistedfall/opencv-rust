@@ -13,13 +13,13 @@ impl Deref for Ptr<f32> {
 	type Target = f32;
 
 	fn deref(&self) -> &Self::Target {
-		unsafe { (self.inner_as_raw() as *const f32).as_ref() }.expect("Got null inner pointer for Ptr<f32>")
+		unsafe { (self.inner_as_raw().cast::<f32>()).as_ref() }.expect("Got null inner pointer for Ptr<f32>")
 	}
 }
 
 impl DerefMut for Ptr<f32> {
 	fn deref_mut(&mut self) -> &mut Self::Target {
-		unsafe { (self.inner_as_raw() as *mut f32).as_mut() }.expect("Got null mut inner pointer for Ptr<f32>")
+		unsafe { (self.inner_as_raw_mut().cast::<f32>()).as_mut() }.expect("Got null mut inner pointer for Ptr<f32>")
 	}
 }
 

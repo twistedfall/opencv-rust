@@ -2,8 +2,8 @@ pub mod objdetect {
 	//! # Object Detection
 	//!    # Cascade Classifier for Object Detection
 	//! 
-	//! The object detector described below has been initially proposed by Paul Viola [Viola01](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Viola01) and
-	//! improved by Rainer Lienhart [Lienhart02](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Lienhart02) .
+	//! The object detector described below has been initially proposed by Paul Viola [Viola01](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Viola01) and
+	//! improved by Rainer Lienhart [Lienhart02](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Lienhart02) .
 	//! 
 	//! First, a classifier (namely a *cascade of boosted classifiers working with haar-like features*) is
 	//! trained with a few hundred sample views of a particular object (i.e., a face or a car), called
@@ -29,7 +29,7 @@ pub mod objdetect {
 	//! classifiers, and are calculated as described below. The current algorithm uses the following
 	//! Haar-like features:
 	//! 
-	//! ![image](https://docs.opencv.org/4.8.1/haarfeatures.png)
+	//! ![image](https://docs.opencv.org/4.9.0/haarfeatures.png)
 	//! 
 	//! The feature used in a particular classifier is specified by its shape (1a, 2b etc.), position within
 	//! the region of interest and the scale (this scale is not the same as the scale used at the detection
@@ -67,11 +67,11 @@ pub mod objdetect {
 	//!        ArUco markers can also be used for advanced chessboard corner finding. To do this, group the markers in the
 	//!        CharucoBoard and find the corners of the chessboard with the CharucoDetector::detectBoard().
 	//! 
-	//!        The implementation is based on the ArUco Library by R. Muñoz-Salinas and S. Garrido-Jurado [Aruco2014](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Aruco2014).
+	//!        The implementation is based on the ArUco Library by R. Muñoz-Salinas and S. Garrido-Jurado [Aruco2014](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Aruco2014).
 	//! 
-	//!        Markers can also be detected based on the AprilTag 2 [wang2016iros](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_wang2016iros) fiducial detection method.
+	//!        Markers can also be detected based on the AprilTag 2 [wang2016iros](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_wang2016iros) fiducial detection method.
 	//! ## See also
-	//! [Aruco2014](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Aruco2014)
+	//! [Aruco2014](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Aruco2014)
 	//!        This code has been originally developed by Sergio Garrido-Jurado as a project
 	//!        for Google Summer of Code 2015 (GSoC 15).
 	use crate::{mod_prelude::*, core, sys, types};
@@ -83,7 +83,7 @@ pub mod objdetect {
 	pub const CASCADE_DO_ROUGH_SEARCH: i32 = 8;
 	pub const CASCADE_FIND_BIGGEST_OBJECT: i32 = 4;
 	pub const CASCADE_SCALE_IMAGE: i32 = 2;
-	/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_wang2016iros)
+	/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_wang2016iros)
 	pub const CORNER_REFINE_APRILTAG: i32 = 3;
 	/// ArUco approach and refine the corners locations using the contour-points line fitting
 	pub const CORNER_REFINE_CONTOUR: i32 = 2;
@@ -168,7 +168,7 @@ pub mod objdetect {
 		CORNER_REFINE_SUBPIX = 1,
 		/// ArUco approach and refine the corners locations using the contour-points line fitting
 		CORNER_REFINE_CONTOUR = 2,
-		/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_wang2016iros)
+		/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_wang2016iros)
 		CORNER_REFINE_APRILTAG = 3,
 	}
 	
@@ -1091,8 +1091,8 @@ pub mod objdetect {
 		}
 		
 		#[inline]
-		fn set_cc(&mut self, mut val: core::Ptr<crate::objdetect::BaseCascadeClassifier>) {
-			let ret = unsafe { sys::cv_CascadeClassifier_propCc_PtrLBaseCascadeClassifierG(self.as_raw_mut_CascadeClassifier(), val.as_raw_mut_PtrOfBaseCascadeClassifier()) };
+		fn set_cc(&mut self, val: core::Ptr<crate::objdetect::BaseCascadeClassifier>) {
+			let ret = unsafe { sys::cv_CascadeClassifier_propCc_const_PtrLBaseCascadeClassifierG(self.as_raw_mut_CascadeClassifier(), val.as_raw_PtrOfBaseCascadeClassifier()) };
 			ret
 		}
 		
@@ -1641,19 +1641,19 @@ pub mod objdetect {
 	
 		#[inline]
 		fn set_id(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_DetectionBasedTracker_ExtObject_propId_int(self.as_raw_mut_DetectionBasedTracker_ExtObject(), val) };
+			let ret = unsafe { sys::cv_DetectionBasedTracker_ExtObject_propId_const_int(self.as_raw_mut_DetectionBasedTracker_ExtObject(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_location(&mut self, val: core::Rect) {
-			let ret = unsafe { sys::cv_DetectionBasedTracker_ExtObject_propLocation_Rect(self.as_raw_mut_DetectionBasedTracker_ExtObject(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_DetectionBasedTracker_ExtObject_propLocation_const_Rect(self.as_raw_mut_DetectionBasedTracker_ExtObject(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_status(&mut self, val: crate::objdetect::DetectionBasedTracker_ObjectStatus) {
-			let ret = unsafe { sys::cv_DetectionBasedTracker_ExtObject_propStatus_ObjectStatus(self.as_raw_mut_DetectionBasedTracker_ExtObject(), val) };
+			let ret = unsafe { sys::cv_DetectionBasedTracker_ExtObject_propStatus_const_ObjectStatus(self.as_raw_mut_DetectionBasedTracker_ExtObject(), val) };
 			ret
 		}
 		
@@ -1864,13 +1864,13 @@ pub mod objdetect {
 	
 		#[inline]
 		fn set_max_track_lifetime(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_DetectionBasedTracker_Parameters_propMaxTrackLifetime_int(self.as_raw_mut_DetectionBasedTracker_Parameters(), val) };
+			let ret = unsafe { sys::cv_DetectionBasedTracker_Parameters_propMaxTrackLifetime_const_int(self.as_raw_mut_DetectionBasedTracker_Parameters(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_min_detection_period(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_DetectionBasedTracker_Parameters_propMinDetectionPeriod_int(self.as_raw_mut_DetectionBasedTracker_Parameters(), val) };
+			let ret = unsafe { sys::cv_DetectionBasedTracker_Parameters_propMinDetectionPeriod_const_int(self.as_raw_mut_DetectionBasedTracker_Parameters(), val) };
 			ret
 		}
 		
@@ -1958,21 +1958,21 @@ pub mod objdetect {
 		/// scale(size) of the bounding box
 		#[inline]
 		fn set_scale(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_DetectionROI_propScale_double(self.as_raw_mut_DetectionROI(), val) };
+			let ret = unsafe { sys::cv_DetectionROI_propScale_const_double(self.as_raw_mut_DetectionROI(), val) };
 			ret
 		}
 		
 		/// set of requested locations to be evaluated
 		#[inline]
-		fn set_locations(&mut self, mut val: core::Vector<core::Point>) {
-			let ret = unsafe { sys::cv_DetectionROI_propLocations_vectorLPointG(self.as_raw_mut_DetectionROI(), val.as_raw_mut_VectorOfPoint()) };
+		fn set_locations(&mut self, val: core::Vector<core::Point>) {
+			let ret = unsafe { sys::cv_DetectionROI_propLocations_const_vectorLPointG(self.as_raw_mut_DetectionROI(), val.as_raw_VectorOfPoint()) };
 			ret
 		}
 		
 		/// vector that will contain confidence values for each location
 		#[inline]
-		fn set_confidences(&mut self, mut val: core::Vector<f64>) {
-			let ret = unsafe { sys::cv_DetectionROI_propConfidences_vectorLdoubleG(self.as_raw_mut_DetectionROI(), val.as_raw_mut_VectorOff64()) };
+		fn set_confidences(&mut self, val: core::Vector<f64>) {
+			let ret = unsafe { sys::cv_DetectionROI_propConfidences_const_vectorLdoubleG(self.as_raw_mut_DetectionROI(), val.as_raw_VectorOff64()) };
 			ret
 		}
 		
@@ -2116,7 +2116,7 @@ pub mod objdetect {
 		
 		/// Detects faces in the input image. Following is an example output.
 		/// 
-		/// * ![image](https://docs.opencv.org/4.8.1/lena-face-detection.jpg)
+		/// * ![image](https://docs.opencv.org/4.9.0/lena-face-detection.jpg)
 		/// 
 		/// ## Parameters
 		/// * image: an image to detect
@@ -2169,7 +2169,7 @@ pub mod objdetect {
 	}
 	
 	impl FaceDetectorYN {
-		/// Creates an instance of this class with given parameters
+		/// Creates an instance of face detector class with given parameters
 		/// 
 		/// ## Parameters
 		/// * model: the path to the requested model
@@ -2199,7 +2199,7 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
-		/// Creates an instance of this class with given parameters
+		/// Creates an instance of face detector class with given parameters
 		/// 
 		/// ## Parameters
 		/// * model: the path to the requested model
@@ -2224,6 +2224,79 @@ pub mod objdetect {
 			extern_container_arg!(config);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FaceDetectorYN_create_const_StringR_const_StringR_const_SizeR(model.opencv_as_extern(), config.opencv_as_extern(), &input_size, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::objdetect::FaceDetectorYN>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Creates an instance of face detector class with given parameters
+		/// 
+		/// ## Parameters
+		/// * model: the path to the requested model
+		/// * config: the path to the config file for compability, which is not requested for ONNX models
+		/// * input_size: the size of the input image
+		/// * score_threshold: the threshold to filter out bounding boxes of score smaller than the given value
+		/// * nms_threshold: the threshold to suppress bounding boxes of IoU bigger than the given value
+		/// * top_k: keep top K bboxes before NMS
+		/// * backend_id: the id of backend
+		/// * target_id: the id of target device
+		/// 
+		/// ## Overloaded parameters
+		/// 
+		/// 
+		/// * framework: Name of origin framework
+		/// * bufferModel: A buffer with a content of binary file with weights
+		/// * bufferConfig: A buffer with a content of text file contains network configuration
+		/// * input_size: the size of the input image
+		/// * score_threshold: the threshold to filter out bounding boxes of score smaller than the given value
+		/// * nms_threshold: the threshold to suppress bounding boxes of IoU bigger than the given value
+		/// * top_k: keep top K bboxes before NMS
+		/// * backend_id: the id of backend
+		/// * target_id: the id of target device
+		/// 
+		/// ## C++ default parameters
+		/// * score_threshold: 0.9f
+		/// * nms_threshold: 0.3f
+		/// * top_k: 5000
+		/// * backend_id: 0
+		/// * target_id: 0
+		#[inline]
+		pub fn create_1(framework: &str, buffer_model: &core::Vector<u8>, buffer_config: &core::Vector<u8>, input_size: core::Size, score_threshold: f32, nms_threshold: f32, top_k: i32, backend_id: i32, target_id: i32) -> Result<core::Ptr<crate::objdetect::FaceDetectorYN>> {
+			extern_container_arg!(framework);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FaceDetectorYN_create_const_StringR_const_vectorLunsigned_charGR_const_vectorLunsigned_charGR_const_SizeR_float_float_int_int_int(framework.opencv_as_extern(), buffer_model.as_raw_VectorOfu8(), buffer_config.as_raw_VectorOfu8(), &input_size, score_threshold, nms_threshold, top_k, backend_id, target_id, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::objdetect::FaceDetectorYN>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// @overload
+		/// 
+		/// ## Parameters
+		/// * framework: Name of origin framework
+		/// * bufferModel: A buffer with a content of binary file with weights
+		/// * bufferConfig: A buffer with a content of text file contains network configuration
+		/// * input_size: the size of the input image
+		/// * score_threshold: the threshold to filter out bounding boxes of score smaller than the given value
+		/// * nms_threshold: the threshold to suppress bounding boxes of IoU bigger than the given value
+		/// * top_k: keep top K bboxes before NMS
+		/// * backend_id: the id of backend
+		/// * target_id: the id of target device
+		/// 
+		/// ## Note
+		/// This alternative version of [FaceDetectorYN::create] function uses the following default values for its arguments:
+		/// * score_threshold: 0.9f
+		/// * nms_threshold: 0.3f
+		/// * top_k: 5000
+		/// * backend_id: 0
+		/// * target_id: 0
+		#[inline]
+		pub fn create_def_1(framework: &str, buffer_model: &core::Vector<u8>, buffer_config: &core::Vector<u8>, input_size: core::Size) -> Result<core::Ptr<crate::objdetect::FaceDetectorYN>> {
+			extern_container_arg!(framework);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FaceDetectorYN_create_const_StringR_const_vectorLunsigned_charGR_const_vectorLunsigned_charGR_const_SizeR(framework.opencv_as_extern(), buffer_model.as_raw_VectorOfu8(), buffer_config.as_raw_VectorOfu8(), &input_size, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::objdetect::FaceDetectorYN>::opencv_from_extern(ret) };
@@ -3371,105 +3444,105 @@ pub mod objdetect {
 		/// Detection window size. Align to block size and block stride. Default value is Size(64,128).
 		#[inline]
 		fn set_win_size(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propWinSize_Size(self.as_raw_mut_HOGDescriptor(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propWinSize_const_Size(self.as_raw_mut_HOGDescriptor(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// Block size in pixels. Align to cell size. Default value is Size(16,16).
 		#[inline]
 		fn set_block_size(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propBlockSize_Size(self.as_raw_mut_HOGDescriptor(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propBlockSize_const_Size(self.as_raw_mut_HOGDescriptor(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// Block stride. It must be a multiple of cell size. Default value is Size(8,8).
 		#[inline]
 		fn set_block_stride(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propBlockStride_Size(self.as_raw_mut_HOGDescriptor(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propBlockStride_const_Size(self.as_raw_mut_HOGDescriptor(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// Cell size. Default value is Size(8,8).
 		#[inline]
 		fn set_cell_size(&mut self, val: core::Size) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propCellSize_Size(self.as_raw_mut_HOGDescriptor(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propCellSize_const_Size(self.as_raw_mut_HOGDescriptor(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// Number of bins used in the calculation of histogram of gradients. Default value is 9.
 		#[inline]
 		fn set_nbins(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propNbins_int(self.as_raw_mut_HOGDescriptor(), val) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propNbins_const_int(self.as_raw_mut_HOGDescriptor(), val) };
 			ret
 		}
 		
 		/// not documented
 		#[inline]
 		fn set_deriv_aperture(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propDerivAperture_int(self.as_raw_mut_HOGDescriptor(), val) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propDerivAperture_const_int(self.as_raw_mut_HOGDescriptor(), val) };
 			ret
 		}
 		
 		/// Gaussian smoothing window parameter.
 		#[inline]
 		fn set_win_sigma(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propWinSigma_double(self.as_raw_mut_HOGDescriptor(), val) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propWinSigma_const_double(self.as_raw_mut_HOGDescriptor(), val) };
 			ret
 		}
 		
 		/// histogramNormType
 		#[inline]
 		fn set_histogram_norm_type(&mut self, val: crate::objdetect::HOGDescriptor_HistogramNormType) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propHistogramNormType_HistogramNormType(self.as_raw_mut_HOGDescriptor(), val) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propHistogramNormType_const_HistogramNormType(self.as_raw_mut_HOGDescriptor(), val) };
 			ret
 		}
 		
 		/// L2-Hys normalization method shrinkage.
 		#[inline]
 		fn set_l2_hys_threshold(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propL2HysThreshold_double(self.as_raw_mut_HOGDescriptor(), val) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propL2HysThreshold_const_double(self.as_raw_mut_HOGDescriptor(), val) };
 			ret
 		}
 		
 		/// Flag to specify whether the gamma correction preprocessing is required or not.
 		#[inline]
 		fn set_gamma_correction(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propGammaCorrection_bool(self.as_raw_mut_HOGDescriptor(), val) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propGammaCorrection_const_bool(self.as_raw_mut_HOGDescriptor(), val) };
 			ret
 		}
 		
 		/// coefficients for the linear SVM classifier.
 		#[inline]
-		fn set_svm_detector_vec(&mut self, mut val: core::Vector<f32>) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propSvmDetector_vectorLfloatG(self.as_raw_mut_HOGDescriptor(), val.as_raw_mut_VectorOff32()) };
+		fn set_svm_detector_vec(&mut self, val: core::Vector<f32>) {
+			let ret = unsafe { sys::cv_HOGDescriptor_propSvmDetector_const_vectorLfloatG(self.as_raw_mut_HOGDescriptor(), val.as_raw_VectorOff32()) };
 			ret
 		}
 		
 		/// coefficients for the linear SVM classifier used when OpenCL is enabled
 		#[inline]
-		fn set_ocl_svm_detector(&mut self, mut val: core::UMat) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propOclSvmDetector_UMat(self.as_raw_mut_HOGDescriptor(), val.as_raw_mut_UMat()) };
+		fn set_ocl_svm_detector(&mut self, val: core::UMat) {
+			let ret = unsafe { sys::cv_HOGDescriptor_propOclSvmDetector_const_UMat(self.as_raw_mut_HOGDescriptor(), val.as_raw_UMat()) };
 			ret
 		}
 		
 		/// not documented
 		#[inline]
 		fn set_free_coef(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propFree_coef_float(self.as_raw_mut_HOGDescriptor(), val) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propFree_coef_const_float(self.as_raw_mut_HOGDescriptor(), val) };
 			ret
 		}
 		
 		/// Maximum number of detection window increases. Default value is 64
 		#[inline]
 		fn set_nlevels(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propNlevels_int(self.as_raw_mut_HOGDescriptor(), val) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propNlevels_const_int(self.as_raw_mut_HOGDescriptor(), val) };
 			ret
 		}
 		
 		/// Indicates signed gradient will be used or not
 		#[inline]
 		fn set_signed_gradient(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_HOGDescriptor_propSignedGradient_bool(self.as_raw_mut_HOGDescriptor(), val) };
+			let ret = unsafe { sys::cv_HOGDescriptor_propSignedGradient_const_bool(self.as_raw_mut_HOGDescriptor(), val) };
 			ret
 		}
 		
@@ -3540,7 +3613,7 @@ pub mod objdetect {
 	
 	/// Implementation of HOG (Histogram of Oriented Gradients) descriptor and object detector.
 	/// 
-	/// the HOG descriptor algorithm introduced by Navneet Dalal and Bill Triggs [Dalal2005](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Dalal2005) .
+	/// the HOG descriptor algorithm introduced by Navneet Dalal and Bill Triggs [Dalal2005](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Dalal2005) .
 	/// 
 	/// useful links:
 	/// 
@@ -4231,18 +4304,16 @@ pub mod objdetect {
 	}
 	
 	/// QR code encoder parameters.
-	/// ## Parameters
-	/// * version: The optional version of QR code (by default - maximum possible depending on
-	///                the length of the string).
-	/// * correction_level: The optional level of error correction (by default - the lowest).
-	/// * mode: The optional encoding mode - Numeric, Alphanumeric, Byte, Kanji, ECI or Structured Append.
-	/// * structure_number: The optional number of QR codes to generate in Structured Append mode.
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq)]
 	pub struct QRCodeEncoder_Params {
+		/// The optional version of QR code (by default - maximum possible depending on the length of the string).
 		pub version: i32,
+		/// The optional level of error correction (by default - the lowest).
 		pub correction_level: crate::objdetect::QRCodeEncoder_CorrectionLevel,
+		/// The optional encoding mode - Numeric, Alphanumeric, Byte, Kanji, ECI or Structured Append.
 		pub mode: crate::objdetect::QRCodeEncoder_EncodeMode,
+		/// The optional number of QR codes to generate in Structured Append mode.
 		pub structure_number: i32,
 	}
 	
@@ -4287,7 +4358,7 @@ pub mod objdetect {
 	
 		#[inline]
 		fn set_eps(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_SimilarRects_propEps_double(self.as_raw_mut_SimilarRects(), val) };
+			let ret = unsafe { sys::cv_SimilarRects_propEps_const_double(self.as_raw_mut_SimilarRects(), val) };
 			ret
 		}
 		
@@ -4966,7 +5037,7 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
-		/// get CharucoBoard::nearestMarkerIdx
+		/// get CharucoBoard::nearestMarkerIdx, for each charuco corner, nearest marker index in ids array
 		#[inline]
 		fn get_nearest_marker_idx(&self) -> Result<core::Vector<core::Vector<i32>>> {
 			return_send!(via ocvrs_return);
@@ -4977,7 +5048,7 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
-		/// get CharucoBoard::nearestMarkerCorners
+		/// get CharucoBoard::nearestMarkerCorners, for each charuco corner, nearest marker corner id of each marker
 		#[inline]
 		fn get_nearest_marker_corners(&self) -> Result<core::Vector<core::Vector<i32>>> {
 			return_send!(via ocvrs_return);
@@ -5516,29 +5587,29 @@ pub mod objdetect {
 	
 		/// cameraMatrix optional 3x3 floating-point camera matrix
 		#[inline]
-		fn set_camera_matrix(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_aruco_CharucoParameters_propCameraMatrix_Mat(self.as_raw_mut_CharucoParameters(), val.as_raw_mut_Mat()) };
+		fn set_camera_matrix(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_aruco_CharucoParameters_propCameraMatrix_const_Mat(self.as_raw_mut_CharucoParameters(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// distCoeffs optional vector of distortion coefficients
 		#[inline]
-		fn set_dist_coeffs(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_aruco_CharucoParameters_propDistCoeffs_Mat(self.as_raw_mut_CharucoParameters(), val.as_raw_mut_Mat()) };
+		fn set_dist_coeffs(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_aruco_CharucoParameters_propDistCoeffs_const_Mat(self.as_raw_mut_CharucoParameters(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// minMarkers number of adjacent markers that must be detected to return a charuco corner, default = 2
 		#[inline]
 		fn set_min_markers(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_CharucoParameters_propMinMarkers_int(self.as_raw_mut_CharucoParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_CharucoParameters_propMinMarkers_const_int(self.as_raw_mut_CharucoParameters(), val) };
 			ret
 		}
 		
 		/// try to use refine board, default false
 		#[inline]
 		fn set_try_refine_markers(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_aruco_CharucoParameters_propTryRefineMarkers_bool(self.as_raw_mut_CharucoParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_CharucoParameters_propTryRefineMarkers_const_bool(self.as_raw_mut_CharucoParameters(), val) };
 			ret
 		}
 		
@@ -5670,12 +5741,31 @@ pub mod objdetect {
 			ret
 		}
 		
-		/// minimum mean distance beetween two marker corners to be considered imilar, so that the smaller one is removed.
+		/// minimum average distance between the corners of the two markers to be grouped (default 0.125).
 		/// 
-		/// The rate is relative to the smaller perimeter of the two markers (default 0.05).
+		/// The rate is relative to the smaller perimeter of the two markers.
+		/// Two markers are grouped if average distance between the corners of the two markers is less than
+		/// min(MarkerPerimeter1, MarkerPerimeter2)*minMarkerDistanceRate.
+		/// 
+		/// default value is 0.125 because 0.125*MarkerPerimeter = (MarkerPerimeter / 4) * 0.5 = half the side of the marker.
+		/// 
+		/// 
+		/// Note: default value was changed from 0.05 after 4.8.1 release, because the filtering algorithm has been changed.
+		/// Now a few candidates from the same group can be added to the list of candidates if they are far from each other.
+		/// ## See also
+		/// minGroupDistance.
 		#[inline]
 		fn min_marker_distance_rate(&self) -> f64 {
 			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinMarkerDistanceRate_const(self.as_raw_DetectorParameters()) };
+			ret
+		}
+		
+		/// minimum average distance between the corners of the two markers in group to add them to the list of candidates
+		/// 
+		/// The average distance between the corners of the two markers is calculated relative to its module size (default 0.21).
+		#[inline]
+		fn min_group_distance(&self) -> f32 {
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinGroupDistance_const(self.as_raw_DetectorParameters()) };
 			ret
 		}
 		
@@ -5686,10 +5776,30 @@ pub mod objdetect {
 			ret
 		}
 		
-		/// window size for the corner refinement process (in pixels) (default 5).
+		/// maximum window size for the corner refinement process (in pixels) (default 5).
+		/// 
+		/// The window size may decrease if the ArUco marker is too small, check relativeCornerRefinmentWinSize.
+		/// The final window size is calculated as:
+		/// min(cornerRefinementWinSize, averageArucoModuleSize*relativeCornerRefinmentWinSize),
+		/// where averageArucoModuleSize is average module size of ArUco marker in pixels.
+		/// (ArUco marker is composed of black and white modules)
 		#[inline]
 		fn corner_refinement_win_size(&self) -> i32 {
 			let ret = unsafe { sys::cv_aruco_DetectorParameters_propCornerRefinementWinSize_const(self.as_raw_DetectorParameters()) };
+			ret
+		}
+		
+		/// Dynamic window size for corner refinement relative to Aruco module size (default 0.3).
+		/// 
+		/// The final window size is calculated as:
+		/// min(cornerRefinementWinSize, averageArucoModuleSize*relativeCornerRefinmentWinSize),
+		/// where averageArucoModuleSize is average module size of ArUco marker in pixels.
+		/// (ArUco marker is composed of black and white modules)
+		/// In the case of markers located far from each other, it may be useful to increase the value of the parameter to 0.4-0.5.
+		/// In the case of markers located close to each other, it may be useful to decrease the parameter value to 0.1-0.2.
+		#[inline]
+		fn relative_corner_refinment_win_size(&self) -> f32 {
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propRelativeCornerRefinmentWinSize_const(self.as_raw_DetectorParameters()) };
 			ret
 		}
 		
@@ -5861,28 +5971,28 @@ pub mod objdetect {
 		/// minimum window size for adaptive thresholding before finding contours (default 3).
 		#[inline]
 		fn set_adaptive_thresh_win_size_min(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAdaptiveThreshWinSizeMin_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAdaptiveThreshWinSizeMin_const_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// maximum window size for adaptive thresholding before finding contours (default 23).
 		#[inline]
 		fn set_adaptive_thresh_win_size_max(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAdaptiveThreshWinSizeMax_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAdaptiveThreshWinSizeMax_const_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// increments from adaptiveThreshWinSizeMin to adaptiveThreshWinSizeMax during the thresholding (default 10).
 		#[inline]
 		fn set_adaptive_thresh_win_size_step(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAdaptiveThreshWinSizeStep_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAdaptiveThreshWinSizeStep_const_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// constant for adaptive thresholding before finding contours (default 7)
 		#[inline]
 		fn set_adaptive_thresh_constant(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAdaptiveThreshConstant_double(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAdaptiveThreshConstant_const_double(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
@@ -5891,7 +6001,7 @@ pub mod objdetect {
 		/// This is defined as a rate respect to the maximum dimension of the input image (default 0.03).
 		#[inline]
 		fn set_min_marker_perimeter_rate(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinMarkerPerimeterRate_double(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinMarkerPerimeterRate_const_double(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
@@ -5900,79 +6010,121 @@ pub mod objdetect {
 		/// This is defined as a rate respect to the maximum dimension of the input image (default 4.0).
 		#[inline]
 		fn set_max_marker_perimeter_rate(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMaxMarkerPerimeterRate_double(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMaxMarkerPerimeterRate_const_double(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// minimum accuracy during the polygonal approximation process to determine which contours are squares. (default 0.03)
 		#[inline]
 		fn set_polygonal_approx_accuracy_rate(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propPolygonalApproxAccuracyRate_double(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propPolygonalApproxAccuracyRate_const_double(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// minimum distance between corners for detected markers relative to its perimeter (default 0.05)
 		#[inline]
 		fn set_min_corner_distance_rate(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinCornerDistanceRate_double(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinCornerDistanceRate_const_double(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// minimum distance of any corner to the image border for detected markers (in pixels) (default 3)
 		#[inline]
 		fn set_min_distance_to_border(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinDistanceToBorder_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinDistanceToBorder_const_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
-		/// minimum mean distance beetween two marker corners to be considered imilar, so that the smaller one is removed.
+		/// minimum average distance between the corners of the two markers to be grouped (default 0.125).
 		/// 
-		/// The rate is relative to the smaller perimeter of the two markers (default 0.05).
+		/// The rate is relative to the smaller perimeter of the two markers.
+		/// Two markers are grouped if average distance between the corners of the two markers is less than
+		/// min(MarkerPerimeter1, MarkerPerimeter2)*minMarkerDistanceRate.
+		/// 
+		/// default value is 0.125 because 0.125*MarkerPerimeter = (MarkerPerimeter / 4) * 0.5 = half the side of the marker.
+		/// 
+		/// 
+		/// Note: default value was changed from 0.05 after 4.8.1 release, because the filtering algorithm has been changed.
+		/// Now a few candidates from the same group can be added to the list of candidates if they are far from each other.
+		/// ## See also
+		/// minGroupDistance.
 		#[inline]
 		fn set_min_marker_distance_rate(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinMarkerDistanceRate_double(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinMarkerDistanceRate_const_double(self.as_raw_mut_DetectorParameters(), val) };
+			ret
+		}
+		
+		/// minimum average distance between the corners of the two markers in group to add them to the list of candidates
+		/// 
+		/// The average distance between the corners of the two markers is calculated relative to its module size (default 0.21).
+		/// 
+		/// ## C++ default parameters
+		/// * val: 0.21f
+		#[inline]
+		fn set_min_group_distance(&mut self, val: f32) {
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinGroupDistance_const_float(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// default value CORNER_REFINE_NONE
 		#[inline]
 		fn set_corner_refinement_method(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propCornerRefinementMethod_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propCornerRefinementMethod_const_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
-		/// window size for the corner refinement process (in pixels) (default 5).
+		/// maximum window size for the corner refinement process (in pixels) (default 5).
+		/// 
+		/// The window size may decrease if the ArUco marker is too small, check relativeCornerRefinmentWinSize.
+		/// The final window size is calculated as:
+		/// min(cornerRefinementWinSize, averageArucoModuleSize*relativeCornerRefinmentWinSize),
+		/// where averageArucoModuleSize is average module size of ArUco marker in pixels.
+		/// (ArUco marker is composed of black and white modules)
 		#[inline]
 		fn set_corner_refinement_win_size(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propCornerRefinementWinSize_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propCornerRefinementWinSize_const_int(self.as_raw_mut_DetectorParameters(), val) };
+			ret
+		}
+		
+		/// Dynamic window size for corner refinement relative to Aruco module size (default 0.3).
+		/// 
+		/// The final window size is calculated as:
+		/// min(cornerRefinementWinSize, averageArucoModuleSize*relativeCornerRefinmentWinSize),
+		/// where averageArucoModuleSize is average module size of ArUco marker in pixels.
+		/// (ArUco marker is composed of black and white modules)
+		/// In the case of markers located far from each other, it may be useful to increase the value of the parameter to 0.4-0.5.
+		/// In the case of markers located close to each other, it may be useful to decrease the parameter value to 0.1-0.2.
+		#[inline]
+		fn set_relative_corner_refinment_win_size(&mut self, val: f32) {
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propRelativeCornerRefinmentWinSize_const_float(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// maximum number of iterations for stop criteria of the corner refinement process (default 30).
 		#[inline]
 		fn set_corner_refinement_max_iterations(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propCornerRefinementMaxIterations_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propCornerRefinementMaxIterations_const_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// minimum error for the stop cristeria of the corner refinement process (default: 0.1)
 		#[inline]
 		fn set_corner_refinement_min_accuracy(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propCornerRefinementMinAccuracy_double(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propCornerRefinementMinAccuracy_const_double(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// number of bits of the marker border, i.e. marker border width (default 1).
 		#[inline]
 		fn set_marker_border_bits(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMarkerBorderBits_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMarkerBorderBits_const_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// number of bits (per dimension) for each cell of the marker when removing the perspective (default 4).
 		#[inline]
 		fn set_perspective_remove_pixel_per_cell(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propPerspectiveRemovePixelPerCell_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propPerspectiveRemovePixelPerCell_const_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
@@ -5981,7 +6133,7 @@ pub mod objdetect {
 		/// Represents the rate respect to the total size of the cell, i.e. perspectiveRemovePixelPerCell (default 0.13)
 		#[inline]
 		fn set_perspective_remove_ignored_margin_per_cell(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propPerspectiveRemoveIgnoredMarginPerCell_double(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propPerspectiveRemoveIgnoredMarginPerCell_const_double(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
@@ -5990,7 +6142,7 @@ pub mod objdetect {
 		/// Represented as a rate respect to the total number of bits per marker (default 0.35).
 		#[inline]
 		fn set_max_erroneous_bits_in_border_rate(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMaxErroneousBitsInBorderRate_double(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMaxErroneousBitsInBorderRate_const_double(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
@@ -5998,14 +6150,14 @@ pub mod objdetect {
 		/// thresholding (otherwise, all the bits are set to 0 or 1 depending on mean higher than 128 or not) (default 5.0)
 		#[inline]
 		fn set_min_otsu_std_dev(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinOtsuStdDev_double(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinOtsuStdDev_const_double(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// error correction rate respect to the maximun error correction capability for each dictionary (default 0.6).
 		#[inline]
 		fn set_error_correction_rate(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propErrorCorrectionRate_double(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propErrorCorrectionRate_const_double(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
@@ -6015,28 +6167,28 @@ pub mod objdetect {
 		/// pose accuracy and a slight decrease in detection rate. Decoding the binary payload is still
 		#[inline]
 		fn set_april_tag_quad_decimate(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagQuadDecimate_float(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagQuadDecimate_const_float(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// what Gaussian blur should be applied to the segmented image (used for quad detection?)
 		#[inline]
 		fn set_april_tag_quad_sigma(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagQuadSigma_float(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagQuadSigma_const_float(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// reject quads containing too few pixels (default 5).
 		#[inline]
 		fn set_april_tag_min_cluster_pixels(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagMinClusterPixels_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagMinClusterPixels_const_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// how many corner candidates to consider when segmenting a group of pixels into a quad (default 10).
 		#[inline]
 		fn set_april_tag_max_nmaxima(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagMaxNmaxima_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagMaxNmaxima_const_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
@@ -6045,14 +6197,14 @@ pub mod objdetect {
 		/// Zero means that no quads are rejected. (In radians) (default 10*PI/180)
 		#[inline]
 		fn set_april_tag_critical_rad(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagCriticalRad_float(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagCriticalRad_const_float(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// when fitting lines to the contours, what is the maximum mean squared error
 		#[inline]
 		fn set_april_tag_max_line_fit_mse(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagMaxLineFitMse_float(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagMaxLineFitMse_const_float(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
@@ -6062,14 +6214,14 @@ pub mod objdetect {
 		/// brighter than the black model. How much brighter? (in pixel values, [0,255]), (default 5)
 		#[inline]
 		fn set_april_tag_min_white_black_diff(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagMinWhiteBlackDiff_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagMinWhiteBlackDiff_const_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// should the thresholded image be deglitched? Only useful for very noisy images (default 0).
 		#[inline]
 		fn set_april_tag_deglitch(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagDeglitch_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propAprilTagDeglitch_const_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
@@ -6078,7 +6230,7 @@ pub mod objdetect {
 		/// In order to generate a "white" marker just invert a normal marker by using a tilde, ~markerImage. (default false)
 		#[inline]
 		fn set_detect_inverted_marker(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propDetectInvertedMarker_bool(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propDetectInvertedMarker_const_bool(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
@@ -6089,21 +6241,21 @@ pub mod objdetect {
 		/// <https://www.researchgate.net/publication/325787310_Speeded_Up_Detection_of_Squared_Fiducial_Markers>
 		#[inline]
 		fn set_use_aruco3_detection(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propUseAruco3Detection_bool(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propUseAruco3Detection_const_bool(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// minimum side length of a marker in the canonical image. Latter is the binarized image in which contours are searched.
 		#[inline]
 		fn set_min_side_length_canonical_img(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinSideLengthCanonicalImg_int(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinSideLengthCanonicalImg_const_int(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
 		/// range [0,1], eq (2) from paper. The parameter tau_i has a direct influence on the processing speed.
 		#[inline]
 		fn set_min_marker_length_ratio_original_img(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinMarkerLengthRatioOriginalImg_float(self.as_raw_mut_DetectorParameters(), val) };
+			let ret = unsafe { sys::cv_aruco_DetectorParameters_propMinMarkerLengthRatioOriginalImg_const_float(self.as_raw_mut_DetectorParameters(), val) };
 			ret
 		}
 		
@@ -6205,8 +6357,10 @@ pub mod objdetect {
 				.field("min_corner_distance_rate", &crate::objdetect::DetectorParametersTraitConst::min_corner_distance_rate(self))
 				.field("min_distance_to_border", &crate::objdetect::DetectorParametersTraitConst::min_distance_to_border(self))
 				.field("min_marker_distance_rate", &crate::objdetect::DetectorParametersTraitConst::min_marker_distance_rate(self))
+				.field("min_group_distance", &crate::objdetect::DetectorParametersTraitConst::min_group_distance(self))
 				.field("corner_refinement_method", &crate::objdetect::DetectorParametersTraitConst::corner_refinement_method(self))
 				.field("corner_refinement_win_size", &crate::objdetect::DetectorParametersTraitConst::corner_refinement_win_size(self))
+				.field("relative_corner_refinment_win_size", &crate::objdetect::DetectorParametersTraitConst::relative_corner_refinment_win_size(self))
 				.field("corner_refinement_max_iterations", &crate::objdetect::DetectorParametersTraitConst::corner_refinement_max_iterations(self))
 				.field("corner_refinement_min_accuracy", &crate::objdetect::DetectorParametersTraitConst::corner_refinement_min_accuracy(self))
 				.field("marker_border_bits", &crate::objdetect::DetectorParametersTraitConst::marker_border_bits(self))
@@ -6235,6 +6389,7 @@ pub mod objdetect {
 	pub trait DictionaryTraitConst {
 		fn as_raw_Dictionary(&self) -> *const c_void;
 	
+		/// marker code information. See class description for more details
 		#[inline]
 		fn bytes_list(&self) -> core::Mat {
 			let ret = unsafe { sys::cv_aruco_Dictionary_propBytesList_const(self.as_raw_Dictionary()) };
@@ -6242,12 +6397,14 @@ pub mod objdetect {
 			ret
 		}
 		
+		/// number of bits per dimension
 		#[inline]
 		fn marker_size(&self) -> i32 {
 			let ret = unsafe { sys::cv_aruco_Dictionary_propMarkerSize_const(self.as_raw_Dictionary()) };
 			ret
 		}
 		
+		/// maximum number of bits that can be corrected
 		#[inline]
 		fn max_correction_bits(&self) -> i32 {
 			let ret = unsafe { sys::cv_aruco_Dictionary_propMaxCorrectionBits_const(self.as_raw_Dictionary()) };
@@ -6256,7 +6413,7 @@ pub mod objdetect {
 		
 		/// Given a matrix of bits. Returns whether if marker is identified or not.
 		/// 
-		/// It returns by reference the correct id (if any) and the correct rotation
+		/// Returns reference to the marker id in the dictionary (if any) and its rotation.
 		#[inline]
 		fn identify(&self, only_bits: &core::Mat, idx: &mut i32, rotation: &mut i32, max_correction_rate: f64) -> Result<bool> {
 			return_send!(via ocvrs_return);
@@ -6266,9 +6423,9 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
-		/// Returns the distance of the input bits to the specific id.
+		/// Returns Hamming distance of the input bits to the specific id.
 		/// 
-		/// If allRotations is true, the four posible bits rotation are considered
+		/// If `allRotations` flag is set, the four posible marker rotations are considered
 		/// 
 		/// ## C++ default parameters
 		/// * all_rotations: true
@@ -6282,9 +6439,9 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
-		/// Returns the distance of the input bits to the specific id.
+		/// Returns Hamming distance of the input bits to the specific id.
 		/// 
-		/// If allRotations is true, the four posible bits rotation are considered
+		/// If `allRotations` flag is set, the four posible marker rotations are considered
 		/// 
 		/// ## Note
 		/// This alternative version of [DictionaryTraitConst::get_distance_to_id] function uses the following default values for its arguments:
@@ -6334,27 +6491,30 @@ pub mod objdetect {
 	pub trait DictionaryTrait: crate::objdetect::DictionaryTraitConst {
 		fn as_raw_mut_Dictionary(&mut self) -> *mut c_void;
 	
+		/// marker code information. See class description for more details
 		#[inline]
-		fn set_bytes_list(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_aruco_Dictionary_propBytesList_Mat(self.as_raw_mut_Dictionary(), val.as_raw_mut_Mat()) };
+		fn set_bytes_list(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_aruco_Dictionary_propBytesList_const_Mat(self.as_raw_mut_Dictionary(), val.as_raw_Mat()) };
 			ret
 		}
 		
+		/// number of bits per dimension
 		#[inline]
 		fn set_marker_size(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_Dictionary_propMarkerSize_int(self.as_raw_mut_Dictionary(), val) };
+			let ret = unsafe { sys::cv_aruco_Dictionary_propMarkerSize_const_int(self.as_raw_mut_Dictionary(), val) };
 			ret
 		}
 		
+		/// maximum number of bits that can be corrected
 		#[inline]
 		fn set_max_correction_bits(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_aruco_Dictionary_propMaxCorrectionBits_int(self.as_raw_mut_Dictionary(), val) };
+			let ret = unsafe { sys::cv_aruco_Dictionary_propMaxCorrectionBits_const_int(self.as_raw_mut_Dictionary(), val) };
 			ret
 		}
 		
 		/// Read a new dictionary from FileNode.
 		/// 
-		/// Dictionary format:
+		/// Dictionary example in YAML format:
 		/// 
 		/// nmarkers: 35
 		/// 
@@ -6406,14 +6566,19 @@ pub mod objdetect {
 		
 	}
 	
-	/// Dictionary/Set of markers, it contains the inner codification
+	/// Dictionary is a set of unique ArUco markers of the same size
 	/// 
-	/// BytesList contains the marker codewords where:
+	/// `bytesList` storing as 2-dimensions Mat with 4-th channels (CV_8UC4 type was used) and contains the marker codewords where:
 	/// - bytesList.rows is the dictionary size
-	/// - each marker is encoded using `nbytes = ceil(markerSize*markerSize/8.)`
+	/// - each marker is encoded using `nbytes = ceil(markerSize*markerSize/8.)` bytes
 	/// - each row contains all 4 rotations of the marker, so its length is `4*nbytes`
+	/// - the byte order in the bytesList[i] row:
+	/// `//bytes without rotation/bytes with rotation 1/bytes with rotation 2/bytes with rotation 3//`
+	/// So `bytesList.ptr(i)[k*nbytes + j]` is the j-th byte of i-th marker, in its k-th rotation.
 	/// 
-	/// `bytesList.ptr(i)[k*nbytes + j]` is then the j-th byte of i-th marker, in its k-th rotation.
+	/// Note: Python bindings generate matrix with shape of bytesList `dictionary_size x nbytes x 4`,
+	/// but it should be indexed like C++ version. Python example for j-th byte of i-th marker, in its k-th rotation:
+	/// `aruco_dict.bytesList[id].ravel()[k*nbytes + j]`
 	pub struct Dictionary {
 		ptr: *mut c_void
 	}
@@ -6448,6 +6613,13 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
+		/// Basic ArUco dictionary constructor
+		/// 
+		/// ## Parameters
+		/// * bytesList: bits for all ArUco markers in dictionary see memory layout in the class description
+		/// * _markerSize: ArUco marker size in units
+		/// * maxcorr: maximum number of bits that can be corrected
+		/// 
 		/// ## C++ default parameters
 		/// * maxcorr: 0
 		#[inline]
@@ -6460,6 +6632,13 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
+		/// Basic ArUco dictionary constructor
+		/// 
+		/// ## Parameters
+		/// * bytesList: bits for all ArUco markers in dictionary see memory layout in the class description
+		/// * _markerSize: ArUco marker size in units
+		/// * maxcorr: maximum number of bits that can be corrected
+		/// 
 		/// ## Note
 		/// This alternative version of [new] function uses the following default values for its arguments:
 		/// * maxcorr: 0
@@ -6473,7 +6652,7 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
-		/// Transform matrix of bits to list of bytes in the 4 rotations
+		/// Transform matrix of bits to list of bytes with 4 marker rotations
 		#[inline]
 		pub fn get_byte_list_from_bits(bits: &core::Mat) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);

@@ -14,7 +14,7 @@ use element::{RustElement, RustNativeGeneratedElement};
 use func::FuncExt;
 pub use string_ext::RustStringExt;
 
-use crate::comment::strip_comment_markers;
+use crate::comment::strip_doxygen_comment_markers;
 use crate::field::Field;
 use crate::name_pool::NamePool;
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle};
@@ -122,7 +122,7 @@ impl GeneratorVisitor for RustNativeBindingWriter<'_> {
 	}
 
 	fn visit_module_comment(&mut self, comment: String) {
-		self.comment = strip_comment_markers(&comment);
+		self.comment = strip_doxygen_comment_markers(&comment);
 	}
 
 	fn visit_const(&mut self, cnst: Const) {

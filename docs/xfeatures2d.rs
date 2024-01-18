@@ -12,8 +12,8 @@ pub mod xfeatures2d {
 	//!    # Experimental 2D Features Matching Algorithm
 	//! 
 	//! This section describes the following matching strategies:
-	//!    - GMS: Grid-based Motion Statistics, [Bian2017gms](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Bian2017gms)
-	//!    - LOGOS: Local geometric support for high-outlier spatial verification, [Lowry2018LOGOSLG](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Lowry2018LOGOSLG)
+	//!    - GMS: Grid-based Motion Statistics, [Bian2017gms](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Bian2017gms)
+	//!    - LOGOS: Local geometric support for high-outlier spatial verification, [Lowry2018LOGOSLG](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Lowry2018LOGOSLG)
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
 		pub use { super::SURFTraitConst, super::SURFTrait, super::FREAKTraitConst, super::FREAKTrait, super::StarDetectorTraitConst, super::StarDetectorTrait, super::BriefDescriptorExtractorTraitConst, super::BriefDescriptorExtractorTrait, super::LUCIDTraitConst, super::LUCIDTrait, super::LATCHTraitConst, super::LATCHTrait, super::BEBLIDTraitConst, super::BEBLIDTrait, super::TEBLIDTraitConst, super::TEBLIDTrait, super::DAISYTraitConst, super::DAISYTrait, super::MSDDetectorTraitConst, super::MSDDetectorTrait, super::VGGTraitConst, super::VGGTrait, super::BoostDescTraitConst, super::BoostDescTrait, super::PCTSignaturesTraitConst, super::PCTSignaturesTrait, super::PCTSignaturesSQFDTraitConst, super::PCTSignaturesSQFDTrait, super::Elliptic_KeyPointTraitConst, super::Elliptic_KeyPointTrait, super::HarrisLaplaceFeatureDetectorTraitConst, super::HarrisLaplaceFeatureDetectorTrait, super::AffineFeature2DTraitConst, super::AffineFeature2DTrait, super::TBMRTraitConst, super::TBMRTrait, super::SURF_CUDATraitConst, super::SURF_CUDATrait };
@@ -122,7 +122,7 @@ pub mod xfeatures2d {
 	///       Signature quadratic form distance.
 	///       In Proceedings of the ACM International Conference on Image and Video Retrieval, pages 438-445.
 	///       ACM, 2010.
-	/// [BeecksUS10](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_BeecksUS10)
+	/// [BeecksUS10](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_BeecksUS10)
 	/// 
 	/// Note: For selected distance function: ![block formula](https://latex.codecogs.com/png.latex?%20d%28c%5Fi%2C%20c%5Fj%29%20)  and parameter: ![block formula](https://latex.codecogs.com/png.latex?%20%5Calpha%20)
 	#[repr(C)]
@@ -180,7 +180,7 @@ pub mod xfeatures2d {
 	/// FastFeatureDetector::TYPE_9_16, FastFeatureDetector::TYPE_7_12,
 	/// FastFeatureDetector::TYPE_5_8
 	/// 
-	/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Rosten06) .
+	/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Rosten06) .
 	/// 
 	/// ## Note
 	/// This alternative version of [fast_for_point_set] function uses the following default values for its arguments:
@@ -210,7 +210,7 @@ pub mod xfeatures2d {
 	/// FastFeatureDetector::TYPE_9_16, FastFeatureDetector::TYPE_7_12,
 	/// FastFeatureDetector::TYPE_5_8
 	/// 
-	/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Rosten06) .
+	/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Rosten06) .
 	/// 
 	/// ## C++ default parameters
 	/// * nonmax_suppression: true
@@ -225,7 +225,7 @@ pub mod xfeatures2d {
 		Ok(ret)
 	}
 	
-	/// GMS (Grid-based Motion Statistics) feature matching strategy described in [Bian2017gms](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Bian2017gms) .
+	/// GMS (Grid-based Motion Statistics) feature matching strategy described in [Bian2017gms](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Bian2017gms) .
 	/// ## Parameters
 	/// * size1: Input size of image1.
 	/// * size2: Input size of image2.
@@ -256,7 +256,7 @@ pub mod xfeatures2d {
 		Ok(ret)
 	}
 	
-	/// GMS (Grid-based Motion Statistics) feature matching strategy described in [Bian2017gms](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Bian2017gms) .
+	/// GMS (Grid-based Motion Statistics) feature matching strategy described in [Bian2017gms](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Bian2017gms) .
 	/// ## Parameters
 	/// * size1: Input size of image1.
 	/// * size2: Input size of image2.
@@ -286,7 +286,7 @@ pub mod xfeatures2d {
 		Ok(ret)
 	}
 	
-	/// LOGOS (Local geometric support for high-outlier spatial verification) feature matching strategy described in [Lowry2018LOGOSLG](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Lowry2018LOGOSLG) .
+	/// LOGOS (Local geometric support for high-outlier spatial verification) feature matching strategy described in [Lowry2018LOGOSLG](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Lowry2018LOGOSLG) .
 	/// ## Parameters
 	/// * keypoints1: Input keypoints of image1.
 	/// * keypoints2: Input keypoints of image2.
@@ -418,74 +418,74 @@ pub mod xfeatures2d {
 	
 		#[inline]
 		fn set_hessian_threshold(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propHessianThreshold_double(self.as_raw_mut_SURF_CUDA(), val) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propHessianThreshold_const_double(self.as_raw_mut_SURF_CUDA(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_n_octaves(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propNOctaves_int(self.as_raw_mut_SURF_CUDA(), val) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propNOctaves_const_int(self.as_raw_mut_SURF_CUDA(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_n_octave_layers(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propNOctaveLayers_int(self.as_raw_mut_SURF_CUDA(), val) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propNOctaveLayers_const_int(self.as_raw_mut_SURF_CUDA(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_extended(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propExtended_bool(self.as_raw_mut_SURF_CUDA(), val) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propExtended_const_bool(self.as_raw_mut_SURF_CUDA(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_upright(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propUpright_bool(self.as_raw_mut_SURF_CUDA(), val) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propUpright_const_bool(self.as_raw_mut_SURF_CUDA(), val) };
 			ret
 		}
 		
 		/// max keypoints = min(keypointsRatio * img.size().area(), 65535)
 		#[inline]
 		fn set_keypoints_ratio(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propKeypointsRatio_float(self.as_raw_mut_SURF_CUDA(), val) };
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propKeypointsRatio_const_float(self.as_raw_mut_SURF_CUDA(), val) };
 			ret
 		}
 		
 		#[inline]
-		fn set_sum(&mut self, mut val: core::GpuMat) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propSum_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) };
+		fn set_sum(&mut self, val: core::GpuMat) {
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propSum_const_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_GpuMat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_mask1(&mut self, mut val: core::GpuMat) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propMask1_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) };
+		fn set_mask1(&mut self, val: core::GpuMat) {
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propMask1_const_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_GpuMat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_mask_sum(&mut self, mut val: core::GpuMat) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propMaskSum_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) };
+		fn set_mask_sum(&mut self, val: core::GpuMat) {
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propMaskSum_const_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_GpuMat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_det(&mut self, mut val: core::GpuMat) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propDet_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) };
+		fn set_det(&mut self, val: core::GpuMat) {
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propDet_const_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_GpuMat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_trace(&mut self, mut val: core::GpuMat) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propTrace_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) };
+		fn set_trace(&mut self, val: core::GpuMat) {
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propTrace_const_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_GpuMat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_max_pos_buffer(&mut self, mut val: core::GpuMat) {
-			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propMaxPosBuffer_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_mut_GpuMat()) };
+		fn set_max_pos_buffer(&mut self, val: core::GpuMat) {
+			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propMaxPosBuffer_const_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_GpuMat()) };
 			ret
 		}
 		
@@ -1076,7 +1076,7 @@ pub mod xfeatures2d {
 	}
 	
 	/// Class implementing BEBLID (Boosted Efficient Binary Local Image Descriptor),
-	///  described in [Suarez2020BEBLID](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Suarez2020BEBLID) .
+	///  described in [Suarez2020BEBLID](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Suarez2020BEBLID) .
 	/// 
 	/// BEBLID \cite Suarez2020BEBLID is a efficient binary descriptor learned with boosting.
 	/// It is able to describe keypoints from any detector just by changing the scale_factor parameter.
@@ -1092,7 +1092,7 @@ pub mod xfeatures2d {
 	/// 
 	/// The descriptor was trained using 1 million of randomly sampled pairs of patches
 	/// (20% positives and 80% negatives) from the Liberty split of the UBC datasets
-	/// \cite winder2007learning as described in the paper [Suarez2020BEBLID](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Suarez2020BEBLID).
+	/// \cite winder2007learning as described in the paper [Suarez2020BEBLID](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Suarez2020BEBLID).
 	/// You can check in the [AKAZE example](https://raw.githubusercontent.com/opencv/opencv/master/samples/cpp/tutorial_code/features2D/AKAZE_match.cpp)
 	/// how well BEBLID works. Detecting 10000 keypoints with ORB and describing with BEBLID obtains
 	/// 561 inliers (75%) whereas describing with ORB obtains only 493 inliers (63%).
@@ -1254,7 +1254,7 @@ pub mod xfeatures2d {
 	}
 	
 	/// Class implementing BoostDesc (Learning Image Descriptors with Boosting), described in
-	/// [Trzcinski13a](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Trzcinski13a) and [Trzcinski13b](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Trzcinski13b).
+	/// [Trzcinski13a](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Trzcinski13a) and [Trzcinski13b](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Trzcinski13b).
 	/// 
 	/// ## Parameters
 	/// * desc: type of descriptor to use, BoostDesc::BINBOOST_256 is default (256 bit long dimension)
@@ -1420,7 +1420,7 @@ pub mod xfeatures2d {
 		
 	}
 	
-	/// Class for computing BRIEF descriptors described in [calon2010](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_calon2010) .
+	/// Class for computing BRIEF descriptors described in [calon2010](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_calon2010) .
 	/// 
 	/// ## Parameters
 	/// * bytes: legth of the descriptor in bytes, valid values are: 16, 32 (default) or 64 .
@@ -1790,7 +1790,7 @@ pub mod xfeatures2d {
 		
 	}
 	
-	/// Class implementing DAISY descriptor, described in [Tola10](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Tola10)
+	/// Class implementing DAISY descriptor, described in [Tola10](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Tola10)
 	/// 
 	/// ## Parameters
 	/// * radius: radius of the descriptor at the initial scale
@@ -1937,21 +1937,21 @@ pub mod xfeatures2d {
 		/// the lengths of the major and minor ellipse axes
 		#[inline]
 		fn set_axes(&mut self, val: core::Size_<f32>) {
-			let ret = unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_propAxes_Size_LfloatG(self.as_raw_mut_Elliptic_KeyPoint(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_propAxes_const_Size_LfloatG(self.as_raw_mut_Elliptic_KeyPoint(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		/// the integration scale at which the parameters were estimated
 		#[inline]
 		fn set_si(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_propSi_float(self.as_raw_mut_Elliptic_KeyPoint(), val) };
+			let ret = unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_propSi_const_float(self.as_raw_mut_Elliptic_KeyPoint(), val) };
 			ret
 		}
 		
 		/// the transformation between image space and local patch space
 		#[inline]
 		fn set_transf(&mut self, val: core::Matx23f) {
-			let ret = unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_propTransf_Matx23f(self.as_raw_mut_Elliptic_KeyPoint(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_propTransf_const_Matx23f(self.as_raw_mut_Elliptic_KeyPoint(), val.opencv_as_extern()) };
 			ret
 		}
 		
@@ -2125,7 +2125,7 @@ pub mod xfeatures2d {
 		
 	}
 	
-	/// Class implementing the FREAK (*Fast Retina Keypoint*) keypoint descriptor, described in [AOV12](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_AOV12) .
+	/// Class implementing the FREAK (*Fast Retina Keypoint*) keypoint descriptor, described in [AOV12](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_AOV12) .
 	/// 
 	/// The algorithm propose a novel keypoint descriptor inspired by the human visual system and more
 	/// precisely the retina, coined Fast Retina Key- point (FREAK). A cascade of binary strings is
@@ -2353,7 +2353,7 @@ pub mod xfeatures2d {
 		
 	}
 	
-	/// Class implementing the Harris-Laplace feature detector as described in [Mikolajczyk2004](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Mikolajczyk2004).
+	/// Class implementing the Harris-Laplace feature detector as described in [Mikolajczyk2004](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Mikolajczyk2004).
 	pub struct HarrisLaplaceFeatureDetector {
 		ptr: *mut c_void
 	}
@@ -2712,7 +2712,7 @@ pub mod xfeatures2d {
 		
 	}
 	
-	/// Class implementing the locally uniform comparison image descriptor, described in [LUCID](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_LUCID)
+	/// Class implementing the locally uniform comparison image descriptor, described in [LUCID](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_LUCID)
 	/// 
 	/// An image descriptor that can be computed very fast, while being
 	/// about as robust as, for example, SURF or BRIEF.
@@ -2992,7 +2992,7 @@ pub mod xfeatures2d {
 		
 	}
 	
-	/// Class implementing the MSD (*Maximal Self-Dissimilarity*) keypoint detector, described in [Tombari14](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Tombari14).
+	/// Class implementing the MSD (*Maximal Self-Dissimilarity*) keypoint detector, described in [Tombari14](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Tombari14).
 	/// 
 	/// The algorithm implements a novel interest point detector stemming from the intuition that image patches
 	/// which are highly dissimilar over a relatively large extent of their surroundings hold the property of
@@ -3634,7 +3634,7 @@ pub mod xfeatures2d {
 	}
 	
 	/// Class implementing PCT (position-color-texture) signature extraction
-	///       as described in [KrulisLS16](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_KrulisLS16).
+	///       as described in [KrulisLS16](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_KrulisLS16).
 	///       The algorithm is divided to a feature sampler and a clusterizer.
 	///       Feature sampler produces samples at given set of coordinates.
 	///       Clusterizer then produces clusters of these samples using k-means algorithm.
@@ -3643,8 +3643,8 @@ pub mod xfeatures2d {
 	///       A signature is an array of SIGNATURE_DIMENSION-dimensional points.
 	///       Used dimensions are:
 	///       weight, x, y position; lab color, contrast, entropy.
-	/// [KrulisLS16](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_KrulisLS16)
-	/// [BeecksUS10](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_BeecksUS10)
+	/// [KrulisLS16](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_KrulisLS16)
+	/// [BeecksUS10](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_BeecksUS10)
 	pub struct PCTSignatures {
 		ptr: *mut c_void
 	}
@@ -3897,7 +3897,7 @@ pub mod xfeatures2d {
 	///   Signature quadratic form distance.
 	///   In Proceedings of the ACM International Conference on Image and Video Retrieval, pages 438-445.
 	///   ACM, 2010.
-	/// [BeecksUS10](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_BeecksUS10)
+	/// [BeecksUS10](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_BeecksUS10)
 	pub struct PCTSignaturesSQFD {
 		ptr: *mut c_void
 	}
@@ -4101,7 +4101,7 @@ pub mod xfeatures2d {
 		
 	}
 	
-	/// Class for extracting Speeded Up Robust Features from an image [Bay06](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Bay06) .
+	/// Class for extracting Speeded Up Robust Features from an image [Bay06](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Bay06) .
 	/// 
 	/// The algorithm parameters:
 	/// *   member int extended
@@ -4347,7 +4347,7 @@ pub mod xfeatures2d {
 		
 	}
 	
-	/// The class implements the keypoint detector introduced by [Agrawal08](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Agrawal08), synonym of StarDetector. :
+	/// The class implements the keypoint detector introduced by [Agrawal08](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Agrawal08), synonym of StarDetector. :
 	pub struct StarDetector {
 		ptr: *mut c_void
 	}
@@ -4524,7 +4524,7 @@ pub mod xfeatures2d {
 	}
 	
 	/// Class implementing the Tree Based Morse Regions (TBMR) as described in
-	/// [Najman2014](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Najman2014) extended with scaled extraction ability.
+	/// [Najman2014](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Najman2014) extended with scaled extraction ability.
 	/// 
 	/// ## Parameters
 	/// * min_area: prune areas smaller than minArea
@@ -4657,7 +4657,7 @@ pub mod xfeatures2d {
 	}
 	
 	/// Class implementing TEBLID (Triplet-based Efficient Binary Local Image Descriptor),
-	///  described in [Suarez2021TEBLID](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Suarez2021TEBLID).
+	///  described in [Suarez2021TEBLID](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Suarez2021TEBLID).
 	/// 
 	/// TEBLID stands for Triplet-based Efficient Binary Local Image Descriptor, although originally it was called BAD
 	/// \cite Suarez2021TEBLID. It is an improvement over BEBLID \cite Suarez2020BEBLID, that uses triplet loss,
@@ -4887,7 +4887,7 @@ pub mod xfeatures2d {
 	}
 	
 	/// Class implementing VGG (Oxford Visual Geometry Group) descriptor trained end to end
-	/// using "Descriptor Learning Using Convex Optimisation" (DLCO) aparatus described in [Simonyan14](https://docs.opencv.org/4.8.1/d0/de3/citelist.html#CITEREF_Simonyan14).
+	/// using "Descriptor Learning Using Convex Optimisation" (DLCO) aparatus described in [Simonyan14](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Simonyan14).
 	/// 
 	/// ## Parameters
 	/// * desc: type of descriptor to use, VGG::VGG_120 is default (120 dimensions float)

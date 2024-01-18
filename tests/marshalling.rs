@@ -116,8 +116,8 @@ fn fixed_array_return() -> Result<()> {
 		let m = Mat::new_rows_cols_with_default(5, 3, i32::opencv_type(), Scalar::all(1.))?;
 		let mut mat_step = m.mat_step();
 		assert_eq!([12, 4], *mat_step.buf());
-		mat_step.buf()[0] = 16;
-		mat_step.buf()[1] = 2;
+		mat_step.buf_mut()[0] = 16;
+		mat_step.buf_mut()[1] = 2;
 		assert_eq!([16, 2], *mat_step.buf());
 	}
 
@@ -142,10 +142,14 @@ fn string_out_argument() -> Result<()> {
 	use matches::assert_matches;
 
 	{
-		let mut st = FileStorage::new(".yml", FileStorage_Mode::WRITE as i32 | FileStorage_Mode::MEMORY as i32, "")?;
+		let mut st = FileStorage::new(
+			".yml",
+			i32::from(FileStorage_Mode::WRITE) | i32::from(FileStorage_Mode::MEMORY),
+			"",
+		)?;
 		st.write_str("test_str", "test string")?;
 		let serialized = st.release_and_get_string()?;
-		let st = FileStorage::new(&serialized, FileStorage_Mode::MEMORY as _, "")?;
+		let st = FileStorage::new(&serialized, FileStorage_Mode::MEMORY.into(), "")?;
 		let str_node = st.get("test_str")?;
 		let mut str_out = String::new();
 		core::read_str(&str_node, &mut str_out, "default string")?;
@@ -154,7 +158,11 @@ fn string_out_argument() -> Result<()> {
 
 	// correctly handle output string on error condition
 	{
-		let st = FileStorage::new("", FileStorage_Mode::WRITE as i32 | FileStorage_Mode::MEMORY as i32, "")?;
+		let st = FileStorage::new(
+			"",
+			i32::from(FileStorage_Mode::WRITE) | i32::from(FileStorage_Mode::MEMORY),
+			"",
+		)?;
 		let node = FileNode::new(&st, 0, 0)?;
 		let mut out = String::new();
 		assert_matches!(

@@ -26,9 +26,9 @@ pub mod bioinspired {
 		/// information
 		#[inline]
 		fn write(&self, fs: &str) -> Result<()> {
-			extern_container_arg!(mut fs);
+			extern_container_arg!(fs);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_bioinspired_Retina_write_const_String(self.as_raw_Retina(), fs.opencv_as_extern_mut(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_bioinspired_Retina_write_const_String(self.as_raw_Retina(), fs.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -126,9 +126,9 @@ pub mod bioinspired {
 		/// * apply_default_setup_on_failure: true
 		#[inline]
 		fn setup_from_file(&mut self, retina_parameter_file: &str, apply_default_setup_on_failure: bool) -> Result<()> {
-			extern_container_arg!(mut retina_parameter_file);
+			extern_container_arg!(retina_parameter_file);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_bioinspired_Retina_setup_String_const_bool(self.as_raw_mut_Retina(), retina_parameter_file.opencv_as_extern_mut(), apply_default_setup_on_failure, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_bioinspired_Retina_setup_String_const_bool(self.as_raw_mut_Retina(), retina_parameter_file.opencv_as_extern(), apply_default_setup_on_failure, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -982,13 +982,13 @@ pub mod bioinspired {
 	
 		#[inline]
 		fn set_op_land_ipl_parvo(&mut self, val: crate::bioinspired::RetinaParameters_OPLandIplParvoParameters) {
-			let ret = unsafe { sys::cv_bioinspired_RetinaParameters_propOPLandIplParvo_OPLandIplParvoParameters(self.as_raw_mut_RetinaParameters(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_bioinspired_RetinaParameters_propOPLandIplParvo_const_OPLandIplParvoParameters(self.as_raw_mut_RetinaParameters(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_ipl_magno(&mut self, val: crate::bioinspired::RetinaParameters_IplMagnoParameters) {
-			let ret = unsafe { sys::cv_bioinspired_RetinaParameters_propIplMagno_IplMagnoParameters(self.as_raw_mut_RetinaParameters(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_bioinspired_RetinaParameters_propIplMagno_const_IplMagnoParameters(self.as_raw_mut_RetinaParameters(), val.opencv_as_extern()) };
 			ret
 		}
 		
@@ -1207,9 +1207,9 @@ pub mod bioinspired {
 		/// * fs: : the filename of the xml file that will be open and writen with formatted parameters information
 		#[inline]
 		fn write(&self, fs: &str) -> Result<()> {
-			extern_container_arg!(mut fs);
+			extern_container_arg!(fs);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_write_const_String(self.as_raw_TransientAreasSegmentationModule(), fs.opencv_as_extern_mut(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_write_const_String(self.as_raw_TransientAreasSegmentationModule(), fs.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1256,9 +1256,9 @@ pub mod bioinspired {
 		/// * apply_default_setup_on_failure: true
 		#[inline]
 		fn setup_from_file(&mut self, segmentation_parameter_file: &str, apply_default_setup_on_failure: bool) -> Result<()> {
-			extern_container_arg!(mut segmentation_parameter_file);
+			extern_container_arg!(segmentation_parameter_file);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_setup_String_const_bool(self.as_raw_mut_TransientAreasSegmentationModule(), segmentation_parameter_file.opencv_as_extern_mut(), apply_default_setup_on_failure, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_setup_String_const_bool(self.as_raw_mut_TransientAreasSegmentationModule(), segmentation_parameter_file.opencv_as_extern(), apply_default_setup_on_failure, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)

@@ -2,14 +2,14 @@ use std::{ffi::c_void, mem::size_of};
 
 use crate::{
 	core::Mat,
-	sys::{Result, Result_void},
+	sys::{Result, ResultVoid},
 };
 
 #[test]
 fn cv_return_type() {
 	assert_eq!(size_of::<Result<i32>>(), 24);
 	assert_eq!(size_of::<Result<u8>>(), 24);
-	assert_eq!(size_of::<Result_void>(), 16);
+	assert_eq!(size_of::<ResultVoid>(), 16);
 }
 
 #[test]

@@ -26,5 +26,7 @@ export VCPKG_DEFAULT_TRIPLET=x64-linux
 #./vcpkg install llvm  # takes very long time
 # workaround to make clang_sys crate detect installed libclang
 sudo ln -fs libclang.so.1 /usr/lib/llvm-14/lib/libclang.so
-./vcpkg install --recurse "opencv[contrib,nonfree]"
+./vcpkg install --clean-after-build --recurse "opencv[contrib,nonfree]"
+# remove build artifacts to save CI cache space
+rm -rf "$VCPKG_ROOT/downloads" "$VCPKG_ROOT/buildtrees" "$VCPKG_ROOT/packages"
 popd

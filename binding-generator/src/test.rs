@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use regex::Regex;
+use regex::bytes::Regex;
 
 use crate::string_ext::Indent;
 use crate::type_ref::FishStyle;

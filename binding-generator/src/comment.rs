@@ -1,7 +1,8 @@
 use crate::string_ext::Indent;
 use crate::StrExt;
 
-pub fn strip_comment_markers(comment: &str) -> String {
+pub fn strip_doxygen_comment_markers(comment: &str) -> String {
+	// todo, simplify/optimize this function, spec is here https://www.doxygen.nl/manual/docblocks.html
 	const MULTILINE_PREFIX: &str = "/*";
 	const MULTILINE_CONT: &str = "*";
 	const MULTILINE_SUFFIX: &str = "*/";
@@ -135,13 +136,13 @@ enum CommentType {
 
 #[cfg(test)]
 mod test {
-	use super::strip_comment_markers;
+	use super::strip_doxygen_comment_markers;
 
 	#[test]
 	fn test_strip_comment_markers() {
-		assert_eq!("test", &strip_comment_markers("/** test */"));
-		assert_eq!("test", &strip_comment_markers("//   test"));
-		assert_eq!("test", &strip_comment_markers("/*test */"));
+		assert_eq!("test", &strip_doxygen_comment_markers("/** test */"));
+		assert_eq!("test", &strip_doxygen_comment_markers("//   test"));
+		assert_eq!("test", &strip_doxygen_comment_markers("/*test */"));
 
 		{
 			let comment = "/** @overload
@@ -150,7 +151,7 @@ mod test {
 
 			let expected = "@overload
 @brief It's the same function as #calibrateCameraAruco but without calibration error estimation.";
-			assert_eq!(expected, &strip_comment_markers(comment));
+			assert_eq!(expected, &strip_doxygen_comment_markers(comment));
 		}
 
 		{
@@ -160,7 +161,7 @@ mod test {
 
 			let expected = "@overload
 @brief It's the same function as #calibrateCameraAruco but without calibration error estimation.";
-			assert_eq!(expected, &strip_comment_markers(comment));
+			assert_eq!(expected, &strip_doxygen_comment_markers(comment));
 		}
 	}
 }

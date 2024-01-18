@@ -1,148 +1,74 @@
-use once_cell::sync::Lazy;
 use std::collections::HashMap;
 
+use once_cell::sync::Lazy;
+
+use crate::type_ref::TypeRefTypeHint;
 use crate::FuncId;
 
-#[derive(Clone, Copy, Debug, PartialEq)]
-pub enum ArgOverride {
-	Nullable,
-	NullableSlice,
-	Slice,
-	LenForSlice(&'static str, usize),
-	/// Treat C++ string as a byte buffer (`Vec<u8>`) instead of an actual string
-	StringAsBytes,
-	/// when C++ char needs to be represented as Rust char
-	CharAsRustChar,
-	/// for the cases when `char *` should not be treated as string, but as a pointer to a single char
-	CharPtrNotString,
-}
+pub const RETURN_HINT: &str = "return";
 
-pub static ARGUMENT_OVERRIDE: Lazy<HashMap<FuncId, HashMap<&str, ArgOverride>>> = Lazy::new(|| {
+pub static ARGUMENT_OVERRIDE: Lazy<HashMap<FuncId, HashMap<&str, TypeRefTypeHint>>> = Lazy::new(|| {
 	HashMap::from([
 		(
 			FuncId::new_const("cv::Mat::at", ["idx"]),
-			HashMap::from([("idx", ArgOverride::Slice)]),
+			HashMap::from([("idx", TypeRefTypeHint::Slice)]),
 		),
 		(
 			FuncId::new_mut("cv::Mat::at", ["idx"]),
-			HashMap::from([("idx", ArgOverride::Slice)]),
+			HashMap::from([("idx", TypeRefTypeHint::Slice)]),
 		),
 		(
 			FuncId::new_const("cv::Mat::ptr", ["idx"]),
-			HashMap::from([("idx", ArgOverride::Slice)]),
+			HashMap::from([("idx", TypeRefTypeHint::Slice)]),
 		),
 		(
 			FuncId::new_mut("cv::Mat::ptr", ["idx"]),
-			HashMap::from([("idx", ArgOverride::Slice)]),
+			HashMap::from([("idx", TypeRefTypeHint::Slice)]),
 		),
 		(
 			FuncId::new_mut("cv::Mat::Mat", ["sizes", "type", "data", "steps"]),
-			HashMap::from([
-				("steps", ArgOverride::NullableSlice),
-				("sizes", ArgOverride::Slice),
-				("ndims", ArgOverride::LenForSlice("sizes", 1)),
-			]),
+			HashMap::from([("steps", TypeRefTypeHint::NullableSlice)]),
 		),
 		(
 			FuncId::new_mut("cv::Mat::Mat", ["ndims", "sizes", "type", "s"]),
-			HashMap::from([
-				("steps", ArgOverride::NullableSlice),
-				("sizes", ArgOverride::Slice),
-				("ndims", ArgOverride::LenForSlice("sizes", 1)),
-			]),
+			HashMap::from([("steps", TypeRefTypeHint::NullableSlice)]),
 		),
 		(
 			FuncId::new_mut("cv::Mat::Mat", ["ndims", "sizes", "type", "data", "steps"]),
-			HashMap::from([
-				("steps", ArgOverride::NullableSlice),
-				("sizes", ArgOverride::Slice),
-				("ndims", ArgOverride::LenForSlice("sizes", 1)),
-			]),
-		),
-		(
-			FuncId::new_mut("cv::Mat::zeros", ["ndims", "sz", "type"]),
-			HashMap::from([("sz", ArgOverride::Slice), ("ndims", ArgOverride::LenForSlice("sz", 1))]),
-		),
-		(
-			FuncId::new_mut("cv::Mat::ones", ["ndims", "sz", "type"]),
-			HashMap::from([("sz", ArgOverride::Slice), ("ndims", ArgOverride::LenForSlice("sz", 1))]),
-		),
-		(
-			FuncId::new_mut("cv::Mat::create", ["ndims", "sizes", "type"]),
-			HashMap::from([("sizes", ArgOverride::Slice), ("ndims", ArgOverride::LenForSlice("sizes", 1))]),
-		),
-		(
-			FuncId::new_const("cv::Mat::reshape", ["cn", "newndims", "newsz"]),
-			HashMap::from([
-				("newsz", ArgOverride::Slice),
-				("newndims", ArgOverride::LenForSlice("newsz", 1)),
-			]),
-		),
-		(
-			FuncId::new_mut("cv::SparseMat::Hdr::Hdr", ["_dims", "_sizes", "_type"]),
-			HashMap::from([
-				("_sizes", ArgOverride::Slice),
-				("_dims", ArgOverride::LenForSlice("_sizes", 1)),
-			]),
-		),
-		(
-			FuncId::new_mut("cv::UMat::UMat", ["ndims", "sizes", "type", "usageFlags"]),
-			HashMap::from([("sizes", ArgOverride::Slice), ("ndims", ArgOverride::LenForSlice("sizes", 1))]),
-		),
-		(
-			FuncId::new_mut("cv::UMat::UMat", ["ndims", "sizes", "type", "s", "usageFlags"]),
-			HashMap::from([("sizes", ArgOverride::Slice), ("ndims", ArgOverride::LenForSlice("sizes", 1))]),
-		),
-		(
-			FuncId::new_mut("cv::UMat::create", ["ndims", "sizes", "type", "usageFlags"]),
-			HashMap::from([("sizes", ArgOverride::Slice), ("ndims", ArgOverride::LenForSlice("sizes", 1))]),
-		),
-		(
-			FuncId::new_const(
-				"cv::_OutputArray::create",
-				["dims", "size", "type", "i", "allowTransposed", "fixedDepthMask"],
-			),
-			HashMap::from([("size", ArgOverride::Slice), ("dims", ArgOverride::LenForSlice("size", 1))]),
-		),
-		(
-			FuncId::new_mut("cv::mixChannels", ["src", "dst", "fromTo", "npairs"]),
-			HashMap::from([
-				("fromTo", ArgOverride::Slice),
-				("npairs", ArgOverride::LenForSlice("from_to", 2)),
-			]),
+			HashMap::from([("steps", TypeRefTypeHint::NullableSlice)]),
 		),
 		(
 			FuncId::new_mut(
 				"cv::createTrackbar",
 				["trackbarname", "winname", "value", "count", "onChange", "userdata"],
 			),
-			HashMap::from([("value", ArgOverride::Nullable)]),
+			HashMap::from([("value", TypeRefTypeHint::Nullable)]),
 		),
 		(
 			FuncId::new_mut("cv::minMaxLoc", ["src", "minVal", "maxVal", "minLoc", "maxLoc", "mask"]),
 			HashMap::from([
-				("minVal", ArgOverride::Nullable),
-				("maxVal", ArgOverride::Nullable),
-				("minLoc", ArgOverride::Nullable),
-				("maxLoc", ArgOverride::Nullable),
+				("minVal", TypeRefTypeHint::Nullable),
+				("maxVal", TypeRefTypeHint::Nullable),
+				("minLoc", TypeRefTypeHint::Nullable),
+				("maxLoc", TypeRefTypeHint::Nullable),
 			]),
 		),
 		(
 			FuncId::new_mut("cv::minMaxLoc", ["a", "minVal", "maxVal", "minIdx", "maxIdx"]),
 			HashMap::from([
-				("minVal", ArgOverride::Nullable),
-				("maxVal", ArgOverride::Nullable),
-				("minIdx", ArgOverride::Nullable),
-				("maxIdx", ArgOverride::Nullable),
+				("minVal", TypeRefTypeHint::Nullable),
+				("maxVal", TypeRefTypeHint::Nullable),
+				("minIdx", TypeRefTypeHint::Nullable),
+				("maxIdx", TypeRefTypeHint::Nullable),
 			]),
 		),
 		(
 			FuncId::new_mut("cv::minMaxIdx", ["src", "minVal", "maxVal", "minIdx", "maxIdx", "mask"]),
 			HashMap::from([
-				("minVal", ArgOverride::Nullable),
-				("maxVal", ArgOverride::Nullable),
-				("minIdx", ArgOverride::Nullable),
-				("maxIdx", ArgOverride::Nullable),
+				("minVal", TypeRefTypeHint::Nullable),
+				("maxVal", TypeRefTypeHint::Nullable),
+				("minIdx", TypeRefTypeHint::Nullable),
+				("maxIdx", TypeRefTypeHint::Nullable),
 			]),
 		),
 		(
@@ -150,41 +76,41 @@ pub static ARGUMENT_OVERRIDE: Lazy<HashMap<FuncId, HashMap<&str, ArgOverride>>> 
 				"cv::EMD",
 				["signature1", "signature2", "distType", "cost", "lowerBound", "flow"],
 			),
-			HashMap::from([("lowerBound", ArgOverride::Nullable)]),
+			HashMap::from([("lowerBound", TypeRefTypeHint::Nullable)]),
 		),
 		(
 			FuncId::new_mut("cv::decodeQRCode", ["in", "points", "decoded_info", "straight_qrcode"]),
-			HashMap::from([("decoded_info", ArgOverride::StringAsBytes)]),
+			HashMap::from([("decoded_info", TypeRefTypeHint::StringAsBytes(None))]),
 		),
 		(
 			FuncId::new_mut("cv::QRCodeDetector::decode", ["img", "points", "straight_qrcode"]),
-			HashMap::from([("return", ArgOverride::StringAsBytes)]),
+			HashMap::from([(RETURN_HINT, TypeRefTypeHint::StringAsBytes(None))]),
 		),
 		(
 			FuncId::new_mut("cv::QRCodeDetector::decodeCurved", ["img", "points", "straight_qrcode"]),
-			HashMap::from([("return", ArgOverride::StringAsBytes)]),
+			HashMap::from([(RETURN_HINT, TypeRefTypeHint::StringAsBytes(None))]),
 		),
 		(
 			FuncId::new_mut("cv::QRCodeDetector::detectAndDecode", ["img", "points", "straight_qrcode"]),
-			HashMap::from([("return", ArgOverride::StringAsBytes)]),
+			HashMap::from([(RETURN_HINT, TypeRefTypeHint::StringAsBytes(None))]),
 		),
 		(
 			FuncId::new_mut(
 				"cv::QRCodeDetector::detectAndDecodeCurved",
 				["img", "points", "straight_qrcode"],
 			),
-			HashMap::from([("return", ArgOverride::StringAsBytes)]),
+			HashMap::from([(RETURN_HINT, TypeRefTypeHint::StringAsBytes(None))]),
 		),
 		(
 			FuncId::new_const("cv::GraphicalCodeDetector::decode", ["img", "points", "straight_code"]),
-			HashMap::from([("return", ArgOverride::StringAsBytes)]),
+			HashMap::from([(RETURN_HINT, TypeRefTypeHint::StringAsBytes(None))]),
 		),
 		(
 			FuncId::new_const(
 				"cv::GraphicalCodeDetector::detectAndDecode",
 				["img", "points", "straight_code"],
 			),
-			HashMap::from([("return", ArgOverride::StringAsBytes)]),
+			HashMap::from([(RETURN_HINT, TypeRefTypeHint::StringAsBytes(None))]),
 		),
 		(
 			FuncId::new_mut(
@@ -199,20 +125,24 @@ pub static ARGUMENT_OVERRIDE: Lazy<HashMap<FuncId, HashMap<&str, ArgOverride>>> 
 					"centerPrincipalPoint",
 				],
 			),
-			HashMap::from([("validPixROI", ArgOverride::Nullable)]),
+			HashMap::from([("validPixROI", TypeRefTypeHint::Nullable)]),
 		),
 		(
 			FuncId::new_mut("cv::VideoWriter::fourcc", ["c1", "c2", "c3", "c4"]),
 			HashMap::from([
-				("c1", ArgOverride::CharAsRustChar),
-				("c2", ArgOverride::CharAsRustChar),
-				("c3", ArgOverride::CharAsRustChar),
-				("c4", ArgOverride::CharAsRustChar),
+				("c1", TypeRefTypeHint::CharAsRustChar),
+				("c2", TypeRefTypeHint::CharAsRustChar),
+				("c3", TypeRefTypeHint::CharAsRustChar),
+				("c4", TypeRefTypeHint::CharAsRustChar),
 			]),
 		),
 		(
 			FuncId::new_mut("cv::ximgproc::createStructuredEdgeDetection", ["model", "howToGetFeatures"]),
-			HashMap::from([("howToGetFeatures", ArgOverride::Nullable)]),
+			HashMap::from([("howToGetFeatures", TypeRefTypeHint::Nullable)]),
+		),
+		(
+			FuncId::new_mut("cv::freetype::FreeType2::loadFontData", ["pBuf", "bufSize", "idx"]),
+			HashMap::from([("pBuf", TypeRefTypeHint::PrimitivePtrAsRaw)]),
 		),
 	])
 });

@@ -52,6 +52,7 @@ impl<'tu> EntityWalkerExt<'tu> for Entity<'tu> {
 							| EntityKind::ClassTemplate
 							| EntityKind::ClassDecl
 							| EntityKind::Destructor
+							| EntityKind::LinkageSpec
 							| EntityKind::VarDecl => WalkAction::Continue,
 							_ => {
 								unreachable!("Unsupported decl for file: {:#?}", root_decl)
@@ -92,7 +93,8 @@ fn visit_cv_namespace<'tu>(ns: Entity<'tu>, visitor: &mut impl EntityWalkerVisit
 			| EntityKind::FunctionTemplate
 			| EntityKind::UsingDeclaration
 			| EntityKind::UsingDirective
-			| EntityKind::TypeAliasTemplateDecl => {
+			| EntityKind::TypeAliasTemplateDecl
+			| EntityKind::LinkageSpec => {
 				/* ignoring */
 				WalkAction::Continue
 			}
