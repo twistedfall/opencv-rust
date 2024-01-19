@@ -1,3 +1,6 @@
+* 0.88.8
+  * Fix the build hang with the latest version of `cc` (fixes https://github.com/twistedfall/opencv-rust/issues/480)
+
 * 0.88.7
   * Improve handling of input strings (fixes https://github.com/twistedfall/opencv-rust/issues/534)
 
