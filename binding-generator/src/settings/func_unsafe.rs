@@ -25,6 +25,13 @@ pub static FUNC_UNSAFE: Lazy<HashSet<FuncId>> = Lazy::new(|| {
 		FuncId::new_mut("cv::UMat::create", ["sizes", "type", "usageFlags"]),
 		FuncId::new_mut("cv::UMat::create", ["rows", "cols", "type", "usageFlags"]),
 		FuncId::new_const("cv::_OutputArray::createSameSize", ["arr", "mtype"]),
+		// manual manipulation of reference counter
+		FuncId::new_mut("cv::Mat::addref", []),
+		FuncId::new_mut("cv::Mat::release", []),
+		FuncId::new_mut("cv::SparseMat::addref", []),
+		FuncId::new_mut("cv::SparseMat::release", []),
+		FuncId::new_mut("cv::UMat::addref", []),
+		FuncId::new_mut("cv::UMat::release", []),
 		// pointer to internal data
 		FuncId::new_const("cv::dnn::Dict::ptr", ["key"]),
 		FuncId::new_mut("cv::dnn::Dict::ptr", ["key"]),

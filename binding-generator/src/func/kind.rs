@@ -166,15 +166,10 @@ impl<'tu, 'ge> FuncKind<'tu, 'ge> {
 
 	/// Any function with a connection to a class: instance method, static method or a constructor
 	pub fn as_class_method(&self) -> Option<&Class<'tu, 'ge>> {
-		if let Some(out) = self.as_instance_method() {
-			Some(out)
-		} else if let Some(out) = self.as_constructor() {
-			Some(out)
-		} else if let Some(out) = self.as_static_method() {
-			Some(out)
-		} else {
-			None
-		}
+		self
+			.as_instance_method()
+			.or_else(|| self.as_constructor())
+			.or_else(|| self.as_static_method())
 	}
 
 	pub fn as_operator(&self) -> Option<(Option<&Class<'tu, 'ge>>, OperatorKind)> {

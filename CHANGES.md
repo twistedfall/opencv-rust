@@ -3,12 +3,13 @@
 
 * 0.88.8
   * Fix the build hang with the latest version of `cc` (fixes https://github.com/twistedfall/opencv-rust/issues/480).
+  * Minimum supported Rust version is now 1.66.0.
 
 * 0.88.7
-  * Improve handling of input strings (fixes https://github.com/twistedfall/opencv-rust/issues/534)
+  * Improve handling of input strings (fixes https://github.com/twistedfall/opencv-rust/issues/534).
 
 * 0.88.6
-  * Regenerate documentation with OpenCV 4.9.0
+  * Regenerate documentation with OpenCV 4.9.0.
 
 * 0.88.5
   * Adjust to the upcoming changes in OpenCV (fixes https://github.com/twistedfall/opencv-rust/issues/518).
@@ -20,7 +21,7 @@
    * Add `Mat::iter_mut()` and improve `Mat` iteration performance.
 
 * 0.88.2
-   * Fix build with clang 17 (fixes https://github.com/twistedfall/opencv-rust/issues/519)
+   * Fix build with clang 17 (fixes https://github.com/twistedfall/opencv-rust/issues/519).
 
 * 0.88.1
   * Generate `Vector<Vector<Point2d>>` bindings for `ccalib` module.

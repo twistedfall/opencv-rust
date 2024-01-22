@@ -285,10 +285,12 @@ fn collect_generated_bindings(modules: &[String], target_module_dir: &Path, manu
 		writeln!(sys_rs)?;
 	}
 	writeln!(hub_rs, "pub mod types {{")?;
+	write!(hub_rs, "\t")?;
 	write_module_include(&mut hub_rs, "types")?;
 	writeln!(hub_rs, "}}")?;
 	writeln!(hub_rs, "#[doc(hidden)]")?;
 	writeln!(hub_rs, "pub mod sys {{")?;
+	write!(hub_rs, "\t")?;
 	write_module_include(&mut hub_rs, "sys")?;
 	writeln!(hub_rs, "}}")?;
 

@@ -236,15 +236,12 @@ macro_rules! opencv_type_simple_generic {
 }
 
 pub fn cstring_new_nofail(bytes: impl Into<Vec<u8>>) -> CString {
-	match CString::new(bytes) {
-		Ok(s) => s,
-		Err(e) => {
-			let nul_pos = e.nul_position();
-			let mut bytes = e.into_vec();
-			bytes.drain(nul_pos..);
-			unsafe { CString::from_vec_unchecked(bytes) }
-		}
-	}
+	CString::new(bytes).unwrap_or_else(|e| {
+		let nul_pos = e.nul_position();
+		let mut bytes = e.into_vec();
+		bytes.drain(nul_pos..);
+		unsafe { CString::from_vec_unchecked(bytes) }
+	})
 }
 
 impl<'a> OpenCVType<'a> for String {

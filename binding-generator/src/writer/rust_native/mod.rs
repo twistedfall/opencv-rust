@@ -147,7 +147,7 @@ impl GeneratorVisitor for RustNativeBindingWriter<'_> {
 		for func in iter::once(func).chain(companion_funcs) {
 			let name = func.identifier();
 			self.rust_funcs.push((name.clone(), func.gen_rust(self.opencv_version)));
-			self.export_funcs.push((name.clone(), func.gen_rust_exports()));
+			self.export_funcs.push((name.clone(), func.gen_rust_externs()));
 			self.cpp_funcs.push((name, func.gen_cpp()));
 		}
 	}
@@ -177,7 +177,7 @@ impl GeneratorVisitor for RustNativeBindingWriter<'_> {
 		}
 		let name = class.cpp_name(CppNameStyle::Reference).into_owned();
 		self.rust_classes.push((name.clone(), class.gen_rust(self.opencv_version)));
-		self.export_classes.push((name.clone(), class.gen_rust_exports()));
+		self.export_classes.push((name.clone(), class.gen_rust_externs()));
 		self.cpp_classes.push((name, class.gen_cpp()));
 	}
 
@@ -214,7 +214,7 @@ impl GeneratorVisitor for RustNativeBindingWriter<'_> {
 		}
 
 		write_generated_type(&self.types_dir, "rs", prio, &safe_id, || typ.gen_rust(self.opencv_version));
-		write_generated_type(&self.types_dir, "externs.rs", prio, &safe_id, || typ.gen_rust_exports());
+		write_generated_type(&self.types_dir, "externs.rs", prio, &safe_id, || typ.gen_rust_externs());
 		write_generated_type(&self.types_dir, "cpp", prio, &safe_id, || typ.gen_cpp());
 	}
 }

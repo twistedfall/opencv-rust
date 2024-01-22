@@ -365,7 +365,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		]))
 	}
 
-	fn gen_rust_exports(&self) -> String {
+	fn gen_rust_externs(&self) -> String {
 		static TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/func/rust_extern.tpl.rs").compile_interpolation());
 
 		if matches!(self.rust_extern_definition(), FuncRustExtern::Absent) {

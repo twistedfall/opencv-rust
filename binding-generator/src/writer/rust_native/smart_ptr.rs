@@ -163,8 +163,8 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		TPL.interpolate(&inter_vars)
 	}
 
-	fn gen_rust_exports(&self) -> String {
-		extern_functions(self).iter().map(Func::gen_rust_exports).join("")
+	fn gen_rust_externs(&self) -> String {
+		extern_functions(self).iter().map(Func::gen_rust_externs).join("")
 	}
 
 	fn gen_cpp(&self) -> String {

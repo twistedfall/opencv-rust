@@ -171,12 +171,12 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		RUST_TPL.interpolate(&inter_vars)
 	}
 
-	fn gen_rust_exports(&self) -> String {
+	fn gen_rust_externs(&self) -> String {
 		if self.type_ref().constness().is_const() {
 			// todo we should generate smth like VectorRef in this case
 			return "".to_string();
 		}
-		extern_functions(self).iter().map(Func::gen_rust_exports).join("")
+		extern_functions(self).iter().map(Func::gen_rust_externs).join("")
 	}
 
 	fn gen_cpp(&self) -> String {

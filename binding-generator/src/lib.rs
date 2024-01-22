@@ -1,4 +1,3 @@
-// todo change dyn InputArray to impl InputArray and friends
 // todo support converting pointer + size to slice of Mat and other similar objects
 // todo add support for arrays in dnn::DictValue
 // todo allow ergonomically combining of enum variants with |

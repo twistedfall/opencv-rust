@@ -3,8 +3,6 @@ on:
   push:
     branches:
       - "*"
-    tags_ignore:
-      - "*"
   pull_request:
     branches:
       - "*"
@@ -35,15 +33,15 @@ jobs:
       CMAKE_C_COMPILER_LAUNCHER: "sccache"
       CMAKE_CXX_COMPILER_LAUNCHER: "sccache"
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
-      - uses: mozilla-actions/sccache-action@v0.0.3
-      - uses: actions/cache@v3
+      - uses: mozilla-actions/sccache-action@v0.0.4
+      - uses: actions/cache@v4
         with:
           path: ~/dist
           key: dist-${{ matrix.opencv-version }}
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: ~/build
           key: build-${{ matrix.opencv-version }}-${{ matrix.linkage }}-${{ matrix.os-image }}
@@ -75,10 +73,10 @@ jobs:
       SCCACHE_GHA_ENABLED: "true"
       RUSTC_WRAPPER: "sccache"
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
-      - uses: mozilla-actions/sccache-action@v0.0.3
-      - uses: actions/cache@v3
+      - uses: mozilla-actions/sccache-action@v0.0.4
+      - uses: actions/cache@v4
         with:
           path: ~/build
           key: vcpkg-${{ matrix.vcpkg-version }}-${{ matrix.os-image }}
@@ -125,9 +123,9 @@ jobs:
       SCCACHE_GHA_ENABLED: "true"
       RUSTC_WRAPPER: "sccache"
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
-      - uses: mozilla-actions/sccache-action@v0.0.3
+      - uses: mozilla-actions/sccache-action@v0.0.4
 
       - name: Install dependencies
         env:
@@ -144,7 +142,7 @@ jobs:
   docs-rs:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
 
       - name: Run a documentation generation test
@@ -160,15 +158,15 @@ jobs:
       CMAKE_C_COMPILER_LAUNCHER: "sccache"
       CMAKE_CXX_COMPILER_LAUNCHER: "sccache"
     steps:
-      - uses: actions/checkout@v3
-      - uses: mozilla-actions/sccache-action@v0.0.3
+      - uses: actions/checkout@v4
+      - uses: mozilla-actions/sccache-action@v0.0.4
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: ~/dist
           key: dist-${{ env.OPENCV_VERSION }}
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: ~/build
           key: build-${{ env.OPENCV_VERSION }}-ubuntu-20.04

@@ -112,7 +112,7 @@ pub trait RustNativeGeneratedElement {
 		"".to_string()
 	}
 
-	fn gen_rust_exports(&self) -> String {
+	fn gen_rust_externs(&self) -> String {
 		"".to_string()
 	}
 

@@ -22,8 +22,8 @@ use crate::settings::{TypeRefFactory, RETURN_HINT};
 use crate::type_ref::{Constness, CppNameStyle, TypeRefDesc, TypeRefTypeHint};
 use crate::writer::rust_native::element::RustElement;
 use crate::{
-	settings, Class, DefaultElement, Element, EntityExt, Field, GeneratedType, GeneratorEnv, IteratorExt, NameDebug, NameStyle,
-	StrExt, StringExt, TypeRef,
+	debug, settings, Class, DefaultElement, Element, EntityExt, Field, GeneratedType, GeneratorEnv, IteratorExt, NameDebug,
+	NameStyle, StrExt, StringExt, TypeRef,
 };
 
 mod desc;
@@ -691,6 +691,18 @@ impl<'me> NameDebug<'me> for &'me Func<'_, '_> {
 		match self {
 			Func::Clang { entity, .. } => entity.file_line_name(),
 			Func::Desc(desc) => LocationName::new(desc.def_loc.clone(), self.cpp_name(CppNameStyle::Reference)),
+		}
+	}
+
+	fn get_debug(self) -> String
+	where
+		Self: Sized,
+	{
+		if *debug::EMIT_DEBUG {
+			let LocationName { location, name } = self.file_line_name();
+			format!("// {name} {func_id:?} {location}", func_id = self.func_id())
+		} else {
+			"".to_string()
 		}
 	}
 }

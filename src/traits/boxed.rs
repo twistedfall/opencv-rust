@@ -8,9 +8,9 @@ pub trait Boxed: Sized {
 	/// Caller must ensure that the passed pointer is pointing to a valid unowned object data
 	unsafe fn from_raw(ptr: *mut c_void) -> Self;
 
-	/// Return an the underlying raw pointer while consuming this wrapper.
+	/// Return the underlying raw pointer while consuming this wrapper.
 	///
-	/// This will *not* free object referenced by this pointer so you can use this pointer indefinitely. Be sure
+	/// This will *not* free object referenced by this pointer, so you can use this pointer indefinitely. Be sure
 	/// to free it (by e.g. calling `from_raw()` with the same wrapper type) to avoid leaking memory.
 	fn into_raw(self) -> *mut c_void;
 
