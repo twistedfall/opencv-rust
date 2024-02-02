@@ -76,7 +76,7 @@ jobslot = "0.2"
 once_cell = "1"
 pkg-config = "0.3"
 semver = "1"
-shlex = { version = "1", default-features = false }
+shlex = { version = "1.3", default-features = false }
 # vcpkg-0.2.9 is the first one that has accessible find_vcpkg_root()
 vcpkg = "0.2.9"
 
