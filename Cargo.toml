@@ -34,7 +34,7 @@ name = "discrete_fourier_transform"
 #name = "gapi_api_example"
 
 [[example]]
-name = "hough_circles"
+name = "hough_circle"
 
 [[example]]
 name = "hough_lines"
