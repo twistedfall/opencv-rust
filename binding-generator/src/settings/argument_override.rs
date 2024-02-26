@@ -169,5 +169,9 @@ pub static ARGUMENT_OVERRIDE: Lazy<HashMap<FuncId, HashMap<&str, TypeRefTypeHint
 			FuncId::new_mut("cv::freetype::FreeType2::loadFontData", ["pBuf", "bufSize", "idx"]),
 			HashMap::from([("pBuf", TypeRefTypeHint::PrimitivePtrAsRaw)]),
 		),
+		(
+			FuncId::new_const("cv::MatConstIterator::pos", ["_idx"]),
+			HashMap::from([("_idx", TypeRefTypeHint::PrimitivePtrAsRaw)]),
+		),
 	])
 });

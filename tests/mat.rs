@@ -661,24 +661,44 @@ fn mat_from_matexpr() -> Result<()> {
 fn mat_const_iterator() -> Result<()> {
 	{
 		let mat = Mat::from_slice(&[1, 2, 3, 4])?;
+		let mut pos = [0, 0];
 		let mut iter = MatConstIterator::over(&mat)?;
+		unsafe {
+			iter.pos_to(pos.as_mut_ptr())?;
+		}
 		assert_eq!(iter.typ(), mat.typ());
 		assert_eq!(1, *iter.current::<i32>()?);
 		assert_eq!(Point::new(0, 0), iter.pos()?);
+		assert_eq!([0, 0], pos);
 		assert!(iter.has_elements());
 		iter.seek(1, true)?;
+		unsafe {
+			iter.pos_to(pos.as_mut_ptr())?;
+		}
 		assert_eq!(2, *iter.current::<i32>()?);
 		assert_eq!(Point::new(1, 0), iter.pos()?);
+		assert_eq!([0, 1], pos);
 		assert!(iter.has_elements());
 		iter.seek(1, true)?;
+		unsafe {
+			iter.pos_to(pos.as_mut_ptr())?;
+		}
 		assert_eq!(3, *iter.current::<i32>()?);
 		assert_eq!(Point::new(2, 0), iter.pos()?);
+		assert_eq!([0, 2], pos);
 		assert!(iter.has_elements());
 		iter.seek(1, true)?;
+		unsafe {
+			iter.pos_to(pos.as_mut_ptr())?;
+		}
 		assert_eq!(4, *iter.current::<i32>()?);
 		assert_eq!(Point::new(3, 0), iter.pos()?);
+		assert_eq!([0, 3], pos);
 		assert!(iter.has_elements());
 		iter.seek(1, true)?;
+		unsafe {
+			iter.pos_to(pos.as_mut_ptr())?;
+		}
 		assert_matches!(
 			iter.current::<i32>(),
 			Err(Error {
@@ -687,8 +707,12 @@ fn mat_const_iterator() -> Result<()> {
 			})
 		);
 		assert_eq!(Point::new(0, 1), iter.pos()?);
+		assert_eq!([1, 0], pos);
 		assert!(!iter.has_elements());
 		iter.seek(1, true)?;
+		unsafe {
+			iter.pos_to(pos.as_mut_ptr())?;
+		}
 		assert_matches!(
 			iter.current::<i32>(),
 			Err(Error {
@@ -697,6 +721,7 @@ fn mat_const_iterator() -> Result<()> {
 			})
 		);
 		assert_eq!(Point::new(0, 1), iter.pos()?);
+		assert_eq!([1, 0], pos);
 		assert!(!iter.has_elements());
 	}
 
