@@ -1,9 +1,8 @@
-//! Port of https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/ImgTrans/HoughCircles_Demo.cpp
+//! Port of https://github.com/opencv/opencv/blob/4.7.0/samples/cpp/tutorial_code/ImgTrans/HoughCircle_Demo.cpp
 
-use std::cmp;
 use std::env::args;
+use std::sync::atomic::{AtomicI32, Ordering};
 use std::sync::Arc;
-use std::sync::Mutex;
 
 use opencv::core::{find_file, Point, Point2i, Size2i, BORDER_DEFAULT};
 use opencv::highgui::{create_trackbar, imshow, named_window, wait_key, WINDOW_AUTOSIZE};
@@ -14,18 +13,18 @@ use opencv::types::VectorOfVec3f;
 use opencv::Result;
 
 opencv::opencv_branch_4! {
-	use opencv::imgproc::LINE_8;
+	 use opencv::imgproc::LINE_8;
 }
 opencv::not_opencv_branch_4! {
-	use opencv::core::LINE_8;
+	 use opencv::core::LINE_8;
 }
 
-// windows and trackbars name
+// Windows and trackbars names
 const WINDOW_NAME: &str = "Hough Circle Detection Demo";
 const CANNY_THRESHOLD_TRACKBAR_NAME: &str = "Canny Threshold";
 const ACCUMULATOR_THRESHOLD_TRACKBAR_NAME: &str = "Accumulator Threshold";
 
-// initial and max values of the parameters of interests.
+// Initial and max values of the parameters of interest
 const CANNY_THRESHOLD_INIT_VAL: i32 = 100;
 const ACCUMULATOR_THRESHOLD_INIT_VAL: i32 = 50;
 const MAX_CANNY_THRESHOLD: i32 = 255;
@@ -63,6 +62,7 @@ fn hough_detection(src_gray: &Mat, src_display: &Mat, canny_threshold: i32, accu
 		circle(&mut display, center, radius, (0.0, 0.0, 255.0).into(), 3, LINE_8, 0)?;
 	}
 
+	// Show the results
 	imshow(WINDOW_NAME, &display)?;
 	Ok(())
 }
@@ -93,8 +93,8 @@ fn main() -> Result<()> {
 	gaussian_blur(&src_gray, &mut src_gray_blur, Size2i::new(9, 9), 2.0, 2.0, BORDER_DEFAULT)?;
 
 	// Declare and initialize both parameters that are subjects to change
-	let canny_threshold: Arc<Mutex<i32>> = Arc::new(Mutex::new(CANNY_THRESHOLD_INIT_VAL));
-	let accumulator_threshold: Arc<Mutex<i32>> = Arc::new(Mutex::new(ACCUMULATOR_THRESHOLD_INIT_VAL));
+	let canny_threshold: Arc<AtomicI32> = Arc::new(AtomicI32::new(CANNY_THRESHOLD_INIT_VAL));
+	let accumulator_threshold: Arc<AtomicI32> = Arc::new(AtomicI32::new(ACCUMULATOR_THRESHOLD_INIT_VAL));
 
 	// Create the main window, and attach the trackbars
 	named_window(WINDOW_NAME, WINDOW_AUTOSIZE)?;
@@ -107,7 +107,7 @@ fn main() -> Result<()> {
 		Some(Box::new({
 			let canny_threshold = canny_threshold.clone();
 			move |val| {
-				*canny_threshold.lock().unwrap() = val;
+				canny_threshold.as_ref().store(val, Ordering::SeqCst);
 			}
 		})),
 	)?;
@@ -120,7 +120,7 @@ fn main() -> Result<()> {
 		Some(Box::new({
 			let accumulator_threshold = accumulator_threshold.clone();
 			move |val| {
-				*accumulator_threshold.lock().unwrap() = val;
+				accumulator_threshold.as_ref().store(val, Ordering::SeqCst);
 			}
 		})),
 	)?;
@@ -131,8 +131,8 @@ fn main() -> Result<()> {
 	let mut key: char = ' ';
 	while key.to_ascii_lowercase() != 'q' {
 		// Those parameters cannot be = 0, so we must check here
-		let canny_threshold_val = cmp::max(*canny_threshold.lock().unwrap(), 1);
-		let accumulator_threshold_val = cmp::max(*accumulator_threshold.lock().unwrap(), 1);
+		let canny_threshold_val = canny_threshold.fetch_max(1, Ordering::SeqCst);
+		let accumulator_threshold_val = accumulator_threshold.fetch_max(1, Ordering::SeqCst);
 
 		// Runs the detection, and update the display
 		hough_detection(&src_gray_blur, &src, canny_threshold_val, accumulator_threshold_val)?;
