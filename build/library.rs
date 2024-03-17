@@ -133,7 +133,17 @@ impl Library {
 	fn emit_link_lib(lib: &str, typ: Option<&str>) -> String {
 		format!(
 			"cargo:rustc-link-lib={}{}",
-			typ.map_or_else(|| "".to_string(), |t| format!("{t}=")),
+			typ.map_or_else(
+				|| "".to_string(),
+				|t| {
+					let prefix = format!("{t}=");
+					if lib.starts_with(&prefix) {
+						"".to_string()
+					} else {
+						prefix
+					}
+				}
+			),
 			lib
 		)
 	}

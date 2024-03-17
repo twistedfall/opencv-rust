@@ -1,3 +1,4 @@
+use std::ffi::OsStr;
 use std::fs;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
@@ -114,13 +115,15 @@ impl<'r> CmakeProbe<'r> {
 		}
 	}
 
-	fn extract_from_cmdline(
+	pub(crate) fn extract_from_cmdline(
 		cmdline: &str,
 		include_paths: &mut Vec<PathBuf>,
 		link_paths: &mut Vec<PathBuf>,
 		link_libs: &mut Vec<String>,
 	) {
-		for arg in Shlex::new(cmdline.trim()) {
+		eprintln!("=== Extracting build arguments from: {cmdline}");
+		let mut args = Shlex::new(cmdline.trim());
+		while let Some(arg) = args.next() {
 			let arg = arg.trim();
 			if let Some(path) = arg.strip_prefix("-I") {
 				let path = PathBuf::from(path.trim_start());
@@ -136,6 +139,23 @@ impl<'r> CmakeProbe<'r> {
 				// unresolved cmake dependency specification like Qt5::Core
 				if !lib.contains("::") {
 					link_libs.push(lib.trim_start().to_string());
+				}
+			} else if let Some(framework) = arg.strip_prefix("-framework") {
+				let framework = framework.trim_start();
+				let framework = if framework.is_empty() {
+					args.next().expect("No framework name after -framework")
+				} else {
+					framework.to_string()
+				};
+				let framework_path = Path::new(&framework);
+				let has_extension = framework_path
+					.extension()
+					.and_then(OsStr::to_str)
+					.map_or(false, |ext| ext.eq_ignore_ascii_case("framework"));
+				if has_extension {
+					link_libs.push(framework);
+				}else {
+					link_libs.push(format!("{}.framework", framework));
 				}
 			} else if !arg.starts_with('-') {
 				let path = Path::new(arg);

@@ -18,7 +18,7 @@ use crate::generator::BindingGenerator;
 #[path = "build/binding-generator.rs"]
 mod binding_generator;
 #[path = "build/cmake_probe.rs"]
-mod cmake_probe;
+pub mod cmake_probe;
 #[path = "build/docs.rs"]
 mod docs;
 #[path = "build/generator.rs"]
