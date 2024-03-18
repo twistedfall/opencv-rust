@@ -2,14 +2,14 @@ use std::ffi::OsString;
 use std::iter::Peekable;
 use std::path::{Path, PathBuf};
 
-use opencv_binding_generator::writer::RustNativeBindingWriter;
 use opencv_binding_generator::Generator;
+use opencv_binding_generator::writer::RustNativeBindingWriter;
 
-use crate::{get_version_from_headers, GenerateFullBindings, Result};
+use super::{GenerateFullBindings, get_version_from_headers, Result};
 
 /// Because clang can't be used from multiple threads we run the binding generator helper for each
-/// module as a separate process. Building an additional helper binary from the build script is problematic
-/// so we employ the trick and we actually run the build script itself again with some additional arguments.
+/// module as a separate process. Building an additional helper binary from the build script is problematic,
+/// so we employ the trick, and we actually run the build script itself again with some additional arguments.
 /// When those arguments are detected the build script will generate the bindings for a single
 /// OpenCV module instead of running its main logic.
 pub fn handle_running_binding_generator(mut args: Peekable<impl Iterator<Item = OsString>>) -> Result<GenerateFullBindings> {

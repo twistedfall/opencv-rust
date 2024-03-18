@@ -1,14 +1,14 @@
+use std::{env, fmt, iter};
 use std::borrow::Cow;
 use std::collections::HashSet;
 use std::ffi::OsStr;
 use std::path::{Path, PathBuf};
-use std::{env, fmt, iter};
 
 use dunce::canonicalize;
 use semver::Version;
 
+use super::{cleanup_lib_filename, get_version_from_headers, MANIFEST_DIR, OUT_DIR, Result, TARGET_VENDOR_APPLE};
 use super::cmake_probe::CmakeProbe;
-use super::{cleanup_lib_filename, get_version_from_headers, Result, MANIFEST_DIR, OUT_DIR, TARGET_VENDOR_APPLE};
 
 struct PackageName;
 
@@ -96,7 +96,7 @@ pub struct Library {
 impl Library {
 	fn process_library_list(libs: impl IntoIterator<Item = impl AsRef<Path>>) -> impl Iterator<Item = String> {
 		libs.into_iter().filter_map(|x| {
-			let path: &Path = x.as_ref();
+			let path = x.as_ref();
 			let is_framework = path
 				.extension()
 				.and_then(OsStr::to_str)

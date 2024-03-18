@@ -15,7 +15,7 @@ jobs:
       matrix:
         os-image:
           - ubuntu-22.04
-          - macos-12
+          - macos-13
         opencv-version:
           - 3.4.20
           - 4.9.0
@@ -100,7 +100,7 @@ jobs:
       fail-fast: false
       matrix:
         os-image:
-          - macos-12
+          - macos-13
           - windows-2022
         version:
           - opencv: 3.4.16
@@ -115,7 +115,7 @@ jobs:
             version:
               opencv: 4.2.0
         exclude:
-          - os-image: macos-12 # brew@3 is broken as of 2023-12-05, requires libceres.3.dylib, but only 2 and 4 are available
+          - os-image: macos-13 # brew@3 is broken as of 2023-12-05, requires libceres.3.dylib, but only 2 and 4 are available
             version:
               brew: "@3"
     runs-on: ${{ matrix.os-image }}

@@ -9,11 +9,10 @@ use std::time::Instant;
 use once_cell::sync::{Lazy, OnceCell};
 use semver::{Version, VersionReq};
 
+use binding_generator::handle_running_binding_generator;
+use docs::handle_running_in_docsrs;
+use generator::BindingGenerator;
 use library::Library;
-
-use crate::binding_generator::handle_running_binding_generator;
-use crate::docs::handle_running_in_docsrs;
-use crate::generator::BindingGenerator;
 
 #[path = "build/binding-generator.rs"]
 mod binding_generator;
@@ -97,39 +96,36 @@ fn files_with_extension<'e>(dir: &Path, extension: impl AsRef<OsStr> + 'e) -> Re
 
 /// Returns Some(new_file_name) if some parts of the filename were removed, None otherwise
 fn cleanup_lib_filename(filename: &OsStr) -> Option<&OsStr> {
-	if let Some(mut new_filename) = Path::new(filename).file_name() {
-		// used to check for the file extension (with dots stripped) and for the part of the filename
-		const LIB_EXTS: [&str; 7] = [".so.", ".a.", ".dll.", ".lib.", ".dylib.", ".framework.", ".tbd."];
-		let filename_path = Path::new(new_filename);
-		// strip lib extension from the filename
-		if let (Some(stem), Some(extension)) = (filename_path.file_stem(), filename_path.extension().and_then(OsStr::to_str)) {
-			if LIB_EXTS.iter().any(|e| e.trim_matches('.').eq_ignore_ascii_case(extension)) {
-				new_filename = stem;
-			}
+	let mut new_filename = filename;
+	// used to check for the file extension (with dots stripped) and for the part of the filename
+	const LIB_EXTS: [&str; 7] = [".so.", ".a.", ".dll.", ".lib.", ".dylib.", ".framework.", ".tbd."];
+	let filename_path = Path::new(new_filename);
+	// strip lib extension from the filename
+	if let (Some(stem), Some(extension)) = (filename_path.file_stem(), filename_path.extension().and_then(OsStr::to_str)) {
+		if LIB_EXTS.iter().any(|e| e.trim_matches('.').eq_ignore_ascii_case(extension)) {
+			new_filename = stem;
 		}
-		if let Some(mut file) = new_filename.to_str() {
-			let orig_len = file.len();
+	}
+	if let Some(mut file) = new_filename.to_str() {
+		let orig_len = file.len();
 
-			// strip "lib" prefix from the filename unless targeting MSVC
-			if !*TARGET_ENV_MSVC {
-				file = file.strip_prefix("lib").unwrap_or(file);
-			}
+		// strip "lib" prefix from the filename unless targeting MSVC
+		if !*TARGET_ENV_MSVC {
+			file = file.strip_prefix("lib").unwrap_or(file);
+		}
 
-			// strip lib extension + suffix (e.g. .so.4.6.0) from the filename
-			LIB_EXTS.iter().for_each(|&inner_ext| {
-				if let Some(inner_ext_idx) = file.find(inner_ext) {
-					file = &file[..inner_ext_idx];
-				}
-			});
-			if orig_len != file.len() {
-				new_filename = OsStr::new(file);
+		// strip lib extension + suffix (e.g. .so.4.6.0) from the filename
+		LIB_EXTS.iter().for_each(|&inner_ext| {
+			if let Some(inner_ext_idx) = file.find(inner_ext) {
+				file = &file[..inner_ext_idx];
 			}
+		});
+		if orig_len != file.len() {
+			new_filename = OsStr::new(file);
 		}
-		if new_filename.len() != filename.len() {
-			Some(new_filename)
-		} else {
-			None
-		}
+	}
+	if new_filename.len() != filename.len() {
+		Some(new_filename)
 	} else {
 		None
 	}
