@@ -78,4 +78,20 @@ extern "C" {
 	void cv_Vec18d_input_array(cv::Vec<double, 18>* instance, Result<void*>* ocvrs_return) { return ocvrs_input_array(instance, ocvrs_return); }
 	void cv_Vec18d_output_array(cv::Vec<double, 18>* instance, Result<void*>* ocvrs_return) { return ocvrs_output_array(instance, ocvrs_return); }
 	void cv_Vec18d_input_output_array(cv::Vec<double, 18>* instance, Result<void*>* ocvrs_return) { return ocvrs_input_output_array(instance, ocvrs_return); }
+
+	void cv_directx_convertFromD3D11Texture2D_ID3D11Texture2DX_const__OutputArrayR(void* ptr, cv::_OutputArray dst, ResultVoid* ocvrs_return) {
+		try {
+			// TODO should only enable on Windows
+			cv::directx::convertFromD3D11Texture2D((ID3D11Texture2D*)ptr, dst);
+			Ok(ocvrs_return);
+		} OCVRS_CATCH(ocvrs_return);
+	}
+
+	void cv_directx_ocl_initializeContextFromD3D11Device_ID3D11Device2DX(void* ptr, Result<cv::ocl::Context*>* ocvrs_return) {
+		try {
+			// TODO should only enable on Windows
+			cv::ocl::Context ret = cv::directx::ocl::initializeContextFromD3D11Device((ID3D11Device*)ptr);
+			Ok(new cv::ocl::Context(ret), ocvrs_return);
+		} OCVRS_CATCH(ocvrs_return);
+	}
 }
