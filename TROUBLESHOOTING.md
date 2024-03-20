@@ -26,9 +26,10 @@
 4. On Windows, you're getting the `(exit code: 0xc0000135, STATUS_DLL_NOT_FOUND)` error when running the
    compiled binary.
 
-   That often means that Windows can't find the OpenCV library dll. Be sure to set up `PATH` environment
-   variable correctly or copy the dll next to the binary you're trying to run. Check
-   [that](https://github.com/twistedfall/opencv-rust/issues/118#issuecomment-619608278) guide too.
+   That often means that Windows can't find the OpenCV or Clang library dll. Be sure to set up `PATH` environment
+   variable correctly or copy the dll next to the binary you're trying to run (e.g. "C:\tools\opencv\build\x64\vc16\bin" and
+5. "C:\Program Files\LLVM\bin"). Check [that](https://github.com/twistedfall/opencv-rust/issues/118#issuecomment-619608278) guide
+   too.
 
 5. On Windows with VCPKG you're getting a lot of linking errors in multiple files like in
    [this issue](https://github.com/twistedfall/opencv-rust/issues/161).

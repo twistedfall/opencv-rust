@@ -364,7 +364,7 @@ fn main() -> Result<()> {
 	if let Some(header_version) = get_version_from_headers(opencv_header_dir) {
 		if header_version != opencv.version {
 			panic!(
-				"Version from the headers: {header_version} (at {}) doesn't match version of the OpenCV library: {} (include paths: {:?})",
+				"OpenCV version from the headers: {header_version} (at {}) must match version of the OpenCV library: {} (include paths: {:?})",
 				opencv_header_dir.display(),
 				opencv.version,
 				opencv.include_paths,
