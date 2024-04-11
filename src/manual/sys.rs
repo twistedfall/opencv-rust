@@ -3,7 +3,9 @@
 
 use std::{ffi::c_void, marker::PhantomData, mem::MaybeUninit};
 
-use crate::{types::Unit, Error, Result as CrateResult};
+use crate::templ::receive_string;
+use crate::types::Unit;
+use crate::Error;
 
 #[repr(C)]
 pub struct Result<S, O = S> {
@@ -15,13 +17,16 @@ pub struct Result<S, O = S> {
 
 impl<S: Into<O>, O> Result<S, O> {
 	#[inline]
-	pub fn into_result(self) -> CrateResult<O> {
+	pub fn into_result(self) -> crate::Result<O> {
 		if self.error_msg.is_null() {
 			Ok(unsafe { self.result.assume_init() }.into())
 		} else {
-			Err(Error::new(self.error_code, unsafe {
-				crate::templ::receive_string(self.error_msg.cast::<String>())
-			}))
+			let error_msg = if self.error_msg.is_null() {
+				"Unable to receive error message".to_string()
+			} else {
+				unsafe { receive_string(self.error_msg.cast::<String>()) }
+			};
+			Err(Error::new(self.error_code, error_msg))
 		}
 	}
 }
