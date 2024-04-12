@@ -66,7 +66,7 @@ jobs:
           - ubuntu-22.04
           - windows-2022
         vcpkg-version:
-          - 2023.11.20
+          - 2024.03.25
     runs-on: ${{ matrix.os-image }}
     env:
       VCPKG_VERSION: ${{ matrix.vcpkg-version }}
@@ -98,13 +98,10 @@ jobs:
       fail-fast: false
       matrix:
         os-image:
-          - macos-13
           - windows-2022
         version:
           - opencv: 3.4.16
-            brew: "@3"
           - opencv: 4.9.0
-            brew: "@4"
         include:
           - os-image: ubuntu-22.04
             version:
@@ -112,10 +109,9 @@ jobs:
           - os-image: ubuntu-20.04
             version:
               opencv: 4.2.0
-        exclude:
-          - os-image: macos-13 # brew@3 is broken as of 2023-12-05, requires libceres.3.dylib, but only 2 and 4 are available
+          - os-image: macos-14
             version:
-              brew: "@3"
+              brew: "@4"
     runs-on: ${{ matrix.os-image }}
     env:
       OPENCV_VERSION: ${{ matrix.version.opencv }}

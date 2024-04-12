@@ -18,7 +18,7 @@ use crate::renderer::{CppExternReturnRenderer, CppRenderer, TypeRefRenderer};
 use crate::vector::VectorDesc;
 use crate::writer::rust_native::type_ref::TypeRefExt;
 use crate::{settings, AbstractRefWrapper, ClassSimplicity, ExportConfig};
-use crate::{Class, Element, GeneratedType, GeneratorEnv, SmartPtr, StringExt, Vector};
+use crate::{Class, Element, GeneratedType, GeneratorEnv, SmartPtr, Vector};
 
 mod desc;
 mod kind;
@@ -392,12 +392,6 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 				vec![]
 			}
 		}
-	}
-
-	pub fn cpp_safe_id(&self) -> Cow<str> {
-		let mut out: String = self.cpp_name_ext(CppNameStyle::Declaration, "", false).into_owned();
-		out.cleanup_name();
-		out.into()
 	}
 
 	pub fn cpp_name(&self, name_style: CppNameStyle) -> Cow<str> {

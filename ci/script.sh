@@ -19,13 +19,10 @@ if [[ "$OS_FAMILY" == "Windows" ]]; then
 	echo "=== Installed chocolatey packages:"
 	choco list
 elif [[ "$OS_FAMILY" == "macOS" ]]; then
-	toolchain_path="$(xcode-select --print-path)/Toolchains/XcodeDefault.xctoolchain/"
+	xcode_select="xcode-select" # IDEA code highlighting workaround
+	toolchain_path="$($xcode_select --print-path)/Toolchains/XcodeDefault.xctoolchain/"
 	export DYLD_FALLBACK_LIBRARY_PATH="$toolchain_path/usr/lib/"
-	if [[ "${BREW_OPENCV_VERSION:-}" != "" ]]; then # brew build
-		if [[ "$BREW_OPENCV_VERSION" == "@3" ]]; then
-			export CMAKE_PREFIX_PATH="$(echo /usr/local/Cellar/opencv@3/3.4.*)"
-		fi
-	else # framework build
+	if [[ "${BREW_OPENCV_VERSION:-}" == "" ]]; then # framework build
 		clang_dir="$(clang --print-search-dirs | awk -F= '/^libraries: =/ { print $2 }')"
 		export OPENCV_LINK_PATHS="$HOME/build/opencv/opencv-$OPENCV_VERSION-build,$clang_dir/lib/darwin"
 		export OPENCV_LINK_LIBS="opencv2.framework,OpenCL.framework,Cocoa.framework,Accelerate.framework,AVFoundation.framework,CoreGraphics.framework,CoreMedia.framework,CoreVideo.framework,QuartzCore.framework,clang_rt.osx"

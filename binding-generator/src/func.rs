@@ -1,7 +1,6 @@
 use std::borrow::Cow;
 use std::collections::HashMap;
 use std::fmt;
-use std::fmt::Write;
 use std::rc::Rc;
 
 use clang::{Availability, Entity, EntityKind, ExceptionSpecification};
@@ -548,36 +547,39 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 	}
 
 	pub fn identifier(&self) -> String {
-		let args = self.arguments();
-		let mut out: String = if let Some((_, fld)) = self.kind().as_field_accessor() {
-			let mut out: String = self.cpp_namespace().into_owned();
-			if !out.is_empty() {
-				out += "::";
+		let mut out = if let Some((_, fld)) = self.kind().as_field_accessor() {
+			let mut name = self.cpp_namespace().into_owned();
+			if !name.is_empty() {
+				name.push('_');
 			}
 			let decl_name = fld.cpp_name(CppNameStyle::Declaration);
+			name.reserve(decl_name.len() + 4);
 			let (first_letter, rest) = decl_name.split_at(1);
-			write!(out, "prop{}{rest}", first_letter.to_uppercase()).expect("write! to String shouldn't fail");
-			out
+			let [first_letter] = <[u8; 1]>::try_from(first_letter.as_bytes()).expect("first part of split_at(1)");
+			name.push_str("prop");
+			name.push(first_letter.to_ascii_uppercase().into());
+			name.push_str(rest);
+			name
 		} else {
 			self.cpp_name(CppNameStyle::Reference).into_owned()
 		};
-		out.cleanup_name();
 		// add return type to function id for cases when we specialize on the return type, in theory we should be able to apply
 		// this to all of the functions, but it's too much work to rename all those entries in FUNC_RENAME
 		if self.is_specialized() {
 			out.push('_');
-			let mut typ = self.return_type_ref().cpp_name(CppNameStyle::Reference).into_owned();
-			typ.cleanup_name();
-			out.push_str(&typ);
+			let ret = self.return_type_ref();
+			out.push_str(&ret.cpp_name(CppNameStyle::Reference));
 		}
 		if self.constness().is_const() {
-			out += "_const";
+			out.push_str("_const");
 		}
+		let args = self.arguments();
+		out.reserve(args.len() * 24);
 		for arg in args.as_ref() {
 			out.push('_');
-			let type_ref = arg.type_ref();
-			out += &type_ref.cpp_safe_id();
+			out.push_str(&arg.type_ref().cpp_name_ext(CppNameStyle::Declaration, "", false));
 		}
+		out.cleanup_name();
 		out
 	}
 

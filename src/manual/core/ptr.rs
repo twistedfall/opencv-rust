@@ -10,7 +10,7 @@ mod ptr_extern;
 mod ptr_f32;
 
 /// This is similar to Rust `Arc`, but handled by the C++. Some OpenCV functions insist on accepting `Ptr` instead of a heap
-/// allocated object so we need to satisfy those.
+/// allocated object, so we need to satisfy those.
 ///
 /// [docs.opencv.org 3.x](https://docs.opencv.org/3.4/d0/de7/structcv_1_1Ptr.html)
 /// [docs.opencv.org 4.x](https://en.cppreference.com/w/cpp/memory/shared_ptr)

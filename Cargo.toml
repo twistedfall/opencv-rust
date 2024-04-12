@@ -166,7 +166,7 @@ default = [
 	"xphoto",
 ]
 
-# OpenCV modules
+# OpenCV module features
 alphamat = []
 aruco = []
 aruco_detector = ["aruco"]
@@ -233,6 +233,8 @@ ximgproc = ["calib3d"]
 xobjdetect = []
 xphoto = ["photo"]
 wechat_qrcode = []
+
+# General features
 clang-runtime = ["opencv-binding-generator/clang-runtime"]
 
 [package.metadata.docs.rs]
