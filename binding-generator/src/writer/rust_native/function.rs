@@ -1,8 +1,8 @@
 use std::borrow::Cow;
 
-use crate::{IteratorExt, NameStyle};
 use crate::function::Function;
 use crate::type_ref::{ExternDir, Nullability};
+use crate::{IteratorExt, NameStyle};
 
 use super::element::RustElement;
 use super::type_ref::{NullabilityExt, TypeRefExt};

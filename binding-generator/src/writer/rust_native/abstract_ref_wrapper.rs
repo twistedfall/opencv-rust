@@ -2,13 +2,13 @@ use std::collections::HashMap;
 
 use once_cell::sync::Lazy;
 
-use crate::{AbstractRefWrapper, CompiledInterpolation, NameStyle, StrExt};
 use crate::type_ref::Constness;
 use crate::writer::rust_native::class::ClassExt;
 use crate::writer::rust_native::element::RustElement;
+use crate::{AbstractRefWrapper, CompiledInterpolation, NameStyle, StrExt};
 
-use super::RustNativeGeneratedElement;
 use super::type_ref::TypeRefExt;
+use super::RustNativeGeneratedElement;
 
 impl RustNativeGeneratedElement for AbstractRefWrapper<'_, '_> {
 	fn element_order(&self) -> u8 {

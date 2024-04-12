@@ -13,19 +13,19 @@ pub use func_id::FuncId;
 pub use kind::{FuncKind, OperatorKind, ReturnKind};
 use slice_arg_finder::SliceArgFinder;
 
-use crate::{
-	Class, debug, DefaultElement, Element, EntityExt, Field, GeneratedType, GeneratorEnv, IteratorExt, NameDebug, NameStyle,
-	settings, StrExt, StringExt, TypeRef,
-};
 use crate::comment::strip_doxygen_comment_markers;
 use crate::debug::{DefinitionLocation, LocationName};
 use crate::element::ExcludeKind;
 use crate::entity::WalkAction;
 use crate::field::FieldDesc;
-use crate::settings::{ARG_OVERRIDE_SELF, TypeRefFactory};
+use crate::settings::{TypeRefFactory, ARG_OVERRIDE_SELF};
 use crate::type_ref::{Constness, CppNameStyle, TypeRefDesc, TypeRefTypeHint};
 use crate::writer::rust_native::element::RustElement;
 use crate::writer::rust_native::type_ref::TypeRefExt;
+use crate::{
+	debug, settings, Class, DefaultElement, Element, EntityExt, Field, GeneratedType, GeneratorEnv, IteratorExt, NameDebug,
+	NameStyle, StrExt, StringExt, TypeRef,
+};
 
 mod desc;
 mod func_id;

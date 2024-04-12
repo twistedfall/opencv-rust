@@ -1,4 +1,3 @@
-use std::{env, fs, io, thread};
 use std::ffi::OsStr;
 use std::fs::{File, OpenOptions};
 use std::io::{BufRead, BufReader, BufWriter, Write};
@@ -6,11 +5,12 @@ use std::ops::Deref;
 use std::path::{Path, PathBuf};
 use std::process::Command;
 use std::time::Instant;
+use std::{env, fs, io, thread};
 
 use opencv_binding_generator::{Generator, IteratorExt};
 
-use super::{files_with_extension, files_with_predicate, Library, MODULES, OUT_DIR, Result, SRC_CPP_DIR, SRC_DIR};
 use super::docs::transfer_bindings_to_docs;
+use super::{files_with_extension, files_with_predicate, Library, Result, MODULES, OUT_DIR, SRC_CPP_DIR, SRC_DIR};
 
 pub struct BindingGenerator {
 	build_script_path: PathBuf,

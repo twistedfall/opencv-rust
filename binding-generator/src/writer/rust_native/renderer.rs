@@ -1,15 +1,15 @@
 use std::borrow::Cow;
 use std::fmt::Write;
 
-use crate::{Element, settings};
 use crate::renderer::TypeRefRenderer;
 use crate::type_ref::{
 	Constness, CppNameStyle, Dir, ExternDir, FishStyle, NameStyle, StrType, TemplateArg, TypeRef, TypeRefDesc, TypeRefKind,
 };
 use crate::writer::rust_native::element::RustElement;
 use crate::writer::rust_native::function::FunctionExt;
-use crate::writer::rust_native::type_ref::{Lifetime, NullabilityExt};
 use crate::writer::rust_native::type_ref::TypeRefExt;
+use crate::writer::rust_native::type_ref::{Lifetime, NullabilityExt};
+use crate::{settings, Element};
 
 fn render_rust_tpl<'a>(renderer: impl TypeRefRenderer<'a>, type_ref: &TypeRef, fish_style: FishStyle) -> String {
 	let generic_types = type_ref.template_specialization_args();

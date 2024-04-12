@@ -3,16 +3,16 @@ use std::collections::{HashMap, HashSet};
 
 use once_cell::sync::Lazy;
 
-use crate::{Class, CompiledInterpolation, CppNameStyle, EntityElement, Func, IteratorExt, NameStyle, StrExt, Tuple, TypeRef};
 use crate::class::ClassDesc;
 use crate::field::{Field, FieldDesc};
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
 use crate::type_ref::{Constness, FishStyle};
+use crate::{Class, CompiledInterpolation, CppNameStyle, EntityElement, Func, IteratorExt, NameStyle, StrExt, Tuple, TypeRef};
 
 use super::disambiguate_single_name;
 use super::element::{DefaultRustNativeElement, RustElement};
-use super::RustNativeGeneratedElement;
 use super::type_ref::TypeRefExt;
+use super::RustNativeGeneratedElement;
 
 impl RustElement for Tuple<'_, '_> {
 	fn rust_module(&self) -> Cow<str> {

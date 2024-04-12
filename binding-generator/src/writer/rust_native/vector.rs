@@ -3,17 +3,17 @@ use std::collections::HashMap;
 
 use once_cell::sync::Lazy;
 
-use crate::{Class, CompiledInterpolation, Func, IteratorExt, settings, StrExt, TypeRef, Vector};
 use crate::class::ClassDesc;
 use crate::field::{Field, FieldDesc};
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
 use crate::settings::ARG_OVERRIDE_SELF;
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle, TypeRefDesc, TypeRefTypeHint};
 use crate::writer::rust_native::RustStringExt;
+use crate::{settings, Class, CompiledInterpolation, Func, IteratorExt, StrExt, TypeRef, Vector};
 
 use super::element::RustElement;
-use super::RustNativeGeneratedElement;
 use super::type_ref::{Lifetime, TypeRefExt};
+use super::RustNativeGeneratedElement;
 
 impl RustElement for Vector<'_, '_> {
 	fn rust_module(&self) -> Cow<str> {

@@ -5,16 +5,16 @@ pub use lifetime::{Lifetime, LifetimeIterator};
 pub use nullability::NullabilityExt;
 
 use crate::renderer::TypeRefRenderer;
-use crate::StringExt;
 use crate::type_ref::{
 	Constness, Dir, ExternDir, FishStyle, InputOutputArrayKind, NameStyle, TypeRef, TypeRefKind, TypeRefTypeHint,
 };
 use crate::writer::rust_native::class::ClassExt;
 use crate::writer::rust_native::type_ref::render_lane::{
-	ByMoveRenderLane, CppPassByVoidPtrRenderLane, EnumRenderLane, FixedArrayRenderLane, FunctionRenderLane, Indirection,
-	IndirectRenderLane, InputArrayRenderLane, InputOutputArrayRenderLane, InStringRenderLane, OutputArrayRenderLane, OutStringRenderLane,
+	ByMoveRenderLane, CppPassByVoidPtrRenderLane, EnumRenderLane, FixedArrayRenderLane, FunctionRenderLane, InStringRenderLane,
+	IndirectRenderLane, Indirection, InputArrayRenderLane, InputOutputArrayRenderLane, OutStringRenderLane, OutputArrayRenderLane,
 	PrimitiveRenderLane, RenderLane, SimpleClassRenderLane, TraitClassRenderLane, VariableArrayRenderLane, VoidSliceRenderLane,
 };
+use crate::StringExt;
 
 use super::element::RustElement;
 use super::renderer::{RustExternRenderer, RustRenderer, RustReturnRenderer};

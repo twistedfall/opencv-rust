@@ -6,9 +6,9 @@ use clang::Type;
 
 pub use desc::VectorDesc;
 
-use crate::{DefaultElement, Element, GeneratedType, GeneratorEnv, StrExt, TypeRef};
 use crate::element::ExcludeKind;
 use crate::type_ref::{Constness, CppNameStyle, TemplateArg, TypeRefDesc, TypeRefKind};
+use crate::{DefaultElement, Element, GeneratedType, GeneratorEnv, StrExt, TypeRef};
 
 mod desc;
 

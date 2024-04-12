@@ -5,15 +5,15 @@ use std::borrow::Cow;
 use std::fmt;
 use std::rc::Rc;
 
-use clang::{Entity, EntityKind, EntityVisitResult};
 use clang::token::TokenKind;
+use clang::{Entity, EntityKind, EntityVisitResult};
 
-use crate::{constant, DefaultElement, Element, GeneratorEnv, StrExt};
 use crate::comment::strip_doxygen_comment_markers;
 use crate::debug::{DefinitionLocation, LocationName, NameDebug};
 use crate::element::ExcludeKind;
 use crate::settings::{ARGUMENT_NAMES_MULTIPLE_SLICE, ARGUMENT_NAMES_NOT_SLICE, ARGUMENT_NAMES_USERDATA};
 use crate::type_ref::{Constness, CppNameStyle, TypeRef, TypeRefKind, TypeRefTypeHint};
+use crate::{constant, DefaultElement, Element, GeneratorEnv, StrExt};
 
 /// Represents a field of a struct or a class or a function argument. Basically a name + type.
 #[derive(Clone)]

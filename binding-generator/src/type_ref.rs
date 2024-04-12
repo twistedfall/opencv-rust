@@ -1,24 +1,24 @@
-use Cow::{Borrowed, Owned};
 use std::borrow::Cow;
 use std::fmt;
 use std::rc::Rc;
+use Cow::{Borrowed, Owned};
 
 use clang::{Entity, Type};
 
 pub use desc::{ClangTypeExt, TypeRefDesc};
 pub use kind::{InputOutputArrayKind, TypeRefKind};
 pub use types::{
-	Constness, CppNameStyle, dbg_clang_type, Dir, ExternDir, FishStyle, NameStyle, Nullability, StrEnc, StrType, TemplateArg,
+	dbg_clang_type, Constness, CppNameStyle, Dir, ExternDir, FishStyle, NameStyle, Nullability, StrEnc, StrType, TemplateArg,
 	TypeRefTypeHint,
 };
 
-use crate::{AbstractRefWrapper, ClassSimplicity, ExportConfig, settings};
-use crate::{Class, Element, GeneratedType, GeneratorEnv, SmartPtr, StringExt, Vector};
 use crate::class::{ClassDesc, TemplateKind};
 use crate::element::ExcludeKind;
 use crate::renderer::{CppExternReturnRenderer, CppRenderer, TypeRefRenderer};
 use crate::vector::VectorDesc;
 use crate::writer::rust_native::type_ref::TypeRefExt;
+use crate::{settings, AbstractRefWrapper, ClassSimplicity, ExportConfig};
+use crate::{Class, Element, GeneratedType, GeneratorEnv, SmartPtr, StringExt, Vector};
 
 mod desc;
 mod kind;

@@ -154,7 +154,7 @@ impl<'r> CmakeProbe<'r> {
 					.map_or(false, |ext| ext.eq_ignore_ascii_case("framework"));
 				if has_extension {
 					link_libs.push(framework);
-				}else {
+				} else {
 					link_libs.push(format!("{}.framework", framework));
 				}
 			} else if !arg.starts_with('-') {

@@ -4,16 +4,16 @@ use std::iter;
 
 use once_cell::sync::Lazy;
 
-use crate::{Class, CompiledInterpolation, Element, Func, IteratorExt, NamePool, settings, StrExt};
 use crate::class::ClassKind;
 use crate::debug::NameDebug;
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
 use crate::type_ref::{Constness, CppNameStyle, ExternDir, FishStyle, NameStyle, TypeRef};
 use crate::writer::rust_native::func::{cpp_return_map, FuncExt};
+use crate::{settings, Class, CompiledInterpolation, Element, Func, IteratorExt, NamePool, StrExt};
 
 use super::element::{DefaultRustNativeElement, RustElement};
-use super::RustNativeGeneratedElement;
 use super::type_ref::TypeRefExt;
+use super::RustNativeGeneratedElement;
 
 fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 	static BOXED_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/class/boxed.tpl.rs").compile_interpolation());

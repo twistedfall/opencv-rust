@@ -1,6 +1,6 @@
-use std::{env, fs};
 use std::ffi::OsStr;
 use std::path::Path;
+use std::{env, fs};
 
 use super::{files_with_extension, GenerateFullBindings, MANIFEST_DIR, OUT_DIR};
 

@@ -2,10 +2,10 @@ use std::ffi::OsString;
 use std::iter::Peekable;
 use std::path::{Path, PathBuf};
 
-use opencv_binding_generator::Generator;
 use opencv_binding_generator::writer::RustNativeBindingWriter;
+use opencv_binding_generator::Generator;
 
-use super::{GenerateFullBindings, get_version_from_headers, Result};
+use super::{get_version_from_headers, GenerateFullBindings, Result};
 
 /// Because clang can't be used from multiple threads we run the binding generator helper for each
 /// module as a separate process. Building an additional helper binary from the build script is problematic,

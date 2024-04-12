@@ -1,11 +1,11 @@
 use std::borrow::Cow;
 
-use crate::{CppNameStyle, Enum, NameStyle};
 use crate::type_ref::{Constness, ExternDir, FishStyle, TypeRef};
 use crate::writer::rust_native::element::RustElement;
 use crate::writer::rust_native::type_ref::{Lifetime, TypeRefExt};
+use crate::{CppNameStyle, Enum, NameStyle};
 
-use super::{Indirection, RenderLaneTrait, rust_arg_func_decl, rust_self_func_decl};
+use super::{rust_arg_func_decl, rust_self_func_decl, Indirection, RenderLaneTrait};
 
 pub struct EnumRenderLane<'tu, 'ge> {
 	pub(crate) non_canonical: TypeRef<'tu, 'ge>,

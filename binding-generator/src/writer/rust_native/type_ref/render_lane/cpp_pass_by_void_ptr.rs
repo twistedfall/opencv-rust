@@ -1,10 +1,10 @@
 use std::borrow::Cow;
 
-use crate::{CppNameStyle, NameStyle};
 use crate::type_ref::{Constness, ExternDir, FishStyle, TypeRef};
 use crate::writer::rust_native::type_ref::{Lifetime, NullabilityExt, TypeRefExt};
+use crate::{CppNameStyle, NameStyle};
 
-use super::{RenderLaneTrait, rust_arg_func_decl, rust_self_func_decl};
+use super::{rust_arg_func_decl, rust_self_func_decl, RenderLaneTrait};
 
 pub struct CppPassByVoidPtrRenderLane<'tu, 'ge> {
 	non_canonical: TypeRef<'tu, 'ge>,

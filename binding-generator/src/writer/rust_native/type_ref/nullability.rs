@@ -1,7 +1,7 @@
 use std::borrow::Cow;
 
-use crate::NameStyle;
 use crate::type_ref::{Constness, Nullability};
+use crate::NameStyle;
 
 pub trait NullabilityExt {
 	fn rust_wrap_nullable_decl(self, typ: Cow<str>, name_style: NameStyle) -> Cow<str>;

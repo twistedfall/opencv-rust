@@ -1,17 +1,13 @@
-use std::{fmt, iter};
 use std::borrow::Cow;
 use std::collections::HashSet;
 use std::hash::{Hash, Hasher};
 use std::rc::Rc;
+use std::{fmt, iter};
 
 use clang::{Accessibility, Entity, EntityKind};
 
 pub use desc::ClassDesc;
 
-use crate::{
-	ClassSimplicity, Const, DefaultElement, Element, EntityExt, Enum, Field, Func, FuncTypeHint, GeneratedType, GeneratorEnv,
-	NameDebug, settings, StrExt,
-};
 use crate::comment::strip_doxygen_comment_markers;
 use crate::debug::{DefinitionLocation, LocationName};
 use crate::element::ExcludeKind;
@@ -20,6 +16,10 @@ use crate::field::FieldDesc;
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, FuncRustExtern, ReturnKind};
 use crate::type_ref::{Constness, CppNameStyle, StrEnc, StrType, TypeRef, TypeRefDesc, TypeRefTypeHint};
 use crate::writer::rust_native::element::RustElement;
+use crate::{
+	settings, ClassSimplicity, Const, DefaultElement, Element, EntityExt, Enum, Field, Func, FuncTypeHint, GeneratedType,
+	GeneratorEnv, NameDebug, StrExt,
+};
 
 mod desc;
 

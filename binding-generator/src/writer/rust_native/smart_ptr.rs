@@ -3,7 +3,6 @@ use std::collections::HashMap;
 
 use once_cell::sync::Lazy;
 
-use crate::{Class, CompiledInterpolation, Element, Func, IteratorExt, SmartPtr, StrExt};
 use crate::class::ClassDesc;
 use crate::field::{Field, FieldDesc};
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
@@ -11,11 +10,12 @@ use crate::smart_ptr::SmartPtrDesc;
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle, TypeRef, TypeRefKind};
 use crate::writer::rust_native::class::rust_generate_debug_fields;
 use crate::writer::rust_native::RustStringExt;
+use crate::{Class, CompiledInterpolation, Element, Func, IteratorExt, SmartPtr, StrExt};
 
 use super::class::ClassExt;
 use super::element::{DefaultRustNativeElement, RustElement};
-use super::RustNativeGeneratedElement;
 use super::type_ref::TypeRefExt;
+use super::RustNativeGeneratedElement;
 
 impl RustElement for SmartPtr<'_, '_> {
 	fn rust_module(&self) -> Cow<str> {

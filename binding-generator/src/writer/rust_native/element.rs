@@ -3,11 +3,11 @@ use std::fmt::Debug;
 
 use clang::{Entity, EntityKind};
 
+use crate::type_ref::FishStyle;
 use crate::{
-	CppNameStyle, Element, GeneratedType, IteratorExt, NameStyle, opencv_module_from_path, reserved_rename, settings, StrExt,
+	opencv_module_from_path, reserved_rename, settings, CppNameStyle, Element, GeneratedType, IteratorExt, NameStyle, StrExt,
 	StringExt,
 };
-use crate::type_ref::FishStyle;
 
 use super::comment::RenderComment;
 

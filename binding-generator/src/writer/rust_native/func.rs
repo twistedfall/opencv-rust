@@ -1,22 +1,22 @@
-use Cow::{Borrowed, Owned};
 use std::borrow::Cow;
 use std::collections::HashMap;
 use std::fmt::Write;
 use std::rc::Rc;
+use Cow::{Borrowed, Owned};
 
 use once_cell::sync::Lazy;
 
-use crate::{CompiledInterpolation, Element, Func, IteratorExt, NameDebug, reserved_rename, settings, StrExt, StringExt};
 use crate::field::Field;
 use crate::func::{FuncCppBody, FuncKind, FuncRustBody, FuncRustExtern, InheritConfig, OperatorKind, ReturnKind, Safety};
 use crate::name_pool::NamePool;
 use crate::settings::ARG_OVERRIDE_SELF;
 use crate::type_ref::{Constness, CppNameStyle, ExternDir, FishStyle, NameStyle, StrEnc, StrType, TypeRef, TypeRefTypeHint};
+use crate::{reserved_rename, settings, CompiledInterpolation, Element, Func, IteratorExt, NameDebug, StrExt, StringExt};
 
-use super::{comment, rust_disambiguate_names, RustNativeGeneratedElement};
 use super::comment::{render_ref, RenderComment};
 use super::element::{DefaultRustNativeElement, RustElement};
 use super::type_ref::{Lifetime, TypeRefExt};
+use super::{comment, rust_disambiguate_names, RustNativeGeneratedElement};
 
 pub trait FuncExt<'tu, 'ge> {
 	fn companion_functions(&self) -> Vec<Func<'tu, 'ge>>;

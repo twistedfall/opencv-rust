@@ -6,9 +6,9 @@ use clang::Entity;
 
 pub use desc::SmartPtrDesc;
 
-use crate::{DefaultElement, Element, GeneratedType, GeneratorEnv, StrExt};
 use crate::element::ExcludeKind;
 use crate::type_ref::{Constness, CppNameStyle, TypeRef, TypeRefDesc, TypeRefKind};
+use crate::{DefaultElement, Element, GeneratedType, GeneratorEnv, StrExt};
 
 mod desc;
 

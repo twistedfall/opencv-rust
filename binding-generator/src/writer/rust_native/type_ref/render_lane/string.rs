@@ -3,7 +3,7 @@ use std::borrow::Cow;
 use crate::type_ref::{Constness, ExternDir, StrEnc, StrType, TypeRef, TypeRefTypeHint};
 use crate::writer::rust_native::type_ref::{Lifetime, TypeRefExt};
 
-use super::{RenderLaneTrait, rust_arg_func_decl, rust_self_func_decl};
+use super::{rust_arg_func_decl, rust_self_func_decl, RenderLaneTrait};
 
 pub struct InStringRenderLane<'tu, 'ge> {
 	str_type: StrType,
