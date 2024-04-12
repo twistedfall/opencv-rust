@@ -143,11 +143,6 @@ impl<'tu, 'ge> ClassDesc<'tu, 'ge> {
 		Class::new_desc(Self::boxed("cv::Feature2D", "features2d"))
 	}
 
-	/// `cv::dnn::LayerParams`
-	pub fn cv_dnn_layerparams() -> Class<'tu, 'ge> {
-		Class::new_desc(Self::boxed("cv::dnn::LayerParams", "dnn"))
-	}
-
 	/// `cv::dnn::DictValue`
 	pub fn cv_dnn_dict_value() -> Class<'tu, 'ge> {
 		Class::new_desc(Self::boxed("cv::dnn::DictValue", "dnn"))

@@ -79,8 +79,6 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 	let mut field_const_methods = const_methods.clone();
 	let methods = c.methods();
 
-	let needs_default_ctor = needs_default_ctor(class_kind, c, methods.iter());
-
 	// make some more room for companion funcs
 	const_methods.reserve(methods.len());
 	mut_methods.reserve(methods.len());
@@ -273,7 +271,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			needs_default_impl = true;
 		}
 	}
-	if needs_default_ctor {
+	if needs_default_ctor(c, class_kind) {
 		let extern_default_new = method_default_new(c.clone(), type_ref.clone()).identifier();
 		inherent_methods.push_str(&DEFAULT_CTOR.interpolate(&HashMap::from([("extern_default_new", extern_default_new)])));
 		inherent_methods_pool.add_name("default");
@@ -447,11 +445,8 @@ impl RustNativeGeneratedElement for Class<'_, '_> {
 }
 
 fn extern_functions<'tu, 'ge>(c: &Class<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
-	let methods = c.methods();
-
-	let needs_default_ctor = needs_default_ctor(c.kind(), c, methods.iter());
-
-	let mut out = methods
+	let mut out = c
+		.methods()
 		.into_iter()
 		.filter(|m| m.exclude_kind().is_included())
 		.flat_map(|m| {
@@ -463,7 +458,7 @@ fn extern_functions<'tu, 'ge>(c: &Class<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
 	if c.has_implicit_clone() {
 		out.push(method_implicit_clone(c.clone(), c.type_ref()));
 	}
-	if needs_default_ctor {
+	if needs_default_ctor(c, c.kind()) {
 		out.push(method_default_new(c.clone(), c.type_ref()));
 	}
 	if c.kind().is_boxed() {
@@ -488,10 +483,8 @@ fn extern_functions<'tu, 'ge>(c: &Class<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
 	out
 }
 
-fn needs_default_ctor<'r>(kind: ClassKind, c: &Class, mut methods: impl Iterator<Item = &'r Func<'r, 'r>>) -> bool {
-	matches!(kind, ClassKind::BoxedForced)
-		&& !c.is_abstract()
-		&& methods.all(|m| !m.kind().as_constructor().is_some() || m.exclude_kind().is_excluded())
+fn needs_default_ctor<'r>(c: &Class, kind: ClassKind) -> bool {
+	kind.is_boxed() && !c.is_abstract() && c.has_implicit_default_constructor()
 }
 
 fn all_bases<'tu, 'ge>(cls: &Class<'tu, 'ge>) -> Vec<Class<'tu, 'ge>> {

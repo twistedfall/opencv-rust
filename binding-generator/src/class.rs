@@ -199,6 +199,21 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		!self.is_abstract() && matches!(self.kind(), ClassKind::BoxedForced) && !self.has_virtual_destructor()
 	}
 
+	pub fn has_implicit_default_constructor(&self) -> bool {
+		match self {
+			&Self::Clang { entity, .. } => !entity
+				.walk_children_while(|f| {
+					if matches!(f.get_kind(), EntityKind::Constructor) {
+						WalkAction::Interrupt
+					} else {
+						WalkAction::Continue
+					}
+				})
+				.is_interrupted(),
+			Self::Desc(_) => false,
+		}
+	}
+
 	pub fn has_virtual_destructor(&self) -> bool {
 		match self {
 			Class::Clang { entity, .. } => entity
