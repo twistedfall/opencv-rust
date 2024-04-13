@@ -1467,41 +1467,41 @@ pub mod viz {
 	
 		/// point coordinates of type CV_32FC3 or CV_64FC3 with only 1 row
 		#[inline]
-		fn set_cloud(&mut self, val: impl core::MatTraitConst) {
+		fn set_cloud(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_viz_Mesh_propCloud_const_Mat(self.as_raw_mut_Mesh(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// point color of type CV_8UC3 or CV_8UC4 with only 1 row
 		#[inline]
-		fn set_colors(&mut self, val: impl core::MatTraitConst) {
+		fn set_colors(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_viz_Mesh_propColors_const_Mat(self.as_raw_mut_Mesh(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// point normals of type CV_32FC3, CV_32FC4, CV_64FC3 or CV_64FC4 with only 1 row
 		#[inline]
-		fn set_normals(&mut self, val: impl core::MatTraitConst) {
+		fn set_normals(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_viz_Mesh_propNormals_const_Mat(self.as_raw_mut_Mesh(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// CV_32SC1 with only 1 row
 		#[inline]
-		fn set_polygons(&mut self, val: impl core::MatTraitConst) {
+		fn set_polygons(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_viz_Mesh_propPolygons_const_Mat(self.as_raw_mut_Mesh(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_texture(&mut self, val: impl core::MatTraitConst) {
+		fn set_texture(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_viz_Mesh_propTexture_const_Mat(self.as_raw_mut_Mesh(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// CV_32FC2 or CV_64FC2 with only 1 row
 		#[inline]
-		fn set_tcoords(&mut self, val: impl core::MatTraitConst) {
+		fn set_tcoords(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_viz_Mesh_propTcoords_const_Mat(self.as_raw_mut_Mesh(), val.as_raw_Mat()) };
 			ret
 		}

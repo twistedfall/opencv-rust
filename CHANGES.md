@@ -1,3 +1,11 @@
+* 0.90.0
+  * Automatically generate default constructors for classes where posssible.
+  * Backwards-incompatible changes:
+    * `LayerParams::default()` can no longer fail, so it returns `Self` without `Result`.
+    * `GpuMat::default()` is now `GpuMat::new_def()`.
+    * Automatically named functions (*_1) in `features2d` module were given proper names.
+    * Generate bindings to `float16_t` and `hfloat` types to fix the build with the current OpenCV master.
+
 * 0.89.0
   * All functions accepting classes now take `impl ClassTrait` instead of `Class` directly. This allows passing other objects
     that implement the same trait. This change should be backwards compatible.

@@ -473,13 +473,13 @@ pub mod features2d {
 	/// @overload
 	/// 
 	/// ## Note
-	/// This alternative version of [draw_matches_1] function uses the following default values for its arguments:
+	/// This alternative version of [draw_matches_with_thickness] function uses the following default values for its arguments:
 	/// * match_color: Scalar::all(-1)
 	/// * single_point_color: Scalar::all(-1)
 	/// * matches_mask: std::vector<char>()
 	/// * flags: DrawMatchesFlags::DEFAULT
 	#[inline]
-	pub fn draw_matches_1_def(img1: &impl ToInputArray, keypoints1: &core::Vector<core::KeyPoint>, img2: &impl ToInputArray, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::DMatch>, out_img: &mut impl ToInputOutputArray, matches_thickness: i32) -> Result<()> {
+	pub fn draw_matches_with_thickness_def(img1: &impl ToInputArray, keypoints1: &core::Vector<core::KeyPoint>, img2: &impl ToInputArray, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::DMatch>, out_img: &mut impl ToInputOutputArray, matches_thickness: i32) -> Result<()> {
 		input_array_arg!(img1);
 		input_array_arg!(img2);
 		input_output_array_arg!(out_img);
@@ -521,7 +521,7 @@ pub mod features2d {
 	/// * matches_mask: std::vector<char>()
 	/// * flags: DrawMatchesFlags::DEFAULT
 	#[inline]
-	pub fn draw_matches_1(img1: &impl ToInputArray, keypoints1: &core::Vector<core::KeyPoint>, img2: &impl ToInputArray, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::DMatch>, out_img: &mut impl ToInputOutputArray, matches_thickness: i32, match_color: core::Scalar, single_point_color: core::Scalar, matches_mask: &core::Vector<c_char>, flags: crate::features2d::DrawMatchesFlags) -> Result<()> {
+	pub fn draw_matches_with_thickness(img1: &impl ToInputArray, keypoints1: &core::Vector<core::KeyPoint>, img2: &impl ToInputArray, keypoints2: &core::Vector<core::KeyPoint>, matches1to2: &core::Vector<core::DMatch>, out_img: &mut impl ToInputOutputArray, matches_thickness: i32, match_color: core::Scalar, single_point_color: core::Scalar, matches_mask: &core::Vector<c_char>, flags: crate::features2d::DrawMatchesFlags) -> Result<()> {
 		input_array_arg!(img1);
 		input_array_arg!(img2);
 		input_output_array_arg!(out_img);
@@ -1653,7 +1653,7 @@ pub mod features2d {
 		/// * dmatcher: Descriptor matcher that is used to find the nearest word of the trained vocabulary
 		/// for each keypoint descriptor of the image.
 		#[inline]
-		pub fn new(dextractor: &core::Ptr<crate::features2d::Feature2D>, dmatcher: &core::Ptr<crate::features2d::DescriptorMatcher>) -> Result<crate::features2d::BOWImgDescriptorExtractor> {
+		pub fn new_with_extractor(dextractor: &core::Ptr<crate::features2d::Feature2D>, dmatcher: &core::Ptr<crate::features2d::DescriptorMatcher>) -> Result<crate::features2d::BOWImgDescriptorExtractor> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_const_PtrLFeature2DGR_const_PtrLDescriptorMatcherGR(dextractor.as_raw_PtrOfFeature2D(), dmatcher.as_raw_PtrOfDescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1672,7 +1672,7 @@ pub mod features2d {
 		/// 
 		/// ## Overloaded parameters
 		#[inline]
-		pub fn new_1(dmatcher: &core::Ptr<crate::features2d::DescriptorMatcher>) -> Result<crate::features2d::BOWImgDescriptorExtractor> {
+		pub fn new(dmatcher: &core::Ptr<crate::features2d::DescriptorMatcher>) -> Result<crate::features2d::BOWImgDescriptorExtractor> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_const_PtrLDescriptorMatcherGR(dmatcher.as_raw_PtrOfDescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -1706,7 +1706,7 @@ pub mod features2d {
 		}
 		
 		#[inline]
-		fn cluster_1(&self, descriptors: &impl core::MatTraitConst) -> Result<core::Mat> {
+		fn cluster_with_descriptor(&self, descriptors: &impl core::MatTraitConst) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BOWKMeansTrainer_cluster_const_const_MatR(self.as_raw_BOWKMeansTrainer(), descriptors.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2501,7 +2501,7 @@ pub mod features2d {
 		}
 		
 		#[inline]
-		fn write_1(&self, unnamed: &mut impl core::FileStorageTrait) -> Result<()> {
+		fn write_to_storage(&self, unnamed: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_write_const_FileStorageR(self.as_raw_DescriptorMatcher(), unnamed.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2550,7 +2550,7 @@ pub mod features2d {
 		}
 		
 		#[inline]
-		fn write_2(&self, fs: &mut impl core::FileStorageTrait, name: &str) -> Result<()> {
+		fn write_to_storage_with_name(&self, fs: &mut impl core::FileStorageTrait, name: &str) -> Result<()> {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_write_const_FileStorageR_const_StringR(self.as_raw_DescriptorMatcher(), fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
@@ -2560,7 +2560,7 @@ pub mod features2d {
 		}
 		
 		#[inline]
-		fn write_3(&self, fs: &core::Ptr<core::FileStorage>, name: &str) -> Result<()> {
+		fn write_to_storage_ptr_with_name(&self, fs: &core::Ptr<core::FileStorage>, name: &str) -> Result<()> {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_write_const_const_PtrLFileStorageGR_const_StringR(self.as_raw_DescriptorMatcher(), fs.as_raw_PtrOfFileStorage(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
@@ -2833,7 +2833,7 @@ pub mod features2d {
 		}
 		
 		#[inline]
-		fn read_1(&mut self, unnamed: &impl core::FileNodeTraitConst) -> Result<()> {
+		fn read_from_node(&mut self, unnamed: &impl core::FileNodeTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DescriptorMatcher_read_const_FileNodeR(self.as_raw_mut_DescriptorMatcher(), unnamed.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3139,7 +3139,7 @@ pub mod features2d {
 		}
 		
 		#[inline]
-		fn write_1(&self, unnamed: &mut impl core::FileStorageTrait) -> Result<()> {
+		fn write_to_storage(&self, unnamed: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_write_const_FileStorageR(self.as_raw_Feature2D(), unnamed.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3168,7 +3168,7 @@ pub mod features2d {
 		}
 		
 		#[inline]
-		fn write_2(&self, fs: &mut impl core::FileStorageTrait, name: &str) -> Result<()> {
+		fn write_to_storage_with_name(&self, fs: &mut impl core::FileStorageTrait, name: &str) -> Result<()> {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_write_const_FileStorageR_const_StringR(self.as_raw_Feature2D(), fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
@@ -3178,7 +3178,7 @@ pub mod features2d {
 		}
 		
 		#[inline]
-		fn write_3(&self, fs: &core::Ptr<core::FileStorage>, name: &str) -> Result<()> {
+		fn write_to_storage_ptr_with_name(&self, fs: &core::Ptr<core::FileStorage>, name: &str) -> Result<()> {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_write_const_const_PtrLFileStorageGR_const_StringR(self.as_raw_Feature2D(), fs.as_raw_PtrOfFileStorage(), name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
@@ -3387,7 +3387,7 @@ pub mod features2d {
 		}
 		
 		#[inline]
-		fn read_1(&mut self, unnamed: &impl core::FileNodeTraitConst) -> Result<()> {
+		fn read_from_node(&mut self, unnamed: &impl core::FileNodeTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Feature2D_read_const_FileNodeR(self.as_raw_mut_Feature2D(), unnamed.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3433,6 +3433,12 @@ pub mod features2d {
 	boxed_ref! { Feature2D, crate::features2d::Feature2DTraitConst, as_raw_Feature2D, crate::features2d::Feature2DTrait, as_raw_mut_Feature2D }
 	
 	impl Feature2D {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_Feature2D_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_descendant! { Feature2D, crate::features2d::AKAZE, cv_Feature2D_to_AKAZE }
@@ -3464,6 +3470,14 @@ pub mod features2d {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Feature2D")
 				.finish()
+		}
+	}
+	
+	impl Default for Feature2D {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -5320,7 +5334,7 @@ pub mod features2d {
 		/// ## C++ default parameters
 		/// * enable_precise_upscale: false
 		#[inline]
-		pub fn create_1(nfeatures: i32, n_octave_layers: i32, contrast_threshold: f64, edge_threshold: f64, sigma: f64, descriptor_type: i32, enable_precise_upscale: bool) -> Result<core::Ptr<crate::features2d::SIFT>> {
+		pub fn create_with_descriptor_type(nfeatures: i32, n_octave_layers: i32, contrast_threshold: f64, edge_threshold: f64, sigma: f64, descriptor_type: i32, enable_precise_upscale: bool) -> Result<core::Ptr<crate::features2d::SIFT>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SIFT_create_int_int_double_double_double_int_bool(nfeatures, n_octave_layers, contrast_threshold, edge_threshold, sigma, descriptor_type, enable_precise_upscale, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -5359,10 +5373,10 @@ pub mod features2d {
 		/// is disabled by default.
 		/// 
 		/// ## Note
-		/// This alternative version of [SIFT::create] function uses the following default values for its arguments:
+		/// This alternative version of [SIFT::create_with_descriptor_type] function uses the following default values for its arguments:
 		/// * enable_precise_upscale: false
 		#[inline]
-		pub fn create_def_1(nfeatures: i32, n_octave_layers: i32, contrast_threshold: f64, edge_threshold: f64, sigma: f64, descriptor_type: i32) -> Result<core::Ptr<crate::features2d::SIFT>> {
+		pub fn create_with_descriptor_type_def(nfeatures: i32, n_octave_layers: i32, contrast_threshold: f64, edge_threshold: f64, sigma: f64, descriptor_type: i32) -> Result<core::Ptr<crate::features2d::SIFT>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SIFT_create_int_int_double_double_double_int(nfeatures, n_octave_layers, contrast_threshold, edge_threshold, sigma, descriptor_type, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

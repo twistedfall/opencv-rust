@@ -285,6 +285,12 @@ pub mod videostab {
 	boxed_ref! { ColorAverageInpainter, crate::videostab::ColorAverageInpainterTraitConst, as_raw_ColorAverageInpainter, crate::videostab::ColorAverageInpainterTrait, as_raw_mut_ColorAverageInpainter }
 	
 	impl ColorAverageInpainter {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_videostab_ColorAverageInpainter_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { ColorAverageInpainter, crate::videostab::InpainterBase, cv_videostab_ColorAverageInpainter_to_InpainterBase }
@@ -294,6 +300,14 @@ pub mod videostab {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ColorAverageInpainter")
 				.finish()
+		}
+	}
+	
+	impl Default for ColorAverageInpainter {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -1861,6 +1875,12 @@ pub mod videostab {
 	boxed_ref! { InpaintingPipeline, crate::videostab::InpaintingPipelineTraitConst, as_raw_InpaintingPipeline, crate::videostab::InpaintingPipelineTrait, as_raw_mut_InpaintingPipeline }
 	
 	impl InpaintingPipeline {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_videostab_InpaintingPipeline_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { InpaintingPipeline, crate::videostab::InpainterBase, cv_videostab_InpaintingPipeline_to_InpainterBase }
@@ -1870,6 +1890,14 @@ pub mod videostab {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("InpaintingPipeline")
 				.finish()
+		}
+	}
+	
+	impl Default for InpaintingPipeline {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -2299,6 +2327,12 @@ pub mod videostab {
 	boxed_ref! { LogToStdout, crate::videostab::LogToStdoutTraitConst, as_raw_LogToStdout, crate::videostab::LogToStdoutTrait, as_raw_mut_LogToStdout }
 	
 	impl LogToStdout {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_videostab_LogToStdout_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { LogToStdout, crate::videostab::ILog, cv_videostab_LogToStdout_to_ILog }
@@ -2308,6 +2342,14 @@ pub mod videostab {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("LogToStdout")
 				.finish()
+		}
+	}
+	
+	impl Default for LogToStdout {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -2687,6 +2729,12 @@ pub mod videostab {
 	boxed_ref! { MoreAccurateMotionWobbleSuppressor, crate::videostab::MoreAccurateMotionWobbleSuppressorTraitConst, as_raw_MoreAccurateMotionWobbleSuppressor, crate::videostab::MoreAccurateMotionWobbleSuppressorTrait, as_raw_mut_MoreAccurateMotionWobbleSuppressor }
 	
 	impl MoreAccurateMotionWobbleSuppressor {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_videostab_MoreAccurateMotionWobbleSuppressor_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { MoreAccurateMotionWobbleSuppressor, crate::videostab::MoreAccurateMotionWobbleSuppressorBase, cv_videostab_MoreAccurateMotionWobbleSuppressor_to_MoreAccurateMotionWobbleSuppressorBase }
@@ -2698,6 +2746,14 @@ pub mod videostab {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MoreAccurateMotionWobbleSuppressor")
 				.finish()
+		}
+	}
+	
+	impl Default for MoreAccurateMotionWobbleSuppressor {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -2859,6 +2915,12 @@ pub mod videostab {
 	boxed_ref! { MoreAccurateMotionWobbleSuppressorGpu, crate::videostab::MoreAccurateMotionWobbleSuppressorGpuTraitConst, as_raw_MoreAccurateMotionWobbleSuppressorGpu, crate::videostab::MoreAccurateMotionWobbleSuppressorGpuTrait, as_raw_mut_MoreAccurateMotionWobbleSuppressorGpu }
 	
 	impl MoreAccurateMotionWobbleSuppressorGpu {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_videostab_MoreAccurateMotionWobbleSuppressorGpu_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { MoreAccurateMotionWobbleSuppressorGpu, crate::videostab::MoreAccurateMotionWobbleSuppressorBase, cv_videostab_MoreAccurateMotionWobbleSuppressorGpu_to_MoreAccurateMotionWobbleSuppressorBase }
@@ -2870,6 +2932,14 @@ pub mod videostab {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MoreAccurateMotionWobbleSuppressorGpu")
 				.finish()
+		}
+	}
+	
+	impl Default for MoreAccurateMotionWobbleSuppressorGpu {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -3575,6 +3645,12 @@ pub mod videostab {
 	boxed_ref! { MotionStabilizationPipeline, crate::videostab::MotionStabilizationPipelineTraitConst, as_raw_MotionStabilizationPipeline, crate::videostab::MotionStabilizationPipelineTrait, as_raw_mut_MotionStabilizationPipeline }
 	
 	impl MotionStabilizationPipeline {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_videostab_MotionStabilizationPipeline_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { MotionStabilizationPipeline, crate::videostab::IMotionStabilizer, cv_videostab_MotionStabilizationPipeline_to_IMotionStabilizer }
@@ -3584,6 +3660,14 @@ pub mod videostab {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MotionStabilizationPipeline")
 				.finish()
+		}
+	}
+	
+	impl Default for MotionStabilizationPipeline {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -3644,6 +3728,12 @@ pub mod videostab {
 	boxed_ref! { NullDeblurer, crate::videostab::NullDeblurerTraitConst, as_raw_NullDeblurer, crate::videostab::NullDeblurerTrait, as_raw_mut_NullDeblurer }
 	
 	impl NullDeblurer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_videostab_NullDeblurer_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { NullDeblurer, crate::videostab::DeblurerBase, cv_videostab_NullDeblurer_to_DeblurerBase }
@@ -3653,6 +3743,14 @@ pub mod videostab {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("NullDeblurer")
 				.finish()
+		}
+	}
+	
+	impl Default for NullDeblurer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -3723,6 +3821,12 @@ pub mod videostab {
 	boxed_ref! { NullFrameSource, crate::videostab::NullFrameSourceTraitConst, as_raw_NullFrameSource, crate::videostab::NullFrameSourceTrait, as_raw_mut_NullFrameSource }
 	
 	impl NullFrameSource {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_videostab_NullFrameSource_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { NullFrameSource, crate::videostab::IFrameSource, cv_videostab_NullFrameSource_to_IFrameSource }
@@ -3732,6 +3836,14 @@ pub mod videostab {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("NullFrameSource")
 				.finish()
+		}
+	}
+	
+	impl Default for NullFrameSource {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -3792,6 +3904,12 @@ pub mod videostab {
 	boxed_ref! { NullInpainter, crate::videostab::NullInpainterTraitConst, as_raw_NullInpainter, crate::videostab::NullInpainterTrait, as_raw_mut_NullInpainter }
 	
 	impl NullInpainter {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_videostab_NullInpainter_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { NullInpainter, crate::videostab::InpainterBase, cv_videostab_NullInpainter_to_InpainterBase }
@@ -3801,6 +3919,14 @@ pub mod videostab {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("NullInpainter")
 				.finish()
+		}
+	}
+	
+	impl Default for NullInpainter {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -3862,6 +3988,12 @@ pub mod videostab {
 	boxed_ref! { NullLog, crate::videostab::NullLogTraitConst, as_raw_NullLog, crate::videostab::NullLogTrait, as_raw_mut_NullLog }
 	
 	impl NullLog {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_videostab_NullLog_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { NullLog, crate::videostab::ILog, cv_videostab_NullLog_to_ILog }
@@ -3871,6 +4003,14 @@ pub mod videostab {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("NullLog")
 				.finish()
+		}
+	}
+	
+	impl Default for NullLog {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -3934,6 +4074,12 @@ pub mod videostab {
 	boxed_ref! { NullOutlierRejector, crate::videostab::NullOutlierRejectorTraitConst, as_raw_NullOutlierRejector, crate::videostab::NullOutlierRejectorTrait, as_raw_mut_NullOutlierRejector }
 	
 	impl NullOutlierRejector {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_videostab_NullOutlierRejector_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { NullOutlierRejector, crate::videostab::IOutlierRejector, cv_videostab_NullOutlierRejector_to_IOutlierRejector }
@@ -3943,6 +4089,14 @@ pub mod videostab {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("NullOutlierRejector")
 				.finish()
+		}
+	}
+	
+	impl Default for NullOutlierRejector {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -4003,6 +4157,12 @@ pub mod videostab {
 	boxed_ref! { NullWobbleSuppressor, crate::videostab::NullWobbleSuppressorTraitConst, as_raw_NullWobbleSuppressor, crate::videostab::NullWobbleSuppressorTrait, as_raw_mut_NullWobbleSuppressor }
 	
 	impl NullWobbleSuppressor {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_videostab_NullWobbleSuppressor_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { NullWobbleSuppressor, crate::videostab::WobbleSuppressorBase, cv_videostab_NullWobbleSuppressor_to_WobbleSuppressorBase }
@@ -4012,6 +4172,14 @@ pub mod videostab {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("NullWobbleSuppressor")
 				.finish()
+		}
+	}
+	
+	impl Default for NullWobbleSuppressor {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -4468,6 +4636,12 @@ pub mod videostab {
 	boxed_ref! { SparsePyrLkOptFlowEstimator, crate::videostab::SparsePyrLkOptFlowEstimatorTraitConst, as_raw_SparsePyrLkOptFlowEstimator, crate::videostab::SparsePyrLkOptFlowEstimatorTrait, as_raw_mut_SparsePyrLkOptFlowEstimator }
 	
 	impl SparsePyrLkOptFlowEstimator {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_videostab_SparsePyrLkOptFlowEstimator_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { SparsePyrLkOptFlowEstimator, crate::videostab::ISparseOptFlowEstimator, cv_videostab_SparsePyrLkOptFlowEstimator_to_ISparseOptFlowEstimator }
@@ -4479,6 +4653,14 @@ pub mod videostab {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SparsePyrLkOptFlowEstimator")
 				.finish()
+		}
+	}
+	
+	impl Default for SparsePyrLkOptFlowEstimator {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	

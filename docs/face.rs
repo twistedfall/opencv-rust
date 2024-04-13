@@ -912,7 +912,7 @@ pub mod face {
 		}
 		
 		#[inline]
-		fn set_face_cascade(&mut self, val: impl crate::objdetect::CascadeClassifierTraitConst) {
+		fn set_face_cascade(&mut self, val: crate::objdetect::CascadeClassifier) {
 			let ret = unsafe { sys::cv_face_CParams_propFace_cascade_const_CascadeClassifier(self.as_raw_mut_CParams(), val.as_raw_CascadeClassifier()) };
 			ret
 		}
@@ -2018,7 +2018,7 @@ pub mod face {
 		fn as_raw_mut_FacemarkAAM_Config(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn set_r(&mut self, val: impl core::MatTraitConst) {
+		fn set_r(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Config_propR_const_Mat(self.as_raw_mut_FacemarkAAM_Config(), val.as_raw_Mat()) };
 			ret
 		}
@@ -2167,6 +2167,12 @@ pub mod face {
 	boxed_ref! { FacemarkAAM_Data, crate::face::FacemarkAAM_DataTraitConst, as_raw_FacemarkAAM_Data, crate::face::FacemarkAAM_DataTrait, as_raw_mut_FacemarkAAM_Data }
 	
 	impl FacemarkAAM_Data {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_face_FacemarkAAM_Data_defaultNew_const()) }
+		}
+		
 	}
 	
 	impl std::fmt::Debug for FacemarkAAM_Data {
@@ -2175,6 +2181,14 @@ pub mod face {
 			f.debug_struct("FacemarkAAM_Data")
 				.field("s0", &crate::face::FacemarkAAM_DataTraitConst::s0(self))
 				.finish()
+		}
+	}
+	
+	impl Default for FacemarkAAM_Data {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -2255,13 +2269,13 @@ pub mod face {
 		}
 		
 		#[inline]
-		fn set_s(&mut self, val: impl core::MatTraitConst) {
+		fn set_s(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_propS_const_Mat(self.as_raw_mut_FacemarkAAM_Model(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_q(&mut self, val: impl core::MatTraitConst) {
+		fn set_q(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_propQ_const_Mat(self.as_raw_mut_FacemarkAAM_Model(), val.as_raw_Mat()) };
 			ret
 		}
@@ -2295,6 +2309,12 @@ pub mod face {
 	boxed_ref! { FacemarkAAM_Model, crate::face::FacemarkAAM_ModelTraitConst, as_raw_FacemarkAAM_Model, crate::face::FacemarkAAM_ModelTrait, as_raw_mut_FacemarkAAM_Model }
 	
 	impl FacemarkAAM_Model {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_face_FacemarkAAM_Model_defaultNew_const()) }
+		}
+		
 	}
 	
 	impl std::fmt::Debug for FacemarkAAM_Model {
@@ -2308,6 +2328,14 @@ pub mod face {
 				.field("s", &crate::face::FacemarkAAM_ModelTraitConst::s(self))
 				.field("q", &crate::face::FacemarkAAM_ModelTraitConst::q(self))
 				.finish()
+		}
+	}
+	
+	impl Default for FacemarkAAM_Model {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -2406,25 +2434,25 @@ pub mod face {
 		}
 		
 		#[inline]
-		fn set_a(&mut self, val: impl core::MatTraitConst) {
+		fn set_a(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_Texture_propA_const_Mat(self.as_raw_mut_FacemarkAAM_Model_Texture(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_a0(&mut self, val: impl core::MatTraitConst) {
+		fn set_a0(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_Texture_propA0_const_Mat(self.as_raw_mut_FacemarkAAM_Model_Texture(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_aa(&mut self, val: impl core::MatTraitConst) {
+		fn set_aa(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_Texture_propAA_const_Mat(self.as_raw_mut_FacemarkAAM_Model_Texture(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_aa0(&mut self, val: impl core::MatTraitConst) {
+		fn set_aa0(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_Texture_propAA0_const_Mat(self.as_raw_mut_FacemarkAAM_Model_Texture(), val.as_raw_Mat()) };
 			ret
 		}
@@ -2481,6 +2509,12 @@ pub mod face {
 	boxed_ref! { FacemarkAAM_Model_Texture, crate::face::FacemarkAAM_Model_TextureTraitConst, as_raw_FacemarkAAM_Model_Texture, crate::face::FacemarkAAM_Model_TextureTrait, as_raw_mut_FacemarkAAM_Model_Texture }
 	
 	impl FacemarkAAM_Model_Texture {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_face_FacemarkAAM_Model_Texture_defaultNew_const()) }
+		}
+		
 	}
 	
 	impl std::fmt::Debug for FacemarkAAM_Model_Texture {
@@ -2498,6 +2532,14 @@ pub mod face {
 				.field("ind1", &crate::face::FacemarkAAM_Model_TextureTraitConst::ind1(self))
 				.field("ind2", &crate::face::FacemarkAAM_Model_TextureTraitConst::ind2(self))
 				.finish()
+		}
+	}
+	
+	impl Default for FacemarkAAM_Model_Texture {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	

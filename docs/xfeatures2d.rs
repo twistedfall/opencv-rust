@@ -454,37 +454,37 @@ pub mod xfeatures2d {
 		}
 		
 		#[inline]
-		fn set_sum(&mut self, val: impl core::GpuMatTraitConst) {
+		fn set_sum(&mut self, val: core::GpuMat) {
 			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propSum_const_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_GpuMat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_mask1(&mut self, val: impl core::GpuMatTraitConst) {
+		fn set_mask1(&mut self, val: core::GpuMat) {
 			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propMask1_const_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_GpuMat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_mask_sum(&mut self, val: impl core::GpuMatTraitConst) {
+		fn set_mask_sum(&mut self, val: core::GpuMat) {
 			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propMaskSum_const_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_GpuMat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_det(&mut self, val: impl core::GpuMatTraitConst) {
+		fn set_det(&mut self, val: core::GpuMat) {
 			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propDet_const_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_GpuMat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_trace(&mut self, val: impl core::GpuMatTraitConst) {
+		fn set_trace(&mut self, val: core::GpuMat) {
 			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propTrace_const_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_GpuMat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_max_pos_buffer(&mut self, val: impl core::GpuMatTraitConst) {
+		fn set_max_pos_buffer(&mut self, val: core::GpuMat) {
 			let ret = unsafe { sys::cv_cuda_SURF_CUDA_propMaxPosBuffer_const_GpuMat(self.as_raw_mut_SURF_CUDA(), val.as_raw_GpuMat()) };
 			ret
 		}
@@ -4815,6 +4815,12 @@ pub mod xfeatures2d {
 	boxed_ref! { TEBLID, crate::xfeatures2d::TEBLIDTraitConst, as_raw_TEBLID, crate::xfeatures2d::TEBLIDTrait, as_raw_mut_TEBLID }
 	
 	impl TEBLID {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_xfeatures2d_TEBLID_defaultNew_const()) }
+		}
+		
 		/// Creates the TEBLID descriptor.
 		/// ## Parameters
 		/// * scale_factor: Adjust the sampling window around detected keypoints:
@@ -4871,6 +4877,14 @@ pub mod xfeatures2d {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("TEBLID")
 				.finish()
+		}
+	}
+	
+	impl Default for TEBLID {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	

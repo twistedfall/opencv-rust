@@ -6147,6 +6147,8 @@ pub mod gapi {
 	boxed_ref! { GArrayDesc, crate::gapi::GArrayDescTraitConst, as_raw_GArrayDesc, crate::gapi::GArrayDescTrait, as_raw_mut_GArrayDesc }
 	
 	impl GArrayDesc {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
 		fn default() -> Self {
 			unsafe { Self::from_raw(sys::cv_GArrayDesc_defaultNew_const()) }
 		}
@@ -7618,6 +7620,12 @@ pub mod gapi {
 	boxed_ref! { GFrameDesc, crate::gapi::GFrameDescTraitConst, as_raw_GFrameDesc, crate::gapi::GFrameDescTrait, as_raw_mut_GFrameDesc }
 	
 	impl GFrameDesc {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_GFrameDesc_defaultNew_const()) }
+		}
+		
 	}
 	
 	impl std::fmt::Debug for GFrameDesc {
@@ -7627,6 +7635,14 @@ pub mod gapi {
 				.field("fmt", &crate::gapi::GFrameDescTraitConst::fmt(self))
 				.field("size", &crate::gapi::GFrameDescTraitConst::size(self))
 				.finish()
+		}
+	}
+	
+	impl Default for GFrameDesc {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -7735,6 +7751,12 @@ pub mod gapi {
 	boxed_ref! { GKernel, crate::gapi::GKernelTraitConst, as_raw_GKernel, crate::gapi::GKernelTrait, as_raw_mut_GKernel }
 	
 	impl GKernel {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_GKernel_defaultNew_const()) }
+		}
+		
 	}
 	
 	impl std::fmt::Debug for GKernel {
@@ -7747,6 +7769,14 @@ pub mod gapi {
 				.field("in_kinds", &crate::gapi::GKernelTraitConst::in_kinds(self))
 				.field("out_kinds", &crate::gapi::GKernelTraitConst::out_kinds(self))
 				.finish()
+		}
+	}
+	
+	impl Default for GKernel {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -7768,7 +7798,7 @@ pub mod gapi {
 		fn as_raw_mut_GKernelImpl(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn set_opaque(&mut self, val: impl crate::gapi::anyTraitConst) {
+		fn set_opaque(&mut self, val: crate::gapi::any) {
 			let ret = unsafe { sys::cv_GKernelImpl_propOpaque_const_any(self.as_raw_mut_GKernelImpl(), val.as_raw_any()) };
 			ret
 		}
@@ -7801,6 +7831,12 @@ pub mod gapi {
 	boxed_ref! { GKernelImpl, crate::gapi::GKernelImplTraitConst, as_raw_GKernelImpl, crate::gapi::GKernelImplTrait, as_raw_mut_GKernelImpl }
 	
 	impl GKernelImpl {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_GKernelImpl_defaultNew_const()) }
+		}
+		
 	}
 	
 	impl std::fmt::Debug for GKernelImpl {
@@ -7809,6 +7845,14 @@ pub mod gapi {
 			f.debug_struct("GKernelImpl")
 				.field("opaque", &crate::gapi::GKernelImplTraitConst::opaque(self))
 				.finish()
+		}
+	}
+	
+	impl Default for GKernelImpl {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -7979,6 +8023,8 @@ pub mod gapi {
 	boxed_ref! { GKernelPackage, crate::gapi::GKernelPackageTraitConst, as_raw_GKernelPackage, crate::gapi::GKernelPackageTrait, as_raw_mut_GKernelPackage }
 	
 	impl GKernelPackage {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
 		fn default() -> Self {
 			unsafe { Self::from_raw(sys::cv_GKernelPackage_defaultNew_const()) }
 		}
@@ -8444,6 +8490,12 @@ pub mod gapi {
 	boxed_ref! { GMatP, crate::gapi::GMatPTraitConst, as_raw_GMatP, crate::gapi::GMatPTrait, as_raw_mut_GMatP }
 	
 	impl GMatP {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_GMatP_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { GMatP, crate::gapi::GMat, cv_GMatP_to_GMat }
@@ -8453,6 +8505,14 @@ pub mod gapi {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GMatP")
 				.finish()
+		}
+	}
+	
+	impl Default for GMatP {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -8504,6 +8564,8 @@ pub mod gapi {
 	boxed_ref! { GOpaqueDesc, crate::gapi::GOpaqueDescTraitConst, as_raw_GOpaqueDesc, crate::gapi::GOpaqueDescTrait, as_raw_mut_GOpaqueDesc }
 	
 	impl GOpaqueDesc {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
 		fn default() -> Self {
 			unsafe { Self::from_raw(sys::cv_GOpaqueDesc_defaultNew_const()) }
 		}
@@ -8873,6 +8935,8 @@ pub mod gapi {
 	boxed_ref! { GScalarDesc, crate::gapi::GScalarDescTraitConst, as_raw_GScalarDesc, crate::gapi::GScalarDescTrait, as_raw_mut_GScalarDesc }
 	
 	impl GScalarDesc {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
 		fn default() -> Self {
 			unsafe { Self::from_raw(sys::cv_GScalarDesc_defaultNew_const()) }
 		}
@@ -9255,6 +9319,8 @@ pub mod gapi {
 	boxed_ref! { GTypeInfo, crate::gapi::GTypeInfoTraitConst, as_raw_GTypeInfo, crate::gapi::GTypeInfoTrait, as_raw_mut_GTypeInfo }
 	
 	impl GTypeInfo {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
 		fn default() -> Self {
 			unsafe { Self::from_raw(sys::cv_GTypeInfo_defaultNew_const()) }
 		}
@@ -9920,6 +9986,12 @@ pub mod gapi {
 	boxed_ref! { Detail_ExtractArgsCallback, crate::gapi::Detail_ExtractArgsCallbackTraitConst, as_raw_Detail_ExtractArgsCallback, crate::gapi::Detail_ExtractArgsCallbackTrait, as_raw_mut_Detail_ExtractArgsCallback }
 	
 	impl Detail_ExtractArgsCallback {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_detail_ExtractArgsCallback_defaultNew_const()) }
+		}
+		
 	}
 	
 	impl std::fmt::Debug for Detail_ExtractArgsCallback {
@@ -9927,6 +9999,14 @@ pub mod gapi {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_ExtractArgsCallback")
 				.finish()
+		}
+	}
+	
+	impl Default for Detail_ExtractArgsCallback {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -9968,6 +10048,12 @@ pub mod gapi {
 	boxed_ref! { Detail_ExtractMetaCallback, crate::gapi::Detail_ExtractMetaCallbackTraitConst, as_raw_Detail_ExtractMetaCallback, crate::gapi::Detail_ExtractMetaCallbackTrait, as_raw_mut_Detail_ExtractMetaCallback }
 	
 	impl Detail_ExtractMetaCallback {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_detail_ExtractMetaCallback_defaultNew_const()) }
+		}
+		
 	}
 	
 	impl std::fmt::Debug for Detail_ExtractMetaCallback {
@@ -9975,6 +10061,14 @@ pub mod gapi {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_ExtractMetaCallback")
 				.finish()
+		}
+	}
+	
+	impl Default for Detail_ExtractMetaCallback {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -10420,7 +10514,7 @@ pub mod gapi {
 		fn as_raw_mut_use_only(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn set_pkg(&mut self, val: impl crate::gapi::GKernelPackageTraitConst) {
+		fn set_pkg(&mut self, val: crate::gapi::GKernelPackage) {
 			let ret = unsafe { sys::cv_gapi_use_only_propPkg_const_GKernelPackage(self.as_raw_mut_use_only(), val.as_raw_GKernelPackage()) };
 			ret
 		}
@@ -10459,6 +10553,12 @@ pub mod gapi {
 	boxed_ref! { use_only, crate::gapi::use_onlyTraitConst, as_raw_use_only, crate::gapi::use_onlyTrait, as_raw_mut_use_only }
 	
 	impl use_only {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_gapi_use_only_defaultNew_const()) }
+		}
+		
 	}
 	
 	impl std::fmt::Debug for use_only {
@@ -10467,6 +10567,14 @@ pub mod gapi {
 			f.debug_struct("use_only")
 				.field("pkg", &crate::gapi::use_onlyTraitConst::pkg(self))
 				.finish()
+		}
+	}
+	
+	impl Default for use_only {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -10523,6 +10631,12 @@ pub mod gapi {
 	boxed_ref! { Data, crate::gapi::DataTraitConst, as_raw_Data, crate::gapi::DataTrait, as_raw_mut_Data }
 	
 	impl Data {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_gapi_wip_Data_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { Data, crate::gapi::GRunArg, cv_gapi_wip_Data_to_GRunArg }
@@ -10532,6 +10646,14 @@ pub mod gapi {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Data")
 				.finish()
+		}
+	}
+	
+	impl Default for Data {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -10667,14 +10789,14 @@ pub mod gapi {
 		
 		/// Image to draw
 		#[inline]
-		fn set_img(&mut self, val: impl core::MatTraitConst) {
+		fn set_img(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_gapi_wip_draw_Image_propImg_const_Mat(self.as_raw_mut_Image(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// Alpha channel for image to draw (same size and number of channels)
 		#[inline]
-		fn set_alpha(&mut self, val: impl core::MatTraitConst) {
+		fn set_alpha(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_gapi_wip_draw_Image_propAlpha_const_Mat(self.as_raw_mut_Image(), val.as_raw_Mat()) };
 			ret
 		}

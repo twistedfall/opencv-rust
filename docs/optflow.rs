@@ -1853,6 +1853,12 @@ pub mod optflow {
 	boxed_ref! { GPCDetails, crate::optflow::GPCDetailsTraitConst, as_raw_GPCDetails, crate::optflow::GPCDetailsTrait, as_raw_mut_GPCDetails }
 	
 	impl GPCDetails {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_optflow_GPCDetails_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn drop_outliers(corr: &mut core::Vector<core::Tuple<(core::Point2i, core::Point2i)>>) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1887,6 +1893,14 @@ pub mod optflow {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GPCDetails")
 				.finish()
+		}
+	}
+	
+	impl Default for GPCDetails {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -2016,6 +2030,12 @@ pub mod optflow {
 	impl GPCPatchDescriptor {
 		/// number of features in a patch descriptor
 		pub const nFeatures: u32 = 18;
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_optflow_GPCPatchDescriptor_defaultNew_const()) }
+		}
+		
 	}
 	
 	impl std::fmt::Debug for GPCPatchDescriptor {
@@ -2024,6 +2044,14 @@ pub mod optflow {
 			f.debug_struct("GPCPatchDescriptor")
 				.field("feature", &crate::optflow::GPCPatchDescriptorTraitConst::feature(self))
 				.finish()
+		}
+	}
+	
+	impl Default for GPCPatchDescriptor {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -2068,19 +2096,19 @@ pub mod optflow {
 		fn as_raw_mut_GPCPatchSample(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn set_ref(&mut self, val: impl crate::optflow::GPCPatchDescriptorTraitConst) {
+		fn set_ref(&mut self, val: crate::optflow::GPCPatchDescriptor) {
 			let ret = unsafe { sys::cv_optflow_GPCPatchSample_propRef_const_GPCPatchDescriptor(self.as_raw_mut_GPCPatchSample(), val.as_raw_GPCPatchDescriptor()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_pos(&mut self, val: impl crate::optflow::GPCPatchDescriptorTraitConst) {
+		fn set_pos(&mut self, val: crate::optflow::GPCPatchDescriptor) {
 			let ret = unsafe { sys::cv_optflow_GPCPatchSample_propPos_const_GPCPatchDescriptor(self.as_raw_mut_GPCPatchSample(), val.as_raw_GPCPatchDescriptor()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_neg(&mut self, val: impl crate::optflow::GPCPatchDescriptorTraitConst) {
+		fn set_neg(&mut self, val: crate::optflow::GPCPatchDescriptor) {
 			let ret = unsafe { sys::cv_optflow_GPCPatchSample_propNeg_const_GPCPatchDescriptor(self.as_raw_mut_GPCPatchSample(), val.as_raw_GPCPatchDescriptor()) };
 			ret
 		}
@@ -2113,6 +2141,12 @@ pub mod optflow {
 	boxed_ref! { GPCPatchSample, crate::optflow::GPCPatchSampleTraitConst, as_raw_GPCPatchSample, crate::optflow::GPCPatchSampleTrait, as_raw_mut_GPCPatchSample }
 	
 	impl GPCPatchSample {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_optflow_GPCPatchSample_defaultNew_const()) }
+		}
+		
 	}
 	
 	impl std::fmt::Debug for GPCPatchSample {
@@ -2123,6 +2157,14 @@ pub mod optflow {
 				.field("pos", &crate::optflow::GPCPatchSampleTraitConst::pos(self))
 				.field("neg", &crate::optflow::GPCPatchSampleTraitConst::neg(self))
 				.finish()
+		}
+	}
+	
+	impl Default for GPCPatchSample {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -2240,6 +2282,12 @@ pub mod optflow {
 	boxed_ref! { GPCTrainingSamples, crate::optflow::GPCTrainingSamplesTraitConst, as_raw_GPCTrainingSamples, crate::optflow::GPCTrainingSamplesTrait, as_raw_mut_GPCTrainingSamples }
 	
 	impl GPCTrainingSamples {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_optflow_GPCTrainingSamples_defaultNew_const()) }
+		}
+		
 		/// This function can be used to extract samples from a pair of images and a ground truth flow.
 		/// Sizes of all the provided vectors must be equal.
 		#[inline]
@@ -2272,6 +2320,14 @@ pub mod optflow {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GPCTrainingSamples")
 				.finish()
+		}
+	}
+	
+	impl Default for GPCTrainingSamples {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -2392,6 +2448,12 @@ pub mod optflow {
 	boxed_ref! { GPCTree, crate::optflow::GPCTreeTraitConst, as_raw_GPCTree, crate::optflow::GPCTreeTrait, as_raw_mut_GPCTree }
 	
 	impl GPCTree {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_optflow_GPCTree_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create() -> Result<core::Ptr<crate::optflow::GPCTree>> {
 			return_send!(via ocvrs_return);
@@ -2411,6 +2473,14 @@ pub mod optflow {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("GPCTree")
 				.finish()
+		}
+	}
+	
+	impl Default for GPCTree {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	

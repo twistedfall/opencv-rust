@@ -2021,6 +2021,12 @@ pub mod objdetect {
 	boxed_ref! { DetectionROI, crate::objdetect::DetectionROITraitConst, as_raw_DetectionROI, crate::objdetect::DetectionROITrait, as_raw_mut_DetectionROI }
 	
 	impl DetectionROI {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_DetectionROI_defaultNew_const()) }
+		}
+		
 	}
 	
 	impl std::fmt::Debug for DetectionROI {
@@ -2031,6 +2037,14 @@ pub mod objdetect {
 				.field("locations", &crate::objdetect::DetectionROITraitConst::locations(self))
 				.field("confidences", &crate::objdetect::DetectionROITraitConst::confidences(self))
 				.finish()
+		}
+	}
+	
+	impl Default for DetectionROI {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -3544,7 +3558,7 @@ pub mod objdetect {
 		
 		/// coefficients for the linear SVM classifier used when OpenCL is enabled
 		#[inline]
-		fn set_ocl_svm_detector(&mut self, val: impl core::UMatTraitConst) {
+		fn set_ocl_svm_detector(&mut self, val: core::UMat) {
 			let ret = unsafe { sys::cv_HOGDescriptor_propOclSvmDetector_const_UMat(self.as_raw_mut_HOGDescriptor(), val.as_raw_UMat()) };
 			ret
 		}
@@ -5639,14 +5653,14 @@ pub mod objdetect {
 	
 		/// cameraMatrix optional 3x3 floating-point camera matrix
 		#[inline]
-		fn set_camera_matrix(&mut self, val: impl core::MatTraitConst) {
+		fn set_camera_matrix(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_aruco_CharucoParameters_propCameraMatrix_const_Mat(self.as_raw_mut_CharucoParameters(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// distCoeffs optional vector of distortion coefficients
 		#[inline]
-		fn set_dist_coeffs(&mut self, val: impl core::MatTraitConst) {
+		fn set_dist_coeffs(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_aruco_CharucoParameters_propDistCoeffs_const_Mat(self.as_raw_mut_CharucoParameters(), val.as_raw_Mat()) };
 			ret
 		}
@@ -6549,7 +6563,7 @@ pub mod objdetect {
 	
 		/// marker code information. See class description for more details
 		#[inline]
-		fn set_bytes_list(&mut self, val: impl core::MatTraitConst) {
+		fn set_bytes_list(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_aruco_Dictionary_propBytesList_const_Mat(self.as_raw_mut_Dictionary(), val.as_raw_Mat()) };
 			ret
 		}

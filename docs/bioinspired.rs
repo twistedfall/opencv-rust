@@ -1088,6 +1088,8 @@ pub mod bioinspired {
 	boxed_ref! { RetinaParameters, crate::bioinspired::RetinaParametersTraitConst, as_raw_RetinaParameters, crate::bioinspired::RetinaParametersTrait, as_raw_mut_RetinaParameters }
 	
 	impl RetinaParameters {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
 		fn default() -> Self {
 			unsafe { Self::from_raw(sys::cv_bioinspired_RetinaParameters_defaultNew_const()) }
 		}

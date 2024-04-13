@@ -2767,6 +2767,12 @@ pub mod rgbd {
 	boxed_ref! { Kinfu_VolumeParams, crate::rgbd::Kinfu_VolumeParamsTraitConst, as_raw_Kinfu_VolumeParams, crate::rgbd::Kinfu_VolumeParamsTrait, as_raw_mut_Kinfu_VolumeParams }
 	
 	impl Kinfu_VolumeParams {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_kinfu_VolumeParams_defaultNew_const()) }
+		}
+		
 		/// Default set of parameters that provide higher quality reconstruction
 		/// at the cost of slow performance.
 		#[inline]
@@ -2807,6 +2813,14 @@ pub mod rgbd {
 				.field("depth_trunc_threshold", &crate::rgbd::Kinfu_VolumeParamsTraitConst::depth_trunc_threshold(self))
 				.field("raycast_step_factor", &crate::rgbd::Kinfu_VolumeParamsTraitConst::raycast_step_factor(self))
 				.finish()
+		}
+	}
+	
+	impl Default for Kinfu_VolumeParams {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -3437,7 +3451,7 @@ pub mod rgbd {
 		
 		/// Volume parameters
 		#[inline]
-		fn set_volume_params(&mut self, val: impl crate::rgbd::Kinfu_VolumeParamsTraitConst) {
+		fn set_volume_params(&mut self, val: crate::rgbd::Kinfu_VolumeParams) {
 			let ret = unsafe { sys::cv_large_kinfu_Params_propVolumeParams_const_VolumeParams(self.as_raw_mut_Params(), val.as_raw_Kinfu_VolumeParams()) };
 			ret
 		}
@@ -3470,6 +3484,12 @@ pub mod rgbd {
 	boxed_ref! { Params, crate::rgbd::ParamsTraitConst, as_raw_Params, crate::rgbd::ParamsTrait, as_raw_mut_Params }
 	
 	impl Params {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_large_kinfu_Params_defaultNew_const()) }
+		}
+		
 		/// Default parameters
 		/// A set of parameters which provides better model quality, can be very slow.
 		#[inline]
@@ -3529,6 +3549,14 @@ pub mod rgbd {
 				.field("truncate_threshold", &crate::rgbd::ParamsTraitConst::truncate_threshold(self))
 				.field("volume_params", &crate::rgbd::ParamsTraitConst::volume_params(self))
 				.finish()
+		}
+	}
+	
+	impl Default for Params {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -4806,6 +4834,8 @@ pub mod rgbd {
 	boxed_ref! { LineMod_Template, crate::rgbd::LineMod_TemplateTraitConst, as_raw_LineMod_Template, crate::rgbd::LineMod_TemplateTrait, as_raw_mut_LineMod_Template }
 	
 	impl LineMod_Template {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
 		fn default() -> Self {
 			unsafe { Self::from_raw(sys::cv_linemod_Template_defaultNew_const()) }
 		}
@@ -6381,25 +6411,25 @@ pub mod rgbd {
 		}
 		
 		#[inline]
-		fn set_image(&mut self, val: impl core::MatTraitConst) {
+		fn set_image(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_rgbd_RgbdFrame_propImage_const_Mat(self.as_raw_mut_RgbdFrame(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_depth(&mut self, val: impl core::MatTraitConst) {
+		fn set_depth(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_rgbd_RgbdFrame_propDepth_const_Mat(self.as_raw_mut_RgbdFrame(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_mask(&mut self, val: impl core::MatTraitConst) {
+		fn set_mask(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_rgbd_RgbdFrame_propMask_const_Mat(self.as_raw_mut_RgbdFrame(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_normals(&mut self, val: impl core::MatTraitConst) {
+		fn set_normals(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_rgbd_RgbdFrame_propNormals_const_Mat(self.as_raw_mut_RgbdFrame(), val.as_raw_Mat()) };
 			ret
 		}

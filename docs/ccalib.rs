@@ -1243,7 +1243,7 @@ pub mod ccalib {
 		}
 		
 		#[inline]
-		fn set_transform(&mut self, val: impl core::MatTraitConst) {
+		fn set_transform(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_propTransform_const_Mat(self.as_raw_mut_MultiCameraCalibration_edge(), val.as_raw_Mat()) };
 			ret
 		}
@@ -1324,7 +1324,7 @@ pub mod ccalib {
 		fn as_raw_mut_MultiCameraCalibration_vertex(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn set_pose(&mut self, val: impl core::MatTraitConst) {
+		fn set_pose(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_propPose_const_Mat(self.as_raw_mut_MultiCameraCalibration_vertex(), val.as_raw_Mat()) };
 			ret
 		}

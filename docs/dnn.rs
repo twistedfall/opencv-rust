@@ -2139,6 +2139,12 @@ pub mod dnn {
 	boxed_ref! { AbsLayer, crate::dnn::AbsLayerTraitConst, as_raw_AbsLayer, crate::dnn::AbsLayerTrait, as_raw_mut_AbsLayer }
 	
 	impl AbsLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_AbsLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::AbsLayer>> {
 			return_send!(via ocvrs_return);
@@ -2166,6 +2172,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for AbsLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -2227,6 +2241,12 @@ pub mod dnn {
 	boxed_ref! { AccumLayer, crate::dnn::AccumLayerTraitConst, as_raw_AccumLayer, crate::dnn::AccumLayerTrait, as_raw_mut_AccumLayer }
 	
 	impl AccumLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_AccumLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::AccumLayer>> {
 			return_send!(via ocvrs_return);
@@ -2252,6 +2272,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for AccumLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -2323,6 +2351,12 @@ pub mod dnn {
 	boxed_ref! { AcosLayer, crate::dnn::AcosLayerTraitConst, as_raw_AcosLayer, crate::dnn::AcosLayerTrait, as_raw_mut_AcosLayer }
 	
 	impl AcosLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_AcosLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::AcosLayer>> {
 			return_send!(via ocvrs_return);
@@ -2350,6 +2384,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for AcosLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -2421,6 +2463,12 @@ pub mod dnn {
 	boxed_ref! { AcoshLayer, crate::dnn::AcoshLayerTraitConst, as_raw_AcoshLayer, crate::dnn::AcoshLayerTrait, as_raw_mut_AcoshLayer }
 	
 	impl AcoshLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_AcoshLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::AcoshLayer>> {
 			return_send!(via ocvrs_return);
@@ -2448,6 +2496,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for AcoshLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -2527,6 +2583,12 @@ pub mod dnn {
 	boxed_ref! { ActivationLayer, crate::dnn::ActivationLayerTraitConst, as_raw_ActivationLayer, crate::dnn::ActivationLayerTrait, as_raw_mut_ActivationLayer }
 	
 	impl ActivationLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_ActivationLayer_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_descendant! { ActivationLayer, crate::dnn::AbsLayer, cv_dnn_ActivationLayer_to_AbsLayer }
@@ -2635,6 +2697,14 @@ pub mod dnn {
 		}
 	}
 	
+	impl Default for ActivationLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::ActivationLayerInt8]
 	pub trait ActivationLayerInt8TraitConst: crate::dnn::ActivationLayerTraitConst {
 		fn as_raw_ActivationLayerInt8(&self) -> *const c_void;
@@ -2703,6 +2773,12 @@ pub mod dnn {
 	boxed_ref! { ActivationLayerInt8, crate::dnn::ActivationLayerInt8TraitConst, as_raw_ActivationLayerInt8, crate::dnn::ActivationLayerInt8Trait, as_raw_mut_ActivationLayerInt8 }
 	
 	impl ActivationLayerInt8 {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_ActivationLayerInt8_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::ActivationLayerInt8>> {
 			return_send!(via ocvrs_return);
@@ -2730,6 +2806,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for ActivationLayerInt8 {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -2794,6 +2878,12 @@ pub mod dnn {
 	boxed_ref! { ArgLayer, crate::dnn::ArgLayerTraitConst, as_raw_ArgLayer, crate::dnn::ArgLayerTrait, as_raw_mut_ArgLayer }
 	
 	impl ArgLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_ArgLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::ArgLayer>> {
 			return_send!(via ocvrs_return);
@@ -2819,6 +2909,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for ArgLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -2890,6 +2988,12 @@ pub mod dnn {
 	boxed_ref! { AsinLayer, crate::dnn::AsinLayerTraitConst, as_raw_AsinLayer, crate::dnn::AsinLayerTrait, as_raw_mut_AsinLayer }
 	
 	impl AsinLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_AsinLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::AsinLayer>> {
 			return_send!(via ocvrs_return);
@@ -2917,6 +3021,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for AsinLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -2988,6 +3100,12 @@ pub mod dnn {
 	boxed_ref! { AsinhLayer, crate::dnn::AsinhLayerTraitConst, as_raw_AsinhLayer, crate::dnn::AsinhLayerTrait, as_raw_mut_AsinhLayer }
 	
 	impl AsinhLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_AsinhLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::AsinhLayer>> {
 			return_send!(via ocvrs_return);
@@ -3015,6 +3133,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for AsinhLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -3086,6 +3212,12 @@ pub mod dnn {
 	boxed_ref! { AtanLayer, crate::dnn::AtanLayerTraitConst, as_raw_AtanLayer, crate::dnn::AtanLayerTrait, as_raw_mut_AtanLayer }
 	
 	impl AtanLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_AtanLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::AtanLayer>> {
 			return_send!(via ocvrs_return);
@@ -3113,6 +3245,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for AtanLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -3184,6 +3324,12 @@ pub mod dnn {
 	boxed_ref! { AtanhLayer, crate::dnn::AtanhLayerTraitConst, as_raw_AtanhLayer, crate::dnn::AtanhLayerTrait, as_raw_mut_AtanhLayer }
 	
 	impl AtanhLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_AtanhLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::AtanhLayer>> {
 			return_send!(via ocvrs_return);
@@ -3211,6 +3357,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for AtanhLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -3272,6 +3426,12 @@ pub mod dnn {
 	boxed_ref! { AttentionLayer, crate::dnn::AttentionLayerTraitConst, as_raw_AttentionLayer, crate::dnn::AttentionLayerTrait, as_raw_mut_AttentionLayer }
 	
 	impl AttentionLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_AttentionLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::AttentionLayer>> {
 			return_send!(via ocvrs_return);
@@ -3297,6 +3457,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for AttentionLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -3368,6 +3536,12 @@ pub mod dnn {
 	boxed_ref! { BNLLLayer, crate::dnn::BNLLLayerTraitConst, as_raw_BNLLLayer, crate::dnn::BNLLLayerTrait, as_raw_mut_BNLLLayer }
 	
 	impl BNLLLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_BNLLLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::BNLLLayer>> {
 			return_send!(via ocvrs_return);
@@ -3395,6 +3569,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for BNLLLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -3793,6 +3975,12 @@ pub mod dnn {
 	boxed_ref! { BaseConvolutionLayer, crate::dnn::BaseConvolutionLayerTraitConst, as_raw_BaseConvolutionLayer, crate::dnn::BaseConvolutionLayerTrait, as_raw_mut_BaseConvolutionLayer }
 	
 	impl BaseConvolutionLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_BaseConvolutionLayer_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { BaseConvolutionLayer, core::Algorithm, cv_dnn_BaseConvolutionLayer_to_Algorithm }
@@ -3821,6 +4009,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for BaseConvolutionLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -3928,6 +4124,12 @@ pub mod dnn {
 	boxed_ref! { BatchNormLayer, crate::dnn::BatchNormLayerTraitConst, as_raw_BatchNormLayer, crate::dnn::BatchNormLayerTrait, as_raw_mut_BatchNormLayer }
 	
 	impl BatchNormLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_BatchNormLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::BatchNormLayer>> {
 			return_send!(via ocvrs_return);
@@ -3958,6 +4160,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for BatchNormLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -4087,6 +4297,12 @@ pub mod dnn {
 	boxed_ref! { BatchNormLayerInt8, crate::dnn::BatchNormLayerInt8TraitConst, as_raw_BatchNormLayerInt8, crate::dnn::BatchNormLayerInt8Trait, as_raw_mut_BatchNormLayerInt8 }
 	
 	impl BatchNormLayerInt8 {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_BatchNormLayerInt8_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::BatchNormLayerInt8>> {
 			return_send!(via ocvrs_return);
@@ -4123,6 +4339,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for BatchNormLayerInt8 {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -4203,6 +4427,12 @@ pub mod dnn {
 	boxed_ref! { BlankLayer, crate::dnn::BlankLayerTraitConst, as_raw_BlankLayer, crate::dnn::BlankLayerTrait, as_raw_mut_BlankLayer }
 	
 	impl BlankLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_BlankLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::Layer>> {
 			return_send!(via ocvrs_return);
@@ -4228,6 +4458,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for BlankLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -4299,6 +4537,12 @@ pub mod dnn {
 	boxed_ref! { CeilLayer, crate::dnn::CeilLayerTraitConst, as_raw_CeilLayer, crate::dnn::CeilLayerTrait, as_raw_mut_CeilLayer }
 	
 	impl CeilLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_CeilLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::CeilLayer>> {
 			return_send!(via ocvrs_return);
@@ -4326,6 +4570,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for CeilLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -4409,6 +4661,12 @@ pub mod dnn {
 	boxed_ref! { CeluLayer, crate::dnn::CeluLayerTraitConst, as_raw_CeluLayer, crate::dnn::CeluLayerTrait, as_raw_mut_CeluLayer }
 	
 	impl CeluLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_CeluLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::CeluLayer>> {
 			return_send!(via ocvrs_return);
@@ -4437,6 +4695,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for CeluLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -4508,6 +4774,12 @@ pub mod dnn {
 	boxed_ref! { ChannelsPReLULayer, crate::dnn::ChannelsPReLULayerTraitConst, as_raw_ChannelsPReLULayer, crate::dnn::ChannelsPReLULayerTrait, as_raw_mut_ChannelsPReLULayer }
 	
 	impl ChannelsPReLULayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_ChannelsPReLULayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::Layer>> {
 			return_send!(via ocvrs_return);
@@ -4535,6 +4807,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for ChannelsPReLULayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -4790,6 +5070,12 @@ pub mod dnn {
 	boxed_ref! { CompareLayer, crate::dnn::CompareLayerTraitConst, as_raw_CompareLayer, crate::dnn::CompareLayerTrait, as_raw_mut_CompareLayer }
 	
 	impl CompareLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_CompareLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::Layer>> {
 			return_send!(via ocvrs_return);
@@ -4815,6 +5101,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for CompareLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -4920,6 +5214,12 @@ pub mod dnn {
 	boxed_ref! { ConcatLayer, crate::dnn::ConcatLayerTraitConst, as_raw_ConcatLayer, crate::dnn::ConcatLayerTrait, as_raw_mut_ConcatLayer }
 	
 	impl ConcatLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_ConcatLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::ConcatLayer>> {
 			return_send!(via ocvrs_return);
@@ -4948,6 +5248,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for ConcatLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -5010,6 +5318,12 @@ pub mod dnn {
 	boxed_ref! { ConstLayer, crate::dnn::ConstLayerTraitConst, as_raw_ConstLayer, crate::dnn::ConstLayerTrait, as_raw_mut_ConstLayer }
 	
 	impl ConstLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_ConstLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::Layer>> {
 			return_send!(via ocvrs_return);
@@ -5035,6 +5349,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for ConstLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -5148,6 +5470,12 @@ pub mod dnn {
 	boxed_ref! { ConvolutionLayer, crate::dnn::ConvolutionLayerTraitConst, as_raw_ConvolutionLayer, crate::dnn::ConvolutionLayerTrait, as_raw_mut_ConvolutionLayer }
 	
 	impl ConvolutionLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_ConvolutionLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::BaseConvolutionLayer>> {
 			return_send!(via ocvrs_return);
@@ -5191,6 +5519,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for ConvolutionLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -5336,6 +5672,12 @@ pub mod dnn {
 	boxed_ref! { ConvolutionLayerInt8, crate::dnn::ConvolutionLayerInt8TraitConst, as_raw_ConvolutionLayerInt8, crate::dnn::ConvolutionLayerInt8Trait, as_raw_mut_ConvolutionLayerInt8 }
 	
 	impl ConvolutionLayerInt8 {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_ConvolutionLayerInt8_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::BaseConvolutionLayer>> {
 			return_send!(via ocvrs_return);
@@ -5382,6 +5724,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for ConvolutionLayerInt8 {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -5443,6 +5793,12 @@ pub mod dnn {
 	boxed_ref! { CorrelationLayer, crate::dnn::CorrelationLayerTraitConst, as_raw_CorrelationLayer, crate::dnn::CorrelationLayerTrait, as_raw_mut_CorrelationLayer }
 	
 	impl CorrelationLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_CorrelationLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::CorrelationLayer>> {
 			return_send!(via ocvrs_return);
@@ -5468,6 +5824,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for CorrelationLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -5539,6 +5903,12 @@ pub mod dnn {
 	boxed_ref! { CosLayer, crate::dnn::CosLayerTraitConst, as_raw_CosLayer, crate::dnn::CosLayerTrait, as_raw_mut_CosLayer }
 	
 	impl CosLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_CosLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::CosLayer>> {
 			return_send!(via ocvrs_return);
@@ -5566,6 +5936,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for CosLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -5637,6 +6015,12 @@ pub mod dnn {
 	boxed_ref! { CoshLayer, crate::dnn::CoshLayerTraitConst, as_raw_CoshLayer, crate::dnn::CoshLayerTrait, as_raw_mut_CoshLayer }
 	
 	impl CoshLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_CoshLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::CoshLayer>> {
 			return_send!(via ocvrs_return);
@@ -5664,6 +6048,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for CoshLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -5725,6 +6117,12 @@ pub mod dnn {
 	boxed_ref! { CropAndResizeLayer, crate::dnn::CropAndResizeLayerTraitConst, as_raw_CropAndResizeLayer, crate::dnn::CropAndResizeLayerTrait, as_raw_mut_CropAndResizeLayer }
 	
 	impl CropAndResizeLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_CropAndResizeLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::Layer>> {
 			return_send!(via ocvrs_return);
@@ -5750,6 +6148,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for CropAndResizeLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -5811,6 +6217,12 @@ pub mod dnn {
 	boxed_ref! { CropLayer, crate::dnn::CropLayerTraitConst, as_raw_CropLayer, crate::dnn::CropLayerTrait, as_raw_mut_CropLayer }
 	
 	impl CropLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_CropLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::Layer>> {
 			return_send!(via ocvrs_return);
@@ -5836,6 +6248,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for CropLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -5921,6 +6341,12 @@ pub mod dnn {
 	boxed_ref! { CumSumLayer, crate::dnn::CumSumLayerTraitConst, as_raw_CumSumLayer, crate::dnn::CumSumLayerTrait, as_raw_mut_CumSumLayer }
 	
 	impl CumSumLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_CumSumLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::CumSumLayer>> {
 			return_send!(via ocvrs_return);
@@ -5948,6 +6374,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for CumSumLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -6009,6 +6443,12 @@ pub mod dnn {
 	boxed_ref! { DataAugmentationLayer, crate::dnn::DataAugmentationLayerTraitConst, as_raw_DataAugmentationLayer, crate::dnn::DataAugmentationLayerTrait, as_raw_mut_DataAugmentationLayer }
 	
 	impl DataAugmentationLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_DataAugmentationLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::DataAugmentationLayer>> {
 			return_send!(via ocvrs_return);
@@ -6034,6 +6474,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for DataAugmentationLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -6105,6 +6553,12 @@ pub mod dnn {
 	boxed_ref! { DeconvolutionLayer, crate::dnn::DeconvolutionLayerTraitConst, as_raw_DeconvolutionLayer, crate::dnn::DeconvolutionLayerTrait, as_raw_mut_DeconvolutionLayer }
 	
 	impl DeconvolutionLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_DeconvolutionLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::BaseConvolutionLayer>> {
 			return_send!(via ocvrs_return);
@@ -6145,6 +6599,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for DeconvolutionLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -6232,6 +6694,12 @@ pub mod dnn {
 	boxed_ref! { DequantizeLayer, crate::dnn::DequantizeLayerTraitConst, as_raw_DequantizeLayer, crate::dnn::DequantizeLayerTrait, as_raw_mut_DequantizeLayer }
 	
 	impl DequantizeLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_DequantizeLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::DequantizeLayer>> {
 			return_send!(via ocvrs_return);
@@ -6259,6 +6727,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for DequantizeLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -6533,6 +7009,12 @@ pub mod dnn {
 	boxed_ref! { DetectionOutputLayer, crate::dnn::DetectionOutputLayerTraitConst, as_raw_DetectionOutputLayer, crate::dnn::DetectionOutputLayerTrait, as_raw_mut_DetectionOutputLayer }
 	
 	impl DetectionOutputLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_DetectionOutputLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::DetectionOutputLayer>> {
 			return_send!(via ocvrs_return);
@@ -6558,6 +7040,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for DetectionOutputLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -6707,6 +7197,12 @@ pub mod dnn {
 	boxed_ref! { Dict, crate::dnn::DictTraitConst, as_raw_Dict, crate::dnn::DictTrait, as_raw_mut_Dict }
 	
 	impl Dict {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_Dict_defaultNew_const()) }
+		}
+		
 	}
 	
 	impl std::fmt::Debug for Dict {
@@ -6714,6 +7210,14 @@ pub mod dnn {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Dict")
 				.finish()
+		}
+	}
+	
+	impl Default for Dict {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -7123,6 +7627,12 @@ pub mod dnn {
 	boxed_ref! { ELULayer, crate::dnn::ELULayerTraitConst, as_raw_ELULayer, crate::dnn::ELULayerTrait, as_raw_mut_ELULayer }
 	
 	impl ELULayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_ELULayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::ELULayer>> {
 			return_send!(via ocvrs_return);
@@ -7151,6 +7661,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for ELULayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -7238,6 +7756,12 @@ pub mod dnn {
 	boxed_ref! { EinsumLayer, crate::dnn::EinsumLayerTraitConst, as_raw_EinsumLayer, crate::dnn::EinsumLayerTrait, as_raw_mut_EinsumLayer }
 	
 	impl EinsumLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_EinsumLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::EinsumLayer>> {
 			return_send!(via ocvrs_return);
@@ -7263,6 +7787,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for EinsumLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -7330,6 +7862,12 @@ pub mod dnn {
 	boxed_ref! { EltwiseLayer, crate::dnn::EltwiseLayerTraitConst, as_raw_EltwiseLayer, crate::dnn::EltwiseLayerTrait, as_raw_mut_EltwiseLayer }
 	
 	impl EltwiseLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_EltwiseLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::EltwiseLayer>> {
 			return_send!(via ocvrs_return);
@@ -7355,6 +7893,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for EltwiseLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -7416,6 +7962,12 @@ pub mod dnn {
 	boxed_ref! { EltwiseLayerInt8, crate::dnn::EltwiseLayerInt8TraitConst, as_raw_EltwiseLayerInt8, crate::dnn::EltwiseLayerInt8Trait, as_raw_mut_EltwiseLayerInt8 }
 	
 	impl EltwiseLayerInt8 {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_EltwiseLayerInt8_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::EltwiseLayerInt8>> {
 			return_send!(via ocvrs_return);
@@ -7441,6 +7993,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for EltwiseLayerInt8 {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -7512,6 +8072,12 @@ pub mod dnn {
 	boxed_ref! { ErfLayer, crate::dnn::ErfLayerTraitConst, as_raw_ErfLayer, crate::dnn::ErfLayerTrait, as_raw_mut_ErfLayer }
 	
 	impl ErfLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_ErfLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::ErfLayer>> {
 			return_send!(via ocvrs_return);
@@ -7539,6 +8105,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for ErfLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -7646,6 +8220,12 @@ pub mod dnn {
 	boxed_ref! { ExpLayer, crate::dnn::ExpLayerTraitConst, as_raw_ExpLayer, crate::dnn::ExpLayerTrait, as_raw_mut_ExpLayer }
 	
 	impl ExpLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_ExpLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::ExpLayer>> {
 			return_send!(via ocvrs_return);
@@ -7676,6 +8256,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for ExpLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -7737,6 +8325,12 @@ pub mod dnn {
 	boxed_ref! { ExpandLayer, crate::dnn::ExpandLayerTraitConst, as_raw_ExpandLayer, crate::dnn::ExpandLayerTrait, as_raw_mut_ExpandLayer }
 	
 	impl ExpandLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_ExpandLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::ExpandLayer>> {
 			return_send!(via ocvrs_return);
@@ -7762,6 +8356,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for ExpandLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -7823,6 +8425,12 @@ pub mod dnn {
 	boxed_ref! { FlattenLayer, crate::dnn::FlattenLayerTraitConst, as_raw_FlattenLayer, crate::dnn::FlattenLayerTrait, as_raw_mut_FlattenLayer }
 	
 	impl FlattenLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_FlattenLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::FlattenLayer>> {
 			return_send!(via ocvrs_return);
@@ -7848,6 +8456,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for FlattenLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -7919,6 +8535,12 @@ pub mod dnn {
 	boxed_ref! { FloorLayer, crate::dnn::FloorLayerTraitConst, as_raw_FloorLayer, crate::dnn::FloorLayerTrait, as_raw_mut_FloorLayer }
 	
 	impl FloorLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_FloorLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::FloorLayer>> {
 			return_send!(via ocvrs_return);
@@ -7946,6 +8568,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for FloorLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -8007,6 +8637,12 @@ pub mod dnn {
 	boxed_ref! { FlowWarpLayer, crate::dnn::FlowWarpLayerTraitConst, as_raw_FlowWarpLayer, crate::dnn::FlowWarpLayerTrait, as_raw_mut_FlowWarpLayer }
 	
 	impl FlowWarpLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_FlowWarpLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::FlowWarpLayer>> {
 			return_send!(via ocvrs_return);
@@ -8032,6 +8668,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for FlowWarpLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -8119,6 +8763,12 @@ pub mod dnn {
 	boxed_ref! { GRULayer, crate::dnn::GRULayerTraitConst, as_raw_GRULayer, crate::dnn::GRULayerTrait, as_raw_mut_GRULayer }
 	
 	impl GRULayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_GRULayer_defaultNew_const()) }
+		}
+		
 		/// Creates instance of GRU layer
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::GRULayer>> {
@@ -8145,6 +8795,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for GRULayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -8215,6 +8873,12 @@ pub mod dnn {
 	boxed_ref! { GatherElementsLayer, crate::dnn::GatherElementsLayerTraitConst, as_raw_GatherElementsLayer, crate::dnn::GatherElementsLayerTrait, as_raw_mut_GatherElementsLayer }
 	
 	impl GatherElementsLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_GatherElementsLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::GatherElementsLayer>> {
 			return_send!(via ocvrs_return);
@@ -8240,6 +8904,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for GatherElementsLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -8302,6 +8974,12 @@ pub mod dnn {
 	boxed_ref! { GatherLayer, crate::dnn::GatherLayerTraitConst, as_raw_GatherLayer, crate::dnn::GatherLayerTrait, as_raw_mut_GatherLayer }
 	
 	impl GatherLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_GatherLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::GatherLayer>> {
 			return_send!(via ocvrs_return);
@@ -8327,6 +9005,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for GatherLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -8398,6 +9084,12 @@ pub mod dnn {
 	boxed_ref! { GeluApproximationLayer, crate::dnn::GeluApproximationLayerTraitConst, as_raw_GeluApproximationLayer, crate::dnn::GeluApproximationLayerTrait, as_raw_mut_GeluApproximationLayer }
 	
 	impl GeluApproximationLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_GeluApproximationLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::GeluApproximationLayer>> {
 			return_send!(via ocvrs_return);
@@ -8425,6 +9117,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for GeluApproximationLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -8496,6 +9196,12 @@ pub mod dnn {
 	boxed_ref! { GeluLayer, crate::dnn::GeluLayerTraitConst, as_raw_GeluLayer, crate::dnn::GeluLayerTrait, as_raw_mut_GeluLayer }
 	
 	impl GeluLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_GeluLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::GeluLayer>> {
 			return_send!(via ocvrs_return);
@@ -8523,6 +9229,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for GeluLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -8632,6 +9346,12 @@ pub mod dnn {
 	boxed_ref! { GemmLayer, crate::dnn::GemmLayerTraitConst, as_raw_GemmLayer, crate::dnn::GemmLayerTrait, as_raw_mut_GemmLayer }
 	
 	impl GemmLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_GemmLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::GemmLayer>> {
 			return_send!(via ocvrs_return);
@@ -8661,6 +9381,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for GemmLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -8756,6 +9484,12 @@ pub mod dnn {
 	boxed_ref! { HardSigmoidLayer, crate::dnn::HardSigmoidLayerTraitConst, as_raw_HardSigmoidLayer, crate::dnn::HardSigmoidLayerTrait, as_raw_mut_HardSigmoidLayer }
 	
 	impl HardSigmoidLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_HardSigmoidLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::HardSigmoidLayer>> {
 			return_send!(via ocvrs_return);
@@ -8785,6 +9519,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for HardSigmoidLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -8856,6 +9598,12 @@ pub mod dnn {
 	boxed_ref! { HardSwishLayer, crate::dnn::HardSwishLayerTraitConst, as_raw_HardSwishLayer, crate::dnn::HardSwishLayerTrait, as_raw_mut_HardSwishLayer }
 	
 	impl HardSwishLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_HardSwishLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::HardSwishLayer>> {
 			return_send!(via ocvrs_return);
@@ -8883,6 +9631,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for HardSwishLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -9068,6 +9824,12 @@ pub mod dnn {
 	boxed_ref! { InnerProductLayer, crate::dnn::InnerProductLayerTraitConst, as_raw_InnerProductLayer, crate::dnn::InnerProductLayerTrait, as_raw_mut_InnerProductLayer }
 	
 	impl InnerProductLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_InnerProductLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::InnerProductLayer>> {
 			return_send!(via ocvrs_return);
@@ -9094,6 +9856,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for InnerProductLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -9225,6 +9995,12 @@ pub mod dnn {
 	boxed_ref! { InnerProductLayerInt8, crate::dnn::InnerProductLayerInt8TraitConst, as_raw_InnerProductLayerInt8, crate::dnn::InnerProductLayerInt8Trait, as_raw_mut_InnerProductLayerInt8 }
 	
 	impl InnerProductLayerInt8 {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_InnerProductLayerInt8_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::InnerProductLayerInt8>> {
 			return_send!(via ocvrs_return);
@@ -9258,6 +10034,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for InnerProductLayerInt8 {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -9331,6 +10115,12 @@ pub mod dnn {
 	boxed_ref! { InstanceNormLayer, crate::dnn::InstanceNormLayerTraitConst, as_raw_InstanceNormLayer, crate::dnn::InstanceNormLayerTrait, as_raw_mut_InstanceNormLayer }
 	
 	impl InstanceNormLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_InstanceNormLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::InstanceNormLayer>> {
 			return_send!(via ocvrs_return);
@@ -9357,6 +10147,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for InstanceNormLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -9421,6 +10219,12 @@ pub mod dnn {
 	boxed_ref! { InterpLayer, crate::dnn::InterpLayerTraitConst, as_raw_InterpLayer, crate::dnn::InterpLayerTrait, as_raw_mut_InterpLayer }
 	
 	impl InterpLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_InterpLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::Layer>> {
 			return_send!(via ocvrs_return);
@@ -9446,6 +10250,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for InterpLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -9745,6 +10557,12 @@ pub mod dnn {
 	boxed_ref! { LRNLayer, crate::dnn::LRNLayerTraitConst, as_raw_LRNLayer, crate::dnn::LRNLayerTrait, as_raw_mut_LRNLayer }
 	
 	impl LRNLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_LRNLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::LRNLayer>> {
 			return_send!(via ocvrs_return);
@@ -9776,6 +10594,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for LRNLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -11043,6 +11869,12 @@ pub mod dnn {
 	boxed_ref! { LayerNormLayer, crate::dnn::LayerNormLayerTraitConst, as_raw_LayerNormLayer, crate::dnn::LayerNormLayerTrait, as_raw_mut_LayerNormLayer }
 	
 	impl LayerNormLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_LayerNormLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::LayerNormLayer>> {
 			return_send!(via ocvrs_return);
@@ -11071,6 +11903,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for LayerNormLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -11173,14 +12013,10 @@ pub mod dnn {
 	boxed_ref! { LayerParams, crate::dnn::LayerParamsTraitConst, as_raw_LayerParams, crate::dnn::LayerParamsTrait, as_raw_mut_LayerParams }
 	
 	impl LayerParams {
+		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
-		pub fn default() -> Result<crate::dnn::LayerParams> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_dnn_LayerParams_new_const(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::dnn::LayerParams::opencv_from_extern(ret) };
-			Ok(ret)
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_LayerParams_defaultNew_const()) }
 		}
 		
 	}
@@ -11195,6 +12031,14 @@ pub mod dnn {
 				.field("name", &crate::dnn::LayerParamsTraitConst::name(self))
 				.field("typ", &crate::dnn::LayerParamsTraitConst::typ(self))
 				.finish()
+		}
+	}
+	
+	impl Default for LayerParams {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -11266,6 +12110,12 @@ pub mod dnn {
 	boxed_ref! { LogLayer, crate::dnn::LogLayerTraitConst, as_raw_LogLayer, crate::dnn::LogLayerTrait, as_raw_mut_LogLayer }
 	
 	impl LogLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_LogLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::LogLayer>> {
 			return_send!(via ocvrs_return);
@@ -11293,6 +12143,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for LogLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -11390,6 +12248,12 @@ pub mod dnn {
 	boxed_ref! { MVNLayer, crate::dnn::MVNLayerTraitConst, as_raw_MVNLayer, crate::dnn::MVNLayerTrait, as_raw_mut_MVNLayer }
 	
 	impl MVNLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_MVNLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::MVNLayer>> {
 			return_send!(via ocvrs_return);
@@ -11418,6 +12282,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for MVNLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -11479,6 +12351,12 @@ pub mod dnn {
 	boxed_ref! { MatMulLayer, crate::dnn::MatMulLayerTraitConst, as_raw_MatMulLayer, crate::dnn::MatMulLayerTrait, as_raw_mut_MatMulLayer }
 	
 	impl MatMulLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_MatMulLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::MatMulLayer>> {
 			return_send!(via ocvrs_return);
@@ -11504,6 +12382,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for MatMulLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -11607,6 +12493,12 @@ pub mod dnn {
 	boxed_ref! { MaxUnpoolLayer, crate::dnn::MaxUnpoolLayerTraitConst, as_raw_MaxUnpoolLayer, crate::dnn::MaxUnpoolLayerTrait, as_raw_mut_MaxUnpoolLayer }
 	
 	impl MaxUnpoolLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_MaxUnpoolLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::MaxUnpoolLayer>> {
 			return_send!(via ocvrs_return);
@@ -11635,6 +12527,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for MaxUnpoolLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -11706,6 +12606,12 @@ pub mod dnn {
 	boxed_ref! { MishLayer, crate::dnn::MishLayerTraitConst, as_raw_MishLayer, crate::dnn::MishLayerTrait, as_raw_mut_MishLayer }
 	
 	impl MishLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_MishLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::MishLayer>> {
 			return_send!(via ocvrs_return);
@@ -11733,6 +12639,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for MishLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -12150,6 +13064,12 @@ pub mod dnn {
 	boxed_ref! { NaryEltwiseLayer, crate::dnn::NaryEltwiseLayerTraitConst, as_raw_NaryEltwiseLayer, crate::dnn::NaryEltwiseLayerTrait, as_raw_mut_NaryEltwiseLayer }
 	
 	impl NaryEltwiseLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_NaryEltwiseLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::NaryEltwiseLayer>> {
 			return_send!(via ocvrs_return);
@@ -12175,6 +13095,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for NaryEltwiseLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -13458,6 +14386,12 @@ pub mod dnn {
 	boxed_ref! { NormalizeBBoxLayer, crate::dnn::NormalizeBBoxLayerTraitConst, as_raw_NormalizeBBoxLayer, crate::dnn::NormalizeBBoxLayerTrait, as_raw_mut_NormalizeBBoxLayer }
 	
 	impl NormalizeBBoxLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_NormalizeBBoxLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::NormalizeBBoxLayer>> {
 			return_send!(via ocvrs_return);
@@ -13486,6 +14420,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for NormalizeBBoxLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -13557,6 +14499,12 @@ pub mod dnn {
 	boxed_ref! { NotLayer, crate::dnn::NotLayerTraitConst, as_raw_NotLayer, crate::dnn::NotLayerTrait, as_raw_mut_NotLayer }
 	
 	impl NotLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_NotLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::NotLayer>> {
 			return_send!(via ocvrs_return);
@@ -13584,6 +14532,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for NotLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -13665,6 +14621,12 @@ pub mod dnn {
 	boxed_ref! { PaddingLayer, crate::dnn::PaddingLayerTraitConst, as_raw_PaddingLayer, crate::dnn::PaddingLayerTrait, as_raw_mut_PaddingLayer }
 	
 	impl PaddingLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_PaddingLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::PaddingLayer>> {
 			return_send!(via ocvrs_return);
@@ -13690,6 +14652,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for PaddingLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -13751,6 +14721,12 @@ pub mod dnn {
 	boxed_ref! { PermuteLayer, crate::dnn::PermuteLayerTraitConst, as_raw_PermuteLayer, crate::dnn::PermuteLayerTrait, as_raw_mut_PermuteLayer }
 	
 	impl PermuteLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_PermuteLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::PermuteLayer>> {
 			return_send!(via ocvrs_return);
@@ -13776,6 +14752,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for PermuteLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -14016,6 +15000,12 @@ pub mod dnn {
 	boxed_ref! { PoolingLayer, crate::dnn::PoolingLayerTraitConst, as_raw_PoolingLayer, crate::dnn::PoolingLayerTrait, as_raw_mut_PoolingLayer }
 	
 	impl PoolingLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_PoolingLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::PoolingLayer>> {
 			return_send!(via ocvrs_return);
@@ -14055,6 +15045,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for PoolingLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -14174,6 +15172,12 @@ pub mod dnn {
 	boxed_ref! { PoolingLayerInt8, crate::dnn::PoolingLayerInt8TraitConst, as_raw_PoolingLayerInt8, crate::dnn::PoolingLayerInt8Trait, as_raw_mut_PoolingLayerInt8 }
 	
 	impl PoolingLayerInt8 {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_PoolingLayerInt8_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::PoolingLayerInt8>> {
 			return_send!(via ocvrs_return);
@@ -14219,6 +15223,14 @@ pub mod dnn {
 				.field("spatial_scale", &crate::dnn::PoolingLayerTraitConst::spatial_scale(self))
 				.field("ps_roi_out_channels", &crate::dnn::PoolingLayerTraitConst::ps_roi_out_channels(self))
 				.finish()
+		}
+	}
+	
+	impl Default for PoolingLayerInt8 {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -14326,6 +15338,12 @@ pub mod dnn {
 	boxed_ref! { PowerLayer, crate::dnn::PowerLayerTraitConst, as_raw_PowerLayer, crate::dnn::PowerLayerTrait, as_raw_mut_PowerLayer }
 	
 	impl PowerLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_PowerLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::PowerLayer>> {
 			return_send!(via ocvrs_return);
@@ -14356,6 +15374,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for PowerLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -14417,6 +15443,12 @@ pub mod dnn {
 	boxed_ref! { PriorBoxLayer, crate::dnn::PriorBoxLayerTraitConst, as_raw_PriorBoxLayer, crate::dnn::PriorBoxLayerTrait, as_raw_mut_PriorBoxLayer }
 	
 	impl PriorBoxLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_PriorBoxLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::PriorBoxLayer>> {
 			return_send!(via ocvrs_return);
@@ -14442,6 +15474,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for PriorBoxLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -14503,6 +15543,12 @@ pub mod dnn {
 	boxed_ref! { ProposalLayer, crate::dnn::ProposalLayerTraitConst, as_raw_ProposalLayer, crate::dnn::ProposalLayerTrait, as_raw_mut_ProposalLayer }
 	
 	impl ProposalLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_ProposalLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::ProposalLayer>> {
 			return_send!(via ocvrs_return);
@@ -14528,6 +15574,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for ProposalLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -14615,6 +15669,12 @@ pub mod dnn {
 	boxed_ref! { QuantizeLayer, crate::dnn::QuantizeLayerTraitConst, as_raw_QuantizeLayer, crate::dnn::QuantizeLayerTrait, as_raw_mut_QuantizeLayer }
 	
 	impl QuantizeLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_QuantizeLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::QuantizeLayer>> {
 			return_send!(via ocvrs_return);
@@ -14642,6 +15702,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for QuantizeLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -14888,6 +15956,12 @@ pub mod dnn {
 	boxed_ref! { ReLU6Layer, crate::dnn::ReLU6LayerTraitConst, as_raw_ReLU6Layer, crate::dnn::ReLU6LayerTrait, as_raw_mut_ReLU6Layer }
 	
 	impl ReLU6Layer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_ReLU6Layer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::ReLU6Layer>> {
 			return_send!(via ocvrs_return);
@@ -14917,6 +15991,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for ReLU6Layer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -15000,6 +16082,12 @@ pub mod dnn {
 	boxed_ref! { ReLULayer, crate::dnn::ReLULayerTraitConst, as_raw_ReLULayer, crate::dnn::ReLULayerTrait, as_raw_mut_ReLULayer }
 	
 	impl ReLULayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_ReLULayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::ReLULayer>> {
 			return_send!(via ocvrs_return);
@@ -15028,6 +16116,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for ReLULayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -15099,6 +16195,12 @@ pub mod dnn {
 	boxed_ref! { ReciprocalLayer, crate::dnn::ReciprocalLayerTraitConst, as_raw_ReciprocalLayer, crate::dnn::ReciprocalLayerTrait, as_raw_mut_ReciprocalLayer }
 	
 	impl ReciprocalLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_ReciprocalLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::ReciprocalLayer>> {
 			return_send!(via ocvrs_return);
@@ -15126,6 +16228,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for ReciprocalLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -15187,6 +16297,12 @@ pub mod dnn {
 	boxed_ref! { ReduceLayer, crate::dnn::ReduceLayerTraitConst, as_raw_ReduceLayer, crate::dnn::ReduceLayerTrait, as_raw_mut_ReduceLayer }
 	
 	impl ReduceLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_ReduceLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::ReduceLayer>> {
 			return_send!(via ocvrs_return);
@@ -15212,6 +16328,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for ReduceLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -15285,6 +16409,12 @@ pub mod dnn {
 	boxed_ref! { RegionLayer, crate::dnn::RegionLayerTraitConst, as_raw_RegionLayer, crate::dnn::RegionLayerTrait, as_raw_mut_RegionLayer }
 	
 	impl RegionLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_RegionLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::RegionLayer>> {
 			return_send!(via ocvrs_return);
@@ -15311,6 +16441,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for RegionLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -15372,6 +16510,12 @@ pub mod dnn {
 	boxed_ref! { ReorgLayer, crate::dnn::ReorgLayerTraitConst, as_raw_ReorgLayer, crate::dnn::ReorgLayerTrait, as_raw_mut_ReorgLayer }
 	
 	impl ReorgLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_ReorgLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::ReorgLayer>> {
 			return_send!(via ocvrs_return);
@@ -15397,6 +16541,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for ReorgLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -15482,6 +16634,12 @@ pub mod dnn {
 	boxed_ref! { RequantizeLayer, crate::dnn::RequantizeLayerTraitConst, as_raw_RequantizeLayer, crate::dnn::RequantizeLayerTrait, as_raw_mut_RequantizeLayer }
 	
 	impl RequantizeLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_RequantizeLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::RequantizeLayer>> {
 			return_send!(via ocvrs_return);
@@ -15509,6 +16667,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for RequantizeLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -15543,7 +16709,7 @@ pub mod dnn {
 		}
 		
 		#[inline]
-		fn set_new_shape_range(&mut self, val: impl core::RangeTraitConst) {
+		fn set_new_shape_range(&mut self, val: core::Range) {
 			let ret = unsafe { sys::cv_dnn_ReshapeLayer_propNewShapeRange_const_Range(self.as_raw_mut_ReshapeLayer(), val.as_raw_Range()) };
 			ret
 		}
@@ -15596,6 +16762,12 @@ pub mod dnn {
 	boxed_ref! { ReshapeLayer, crate::dnn::ReshapeLayerTraitConst, as_raw_ReshapeLayer, crate::dnn::ReshapeLayerTrait, as_raw_mut_ReshapeLayer }
 	
 	impl ReshapeLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_ReshapeLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::ReshapeLayer>> {
 			return_send!(via ocvrs_return);
@@ -15623,6 +16795,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for ReshapeLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -15687,6 +16867,12 @@ pub mod dnn {
 	boxed_ref! { ResizeLayer, crate::dnn::ResizeLayerTraitConst, as_raw_ResizeLayer, crate::dnn::ResizeLayerTrait, as_raw_mut_ResizeLayer }
 	
 	impl ResizeLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_ResizeLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::ResizeLayer>> {
 			return_send!(via ocvrs_return);
@@ -15712,6 +16898,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for ResizeLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -15783,6 +16977,12 @@ pub mod dnn {
 	boxed_ref! { RoundLayer, crate::dnn::RoundLayerTraitConst, as_raw_RoundLayer, crate::dnn::RoundLayerTrait, as_raw_mut_RoundLayer }
 	
 	impl RoundLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_RoundLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::RoundLayer>> {
 			return_send!(via ocvrs_return);
@@ -15810,6 +17010,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for RoundLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -15909,6 +17117,12 @@ pub mod dnn {
 	boxed_ref! { ScaleLayer, crate::dnn::ScaleLayerTraitConst, as_raw_ScaleLayer, crate::dnn::ScaleLayerTrait, as_raw_mut_ScaleLayer }
 	
 	impl ScaleLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_ScaleLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::ScaleLayer>> {
 			return_send!(via ocvrs_return);
@@ -15937,6 +17151,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for ScaleLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -16032,6 +17254,12 @@ pub mod dnn {
 	boxed_ref! { ScaleLayerInt8, crate::dnn::ScaleLayerInt8TraitConst, as_raw_ScaleLayerInt8, crate::dnn::ScaleLayerInt8Trait, as_raw_mut_ScaleLayerInt8 }
 	
 	impl ScaleLayerInt8 {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_ScaleLayerInt8_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::ScaleLayerInt8>> {
 			return_send!(via ocvrs_return);
@@ -16064,6 +17292,14 @@ pub mod dnn {
 				.field("axis", &crate::dnn::ScaleLayerTraitConst::axis(self))
 				.field("mode", &crate::dnn::ScaleLayerTraitConst::mode(self))
 				.finish()
+		}
+	}
+	
+	impl Default for ScaleLayerInt8 {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -16125,6 +17361,12 @@ pub mod dnn {
 	boxed_ref! { ScatterLayer, crate::dnn::ScatterLayerTraitConst, as_raw_ScatterLayer, crate::dnn::ScatterLayerTrait, as_raw_mut_ScatterLayer }
 	
 	impl ScatterLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_ScatterLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::ScatterLayer>> {
 			return_send!(via ocvrs_return);
@@ -16150,6 +17392,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for ScatterLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -16211,6 +17461,12 @@ pub mod dnn {
 	boxed_ref! { ScatterNDLayer, crate::dnn::ScatterNDLayerTraitConst, as_raw_ScatterNDLayer, crate::dnn::ScatterNDLayerTrait, as_raw_mut_ScatterNDLayer }
 	
 	impl ScatterNDLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_ScatterNDLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::ScatterNDLayer>> {
 			return_send!(via ocvrs_return);
@@ -16236,6 +17492,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for ScatterNDLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -16471,6 +17735,12 @@ pub mod dnn {
 	boxed_ref! { SeluLayer, crate::dnn::SeluLayerTraitConst, as_raw_SeluLayer, crate::dnn::SeluLayerTrait, as_raw_mut_SeluLayer }
 	
 	impl SeluLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_SeluLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::SeluLayer>> {
 			return_send!(via ocvrs_return);
@@ -16500,6 +17770,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for SeluLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -16561,6 +17839,12 @@ pub mod dnn {
 	boxed_ref! { ShiftLayer, crate::dnn::ShiftLayerTraitConst, as_raw_ShiftLayer, crate::dnn::ShiftLayerTrait, as_raw_mut_ShiftLayer }
 	
 	impl ShiftLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_ShiftLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::Layer>> {
 			return_send!(via ocvrs_return);
@@ -16586,6 +17870,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for ShiftLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -16647,6 +17939,12 @@ pub mod dnn {
 	boxed_ref! { ShiftLayerInt8, crate::dnn::ShiftLayerInt8TraitConst, as_raw_ShiftLayerInt8, crate::dnn::ShiftLayerInt8Trait, as_raw_mut_ShiftLayerInt8 }
 	
 	impl ShiftLayerInt8 {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_ShiftLayerInt8_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::Layer>> {
 			return_send!(via ocvrs_return);
@@ -16672,6 +17970,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for ShiftLayerInt8 {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -16767,6 +18073,12 @@ pub mod dnn {
 	boxed_ref! { ShrinkLayer, crate::dnn::ShrinkLayerTraitConst, as_raw_ShrinkLayer, crate::dnn::ShrinkLayerTrait, as_raw_mut_ShrinkLayer }
 	
 	impl ShrinkLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_ShrinkLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::ShrinkLayer>> {
 			return_send!(via ocvrs_return);
@@ -16796,6 +18108,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for ShrinkLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -16877,6 +18197,12 @@ pub mod dnn {
 	boxed_ref! { ShuffleChannelLayer, crate::dnn::ShuffleChannelLayerTraitConst, as_raw_ShuffleChannelLayer, crate::dnn::ShuffleChannelLayerTrait, as_raw_mut_ShuffleChannelLayer }
 	
 	impl ShuffleChannelLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_ShuffleChannelLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::Layer>> {
 			return_send!(via ocvrs_return);
@@ -16903,6 +18229,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for ShuffleChannelLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -16974,6 +18308,12 @@ pub mod dnn {
 	boxed_ref! { SigmoidLayer, crate::dnn::SigmoidLayerTraitConst, as_raw_SigmoidLayer, crate::dnn::SigmoidLayerTrait, as_raw_mut_SigmoidLayer }
 	
 	impl SigmoidLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_SigmoidLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::SigmoidLayer>> {
 			return_send!(via ocvrs_return);
@@ -17001,6 +18341,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for SigmoidLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -17072,6 +18420,12 @@ pub mod dnn {
 	boxed_ref! { SignLayer, crate::dnn::SignLayerTraitConst, as_raw_SignLayer, crate::dnn::SignLayerTrait, as_raw_mut_SignLayer }
 	
 	impl SignLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_SignLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::SignLayer>> {
 			return_send!(via ocvrs_return);
@@ -17099,6 +18453,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for SignLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -17170,6 +18532,12 @@ pub mod dnn {
 	boxed_ref! { SinLayer, crate::dnn::SinLayerTraitConst, as_raw_SinLayer, crate::dnn::SinLayerTrait, as_raw_mut_SinLayer }
 	
 	impl SinLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_SinLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::SinLayer>> {
 			return_send!(via ocvrs_return);
@@ -17197,6 +18565,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for SinLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -17268,6 +18644,12 @@ pub mod dnn {
 	boxed_ref! { SinhLayer, crate::dnn::SinhLayerTraitConst, as_raw_SinhLayer, crate::dnn::SinhLayerTrait, as_raw_mut_SinhLayer }
 	
 	impl SinhLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_SinhLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::SinhLayer>> {
 			return_send!(via ocvrs_return);
@@ -17295,6 +18677,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for SinhLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -17437,6 +18827,12 @@ pub mod dnn {
 	boxed_ref! { SliceLayer, crate::dnn::SliceLayerTraitConst, as_raw_SliceLayer, crate::dnn::SliceLayerTrait, as_raw_mut_SliceLayer }
 	
 	impl SliceLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_SliceLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::SliceLayer>> {
 			return_send!(via ocvrs_return);
@@ -17466,6 +18862,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for SliceLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -17539,6 +18943,12 @@ pub mod dnn {
 	boxed_ref! { SoftmaxLayer, crate::dnn::SoftmaxLayerTraitConst, as_raw_SoftmaxLayer, crate::dnn::SoftmaxLayerTrait, as_raw_mut_SoftmaxLayer }
 	
 	impl SoftmaxLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_SoftmaxLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::SoftmaxLayer>> {
 			return_send!(via ocvrs_return);
@@ -17565,6 +18975,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for SoftmaxLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -17660,6 +19078,12 @@ pub mod dnn {
 	boxed_ref! { SoftmaxLayerInt8, crate::dnn::SoftmaxLayerInt8TraitConst, as_raw_SoftmaxLayerInt8, crate::dnn::SoftmaxLayerInt8Trait, as_raw_mut_SoftmaxLayerInt8 }
 	
 	impl SoftmaxLayerInt8 {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_SoftmaxLayerInt8_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::SoftmaxLayerInt8>> {
 			return_send!(via ocvrs_return);
@@ -17690,6 +19114,14 @@ pub mod dnn {
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.field("log_soft_max", &crate::dnn::SoftmaxLayerTraitConst::log_soft_max(self))
 				.finish()
+		}
+	}
+	
+	impl Default for SoftmaxLayerInt8 {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -17761,6 +19193,12 @@ pub mod dnn {
 	boxed_ref! { SoftplusLayer, crate::dnn::SoftplusLayerTraitConst, as_raw_SoftplusLayer, crate::dnn::SoftplusLayerTrait, as_raw_mut_SoftplusLayer }
 	
 	impl SoftplusLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_SoftplusLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::SoftplusLayer>> {
 			return_send!(via ocvrs_return);
@@ -17788,6 +19226,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for SoftplusLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -17859,6 +19305,12 @@ pub mod dnn {
 	boxed_ref! { SoftsignLayer, crate::dnn::SoftsignLayerTraitConst, as_raw_SoftsignLayer, crate::dnn::SoftsignLayerTrait, as_raw_mut_SoftsignLayer }
 	
 	impl SoftsignLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_SoftsignLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::SoftsignLayer>> {
 			return_send!(via ocvrs_return);
@@ -17886,6 +19338,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for SoftsignLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -17961,6 +19421,12 @@ pub mod dnn {
 	boxed_ref! { SplitLayer, crate::dnn::SplitLayerTraitConst, as_raw_SplitLayer, crate::dnn::SplitLayerTrait, as_raw_mut_SplitLayer }
 	
 	impl SplitLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_SplitLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::SplitLayer>> {
 			return_send!(via ocvrs_return);
@@ -17987,6 +19453,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for SplitLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -18058,6 +19532,12 @@ pub mod dnn {
 	boxed_ref! { SqrtLayer, crate::dnn::SqrtLayerTraitConst, as_raw_SqrtLayer, crate::dnn::SqrtLayerTrait, as_raw_mut_SqrtLayer }
 	
 	impl SqrtLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_SqrtLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::SqrtLayer>> {
 			return_send!(via ocvrs_return);
@@ -18085,6 +19565,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for SqrtLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -18156,6 +19644,12 @@ pub mod dnn {
 	boxed_ref! { SwishLayer, crate::dnn::SwishLayerTraitConst, as_raw_SwishLayer, crate::dnn::SwishLayerTrait, as_raw_mut_SwishLayer }
 	
 	impl SwishLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_SwishLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::SwishLayer>> {
 			return_send!(via ocvrs_return);
@@ -18183,6 +19677,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for SwishLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -18254,6 +19756,12 @@ pub mod dnn {
 	boxed_ref! { TanHLayer, crate::dnn::TanHLayerTraitConst, as_raw_TanHLayer, crate::dnn::TanHLayerTrait, as_raw_mut_TanHLayer }
 	
 	impl TanHLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_TanHLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::TanHLayer>> {
 			return_send!(via ocvrs_return);
@@ -18281,6 +19789,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for TanHLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -18352,6 +19868,12 @@ pub mod dnn {
 	boxed_ref! { TanLayer, crate::dnn::TanLayerTraitConst, as_raw_TanLayer, crate::dnn::TanLayerTrait, as_raw_mut_TanLayer }
 	
 	impl TanLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_TanLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::TanLayer>> {
 			return_send!(via ocvrs_return);
@@ -18379,6 +19901,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for TanLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -19314,6 +20844,12 @@ pub mod dnn {
 	boxed_ref! { ThresholdedReluLayer, crate::dnn::ThresholdedReluLayerTraitConst, as_raw_ThresholdedReluLayer, crate::dnn::ThresholdedReluLayerTrait, as_raw_mut_ThresholdedReluLayer }
 	
 	impl ThresholdedReluLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_ThresholdedReluLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::ThresholdedReluLayer>> {
 			return_send!(via ocvrs_return);
@@ -19342,6 +20878,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for ThresholdedReluLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -19403,6 +20947,12 @@ pub mod dnn {
 	boxed_ref! { TileLayer, crate::dnn::TileLayerTraitConst, as_raw_TileLayer, crate::dnn::TileLayerTrait, as_raw_mut_TileLayer }
 	
 	impl TileLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_TileLayer_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::TileLayer>> {
 			return_send!(via ocvrs_return);
@@ -19428,6 +20978,14 @@ pub mod dnn {
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
 				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
 				.finish()
+		}
+	}
+	
+	impl Default for TileLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	

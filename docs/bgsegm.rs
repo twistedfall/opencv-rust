@@ -1114,6 +1114,12 @@ pub mod bgsegm {
 	boxed_ref! { BackgroundSubtractorLSBPDesc, crate::bgsegm::BackgroundSubtractorLSBPDescTraitConst, as_raw_BackgroundSubtractorLSBPDesc, crate::bgsegm::BackgroundSubtractorLSBPDescTrait, as_raw_mut_BackgroundSubtractorLSBPDesc }
 	
 	impl BackgroundSubtractorLSBPDesc {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_bgsegm_BackgroundSubtractorLSBPDesc_defaultNew_const()) }
+		}
+		
 		#[inline]
 		pub fn calc_local_svd_values(local_svd_values: &mut impl ToOutputArray, frame: &impl core::MatTraitConst) -> Result<()> {
 			output_array_arg!(local_svd_values);
@@ -1151,6 +1157,14 @@ pub mod bgsegm {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("BackgroundSubtractorLSBPDesc")
 				.finish()
+		}
+	}
+	
+	impl Default for BackgroundSubtractorLSBPDesc {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	

@@ -1841,6 +1841,12 @@ pub mod highgui {
 	boxed_ref! { QtFont, crate::highgui::QtFontTraitConst, as_raw_QtFont, crate::highgui::QtFontTrait, as_raw_mut_QtFont }
 	
 	impl QtFont {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_QtFont_defaultNew_const()) }
+		}
+		
 	}
 	
 	impl std::fmt::Debug for QtFont {
@@ -1860,6 +1866,14 @@ pub mod highgui {
 				.field("dx", &crate::highgui::QtFontTraitConst::dx(self))
 				.field("line_type", &crate::highgui::QtFontTraitConst::line_type(self))
 				.finish()
+		}
+	}
+	
+	impl Default for QtFont {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 }

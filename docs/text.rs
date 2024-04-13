@@ -1819,6 +1819,12 @@ pub mod text {
 	boxed_ref! { OCRBeamSearchDecoder, crate::text::OCRBeamSearchDecoderTraitConst, as_raw_OCRBeamSearchDecoder, crate::text::OCRBeamSearchDecoderTrait, as_raw_mut_OCRBeamSearchDecoder }
 	
 	impl OCRBeamSearchDecoder {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_text_OCRBeamSearchDecoder_defaultNew_const()) }
+		}
+		
 		/// Creates an instance of the OCRBeamSearchDecoder class. Initializes HMMDecoder.
 		/// 
 		/// ## Parameters
@@ -1928,6 +1934,14 @@ pub mod text {
 		}
 	}
 	
+	impl Default for OCRBeamSearchDecoder {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
+		}
+	}
+	
 	/// Constant methods for [crate::text::OCRBeamSearchDecoder_ClassifierCallback]
 	pub trait OCRBeamSearchDecoder_ClassifierCallbackTraitConst {
 		fn as_raw_OCRBeamSearchDecoder_ClassifierCallback(&self) -> *const c_void;
@@ -2010,6 +2024,12 @@ pub mod text {
 	boxed_ref! { OCRBeamSearchDecoder_ClassifierCallback, crate::text::OCRBeamSearchDecoder_ClassifierCallbackTraitConst, as_raw_OCRBeamSearchDecoder_ClassifierCallback, crate::text::OCRBeamSearchDecoder_ClassifierCallbackTrait, as_raw_mut_OCRBeamSearchDecoder_ClassifierCallback }
 	
 	impl OCRBeamSearchDecoder_ClassifierCallback {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_text_OCRBeamSearchDecoder_ClassifierCallback_defaultNew_const()) }
+		}
+		
 	}
 	
 	impl std::fmt::Debug for OCRBeamSearchDecoder_ClassifierCallback {
@@ -2017,6 +2037,14 @@ pub mod text {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("OCRBeamSearchDecoder_ClassifierCallback")
 				.finish()
+		}
+	}
+	
+	impl Default for OCRBeamSearchDecoder_ClassifierCallback {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -2289,6 +2317,12 @@ pub mod text {
 	boxed_ref! { OCRHMMDecoder, crate::text::OCRHMMDecoderTraitConst, as_raw_OCRHMMDecoder, crate::text::OCRHMMDecoderTrait, as_raw_mut_OCRHMMDecoder }
 	
 	impl OCRHMMDecoder {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_text_OCRHMMDecoder_defaultNew_const()) }
+		}
+		
 		/// Creates an instance of the OCRHMMDecoder class. Initializes HMMDecoder.
 		/// 
 		/// ## Parameters
@@ -2426,6 +2460,14 @@ pub mod text {
 		}
 	}
 	
+	impl Default for OCRHMMDecoder {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
+		}
+	}
+	
 	/// Constant methods for [crate::text::OCRHMMDecoder_ClassifierCallback]
 	pub trait OCRHMMDecoder_ClassifierCallbackTraitConst {
 		fn as_raw_OCRHMMDecoder_ClassifierCallback(&self) -> *const c_void;
@@ -2490,6 +2532,12 @@ pub mod text {
 	boxed_ref! { OCRHMMDecoder_ClassifierCallback, crate::text::OCRHMMDecoder_ClassifierCallbackTraitConst, as_raw_OCRHMMDecoder_ClassifierCallback, crate::text::OCRHMMDecoder_ClassifierCallbackTrait, as_raw_mut_OCRHMMDecoder_ClassifierCallback }
 	
 	impl OCRHMMDecoder_ClassifierCallback {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_text_OCRHMMDecoder_ClassifierCallback_defaultNew_const()) }
+		}
+		
 	}
 	
 	impl std::fmt::Debug for OCRHMMDecoder_ClassifierCallback {
@@ -2497,6 +2545,14 @@ pub mod text {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("OCRHMMDecoder_ClassifierCallback")
 				.finish()
+		}
+	}
+	
+	impl Default for OCRHMMDecoder_ClassifierCallback {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	

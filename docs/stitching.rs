@@ -462,6 +462,12 @@ pub mod stitching {
 	boxed_ref! { AffineWarper, crate::stitching::AffineWarperTraitConst, as_raw_AffineWarper, crate::stitching::AffineWarperTrait, as_raw_mut_AffineWarper }
 	
 	impl AffineWarper {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_AffineWarper_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { AffineWarper, crate::stitching::WarperCreator, cv_AffineWarper_to_WarperCreator }
@@ -471,6 +477,14 @@ pub mod stitching {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("AffineWarper")
 				.finish()
+		}
+	}
+	
+	impl Default for AffineWarper {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -729,6 +743,12 @@ pub mod stitching {
 	boxed_ref! { CylindricalWarper, crate::stitching::CylindricalWarperTraitConst, as_raw_CylindricalWarper, crate::stitching::CylindricalWarperTrait, as_raw_mut_CylindricalWarper }
 	
 	impl CylindricalWarper {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_CylindricalWarper_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { CylindricalWarper, crate::stitching::WarperCreator, cv_CylindricalWarper_to_WarperCreator }
@@ -738,6 +758,14 @@ pub mod stitching {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CylindricalWarper")
 				.finish()
+		}
+	}
+	
+	impl Default for CylindricalWarper {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -799,6 +827,12 @@ pub mod stitching {
 	boxed_ref! { CylindricalWarperGpu, crate::stitching::CylindricalWarperGpuTraitConst, as_raw_CylindricalWarperGpu, crate::stitching::CylindricalWarperGpuTrait, as_raw_mut_CylindricalWarperGpu }
 	
 	impl CylindricalWarperGpu {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_CylindricalWarperGpu_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { CylindricalWarperGpu, crate::stitching::WarperCreator, cv_CylindricalWarperGpu_to_WarperCreator }
@@ -808,6 +842,14 @@ pub mod stitching {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("CylindricalWarperGpu")
 				.finish()
+		}
+	}
+	
+	impl Default for CylindricalWarperGpu {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -869,6 +911,12 @@ pub mod stitching {
 	boxed_ref! { FisheyeWarper, crate::stitching::FisheyeWarperTraitConst, as_raw_FisheyeWarper, crate::stitching::FisheyeWarperTrait, as_raw_mut_FisheyeWarper }
 	
 	impl FisheyeWarper {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_FisheyeWarper_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { FisheyeWarper, crate::stitching::WarperCreator, cv_FisheyeWarper_to_WarperCreator }
@@ -878,6 +926,14 @@ pub mod stitching {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("FisheyeWarper")
 				.finish()
+		}
+	}
+	
+	impl Default for FisheyeWarper {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -939,6 +995,12 @@ pub mod stitching {
 	boxed_ref! { MercatorWarper, crate::stitching::MercatorWarperTraitConst, as_raw_MercatorWarper, crate::stitching::MercatorWarperTrait, as_raw_mut_MercatorWarper }
 	
 	impl MercatorWarper {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_MercatorWarper_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { MercatorWarper, crate::stitching::WarperCreator, cv_MercatorWarper_to_WarperCreator }
@@ -948,6 +1010,14 @@ pub mod stitching {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MercatorWarper")
 				.finish()
+		}
+	}
+	
+	impl Default for MercatorWarper {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -1206,6 +1276,12 @@ pub mod stitching {
 	boxed_ref! { PlaneWarper, crate::stitching::PlaneWarperTraitConst, as_raw_PlaneWarper, crate::stitching::PlaneWarperTrait, as_raw_mut_PlaneWarper }
 	
 	impl PlaneWarper {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_PlaneWarper_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { PlaneWarper, crate::stitching::WarperCreator, cv_PlaneWarper_to_WarperCreator }
@@ -1215,6 +1291,14 @@ pub mod stitching {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PlaneWarper")
 				.finish()
+		}
+	}
+	
+	impl Default for PlaneWarper {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -1276,6 +1360,12 @@ pub mod stitching {
 	boxed_ref! { PlaneWarperGpu, crate::stitching::PlaneWarperGpuTraitConst, as_raw_PlaneWarperGpu, crate::stitching::PlaneWarperGpuTrait, as_raw_mut_PlaneWarperGpu }
 	
 	impl PlaneWarperGpu {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_PlaneWarperGpu_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { PlaneWarperGpu, crate::stitching::WarperCreator, cv_PlaneWarperGpu_to_WarperCreator }
@@ -1285,6 +1375,14 @@ pub mod stitching {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PlaneWarperGpu")
 				.finish()
+		}
+	}
+	
+	impl Default for PlaneWarperGpu {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -1551,6 +1649,12 @@ pub mod stitching {
 	boxed_ref! { SphericalWarper, crate::stitching::SphericalWarperTraitConst, as_raw_SphericalWarper, crate::stitching::SphericalWarperTrait, as_raw_mut_SphericalWarper }
 	
 	impl SphericalWarper {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_SphericalWarper_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { SphericalWarper, crate::stitching::WarperCreator, cv_SphericalWarper_to_WarperCreator }
@@ -1560,6 +1664,14 @@ pub mod stitching {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SphericalWarper")
 				.finish()
+		}
+	}
+	
+	impl Default for SphericalWarper {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -1621,6 +1733,12 @@ pub mod stitching {
 	boxed_ref! { SphericalWarperGpu, crate::stitching::SphericalWarperGpuTraitConst, as_raw_SphericalWarperGpu, crate::stitching::SphericalWarperGpuTrait, as_raw_mut_SphericalWarperGpu }
 	
 	impl SphericalWarperGpu {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_SphericalWarperGpu_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { SphericalWarperGpu, crate::stitching::WarperCreator, cv_SphericalWarperGpu_to_WarperCreator }
@@ -1630,6 +1748,14 @@ pub mod stitching {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("SphericalWarperGpu")
 				.finish()
+		}
+	}
+	
+	impl Default for SphericalWarperGpu {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -1691,6 +1817,12 @@ pub mod stitching {
 	boxed_ref! { StereographicWarper, crate::stitching::StereographicWarperTraitConst, as_raw_StereographicWarper, crate::stitching::StereographicWarperTrait, as_raw_mut_StereographicWarper }
 	
 	impl StereographicWarper {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_StereographicWarper_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { StereographicWarper, crate::stitching::WarperCreator, cv_StereographicWarper_to_WarperCreator }
@@ -1700,6 +1832,14 @@ pub mod stitching {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("StereographicWarper")
 				.finish()
+		}
+	}
+	
+	impl Default for StereographicWarper {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -2359,6 +2499,12 @@ pub mod stitching {
 	
 	impl Stitcher {
 		pub const ORIG_RESOL: f64 = -1.;
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_Stitcher_defaultNew_const()) }
+		}
+		
 		/// Creates a Stitcher configured in one of the stitching modes.
 		/// 
 		/// ## Parameters
@@ -2409,6 +2555,14 @@ pub mod stitching {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Stitcher")
 				.finish()
+		}
+	}
+	
+	impl Default for Stitcher {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -2470,6 +2624,12 @@ pub mod stitching {
 	boxed_ref! { TransverseMercatorWarper, crate::stitching::TransverseMercatorWarperTraitConst, as_raw_TransverseMercatorWarper, crate::stitching::TransverseMercatorWarperTrait, as_raw_mut_TransverseMercatorWarper }
 	
 	impl TransverseMercatorWarper {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_TransverseMercatorWarper_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { TransverseMercatorWarper, crate::stitching::WarperCreator, cv_TransverseMercatorWarper_to_WarperCreator }
@@ -2479,6 +2639,14 @@ pub mod stitching {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("TransverseMercatorWarper")
 				.finish()
+		}
+	}
+	
+	impl Default for TransverseMercatorWarper {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -3373,6 +3541,12 @@ pub mod stitching {
 	boxed_ref! { Detail_Blender, crate::stitching::Detail_BlenderTraitConst, as_raw_Detail_Blender, crate::stitching::Detail_BlenderTrait, as_raw_mut_Detail_Blender }
 	
 	impl Detail_Blender {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_detail_Blender_defaultNew_const()) }
+		}
+		
 		/// ## C++ default parameters
 		/// * try_gpu: false
 		#[inline]
@@ -3409,6 +3583,14 @@ pub mod stitching {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_Blender")
 				.finish()
+		}
+	}
+	
+	impl Default for Detail_Blender {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -4410,13 +4592,13 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn set_r(&mut self, val: impl core::MatTraitConst) {
+		fn set_r(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_detail_CameraParams_propR_const_Mat(self.as_raw_mut_Detail_CameraParams(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_t(&mut self, val: impl core::MatTraitConst) {
+		fn set_t(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_detail_CameraParams_propT_const_Mat(self.as_raw_mut_Detail_CameraParams(), val.as_raw_Mat()) };
 			ret
 		}
@@ -4766,6 +4948,12 @@ pub mod stitching {
 	boxed_ref! { Detail_CompressedRectilinearPortraitProjector, crate::stitching::Detail_CompressedRectilinearPortraitProjectorTraitConst, as_raw_Detail_CompressedRectilinearPortraitProjector, crate::stitching::Detail_CompressedRectilinearPortraitProjectorTrait, as_raw_mut_Detail_CompressedRectilinearPortraitProjector }
 	
 	impl Detail_CompressedRectilinearPortraitProjector {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_detail_CompressedRectilinearPortraitProjector_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { Detail_CompressedRectilinearPortraitProjector, crate::stitching::Detail_ProjectorBase, cv_detail_CompressedRectilinearPortraitProjector_to_Detail_ProjectorBase }
@@ -4783,6 +4971,14 @@ pub mod stitching {
 				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
 				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
 				.finish()
+		}
+	}
+	
+	impl Default for Detail_CompressedRectilinearPortraitProjector {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -4963,6 +5159,12 @@ pub mod stitching {
 	boxed_ref! { Detail_CompressedRectilinearProjector, crate::stitching::Detail_CompressedRectilinearProjectorTraitConst, as_raw_Detail_CompressedRectilinearProjector, crate::stitching::Detail_CompressedRectilinearProjectorTrait, as_raw_mut_Detail_CompressedRectilinearProjector }
 	
 	impl Detail_CompressedRectilinearProjector {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_detail_CompressedRectilinearProjector_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { Detail_CompressedRectilinearProjector, crate::stitching::Detail_ProjectorBase, cv_detail_CompressedRectilinearProjector_to_Detail_ProjectorBase }
@@ -4980,6 +5182,14 @@ pub mod stitching {
 				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
 				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
 				.finish()
+		}
+	}
+	
+	impl Default for Detail_CompressedRectilinearProjector {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -5136,6 +5346,12 @@ pub mod stitching {
 	boxed_ref! { Detail_CylindricalPortraitProjector, crate::stitching::Detail_CylindricalPortraitProjectorTraitConst, as_raw_Detail_CylindricalPortraitProjector, crate::stitching::Detail_CylindricalPortraitProjectorTrait, as_raw_mut_Detail_CylindricalPortraitProjector }
 	
 	impl Detail_CylindricalPortraitProjector {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_detail_CylindricalPortraitProjector_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { Detail_CylindricalPortraitProjector, crate::stitching::Detail_ProjectorBase, cv_detail_CylindricalPortraitProjector_to_Detail_ProjectorBase }
@@ -5151,6 +5367,14 @@ pub mod stitching {
 				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
 				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
 				.finish()
+		}
+	}
+	
+	impl Default for Detail_CylindricalPortraitProjector {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -5290,6 +5514,12 @@ pub mod stitching {
 	boxed_ref! { Detail_CylindricalProjector, crate::stitching::Detail_CylindricalProjectorTraitConst, as_raw_Detail_CylindricalProjector, crate::stitching::Detail_CylindricalProjectorTrait, as_raw_mut_Detail_CylindricalProjector }
 	
 	impl Detail_CylindricalProjector {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_detail_CylindricalProjector_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { Detail_CylindricalProjector, crate::stitching::Detail_ProjectorBase, cv_detail_CylindricalProjector_to_Detail_ProjectorBase }
@@ -5305,6 +5535,14 @@ pub mod stitching {
 				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
 				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
 				.finish()
+		}
+	}
+	
+	impl Default for Detail_CylindricalProjector {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -6404,6 +6642,12 @@ pub mod stitching {
 	boxed_ref! { Detail_FisheyeProjector, crate::stitching::Detail_FisheyeProjectorTraitConst, as_raw_Detail_FisheyeProjector, crate::stitching::Detail_FisheyeProjectorTrait, as_raw_mut_Detail_FisheyeProjector }
 	
 	impl Detail_FisheyeProjector {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_detail_FisheyeProjector_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { Detail_FisheyeProjector, crate::stitching::Detail_ProjectorBase, cv_detail_FisheyeProjector_to_Detail_ProjectorBase }
@@ -6419,6 +6663,14 @@ pub mod stitching {
 				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
 				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
 				.finish()
+		}
+	}
+	
+	impl Default for Detail_FisheyeProjector {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -6955,6 +7207,12 @@ pub mod stitching {
 	boxed_ref! { Detail_GraphCutSeamFinderBase, crate::stitching::Detail_GraphCutSeamFinderBaseTraitConst, as_raw_Detail_GraphCutSeamFinderBase, crate::stitching::Detail_GraphCutSeamFinderBaseTrait, as_raw_mut_Detail_GraphCutSeamFinderBase }
 	
 	impl Detail_GraphCutSeamFinderBase {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_detail_GraphCutSeamFinderBase_defaultNew_const()) }
+		}
+		
 	}
 	
 	impl std::fmt::Debug for Detail_GraphCutSeamFinderBase {
@@ -6962,6 +7220,14 @@ pub mod stitching {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_GraphCutSeamFinderBase")
 				.finish()
+		}
+	}
+	
+	impl Default for Detail_GraphCutSeamFinderBase {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -7354,7 +7620,7 @@ pub mod stitching {
 		}
 		
 		#[inline]
-		fn set_descriptors(&mut self, val: impl core::UMatTraitConst) {
+		fn set_descriptors(&mut self, val: core::UMat) {
 			let ret = unsafe { sys::cv_detail_ImageFeatures_propDescriptors_const_UMat(self.as_raw_mut_Detail_ImageFeatures(), val.as_raw_UMat()) };
 			ret
 		}
@@ -7398,6 +7664,8 @@ pub mod stitching {
 	boxed_ref! { Detail_ImageFeatures, crate::stitching::Detail_ImageFeaturesTraitConst, as_raw_Detail_ImageFeatures, crate::stitching::Detail_ImageFeaturesTrait, as_raw_mut_Detail_ImageFeatures }
 	
 	impl Detail_ImageFeatures {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
 		fn default() -> Self {
 			unsafe { Self::from_raw(sys::cv_detail_ImageFeatures_defaultNew_const()) }
 		}
@@ -7526,7 +7794,7 @@ pub mod stitching {
 		
 		/// Estimated transformation
 		#[inline]
-		fn set_h(&mut self, val: impl core::MatTraitConst) {
+		fn set_h(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_detail_MatchesInfo_propH_const_Mat(self.as_raw_mut_Detail_MatchesInfo(), val.as_raw_Mat()) };
 			ret
 		}
@@ -7711,6 +7979,12 @@ pub mod stitching {
 	boxed_ref! { Detail_MercatorProjector, crate::stitching::Detail_MercatorProjectorTraitConst, as_raw_Detail_MercatorProjector, crate::stitching::Detail_MercatorProjectorTrait, as_raw_mut_Detail_MercatorProjector }
 	
 	impl Detail_MercatorProjector {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_detail_MercatorProjector_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { Detail_MercatorProjector, crate::stitching::Detail_ProjectorBase, cv_detail_MercatorProjector_to_Detail_ProjectorBase }
@@ -7726,6 +8000,14 @@ pub mod stitching {
 				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
 				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
 				.finish()
+		}
+	}
+	
+	impl Default for Detail_MercatorProjector {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -8108,6 +8390,12 @@ pub mod stitching {
 	boxed_ref! { Detail_NoExposureCompensator, crate::stitching::Detail_NoExposureCompensatorTraitConst, as_raw_Detail_NoExposureCompensator, crate::stitching::Detail_NoExposureCompensatorTrait, as_raw_mut_Detail_NoExposureCompensator }
 	
 	impl Detail_NoExposureCompensator {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_detail_NoExposureCompensator_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { Detail_NoExposureCompensator, crate::stitching::Detail_ExposureCompensator, cv_detail_NoExposureCompensator_to_Detail_ExposureCompensator }
@@ -8117,6 +8405,14 @@ pub mod stitching {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_NoExposureCompensator")
 				.finish()
+		}
+	}
+	
+	impl Default for Detail_NoExposureCompensator {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -8178,6 +8474,12 @@ pub mod stitching {
 	boxed_ref! { Detail_NoSeamFinder, crate::stitching::Detail_NoSeamFinderTraitConst, as_raw_Detail_NoSeamFinder, crate::stitching::Detail_NoSeamFinderTrait, as_raw_mut_Detail_NoSeamFinder }
 	
 	impl Detail_NoSeamFinder {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_detail_NoSeamFinder_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { Detail_NoSeamFinder, crate::stitching::Detail_SeamFinder, cv_detail_NoSeamFinder_to_Detail_SeamFinder }
@@ -8187,6 +8489,14 @@ pub mod stitching {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_NoSeamFinder")
 				.finish()
+		}
+	}
+	
+	impl Default for Detail_NoSeamFinder {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -8354,6 +8664,12 @@ pub mod stitching {
 	boxed_ref! { Detail_PaniniPortraitProjector, crate::stitching::Detail_PaniniPortraitProjectorTraitConst, as_raw_Detail_PaniniPortraitProjector, crate::stitching::Detail_PaniniPortraitProjectorTrait, as_raw_mut_Detail_PaniniPortraitProjector }
 	
 	impl Detail_PaniniPortraitProjector {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_detail_PaniniPortraitProjector_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { Detail_PaniniPortraitProjector, crate::stitching::Detail_ProjectorBase, cv_detail_PaniniPortraitProjector_to_Detail_ProjectorBase }
@@ -8371,6 +8687,14 @@ pub mod stitching {
 				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
 				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
 				.finish()
+		}
+	}
+	
+	impl Default for Detail_PaniniPortraitProjector {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -8551,6 +8875,12 @@ pub mod stitching {
 	boxed_ref! { Detail_PaniniProjector, crate::stitching::Detail_PaniniProjectorTraitConst, as_raw_Detail_PaniniProjector, crate::stitching::Detail_PaniniProjectorTrait, as_raw_mut_Detail_PaniniProjector }
 	
 	impl Detail_PaniniProjector {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_detail_PaniniProjector_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { Detail_PaniniProjector, crate::stitching::Detail_ProjectorBase, cv_detail_PaniniProjector_to_Detail_ProjectorBase }
@@ -8568,6 +8898,14 @@ pub mod stitching {
 				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
 				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
 				.finish()
+		}
+	}
+	
+	impl Default for Detail_PaniniProjector {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -8724,6 +9062,12 @@ pub mod stitching {
 	boxed_ref! { Detail_PlanePortraitProjector, crate::stitching::Detail_PlanePortraitProjectorTraitConst, as_raw_Detail_PlanePortraitProjector, crate::stitching::Detail_PlanePortraitProjectorTrait, as_raw_mut_Detail_PlanePortraitProjector }
 	
 	impl Detail_PlanePortraitProjector {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_detail_PlanePortraitProjector_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { Detail_PlanePortraitProjector, crate::stitching::Detail_ProjectorBase, cv_detail_PlanePortraitProjector_to_Detail_ProjectorBase }
@@ -8739,6 +9083,14 @@ pub mod stitching {
 				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
 				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
 				.finish()
+		}
+	}
+	
+	impl Default for Detail_PlanePortraitProjector {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -8878,6 +9230,12 @@ pub mod stitching {
 	boxed_ref! { Detail_PlaneProjector, crate::stitching::Detail_PlaneProjectorTraitConst, as_raw_Detail_PlaneProjector, crate::stitching::Detail_PlaneProjectorTrait, as_raw_mut_Detail_PlaneProjector }
 	
 	impl Detail_PlaneProjector {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_detail_PlaneProjector_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { Detail_PlaneProjector, crate::stitching::Detail_ProjectorBase, cv_detail_PlaneProjector_to_Detail_ProjectorBase }
@@ -8893,6 +9251,14 @@ pub mod stitching {
 				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
 				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
 				.finish()
+		}
+	}
+	
+	impl Default for Detail_PlaneProjector {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -9467,6 +9833,8 @@ pub mod stitching {
 	boxed_ref! { Detail_ProjectorBase, crate::stitching::Detail_ProjectorBaseTraitConst, as_raw_Detail_ProjectorBase, crate::stitching::Detail_ProjectorBaseTrait, as_raw_mut_Detail_ProjectorBase }
 	
 	impl Detail_ProjectorBase {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
 		fn default() -> Self {
 			unsafe { Self::from_raw(sys::cv_detail_ProjectorBase_defaultNew_const()) }
 		}
@@ -9838,6 +10206,12 @@ pub mod stitching {
 	boxed_ref! { Detail_SphericalPortraitProjector, crate::stitching::Detail_SphericalPortraitProjectorTraitConst, as_raw_Detail_SphericalPortraitProjector, crate::stitching::Detail_SphericalPortraitProjectorTrait, as_raw_mut_Detail_SphericalPortraitProjector }
 	
 	impl Detail_SphericalPortraitProjector {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_detail_SphericalPortraitProjector_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { Detail_SphericalPortraitProjector, crate::stitching::Detail_ProjectorBase, cv_detail_SphericalPortraitProjector_to_Detail_ProjectorBase }
@@ -9853,6 +10227,14 @@ pub mod stitching {
 				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
 				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
 				.finish()
+		}
+	}
+	
+	impl Default for Detail_SphericalPortraitProjector {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -9992,6 +10374,8 @@ pub mod stitching {
 	boxed_ref! { Detail_SphericalProjector, crate::stitching::Detail_SphericalProjectorTraitConst, as_raw_Detail_SphericalProjector, crate::stitching::Detail_SphericalProjectorTrait, as_raw_mut_Detail_SphericalProjector }
 	
 	impl Detail_SphericalProjector {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
 		fn default() -> Self {
 			unsafe { Self::from_raw(sys::cv_detail_SphericalProjector_defaultNew_const()) }
 		}
@@ -10333,6 +10717,12 @@ pub mod stitching {
 	boxed_ref! { Detail_StereographicProjector, crate::stitching::Detail_StereographicProjectorTraitConst, as_raw_Detail_StereographicProjector, crate::stitching::Detail_StereographicProjectorTrait, as_raw_mut_Detail_StereographicProjector }
 	
 	impl Detail_StereographicProjector {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_detail_StereographicProjector_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { Detail_StereographicProjector, crate::stitching::Detail_ProjectorBase, cv_detail_StereographicProjector_to_Detail_ProjectorBase }
@@ -10348,6 +10738,14 @@ pub mod stitching {
 				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
 				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
 				.finish()
+		}
+	}
+	
+	impl Default for Detail_StereographicProjector {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -10487,6 +10885,12 @@ pub mod stitching {
 	boxed_ref! { Detail_TransverseMercatorProjector, crate::stitching::Detail_TransverseMercatorProjectorTraitConst, as_raw_Detail_TransverseMercatorProjector, crate::stitching::Detail_TransverseMercatorProjectorTrait, as_raw_mut_Detail_TransverseMercatorProjector }
 	
 	impl Detail_TransverseMercatorProjector {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_detail_TransverseMercatorProjector_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { Detail_TransverseMercatorProjector, crate::stitching::Detail_ProjectorBase, cv_detail_TransverseMercatorProjector_to_Detail_ProjectorBase }
@@ -10502,6 +10906,14 @@ pub mod stitching {
 				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
 				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
 				.finish()
+		}
+	}
+	
+	impl Default for Detail_TransverseMercatorProjector {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -10652,6 +11064,12 @@ pub mod stitching {
 	boxed_ref! { Detail_VoronoiSeamFinder, crate::stitching::Detail_VoronoiSeamFinderTraitConst, as_raw_Detail_VoronoiSeamFinder, crate::stitching::Detail_VoronoiSeamFinderTrait, as_raw_mut_Detail_VoronoiSeamFinder }
 	
 	impl Detail_VoronoiSeamFinder {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_detail_VoronoiSeamFinder_defaultNew_const()) }
+		}
+		
 	}
 	
 	boxed_cast_base! { Detail_VoronoiSeamFinder, crate::stitching::Detail_PairwiseSeamFinder, cv_detail_VoronoiSeamFinder_to_Detail_PairwiseSeamFinder }
@@ -10663,6 +11081,14 @@ pub mod stitching {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Detail_VoronoiSeamFinder")
 				.finish()
+		}
+	}
+	
+	impl Default for Detail_VoronoiSeamFinder {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 }

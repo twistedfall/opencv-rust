@@ -2328,100 +2328,100 @@ pub mod video {
 	
 		/// predicted state (x'(k)): x(k)=A*x(k-1)+B*u(k)
 		#[inline]
-		fn set_state_pre(&mut self, val: impl core::MatTraitConst) {
+		fn set_state_pre(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_KalmanFilter_propStatePre_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// corrected state (x(k)): x(k)=x'(k)+K(k)*(z(k)-H*x'(k))
 		#[inline]
-		fn set_state_post(&mut self, val: impl core::MatTraitConst) {
+		fn set_state_post(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_KalmanFilter_propStatePost_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// state transition matrix (A)
 		#[inline]
-		fn set_transition_matrix(&mut self, val: impl core::MatTraitConst) {
+		fn set_transition_matrix(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_KalmanFilter_propTransitionMatrix_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// control matrix (B) (not used if there is no control)
 		#[inline]
-		fn set_control_matrix(&mut self, val: impl core::MatTraitConst) {
+		fn set_control_matrix(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_KalmanFilter_propControlMatrix_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// measurement matrix (H)
 		#[inline]
-		fn set_measurement_matrix(&mut self, val: impl core::MatTraitConst) {
+		fn set_measurement_matrix(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_KalmanFilter_propMeasurementMatrix_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// process noise covariance matrix (Q)
 		#[inline]
-		fn set_process_noise_cov(&mut self, val: impl core::MatTraitConst) {
+		fn set_process_noise_cov(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_KalmanFilter_propProcessNoiseCov_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// measurement noise covariance matrix (R)
 		#[inline]
-		fn set_measurement_noise_cov(&mut self, val: impl core::MatTraitConst) {
+		fn set_measurement_noise_cov(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_KalmanFilter_propMeasurementNoiseCov_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// priori error estimate covariance matrix (P'(k)): P'(k)=A*P(k-1)*At + Q)
 		#[inline]
-		fn set_error_cov_pre(&mut self, val: impl core::MatTraitConst) {
+		fn set_error_cov_pre(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_KalmanFilter_propErrorCovPre_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// Kalman gain matrix (K(k)): K(k)=P'(k)*Ht*inv(H*P'(k)*Ht+R)
 		#[inline]
-		fn set_gain(&mut self, val: impl core::MatTraitConst) {
+		fn set_gain(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_KalmanFilter_propGain_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// posteriori error estimate covariance matrix (P(k)): P(k)=(I-K(k)*H)*P'(k)
 		#[inline]
-		fn set_error_cov_post(&mut self, val: impl core::MatTraitConst) {
+		fn set_error_cov_post(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_KalmanFilter_propErrorCovPost_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_temp1(&mut self, val: impl core::MatTraitConst) {
+		fn set_temp1(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_KalmanFilter_propTemp1_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_temp2(&mut self, val: impl core::MatTraitConst) {
+		fn set_temp2(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_KalmanFilter_propTemp2_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_temp3(&mut self, val: impl core::MatTraitConst) {
+		fn set_temp3(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_KalmanFilter_propTemp3_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_temp4(&mut self, val: impl core::MatTraitConst) {
+		fn set_temp4(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_KalmanFilter_propTemp4_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_temp5(&mut self, val: impl core::MatTraitConst) {
+		fn set_temp5(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_KalmanFilter_propTemp5_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}

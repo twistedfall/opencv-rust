@@ -15068,6 +15068,12 @@ pub mod core {
 	
 	impl Hamming {
 		pub const normType: u32 = 6;
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_Hamming_defaultNew_const()) }
+		}
+		
 	}
 	
 	impl std::fmt::Debug for Hamming {
@@ -15075,6 +15081,14 @@ pub mod core {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Hamming")
 				.finish()
+		}
+	}
+	
+	impl Default for Hamming {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -17358,7 +17372,7 @@ pub mod core {
 		}
 		
 		#[inline]
-		fn set_size(&mut self, val: impl core::MatSizeTraitConst) {
+		fn set_size(&mut self, val: core::MatSize) {
 			let ret = unsafe { sys::cv_Mat_propSize_const_MatSize(self.as_raw_mut_Mat(), val.as_raw_MatSize()) };
 			ret
 		}
@@ -20317,19 +20331,19 @@ pub mod core {
 		}
 		
 		#[inline]
-		fn set_a(&mut self, val: impl core::MatTraitConst) {
+		fn set_a(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_MatExpr_propA_const_Mat(self.as_raw_mut_MatExpr(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_b(&mut self, val: impl core::MatTraitConst) {
+		fn set_b(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_MatExpr_propB_const_Mat(self.as_raw_mut_MatExpr(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_c(&mut self, val: impl core::MatTraitConst) {
+		fn set_c(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_MatExpr_propC_const_Mat(self.as_raw_mut_MatExpr(), val.as_raw_Mat()) };
 			ret
 		}
@@ -22070,21 +22084,21 @@ pub mod core {
 	
 		/// eigenvectors of the covariation matrix
 		#[inline]
-		fn set_eigenvectors(&mut self, val: impl core::MatTraitConst) {
+		fn set_eigenvectors(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_PCA_propEigenvectors_const_Mat(self.as_raw_mut_PCA(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// eigenvalues of the covariation matrix
 		#[inline]
-		fn set_eigenvalues(&mut self, val: impl core::MatTraitConst) {
+		fn set_eigenvalues(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_PCA_propEigenvalues_const_Mat(self.as_raw_mut_PCA(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// mean value subtracted before the projection and added after the back projection
 		#[inline]
-		fn set_mean(&mut self, val: impl core::MatTraitConst) {
+		fn set_mean(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_PCA_propMean_const_Mat(self.as_raw_mut_PCA(), val.as_raw_Mat()) };
 			ret
 		}
@@ -23468,19 +23482,19 @@ pub mod core {
 		fn as_raw_mut_SVD(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn set_u(&mut self, val: impl core::MatTraitConst) {
+		fn set_u(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_SVD_propU_const_Mat(self.as_raw_mut_SVD(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_w(&mut self, val: impl core::MatTraitConst) {
+		fn set_w(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_SVD_propW_const_Mat(self.as_raw_mut_SVD(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_vt(&mut self, val: impl core::MatTraitConst) {
+		fn set_vt(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_SVD_propVt_const_Mat(self.as_raw_mut_SVD(), val.as_raw_Mat()) };
 			ret
 		}
@@ -24920,6 +24934,12 @@ pub mod core {
 	boxed_ref! { SparseMat_Node, core::SparseMat_NodeTraitConst, as_raw_SparseMat_Node, core::SparseMat_NodeTrait, as_raw_mut_SparseMat_Node }
 	
 	impl SparseMat_Node {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_SparseMat_Node_defaultNew_const()) }
+		}
+		
 	}
 	
 	impl std::fmt::Debug for SparseMat_Node {
@@ -24930,6 +24950,14 @@ pub mod core {
 				.field("next", &core::SparseMat_NodeTraitConst::next(self))
 				.field("idx", &core::SparseMat_NodeTraitConst::idx(self))
 				.finish()
+		}
+	}
+	
+	impl Default for SparseMat_Node {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -26119,7 +26147,7 @@ pub mod core {
 		
 		/// dimensional size of the matrix; accessible in various formats
 		#[inline]
-		fn set_size(&mut self, val: impl core::MatSizeTraitConst) {
+		fn set_size(&mut self, val: core::MatSize) {
 			let ret = unsafe { sys::cv_UMat_propSize_const_MatSize(self.as_raw_mut_UMat(), val.as_raw_MatSize()) };
 			ret
 		}
@@ -32857,6 +32885,12 @@ pub mod core {
 	boxed_ref! { TargetArchs, core::TargetArchsTraitConst, as_raw_TargetArchs, core::TargetArchsTrait, as_raw_mut_TargetArchs }
 	
 	impl TargetArchs {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_cuda_TargetArchs_defaultNew_const()) }
+		}
+		
 		/// The following method checks whether the module was built with the support of the given feature:
 		/// 
 		/// ## Parameters
@@ -32946,6 +32980,14 @@ pub mod core {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("TargetArchs")
 				.finish()
+		}
+	}
+	
+	impl Default for TargetArchs {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -33048,6 +33090,8 @@ pub mod core {
 	boxed_ref! { Detail_CheckContext, core::Detail_CheckContextTraitConst, as_raw_Detail_CheckContext, core::Detail_CheckContextTrait, as_raw_mut_Detail_CheckContext }
 	
 	impl Detail_CheckContext {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
 		fn default() -> Self {
 			unsafe { Self::from_raw(sys::cv_detail_CheckContext_defaultNew_const()) }
 		}
@@ -33750,6 +33794,12 @@ pub mod core {
 	boxed_ref! { Context_UserContext, core::Context_UserContextTraitConst, as_raw_Context_UserContext, core::Context_UserContextTrait, as_raw_mut_Context_UserContext }
 	
 	impl Context_UserContext {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_ocl_Context_UserContext_defaultNew_const()) }
+		}
+		
 	}
 	
 	impl std::fmt::Debug for Context_UserContext {
@@ -33757,6 +33807,14 @@ pub mod core {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Context_UserContext")
 				.finish()
+		}
+	}
+	
+	impl Default for Context_UserContext {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -38536,6 +38594,12 @@ pub mod core {
 	boxed_ref! { FunctionParams, core::FunctionParamsTraitConst, as_raw_FunctionParams, core::FunctionParamsTrait, as_raw_mut_FunctionParams }
 	
 	impl FunctionParams {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_utils_FunctionParams_defaultNew_const()) }
+		}
+		
 	}
 	
 	impl std::fmt::Debug for FunctionParams {
@@ -38545,6 +38609,14 @@ pub mod core {
 				.field("lambda", &core::FunctionParamsTraitConst::lambda(self))
 				.field("sigma", &core::FunctionParamsTraitConst::sigma(self))
 				.finish()
+		}
+	}
+	
+	impl Default for FunctionParams {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
