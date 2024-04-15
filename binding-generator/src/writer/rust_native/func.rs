@@ -293,7 +293,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 
 		let doc_comment = self.rendered_doc_comment("///", _opencv_version);
 		let visibility = if let Some(cls) = as_instance_method {
-			if cls.is_trait() {
+			if cls.kind().is_trait() {
 				""
 			} else {
 				"pub "

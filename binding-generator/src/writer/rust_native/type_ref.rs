@@ -4,7 +4,6 @@ use std::borrow::Cow::{Borrowed, Owned};
 pub use lifetime::{Lifetime, LifetimeIterator};
 pub use nullability::NullabilityExt;
 
-use crate::class::ClassKind;
 use crate::renderer::TypeRefRenderer;
 use crate::type_ref::{
 	Constness, Dir, ExternDir, FishStyle, InputOutputArrayKind, NameStyle, TypeRef, TypeRefKind, TypeRefTypeHint,
@@ -101,26 +100,20 @@ impl TypeRefExt for TypeRef<'_, '_> {
 					};
 					match tref_kind.canonical().into_owned() {
 						TypeRefKind::Class(cls) => {
-							if cls.is_trait() {
+							let cls_kind = cls.kind();
+							if cls_kind.is_simple() {
+								RenderLane::SimpleClass(SimpleClassRenderLane::from_non_canonical_indirection(
+									tref.into_owned(),
+									indirection,
+								))
+							} else if cls_kind.is_trait() {
 								RenderLane::TraitClass(TraitClassRenderLane::from_non_canonical_class_indirection(
 									self.clone(),
 									cls,
 									indirection,
 								))
 							} else {
-								let cls_kind = cls.kind();
-								match cls_kind {
-									ClassKind::Simple => RenderLane::SimpleClass(SimpleClassRenderLane::from_non_canonical_indirection(
-										tref.into_owned(),
-										indirection,
-									)),
-									ClassKind::Boxed | ClassKind::BoxedForced | ClassKind::System => {
-										RenderLane::CppPassByVoidPtr(CppPassByVoidPtrRenderLane::from_non_canonical(tref.into_owned()))
-									}
-									ClassKind::Other => {
-										unreachable!("Any other kind of class shouldn't be generated")
-									}
-								}
+								unreachable!("Any other kind of class shouldn't be generated")
 							}
 						}
 						TypeRefKind::Enum(enm) => RenderLane::Enum(EnumRenderLane::from_non_canonical_enum_indirection(

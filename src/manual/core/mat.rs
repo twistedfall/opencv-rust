@@ -7,9 +7,9 @@ use std::{fmt, ptr, slice};
 pub use mat_::*;
 
 use crate::boxed_ref::{BoxedRef, BoxedRefMut};
-use crate::core::{MatConstIterator, MatExpr, MatSize, Point, Rect, Scalar, Size, UMat, Vector};
+use crate::core::{MatConstIterator, MatExpr, MatSize, Point, Rect, Scalar, Size, UMat};
 use crate::prelude::*;
-use crate::{core, input_output_array, Error, Result};
+use crate::{core, input_output_array, input_output_array_vector, Error, Result};
 
 mod mat_;
 
@@ -671,7 +671,7 @@ impl<T: MatTraitConst + ?Sized> MatTraitConstManual for T {}
 impl<T: MatTrait + ?Sized> MatTraitManual for T {}
 
 input_output_array! { Mat, from_mat, from_mat_mut }
-input_output_array! { Vector<Mat>, from_mat_vec, from_mat_vec_mut }
+input_output_array_vector! { Mat, from_mat_vec, from_mat_vec_mut }
 
 impl fmt::Debug for Mat {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -700,7 +700,7 @@ impl fmt::Debug for Mat {
 }
 
 input_output_array! { UMat, from_umat, from_umat_mut }
-input_output_array! { Vector<UMat>, from_umat_vec, from_umat_vec_mut }
+input_output_array_vector! { UMat, from_umat_vec, from_umat_vec_mut }
 
 impl Deref for MatSize {
 	type Target = [i32];

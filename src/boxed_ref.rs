@@ -8,6 +8,7 @@ use crate::traits::{Boxed, OpenCVType, OpenCVTypeArg};
 ///
 /// This wrapper implements all traits that the underlying type does, but explicitly doesn't implement `Deref` and `DerefMut` to
 /// avoid being able to `mem::swap` the reference out of the wrapper.
+#[repr(transparent)]
 pub struct BoxedRef<'r, T: Boxed> {
 	pub(crate) reference: T,
 	// can make it &'r T, but then it will just take up unnecessary space
@@ -47,8 +48,8 @@ impl<'t, T: OpenCVTypeArg<'t> + Boxed> OpenCVTypeArg<'t> for BoxedRef<'_, T> {
 	}
 }
 
-impl<'t, T: OpenCVType<'t> + Boxed> OpenCVType<'t> for BoxedRef<'_, T> {
-	type Arg = T::Arg;
+impl<'t, 'b, T: OpenCVType<'t> + Boxed> OpenCVType<'t> for BoxedRef<'b, T> {
+	type Arg = BoxedRef<'b, T>;
 	type ExternReceive = T::ExternReceive;
 
 	#[inline]
@@ -76,6 +77,7 @@ impl<T: Boxed + OpenCVTypeExternContainer> OpenCVTypeExternContainer for BoxedRe
 }
 
 /// Mutable version of [BoxedRef], implements the traits that take `&mut self`.
+#[repr(transparent)]
 pub struct BoxedRefMut<'r, T: Boxed> {
 	pub(crate) reference: T,
 	referenced_object: PhantomData<&'r mut T>,
@@ -114,8 +116,8 @@ impl<'t, T: OpenCVTypeArg<'t> + Boxed> OpenCVTypeArg<'t> for BoxedRefMut<'_, T> 
 	}
 }
 
-impl<'t, T: OpenCVType<'t> + Boxed> OpenCVType<'t> for BoxedRefMut<'_, T> {
-	type Arg = T::Arg;
+impl<'t, 'b, T: OpenCVType<'t> + Boxed> OpenCVType<'t> for BoxedRefMut<'b, T> {
+	type Arg = BoxedRefMut<'b, T>;
 	type ExternReceive = T::ExternReceive;
 
 	#[inline]

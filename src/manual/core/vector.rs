@@ -3,11 +3,12 @@ use std::ffi::c_void;
 use std::iter::FromIterator;
 use std::marker::PhantomData;
 use std::mem::ManuallyDrop;
-use std::{fmt, slice};
+use std::{fmt, mem, slice};
 
 pub use iter::{VectorIterator, VectorRefIterator};
 pub use vector_extern::{VectorExtern, VectorExternCopyNonBool};
 
+use crate::boxed_ref::BoxedRef;
 use crate::platform_types::size_t;
 use crate::traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer};
 use crate::Result;
@@ -214,9 +215,11 @@ where
 	}
 }
 
-pub trait VectorToVec<T> {
+pub trait VectorToVec {
+	type Element;
+
 	/// Convert `Vector` to `Vec`
-	fn to_vec(&self) -> Vec<T>;
+	fn to_vec(&self) -> Vec<Self::Element>;
 }
 
 impl<T: for<'o> OpenCVType<'o>> Default for Vector<T>
@@ -231,7 +234,7 @@ where
 
 impl<T: for<'o> OpenCVType<'o>> From<Vector<T>> for Vec<T>
 where
-	Vector<T>: VectorExtern<T> + VectorToVec<T>,
+	Vector<T>: VectorExtern<T> + VectorToVec<Element = T>,
 {
 	#[inline]
 	fn from(from: Vector<T>) -> Self {
@@ -338,6 +341,19 @@ where
 	#[inline]
 	fn as_raw_mut(&mut self) -> *mut c_void {
 		self.ptr
+	}
+}
+
+impl<'b, T: Boxed> Vector<BoxedRef<'b, T>>
+where
+	BoxedRef<'b, T>: for<'o> OpenCVType<'o>,
+	Vector<BoxedRef<'b, T>>: VectorExtern<BoxedRef<'b, T>>,
+	Vector<T>: VectorExtern<T>,
+{
+	/// Transmutes a `&Vector<BoxedRef<T>>` into a `&Vector<T>`. This is safe as `BoxedRef` is a transparent wrapper around `T`,
+	/// but it breaks the lifetime guards imposed by `BoxedRef`, so this is a crate private function.
+	pub(crate) fn as_non_ref_vec(&self) -> &Vector<T> {
+		unsafe { mem::transmute::<_, &Vector<T>>(self) }
 	}
 }
 

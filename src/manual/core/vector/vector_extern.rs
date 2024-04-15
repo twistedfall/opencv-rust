@@ -164,9 +164,11 @@ macro_rules! vector_copy_non_bool {
 		$extern_from_slice: ident,
 		$extern_clone: ident $(,)?
 	) => {
-		impl $crate::core::VectorToVec<$type> for $crate::core::Vector<$type> {
+		impl $crate::core::VectorToVec for $crate::core::Vector<$type> {
+			type Element = $type;
+
 			#[inline]
-			fn to_vec(&self) -> std::vec::Vec<$type> {
+			fn to_vec(&self) -> std::vec::Vec<Self::Element> {
 				self.as_slice().to_vec()
 			}
 		}
@@ -218,9 +220,26 @@ macro_rules! vector_non_copy_or_bool {
 		vector_non_copy_or_bool! { $type }
 	};
 	($type: ty) => {
-		impl $crate::core::VectorToVec<$type> for $crate::core::Vector<$type> {
+		impl $crate::core::VectorToVec for $crate::core::Vector<$type> {
+			type Element = $type;
+
 			#[inline]
-			fn to_vec(&self) -> std::vec::Vec<$type> {
+			fn to_vec(&self) -> std::vec::Vec<Self::Element> {
+				(0..self.len()).map(|x| unsafe { self.get_unchecked(x) }).collect()
+			}
+		}
+	};
+}
+
+#[doc(hidden)]
+#[macro_export]
+macro_rules! vector_boxed_ref {
+	($type: ty) => {
+		impl<'b> $crate::core::VectorToVec for $crate::core::Vector<BoxedRef<'b, $type>> {
+			type Element = BoxedRef<'b, $type>;
+
+			#[inline]
+			fn to_vec(&self) -> std::vec::Vec<Self::Element> {
 				(0..self.len()).map(|x| unsafe { self.get_unchecked(x) }).collect()
 			}
 		}

@@ -37,6 +37,13 @@ impl<'tu, 'ge> ClassDesc<'tu, 'ge> {
 		}
 	}
 
+	pub fn system(cpp_refname: impl Into<Rc<str>>, rust_module: impl Into<Rc<str>>) -> Self {
+		Self {
+			kind: ClassKind::System,
+			..Self::boxed(cpp_refname, rust_module)
+		}
+	}
+
 	/// `cv::Scalar`
 	pub fn cv_scalar() -> Class<'tu, 'ge> {
 		Class::new_desc(Self::simple("cv::Scalar", "core"))
@@ -104,7 +111,7 @@ impl<'tu, 'ge> ClassDesc<'tu, 'ge> {
 
 	/// `cv::String`
 	pub fn cv_string() -> Class<'tu, 'ge> {
-		Class::new_desc(Self::boxed("cv::String", "core"))
+		Class::new_desc(Self::system("cv::String", "core"))
 	}
 
 	/// `cv::MatConstIterator`

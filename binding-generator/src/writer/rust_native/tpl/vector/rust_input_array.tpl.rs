@@ -1,5 +1,4 @@
 
-
 impl ToInputArray for {{rust_full}} {
 	{{input_array_impl}}
 }

@@ -1125,10 +1125,12 @@ mod core_types {
 		std_vectorLcv_DMatchG_get_const_size_t, std_vectorLcv_DMatchG_set_size_t_const_DMatch,
 		std_vectorLcv_DMatchG_push_const_DMatch, std_vectorLcv_DMatchG_insert_size_t_const_DMatch,
 	}
+	
 	vector_copy_non_bool! { core::DMatch,
 		std_vectorLcv_DMatchG_data_const, std_vectorLcv_DMatchG_dataMut, cv_fromSlice_const_const_DMatchX_size_t,
 		std_vectorLcv_DMatchG_clone_const,
 	}
+	
 	
 	pub type VectorOfGpuMat = core::Vector<core::GpuMat>;
 	
@@ -1146,7 +1148,21 @@ mod core_types {
 		std_vectorLcv_cuda_GpuMatG_get_const_size_t, std_vectorLcv_cuda_GpuMatG_set_size_t_const_GpuMat,
 		std_vectorLcv_cuda_GpuMatG_push_const_GpuMat, std_vectorLcv_cuda_GpuMatG_insert_size_t_const_GpuMat,
 	}
+	
 	vector_non_copy_or_bool! { clone core::GpuMat }
+	
+	vector_boxed_ref! { core::GpuMat }
+	
+	vector_extern! { BoxedRef<'_, core::GpuMat>,
+		std_vectorLcv_cuda_GpuMatG_new_const, std_vectorLcv_cuda_GpuMatG_delete,
+		std_vectorLcv_cuda_GpuMatG_len_const, std_vectorLcv_cuda_GpuMatG_isEmpty_const,
+		std_vectorLcv_cuda_GpuMatG_capacity_const, std_vectorLcv_cuda_GpuMatG_shrinkToFit,
+		std_vectorLcv_cuda_GpuMatG_reserve_size_t, std_vectorLcv_cuda_GpuMatG_remove_size_t,
+		std_vectorLcv_cuda_GpuMatG_swap_size_t_size_t, std_vectorLcv_cuda_GpuMatG_clear,
+		std_vectorLcv_cuda_GpuMatG_get_const_size_t, std_vectorLcv_cuda_GpuMatG_set_size_t_const_GpuMat,
+		std_vectorLcv_cuda_GpuMatG_push_const_GpuMat, std_vectorLcv_cuda_GpuMatG_insert_size_t_const_GpuMat,
+	}
+	
 	
 	pub type VectorOfKeyPoint = core::Vector<core::KeyPoint>;
 	
@@ -1164,7 +1180,21 @@ mod core_types {
 		std_vectorLcv_KeyPointG_get_const_size_t, std_vectorLcv_KeyPointG_set_size_t_const_KeyPoint,
 		std_vectorLcv_KeyPointG_push_const_KeyPoint, std_vectorLcv_KeyPointG_insert_size_t_const_KeyPoint,
 	}
+	
 	vector_non_copy_or_bool! { clone core::KeyPoint }
+	
+	vector_boxed_ref! { core::KeyPoint }
+	
+	vector_extern! { BoxedRef<'_, core::KeyPoint>,
+		std_vectorLcv_KeyPointG_new_const, std_vectorLcv_KeyPointG_delete,
+		std_vectorLcv_KeyPointG_len_const, std_vectorLcv_KeyPointG_isEmpty_const,
+		std_vectorLcv_KeyPointG_capacity_const, std_vectorLcv_KeyPointG_shrinkToFit,
+		std_vectorLcv_KeyPointG_reserve_size_t, std_vectorLcv_KeyPointG_remove_size_t,
+		std_vectorLcv_KeyPointG_swap_size_t_size_t, std_vectorLcv_KeyPointG_clear,
+		std_vectorLcv_KeyPointG_get_const_size_t, std_vectorLcv_KeyPointG_set_size_t_const_KeyPoint,
+		std_vectorLcv_KeyPointG_push_const_KeyPoint, std_vectorLcv_KeyPointG_insert_size_t_const_KeyPoint,
+	}
+	
 	
 	pub type VectorOfMat = core::Vector<core::Mat>;
 	
@@ -1182,7 +1212,21 @@ mod core_types {
 		std_vectorLcv_MatG_get_const_size_t, std_vectorLcv_MatG_set_size_t_const_Mat,
 		std_vectorLcv_MatG_push_const_Mat, std_vectorLcv_MatG_insert_size_t_const_Mat,
 	}
+	
 	vector_non_copy_or_bool! { clone core::Mat }
+	
+	vector_boxed_ref! { core::Mat }
+	
+	vector_extern! { BoxedRef<'_, core::Mat>,
+		std_vectorLcv_MatG_new_const, std_vectorLcv_MatG_delete,
+		std_vectorLcv_MatG_len_const, std_vectorLcv_MatG_isEmpty_const,
+		std_vectorLcv_MatG_capacity_const, std_vectorLcv_MatG_shrinkToFit,
+		std_vectorLcv_MatG_reserve_size_t, std_vectorLcv_MatG_remove_size_t,
+		std_vectorLcv_MatG_swap_size_t_size_t, std_vectorLcv_MatG_clear,
+		std_vectorLcv_MatG_get_const_size_t, std_vectorLcv_MatG_set_size_t_const_Mat,
+		std_vectorLcv_MatG_push_const_Mat, std_vectorLcv_MatG_insert_size_t_const_Mat,
+	}
+	
 	
 	pub type VectorOfPlatformInfo = core::Vector<core::PlatformInfo>;
 	
@@ -1200,7 +1244,21 @@ mod core_types {
 		std_vectorLcv_ocl_PlatformInfoG_get_const_size_t, std_vectorLcv_ocl_PlatformInfoG_set_size_t_const_PlatformInfo,
 		std_vectorLcv_ocl_PlatformInfoG_push_const_PlatformInfo, std_vectorLcv_ocl_PlatformInfoG_insert_size_t_const_PlatformInfo,
 	}
+	
 	vector_non_copy_or_bool! { core::PlatformInfo }
+	
+	vector_boxed_ref! { core::PlatformInfo }
+	
+	vector_extern! { BoxedRef<'_, core::PlatformInfo>,
+		std_vectorLcv_ocl_PlatformInfoG_new_const, std_vectorLcv_ocl_PlatformInfoG_delete,
+		std_vectorLcv_ocl_PlatformInfoG_len_const, std_vectorLcv_ocl_PlatformInfoG_isEmpty_const,
+		std_vectorLcv_ocl_PlatformInfoG_capacity_const, std_vectorLcv_ocl_PlatformInfoG_shrinkToFit,
+		std_vectorLcv_ocl_PlatformInfoG_reserve_size_t, std_vectorLcv_ocl_PlatformInfoG_remove_size_t,
+		std_vectorLcv_ocl_PlatformInfoG_swap_size_t_size_t, std_vectorLcv_ocl_PlatformInfoG_clear,
+		std_vectorLcv_ocl_PlatformInfoG_get_const_size_t, std_vectorLcv_ocl_PlatformInfoG_set_size_t_const_PlatformInfo,
+		std_vectorLcv_ocl_PlatformInfoG_push_const_PlatformInfo, std_vectorLcv_ocl_PlatformInfoG_insert_size_t_const_PlatformInfo,
+	}
+	
 	
 	pub type VectorOfPoint = core::Vector<core::Point>;
 	
@@ -1218,6 +1276,7 @@ mod core_types {
 		std_vectorLcv_PointG_get_const_size_t, std_vectorLcv_PointG_set_size_t_const_Point,
 		std_vectorLcv_PointG_push_const_Point, std_vectorLcv_PointG_insert_size_t_const_Point,
 	}
+	
 	vector_copy_non_bool! { core::Point,
 		std_vectorLcv_PointG_data_const, std_vectorLcv_PointG_dataMut, cv_fromSlice_const_const_PointX_size_t,
 		std_vectorLcv_PointG_clone_const,
@@ -1282,6 +1341,7 @@ mod core_types {
 		std_vectorLcv_Point2dG_get_const_size_t, std_vectorLcv_Point2dG_set_size_t_const_Point2d,
 		std_vectorLcv_Point2dG_push_const_Point2d, std_vectorLcv_Point2dG_insert_size_t_const_Point2d,
 	}
+	
 	vector_copy_non_bool! { core::Point2d,
 		std_vectorLcv_Point2dG_data_const, std_vectorLcv_Point2dG_dataMut, cv_fromSlice_const_const_Point2dX_size_t,
 		std_vectorLcv_Point2dG_clone_const,
@@ -1346,6 +1406,7 @@ mod core_types {
 		std_vectorLcv_Point2fG_get_const_size_t, std_vectorLcv_Point2fG_set_size_t_const_Point2f,
 		std_vectorLcv_Point2fG_push_const_Point2f, std_vectorLcv_Point2fG_insert_size_t_const_Point2f,
 	}
+	
 	vector_copy_non_bool! { core::Point2f,
 		std_vectorLcv_Point2fG_data_const, std_vectorLcv_Point2fG_dataMut, cv_fromSlice_const_const_Point2fX_size_t,
 		std_vectorLcv_Point2fG_clone_const,
@@ -1410,6 +1471,7 @@ mod core_types {
 		std_vectorLcv_Point3dG_get_const_size_t, std_vectorLcv_Point3dG_set_size_t_const_Point3d,
 		std_vectorLcv_Point3dG_push_const_Point3d, std_vectorLcv_Point3dG_insert_size_t_const_Point3d,
 	}
+	
 	vector_copy_non_bool! { core::Point3d,
 		std_vectorLcv_Point3dG_data_const, std_vectorLcv_Point3dG_dataMut, cv_fromSlice_const_const_Point3dX_size_t,
 		std_vectorLcv_Point3dG_clone_const,
@@ -1474,6 +1536,7 @@ mod core_types {
 		std_vectorLcv_Point3fG_get_const_size_t, std_vectorLcv_Point3fG_set_size_t_const_Point3f,
 		std_vectorLcv_Point3fG_push_const_Point3f, std_vectorLcv_Point3fG_insert_size_t_const_Point3f,
 	}
+	
 	vector_copy_non_bool! { core::Point3f,
 		std_vectorLcv_Point3fG_data_const, std_vectorLcv_Point3fG_dataMut, cv_fromSlice_const_const_Point3fX_size_t,
 		std_vectorLcv_Point3fG_clone_const,
@@ -1538,6 +1601,7 @@ mod core_types {
 		std_vectorLcv_Point3iG_get_const_size_t, std_vectorLcv_Point3iG_set_size_t_const_Point3i,
 		std_vectorLcv_Point3iG_push_const_Point3i, std_vectorLcv_Point3iG_insert_size_t_const_Point3i,
 	}
+	
 	vector_copy_non_bool! { core::Point3i,
 		std_vectorLcv_Point3iG_data_const, std_vectorLcv_Point3iG_dataMut, cv_fromSlice_const_const_Point3iX_size_t,
 		std_vectorLcv_Point3iG_clone_const,
@@ -1602,7 +1666,21 @@ mod core_types {
 		std_vectorLcv_RangeG_get_const_size_t, std_vectorLcv_RangeG_set_size_t_const_Range,
 		std_vectorLcv_RangeG_push_const_Range, std_vectorLcv_RangeG_insert_size_t_const_Range,
 	}
+	
 	vector_non_copy_or_bool! { core::Range }
+	
+	vector_boxed_ref! { core::Range }
+	
+	vector_extern! { BoxedRef<'_, core::Range>,
+		std_vectorLcv_RangeG_new_const, std_vectorLcv_RangeG_delete,
+		std_vectorLcv_RangeG_len_const, std_vectorLcv_RangeG_isEmpty_const,
+		std_vectorLcv_RangeG_capacity_const, std_vectorLcv_RangeG_shrinkToFit,
+		std_vectorLcv_RangeG_reserve_size_t, std_vectorLcv_RangeG_remove_size_t,
+		std_vectorLcv_RangeG_swap_size_t_size_t, std_vectorLcv_RangeG_clear,
+		std_vectorLcv_RangeG_get_const_size_t, std_vectorLcv_RangeG_set_size_t_const_Range,
+		std_vectorLcv_RangeG_push_const_Range, std_vectorLcv_RangeG_insert_size_t_const_Range,
+	}
+	
 	
 	pub type VectorOfRect = core::Vector<core::Rect>;
 	
@@ -1620,6 +1698,7 @@ mod core_types {
 		std_vectorLcv_RectG_get_const_size_t, std_vectorLcv_RectG_set_size_t_const_Rect,
 		std_vectorLcv_RectG_push_const_Rect, std_vectorLcv_RectG_insert_size_t_const_Rect,
 	}
+	
 	vector_copy_non_bool! { core::Rect,
 		std_vectorLcv_RectG_data_const, std_vectorLcv_RectG_dataMut, cv_fromSlice_const_const_RectX_size_t,
 		std_vectorLcv_RectG_clone_const,
@@ -1684,6 +1763,7 @@ mod core_types {
 		std_vectorLcv_Rect2dG_get_const_size_t, std_vectorLcv_Rect2dG_set_size_t_const_Rect2d,
 		std_vectorLcv_Rect2dG_push_const_Rect2d, std_vectorLcv_Rect2dG_insert_size_t_const_Rect2d,
 	}
+	
 	vector_copy_non_bool! { core::Rect2d,
 		std_vectorLcv_Rect2dG_data_const, std_vectorLcv_Rect2dG_dataMut, cv_fromSlice_const_const_Rect2dX_size_t,
 		std_vectorLcv_Rect2dG_clone_const,
@@ -1748,10 +1828,12 @@ mod core_types {
 		std_vectorLcv_RotatedRectG_get_const_size_t, std_vectorLcv_RotatedRectG_set_size_t_const_RotatedRect,
 		std_vectorLcv_RotatedRectG_push_const_RotatedRect, std_vectorLcv_RotatedRectG_insert_size_t_const_RotatedRect,
 	}
+	
 	vector_copy_non_bool! { core::RotatedRect,
 		std_vectorLcv_RotatedRectG_data_const, std_vectorLcv_RotatedRectG_dataMut, cv_fromSlice_const_const_RotatedRectX_size_t,
 		std_vectorLcv_RotatedRectG_clone_const,
 	}
+	
 	
 	pub type VectorOfScalar = core::Vector<core::Scalar>;
 	
@@ -1769,6 +1851,7 @@ mod core_types {
 		std_vectorLcv_ScalarG_get_const_size_t, std_vectorLcv_ScalarG_set_size_t_const_Scalar,
 		std_vectorLcv_ScalarG_push_const_Scalar, std_vectorLcv_ScalarG_insert_size_t_const_Scalar,
 	}
+	
 	vector_copy_non_bool! { core::Scalar,
 		std_vectorLcv_ScalarG_data_const, std_vectorLcv_ScalarG_dataMut, cv_fromSlice_const_const_ScalarX_size_t,
 		std_vectorLcv_ScalarG_clone_const,
@@ -1833,6 +1916,7 @@ mod core_types {
 		std_vectorLcv_SizeG_get_const_size_t, std_vectorLcv_SizeG_set_size_t_const_Size,
 		std_vectorLcv_SizeG_push_const_Size, std_vectorLcv_SizeG_insert_size_t_const_Size,
 	}
+	
 	vector_copy_non_bool! { core::Size,
 		std_vectorLcv_SizeG_data_const, std_vectorLcv_SizeG_dataMut, cv_fromSlice_const_const_SizeX_size_t,
 		std_vectorLcv_SizeG_clone_const,
@@ -1897,7 +1981,9 @@ mod core_types {
 		std_vectorLcv_StringG_get_const_size_t, std_vectorLcv_StringG_set_size_t_const_String,
 		std_vectorLcv_StringG_push_const_String, std_vectorLcv_StringG_insert_size_t_const_String,
 	}
+	
 	vector_non_copy_or_bool! { String }
+	
 	
 	pub type VectorOfTupleOfPoint2i_Point2i = core::Vector<core::Tuple<(core::Point2i, core::Point2i)>>;
 	
@@ -1915,7 +2001,9 @@ mod core_types {
 		std_vectorLstd_pairLcv_Point2i__cv_Point2iGG_get_const_size_t, std_vectorLstd_pairLcv_Point2i__cv_Point2iGG_set_size_t_const_pairLcv_Point2i__cv_Point2iG,
 		std_vectorLstd_pairLcv_Point2i__cv_Point2iGG_push_const_pairLcv_Point2i__cv_Point2iG, std_vectorLstd_pairLcv_Point2i__cv_Point2iGG_insert_size_t_const_pairLcv_Point2i__cv_Point2iG,
 	}
+	
 	vector_non_copy_or_bool! { core::Tuple<(core::Point2i, core::Point2i)> }
+	
 	
 	pub type VectorOfTupleOfUMat_u8 = core::Vector<core::Tuple<(core::UMat, u8)>>;
 	
@@ -1933,7 +2021,9 @@ mod core_types {
 		std_vectorLstd_pairLcv_UMat__unsigned_charGG_get_const_size_t, std_vectorLstd_pairLcv_UMat__unsigned_charGG_set_size_t_const_pairLcv_UMat__unsigned_charG,
 		std_vectorLstd_pairLcv_UMat__unsigned_charGG_push_const_pairLcv_UMat__unsigned_charG, std_vectorLstd_pairLcv_UMat__unsigned_charGG_insert_size_t_const_pairLcv_UMat__unsigned_charG,
 	}
+	
 	vector_non_copy_or_bool! { core::Tuple<(core::UMat, u8)> }
+	
 	
 	pub type VectorOfTupleOfi32_f64 = core::Vector<core::Tuple<(i32, f64)>>;
 	
@@ -1951,7 +2041,9 @@ mod core_types {
 		std_vectorLstd_pairLint__doubleGG_get_const_size_t, std_vectorLstd_pairLint__doubleGG_set_size_t_const_pairLint__doubleG,
 		std_vectorLstd_pairLint__doubleGG_push_const_pairLint__doubleG, std_vectorLstd_pairLint__doubleGG_insert_size_t_const_pairLint__doubleG,
 	}
+	
 	vector_non_copy_or_bool! { core::Tuple<(i32, f64)> }
+	
 	
 	pub type VectorOfUMat = core::Vector<core::UMat>;
 	
@@ -1969,7 +2061,21 @@ mod core_types {
 		std_vectorLcv_UMatG_get_const_size_t, std_vectorLcv_UMatG_set_size_t_const_UMat,
 		std_vectorLcv_UMatG_push_const_UMat, std_vectorLcv_UMatG_insert_size_t_const_UMat,
 	}
+	
 	vector_non_copy_or_bool! { clone core::UMat }
+	
+	vector_boxed_ref! { core::UMat }
+	
+	vector_extern! { BoxedRef<'_, core::UMat>,
+		std_vectorLcv_UMatG_new_const, std_vectorLcv_UMatG_delete,
+		std_vectorLcv_UMatG_len_const, std_vectorLcv_UMatG_isEmpty_const,
+		std_vectorLcv_UMatG_capacity_const, std_vectorLcv_UMatG_shrinkToFit,
+		std_vectorLcv_UMatG_reserve_size_t, std_vectorLcv_UMatG_remove_size_t,
+		std_vectorLcv_UMatG_swap_size_t_size_t, std_vectorLcv_UMatG_clear,
+		std_vectorLcv_UMatG_get_const_size_t, std_vectorLcv_UMatG_set_size_t_const_UMat,
+		std_vectorLcv_UMatG_push_const_UMat, std_vectorLcv_UMatG_insert_size_t_const_UMat,
+	}
+	
 	
 	pub type VectorOfVec2d = core::Vector<core::Vec2d>;
 	
@@ -1987,6 +2093,7 @@ mod core_types {
 		std_vectorLcv_Vec2dG_get_const_size_t, std_vectorLcv_Vec2dG_set_size_t_const_Vec2d,
 		std_vectorLcv_Vec2dG_push_const_Vec2d, std_vectorLcv_Vec2dG_insert_size_t_const_Vec2d,
 	}
+	
 	vector_copy_non_bool! { core::Vec2d,
 		std_vectorLcv_Vec2dG_data_const, std_vectorLcv_Vec2dG_dataMut, cv_fromSlice_const_const_Vec2dX_size_t,
 		std_vectorLcv_Vec2dG_clone_const,
@@ -2051,6 +2158,7 @@ mod core_types {
 		std_vectorLcv_Vec2fG_get_const_size_t, std_vectorLcv_Vec2fG_set_size_t_const_Vec2f,
 		std_vectorLcv_Vec2fG_push_const_Vec2f, std_vectorLcv_Vec2fG_insert_size_t_const_Vec2f,
 	}
+	
 	vector_copy_non_bool! { core::Vec2f,
 		std_vectorLcv_Vec2fG_data_const, std_vectorLcv_Vec2fG_dataMut, cv_fromSlice_const_const_Vec2fX_size_t,
 		std_vectorLcv_Vec2fG_clone_const,
@@ -2115,6 +2223,7 @@ mod core_types {
 		std_vectorLcv_Vec2iG_get_const_size_t, std_vectorLcv_Vec2iG_set_size_t_const_Vec2i,
 		std_vectorLcv_Vec2iG_push_const_Vec2i, std_vectorLcv_Vec2iG_insert_size_t_const_Vec2i,
 	}
+	
 	vector_copy_non_bool! { core::Vec2i,
 		std_vectorLcv_Vec2iG_data_const, std_vectorLcv_Vec2iG_dataMut, cv_fromSlice_const_const_Vec2iX_size_t,
 		std_vectorLcv_Vec2iG_clone_const,
@@ -2179,6 +2288,7 @@ mod core_types {
 		std_vectorLcv_Vec3dG_get_const_size_t, std_vectorLcv_Vec3dG_set_size_t_const_Vec3d,
 		std_vectorLcv_Vec3dG_push_const_Vec3d, std_vectorLcv_Vec3dG_insert_size_t_const_Vec3d,
 	}
+	
 	vector_copy_non_bool! { core::Vec3d,
 		std_vectorLcv_Vec3dG_data_const, std_vectorLcv_Vec3dG_dataMut, cv_fromSlice_const_const_Vec3dX_size_t,
 		std_vectorLcv_Vec3dG_clone_const,
@@ -2243,6 +2353,7 @@ mod core_types {
 		std_vectorLcv_Vec3fG_get_const_size_t, std_vectorLcv_Vec3fG_set_size_t_const_Vec3f,
 		std_vectorLcv_Vec3fG_push_const_Vec3f, std_vectorLcv_Vec3fG_insert_size_t_const_Vec3f,
 	}
+	
 	vector_copy_non_bool! { core::Vec3f,
 		std_vectorLcv_Vec3fG_data_const, std_vectorLcv_Vec3fG_dataMut, cv_fromSlice_const_const_Vec3fX_size_t,
 		std_vectorLcv_Vec3fG_clone_const,
@@ -2307,6 +2418,7 @@ mod core_types {
 		std_vectorLcv_Vec3iG_get_const_size_t, std_vectorLcv_Vec3iG_set_size_t_const_Vec3i,
 		std_vectorLcv_Vec3iG_push_const_Vec3i, std_vectorLcv_Vec3iG_insert_size_t_const_Vec3i,
 	}
+	
 	vector_copy_non_bool! { core::Vec3i,
 		std_vectorLcv_Vec3iG_data_const, std_vectorLcv_Vec3iG_dataMut, cv_fromSlice_const_const_Vec3iX_size_t,
 		std_vectorLcv_Vec3iG_clone_const,
@@ -2371,6 +2483,7 @@ mod core_types {
 		std_vectorLcv_Vec4fG_get_const_size_t, std_vectorLcv_Vec4fG_set_size_t_const_Vec4f,
 		std_vectorLcv_Vec4fG_push_const_Vec4f, std_vectorLcv_Vec4fG_insert_size_t_const_Vec4f,
 	}
+	
 	vector_copy_non_bool! { core::Vec4f,
 		std_vectorLcv_Vec4fG_data_const, std_vectorLcv_Vec4fG_dataMut, cv_fromSlice_const_const_Vec4fX_size_t,
 		std_vectorLcv_Vec4fG_clone_const,
@@ -2435,6 +2548,7 @@ mod core_types {
 		std_vectorLcv_Vec4iG_get_const_size_t, std_vectorLcv_Vec4iG_set_size_t_const_Vec4i,
 		std_vectorLcv_Vec4iG_push_const_Vec4i, std_vectorLcv_Vec4iG_insert_size_t_const_Vec4i,
 	}
+	
 	vector_copy_non_bool! { core::Vec4i,
 		std_vectorLcv_Vec4iG_data_const, std_vectorLcv_Vec4iG_dataMut, cv_fromSlice_const_const_Vec4iX_size_t,
 		std_vectorLcv_Vec4iG_clone_const,
@@ -2499,6 +2613,7 @@ mod core_types {
 		std_vectorLcv_Vec6fG_get_const_size_t, std_vectorLcv_Vec6fG_set_size_t_const_Vec6f,
 		std_vectorLcv_Vec6fG_push_const_Vec6f, std_vectorLcv_Vec6fG_insert_size_t_const_Vec6f,
 	}
+	
 	vector_copy_non_bool! { core::Vec6f,
 		std_vectorLcv_Vec6fG_data_const, std_vectorLcv_Vec6fG_dataMut, cv_fromSlice_const_const_Vec6fX_size_t,
 		std_vectorLcv_Vec6fG_clone_const,
@@ -2563,7 +2678,9 @@ mod core_types {
 		std_vectorLstd_vectorLcv_DMatchGG_get_const_size_t, std_vectorLstd_vectorLcv_DMatchGG_set_size_t_const_vectorLDMatchG,
 		std_vectorLstd_vectorLcv_DMatchGG_push_const_vectorLDMatchG, std_vectorLstd_vectorLcv_DMatchGG_insert_size_t_const_vectorLDMatchG,
 	}
+	
 	vector_non_copy_or_bool! { clone core::Vector<core::DMatch> }
+	
 	
 	pub type VectorOfVectorOfKeyPoint = core::Vector<core::Vector<core::KeyPoint>>;
 	
@@ -2581,7 +2698,9 @@ mod core_types {
 		std_vectorLstd_vectorLcv_KeyPointGG_get_const_size_t, std_vectorLstd_vectorLcv_KeyPointGG_set_size_t_const_vectorLKeyPointG,
 		std_vectorLstd_vectorLcv_KeyPointGG_push_const_vectorLKeyPointG, std_vectorLstd_vectorLcv_KeyPointGG_insert_size_t_const_vectorLKeyPointG,
 	}
+	
 	vector_non_copy_or_bool! { clone core::Vector<core::KeyPoint> }
+	
 	
 	pub type VectorOfVectorOfMat = core::Vector<core::Vector<core::Mat>>;
 	
@@ -2599,7 +2718,9 @@ mod core_types {
 		std_vectorLstd_vectorLcv_MatGG_get_const_size_t, std_vectorLstd_vectorLcv_MatGG_set_size_t_const_vectorLMatG,
 		std_vectorLstd_vectorLcv_MatGG_push_const_vectorLMatG, std_vectorLstd_vectorLcv_MatGG_insert_size_t_const_vectorLMatG,
 	}
+	
 	vector_non_copy_or_bool! { clone core::Vector<core::Mat> }
+	
 	
 	pub type VectorOfVectorOfPoint = core::Vector<core::Vector<core::Point>>;
 	
@@ -2617,6 +2738,7 @@ mod core_types {
 		std_vectorLstd_vectorLcv_PointGG_get_const_size_t, std_vectorLstd_vectorLcv_PointGG_set_size_t_const_vectorLPointG,
 		std_vectorLstd_vectorLcv_PointGG_push_const_vectorLPointG, std_vectorLstd_vectorLcv_PointGG_insert_size_t_const_vectorLPointG,
 	}
+	
 	vector_non_copy_or_bool! { clone core::Vector<core::Point> }
 	
 	impl ToInputArray for core::Vector<core::Vector<core::Point>> {
@@ -2678,6 +2800,7 @@ mod core_types {
 		std_vectorLstd_vectorLcv_Point2dGG_get_const_size_t, std_vectorLstd_vectorLcv_Point2dGG_set_size_t_const_vectorLPoint2dG,
 		std_vectorLstd_vectorLcv_Point2dGG_push_const_vectorLPoint2dG, std_vectorLstd_vectorLcv_Point2dGG_insert_size_t_const_vectorLPoint2dG,
 	}
+	
 	vector_non_copy_or_bool! { clone core::Vector<core::Point2d> }
 	
 	impl ToInputArray for core::Vector<core::Vector<core::Point2d>> {
@@ -2739,6 +2862,7 @@ mod core_types {
 		std_vectorLstd_vectorLcv_Point2fGG_get_const_size_t, std_vectorLstd_vectorLcv_Point2fGG_set_size_t_const_vectorLPoint2fG,
 		std_vectorLstd_vectorLcv_Point2fGG_push_const_vectorLPoint2fG, std_vectorLstd_vectorLcv_Point2fGG_insert_size_t_const_vectorLPoint2fG,
 	}
+	
 	vector_non_copy_or_bool! { clone core::Vector<core::Point2f> }
 	
 	impl ToInputArray for core::Vector<core::Vector<core::Point2f>> {
@@ -2800,6 +2924,7 @@ mod core_types {
 		std_vectorLstd_vectorLcv_Point3dGG_get_const_size_t, std_vectorLstd_vectorLcv_Point3dGG_set_size_t_const_vectorLPoint3dG,
 		std_vectorLstd_vectorLcv_Point3dGG_push_const_vectorLPoint3dG, std_vectorLstd_vectorLcv_Point3dGG_insert_size_t_const_vectorLPoint3dG,
 	}
+	
 	vector_non_copy_or_bool! { clone core::Vector<core::Point3d> }
 	
 	impl ToInputArray for core::Vector<core::Vector<core::Point3d>> {
@@ -2861,6 +2986,7 @@ mod core_types {
 		std_vectorLstd_vectorLcv_Point3fGG_get_const_size_t, std_vectorLstd_vectorLcv_Point3fGG_set_size_t_const_vectorLPoint3fG,
 		std_vectorLstd_vectorLcv_Point3fGG_push_const_vectorLPoint3fG, std_vectorLstd_vectorLcv_Point3fGG_insert_size_t_const_vectorLPoint3fG,
 	}
+	
 	vector_non_copy_or_bool! { clone core::Vector<core::Point3f> }
 	
 	impl ToInputArray for core::Vector<core::Vector<core::Point3f>> {
@@ -2922,6 +3048,7 @@ mod core_types {
 		std_vectorLstd_vectorLcv_Point3iGG_get_const_size_t, std_vectorLstd_vectorLcv_Point3iGG_set_size_t_const_vectorLPoint3iG,
 		std_vectorLstd_vectorLcv_Point3iGG_push_const_vectorLPoint3iG, std_vectorLstd_vectorLcv_Point3iGG_insert_size_t_const_vectorLPoint3iG,
 	}
+	
 	vector_non_copy_or_bool! { clone core::Vector<core::Point3i> }
 	
 	impl ToInputArray for core::Vector<core::Vector<core::Point3i>> {
@@ -2983,7 +3110,9 @@ mod core_types {
 		std_vectorLstd_vectorLcv_RangeGG_get_const_size_t, std_vectorLstd_vectorLcv_RangeGG_set_size_t_const_vectorLRangeG,
 		std_vectorLstd_vectorLcv_RangeGG_push_const_vectorLRangeG, std_vectorLstd_vectorLcv_RangeGG_insert_size_t_const_vectorLRangeG,
 	}
+	
 	vector_non_copy_or_bool! { core::Vector<core::Range> }
+	
 	
 	pub type VectorOfVectorOfVec2d = core::Vector<core::Vector<core::Vec2d>>;
 	
@@ -3001,6 +3130,7 @@ mod core_types {
 		std_vectorLstd_vectorLcv_Vec2dGG_get_const_size_t, std_vectorLstd_vectorLcv_Vec2dGG_set_size_t_const_vectorLVec2dG,
 		std_vectorLstd_vectorLcv_Vec2dGG_push_const_vectorLVec2dG, std_vectorLstd_vectorLcv_Vec2dGG_insert_size_t_const_vectorLVec2dG,
 	}
+	
 	vector_non_copy_or_bool! { clone core::Vector<core::Vec2d> }
 	
 	impl ToInputArray for core::Vector<core::Vector<core::Vec2d>> {
@@ -3062,6 +3192,7 @@ mod core_types {
 		std_vectorLstd_vectorLcv_Vec2fGG_get_const_size_t, std_vectorLstd_vectorLcv_Vec2fGG_set_size_t_const_vectorLVec2fG,
 		std_vectorLstd_vectorLcv_Vec2fGG_push_const_vectorLVec2fG, std_vectorLstd_vectorLcv_Vec2fGG_insert_size_t_const_vectorLVec2fG,
 	}
+	
 	vector_non_copy_or_bool! { clone core::Vector<core::Vec2f> }
 	
 	impl ToInputArray for core::Vector<core::Vector<core::Vec2f>> {
@@ -3123,6 +3254,7 @@ mod core_types {
 		std_vectorLstd_vectorLcv_Vec2iGG_get_const_size_t, std_vectorLstd_vectorLcv_Vec2iGG_set_size_t_const_vectorLVec2iG,
 		std_vectorLstd_vectorLcv_Vec2iGG_push_const_vectorLVec2iG, std_vectorLstd_vectorLcv_Vec2iGG_insert_size_t_const_vectorLVec2iG,
 	}
+	
 	vector_non_copy_or_bool! { clone core::Vector<core::Vec2i> }
 	
 	impl ToInputArray for core::Vector<core::Vector<core::Vec2i>> {
@@ -3184,6 +3316,7 @@ mod core_types {
 		std_vectorLstd_vectorLcv_Vec3dGG_get_const_size_t, std_vectorLstd_vectorLcv_Vec3dGG_set_size_t_const_vectorLVec3dG,
 		std_vectorLstd_vectorLcv_Vec3dGG_push_const_vectorLVec3dG, std_vectorLstd_vectorLcv_Vec3dGG_insert_size_t_const_vectorLVec3dG,
 	}
+	
 	vector_non_copy_or_bool! { clone core::Vector<core::Vec3d> }
 	
 	impl ToInputArray for core::Vector<core::Vector<core::Vec3d>> {
@@ -3245,6 +3378,7 @@ mod core_types {
 		std_vectorLstd_vectorLcv_Vec3fGG_get_const_size_t, std_vectorLstd_vectorLcv_Vec3fGG_set_size_t_const_vectorLVec3fG,
 		std_vectorLstd_vectorLcv_Vec3fGG_push_const_vectorLVec3fG, std_vectorLstd_vectorLcv_Vec3fGG_insert_size_t_const_vectorLVec3fG,
 	}
+	
 	vector_non_copy_or_bool! { clone core::Vector<core::Vec3f> }
 	
 	impl ToInputArray for core::Vector<core::Vector<core::Vec3f>> {
@@ -3313,6 +3447,7 @@ mod core_types {
 		std_vectorLstd_vectorLfloatGG_get_const_size_t, std_vectorLstd_vectorLfloatGG_set_size_t_const_vectorLfloatG,
 		std_vectorLstd_vectorLfloatGG_push_const_vectorLfloatG, std_vectorLstd_vectorLfloatGG_insert_size_t_const_vectorLfloatG,
 	}
+	
 	vector_non_copy_or_bool! { clone core::Vector<f32> }
 	
 	impl ToInputArray for core::Vector<core::Vector<f32>> {
@@ -3374,6 +3509,7 @@ mod core_types {
 		std_vectorLstd_vectorLdoubleGG_get_const_size_t, std_vectorLstd_vectorLdoubleGG_set_size_t_const_vectorLdoubleG,
 		std_vectorLstd_vectorLdoubleGG_push_const_vectorLdoubleG, std_vectorLstd_vectorLdoubleGG_insert_size_t_const_vectorLdoubleG,
 	}
+	
 	vector_non_copy_or_bool! { clone core::Vector<f64> }
 	
 	impl ToInputArray for core::Vector<core::Vector<f64>> {
@@ -3435,6 +3571,7 @@ mod core_types {
 		std_vectorLstd_vectorLintGG_get_const_size_t, std_vectorLstd_vectorLintGG_set_size_t_const_vectorLintG,
 		std_vectorLstd_vectorLintGG_push_const_vectorLintG, std_vectorLstd_vectorLintGG_insert_size_t_const_vectorLintG,
 	}
+	
 	vector_non_copy_or_bool! { clone core::Vector<i32> }
 	
 	impl ToInputArray for core::Vector<core::Vector<i32>> {
@@ -3496,7 +3633,9 @@ mod core_types {
 		std_vectorLstd_vectorLsigned_charGG_get_const_size_t, std_vectorLstd_vectorLsigned_charGG_set_size_t_const_vectorLsigned_charG,
 		std_vectorLstd_vectorLsigned_charGG_push_const_vectorLsigned_charG, std_vectorLstd_vectorLsigned_charGG_insert_size_t_const_vectorLsigned_charG,
 	}
+	
 	vector_non_copy_or_bool! { clone core::Vector<i8> }
+	
 	
 	pub type VectorOfVectorOfu8 = core::Vector<core::Vector<u8>>;
 	
@@ -3514,6 +3653,7 @@ mod core_types {
 		std_vectorLstd_vectorLuint8_tGG_get_const_size_t, std_vectorLstd_vectorLuint8_tGG_set_size_t_const_vectorLuint8_tG,
 		std_vectorLstd_vectorLuint8_tGG_push_const_vectorLuint8_tG, std_vectorLstd_vectorLuint8_tGG_insert_size_t_const_vectorLuint8_tG,
 	}
+	
 	vector_non_copy_or_bool! { clone core::Vector<u8> }
 	
 	impl ToInputArray for core::Vector<core::Vector<u8>> {
@@ -3575,6 +3715,7 @@ mod core_types {
 		std_vectorLboolG_get_const_size_t, std_vectorLboolG_set_size_t_const_bool,
 		std_vectorLboolG_push_const_bool, std_vectorLboolG_insert_size_t_const_bool,
 	}
+	
 	vector_non_copy_or_bool! { clone bool }
 	
 	impl ToInputArray for core::Vector<bool> {
@@ -3615,6 +3756,7 @@ mod core_types {
 		std_vectorLfloatG_get_const_size_t, std_vectorLfloatG_set_size_t_const_float,
 		std_vectorLfloatG_push_const_float, std_vectorLfloatG_insert_size_t_const_float,
 	}
+	
 	vector_copy_non_bool! { f32,
 		std_vectorLfloatG_data_const, std_vectorLfloatG_dataMut, cv_fromSlice_const_const_floatX_size_t,
 		std_vectorLfloatG_clone_const,
@@ -3679,6 +3821,7 @@ mod core_types {
 		std_vectorLdoubleG_get_const_size_t, std_vectorLdoubleG_set_size_t_const_double,
 		std_vectorLdoubleG_push_const_double, std_vectorLdoubleG_insert_size_t_const_double,
 	}
+	
 	vector_copy_non_bool! { f64,
 		std_vectorLdoubleG_data_const, std_vectorLdoubleG_dataMut, cv_fromSlice_const_const_doubleX_size_t,
 		std_vectorLdoubleG_clone_const,
@@ -3743,6 +3886,7 @@ mod core_types {
 		std_vectorLintG_get_const_size_t, std_vectorLintG_set_size_t_const_int,
 		std_vectorLintG_push_const_int, std_vectorLintG_insert_size_t_const_int,
 	}
+	
 	vector_copy_non_bool! { i32,
 		std_vectorLintG_data_const, std_vectorLintG_dataMut, cv_fromSlice_const_const_intX_size_t,
 		std_vectorLintG_clone_const,
@@ -3807,10 +3951,12 @@ mod core_types {
 		std_vectorLsigned_charG_get_const_size_t, std_vectorLsigned_charG_set_size_t_const_signed_char,
 		std_vectorLsigned_charG_push_const_signed_char, std_vectorLsigned_charG_insert_size_t_const_signed_char,
 	}
+	
 	vector_copy_non_bool! { i8,
 		std_vectorLsigned_charG_data_const, std_vectorLsigned_charG_dataMut, cv_fromSlice_const_const_signed_charX_size_t,
 		std_vectorLsigned_charG_clone_const,
 	}
+	
 	
 	pub type VectorOfsize_t = core::Vector<size_t>;
 	
@@ -3828,10 +3974,12 @@ mod core_types {
 		std_vectorLsize_tG_get_const_size_t, std_vectorLsize_tG_set_size_t_const_size_t,
 		std_vectorLsize_tG_push_const_size_t, std_vectorLsize_tG_insert_size_t_const_size_t,
 	}
+	
 	vector_copy_non_bool! { size_t,
 		std_vectorLsize_tG_data_const, std_vectorLsize_tG_dataMut, cv_fromSlice_const_const_size_tX_size_t,
 		std_vectorLsize_tG_clone_const,
 	}
+	
 	
 	pub type VectorOfu8 = core::Vector<u8>;
 	
@@ -3849,6 +3997,7 @@ mod core_types {
 		std_vectorLuint8_tG_get_const_size_t, std_vectorLuint8_tG_set_size_t_const_uint8_t,
 		std_vectorLuint8_tG_push_const_uint8_t, std_vectorLuint8_tG_insert_size_t_const_uint8_t,
 	}
+	
 	vector_copy_non_bool! { u8,
 		std_vectorLuint8_tG_data_const, std_vectorLuint8_tG_dataMut, cv_fromSlice_const_const_uint8_tX_size_t,
 		std_vectorLuint8_tG_clone_const,
@@ -12281,7 +12430,9 @@ mod dnn_types {
 		std_vectorLcv_PtrLcv_dnn_BackendNodeGG_get_const_size_t, std_vectorLcv_PtrLcv_dnn_BackendNodeGG_set_size_t_const_PtrLBackendNodeG,
 		std_vectorLcv_PtrLcv_dnn_BackendNodeGG_push_const_PtrLBackendNodeG, std_vectorLcv_PtrLcv_dnn_BackendNodeGG_insert_size_t_const_PtrLBackendNodeG,
 	}
+	
 	vector_non_copy_or_bool! { core::Ptr<crate::dnn::BackendNode> }
+	
 	
 	pub type VectorOfPtrOfBackendWrapper = core::Vector<core::Ptr<crate::dnn::BackendWrapper>>;
 	
@@ -12299,7 +12450,9 @@ mod dnn_types {
 		std_vectorLcv_PtrLcv_dnn_BackendWrapperGG_get_const_size_t, std_vectorLcv_PtrLcv_dnn_BackendWrapperGG_set_size_t_const_PtrLBackendWrapperG,
 		std_vectorLcv_PtrLcv_dnn_BackendWrapperGG_push_const_PtrLBackendWrapperG, std_vectorLcv_PtrLcv_dnn_BackendWrapperGG_insert_size_t_const_PtrLBackendWrapperG,
 	}
+	
 	vector_non_copy_or_bool! { core::Ptr<crate::dnn::BackendWrapper> }
+	
 	
 	pub type VectorOfPtrOfLayer = core::Vector<core::Ptr<crate::dnn::Layer>>;
 	
@@ -12317,7 +12470,9 @@ mod dnn_types {
 		std_vectorLcv_PtrLcv_dnn_LayerGG_get_const_size_t, std_vectorLcv_PtrLcv_dnn_LayerGG_set_size_t_const_PtrLLayerG,
 		std_vectorLcv_PtrLcv_dnn_LayerGG_push_const_PtrLLayerG, std_vectorLcv_PtrLcv_dnn_LayerGG_insert_size_t_const_PtrLLayerG,
 	}
+	
 	vector_non_copy_or_bool! { core::Ptr<crate::dnn::Layer> }
+	
 	
 	pub type VectorOfTarget = core::Vector<crate::dnn::Target>;
 	
@@ -12335,10 +12490,12 @@ mod dnn_types {
 		std_vectorLcv_dnn_TargetG_get_const_size_t, std_vectorLcv_dnn_TargetG_set_size_t_const_Target,
 		std_vectorLcv_dnn_TargetG_push_const_Target, std_vectorLcv_dnn_TargetG_insert_size_t_const_Target,
 	}
+	
 	vector_copy_non_bool! { crate::dnn::Target,
 		std_vectorLcv_dnn_TargetG_data_const, std_vectorLcv_dnn_TargetG_dataMut, cv_fromSlice_const_const_TargetX_size_t,
 		std_vectorLcv_dnn_TargetG_clone_const,
 	}
+	
 	
 	pub type VectorOfTupleOfBackend_Target = core::Vector<core::Tuple<(crate::dnn::Backend, crate::dnn::Target)>>;
 	
@@ -12356,7 +12513,9 @@ mod dnn_types {
 		std_vectorLstd_pairLcv_dnn_Backend__cv_dnn_TargetGG_get_const_size_t, std_vectorLstd_pairLcv_dnn_Backend__cv_dnn_TargetGG_set_size_t_const_pairLcv_dnn_Backend__cv_dnn_TargetG,
 		std_vectorLstd_pairLcv_dnn_Backend__cv_dnn_TargetGG_push_const_pairLcv_dnn_Backend__cv_dnn_TargetG, std_vectorLstd_pairLcv_dnn_Backend__cv_dnn_TargetGG_insert_size_t_const_pairLcv_dnn_Backend__cv_dnn_TargetG,
 	}
+	
 	vector_non_copy_or_bool! { core::Tuple<(crate::dnn::Backend, crate::dnn::Target)> }
+	
 	
 	pub type VectorOfVectorOfMatShape = core::Vector<core::Vector<crate::dnn::MatShape>>;
 	
@@ -12374,7 +12533,9 @@ mod dnn_types {
 		std_vectorLstd_vectorLcv_dnn_MatShapeGG_get_const_size_t, std_vectorLstd_vectorLcv_dnn_MatShapeGG_set_size_t_const_vectorLMatShapeG,
 		std_vectorLstd_vectorLcv_dnn_MatShapeGG_push_const_vectorLMatShapeG, std_vectorLstd_vectorLcv_dnn_MatShapeGG_insert_size_t_const_vectorLMatShapeG,
 	}
+	
 	vector_non_copy_or_bool! { core::Vector<crate::dnn::MatShape> }
+	
 	
 }
 #[cfg(ocvrs_has_module_dnn)]
@@ -12463,7 +12624,21 @@ mod dpm_types {
 		std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_get_const_size_t, std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_set_size_t_const_ObjectDetection,
 		std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_push_const_ObjectDetection, std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_insert_size_t_const_ObjectDetection,
 	}
+	
 	vector_non_copy_or_bool! { crate::dpm::DPMDetector_ObjectDetection }
+	
+	vector_boxed_ref! { crate::dpm::DPMDetector_ObjectDetection }
+	
+	vector_extern! { BoxedRef<'_, crate::dpm::DPMDetector_ObjectDetection>,
+		std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_new_const, std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_delete,
+		std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_len_const, std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_isEmpty_const,
+		std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_capacity_const, std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_shrinkToFit,
+		std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_reserve_size_t, std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_remove_size_t,
+		std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_swap_size_t_size_t, std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_clear,
+		std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_get_const_size_t, std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_set_size_t_const_ObjectDetection,
+		std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_push_const_ObjectDetection, std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_insert_size_t_const_ObjectDetection,
+	}
+	
 	
 }
 #[cfg(ocvrs_has_module_dpm)]
@@ -13118,7 +13293,21 @@ mod face_types {
 		std_vectorLcv_face_FacemarkAAM_ConfigG_get_const_size_t, std_vectorLcv_face_FacemarkAAM_ConfigG_set_size_t_const_Config,
 		std_vectorLcv_face_FacemarkAAM_ConfigG_push_const_Config, std_vectorLcv_face_FacemarkAAM_ConfigG_insert_size_t_const_Config,
 	}
+	
 	vector_non_copy_or_bool! { crate::face::FacemarkAAM_Config }
+	
+	vector_boxed_ref! { crate::face::FacemarkAAM_Config }
+	
+	vector_extern! { BoxedRef<'_, crate::face::FacemarkAAM_Config>,
+		std_vectorLcv_face_FacemarkAAM_ConfigG_new_const, std_vectorLcv_face_FacemarkAAM_ConfigG_delete,
+		std_vectorLcv_face_FacemarkAAM_ConfigG_len_const, std_vectorLcv_face_FacemarkAAM_ConfigG_isEmpty_const,
+		std_vectorLcv_face_FacemarkAAM_ConfigG_capacity_const, std_vectorLcv_face_FacemarkAAM_ConfigG_shrinkToFit,
+		std_vectorLcv_face_FacemarkAAM_ConfigG_reserve_size_t, std_vectorLcv_face_FacemarkAAM_ConfigG_remove_size_t,
+		std_vectorLcv_face_FacemarkAAM_ConfigG_swap_size_t_size_t, std_vectorLcv_face_FacemarkAAM_ConfigG_clear,
+		std_vectorLcv_face_FacemarkAAM_ConfigG_get_const_size_t, std_vectorLcv_face_FacemarkAAM_ConfigG_set_size_t_const_Config,
+		std_vectorLcv_face_FacemarkAAM_ConfigG_push_const_Config, std_vectorLcv_face_FacemarkAAM_ConfigG_insert_size_t_const_Config,
+	}
+	
 	
 	pub type VectorOfFacemarkAAM_Model_Texture = core::Vector<crate::face::FacemarkAAM_Model_Texture>;
 	
@@ -13136,7 +13325,21 @@ mod face_types {
 		std_vectorLcv_face_FacemarkAAM_Model_TextureG_get_const_size_t, std_vectorLcv_face_FacemarkAAM_Model_TextureG_set_size_t_const_Texture,
 		std_vectorLcv_face_FacemarkAAM_Model_TextureG_push_const_Texture, std_vectorLcv_face_FacemarkAAM_Model_TextureG_insert_size_t_const_Texture,
 	}
+	
 	vector_non_copy_or_bool! { crate::face::FacemarkAAM_Model_Texture }
+	
+	vector_boxed_ref! { crate::face::FacemarkAAM_Model_Texture }
+	
+	vector_extern! { BoxedRef<'_, crate::face::FacemarkAAM_Model_Texture>,
+		std_vectorLcv_face_FacemarkAAM_Model_TextureG_new_const, std_vectorLcv_face_FacemarkAAM_Model_TextureG_delete,
+		std_vectorLcv_face_FacemarkAAM_Model_TextureG_len_const, std_vectorLcv_face_FacemarkAAM_Model_TextureG_isEmpty_const,
+		std_vectorLcv_face_FacemarkAAM_Model_TextureG_capacity_const, std_vectorLcv_face_FacemarkAAM_Model_TextureG_shrinkToFit,
+		std_vectorLcv_face_FacemarkAAM_Model_TextureG_reserve_size_t, std_vectorLcv_face_FacemarkAAM_Model_TextureG_remove_size_t,
+		std_vectorLcv_face_FacemarkAAM_Model_TextureG_swap_size_t_size_t, std_vectorLcv_face_FacemarkAAM_Model_TextureG_clear,
+		std_vectorLcv_face_FacemarkAAM_Model_TextureG_get_const_size_t, std_vectorLcv_face_FacemarkAAM_Model_TextureG_set_size_t_const_Texture,
+		std_vectorLcv_face_FacemarkAAM_Model_TextureG_push_const_Texture, std_vectorLcv_face_FacemarkAAM_Model_TextureG_insert_size_t_const_Texture,
+	}
+	
 	
 }
 #[cfg(ocvrs_has_module_face)]
@@ -14228,10 +14431,12 @@ mod flann_types {
 		std_vectorLcv_flann_FlannIndexTypeG_get_const_size_t, std_vectorLcv_flann_FlannIndexTypeG_set_size_t_const_FlannIndexType,
 		std_vectorLcv_flann_FlannIndexTypeG_push_const_FlannIndexType, std_vectorLcv_flann_FlannIndexTypeG_insert_size_t_const_FlannIndexType,
 	}
+	
 	vector_copy_non_bool! { crate::flann::FlannIndexType,
 		std_vectorLcv_flann_FlannIndexTypeG_data_const, std_vectorLcv_flann_FlannIndexTypeG_dataMut, cv_fromSlice_const_const_FlannIndexTypeX_size_t,
 		std_vectorLcv_flann_FlannIndexTypeG_clone_const,
 	}
+	
 	
 	pub type VectorOffeature_index = core::Vector<crate::flann::feature_index>;
 	
@@ -14249,10 +14454,12 @@ mod flann_types {
 		std_vectorLcvflann_lsh_FeatureIndexG_get_const_size_t, std_vectorLcvflann_lsh_FeatureIndexG_set_size_t_const_FeatureIndex,
 		std_vectorLcvflann_lsh_FeatureIndexG_push_const_FeatureIndex, std_vectorLcvflann_lsh_FeatureIndexG_insert_size_t_const_FeatureIndex,
 	}
+	
 	vector_copy_non_bool! { crate::flann::feature_index,
 		std_vectorLcvflann_lsh_FeatureIndexG_data_const, std_vectorLcvflann_lsh_FeatureIndexG_dataMut, cv_fromSlice_const_const_FeatureIndexX_size_t,
 		std_vectorLcvflann_lsh_FeatureIndexG_clone_const,
 	}
+	
 	
 }
 #[cfg(ocvrs_has_module_flann)]
@@ -14391,10 +14598,12 @@ mod gapi_types {
 		std_vectorLcv_detail_OpaqueKindG_get_const_size_t, std_vectorLcv_detail_OpaqueKindG_set_size_t_const_OpaqueKind,
 		std_vectorLcv_detail_OpaqueKindG_push_const_OpaqueKind, std_vectorLcv_detail_OpaqueKindG_insert_size_t_const_OpaqueKind,
 	}
+	
 	vector_copy_non_bool! { crate::gapi::Detail_OpaqueKind,
 		std_vectorLcv_detail_OpaqueKindG_data_const, std_vectorLcv_detail_OpaqueKindG_dataMut, cv_fromSlice_const_const_OpaqueKindX_size_t,
 		std_vectorLcv_detail_OpaqueKindG_clone_const,
 	}
+	
 	
 	pub type VectorOfGArg = core::Vector<crate::gapi::GArg>;
 	
@@ -14412,7 +14621,21 @@ mod gapi_types {
 		std_vectorLcv_GArgG_get_const_size_t, std_vectorLcv_GArgG_set_size_t_const_GArg,
 		std_vectorLcv_GArgG_push_const_GArg, std_vectorLcv_GArgG_insert_size_t_const_GArg,
 	}
+	
 	vector_non_copy_or_bool! { crate::gapi::GArg }
+	
+	vector_boxed_ref! { crate::gapi::GArg }
+	
+	vector_extern! { BoxedRef<'_, crate::gapi::GArg>,
+		std_vectorLcv_GArgG_new_const, std_vectorLcv_GArgG_delete,
+		std_vectorLcv_GArgG_len_const, std_vectorLcv_GArgG_isEmpty_const,
+		std_vectorLcv_GArgG_capacity_const, std_vectorLcv_GArgG_shrinkToFit,
+		std_vectorLcv_GArgG_reserve_size_t, std_vectorLcv_GArgG_remove_size_t,
+		std_vectorLcv_GArgG_swap_size_t_size_t, std_vectorLcv_GArgG_clear,
+		std_vectorLcv_GArgG_get_const_size_t, std_vectorLcv_GArgG_set_size_t_const_GArg,
+		std_vectorLcv_GArgG_push_const_GArg, std_vectorLcv_GArgG_insert_size_t_const_GArg,
+	}
+	
 	
 	pub type VectorOfGBackend = core::Vector<crate::gapi::GBackend>;
 	
@@ -14430,7 +14653,21 @@ mod gapi_types {
 		std_vectorLcv_gapi_GBackendG_get_const_size_t, std_vectorLcv_gapi_GBackendG_set_size_t_const_GBackend,
 		std_vectorLcv_gapi_GBackendG_push_const_GBackend, std_vectorLcv_gapi_GBackendG_insert_size_t_const_GBackend,
 	}
+	
 	vector_non_copy_or_bool! { crate::gapi::GBackend }
+	
+	vector_boxed_ref! { crate::gapi::GBackend }
+	
+	vector_extern! { BoxedRef<'_, crate::gapi::GBackend>,
+		std_vectorLcv_gapi_GBackendG_new_const, std_vectorLcv_gapi_GBackendG_delete,
+		std_vectorLcv_gapi_GBackendG_len_const, std_vectorLcv_gapi_GBackendG_isEmpty_const,
+		std_vectorLcv_gapi_GBackendG_capacity_const, std_vectorLcv_gapi_GBackendG_shrinkToFit,
+		std_vectorLcv_gapi_GBackendG_reserve_size_t, std_vectorLcv_gapi_GBackendG_remove_size_t,
+		std_vectorLcv_gapi_GBackendG_swap_size_t_size_t, std_vectorLcv_gapi_GBackendG_clear,
+		std_vectorLcv_gapi_GBackendG_get_const_size_t, std_vectorLcv_gapi_GBackendG_set_size_t_const_GBackend,
+		std_vectorLcv_gapi_GBackendG_push_const_GBackend, std_vectorLcv_gapi_GBackendG_insert_size_t_const_GBackend,
+	}
+	
 	
 	pub type VectorOfGCompileArg = core::Vector<crate::gapi::GCompileArg>;
 	
@@ -14448,7 +14685,21 @@ mod gapi_types {
 		std_vectorLcv_GCompileArgG_get_const_size_t, std_vectorLcv_GCompileArgG_set_size_t_const_GCompileArg,
 		std_vectorLcv_GCompileArgG_push_const_GCompileArg, std_vectorLcv_GCompileArgG_insert_size_t_const_GCompileArg,
 	}
+	
 	vector_non_copy_or_bool! { crate::gapi::GCompileArg }
+	
+	vector_boxed_ref! { crate::gapi::GCompileArg }
+	
+	vector_extern! { BoxedRef<'_, crate::gapi::GCompileArg>,
+		std_vectorLcv_GCompileArgG_new_const, std_vectorLcv_GCompileArgG_delete,
+		std_vectorLcv_GCompileArgG_len_const, std_vectorLcv_GCompileArgG_isEmpty_const,
+		std_vectorLcv_GCompileArgG_capacity_const, std_vectorLcv_GCompileArgG_shrinkToFit,
+		std_vectorLcv_GCompileArgG_reserve_size_t, std_vectorLcv_GCompileArgG_remove_size_t,
+		std_vectorLcv_GCompileArgG_swap_size_t_size_t, std_vectorLcv_GCompileArgG_clear,
+		std_vectorLcv_GCompileArgG_get_const_size_t, std_vectorLcv_GCompileArgG_set_size_t_const_GCompileArg,
+		std_vectorLcv_GCompileArgG_push_const_GCompileArg, std_vectorLcv_GCompileArgG_insert_size_t_const_GCompileArg,
+	}
+	
 	
 	pub type VectorOfGMat = core::Vector<crate::gapi::GMat>;
 	
@@ -14466,7 +14717,21 @@ mod gapi_types {
 		std_vectorLcv_GMatG_get_const_size_t, std_vectorLcv_GMatG_set_size_t_const_GMat,
 		std_vectorLcv_GMatG_push_const_GMat, std_vectorLcv_GMatG_insert_size_t_const_GMat,
 	}
+	
 	vector_non_copy_or_bool! { clone crate::gapi::GMat }
+	
+	vector_boxed_ref! { crate::gapi::GMat }
+	
+	vector_extern! { BoxedRef<'_, crate::gapi::GMat>,
+		std_vectorLcv_GMatG_new_const, std_vectorLcv_GMatG_delete,
+		std_vectorLcv_GMatG_len_const, std_vectorLcv_GMatG_isEmpty_const,
+		std_vectorLcv_GMatG_capacity_const, std_vectorLcv_GMatG_shrinkToFit,
+		std_vectorLcv_GMatG_reserve_size_t, std_vectorLcv_GMatG_remove_size_t,
+		std_vectorLcv_GMatG_swap_size_t_size_t, std_vectorLcv_GMatG_clear,
+		std_vectorLcv_GMatG_get_const_size_t, std_vectorLcv_GMatG_set_size_t_const_GMat,
+		std_vectorLcv_GMatG_push_const_GMat, std_vectorLcv_GMatG_insert_size_t_const_GMat,
+	}
+	
 	
 	pub type VectorOfGRunArg = core::Vector<crate::gapi::GRunArg>;
 	
@@ -14484,7 +14749,21 @@ mod gapi_types {
 		std_vectorLcv_GRunArgG_get_const_size_t, std_vectorLcv_GRunArgG_set_size_t_const_GRunArg,
 		std_vectorLcv_GRunArgG_push_const_GRunArg, std_vectorLcv_GRunArgG_insert_size_t_const_GRunArg,
 	}
+	
 	vector_non_copy_or_bool! { crate::gapi::GRunArg }
+	
+	vector_boxed_ref! { crate::gapi::GRunArg }
+	
+	vector_extern! { BoxedRef<'_, crate::gapi::GRunArg>,
+		std_vectorLcv_GRunArgG_new_const, std_vectorLcv_GRunArgG_delete,
+		std_vectorLcv_GRunArgG_len_const, std_vectorLcv_GRunArgG_isEmpty_const,
+		std_vectorLcv_GRunArgG_capacity_const, std_vectorLcv_GRunArgG_shrinkToFit,
+		std_vectorLcv_GRunArgG_reserve_size_t, std_vectorLcv_GRunArgG_remove_size_t,
+		std_vectorLcv_GRunArgG_swap_size_t_size_t, std_vectorLcv_GRunArgG_clear,
+		std_vectorLcv_GRunArgG_get_const_size_t, std_vectorLcv_GRunArgG_set_size_t_const_GRunArg,
+		std_vectorLcv_GRunArgG_push_const_GRunArg, std_vectorLcv_GRunArgG_insert_size_t_const_GRunArg,
+	}
+	
 	
 	pub type VectorOfGShape = core::Vector<crate::gapi::GShape>;
 	
@@ -14502,10 +14781,12 @@ mod gapi_types {
 		std_vectorLcv_GShapeG_get_const_size_t, std_vectorLcv_GShapeG_set_size_t_const_GShape,
 		std_vectorLcv_GShapeG_push_const_GShape, std_vectorLcv_GShapeG_insert_size_t_const_GShape,
 	}
+	
 	vector_copy_non_bool! { crate::gapi::GShape,
 		std_vectorLcv_GShapeG_data_const, std_vectorLcv_GShapeG_dataMut, cv_fromSlice_const_const_GShapeX_size_t,
 		std_vectorLcv_GShapeG_clone_const,
 	}
+	
 	
 	pub type VectorOfGTransform = core::Vector<crate::gapi::GTransform>;
 	
@@ -14523,7 +14804,21 @@ mod gapi_types {
 		std_vectorLcv_GTransformG_get_const_size_t, std_vectorLcv_GTransformG_set_size_t_const_GTransform,
 		std_vectorLcv_GTransformG_push_const_GTransform, std_vectorLcv_GTransformG_insert_size_t_const_GTransform,
 	}
+	
 	vector_non_copy_or_bool! { crate::gapi::GTransform }
+	
+	vector_boxed_ref! { crate::gapi::GTransform }
+	
+	vector_extern! { BoxedRef<'_, crate::gapi::GTransform>,
+		std_vectorLcv_GTransformG_new_const, std_vectorLcv_GTransformG_delete,
+		std_vectorLcv_GTransformG_len_const, std_vectorLcv_GTransformG_isEmpty_const,
+		std_vectorLcv_GTransformG_capacity_const, std_vectorLcv_GTransformG_shrinkToFit,
+		std_vectorLcv_GTransformG_reserve_size_t, std_vectorLcv_GTransformG_remove_size_t,
+		std_vectorLcv_GTransformG_swap_size_t_size_t, std_vectorLcv_GTransformG_clear,
+		std_vectorLcv_GTransformG_get_const_size_t, std_vectorLcv_GTransformG_set_size_t_const_GTransform,
+		std_vectorLcv_GTransformG_push_const_GTransform, std_vectorLcv_GTransformG_insert_size_t_const_GTransform,
+	}
+	
 	
 	pub type VectorOfGTypeInfo = core::Vector<crate::gapi::GTypeInfo>;
 	
@@ -14541,7 +14836,21 @@ mod gapi_types {
 		std_vectorLcv_GTypeInfoG_get_const_size_t, std_vectorLcv_GTypeInfoG_set_size_t_const_GTypeInfo,
 		std_vectorLcv_GTypeInfoG_push_const_GTypeInfo, std_vectorLcv_GTypeInfoG_insert_size_t_const_GTypeInfo,
 	}
+	
 	vector_non_copy_or_bool! { clone crate::gapi::GTypeInfo }
+	
+	vector_boxed_ref! { crate::gapi::GTypeInfo }
+	
+	vector_extern! { BoxedRef<'_, crate::gapi::GTypeInfo>,
+		std_vectorLcv_GTypeInfoG_new_const, std_vectorLcv_GTypeInfoG_delete,
+		std_vectorLcv_GTypeInfoG_len_const, std_vectorLcv_GTypeInfoG_isEmpty_const,
+		std_vectorLcv_GTypeInfoG_capacity_const, std_vectorLcv_GTypeInfoG_shrinkToFit,
+		std_vectorLcv_GTypeInfoG_reserve_size_t, std_vectorLcv_GTypeInfoG_remove_size_t,
+		std_vectorLcv_GTypeInfoG_swap_size_t_size_t, std_vectorLcv_GTypeInfoG_clear,
+		std_vectorLcv_GTypeInfoG_get_const_size_t, std_vectorLcv_GTypeInfoG_set_size_t_const_GTypeInfo,
+		std_vectorLcv_GTypeInfoG_push_const_GTypeInfo, std_vectorLcv_GTypeInfoG_insert_size_t_const_GTypeInfo,
+	}
+	
 	
 }
 #[cfg(ocvrs_has_module_gapi)]
@@ -15308,10 +15617,12 @@ mod line_descriptor_types {
 		std_vectorLcv_line_descriptor_KeyLineG_get_const_size_t, std_vectorLcv_line_descriptor_KeyLineG_set_size_t_const_KeyLine,
 		std_vectorLcv_line_descriptor_KeyLineG_push_const_KeyLine, std_vectorLcv_line_descriptor_KeyLineG_insert_size_t_const_KeyLine,
 	}
+	
 	vector_copy_non_bool! { crate::line_descriptor::KeyLine,
 		std_vectorLcv_line_descriptor_KeyLineG_data_const, std_vectorLcv_line_descriptor_KeyLineG_dataMut, cv_fromSlice_const_const_KeyLineX_size_t,
 		std_vectorLcv_line_descriptor_KeyLineG_clone_const,
 	}
+	
 	
 	pub type VectorOfVectorOfKeyLine = core::Vector<core::Vector<crate::line_descriptor::KeyLine>>;
 	
@@ -15329,7 +15640,9 @@ mod line_descriptor_types {
 		std_vectorLstd_vectorLcv_line_descriptor_KeyLineGG_get_const_size_t, std_vectorLstd_vectorLcv_line_descriptor_KeyLineGG_set_size_t_const_vectorLKeyLineG,
 		std_vectorLstd_vectorLcv_line_descriptor_KeyLineGG_push_const_vectorLKeyLineG, std_vectorLstd_vectorLcv_line_descriptor_KeyLineGG_insert_size_t_const_vectorLKeyLineG,
 	}
+	
 	vector_non_copy_or_bool! { clone core::Vector<crate::line_descriptor::KeyLine> }
+	
 	
 }
 #[cfg(ocvrs_has_module_line_descriptor)]
@@ -15492,7 +15805,9 @@ mod mcc_types {
 		std_vectorLcv_PtrLcv_mcc_CCheckerGG_get_const_size_t, std_vectorLcv_PtrLcv_mcc_CCheckerGG_set_size_t_const_PtrLCCheckerG,
 		std_vectorLcv_PtrLcv_mcc_CCheckerGG_push_const_PtrLCCheckerG, std_vectorLcv_PtrLcv_mcc_CCheckerGG_insert_size_t_const_PtrLCCheckerG,
 	}
+	
 	vector_non_copy_or_bool! { core::Ptr<crate::mcc::MCC_CChecker> }
+	
 	
 }
 #[cfg(ocvrs_has_module_mcc)]
@@ -16140,7 +16455,21 @@ mod ml_types {
 		std_vectorLcv_ml_DTrees_NodeG_get_const_size_t, std_vectorLcv_ml_DTrees_NodeG_set_size_t_const_Node,
 		std_vectorLcv_ml_DTrees_NodeG_push_const_Node, std_vectorLcv_ml_DTrees_NodeG_insert_size_t_const_Node,
 	}
+	
 	vector_non_copy_or_bool! { crate::ml::DTrees_Node }
+	
+	vector_boxed_ref! { crate::ml::DTrees_Node }
+	
+	vector_extern! { BoxedRef<'_, crate::ml::DTrees_Node>,
+		std_vectorLcv_ml_DTrees_NodeG_new_const, std_vectorLcv_ml_DTrees_NodeG_delete,
+		std_vectorLcv_ml_DTrees_NodeG_len_const, std_vectorLcv_ml_DTrees_NodeG_isEmpty_const,
+		std_vectorLcv_ml_DTrees_NodeG_capacity_const, std_vectorLcv_ml_DTrees_NodeG_shrinkToFit,
+		std_vectorLcv_ml_DTrees_NodeG_reserve_size_t, std_vectorLcv_ml_DTrees_NodeG_remove_size_t,
+		std_vectorLcv_ml_DTrees_NodeG_swap_size_t_size_t, std_vectorLcv_ml_DTrees_NodeG_clear,
+		std_vectorLcv_ml_DTrees_NodeG_get_const_size_t, std_vectorLcv_ml_DTrees_NodeG_set_size_t_const_Node,
+		std_vectorLcv_ml_DTrees_NodeG_push_const_Node, std_vectorLcv_ml_DTrees_NodeG_insert_size_t_const_Node,
+	}
+	
 	
 	pub type VectorOfDTrees_Split = core::Vector<crate::ml::DTrees_Split>;
 	
@@ -16158,7 +16487,21 @@ mod ml_types {
 		std_vectorLcv_ml_DTrees_SplitG_get_const_size_t, std_vectorLcv_ml_DTrees_SplitG_set_size_t_const_Split,
 		std_vectorLcv_ml_DTrees_SplitG_push_const_Split, std_vectorLcv_ml_DTrees_SplitG_insert_size_t_const_Split,
 	}
+	
 	vector_non_copy_or_bool! { crate::ml::DTrees_Split }
+	
+	vector_boxed_ref! { crate::ml::DTrees_Split }
+	
+	vector_extern! { BoxedRef<'_, crate::ml::DTrees_Split>,
+		std_vectorLcv_ml_DTrees_SplitG_new_const, std_vectorLcv_ml_DTrees_SplitG_delete,
+		std_vectorLcv_ml_DTrees_SplitG_len_const, std_vectorLcv_ml_DTrees_SplitG_isEmpty_const,
+		std_vectorLcv_ml_DTrees_SplitG_capacity_const, std_vectorLcv_ml_DTrees_SplitG_shrinkToFit,
+		std_vectorLcv_ml_DTrees_SplitG_reserve_size_t, std_vectorLcv_ml_DTrees_SplitG_remove_size_t,
+		std_vectorLcv_ml_DTrees_SplitG_swap_size_t_size_t, std_vectorLcv_ml_DTrees_SplitG_clear,
+		std_vectorLcv_ml_DTrees_SplitG_get_const_size_t, std_vectorLcv_ml_DTrees_SplitG_set_size_t_const_Split,
+		std_vectorLcv_ml_DTrees_SplitG_push_const_Split, std_vectorLcv_ml_DTrees_SplitG_insert_size_t_const_Split,
+	}
+	
 	
 }
 #[cfg(ocvrs_has_module_ml)]
@@ -16629,7 +16972,21 @@ mod objdetect_types {
 		std_vectorLcv_DetectionBasedTracker_ExtObjectG_get_const_size_t, std_vectorLcv_DetectionBasedTracker_ExtObjectG_set_size_t_const_ExtObject,
 		std_vectorLcv_DetectionBasedTracker_ExtObjectG_push_const_ExtObject, std_vectorLcv_DetectionBasedTracker_ExtObjectG_insert_size_t_const_ExtObject,
 	}
+	
 	vector_non_copy_or_bool! { clone crate::objdetect::DetectionBasedTracker_ExtObject }
+	
+	vector_boxed_ref! { crate::objdetect::DetectionBasedTracker_ExtObject }
+	
+	vector_extern! { BoxedRef<'_, crate::objdetect::DetectionBasedTracker_ExtObject>,
+		std_vectorLcv_DetectionBasedTracker_ExtObjectG_new_const, std_vectorLcv_DetectionBasedTracker_ExtObjectG_delete,
+		std_vectorLcv_DetectionBasedTracker_ExtObjectG_len_const, std_vectorLcv_DetectionBasedTracker_ExtObjectG_isEmpty_const,
+		std_vectorLcv_DetectionBasedTracker_ExtObjectG_capacity_const, std_vectorLcv_DetectionBasedTracker_ExtObjectG_shrinkToFit,
+		std_vectorLcv_DetectionBasedTracker_ExtObjectG_reserve_size_t, std_vectorLcv_DetectionBasedTracker_ExtObjectG_remove_size_t,
+		std_vectorLcv_DetectionBasedTracker_ExtObjectG_swap_size_t_size_t, std_vectorLcv_DetectionBasedTracker_ExtObjectG_clear,
+		std_vectorLcv_DetectionBasedTracker_ExtObjectG_get_const_size_t, std_vectorLcv_DetectionBasedTracker_ExtObjectG_set_size_t_const_ExtObject,
+		std_vectorLcv_DetectionBasedTracker_ExtObjectG_push_const_ExtObject, std_vectorLcv_DetectionBasedTracker_ExtObjectG_insert_size_t_const_ExtObject,
+	}
+	
 	
 	pub type VectorOfDetectionBasedTracker_Object = core::Vector<crate::objdetect::DetectionBasedTracker_Object>;
 	
@@ -16647,7 +17004,9 @@ mod objdetect_types {
 		std_vectorLcv_DetectionBasedTracker_ObjectG_get_const_size_t, std_vectorLcv_DetectionBasedTracker_ObjectG_set_size_t_const_Object,
 		std_vectorLcv_DetectionBasedTracker_ObjectG_push_const_Object, std_vectorLcv_DetectionBasedTracker_ObjectG_insert_size_t_const_Object,
 	}
+	
 	vector_non_copy_or_bool! { crate::objdetect::DetectionBasedTracker_Object }
+	
 	
 	pub type VectorOfDetectionROI = core::Vector<crate::objdetect::DetectionROI>;
 	
@@ -16665,7 +17024,21 @@ mod objdetect_types {
 		std_vectorLcv_DetectionROIG_get_const_size_t, std_vectorLcv_DetectionROIG_set_size_t_const_DetectionROI,
 		std_vectorLcv_DetectionROIG_push_const_DetectionROI, std_vectorLcv_DetectionROIG_insert_size_t_const_DetectionROI,
 	}
+	
 	vector_non_copy_or_bool! { crate::objdetect::DetectionROI }
+	
+	vector_boxed_ref! { crate::objdetect::DetectionROI }
+	
+	vector_extern! { BoxedRef<'_, crate::objdetect::DetectionROI>,
+		std_vectorLcv_DetectionROIG_new_const, std_vectorLcv_DetectionROIG_delete,
+		std_vectorLcv_DetectionROIG_len_const, std_vectorLcv_DetectionROIG_isEmpty_const,
+		std_vectorLcv_DetectionROIG_capacity_const, std_vectorLcv_DetectionROIG_shrinkToFit,
+		std_vectorLcv_DetectionROIG_reserve_size_t, std_vectorLcv_DetectionROIG_remove_size_t,
+		std_vectorLcv_DetectionROIG_swap_size_t_size_t, std_vectorLcv_DetectionROIG_clear,
+		std_vectorLcv_DetectionROIG_get_const_size_t, std_vectorLcv_DetectionROIG_set_size_t_const_DetectionROI,
+		std_vectorLcv_DetectionROIG_push_const_DetectionROI, std_vectorLcv_DetectionROIG_insert_size_t_const_DetectionROI,
+	}
+	
 	
 }
 #[cfg(ocvrs_has_module_objdetect)]
@@ -17016,7 +17389,21 @@ mod optflow_types {
 		std_vectorLcv_optflow_GPCPatchDescriptorG_get_const_size_t, std_vectorLcv_optflow_GPCPatchDescriptorG_set_size_t_const_GPCPatchDescriptor,
 		std_vectorLcv_optflow_GPCPatchDescriptorG_push_const_GPCPatchDescriptor, std_vectorLcv_optflow_GPCPatchDescriptorG_insert_size_t_const_GPCPatchDescriptor,
 	}
+	
 	vector_non_copy_or_bool! { crate::optflow::GPCPatchDescriptor }
+	
+	vector_boxed_ref! { crate::optflow::GPCPatchDescriptor }
+	
+	vector_extern! { BoxedRef<'_, crate::optflow::GPCPatchDescriptor>,
+		std_vectorLcv_optflow_GPCPatchDescriptorG_new_const, std_vectorLcv_optflow_GPCPatchDescriptorG_delete,
+		std_vectorLcv_optflow_GPCPatchDescriptorG_len_const, std_vectorLcv_optflow_GPCPatchDescriptorG_isEmpty_const,
+		std_vectorLcv_optflow_GPCPatchDescriptorG_capacity_const, std_vectorLcv_optflow_GPCPatchDescriptorG_shrinkToFit,
+		std_vectorLcv_optflow_GPCPatchDescriptorG_reserve_size_t, std_vectorLcv_optflow_GPCPatchDescriptorG_remove_size_t,
+		std_vectorLcv_optflow_GPCPatchDescriptorG_swap_size_t_size_t, std_vectorLcv_optflow_GPCPatchDescriptorG_clear,
+		std_vectorLcv_optflow_GPCPatchDescriptorG_get_const_size_t, std_vectorLcv_optflow_GPCPatchDescriptorG_set_size_t_const_GPCPatchDescriptor,
+		std_vectorLcv_optflow_GPCPatchDescriptorG_push_const_GPCPatchDescriptor, std_vectorLcv_optflow_GPCPatchDescriptorG_insert_size_t_const_GPCPatchDescriptor,
+	}
+	
 	
 	pub type VectorOfGPCPatchSample = core::Vector<crate::optflow::GPCPatchSample>;
 	
@@ -17034,7 +17421,21 @@ mod optflow_types {
 		std_vectorLcv_optflow_GPCPatchSampleG_get_const_size_t, std_vectorLcv_optflow_GPCPatchSampleG_set_size_t_const_GPCPatchSample,
 		std_vectorLcv_optflow_GPCPatchSampleG_push_const_GPCPatchSample, std_vectorLcv_optflow_GPCPatchSampleG_insert_size_t_const_GPCPatchSample,
 	}
+	
 	vector_non_copy_or_bool! { crate::optflow::GPCPatchSample }
+	
+	vector_boxed_ref! { crate::optflow::GPCPatchSample }
+	
+	vector_extern! { BoxedRef<'_, crate::optflow::GPCPatchSample>,
+		std_vectorLcv_optflow_GPCPatchSampleG_new_const, std_vectorLcv_optflow_GPCPatchSampleG_delete,
+		std_vectorLcv_optflow_GPCPatchSampleG_len_const, std_vectorLcv_optflow_GPCPatchSampleG_isEmpty_const,
+		std_vectorLcv_optflow_GPCPatchSampleG_capacity_const, std_vectorLcv_optflow_GPCPatchSampleG_shrinkToFit,
+		std_vectorLcv_optflow_GPCPatchSampleG_reserve_size_t, std_vectorLcv_optflow_GPCPatchSampleG_remove_size_t,
+		std_vectorLcv_optflow_GPCPatchSampleG_swap_size_t_size_t, std_vectorLcv_optflow_GPCPatchSampleG_clear,
+		std_vectorLcv_optflow_GPCPatchSampleG_get_const_size_t, std_vectorLcv_optflow_GPCPatchSampleG_set_size_t_const_GPCPatchSample,
+		std_vectorLcv_optflow_GPCPatchSampleG_push_const_GPCPatchSample, std_vectorLcv_optflow_GPCPatchSampleG_insert_size_t_const_GPCPatchSample,
+	}
+	
 	
 }
 #[cfg(ocvrs_has_module_optflow)]
@@ -19220,10 +19621,12 @@ mod rgbd_types {
 		std_vectorLcv_linemod_FeatureG_get_const_size_t, std_vectorLcv_linemod_FeatureG_set_size_t_const_Feature,
 		std_vectorLcv_linemod_FeatureG_push_const_Feature, std_vectorLcv_linemod_FeatureG_insert_size_t_const_Feature,
 	}
+	
 	vector_copy_non_bool! { crate::rgbd::LineMod_Feature,
 		std_vectorLcv_linemod_FeatureG_data_const, std_vectorLcv_linemod_FeatureG_dataMut, cv_fromSlice_const_const_FeatureX_size_t,
 		std_vectorLcv_linemod_FeatureG_clone_const,
 	}
+	
 	
 	pub type VectorOfLineMod_Match = core::Vector<crate::rgbd::LineMod_Match>;
 	
@@ -19241,7 +19644,21 @@ mod rgbd_types {
 		std_vectorLcv_linemod_MatchG_get_const_size_t, std_vectorLcv_linemod_MatchG_set_size_t_const_Match,
 		std_vectorLcv_linemod_MatchG_push_const_Match, std_vectorLcv_linemod_MatchG_insert_size_t_const_Match,
 	}
+	
 	vector_non_copy_or_bool! { clone crate::rgbd::LineMod_Match }
+	
+	vector_boxed_ref! { crate::rgbd::LineMod_Match }
+	
+	vector_extern! { BoxedRef<'_, crate::rgbd::LineMod_Match>,
+		std_vectorLcv_linemod_MatchG_new_const, std_vectorLcv_linemod_MatchG_delete,
+		std_vectorLcv_linemod_MatchG_len_const, std_vectorLcv_linemod_MatchG_isEmpty_const,
+		std_vectorLcv_linemod_MatchG_capacity_const, std_vectorLcv_linemod_MatchG_shrinkToFit,
+		std_vectorLcv_linemod_MatchG_reserve_size_t, std_vectorLcv_linemod_MatchG_remove_size_t,
+		std_vectorLcv_linemod_MatchG_swap_size_t_size_t, std_vectorLcv_linemod_MatchG_clear,
+		std_vectorLcv_linemod_MatchG_get_const_size_t, std_vectorLcv_linemod_MatchG_set_size_t_const_Match,
+		std_vectorLcv_linemod_MatchG_push_const_Match, std_vectorLcv_linemod_MatchG_insert_size_t_const_Match,
+	}
+	
 	
 	pub type VectorOfLineMod_Template = core::Vector<crate::rgbd::LineMod_Template>;
 	
@@ -19259,7 +19676,21 @@ mod rgbd_types {
 		std_vectorLcv_linemod_TemplateG_get_const_size_t, std_vectorLcv_linemod_TemplateG_set_size_t_const_Template,
 		std_vectorLcv_linemod_TemplateG_push_const_Template, std_vectorLcv_linemod_TemplateG_insert_size_t_const_Template,
 	}
+	
 	vector_non_copy_or_bool! { clone crate::rgbd::LineMod_Template }
+	
+	vector_boxed_ref! { crate::rgbd::LineMod_Template }
+	
+	vector_extern! { BoxedRef<'_, crate::rgbd::LineMod_Template>,
+		std_vectorLcv_linemod_TemplateG_new_const, std_vectorLcv_linemod_TemplateG_delete,
+		std_vectorLcv_linemod_TemplateG_len_const, std_vectorLcv_linemod_TemplateG_isEmpty_const,
+		std_vectorLcv_linemod_TemplateG_capacity_const, std_vectorLcv_linemod_TemplateG_shrinkToFit,
+		std_vectorLcv_linemod_TemplateG_reserve_size_t, std_vectorLcv_linemod_TemplateG_remove_size_t,
+		std_vectorLcv_linemod_TemplateG_swap_size_t_size_t, std_vectorLcv_linemod_TemplateG_clear,
+		std_vectorLcv_linemod_TemplateG_get_const_size_t, std_vectorLcv_linemod_TemplateG_set_size_t_const_Template,
+		std_vectorLcv_linemod_TemplateG_push_const_Template, std_vectorLcv_linemod_TemplateG_insert_size_t_const_Template,
+	}
+	
 	
 	pub type VectorOfPtrOfLineMod_Modality = core::Vector<core::Ptr<crate::rgbd::LineMod_Modality>>;
 	
@@ -19277,7 +19708,9 @@ mod rgbd_types {
 		std_vectorLcv_PtrLcv_linemod_ModalityGG_get_const_size_t, std_vectorLcv_PtrLcv_linemod_ModalityGG_set_size_t_const_PtrLModalityG,
 		std_vectorLcv_PtrLcv_linemod_ModalityGG_push_const_PtrLModalityG, std_vectorLcv_PtrLcv_linemod_ModalityGG_insert_size_t_const_PtrLModalityG,
 	}
+	
 	vector_non_copy_or_bool! { core::Ptr<crate::rgbd::LineMod_Modality> }
+	
 	
 }
 #[cfg(ocvrs_has_module_rgbd)]
@@ -20316,10 +20749,12 @@ mod stereo_types {
 		std_vectorLcv_stereo_MatchQuasiDenseG_get_const_size_t, std_vectorLcv_stereo_MatchQuasiDenseG_set_size_t_const_MatchQuasiDense,
 		std_vectorLcv_stereo_MatchQuasiDenseG_push_const_MatchQuasiDense, std_vectorLcv_stereo_MatchQuasiDenseG_insert_size_t_const_MatchQuasiDense,
 	}
+	
 	vector_copy_non_bool! { crate::stereo::MatchQuasiDense,
 		std_vectorLcv_stereo_MatchQuasiDenseG_data_const, std_vectorLcv_stereo_MatchQuasiDenseG_dataMut, cv_fromSlice_const_const_MatchQuasiDenseX_size_t,
 		std_vectorLcv_stereo_MatchQuasiDenseG_clone_const,
 	}
+	
 	
 }
 #[cfg(ocvrs_has_module_stereo)]
@@ -22238,7 +22673,21 @@ mod stitching_types {
 		std_vectorLcv_detail_CameraParamsG_get_const_size_t, std_vectorLcv_detail_CameraParamsG_set_size_t_const_CameraParams,
 		std_vectorLcv_detail_CameraParamsG_push_const_CameraParams, std_vectorLcv_detail_CameraParamsG_insert_size_t_const_CameraParams,
 	}
+	
 	vector_non_copy_or_bool! { clone crate::stitching::Detail_CameraParams }
+	
+	vector_boxed_ref! { crate::stitching::Detail_CameraParams }
+	
+	vector_extern! { BoxedRef<'_, crate::stitching::Detail_CameraParams>,
+		std_vectorLcv_detail_CameraParamsG_new_const, std_vectorLcv_detail_CameraParamsG_delete,
+		std_vectorLcv_detail_CameraParamsG_len_const, std_vectorLcv_detail_CameraParamsG_isEmpty_const,
+		std_vectorLcv_detail_CameraParamsG_capacity_const, std_vectorLcv_detail_CameraParamsG_shrinkToFit,
+		std_vectorLcv_detail_CameraParamsG_reserve_size_t, std_vectorLcv_detail_CameraParamsG_remove_size_t,
+		std_vectorLcv_detail_CameraParamsG_swap_size_t_size_t, std_vectorLcv_detail_CameraParamsG_clear,
+		std_vectorLcv_detail_CameraParamsG_get_const_size_t, std_vectorLcv_detail_CameraParamsG_set_size_t_const_CameraParams,
+		std_vectorLcv_detail_CameraParamsG_push_const_CameraParams, std_vectorLcv_detail_CameraParamsG_insert_size_t_const_CameraParams,
+	}
+	
 	
 	pub type VectorOfDetail_ImageFeatures = core::Vector<crate::stitching::Detail_ImageFeatures>;
 	
@@ -22256,7 +22705,21 @@ mod stitching_types {
 		std_vectorLcv_detail_ImageFeaturesG_get_const_size_t, std_vectorLcv_detail_ImageFeaturesG_set_size_t_const_ImageFeatures,
 		std_vectorLcv_detail_ImageFeaturesG_push_const_ImageFeatures, std_vectorLcv_detail_ImageFeaturesG_insert_size_t_const_ImageFeatures,
 	}
+	
 	vector_non_copy_or_bool! { clone crate::stitching::Detail_ImageFeatures }
+	
+	vector_boxed_ref! { crate::stitching::Detail_ImageFeatures }
+	
+	vector_extern! { BoxedRef<'_, crate::stitching::Detail_ImageFeatures>,
+		std_vectorLcv_detail_ImageFeaturesG_new_const, std_vectorLcv_detail_ImageFeaturesG_delete,
+		std_vectorLcv_detail_ImageFeaturesG_len_const, std_vectorLcv_detail_ImageFeaturesG_isEmpty_const,
+		std_vectorLcv_detail_ImageFeaturesG_capacity_const, std_vectorLcv_detail_ImageFeaturesG_shrinkToFit,
+		std_vectorLcv_detail_ImageFeaturesG_reserve_size_t, std_vectorLcv_detail_ImageFeaturesG_remove_size_t,
+		std_vectorLcv_detail_ImageFeaturesG_swap_size_t_size_t, std_vectorLcv_detail_ImageFeaturesG_clear,
+		std_vectorLcv_detail_ImageFeaturesG_get_const_size_t, std_vectorLcv_detail_ImageFeaturesG_set_size_t_const_ImageFeatures,
+		std_vectorLcv_detail_ImageFeaturesG_push_const_ImageFeatures, std_vectorLcv_detail_ImageFeaturesG_insert_size_t_const_ImageFeatures,
+	}
+	
 	
 	pub type VectorOfDetail_MatchesInfo = core::Vector<crate::stitching::Detail_MatchesInfo>;
 	
@@ -22274,7 +22737,21 @@ mod stitching_types {
 		std_vectorLcv_detail_MatchesInfoG_get_const_size_t, std_vectorLcv_detail_MatchesInfoG_set_size_t_const_MatchesInfo,
 		std_vectorLcv_detail_MatchesInfoG_push_const_MatchesInfo, std_vectorLcv_detail_MatchesInfoG_insert_size_t_const_MatchesInfo,
 	}
+	
 	vector_non_copy_or_bool! { clone crate::stitching::Detail_MatchesInfo }
+	
+	vector_boxed_ref! { crate::stitching::Detail_MatchesInfo }
+	
+	vector_extern! { BoxedRef<'_, crate::stitching::Detail_MatchesInfo>,
+		std_vectorLcv_detail_MatchesInfoG_new_const, std_vectorLcv_detail_MatchesInfoG_delete,
+		std_vectorLcv_detail_MatchesInfoG_len_const, std_vectorLcv_detail_MatchesInfoG_isEmpty_const,
+		std_vectorLcv_detail_MatchesInfoG_capacity_const, std_vectorLcv_detail_MatchesInfoG_shrinkToFit,
+		std_vectorLcv_detail_MatchesInfoG_reserve_size_t, std_vectorLcv_detail_MatchesInfoG_remove_size_t,
+		std_vectorLcv_detail_MatchesInfoG_swap_size_t_size_t, std_vectorLcv_detail_MatchesInfoG_clear,
+		std_vectorLcv_detail_MatchesInfoG_get_const_size_t, std_vectorLcv_detail_MatchesInfoG_set_size_t_const_MatchesInfo,
+		std_vectorLcv_detail_MatchesInfoG_push_const_MatchesInfo, std_vectorLcv_detail_MatchesInfoG_insert_size_t_const_MatchesInfo,
+	}
+	
 	
 }
 #[cfg(ocvrs_has_module_stitching)]
@@ -22850,7 +23327,9 @@ mod surface_matching_types {
 		std_vectorLcv_ppf_match_3d_Pose3DPtrG_get_const_size_t, std_vectorLcv_ppf_match_3d_Pose3DPtrG_set_size_t_const_Pose3DPtr,
 		std_vectorLcv_ppf_match_3d_Pose3DPtrG_push_const_Pose3DPtr, std_vectorLcv_ppf_match_3d_Pose3DPtrG_insert_size_t_const_Pose3DPtr,
 	}
+	
 	vector_non_copy_or_bool! { crate::surface_matching::Pose3DPtr }
+	
 	
 }
 #[cfg(ocvrs_has_module_surface_matching)]
@@ -23237,7 +23716,21 @@ mod text_types {
 		std_vectorLcv_text_ERStatG_get_const_size_t, std_vectorLcv_text_ERStatG_set_size_t_const_ERStat,
 		std_vectorLcv_text_ERStatG_push_const_ERStat, std_vectorLcv_text_ERStatG_insert_size_t_const_ERStat,
 	}
+	
 	vector_non_copy_or_bool! { crate::text::ERStat }
+	
+	vector_boxed_ref! { crate::text::ERStat }
+	
+	vector_extern! { BoxedRef<'_, crate::text::ERStat>,
+		std_vectorLcv_text_ERStatG_new_const, std_vectorLcv_text_ERStatG_delete,
+		std_vectorLcv_text_ERStatG_len_const, std_vectorLcv_text_ERStatG_isEmpty_const,
+		std_vectorLcv_text_ERStatG_capacity_const, std_vectorLcv_text_ERStatG_shrinkToFit,
+		std_vectorLcv_text_ERStatG_reserve_size_t, std_vectorLcv_text_ERStatG_remove_size_t,
+		std_vectorLcv_text_ERStatG_swap_size_t_size_t, std_vectorLcv_text_ERStatG_clear,
+		std_vectorLcv_text_ERStatG_get_const_size_t, std_vectorLcv_text_ERStatG_set_size_t_const_ERStat,
+		std_vectorLcv_text_ERStatG_push_const_ERStat, std_vectorLcv_text_ERStatG_insert_size_t_const_ERStat,
+	}
+	
 	
 	pub type VectorOfVectorOfERStat = core::Vector<core::Vector<crate::text::ERStat>>;
 	
@@ -23255,7 +23748,9 @@ mod text_types {
 		std_vectorLstd_vectorLcv_text_ERStatGG_get_const_size_t, std_vectorLstd_vectorLcv_text_ERStatGG_set_size_t_const_vectorLERStatG,
 		std_vectorLstd_vectorLcv_text_ERStatGG_push_const_vectorLERStatG, std_vectorLstd_vectorLcv_text_ERStatGG_insert_size_t_const_vectorLERStatG,
 	}
+	
 	vector_non_copy_or_bool! { core::Vector<crate::text::ERStat> }
+	
 	
 }
 #[cfg(ocvrs_has_module_text)]
@@ -23976,7 +24471,21 @@ mod videoio_types {
 		std_vectorLcv_VideoCaptureG_get_const_size_t, std_vectorLcv_VideoCaptureG_set_size_t_const_VideoCapture,
 		std_vectorLcv_VideoCaptureG_push_const_VideoCapture, std_vectorLcv_VideoCaptureG_insert_size_t_const_VideoCapture,
 	}
+	
 	vector_non_copy_or_bool! { crate::videoio::VideoCapture }
+	
+	vector_boxed_ref! { crate::videoio::VideoCapture }
+	
+	vector_extern! { BoxedRef<'_, crate::videoio::VideoCapture>,
+		std_vectorLcv_VideoCaptureG_new_const, std_vectorLcv_VideoCaptureG_delete,
+		std_vectorLcv_VideoCaptureG_len_const, std_vectorLcv_VideoCaptureG_isEmpty_const,
+		std_vectorLcv_VideoCaptureG_capacity_const, std_vectorLcv_VideoCaptureG_shrinkToFit,
+		std_vectorLcv_VideoCaptureG_reserve_size_t, std_vectorLcv_VideoCaptureG_remove_size_t,
+		std_vectorLcv_VideoCaptureG_swap_size_t_size_t, std_vectorLcv_VideoCaptureG_clear,
+		std_vectorLcv_VideoCaptureG_get_const_size_t, std_vectorLcv_VideoCaptureG_set_size_t_const_VideoCapture,
+		std_vectorLcv_VideoCaptureG_push_const_VideoCapture, std_vectorLcv_VideoCaptureG_insert_size_t_const_VideoCapture,
+	}
+	
 	
 	pub type VectorOfVideoCaptureAPIs = core::Vector<crate::videoio::VideoCaptureAPIs>;
 	
@@ -23994,10 +24503,12 @@ mod videoio_types {
 		std_vectorLcv_VideoCaptureAPIsG_get_const_size_t, std_vectorLcv_VideoCaptureAPIsG_set_size_t_const_VideoCaptureAPIs,
 		std_vectorLcv_VideoCaptureAPIsG_push_const_VideoCaptureAPIs, std_vectorLcv_VideoCaptureAPIsG_insert_size_t_const_VideoCaptureAPIs,
 	}
+	
 	vector_copy_non_bool! { crate::videoio::VideoCaptureAPIs,
 		std_vectorLcv_VideoCaptureAPIsG_data_const, std_vectorLcv_VideoCaptureAPIsG_dataMut, cv_fromSlice_const_const_VideoCaptureAPIsX_size_t,
 		std_vectorLcv_VideoCaptureAPIsG_clone_const,
 	}
+	
 	
 }
 #[cfg(ocvrs_has_module_videoio)]
@@ -26583,7 +27094,21 @@ mod xfeatures2d_types {
 		std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_get_const_size_t, std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_set_size_t_const_Elliptic_KeyPoint,
 		std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_push_const_Elliptic_KeyPoint, std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_insert_size_t_const_Elliptic_KeyPoint,
 	}
+	
 	vector_non_copy_or_bool! { crate::xfeatures2d::Elliptic_KeyPoint }
+	
+	vector_boxed_ref! { crate::xfeatures2d::Elliptic_KeyPoint }
+	
+	vector_extern! { BoxedRef<'_, crate::xfeatures2d::Elliptic_KeyPoint>,
+		std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_new_const, std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_delete,
+		std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_len_const, std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_isEmpty_const,
+		std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_capacity_const, std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_shrinkToFit,
+		std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_reserve_size_t, std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_remove_size_t,
+		std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_swap_size_t_size_t, std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_clear,
+		std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_get_const_size_t, std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_set_size_t_const_Elliptic_KeyPoint,
+		std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_push_const_Elliptic_KeyPoint, std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_insert_size_t_const_Elliptic_KeyPoint,
+	}
+	
 	
 }
 #[cfg(ocvrs_has_module_xfeatures2d)]
@@ -27764,10 +28289,12 @@ mod ximgproc_types {
 		std_vectorLcv_ximgproc_BoxG_get_const_size_t, std_vectorLcv_ximgproc_BoxG_set_size_t_const_Box,
 		std_vectorLcv_ximgproc_BoxG_push_const_Box, std_vectorLcv_ximgproc_BoxG_insert_size_t_const_Box,
 	}
+	
 	vector_copy_non_bool! { crate::ximgproc::Box,
 		std_vectorLcv_ximgproc_BoxG_data_const, std_vectorLcv_ximgproc_BoxG_dataMut, cv_fromSlice_const_const_BoxX_size_t,
 		std_vectorLcv_ximgproc_BoxG_clone_const,
 	}
+	
 	
 }
 #[cfg(ocvrs_has_module_ximgproc)]

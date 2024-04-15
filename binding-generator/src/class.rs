@@ -160,11 +160,6 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		}
 	}
 
-	pub fn is_trait(&self) -> bool {
-		self.kind().is_boxed()
-		//		self.is_abstract() || self.has_descendants() || settings::FORCE_CLASS_TRAIT.contains(self.cpp_name(CppNameStyle::Reference).as_ref())
-	}
-
 	/// Special case of an empty class with only an anonymous enum inside (e.g. DrawLinesMatchesFlags)
 	pub fn as_enum(&self) -> Option<Enum<'tu>> {
 		match self {
@@ -429,7 +424,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 							&& !fld_type_kind.is_char_ptr_string(fld_type_ref.type_hint())
 						{
 							fld_type_ref.set_type_hint(TypeRefTypeHint::PrimitivePtrAsRaw);
-						} else if fld_type_kind.as_class().map_or(false, |cls| cls.is_trait()) {
+						} else if fld_type_kind.as_class().map_or(false, |cls| cls.kind().is_trait()) {
 							fld_type_ref.set_type_hint(TypeRefTypeHint::TraitClassConcrete);
 						}
 						let fld_type_kind = fld_type_ref.kind();
@@ -718,7 +713,7 @@ impl fmt::Debug for Class<'_, '_> {
 		if self.is_polymorphic() {
 			props.push("polymorphic");
 		}
-		if self.is_trait() {
+		if self.kind().is_trait() {
 			props.push("trait");
 		}
 		if self.as_enum().is_some() {
@@ -800,7 +795,13 @@ impl ClassKind {
 
 	pub fn is_boxed(self) -> bool {
 		match self {
-			// fixme: Self::System to return true is kind of hack to make sure that system classes are passed by void*, probably better to handle in explicitly in CppPassByVoidPtrRenderLane
+			Self::Boxed | Self::BoxedForced => true,
+			Self::Simple | Self::Other | Self::System => false,
+		}
+	}
+
+	pub fn is_trait(&self) -> bool {
+		match self {
 			Self::Boxed | Self::BoxedForced | Self::System => true,
 			Self::Simple | Self::Other => false,
 		}

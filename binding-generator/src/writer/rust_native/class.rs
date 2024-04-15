@@ -51,8 +51,8 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 	static TRAIT_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/class/trait.tpl.rs").compile_interpolation());
 
 	let type_ref = c.type_ref();
-	let is_trait = c.is_trait();
 	let class_kind = c.kind();
+	let is_trait = class_kind.is_trait();
 	let doc_comment = c.rendered_doc_comment("///", opencv_version);
 
 	let mut out = String::new();
@@ -577,7 +577,7 @@ pub trait ClassExt {
 impl ClassExt for Class<'_, '_> {
 	fn rust_trait_name(&self, style: NameStyle, constness: Constness) -> Cow<str> {
 		let mut out = self.rust_name(style);
-		if self.is_trait() {
+		if self.kind().is_trait() {
 			if constness.is_const() {
 				out.to_mut().push_str("TraitConst");
 			} else {

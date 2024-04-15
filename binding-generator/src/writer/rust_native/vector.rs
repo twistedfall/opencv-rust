@@ -62,11 +62,14 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		static EXTERN_TPL: Lazy<CompiledInterpolation> =
 			Lazy::new(|| include_str!("tpl/vector/rust_extern.tpl.rs").compile_interpolation());
 
-		static ADD_COPY_NON_BOOL_TPL: Lazy<CompiledInterpolation> =
+		static COPY_NON_BOOL_TPL: Lazy<CompiledInterpolation> =
 			Lazy::new(|| include_str!("tpl/vector/rust_copy_non_bool.tpl.rs").compile_interpolation());
 
-		static ADD_NON_COPY_OR_BOOL_TPL: Lazy<CompiledInterpolation> =
+		static NON_COPY_OR_BOOL_TPL: Lazy<CompiledInterpolation> =
 			Lazy::new(|| include_str!("tpl/vector/rust_non_copy_or_bool.tpl.rs").compile_interpolation());
+
+		static BOXED_REF_TPL: Lazy<CompiledInterpolation> =
+			Lazy::new(|| include_str!("tpl/vector/rust_boxed_ref.tpl.rs").compile_interpolation());
 
 		static INPUT_ARRAY_TPL: Lazy<CompiledInterpolation> =
 			Lazy::new(|| include_str!("tpl/vector/rust_input_array.tpl.rs").compile_interpolation());
@@ -148,7 +151,7 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 						("extern_data_mut", extern_data_mut.into()),
 						("extern_from_slice", extern_from_slice.into()),
 					]);
-					impls += &ADD_COPY_NON_BOOL_TPL.interpolate(&inter_vars);
+					impls += &COPY_NON_BOOL_TPL.interpolate(&inter_vars);
 				} else {
 					inter_vars.insert(
 						"clone",
@@ -159,7 +162,7 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 						}
 						.into(),
 					);
-					impls += &ADD_NON_COPY_OR_BOOL_TPL.interpolate(&inter_vars);
+					impls += &NON_COPY_OR_BOOL_TPL.interpolate(&inter_vars);
 				}
 				if element_type.is_element_data_type() || element_is_bool {
 					let input_array = method_input_array(vector_class.clone()).gen_rust(opencv_version);
@@ -173,6 +176,22 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 							("input_output_array_impl", input_output_array.into()),
 						]);
 						impls += &OUTPUT_ARRAY_TPL.interpolate(&inter_vars);
+					}
+				}
+				// string is a custom type in 3.4 so exclude it explicitly
+				if element_kind
+					.as_class()
+					.map_or(false, |cls| cls.kind().is_boxed() && cls.string_type().is_none())
+				{
+					impls += &BOXED_REF_TPL.interpolate(&inter_vars);
+					inter_vars.insert(
+						"inner_rust_full",
+						format!("BoxedRef<'_, {}>", inter_vars["inner_rust_full"]).into(),
+					);
+					impls += &EXTERN_TPL.interpolate(&inter_vars);
+					if element_type.is_element_data_type() {
+						inter_vars.insert("rust_full", format!("BoxedRef<'_, {}>", rust_localalias).into());
+						impls += &INPUT_ARRAY_TPL.interpolate(&inter_vars);
 					}
 				}
 			}

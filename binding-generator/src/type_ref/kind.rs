@@ -63,7 +63,7 @@ impl<'tu, 'ge> TypeRefKind<'tu, 'ge> {
 		match self {
 			TypeRefKind::Typedef(tdef) => tdef.underlying_type_ref().kind().extern_pass_kind(),
 			TypeRefKind::Class(inner) if !inner.string_type().is_some() => {
-				if inner.kind().is_boxed() {
+				if inner.kind().is_trait() {
 					ExternPassKind::ByVoidPtr
 				} else {
 					ExternPassKind::ByPtr
@@ -210,10 +210,6 @@ impl<'tu, 'ge> TypeRefKind<'tu, 'ge> {
 				.map(|inner| Owned(inner.into_owned())),
 			_ => None,
 		}
-	}
-
-	pub fn as_simple_class(&self) -> Option<Cow<Class<'tu, 'ge>>> {
-		self.as_class().filter(|cls| cls.kind().is_simple())
 	}
 
 	pub fn as_vector(&self) -> Option<Cow<Vector<'tu, 'ge>>> {

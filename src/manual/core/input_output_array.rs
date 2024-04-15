@@ -143,6 +143,36 @@ macro_rules! input_output_array {
 	};
 }
 
+#[doc(hidden)]
+#[macro_export]
+macro_rules! input_output_array_vector {
+	($type: ty, $const_cons: ident) => {
+		impl $crate::core::ToInputArray for $crate::core::Vector<$crate::boxed_ref::BoxedRef<'_, $type>> {
+			#[inline]
+			fn input_array(&self) -> $crate::Result<$crate::boxed_ref::BoxedRef<$crate::core::_InputArray>> {
+				$crate::core::_InputArray::$const_cons(self.as_non_ref_vec())
+			}
+		}
+
+		$crate::input_array_ref_forward! { $crate::core::Vector<$crate::boxed_ref::BoxedRef<'_, $type>> }
+
+		$crate::input_output_array! { $crate::core::Vector<$type>, $const_cons }
+	};
+
+	($type: ty, $const_cons: ident, $mut_cons: ident) => {
+		impl $crate::core::ToInputArray for $crate::core::Vector<$crate::boxed_ref::BoxedRef<'_, $type>> {
+			#[inline]
+			fn input_array(&self) -> $crate::Result<$crate::boxed_ref::BoxedRef<$crate::core::_InputArray>> {
+				$crate::core::_InputArray::$const_cons(self.as_non_ref_vec())
+			}
+		}
+
+		$crate::input_array_ref_forward! { $crate::core::Vector<$crate::boxed_ref::BoxedRef<'_, $type>> }
+
+		$crate::input_output_array! { $crate::core::Vector<$type>, $const_cons, $mut_cons }
+	};
+}
+
 /// Adds automatic implementation for [ToInputArray] for the reference to the supplied type
 #[doc(hidden)]
 #[macro_export]

@@ -165,7 +165,7 @@ impl GeneratorVisitor for RustNativeBindingWriter<'_> {
 
 	fn visit_class(&mut self, class: Class) {
 		self.emit_debug_log(&class);
-		if class.is_trait() {
+		if class.kind().is_trait() {
 			self.prelude_traits.push(format!(
 				"super::{}",
 				class.rust_trait_name(NameStyle::decl(), Constness::Const).into_owned()

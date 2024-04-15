@@ -1,8 +1,7 @@
 use opencv::boxed_ref::{BoxedRef, BoxedRefMut};
-use opencv::core;
-use opencv::core::{no_array, Rect};
+use opencv::core::{no_array, Rect, Vec2i, Vector};
 use opencv::prelude::*;
-use opencv::Result;
+use opencv::{core, Result};
 
 #[test]
 fn boxed_ref_from_roi() -> Result<()> {
@@ -99,6 +98,27 @@ fn boxed_ref_pass() -> Result<()> {
 		core::min_mat_to(&mat, &mat2, &mut boxed_ref)?;
 		assert_eq!(&[1, 2, 2, 1], out.data_typed::<i32>()?);
 	}
+
+	Ok(())
+}
+
+#[test]
+fn vector_boxed_ref() -> Result<()> {
+	let src = Mat::from_slice(&[1, 2, 3, 4])?;
+
+	let roi1 = src.roi(Rect::new(0, 0, 2, 1))?;
+	let roi2 = src.roi(Rect::new(2, 0, 2, 1))?;
+	let mut roi_vec = Vector::<BoxedRef<Mat>>::new();
+	roi_vec.push(roi1);
+	roi_vec.push(roi2);
+
+	let mut dst = Mat::default();
+	core::merge(&&roi_vec, &mut dst)?;
+
+	assert_eq!(2, dst.channels());
+	assert_eq!(2, dst.cols());
+	assert_eq!(1, dst.rows());
+	assert_eq!([Vec2i::from([1, 3]), Vec2i::from([2, 4])], dst.data_typed::<Vec2i>()?);
 
 	Ok(())
 }

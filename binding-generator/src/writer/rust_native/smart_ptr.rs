@@ -104,7 +104,7 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		]);
 
 		let mut impls = String::new();
-		if let Some(cls) = pointee_kind.as_class().filter(|cls| cls.is_trait()) {
+		if let Some(cls) = pointee_kind.as_class().filter(|cls| cls.kind().is_trait()) {
 			inter_vars.extend([
 				("base_rust_as_raw_const", cls.rust_as_raw_name(Constness::Const).into()),
 				("base_rust_as_raw_mut", cls.rust_as_raw_name(Constness::Mut).into()),
@@ -195,7 +195,7 @@ fn extern_functions<'tu, 'ge>(ptr: &SmartPtr<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
 		pointee_type.with_inherent_constness(Constness::Mut),
 	));
 	out.push(FuncDesc::method_delete(smartptr_class.clone()));
-	if let Some(cls) = pointee_kind.as_class().filter(|cls| cls.is_trait()) {
+	if let Some(cls) = pointee_kind.as_class().filter(|cls| cls.kind().is_trait()) {
 		for base in all_bases(&cls) {
 			out.push(method_cast_to_base(
 				smartptr_class.clone(),
@@ -266,7 +266,7 @@ fn method_new<'tu, 'ge>(
 ) -> Func<'tu, 'ge> {
 	let pointee_kind = pointee_type.kind();
 	let val = if pointee_kind.is_copy(pointee_type.type_hint()) {
-		if pointee_kind.as_simple_class().is_some() {
+		if pointee_kind.as_class().map_or(false, |cls| cls.kind().is_simple()) {
 			panic!("Ptr with simple class is not supported");
 		} else {
 			format!("new {typ}(val)", typ = pointee_type.cpp_name(CppNameStyle::Reference)).into()
