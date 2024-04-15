@@ -31,7 +31,7 @@ fn main() -> Result<()> {
 		let mut gray = Mat::default();
 		imgproc::cvt_color(&img, &mut gray, imgproc::COLOR_BGR2GRAY, 0)?;
 		let mut blurred = Mat::default();
-		imgproc::gaussian_blur(&gray, &mut blurred, core::Size::new(7, 7), 1.5, 0., core::BORDER_DEFAULT)?;
+		imgproc::gaussian_blur(&gray, &mut blurred, Size::new(7, 7), 1.5, 0., core::BORDER_DEFAULT)?;
 		let mut edges = Mat::default();
 		imgproc::canny(&blurred, &mut edges, 0., 50., 3, false)?;
 	}

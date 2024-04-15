@@ -483,7 +483,7 @@ fn extern_functions<'tu, 'ge>(c: &Class<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
 	out
 }
 
-fn needs_default_ctor<'r>(c: &Class, kind: ClassKind) -> bool {
+fn needs_default_ctor(c: &Class, kind: ClassKind) -> bool {
 	kind.is_boxed() && !c.is_abstract() && c.has_implicit_default_constructor()
 }
 

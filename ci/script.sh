@@ -22,7 +22,7 @@ elif [[ "$OS_FAMILY" == "macOS" ]]; then
 	xcode_select="xcode-select" # IDEA code highlighting workaround
 	toolchain_path="$($xcode_select --print-path)/Toolchains/XcodeDefault.xctoolchain/"
 	export DYLD_FALLBACK_LIBRARY_PATH="$toolchain_path/usr/lib/"
-	if [[ "${VCPKG_VERSION:-}" != "" ]]; then
+	if [[ "${VCPKG_VERSION:-}" != "" ]]; then # vcpkg build
 		export VCPKG_ROOT="$HOME/build/vcpkg"
 		echo "=== Installed vcpkg packages:"
 		"$VCPKG_ROOT/vcpkg" list

@@ -1,4 +1,5 @@
 //! Port of https://github.com/opencv/opencv/blob/4.9.0/samples/dnn/face_detect.cpp
+//! Tutorial: https://docs.opencv.org/4.9.0/d0/dd4/tutorial_dnn_face.html
 
 use std::env;
 

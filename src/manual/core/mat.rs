@@ -191,12 +191,11 @@ impl Mat {
 			));
 		}
 		unsafe {
-			Self::new_rows_cols_with_data(
+			Self::new_rows_cols_with_data_def(
 				row_count_i32(row_count)?,
 				col_count_i32(col_count)?,
 				T::opencv_type(),
 				s.as_ptr().cast::<c_void>().cast_mut(),
-				core::Mat_AUTO_STEP,
 			)
 		}?
 		.try_clone()
