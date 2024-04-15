@@ -10,8 +10,7 @@ version = "0.90.0"
 edition = "2021"
 rust-version = "1.66"
 authors = ["Pro <twisted.fall@gmail.com>", "Mathieu Poumeyrol <kali@zoy.org>"]
-autoexamples = false # not all examples compile on just any system
-exclude = ["/.github", "/ci", "/tools", "release.toml", "rustfmt.toml"]
+exclude = ["/.github", "/ci", "/tools", ".editorconfig", ".gitattributes", ".gitignore", "release.toml", "rustfmt.toml"]
 
 [lib]
 doctest = false
@@ -21,48 +20,6 @@ maintenance = { status = "actively-developed" }
 
 [workspace]
 members = ["binding-generator"]
-
-# requires CUDA
-#[[example]]
-#name = "cuda"
-
-[[example]]
-name = "discrete_fourier_transform"
-
-# requires Graph-API module
-#[[example]]
-#name = "gapi_api_example"
-
-[[example]]
-name = "hough_circle"
-
-[[example]]
-name = "hough_lines"
-
-[[example]]
-name = "opencl"
-
-# requires OpenCV 4.5.1+
-#[[example]]
-#name = "text_detection"
-
-[[example]]
-name = "video_capture"
-
-[[example]]
-name = "video_facedetect"
-
-[[example]]
-name = "video_features"
-
-[[example]]
-name = "video_to_gray"
-
-[[example]]
-name = "warp_perspective_demo"
-
-[[example]]
-name = "window"
 
 [dependencies]
 libc = "0.2"

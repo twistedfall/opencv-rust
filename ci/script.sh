@@ -42,9 +42,13 @@ elif [[ "$OS_FAMILY" == "Linux" ]]; then
 	fi
 fi
 
-if [[ "${OPENCV_VERSION:-}" == "4.5.4" || "${OPENCV_VERSION:-}" == "4.2.0" || "${OPENCV_VERSION:-}" == "3.4.16" || "${OPENCV_VERSION:-}" == "3.4.20" ]]; then
-	rm -vf tests/*4_5_4_norun.rs
+# remove tests and examples that require the latest OpenCV version so that they don't fail due to missing modules
+if [[ "${OPENCV_VERSION:-}" != "4.9.0" ]]; then
+	rm -vf tests/*_only_latest_opencv.rs
+	rm -vf examples/dnn_face_detect.rs examples/gapi_api_example.rs examples/text_detection.rs
 fi
+# the following examples don't work in CI
+rm -vf examples/cuda.rs
 
 echo "=== Current directory: $(pwd)"
 echo "=== Environment variable dump:"
