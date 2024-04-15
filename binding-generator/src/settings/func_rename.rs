@@ -368,8 +368,10 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		// ### features2d ###
 		("cv_AGAST_const__InputArrayR_vectorLKeyPointGR_int_bool_DetectorType", "+_with_type"),
 		("cv_AGAST_const__InputArrayR_vectorLKeyPointGR_int_bool_int", "+_with_type"), // 3.x only
+		("cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_const_PtrLFeature2DGR_const_PtrLDescriptorMatcherGR", "+_with_extractor"),
 		("cv_BOWImgDescriptorExtractor_compute2_const_MatR_vectorLKeyPointGR_MatR", "compute2"),
 		("cv_BOWImgDescriptorExtractor_compute_const__InputArrayR_vectorLKeyPointGR_const__OutputArrayR_vectorLvectorLintGGX_MatX", "+_desc"),
+		("cv_BOWKMeansTrainer_cluster_const_const_MatR", "+_with_descriptor"),
 		("cv_BOWTrainer_cluster_const_const_MatR", "+_with_descriptors"), // 3.2
 		("cv_BRISK_create_const_vectorLfloatGR_const_vectorLintGR_float_float_const_vectorLintGR", "+_with_pattern"),
 		("cv_BRISK_create_int_int_const_vectorLfloatGR_const_vectorLintGR_float_float_const_vectorLintGR", "+_with_pattern_threshold_octaves"),
@@ -378,11 +380,23 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		("cv_DescriptorMatcher_knnMatch_const_const__InputArrayR_const__InputArrayR_vectorLvectorLDMatchGGR_int_const__InputArrayR_bool", "knn_train_match"),
 		("cv_DescriptorMatcher_match_const_const__InputArrayR_const__InputArrayR_vectorLDMatchGR_const__InputArrayR", "train_match"),
 		("cv_DescriptorMatcher_radiusMatch_const_const__InputArrayR_const__InputArrayR_vectorLvectorLDMatchGGR_float_const__InputArrayR_bool", "radius_train_match"),
+		("cv_DescriptorMatcher_read_const_FileNodeR", "+_from_node"),
+		("cv_DescriptorMatcher_write_const_FileStorageR", "+_to_storage"),
+		("cv_DescriptorMatcher_write_const_FileStorageR_const_StringR", "+_to_storage_with_name"),
+		("cv_DescriptorMatcher_write_const_const_PtrLFileStorageGR_const_StringR", "+_to_storage_ptr_with_name"),
 		("cv_FAST_const__InputArrayR_vectorLKeyPointGR_int_bool_DetectorType", "+_with_type"),
 		("cv_FAST_const__InputArrayR_vectorLKeyPointGR_int_bool_int", "+_with_type"), // 3.x only
 		("cv_Feature2D_compute_const__InputArrayR_vectorLvectorLKeyPointGGR_const__OutputArrayR", "+_multiple"),
 		("cv_Feature2D_detect_const__InputArrayR_vectorLvectorLKeyPointGGR_const__InputArrayR", "+_multiple"),
+		("cv_Feature2D_read_const_FileNodeR", "+_from_node"),
+		("cv_Feature2D_write_const_FileStorageR", "+_to_storage"),
+		("cv_Feature2D_write_const_FileStorageR_const_StringR", "+_to_storage_with_name"),
+		("cv_Feature2D_write_const_const_PtrLFileStorageGR_const_StringR", "+_to_storage_ptr_with_name"),
 		("cv_GFTTDetector_create_int_double_double_int_int_bool_double", "+_with_gradient"),
+		("cv_SIFT_create_int_int_double_double_double_int", "+_with_descriptor_type"),
+		("cv_SIFT_create_int_int_double_double_double_int_bool", "+_with_descriptor_type"),
+		("cv_drawMatches_const__InputArrayR_const_vectorLKeyPointGR_const__InputArrayR_const_vectorLKeyPointGR_const_vectorLDMatchGR_const__InputOutputArrayR_const_int_const_ScalarR_const_ScalarR_const_vectorLcharGR_DrawMatchesFlags", "+_with_thickness"),
+		("cv_drawMatches_const__InputArrayR_const_vectorLKeyPointGR_const__InputArrayR_const_vectorLKeyPointGR_const_vectorLDMatchGR_const__InputOutputArrayR_const_int_const_ScalarR_const_ScalarR_const_vectorLcharGR_int", "+_with_thickness"),
 
 		// ### hdf ###
 		("cv_hdf_HDF5_atread_StringX_const_StringR", "+_str"),
