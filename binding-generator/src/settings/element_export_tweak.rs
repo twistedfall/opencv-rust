@@ -79,6 +79,9 @@ pub static ELEMENT_EXPORT_TWEAK: Lazy<HashMap<&str, fn(ExportConfig) -> Option<E
 		("cv::viz::Color", ExportConfig::export as _),
 		("cv::ximgproc::Box", ExportConfig::simple as _), // used by Boxes typedef
 		("cvv::impl::CallMetaData", ExportConfig::force_boxed as _),
+		// half-float types from core
+		("cv::hfloat", ExportConfig::simple as _),
+		("cv::float16_t", ExportConfig::simple as _),
 		// gapi
 		("cv::GCompileArg", ExportConfig::export as _),
 		("cv::GCompileArgs", ExportConfig::export as _),
