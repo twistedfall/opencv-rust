@@ -65,6 +65,7 @@ jobs:
         os-image:
           - ubuntu-22.04
           - windows-2022
+          - macos-14
         vcpkg-version:
           - 2024.03.25
     runs-on: ${{ matrix.os-image }}

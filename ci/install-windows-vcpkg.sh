@@ -34,8 +34,9 @@ export VCPKG_DEFAULT_TRIPLET=x64-windows
 #./vcpkg install llvm  # takes very long time
 (
 	set +e
+	which cmake
 	cmake --version
-	if ! ./vcpkg install --clean-after-build --recurse "opencv[contrib,nonfree]"; then
+	if ! ./vcpkg install --clean-after-build --recurse "opencv[contrib,nonfree,ade]"; then
 		for log in "$VCPKG_ROOT/buildtrees"/**/*out.log; do
 			echo "=== $log"
 			cat "$log"
