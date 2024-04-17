@@ -93,17 +93,6 @@ all_modules_34="aruco
 	calib3d
 	ccalib
 	core
-	cudaarithm
-	cudabgsegm
-	cudacodec
-	cudafeatures2d
-	cudafilters
-	cudaimgproc
-	cudaobjdetect
-	cudaoptflow
-	cudastereo
-	cudawarping
-	cvv
 	dnn
 	dpm
 	face

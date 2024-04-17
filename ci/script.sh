@@ -63,6 +63,8 @@ echo "=== Target settings:"
 rustc --version
 rustc --print=cfg
 
+export RUST_BACKTRACE=full
+
 cargo test -vv -p opencv-binding-generator
 
 FEATURES=rgb

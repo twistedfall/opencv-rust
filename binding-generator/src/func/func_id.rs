@@ -6,7 +6,7 @@ use clang::{Entity, EntityKind};
 use crate::element::UNNAMED;
 use crate::func::FuncDesc;
 use crate::type_ref::Constness;
-use crate::{CppNameStyle, Element, EntityExt, WalkAction};
+use crate::{CppNameStyle, Element, EntityExt, IteratorExt, WalkAction};
 
 #[derive(Clone, Debug, Eq, Hash, PartialEq)]
 pub struct FuncId<'f> {
@@ -44,7 +44,7 @@ impl<'f> FuncId<'f> {
 			let mut args = Vec::with_capacity(8);
 			entity.walk_children_while(|child| {
 				if child.get_kind() == EntityKind::ParmDecl {
-					args.push(child.get_name().map_or_else(|| UNNAMED.into(), Cow::Owned));
+					args.push(child.get_name().map_or(UNNAMED.into(), Cow::Owned));
 				}
 				WalkAction::Continue
 			});
@@ -54,7 +54,7 @@ impl<'f> FuncId<'f> {
 				.get_arguments()
 				.into_iter()
 				.flatten()
-				.map(|a| a.get_name().map_or_else(|| UNNAMED.into(), Cow::Owned))
+				.map(|a| a.get_name().map_or(UNNAMED.into(), Cow::Owned))
 				.collect()
 		};
 		FuncId {
@@ -65,11 +65,10 @@ impl<'f> FuncId<'f> {
 	}
 
 	pub fn from_desc(desc: &'f FuncDesc) -> FuncId<'f> {
-		let mut name = if let Some(cls) = desc.kind.as_instance_method() {
-			format!("{}::", cls.cpp_name(CppNameStyle::Reference))
-		} else {
-			"".to_string()
-		};
+		let mut name = desc.kind.as_instance_method().map_or_else(
+			|| "".to_string(),
+			|cls| format!("{}::", cls.cpp_name(CppNameStyle::Reference)),
+		);
 		name.push_str(desc.cpp_name.as_ref());
 		let args = desc
 			.arguments
@@ -105,10 +104,10 @@ impl fmt::Display for FuncId<'_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		write!(
 			f,
-			"{cnst}{name}({args})",
-			cnst = self.constness.rust_qual_ptr(),
+			"FuncId::new{cnst}(\"{name}\", [{args}])",
+			cnst = self.constness.rust_function_name_qual(),
 			name = self.name,
-			args = self.args.join(", ")
+			args = self.args.iter().map(|a| format!("\"{a}\"")).join(", ")
 		)
 	}
 }

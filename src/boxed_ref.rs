@@ -31,6 +31,7 @@ impl<T: Boxed + fmt::Debug> fmt::Debug for BoxedRef<'_, T> {
 }
 
 impl<T: Boxed + Clone> BoxedRef<'_, T> {
+	/// Clones the pointee of this BoxedRef
 	#[inline]
 	pub fn clone_pointee(&self) -> T {
 		self.reference.clone()
@@ -97,6 +98,7 @@ impl<T: Boxed + fmt::Debug> fmt::Debug for BoxedRefMut<'_, T> {
 }
 
 impl<T: Boxed + Clone> BoxedRefMut<'_, T> {
+	/// Clones the pointee of this BoxedRef
 	#[inline]
 	pub fn clone_pointee(&self) -> T {
 		self.reference.clone()
