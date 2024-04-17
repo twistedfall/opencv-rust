@@ -576,12 +576,11 @@ fn mat_from_data() -> Result<()> {
 
 	{
 		let src = unsafe {
-			Mat::new_rows_cols_with_data(
+			Mat::new_rows_cols_with_data_unsafe_def(
 				1,
 				PIXEL.len().try_into()?,
 				u8::opencv_type(),
 				bytes.as_mut_ptr().cast::<c_void>(),
-				core::Mat_AUTO_STEP,
 			)?
 		};
 		assert_eq!(Size::new(PIXEL.len().try_into()?, 1), src.size()?);
@@ -595,7 +594,7 @@ fn mat_from_data() -> Result<()> {
 	}
 
 	{
-		let src = unsafe { Mat::new_nd_with_data(&[3, 5, 6], u8::opencv_type(), bytes.as_mut_ptr().cast::<c_void>(), None)? };
+		let src = unsafe { Mat::new_nd_with_data_unsafe_def(&[3, 5, 6], u8::opencv_type(), bytes.as_mut_ptr().cast::<c_void>())? };
 		assert_eq!(Size::new(5, 3), src.size()?);
 		assert_eq!(PIXEL.len(), src.total());
 		assert_eq!(0x89, *src.at_3d::<u8>(0, 0, 0)?);
@@ -608,12 +607,11 @@ fn mat_from_data() -> Result<()> {
 	{
 		let mut bytes = bytes.clone();
 		let mut mat = unsafe {
-			Mat::new_rows_cols_with_data(
+			Mat::new_rows_cols_with_data_unsafe_def(
 				1,
 				bytes.len().try_into()?,
 				u8::opencv_type(),
 				bytes.as_mut_ptr().cast::<c_void>(),
-				core::Mat_AUTO_STEP,
 			)?
 		};
 		assert_eq!(mat.data(), bytes.as_ptr());
@@ -810,7 +808,7 @@ fn mat_locate_roi() -> Result<()> {
 
 #[test]
 fn mat_roi() -> Result<()> {
-	let mut mat = Mat::from_slice(&[1, 2, 3, 4])?;
+	let mut mat = Mat::from_slice(&[1, 2, 3, 4])?.try_clone()?;
 	let roi = Mat::roi(&mat, Rect::new(1, 0, 2, 1))?;
 	assert_eq!(2, *roi.at(0)?);
 	assert_eq!(3, *roi.at(1)?);
@@ -838,7 +836,7 @@ fn mat_roi() -> Result<()> {
 
 #[test]
 fn mat_roi_2() -> Result<()> {
-	let mut mat = Mat::from_slice(&[1, 2, 3, 4])?;
+	let mut mat = Mat::from_slice(&[1, 2, 3, 4])?.try_clone()?;
 	let (mut roi1, mut roi2) = Mat::roi_2_mut(&mut mat, Rect::new(0, 0, 2, 1), Rect::new(2, 0, 2, 1))?;
 	assert_eq!(1, *roi1.at(0)?);
 	assert_eq!(2, *roi1.at(1)?);
@@ -931,7 +929,7 @@ fn mat_data() -> Result<()> {
 	}
 
 	{
-		let mut mat = Mat::from_slice(&[Vec2b::from([5, 8]), Vec2b::from([13, 21])])?;
+		let mut mat = Mat::from_slice(&[Vec2b::from([5, 8]), Vec2b::from([13, 21])])?.try_clone()?;
 		assert_eq!(&[5, 8, 13, 21], mat.data_bytes()?);
 		let bytes = mat.data_bytes_mut()?;
 		bytes[1] = 90;
@@ -988,13 +986,48 @@ fn mat_from_slice() -> Result<()> {
 	}
 
 	{
-		let mat = Mat::from_slice_rows_cols(&src_u8, 2, 5)?;
+		let mat = Mat::new_rows_cols_with_data(2, 5, &src_u8)?;
 		assert_eq!(10, mat.total());
 		assert_eq!(2, mat.rows());
 		assert_eq!(5, mat.cols());
 		assert_eq!(6u8, *mat.at_2d(1, 1)?);
 
-		let mat_res = Mat::from_slice_rows_cols(&src_u8, 3, 3);
+		let mat_sz = Mat::new_size_with_data(Size::new(5, 2), &src_u8)?;
+		assert_eq!(mat.data_typed::<u8>()?, mat_sz.data_typed::<u8>()?);
+
+		let mat_nd = Mat::new_nd_with_data(&[2, 5], &src_u8)?;
+		assert_eq!(mat.rows(), mat_nd.rows());
+		assert_eq!(mat.cols(), mat_nd.cols());
+		assert_eq!(mat.data_typed::<u8>()?, mat_nd.data_typed::<u8>()?);
+
+		let mat_3d = Mat::new_nd_with_data(&[1, 2, 3], &src_u8[..6])?;
+		assert_eq!(3, mat_3d.dims());
+		assert_eq!(-1, mat_3d.rows());
+		assert_eq!(-1, mat_3d.cols());
+		let mat_size = mat_3d.mat_size();
+		assert_eq!(1, mat_size.get(0)?);
+		assert_eq!(2, mat_size.get(1)?);
+		assert_eq!(3, mat_size.get(2)?);
+	}
+
+	{
+		let mut src_u8 = src_u8;
+
+		let mut mat = Mat::new_rows_cols_with_data_mut(5, 2, &mut src_u8)?;
+		*mat.at_2d_mut::<u8>(3, 0)? = 222;
+		assert_eq!(222, src_u8[6]);
+
+		let mut mat_sz = Mat::new_size_with_data_mut(Size::new(2, 5), &mut src_u8)?;
+		*mat_sz.at_2d_mut::<u8>(3, 0)? = 211;
+		assert_eq!(211, src_u8[6]);
+
+		let mut mat = Mat::new_nd_with_data_mut(&[5, 2], &mut src_u8)?;
+		*mat.at_nd_mut::<u8>(&[3, 0])? = 111;
+		assert_eq!(111, src_u8[6]);
+	}
+
+	{
+		let mat_res = Mat::new_rows_cols_with_data(3, 3, &src_u8);
 		assert_matches!(
 			mat_res,
 			Err(Error {
@@ -1003,11 +1036,62 @@ fn mat_from_slice() -> Result<()> {
 			})
 		);
 
-		let mat = Mat::from_slice_rows_cols(&src_point, 2, 2)?;
+		let mat_res = Mat::new_size_with_data(Size::new(3, 3), &src_u8);
+		assert_matches!(
+			mat_res,
+			Err(Error {
+				code: core::StsUnmatchedSizes,
+				..
+			})
+		);
+
+		let mat_res = Mat::new_nd_with_data(&[3, 3], &src_u8);
+		assert_matches!(
+			mat_res,
+			Err(Error {
+				code: core::StsUnmatchedSizes,
+				..
+			})
+		);
+	}
+
+	{
+		let mat = Mat::new_rows_cols_with_data(2, 2, &src_point)?;
 		assert_eq!(4, mat.total());
 		assert_eq!(2, mat.rows());
 		assert_eq!(2, mat.cols());
 		assert_eq!(Point2d::new(50.5, 60.6), *mat.at_2d(1, 0)?);
+	}
+
+	Ok(())
+}
+
+#[test]
+fn mat_from_slice_2d() -> Result<()> {
+	{
+		let src = [&[1, 2, 3, 4], &[5, 6, 7, 8], &[9, 10, 11, 12], &[13, 14, 15, 16u8]];
+		let mat = Mat::from_slice_2d(&src)?;
+		assert_eq!(4, mat.rows());
+		assert_eq!(4, mat.cols());
+		assert_eq!(16, mat.total());
+	}
+
+	{
+		// first row is shorter
+		let src = &[
+			[1, 2].as_slice(),
+			[5, 6, 7, 8].as_slice(),
+			[9, 10, 11, 12].as_slice(),
+			[13, 14, 15, 16u8].as_slice(),
+		];
+		let mat_res = Mat::from_slice_2d(src);
+		assert_matches!(
+			mat_res,
+			Err(Error {
+				code: core::StsUnmatchedSizes,
+				..
+			})
+		);
 	}
 
 	Ok(())
@@ -1041,7 +1125,8 @@ fn mat_custom_data_type() -> Result<()> {
 
 #[test]
 fn mat_reshape() -> Result<()> {
-	let mut mat = Mat::from_slice(&[1, 2, 3, 4, 5, 6])?;
+	let mut slice = [1, 2, 3, 4, 5, 6];
+	let mut mat = Mat::from_slice_mut(&mut slice)?;
 
 	let mut mat2 = mat.reshape_mut(1, 2)?;
 	assert_eq!(mat2.cols(), 3);

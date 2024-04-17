@@ -2,7 +2,7 @@
 
 use std::ffi::c_void;
 
-use opencv::core::{Mat_AUTO_STEP, Point, Point2f, Rect, RotatedRect, Size, Size2f, Vec2f, Vec3b, Vector};
+use opencv::core::{Point, Point2f, Rect, RotatedRect, Size, Size2f, Vec2f, Vec3b, Vector};
 use opencv::prelude::*;
 use opencv::{imgproc, Result};
 
@@ -43,7 +43,7 @@ fn get_rotation_matrix_2d() -> Result<()> {
 #[test]
 fn line_iterator() -> Result<()> {
 	let mut data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12u8];
-	let mat = unsafe { Mat::new_rows_cols_with_data(4, 3, u8::opencv_type(), data.as_mut_ptr().cast::<c_void>(), Mat_AUTO_STEP) }?;
+	let mat = unsafe { Mat::new_rows_cols_with_data_unsafe_def(4, 3, u8::opencv_type(), data.as_mut_ptr().cast::<c_void>()) }?;
 	let mut line_iter = imgproc::LineIterator::new_def(&mat, Point::new(0, 0), Point::new(2, 2))?;
 	assert_eq!(3, line_iter.count());
 	assert_eq!(Point::new(0, 0), line_iter.pos()?);

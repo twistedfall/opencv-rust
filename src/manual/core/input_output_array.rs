@@ -115,7 +115,7 @@ macro_rules! input_output_array {
 		impl $crate::core::ToInputArray for $type {
 			#[inline]
 			fn input_array(&self) -> $crate::Result<$crate::boxed_ref::BoxedRef<$crate::core::_InputArray>> {
-				$crate::core::_InputArray::$const_cons(self).map(Into::into)
+				$crate::core::_InputArray::$const_cons(self)
 			}
 		}
 
@@ -128,14 +128,14 @@ macro_rules! input_output_array {
 		impl $crate::core::ToOutputArray for $type {
 			#[inline]
 			fn output_array(&mut self) -> $crate::Result<$crate::boxed_ref::BoxedRefMut<$crate::core::_OutputArray>> {
-				$crate::core::_OutputArray::$mut_cons(self).map(Into::into)
+				$crate::core::_OutputArray::$mut_cons(self)
 			}
 		}
 
 		impl $crate::core::ToInputOutputArray for $type {
 			#[inline]
 			fn input_output_array(&mut self) -> $crate::Result<$crate::boxed_ref::BoxedRefMut<$crate::core::_InputOutputArray>> {
-				$crate::core::_InputOutputArray::$mut_cons(self).map(Into::into)
+				$crate::core::_InputOutputArray::$mut_cons(self)
 			}
 		}
 
@@ -180,10 +180,25 @@ macro_rules! output_array_ref_forward {
 
 input_output_array! { f64, from_f64 }
 
+impl ToInputArray for &[u8] {
+	#[inline]
+	fn input_array(&self) -> Result<BoxedRef<_InputArray>> {
+		_InputArray::from_byte_slice(self)
+	}
+}
+
+impl<const N: usize> ToInputArray for [u8; N] {
+	#[inline]
+	fn input_array(&self) -> Result<BoxedRef<_InputArray>> {
+		_InputArray::from_byte_slice(self)
+	}
+}
+
 impl<T> ToInputArray for BoxedRef<'_, T>
 where
 	T: Boxed + ToInputArray,
 {
+	#[inline]
 	fn input_array(&self) -> Result<BoxedRef<_InputArray>> {
 		self.reference.input_array()
 	}
@@ -193,6 +208,7 @@ impl<T> ToInputArray for &BoxedRef<'_, T>
 where
 	T: Boxed + ToInputArray,
 {
+	#[inline]
 	fn input_array(&self) -> Result<BoxedRef<_InputArray>> {
 		(*self).input_array()
 	}
@@ -202,6 +218,7 @@ impl<T> ToInputArray for BoxedRefMut<'_, T>
 where
 	T: Boxed + ToInputArray,
 {
+	#[inline]
 	fn input_array(&self) -> Result<BoxedRef<_InputArray>> {
 		self.reference.input_array()
 	}
@@ -211,6 +228,7 @@ impl<T> ToInputArray for &BoxedRefMut<'_, T>
 where
 	T: Boxed + ToInputArray,
 {
+	#[inline]
 	fn input_array(&self) -> Result<BoxedRef<_InputArray>> {
 		(*self).input_array()
 	}
@@ -220,6 +238,7 @@ impl<T> ToOutputArray for BoxedRefMut<'_, T>
 where
 	T: Boxed + ToOutputArray,
 {
+	#[inline]
 	fn output_array(&mut self) -> Result<BoxedRefMut<_OutputArray>> {
 		self.reference.output_array()
 	}
@@ -229,6 +248,7 @@ impl<T> ToOutputArray for &mut BoxedRefMut<'_, T>
 where
 	T: Boxed + ToOutputArray,
 {
+	#[inline]
 	fn output_array(&mut self) -> Result<BoxedRefMut<_OutputArray>> {
 		(*self).output_array()
 	}
@@ -238,6 +258,7 @@ impl<T> ToInputOutputArray for BoxedRefMut<'_, T>
 where
 	T: Boxed + ToInputOutputArray,
 {
+	#[inline]
 	fn input_output_array(&mut self) -> Result<BoxedRefMut<_InputOutputArray>> {
 		self.reference.input_output_array()
 	}
@@ -247,6 +268,7 @@ impl<T> ToInputOutputArray for &mut BoxedRefMut<'_, T>
 where
 	T: Boxed + ToInputOutputArray,
 {
+	#[inline]
 	fn input_output_array(&mut self) -> Result<BoxedRefMut<_InputOutputArray>> {
 		(*self).input_output_array()
 	}

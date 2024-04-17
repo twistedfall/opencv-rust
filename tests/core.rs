@@ -46,7 +46,10 @@ fn in_range() -> Result<()> {
 	let mut m = Mat::default();
 	core::merge(&cs, &mut m)?;
 	let mut out = Mat::default();
-	core::in_range(&m, &Scalar::from((2, 10)), &Scalar::from((6, 15)), &mut out)?;
+	let lowerb = Scalar::from((2, 10));
+	let upperb = Scalar::from((6, 15));
+	core::in_range(&m, &lowerb, &upperb, &mut out)?;
+
 	assert_eq!(&[0, 255, 255, 255, 255, 0, 0, 0, 0], &out.data_typed::<u8>()?);
 	Ok(())
 }
@@ -56,33 +59,31 @@ fn in_range() -> Result<()> {
 fn file_storage() -> Result<()> {
 	use opencv::core::{FileStorage, FileStorage_Mode};
 
-	{
-		let mut st = FileStorage::new_def(
-			".yml",
-			i32::from(FileStorage_Mode::WRITE) | i32::from(FileStorage_Mode::MEMORY),
-		)?;
-		st.write_i32("test_int", 98)?;
-		core::write_f64(&mut st, "test_double", 123.45)?;
-		st.write_str("test_str", "test string")?;
-		let serialized = st.release_and_get_string()?;
+	let mut st = FileStorage::new_def(
+		".yml",
+		i32::from(FileStorage_Mode::WRITE) | i32::from(FileStorage_Mode::MEMORY),
+	)?;
+	st.write_i32("test_int", 98)?;
+	core::write_f64(&mut st, "test_double", 123.45)?;
+	st.write_str("test_str", "test string")?;
+	let serialized = st.release_and_get_string()?;
 
-		let st = FileStorage::new_def(&serialized, FileStorage_Mode::MEMORY.into())?;
-		let int_node = st.get("test_int")?;
-		assert!(int_node.is_int()?);
-		assert_eq!(98, int_node.to_i32()?);
-		let double_node = st.get_node("test_double")?;
-		assert!(double_node.is_real()?);
-		assert_eq!(123.45, double_node.to_f64()?);
-		let str_node = st.get("test_str")?;
-		assert!(str_node.is_string()?);
-		assert_eq!("test string", str_node.to_string()?);
+	let st = FileStorage::new_def(&serialized, FileStorage_Mode::MEMORY.into())?;
+	let int_node = st.get("test_int")?;
+	assert!(int_node.is_int()?);
+	assert_eq!(98, int_node.to_i32()?);
+	let double_node = st.get_node("test_double")?;
+	assert!(double_node.is_real()?);
+	assert_eq!(123.45, double_node.to_f64()?);
+	let str_node = st.get("test_str")?;
+	assert!(str_node.is_string()?);
+	assert_eq!("test string", str_node.to_string()?);
 
-		let mut str_out = String::new();
-		core::read_str(&str_node, &mut str_out, "default string")?;
-		assert_eq!("test string", str_out);
-		core::read_str(&st.get("non_existent")?, &mut str_out, "default string")?;
-		assert_eq!("default string", str_out);
-	}
+	let mut str_out = String::new();
+	core::read_str(&str_node, &mut str_out, "default string")?;
+	assert_eq!("test string", str_out);
+	core::read_str(&st.get("non_existent")?, &mut str_out, "default string")?;
+	assert_eq!("default string", str_out);
 
 	Ok(())
 }

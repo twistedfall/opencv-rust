@@ -4,7 +4,7 @@ use std::ffi::c_void;
 
 use opencv::core::{Size, Vec3b};
 use opencv::prelude::*;
-use opencv::{core, imgcodecs, Result};
+use opencv::{imgcodecs, Result};
 
 const PIXEL: &[u8] = include_bytes!("pixel.png");
 
@@ -21,12 +21,11 @@ fn decode() -> Result<()> {
 	{
 		let mut bytes = PIXEL.to_vec();
 		let src = unsafe {
-			Mat::new_rows_cols_with_data(
+			Mat::new_rows_cols_with_data_unsafe_def(
 				1,
 				PIXEL.len().try_into()?,
 				u8::opencv_type(),
 				bytes.as_mut_ptr().cast::<c_void>(),
-				core::Mat_AUTO_STEP,
 			)
 		}?;
 		let mut dest = Mat::default();

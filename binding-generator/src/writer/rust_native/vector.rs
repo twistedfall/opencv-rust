@@ -56,7 +56,7 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		format!("{}-{}", self.rust_element_module(), self.rust_localalias())
 	}
 
-	fn gen_rust(&self, _opencv_version: &str) -> String {
+	fn gen_rust(&self, opencv_version: &str) -> String {
 		static RUST_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/vector/rust.tpl.rs").compile_interpolation());
 
 		static EXTERN_TPL: Lazy<CompiledInterpolation> =
@@ -68,8 +68,11 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		static ADD_NON_COPY_OR_BOOL_TPL: Lazy<CompiledInterpolation> =
 			Lazy::new(|| include_str!("tpl/vector/rust_non_copy_or_bool.tpl.rs").compile_interpolation());
 
-		static INPUT_OUTPUT_ARRAY_TPL: Lazy<CompiledInterpolation> =
-			Lazy::new(|| include_str!("tpl/vector/rust_input_output_array.tpl.rs").compile_interpolation());
+		static INPUT_ARRAY_TPL: Lazy<CompiledInterpolation> =
+			Lazy::new(|| include_str!("tpl/vector/rust_input_array.tpl.rs").compile_interpolation());
+
+		static OUTPUT_ARRAY_TPL: Lazy<CompiledInterpolation> =
+			Lazy::new(|| include_str!("tpl/vector/rust_output_array.tpl.rs").compile_interpolation());
 
 		let vec_type_ref = self.type_ref();
 		if vec_type_ref.constness().is_const() {
@@ -94,6 +97,7 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		// in binding-generator/src/type_ref.rs
 		if !element_type.base().kind().is_char() {
 			let element_kind = element_type.kind();
+			let element_is_bool = element_kind.is_bool();
 			let vector_class = vector_class(&vec_type_ref);
 
 			let extern_new = method_new(vector_class.clone(), vec_type_ref.clone()).identifier();
@@ -104,7 +108,7 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 			let extern_shrink_to_fit = method_shrink_to_fit(vector_class.clone()).identifier();
 			let extern_reserve = method_reserve(vector_class.clone()).identifier();
 			let extern_remove = method_remove(vector_class.clone()).identifier();
-			let extern_swap = method_swap(vector_class.clone(), element_kind.is_bool()).identifier();
+			let extern_swap = method_swap(vector_class.clone(), element_is_bool).identifier();
 			let extern_clear = method_clear(vector_class.clone()).identifier();
 			let extern_get = method_get(vector_class.clone(), element_type.clone()).identifier();
 			let extern_set = method_set(vector_class.clone(), element_type.clone()).identifier();
@@ -133,7 +137,7 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 			} else {
 				impls += &EXTERN_TPL.interpolate(&inter_vars);
 
-				if element_kind.is_copy(element_type.type_hint()) && !element_kind.is_bool() {
+				if element_kind.is_copy(element_type.type_hint()) && !element_is_bool {
 					let extern_clone = method_clone(vector_class.clone(), vec_type_ref.clone()).identifier();
 					let extern_data = method_data(vector_class.clone(), element_type.clone()).identifier();
 					let extern_data_mut = method_data_mut(vector_class.clone(), element_type.clone()).identifier();
@@ -157,16 +161,19 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 					);
 					impls += &ADD_NON_COPY_OR_BOOL_TPL.interpolate(&inter_vars);
 				}
-				if element_type.is_element_data_type() {
-					let input_array = method_input_array(vector_class.clone()).gen_rust(_opencv_version);
-					let output_array = method_output_array(vector_class.clone()).gen_rust(_opencv_version);
-					let input_output_array = method_input_output_array(vector_class).gen_rust(_opencv_version);
-					inter_vars.extend([
-						("input_array_impl", input_array.into()),
-						("output_array_impl", output_array.into()),
-						("input_output_array_impl", input_output_array.into()),
-					]);
-					impls += &INPUT_OUTPUT_ARRAY_TPL.interpolate(&inter_vars);
+				if element_type.is_element_data_type() || element_is_bool {
+					let input_array = method_input_array(vector_class.clone()).gen_rust(opencv_version);
+					inter_vars.insert("input_array_impl", input_array.into());
+					impls += &INPUT_ARRAY_TPL.interpolate(&inter_vars);
+					if !element_is_bool {
+						let output_array = method_output_array(vector_class.clone()).gen_rust(opencv_version);
+						let input_output_array = method_input_output_array(vector_class).gen_rust(opencv_version);
+						inter_vars.extend([
+							("output_array_impl", output_array.into()),
+							("input_output_array_impl", input_output_array.into()),
+						]);
+						impls += &OUTPUT_ARRAY_TPL.interpolate(&inter_vars);
+					}
 				}
 			}
 		}
@@ -229,10 +236,12 @@ fn extern_functions<'tu, 'ge>(vec: &Vector<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
 			out.push(method_data_mut(vector_class.clone(), element_type.clone()));
 			out.push(method_from_slice(vec_type_ref, element_type.clone()));
 		}
-		if element_type.is_element_data_type() {
+		if element_type.is_element_data_type() || element_is_bool {
 			out.push(method_input_array(vector_class.clone()));
-			out.push(method_output_array(vector_class.clone()));
-			out.push(method_input_output_array(vector_class));
+			if !element_is_bool {
+				out.push(method_output_array(vector_class.clone()));
+				out.push(method_input_output_array(vector_class));
+			}
 		}
 	}
 	out
@@ -542,7 +551,11 @@ fn method_input_array<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge>
 		FuncRustBody::Auto,
 		TypeRefDesc::cv_input_array()
 			.with_inherent_constness(Constness::Const)
-			.with_type_hint(TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided)),
+			.with_type_hint(TypeRefTypeHint::BoxedAsRef(
+				Constness::Mut,
+				ARG_OVERRIDE_SELF,
+				Lifetime::Elided,
+			)),
 	))
 }
 
@@ -558,7 +571,11 @@ fn method_output_array<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge
 		FuncRustBody::Auto,
 		TypeRefDesc::cv_output_array()
 			.with_inherent_constness(Constness::Mut)
-			.with_type_hint(TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided)),
+			.with_type_hint(TypeRefTypeHint::BoxedAsRef(
+				Constness::Mut,
+				ARG_OVERRIDE_SELF,
+				Lifetime::Elided,
+			)),
 	))
 }
 
@@ -574,6 +591,10 @@ fn method_input_output_array<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'t
 		FuncRustBody::Auto,
 		TypeRefDesc::cv_input_output_array()
 			.with_inherent_constness(Constness::Mut)
-			.with_type_hint(TypeRefTypeHint::BoxedAsRef(ARG_OVERRIDE_SELF, Lifetime::Elided)),
+			.with_type_hint(TypeRefTypeHint::BoxedAsRef(
+				Constness::Mut,
+				ARG_OVERRIDE_SELF,
+				Lifetime::Elided,
+			)),
 	))
 }

@@ -217,19 +217,15 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		let mut call_args = Vec::with_capacity(args.len() + 1);
 		let mut forward_args = Vec::with_capacity(args.len());
 		let mut post_success_call_args = Vec::with_capacity(args.len());
-		let boxed_ref_arg = if let Some((name, lt)) = return_type_ref.type_hint().as_boxed_as_ref() {
-			Some((name, lt))
-		} else {
-			None
-		};
+		let boxed_ref_arg = return_type_ref.type_hint().as_boxed_as_ref();
 		if let Some(cls) = as_instance_method {
 			let constness = self.constness();
 			let cls_type_ref = cls.type_ref().with_inherent_constness(constness);
 			let render_lane = cls_type_ref.render_lane();
 			let render_lane = render_lane.to_dyn();
 			let lt = boxed_ref_arg
-				.filter(|(boxed_arg_name, _)| *boxed_arg_name == ARG_OVERRIDE_SELF)
-				.map_or(Lifetime::Elided, |(_, lt)| lt);
+				.filter(|(_, boxed_arg_name, _)| *boxed_arg_name == ARG_OVERRIDE_SELF)
+				.map_or(Lifetime::Elided, |(_, _, lt)| lt);
 			decl_args.push(render_lane.rust_self_func_decl(lt));
 			call_args.push(render_lane.rust_arg_func_call("self"));
 		}
@@ -253,8 +249,8 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 				}
 				if !arg_type_ref.type_hint().as_slice_len().is_some() {
 					let lt = boxed_ref_arg
-						.filter(|(boxed_arg_name, _)| *boxed_arg_name == name)
-						.map_or(Lifetime::Elided, |(_, lt)| lt);
+						.filter(|(_, boxed_arg_name, _)| *boxed_arg_name == name)
+						.map_or(Lifetime::Elided, |(_, _, lt)| lt);
 					decl_args.push(render_lane.rust_arg_func_decl(name, lt).into());
 				}
 				pre_post_arg_handle(
@@ -306,7 +302,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 			"pub "
 		};
 		let return_lifetime = match boxed_ref_arg {
-			Some((_, lifetime)) => lifetime,
+			Some((_, _, lifetime)) => lifetime,
 			None if matches!(kind.as_ref(), FuncKind::Function | FuncKind::StaticMethod(_)) => Lifetime::statik(),
 			None => Lifetime::Elided,
 		};
@@ -811,7 +807,7 @@ where
 
 fn rust_generic_decl<'f>(f: &'f Func, return_type_ref: &TypeRef) -> Cow<'f, str> {
 	let mut decls = vec![];
-	if let Some((_, lt)) = return_type_ref.type_hint().as_boxed_as_ref() {
+	if let Some((_, _, lt)) = return_type_ref.type_hint().as_boxed_as_ref() {
 		decls.push(lt.to_string());
 	}
 	match f {
@@ -900,7 +896,7 @@ fn companion_func_default_args<'tu, 'ge>(f: &Func<'tu, 'ge>) -> Option<Func<'tu,
 /// Companion function returning `BoxRefMut` for a corresponding function returning `BoxRef`
 fn companion_func_boxref_mut<'tu, 'ge>(f: &Func<'tu, 'ge>) -> Option<Func<'tu, 'ge>> {
 	let ret_type_ref = f.return_type_ref();
-	if let Some((borrow_arg_name, _)) = ret_type_ref.type_hint().as_boxed_as_ref() {
+	if let Some((Constness::Mut, borrow_arg_name, _)) = ret_type_ref.type_hint().as_boxed_as_ref() {
 		let mut desc = f.to_desc(InheritConfig::empty());
 		let desc_mut = Rc::make_mut(&mut desc);
 		let mut cloned_args = None;

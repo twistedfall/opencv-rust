@@ -27,7 +27,7 @@ pub enum TypeRefTypeHint {
 	AddArrayLength(usize),
 	/// Return boxed class as a wrapped reference to maintain lifetime connection to the source boxed object
 	/// (cpp_name(Declaration), lifetime)
-	BoxedAsRef(&'static str, Lifetime),
+	BoxedAsRef(Constness, &'static str, Lifetime),
 	/// Make sure to pass TraitClass as a concrete type, not as a trait object, it's used for property setters as we don't want
 	/// to be able to use `BoxedRef` there.
 	TraitClassConcrete,
@@ -52,7 +52,7 @@ impl TypeRefTypeHint {
 			| TypeRefTypeHint::CharPtrSingleChar
 			| TypeRefTypeHint::PrimitivePtrAsRaw
 			| TypeRefTypeHint::AddArrayLength(_)
-			| TypeRefTypeHint::BoxedAsRef(_, _)
+			| TypeRefTypeHint::BoxedAsRef(_, _, _)
 			| TypeRefTypeHint::TraitClassConcrete => Nullability::NotNullable,
 		}
 	}
@@ -65,9 +65,9 @@ impl TypeRefTypeHint {
 		}
 	}
 
-	pub fn as_boxed_as_ref(&self) -> Option<(&'static str, Lifetime)> {
-		if let TypeRefTypeHint::BoxedAsRef(cpp_name, lifetime) = self {
-			Some((cpp_name, *lifetime))
+	pub fn as_boxed_as_ref(&self) -> Option<(Constness, &'static str, Lifetime)> {
+		if let TypeRefTypeHint::BoxedAsRef(constness, cpp_name, lifetime) = self {
+			Some((*constness, cpp_name, *lifetime))
 		} else {
 			None
 		}

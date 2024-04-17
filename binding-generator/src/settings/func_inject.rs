@@ -3,8 +3,11 @@ use std::collections::HashMap;
 use once_cell::sync::Lazy;
 
 use crate::class::ClassDesc;
+use crate::field::{Field, FieldDesc};
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
-use crate::type_ref::{Constness, TypeRefDesc};
+use crate::type_ref::Constness::{Const, Mut};
+use crate::type_ref::{TypeRef, TypeRefDesc, TypeRefTypeHint};
+use crate::writer::rust_native::type_ref::Lifetime;
 use crate::Func;
 
 pub type FuncFactory = fn() -> Func<'static, 'static>;
@@ -17,7 +20,7 @@ pub static FUNC_INJECT: Lazy<HashMap<&str, Vec<FuncFactory>>> = Lazy::new(|| {
 			(|| {
 				Func::new_desc(FuncDesc::new(
 					FuncKind::InstanceMethod(ClassDesc::cv_matconstiterator()),
-					Constness::Const,
+					Const,
 					ReturnKind::InfallibleNaked,
 					"type",
 					"core",
@@ -30,7 +33,7 @@ pub static FUNC_INJECT: Lazy<HashMap<&str, Vec<FuncFactory>>> = Lazy::new(|| {
 			|| {
 				Func::new_desc(FuncDesc::new(
 					FuncKind::InstanceMethod(ClassDesc::cv_mat()),
-					Constness::Const,
+					Const,
 					ReturnKind::Fallible,
 					"size",
 					"core",
@@ -43,7 +46,7 @@ pub static FUNC_INJECT: Lazy<HashMap<&str, Vec<FuncFactory>>> = Lazy::new(|| {
 			|| {
 				Func::new_desc(FuncDesc::new(
 					FuncKind::InstanceMethod(ClassDesc::cv_umat()),
-					Constness::Const,
+					Const,
 					ReturnKind::Fallible,
 					"size",
 					"core",
@@ -51,6 +54,30 @@ pub static FUNC_INJECT: Lazy<HashMap<&str, Vec<FuncFactory>>> = Lazy::new(|| {
 					FuncCppBody::Auto,
 					FuncRustBody::Auto,
 					TypeRefDesc::cv_size(),
+				))
+			},
+			|| {
+				Func::new_desc(FuncDesc::new(
+					FuncKind::Constructor(ClassDesc::cv_input_array()),
+					Mut,
+					ReturnKind::Fallible,
+					"_InputArray",
+					"core",
+					vec![
+						Field::new_desc(FieldDesc::new(
+							"vec",
+							TypeRef::new_array(TypeRefDesc::uchar().with_inherent_constness(Const), None),
+						)),
+						Field::new_desc(FieldDesc::new(
+							"n",
+							TypeRefDesc::int().with_type_hint(TypeRefTypeHint::LenForSlice(vec!["vec".to_string()], 1)),
+						)),
+					],
+					FuncCppBody::Auto,
+					FuncRustBody::Auto,
+					TypeRefDesc::cv_input_array()
+						.with_inherent_constness(Const)
+						.with_type_hint(TypeRefTypeHint::BoxedAsRef(Const, "vec", Lifetime::Elided)),
 				))
 			},
 		],

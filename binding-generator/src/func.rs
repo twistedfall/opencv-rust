@@ -445,7 +445,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 				if let Some(return_hint) = settings::RETURN_OVERRIDE.get(&self.func_id()) {
 					out.set_type_hint(return_hint.clone());
 					// if we're returning a BoxedRef then assign its mutability to the mutability of the borrowed argument
-					if let Some((borrow_arg_name, _)) = return_hint.as_boxed_as_ref() {
+					if let Some((_, borrow_arg_name, _)) = return_hint.as_boxed_as_ref() {
 						let borrow_arg_constness = if borrow_arg_name == ARG_OVERRIDE_SELF {
 							self.constness()
 						} else {
@@ -712,7 +712,7 @@ impl<'me> NameDebug<'me> for &'me Func<'_, '_> {
 				.iter()
 				.map(|a| format!("{:?}", a.type_ref().render_lane()))
 				.join(", ");
-			format!("// {name}({render_lanes}) {func_id:?} {location}", func_id = self.func_id())
+			format!("// {name}({render_lanes}) {func_id} {location}", func_id = self.func_id())
 		} else {
 			"".to_string()
 		}

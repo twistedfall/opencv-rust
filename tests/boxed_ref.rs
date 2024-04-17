@@ -6,7 +6,7 @@ use opencv::Result;
 
 #[test]
 fn boxed_ref_from_roi() -> Result<()> {
-	let mut mat = Mat::from_slice(&[1, 2, 3, 4])?;
+	let mut mat = Mat::from_slice(&[1, 2, 3, 4])?.try_clone()?;
 
 	// const
 	{
@@ -37,7 +37,7 @@ fn boxed_ref_from_roi() -> Result<()> {
 
 #[test]
 fn boxed_ref_clone_pointee() -> Result<()> {
-	let mut mat = Mat::from_slice(&[1, 2, 3, 4])?;
+	let mut mat = Mat::from_slice(&[1, 2, 3, 4])?.try_clone()?;
 
 	let boxed_ref: BoxedRefMut<Mat> = mat.roi_mut(Rect::new(1, 0, 2, 1))?;
 	let mut mat2: Mat = boxed_ref.clone_pointee();
@@ -50,7 +50,7 @@ fn boxed_ref_clone_pointee() -> Result<()> {
 
 #[test]
 fn boxed_ref_pass() -> Result<()> {
-	let mat = Mat::from_slice(&[1, 2, 3, 4])?;
+	let mat = Mat::from_slice(&[1, 2, 3, 4])?.try_clone()?;
 
 	// pass as InputArray
 	{
@@ -94,7 +94,7 @@ fn boxed_ref_pass() -> Result<()> {
 	// pass as mut Mat
 	{
 		let mat2 = Mat::from_slice(&[4, 3, 2, 1])?;
-		let mut out = Mat::from_slice(&[0, 0, 0, 0])?;
+		let mut out = Mat::from_slice(&[0, 0, 0, 0])?.try_clone()?;
 		let mut boxed_ref: BoxedRefMut<Mat> = out.roi_mut(Rect::new(0, 0, 4, 1))?;
 		core::min_mat_to(&mat, &mat2, &mut boxed_ref)?;
 		assert_eq!(&[1, 2, 2, 1], out.data_typed::<i32>()?);

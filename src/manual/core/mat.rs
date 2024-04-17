@@ -6,8 +6,8 @@ use std::{fmt, ptr, slice};
 
 pub use mat_::*;
 
-use crate::boxed_ref::BoxedRefMut;
-use crate::core::{MatConstIterator, MatExpr, MatSize, Point, Rect, Scalar, UMat};
+use crate::boxed_ref::{BoxedRef, BoxedRefMut};
+use crate::core::{MatConstIterator, MatExpr, MatSize, Point, Rect, Scalar, Size, UMat, Vector};
 use crate::prelude::*;
 use crate::{core, input_output_array, Error, Result};
 
@@ -98,6 +98,24 @@ fn match_is_continuous(mat: &(impl MatTraitConst + ?Sized)) -> Result<()> {
 	}
 }
 
+#[inline]
+fn match_length(sizes: &[i32], len: usize) -> Result<()> {
+	let data_len = i32::try_from(len)?;
+	if sizes.iter().product::<i32>() != data_len {
+		let msg = if sizes.len() == 2 {
+			format!(
+				"The length of the slice: {data_len} must match the passed row count: {rows} and column count: {cols} exactly",
+				rows = sizes[0],
+				cols = sizes[1],
+			)
+		} else {
+			format!("The length of the slice: {data_len} must match the passed dimensions: {sizes:?} exactly")
+		};
+		return Err(Error::new(core::StsUnmatchedSizes, msg));
+	}
+	Ok(())
+}
+
 #[inline(always)]
 fn idx_to_row_col(mat: &(impl MatTraitConst + ?Sized), i0: i32) -> Result<(i32, i32)> {
 	Ok(if mat.is_continuous() {
@@ -137,13 +155,21 @@ impl Mat {
 		Ok(out)
 	}
 
-	/// Create a new `Mat` by copying the data from a single-dimensional slice
+	/// Create a new `Mat` from a single-dimensional slice
 	#[inline]
-	pub fn from_slice<T: DataType>(s: &[T]) -> Result<Self> {
-		Self::from_slice_2d(&[s])
+	pub fn from_slice<T: DataType>(s: &[T]) -> Result<BoxedRef<Self>> {
+		Self::new_rows_cols_with_data(1, i32::try_from(s.len())?, s)
 	}
 
-	/// Create a new `Mat` by copying the data from a 2-dimensional slice (slice of slices)
+	/// Create a new `Mat` from a mutable single-dimensional slice
+	#[inline]
+	pub fn from_slice_mut<T: DataType>(s: &mut [T]) -> Result<BoxedRefMut<Self>> {
+		Self::new_rows_cols_with_data_mut(1, i32::try_from(s.len())?, s)
+	}
+
+	/// Create a new `Mat` by copying the data from a slice of slices
+	///
+	/// Every subslice must have the same length, otherwise an error is returned.
 	pub fn from_slice_2d<T: DataType>(s: &[impl AsRef<[T]>]) -> Result<Self> {
 		let col_count = if let Some(first_row) = s.first() {
 			col_count_i32(first_row.as_ref().len())?
@@ -167,8 +193,8 @@ impl Mat {
 						core::StsUnmatchedSizes,
 						format!(
 							"Unexpected number of items: {} in a row index: {row_n}, expected: {}",
+							src.len(),
 							trg.len(),
-							src.len()
 						),
 					));
 				}
@@ -178,27 +204,63 @@ impl Mat {
 		Ok(out)
 	}
 
-	/// Create a new `Mat` by copying the data from a single-dimensional slice with custom shape
+	/// Create a new `Mat` from a single-dimensional slice with custom shape
 	#[inline]
-	pub fn from_slice_rows_cols<T: DataType>(s: &[T], row_count: usize, col_count: usize) -> Result<Self> {
-		if row_count * col_count != s.len() {
-			return Err(Error::new(
-				core::StsUnmatchedSizes,
-				format!(
-					"The length of the slice: {} must match the passed row count: {row_count} and column count: {col_count} exactly",
-					s.len()
-				),
-			));
+	pub fn new_rows_cols_with_data<T: DataType>(rows: i32, cols: i32, data: &[T]) -> Result<BoxedRef<Self>> {
+		match_length(&[rows, cols], data.len())?;
+		let m = unsafe {
+			Self::new_rows_cols_with_data_unsafe_def(rows, cols, T::opencv_type(), data.as_ptr().cast::<c_void>().cast_mut())
+		}?;
+		Ok(<BoxedRef<Mat>>::from(m))
+	}
+
+	#[inline]
+	pub fn new_rows_cols_with_data_mut<T: DataType>(rows: i32, cols: i32, data: &mut [T]) -> Result<BoxedRefMut<Self>> {
+		match_length(&[rows, cols], data.len())?;
+		let m =
+			unsafe { Self::new_rows_cols_with_data_unsafe_def(rows, cols, T::opencv_type(), data.as_mut_ptr().cast::<c_void>()) }?;
+		Ok(<BoxedRefMut<Mat>>::from(m))
+	}
+
+	#[inline]
+	pub fn new_size_with_data<T: DataType>(size: Size, data: &[T]) -> Result<BoxedRef<Self>> {
+		match_length(&[size.width, size.height], data.len())?;
+		let m = unsafe { Self::new_size_with_data_unsafe_def(size, T::opencv_type(), data.as_ptr().cast::<c_void>().cast_mut()) }?;
+		Ok(<BoxedRef<Mat>>::from(m))
+	}
+
+	#[inline]
+	pub fn new_size_with_data_mut<T: DataType>(size: Size, data: &mut [T]) -> Result<BoxedRefMut<Self>> {
+		match_length(&[size.width, size.height], data.len())?;
+		let m = unsafe { Self::new_size_with_data_unsafe_def(size, T::opencv_type(), data.as_mut_ptr().cast::<c_void>()) }?;
+		Ok(<BoxedRefMut<Mat>>::from(m))
+	}
+
+	#[inline]
+	pub fn new_nd_with_data<'data, T: DataType>(sizes: &[i32], data: &'data [T]) -> Result<BoxedRef<'data, Self>> {
+		match_length(sizes, data.len())?;
+		let m = unsafe { Self::new_nd_with_data_unsafe_def(sizes, T::opencv_type(), data.as_ptr().cast::<c_void>().cast_mut()) }?;
+		Ok(<BoxedRef<Mat>>::from(m))
+	}
+
+	#[inline]
+	pub fn new_nd_with_data_mut<'data, T: DataType>(sizes: &[i32], data: &'data mut [T]) -> Result<BoxedRefMut<'data, Self>> {
+		match_length(sizes, data.len())?;
+		let m = unsafe { Self::new_nd_with_data_unsafe_def(sizes, T::opencv_type(), data.as_mut_ptr().cast::<c_void>()) }?;
+		Ok(<BoxedRefMut<Mat>>::from(m))
+	}
+
+	/// Returns 2 mutable ROIs into a single `Mat` as long as they do not intersect
+	pub fn roi_2_mut<MAT: MatTrait>(m: &mut MAT, roi1: Rect, roi2: Rect) -> Result<(BoxedRefMut<Mat>, BoxedRefMut<Mat>)> {
+		if (roi1 & roi2).empty() {
+			// safe because we made sure that the interest areas do not intersect
+			let m2 = unsafe { (m as *mut MAT).as_mut().expect("Can't fail") };
+			let out1 = Mat::roi_mut(m, roi1)?;
+			let out2 = Mat::roi_mut(m2, roi2)?;
+			Ok((out1, out2))
+		} else {
+			Err(Error::new(core::StsBadArg, "ROIs must not intersect"))
 		}
-		unsafe {
-			Self::new_rows_cols_with_data_def(
-				row_count_i32(row_count)?,
-				col_count_i32(col_count)?,
-				T::opencv_type(),
-				s.as_ptr().cast::<c_void>().cast_mut(),
-			)
-		}?
-		.try_clone()
 	}
 }
 
@@ -596,26 +658,12 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 	}
 }
 
-impl Mat {
-	/// Returns 2 mutable ROIs into a single `Mat` as long as they do not intersect
-	pub fn roi_2_mut<MAT: MatTrait>(m: &mut MAT, roi1: Rect, roi2: Rect) -> Result<(BoxedRefMut<Mat>, BoxedRefMut<Mat>)> {
-		if (roi1 & roi2).empty() {
-			// safe because we made sure that the interest areas do not intersect
-			let m2 = unsafe { (m as *mut MAT).as_mut().expect("Can't fail") };
-			let out1 = Mat::roi_mut(m, roi1)?;
-			let out2 = Mat::roi_mut(m2, roi2)?;
-			Ok((out1, out2))
-		} else {
-			Err(Error::new(core::StsBadArg, "ROIs must not intersect"))
-		}
-	}
-}
-
 impl<T: MatTraitConst + ?Sized> MatTraitConstManual for T {}
 
 impl<T: MatTrait + ?Sized> MatTraitManual for T {}
 
 input_output_array! { Mat, from_mat, from_mat_mut }
+input_output_array! { Vector<Mat>, from_mat_vec, from_mat_vec_mut }
 
 impl fmt::Debug for Mat {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -644,6 +692,7 @@ impl fmt::Debug for Mat {
 }
 
 input_output_array! { UMat, from_umat, from_umat_mut }
+input_output_array! { Vector<UMat>, from_umat_vec, from_umat_vec_mut }
 
 impl Deref for MatSize {
 	type Target = [i32];
