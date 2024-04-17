@@ -28,14 +28,18 @@
 
    That often means that Windows can't find the OpenCV or Clang library dll. Be sure to set up `PATH` environment
    variable correctly or copy the dll next to the binary you're trying to run (e.g. "C:\tools\opencv\build\x64\vc16\bin" and
-5. "C:\Program Files\LLVM\bin"). Check [that](https://github.com/twistedfall/opencv-rust/issues/118#issuecomment-619608278) guide
+   "C:\Program Files\LLVM\bin"). Check [that](https://github.com/twistedfall/opencv-rust/issues/118#issuecomment-619608278) guide
    too.
 
 5. On Windows with VCPKG you're getting a lot of linking errors in multiple files like in
-   [this issue](https://github.com/twistedfall/opencv-rust/issues/161).
+   [this issue](https://github.com/twistedfall/opencv-rust/issues/340).
 
-   Unless you're doing a very specific build, you want to have environment variable `VCPKGRS_DYNAMIC` set to
-   "1".
+   Make sure to add missing linked libs to `OPENCV_LINK_LIBS` environment variable prepended by `+`, e.g.:
+   ```
+   OPENCV_LINK_LIBS="+user32,gdi32,comdlg32"
+   ```
+
+   Alternatively, switch to the dynamic linking mode by having environment variable `VCPKGRS_DYNAMIC` set to "1".
 
 6. On Windows with OpenCV 4.6.0 you're getting linking errors related to `img_hash` module like in
    [this issue](https://github.com/twistedfall/opencv-rust/issues/360).
