@@ -3577,6 +3577,21 @@ mod core_types {
 	}
 	vector_non_copy_or_bool! { clone bool }
 	
+	impl ToInputArray for core::Vector<bool> {
+		#[inline]
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::std_vectorLboolG_inputArray_const(self.as_raw_VectorOfbool(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+	}
+	
+	input_array_ref_forward! { core::Vector<bool> }
+	
 	pub type VectorOfc_char = core::Vector<c_char>;
 	
 	impl core::Vector<c_char> {

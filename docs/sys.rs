@@ -2092,6 +2092,7 @@ mod core_sys {
 		pub fn cv__InputArray_isVector_const(instance: *const c_void, ocvrs_return: *mut Result<bool>);
 		pub fn cv__InputArray_isGpuMat_const(instance: *const c_void, ocvrs_return: *mut Result<bool>);
 		pub fn cv__InputArray_isGpuMatVector_const(instance: *const c_void, ocvrs_return: *mut Result<bool>);
+		pub fn cv__InputArray__InputArray_const_unsigned_charX_int(vec: *const u8, n: i32, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv__InputArray_delete(instance: *mut c_void);
 		pub fn cv__InputOutputArray__InputOutputArray(ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv__InputOutputArray__InputOutputArray_int_voidX(_flags: i32, _obj: *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
@@ -2485,6 +2486,12 @@ mod core_sys {
 		pub fn cv_detail_CheckContext_propP1_str_const(instance: *const c_void) -> *mut c_void;
 		pub fn cv_detail_CheckContext_propP2_str_const(instance: *const c_void) -> *mut c_void;
 		pub fn cv_detail_CheckContext_delete(instance: *mut c_void);
+		pub fn cv_float16_t_float16_t(ocvrs_return: *mut Result<core::float16_t>);
+		pub fn cv_float16_t_float16_t_float(x: f32, ocvrs_return: *mut Result<core::float16_t>);
+		pub fn cv_float16_t_operator_float_const(instance: *const core::float16_t, ocvrs_return: *mut Result<f32>);
+		pub fn cv_float16_t_fromBits_unsigned_short(b: u16, ocvrs_return: *mut Result<core::float16_t>);
+		pub fn cv_float16_t_zero(ocvrs_return: *mut Result<core::float16_t>);
+		pub fn cv_float16_t_bits_const(instance: *const core::float16_t, ocvrs_return: *mut Result<u16>);
 		pub fn cv_instr_NodeData_NodeData_const_charX_const_charX_int_voidX_bool_TYPE_IMPL(fun_name: *const c_char, file_name: *const c_char, line_num: i32, ret_address: *mut c_void, always_expand: bool, instr_type: core::TYPE, impl_type: core::IMPL, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_instr_NodeData_NodeData(ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_instr_NodeData_NodeData_NodeDataR(ref_: *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
@@ -3886,6 +3893,7 @@ mod core_sys {
 		pub fn std_vectorLboolG_insert_size_t_const_bool(instance: *mut c_void, index: size_t, val: bool);
 		pub fn std_vectorLboolG_get_const_size_t(instance: *const c_void, index: size_t, ocvrs_return: *mut bool);
 		pub fn std_vectorLboolG_set_size_t_const_bool(instance: *mut c_void, index: size_t, val: bool);
+		pub fn std_vectorLboolG_inputArray_const(instance: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn std_vectorLfloatG_new_const() -> *mut c_void;
 		pub fn std_vectorLfloatG_delete(instance: *mut c_void);
 		pub fn std_vectorLfloatG_len_const(instance: *const c_void) -> size_t;

@@ -1,3 +1,14 @@
+* 0.91.0
+  * Multiple improvements for `InputArray`/`OutputArray`/`InputOutputArray` handling:
+    * It's now possible to use the following types as `InputArray`: `&[u8]`/`[u8; N]`, `Vector<bool>` `Vector<GpuMat>` and the
+      following as `InputArray`, `OutputArray` or `InputOutputArray`: `Vector<Mat>` and `Vector<UMat>`.
+    * `InputArray`/`OutputArray`/`InputOutputArray` constructors now return `BoxedRef`/`BoxedRefMut` to express the borrowing
+      semantics.
+    * Some constructors have received `_mut` suffix where appropriate.
+  * Unsafe `Mat` constructors (`*_with_data`) have received `_unsafe` suffix and safe versions have been introduced that return
+    `BoxedRef`/`BoxedRefMut`
+  * `MatSize::new` is now unsafe and accepts a pointer.
+
 * 0.90.0
   * Automatically generate default constructors for classes where posssible.
   * Backwards-incompatible changes:
