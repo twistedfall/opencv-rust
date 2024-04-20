@@ -311,7 +311,7 @@ fn collect_generated_bindings(modules: &[String], target_module_dir: &Path, manu
 }
 
 fn build_job_server() -> Result<Jobserver> {
-	unsafe { jobslot::Client::from_env() }
+	unsafe { jobserver::Client::from_env() }
 		.and_then(|client| {
 			let own_token_released = client.release_raw().is_ok();
 			let available_jobs = client.available().unwrap_or(0);
@@ -339,7 +339,7 @@ fn build_job_server() -> Result<Jobserver> {
 				.unwrap_or(2)
 				.max(1);
 			eprintln!("=== Creating a new job server with num_jobs: {num_jobs}");
-			jobslot::Client::new(num_jobs).ok().map(|client| Jobserver {
+			jobserver::Client::new(num_jobs).ok().map(|client| Jobserver {
 				client,
 				reacquire_token_on_drop: false,
 			})
@@ -348,7 +348,7 @@ fn build_job_server() -> Result<Jobserver> {
 }
 
 pub struct Jobserver {
-	client: jobslot::Client,
+	client: jobserver::Client,
 	reacquire_token_on_drop: bool,
 }
 
@@ -361,7 +361,7 @@ impl Drop for Jobserver {
 }
 
 impl Deref for Jobserver {
-	type Target = jobslot::Client;
+	type Target = jobserver::Client;
 
 	fn deref(&self) -> &Self::Target {
 		&self.client
