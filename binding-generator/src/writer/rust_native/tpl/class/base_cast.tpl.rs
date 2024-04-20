@@ -1,3 +1,3 @@
-boxed_cast_base! { {{rust_local}}, {{base_rust_full}}, {{extern_cast_to_base}} }
+boxed_cast_base! { {{rust_local}}, {{base_rust_full_mut}}, {{extern_cast_to_base}} }
 
 

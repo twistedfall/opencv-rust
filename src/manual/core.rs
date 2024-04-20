@@ -1,6 +1,5 @@
 pub use affine3::*;
 pub use data_type::*;
-pub use gpumat::*;
 pub use input_output_array::*;
 pub use mat::*;
 pub use mat_ops::*;

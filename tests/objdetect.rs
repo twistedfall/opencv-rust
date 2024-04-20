@@ -9,7 +9,9 @@ fn qr_code() -> Result<()> {
 	let qr_path = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/qr.png");
 
 	// workaround for the missing (and not runtime detectable) QUIRC support in repository OpenCV in Ubuntu 20.04
-	let objdetect_missing_quirc = cfg!(target_os = "linux") && core::get_build_information()?.contains("/opencv-4.5.4+dfsg/");
+	let build_info = core::get_build_information()?;
+	let objdetect_missing_quirc =
+		cfg!(target_os = "linux") && (build_info.contains("/opencv-4.2.0+dfsg/") || build_info.contains("/opencv-4.5.4+dfsg/"));
 
 	{
 		#[allow(unused_mut)]

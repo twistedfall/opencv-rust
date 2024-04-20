@@ -6,13 +6,13 @@ use once_cell::sync::Lazy;
 use crate::class::ClassDesc;
 use crate::field::{Field, FieldDesc};
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
-use crate::settings::ArgOverride;
+use crate::settings::ARG_OVERRIDE_SELF;
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle, TypeRefDesc, TypeRefTypeHint};
 use crate::writer::rust_native::RustStringExt;
-use crate::{settings, Class, CompiledInterpolation, Func, GeneratorEnv, IteratorExt, StrExt, TypeRef, Vector};
+use crate::{settings, Class, CompiledInterpolation, Func, IteratorExt, StrExt, TypeRef, Vector};
 
 use super::element::RustElement;
-use super::type_ref::TypeRefExt;
+use super::type_ref::{Lifetime, TypeRefExt};
 use super::RustNativeGeneratedElement;
 
 impl RustElement for Vector<'_, '_> {
@@ -34,9 +34,9 @@ impl RustElement for Vector<'_, '_> {
 
 	fn rust_leafname(&self, fish_style: FishStyle) -> Cow<str> {
 		let mut inner_typ = self.element_type();
-		if let Some(inner) = inner_typ.as_pointer() {
+		if let Some(inner) = inner_typ.kind().as_pointer() {
 			// fixme, implement references properly, use MatRef/Mut type
-			inner_typ = inner;
+			inner_typ = inner.into_owned();
 		}
 		format!(
 			"Vector{fish}<{typ}>",
@@ -46,7 +46,7 @@ impl RustElement for Vector<'_, '_> {
 		.into()
 	}
 
-	fn rendered_doc_comment_with_prefix(&self, _prefix: &str, _opencv_version: &str) -> String {
+	fn rendered_doc_comment(&self, _comment_marker: &str, _opencv_version: &str) -> String {
 		"".to_string()
 	}
 }
@@ -56,7 +56,7 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		format!("{}-{}", self.rust_element_module(), self.rust_localalias())
 	}
 
-	fn gen_rust(&self, _opencv_version: &str, gen_env: &GeneratorEnv) -> String {
+	fn gen_rust(&self, opencv_version: &str) -> String {
 		static RUST_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/vector/rust.tpl.rs").compile_interpolation());
 
 		static EXTERN_TPL: Lazy<CompiledInterpolation> =
@@ -68,14 +68,25 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		static ADD_NON_COPY_OR_BOOL_TPL: Lazy<CompiledInterpolation> =
 			Lazy::new(|| include_str!("tpl/vector/rust_non_copy_or_bool.tpl.rs").compile_interpolation());
 
-		static INPUT_OUTPUT_ARRAY_TPL: Lazy<CompiledInterpolation> =
-			Lazy::new(|| include_str!("tpl/vector/rust_input_output_array.tpl.rs").compile_interpolation());
+		static INPUT_ARRAY_TPL: Lazy<CompiledInterpolation> =
+			Lazy::new(|| include_str!("tpl/vector/rust_input_array.tpl.rs").compile_interpolation());
+
+		static OUTPUT_ARRAY_TPL: Lazy<CompiledInterpolation> =
+			Lazy::new(|| include_str!("tpl/vector/rust_output_array.tpl.rs").compile_interpolation());
+
+		let vec_type_ref = self.type_ref();
+		if vec_type_ref.constness().is_const() {
+			// todo we should generate smth like VectorRef in this case
+			return "".to_string();
+		}
 
 		let rust_localalias = self.rust_localalias();
 		let element_type = self.element_type();
 
 		let mut inter_vars = HashMap::from([
 			("rust_localalias", rust_localalias.clone()),
+			("rust_as_raw_const", vec_type_ref.rust_as_raw_name(Constness::Const).into()),
+			("rust_as_raw_mut", vec_type_ref.rust_as_raw_name(Constness::Mut).into()),
 			("rust_full", self.rust_name(NameStyle::ref_())),
 			("inner_rust_full", element_type.rust_name(NameStyle::ref_())),
 		]);
@@ -84,13 +95,9 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		// Generate only the basic type alias and as_raw* methods for char, the rest will be handled by the generated Vector<u8> and
 		// Vector<i8> to handle the dualistic nature of C++ char on different platforms, see also `TypeRef::generated_types()`
 		// in binding-generator/src/type_ref.rs
-		if !element_type.base().is_char() {
-			let vec_type_ref = self.type_ref();
-
-			if vec_type_ref.constness().is_const() {
-				// todo we should generate smth like VectorRef in this case
-				return "".to_string();
-			}
+		if !element_type.base().kind().is_char() {
+			let element_kind = element_type.kind();
+			let element_is_bool = element_kind.is_bool();
 			let vector_class = vector_class(&vec_type_ref);
 
 			let extern_new = method_new(vector_class.clone(), vec_type_ref.clone()).identifier();
@@ -101,7 +108,7 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 			let extern_shrink_to_fit = method_shrink_to_fit(vector_class.clone()).identifier();
 			let extern_reserve = method_reserve(vector_class.clone()).identifier();
 			let extern_remove = method_remove(vector_class.clone()).identifier();
-			let extern_swap = method_swap(vector_class.clone(), element_type.is_bool()).identifier();
+			let extern_swap = method_swap(vector_class.clone(), element_is_bool).identifier();
 			let extern_clear = method_clear(vector_class.clone()).identifier();
 			let extern_get = method_get(vector_class.clone(), element_type.clone()).identifier();
 			let extern_set = method_set(vector_class.clone(), element_type.clone()).identifier();
@@ -126,12 +133,11 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 			]);
 
 			if settings::PREVENT_VECTOR_TYPEDEF_GENERATION.contains(element_type.cpp_name(CppNameStyle::Reference).as_ref()) {
-				inter_vars.insert("extern", "".into());
-				inter_vars.insert("additional_methods", "".into());
+				inter_vars.extend([("extern", "".into()), ("additional_methods", "".into())]);
 			} else {
 				impls += &EXTERN_TPL.interpolate(&inter_vars);
 
-				if element_type.is_copy() && !element_type.is_bool() {
+				if element_kind.is_copy(element_type.type_hint()) && !element_is_bool {
 					let extern_clone = method_clone(vector_class.clone(), vec_type_ref.clone()).identifier();
 					let extern_data = method_data(vector_class.clone(), element_type.clone()).identifier();
 					let extern_data_mut = method_data_mut(vector_class.clone(), element_type.clone()).identifier();
@@ -146,7 +152,7 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 				} else {
 					inter_vars.insert(
 						"clone",
-						if element_type.is_clone() {
+						if element_kind.is_clone(element_type.type_hint()) {
 							"clone "
 						} else {
 							""
@@ -155,16 +161,19 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 					);
 					impls += &ADD_NON_COPY_OR_BOOL_TPL.interpolate(&inter_vars);
 				}
-				if element_type.is_element_data_type() {
-					let input_array = method_input_array(vector_class.clone()).gen_rust(_opencv_version, gen_env);
-					let output_array = method_output_array(vector_class.clone()).gen_rust(_opencv_version, gen_env);
-					let input_output_array = method_input_output_array(vector_class).gen_rust(_opencv_version, gen_env);
-					inter_vars.extend([
-						("input_array_impl", input_array.into()),
-						("output_array_impl", output_array.into()),
-						("input_output_array_impl", input_output_array.into()),
-					]);
-					impls += &INPUT_OUTPUT_ARRAY_TPL.interpolate(&inter_vars);
+				if element_type.is_element_data_type() || element_is_bool {
+					let input_array = method_input_array(vector_class.clone()).gen_rust(opencv_version);
+					inter_vars.insert("input_array_impl", input_array.into());
+					impls += &INPUT_ARRAY_TPL.interpolate(&inter_vars);
+					if !element_is_bool {
+						let output_array = method_output_array(vector_class.clone()).gen_rust(opencv_version);
+						let input_output_array = method_input_output_array(vector_class).gen_rust(opencv_version);
+						inter_vars.extend([
+							("output_array_impl", output_array.into()),
+							("input_output_array_impl", input_output_array.into()),
+						]);
+						impls += &OUTPUT_ARRAY_TPL.interpolate(&inter_vars);
+					}
 				}
 			}
 		}
@@ -173,36 +182,36 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 		RUST_TPL.interpolate(&inter_vars)
 	}
 
-	fn gen_rust_exports(&self, gen_env: &GeneratorEnv) -> String {
-		extern_functions(self)
-			.into_iter()
-			.map(|f| f.gen_rust_exports(gen_env))
-			.join("")
+	fn gen_rust_externs(&self) -> String {
+		if self.type_ref().constness().is_const() {
+			// todo we should generate smth like VectorRef in this case
+			return "".to_string();
+		}
+		extern_functions(self).iter().map(Func::gen_rust_externs).join("")
 	}
 
-	fn gen_cpp(&self, gen_env: &GeneratorEnv) -> String {
+	fn gen_cpp(&self) -> String {
 		static COMMON_TPL: Lazy<CompiledInterpolation> =
 			Lazy::new(|| include_str!("tpl/vector/cpp.tpl.cpp").compile_interpolation());
 
-		let vec_type_ref = self.type_ref();
-		if vec_type_ref.constness().is_const() {
+		if self.type_ref().constness().is_const() {
 			// todo we should generate smth like VectorRef in this case
 			return "".to_string();
 		}
 
 		COMMON_TPL.interpolate(&HashMap::from([(
 			"methods",
-			extern_functions(self).into_iter().map(|f| f.gen_cpp(gen_env)).join(""),
+			extern_functions(self).iter().map(Func::gen_cpp).join(""),
 		)]))
 	}
 }
 
-#[inline]
 fn extern_functions<'tu, 'ge>(vec: &Vector<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
 	let element_type = vec.element_type();
 	let mut out = Vec::with_capacity(7);
-	if !element_type.base().is_char() {
-		let element_is_bool = element_type.is_bool();
+	if !element_type.base().kind().is_char() {
+		let element_kind = element_type.kind();
+		let element_is_bool = element_kind.is_bool();
 		let vec_type_ref = vec.type_ref();
 		let vector_class = vector_class(&vec_type_ref);
 		out.extend([
@@ -221,16 +230,18 @@ fn extern_functions<'tu, 'ge>(vec: &Vector<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
 			method_get(vector_class.clone(), element_type.clone()),
 			method_set(vector_class.clone(), element_type.clone()),
 		]);
-		if element_type.is_copy() && !element_is_bool {
+		if element_kind.is_copy(element_type.type_hint()) && !element_is_bool {
 			out.push(method_clone(vector_class.clone(), vec_type_ref.clone()));
 			out.push(method_data(vector_class.clone(), element_type.clone()));
 			out.push(method_data_mut(vector_class.clone(), element_type.clone()));
 			out.push(method_from_slice(vec_type_ref, element_type.clone()));
 		}
-		if element_type.is_element_data_type() {
+		if element_type.is_element_data_type() || element_is_bool {
 			out.push(method_input_array(vector_class.clone()));
-			out.push(method_output_array(vector_class.clone()));
-			out.push(method_input_output_array(vector_class));
+			if !element_is_bool {
+				out.push(method_output_array(vector_class.clone()));
+				out.push(method_input_output_array(vector_class));
+			}
 		}
 	}
 	out
@@ -260,7 +271,7 @@ fn method_new<'tu, 'ge>(vector_class: Class<'tu, 'ge>, vec_type_ref: TypeRef<'tu
 		FuncKind::Constructor(vector_class),
 		Constness::Const,
 		ReturnKind::InfallibleNaked,
-		"new",
+		"cv::new",
 		"core",
 		vec![],
 		FuncCppBody::Auto,
@@ -274,7 +285,7 @@ fn method_len<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Const,
 		ReturnKind::InfallibleNaked,
-		"len",
+		"cv::len",
 		"core",
 		vec![],
 		FuncCppBody::ManualCall("instance->size()".into()),
@@ -288,7 +299,7 @@ fn method_is_empty<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Const,
 		ReturnKind::InfallibleNaked,
-		"isEmpty",
+		"cv::isEmpty",
 		"core",
 		vec![],
 		FuncCppBody::ManualCall("instance->empty()".into()),
@@ -302,7 +313,7 @@ fn method_capacity<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Const,
 		ReturnKind::InfallibleNaked,
-		"capacity",
+		"cv::capacity",
 		"core",
 		vec![],
 		FuncCppBody::ManualCall("instance->capacity()".into()),
@@ -316,7 +327,7 @@ fn method_shrink_to_fit<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'g
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Mut,
 		ReturnKind::InfallibleNaked,
-		"shrinkToFit",
+		"cv::shrinkToFit",
 		"core",
 		vec![],
 		FuncCppBody::ManualCall("instance->shrink_to_fit()".into()),
@@ -330,7 +341,7 @@ fn method_reserve<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Mut,
 		ReturnKind::InfallibleNaked,
-		"reserve",
+		"cv::reserve",
 		"core",
 		vec![Field::new_desc(FieldDesc::new("additional", TypeRefDesc::size_t()))],
 		FuncCppBody::ManualCall("instance->reserve(instance->size() + {{args}})".into()),
@@ -344,7 +355,7 @@ fn method_remove<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Mut,
 		ReturnKind::InfallibleNaked,
-		"remove",
+		"cv::remove",
 		"core",
 		vec![Field::new_desc(FieldDesc::new("index", TypeRefDesc::size_t()))],
 		FuncCppBody::ManualCall("instance->erase(instance->begin() + {{args}})".into()),
@@ -364,7 +375,7 @@ fn method_swap<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_is_bool: bool) -
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Mut,
 		ReturnKind::InfallibleNaked,
-		"swap",
+		"cv::swap",
 		"core",
 		vec![
 			Field::new_desc(FieldDesc::new("index1", TypeRefDesc::size_t())),
@@ -381,7 +392,7 @@ fn method_clear<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Mut,
 		ReturnKind::InfallibleNaked,
-		"clear",
+		"cv::clear",
 		"core",
 		vec![],
 		FuncCppBody::Auto,
@@ -395,11 +406,11 @@ fn method_push<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<'t
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Mut,
 		ReturnKind::InfallibleNaked,
-		"push",
+		"cv::push",
 		"core",
 		vec![Field::new_desc(FieldDesc::new(
 			"val",
-			element_type.with_constness(Constness::Const),
+			element_type.with_inherent_constness(Constness::Const),
 		))],
 		FuncCppBody::ManualCall("instance->push_back({{args}})".into()),
 		FuncRustBody::Auto,
@@ -412,11 +423,11 @@ fn method_insert<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Mut,
 		ReturnKind::InfallibleNaked,
-		"insert",
+		"cv::insert",
 		"core",
 		vec![
 			Field::new_desc(FieldDesc::new("index", TypeRefDesc::size_t())),
-			Field::new_desc(FieldDesc::new("val", element_type.with_constness(Constness::Const))),
+			Field::new_desc(FieldDesc::new("val", element_type.with_inherent_constness(Constness::Const))),
 		],
 		FuncCppBody::ManualCall("instance->insert(instance->begin() + {{args}})".into()),
 		FuncRustBody::Auto,
@@ -429,7 +440,7 @@ fn method_get<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<'tu
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Const,
 		ReturnKind::InfallibleViaArg,
-		"get",
+		"cv::get",
 		"core",
 		vec![Field::new_desc(FieldDesc::new("index", TypeRefDesc::size_t()))],
 		FuncCppBody::ManualCall("(*instance)[{{args}}]".into()),
@@ -443,13 +454,22 @@ fn method_set<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<'tu
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Mut,
 		ReturnKind::InfallibleNaked,
-		"set",
+		"cv::set",
 		"core",
 		vec![
 			Field::new_desc(FieldDesc::new("index", TypeRefDesc::size_t())),
-			Field::new_desc(FieldDesc::new("val", element_type.clone().with_constness(Constness::Const))),
+			Field::new_desc(FieldDesc::new(
+				"val",
+				element_type.clone().with_inherent_constness(Constness::Const),
+			)),
 		],
-		FuncCppBody::ManualCall(format!("(*instance)[index] = {}", element_type.cpp_arg_func_call("val")).into()),
+		FuncCppBody::ManualCall(
+			format!(
+				"(*instance)[index] = {}",
+				element_type.render_lane().to_dyn().cpp_arg_func_call("val")
+			)
+			.into(),
+		),
 		FuncRustBody::Auto,
 		TypeRefDesc::void(),
 	))
@@ -460,7 +480,7 @@ fn method_clone<'tu, 'ge>(vector_class: Class<'tu, 'ge>, vec_type_ref: TypeRef<'
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Const,
 		ReturnKind::InfallibleNaked,
-		"clone",
+		"cv::clone",
 		"core",
 		vec![],
 		FuncCppBody::ManualCall("{{ret_type}}(*instance)".into()),
@@ -474,13 +494,13 @@ fn method_data<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<'t
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Const,
 		ReturnKind::InfallibleNaked,
-		"data",
+		"cv::data",
 		"core",
 		vec![],
 		FuncCppBody::Auto,
 		FuncRustBody::Auto,
-		TypeRef::new_pointer(element_type.with_constness(Constness::Const))
-			.with_type_hint(TypeRefTypeHint::ArgOverride(ArgOverride::CharPtrNotString)),
+		TypeRef::new_pointer(element_type.with_inherent_constness(Constness::Const))
+			.with_type_hint(TypeRefTypeHint::CharPtrSingleChar),
 	))
 }
 
@@ -489,13 +509,13 @@ fn method_data_mut<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRe
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Mut,
 		ReturnKind::InfallibleNaked,
-		"dataMut",
+		"cv::dataMut",
 		"core",
 		vec![],
 		FuncCppBody::ManualCall("instance->data()".into()),
 		FuncRustBody::Auto,
-		TypeRef::new_pointer(element_type.with_constness(Constness::Mut))
-			.with_type_hint(TypeRefTypeHint::ArgOverride(ArgOverride::CharPtrNotString)),
+		TypeRef::new_pointer(element_type.with_inherent_constness(Constness::Mut))
+			.with_type_hint(TypeRefTypeHint::CharPtrSingleChar),
 	))
 }
 
@@ -504,16 +524,16 @@ fn method_from_slice<'tu, 'ge>(vec_type_ref: TypeRef<'tu, 'ge>, element_type: Ty
 		FuncKind::Function,
 		Constness::Const,
 		ReturnKind::InfallibleNaked,
-		"fromSlice",
+		"cv::fromSlice",
 		"core",
 		vec![
 			Field::new_desc(FieldDesc::new(
 				"data",
-				TypeRef::new_pointer(element_type.with_constness(Constness::Const)),
+				TypeRef::new_pointer(element_type.with_inherent_constness(Constness::Const)),
 			)),
 			Field::new_desc(FieldDesc::new("len", TypeRefDesc::size_t())),
 		],
-		FuncCppBody::ManualFull("return new {{ret_type}}(data, data + len);".into()),
+		FuncCppBody::ManualCallReturn("return new {{ret_type}}(data, data + len);".into()),
 		FuncRustBody::Auto,
 		vec_type_ref,
 	))
@@ -524,12 +544,18 @@ fn method_input_array<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge>
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Const,
 		ReturnKind::Fallible,
-		"inputArray",
+		"cv::inputArray",
 		"core",
 		vec![],
 		FuncCppBody::ManualCall("cv::_InputArray(*instance)".into()),
 		FuncRustBody::Auto,
-		TypeRefDesc::cv_input_array(),
+		TypeRefDesc::cv_input_array()
+			.with_inherent_constness(Constness::Const)
+			.with_type_hint(TypeRefTypeHint::BoxedAsRef(
+				Constness::Mut,
+				ARG_OVERRIDE_SELF,
+				Lifetime::Elided,
+			)),
 	))
 }
 
@@ -538,12 +564,18 @@ fn method_output_array<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Mut,
 		ReturnKind::Fallible,
-		"outputArray",
+		"cv::outputArray",
 		"core",
 		vec![],
 		FuncCppBody::ManualCall("cv::_OutputArray(*instance)".into()),
 		FuncRustBody::Auto,
-		TypeRefDesc::cv_output_array(),
+		TypeRefDesc::cv_output_array()
+			.with_inherent_constness(Constness::Mut)
+			.with_type_hint(TypeRefTypeHint::BoxedAsRef(
+				Constness::Mut,
+				ARG_OVERRIDE_SELF,
+				Lifetime::Elided,
+			)),
 	))
 }
 
@@ -552,11 +584,17 @@ fn method_input_output_array<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'t
 		FuncKind::InstanceMethod(vector_class),
 		Constness::Mut,
 		ReturnKind::Fallible,
-		"inputOutputArray",
+		"cv::inputOutputArray",
 		"core",
 		vec![],
 		FuncCppBody::ManualCall("cv::_InputOutputArray(*instance)".into()),
 		FuncRustBody::Auto,
-		TypeRefDesc::cv_input_output_array(),
+		TypeRefDesc::cv_input_output_array()
+			.with_inherent_constness(Constness::Mut)
+			.with_type_hint(TypeRefTypeHint::BoxedAsRef(
+				Constness::Mut,
+				ARG_OVERRIDE_SELF,
+				Lifetime::Elided,
+			)),
 	))
 }

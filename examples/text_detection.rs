@@ -115,7 +115,7 @@ pub fn main() -> Result<()> {
 				for pt in &quadrangle {
 					quadrangle_2f.push(Point2f::new(pt.x as f32, pt.y as f32))
 				}
-				let cropped = four_points_transform(rec_input.as_ref().unwrap_or(&frame), quadrangle_2f.as_slice())?;
+				let cropped = four_points_transform(rec_input.as_ref().unwrap_or(&frame), quadrangle_2f.as_slice().try_into()?)?;
 				let recognition_result = recognizer.recognize(&cropped)?;
 				println!("Recognition result: {recognition_result}");
 				imgproc::put_text(
@@ -124,22 +124,14 @@ pub fn main() -> Result<()> {
 					quadrangle.get(3)?,
 					imgproc::FONT_HERSHEY_SIMPLEX,
 					1.5,
-					Scalar::from((0., 0., 255.)),
+					(0, 0, 255).into(),
 					2,
 					imgproc::LINE_8,
 					false,
 				)?;
 				contours.push(quadrangle);
 			}
-			imgproc::polylines(
-				&mut frame,
-				&contours,
-				true,
-				Scalar::from((0., 255., 0.)),
-				2,
-				imgproc::LINE_8,
-				0,
-			)?;
+			imgproc::polylines(&mut frame, &contours, true, (0, 255, 0).into(), 2, imgproc::LINE_8, 0)?;
 		}
 		let mut big_frame = Mat::default();
 		imgproc::resize(&frame, &mut big_frame, Size::default(), 3., 3., imgproc::INTER_NEAREST)?;
@@ -148,7 +140,7 @@ pub fn main() -> Result<()> {
 	Ok(())
 }
 
-fn four_points_transform(frame: &Mat, vertices: &[Point2f]) -> Result<Mat> {
+fn four_points_transform(frame: &Mat, vertices: &[Point2f; 4]) -> Result<Mat> {
 	let output_size = Size::new(100, 32);
 	let target_vertices = [
 		Point2f::new(0., (output_size.height - 1) as f32),
@@ -158,14 +150,6 @@ fn four_points_transform(frame: &Mat, vertices: &[Point2f]) -> Result<Mat> {
 	];
 	let rotation_matrix = imgproc::get_perspective_transform_slice(vertices, &target_vertices, core::DECOMP_LU)?;
 	let mut out = Mat::default();
-	imgproc::warp_perspective(
-		frame,
-		&mut out,
-		&rotation_matrix,
-		output_size,
-		imgproc::INTER_LINEAR,
-		core::BORDER_CONSTANT,
-		Scalar::default(),
-	)?;
+	imgproc::warp_perspective_def(frame, &mut out, &rotation_matrix, output_size)?;
 	Ok(out)
 }

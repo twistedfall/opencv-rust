@@ -7,7 +7,7 @@ use clang::Type;
 pub use desc::VectorDesc;
 
 use crate::element::ExcludeKind;
-use crate::type_ref::{CppNameStyle, TemplateArg, TypeRefDesc, TypeRefKind};
+use crate::type_ref::{Constness, CppNameStyle, TemplateArg, TypeRefDesc, TypeRefKind};
 use crate::{DefaultElement, Element, GeneratedType, GeneratorEnv, StrExt, TypeRef};
 
 mod desc;
@@ -33,7 +33,10 @@ impl<'tu, 'ge> Vector<'tu, 'ge> {
 	pub fn type_ref(&self) -> TypeRef<'tu, 'ge> {
 		match self {
 			&Vector::Clang { type_ref, gen_env } => TypeRef::new(type_ref, gen_env),
-			Vector::Desc(desc) => TypeRef::new_desc(TypeRefDesc::new(TypeRefKind::StdVector(Vector::Desc(Rc::clone(desc))))),
+			Vector::Desc(desc) => TypeRef::new_desc(TypeRefDesc::new(
+				TypeRefKind::StdVector(Vector::Desc(Rc::clone(desc))),
+				Constness::Mut,
+			)),
 		}
 	}
 

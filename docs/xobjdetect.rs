@@ -13,7 +13,7 @@ pub mod xobjdetect {
 		/// ## Parameters
 		/// * fs: FileStorage for output
 		#[inline]
-		fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
+		fn write(&self, fs: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xobjdetect_WBDetector_write_const_FileStorageR(self.as_raw_WBDetector(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -31,7 +31,7 @@ pub mod xobjdetect {
 		/// ## Parameters
 		/// * node: FileNode for input
 		#[inline]
-		fn read(&mut self, node: &core::FileNode) -> Result<()> {
+		fn read(&mut self, node: &impl core::FileNodeTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xobjdetect_WBDetector_read_const_FileNodeR(self.as_raw_mut_WBDetector(), node.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -60,7 +60,7 @@ pub mod xobjdetect {
 		/// * bboxes: Bounding boxes coordinates output vector
 		/// * confidences: Confidence values for bounding boxes output vector
 		#[inline]
-		fn detect(&mut self, img: &core::Mat, bboxes: &mut core::Vector<core::Rect>, confidences: &mut core::Vector<f64>) -> Result<()> {
+		fn detect(&mut self, img: &impl core::MatTraitConst, bboxes: &mut core::Vector<core::Rect>, confidences: &mut core::Vector<f64>) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_xobjdetect_WBDetector_detect_const_MatR_vectorLRectGR_vectorLdoubleGR(self.as_raw_mut_WBDetector(), img.as_raw_Mat(), bboxes.as_raw_mut_VectorOfRect(), confidences.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -93,6 +93,8 @@ pub mod xobjdetect {
 	impl crate::xobjdetect::WBDetectorTrait for WBDetector {
 		#[inline] fn as_raw_mut_WBDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { WBDetector, crate::xobjdetect::WBDetectorTraitConst, as_raw_WBDetector, crate::xobjdetect::WBDetectorTrait, as_raw_mut_WBDetector }
 	
 	impl WBDetector {
 		/// Create instance of WBDetector

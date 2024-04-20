@@ -23,9 +23,9 @@ fn partial_max<T: PartialOrd>(a: T, b: T) -> T {
 	}
 }
 
+/// [docs.opencv.org](https://docs.opencv.org/master/d2/d44/classcv_1_1Rect__.html)
 #[repr(C)]
 #[derive(Copy, Clone, Debug, Default, PartialEq, Eq, PartialOrd)]
-/// [docs.opencv.org](https://docs.opencv.org/master/d2/d44/classcv_1_1Rect__.html)
 pub struct Rect_<T> {
 	pub x: T,
 	pub y: T,
@@ -55,7 +55,7 @@ impl<T> Rect_<T> {
 	}
 
 	#[inline]
-	pub fn tl(&self) -> Point_<T>
+	pub const fn tl(&self) -> Point_<T>
 	where
 		T: Copy,
 	{
@@ -71,7 +71,7 @@ impl<T> Rect_<T> {
 	}
 
 	#[inline]
-	pub fn size(&self) -> Size_<T>
+	pub const fn size(&self) -> Size_<T>
 	where
 		T: Copy,
 	{
@@ -102,6 +102,7 @@ impl<T> Rect_<T> {
 		self.x <= pt.x && pt.x < self.x + self.width && self.y <= pt.y && pt.y < self.y + self.height
 	}
 
+	/// Cast `Rect` to the other coord and size type
 	#[inline]
 	pub fn to<D: NumCast>(&self) -> Option<Rect_<D>>
 	where

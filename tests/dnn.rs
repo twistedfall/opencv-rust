@@ -16,7 +16,7 @@ fn net() -> Result<()> {
 	let mut net = Net::default()?;
 	assert!(net.empty()?);
 	net.enable_fusion(false)?;
-	let mut params = LayerParams::default()?;
+	let mut params = LayerParams::default();
 	assert_eq!(params.name(), "");
 	assert_eq!(params.typ(), "");
 	params.set_name("param name");

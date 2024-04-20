@@ -79,7 +79,7 @@ impl Element for Tuple<'_, '_> {
 	}
 
 	fn doc_comment(&self) -> Cow<str> {
-		self.entity().get_comment().unwrap_or_default().into()
+		"".into()
 	}
 
 	fn cpp_namespace(&self) -> Cow<str> {

@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use std::iter;
 
 use once_cell::sync::Lazy;
-use regex::{CaptureLocations, Regex};
+use regex::bytes::{CaptureLocations, Regex};
 
 use crate::CppNameStyle;
 
@@ -124,7 +124,7 @@ impl StringExt for String {
 			})
 		} else {
 			let mut count = 0;
-			while let Some((start_idx, end_idx)) = from.find_at(self, idx).map(|m| (m.start(), m.end())) {
+			while let Some((start_idx, end_idx)) = from.find_at(self.as_bytes(), idx).map(|m| (m.start(), m.end())) {
 				if start_idx == end_idx {
 					return false;
 				}
@@ -152,7 +152,10 @@ impl StringExt for String {
 		let mut idx = 0;
 		let mut caps = from.capture_locations();
 		let mut count = 0;
-		while let Some((start_idx, end_idx)) = from.captures_read_at(&mut caps, self, idx).map(|m| (m.start(), m.end())) {
+		while let Some((start_idx, end_idx)) = from
+			.captures_read_at(&mut caps, self.as_bytes(), idx)
+			.map(|m| (m.start(), m.end()))
+		{
 			if start_idx == end_idx {
 				return false;
 			}
@@ -201,8 +204,8 @@ impl StringExt for String {
 	}
 
 	fn extend_sep(&mut self, sep: &str, s: &str) {
-		self.reserve(s.len() + sep.len());
 		if !self.is_empty() {
+			self.reserve(s.len() + sep.len());
 			self.push_str(sep);
 		}
 		self.push_str(s);
@@ -253,6 +256,7 @@ impl StringExt for String {
 		self.replace_in_place("|", "OR");
 		self.replace_in_place("^", "XOR");
 		self.replace_in_place("~", "NOTB");
+		self.replace_in_place("=", "ST");
 	}
 }
 
@@ -365,7 +369,7 @@ impl CompiledInterpolation<'_> {
 }
 
 pub trait StrExt {
-	fn to_snake_case(&self) -> String;
+	fn cpp_name_to_rust_case(&self) -> String;
 	fn lines_with_nl(&self) -> LinesWithNl;
 	fn detect_indent(&self) -> Indent;
 	fn compile_interpolation(&self) -> CompiledInterpolation;
@@ -381,27 +385,48 @@ pub trait StrExt {
 }
 
 impl StrExt for str {
-	fn to_snake_case(&self) -> String {
-		static R1: Lazy<Regex> = Lazy::new(|| Regex::new(r#"([^_])([A-Z][a-z]+)"#).expect("Can't compile regex"));
-		let out = R1.replace_all(self, "${1}_$2");
-
-		static R2: Lazy<Regex> = Lazy::new(|| Regex::new(r#"([a-z0-9])([A-Z])"#).expect("Can't compile regex"));
-		let out = R2.replace_all(&out, "${1}_$2");
-
-		static R3: Lazy<Regex> = Lazy::new(|| Regex::new(r#"\B([23])_(D)\b"#).expect("Can't compile regex"));
-		let out = R3.replace_all(&out, "_$1$2");
-
-		static R4: Lazy<Regex> = Lazy::new(|| Regex::new(r#"_(P[n3])_(P)"#).expect("Can't compile regex"));
-		let out = R4.replace_all(&out, "_$1$2");
-
-		static R5: Lazy<Regex> = Lazy::new(|| Regex::new(r#"Open_(CL|Gl|VX)"#).expect("Can't compile regex"));
-		let out = R5.replace_all(&out, "Open$1");
-
-		#[allow(clippy::trivial_regex)]
-		static R6: Lazy<Regex> = Lazy::new(|| Regex::new(r#"U_Mat"#).expect("Can't compile regex"));
-		let out = R6.replace_all(&out, "UMat");
-
-		out.to_lowercase()
+	fn cpp_name_to_rust_case(&self) -> String {
+		let mut out = String::with_capacity(self.len() + 8);
+		#[derive(Copy, Clone)]
+		enum State {
+			StartOrLastUnderscore,
+			LastLowercase,
+			LastUppercase,
+		}
+		let mut state = State::StartOrLastUnderscore;
+		let mut chars = self.chars().peekable();
+		while let Some(cur_c) = chars.next() {
+			let (add_c, new_state) = match cur_c {
+				_ if cur_c.is_ascii_uppercase() => {
+					match state {
+						State::StartOrLastUnderscore => {}
+						State::LastLowercase => out.push('_'),
+						State::LastUppercase => {
+							// SVDValue => svd_value
+							if chars.peek().map_or(false, |next_c| next_c.is_lowercase()) {
+								out.push('_');
+							}
+						}
+					}
+					(cur_c.to_ascii_lowercase(), State::LastUppercase)
+				}
+				'_' => (cur_c, State::StartOrLastUnderscore),
+				_ => (cur_c, State::LastLowercase),
+			};
+			out.push(add_c);
+			state = new_state;
+		}
+		out.replacen_in_place("pn_p", 1, "pnp");
+		out.replacen_in_place("p3_p", 1, "p3p");
+		out.replacen_in_place("_u_mat", 1, "_umat");
+		out.replacen_in_place("i_d3_d", 1, "id_3d_");
+		out.replacen_in_place("2_d", 1, "_2d");
+		out.replacen_in_place("3_d", 1, "_3d");
+		out.replacen_in_place("open_gl", 1, "opengl");
+		out.replacen_in_place("open_cl", 1, "opencl");
+		out.replacen_in_place("open_vx", 1, "openvx");
+		out.replacen_in_place("aruco_3detect", 1, "aruco3_detect");
+		out
 	}
 
 	fn lines_with_nl(&self) -> LinesWithNl {
@@ -424,7 +449,7 @@ impl StrExt for str {
 	}
 
 	fn compile_interpolation(&self) -> CompiledInterpolation {
-		static VARS: Lazy<Regex> = Lazy::new(|| Regex::new(r#"\{\{\s*([^{}]+?)\s*}}"#).expect("Can't compile regex"));
+		static VARS: Lazy<Regex> = Lazy::new(|| Regex::new(r"\{\{\s*([^{}]+?)\s*}}").expect("Can't compile regex"));
 
 		// trim leading newline
 		let tpl = self.strip_prefix('\n').unwrap_or(self);
@@ -449,7 +474,7 @@ impl StrExt for str {
 			for line in tpl.lines() {
 				let line = &line[common_indent_len.min(line.len())..];
 				let mut last_idx = 0;
-				for cap in VARS.captures_iter(line) {
+				for cap in VARS.captures_iter(line.as_bytes()) {
 					if let (Some(whole), Some(var)) = (cap.get(0), cap.get(1)) {
 						if last_idx == 0 {
 							elems.push(Compiled::IntpLineStart(&line[last_idx..whole.start()]));
@@ -457,7 +482,7 @@ impl StrExt for str {
 							elems.push(Compiled::IntpLiteral(&line[last_idx..whole.start()]));
 						}
 						last_idx = whole.end();
-						elems.push(Compiled::Var(var.as_str()));
+						elems.push(Compiled::Var(&line[var.start()..var.end()]));
 					}
 				}
 				if last_idx == 0 {

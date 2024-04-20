@@ -2,7 +2,7 @@ use std::ffi::OsStr;
 use std::path::Path;
 use std::{env, fs};
 
-use crate::{files_with_extension, GenerateFullBindings, MANIFEST_DIR, OUT_DIR};
+use super::{files_with_extension, GenerateFullBindings, MANIFEST_DIR, OUT_DIR};
 
 pub fn handle_running_in_docsrs() -> GenerateFullBindings {
 	if env::var_os("DOCS_RS").is_some() {

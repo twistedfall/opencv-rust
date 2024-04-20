@@ -25,7 +25,7 @@ pub mod saliency {
 	//! to cover all objects in an image. Being able to perceive objects before identifying them is closely
 	//! related to bottom up visual attention (saliency).
 	//! 
-	//! ![Saliency diagram](https://docs.opencv.org/4.8.0/saliency.png)
+	//! ![Saliency diagram](https://docs.opencv.org/4.9.0/saliency.png)
 	//! 
 	//! To see how API works, try tracker demo:
 	//! <https://github.com/fpuja/opencv_contrib/blob/saliencyModuleDevelop/modules/saliency/samples/computeSaliency.cpp>
@@ -73,6 +73,8 @@ pub mod saliency {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { MotionSaliency, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::saliency::SaliencyTraitConst for MotionSaliency {
 		#[inline] fn as_raw_Saliency(&self) -> *const c_void { self.as_raw() }
 	}
@@ -81,6 +83,8 @@ pub mod saliency {
 		#[inline] fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { MotionSaliency, crate::saliency::SaliencyTraitConst, as_raw_Saliency, crate::saliency::SaliencyTrait, as_raw_mut_Saliency }
+	
 	impl crate::saliency::MotionSaliencyTraitConst for MotionSaliency {
 		#[inline] fn as_raw_MotionSaliency(&self) -> *const c_void { self.as_raw() }
 	}
@@ -88,6 +92,8 @@ pub mod saliency {
 	impl crate::saliency::MotionSaliencyTrait for MotionSaliency {
 		#[inline] fn as_raw_mut_MotionSaliency(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { MotionSaliency, crate::saliency::MotionSaliencyTraitConst, as_raw_MotionSaliency, crate::saliency::MotionSaliencyTrait, as_raw_mut_MotionSaliency }
 	
 	impl MotionSaliency {
 	}
@@ -135,7 +141,7 @@ pub mod saliency {
 		fn as_raw_mut_MotionSaliencyBinWangApr2014(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn compute_saliency(&mut self, image: &impl core::ToInputArray, saliency_map: &mut impl core::ToOutputArray) -> Result<bool> {
+		fn compute_saliency(&mut self, image: &impl ToInputArray, saliency_map: &mut impl ToOutputArray) -> Result<bool> {
 			input_array_arg!(image);
 			output_array_arg!(saliency_map);
 			return_send!(via ocvrs_return);
@@ -197,7 +203,7 @@ pub mod saliency {
 	///  * [2]  B. Wang and P. Dudek "A Fast Self-tuning Background Subtraction Algorithm", in proc of IEEE Workshop on Change Detection, 2014
 	///  *
 	/// 
-	/// the Fast Self-tuning Background Subtraction Algorithm from [BinWangApr2014](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_BinWangApr2014)
+	/// the Fast Self-tuning Background Subtraction Algorithm from [BinWangApr2014](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_BinWangApr2014)
 	pub struct MotionSaliencyBinWangApr2014 {
 		ptr: *mut c_void
 	}
@@ -221,6 +227,8 @@ pub mod saliency {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { MotionSaliencyBinWangApr2014, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::saliency::MotionSaliencyTraitConst for MotionSaliencyBinWangApr2014 {
 		#[inline] fn as_raw_MotionSaliency(&self) -> *const c_void { self.as_raw() }
 	}
@@ -228,6 +236,8 @@ pub mod saliency {
 	impl crate::saliency::MotionSaliencyTrait for MotionSaliencyBinWangApr2014 {
 		#[inline] fn as_raw_mut_MotionSaliency(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { MotionSaliencyBinWangApr2014, crate::saliency::MotionSaliencyTraitConst, as_raw_MotionSaliency, crate::saliency::MotionSaliencyTrait, as_raw_mut_MotionSaliency }
 	
 	impl crate::saliency::SaliencyTraitConst for MotionSaliencyBinWangApr2014 {
 		#[inline] fn as_raw_Saliency(&self) -> *const c_void { self.as_raw() }
@@ -237,6 +247,8 @@ pub mod saliency {
 		#[inline] fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { MotionSaliencyBinWangApr2014, crate::saliency::SaliencyTraitConst, as_raw_Saliency, crate::saliency::SaliencyTrait, as_raw_mut_Saliency }
+	
 	impl crate::saliency::MotionSaliencyBinWangApr2014TraitConst for MotionSaliencyBinWangApr2014 {
 		#[inline] fn as_raw_MotionSaliencyBinWangApr2014(&self) -> *const c_void { self.as_raw() }
 	}
@@ -244,6 +256,8 @@ pub mod saliency {
 	impl crate::saliency::MotionSaliencyBinWangApr2014Trait for MotionSaliencyBinWangApr2014 {
 		#[inline] fn as_raw_mut_MotionSaliencyBinWangApr2014(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { MotionSaliencyBinWangApr2014, crate::saliency::MotionSaliencyBinWangApr2014TraitConst, as_raw_MotionSaliencyBinWangApr2014, crate::saliency::MotionSaliencyBinWangApr2014Trait, as_raw_mut_MotionSaliencyBinWangApr2014 }
 	
 	impl MotionSaliencyBinWangApr2014 {
 		#[inline]
@@ -318,6 +332,8 @@ pub mod saliency {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Objectness, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::saliency::SaliencyTraitConst for Objectness {
 		#[inline] fn as_raw_Saliency(&self) -> *const c_void { self.as_raw() }
 	}
@@ -326,6 +342,8 @@ pub mod saliency {
 		#[inline] fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Objectness, crate::saliency::SaliencyTraitConst, as_raw_Saliency, crate::saliency::SaliencyTrait, as_raw_mut_Saliency }
+	
 	impl crate::saliency::ObjectnessTraitConst for Objectness {
 		#[inline] fn as_raw_Objectness(&self) -> *const c_void { self.as_raw() }
 	}
@@ -333,6 +351,8 @@ pub mod saliency {
 	impl crate::saliency::ObjectnessTrait for Objectness {
 		#[inline] fn as_raw_mut_Objectness(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { Objectness, crate::saliency::ObjectnessTraitConst, as_raw_Objectness, crate::saliency::ObjectnessTrait, as_raw_mut_Objectness }
 	
 	impl Objectness {
 	}
@@ -398,7 +418,7 @@ pub mod saliency {
 		fn as_raw_mut_ObjectnessBING(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn compute_saliency(&mut self, image: &impl core::ToInputArray, saliency_map: &mut impl core::ToOutputArray) -> Result<bool> {
+		fn compute_saliency(&mut self, image: &impl ToInputArray, saliency_map: &mut impl ToOutputArray) -> Result<bool> {
 			input_array_arg!(image);
 			output_array_arg!(saliency_map);
 			return_send!(via ocvrs_return);
@@ -492,7 +512,7 @@ pub mod saliency {
 		
 	}
 	
-	/// the Binarized normed gradients algorithm from [BING](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_BING)
+	/// the Binarized normed gradients algorithm from [BING](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_BING)
 	pub struct ObjectnessBING {
 		ptr: *mut c_void
 	}
@@ -516,6 +536,8 @@ pub mod saliency {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { ObjectnessBING, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::saliency::ObjectnessTraitConst for ObjectnessBING {
 		#[inline] fn as_raw_Objectness(&self) -> *const c_void { self.as_raw() }
 	}
@@ -523,6 +545,8 @@ pub mod saliency {
 	impl crate::saliency::ObjectnessTrait for ObjectnessBING {
 		#[inline] fn as_raw_mut_Objectness(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { ObjectnessBING, crate::saliency::ObjectnessTraitConst, as_raw_Objectness, crate::saliency::ObjectnessTrait, as_raw_mut_Objectness }
 	
 	impl crate::saliency::SaliencyTraitConst for ObjectnessBING {
 		#[inline] fn as_raw_Saliency(&self) -> *const c_void { self.as_raw() }
@@ -532,6 +556,8 @@ pub mod saliency {
 		#[inline] fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { ObjectnessBING, crate::saliency::SaliencyTraitConst, as_raw_Saliency, crate::saliency::SaliencyTrait, as_raw_mut_Saliency }
+	
 	impl crate::saliency::ObjectnessBINGTraitConst for ObjectnessBING {
 		#[inline] fn as_raw_ObjectnessBING(&self) -> *const c_void { self.as_raw() }
 	}
@@ -539,6 +565,8 @@ pub mod saliency {
 	impl crate::saliency::ObjectnessBINGTrait for ObjectnessBING {
 		#[inline] fn as_raw_mut_ObjectnessBING(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { ObjectnessBING, crate::saliency::ObjectnessBINGTraitConst, as_raw_ObjectnessBING, crate::saliency::ObjectnessBINGTrait, as_raw_mut_ObjectnessBING }
 	
 	impl ObjectnessBING {
 		#[inline]
@@ -592,7 +620,7 @@ pub mod saliency {
 		/// \param saliencyMap      The computed saliency map.
 		/// \return true if the saliency map is computed, false otherwise
 		#[inline]
-		fn compute_saliency(&mut self, image: &impl core::ToInputArray, saliency_map: &mut impl core::ToOutputArray) -> Result<bool> {
+		fn compute_saliency(&mut self, image: &impl ToInputArray, saliency_map: &mut impl ToOutputArray) -> Result<bool> {
 			input_array_arg!(image);
 			output_array_arg!(saliency_map);
 			return_send!(via ocvrs_return);
@@ -628,6 +656,8 @@ pub mod saliency {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Saliency, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::saliency::SaliencyTraitConst for Saliency {
 		#[inline] fn as_raw_Saliency(&self) -> *const c_void { self.as_raw() }
 	}
@@ -635,6 +665,8 @@ pub mod saliency {
 	impl crate::saliency::SaliencyTrait for Saliency {
 		#[inline] fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { Saliency, crate::saliency::SaliencyTraitConst, as_raw_Saliency, crate::saliency::SaliencyTrait, as_raw_mut_Saliency }
 	
 	impl Saliency {
 	}
@@ -689,7 +721,7 @@ pub mod saliency {
 		/// * _saliencyMap: the saliency map obtained through one of the specialized algorithms
 		/// * _binaryMap: the binary map
 		#[inline]
-		fn compute_binary_map(&mut self, _saliency_map: &impl core::ToInputArray, _binary_map: &mut impl core::ToOutputArray) -> Result<bool> {
+		fn compute_binary_map(&mut self, _saliency_map: &impl ToInputArray, _binary_map: &mut impl ToOutputArray) -> Result<bool> {
 			input_array_arg!(_saliency_map);
 			output_array_arg!(_binary_map);
 			return_send!(via ocvrs_return);
@@ -725,6 +757,8 @@ pub mod saliency {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { StaticSaliency, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::saliency::SaliencyTraitConst for StaticSaliency {
 		#[inline] fn as_raw_Saliency(&self) -> *const c_void { self.as_raw() }
 	}
@@ -733,6 +767,8 @@ pub mod saliency {
 		#[inline] fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { StaticSaliency, crate::saliency::SaliencyTraitConst, as_raw_Saliency, crate::saliency::SaliencyTrait, as_raw_mut_Saliency }
+	
 	impl crate::saliency::StaticSaliencyTraitConst for StaticSaliency {
 		#[inline] fn as_raw_StaticSaliency(&self) -> *const c_void { self.as_raw() }
 	}
@@ -740,6 +776,8 @@ pub mod saliency {
 	impl crate::saliency::StaticSaliencyTrait for StaticSaliency {
 		#[inline] fn as_raw_mut_StaticSaliency(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { StaticSaliency, crate::saliency::StaticSaliencyTraitConst, as_raw_StaticSaliency, crate::saliency::StaticSaliencyTrait, as_raw_mut_StaticSaliency }
 	
 	impl StaticSaliency {
 	}
@@ -771,7 +809,7 @@ pub mod saliency {
 		fn as_raw_mut_StaticSaliencyFineGrained(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn compute_saliency(&mut self, image: &impl core::ToInputArray, saliency_map: &mut impl core::ToOutputArray) -> Result<bool> {
+		fn compute_saliency(&mut self, image: &impl ToInputArray, saliency_map: &mut impl ToOutputArray) -> Result<bool> {
 			input_array_arg!(image);
 			output_array_arg!(saliency_map);
 			return_send!(via ocvrs_return);
@@ -783,7 +821,7 @@ pub mod saliency {
 		
 	}
 	
-	/// the Fine Grained Saliency approach from [FGS](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_FGS)
+	/// the Fine Grained Saliency approach from [FGS](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_FGS)
 	/// 
 	/// This method calculates saliency based on center-surround differences.
 	/// High resolution saliency maps are generated in real time by using integral images.
@@ -810,6 +848,8 @@ pub mod saliency {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { StaticSaliencyFineGrained, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::saliency::SaliencyTraitConst for StaticSaliencyFineGrained {
 		#[inline] fn as_raw_Saliency(&self) -> *const c_void { self.as_raw() }
 	}
@@ -817,6 +857,8 @@ pub mod saliency {
 	impl crate::saliency::SaliencyTrait for StaticSaliencyFineGrained {
 		#[inline] fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { StaticSaliencyFineGrained, crate::saliency::SaliencyTraitConst, as_raw_Saliency, crate::saliency::SaliencyTrait, as_raw_mut_Saliency }
 	
 	impl crate::saliency::StaticSaliencyTraitConst for StaticSaliencyFineGrained {
 		#[inline] fn as_raw_StaticSaliency(&self) -> *const c_void { self.as_raw() }
@@ -826,6 +868,8 @@ pub mod saliency {
 		#[inline] fn as_raw_mut_StaticSaliency(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { StaticSaliencyFineGrained, crate::saliency::StaticSaliencyTraitConst, as_raw_StaticSaliency, crate::saliency::StaticSaliencyTrait, as_raw_mut_StaticSaliency }
+	
 	impl crate::saliency::StaticSaliencyFineGrainedTraitConst for StaticSaliencyFineGrained {
 		#[inline] fn as_raw_StaticSaliencyFineGrained(&self) -> *const c_void { self.as_raw() }
 	}
@@ -833,6 +877,8 @@ pub mod saliency {
 	impl crate::saliency::StaticSaliencyFineGrainedTrait for StaticSaliencyFineGrained {
 		#[inline] fn as_raw_mut_StaticSaliencyFineGrained(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { StaticSaliencyFineGrained, crate::saliency::StaticSaliencyFineGrainedTraitConst, as_raw_StaticSaliencyFineGrained, crate::saliency::StaticSaliencyFineGrainedTrait, as_raw_mut_StaticSaliencyFineGrained }
 	
 	impl StaticSaliencyFineGrained {
 		#[inline]
@@ -876,7 +922,7 @@ pub mod saliency {
 		fn as_raw_StaticSaliencySpectralResidual(&self) -> *const c_void;
 	
 		#[inline]
-		fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
+		fn write(&self, fs: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_write_const_FileStorageR(self.as_raw_StaticSaliencySpectralResidual(), fs.as_raw_mut_FileStorage(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -909,7 +955,7 @@ pub mod saliency {
 		fn as_raw_mut_StaticSaliencySpectralResidual(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn compute_saliency(&mut self, image: &impl core::ToInputArray, saliency_map: &mut impl core::ToOutputArray) -> Result<bool> {
+		fn compute_saliency(&mut self, image: &impl ToInputArray, saliency_map: &mut impl ToOutputArray) -> Result<bool> {
 			input_array_arg!(image);
 			output_array_arg!(saliency_map);
 			return_send!(via ocvrs_return);
@@ -920,7 +966,7 @@ pub mod saliency {
 		}
 		
 		#[inline]
-		fn read(&mut self, fn_: &core::FileNode) -> Result<()> {
+		fn read(&mut self, fn_: &impl core::FileNodeTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_read_const_FileNodeR(self.as_raw_mut_StaticSaliencySpectralResidual(), fn_.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -948,7 +994,7 @@ pub mod saliency {
 		
 	}
 	
-	/// the Spectral Residual approach from  [SR](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_SR)
+	/// the Spectral Residual approach from  [SR](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_SR)
 	/// 
 	/// Starting from the principle of natural image statistics, this method simulate the behavior of
 	/// pre-attentive visual search. The algorithm analyze the log spectrum of each image and obtain the
@@ -977,6 +1023,8 @@ pub mod saliency {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { StaticSaliencySpectralResidual, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::saliency::SaliencyTraitConst for StaticSaliencySpectralResidual {
 		#[inline] fn as_raw_Saliency(&self) -> *const c_void { self.as_raw() }
 	}
@@ -984,6 +1032,8 @@ pub mod saliency {
 	impl crate::saliency::SaliencyTrait for StaticSaliencySpectralResidual {
 		#[inline] fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { StaticSaliencySpectralResidual, crate::saliency::SaliencyTraitConst, as_raw_Saliency, crate::saliency::SaliencyTrait, as_raw_mut_Saliency }
 	
 	impl crate::saliency::StaticSaliencyTraitConst for StaticSaliencySpectralResidual {
 		#[inline] fn as_raw_StaticSaliency(&self) -> *const c_void { self.as_raw() }
@@ -993,6 +1043,8 @@ pub mod saliency {
 		#[inline] fn as_raw_mut_StaticSaliency(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { StaticSaliencySpectralResidual, crate::saliency::StaticSaliencyTraitConst, as_raw_StaticSaliency, crate::saliency::StaticSaliencyTrait, as_raw_mut_StaticSaliency }
+	
 	impl crate::saliency::StaticSaliencySpectralResidualTraitConst for StaticSaliencySpectralResidual {
 		#[inline] fn as_raw_StaticSaliencySpectralResidual(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1000,6 +1052,8 @@ pub mod saliency {
 	impl crate::saliency::StaticSaliencySpectralResidualTrait for StaticSaliencySpectralResidual {
 		#[inline] fn as_raw_mut_StaticSaliencySpectralResidual(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { StaticSaliencySpectralResidual, crate::saliency::StaticSaliencySpectralResidualTraitConst, as_raw_StaticSaliencySpectralResidual, crate::saliency::StaticSaliencySpectralResidualTrait, as_raw_mut_StaticSaliencySpectralResidual }
 	
 	impl StaticSaliencySpectralResidual {
 		#[inline]

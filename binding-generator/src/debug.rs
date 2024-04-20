@@ -7,7 +7,7 @@ use clang::Entity;
 use dunce::canonicalize;
 use once_cell::sync::Lazy;
 
-static EMIT_DEBUG: Lazy<bool> = Lazy::new(|| env::var("OPENCV_BINDING_GENERATOR_EMIT_DEBUG").map_or(false, |v| v == "1"));
+pub static EMIT_DEBUG: Lazy<bool> = Lazy::new(|| env::var("OPENCV_BINDING_GENERATOR_EMIT_DEBUG").map_or(false, |v| v == "1"));
 
 #[derive(Clone, Debug)]
 pub struct LocationName<'me> {

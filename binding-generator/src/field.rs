@@ -8,23 +8,19 @@ use std::rc::Rc;
 use clang::token::TokenKind;
 use clang::{Entity, EntityKind, EntityVisitResult};
 
+use crate::comment::strip_doxygen_comment_markers;
 use crate::debug::{DefinitionLocation, LocationName, NameDebug};
-use crate::element::{ExcludeKind, UNNAMED};
-use crate::settings::ArgOverride;
-use crate::type_ref::{Constness, CppNameStyle, TypeRef, TypeRefTypeHint};
+use crate::element::ExcludeKind;
+use crate::settings::{ARGUMENT_NAMES_MULTIPLE_SLICE, ARGUMENT_NAMES_NOT_SLICE, ARGUMENT_NAMES_USERDATA};
+use crate::type_ref::{Constness, CppNameStyle, TypeRef, TypeRefKind, TypeRefTypeHint};
 use crate::{constant, DefaultElement, Element, GeneratorEnv, StrExt};
 
-#[derive(Clone, Copy, Debug)]
-pub enum FieldTypeHint {
-	None,
-	ArgOverride(ArgOverride),
-}
-
+/// Represents a field of a struct or a class or a function argument. Basically a name + type.
 #[derive(Clone)]
 pub enum Field<'tu, 'ge> {
 	Clang {
 		entity: Entity<'tu>,
-		type_hint: FieldTypeHint,
+		type_ref_type_hint: TypeRefTypeHint,
 		gen_env: &'ge GeneratorEnv<'tu>,
 	},
 	Desc(Rc<FieldDesc<'tu, 'ge>>),
@@ -32,13 +28,13 @@ pub enum Field<'tu, 'ge> {
 
 impl<'tu, 'ge> Field<'tu, 'ge> {
 	pub fn new(entity: Entity<'tu>, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
-		Self::new_ext(entity, FieldTypeHint::None, gen_env)
+		Self::new_ext(entity, TypeRefTypeHint::None, gen_env)
 	}
 
-	pub fn new_ext(entity: Entity<'tu>, type_hint: FieldTypeHint, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
+	pub fn new_ext(entity: Entity<'tu>, type_ref_type_hint: TypeRefTypeHint, gen_env: &'ge GeneratorEnv<'tu>) -> Self {
 		Self::Clang {
 			entity,
-			type_hint,
+			type_ref_type_hint,
 			gen_env,
 		}
 	}
@@ -47,43 +43,93 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 		Self::Desc(Rc::new(desc))
 	}
 
-	pub fn type_hint(&self) -> FieldTypeHint {
+	pub(crate) fn to_desc(&self) -> Rc<FieldDesc<'tu, 'ge>> {
 		match self {
-			&Self::Clang { type_hint, .. } => type_hint,
-			Self::Desc(desc) => desc.type_hint,
+			Self::Clang { type_ref_type_hint, .. } => Rc::new(FieldDesc {
+				cpp_fullname: self.cpp_name(CppNameStyle::Reference).into(),
+				type_ref: self.type_ref().into_owned().with_type_hint(type_ref_type_hint.clone()), // todo: add an option to avoid inheriting type_ref
+				default_value: self.default_value().map(Rc::from),
+			}),
+			Self::Desc(desc) => Rc::clone(desc),
 		}
 	}
 
-	pub fn type_ref(&self) -> TypeRef<'tu, 'ge> {
+	pub fn type_ref_type_hint(&self) -> &TypeRefTypeHint {
 		match self {
-			&Self::Clang { entity, gen_env, .. } => {
-				let type_hint = match self.type_hint() {
-					FieldTypeHint::ArgOverride(over) => TypeRefTypeHint::ArgOverride(over),
-					_ => {
-						let default_value_string = self
-							.default_value()
-							.map_or(false, |def| def.contains(|c| c == '"' || c == '\''));
-						if default_value_string {
-							TypeRefTypeHint::ArgOverride(ArgOverride::CharAsRustChar)
-						} else {
-							TypeRefTypeHint::None
-						}
-					}
-				};
-
-				TypeRef::new_ext(entity.get_type().expect("Can't get type"), type_hint, Some(entity), gen_env)
-			}
-			Self::Desc(desc) => desc.type_ref.clone(),
+			Self::Clang { type_ref_type_hint, .. } => type_ref_type_hint,
+			Self::Desc(desc) => desc.type_ref.type_hint(),
 		}
+	}
+
+	pub fn set_type_ref_type_hint(&mut self, type_ref_type_hint: TypeRefTypeHint) {
+		match self {
+			Self::Clang {
+				type_ref_type_hint: self_type_ref_type_hint,
+				..
+			} => {
+				if *self_type_ref_type_hint != type_ref_type_hint {
+					*self_type_ref_type_hint = type_ref_type_hint;
+				}
+			}
+			Self::Desc(desc) => {
+				if *desc.type_ref.type_hint() != type_ref_type_hint {
+					Rc::make_mut(desc).type_ref.set_type_hint(type_ref_type_hint);
+				}
+			}
+		}
+	}
+
+	pub fn type_ref(&self) -> Cow<TypeRef<'tu, 'ge>> {
+		match self {
+			Self::Clang {
+				entity,
+				type_ref_type_hint,
+				gen_env,
+				..
+			} => {
+				let type_ref_type_hint = type_ref_type_hint.clone().something_or_else(|| {
+					let default_value_string = self
+						.default_value()
+						.map_or(false, |def| def.contains(|c| c == '"' || c == '\''));
+					if default_value_string {
+						TypeRefTypeHint::CharAsRustChar
+					} else {
+						TypeRefTypeHint::None
+					}
+				});
+				Cow::Owned(TypeRef::new_ext(
+					entity.get_type().expect("Can't get type"),
+					type_ref_type_hint,
+					Some(*entity),
+					gen_env,
+				))
+			}
+			Self::Desc(desc) => Cow::Borrowed(&desc.type_ref),
+		}
+	}
+
+	pub fn with_type_ref(&self, type_ref: TypeRef<'tu, 'ge>) -> Self {
+		let mut desc = self.to_desc();
+		Rc::make_mut(&mut desc).type_ref = type_ref;
+		Self::Desc(desc)
 	}
 
 	pub fn constness(&self) -> Constness {
 		let type_ref = self.type_ref();
-		Constness::from_is_mut(
-			type_ref.as_array().is_some()
-				|| type_ref.as_smart_ptr().is_some()
-				|| type_ref.as_pointer().map_or(false, |r| r.constness().is_mut()),
-		)
+		match type_ref.kind().canonical().as_ref() {
+			TypeRefKind::Array(_, _) | TypeRefKind::SmartPtr(_) => Constness::Mut,
+			TypeRefKind::Pointer(pointee) | TypeRefKind::Reference(pointee) => pointee.constness(),
+			TypeRefKind::Primitive(_, _)
+			| TypeRefKind::StdVector(_)
+			| TypeRefKind::StdTuple(_)
+			| TypeRefKind::RValueReference(_)
+			| TypeRefKind::Class(_)
+			| TypeRefKind::Enum(_)
+			| TypeRefKind::Function(_)
+			| TypeRefKind::Typedef(_)
+			| TypeRefKind::Generic(_)
+			| TypeRefKind::Ignored => Constness::Const,
+		}
 	}
 
 	pub fn default_value(&self) -> Option<Cow<str>> {
@@ -104,13 +150,12 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 				});
 
 				if let Some(range) = entity.get_range() {
-					let mut tokens = range.tokenize();
+					let tokens = range.tokenize();
 					let equal_pos = tokens
 						.iter()
 						.position(|t| t.get_kind() == TokenKind::Punctuation && t.get_spelling() == "=");
 					if let Some(equal_pos) = equal_pos {
-						tokens.drain(..equal_pos + 1);
-						return Some(constant::render_constant_cpp(tokens).into());
+						return Some(constant::render_constant_cpp(&tokens[equal_pos + 1..]).into());
 					}
 				}
 				None
@@ -121,17 +166,39 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 
 	/// whether argument is used for passing user data to callback
 	pub fn is_user_data(&self) -> bool {
-		let leafname = self.cpp_name(CppNameStyle::Declaration);
-		(leafname == "userdata" || leafname == "userData" || leafname == "cookie" || leafname == UNNAMED)
-			&& self.type_ref().is_void_ptr()
+		ARGUMENT_NAMES_USERDATA.contains(self.cpp_name(CppNameStyle::Declaration).as_ref()) && self.type_ref().kind().is_void_ptr()
 	}
 
-	pub fn as_slice_len(&self) -> Option<(&'static str, usize)> {
-		if let FieldTypeHint::ArgOverride(ArgOverride::LenForSlice(ptr_arg, len_div)) = self.type_hint() {
-			Some((ptr_arg, len_div))
-		} else {
-			None
-		}
+	pub fn slice_arg_eligibility(&self) -> SliceArgEligibility {
+		self
+			.type_ref()
+			.kind()
+			.as_pointer()
+			.filter(|inner| inner.kind().is_copy(inner.type_hint()))
+			.map_or(SliceArgEligibility::NotEligible, |_| {
+				let name = self.cpp_name(CppNameStyle::Declaration);
+				if ARGUMENT_NAMES_NOT_SLICE.contains(name.as_ref()) {
+					SliceArgEligibility::NotEligible
+				} else if ARGUMENT_NAMES_MULTIPLE_SLICE.contains(name.as_ref()) {
+					SliceArgEligibility::EligibleWithMultiple
+				} else {
+					SliceArgEligibility::Eligible
+				}
+			})
+	}
+
+	pub fn can_be_slice_arg_len(&self) -> bool {
+		let name = self.cpp_name(CppNameStyle::Declaration);
+		let type_ref = self.type_ref();
+		type_ref
+			.kind()
+			.as_primitive()
+			.map_or(false, |(_, cpp)| cpp == "int" || cpp == "size_t")
+			&& (name.ends_with('s') && name.contains('n') && name != "thickness" // fixme: have to exclude thickness
+				|| name.contains("dims")
+				|| name == "size"
+				|| name.ends_with("Size")
+				|| name == "len")
 	}
 }
 
@@ -156,7 +223,7 @@ impl Element for Field<'_, '_> {
 
 	fn doc_comment(&self) -> Cow<str> {
 		match self {
-			Field::Clang { entity, .. } => entity.get_comment().unwrap_or_default().into(),
+			Field::Clang { entity, .. } => strip_doxygen_comment_markers(&entity.get_comment().unwrap_or_default()).into(),
 			Field::Desc(_) => "".into(),
 		}
 	}
@@ -192,7 +259,7 @@ impl fmt::Debug for Field<'_, '_> {
 			Self::Desc(_) => "Field::Desc",
 		})
 		.field("cpp_fullname", &self.cpp_name(CppNameStyle::Reference))
-		.field("type_hint", &self.type_hint())
+		.field("type_ref_type_hint", &self.type_ref_type_hint())
 		.field("type_ref", &self.type_ref())
 		.field("default_value", &self.default_value())
 		.finish()
@@ -203,7 +270,6 @@ impl fmt::Debug for Field<'_, '_> {
 pub struct FieldDesc<'tu, 'ge> {
 	pub cpp_fullname: Rc<str>,
 	pub type_ref: TypeRef<'tu, 'ge>,
-	pub type_hint: FieldTypeHint,
 	pub default_value: Option<Rc<str>>,
 }
 
@@ -212,8 +278,13 @@ impl<'tu, 'ge> FieldDesc<'tu, 'ge> {
 		Self {
 			cpp_fullname: name.into(),
 			type_ref,
-			type_hint: FieldTypeHint::None,
 			default_value: None,
 		}
 	}
+}
+
+pub enum SliceArgEligibility {
+	NotEligible,
+	Eligible,
+	EligibleWithMultiple,
 }

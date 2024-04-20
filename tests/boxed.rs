@@ -59,21 +59,19 @@ fn into_raw() -> Result<()> {
 #[test]
 fn smart_ptr_crate_and_cast_to_base_class() -> Result<()> {
 	#![cfg(ocvrs_has_module_videostab)]
-	#[cfg(ocvrs_opencv_branch_4)]
-	use opencv::features2d::FastFeatureDetector_DetectorType;
 	use opencv::{
 		core::Ptr,
 		features2d::{FastFeatureDetector, Feature2D},
-		videostab::{KeypointBasedMotionEstimator, MotionEstimatorRansacL2, MotionModel},
+		videostab::{KeypointBasedMotionEstimator, MotionEstimatorRansacL2},
 	};
 
-	let est = MotionEstimatorRansacL2::new(MotionModel::MM_AFFINE).unwrap();
+	let est = MotionEstimatorRansacL2::new_def().unwrap();
 	let est_ptr = Ptr::new(est);
 	let mut estimator = KeypointBasedMotionEstimator::new(est_ptr.into()).unwrap();
 	#[cfg(ocvrs_opencv_branch_4)]
-	let detector_ptr = FastFeatureDetector::create(10, true, FastFeatureDetector_DetectorType::TYPE_9_16).unwrap();
+	let detector_ptr = FastFeatureDetector::create_def().unwrap();
 	#[cfg(not(ocvrs_opencv_branch_4))]
-	let detector_ptr = FastFeatureDetector::create(10, true, 2).unwrap();
+	let detector_ptr = FastFeatureDetector::create_def().unwrap();
 	let base_detector_ptr: Ptr<Feature2D> = detector_ptr.into();
 	estimator.set_detector(base_detector_ptr).unwrap();
 
@@ -84,11 +82,11 @@ fn smart_ptr_crate_and_cast_to_base_class() -> Result<()> {
 fn smart_ptr_cast_base() -> Result<()> {
 	#![cfg(ocvrs_has_module_features2d)]
 	#[cfg(ocvrs_opencv_branch_4)]
-	use opencv::features2d::{AKAZE_DescriptorType::DESCRIPTOR_MLDB, KAZE_DiffusivityType::DIFF_PM_G2, AKAZE};
+	use opencv::features2d::AKAZE;
 	#[cfg(not(ocvrs_opencv_branch_4))]
-	use opencv::features2d::{AKAZE, AKAZE_DESCRIPTOR_MLDB as DESCRIPTOR_MLDB, KAZE_DIFF_PM_G2 as DIFF_PM_G2};
+	use opencv::features2d::AKAZE;
 
-	let d = AKAZE::create(DESCRIPTOR_MLDB, 0, 3, 0.001, 4, 4, DIFF_PM_G2)?;
+	let d = AKAZE::create_def()?;
 	assert!(Feature2DTraitConst::empty(&d)?);
 	assert_eq!("Feature2D.AKAZE", Feature2DTraitConst::get_default_name(&d)?);
 	let a = PtrOfFeature2D::from(d);
@@ -100,10 +98,10 @@ fn smart_ptr_cast_base() -> Result<()> {
 #[test]
 fn cast_base() -> Result<()> {
 	#![cfg(ocvrs_has_module_features2d)]
-	use opencv::{core::NORM_L2, features2d::BFMatcher};
+	use opencv::features2d::BFMatcher;
 
-	let m = BFMatcher::new(NORM_L2, false)?;
-	assert!(<dyn AlgorithmTrait>::empty(&m)?);
+	let m = BFMatcher::new_def()?;
+	assert!(AlgorithmTraitConst::empty(&m)?);
 	assert_eq!("my_object", &m.get_default_name()?);
 	let a = Algorithm::from(m);
 	assert!(a.empty()?);
@@ -117,7 +115,7 @@ fn cast_descendant() -> Result<()> {
 	use opencv::rgbd::{OdometryFrame, RgbdFrame};
 	use std::convert::TryFrom;
 
-	let image = Mat::new_rows_cols_with_default(1, 2, i32::opencv_type(), Scalar::from(1.))?;
+	let image = Mat::new_rows_cols_with_default(1, 2, i32::opencv_type(), 1.into())?;
 	let depth = Mat::default();
 	let mask = Mat::default();
 	let normals = Mat::default();
@@ -127,7 +125,7 @@ fn cast_descendant() -> Result<()> {
 	let mut base = RgbdFrame::from(child);
 	assert_eq!(345, base.id());
 	assert_eq!(2, base.image().cols());
-	base.set_image(Mat::new_rows_cols_with_default(10, 20, f64::opencv_type(), Scalar::from(2.))?);
+	base.set_image(Mat::new_rows_cols_with_default(10, 20, f64::opencv_type(), 2.into())?);
 	let child = OdometryFrame::try_from(base)?;
 	assert_eq!(345, child.id());
 	assert_eq!(20, child.image().cols());

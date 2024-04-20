@@ -4,7 +4,7 @@ pub mod flann {
 	//! This section documents OpenCV's interface to the FLANN library. FLANN (Fast Library for Approximate
 	//! Nearest Neighbors) is a library that contains a collection of algorithms optimized for fast nearest
 	//! neighbor search in large datasets and for high dimensional features. More information about FLANN
-	//! can be found in [Muja2009](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Muja2009) .
+	//! can be found in [Muja2009](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Muja2009) .
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
 		pub use { super::IndexParamsTraitConst, super::IndexParamsTrait, super::KDTreeIndexParamsTraitConst, super::KDTreeIndexParamsTrait, super::LinearIndexParamsTraitConst, super::LinearIndexParamsTrait, super::CompositeIndexParamsTraitConst, super::CompositeIndexParamsTrait, super::AutotunedIndexParamsTraitConst, super::AutotunedIndexParamsTrait, super::HierarchicalClusteringIndexParamsTraitConst, super::HierarchicalClusteringIndexParamsTrait, super::KMeansIndexParamsTraitConst, super::KMeansIndexParamsTrait, super::LshIndexParamsTraitConst, super::LshIndexParamsTrait, super::SavedIndexParamsTraitConst, super::SavedIndexParamsTrait, super::SearchParamsTraitConst, super::SearchParamsTrait, super::IndexTraitConst, super::IndexTrait };
@@ -300,6 +300,8 @@ pub mod flann {
 		#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { AutotunedIndexParams, crate::flann::IndexParamsTraitConst, as_raw_IndexParams, crate::flann::IndexParamsTrait, as_raw_mut_IndexParams }
+	
 	impl crate::flann::AutotunedIndexParamsTraitConst for AutotunedIndexParams {
 		#[inline] fn as_raw_AutotunedIndexParams(&self) -> *const c_void { self.as_raw() }
 	}
@@ -307,6 +309,8 @@ pub mod flann {
 	impl crate::flann::AutotunedIndexParamsTrait for AutotunedIndexParams {
 		#[inline] fn as_raw_mut_AutotunedIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { AutotunedIndexParams, crate::flann::AutotunedIndexParamsTraitConst, as_raw_AutotunedIndexParams, crate::flann::AutotunedIndexParamsTrait, as_raw_mut_AutotunedIndexParams }
 	
 	impl AutotunedIndexParams {
 		/// ## C++ default parameters
@@ -318,6 +322,22 @@ pub mod flann {
 		pub fn new(target_precision: f32, build_weight: f32, memory_weight: f32, sample_fraction: f32) -> Result<crate::flann::AutotunedIndexParams> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_AutotunedIndexParams_AutotunedIndexParams_float_float_float_float(target_precision, build_weight, memory_weight, sample_fraction, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::flann::AutotunedIndexParams::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * target_precision: 0.8f
+		/// * build_weight: 0.01f
+		/// * memory_weight: 0
+		/// * sample_fraction: 0.1f
+		#[inline]
+		pub fn new_def() -> Result<crate::flann::AutotunedIndexParams> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_flann_AutotunedIndexParams_AutotunedIndexParams(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::flann::AutotunedIndexParams::opencv_from_extern(ret) };
@@ -371,6 +391,8 @@ pub mod flann {
 		#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { CompositeIndexParams, crate::flann::IndexParamsTraitConst, as_raw_IndexParams, crate::flann::IndexParamsTrait, as_raw_mut_IndexParams }
+	
 	impl crate::flann::CompositeIndexParamsTraitConst for CompositeIndexParams {
 		#[inline] fn as_raw_CompositeIndexParams(&self) -> *const c_void { self.as_raw() }
 	}
@@ -378,6 +400,8 @@ pub mod flann {
 	impl crate::flann::CompositeIndexParamsTrait for CompositeIndexParams {
 		#[inline] fn as_raw_mut_CompositeIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { CompositeIndexParams, crate::flann::CompositeIndexParamsTraitConst, as_raw_CompositeIndexParams, crate::flann::CompositeIndexParamsTrait, as_raw_mut_CompositeIndexParams }
 	
 	impl CompositeIndexParams {
 		/// ## C++ default parameters
@@ -390,6 +414,23 @@ pub mod flann {
 		pub fn new(trees: i32, branching: i32, iterations: i32, centers_init: crate::flann::flann_centers_init_t, cb_index: f32) -> Result<crate::flann::CompositeIndexParams> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_CompositeIndexParams_CompositeIndexParams_int_int_int_flann_centers_init_t_float(trees, branching, iterations, centers_init, cb_index, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::flann::CompositeIndexParams::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * trees: 4
+		/// * branching: 32
+		/// * iterations: 11
+		/// * centers_init: cvflann::FLANN_CENTERS_RANDOM
+		/// * cb_index: 0.2f
+		#[inline]
+		pub fn new_def() -> Result<crate::flann::CompositeIndexParams> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_flann_CompositeIndexParams_CompositeIndexParams(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::flann::CompositeIndexParams::opencv_from_extern(ret) };
@@ -443,6 +484,8 @@ pub mod flann {
 		#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { HierarchicalClusteringIndexParams, crate::flann::IndexParamsTraitConst, as_raw_IndexParams, crate::flann::IndexParamsTrait, as_raw_mut_IndexParams }
+	
 	impl crate::flann::HierarchicalClusteringIndexParamsTraitConst for HierarchicalClusteringIndexParams {
 		#[inline] fn as_raw_HierarchicalClusteringIndexParams(&self) -> *const c_void { self.as_raw() }
 	}
@@ -450,6 +493,8 @@ pub mod flann {
 	impl crate::flann::HierarchicalClusteringIndexParamsTrait for HierarchicalClusteringIndexParams {
 		#[inline] fn as_raw_mut_HierarchicalClusteringIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { HierarchicalClusteringIndexParams, crate::flann::HierarchicalClusteringIndexParamsTraitConst, as_raw_HierarchicalClusteringIndexParams, crate::flann::HierarchicalClusteringIndexParamsTrait, as_raw_mut_HierarchicalClusteringIndexParams }
 	
 	impl HierarchicalClusteringIndexParams {
 		/// ## C++ default parameters
@@ -461,6 +506,22 @@ pub mod flann {
 		pub fn new(branching: i32, centers_init: crate::flann::flann_centers_init_t, trees: i32, leaf_size: i32) -> Result<crate::flann::HierarchicalClusteringIndexParams> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_HierarchicalClusteringIndexParams_HierarchicalClusteringIndexParams_int_flann_centers_init_t_int_int(branching, centers_init, trees, leaf_size, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::flann::HierarchicalClusteringIndexParams::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * branching: 32
+		/// * centers_init: cvflann::FLANN_CENTERS_RANDOM
+		/// * trees: 4
+		/// * leaf_size: 100
+		#[inline]
+		pub fn new_def() -> Result<crate::flann::HierarchicalClusteringIndexParams> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_flann_HierarchicalClusteringIndexParams_HierarchicalClusteringIndexParams(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::flann::HierarchicalClusteringIndexParams::opencv_from_extern(ret) };
@@ -520,7 +581,7 @@ pub mod flann {
 		/// ## C++ default parameters
 		/// * dist_type: cvflann::FLANN_DIST_L2
 		#[inline]
-		fn build(&mut self, features: &impl core::ToInputArray, params: &crate::flann::IndexParams, dist_type: crate::flann::flann_distance_t) -> Result<()> {
+		fn build(&mut self, features: &impl ToInputArray, params: &impl crate::flann::IndexParamsTraitConst, dist_type: crate::flann::flann_distance_t) -> Result<()> {
 			input_array_arg!(features);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_Index_build_const__InputArrayR_const_IndexParamsR_flann_distance_t(self.as_raw_mut_Index(), features.as_raw__InputArray(), params.as_raw_IndexParams(), dist_type, ocvrs_return.as_mut_ptr()) };
@@ -529,10 +590,23 @@ pub mod flann {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [IndexTrait::build] function uses the following default values for its arguments:
+		/// * dist_type: cvflann::FLANN_DIST_L2
+		#[inline]
+		fn build_def(&mut self, features: &impl ToInputArray, params: &impl crate::flann::IndexParamsTraitConst) -> Result<()> {
+			input_array_arg!(features);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_flann_Index_build_const__InputArrayR_const_IndexParamsR(self.as_raw_mut_Index(), features.as_raw__InputArray(), params.as_raw_IndexParams(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * params: SearchParams()
 		#[inline]
-		fn knn_search(&mut self, query: &impl core::ToInputArray, indices: &mut impl core::ToOutputArray, dists: &mut impl core::ToOutputArray, knn: i32, params: &crate::flann::SearchParams) -> Result<()> {
+		fn knn_search(&mut self, query: &impl ToInputArray, indices: &mut impl ToOutputArray, dists: &mut impl ToOutputArray, knn: i32, params: &impl crate::flann::SearchParamsTraitConst) -> Result<()> {
 			input_array_arg!(query);
 			output_array_arg!(indices);
 			output_array_arg!(dists);
@@ -543,10 +617,25 @@ pub mod flann {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [IndexTrait::knn_search] function uses the following default values for its arguments:
+		/// * params: SearchParams()
+		#[inline]
+		fn knn_search_def(&mut self, query: &impl ToInputArray, indices: &mut impl ToOutputArray, dists: &mut impl ToOutputArray, knn: i32) -> Result<()> {
+			input_array_arg!(query);
+			output_array_arg!(indices);
+			output_array_arg!(dists);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_flann_Index_knnSearch_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int(self.as_raw_mut_Index(), query.as_raw__InputArray(), indices.as_raw__OutputArray(), dists.as_raw__OutputArray(), knn, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * params: SearchParams()
 		#[inline]
-		fn radius_search(&mut self, query: &impl core::ToInputArray, indices: &mut impl core::ToOutputArray, dists: &mut impl core::ToOutputArray, radius: f64, max_results: i32, params: &crate::flann::SearchParams) -> Result<i32> {
+		fn radius_search(&mut self, query: &impl ToInputArray, indices: &mut impl ToOutputArray, dists: &mut impl ToOutputArray, radius: f64, max_results: i32, params: &impl crate::flann::SearchParamsTraitConst) -> Result<i32> {
 			input_array_arg!(query);
 			output_array_arg!(indices);
 			output_array_arg!(dists);
@@ -557,8 +646,23 @@ pub mod flann {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [IndexTrait::radius_search] function uses the following default values for its arguments:
+		/// * params: SearchParams()
 		#[inline]
-		fn load(&mut self, features: &impl core::ToInputArray, filename: &str) -> Result<bool> {
+		fn radius_search_def(&mut self, query: &impl ToInputArray, indices: &mut impl ToOutputArray, dists: &mut impl ToOutputArray, radius: f64, max_results: i32) -> Result<i32> {
+			input_array_arg!(query);
+			output_array_arg!(indices);
+			output_array_arg!(dists);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_flann_Index_radiusSearch_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_double_int(self.as_raw_mut_Index(), query.as_raw__InputArray(), indices.as_raw__OutputArray(), dists.as_raw__OutputArray(), radius, max_results, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		#[inline]
+		fn load(&mut self, features: &impl ToInputArray, filename: &str) -> Result<bool> {
 			input_array_arg!(features);
 			extern_container_arg!(filename);
 			return_send!(via ocvrs_return);
@@ -602,6 +706,8 @@ pub mod flann {
 		#[inline] fn as_raw_mut_Index(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Index, crate::flann::IndexTraitConst, as_raw_Index, crate::flann::IndexTrait, as_raw_mut_Index }
+	
 	impl Index {
 		#[inline]
 		pub fn default() -> Result<crate::flann::Index> {
@@ -616,10 +722,24 @@ pub mod flann {
 		/// ## C++ default parameters
 		/// * dist_type: cvflann::FLANN_DIST_L2
 		#[inline]
-		pub fn new(features: &impl core::ToInputArray, params: &crate::flann::IndexParams, dist_type: crate::flann::flann_distance_t) -> Result<crate::flann::Index> {
+		pub fn new(features: &impl ToInputArray, params: &impl crate::flann::IndexParamsTraitConst, dist_type: crate::flann::flann_distance_t) -> Result<crate::flann::Index> {
 			input_array_arg!(features);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_Index_Index_const__InputArrayR_const_IndexParamsR_flann_distance_t(features.as_raw__InputArray(), params.as_raw_IndexParams(), dist_type, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::flann::Index::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * dist_type: cvflann::FLANN_DIST_L2
+		#[inline]
+		pub fn new_def(features: &impl ToInputArray, params: &impl crate::flann::IndexParamsTraitConst) -> Result<crate::flann::Index> {
+			input_array_arg!(features);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_flann_Index_Index_const__InputArrayR_const_IndexParamsR(features.as_raw__InputArray(), params.as_raw_IndexParams(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::flann::Index::opencv_from_extern(ret) };
@@ -654,6 +774,20 @@ pub mod flann {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [IndexParamsTraitConst::get_string] function uses the following default values for its arguments:
+		/// * default_val: String()
+		#[inline]
+		fn get_string_def(&self, key: &str) -> Result<String> {
+			extern_container_arg!(key);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_flann_IndexParams_getString_const_const_StringR(self.as_raw_IndexParams(), key.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { String::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * default_val: -1
 		#[inline]
@@ -666,6 +800,19 @@ pub mod flann {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [IndexParamsTraitConst::get_int] function uses the following default values for its arguments:
+		/// * default_val: -1
+		#[inline]
+		fn get_int_def(&self, key: &str) -> Result<i32> {
+			extern_container_arg!(key);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_flann_IndexParams_getInt_const_const_StringR(self.as_raw_IndexParams(), key.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * default_val: -1
 		#[inline]
@@ -673,6 +820,19 @@ pub mod flann {
 			extern_container_arg!(key);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_IndexParams_getDouble_const_const_StringR_double(self.as_raw_IndexParams(), key.opencv_as_extern(), default_val, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [IndexParamsTraitConst::get_double] function uses the following default values for its arguments:
+		/// * default_val: -1
+		#[inline]
+		fn get_double_def(&self, key: &str) -> Result<f64> {
+			extern_container_arg!(key);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_flann_IndexParams_getDouble_const_const_StringR(self.as_raw_IndexParams(), key.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -700,7 +860,7 @@ pub mod flann {
 		}
 		
 		#[inline]
-		unsafe fn set_params(&mut self, val: *mut c_void) {
+		unsafe fn set_params(&mut self, val: *const c_void) {
 			let ret = { sys::cv_flann_IndexParams_propParams_voidX(self.as_raw_mut_IndexParams(), val) };
 			ret
 		}
@@ -790,6 +950,8 @@ pub mod flann {
 		#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { IndexParams, crate::flann::IndexParamsTraitConst, as_raw_IndexParams, crate::flann::IndexParamsTrait, as_raw_mut_IndexParams }
+	
 	impl IndexParams {
 		#[inline]
 		pub fn default() -> Result<crate::flann::IndexParams> {
@@ -846,6 +1008,8 @@ pub mod flann {
 		#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { KDTreeIndexParams, crate::flann::IndexParamsTraitConst, as_raw_IndexParams, crate::flann::IndexParamsTrait, as_raw_mut_IndexParams }
+	
 	impl crate::flann::KDTreeIndexParamsTraitConst for KDTreeIndexParams {
 		#[inline] fn as_raw_KDTreeIndexParams(&self) -> *const c_void { self.as_raw() }
 	}
@@ -854,6 +1018,8 @@ pub mod flann {
 		#[inline] fn as_raw_mut_KDTreeIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { KDTreeIndexParams, crate::flann::KDTreeIndexParamsTraitConst, as_raw_KDTreeIndexParams, crate::flann::KDTreeIndexParamsTrait, as_raw_mut_KDTreeIndexParams }
+	
 	impl KDTreeIndexParams {
 		/// ## C++ default parameters
 		/// * trees: 4
@@ -861,6 +1027,19 @@ pub mod flann {
 		pub fn new(trees: i32) -> Result<crate::flann::KDTreeIndexParams> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_KDTreeIndexParams_KDTreeIndexParams_int(trees, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::flann::KDTreeIndexParams::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * trees: 4
+		#[inline]
+		pub fn new_def() -> Result<crate::flann::KDTreeIndexParams> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_flann_KDTreeIndexParams_KDTreeIndexParams(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::flann::KDTreeIndexParams::opencv_from_extern(ret) };
@@ -914,6 +1093,8 @@ pub mod flann {
 		#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { KMeansIndexParams, crate::flann::IndexParamsTraitConst, as_raw_IndexParams, crate::flann::IndexParamsTrait, as_raw_mut_IndexParams }
+	
 	impl crate::flann::KMeansIndexParamsTraitConst for KMeansIndexParams {
 		#[inline] fn as_raw_KMeansIndexParams(&self) -> *const c_void { self.as_raw() }
 	}
@@ -921,6 +1102,8 @@ pub mod flann {
 	impl crate::flann::KMeansIndexParamsTrait for KMeansIndexParams {
 		#[inline] fn as_raw_mut_KMeansIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { KMeansIndexParams, crate::flann::KMeansIndexParamsTraitConst, as_raw_KMeansIndexParams, crate::flann::KMeansIndexParamsTrait, as_raw_mut_KMeansIndexParams }
 	
 	impl KMeansIndexParams {
 		/// ## C++ default parameters
@@ -932,6 +1115,22 @@ pub mod flann {
 		pub fn new(branching: i32, iterations: i32, centers_init: crate::flann::flann_centers_init_t, cb_index: f32) -> Result<crate::flann::KMeansIndexParams> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_KMeansIndexParams_KMeansIndexParams_int_int_flann_centers_init_t_float(branching, iterations, centers_init, cb_index, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::flann::KMeansIndexParams::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * branching: 32
+		/// * iterations: 11
+		/// * centers_init: cvflann::FLANN_CENTERS_RANDOM
+		/// * cb_index: 0.2f
+		#[inline]
+		pub fn new_def() -> Result<crate::flann::KMeansIndexParams> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_flann_KMeansIndexParams_KMeansIndexParams(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::flann::KMeansIndexParams::opencv_from_extern(ret) };
@@ -985,6 +1184,8 @@ pub mod flann {
 		#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { LinearIndexParams, crate::flann::IndexParamsTraitConst, as_raw_IndexParams, crate::flann::IndexParamsTrait, as_raw_mut_IndexParams }
+	
 	impl crate::flann::LinearIndexParamsTraitConst for LinearIndexParams {
 		#[inline] fn as_raw_LinearIndexParams(&self) -> *const c_void { self.as_raw() }
 	}
@@ -992,6 +1193,8 @@ pub mod flann {
 	impl crate::flann::LinearIndexParamsTrait for LinearIndexParams {
 		#[inline] fn as_raw_mut_LinearIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { LinearIndexParams, crate::flann::LinearIndexParamsTraitConst, as_raw_LinearIndexParams, crate::flann::LinearIndexParamsTrait, as_raw_mut_LinearIndexParams }
 	
 	impl LinearIndexParams {
 		#[inline]
@@ -1051,6 +1254,8 @@ pub mod flann {
 		#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { LshIndexParams, crate::flann::IndexParamsTraitConst, as_raw_IndexParams, crate::flann::IndexParamsTrait, as_raw_mut_IndexParams }
+	
 	impl crate::flann::LshIndexParamsTraitConst for LshIndexParams {
 		#[inline] fn as_raw_LshIndexParams(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1058,6 +1263,8 @@ pub mod flann {
 	impl crate::flann::LshIndexParamsTrait for LshIndexParams {
 		#[inline] fn as_raw_mut_LshIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { LshIndexParams, crate::flann::LshIndexParamsTraitConst, as_raw_LshIndexParams, crate::flann::LshIndexParamsTrait, as_raw_mut_LshIndexParams }
 	
 	impl LshIndexParams {
 		#[inline]
@@ -1117,6 +1324,8 @@ pub mod flann {
 		#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { SavedIndexParams, crate::flann::IndexParamsTraitConst, as_raw_IndexParams, crate::flann::IndexParamsTrait, as_raw_mut_IndexParams }
+	
 	impl crate::flann::SavedIndexParamsTraitConst for SavedIndexParams {
 		#[inline] fn as_raw_SavedIndexParams(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1124,6 +1333,8 @@ pub mod flann {
 	impl crate::flann::SavedIndexParamsTrait for SavedIndexParams {
 		#[inline] fn as_raw_mut_SavedIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { SavedIndexParams, crate::flann::SavedIndexParamsTraitConst, as_raw_SavedIndexParams, crate::flann::SavedIndexParamsTrait, as_raw_mut_SavedIndexParams }
 	
 	impl SavedIndexParams {
 		#[inline]
@@ -1184,6 +1395,8 @@ pub mod flann {
 		#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { SearchParams, crate::flann::IndexParamsTraitConst, as_raw_IndexParams, crate::flann::IndexParamsTrait, as_raw_mut_IndexParams }
+	
 	impl crate::flann::SearchParamsTraitConst for SearchParams {
 		#[inline] fn as_raw_SearchParams(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1191,6 +1404,8 @@ pub mod flann {
 	impl crate::flann::SearchParamsTrait for SearchParams {
 		#[inline] fn as_raw_mut_SearchParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { SearchParams, crate::flann::SearchParamsTraitConst, as_raw_SearchParams, crate::flann::SearchParamsTrait, as_raw_mut_SearchParams }
 	
 	impl SearchParams {
 		#[inline]
@@ -1211,6 +1426,21 @@ pub mod flann {
 		pub fn new_1(checks: i32, eps: f32, sorted: bool) -> Result<crate::flann::SearchParams> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_flann_SearchParams_SearchParams_int_float_bool(checks, eps, sorted, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::flann::SearchParams::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * checks: 32
+		/// * eps: 0
+		/// * sorted: true
+		#[inline]
+		pub fn new_def() -> Result<crate::flann::SearchParams> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_flann_SearchParams_SearchParams(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::flann::SearchParams::opencv_from_extern(ret) };

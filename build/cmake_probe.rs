@@ -1,3 +1,4 @@
+use std::ffi::OsStr;
 use std::fs;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
@@ -87,22 +88,16 @@ impl<'r> CmakeProbe<'r> {
 					break;
 				}
 				if line.starts_with("OCVRS") {
-					let mut name_value = line.splitn(2, ':');
-					let (name, value) = (name_value.next(), name_value.next().unwrap_or_default());
-					match name {
-						Some("OCVRS_INCLUDE_DIRS") => {
-							opencv_include_paths.extend(value.split(';').filter_map(|s| {
-								if !s.is_empty() {
-									Some(PathBuf::from(s.trim()))
-								} else {
-									None
-								}
-							}));
+					if let Some((name, value)) = line.split_once(':') {
+						match name {
+							"OCVRS_INCLUDE_DIRS" => {
+								opencv_include_paths.extend(value.split(';').filter(|s| !s.is_empty()).map(|s| PathBuf::from(s.trim())));
+							}
+							"OCVRS_VERSION" => {
+								*version = Some(Version::parse(value.trim())?);
+							}
+							_ => {}
 						}
-						Some("OCVRS_VERSION") => {
-							*version = Some(Version::parse(value.trim())?);
-						}
-						_ => {}
 					}
 				}
 				line.clear();
@@ -120,13 +115,15 @@ impl<'r> CmakeProbe<'r> {
 		}
 	}
 
-	fn extract_from_cmdline(
+	pub(crate) fn extract_from_cmdline(
 		cmdline: &str,
 		include_paths: &mut Vec<PathBuf>,
 		link_paths: &mut Vec<PathBuf>,
 		link_libs: &mut Vec<String>,
 	) {
-		for arg in Shlex::new(cmdline.trim()) {
+		eprintln!("=== Extracting build arguments from: {cmdline}");
+		let mut args = Shlex::new(cmdline.trim());
+		while let Some(arg) = args.next() {
 			let arg = arg.trim();
 			if let Some(path) = arg.strip_prefix("-I") {
 				let path = PathBuf::from(path.trim_start());
@@ -142,6 +139,23 @@ impl<'r> CmakeProbe<'r> {
 				// unresolved cmake dependency specification like Qt5::Core
 				if !lib.contains("::") {
 					link_libs.push(lib.trim_start().to_string());
+				}
+			} else if let Some(framework) = arg.strip_prefix("-framework") {
+				let framework = framework.trim_start();
+				let framework = if framework.is_empty() {
+					args.next().expect("No framework name after -framework")
+				} else {
+					framework.to_string()
+				};
+				let framework_path = Path::new(&framework);
+				let has_extension = framework_path
+					.extension()
+					.and_then(OsStr::to_str)
+					.map_or(false, |ext| ext.eq_ignore_ascii_case("framework"));
+				if has_extension {
+					link_libs.push(framework);
+				} else {
+					link_libs.push(format!("{}.framework", framework));
 				}
 			} else if !arg.starts_with('-') {
 				let path = Path::new(arg);
@@ -163,7 +177,7 @@ impl<'r> CmakeProbe<'r> {
 
 	fn extract_from_makefile(&self, link_paths: &mut Vec<PathBuf>, link_libs: &mut Vec<String>) -> Result<()> {
 		let link_cmdline = fs::read_to_string(self.build_dir.join("CMakeFiles/ocvrs_probe.dir/link.txt"))?;
-		Self::extract_from_cmdline(link_cmdline.trim(), &mut vec![], link_paths, link_libs);
+		Self::extract_from_cmdline(&link_cmdline, &mut vec![], link_paths, link_libs);
 		Ok(())
 	}
 
@@ -192,9 +206,10 @@ impl<'r> CmakeProbe<'r> {
 					}
 				}
 				State::Reading => {
-					if let Some(paths) = line.trim_start().strip_prefix("LINK_PATH = ") {
+					let trimmed_line = line.trim_start();
+					if let Some(paths) = trimmed_line.strip_prefix("LINK_PATH = ") {
 						Self::extract_from_cmdline(paths, include_paths, link_paths, link_libs);
-					} else if let Some(libs) = line.trim_start().strip_prefix("LINK_LIBRARIES = ") {
+					} else if let Some(libs) = trimmed_line.strip_prefix("LINK_LIBRARIES = ") {
 						Self::extract_from_cmdline(libs, include_paths, link_paths, link_libs);
 					}
 				}

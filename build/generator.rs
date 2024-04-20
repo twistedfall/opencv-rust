@@ -1,25 +1,23 @@
-use std::ffi::{OsStr, OsString};
+use std::ffi::OsStr;
 use std::fs::{File, OpenOptions};
 use std::io::{BufRead, BufReader, BufWriter, Write};
 use std::ops::Deref;
 use std::path::{Path, PathBuf};
 use std::process::Command;
-use std::sync::Arc;
 use std::time::Instant;
 use std::{env, fs, io, thread};
 
 use opencv_binding_generator::{Generator, IteratorExt};
 
-use crate::docs::transfer_bindings_to_docs;
-
+use super::docs::transfer_bindings_to_docs;
 use super::{files_with_extension, files_with_predicate, Library, Result, MODULES, OUT_DIR, SRC_CPP_DIR, SRC_DIR};
 
 pub struct BindingGenerator {
-	build_script_path: OsString,
+	build_script_path: PathBuf,
 }
 
 impl BindingGenerator {
-	pub fn new(build_script_path: OsString) -> Self {
+	pub fn new(build_script_path: PathBuf) -> Self {
 		Self { build_script_path }
 	}
 
@@ -61,61 +59,65 @@ impl BindingGenerator {
 		Ok(())
 	}
 
-	fn run(&self, modules: &'static [String], opencv_header_dir: &Path, opencv: &Library) -> Result<()> {
+	fn run(&self, modules: &[String], opencv_header_dir: &Path, opencv: &Library) -> Result<()> {
 		let additional_include_dirs = opencv
 			.include_paths
 			.iter()
-			.map(|path| path.as_path())
 			.filter(|&include_path| include_path != opencv_header_dir)
+			.map(|path| path.as_path())
 			.collect::<Vec<_>>();
 
 		let gen = Generator::new(opencv_header_dir, &additional_include_dirs, &SRC_CPP_DIR);
+		if !gen.is_clang_loaded() {
+			eprintln!("=== ERROR: Unable to load libclang library, check item #8 in https://github.com/twistedfall/opencv-rust/blob/master/README.md#troubleshooting");
+			eprintln!(
+				"=== Try enabling `clang-runtime` feature of the `opencv` crate, or alternatively disabling it if it's enabled"
+			);
+			return Err("a `libclang` shared library is not loaded on this thread".into());
+		}
 		eprintln!("=== Clang: {}", gen.clang_version());
 		eprintln!("=== Clang command line args: {:#?}", gen.build_clang_command_line_args());
 
-		let additional_include_dirs = Arc::new(
-			additional_include_dirs
-				.into_iter()
-				.map(|p| p.to_str().expect("Can't convert additional include dir to UTF-8 string"))
-				.join(","),
-		);
-		let opencv_header_dir = Arc::new(opencv_header_dir.to_owned());
+		let additional_include_dirs = additional_include_dirs
+			.into_iter()
+			.map(|p| p.to_str().expect("Can't convert additional include dir to UTF-8 string"))
+			.join(",");
 		let job_server = build_job_server()?;
-		let mut join_handles = Vec::with_capacity(modules.len());
 		let start = Instant::now();
-		// todo use thread::scope when MSRV is 1.63
 		eprintln!("=== Generating {} modules", modules.len());
-		modules.iter().for_each(|module| {
-			let token = job_server.acquire().expect("Can't acquire token from job server");
-			let join_handle = thread::spawn({
-				let additional_include_dirs = Arc::clone(&additional_include_dirs);
-				let opencv_header_dir = Arc::clone(&opencv_header_dir);
-				let build_script_path = self.build_script_path.clone();
-				move || {
-					let module_start = Instant::now();
-					let mut bin_generator = Command::new(build_script_path);
-					bin_generator
-						.arg(&*opencv_header_dir)
-						.arg(&*SRC_CPP_DIR)
-						.arg(&*OUT_DIR)
-						.arg(module)
-						.arg(&*additional_include_dirs);
-					eprintln!("=== Running: {bin_generator:?}");
-					let res = bin_generator
-						.status()
-						.unwrap_or_else(|e| panic!("Can't run bindings generator for module: {module}, error: {e}"));
-					if !res.success() {
-						panic!("Failed to run the bindings generator for module: {module}");
-					}
-					eprintln!("=== Generated: {module} in {:?}", module_start.elapsed());
-					drop(token); // needed to move the token to the thread
-				}
-			});
-			join_handles.push(join_handle);
+		thread::scope(|scope| {
+			let join_handles = modules
+				.iter()
+				.map(|module| {
+					let token = job_server.acquire().expect("Can't acquire token from job server");
+					scope.spawn({
+						let additional_include_dirs = additional_include_dirs.as_str();
+						move || {
+							let module_start = Instant::now();
+							let mut bin_generator = Command::new(&self.build_script_path);
+							bin_generator
+								.arg(opencv_header_dir)
+								.arg(&*SRC_CPP_DIR)
+								.arg(&*OUT_DIR)
+								.arg(module)
+								.arg(additional_include_dirs);
+							eprintln!("=== Running: {bin_generator:?}");
+							let res = bin_generator
+								.status()
+								.unwrap_or_else(|e| panic!("Can't run bindings generator for module: {module}, error: {e}"));
+							if !res.success() {
+								panic!("Failed to run the bindings generator for module: {module}");
+							}
+							eprintln!("=== Generated: {module} in {:?}", module_start.elapsed());
+							drop(token); // needed to move the token to the thread
+						}
+					})
+				})
+				.collect::<Vec<_>>();
+			for join_handle in join_handles {
+				join_handle.join().expect("Generator process panicked");
+			}
 		});
-		for join_handle in join_handles {
-			join_handle.join().expect("Generator process panicked");
-		}
 		eprintln!("=== Total binding generation time: {:?}", start.elapsed());
 		Ok(())
 	}
@@ -283,10 +285,12 @@ fn collect_generated_bindings(modules: &[String], target_module_dir: &Path, manu
 		writeln!(sys_rs)?;
 	}
 	writeln!(hub_rs, "pub mod types {{")?;
+	write!(hub_rs, "\t")?;
 	write_module_include(&mut hub_rs, "types")?;
 	writeln!(hub_rs, "}}")?;
 	writeln!(hub_rs, "#[doc(hidden)]")?;
 	writeln!(hub_rs, "pub mod sys {{")?;
+	write!(hub_rs, "\t")?;
 	write_module_include(&mut hub_rs, "sys")?;
 	writeln!(hub_rs, "}}")?;
 
@@ -307,7 +311,7 @@ fn collect_generated_bindings(modules: &[String], target_module_dir: &Path, manu
 }
 
 fn build_job_server() -> Result<Jobserver> {
-	unsafe { jobserver::Client::from_env() }
+	unsafe { jobslot::Client::from_env() }
 		.and_then(|client| {
 			let own_token_released = client.release_raw().is_ok();
 			let available_jobs = client.available().unwrap_or(0);
@@ -318,7 +322,9 @@ fn build_job_server() -> Result<Jobserver> {
 					reacquire_token_on_drop: own_token_released,
 				})
 			} else {
-				client.acquire_raw().expect("Can't reacquire build script thread token");
+				if own_token_released {
+					client.acquire_raw().expect("Can't reacquire build script thread token");
+				}
 				eprintln!(
 					"=== Available jobs from the environment created jobserver is: {available_jobs} or there is an error reading that value"
 				);
@@ -329,10 +335,11 @@ fn build_job_server() -> Result<Jobserver> {
 			let num_jobs = env::var("NUM_JOBS")
 				.ok()
 				.and_then(|jobs| jobs.parse().ok())
+				.or_else(|| thread::available_parallelism().map(|p| p.get()).ok())
 				.unwrap_or(2)
 				.max(1);
 			eprintln!("=== Creating a new job server with num_jobs: {num_jobs}");
-			jobserver::Client::new(num_jobs).ok().map(|client| Jobserver {
+			jobslot::Client::new(num_jobs).ok().map(|client| Jobserver {
 				client,
 				reacquire_token_on_drop: false,
 			})
@@ -341,7 +348,7 @@ fn build_job_server() -> Result<Jobserver> {
 }
 
 pub struct Jobserver {
-	client: jobserver::Client,
+	client: jobslot::Client,
 	reacquire_token_on_drop: bool,
 }
 
@@ -354,7 +361,7 @@ impl Drop for Jobserver {
 }
 
 impl Deref for Jobserver {
-	type Target = jobserver::Client;
+	type Target = jobslot::Client;
 
 	fn deref(&self) -> &Self::Target {
 		&self.client

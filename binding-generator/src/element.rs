@@ -66,7 +66,11 @@ impl DefaultElement {
 						parts.push(parent_name);
 					}
 				}
-				EntityKind::TranslationUnit | EntityKind::UnexposedDecl | EntityKind::NotImplemented => {}
+				EntityKind::TranslationUnit
+				| EntityKind::UnexposedDecl
+				| EntityKind::LinkageSpec
+				| EntityKind::NotImplemented
+				| EntityKind::Constructor => {}
 				_ => {
 					unreachable!("Can't get kind of parent for cpp namespace: {:#?}", parent)
 				}

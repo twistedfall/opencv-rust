@@ -63,8 +63,8 @@ fn matx_arg() -> Result<()> {
 
 #[test]
 fn matx_input_array() -> Result<()> {
-	assert_eq!(Scalar::from(2.), core::sum_elems(&Matx32f::eye())?);
-	assert_eq!(Scalar::from(2.), core::sum_elems(&Matx23f::eye())?);
+	assert_eq!(Scalar::from(2), core::sum_elems(&Matx32f::eye())?);
+	assert_eq!(Scalar::from(2), core::sum_elems(&Matx23f::eye())?);
 	Ok(())
 }
 

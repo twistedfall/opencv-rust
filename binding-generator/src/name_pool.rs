@@ -50,6 +50,9 @@ pub enum MakeUniqueNameResult {
 
 impl MakeUniqueNameResult {
 	pub fn is_changed(self) -> bool {
-		matches!(self, Self::Changed)
+		match self {
+			MakeUniqueNameResult::Unchanged => false,
+			MakeUniqueNameResult::Changed => true,
+		}
 	}
 }

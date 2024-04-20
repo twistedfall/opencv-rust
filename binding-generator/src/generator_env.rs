@@ -4,13 +4,14 @@ use std::fmt;
 use std::fs::File;
 use std::io::{BufRead, BufReader, Read, Seek, SeekFrom};
 use std::path::{Path, PathBuf};
+use std::rc::Rc;
 
 use clang::{Entity, EntityKind, EntityVisitResult};
 
 use crate::class::ClassKind;
 use crate::type_ref::CppNameStyle;
 use crate::{
-	comment, is_opencv_path, opencv_module_from_path, settings, Class, Element, EntityWalkerExt, EntityWalkerVisitor, MemoizeMap,
+	is_opencv_path, opencv_module_from_path, settings, Class, Element, EntityWalkerExt, EntityWalkerVisitor, MemoizeMap,
 	MemoizeMapExt, NamePool, WalkAction,
 };
 
@@ -81,7 +82,7 @@ impl ExportConfig {
 }
 
 pub struct RenameConfig {
-	pub rename: String,
+	pub rename: Rc<str>,
 }
 
 #[derive(Eq, PartialEq, Hash)]
@@ -93,7 +94,6 @@ struct ExportIdx {
 
 /// Populates different fields of [GeneratorEnv] to be used later for binding generation.
 ///
-///
 /// This is 1st pass of the analysis. It performs the collection of the necessary auxiliary data like which descendants a class has.
 struct GeneratorEnvPopulator<'tu, 'ge> {
 	gen_env: &'ge mut GeneratorEnv<'tu>,
@@ -102,11 +102,12 @@ struct GeneratorEnvPopulator<'tu, 'ge> {
 impl<'tu> GeneratorEnvPopulator<'tu, '_> {
 	fn add_func_comment(&mut self, entity: Entity) {
 		let raw_comment = entity.doc_comment();
+		// Note to future: str::contains is very fast, no sense in trying to avoid going over string multiple times
 		if !raw_comment.is_empty() && !raw_comment.contains("@overload") && !raw_comment.contains("@copybrief") {
 			let name = entity.cpp_name(CppNameStyle::Reference).into_owned();
 			let line = entity.get_location().map_or(0, |l| l.get_file_location().line);
-			let defs = self.gen_env.func_comments.entry(name).or_insert_with(Vec::new);
-			defs.push((line, comment::strip_comment_markers(&raw_comment)));
+			let defs = self.gen_env.func_comments.entry(name).or_default();
+			defs.push((line, raw_comment.into_owned()));
 			// reverse sort due to how we're querying this; the amount of elements in this Vec doesn't go above 7
 			defs.sort_unstable_by(|(left_line, _), (right_line, _)| right_line.cmp(left_line));
 		}
@@ -201,7 +202,7 @@ impl<'tu> GeneratorEnv<'tu> {
 				.get_end()
 				.get_spelling_location();
 			let path = l.file.expect("Can't get exported macro file").get_path();
-			let mut f = BufReader::new(File::open(&path).expect("Can't open export macro file"));
+			let mut f = BufReader::new(File::open(path).expect("Can't open export macro file"));
 			f.seek(SeekFrom::Start(u64::from(l.offset)))
 				.expect("Can't seek export macro file");
 			let mut line_offset = 0;
@@ -218,16 +219,15 @@ impl<'tu> GeneratorEnv<'tu> {
 			}
 			(l, line_offset)
 		} else {
-			let loc = if let Some(range) = entity.get_range() {
-				range.get_start().get_spelling_location()
-			} else {
-				// for some reason Apple libclang on macos has problems with get_range() on FacemarkLBF::Params::pupils
-				// see https://github.com/twistedfall/opencv-rust/issues/159#issuecomment-668234058
-				entity
-					.get_location()
-					.expect("Can't get entity location")
-					.get_spelling_location()
-			};
+			let loc = entity
+				.get_range()
+				.map_or_else(
+					// for some reason Apple libclang on macos has problems with get_range() on FacemarkLBF::Params::pupils
+					// see https://github.com/twistedfall/opencv-rust/issues/159#issuecomment-668234058
+					|| entity.get_location().expect("Can't get entity location"),
+					|range| range.get_start(),
+				)
+				.get_spelling_location();
 			(loc, 0)
 		};
 		ExportIdx {
@@ -278,7 +278,7 @@ impl<'tu> GeneratorEnv<'tu> {
 		self
 			.rename_map
 			.entry(key)
-			.or_insert_with(|| RenameConfig { rename: String::new() })
+			.or_insert_with(|| RenameConfig { rename: Rc::from("") })
 	}
 
 	pub fn get_rename_config(&self, entity: Entity) -> Option<&RenameConfig> {

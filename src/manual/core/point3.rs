@@ -2,14 +2,12 @@ use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
 use num_traits::{NumCast, NumOps, ToPrimitive, Zero};
 
-use crate::{
-	core::{Point_, VecN},
-	opencv_type_simple_generic,
-};
+use crate::core::{Point_, VecN};
+use crate::opencv_type_simple_generic;
 
+/// [docs.opencv.org](https://docs.opencv.org/master/df/d6c/classcv_1_1Point3__.html)
 #[repr(C)]
 #[derive(Copy, Clone, Debug, Default, PartialEq, Eq, PartialOrd)]
-/// [docs.opencv.org](https://docs.opencv.org/master/df/d6c/classcv_1_1Point3__.html)
 pub struct Point3_<T> {
 	pub x: T,
 	pub y: T,
@@ -81,6 +79,7 @@ impl<T> Point3_<T> {
 		(self_x.powi(2) + self_y.powi(2) + self_z.powi(2)).sqrt()
 	}
 
+	/// Cast `Point3` to the other coord type
 	#[inline]
 	pub fn to<D: NumCast>(self) -> Option<Point3_<D>>
 	where

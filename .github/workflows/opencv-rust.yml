@@ -3,8 +3,6 @@ on:
   push:
     branches:
       - "*"
-    tags_ignore:
-      - "*"
   pull_request:
     branches:
       - "*"
@@ -15,38 +13,44 @@ jobs:
       matrix:
         os-image:
           - ubuntu-22.04
-          - macos-12
-        version:
-          - opencv: 3.4.19
-          - opencv: 4.8.0
-        exclude:
-          - os-image: macos-12
-            version:
-              opencv: 3.4.20
+          - macos-13
+        opencv-version:
+          - 3.4.20
+          - 4.9.0
+        linkage:
+          - dynamic
         include:
           - os-image: ubuntu-22.04
-            version:
-              opencv: 4.8.0-static
+            opencv-version: 4.9.0
+            linkage: static
     runs-on: ${{ matrix.os-image }}
     env:
       Atlas_ROOT_DIR: /usr/include/ # for cmake to find lapacke.h
-      OPENCV_VERSION: ${{ matrix.version.opencv }}
+      OPENCV_VERSION: ${{ matrix.opencv-version }}
+      OPENCV_LINKAGE: ${{ matrix.linkage }}
+      SCCACHE_GHA_ENABLED: "true"
+      RUSTC_WRAPPER: "sccache"
+      CMAKE_C_COMPILER_LAUNCHER: "sccache"
+      CMAKE_CXX_COMPILER_LAUNCHER: "sccache"
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: mozilla-actions/sccache-action@v0.0.4
+      - uses: actions/cache@v4
+        with:
+          path: ~/dist
+          key: dist-${{ matrix.opencv-version }}
 
-      - name: Cache dependencies
-        uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: ~/build
-          key: src-${{ matrix.version.opencv }}-${{ matrix.os-image }}
+          key: build-${{ matrix.opencv-version }}-${{ matrix.linkage }}-${{ matrix.os-image }}
 
       - name: Install dependencies
         env:
           OS_FAMILY: ${{ runner.os }}
         run: ci/install.sh
         shell: bash
-
-      - uses: dtolnay/rust-toolchain@stable
 
       - name: Test project
         env:
@@ -61,27 +65,28 @@ jobs:
         os-image:
           - ubuntu-22.04
           - windows-2022
-        version:
-          - vcpkg: b7dba7f9aad09a56900f21cd78cfda1258e54e38
+          - macos-14
+        vcpkg-version:
+          - 2024.03.25
     runs-on: ${{ matrix.os-image }}
     env:
-      VCPKG_VERSION: ${{ matrix.version.vcpkg }}
+      VCPKG_VERSION: ${{ matrix.vcpkg-version }}
+      SCCACHE_GHA_ENABLED: "true"
+      RUSTC_WRAPPER: "sccache"
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Cache dependencies
-        uses: actions/cache@v3
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: mozilla-actions/sccache-action@v0.0.4
+      - uses: actions/cache@v4
         with:
           path: ~/build
-          key: vcpkg-${{ matrix.version.vcpkg }}-${{ matrix.os-image }}
+          key: vcpkg-${{ matrix.vcpkg-version }}-${{ matrix.os-image }}
 
       - name: Install dependencies
         env:
           OS_FAMILY: ${{ runner.os }}
         run: ci/install.sh
         shell: bash
-
-      - uses: dtolnay/rust-toolchain@stable
 
       - name: Test project
         env:
@@ -94,34 +99,36 @@ jobs:
       fail-fast: false
       matrix:
         os-image:
-          - macos-12
           - windows-2022
         version:
-          - branch: 3.4
-            opencv: 3.4.16
-            brew: "@3"
-          - branch: 4
-            opencv: 4.7.0
-            brew: "@4"
+          - opencv: 3.4.16
+          - opencv: 4.9.0
         include:
           - os-image: ubuntu-22.04
             version:
               opencv: 4.5.4
-              brew: excluded
+          - os-image: ubuntu-20.04
+            version:
+              opencv: 4.2.0
+          - os-image: macos-14
+            version:
+              brew: "@4"
     runs-on: ${{ matrix.os-image }}
     env:
       OPENCV_VERSION: ${{ matrix.version.opencv }}
       BREW_OPENCV_VERSION: ${{ matrix.version.brew }}
+      SCCACHE_GHA_ENABLED: "true"
+      RUSTC_WRAPPER: "sccache"
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: mozilla-actions/sccache-action@v0.0.4
 
       - name: Install dependencies
         env:
           OS_FAMILY: ${{ runner.os }}
         run: ci/install.sh
         shell: bash
-
-      - uses: dtolnay/rust-toolchain@stable
 
       - name: Test project
         env:
@@ -132,8 +139,7 @@ jobs:
   docs-rs:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v3
-
+      - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
 
       - name: Run a documentation generation test
@@ -141,17 +147,26 @@ jobs:
         shell: bash
 
   msrv:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-20.04
     env:
-      OPENCV_VERSION: 4.5.4
+      OPENCV_VERSION: 4.9.0
+      SCCACHE_GHA_ENABLED: "true"
+      RUSTC_WRAPPER: "sccache"
+      CMAKE_C_COMPILER_LAUNCHER: "sccache"
+      CMAKE_CXX_COMPILER_LAUNCHER: "sccache"
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      - uses: mozilla-actions/sccache-action@v0.0.4
 
-      - name: Install dependencies
-        env:
-          OS_FAMILY: ${{ runner.os }}
-        run: ci/install.sh
-        shell: bash
+      - uses: actions/cache@v4
+        with:
+          path: ~/dist
+          key: dist-${{ env.OPENCV_VERSION }}
+
+      - uses: actions/cache@v4
+        with:
+          path: ~/build
+          key: build-${{ env.OPENCV_VERSION }}-ubuntu-20.04
 
       - name: Get MSRV package metadata
         id: metadata
@@ -160,6 +175,12 @@ jobs:
       - uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ steps.metadata.outputs.msrv }}
+
+      - name: Install dependencies
+        env:
+          OS_FAMILY: ${{ runner.os }}
+        run: ci/install.sh
+        shell: bash
 
       - name: Check project
         env:

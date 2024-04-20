@@ -7,7 +7,7 @@ use clang::Entity;
 pub use desc::SmartPtrDesc;
 
 use crate::element::ExcludeKind;
-use crate::type_ref::{CppNameStyle, TypeRef, TypeRefDesc, TypeRefKind};
+use crate::type_ref::{Constness, CppNameStyle, TypeRef, TypeRefDesc, TypeRefKind};
 use crate::{DefaultElement, Element, GeneratedType, GeneratorEnv, StrExt};
 
 mod desc;
@@ -33,7 +33,7 @@ impl<'tu, 'ge> SmartPtr<'tu, 'ge> {
 	pub fn type_ref(&self) -> TypeRef<'tu, 'ge> {
 		match self {
 			&Self::Clang { entity, gen_env, .. } => TypeRef::new(entity.get_type().expect("Can't get smart pointer type"), gen_env),
-			Self::Desc(_) => TypeRef::new_desc(TypeRefDesc::new(TypeRefKind::SmartPtr(self.clone()))),
+			Self::Desc(_) => TypeRef::new_desc(TypeRefDesc::new(TypeRefKind::SmartPtr(self.clone()), Constness::Mut)),
 		}
 	}
 
@@ -51,7 +51,9 @@ impl<'tu, 'ge> SmartPtr<'tu, 'ge> {
 	}
 
 	pub fn generated_types(&self) -> Vec<GeneratedType<'tu, 'ge>> {
-		let mut out = if let Some(cls) = self.pointee().as_class() {
+		let pointee = self.pointee();
+		let pointee_kind = pointee.kind();
+		let mut out = if let Some(cls) = pointee_kind.as_class() {
 			cls.all_family()
 				.into_iter()
 				.map(|desc| GeneratedType::SmartPtr(SmartPtr::new_desc(SmartPtrDesc::new(TypeRef::new_class(desc)))))
@@ -59,7 +61,7 @@ impl<'tu, 'ge> SmartPtr<'tu, 'ge> {
 		} else {
 			vec![]
 		};
-		if let Some(typedef) = self.pointee().as_typedef() {
+		if let Some(typedef) = pointee_kind.as_typedef() {
 			out.extend(typedef.generated_types());
 		}
 		out
@@ -86,10 +88,7 @@ impl Element for SmartPtr<'_, '_> {
 	}
 
 	fn doc_comment(&self) -> Cow<str> {
-		match self {
-			&Self::Clang { entity, .. } => entity.get_comment().unwrap_or_default().into(),
-			Self::Desc(_) => "".into(),
-		}
+		"".into()
 	}
 
 	fn cpp_namespace(&self) -> Cow<str> {

@@ -2,25 +2,27 @@ use std::convert::TryInto;
 use std::ffi::c_void;
 use std::marker::PhantomData;
 use std::ops::Deref;
-use std::{fmt, slice};
+use std::{fmt, ptr, slice};
 
 pub use mat_::*;
 
-use crate::core::{MatConstIterator, MatExpr, MatSize, MatStep, Point, Scalar, UMat};
-use crate::platform_types::size_t;
+use crate::boxed_ref::{BoxedRef, BoxedRefMut};
+use crate::core::{MatConstIterator, MatExpr, MatSize, Point, Rect, Scalar, Size, UMat, Vector};
 use crate::prelude::*;
 use crate::{core, input_output_array, Error, Result};
 
 mod mat_;
 
 #[inline(always)]
+/// We rely on OpenCV to make sure that the pointer is correctly aligned
 unsafe fn convert_ptr<'r, T>(r: *const u8) -> &'r T {
-	&*(r as *const T)
+	&*(r.cast::<T>())
 }
 
 #[inline(always)]
+/// We rely on OpenCV to make sure that the pointer is correctly aligned
 unsafe fn convert_ptr_mut<'r, T>(r: *mut u8) -> &'r mut T {
-	&mut *(r as *mut T)
+	&mut *(r.cast::<T>())
 }
 
 #[inline]
@@ -42,6 +44,7 @@ fn match_format<T: DataType>(mat_type: i32) -> Result<()> {
 
 #[inline]
 fn match_dims(mat: &(impl MatTraitConst + ?Sized), dims: usize) -> Result<()> {
+	// safe because `Mat::dims()` returns value >= 2
 	let mat_dims = mat.dims() as usize;
 	if mat_dims == dims {
 		Ok(())
@@ -56,8 +59,7 @@ fn match_dims(mat: &(impl MatTraitConst + ?Sized), dims: usize) -> Result<()> {
 fn match_indices(mat: &(impl MatTraitConst + ?Sized), idx: &[i32]) -> Result<()> {
 	let size = mat.mat_size();
 	match_dims(mat, idx.len())?;
-	let mut out_of_bounds = size.iter().enumerate().filter(|&(i, &x)| idx[i] < 0 || idx[i] >= x);
-	if let Some((out_dim, out_size)) = out_of_bounds.next() {
+	if let Some((out_dim, out_size)) = size.iter().enumerate().find(|&(i, &x)| idx[i] < 0 || idx[i] >= x) {
 		Err(Error::new(
 			core::StsOutOfRange,
 			format!(
@@ -73,6 +75,7 @@ fn match_indices(mat: &(impl MatTraitConst + ?Sized), idx: &[i32]) -> Result<()>
 #[inline]
 fn match_total(mat: &(impl MatTraitConst + ?Sized), idx: i32) -> Result<()> {
 	let size = mat.total();
+	// safe because of the `0 <= idx` check
 	if 0 <= idx && (idx as usize) < size {
 		Ok(())
 	} else {
@@ -93,6 +96,24 @@ fn match_is_continuous(mat: &(impl MatTraitConst + ?Sized)) -> Result<()> {
 			"Mat is not continuous, operation is not applicable",
 		))
 	}
+}
+
+#[inline]
+fn match_length(sizes: &[i32], len: usize) -> Result<()> {
+	let data_len = i32::try_from(len)?;
+	if sizes.iter().product::<i32>() != data_len {
+		let msg = if sizes.len() == 2 {
+			format!(
+				"The length of the slice: {data_len} must match the passed row count: {rows} and column count: {cols} exactly",
+				rows = sizes[0],
+				cols = sizes[1],
+			)
+		} else {
+			format!("The length of the slice: {data_len} must match the passed dimensions: {sizes:?} exactly")
+		};
+		return Err(Error::new(core::StsUnmatchedSizes, msg));
+	}
+	Ok(())
 }
 
 #[inline(always)]
@@ -129,18 +150,26 @@ impl Mat {
 		for (i, x) in s.enumerate() {
 			// safe because `row_count_i32` ensures that len of `s` fits `i32`
 			let i = i as i32;
-			unsafe { ({ out.at_unchecked_mut::<T>(i) }? as *mut T).write(x) };
+			unsafe { ptr::write(out.at_unchecked_mut::<T>(i)?, x) };
 		}
 		Ok(out)
 	}
 
-	/// Create a new `Mat` by copying the data from a single-dimensional slice
+	/// Create a new `Mat` from a single-dimensional slice
 	#[inline]
-	pub fn from_slice<T: DataType>(s: &[T]) -> Result<Self> {
-		Self::from_slice_2d(&[s])
+	pub fn from_slice<T: DataType>(s: &[T]) -> Result<BoxedRef<Self>> {
+		Self::new_rows_cols_with_data(1, i32::try_from(s.len())?, s)
 	}
 
-	/// Create a new `Mat` by copying the data from a 2-dimensional slice (slice of slices)
+	/// Create a new `Mat` from a mutable single-dimensional slice
+	#[inline]
+	pub fn from_slice_mut<T: DataType>(s: &mut [T]) -> Result<BoxedRefMut<Self>> {
+		Self::new_rows_cols_with_data_mut(1, i32::try_from(s.len())?, s)
+	}
+
+	/// Create a new `Mat` by copying the data from a slice of slices
+	///
+	/// Every subslice must have the same length, otherwise an error is returned.
 	pub fn from_slice_2d<T: DataType>(s: &[impl AsRef<[T]>]) -> Result<Self> {
 		let col_count = if let Some(first_row) = s.first() {
 			col_count_i32(first_row.as_ref().len())?
@@ -164,8 +193,8 @@ impl Mat {
 						core::StsUnmatchedSizes,
 						format!(
 							"Unexpected number of items: {} in a row index: {row_n}, expected: {}",
+							src.len(),
 							trg.len(),
-							src.len()
 						),
 					));
 				}
@@ -175,53 +204,63 @@ impl Mat {
 		Ok(out)
 	}
 
-	/// Create a new `Mat` by copying the data from a single-dimensional slice with custom shape
+	/// Create a new `Mat` from a single-dimensional slice with custom shape
 	#[inline]
-	pub fn from_slice_rows_cols<T: DataType>(s: &[T], row_count: usize, col_count: usize) -> Result<Self> {
-		if row_count * col_count != s.len() {
-			return Err(Error::new(
-				core::StsUnmatchedSizes,
-				format!(
-					"The length of the slice: {} must match the passed row count: {row_count} and column count: {col_count} exactly",
-					s.len()
-				),
-			));
-		}
-		unsafe {
-			Self::new_rows_cols_with_data(
-				row_count_i32(row_count)?,
-				col_count_i32(col_count)?,
-				T::opencv_type(),
-				s.as_ptr() as *mut c_void,
-				core::Mat_AUTO_STEP,
-			)
-		}?
-		.try_clone()
+	pub fn new_rows_cols_with_data<T: DataType>(rows: i32, cols: i32, data: &[T]) -> Result<BoxedRef<Self>> {
+		match_length(&[rows, cols], data.len())?;
+		let m = unsafe {
+			Self::new_rows_cols_with_data_unsafe_def(rows, cols, T::opencv_type(), data.as_ptr().cast::<c_void>().cast_mut())
+		}?;
+		Ok(<BoxedRef<Mat>>::from(m))
 	}
 
 	#[inline]
-	pub fn try_into_typed<T: DataType>(self) -> Result<Mat_<T>>
-	where
-		Self: Sized,
-	{
-		self.try_into()
+	pub fn new_rows_cols_with_data_mut<T: DataType>(rows: i32, cols: i32, data: &mut [T]) -> Result<BoxedRefMut<Self>> {
+		match_length(&[rows, cols], data.len())?;
+		let m =
+			unsafe { Self::new_rows_cols_with_data_unsafe_def(rows, cols, T::opencv_type(), data.as_mut_ptr().cast::<c_void>()) }?;
+		Ok(<BoxedRefMut<Mat>>::from(m))
 	}
 
-	/// Returns iterator over Mat elements and their positions
 	#[inline]
-	pub fn iter<T: DataType>(&self) -> Result<MatIter<T>> {
-		match_format::<T>(self.typ())?;
-		Ok(if self.empty() {
-			MatIter {
-				iter: None,
-				_d: PhantomData,
-			}
+	pub fn new_size_with_data<T: DataType>(size: Size, data: &[T]) -> Result<BoxedRef<Self>> {
+		match_length(&[size.width, size.height], data.len())?;
+		let m = unsafe { Self::new_size_with_data_unsafe_def(size, T::opencv_type(), data.as_ptr().cast::<c_void>().cast_mut()) }?;
+		Ok(<BoxedRef<Mat>>::from(m))
+	}
+
+	#[inline]
+	pub fn new_size_with_data_mut<T: DataType>(size: Size, data: &mut [T]) -> Result<BoxedRefMut<Self>> {
+		match_length(&[size.width, size.height], data.len())?;
+		let m = unsafe { Self::new_size_with_data_unsafe_def(size, T::opencv_type(), data.as_mut_ptr().cast::<c_void>()) }?;
+		Ok(<BoxedRefMut<Mat>>::from(m))
+	}
+
+	#[inline]
+	pub fn new_nd_with_data<'data, T: DataType>(sizes: &[i32], data: &'data [T]) -> Result<BoxedRef<'data, Self>> {
+		match_length(sizes, data.len())?;
+		let m = unsafe { Self::new_nd_with_data_unsafe_def(sizes, T::opencv_type(), data.as_ptr().cast::<c_void>().cast_mut()) }?;
+		Ok(<BoxedRef<Mat>>::from(m))
+	}
+
+	#[inline]
+	pub fn new_nd_with_data_mut<'data, T: DataType>(sizes: &[i32], data: &'data mut [T]) -> Result<BoxedRefMut<'data, Self>> {
+		match_length(sizes, data.len())?;
+		let m = unsafe { Self::new_nd_with_data_unsafe_def(sizes, T::opencv_type(), data.as_mut_ptr().cast::<c_void>()) }?;
+		Ok(<BoxedRefMut<Mat>>::from(m))
+	}
+
+	/// Returns 2 mutable ROIs into a single `Mat` as long as they do not intersect
+	pub fn roi_2_mut<MAT: MatTrait>(m: &mut MAT, roi1: Rect, roi2: Rect) -> Result<(BoxedRefMut<Mat>, BoxedRefMut<Mat>)> {
+		if (roi1 & roi2).empty() {
+			// safe because we made sure that the interest areas do not intersect
+			let m2 = unsafe { (m as *mut MAT).as_mut().expect("Can't fail") };
+			let out1 = Mat::roi_mut(m, roi1)?;
+			let out2 = Mat::roi_mut(m2, roi2)?;
+			Ok((out1, out2))
 		} else {
-			MatIter {
-				iter: Some(MatConstIterator::over(self)?),
-				_d: PhantomData,
-			}
-		})
+			Err(Error::new(core::StsBadArg, "ROIs must not intersect"))
+		}
 	}
 }
 
@@ -230,16 +269,60 @@ pub struct MatIter<'m, T> {
 	_d: PhantomData<&'m T>,
 }
 
+impl<'m, T: DataType> MatIter<'m, T> {
+	pub fn new(iter: MatConstIterator) -> Result<Self> {
+		match_format::<T>(iter.typ())?;
+		Ok(Self {
+			iter: Some(iter),
+			_d: PhantomData,
+		})
+	}
+}
+
 impl<T: DataType> Iterator for MatIter<'_, T> {
 	type Item = (Point, T);
 
 	fn next(&mut self) -> Option<Self::Item> {
 		self.iter.as_mut().and_then(|iter| {
 			if iter.has_elements() {
-				let cur = iter.current().ok()?;
-				let out = (iter.pos().ok()?, *cur);
+				// the type is checked by the `MatIter::new()` and we ensure there are still elements by calling `has_elements()`
+				let cur = *unsafe { convert_ptr(iter.ptr()) };
+				let pos = iter.pos().ok()?;
 				iter.seek(1, true).ok()?;
-				Some(out)
+				Some((pos, cur))
+			} else {
+				None
+			}
+		})
+	}
+}
+
+pub struct MatIterMut<'m, T> {
+	iter: Option<MatConstIterator>,
+	_d: PhantomData<&'m mut T>,
+}
+
+impl<'m, T: DataType> MatIterMut<'m, T> {
+	pub fn new(iter: MatConstIterator) -> Result<Self> {
+		match_format::<T>(iter.typ())?;
+		Ok(Self {
+			iter: Some(iter),
+			_d: PhantomData,
+		})
+	}
+}
+
+impl<'m, T: DataType> Iterator for MatIterMut<'m, T> {
+	type Item = (Point, &'m mut T);
+
+	fn next(&mut self) -> Option<Self::Item> {
+		self.iter.as_mut().and_then(|iter| {
+			if iter.has_elements() {
+				// the type is checked by the `MatIterMut::new()` and we ensure there are still elements by calling `has_elements()`
+				let cur = unsafe { convert_ptr_mut(iter.ptr().cast_mut()) };
+				let pos = iter.pos().ok()?;
+				iter.seek(1, true).ok()?;
+				Some((pos, cur))
 			} else {
 				None
 			}
@@ -380,6 +463,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 	/// Caller must ensure that index is within Mat bounds
 	#[inline]
 	unsafe fn at_row_unchecked<T: DataType>(&self, row: i32) -> Result<&[T]> {
+		// safe because Mat::size() can't be negative
 		let width = self.size()?.width as usize;
 		self.ptr(row).map(|x| slice::from_raw_parts(convert_ptr(x), width))
 	}
@@ -417,18 +501,20 @@ pub trait MatTraitConstManual: MatTraitConst {
 		if data.is_null() {
 			Err(Error::new(core::StsNullPtr, "Function returned null pointer"))
 		} else {
-			Ok(slice::from_raw_parts(data as *const T, self.total()))
+			Ok(slice::from_raw_parts(data.cast::<T>(), self.total()))
 		}
 	}
 
 	fn to_vec_2d<T: DataType>(&self) -> Result<Vec<Vec<T>>> {
 		match_format::<T>(self.typ()).and_then(|_| match_dims(self, 2)).and_then(|_| {
-			let size = Self::size(self)?;
+			let size = self.size()?;
+			// safe because Mat size can't be negative
 			let width = size.width as usize;
 			if self.is_continuous() {
 				let data = self.data_typed()?;
 				Ok((0..size.height)
 					.map(|row_n| {
+						// safe because the iteration starts from 0
 						let row_n = row_n as usize;
 						let mut row = Vec::with_capacity(width);
 						row.extend_from_slice(&data[row_n * width..(row_n + 1) * width]);
@@ -447,6 +533,30 @@ pub trait MatTraitConstManual: MatTraitConst {
 					.collect::<Result<_>>()?)
 			}
 		})
+	}
+
+	/// Returns an iterator over `Mat` elements and their positions
+	#[inline]
+	fn iter<T: DataType>(&self) -> Result<MatIter<T>>
+	where
+		Self: Sized,
+	{
+		MatConstIterator::over(self).map_or(
+			Ok(MatIter {
+				iter: None,
+				_d: PhantomData,
+			}),
+			MatIter::new,
+		)
+	}
+
+	#[inline]
+	fn try_into_typed<T: DataType>(self) -> Result<Mat_<T>>
+	where
+		Self: Sized,
+		Mat_<T>: TryFrom<Self, Error = Error>,
+	{
+		self.try_into()
 	}
 }
 
@@ -504,6 +614,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 	/// Caller must ensure that index is within Mat bounds
 	#[inline]
 	unsafe fn at_row_unchecked_mut<T: DataType>(&mut self, row: i32) -> Result<&mut [T]> {
+		// safe because Mat::size() can't be negative
 		let width = self.size()?.width as usize;
 		self
 			.ptr_mut(row)
@@ -528,7 +639,22 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 	#[inline]
 	unsafe fn data_typed_unchecked_mut<T: DataType>(&mut self) -> Result<&mut [T]> {
 		let total = self.total();
-		Ok(slice::from_raw_parts_mut(self.data_mut() as *mut T, total))
+		Ok(slice::from_raw_parts_mut(self.data_mut().cast::<T>(), total))
+	}
+
+	/// Returns a mutable iterator over `Mat` elements and their positions
+	#[inline]
+	fn iter_mut<T: DataType>(&mut self) -> Result<MatIterMut<T>>
+	where
+		Self: Sized,
+	{
+		MatConstIterator::over(self).map_or(
+			Ok(MatIterMut {
+				iter: None,
+				_d: PhantomData,
+			}),
+			MatIterMut::new,
+		)
 	}
 }
 
@@ -537,6 +663,7 @@ impl<T: MatTraitConst + ?Sized> MatTraitConstManual for T {}
 impl<T: MatTrait + ?Sized> MatTraitManual for T {}
 
 input_output_array! { Mat, from_mat, from_mat_mut }
+input_output_array! { Vector<Mat>, from_mat_vec, from_mat_vec_mut }
 
 impl fmt::Debug for Mat {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -565,13 +692,16 @@ impl fmt::Debug for Mat {
 }
 
 input_output_array! { UMat, from_umat, from_umat_mut }
+input_output_array! { Vector<UMat>, from_umat_vec, from_umat_vec_mut }
 
 impl Deref for MatSize {
 	type Target = [i32];
 
 	#[inline]
 	fn deref(&self) -> &Self::Target {
-		unsafe { slice::from_raw_parts(self.to_xconst_i32(), self.dims() as usize) }
+		// safe because `Mat::dims()` returns value >= 2
+		let dims = self.dims() as usize;
+		unsafe { slice::from_raw_parts(self.p(), dims) }
 	}
 }
 
@@ -581,31 +711,30 @@ impl fmt::Debug for MatSize {
 	}
 }
 
-impl Deref for MatStep {
-	type Target = [size_t];
-
-	#[inline]
-	fn deref(&self) -> &Self::Target {
-		extern "C" {
-			fn cv_manual_MatStep_deref(instance: *const c_void) -> *const size_t;
-		}
-		let ptr = unsafe { cv_manual_MatStep_deref(self.as_raw_MatStep()) };
-		unsafe { slice::from_raw_parts(ptr, 2) }
-	}
-}
-
-impl fmt::Debug for MatStep {
-	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-		writeln!(f, "{:#?}", self.deref())
-	}
-}
-
 pub trait MatConstIteratorTraitManual: MatConstIteratorTrait {
+	#[inline]
+	fn has_elements(&self) -> bool {
+		self.ptr() != self.slice_end()
+	}
+
 	#[inline]
 	fn current<T: DataType>(&self) -> Result<&T> {
 		match_format::<T>(self.typ())?;
 		if self.has_elements() {
-			self.try_deref().map(|ptr| unsafe { convert_ptr(ptr) })
+			Ok(unsafe { convert_ptr(self.ptr()) })
+		} else {
+			Err(Error::new(
+				core::StsOutOfRange,
+				"MatConstIterator doesn't have any more elements",
+			))
+		}
+	}
+
+	#[inline]
+	fn current_mut<T: DataType>(&mut self) -> Result<&mut T> {
+		match_format::<T>(self.typ())?;
+		if self.has_elements() {
+			Ok(unsafe { convert_ptr_mut(self.ptr().cast_mut()) })
 		} else {
 			Err(Error::new(
 				core::StsOutOfRange,

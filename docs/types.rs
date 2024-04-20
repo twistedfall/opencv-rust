@@ -1223,46 +1223,48 @@ mod core_types {
 		std_vectorLcv_PointG_clone_const,
 	}
 	
-	impl core::ToInputArray for core::Vector<core::Point> {
+	impl ToInputArray for core::Vector<core::Point> {
 		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_PointG_inputArray_const(self.as_raw_VectorOfPoint(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToOutputArray for core::Vector<core::Point> {
+	input_array_ref_forward! { core::Vector<core::Point> }
+	
+	impl ToOutputArray for core::Vector<core::Point> {
 		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_PointG_outputArray(self.as_raw_mut_VectorOfPoint(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToInputOutputArray for core::Vector<core::Point> {
+	impl ToInputOutputArray for core::Vector<core::Point> {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_PointG_inputOutputArray(self.as_raw_mut_VectorOfPoint(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Point> }
+	output_array_ref_forward! { core::Vector<core::Point> }
 	
 	pub type VectorOfPoint2d = core::Vector<core::Point2d>;
 	
@@ -1285,46 +1287,48 @@ mod core_types {
 		std_vectorLcv_Point2dG_clone_const,
 	}
 	
-	impl core::ToInputArray for core::Vector<core::Point2d> {
+	impl ToInputArray for core::Vector<core::Point2d> {
 		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Point2dG_inputArray_const(self.as_raw_VectorOfPoint2d(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToOutputArray for core::Vector<core::Point2d> {
+	input_array_ref_forward! { core::Vector<core::Point2d> }
+	
+	impl ToOutputArray for core::Vector<core::Point2d> {
 		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Point2dG_outputArray(self.as_raw_mut_VectorOfPoint2d(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToInputOutputArray for core::Vector<core::Point2d> {
+	impl ToInputOutputArray for core::Vector<core::Point2d> {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Point2dG_inputOutputArray(self.as_raw_mut_VectorOfPoint2d(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Point2d> }
+	output_array_ref_forward! { core::Vector<core::Point2d> }
 	
 	pub type VectorOfPoint2f = core::Vector<core::Point2f>;
 	
@@ -1347,46 +1351,48 @@ mod core_types {
 		std_vectorLcv_Point2fG_clone_const,
 	}
 	
-	impl core::ToInputArray for core::Vector<core::Point2f> {
+	impl ToInputArray for core::Vector<core::Point2f> {
 		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Point2fG_inputArray_const(self.as_raw_VectorOfPoint2f(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToOutputArray for core::Vector<core::Point2f> {
+	input_array_ref_forward! { core::Vector<core::Point2f> }
+	
+	impl ToOutputArray for core::Vector<core::Point2f> {
 		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Point2fG_outputArray(self.as_raw_mut_VectorOfPoint2f(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToInputOutputArray for core::Vector<core::Point2f> {
+	impl ToInputOutputArray for core::Vector<core::Point2f> {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Point2fG_inputOutputArray(self.as_raw_mut_VectorOfPoint2f(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Point2f> }
+	output_array_ref_forward! { core::Vector<core::Point2f> }
 	
 	pub type VectorOfPoint3d = core::Vector<core::Point3d>;
 	
@@ -1409,46 +1415,48 @@ mod core_types {
 		std_vectorLcv_Point3dG_clone_const,
 	}
 	
-	impl core::ToInputArray for core::Vector<core::Point3d> {
+	impl ToInputArray for core::Vector<core::Point3d> {
 		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Point3dG_inputArray_const(self.as_raw_VectorOfPoint3d(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToOutputArray for core::Vector<core::Point3d> {
+	input_array_ref_forward! { core::Vector<core::Point3d> }
+	
+	impl ToOutputArray for core::Vector<core::Point3d> {
 		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Point3dG_outputArray(self.as_raw_mut_VectorOfPoint3d(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToInputOutputArray for core::Vector<core::Point3d> {
+	impl ToInputOutputArray for core::Vector<core::Point3d> {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Point3dG_inputOutputArray(self.as_raw_mut_VectorOfPoint3d(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Point3d> }
+	output_array_ref_forward! { core::Vector<core::Point3d> }
 	
 	pub type VectorOfPoint3f = core::Vector<core::Point3f>;
 	
@@ -1471,46 +1479,48 @@ mod core_types {
 		std_vectorLcv_Point3fG_clone_const,
 	}
 	
-	impl core::ToInputArray for core::Vector<core::Point3f> {
+	impl ToInputArray for core::Vector<core::Point3f> {
 		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Point3fG_inputArray_const(self.as_raw_VectorOfPoint3f(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToOutputArray for core::Vector<core::Point3f> {
+	input_array_ref_forward! { core::Vector<core::Point3f> }
+	
+	impl ToOutputArray for core::Vector<core::Point3f> {
 		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Point3fG_outputArray(self.as_raw_mut_VectorOfPoint3f(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToInputOutputArray for core::Vector<core::Point3f> {
+	impl ToInputOutputArray for core::Vector<core::Point3f> {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Point3fG_inputOutputArray(self.as_raw_mut_VectorOfPoint3f(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Point3f> }
+	output_array_ref_forward! { core::Vector<core::Point3f> }
 	
 	pub type VectorOfPoint3i = core::Vector<core::Point3i>;
 	
@@ -1533,46 +1543,48 @@ mod core_types {
 		std_vectorLcv_Point3iG_clone_const,
 	}
 	
-	impl core::ToInputArray for core::Vector<core::Point3i> {
+	impl ToInputArray for core::Vector<core::Point3i> {
 		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Point3iG_inputArray_const(self.as_raw_VectorOfPoint3i(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToOutputArray for core::Vector<core::Point3i> {
+	input_array_ref_forward! { core::Vector<core::Point3i> }
+	
+	impl ToOutputArray for core::Vector<core::Point3i> {
 		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Point3iG_outputArray(self.as_raw_mut_VectorOfPoint3i(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToInputOutputArray for core::Vector<core::Point3i> {
+	impl ToInputOutputArray for core::Vector<core::Point3i> {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Point3iG_inputOutputArray(self.as_raw_mut_VectorOfPoint3i(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Point3i> }
+	output_array_ref_forward! { core::Vector<core::Point3i> }
 	
 	pub type VectorOfRange = core::Vector<core::Range>;
 	
@@ -1613,46 +1625,48 @@ mod core_types {
 		std_vectorLcv_RectG_clone_const,
 	}
 	
-	impl core::ToInputArray for core::Vector<core::Rect> {
+	impl ToInputArray for core::Vector<core::Rect> {
 		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_RectG_inputArray_const(self.as_raw_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToOutputArray for core::Vector<core::Rect> {
+	input_array_ref_forward! { core::Vector<core::Rect> }
+	
+	impl ToOutputArray for core::Vector<core::Rect> {
 		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_RectG_outputArray(self.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToInputOutputArray for core::Vector<core::Rect> {
+	impl ToInputOutputArray for core::Vector<core::Rect> {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_RectG_inputOutputArray(self.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Rect> }
+	output_array_ref_forward! { core::Vector<core::Rect> }
 	
 	pub type VectorOfRect2d = core::Vector<core::Rect2d>;
 	
@@ -1675,46 +1689,48 @@ mod core_types {
 		std_vectorLcv_Rect2dG_clone_const,
 	}
 	
-	impl core::ToInputArray for core::Vector<core::Rect2d> {
+	impl ToInputArray for core::Vector<core::Rect2d> {
 		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Rect2dG_inputArray_const(self.as_raw_VectorOfRect2d(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToOutputArray for core::Vector<core::Rect2d> {
+	input_array_ref_forward! { core::Vector<core::Rect2d> }
+	
+	impl ToOutputArray for core::Vector<core::Rect2d> {
 		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Rect2dG_outputArray(self.as_raw_mut_VectorOfRect2d(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToInputOutputArray for core::Vector<core::Rect2d> {
+	impl ToInputOutputArray for core::Vector<core::Rect2d> {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Rect2dG_inputOutputArray(self.as_raw_mut_VectorOfRect2d(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Rect2d> }
+	output_array_ref_forward! { core::Vector<core::Rect2d> }
 	
 	pub type VectorOfRotatedRect = core::Vector<core::RotatedRect>;
 	
@@ -1758,46 +1774,48 @@ mod core_types {
 		std_vectorLcv_ScalarG_clone_const,
 	}
 	
-	impl core::ToInputArray for core::Vector<core::Scalar> {
+	impl ToInputArray for core::Vector<core::Scalar> {
 		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_ScalarG_inputArray_const(self.as_raw_VectorOfScalar(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToOutputArray for core::Vector<core::Scalar> {
+	input_array_ref_forward! { core::Vector<core::Scalar> }
+	
+	impl ToOutputArray for core::Vector<core::Scalar> {
 		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_ScalarG_outputArray(self.as_raw_mut_VectorOfScalar(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToInputOutputArray for core::Vector<core::Scalar> {
+	impl ToInputOutputArray for core::Vector<core::Scalar> {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_ScalarG_inputOutputArray(self.as_raw_mut_VectorOfScalar(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Scalar> }
+	output_array_ref_forward! { core::Vector<core::Scalar> }
 	
 	pub type VectorOfSize = core::Vector<core::Size>;
 	
@@ -1820,46 +1838,48 @@ mod core_types {
 		std_vectorLcv_SizeG_clone_const,
 	}
 	
-	impl core::ToInputArray for core::Vector<core::Size> {
+	impl ToInputArray for core::Vector<core::Size> {
 		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_SizeG_inputArray_const(self.as_raw_VectorOfSize(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToOutputArray for core::Vector<core::Size> {
+	input_array_ref_forward! { core::Vector<core::Size> }
+	
+	impl ToOutputArray for core::Vector<core::Size> {
 		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_SizeG_outputArray(self.as_raw_mut_VectorOfSize(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToInputOutputArray for core::Vector<core::Size> {
+	impl ToInputOutputArray for core::Vector<core::Size> {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_SizeG_inputOutputArray(self.as_raw_mut_VectorOfSize(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Size> }
+	output_array_ref_forward! { core::Vector<core::Size> }
 	
 	pub type VectorOfString = core::Vector<String>;
 	
@@ -1972,46 +1992,48 @@ mod core_types {
 		std_vectorLcv_Vec2dG_clone_const,
 	}
 	
-	impl core::ToInputArray for core::Vector<core::Vec2d> {
+	impl ToInputArray for core::Vector<core::Vec2d> {
 		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Vec2dG_inputArray_const(self.as_raw_VectorOfVec2d(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToOutputArray for core::Vector<core::Vec2d> {
+	input_array_ref_forward! { core::Vector<core::Vec2d> }
+	
+	impl ToOutputArray for core::Vector<core::Vec2d> {
 		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Vec2dG_outputArray(self.as_raw_mut_VectorOfVec2d(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToInputOutputArray for core::Vector<core::Vec2d> {
+	impl ToInputOutputArray for core::Vector<core::Vec2d> {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Vec2dG_inputOutputArray(self.as_raw_mut_VectorOfVec2d(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vec2d> }
+	output_array_ref_forward! { core::Vector<core::Vec2d> }
 	
 	pub type VectorOfVec2f = core::Vector<core::Vec2f>;
 	
@@ -2034,46 +2056,48 @@ mod core_types {
 		std_vectorLcv_Vec2fG_clone_const,
 	}
 	
-	impl core::ToInputArray for core::Vector<core::Vec2f> {
+	impl ToInputArray for core::Vector<core::Vec2f> {
 		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Vec2fG_inputArray_const(self.as_raw_VectorOfVec2f(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToOutputArray for core::Vector<core::Vec2f> {
+	input_array_ref_forward! { core::Vector<core::Vec2f> }
+	
+	impl ToOutputArray for core::Vector<core::Vec2f> {
 		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Vec2fG_outputArray(self.as_raw_mut_VectorOfVec2f(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToInputOutputArray for core::Vector<core::Vec2f> {
+	impl ToInputOutputArray for core::Vector<core::Vec2f> {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Vec2fG_inputOutputArray(self.as_raw_mut_VectorOfVec2f(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vec2f> }
+	output_array_ref_forward! { core::Vector<core::Vec2f> }
 	
 	pub type VectorOfVec2i = core::Vector<core::Vec2i>;
 	
@@ -2096,46 +2120,48 @@ mod core_types {
 		std_vectorLcv_Vec2iG_clone_const,
 	}
 	
-	impl core::ToInputArray for core::Vector<core::Vec2i> {
+	impl ToInputArray for core::Vector<core::Vec2i> {
 		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Vec2iG_inputArray_const(self.as_raw_VectorOfVec2i(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToOutputArray for core::Vector<core::Vec2i> {
+	input_array_ref_forward! { core::Vector<core::Vec2i> }
+	
+	impl ToOutputArray for core::Vector<core::Vec2i> {
 		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Vec2iG_outputArray(self.as_raw_mut_VectorOfVec2i(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToInputOutputArray for core::Vector<core::Vec2i> {
+	impl ToInputOutputArray for core::Vector<core::Vec2i> {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Vec2iG_inputOutputArray(self.as_raw_mut_VectorOfVec2i(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vec2i> }
+	output_array_ref_forward! { core::Vector<core::Vec2i> }
 	
 	pub type VectorOfVec3d = core::Vector<core::Vec3d>;
 	
@@ -2158,46 +2184,48 @@ mod core_types {
 		std_vectorLcv_Vec3dG_clone_const,
 	}
 	
-	impl core::ToInputArray for core::Vector<core::Vec3d> {
+	impl ToInputArray for core::Vector<core::Vec3d> {
 		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Vec3dG_inputArray_const(self.as_raw_VectorOfVec3d(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToOutputArray for core::Vector<core::Vec3d> {
+	input_array_ref_forward! { core::Vector<core::Vec3d> }
+	
+	impl ToOutputArray for core::Vector<core::Vec3d> {
 		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Vec3dG_outputArray(self.as_raw_mut_VectorOfVec3d(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToInputOutputArray for core::Vector<core::Vec3d> {
+	impl ToInputOutputArray for core::Vector<core::Vec3d> {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Vec3dG_inputOutputArray(self.as_raw_mut_VectorOfVec3d(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vec3d> }
+	output_array_ref_forward! { core::Vector<core::Vec3d> }
 	
 	pub type VectorOfVec3f = core::Vector<core::Vec3f>;
 	
@@ -2220,46 +2248,48 @@ mod core_types {
 		std_vectorLcv_Vec3fG_clone_const,
 	}
 	
-	impl core::ToInputArray for core::Vector<core::Vec3f> {
+	impl ToInputArray for core::Vector<core::Vec3f> {
 		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Vec3fG_inputArray_const(self.as_raw_VectorOfVec3f(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToOutputArray for core::Vector<core::Vec3f> {
+	input_array_ref_forward! { core::Vector<core::Vec3f> }
+	
+	impl ToOutputArray for core::Vector<core::Vec3f> {
 		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Vec3fG_outputArray(self.as_raw_mut_VectorOfVec3f(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToInputOutputArray for core::Vector<core::Vec3f> {
+	impl ToInputOutputArray for core::Vector<core::Vec3f> {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Vec3fG_inputOutputArray(self.as_raw_mut_VectorOfVec3f(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vec3f> }
+	output_array_ref_forward! { core::Vector<core::Vec3f> }
 	
 	pub type VectorOfVec3i = core::Vector<core::Vec3i>;
 	
@@ -2282,46 +2312,48 @@ mod core_types {
 		std_vectorLcv_Vec3iG_clone_const,
 	}
 	
-	impl core::ToInputArray for core::Vector<core::Vec3i> {
+	impl ToInputArray for core::Vector<core::Vec3i> {
 		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Vec3iG_inputArray_const(self.as_raw_VectorOfVec3i(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToOutputArray for core::Vector<core::Vec3i> {
+	input_array_ref_forward! { core::Vector<core::Vec3i> }
+	
+	impl ToOutputArray for core::Vector<core::Vec3i> {
 		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Vec3iG_outputArray(self.as_raw_mut_VectorOfVec3i(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToInputOutputArray for core::Vector<core::Vec3i> {
+	impl ToInputOutputArray for core::Vector<core::Vec3i> {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Vec3iG_inputOutputArray(self.as_raw_mut_VectorOfVec3i(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vec3i> }
+	output_array_ref_forward! { core::Vector<core::Vec3i> }
 	
 	pub type VectorOfVec4f = core::Vector<core::Vec4f>;
 	
@@ -2344,46 +2376,48 @@ mod core_types {
 		std_vectorLcv_Vec4fG_clone_const,
 	}
 	
-	impl core::ToInputArray for core::Vector<core::Vec4f> {
+	impl ToInputArray for core::Vector<core::Vec4f> {
 		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Vec4fG_inputArray_const(self.as_raw_VectorOfVec4f(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToOutputArray for core::Vector<core::Vec4f> {
+	input_array_ref_forward! { core::Vector<core::Vec4f> }
+	
+	impl ToOutputArray for core::Vector<core::Vec4f> {
 		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Vec4fG_outputArray(self.as_raw_mut_VectorOfVec4f(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToInputOutputArray for core::Vector<core::Vec4f> {
+	impl ToInputOutputArray for core::Vector<core::Vec4f> {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Vec4fG_inputOutputArray(self.as_raw_mut_VectorOfVec4f(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vec4f> }
+	output_array_ref_forward! { core::Vector<core::Vec4f> }
 	
 	pub type VectorOfVec4i = core::Vector<core::Vec4i>;
 	
@@ -2406,46 +2440,48 @@ mod core_types {
 		std_vectorLcv_Vec4iG_clone_const,
 	}
 	
-	impl core::ToInputArray for core::Vector<core::Vec4i> {
+	impl ToInputArray for core::Vector<core::Vec4i> {
 		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Vec4iG_inputArray_const(self.as_raw_VectorOfVec4i(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToOutputArray for core::Vector<core::Vec4i> {
+	input_array_ref_forward! { core::Vector<core::Vec4i> }
+	
+	impl ToOutputArray for core::Vector<core::Vec4i> {
 		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Vec4iG_outputArray(self.as_raw_mut_VectorOfVec4i(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToInputOutputArray for core::Vector<core::Vec4i> {
+	impl ToInputOutputArray for core::Vector<core::Vec4i> {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Vec4iG_inputOutputArray(self.as_raw_mut_VectorOfVec4i(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vec4i> }
+	output_array_ref_forward! { core::Vector<core::Vec4i> }
 	
 	pub type VectorOfVec6f = core::Vector<core::Vec6f>;
 	
@@ -2468,46 +2504,48 @@ mod core_types {
 		std_vectorLcv_Vec6fG_clone_const,
 	}
 	
-	impl core::ToInputArray for core::Vector<core::Vec6f> {
+	impl ToInputArray for core::Vector<core::Vec6f> {
 		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Vec6fG_inputArray_const(self.as_raw_VectorOfVec6f(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToOutputArray for core::Vector<core::Vec6f> {
+	input_array_ref_forward! { core::Vector<core::Vec6f> }
+	
+	impl ToOutputArray for core::Vector<core::Vec6f> {
 		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Vec6fG_outputArray(self.as_raw_mut_VectorOfVec6f(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToInputOutputArray for core::Vector<core::Vec6f> {
+	impl ToInputOutputArray for core::Vector<core::Vec6f> {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLcv_Vec6fG_inputOutputArray(self.as_raw_mut_VectorOfVec6f(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vec6f> }
+	output_array_ref_forward! { core::Vector<core::Vec6f> }
 	
 	pub type VectorOfVectorOfDMatch = core::Vector<core::Vector<core::DMatch>>;
 	
@@ -2581,46 +2619,109 @@ mod core_types {
 	}
 	vector_non_copy_or_bool! { clone core::Vector<core::Point> }
 	
-	impl core::ToInputArray for core::Vector<core::Vector<core::Point>> {
+	impl ToInputArray for core::Vector<core::Vector<core::Point>> {
 		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLstd_vectorLcv_PointGG_inputArray_const(self.as_raw_VectorOfVectorOfPoint(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToOutputArray for core::Vector<core::Vector<core::Point>> {
+	input_array_ref_forward! { core::Vector<core::Vector<core::Point>> }
+	
+	impl ToOutputArray for core::Vector<core::Vector<core::Point>> {
 		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLstd_vectorLcv_PointGG_outputArray(self.as_raw_mut_VectorOfVectorOfPoint(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToInputOutputArray for core::Vector<core::Vector<core::Point>> {
+	impl ToInputOutputArray for core::Vector<core::Vector<core::Point>> {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLstd_vectorLcv_PointGG_inputOutputArray(self.as_raw_mut_VectorOfVectorOfPoint(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vector<core::Point>> }
+	output_array_ref_forward! { core::Vector<core::Vector<core::Point>> }
+	
+	pub type VectorOfVectorOfPoint2d = core::Vector<core::Vector<core::Point2d>>;
+	
+	impl core::Vector<core::Vector<core::Point2d>> {
+		pub fn as_raw_VectorOfVectorOfPoint2d(&self) -> extern_send!(Self) { self.as_raw() }
+		pub fn as_raw_mut_VectorOfVectorOfPoint2d(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+	
+	vector_extern! { core::Vector<core::Point2d>,
+		std_vectorLstd_vectorLcv_Point2dGG_new_const, std_vectorLstd_vectorLcv_Point2dGG_delete,
+		std_vectorLstd_vectorLcv_Point2dGG_len_const, std_vectorLstd_vectorLcv_Point2dGG_isEmpty_const,
+		std_vectorLstd_vectorLcv_Point2dGG_capacity_const, std_vectorLstd_vectorLcv_Point2dGG_shrinkToFit,
+		std_vectorLstd_vectorLcv_Point2dGG_reserve_size_t, std_vectorLstd_vectorLcv_Point2dGG_remove_size_t,
+		std_vectorLstd_vectorLcv_Point2dGG_swap_size_t_size_t, std_vectorLstd_vectorLcv_Point2dGG_clear,
+		std_vectorLstd_vectorLcv_Point2dGG_get_const_size_t, std_vectorLstd_vectorLcv_Point2dGG_set_size_t_const_vectorLPoint2dG,
+		std_vectorLstd_vectorLcv_Point2dGG_push_const_vectorLPoint2dG, std_vectorLstd_vectorLcv_Point2dGG_insert_size_t_const_vectorLPoint2dG,
+	}
+	vector_non_copy_or_bool! { clone core::Vector<core::Point2d> }
+	
+	impl ToInputArray for core::Vector<core::Vector<core::Point2d>> {
+		#[inline]
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::std_vectorLstd_vectorLcv_Point2dGG_inputArray_const(self.as_raw_VectorOfVectorOfPoint2d(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+	}
+	
+	input_array_ref_forward! { core::Vector<core::Vector<core::Point2d>> }
+	
+	impl ToOutputArray for core::Vector<core::Vector<core::Point2d>> {
+		#[inline]
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::std_vectorLstd_vectorLcv_Point2dGG_outputArray(self.as_raw_mut_VectorOfVectorOfPoint2d(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+	}
+	
+	impl ToInputOutputArray for core::Vector<core::Vector<core::Point2d>> {
+		#[inline]
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::std_vectorLstd_vectorLcv_Point2dGG_inputOutputArray(self.as_raw_mut_VectorOfVectorOfPoint2d(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+	}
+	
+	output_array_ref_forward! { core::Vector<core::Vector<core::Point2d>> }
 	
 	pub type VectorOfVectorOfPoint2f = core::Vector<core::Vector<core::Point2f>>;
 	
@@ -2640,46 +2741,48 @@ mod core_types {
 	}
 	vector_non_copy_or_bool! { clone core::Vector<core::Point2f> }
 	
-	impl core::ToInputArray for core::Vector<core::Vector<core::Point2f>> {
+	impl ToInputArray for core::Vector<core::Vector<core::Point2f>> {
 		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLstd_vectorLcv_Point2fGG_inputArray_const(self.as_raw_VectorOfVectorOfPoint2f(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToOutputArray for core::Vector<core::Vector<core::Point2f>> {
+	input_array_ref_forward! { core::Vector<core::Vector<core::Point2f>> }
+	
+	impl ToOutputArray for core::Vector<core::Vector<core::Point2f>> {
 		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLstd_vectorLcv_Point2fGG_outputArray(self.as_raw_mut_VectorOfVectorOfPoint2f(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToInputOutputArray for core::Vector<core::Vector<core::Point2f>> {
+	impl ToInputOutputArray for core::Vector<core::Vector<core::Point2f>> {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLstd_vectorLcv_Point2fGG_inputOutputArray(self.as_raw_mut_VectorOfVectorOfPoint2f(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vector<core::Point2f>> }
+	output_array_ref_forward! { core::Vector<core::Vector<core::Point2f>> }
 	
 	pub type VectorOfVectorOfPoint3d = core::Vector<core::Vector<core::Point3d>>;
 	
@@ -2699,46 +2802,48 @@ mod core_types {
 	}
 	vector_non_copy_or_bool! { clone core::Vector<core::Point3d> }
 	
-	impl core::ToInputArray for core::Vector<core::Vector<core::Point3d>> {
+	impl ToInputArray for core::Vector<core::Vector<core::Point3d>> {
 		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLstd_vectorLcv_Point3dGG_inputArray_const(self.as_raw_VectorOfVectorOfPoint3d(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToOutputArray for core::Vector<core::Vector<core::Point3d>> {
+	input_array_ref_forward! { core::Vector<core::Vector<core::Point3d>> }
+	
+	impl ToOutputArray for core::Vector<core::Vector<core::Point3d>> {
 		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLstd_vectorLcv_Point3dGG_outputArray(self.as_raw_mut_VectorOfVectorOfPoint3d(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToInputOutputArray for core::Vector<core::Vector<core::Point3d>> {
+	impl ToInputOutputArray for core::Vector<core::Vector<core::Point3d>> {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLstd_vectorLcv_Point3dGG_inputOutputArray(self.as_raw_mut_VectorOfVectorOfPoint3d(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vector<core::Point3d>> }
+	output_array_ref_forward! { core::Vector<core::Vector<core::Point3d>> }
 	
 	pub type VectorOfVectorOfPoint3f = core::Vector<core::Vector<core::Point3f>>;
 	
@@ -2758,46 +2863,48 @@ mod core_types {
 	}
 	vector_non_copy_or_bool! { clone core::Vector<core::Point3f> }
 	
-	impl core::ToInputArray for core::Vector<core::Vector<core::Point3f>> {
+	impl ToInputArray for core::Vector<core::Vector<core::Point3f>> {
 		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLstd_vectorLcv_Point3fGG_inputArray_const(self.as_raw_VectorOfVectorOfPoint3f(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToOutputArray for core::Vector<core::Vector<core::Point3f>> {
+	input_array_ref_forward! { core::Vector<core::Vector<core::Point3f>> }
+	
+	impl ToOutputArray for core::Vector<core::Vector<core::Point3f>> {
 		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLstd_vectorLcv_Point3fGG_outputArray(self.as_raw_mut_VectorOfVectorOfPoint3f(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToInputOutputArray for core::Vector<core::Vector<core::Point3f>> {
+	impl ToInputOutputArray for core::Vector<core::Vector<core::Point3f>> {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLstd_vectorLcv_Point3fGG_inputOutputArray(self.as_raw_mut_VectorOfVectorOfPoint3f(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vector<core::Point3f>> }
+	output_array_ref_forward! { core::Vector<core::Vector<core::Point3f>> }
 	
 	pub type VectorOfVectorOfPoint3i = core::Vector<core::Vector<core::Point3i>>;
 	
@@ -2817,46 +2924,48 @@ mod core_types {
 	}
 	vector_non_copy_or_bool! { clone core::Vector<core::Point3i> }
 	
-	impl core::ToInputArray for core::Vector<core::Vector<core::Point3i>> {
+	impl ToInputArray for core::Vector<core::Vector<core::Point3i>> {
 		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLstd_vectorLcv_Point3iGG_inputArray_const(self.as_raw_VectorOfVectorOfPoint3i(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToOutputArray for core::Vector<core::Vector<core::Point3i>> {
+	input_array_ref_forward! { core::Vector<core::Vector<core::Point3i>> }
+	
+	impl ToOutputArray for core::Vector<core::Vector<core::Point3i>> {
 		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLstd_vectorLcv_Point3iGG_outputArray(self.as_raw_mut_VectorOfVectorOfPoint3i(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToInputOutputArray for core::Vector<core::Vector<core::Point3i>> {
+	impl ToInputOutputArray for core::Vector<core::Vector<core::Point3i>> {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLstd_vectorLcv_Point3iGG_inputOutputArray(self.as_raw_mut_VectorOfVectorOfPoint3i(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vector<core::Point3i>> }
+	output_array_ref_forward! { core::Vector<core::Vector<core::Point3i>> }
 	
 	pub type VectorOfVectorOfRange = core::Vector<core::Vector<core::Range>>;
 	
@@ -2876,6 +2985,128 @@ mod core_types {
 	}
 	vector_non_copy_or_bool! { core::Vector<core::Range> }
 	
+	pub type VectorOfVectorOfVec2d = core::Vector<core::Vector<core::Vec2d>>;
+	
+	impl core::Vector<core::Vector<core::Vec2d>> {
+		pub fn as_raw_VectorOfVectorOfVec2d(&self) -> extern_send!(Self) { self.as_raw() }
+		pub fn as_raw_mut_VectorOfVectorOfVec2d(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+	
+	vector_extern! { core::Vector<core::Vec2d>,
+		std_vectorLstd_vectorLcv_Vec2dGG_new_const, std_vectorLstd_vectorLcv_Vec2dGG_delete,
+		std_vectorLstd_vectorLcv_Vec2dGG_len_const, std_vectorLstd_vectorLcv_Vec2dGG_isEmpty_const,
+		std_vectorLstd_vectorLcv_Vec2dGG_capacity_const, std_vectorLstd_vectorLcv_Vec2dGG_shrinkToFit,
+		std_vectorLstd_vectorLcv_Vec2dGG_reserve_size_t, std_vectorLstd_vectorLcv_Vec2dGG_remove_size_t,
+		std_vectorLstd_vectorLcv_Vec2dGG_swap_size_t_size_t, std_vectorLstd_vectorLcv_Vec2dGG_clear,
+		std_vectorLstd_vectorLcv_Vec2dGG_get_const_size_t, std_vectorLstd_vectorLcv_Vec2dGG_set_size_t_const_vectorLVec2dG,
+		std_vectorLstd_vectorLcv_Vec2dGG_push_const_vectorLVec2dG, std_vectorLstd_vectorLcv_Vec2dGG_insert_size_t_const_vectorLVec2dG,
+	}
+	vector_non_copy_or_bool! { clone core::Vector<core::Vec2d> }
+	
+	impl ToInputArray for core::Vector<core::Vector<core::Vec2d>> {
+		#[inline]
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::std_vectorLstd_vectorLcv_Vec2dGG_inputArray_const(self.as_raw_VectorOfVectorOfVec2d(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+	}
+	
+	input_array_ref_forward! { core::Vector<core::Vector<core::Vec2d>> }
+	
+	impl ToOutputArray for core::Vector<core::Vector<core::Vec2d>> {
+		#[inline]
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::std_vectorLstd_vectorLcv_Vec2dGG_outputArray(self.as_raw_mut_VectorOfVectorOfVec2d(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+	}
+	
+	impl ToInputOutputArray for core::Vector<core::Vector<core::Vec2d>> {
+		#[inline]
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::std_vectorLstd_vectorLcv_Vec2dGG_inputOutputArray(self.as_raw_mut_VectorOfVectorOfVec2d(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+	}
+	
+	output_array_ref_forward! { core::Vector<core::Vector<core::Vec2d>> }
+	
+	pub type VectorOfVectorOfVec2f = core::Vector<core::Vector<core::Vec2f>>;
+	
+	impl core::Vector<core::Vector<core::Vec2f>> {
+		pub fn as_raw_VectorOfVectorOfVec2f(&self) -> extern_send!(Self) { self.as_raw() }
+		pub fn as_raw_mut_VectorOfVectorOfVec2f(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+	
+	vector_extern! { core::Vector<core::Vec2f>,
+		std_vectorLstd_vectorLcv_Vec2fGG_new_const, std_vectorLstd_vectorLcv_Vec2fGG_delete,
+		std_vectorLstd_vectorLcv_Vec2fGG_len_const, std_vectorLstd_vectorLcv_Vec2fGG_isEmpty_const,
+		std_vectorLstd_vectorLcv_Vec2fGG_capacity_const, std_vectorLstd_vectorLcv_Vec2fGG_shrinkToFit,
+		std_vectorLstd_vectorLcv_Vec2fGG_reserve_size_t, std_vectorLstd_vectorLcv_Vec2fGG_remove_size_t,
+		std_vectorLstd_vectorLcv_Vec2fGG_swap_size_t_size_t, std_vectorLstd_vectorLcv_Vec2fGG_clear,
+		std_vectorLstd_vectorLcv_Vec2fGG_get_const_size_t, std_vectorLstd_vectorLcv_Vec2fGG_set_size_t_const_vectorLVec2fG,
+		std_vectorLstd_vectorLcv_Vec2fGG_push_const_vectorLVec2fG, std_vectorLstd_vectorLcv_Vec2fGG_insert_size_t_const_vectorLVec2fG,
+	}
+	vector_non_copy_or_bool! { clone core::Vector<core::Vec2f> }
+	
+	impl ToInputArray for core::Vector<core::Vector<core::Vec2f>> {
+		#[inline]
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::std_vectorLstd_vectorLcv_Vec2fGG_inputArray_const(self.as_raw_VectorOfVectorOfVec2f(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+	}
+	
+	input_array_ref_forward! { core::Vector<core::Vector<core::Vec2f>> }
+	
+	impl ToOutputArray for core::Vector<core::Vector<core::Vec2f>> {
+		#[inline]
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::std_vectorLstd_vectorLcv_Vec2fGG_outputArray(self.as_raw_mut_VectorOfVectorOfVec2f(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+	}
+	
+	impl ToInputOutputArray for core::Vector<core::Vector<core::Vec2f>> {
+		#[inline]
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::std_vectorLstd_vectorLcv_Vec2fGG_inputOutputArray(self.as_raw_mut_VectorOfVectorOfVec2f(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+	}
+	
+	output_array_ref_forward! { core::Vector<core::Vector<core::Vec2f>> }
+	
 	pub type VectorOfVectorOfVec2i = core::Vector<core::Vector<core::Vec2i>>;
 	
 	impl core::Vector<core::Vector<core::Vec2i>> {
@@ -2894,46 +3125,109 @@ mod core_types {
 	}
 	vector_non_copy_or_bool! { clone core::Vector<core::Vec2i> }
 	
-	impl core::ToInputArray for core::Vector<core::Vector<core::Vec2i>> {
+	impl ToInputArray for core::Vector<core::Vector<core::Vec2i>> {
 		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLstd_vectorLcv_Vec2iGG_inputArray_const(self.as_raw_VectorOfVectorOfVec2i(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToOutputArray for core::Vector<core::Vector<core::Vec2i>> {
+	input_array_ref_forward! { core::Vector<core::Vector<core::Vec2i>> }
+	
+	impl ToOutputArray for core::Vector<core::Vector<core::Vec2i>> {
 		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLstd_vectorLcv_Vec2iGG_outputArray(self.as_raw_mut_VectorOfVectorOfVec2i(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToInputOutputArray for core::Vector<core::Vector<core::Vec2i>> {
+	impl ToInputOutputArray for core::Vector<core::Vector<core::Vec2i>> {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLstd_vectorLcv_Vec2iGG_inputOutputArray(self.as_raw_mut_VectorOfVectorOfVec2i(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vector<core::Vec2i>> }
+	output_array_ref_forward! { core::Vector<core::Vector<core::Vec2i>> }
+	
+	pub type VectorOfVectorOfVec3d = core::Vector<core::Vector<core::Vec3d>>;
+	
+	impl core::Vector<core::Vector<core::Vec3d>> {
+		pub fn as_raw_VectorOfVectorOfVec3d(&self) -> extern_send!(Self) { self.as_raw() }
+		pub fn as_raw_mut_VectorOfVectorOfVec3d(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+	
+	vector_extern! { core::Vector<core::Vec3d>,
+		std_vectorLstd_vectorLcv_Vec3dGG_new_const, std_vectorLstd_vectorLcv_Vec3dGG_delete,
+		std_vectorLstd_vectorLcv_Vec3dGG_len_const, std_vectorLstd_vectorLcv_Vec3dGG_isEmpty_const,
+		std_vectorLstd_vectorLcv_Vec3dGG_capacity_const, std_vectorLstd_vectorLcv_Vec3dGG_shrinkToFit,
+		std_vectorLstd_vectorLcv_Vec3dGG_reserve_size_t, std_vectorLstd_vectorLcv_Vec3dGG_remove_size_t,
+		std_vectorLstd_vectorLcv_Vec3dGG_swap_size_t_size_t, std_vectorLstd_vectorLcv_Vec3dGG_clear,
+		std_vectorLstd_vectorLcv_Vec3dGG_get_const_size_t, std_vectorLstd_vectorLcv_Vec3dGG_set_size_t_const_vectorLVec3dG,
+		std_vectorLstd_vectorLcv_Vec3dGG_push_const_vectorLVec3dG, std_vectorLstd_vectorLcv_Vec3dGG_insert_size_t_const_vectorLVec3dG,
+	}
+	vector_non_copy_or_bool! { clone core::Vector<core::Vec3d> }
+	
+	impl ToInputArray for core::Vector<core::Vector<core::Vec3d>> {
+		#[inline]
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::std_vectorLstd_vectorLcv_Vec3dGG_inputArray_const(self.as_raw_VectorOfVectorOfVec3d(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+	}
+	
+	input_array_ref_forward! { core::Vector<core::Vector<core::Vec3d>> }
+	
+	impl ToOutputArray for core::Vector<core::Vector<core::Vec3d>> {
+		#[inline]
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::std_vectorLstd_vectorLcv_Vec3dGG_outputArray(self.as_raw_mut_VectorOfVectorOfVec3d(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+	}
+	
+	impl ToInputOutputArray for core::Vector<core::Vector<core::Vec3d>> {
+		#[inline]
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::std_vectorLstd_vectorLcv_Vec3dGG_inputOutputArray(self.as_raw_mut_VectorOfVectorOfVec3d(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+	}
+	
+	output_array_ref_forward! { core::Vector<core::Vector<core::Vec3d>> }
 	
 	pub type VectorOfVectorOfVec3f = core::Vector<core::Vector<core::Vec3f>>;
 	
@@ -2953,46 +3247,48 @@ mod core_types {
 	}
 	vector_non_copy_or_bool! { clone core::Vector<core::Vec3f> }
 	
-	impl core::ToInputArray for core::Vector<core::Vector<core::Vec3f>> {
+	impl ToInputArray for core::Vector<core::Vector<core::Vec3f>> {
 		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLstd_vectorLcv_Vec3fGG_inputArray_const(self.as_raw_VectorOfVectorOfVec3f(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToOutputArray for core::Vector<core::Vector<core::Vec3f>> {
+	input_array_ref_forward! { core::Vector<core::Vector<core::Vec3f>> }
+	
+	impl ToOutputArray for core::Vector<core::Vector<core::Vec3f>> {
 		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLstd_vectorLcv_Vec3fGG_outputArray(self.as_raw_mut_VectorOfVectorOfVec3f(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToInputOutputArray for core::Vector<core::Vector<core::Vec3f>> {
+	impl ToInputOutputArray for core::Vector<core::Vector<core::Vec3f>> {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLstd_vectorLcv_Vec3fGG_inputOutputArray(self.as_raw_mut_VectorOfVectorOfVec3f(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vector<core::Vec3f>> }
+	output_array_ref_forward! { core::Vector<core::Vector<core::Vec3f>> }
 	
 	pub type VectorOfVectorOfc_char = core::Vector<core::Vector<c_char>>;
 	
@@ -3019,46 +3315,48 @@ mod core_types {
 	}
 	vector_non_copy_or_bool! { clone core::Vector<f32> }
 	
-	impl core::ToInputArray for core::Vector<core::Vector<f32>> {
+	impl ToInputArray for core::Vector<core::Vector<f32>> {
 		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLstd_vectorLfloatGG_inputArray_const(self.as_raw_VectorOfVectorOff32(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToOutputArray for core::Vector<core::Vector<f32>> {
+	input_array_ref_forward! { core::Vector<core::Vector<f32>> }
+	
+	impl ToOutputArray for core::Vector<core::Vector<f32>> {
 		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLstd_vectorLfloatGG_outputArray(self.as_raw_mut_VectorOfVectorOff32(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToInputOutputArray for core::Vector<core::Vector<f32>> {
+	impl ToInputOutputArray for core::Vector<core::Vector<f32>> {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLstd_vectorLfloatGG_inputOutputArray(self.as_raw_mut_VectorOfVectorOff32(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vector<f32>> }
+	output_array_ref_forward! { core::Vector<core::Vector<f32>> }
 	
 	pub type VectorOfVectorOff64 = core::Vector<core::Vector<f64>>;
 	
@@ -3078,46 +3376,48 @@ mod core_types {
 	}
 	vector_non_copy_or_bool! { clone core::Vector<f64> }
 	
-	impl core::ToInputArray for core::Vector<core::Vector<f64>> {
+	impl ToInputArray for core::Vector<core::Vector<f64>> {
 		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLstd_vectorLdoubleGG_inputArray_const(self.as_raw_VectorOfVectorOff64(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToOutputArray for core::Vector<core::Vector<f64>> {
+	input_array_ref_forward! { core::Vector<core::Vector<f64>> }
+	
+	impl ToOutputArray for core::Vector<core::Vector<f64>> {
 		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLstd_vectorLdoubleGG_outputArray(self.as_raw_mut_VectorOfVectorOff64(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToInputOutputArray for core::Vector<core::Vector<f64>> {
+	impl ToInputOutputArray for core::Vector<core::Vector<f64>> {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLstd_vectorLdoubleGG_inputOutputArray(self.as_raw_mut_VectorOfVectorOff64(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vector<f64>> }
+	output_array_ref_forward! { core::Vector<core::Vector<f64>> }
 	
 	pub type VectorOfVectorOfi32 = core::Vector<core::Vector<i32>>;
 	
@@ -3137,46 +3437,48 @@ mod core_types {
 	}
 	vector_non_copy_or_bool! { clone core::Vector<i32> }
 	
-	impl core::ToInputArray for core::Vector<core::Vector<i32>> {
+	impl ToInputArray for core::Vector<core::Vector<i32>> {
 		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLstd_vectorLintGG_inputArray_const(self.as_raw_VectorOfVectorOfi32(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToOutputArray for core::Vector<core::Vector<i32>> {
+	input_array_ref_forward! { core::Vector<core::Vector<i32>> }
+	
+	impl ToOutputArray for core::Vector<core::Vector<i32>> {
 		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLstd_vectorLintGG_outputArray(self.as_raw_mut_VectorOfVectorOfi32(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToInputOutputArray for core::Vector<core::Vector<i32>> {
+	impl ToInputOutputArray for core::Vector<core::Vector<i32>> {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLstd_vectorLintGG_inputOutputArray(self.as_raw_mut_VectorOfVectorOfi32(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vector<i32>> }
+	output_array_ref_forward! { core::Vector<core::Vector<i32>> }
 	
 	pub type VectorOfVectorOfi8 = core::Vector<core::Vector<i8>>;
 	
@@ -3214,46 +3516,48 @@ mod core_types {
 	}
 	vector_non_copy_or_bool! { clone core::Vector<u8> }
 	
-	impl core::ToInputArray for core::Vector<core::Vector<u8>> {
+	impl ToInputArray for core::Vector<core::Vector<u8>> {
 		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLstd_vectorLuint8_tGG_inputArray_const(self.as_raw_VectorOfVectorOfu8(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToOutputArray for core::Vector<core::Vector<u8>> {
+	input_array_ref_forward! { core::Vector<core::Vector<u8>> }
+	
+	impl ToOutputArray for core::Vector<core::Vector<u8>> {
 		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLstd_vectorLuint8_tGG_outputArray(self.as_raw_mut_VectorOfVectorOfu8(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToInputOutputArray for core::Vector<core::Vector<u8>> {
+	impl ToInputOutputArray for core::Vector<core::Vector<u8>> {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLstd_vectorLuint8_tGG_inputOutputArray(self.as_raw_mut_VectorOfVectorOfu8(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<core::Vector<u8>> }
+	output_array_ref_forward! { core::Vector<core::Vector<u8>> }
 	
 	pub type VectorOfbool = core::Vector<bool>;
 	
@@ -3272,6 +3576,21 @@ mod core_types {
 		std_vectorLboolG_push_const_bool, std_vectorLboolG_insert_size_t_const_bool,
 	}
 	vector_non_copy_or_bool! { clone bool }
+	
+	impl ToInputArray for core::Vector<bool> {
+		#[inline]
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::std_vectorLboolG_inputArray_const(self.as_raw_VectorOfbool(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+	}
+	
+	input_array_ref_forward! { core::Vector<bool> }
 	
 	pub type VectorOfc_char = core::Vector<c_char>;
 	
@@ -3301,46 +3620,48 @@ mod core_types {
 		std_vectorLfloatG_clone_const,
 	}
 	
-	impl core::ToInputArray for core::Vector<f32> {
+	impl ToInputArray for core::Vector<f32> {
 		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLfloatG_inputArray_const(self.as_raw_VectorOff32(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToOutputArray for core::Vector<f32> {
+	input_array_ref_forward! { core::Vector<f32> }
+	
+	impl ToOutputArray for core::Vector<f32> {
 		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLfloatG_outputArray(self.as_raw_mut_VectorOff32(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToInputOutputArray for core::Vector<f32> {
+	impl ToInputOutputArray for core::Vector<f32> {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLfloatG_inputOutputArray(self.as_raw_mut_VectorOff32(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<f32> }
+	output_array_ref_forward! { core::Vector<f32> }
 	
 	pub type VectorOff64 = core::Vector<f64>;
 	
@@ -3363,46 +3684,48 @@ mod core_types {
 		std_vectorLdoubleG_clone_const,
 	}
 	
-	impl core::ToInputArray for core::Vector<f64> {
+	impl ToInputArray for core::Vector<f64> {
 		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLdoubleG_inputArray_const(self.as_raw_VectorOff64(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToOutputArray for core::Vector<f64> {
+	input_array_ref_forward! { core::Vector<f64> }
+	
+	impl ToOutputArray for core::Vector<f64> {
 		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLdoubleG_outputArray(self.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToInputOutputArray for core::Vector<f64> {
+	impl ToInputOutputArray for core::Vector<f64> {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLdoubleG_inputOutputArray(self.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<f64> }
+	output_array_ref_forward! { core::Vector<f64> }
 	
 	pub type VectorOfi32 = core::Vector<i32>;
 	
@@ -3425,46 +3748,48 @@ mod core_types {
 		std_vectorLintG_clone_const,
 	}
 	
-	impl core::ToInputArray for core::Vector<i32> {
+	impl ToInputArray for core::Vector<i32> {
 		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLintG_inputArray_const(self.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToOutputArray for core::Vector<i32> {
+	input_array_ref_forward! { core::Vector<i32> }
+	
+	impl ToOutputArray for core::Vector<i32> {
 		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLintG_outputArray(self.as_raw_mut_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToInputOutputArray for core::Vector<i32> {
+	impl ToInputOutputArray for core::Vector<i32> {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLintG_inputOutputArray(self.as_raw_mut_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<i32> }
+	output_array_ref_forward! { core::Vector<i32> }
 	
 	pub type VectorOfi8 = core::Vector<i8>;
 	
@@ -3529,46 +3854,48 @@ mod core_types {
 		std_vectorLuint8_tG_clone_const,
 	}
 	
-	impl core::ToInputArray for core::Vector<u8> {
+	impl ToInputArray for core::Vector<u8> {
 		#[inline]
-		fn input_array(&self) -> Result<core::_InputArray> {
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLuint8_tG_inputArray_const(self.as_raw_VectorOfu8(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToOutputArray for core::Vector<u8> {
+	input_array_ref_forward! { core::Vector<u8> }
+	
+	impl ToOutputArray for core::Vector<u8> {
 		#[inline]
-		fn output_array(&mut self) -> Result<core::_OutputArray> {
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLuint8_tG_outputArray(self.as_raw_mut_VectorOfu8(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	impl core::ToInputOutputArray for core::Vector<u8> {
+	impl ToInputOutputArray for core::Vector<u8> {
 		#[inline]
-		fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::std_vectorLuint8_tG_inputOutputArray(self.as_raw_mut_VectorOfu8(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputOutputArray::opencv_from_extern(ret) };
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
 	}
 	
-	input_output_array_ref_forward! { core::Vector<u8> }
+	output_array_ref_forward! { core::Vector<u8> }
 	
 }
 #[cfg(ocvrs_has_module_core)]
@@ -5935,6 +6262,58 @@ mod dnn_types {
 		}
 	}
 	
+	pub type PtrOfAttentionLayer = core::Ptr<crate::dnn::AttentionLayer>;
+	
+	ptr_extern! { crate::dnn::AttentionLayer,
+		cv_PtrLcv_dnn_AttentionLayerG_delete, cv_PtrLcv_dnn_AttentionLayerG_getInnerPtr_const, cv_PtrLcv_dnn_AttentionLayerG_getInnerPtrMut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::AttentionLayer, cv_PtrLcv_dnn_AttentionLayerG_new_const_AttentionLayer }
+	impl core::Ptr<crate::dnn::AttentionLayer> {
+		#[inline] pub fn as_raw_PtrOfAttentionLayer(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfAttentionLayer(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::AttentionLayerTraitConst for core::Ptr<crate::dnn::AttentionLayer> {
+		#[inline] fn as_raw_AttentionLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::AttentionLayerTrait for core::Ptr<crate::dnn::AttentionLayer> {
+		#[inline] fn as_raw_mut_AttentionLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::AttentionLayer> {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for core::Ptr<crate::dnn::AttentionLayer> {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	ptr_cast_base! { PtrOfAttentionLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_AttentionLayerG_to_PtrOfAlgorithm }
+	
+	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::AttentionLayer> {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for core::Ptr<crate::dnn::AttentionLayer> {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	ptr_cast_base! { PtrOfAttentionLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AttentionLayerG_to_PtrOfLayer }
+	
+	impl std::fmt::Debug for core::Ptr<crate::dnn::AttentionLayer> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfAttentionLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	pub type PtrOfBNLLLayer = core::Ptr<crate::dnn::BNLLLayer>;
 	
 	ptr_extern! { crate::dnn::BNLLLayer,
@@ -7451,6 +7830,58 @@ mod dnn_types {
 		}
 	}
 	
+	pub type PtrOfEinsumLayer = core::Ptr<crate::dnn::EinsumLayer>;
+	
+	ptr_extern! { crate::dnn::EinsumLayer,
+		cv_PtrLcv_dnn_EinsumLayerG_delete, cv_PtrLcv_dnn_EinsumLayerG_getInnerPtr_const, cv_PtrLcv_dnn_EinsumLayerG_getInnerPtrMut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::EinsumLayer, cv_PtrLcv_dnn_EinsumLayerG_new_const_EinsumLayer }
+	impl core::Ptr<crate::dnn::EinsumLayer> {
+		#[inline] pub fn as_raw_PtrOfEinsumLayer(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfEinsumLayer(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::EinsumLayerTraitConst for core::Ptr<crate::dnn::EinsumLayer> {
+		#[inline] fn as_raw_EinsumLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::EinsumLayerTrait for core::Ptr<crate::dnn::EinsumLayer> {
+		#[inline] fn as_raw_mut_EinsumLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::EinsumLayer> {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for core::Ptr<crate::dnn::EinsumLayer> {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	ptr_cast_base! { PtrOfEinsumLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_EinsumLayerG_to_PtrOfAlgorithm }
+	
+	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::EinsumLayer> {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for core::Ptr<crate::dnn::EinsumLayer> {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	ptr_cast_base! { PtrOfEinsumLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_EinsumLayerG_to_PtrOfLayer }
+	
+	impl std::fmt::Debug for core::Ptr<crate::dnn::EinsumLayer> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfEinsumLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	pub type PtrOfEltwiseLayer = core::Ptr<crate::dnn::EltwiseLayer>;
 	
 	ptr_extern! { crate::dnn::EltwiseLayer,
@@ -7682,6 +8113,58 @@ mod dnn_types {
 		}
 	}
 	
+	pub type PtrOfExpandLayer = core::Ptr<crate::dnn::ExpandLayer>;
+	
+	ptr_extern! { crate::dnn::ExpandLayer,
+		cv_PtrLcv_dnn_ExpandLayerG_delete, cv_PtrLcv_dnn_ExpandLayerG_getInnerPtr_const, cv_PtrLcv_dnn_ExpandLayerG_getInnerPtrMut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::ExpandLayer, cv_PtrLcv_dnn_ExpandLayerG_new_const_ExpandLayer }
+	impl core::Ptr<crate::dnn::ExpandLayer> {
+		#[inline] pub fn as_raw_PtrOfExpandLayer(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfExpandLayer(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::ExpandLayerTraitConst for core::Ptr<crate::dnn::ExpandLayer> {
+		#[inline] fn as_raw_ExpandLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::ExpandLayerTrait for core::Ptr<crate::dnn::ExpandLayer> {
+		#[inline] fn as_raw_mut_ExpandLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::ExpandLayer> {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for core::Ptr<crate::dnn::ExpandLayer> {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	ptr_cast_base! { PtrOfExpandLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ExpandLayerG_to_PtrOfAlgorithm }
+	
+	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ExpandLayer> {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for core::Ptr<crate::dnn::ExpandLayer> {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	ptr_cast_base! { PtrOfExpandLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ExpandLayerG_to_PtrOfLayer }
+	
+	impl std::fmt::Debug for core::Ptr<crate::dnn::ExpandLayer> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfExpandLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	pub type PtrOfFlattenLayer = core::Ptr<crate::dnn::FlattenLayer>;
 	
 	ptr_extern! { crate::dnn::FlattenLayer,
@@ -7900,6 +8383,58 @@ mod dnn_types {
 		}
 	}
 	
+	pub type PtrOfGatherElementsLayer = core::Ptr<crate::dnn::GatherElementsLayer>;
+	
+	ptr_extern! { crate::dnn::GatherElementsLayer,
+		cv_PtrLcv_dnn_GatherElementsLayerG_delete, cv_PtrLcv_dnn_GatherElementsLayerG_getInnerPtr_const, cv_PtrLcv_dnn_GatherElementsLayerG_getInnerPtrMut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::GatherElementsLayer, cv_PtrLcv_dnn_GatherElementsLayerG_new_const_GatherElementsLayer }
+	impl core::Ptr<crate::dnn::GatherElementsLayer> {
+		#[inline] pub fn as_raw_PtrOfGatherElementsLayer(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfGatherElementsLayer(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::GatherElementsLayerTraitConst for core::Ptr<crate::dnn::GatherElementsLayer> {
+		#[inline] fn as_raw_GatherElementsLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::GatherElementsLayerTrait for core::Ptr<crate::dnn::GatherElementsLayer> {
+		#[inline] fn as_raw_mut_GatherElementsLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::GatherElementsLayer> {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for core::Ptr<crate::dnn::GatherElementsLayer> {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	ptr_cast_base! { PtrOfGatherElementsLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_GatherElementsLayerG_to_PtrOfAlgorithm }
+	
+	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::GatherElementsLayer> {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for core::Ptr<crate::dnn::GatherElementsLayer> {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	ptr_cast_base! { PtrOfGatherElementsLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_GatherElementsLayerG_to_PtrOfLayer }
+	
+	impl std::fmt::Debug for core::Ptr<crate::dnn::GatherElementsLayer> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfGatherElementsLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
 	pub type PtrOfGatherLayer = core::Ptr<crate::dnn::GatherLayer>;
 	
 	ptr_extern! { crate::dnn::GatherLayer,
@@ -8068,6 +8603,62 @@ mod dnn_types {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfGeluLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
+	pub type PtrOfGemmLayer = core::Ptr<crate::dnn::GemmLayer>;
+	
+	ptr_extern! { crate::dnn::GemmLayer,
+		cv_PtrLcv_dnn_GemmLayerG_delete, cv_PtrLcv_dnn_GemmLayerG_getInnerPtr_const, cv_PtrLcv_dnn_GemmLayerG_getInnerPtrMut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::GemmLayer, cv_PtrLcv_dnn_GemmLayerG_new_const_GemmLayer }
+	impl core::Ptr<crate::dnn::GemmLayer> {
+		#[inline] pub fn as_raw_PtrOfGemmLayer(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfGemmLayer(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::GemmLayerTraitConst for core::Ptr<crate::dnn::GemmLayer> {
+		#[inline] fn as_raw_GemmLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::GemmLayerTrait for core::Ptr<crate::dnn::GemmLayer> {
+		#[inline] fn as_raw_mut_GemmLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::GemmLayer> {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for core::Ptr<crate::dnn::GemmLayer> {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	ptr_cast_base! { PtrOfGemmLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_GemmLayerG_to_PtrOfAlgorithm }
+	
+	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::GemmLayer> {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for core::Ptr<crate::dnn::GemmLayer> {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	ptr_cast_base! { PtrOfGemmLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_GemmLayerG_to_PtrOfLayer }
+	
+	impl std::fmt::Debug for core::Ptr<crate::dnn::GemmLayer> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfGemmLayer")
+				.field("trans_a", &crate::dnn::GemmLayerTraitConst::trans_a(self))
+				.field("trans_b", &crate::dnn::GemmLayerTraitConst::trans_b(self))
+				.field("alpha", &crate::dnn::GemmLayerTraitConst::alpha(self))
+				.field("beta", &crate::dnn::GemmLayerTraitConst::beta(self))
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("name", &crate::dnn::LayerTraitConst::name(self))
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
@@ -8315,6 +8906,59 @@ mod dnn_types {
 				.field("output_sc", &crate::dnn::InnerProductLayerInt8TraitConst::output_sc(self))
 				.field("per_channel", &crate::dnn::InnerProductLayerInt8TraitConst::per_channel(self))
 				.field("axis", &crate::dnn::InnerProductLayerTraitConst::axis(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
+	pub type PtrOfInstanceNormLayer = core::Ptr<crate::dnn::InstanceNormLayer>;
+	
+	ptr_extern! { crate::dnn::InstanceNormLayer,
+		cv_PtrLcv_dnn_InstanceNormLayerG_delete, cv_PtrLcv_dnn_InstanceNormLayerG_getInnerPtr_const, cv_PtrLcv_dnn_InstanceNormLayerG_getInnerPtrMut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::InstanceNormLayer, cv_PtrLcv_dnn_InstanceNormLayerG_new_const_InstanceNormLayer }
+	impl core::Ptr<crate::dnn::InstanceNormLayer> {
+		#[inline] pub fn as_raw_PtrOfInstanceNormLayer(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfInstanceNormLayer(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::InstanceNormLayerTraitConst for core::Ptr<crate::dnn::InstanceNormLayer> {
+		#[inline] fn as_raw_InstanceNormLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::InstanceNormLayerTrait for core::Ptr<crate::dnn::InstanceNormLayer> {
+		#[inline] fn as_raw_mut_InstanceNormLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::InstanceNormLayer> {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for core::Ptr<crate::dnn::InstanceNormLayer> {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	ptr_cast_base! { PtrOfInstanceNormLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_InstanceNormLayerG_to_PtrOfAlgorithm }
+	
+	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::InstanceNormLayer> {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for core::Ptr<crate::dnn::InstanceNormLayer> {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	ptr_cast_base! { PtrOfInstanceNormLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_InstanceNormLayerG_to_PtrOfLayer }
+	
+	impl std::fmt::Debug for core::Ptr<crate::dnn::InstanceNormLayer> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfInstanceNormLayer")
+				.field("epsilon", &crate::dnn::InstanceNormLayerTraitConst::epsilon(self))
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("name", &crate::dnn::LayerTraitConst::name(self))
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
@@ -8690,6 +9334,58 @@ mod dnn_types {
 				.field("eps", &crate::dnn::MVNLayerTraitConst::eps(self))
 				.field("norm_variance", &crate::dnn::MVNLayerTraitConst::norm_variance(self))
 				.field("across_channels", &crate::dnn::MVNLayerTraitConst::across_channels(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
+	pub type PtrOfMatMulLayer = core::Ptr<crate::dnn::MatMulLayer>;
+	
+	ptr_extern! { crate::dnn::MatMulLayer,
+		cv_PtrLcv_dnn_MatMulLayerG_delete, cv_PtrLcv_dnn_MatMulLayerG_getInnerPtr_const, cv_PtrLcv_dnn_MatMulLayerG_getInnerPtrMut
+	}
+	
+	ptr_extern_ctor! { crate::dnn::MatMulLayer, cv_PtrLcv_dnn_MatMulLayerG_new_const_MatMulLayer }
+	impl core::Ptr<crate::dnn::MatMulLayer> {
+		#[inline] pub fn as_raw_PtrOfMatMulLayer(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfMatMulLayer(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+	
+	impl crate::dnn::MatMulLayerTraitConst for core::Ptr<crate::dnn::MatMulLayer> {
+		#[inline] fn as_raw_MatMulLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::MatMulLayerTrait for core::Ptr<crate::dnn::MatMulLayer> {
+		#[inline] fn as_raw_mut_MatMulLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::MatMulLayer> {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for core::Ptr<crate::dnn::MatMulLayer> {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	ptr_cast_base! { PtrOfMatMulLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_MatMulLayerG_to_PtrOfAlgorithm }
+	
+	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::MatMulLayer> {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for core::Ptr<crate::dnn::MatMulLayer> {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	ptr_cast_base! { PtrOfMatMulLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_MatMulLayerG_to_PtrOfLayer }
+	
+	impl std::fmt::Debug for core::Ptr<crate::dnn::MatMulLayer> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfMatMulLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("name", &crate::dnn::LayerTraitConst::name(self))
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
@@ -15739,8 +16435,10 @@ mod objdetect_types {
 				.field("min_corner_distance_rate", &crate::objdetect::DetectorParametersTraitConst::min_corner_distance_rate(self))
 				.field("min_distance_to_border", &crate::objdetect::DetectorParametersTraitConst::min_distance_to_border(self))
 				.field("min_marker_distance_rate", &crate::objdetect::DetectorParametersTraitConst::min_marker_distance_rate(self))
+				.field("min_group_distance", &crate::objdetect::DetectorParametersTraitConst::min_group_distance(self))
 				.field("corner_refinement_method", &crate::objdetect::DetectorParametersTraitConst::corner_refinement_method(self))
 				.field("corner_refinement_win_size", &crate::objdetect::DetectorParametersTraitConst::corner_refinement_win_size(self))
+				.field("relative_corner_refinment_win_size", &crate::objdetect::DetectorParametersTraitConst::relative_corner_refinment_win_size(self))
 				.field("corner_refinement_max_iterations", &crate::objdetect::DetectorParametersTraitConst::corner_refinement_max_iterations(self))
 				.field("corner_refinement_min_accuracy", &crate::objdetect::DetectorParametersTraitConst::corner_refinement_min_accuracy(self))
 				.field("marker_border_bits", &crate::objdetect::DetectorParametersTraitConst::marker_border_bits(self))
@@ -23166,6 +23864,43 @@ mod video_types {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfTrackerNano")
+				.finish()
+		}
+	}
+	
+	pub type PtrOfTrackerVit = core::Ptr<crate::video::TrackerVit>;
+	
+	ptr_extern! { crate::video::TrackerVit,
+		cv_PtrLcv_TrackerVitG_delete, cv_PtrLcv_TrackerVitG_getInnerPtr_const, cv_PtrLcv_TrackerVitG_getInnerPtrMut
+	}
+	
+	impl core::Ptr<crate::video::TrackerVit> {
+		#[inline] pub fn as_raw_PtrOfTrackerVit(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfTrackerVit(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+	
+	impl crate::video::TrackerVitTraitConst for core::Ptr<crate::video::TrackerVit> {
+		#[inline] fn as_raw_TrackerVit(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::video::TrackerVitTrait for core::Ptr<crate::video::TrackerVit> {
+		#[inline] fn as_raw_mut_TrackerVit(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	impl crate::video::TrackerTraitConst for core::Ptr<crate::video::TrackerVit> {
+		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.inner_as_raw() }
+	}
+	
+	impl crate::video::TrackerTrait for core::Ptr<crate::video::TrackerVit> {
+		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+	
+	ptr_cast_base! { PtrOfTrackerVit, core::Ptr<crate::video::Tracker>, cv_PtrLcv_TrackerVitG_to_PtrOfTracker }
+	
+	impl std::fmt::Debug for core::Ptr<crate::video::TrackerVit> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfTrackerVit")
 				.finish()
 		}
 	}

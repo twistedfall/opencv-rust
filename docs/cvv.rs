@@ -16,7 +16,7 @@ pub mod cvv {
 	}
 	
 	#[inline]
-	pub fn debug_d_match(img1: &impl core::ToInputArray, mut keypoints1: core::Vector<core::KeyPoint>, img2: &impl core::ToInputArray, mut keypoints2: core::Vector<core::KeyPoint>, mut matches: core::Vector<core::DMatch>, data: &crate::cvv::CallMetaData, description: &str, view: &str, use_train_descriptor: bool) -> Result<()> {
+	pub fn debug_d_match(img1: &impl ToInputArray, mut keypoints1: core::Vector<core::KeyPoint>, img2: &impl ToInputArray, mut keypoints2: core::Vector<core::KeyPoint>, mut matches: core::Vector<core::DMatch>, data: &impl crate::cvv::CallMetaDataTraitConst, description: &str, view: &str, use_train_descriptor: bool) -> Result<()> {
 		input_array_arg!(img1);
 		input_array_arg!(img2);
 		extern_container_arg!(description);
@@ -29,7 +29,7 @@ pub mod cvv {
 	}
 	
 	#[inline]
-	pub fn debug_filter(original: &impl core::ToInputArray, result: &impl core::ToInputArray, data: &crate::cvv::CallMetaData, description: &str, view: &str) -> Result<()> {
+	pub fn debug_filter(original: &impl ToInputArray, result: &impl ToInputArray, data: &impl crate::cvv::CallMetaDataTraitConst, description: &str, view: &str) -> Result<()> {
 		input_array_arg!(original);
 		input_array_arg!(result);
 		extern_container_arg!(description);
@@ -51,7 +51,7 @@ pub mod cvv {
 	}
 	
 	#[inline]
-	pub fn show_image(img: &impl core::ToInputArray, data: &crate::cvv::CallMetaData, description: &str, view: &str) -> Result<()> {
+	pub fn show_image(img: &impl ToInputArray, data: &impl crate::cvv::CallMetaDataTraitConst, description: &str, view: &str) -> Result<()> {
 		input_array_arg!(img);
 		extern_container_arg!(description);
 		extern_container_arg!(view);
@@ -133,6 +133,8 @@ pub mod cvv {
 	impl crate::cvv::CallMetaDataTrait for CallMetaData {
 		#[inline] fn as_raw_mut_CallMetaData(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { CallMetaData, crate::cvv::CallMetaDataTraitConst, as_raw_CallMetaData, crate::cvv::CallMetaDataTrait, as_raw_mut_CallMetaData }
 	
 	impl CallMetaData {
 		/// Creates an unknown location.

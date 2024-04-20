@@ -5,7 +5,7 @@ pub mod video {
 	//!   # C API
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::KalmanFilterTraitConst, super::KalmanFilterTrait, super::DenseOpticalFlowTraitConst, super::DenseOpticalFlowTrait, super::SparseOpticalFlowTraitConst, super::SparseOpticalFlowTrait, super::FarnebackOpticalFlowTraitConst, super::FarnebackOpticalFlowTrait, super::VariationalRefinementTraitConst, super::VariationalRefinementTrait, super::DISOpticalFlowTraitConst, super::DISOpticalFlowTrait, super::SparsePyrLKOpticalFlowTraitConst, super::SparsePyrLKOpticalFlowTrait, super::TrackerTraitConst, super::TrackerTrait, super::TrackerMILTraitConst, super::TrackerMILTrait, super::TrackerGOTURN_ParamsTraitConst, super::TrackerGOTURN_ParamsTrait, super::TrackerGOTURNTraitConst, super::TrackerGOTURNTrait, super::TrackerDaSiamRPN_ParamsTraitConst, super::TrackerDaSiamRPN_ParamsTrait, super::TrackerDaSiamRPNTraitConst, super::TrackerDaSiamRPNTrait, super::TrackerNano_ParamsTraitConst, super::TrackerNano_ParamsTrait, super::TrackerNanoTraitConst, super::TrackerNanoTrait, super::BackgroundSubtractorTraitConst, super::BackgroundSubtractorTrait, super::BackgroundSubtractorMOG2TraitConst, super::BackgroundSubtractorMOG2Trait, super::BackgroundSubtractorKNNTraitConst, super::BackgroundSubtractorKNNTrait };
+		pub use { super::KalmanFilterTraitConst, super::KalmanFilterTrait, super::DenseOpticalFlowTraitConst, super::DenseOpticalFlowTrait, super::SparseOpticalFlowTraitConst, super::SparseOpticalFlowTrait, super::FarnebackOpticalFlowTraitConst, super::FarnebackOpticalFlowTrait, super::VariationalRefinementTraitConst, super::VariationalRefinementTrait, super::DISOpticalFlowTraitConst, super::DISOpticalFlowTrait, super::SparsePyrLKOpticalFlowTraitConst, super::SparsePyrLKOpticalFlowTrait, super::TrackerTraitConst, super::TrackerTrait, super::TrackerMILTraitConst, super::TrackerMILTrait, super::TrackerGOTURN_ParamsTraitConst, super::TrackerGOTURN_ParamsTrait, super::TrackerGOTURNTraitConst, super::TrackerGOTURNTrait, super::TrackerDaSiamRPN_ParamsTraitConst, super::TrackerDaSiamRPN_ParamsTrait, super::TrackerDaSiamRPNTraitConst, super::TrackerDaSiamRPNTrait, super::TrackerNano_ParamsTraitConst, super::TrackerNano_ParamsTrait, super::TrackerNanoTraitConst, super::TrackerNanoTrait, super::TrackerVit_ParamsTraitConst, super::TrackerVit_ParamsTrait, super::TrackerVitTraitConst, super::TrackerVitTrait, super::BackgroundSubtractorTraitConst, super::BackgroundSubtractorTrait, super::BackgroundSubtractorMOG2TraitConst, super::BackgroundSubtractorMOG2Trait, super::BackgroundSubtractorKNNTraitConst, super::BackgroundSubtractorKNNTrait };
 	}
 	
 	pub const DISOpticalFlow_PRESET_FAST: i32 = 1;
@@ -26,7 +26,7 @@ pub mod video {
 	/// * criteria: Stop criteria for the underlying meanShift.
 	/// returns
 	/// (in old interfaces) Number of iterations CAMSHIFT took to converge
-	/// The function implements the CAMSHIFT object tracking algorithm [Bradski98](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Bradski98) . First, it finds an
+	/// The function implements the CAMSHIFT object tracking algorithm [Bradski98](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Bradski98) . First, it finds an
 	/// object center using meanShift and then adjusts the window size and finds the optimal rotation. The
 	/// function returns the rotated rectangle structure that includes the object position, size, and
 	/// orientation. The next position of the search window can be obtained with RotatedRect::boundingRect()
@@ -38,10 +38,44 @@ pub mod video {
 	/// *   (Python) A sample explaining the camshift tracking algorithm can be found at
 	///    opencv_source_code/samples/python/camshift.py
 	#[inline]
-	pub fn cam_shift(prob_image: &impl core::ToInputArray, window: &mut core::Rect, criteria: core::TermCriteria) -> Result<core::RotatedRect> {
+	pub fn cam_shift(prob_image: &impl ToInputArray, window: &mut core::Rect, criteria: core::TermCriteria) -> Result<core::RotatedRect> {
 		input_array_arg!(prob_image);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_CamShift_const__InputArrayR_RectR_TermCriteria(prob_image.as_raw__InputArray(), window, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_CamShift_const__InputArrayR_RectR_TermCriteria(prob_image.as_raw__InputArray(), window, &criteria, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Constructs the image pyramid which can be passed to calcOpticalFlowPyrLK.
+	/// 
+	/// ## Parameters
+	/// * img: 8-bit input image.
+	/// * pyramid: output pyramid.
+	/// * winSize: window size of optical flow algorithm. Must be not less than winSize argument of
+	/// calcOpticalFlowPyrLK. It is needed to calculate required padding for pyramid levels.
+	/// * maxLevel: 0-based maximal pyramid level number.
+	/// * withDerivatives: set to precompute gradients for the every pyramid level. If pyramid is
+	/// constructed without the gradients then calcOpticalFlowPyrLK will calculate them internally.
+	/// * pyrBorder: the border mode for pyramid layers.
+	/// * derivBorder: the border mode for gradients.
+	/// * tryReuseInputImage: put ROI of input image into the pyramid if possible. You can pass false
+	/// to force data copying.
+	/// ## Returns
+	/// number of levels in constructed pyramid. Can be less than maxLevel.
+	/// 
+	/// ## Note
+	/// This alternative version of [build_optical_flow_pyramid] function uses the following default values for its arguments:
+	/// * with_derivatives: true
+	/// * pyr_border: BORDER_REFLECT_101
+	/// * deriv_border: BORDER_CONSTANT
+	/// * try_reuse_input_image: true
+	#[inline]
+	pub fn build_optical_flow_pyramid_def(img: &impl ToInputArray, pyramid: &mut impl ToOutputArray, win_size: core::Size, max_level: i32) -> Result<i32> {
+		input_array_arg!(img);
+		output_array_arg!(pyramid);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_buildOpticalFlowPyramid_const__InputArrayR_const__OutputArrayR_Size_int(img.as_raw__InputArray(), pyramid.as_raw__OutputArray(), &win_size, max_level, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -70,11 +104,11 @@ pub mod video {
 	/// * deriv_border: BORDER_CONSTANT
 	/// * try_reuse_input_image: true
 	#[inline]
-	pub fn build_optical_flow_pyramid(img: &impl core::ToInputArray, pyramid: &mut impl core::ToOutputArray, win_size: core::Size, max_level: i32, with_derivatives: bool, pyr_border: i32, deriv_border: i32, try_reuse_input_image: bool) -> Result<i32> {
+	pub fn build_optical_flow_pyramid(img: &impl ToInputArray, pyramid: &mut impl ToOutputArray, win_size: core::Size, max_level: i32, with_derivatives: bool, pyr_border: i32, deriv_border: i32, try_reuse_input_image: bool) -> Result<i32> {
 		input_array_arg!(img);
 		output_array_arg!(pyramid);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_buildOpticalFlowPyramid_const__InputArrayR_const__OutputArrayR_Size_int_bool_int_int_bool(img.as_raw__InputArray(), pyramid.as_raw__OutputArray(), win_size.opencv_as_extern(), max_level, with_derivatives, pyr_border, deriv_border, try_reuse_input_image, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_buildOpticalFlowPyramid_const__InputArrayR_const__OutputArrayR_Size_int_bool_int_int_bool(img.as_raw__InputArray(), pyramid.as_raw__OutputArray(), &win_size, max_level, with_derivatives, pyr_border, deriv_border, try_reuse_input_image, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -108,19 +142,19 @@ pub mod video {
 	///      normally, winsize for a Gaussian window should be set to a larger value to achieve the same
 	///      level of robustness.
 	/// 
-	/// The function finds an optical flow for each prev pixel using the [Farneback2003](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Farneback2003) algorithm so that
+	/// The function finds an optical flow for each prev pixel using the [Farneback2003](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Farneback2003) algorithm so that
 	/// 
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bprev%7D%20%28y%2Cx%29%20%20%5Csim%20%5Ctexttt%7Bnext%7D%20%28%20y%20%2B%20%5Ctexttt%7Bflow%7D%20%28y%2Cx%29%5B1%5D%2C%20%20x%20%2B%20%5Ctexttt%7Bflow%7D%20%28y%2Cx%29%5B0%5D%29)
 	/// 
 	/// 
-	/// Note:
+	/// Note: Some examples:
 	/// 
 	/// *   An example using the optical flow algorithm described by Gunnar Farneback can be found at
 	///    opencv_source_code/samples/cpp/fback.cpp
 	/// *   (Python) An example using the optical flow algorithm described by Gunnar Farneback can be
 	///    found at opencv_source_code/samples/python/opt_flow.py
 	#[inline]
-	pub fn calc_optical_flow_farneback(prev: &impl core::ToInputArray, next: &impl core::ToInputArray, flow: &mut impl core::ToInputOutputArray, pyr_scale: f64, levels: i32, winsize: i32, iterations: i32, poly_n: i32, poly_sigma: f64, flags: i32) -> Result<()> {
+	pub fn calc_optical_flow_farneback(prev: &impl ToInputArray, next: &impl ToInputArray, flow: &mut impl ToInputOutputArray, pyr_scale: f64, levels: i32, winsize: i32, iterations: i32, poly_n: i32, poly_sigma: f64, flags: i32) -> Result<()> {
 		input_array_arg!(prev);
 		input_array_arg!(next);
 		input_output_array_arg!(flow);
@@ -162,16 +196,87 @@ pub mod video {
 	///      around the original and a moved point, divided by number of pixels in a window, is used as a
 	///      error measure.
 	/// * minEigThreshold: the algorithm calculates the minimum eigen value of a 2x2 normal matrix of
-	/// optical flow equations (this matrix is called a spatial gradient matrix in [Bouguet00](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Bouguet00)), divided
+	/// optical flow equations (this matrix is called a spatial gradient matrix in [Bouguet00](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Bouguet00)), divided
 	/// by number of pixels in a window; if this value is less than minEigThreshold, then a corresponding
 	/// feature is filtered out and its flow is not processed, so it allows to remove bad points and get a
 	/// performance boost.
 	/// 
 	/// The function implements a sparse iterative version of the Lucas-Kanade optical flow in pyramids. See
-	/// [Bouguet00](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Bouguet00) . The function is parallelized with the TBB library.
+	/// [Bouguet00](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Bouguet00) . The function is parallelized with the TBB library.
 	/// 
 	/// 
-	/// Note:
+	/// Note: Some examples:
+	/// 
+	/// *   An example using the Lucas-Kanade optical flow algorithm can be found at
+	///    opencv_source_code/samples/cpp/lkdemo.cpp
+	/// *   (Python) An example using the Lucas-Kanade optical flow algorithm can be found at
+	///    opencv_source_code/samples/python/lk_track.py
+	/// *   (Python) An example using the Lucas-Kanade tracker for homography matching can be found at
+	///    opencv_source_code/samples/python/lk_homography.py
+	/// 
+	/// ## Note
+	/// This alternative version of [calc_optical_flow_pyr_lk] function uses the following default values for its arguments:
+	/// * win_size: Size(21,21)
+	/// * max_level: 3
+	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,0.01)
+	/// * flags: 0
+	/// * min_eig_threshold: 1e-4
+	#[inline]
+	pub fn calc_optical_flow_pyr_lk_def(prev_img: &impl ToInputArray, next_img: &impl ToInputArray, prev_pts: &impl ToInputArray, next_pts: &mut impl ToInputOutputArray, status: &mut impl ToOutputArray, err: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(prev_img);
+		input_array_arg!(next_img);
+		input_array_arg!(prev_pts);
+		input_output_array_arg!(next_pts);
+		output_array_arg!(status);
+		output_array_arg!(err);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_calcOpticalFlowPyrLK_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR(prev_img.as_raw__InputArray(), next_img.as_raw__InputArray(), prev_pts.as_raw__InputArray(), next_pts.as_raw__InputOutputArray(), status.as_raw__OutputArray(), err.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Calculates an optical flow for a sparse feature set using the iterative Lucas-Kanade method with
+	/// pyramids.
+	/// 
+	/// ## Parameters
+	/// * prevImg: first 8-bit input image or pyramid constructed by buildOpticalFlowPyramid.
+	/// * nextImg: second input image or pyramid of the same size and the same type as prevImg.
+	/// * prevPts: vector of 2D points for which the flow needs to be found; point coordinates must be
+	/// single-precision floating-point numbers.
+	/// * nextPts: output vector of 2D points (with single-precision floating-point coordinates)
+	/// containing the calculated new positions of input features in the second image; when
+	/// OPTFLOW_USE_INITIAL_FLOW flag is passed, the vector must have the same size as in the input.
+	/// * status: output status vector (of unsigned chars); each element of the vector is set to 1 if
+	/// the flow for the corresponding features has been found, otherwise, it is set to 0.
+	/// * err: output vector of errors; each element of the vector is set to an error for the
+	/// corresponding feature, type of the error measure can be set in flags parameter; if the flow wasn't
+	/// found then the error is not defined (use the status parameter to find such cases).
+	/// * winSize: size of the search window at each pyramid level.
+	/// * maxLevel: 0-based maximal pyramid level number; if set to 0, pyramids are not used (single
+	/// level), if set to 1, two levels are used, and so on; if pyramids are passed to input then
+	/// algorithm will use as many levels as pyramids have but no more than maxLevel.
+	/// * criteria: parameter, specifying the termination criteria of the iterative search algorithm
+	/// (after the specified maximum number of iterations criteria.maxCount or when the search window
+	/// moves by less than criteria.epsilon.
+	/// * flags: operation flags:
+	///  *   **OPTFLOW_USE_INITIAL_FLOW** uses initial estimations, stored in nextPts; if the flag is
+	///      not set, then prevPts is copied to nextPts and is considered the initial estimate.
+	///  *   **OPTFLOW_LK_GET_MIN_EIGENVALS** use minimum eigen values as an error measure (see
+	///      minEigThreshold description); if the flag is not set, then L1 distance between patches
+	///      around the original and a moved point, divided by number of pixels in a window, is used as a
+	///      error measure.
+	/// * minEigThreshold: the algorithm calculates the minimum eigen value of a 2x2 normal matrix of
+	/// optical flow equations (this matrix is called a spatial gradient matrix in [Bouguet00](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Bouguet00)), divided
+	/// by number of pixels in a window; if this value is less than minEigThreshold, then a corresponding
+	/// feature is filtered out and its flow is not processed, so it allows to remove bad points and get a
+	/// performance boost.
+	/// 
+	/// The function implements a sparse iterative version of the Lucas-Kanade optical flow in pyramids. See
+	/// [Bouguet00](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Bouguet00) . The function is parallelized with the TBB library.
+	/// 
+	/// 
+	/// Note: Some examples:
 	/// 
 	/// *   An example using the Lucas-Kanade optical flow algorithm can be found at
 	///    opencv_source_code/samples/cpp/lkdemo.cpp
@@ -187,7 +292,7 @@ pub mod video {
 	/// * flags: 0
 	/// * min_eig_threshold: 1e-4
 	#[inline]
-	pub fn calc_optical_flow_pyr_lk(prev_img: &impl core::ToInputArray, next_img: &impl core::ToInputArray, prev_pts: &impl core::ToInputArray, next_pts: &mut impl core::ToInputOutputArray, status: &mut impl core::ToOutputArray, err: &mut impl core::ToOutputArray, win_size: core::Size, max_level: i32, criteria: core::TermCriteria, flags: i32, min_eig_threshold: f64) -> Result<()> {
+	pub fn calc_optical_flow_pyr_lk(prev_img: &impl ToInputArray, next_img: &impl ToInputArray, prev_pts: &impl ToInputArray, next_pts: &mut impl ToInputOutputArray, status: &mut impl ToOutputArray, err: &mut impl ToOutputArray, win_size: core::Size, max_level: i32, criteria: core::TermCriteria, flags: i32, min_eig_threshold: f64) -> Result<()> {
 		input_array_arg!(prev_img);
 		input_array_arg!(next_img);
 		input_array_arg!(prev_pts);
@@ -195,13 +300,37 @@ pub mod video {
 		output_array_arg!(status);
 		output_array_arg!(err);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_calcOpticalFlowPyrLK_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_Size_int_TermCriteria_int_double(prev_img.as_raw__InputArray(), next_img.as_raw__InputArray(), prev_pts.as_raw__InputArray(), next_pts.as_raw__InputOutputArray(), status.as_raw__OutputArray(), err.as_raw__OutputArray(), win_size.opencv_as_extern(), max_level, criteria.opencv_as_extern(), flags, min_eig_threshold, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_calcOpticalFlowPyrLK_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_Size_int_TermCriteria_int_double(prev_img.as_raw__InputArray(), next_img.as_raw__InputArray(), prev_pts.as_raw__InputArray(), next_pts.as_raw__InputOutputArray(), status.as_raw__OutputArray(), err.as_raw__OutputArray(), &win_size, max_level, &criteria, flags, min_eig_threshold, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
-	/// Computes the Enhanced Correlation Coefficient value between two images [EP08](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_EP08) .
+	/// Computes the Enhanced Correlation Coefficient value between two images [EP08](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_EP08) .
+	/// 
+	/// ## Parameters
+	/// * templateImage: single-channel template image; CV_8U or CV_32F array.
+	/// * inputImage: single-channel input image to be warped to provide an image similar to
+	///  templateImage, same type as templateImage.
+	/// * inputMask: An optional mask to indicate valid values of inputImage.
+	/// ## See also
+	/// findTransformECC
+	/// 
+	/// ## Note
+	/// This alternative version of [compute_ecc] function uses the following default values for its arguments:
+	/// * input_mask: noArray()
+	#[inline]
+	pub fn compute_ecc_def(template_image: &impl ToInputArray, input_image: &impl ToInputArray) -> Result<f64> {
+		input_array_arg!(template_image);
+		input_array_arg!(input_image);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_computeECC_const__InputArrayR_const__InputArrayR(template_image.as_raw__InputArray(), input_image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Computes the Enhanced Correlation Coefficient value between two images [EP08](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_EP08) .
 	/// 
 	/// ## Parameters
 	/// * templateImage: single-channel template image; CV_8U or CV_32F array.
@@ -214,7 +343,7 @@ pub mod video {
 	/// ## C++ default parameters
 	/// * input_mask: noArray()
 	#[inline]
-	pub fn compute_ecc(template_image: &impl core::ToInputArray, input_image: &impl core::ToInputArray, input_mask: &impl core::ToInputArray) -> Result<f64> {
+	pub fn compute_ecc(template_image: &impl ToInputArray, input_image: &impl ToInputArray, input_mask: &impl ToInputArray) -> Result<f64> {
 		input_array_arg!(template_image);
 		input_array_arg!(input_image);
 		input_array_arg!(input_mask);
@@ -222,6 +351,30 @@ pub mod video {
 		unsafe { sys::cv_computeECC_const__InputArrayR_const__InputArrayR_const__InputArrayR(template_image.as_raw__InputArray(), input_image.as_raw__InputArray(), input_mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Creates KNN Background Subtractor
+	/// 
+	/// ## Parameters
+	/// * history: Length of the history.
+	/// * dist2Threshold: Threshold on the squared distance between the pixel and the sample to decide
+	/// whether a pixel is close to that sample. This parameter does not affect the background update.
+	/// * detectShadows: If true, the algorithm will detect shadows and mark them. It decreases the
+	/// speed a bit, so if you do not need this feature, set the parameter to false.
+	/// 
+	/// ## Note
+	/// This alternative version of [create_background_subtractor_knn] function uses the following default values for its arguments:
+	/// * history: 500
+	/// * dist2_threshold: 400.0
+	/// * detect_shadows: true
+	#[inline]
+	pub fn create_background_subtractor_knn_def() -> Result<core::Ptr<crate::video::BackgroundSubtractorKNN>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_createBackgroundSubtractorKNN(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::video::BackgroundSubtractorKNN>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -245,6 +398,31 @@ pub mod video {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::video::BackgroundSubtractorKNN>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates MOG2 Background Subtractor
+	/// 
+	/// ## Parameters
+	/// * history: Length of the history.
+	/// * varThreshold: Threshold on the squared Mahalanobis distance between the pixel and the model
+	/// to decide whether a pixel is well described by the background model. This parameter does not
+	/// affect the background update.
+	/// * detectShadows: If true, the algorithm will detect shadows and mark them. It decreases the
+	/// speed a bit, so if you do not need this feature, set the parameter to false.
+	/// 
+	/// ## Note
+	/// This alternative version of [create_background_subtractor_mog2] function uses the following default values for its arguments:
+	/// * history: 500
+	/// * var_threshold: 16
+	/// * detect_shadows: true
+	#[inline]
+	pub fn create_background_subtractor_mog2_def() -> Result<core::Ptr<crate::video::BackgroundSubtractorMOG2>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_createBackgroundSubtractorMOG2(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::video::BackgroundSubtractorMOG2>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -304,7 +482,7 @@ pub mod video {
 	/// estimateAffine2D, estimateAffinePartial2D, getAffineTransform, getPerspectiveTransform, findHomography
 	#[deprecated = "Use cv::estimateAffine2D, cv::estimateAffinePartial2D instead. If you are using this function"]
 	#[inline]
-	pub fn estimate_rigid_transform(src: &impl core::ToInputArray, dst: &impl core::ToInputArray, full_affine: bool) -> Result<core::Mat> {
+	pub fn estimate_rigid_transform(src: &impl ToInputArray, dst: &impl ToInputArray, full_affine: bool) -> Result<core::Mat> {
 		input_array_arg!(src);
 		input_array_arg!(dst);
 		return_send!(via ocvrs_return);
@@ -315,7 +493,26 @@ pub mod video {
 		Ok(ret)
 	}
 	
-	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_EP08) .
+	/// @overload
+	/// 
+	/// ## Note
+	/// This alternative version of [find_transform_ecc_1] function uses the following default values for its arguments:
+	/// * motion_type: MOTION_AFFINE
+	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,50,0.001)
+	/// * input_mask: noArray()
+	#[inline]
+	pub fn find_transform_ecc_1_def(template_image: &impl ToInputArray, input_image: &impl ToInputArray, warp_matrix: &mut impl ToInputOutputArray) -> Result<f64> {
+		input_array_arg!(template_image);
+		input_array_arg!(input_image);
+		input_output_array_arg!(warp_matrix);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_findTransformECC_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR(template_image.as_raw__InputArray(), input_image.as_raw__InputArray(), warp_matrix.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_EP08) .
 	/// 
 	/// ## Parameters
 	/// * templateImage: single-channel template image; CV_8U or CV_32F array.
@@ -340,7 +537,7 @@ pub mod video {
 	/// * gaussFiltSize: An optional value indicating size of gaussian blur filter; (DEFAULT: 5)
 	/// 
 	/// The function estimates the optimum transformation (warpMatrix) with respect to ECC criterion
-	/// ([EP08](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_EP08)), that is
+	/// ([EP08](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_EP08)), that is
 	/// 
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Carg%5Cmax%5F%7BW%7D%20%5Ctexttt%7BECC%7D%28%5Ctexttt%7BtemplateImage%7D%28x%2Cy%29%2C%5Ctexttt%7BinputImage%7D%28x%27%2Cy%27%29%29)
 	/// 
@@ -373,19 +570,19 @@ pub mod video {
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,50,0.001)
 	/// * input_mask: noArray()
 	#[inline]
-	pub fn find_transform_ecc_1(template_image: &impl core::ToInputArray, input_image: &impl core::ToInputArray, warp_matrix: &mut impl core::ToInputOutputArray, motion_type: i32, criteria: core::TermCriteria, input_mask: &impl core::ToInputArray) -> Result<f64> {
+	pub fn find_transform_ecc_1(template_image: &impl ToInputArray, input_image: &impl ToInputArray, warp_matrix: &mut impl ToInputOutputArray, motion_type: i32, criteria: core::TermCriteria, input_mask: &impl ToInputArray) -> Result<f64> {
 		input_array_arg!(template_image);
 		input_array_arg!(input_image);
 		input_output_array_arg!(warp_matrix);
 		input_array_arg!(input_mask);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_findTransformECC_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_int_TermCriteria_const__InputArrayR(template_image.as_raw__InputArray(), input_image.as_raw__InputArray(), warp_matrix.as_raw__InputOutputArray(), motion_type, criteria.opencv_as_extern(), input_mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_findTransformECC_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_int_TermCriteria_const__InputArrayR(template_image.as_raw__InputArray(), input_image.as_raw__InputArray(), warp_matrix.as_raw__InputOutputArray(), motion_type, &criteria, input_mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
-	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_EP08) .
+	/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_EP08) .
 	/// 
 	/// ## Parameters
 	/// * templateImage: single-channel template image; CV_8U or CV_32F array.
@@ -410,7 +607,7 @@ pub mod video {
 	/// * gaussFiltSize: An optional value indicating size of gaussian blur filter; (DEFAULT: 5)
 	/// 
 	/// The function estimates the optimum transformation (warpMatrix) with respect to ECC criterion
-	/// ([EP08](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_EP08)), that is
+	/// ([EP08](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_EP08)), that is
 	/// 
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Carg%5Cmax%5F%7BW%7D%20%5Ctexttt%7BECC%7D%28%5Ctexttt%7BtemplateImage%7D%28x%2Cy%29%2C%5Ctexttt%7BinputImage%7D%28x%27%2Cy%27%29%29)
 	/// 
@@ -436,13 +633,13 @@ pub mod video {
 	/// ## See also
 	/// computeECC, estimateAffine2D, estimateAffinePartial2D, findHomography
 	#[inline]
-	pub fn find_transform_ecc(template_image: &impl core::ToInputArray, input_image: &impl core::ToInputArray, warp_matrix: &mut impl core::ToInputOutputArray, motion_type: i32, criteria: core::TermCriteria, input_mask: &impl core::ToInputArray, gauss_filt_size: i32) -> Result<f64> {
+	pub fn find_transform_ecc(template_image: &impl ToInputArray, input_image: &impl ToInputArray, warp_matrix: &mut impl ToInputOutputArray, motion_type: i32, criteria: core::TermCriteria, input_mask: &impl ToInputArray, gauss_filt_size: i32) -> Result<f64> {
 		input_array_arg!(template_image);
 		input_array_arg!(input_image);
 		input_output_array_arg!(warp_matrix);
 		input_array_arg!(input_mask);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_findTransformECC_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_int_TermCriteria_const__InputArrayR_int(template_image.as_raw__InputArray(), input_image.as_raw__InputArray(), warp_matrix.as_raw__InputOutputArray(), motion_type, criteria.opencv_as_extern(), input_mask.as_raw__InputArray(), gauss_filt_size, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_findTransformECC_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_int_TermCriteria_const__InputArrayR_int(template_image.as_raw__InputArray(), input_image.as_raw__InputArray(), warp_matrix.as_raw__InputOutputArray(), motion_type, &criteria, input_mask.as_raw__InputArray(), gauss_filt_size, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -467,10 +664,10 @@ pub mod video {
 	/// with findContours , throwing away contours with small area ( contourArea ), and rendering the
 	/// remaining contours with drawContours.
 	#[inline]
-	pub fn mean_shift(prob_image: &impl core::ToInputArray, window: &mut core::Rect, criteria: core::TermCriteria) -> Result<i32> {
+	pub fn mean_shift(prob_image: &impl ToInputArray, window: &mut core::Rect, criteria: core::TermCriteria) -> Result<i32> {
 		input_array_arg!(prob_image);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_meanShift_const__InputArrayR_RectR_TermCriteria(prob_image.as_raw__InputArray(), window, criteria.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_meanShift_const__InputArrayR_RectR_TermCriteria(prob_image.as_raw__InputArray(), window, &criteria, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -505,7 +702,7 @@ pub mod video {
 	/// The flow field must be a 2-channel, floating-point matrix (CV_32FC2). First channel corresponds
 	/// to the flow in the horizontal direction (u), second - vertical (v).
 	#[inline]
-	pub fn write_optical_flow(path: &str, flow: &impl core::ToInputArray) -> Result<bool> {
+	pub fn write_optical_flow(path: &str, flow: &impl ToInputArray) -> Result<bool> {
 		extern_container_arg!(path);
 		input_array_arg!(flow);
 		return_send!(via ocvrs_return);
@@ -528,7 +725,7 @@ pub mod video {
 		/// Note: Sometimes the background image can be very blurry, as it contain the average background
 		/// statistics.
 		#[inline]
-		fn get_background_image(&self, background_image: &mut impl core::ToOutputArray) -> Result<()> {
+		fn get_background_image(&self, background_image: &mut impl ToOutputArray) -> Result<()> {
 			output_array_arg!(background_image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractor_getBackgroundImage_const_const__OutputArrayR(self.as_raw_BackgroundSubtractor(), background_image.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
@@ -556,11 +753,35 @@ pub mod video {
 		/// ## C++ default parameters
 		/// * learning_rate: -1
 		#[inline]
-		fn apply(&mut self, image: &impl core::ToInputArray, fgmask: &mut impl core::ToOutputArray, learning_rate: f64) -> Result<()> {
+		fn apply(&mut self, image: &impl ToInputArray, fgmask: &mut impl ToOutputArray, learning_rate: f64) -> Result<()> {
 			input_array_arg!(image);
 			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_BackgroundSubtractor_apply_const__InputArrayR_const__OutputArrayR_double(self.as_raw_mut_BackgroundSubtractor(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Computes a foreground mask.
+		/// 
+		/// ## Parameters
+		/// * image: Next video frame.
+		/// * fgmask: The output foreground mask as an 8-bit binary image.
+		/// * learningRate: The value between 0 and 1 that indicates how fast the background model is
+		/// learnt. Negative parameter value makes the algorithm to use some automatically chosen learning
+		/// rate. 0 means that the background model is not updated at all, 1 means that the background model
+		/// is completely reinitialized from the last frame.
+		/// 
+		/// ## Note
+		/// This alternative version of [BackgroundSubtractorTrait::apply] function uses the following default values for its arguments:
+		/// * learning_rate: -1
+		#[inline]
+		fn apply_def(&mut self, image: &impl ToInputArray, fgmask: &mut impl ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(fgmask);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_BackgroundSubtractor_apply_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_BackgroundSubtractor(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -595,6 +816,8 @@ pub mod video {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { BackgroundSubtractor, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::video::BackgroundSubtractorTraitConst for BackgroundSubtractor {
 		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.as_raw() }
 	}
@@ -602,6 +825,8 @@ pub mod video {
 	impl crate::video::BackgroundSubtractorTrait for BackgroundSubtractor {
 		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { BackgroundSubtractor, crate::video::BackgroundSubtractorTraitConst, as_raw_BackgroundSubtractor, crate::video::BackgroundSubtractorTrait, as_raw_mut_BackgroundSubtractor }
 	
 	impl BackgroundSubtractor {
 	}
@@ -793,7 +1018,7 @@ pub mod video {
 	
 	/// K-nearest neighbours - based Background/Foreground Segmentation Algorithm.
 	/// 
-	/// The class implements the K-nearest neighbours background subtraction described in [Zivkovic2006](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
+	/// The class implements the K-nearest neighbours background subtraction described in [Zivkovic2006](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
 	/// Very efficient if number of foreground pixels is low.
 	pub struct BackgroundSubtractorKNN {
 		ptr: *mut c_void
@@ -818,6 +1043,8 @@ pub mod video {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { BackgroundSubtractorKNN, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::video::BackgroundSubtractorTraitConst for BackgroundSubtractorKNN {
 		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.as_raw() }
 	}
@@ -826,6 +1053,8 @@ pub mod video {
 		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { BackgroundSubtractorKNN, crate::video::BackgroundSubtractorTraitConst, as_raw_BackgroundSubtractor, crate::video::BackgroundSubtractorTrait, as_raw_mut_BackgroundSubtractor }
+	
 	impl crate::video::BackgroundSubtractorKNNTraitConst for BackgroundSubtractorKNN {
 		#[inline] fn as_raw_BackgroundSubtractorKNN(&self) -> *const c_void { self.as_raw() }
 	}
@@ -833,6 +1062,8 @@ pub mod video {
 	impl crate::video::BackgroundSubtractorKNNTrait for BackgroundSubtractorKNN {
 		#[inline] fn as_raw_mut_BackgroundSubtractorKNN(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { BackgroundSubtractorKNN, crate::video::BackgroundSubtractorKNNTraitConst, as_raw_BackgroundSubtractorKNN, crate::video::BackgroundSubtractorKNNTrait, as_raw_mut_BackgroundSubtractorKNN }
 	
 	impl BackgroundSubtractorKNN {
 	}
@@ -1138,7 +1369,7 @@ pub mod video {
 		/// ## C++ default parameters
 		/// * learning_rate: -1
 		#[inline]
-		fn apply(&mut self, image: &impl core::ToInputArray, fgmask: &mut impl core::ToOutputArray, learning_rate: f64) -> Result<()> {
+		fn apply(&mut self, image: &impl ToInputArray, fgmask: &mut impl ToOutputArray, learning_rate: f64) -> Result<()> {
 			input_array_arg!(image);
 			output_array_arg!(fgmask);
 			return_send!(via ocvrs_return);
@@ -1148,12 +1379,36 @@ pub mod video {
 			Ok(ret)
 		}
 		
+		/// Computes a foreground mask.
+		/// 
+		/// ## Parameters
+		/// * image: Next video frame. Floating point frame will be used without scaling and should be in range ![inline formula](https://latex.codecogs.com/png.latex?%5B0%2C255%5D).
+		/// * fgmask: The output foreground mask as an 8-bit binary image.
+		/// * learningRate: The value between 0 and 1 that indicates how fast the background model is
+		/// learnt. Negative parameter value makes the algorithm to use some automatically chosen learning
+		/// rate. 0 means that the background model is not updated at all, 1 means that the background model
+		/// is completely reinitialized from the last frame.
+		/// 
+		/// ## Note
+		/// This alternative version of [BackgroundSubtractorMOG2Trait::apply] function uses the following default values for its arguments:
+		/// * learning_rate: -1
+		#[inline]
+		fn apply_def(&mut self, image: &impl ToInputArray, fgmask: &mut impl ToOutputArray) -> Result<()> {
+			input_array_arg!(image);
+			output_array_arg!(fgmask);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_BackgroundSubtractorMOG2_apply_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_BackgroundSubtractorMOG2(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	/// Gaussian Mixture-based Background/Foreground Segmentation Algorithm.
 	/// 
-	/// The class implements the Gaussian mixture model background subtraction described in [Zivkovic2004](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Zivkovic2004)
-	/// and [Zivkovic2006](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
+	/// The class implements the Gaussian mixture model background subtraction described in [Zivkovic2004](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Zivkovic2004)
+	/// and [Zivkovic2006](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
 	pub struct BackgroundSubtractorMOG2 {
 		ptr: *mut c_void
 	}
@@ -1177,6 +1432,8 @@ pub mod video {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { BackgroundSubtractorMOG2, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::video::BackgroundSubtractorTraitConst for BackgroundSubtractorMOG2 {
 		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1185,6 +1442,8 @@ pub mod video {
 		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { BackgroundSubtractorMOG2, crate::video::BackgroundSubtractorTraitConst, as_raw_BackgroundSubtractor, crate::video::BackgroundSubtractorTrait, as_raw_mut_BackgroundSubtractor }
+	
 	impl crate::video::BackgroundSubtractorMOG2TraitConst for BackgroundSubtractorMOG2 {
 		#[inline] fn as_raw_BackgroundSubtractorMOG2(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1192,6 +1451,8 @@ pub mod video {
 	impl crate::video::BackgroundSubtractorMOG2Trait for BackgroundSubtractorMOG2 {
 		#[inline] fn as_raw_mut_BackgroundSubtractorMOG2(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { BackgroundSubtractorMOG2, crate::video::BackgroundSubtractorMOG2TraitConst, as_raw_BackgroundSubtractorMOG2, crate::video::BackgroundSubtractorMOG2Trait, as_raw_mut_BackgroundSubtractorMOG2 }
 	
 	impl BackgroundSubtractorMOG2 {
 	}
@@ -1486,7 +1747,7 @@ pub mod video {
 	/// DIS optical flow algorithm.
 	/// 
 	/// This class implements the Dense Inverse Search (DIS) optical flow algorithm. More
-	/// details about the algorithm can be found at [Kroeger2016](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Kroeger2016) . Includes three presets with preselected
+	/// details about the algorithm can be found at [Kroeger2016](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Kroeger2016) . Includes three presets with preselected
 	/// parameters to provide reasonable trade-off between speed and quality. However, even the slowest preset is
 	/// still relatively fast, use DeepFlow if you need better quality and don't care about speed.
 	/// 
@@ -1517,6 +1778,8 @@ pub mod video {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { DISOpticalFlow, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::video::DenseOpticalFlowTraitConst for DISOpticalFlow {
 		#[inline] fn as_raw_DenseOpticalFlow(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1525,6 +1788,8 @@ pub mod video {
 		#[inline] fn as_raw_mut_DenseOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { DISOpticalFlow, crate::video::DenseOpticalFlowTraitConst, as_raw_DenseOpticalFlow, crate::video::DenseOpticalFlowTrait, as_raw_mut_DenseOpticalFlow }
+	
 	impl crate::video::DISOpticalFlowTraitConst for DISOpticalFlow {
 		#[inline] fn as_raw_DISOpticalFlow(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1532,6 +1797,8 @@ pub mod video {
 	impl crate::video::DISOpticalFlowTrait for DISOpticalFlow {
 		#[inline] fn as_raw_mut_DISOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { DISOpticalFlow, crate::video::DISOpticalFlowTraitConst, as_raw_DISOpticalFlow, crate::video::DISOpticalFlowTrait, as_raw_mut_DISOpticalFlow }
 	
 	impl DISOpticalFlow {
 		/// Creates an instance of DISOpticalFlow
@@ -1545,6 +1812,24 @@ pub mod video {
 		pub fn create(preset: i32) -> Result<core::Ptr<crate::video::DISOpticalFlow>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_DISOpticalFlow_create_int(preset, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::video::DISOpticalFlow>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Creates an instance of DISOpticalFlow
+		/// 
+		/// ## Parameters
+		/// * preset: one of PRESET_ULTRAFAST, PRESET_FAST and PRESET_MEDIUM
+		/// 
+		/// ## Note
+		/// This alternative version of [DISOpticalFlow::create] function uses the following default values for its arguments:
+		/// * preset: DISOpticalFlow::PRESET_FAST
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::video::DISOpticalFlow>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_DISOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::video::DISOpticalFlow>::opencv_from_extern(ret) };
@@ -1582,7 +1867,7 @@ pub mod video {
 		/// * I1: second input image of the same size and the same type as prev.
 		/// * flow: computed flow image that has the same size as prev and type CV_32FC2.
 		#[inline]
-		fn calc(&mut self, i0: &impl core::ToInputArray, i1: &impl core::ToInputArray, flow: &mut impl core::ToInputOutputArray) -> Result<()> {
+		fn calc(&mut self, i0: &impl ToInputArray, i1: &impl ToInputArray, flow: &mut impl ToInputOutputArray) -> Result<()> {
 			input_array_arg!(i0);
 			input_array_arg!(i1);
 			input_output_array_arg!(flow);
@@ -1629,6 +1914,8 @@ pub mod video {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { DenseOpticalFlow, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::video::DenseOpticalFlowTraitConst for DenseOpticalFlow {
 		#[inline] fn as_raw_DenseOpticalFlow(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1636,6 +1923,8 @@ pub mod video {
 	impl crate::video::DenseOpticalFlowTrait for DenseOpticalFlow {
 		#[inline] fn as_raw_mut_DenseOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { DenseOpticalFlow, crate::video::DenseOpticalFlowTraitConst, as_raw_DenseOpticalFlow, crate::video::DenseOpticalFlowTrait, as_raw_mut_DenseOpticalFlow }
 	
 	impl DenseOpticalFlow {
 	}
@@ -1836,6 +2125,8 @@ pub mod video {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { FarnebackOpticalFlow, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::video::DenseOpticalFlowTraitConst for FarnebackOpticalFlow {
 		#[inline] fn as_raw_DenseOpticalFlow(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1844,6 +2135,8 @@ pub mod video {
 		#[inline] fn as_raw_mut_DenseOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { FarnebackOpticalFlow, crate::video::DenseOpticalFlowTraitConst, as_raw_DenseOpticalFlow, crate::video::DenseOpticalFlowTrait, as_raw_mut_DenseOpticalFlow }
+	
 	impl crate::video::FarnebackOpticalFlowTraitConst for FarnebackOpticalFlow {
 		#[inline] fn as_raw_FarnebackOpticalFlow(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1851,6 +2144,8 @@ pub mod video {
 	impl crate::video::FarnebackOpticalFlowTrait for FarnebackOpticalFlow {
 		#[inline] fn as_raw_mut_FarnebackOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { FarnebackOpticalFlow, crate::video::FarnebackOpticalFlowTraitConst, as_raw_FarnebackOpticalFlow, crate::video::FarnebackOpticalFlowTrait, as_raw_mut_FarnebackOpticalFlow }
 	
 	impl FarnebackOpticalFlow {
 		/// ## C++ default parameters
@@ -1866,6 +2161,26 @@ pub mod video {
 		pub fn create(num_levels: i32, pyr_scale: f64, fast_pyramids: bool, win_size: i32, num_iters: i32, poly_n: i32, poly_sigma: f64, flags: i32) -> Result<core::Ptr<crate::video::FarnebackOpticalFlow>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FarnebackOpticalFlow_create_int_double_bool_int_int_int_double_int(num_levels, pyr_scale, fast_pyramids, win_size, num_iters, poly_n, poly_sigma, flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::video::FarnebackOpticalFlow>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [FarnebackOpticalFlow::create] function uses the following default values for its arguments:
+		/// * num_levels: 5
+		/// * pyr_scale: 0.5
+		/// * fast_pyramids: false
+		/// * win_size: 13
+		/// * num_iters: 10
+		/// * poly_n: 5
+		/// * poly_sigma: 1.1
+		/// * flags: 0
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::video::FarnebackOpticalFlow>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FarnebackOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::video::FarnebackOpticalFlow>::opencv_from_extern(ret) };
@@ -2013,101 +2328,101 @@ pub mod video {
 	
 		/// predicted state (x'(k)): x(k)=A*x(k-1)+B*u(k)
 		#[inline]
-		fn set_state_pre(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propStatePre_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
+		fn set_state_pre(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propStatePre_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// corrected state (x(k)): x(k)=x'(k)+K(k)*(z(k)-H*x'(k))
 		#[inline]
-		fn set_state_post(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propStatePost_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
+		fn set_state_post(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propStatePost_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// state transition matrix (A)
 		#[inline]
-		fn set_transition_matrix(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propTransitionMatrix_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
+		fn set_transition_matrix(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propTransitionMatrix_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// control matrix (B) (not used if there is no control)
 		#[inline]
-		fn set_control_matrix(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propControlMatrix_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
+		fn set_control_matrix(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propControlMatrix_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// measurement matrix (H)
 		#[inline]
-		fn set_measurement_matrix(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propMeasurementMatrix_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
+		fn set_measurement_matrix(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propMeasurementMatrix_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// process noise covariance matrix (Q)
 		#[inline]
-		fn set_process_noise_cov(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propProcessNoiseCov_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
+		fn set_process_noise_cov(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propProcessNoiseCov_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// measurement noise covariance matrix (R)
 		#[inline]
-		fn set_measurement_noise_cov(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propMeasurementNoiseCov_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
+		fn set_measurement_noise_cov(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propMeasurementNoiseCov_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// priori error estimate covariance matrix (P'(k)): P'(k)=A*P(k-1)*At + Q)
 		#[inline]
-		fn set_error_cov_pre(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propErrorCovPre_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
+		fn set_error_cov_pre(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propErrorCovPre_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// Kalman gain matrix (K(k)): K(k)=P'(k)*Ht*inv(H*P'(k)*Ht+R)
 		#[inline]
-		fn set_gain(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propGain_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
+		fn set_gain(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propGain_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		/// posteriori error estimate covariance matrix (P(k)): P(k)=(I-K(k)*H)*P'(k)
 		#[inline]
-		fn set_error_cov_post(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propErrorCovPost_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
+		fn set_error_cov_post(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propErrorCovPost_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_temp1(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propTemp1_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
+		fn set_temp1(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propTemp1_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_temp2(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propTemp2_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
+		fn set_temp2(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propTemp2_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_temp3(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propTemp3_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
+		fn set_temp3(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propTemp3_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_temp4(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propTemp4_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
+		fn set_temp4(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propTemp4_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
 		#[inline]
-		fn set_temp5(&mut self, mut val: core::Mat) {
-			let ret = unsafe { sys::cv_KalmanFilter_propTemp5_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_mut_Mat()) };
+		fn set_temp5(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_KalmanFilter_propTemp5_const_Mat(self.as_raw_mut_KalmanFilter(), val.as_raw_Mat()) };
 			ret
 		}
 		
@@ -2131,6 +2446,27 @@ pub mod video {
 			Ok(ret)
 		}
 		
+		/// Re-initializes Kalman filter. The previous content is destroyed.
+		/// 
+		/// ## Parameters
+		/// * dynamParams: Dimensionality of the state.
+		/// * measureParams: Dimensionality of the measurement.
+		/// * controlParams: Dimensionality of the control vector.
+		/// * type: Type of the created matrices that should be CV_32F or CV_64F.
+		/// 
+		/// ## Note
+		/// This alternative version of [KalmanFilterTrait::init] function uses the following default values for its arguments:
+		/// * control_params: 0
+		/// * typ: CV_32F
+		#[inline]
+		fn init_def(&mut self, dynam_params: i32, measure_params: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_KalmanFilter_init_int_int(self.as_raw_mut_KalmanFilter(), dynam_params, measure_params, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 		/// Computes a predicted state.
 		/// 
 		/// ## Parameters
@@ -2139,9 +2475,27 @@ pub mod video {
 		/// ## C++ default parameters
 		/// * control: Mat()
 		#[inline]
-		fn predict(&mut self, control: &core::Mat) -> Result<core::Mat> {
+		fn predict(&mut self, control: &impl core::MatTraitConst) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KalmanFilter_predict_const_MatR(self.as_raw_mut_KalmanFilter(), control.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Computes a predicted state.
+		/// 
+		/// ## Parameters
+		/// * control: The optional input control
+		/// 
+		/// ## Note
+		/// This alternative version of [KalmanFilterTrait::predict] function uses the following default values for its arguments:
+		/// * control: Mat()
+		#[inline]
+		fn predict_def(&mut self) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_KalmanFilter_predict(self.as_raw_mut_KalmanFilter(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -2153,7 +2507,7 @@ pub mod video {
 		/// ## Parameters
 		/// * measurement: The measured system parameters
 		#[inline]
-		fn correct(&mut self, measurement: &core::Mat) -> Result<core::Mat> {
+		fn correct(&mut self, measurement: &impl core::MatTraitConst) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KalmanFilter_correct_const_MatR(self.as_raw_mut_KalmanFilter(), measurement.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2167,7 +2521,7 @@ pub mod video {
 	/// Kalman filter class.
 	/// 
 	/// The class implements a standard Kalman filter <http://en.wikipedia.org/wiki/Kalman_filter>,
-	/// [Welch95](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Welch95) . However, you can modify transitionMatrix, controlMatrix, and measurementMatrix to get
+	/// [Welch95](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Welch95) . However, you can modify transitionMatrix, controlMatrix, and measurementMatrix to get
 	/// an extended Kalman filter functionality.
 	/// 
 	/// Note: In C API when CvKalman\* kalmanFilter structure is not needed anymore, it should be released
@@ -2195,6 +2549,8 @@ pub mod video {
 		#[inline] fn as_raw_mut_KalmanFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { KalmanFilter, crate::video::KalmanFilterTraitConst, as_raw_KalmanFilter, crate::video::KalmanFilterTrait, as_raw_mut_KalmanFilter }
+	
 	impl KalmanFilter {
 		#[inline]
 		pub fn default() -> Result<crate::video::KalmanFilter> {
@@ -2220,6 +2576,27 @@ pub mod video {
 		pub fn new(dynam_params: i32, measure_params: i32, control_params: i32, typ: i32) -> Result<crate::video::KalmanFilter> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_KalmanFilter_KalmanFilter_int_int_int_int(dynam_params, measure_params, control_params, typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::video::KalmanFilter::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// @overload
+		/// ## Parameters
+		/// * dynamParams: Dimensionality of the state.
+		/// * measureParams: Dimensionality of the measurement.
+		/// * controlParams: Dimensionality of the control vector.
+		/// * type: Type of the created matrices that should be CV_32F or CV_64F.
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * control_params: 0
+		/// * typ: CV_32F
+		#[inline]
+		pub fn new_def(dynam_params: i32, measure_params: i32) -> Result<crate::video::KalmanFilter> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_KalmanFilter_KalmanFilter_int_int(dynam_params, measure_params, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::video::KalmanFilter::opencv_from_extern(ret) };
@@ -2275,7 +2652,7 @@ pub mod video {
 		/// ## C++ default parameters
 		/// * err: cv::noArray()
 		#[inline]
-		fn calc(&mut self, prev_img: &impl core::ToInputArray, next_img: &impl core::ToInputArray, prev_pts: &impl core::ToInputArray, next_pts: &mut impl core::ToInputOutputArray, status: &mut impl core::ToOutputArray, err: &mut impl core::ToOutputArray) -> Result<()> {
+		fn calc(&mut self, prev_img: &impl ToInputArray, next_img: &impl ToInputArray, prev_pts: &impl ToInputArray, next_pts: &mut impl ToInputOutputArray, status: &mut impl ToOutputArray, err: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(prev_img);
 			input_array_arg!(next_img);
 			input_array_arg!(prev_pts);
@@ -2284,6 +2661,34 @@ pub mod video {
 			output_array_arg!(err);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_SparseOpticalFlow_calc_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR(self.as_raw_mut_SparseOpticalFlow(), prev_img.as_raw__InputArray(), next_img.as_raw__InputArray(), prev_pts.as_raw__InputArray(), next_pts.as_raw__InputOutputArray(), status.as_raw__OutputArray(), err.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Calculates a sparse optical flow.
+		/// 
+		/// ## Parameters
+		/// * prevImg: First input image.
+		/// * nextImg: Second input image of the same size and the same type as prevImg.
+		/// * prevPts: Vector of 2D points for which the flow needs to be found.
+		/// * nextPts: Output vector of 2D points containing the calculated new positions of input features in the second image.
+		/// * status: Output status vector. Each element of the vector is set to 1 if the
+		///               flow for the corresponding features has been found. Otherwise, it is set to 0.
+		/// * err: Optional output vector that contains error response for each point (inverse confidence).
+		/// 
+		/// ## Note
+		/// This alternative version of [SparseOpticalFlowTrait::calc] function uses the following default values for its arguments:
+		/// * err: cv::noArray()
+		#[inline]
+		fn calc_def(&mut self, prev_img: &impl ToInputArray, next_img: &impl ToInputArray, prev_pts: &impl ToInputArray, next_pts: &mut impl ToInputOutputArray, status: &mut impl ToOutputArray) -> Result<()> {
+			input_array_arg!(prev_img);
+			input_array_arg!(next_img);
+			input_array_arg!(prev_pts);
+			input_output_array_arg!(next_pts);
+			output_array_arg!(status);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SparseOpticalFlow_calc_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__OutputArrayR(self.as_raw_mut_SparseOpticalFlow(), prev_img.as_raw__InputArray(), next_img.as_raw__InputArray(), prev_pts.as_raw__InputArray(), next_pts.as_raw__InputOutputArray(), status.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -2315,6 +2720,8 @@ pub mod video {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { SparseOpticalFlow, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::video::SparseOpticalFlowTraitConst for SparseOpticalFlow {
 		#[inline] fn as_raw_SparseOpticalFlow(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2322,6 +2729,8 @@ pub mod video {
 	impl crate::video::SparseOpticalFlowTrait for SparseOpticalFlow {
 		#[inline] fn as_raw_mut_SparseOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { SparseOpticalFlow, crate::video::SparseOpticalFlowTraitConst, as_raw_SparseOpticalFlow, crate::video::SparseOpticalFlowTrait, as_raw_mut_SparseOpticalFlow }
 	
 	impl SparseOpticalFlow {
 	}
@@ -2396,7 +2805,7 @@ pub mod video {
 		#[inline]
 		fn set_win_size(&mut self, win_size: core::Size) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SparsePyrLKOpticalFlow_setWinSize_Size(self.as_raw_mut_SparsePyrLKOpticalFlow(), win_size.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_SparsePyrLKOpticalFlow_setWinSize_Size(self.as_raw_mut_SparsePyrLKOpticalFlow(), &win_size, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -2469,6 +2878,8 @@ pub mod video {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { SparsePyrLKOpticalFlow, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::video::SparseOpticalFlowTraitConst for SparsePyrLKOpticalFlow {
 		#[inline] fn as_raw_SparseOpticalFlow(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2477,6 +2888,8 @@ pub mod video {
 		#[inline] fn as_raw_mut_SparseOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { SparsePyrLKOpticalFlow, crate::video::SparseOpticalFlowTraitConst, as_raw_SparseOpticalFlow, crate::video::SparseOpticalFlowTrait, as_raw_mut_SparseOpticalFlow }
+	
 	impl crate::video::SparsePyrLKOpticalFlowTraitConst for SparsePyrLKOpticalFlow {
 		#[inline] fn as_raw_SparsePyrLKOpticalFlow(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2484,6 +2897,8 @@ pub mod video {
 	impl crate::video::SparsePyrLKOpticalFlowTrait for SparsePyrLKOpticalFlow {
 		#[inline] fn as_raw_mut_SparsePyrLKOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { SparsePyrLKOpticalFlow, crate::video::SparsePyrLKOpticalFlowTraitConst, as_raw_SparsePyrLKOpticalFlow, crate::video::SparsePyrLKOpticalFlowTrait, as_raw_mut_SparsePyrLKOpticalFlow }
 	
 	impl SparsePyrLKOpticalFlow {
 		/// ## C++ default parameters
@@ -2495,7 +2910,24 @@ pub mod video {
 		#[inline]
 		pub fn create(win_size: core::Size, max_level: i32, crit: core::TermCriteria, flags: i32, min_eig_threshold: f64) -> Result<core::Ptr<crate::video::SparsePyrLKOpticalFlow>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SparsePyrLKOpticalFlow_create_Size_int_TermCriteria_int_double(win_size.opencv_as_extern(), max_level, crit.opencv_as_extern(), flags, min_eig_threshold, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_SparsePyrLKOpticalFlow_create_Size_int_TermCriteria_int_double(&win_size, max_level, &crit, flags, min_eig_threshold, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::video::SparsePyrLKOpticalFlow>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [SparsePyrLKOpticalFlow::create] function uses the following default values for its arguments:
+		/// * win_size: Size(21,21)
+		/// * max_level: 3
+		/// * crit: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,0.01)
+		/// * flags: 0
+		/// * min_eig_threshold: 1e-4
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::video::SparsePyrLKOpticalFlow>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SparsePyrLKOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::video::SparsePyrLKOpticalFlow>::opencv_from_extern(ret) };
@@ -2531,7 +2963,7 @@ pub mod video {
 		/// * image: The initial frame
 		/// * boundingBox: The initial bounding box
 		#[inline]
-		fn init(&mut self, image: &impl core::ToInputArray, bounding_box: core::Rect) -> Result<()> {
+		fn init(&mut self, image: &impl ToInputArray, bounding_box: core::Rect) -> Result<()> {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Tracker_init_const__InputArrayR_const_RectR(self.as_raw_mut_Tracker(), image.as_raw__InputArray(), &bounding_box, ocvrs_return.as_mut_ptr()) };
@@ -2551,7 +2983,7 @@ pub mod video {
 		/// current frame. Note, that latter *does not* imply that tracker has failed, maybe target is indeed
 		/// missing from the frame (say, out of sight)
 		#[inline]
-		fn update(&mut self, image: &impl core::ToInputArray, bounding_box: &mut core::Rect) -> Result<bool> {
+		fn update(&mut self, image: &impl ToInputArray, bounding_box: &mut core::Rect) -> Result<bool> {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Tracker_update_const__InputArrayR_RectR(self.as_raw_mut_Tracker(), image.as_raw__InputArray(), bounding_box, ocvrs_return.as_mut_ptr()) };
@@ -2586,6 +3018,8 @@ pub mod video {
 		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Tracker, crate::video::TrackerTraitConst, as_raw_Tracker, crate::video::TrackerTrait, as_raw_mut_Tracker }
+	
 	impl Tracker {
 	}
 	
@@ -2596,6 +3030,8 @@ pub mod video {
 	boxed_cast_descendant! { Tracker, crate::video::TrackerMIL, cv_Tracker_to_TrackerMIL }
 	
 	boxed_cast_descendant! { Tracker, crate::video::TrackerNano, cv_Tracker_to_TrackerNano }
+	
+	boxed_cast_descendant! { Tracker, crate::video::TrackerVit, cv_Tracker_to_TrackerVit }
 	
 	impl std::fmt::Debug for Tracker {
 		#[inline]
@@ -2650,6 +3086,8 @@ pub mod video {
 		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { TrackerDaSiamRPN, crate::video::TrackerTraitConst, as_raw_Tracker, crate::video::TrackerTrait, as_raw_mut_Tracker }
+	
 	impl crate::video::TrackerDaSiamRPNTraitConst for TrackerDaSiamRPN {
 		#[inline] fn as_raw_TrackerDaSiamRPN(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2657,6 +3095,8 @@ pub mod video {
 	impl crate::video::TrackerDaSiamRPNTrait for TrackerDaSiamRPN {
 		#[inline] fn as_raw_mut_TrackerDaSiamRPN(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { TrackerDaSiamRPN, crate::video::TrackerDaSiamRPNTraitConst, as_raw_TrackerDaSiamRPN, crate::video::TrackerDaSiamRPNTrait, as_raw_mut_TrackerDaSiamRPN }
 	
 	impl TrackerDaSiamRPN {
 		/// Constructor
@@ -2666,9 +3106,26 @@ pub mod video {
 		/// ## C++ default parameters
 		/// * parameters: TrackerDaSiamRPN::Params()
 		#[inline]
-		pub fn create(parameters: &crate::video::TrackerDaSiamRPN_Params) -> Result<core::Ptr<crate::video::TrackerDaSiamRPN>> {
+		pub fn create(parameters: &impl crate::video::TrackerDaSiamRPN_ParamsTraitConst) -> Result<core::Ptr<crate::video::TrackerDaSiamRPN>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TrackerDaSiamRPN_create_const_ParamsR(parameters.as_raw_TrackerDaSiamRPN_Params(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::video::TrackerDaSiamRPN>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Constructor
+		/// ## Parameters
+		/// * parameters: DaSiamRPN parameters TrackerDaSiamRPN::Params
+		/// 
+		/// ## Note
+		/// This alternative version of [TrackerDaSiamRPN::create] function uses the following default values for its arguments:
+		/// * parameters: TrackerDaSiamRPN::Params()
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::video::TrackerDaSiamRPN>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_TrackerDaSiamRPN_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::video::TrackerDaSiamRPN>::opencv_from_extern(ret) };
@@ -2732,34 +3189,34 @@ pub mod video {
 	
 		#[inline]
 		fn set_model(&mut self, val: &str) {
-			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_TrackerDaSiamRPN_Params_propModel_string(self.as_raw_mut_TrackerDaSiamRPN_Params(), val.opencv_as_extern_mut()) };
+			extern_container_arg!(nofail val);
+			let ret = unsafe { sys::cv_TrackerDaSiamRPN_Params_propModel_const_string(self.as_raw_mut_TrackerDaSiamRPN_Params(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_kernel_cls1(&mut self, val: &str) {
-			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_TrackerDaSiamRPN_Params_propKernel_cls1_string(self.as_raw_mut_TrackerDaSiamRPN_Params(), val.opencv_as_extern_mut()) };
+			extern_container_arg!(nofail val);
+			let ret = unsafe { sys::cv_TrackerDaSiamRPN_Params_propKernel_cls1_const_string(self.as_raw_mut_TrackerDaSiamRPN_Params(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_kernel_r1(&mut self, val: &str) {
-			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_TrackerDaSiamRPN_Params_propKernel_r1_string(self.as_raw_mut_TrackerDaSiamRPN_Params(), val.opencv_as_extern_mut()) };
+			extern_container_arg!(nofail val);
+			let ret = unsafe { sys::cv_TrackerDaSiamRPN_Params_propKernel_r1_const_string(self.as_raw_mut_TrackerDaSiamRPN_Params(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_backend(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_TrackerDaSiamRPN_Params_propBackend_int(self.as_raw_mut_TrackerDaSiamRPN_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerDaSiamRPN_Params_propBackend_const_int(self.as_raw_mut_TrackerDaSiamRPN_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_target(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_TrackerDaSiamRPN_Params_propTarget_int(self.as_raw_mut_TrackerDaSiamRPN_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerDaSiamRPN_Params_propTarget_const_int(self.as_raw_mut_TrackerDaSiamRPN_Params(), val) };
 			ret
 		}
 		
@@ -2787,6 +3244,8 @@ pub mod video {
 	impl crate::video::TrackerDaSiamRPN_ParamsTrait for TrackerDaSiamRPN_Params {
 		#[inline] fn as_raw_mut_TrackerDaSiamRPN_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { TrackerDaSiamRPN_Params, crate::video::TrackerDaSiamRPN_ParamsTraitConst, as_raw_TrackerDaSiamRPN_Params, crate::video::TrackerDaSiamRPN_ParamsTrait, as_raw_mut_TrackerDaSiamRPN_Params }
 	
 	impl TrackerDaSiamRPN_Params {
 		#[inline]
@@ -2835,7 +3294,7 @@ pub mod video {
 	
 	/// the GOTURN (Generic Object Tracking Using Regression Networks) tracker
 	/// 
-	/// GOTURN ([GOTURN](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_GOTURN)) is kind of trackers based on Convolutional Neural Networks (CNN). While taking all advantages of CNN trackers,
+	/// GOTURN ([GOTURN](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_GOTURN)) is kind of trackers based on Convolutional Neural Networks (CNN). While taking all advantages of CNN trackers,
 	/// GOTURN is much faster due to offline training without online fine-tuning nature.
 	/// GOTURN tracker addresses the problem of single target tracking: given a bounding box label of an object in the first frame of the video,
 	/// we track that object through the rest of the video. NOTE: Current method of GOTURN does not handle occlusions; however, it is fairly
@@ -2870,6 +3329,8 @@ pub mod video {
 		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { TrackerGOTURN, crate::video::TrackerTraitConst, as_raw_Tracker, crate::video::TrackerTrait, as_raw_mut_Tracker }
+	
 	impl crate::video::TrackerGOTURNTraitConst for TrackerGOTURN {
 		#[inline] fn as_raw_TrackerGOTURN(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2877,6 +3338,8 @@ pub mod video {
 	impl crate::video::TrackerGOTURNTrait for TrackerGOTURN {
 		#[inline] fn as_raw_mut_TrackerGOTURN(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { TrackerGOTURN, crate::video::TrackerGOTURNTraitConst, as_raw_TrackerGOTURN, crate::video::TrackerGOTURNTrait, as_raw_mut_TrackerGOTURN }
 	
 	impl TrackerGOTURN {
 		/// Constructor
@@ -2886,9 +3349,26 @@ pub mod video {
 		/// ## C++ default parameters
 		/// * parameters: TrackerGOTURN::Params()
 		#[inline]
-		pub fn create(parameters: &crate::video::TrackerGOTURN_Params) -> Result<core::Ptr<crate::video::TrackerGOTURN>> {
+		pub fn create(parameters: &impl crate::video::TrackerGOTURN_ParamsTraitConst) -> Result<core::Ptr<crate::video::TrackerGOTURN>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TrackerGOTURN_create_const_ParamsR(parameters.as_raw_TrackerGOTURN_Params(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::video::TrackerGOTURN>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Constructor
+		/// ## Parameters
+		/// * parameters: GOTURN parameters TrackerGOTURN::Params
+		/// 
+		/// ## Note
+		/// This alternative version of [TrackerGOTURN::create] function uses the following default values for its arguments:
+		/// * parameters: TrackerGOTURN::Params()
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::video::TrackerGOTURN>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_TrackerGOTURN_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::video::TrackerGOTURN>::opencv_from_extern(ret) };
@@ -2933,15 +3413,15 @@ pub mod video {
 	
 		#[inline]
 		fn set_model_txt(&mut self, val: &str) {
-			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_TrackerGOTURN_Params_propModelTxt_string(self.as_raw_mut_TrackerGOTURN_Params(), val.opencv_as_extern_mut()) };
+			extern_container_arg!(nofail val);
+			let ret = unsafe { sys::cv_TrackerGOTURN_Params_propModelTxt_const_string(self.as_raw_mut_TrackerGOTURN_Params(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_model_bin(&mut self, val: &str) {
-			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_TrackerGOTURN_Params_propModelBin_string(self.as_raw_mut_TrackerGOTURN_Params(), val.opencv_as_extern_mut()) };
+			extern_container_arg!(nofail val);
+			let ret = unsafe { sys::cv_TrackerGOTURN_Params_propModelBin_const_string(self.as_raw_mut_TrackerGOTURN_Params(), val.opencv_as_extern()) };
 			ret
 		}
 		
@@ -2969,6 +3449,8 @@ pub mod video {
 	impl crate::video::TrackerGOTURN_ParamsTrait for TrackerGOTURN_Params {
 		#[inline] fn as_raw_mut_TrackerGOTURN_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { TrackerGOTURN_Params, crate::video::TrackerGOTURN_ParamsTraitConst, as_raw_TrackerGOTURN_Params, crate::video::TrackerGOTURN_ParamsTrait, as_raw_mut_TrackerGOTURN_Params }
 	
 	impl TrackerGOTURN_Params {
 		#[inline]
@@ -3016,7 +3498,7 @@ pub mod video {
 	/// background.
 	/// 
 	/// Multiple Instance Learning avoids the drift problem for a robust tracking. The implementation is
-	/// based on [MIL](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_MIL) .
+	/// based on [MIL](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_MIL) .
 	/// 
 	/// Original code can be found here <http://vision.ucsd.edu/~bbabenko/project_miltrack.shtml>
 	pub struct TrackerMIL {
@@ -3042,6 +3524,8 @@ pub mod video {
 		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { TrackerMIL, crate::video::TrackerTraitConst, as_raw_Tracker, crate::video::TrackerTrait, as_raw_mut_Tracker }
+	
 	impl crate::video::TrackerMILTraitConst for TrackerMIL {
 		#[inline] fn as_raw_TrackerMIL(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3049,6 +3533,8 @@ pub mod video {
 	impl crate::video::TrackerMILTrait for TrackerMIL {
 		#[inline] fn as_raw_mut_TrackerMIL(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { TrackerMIL, crate::video::TrackerMILTraitConst, as_raw_TrackerMIL, crate::video::TrackerMILTrait, as_raw_mut_TrackerMIL }
 	
 	impl TrackerMIL {
 		/// Create MIL tracker instance
@@ -3061,6 +3547,23 @@ pub mod video {
 		pub fn create(parameters: crate::video::TrackerMIL_Params) -> Result<core::Ptr<crate::video::TrackerMIL>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TrackerMIL_create_const_ParamsR(&parameters, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::video::TrackerMIL>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Create MIL tracker instance
+		/// ## Parameters
+		/// * parameters: MIL parameters TrackerMIL::Params
+		/// 
+		/// ## Note
+		/// This alternative version of [TrackerMIL::create] function uses the following default values for its arguments:
+		/// * parameters: TrackerMIL::Params()
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::video::TrackerMIL>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_TrackerMIL_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::video::TrackerMIL>::opencv_from_extern(ret) };
@@ -3164,6 +3667,8 @@ pub mod video {
 		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { TrackerNano, crate::video::TrackerTraitConst, as_raw_Tracker, crate::video::TrackerTrait, as_raw_mut_Tracker }
+	
 	impl crate::video::TrackerNanoTraitConst for TrackerNano {
 		#[inline] fn as_raw_TrackerNano(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3171,6 +3676,8 @@ pub mod video {
 	impl crate::video::TrackerNanoTrait for TrackerNano {
 		#[inline] fn as_raw_mut_TrackerNano(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { TrackerNano, crate::video::TrackerNanoTraitConst, as_raw_TrackerNano, crate::video::TrackerNanoTrait, as_raw_mut_TrackerNano }
 	
 	impl TrackerNano {
 		/// Constructor
@@ -3180,9 +3687,26 @@ pub mod video {
 		/// ## C++ default parameters
 		/// * parameters: TrackerNano::Params()
 		#[inline]
-		pub fn create(parameters: &crate::video::TrackerNano_Params) -> Result<core::Ptr<crate::video::TrackerNano>> {
+		pub fn create(parameters: &impl crate::video::TrackerNano_ParamsTraitConst) -> Result<core::Ptr<crate::video::TrackerNano>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_TrackerNano_create_const_ParamsR(parameters.as_raw_TrackerNano_Params(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::video::TrackerNano>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Constructor
+		/// ## Parameters
+		/// * parameters: NanoTrack parameters TrackerNano::Params
+		/// 
+		/// ## Note
+		/// This alternative version of [TrackerNano::create] function uses the following default values for its arguments:
+		/// * parameters: TrackerNano::Params()
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::video::TrackerNano>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_TrackerNano_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::video::TrackerNano>::opencv_from_extern(ret) };
@@ -3239,27 +3763,27 @@ pub mod video {
 	
 		#[inline]
 		fn set_backbone(&mut self, val: &str) {
-			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_TrackerNano_Params_propBackbone_string(self.as_raw_mut_TrackerNano_Params(), val.opencv_as_extern_mut()) };
+			extern_container_arg!(nofail val);
+			let ret = unsafe { sys::cv_TrackerNano_Params_propBackbone_const_string(self.as_raw_mut_TrackerNano_Params(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_neckhead(&mut self, val: &str) {
-			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_TrackerNano_Params_propNeckhead_string(self.as_raw_mut_TrackerNano_Params(), val.opencv_as_extern_mut()) };
+			extern_container_arg!(nofail val);
+			let ret = unsafe { sys::cv_TrackerNano_Params_propNeckhead_const_string(self.as_raw_mut_TrackerNano_Params(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_backend(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_TrackerNano_Params_propBackend_int(self.as_raw_mut_TrackerNano_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerNano_Params_propBackend_const_int(self.as_raw_mut_TrackerNano_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_target(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_TrackerNano_Params_propTarget_int(self.as_raw_mut_TrackerNano_Params(), val) };
+			let ret = unsafe { sys::cv_TrackerNano_Params_propTarget_const_int(self.as_raw_mut_TrackerNano_Params(), val) };
 			ret
 		}
 		
@@ -3287,6 +3811,8 @@ pub mod video {
 	impl crate::video::TrackerNano_ParamsTrait for TrackerNano_Params {
 		#[inline] fn as_raw_mut_TrackerNano_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { TrackerNano_Params, crate::video::TrackerNano_ParamsTraitConst, as_raw_TrackerNano_Params, crate::video::TrackerNano_ParamsTrait, as_raw_mut_TrackerNano_Params }
 	
 	impl TrackerNano_Params {
 		#[inline]
@@ -3316,6 +3842,250 @@ pub mod video {
 				.field("neckhead", &crate::video::TrackerNano_ParamsTraitConst::neckhead(self))
 				.field("backend", &crate::video::TrackerNano_ParamsTraitConst::backend(self))
 				.field("target", &crate::video::TrackerNano_ParamsTraitConst::target(self))
+				.finish()
+		}
+	}
+	
+	/// Constant methods for [crate::video::TrackerVit]
+	pub trait TrackerVitTraitConst: crate::video::TrackerTraitConst {
+		fn as_raw_TrackerVit(&self) -> *const c_void;
+	
+	}
+	
+	/// Mutable methods for [crate::video::TrackerVit]
+	pub trait TrackerVitTrait: crate::video::TrackerTrait + crate::video::TrackerVitTraitConst {
+		fn as_raw_mut_TrackerVit(&mut self) -> *mut c_void;
+	
+		/// Return tracking score
+		#[inline]
+		fn get_tracking_score(&mut self) -> Result<f32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_TrackerVit_getTrackingScore(self.as_raw_mut_TrackerVit(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+	}
+	
+	/// the VIT tracker is a super lightweight dnn-based general object tracking.
+	/// 
+	/// VIT tracker is much faster and extremely lightweight due to special model structure, the model file is about 767KB.
+	/// Model download link: <https://github.com/opencv/opencv_zoo/tree/main/models/object_tracking_vittrack>
+	/// Author: PengyuLiu, 1872918507@qq.com
+	pub struct TrackerVit {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { TrackerVit }
+	
+	impl Drop for TrackerVit {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_TrackerVit_delete(self.as_raw_mut_TrackerVit()) };
+		}
+	}
+	
+	unsafe impl Send for TrackerVit {}
+	
+	impl crate::video::TrackerTraitConst for TrackerVit {
+		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::video::TrackerTrait for TrackerVit {
+		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	boxed_ref! { TrackerVit, crate::video::TrackerTraitConst, as_raw_Tracker, crate::video::TrackerTrait, as_raw_mut_Tracker }
+	
+	impl crate::video::TrackerVitTraitConst for TrackerVit {
+		#[inline] fn as_raw_TrackerVit(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::video::TrackerVitTrait for TrackerVit {
+		#[inline] fn as_raw_mut_TrackerVit(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	boxed_ref! { TrackerVit, crate::video::TrackerVitTraitConst, as_raw_TrackerVit, crate::video::TrackerVitTrait, as_raw_mut_TrackerVit }
+	
+	impl TrackerVit {
+		/// Constructor
+		/// ## Parameters
+		/// * parameters: vit tracker parameters TrackerVit::Params
+		/// 
+		/// ## C++ default parameters
+		/// * parameters: TrackerVit::Params()
+		#[inline]
+		pub fn create(parameters: &impl crate::video::TrackerVit_ParamsTraitConst) -> Result<core::Ptr<crate::video::TrackerVit>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_TrackerVit_create_const_ParamsR(parameters.as_raw_TrackerVit_Params(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::video::TrackerVit>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Constructor
+		/// ## Parameters
+		/// * parameters: vit tracker parameters TrackerVit::Params
+		/// 
+		/// ## Note
+		/// This alternative version of [TrackerVit::create] function uses the following default values for its arguments:
+		/// * parameters: TrackerVit::Params()
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::video::TrackerVit>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_TrackerVit_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::video::TrackerVit>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+	}
+	
+	boxed_cast_base! { TrackerVit, crate::video::Tracker, cv_TrackerVit_to_Tracker }
+	
+	impl std::fmt::Debug for TrackerVit {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TrackerVit")
+				.finish()
+		}
+	}
+	
+	/// Constant methods for [crate::video::TrackerVit_Params]
+	pub trait TrackerVit_ParamsTraitConst {
+		fn as_raw_TrackerVit_Params(&self) -> *const c_void;
+	
+		#[inline]
+		fn net(&self) -> String {
+			let ret = unsafe { sys::cv_TrackerVit_Params_propNet_const(self.as_raw_TrackerVit_Params()) };
+			let ret = unsafe { String::opencv_from_extern(ret) };
+			ret
+		}
+		
+		#[inline]
+		fn backend(&self) -> i32 {
+			let ret = unsafe { sys::cv_TrackerVit_Params_propBackend_const(self.as_raw_TrackerVit_Params()) };
+			ret
+		}
+		
+		#[inline]
+		fn target(&self) -> i32 {
+			let ret = unsafe { sys::cv_TrackerVit_Params_propTarget_const(self.as_raw_TrackerVit_Params()) };
+			ret
+		}
+		
+		#[inline]
+		fn meanvalue(&self) -> core::Scalar {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_TrackerVit_Params_propMeanvalue_const(self.as_raw_TrackerVit_Params(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			ret
+		}
+		
+		#[inline]
+		fn stdvalue(&self) -> core::Scalar {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_TrackerVit_Params_propStdvalue_const(self.as_raw_TrackerVit_Params(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			ret
+		}
+		
+	}
+	
+	/// Mutable methods for [crate::video::TrackerVit_Params]
+	pub trait TrackerVit_ParamsTrait: crate::video::TrackerVit_ParamsTraitConst {
+		fn as_raw_mut_TrackerVit_Params(&mut self) -> *mut c_void;
+	
+		#[inline]
+		fn set_net(&mut self, val: &str) {
+			extern_container_arg!(nofail val);
+			let ret = unsafe { sys::cv_TrackerVit_Params_propNet_const_string(self.as_raw_mut_TrackerVit_Params(), val.opencv_as_extern()) };
+			ret
+		}
+		
+		#[inline]
+		fn set_backend(&mut self, val: i32) {
+			let ret = unsafe { sys::cv_TrackerVit_Params_propBackend_const_int(self.as_raw_mut_TrackerVit_Params(), val) };
+			ret
+		}
+		
+		#[inline]
+		fn set_target(&mut self, val: i32) {
+			let ret = unsafe { sys::cv_TrackerVit_Params_propTarget_const_int(self.as_raw_mut_TrackerVit_Params(), val) };
+			ret
+		}
+		
+		#[inline]
+		fn set_meanvalue(&mut self, val: core::Scalar) {
+			let ret = unsafe { sys::cv_TrackerVit_Params_propMeanvalue_const_Scalar(self.as_raw_mut_TrackerVit_Params(), &val) };
+			ret
+		}
+		
+		#[inline]
+		fn set_stdvalue(&mut self, val: core::Scalar) {
+			let ret = unsafe { sys::cv_TrackerVit_Params_propStdvalue_const_Scalar(self.as_raw_mut_TrackerVit_Params(), &val) };
+			ret
+		}
+		
+	}
+	
+	pub struct TrackerVit_Params {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { TrackerVit_Params }
+	
+	impl Drop for TrackerVit_Params {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_TrackerVit_Params_delete(self.as_raw_mut_TrackerVit_Params()) };
+		}
+	}
+	
+	unsafe impl Send for TrackerVit_Params {}
+	
+	impl crate::video::TrackerVit_ParamsTraitConst for TrackerVit_Params {
+		#[inline] fn as_raw_TrackerVit_Params(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::video::TrackerVit_ParamsTrait for TrackerVit_Params {
+		#[inline] fn as_raw_mut_TrackerVit_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	boxed_ref! { TrackerVit_Params, crate::video::TrackerVit_ParamsTraitConst, as_raw_TrackerVit_Params, crate::video::TrackerVit_ParamsTrait, as_raw_mut_TrackerVit_Params }
+	
+	impl TrackerVit_Params {
+		#[inline]
+		pub fn default() -> Result<crate::video::TrackerVit_Params> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_TrackerVit_Params_Params(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::video::TrackerVit_Params::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+	}
+	
+	impl Clone for TrackerVit_Params {
+		#[inline]
+		fn clone(&self) -> Self {
+			unsafe { Self::from_raw(sys::cv_TrackerVit_Params_implicitClone_const(self.as_raw_TrackerVit_Params())) }
+		}
+	}
+	
+	impl std::fmt::Debug for TrackerVit_Params {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TrackerVit_Params")
+				.field("net", &crate::video::TrackerVit_ParamsTraitConst::net(self))
+				.field("backend", &crate::video::TrackerVit_ParamsTraitConst::backend(self))
+				.field("target", &crate::video::TrackerVit_ParamsTraitConst::target(self))
+				.field("meanvalue", &crate::video::TrackerVit_ParamsTraitConst::meanvalue(self))
+				.field("stdvalue", &crate::video::TrackerVit_ParamsTraitConst::stdvalue(self))
 				.finish()
 		}
 	}
@@ -3406,7 +4176,7 @@ pub mod video {
 		/// [calc] function overload to handle separate horizontal (u) and vertical (v) flow components
 		/// (to avoid extra splits/merges)
 		#[inline]
-		fn calc_uv(&mut self, i0: &impl core::ToInputArray, i1: &impl core::ToInputArray, flow_u: &mut impl core::ToInputOutputArray, flow_v: &mut impl core::ToInputOutputArray) -> Result<()> {
+		fn calc_uv(&mut self, i0: &impl ToInputArray, i1: &impl ToInputArray, flow_u: &mut impl ToInputOutputArray, flow_v: &mut impl ToInputOutputArray) -> Result<()> {
 			input_array_arg!(i0);
 			input_array_arg!(i1);
 			input_output_array_arg!(flow_u);
@@ -3501,7 +4271,7 @@ pub mod video {
 	/// where ![inline formula](https://latex.codecogs.com/png.latex?E%5FI%2CE%5FG%2CE%5FS) are color constancy, gradient constancy and smoothness terms
 	/// respectively. ![inline formula](https://latex.codecogs.com/png.latex?%5CPsi%28s%5E2%29%3D%5Csqrt%7Bs%5E2%2B%5Cepsilon%5E2%7D) is a robust penalizer to limit the
 	/// influence of outliers. A complete formulation and a description of the minimization
-	/// procedure can be found in [Brox2004](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Brox2004)
+	/// procedure can be found in [Brox2004](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Brox2004)
 	pub struct VariationalRefinement {
 		ptr: *mut c_void
 	}
@@ -3525,6 +4295,8 @@ pub mod video {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { VariationalRefinement, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::video::DenseOpticalFlowTraitConst for VariationalRefinement {
 		#[inline] fn as_raw_DenseOpticalFlow(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3533,6 +4305,8 @@ pub mod video {
 		#[inline] fn as_raw_mut_DenseOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { VariationalRefinement, crate::video::DenseOpticalFlowTraitConst, as_raw_DenseOpticalFlow, crate::video::DenseOpticalFlowTrait, as_raw_mut_DenseOpticalFlow }
+	
 	impl crate::video::VariationalRefinementTraitConst for VariationalRefinement {
 		#[inline] fn as_raw_VariationalRefinement(&self) -> *const c_void { self.as_raw() }
 	}
@@ -3540,6 +4314,8 @@ pub mod video {
 	impl crate::video::VariationalRefinementTrait for VariationalRefinement {
 		#[inline] fn as_raw_mut_VariationalRefinement(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { VariationalRefinement, crate::video::VariationalRefinementTraitConst, as_raw_VariationalRefinement, crate::video::VariationalRefinementTrait, as_raw_mut_VariationalRefinement }
 	
 	impl VariationalRefinement {
 		/// Creates an instance of VariationalRefinement

@@ -7,9 +7,7 @@ use crate::class::ClassDesc;
 use crate::field::{Field, FieldDesc};
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
 use crate::type_ref::{Constness, FishStyle};
-use crate::{
-	Class, CompiledInterpolation, CppNameStyle, EntityElement, Func, GeneratorEnv, IteratorExt, NameStyle, StrExt, Tuple, TypeRef,
-};
+use crate::{Class, CompiledInterpolation, CppNameStyle, EntityElement, Func, IteratorExt, NameStyle, StrExt, Tuple, TypeRef};
 
 use super::disambiguate_single_name;
 use super::element::{DefaultRustNativeElement, RustElement};
@@ -34,8 +32,8 @@ impl RustElement for Tuple<'_, '_> {
 		.into()
 	}
 
-	fn rendered_doc_comment_with_prefix(&self, prefix: &str, opencv_version: &str) -> String {
-		DefaultRustNativeElement::rendered_doc_comment_with_prefix(self.entity(), prefix, opencv_version)
+	fn rendered_doc_comment(&self, comment_marker: &str, opencv_version: &str) -> String {
+		DefaultRustNativeElement::rendered_doc_comment(self.entity(), comment_marker, opencv_version)
 	}
 }
 
@@ -44,7 +42,7 @@ impl RustNativeGeneratedElement for Tuple<'_, '_> {
 		format!("{}-{}", self.rust_element_module(), self.rust_localalias())
 	}
 
-	fn gen_rust(&self, _opencv_version: &str, _gen_env: &GeneratorEnv) -> String {
+	fn gen_rust(&self, _opencv_version: &str) -> String {
 		static RUST_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/tuple/rust.tpl.rs").compile_interpolation());
 
 		let type_ref = self.type_ref();
@@ -66,11 +64,13 @@ impl RustNativeGeneratedElement for Tuple<'_, '_> {
 				)
 			})
 			.join(",\n");
-		let new_extern = method_new(type_ref, &elements).identifier();
+		let new_extern = method_new(type_ref.clone(), &elements).identifier();
 		let delete_extern = FuncDesc::method_delete(tuple_desc).identifier();
 
 		RUST_TPL.interpolate(&HashMap::from([
 			("rust_localalias", rust_localalias),
+			("rust_as_raw_const", type_ref.rust_as_raw_name(Constness::Const).into()),
+			("rust_as_raw_mut", type_ref.rust_as_raw_name(Constness::Mut).into()),
 			("rust_full", self.rust_name(NameStyle::ref_())),
 			("inner_rust_full", self.rust_inner().into()),
 			("getters", getters.into()),
@@ -79,24 +79,20 @@ impl RustNativeGeneratedElement for Tuple<'_, '_> {
 		]))
 	}
 
-	fn gen_rust_exports(&self, gen_env: &GeneratorEnv) -> String {
-		extern_functions(self)
-			.into_iter()
-			.map(|f| f.gen_rust_exports(gen_env))
-			.join("")
+	fn gen_rust_externs(&self) -> String {
+		extern_functions(self).iter().map(Func::gen_rust_externs).join("")
 	}
 
-	fn gen_cpp(&self, gen_env: &GeneratorEnv) -> String {
+	fn gen_cpp(&self) -> String {
 		static CPP_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/tuple/cpp.tpl.cpp").compile_interpolation());
 
 		CPP_TPL.interpolate(&HashMap::from([(
 			"methods",
-			extern_functions(self).into_iter().map(|f| f.gen_cpp(gen_env)).join(""),
+			extern_functions(self).iter().map(Func::gen_cpp).join(""),
 		)]))
 	}
 }
 
-#[inline]
 fn extern_functions<'tu, 'ge>(tuple: &Tuple<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
 	let type_ref = tuple.type_ref();
 	let elements = tuple.elements();

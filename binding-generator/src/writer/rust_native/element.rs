@@ -5,11 +5,11 @@ use clang::{Entity, EntityKind};
 
 use crate::type_ref::FishStyle;
 use crate::{
-	opencv_module_from_path, reserved_rename, settings, CppNameStyle, Element, GeneratedType, GeneratorEnv, IteratorExt,
-	NameStyle, StrExt, StringExt,
+	opencv_module_from_path, reserved_rename, settings, CppNameStyle, Element, GeneratedType, IteratorExt, NameStyle, StrExt,
+	StringExt,
 };
 
-use super::comment;
+use super::comment::RenderComment;
 
 pub struct DefaultRustNativeElement;
 
@@ -35,7 +35,7 @@ impl DefaultRustNativeElement {
 	}
 
 	pub fn rust_leafname(this: &(impl Element + ?Sized)) -> Cow<str> {
-		reserved_rename(this.cpp_name(CppNameStyle::Declaration).to_snake_case().into())
+		reserved_rename(this.cpp_name(CppNameStyle::Declaration).cpp_name_to_rust_case().into())
 	}
 
 	pub fn rust_name(this: &(impl RustElement + ?Sized), entity: Entity, name_style: NameStyle) -> String {
@@ -93,13 +93,10 @@ impl DefaultRustNativeElement {
 		}
 	}
 
-	pub fn rendered_doc_comment_with_prefix(entity: Entity, prefix: &str, opencv_version: &str) -> String {
-		let comment = entity.get_comment();
-		comment::render_doc_comment(comment.as_deref().unwrap_or(""), prefix, opencv_version)
-	}
-
-	pub fn rendered_doc_comment(this: &(impl RustElement + ?Sized), opencv_version: &str) -> String {
-		this.rendered_doc_comment_with_prefix("///", opencv_version)
+	pub fn rendered_doc_comment(entity: Entity, comment_marker: &str, opencv_version: &str) -> String {
+		RenderComment::new(&entity.doc_comment(), opencv_version)
+			.render_with_comment_marker(comment_marker)
+			.into_owned()
 	}
 }
 
@@ -111,15 +108,15 @@ pub trait RustNativeGeneratedElement {
 
 	fn element_safe_id(&self) -> String;
 
-	fn gen_rust(&self, _opencv_version: &str, _gen_env: &GeneratorEnv) -> String {
+	fn gen_rust(&self, _opencv_version: &str) -> String {
 		"".to_string()
 	}
 
-	fn gen_rust_exports(&self, _gen_env: &GeneratorEnv) -> String {
+	fn gen_rust_externs(&self) -> String {
 		"".to_string()
 	}
 
-	fn gen_cpp(&self, _gen_env: &GeneratorEnv) -> String {
+	fn gen_cpp(&self) -> String {
 		"".to_string()
 	}
 }
@@ -141,11 +138,7 @@ pub trait RustElement: Element {
 		DefaultRustNativeElement::rust_leafname(self)
 	}
 
-	fn rendered_doc_comment_with_prefix(&self, prefix: &str, opencv_version: &str) -> String;
-
-	fn rendered_doc_comment(&self, opencv_version: &str) -> String {
-		DefaultRustNativeElement::rendered_doc_comment(self, opencv_version)
-	}
+	fn rendered_doc_comment(&self, comment_marker: &str, opencv_version: &str) -> String;
 }
 
 pub trait DebugRust {

@@ -35,14 +35,7 @@ impl<'tu, 'ge> ClassDesc<'tu, 'ge> {
 	pub fn simple(cpp_refname: impl Into<Rc<str>>, rust_module: impl Into<Rc<str>>) -> Self {
 		Self {
 			kind: ClassKind::Simple,
-			is_abstract: false,
-			is_system: false,
-			is_public: true,
-			exclude_kind: ExcludeKind::Included,
-			template_kind: TemplateKind::No,
-			bases: Rc::new([]),
-			cpp_fullname: cpp_refname.into(),
-			rust_module: rust_module.into(),
+			..Self::boxed(cpp_refname, rust_module)
 		}
 	}
 
@@ -59,6 +52,11 @@ impl<'tu, 'ge> ClassDesc<'tu, 'ge> {
 	/// `cv::Point`
 	pub fn cv_point() -> Class<'tu, 'ge> {
 		Class::new_desc(Self::simple("cv::Point", "core"))
+	}
+
+	/// `cv::Point2f`
+	pub fn cv_point2f() -> Class<'tu, 'ge> {
+		Class::new_desc(Self::simple("cv::Point2f", "core"))
 	}
 
 	/// `cv::Point2d`
@@ -145,18 +143,8 @@ impl<'tu, 'ge> ClassDesc<'tu, 'ge> {
 		Class::new_desc(Self::boxed("cv::Feature2D", "features2d"))
 	}
 
-	/// `cv::dnn::LayerParams`
-	pub fn cv_dnn_layerparams() -> Class<'tu, 'ge> {
-		Class::new_desc(Self::boxed("cv::dnn::LayerParams", "dnn"))
-	}
-
 	/// `cv::dnn::DictValue`
 	pub fn cv_dnn_dict_value() -> Class<'tu, 'ge> {
 		Class::new_desc(Self::boxed("cv::dnn::DictValue", "dnn"))
-	}
-
-	/// `cv::ORB`
-	pub fn cv_orb() -> Class<'tu, 'ge> {
-		Class::new_desc(Self::boxed("cv::ORB", "features2d"))
 	}
 }

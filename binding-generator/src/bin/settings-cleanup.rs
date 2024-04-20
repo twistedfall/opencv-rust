@@ -1,40 +1,38 @@
 use std::cell::RefCell;
 use std::collections::HashSet;
 use std::path::{Path, PathBuf};
-use std::{env, fmt, mem};
+use std::{env, fmt};
 
 use clang::{Entity, EntityKind};
 
 use opencv_binding_generator::{
-	opencv_module_from_path, settings, Class, CppNameStyle, Element, EntityExt, EntityWalkerExt, EntityWalkerVisitor, Func,
-	FuncId, Generator, GeneratorEnv, WalkAction,
+	opencv_module_from_path, settings, Class, EntityExt, EntityWalkerExt, EntityWalkerVisitor, Func, FuncId, Generator,
+	GeneratorEnv, WalkAction,
 };
 
 struct FunctionFinder<'tu, 'f> {
 	pub gen_env: GeneratorEnv<'tu>,
 	pub func_rename_unused: RefCell<&'f mut HashSet<&'static str>>,
+	pub func_exclude_unused: RefCell<&'f mut HashSet<&'static str>>,
 	pub func_cfg_attr_unused: RefCell<&'f mut HashSet<&'static str>>,
 	pub func_unsafe_unused: RefCell<&'f mut HashSet<FuncId<'static>>>,
-	pub func_manual_unused: RefCell<&'f mut HashSet<&'static str>>,
+	pub func_replace_unused: RefCell<&'f mut HashSet<FuncId<'static>>>,
 	pub func_specialize_unused: RefCell<&'f mut HashSet<FuncId<'static>>>,
-	pub argument_override_unused: RefCell<&'f mut HashSet<String>>, // fixme, doesn't seem to work perfectly (shows cv::mixChannels, but it's def used)
+	pub argument_override_unused: RefCell<&'f mut HashSet<FuncId<'static>>>,
 }
 
 impl<'tu, 'f> FunctionFinder<'tu, 'f> {
 	pub fn update_used_func(&self, f: &Func) {
 		let identifier = f.identifier();
-		let func_id = f.func_id();
-		let cpp_refname = f.cpp_name(CppNameStyle::Reference);
+		let func_id = f.func_id().make_static();
 
 		self.func_rename_unused.borrow_mut().remove(identifier.as_str());
+		self.func_exclude_unused.borrow_mut().remove(identifier.as_str());
 		self.func_cfg_attr_unused.borrow_mut().remove(identifier.as_str());
-		{
-			let static_func_id: FuncId<'static> = unsafe { mem::transmute(func_id) };
-			self.func_unsafe_unused.borrow_mut().remove(&static_func_id);
-		}
-		self.func_manual_unused.borrow_mut().remove(identifier.as_str());
-		self.func_specialize_unused.borrow_mut().remove(&f.func_id().make_static());
-		self.argument_override_unused.borrow_mut().remove(cpp_refname.as_ref());
+		self.func_unsafe_unused.borrow_mut().remove(&func_id);
+		self.func_replace_unused.borrow_mut().remove(&func_id);
+		self.func_specialize_unused.borrow_mut().remove(&func_id);
+		self.argument_override_unused.borrow_mut().remove(&func_id);
 	}
 }
 
@@ -51,7 +49,7 @@ impl<'tu> EntityWalkerVisitor<'tu> for FunctionFinder<'tu, '_> {
 			| EntityKind::StructDecl => {
 				let c = Class::new(entity, &self.gen_env);
 				if !c.template_kind().is_template() {
-					c.methods(None).into_iter().for_each(|f| self.update_used_func(&f));
+					c.methods().into_iter().for_each(|f| self.update_used_func(&f));
 					let fields = c.fields();
 					c.field_methods(fields.iter(), None)
 						.into_iter()
@@ -91,15 +89,12 @@ fn main() {
 	let src_cpp_dir = PathBuf::from(args.next().expect("2nd argument must be dir with custom cpp"));
 	let opencv_header_dirs = args.map(PathBuf::from);
 	let mut func_rename_unused = settings::FUNC_RENAME.keys().copied().collect::<HashSet<_>>();
+	let mut func_exclude_unused = settings::FUNC_EXCLUDE.clone();
 	let mut func_cfg_attr_unused = settings::FUNC_CFG_ATTR.keys().copied().collect::<HashSet<_>>();
 	let mut func_unsafe_unused = settings::FUNC_UNSAFE.clone();
-	let mut func_manual_unused = settings::FUNC_MANUAL.keys().copied().collect::<HashSet<_>>();
+	let mut func_replace_unused = settings::FUNC_REPLACE.keys().cloned().collect::<HashSet<_>>();
 	let mut func_specialize_unused = settings::FUNC_SPECIALIZE.keys().cloned().collect::<HashSet<_>>();
-	let mut argument_override_unused = settings::ARGUMENT_OVERRIDE
-		.keys()
-		.cloned()
-		.map(|func_id| func_id.name().to_string())
-		.collect::<HashSet<_>>();
+	let mut argument_override_unused = settings::ARGUMENT_OVERRIDE.keys().cloned().collect::<HashSet<_>>();
 	for opencv_header_dir in opencv_header_dirs {
 		println!("Processing header dir: {}", opencv_header_dir.display());
 		let modules = opencv_header_dir
@@ -120,9 +115,10 @@ fn main() {
 				root_entity.walk_opencv_entities(FunctionFinder {
 					gen_env,
 					func_rename_unused: RefCell::new(&mut func_rename_unused),
+					func_exclude_unused: RefCell::new(&mut func_exclude_unused),
 					func_cfg_attr_unused: RefCell::new(&mut func_cfg_attr_unused),
 					func_unsafe_unused: RefCell::new(&mut func_unsafe_unused),
-					func_manual_unused: RefCell::new(&mut func_manual_unused),
+					func_replace_unused: RefCell::new(&mut func_replace_unused),
 					func_specialize_unused: RefCell::new(&mut func_specialize_unused),
 					argument_override_unused: RefCell::new(&mut argument_override_unused),
 				});
@@ -131,12 +127,14 @@ fn main() {
 	}
 	println!("Unused entries in settings::FUNC_RENAME ({}):", func_rename_unused.len());
 	show(func_rename_unused);
+	println!("Unused entries in settings::FUNC_EXCLUDE ({}):", func_exclude_unused.len());
+	show(func_exclude_unused);
 	println!("Unused entries in settings::FUNC_CFG_ATTR ({}):", func_cfg_attr_unused.len());
 	show(func_cfg_attr_unused);
 	println!("Unused entries in settings::FUNC_UNSAFE ({}):", func_unsafe_unused.len());
 	show(func_unsafe_unused);
-	println!("Unused entries in settings::FUNC_UNSAFE ({}):", func_manual_unused.len());
-	show(func_manual_unused);
+	println!("Unused entries in settings::FUNC_REPLACE ({}):", func_replace_unused.len());
+	show(func_replace_unused);
 	println!(
 		"Unused entries in settings::FUNC_SPECIALIZE ({}):",
 		func_specialize_unused.len()

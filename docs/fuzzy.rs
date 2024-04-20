@@ -36,7 +36,7 @@ pub mod fuzzy {
 	/// 
 	/// This function computes F-transfrom and inverse F-transfotm using linear basic function in one step. It is ~10 times faster than `ft::FT02D_process` method.
 	#[inline]
-	pub fn ft02_d_fl_process(matrix: &impl core::ToInputArray, radius: i32, output: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn ft0_2d_fl_process(matrix: &impl ToInputArray, radius: i32, output: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(matrix);
 		output_array_arg!(output);
 		return_send!(via ocvrs_return);
@@ -54,7 +54,7 @@ pub mod fuzzy {
 	/// 
 	/// This function computes F-transfrom and inverse F-transfotm using linear basic function in one step. It is ~9 times faster then `ft::FT02D_process` method and more accurate than `ft::FT02D_FL_process` method.
 	#[inline]
-	pub fn ft02_d_fl_process_float(matrix: &impl core::ToInputArray, radius: i32, output: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn ft0_2d_fl_process_float(matrix: &impl ToInputArray, radius: i32, output: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(matrix);
 		output_array_arg!(output);
 		return_send!(via ocvrs_return);
@@ -73,10 +73,34 @@ pub mod fuzzy {
 	/// 
 	/// The function computes components using predefined kernel and mask.
 	/// 
+	/// ## Note
+	/// This alternative version of [ft0_2d_components] function uses the following default values for its arguments:
+	/// * mask: noArray()
+	#[inline]
+	pub fn ft0_2d_components_def(matrix: &impl ToInputArray, kernel: &impl ToInputArray, components: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(matrix);
+		input_array_arg!(kernel);
+		output_array_arg!(components);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ft_FT02D_components_const__InputArrayR_const__InputArrayR_const__OutputArrayR(matrix.as_raw__InputArray(), kernel.as_raw__InputArray(), components.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Computes components of the array using direct ![inline formula](https://latex.codecogs.com/png.latex?F%5E0)-transform.
+	/// ## Parameters
+	/// * matrix: Input array.
+	/// * kernel: Kernel used for processing. Function `ft::createKernel` can be used.
+	/// * components: Output 32-bit float array for the components.
+	/// * mask: Mask can be used for unwanted area marking.
+	/// 
+	/// The function computes components using predefined kernel and mask.
+	/// 
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
-	pub fn ft02_d_components(matrix: &impl core::ToInputArray, kernel: &impl core::ToInputArray, components: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray) -> Result<()> {
+	pub fn ft0_2d_components(matrix: &impl ToInputArray, kernel: &impl ToInputArray, components: &mut impl ToOutputArray, mask: &impl ToInputArray) -> Result<()> {
 		input_array_arg!(matrix);
 		input_array_arg!(kernel);
 		output_array_arg!(components);
@@ -98,7 +122,7 @@ pub mod fuzzy {
 	/// 
 	/// Computation of inverse F-transform.
 	#[inline]
-	pub fn ft02_d_inverse_ft(components: &impl core::ToInputArray, kernel: &impl core::ToInputArray, output: &mut impl core::ToOutputArray, width: i32, height: i32) -> Result<()> {
+	pub fn ft0_2d_inverse_ft(components: &impl ToInputArray, kernel: &impl ToInputArray, output: &mut impl ToOutputArray, width: i32, height: i32) -> Result<()> {
 		input_array_arg!(components);
 		input_array_arg!(kernel);
 		output_array_arg!(output);
@@ -120,7 +144,7 @@ pub mod fuzzy {
 	/// 
 	/// This function computes iteration of F-transfrom and inverse F-transfotm and handle image and mask change. The function is used in `ft::inpaint` function.
 	#[inline]
-	pub fn ft02_d_iteration(matrix: &impl core::ToInputArray, kernel: &impl core::ToInputArray, output: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray, mask_output: &mut impl core::ToOutputArray, first_stop: bool) -> Result<i32> {
+	pub fn ft0_2d_iteration(matrix: &impl ToInputArray, kernel: &impl ToInputArray, output: &mut impl ToOutputArray, mask: &impl ToInputArray, mask_output: &mut impl ToOutputArray, first_stop: bool) -> Result<i32> {
 		input_array_arg!(matrix);
 		input_array_arg!(kernel);
 		output_array_arg!(output);
@@ -142,10 +166,34 @@ pub mod fuzzy {
 	/// 
 	/// This function computes F-transfrom and inverse F-transfotm in one step. It is fully sufficient and optimized for `cv::Mat`.
 	/// 
+	/// ## Note
+	/// This alternative version of [ft0_2d_process] function uses the following default values for its arguments:
+	/// * mask: noArray()
+	#[inline]
+	pub fn ft0_2d_process_def(matrix: &impl ToInputArray, kernel: &impl ToInputArray, output: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(matrix);
+		input_array_arg!(kernel);
+		output_array_arg!(output);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ft_FT02D_process_const__InputArrayR_const__InputArrayR_const__OutputArrayR(matrix.as_raw__InputArray(), kernel.as_raw__InputArray(), output.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Computes ![inline formula](https://latex.codecogs.com/png.latex?F%5E0)-transfrom and inverse ![inline formula](https://latex.codecogs.com/png.latex?F%5E0)-transfrom at once.
+	/// ## Parameters
+	/// * matrix: Input matrix.
+	/// * kernel: Kernel used for processing. Function `ft::createKernel` can be used.
+	/// * output: Output 32-bit float array.
+	/// * mask: Mask used for unwanted area marking.
+	/// 
+	/// This function computes F-transfrom and inverse F-transfotm in one step. It is fully sufficient and optimized for `cv::Mat`.
+	/// 
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
-	pub fn ft02_d_process(matrix: &impl core::ToInputArray, kernel: &impl core::ToInputArray, output: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray) -> Result<()> {
+	pub fn ft0_2d_process(matrix: &impl ToInputArray, kernel: &impl ToInputArray, output: &mut impl ToOutputArray, mask: &impl ToInputArray) -> Result<()> {
 		input_array_arg!(matrix);
 		input_array_arg!(kernel);
 		output_array_arg!(output);
@@ -165,7 +213,7 @@ pub mod fuzzy {
 	/// 
 	/// The function computes linear components using predefined kernel.
 	#[inline]
-	pub fn ft12_d_components(matrix: &impl core::ToInputArray, kernel: &impl core::ToInputArray, components: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn ft1_2d_components(matrix: &impl ToInputArray, kernel: &impl ToInputArray, components: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(matrix);
 		input_array_arg!(kernel);
 		output_array_arg!(components);
@@ -184,7 +232,7 @@ pub mod fuzzy {
 	/// 
 	/// The function creates helper horizontal matrix for ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transfrom processing. It is used for gradient computation.
 	#[inline]
-	pub fn ft12_d_create_polynom_matrix_horizontal(radius: i32, matrix: &mut impl core::ToOutputArray, chn: i32) -> Result<()> {
+	pub fn ft1_2d_create_polynom_matrix_horizontal(radius: i32, matrix: &mut impl ToOutputArray, chn: i32) -> Result<()> {
 		output_array_arg!(matrix);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ft_FT12D_createPolynomMatrixHorizontal_int_const__OutputArrayR_const_int(radius, matrix.as_raw__OutputArray(), chn, ocvrs_return.as_mut_ptr()) };
@@ -201,7 +249,7 @@ pub mod fuzzy {
 	/// 
 	/// The function creates helper vertical matrix for ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transfrom processing. It is used for gradient computation.
 	#[inline]
-	pub fn ft12_d_create_polynom_matrix_vertical(radius: i32, matrix: &mut impl core::ToOutputArray, chn: i32) -> Result<()> {
+	pub fn ft1_2d_create_polynom_matrix_vertical(radius: i32, matrix: &mut impl ToOutputArray, chn: i32) -> Result<()> {
 		output_array_arg!(matrix);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ft_FT12D_createPolynomMatrixVertical_int_const__OutputArrayR_const_int(radius, matrix.as_raw__OutputArray(), chn, ocvrs_return.as_mut_ptr()) };
@@ -220,7 +268,7 @@ pub mod fuzzy {
 	/// 
 	/// Computation of inverse ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transform.
 	#[inline]
-	pub fn ft12_d_inverse_ft(components: &impl core::ToInputArray, kernel: &impl core::ToInputArray, output: &mut impl core::ToOutputArray, width: i32, height: i32) -> Result<()> {
+	pub fn ft1_2d_inverse_ft(components: &impl ToInputArray, kernel: &impl ToInputArray, output: &mut impl ToOutputArray, width: i32, height: i32) -> Result<()> {
 		input_array_arg!(components);
 		input_array_arg!(kernel);
 		output_array_arg!(output);
@@ -243,10 +291,40 @@ pub mod fuzzy {
 	/// 
 	/// The function computes components and its elements using predefined kernel and mask.
 	/// 
+	/// ## Note
+	/// This alternative version of [ft1_2d_polynomial] function uses the following default values for its arguments:
+	/// * mask: noArray()
+	#[inline]
+	pub fn ft1_2d_polynomial_def(matrix: &impl ToInputArray, kernel: &impl ToInputArray, c00: &mut impl ToOutputArray, c10: &mut impl ToOutputArray, c01: &mut impl ToOutputArray, components: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(matrix);
+		input_array_arg!(kernel);
+		output_array_arg!(c00);
+		output_array_arg!(c10);
+		output_array_arg!(c01);
+		output_array_arg!(components);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ft_FT12D_polynomial_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR_const__OutputArrayR(matrix.as_raw__InputArray(), kernel.as_raw__InputArray(), c00.as_raw__OutputArray(), c10.as_raw__OutputArray(), c01.as_raw__OutputArray(), components.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Computes elements of ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transform components.
+	/// ## Parameters
+	/// * matrix: Input array.
+	/// * kernel: Kernel used for processing. Function `ft::createKernel` can be used.
+	/// * c00: Elements represent average color.
+	/// * c10: Elements represent average vertical gradient.
+	/// * c01: Elements represent average horizontal gradient.
+	/// * components: Output 32-bit float array for the components.
+	/// * mask: Mask can be used for unwanted area marking.
+	/// 
+	/// The function computes components and its elements using predefined kernel and mask.
+	/// 
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
-	pub fn ft12_d_polynomial(matrix: &impl core::ToInputArray, kernel: &impl core::ToInputArray, c00: &mut impl core::ToOutputArray, c10: &mut impl core::ToOutputArray, c01: &mut impl core::ToOutputArray, components: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray) -> Result<()> {
+	pub fn ft1_2d_polynomial(matrix: &impl ToInputArray, kernel: &impl ToInputArray, c00: &mut impl ToOutputArray, c10: &mut impl ToOutputArray, c01: &mut impl ToOutputArray, components: &mut impl ToOutputArray, mask: &impl ToInputArray) -> Result<()> {
 		input_array_arg!(matrix);
 		input_array_arg!(kernel);
 		output_array_arg!(c00);
@@ -272,12 +350,40 @@ pub mod fuzzy {
 	/// 
 	/// 
 	/// Note:
-	///    F-transform technique of first degreee is described in paper [Vlas:FT](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Vlas:FT).
+	///    F-transform technique of first degreee is described in paper [Vlas:FT](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Vlas:FT).
+	/// 
+	/// ## Note
+	/// This alternative version of [ft1_2d_process] function uses the following default values for its arguments:
+	/// * mask: noArray()
+	#[inline]
+	pub fn ft1_2d_process_def(matrix: &impl ToInputArray, kernel: &impl ToInputArray, output: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(matrix);
+		input_array_arg!(kernel);
+		output_array_arg!(output);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_ft_FT12D_process_const__InputArrayR_const__InputArrayR_const__OutputArrayR(matrix.as_raw__InputArray(), kernel.as_raw__InputArray(), output.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Computes ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transfrom and inverse ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transfrom at once.
+	/// ## Parameters
+	/// * matrix: Input matrix.
+	/// * kernel: Kernel used for processing. Function `ft::createKernel` can be used.
+	/// * output: Output 32-bit float array.
+	/// * mask: Mask used for unwanted area marking.
+	/// 
+	/// This function computes ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transfrom and inverse ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transfotm in one step. It is fully sufficient and optimized for `cv::Mat`.
+	/// 
+	/// 
+	/// Note:
+	///    F-transform technique of first degreee is described in paper [Vlas:FT](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Vlas:FT).
 	/// 
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
-	pub fn ft12_d_process(matrix: &impl core::ToInputArray, kernel: &impl core::ToInputArray, output: &mut impl core::ToOutputArray, mask: &impl core::ToInputArray) -> Result<()> {
+	pub fn ft1_2d_process(matrix: &impl ToInputArray, kernel: &impl ToInputArray, output: &mut impl ToOutputArray, mask: &impl ToInputArray) -> Result<()> {
 		input_array_arg!(matrix);
 		input_array_arg!(kernel);
 		output_array_arg!(output);
@@ -298,7 +404,7 @@ pub mod fuzzy {
 	/// 
 	/// The function creates kernel usable for latter fuzzy image processing.
 	#[inline]
-	pub fn create_kernel1(a: &impl core::ToInputArray, b: &impl core::ToInputArray, kernel: &mut impl core::ToOutputArray, chn: i32) -> Result<()> {
+	pub fn create_kernel1(a: &impl ToInputArray, b: &impl ToInputArray, kernel: &mut impl ToOutputArray, chn: i32) -> Result<()> {
 		input_array_arg!(a);
 		input_array_arg!(b);
 		output_array_arg!(kernel);
@@ -319,7 +425,7 @@ pub mod fuzzy {
 	/// 
 	/// The function creates kernel from predefined functions.
 	#[inline]
-	pub fn create_kernel(function: i32, radius: i32, kernel: &mut impl core::ToOutputArray, chn: i32) -> Result<()> {
+	pub fn create_kernel(function: i32, radius: i32, kernel: &mut impl ToOutputArray, chn: i32) -> Result<()> {
 		output_array_arg!(kernel);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_ft_createKernel_int_int_const__OutputArrayR_const_int(function, radius, kernel.as_raw__OutputArray(), chn, ocvrs_return.as_mut_ptr()) };
@@ -336,7 +442,7 @@ pub mod fuzzy {
 	/// 
 	/// Filtering of the input image by means of F-transform.
 	#[inline]
-	pub fn filter(image: &impl core::ToInputArray, kernel: &impl core::ToInputArray, output: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn filter(image: &impl ToInputArray, kernel: &impl ToInputArray, output: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(image);
 		input_array_arg!(kernel);
 		output_array_arg!(output);
@@ -364,9 +470,9 @@ pub mod fuzzy {
 	/// 
 	/// 
 	/// Note:
-	///    The algorithms are described in paper [Perf:rec](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Perf:rec).
+	///    The algorithms are described in paper [Perf:rec](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Perf:rec).
 	#[inline]
-	pub fn inpaint(image: &impl core::ToInputArray, mask: &impl core::ToInputArray, output: &mut impl core::ToOutputArray, radius: i32, function: i32, algorithm: i32) -> Result<()> {
+	pub fn inpaint(image: &impl ToInputArray, mask: &impl ToInputArray, output: &mut impl ToOutputArray, radius: i32, function: i32, algorithm: i32) -> Result<()> {
 		input_array_arg!(image);
 		input_array_arg!(mask);
 		output_array_arg!(output);

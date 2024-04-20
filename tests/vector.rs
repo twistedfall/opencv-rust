@@ -1,5 +1,5 @@
 use std::any::TypeId;
-use std::os::raw::c_char;
+use std::ffi::c_char;
 
 use matches::assert_matches;
 
@@ -45,10 +45,10 @@ fn boxed() -> Result<()> {
 			imgproc,
 		};
 
-		let mut m = Mat::new_rows_cols_with_default(10, 10, Vec3b::opencv_type(), Scalar::default())?;
+		let mut m = Mat::new_rows_cols_with_default(10, 10, Vec3b::opencv_type(), 0.into())?;
 		let mut ps = VectorOfMat::new();
 		assert_eq!(ps.len(), 0);
-		let mut p1 = unsafe { Mat::new_rows_cols(3, 2, i32::opencv_type()) }?;
+		let mut p1 = Mat::new_rows_cols_with_default(3, 2, i32::opencv_type(), 0.into())?;
 		p1.at_row_mut::<i32>(0)?.copy_from_slice(&[0, 0]);
 		p1.at_row_mut::<i32>(1)?.copy_from_slice(&[0, 9]);
 		p1.at_row_mut::<i32>(2)?.copy_from_slice(&[9, 9]);
@@ -58,7 +58,7 @@ fn boxed() -> Result<()> {
 		use imgproc::LINE_8;
 		#[cfg(not(ocvrs_opencv_branch_4))]
 		use opencv::core::LINE_8;
-		imgproc::fill_poly(&mut m, &ps, Scalar::new(127., 127., 127., 0.), LINE_8, 0, Point::default())?;
+		imgproc::fill_poly(&mut m, &ps, (127, 127, 127).into(), LINE_8, 0, Point::default())?;
 		assert_eq!(*m.at_2d::<Vec3b>(0, 0)?, Vec3b::from([127, 127, 127]));
 		assert_eq!(*m.at_2d::<Vec3b>(0, 9)?, Vec3b::default());
 		assert_eq!(*m.at_2d::<Vec3b>(9, 9)?, Vec3b::from([127, 127, 127]));
@@ -503,6 +503,7 @@ fn iter() -> Result<()> {
 
 	{
 		let vec = VectorOfMat::from_iter(vec![]);
+		#[allow(clippy::never_loop)]
 		for _ in vec {
 			panic!("iterator must not yield any elements")
 		}
@@ -713,8 +714,8 @@ fn clone() -> Result<()> {
 	}
 	{
 		let mut src = vec![
-			Mat::new_rows_cols_with_default(10, 20, f64::opencv_type(), Scalar::from(10.))?,
-			Mat::new_rows_cols_with_default(5, 8, i32::opencv_type(), Scalar::from(20.))?,
+			Mat::new_rows_cols_with_default(10, 20, f64::opencv_type(), 10.into())?,
+			Mat::new_rows_cols_with_default(5, 8, i32::opencv_type(), 20.into())?,
 		];
 		let src_clone = src.clone();
 		assert_eq!(20, *src[1].at_2d::<i32>(2, 2)?);
@@ -731,10 +732,7 @@ fn clone() -> Result<()> {
 		assert_eq!(20, *boxed_clone.get(1)?.at_2d::<i32>(2, 2)?);
 		boxed.remove(1)?;
 		assert_eq!(boxed.len() + 1, boxed_clone.len());
-		boxed.set(
-			0,
-			Mat::new_rows_cols_with_default(40, 50, f64::opencv_type(), Scalar::from(40.))?,
-		)?;
+		boxed.set(0, Mat::new_rows_cols_with_default(40, 50, f64::opencv_type(), 40.into())?)?;
 		assert_eq!(40., *boxed.get(0)?.at_2d::<f64>(2, 2)?);
 		assert_eq!(10., *boxed_clone.get(0)?.at_2d::<f64>(2, 2)?);
 		drop(boxed);

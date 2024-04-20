@@ -1,5 +1,4 @@
-use std::ffi::CStr;
-use std::os::raw::c_char;
+use std::ffi::{c_char, CStr};
 use std::slice;
 
 use crate::platform_types::size_t;
@@ -27,29 +26,21 @@ macro_rules! string_arg_output_send {
 
 macro_rules! string_arg_output_receive {
 	($name_via: ident => $name: ident) => {
-		*$name = unsafe { $crate::templ::receive_string($name_via as *mut String) };
-	};
-}
-
-// currently only used in objdetect::decodeQRCode function in OpenCV 3.4
-#[allow(unused_macros)]
-macro_rules! byte_string_arg_output_receive {
-	($name_via: ident => $name: ident) => {
-		*$name = unsafe { $crate::templ::receive_byte_string($name_via as *mut Vec<u8>) };
+		*$name = unsafe { $crate::templ::receive_string($name_via.cast()) };
 	};
 }
 
 macro_rules! callback_arg {
 	($tr_name: ident($($tr_arg_name: ident: $tr_arg_type: ty),*) -> $tr_ret: ty => $tr_userdata_name: ident in $callbacks_name: ident => $callback_name: ident($($fw_arg_name: ident: $fw_arg_type: ty),*) -> $fw_ret: ty) => {
 		unsafe extern "C" fn trampoline($($tr_arg_name: $tr_arg_type),*) -> $tr_ret {
-			let mut callback: Box<Box<dyn FnMut($($fw_arg_type),*) -> $fw_ret + Send + Sync>> = Box::from_raw($tr_userdata_name as _);
+			let mut callback: Box<Box<dyn FnMut($($fw_arg_type),*) -> $fw_ret + Send + Sync>> = Box::from_raw($tr_userdata_name.cast());
 			let out = callback($($fw_arg_name),*);
 			Box::into_raw(callback);
 			out
 		}
 
 		let $tr_name = if $callback_name.is_some() {
-			Some(trampoline as _)
+			Some(trampoline as unsafe extern "C" fn($($tr_arg_name: $tr_arg_type),*) -> $tr_ret)
 		} else {
 			None
 		};
@@ -59,9 +50,9 @@ macro_rules! callback_arg {
 macro_rules! userdata_arg {
 	($userdata_name: ident in $callbacks_name: ident => $callback_name: ident) => {
 		let $userdata_name = if let Some(callback) = $callback_name {
-			Box::into_raw(Box::new(callback)) as *mut ::std::ffi::c_void
+			Box::into_raw(Box::new(callback)).cast::<::std::ffi::c_void>()
 		} else {
-			0 as _ // fixme, remove previous callback
+			::std::ptr::null_mut() // fixme, remove previous callback
 		};
 	};
 }
@@ -86,14 +77,20 @@ macro_rules! input_output_array_arg {
 
 macro_rules! string_array_arg {
 	($name: ident) => {
-		let $name = $name.iter().map(|x| x.as_ptr() as _).collect::<::std::vec::Vec<_>>();
+		let $name = $name
+			.iter()
+			.map(|x| x.as_ptr().cast::<::std::ffi::c_char>())
+			.collect::<::std::vec::Vec<_>>();
 	};
 }
 
 #[allow(unused_macros)]
 macro_rules! string_array_arg_mut {
 	($name: ident) => {
-		let mut $name = $name.iter().map(|x| x.as_ptr() as _).collect::<::std::vec::Vec<_>>();
+		let mut $name = $name
+			.iter()
+			.map(|x| x.as_ptr().cast::<::std::ffi::c_char>().cast_mut())
+			.collect::<::std::vec::Vec<_>>();
 	};
 }
 
@@ -126,18 +123,11 @@ unsafe extern "C" fn ocvrs_create_byte_string(v: *const u8, len: size_t) -> *mut
 	Box::into_raw(Box::new(v))
 }
 
+/// Used for both regular `String` and byte string (`Vec<u8>`)
 #[inline]
-pub unsafe fn receive_string(s: *mut String) -> String {
+pub unsafe fn receive_string<T>(s: *mut T) -> T {
 	if s.is_null() {
 		panic!("Got null pointer for receive_string()");
-	}
-	*Box::from_raw(s)
-}
-
-#[inline]
-pub unsafe fn receive_byte_string(s: *mut Vec<u8>) -> Vec<u8> {
-	if s.is_null() {
-		panic!("Got null pointer for receive_byte_vec()");
 	}
 	*Box::from_raw(s)
 }

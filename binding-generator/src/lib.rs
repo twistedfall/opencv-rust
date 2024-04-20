@@ -1,4 +1,3 @@
-// todo change dyn InputArray to impl InputArray and friends
 // todo support converting pointer + size to slice of Mat and other similar objects
 // todo add support for arrays in dnn::DictValue
 // todo allow ergonomically combining of enum variants with |
@@ -14,6 +13,8 @@
 
 #![allow(clippy::nonminimal_bool)] // pattern `!type_ref.as_vector().is_some()` used for more clarity
 
+extern crate core;
+
 use std::borrow::Cow;
 use std::fs::File;
 use std::io::{BufRead, Read, Seek, SeekFrom};
@@ -28,9 +29,8 @@ pub use element::{is_opencv_path, opencv_module_from_path, DefaultElement, Eleme
 use entity::dbg_clang_entity;
 pub use entity::{EntityExt, WalkAction, WalkResult};
 pub use enumeration::Enum;
-use field::{Field, FieldTypeHint};
+use field::Field;
 pub use func::{Func, FuncId, FuncTypeHint};
-use function::Function;
 pub use generator::{GeneratedType, Generator, GeneratorVisitor};
 pub use generator_env::{ClassSimplicity, ExportConfig, GeneratorEnv};
 pub use iterator_ext::IteratorExt;
@@ -84,7 +84,8 @@ fn get_definition_text(entity: Entity) -> String {
 		let mut source = File::open(loc.file.expect("Can't get file").get_path()).expect("Can't open source file");
 		let start = loc.offset;
 		let end = range.get_end().get_spelling_location().offset;
-		let mut def_bytes = vec![0; (end - start) as usize];
+		let len = usize::try_from(end - start).expect("Definition span is too large");
+		let mut def_bytes = vec![0; len];
 		source.seek(SeekFrom::Start(u64::from(start))).expect("Cannot seek");
 		source.read_exact(&mut def_bytes).expect("Can't read definition");
 		String::from_utf8(def_bytes).expect("Can't parse definition")

@@ -12,6 +12,28 @@ pub mod cudastereo {
 	/// * radius: Filter radius.
 	/// * iters: Number of iterations.
 	/// 
+	/// ## Note
+	/// This alternative version of [create_disparity_bilateral_filter] function uses the following default values for its arguments:
+	/// * ndisp: 64
+	/// * radius: 3
+	/// * iters: 1
+	#[inline]
+	pub fn create_disparity_bilateral_filter_def() -> Result<core::Ptr<crate::cudastereo::CUDA_DisparityBilateralFilter>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_createDisparityBilateralFilter(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::cudastereo::CUDA_DisparityBilateralFilter>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates DisparityBilateralFilter object.
+	/// 
+	/// ## Parameters
+	/// * ndisp: Number of disparities.
+	/// * radius: Filter radius.
+	/// * iters: Number of iterations.
+	/// 
 	/// ## C++ default parameters
 	/// * ndisp: 64
 	/// * radius: 3
@@ -23,6 +45,31 @@ pub mod cudastereo {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudastereo::CUDA_DisparityBilateralFilter>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates StereoBM object.
+	/// 
+	/// ## Parameters
+	/// * numDisparities: the disparity search range. For each pixel algorithm will find the best
+	/// disparity from 0 (default minimum disparity) to numDisparities. The search range can then be
+	/// shifted by changing the minimum disparity.
+	/// * blockSize: the linear size of the blocks compared by the algorithm. The size should be odd
+	/// (as the block is centered at the current pixel). Larger block size implies smoother, though less
+	/// accurate disparity map. Smaller block size gives more detailed disparity map, but there is higher
+	/// chance for algorithm to find a wrong correspondence.
+	/// 
+	/// ## Note
+	/// This alternative version of [create_stereo_bm] function uses the following default values for its arguments:
+	/// * num_disparities: 64
+	/// * block_size: 19
+	#[inline]
+	pub fn create_stereo_bm_def() -> Result<core::Ptr<crate::cudastereo::CUDA_StereoBM>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_createStereoBM(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::cudastereo::CUDA_StereoBM>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -58,6 +105,30 @@ pub mod cudastereo {
 	/// * levels: Number of levels.
 	/// * msg_type: Type for messages. CV_16SC1 and CV_32FC1 types are supported.
 	/// 
+	/// ## Note
+	/// This alternative version of [create_stereo_belief_propagation] function uses the following default values for its arguments:
+	/// * ndisp: 64
+	/// * iters: 5
+	/// * levels: 5
+	/// * msg_type: CV_32F
+	#[inline]
+	pub fn create_stereo_belief_propagation_def() -> Result<core::Ptr<crate::cudastereo::CUDA_StereoBeliefPropagation>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_createStereoBeliefPropagation(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::cudastereo::CUDA_StereoBeliefPropagation>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates StereoBeliefPropagation object.
+	/// 
+	/// ## Parameters
+	/// * ndisp: Number of disparities.
+	/// * iters: Number of BP iterations on each level.
+	/// * levels: Number of levels.
+	/// * msg_type: Type for messages. CV_16SC1 and CV_32FC1 types are supported.
+	/// 
 	/// ## C++ default parameters
 	/// * ndisp: 64
 	/// * iters: 5
@@ -70,6 +141,32 @@ pub mod cudastereo {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudastereo::CUDA_StereoBeliefPropagation>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates StereoConstantSpaceBP object.
+	/// 
+	/// ## Parameters
+	/// * ndisp: Number of disparities.
+	/// * iters: Number of BP iterations on each level.
+	/// * levels: Number of levels.
+	/// * nr_plane: Number of disparity levels on the first level.
+	/// * msg_type: Type for messages. CV_16SC1 and CV_32FC1 types are supported.
+	/// 
+	/// ## Note
+	/// This alternative version of [create_stereo_constant_space_bp] function uses the following default values for its arguments:
+	/// * ndisp: 128
+	/// * iters: 8
+	/// * levels: 4
+	/// * nr_plane: 4
+	/// * msg_type: CV_32F
+	#[inline]
+	pub fn create_stereo_constant_space_bp_def() -> Result<core::Ptr<crate::cudastereo::CUDA_StereoConstantSpaceBP>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_createStereoConstantSpaceBP(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::cudastereo::CUDA_StereoConstantSpaceBP>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -95,6 +192,37 @@ pub mod cudastereo {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Ptr::<crate::cudastereo::CUDA_StereoConstantSpaceBP>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Creates StereoSGM object.
+	/// 
+	/// ## Parameters
+	/// * minDisparity: Minimum possible disparity value. Normally, it is zero but sometimes rectification algorithms can shift images, so this parameter needs to be adjusted accordingly.
+	/// * numDisparities: Maximum disparity minus minimum disparity. The value must be 64, 128 or 256.
+	/// * P1: The first parameter controlling the disparity smoothness.This parameter is used for the case of slanted surfaces (not fronto parallel).
+	/// * P2: The second parameter controlling the disparity smoothness.This parameter is used for "solving" the depth discontinuities problem.
+	/// * uniquenessRatio: Margin in percentage by which the best (minimum) computed cost function
+	/// value should "win" the second best value to consider the found match correct. Normally, a value
+	/// within the 5-15 range is good enough.
+	/// * mode: Set it to StereoSGM::MODE_HH to run the full-scale two-pass dynamic programming algorithm.
+	/// It will consume O(W\*H\*numDisparities) bytes. By default, it is set to StereoSGM::MODE_HH4.
+	/// 
+	/// ## Note
+	/// This alternative version of [create_stereo_sgm] function uses the following default values for its arguments:
+	/// * min_disparity: 0
+	/// * num_disparities: 128
+	/// * p1: 10
+	/// * p2: 120
+	/// * uniqueness_ratio: 5
+	/// * mode: cv::cuda::StereoSGM::MODE_HH4
+	#[inline]
+	pub fn create_stereo_sgm_def() -> Result<core::Ptr<crate::cudastereo::CUDA_StereoSGM>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_createStereoSGM(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::cudastereo::CUDA_StereoSGM>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -143,10 +271,39 @@ pub mod cudastereo {
 	/// first to HSV color space (where different disparity values correspond to different hues) and then
 	/// converting the pixels to RGB for visualization.
 	/// 
+	/// ## Note
+	/// This alternative version of [draw_color_disp] function uses the following default values for its arguments:
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn draw_color_disp_def(src_disp: &impl ToInputArray, dst_disp: &mut impl ToOutputArray, ndisp: i32) -> Result<()> {
+		input_array_arg!(src_disp);
+		output_array_arg!(dst_disp);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_drawColorDisp_const__InputArrayR_const__OutputArrayR_int(src_disp.as_raw__InputArray(), dst_disp.as_raw__OutputArray(), ndisp, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Colors a disparity image.
+	/// 
+	/// ## Parameters
+	/// * src_disp: Input single-channel 8-bit unsigned, 16-bit signed, 32-bit signed or 32-bit
+	/// floating-point disparity image. If 16-bit signed format is used, the values are assumed to have no
+	/// fractional bits.
+	/// * dst_disp: Output disparity image. It has the same size as src_disp. The type is CV_8UC4
+	/// in BGRA format (alpha = 255).
+	/// * ndisp: Number of disparities.
+	/// * stream: Stream for the asynchronous version.
+	/// 
+	/// This function draws a colored disparity map by converting disparity values from [0..ndisp) interval
+	/// first to HSV color space (where different disparity values correspond to different hues) and then
+	/// converting the pixels to RGB for visualization.
+	/// 
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn draw_color_disp(src_disp: &impl core::ToInputArray, dst_disp: &mut impl core::ToOutputArray, ndisp: i32, stream: &mut core::Stream) -> Result<()> {
+	pub fn draw_color_disp(src_disp: &impl ToInputArray, dst_disp: &mut impl ToOutputArray, ndisp: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(src_disp);
 		output_array_arg!(dst_disp);
 		return_send!(via ocvrs_return);
@@ -156,13 +313,57 @@ pub mod cudastereo {
 		Ok(ret)
 	}
 	
+	/// ## Note
+	/// This alternative version of [reproject_image_to_3d_1] function uses the following default values for its arguments:
+	/// * dst_cn: 4
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn reproject_image_to_3d_1_def(mut disp: impl core::GpuMatTrait, xyzw: &mut impl core::GpuMatTrait, mut q: impl core::MatTrait) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_reprojectImageTo3D_GpuMat_GpuMatR_Mat(disp.as_raw_mut_GpuMat(), xyzw.as_raw_mut_GpuMat(), q.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// ## C++ default parameters
 	/// * dst_cn: 4
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn reproject_image_to_3d_1(mut disp: core::GpuMat, xyzw: &mut core::GpuMat, mut q: core::Mat, dst_cn: i32, stream: &mut core::Stream) -> Result<()> {
+	pub fn reproject_image_to_3d_1(mut disp: impl core::GpuMatTrait, xyzw: &mut impl core::GpuMatTrait, mut q: impl core::MatTrait, dst_cn: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_reprojectImageTo3D_GpuMat_GpuMatR_Mat_int_StreamR(disp.as_raw_mut_GpuMat(), xyzw.as_raw_mut_GpuMat(), q.as_raw_mut_Mat(), dst_cn, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Reprojects a disparity image to 3D space.
+	/// 
+	/// ## Parameters
+	/// * disp: Input single-channel 8-bit unsigned, 16-bit signed, 32-bit signed or 32-bit
+	/// floating-point disparity image. If 16-bit signed format is used, the values are assumed to have no
+	/// fractional bits.
+	/// * xyzw: Output 3- or 4-channel floating-point image of the same size as disp . Each element of
+	/// xyzw(x,y) contains 3D coordinates (x,y,z) or (x,y,z,1) of the point (x,y) , computed from the
+	/// disparity map.
+	/// * Q: ![inline formula](https://latex.codecogs.com/png.latex?4%20%5Ctimes%204) perspective transformation matrix that can be obtained via stereoRectify .
+	/// * dst_cn: The number of channels for output image. Can be 3 or 4.
+	/// * stream: Stream for the asynchronous version.
+	/// ## See also
+	/// reprojectImageTo3D
+	/// 
+	/// ## Note
+	/// This alternative version of [reproject_image_to_3d] function uses the following default values for its arguments:
+	/// * dst_cn: 4
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn reproject_image_to_3d_def(disp: &impl ToInputArray, xyzw: &mut impl ToOutputArray, q: &impl ToInputArray) -> Result<()> {
+		input_array_arg!(disp);
+		output_array_arg!(xyzw);
+		input_array_arg!(q);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_reprojectImageTo3D_const__InputArrayR_const__OutputArrayR_const__InputArrayR(disp.as_raw__InputArray(), xyzw.as_raw__OutputArray(), q.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -187,7 +388,7 @@ pub mod cudastereo {
 	/// * dst_cn: 4
 	/// * stream: Stream::Null()
 	#[inline]
-	pub fn reproject_image_to_3d(disp: &impl core::ToInputArray, xyzw: &mut impl core::ToOutputArray, q: &impl core::ToInputArray, dst_cn: i32, stream: &mut core::Stream) -> Result<()> {
+	pub fn reproject_image_to_3d(disp: &impl ToInputArray, xyzw: &mut impl ToOutputArray, q: &impl ToInputArray, dst_cn: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
 		input_array_arg!(disp);
 		output_array_arg!(xyzw);
 		input_array_arg!(q);
@@ -276,12 +477,35 @@ pub mod cudastereo {
 		/// ## C++ default parameters
 		/// * stream: Stream::Null()
 		#[inline]
-		fn apply(&mut self, disparity: &impl core::ToInputArray, image: &impl core::ToInputArray, dst: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		fn apply(&mut self, disparity: &impl ToInputArray, image: &impl ToInputArray, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 			input_array_arg!(disparity);
 			input_array_arg!(image);
 			output_array_arg!(dst);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_DisparityBilateralFilter_apply_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_DisparityBilateralFilter(), disparity.as_raw__InputArray(), image.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Refines a disparity map using joint bilateral filtering.
+		/// 
+		/// ## Parameters
+		/// * disparity: Input disparity map. CV_8UC1 and CV_16SC1 types are supported.
+		/// * image: Input image. CV_8UC1 and CV_8UC3 types are supported.
+		/// * dst: Destination disparity map. It has the same size and type as disparity .
+		/// * stream: Stream for the asynchronous version.
+		/// 
+		/// ## Note
+		/// This alternative version of [CUDA_DisparityBilateralFilterTrait::apply] function uses the following default values for its arguments:
+		/// * stream: Stream::Null()
+		#[inline]
+		fn apply_def(&mut self, disparity: &impl ToInputArray, image: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
+			input_array_arg!(disparity);
+			input_array_arg!(image);
+			output_array_arg!(dst);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_DisparityBilateralFilter_apply_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_CUDA_DisparityBilateralFilter(), disparity.as_raw__InputArray(), image.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -345,7 +569,7 @@ pub mod cudastereo {
 	
 	/// Class refining a disparity map using joint bilateral filtering. :
 	/// 
-	/// The class implements [Yang2010](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Yang2010) algorithm.
+	/// The class implements [Yang2010](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Yang2010) algorithm.
 	pub struct CUDA_DisparityBilateralFilter {
 		ptr: *mut c_void
 	}
@@ -369,6 +593,8 @@ pub mod cudastereo {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { CUDA_DisparityBilateralFilter, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::cudastereo::CUDA_DisparityBilateralFilterTraitConst for CUDA_DisparityBilateralFilter {
 		#[inline] fn as_raw_CUDA_DisparityBilateralFilter(&self) -> *const c_void { self.as_raw() }
 	}
@@ -376,6 +602,8 @@ pub mod cudastereo {
 	impl crate::cudastereo::CUDA_DisparityBilateralFilterTrait for CUDA_DisparityBilateralFilter {
 		#[inline] fn as_raw_mut_CUDA_DisparityBilateralFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { CUDA_DisparityBilateralFilter, crate::cudastereo::CUDA_DisparityBilateralFilterTraitConst, as_raw_CUDA_DisparityBilateralFilter, crate::cudastereo::CUDA_DisparityBilateralFilterTrait, as_raw_mut_CUDA_DisparityBilateralFilter }
 	
 	impl CUDA_DisparityBilateralFilter {
 	}
@@ -401,7 +629,7 @@ pub mod cudastereo {
 		fn as_raw_mut_CUDA_StereoBM(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn compute(&mut self, left: &impl core::ToInputArray, right: &impl core::ToInputArray, disparity: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		fn compute(&mut self, left: &impl ToInputArray, right: &impl ToInputArray, disparity: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 			input_array_arg!(left);
 			input_array_arg!(right);
 			output_array_arg!(disparity);
@@ -440,6 +668,8 @@ pub mod cudastereo {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { CUDA_StereoBM, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::calib3d::StereoBMTraitConst for CUDA_StereoBM {
 		#[inline] fn as_raw_StereoBM(&self) -> *const c_void { self.as_raw() }
 	}
@@ -447,6 +677,8 @@ pub mod cudastereo {
 	impl crate::calib3d::StereoBMTrait for CUDA_StereoBM {
 		#[inline] fn as_raw_mut_StereoBM(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { CUDA_StereoBM, crate::calib3d::StereoBMTraitConst, as_raw_StereoBM, crate::calib3d::StereoBMTrait, as_raw_mut_StereoBM }
 	
 	impl crate::calib3d::StereoMatcherTraitConst for CUDA_StereoBM {
 		#[inline] fn as_raw_StereoMatcher(&self) -> *const c_void { self.as_raw() }
@@ -456,6 +688,8 @@ pub mod cudastereo {
 		#[inline] fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { CUDA_StereoBM, crate::calib3d::StereoMatcherTraitConst, as_raw_StereoMatcher, crate::calib3d::StereoMatcherTrait, as_raw_mut_StereoMatcher }
+	
 	impl crate::cudastereo::CUDA_StereoBMTraitConst for CUDA_StereoBM {
 		#[inline] fn as_raw_CUDA_StereoBM(&self) -> *const c_void { self.as_raw() }
 	}
@@ -463,6 +697,8 @@ pub mod cudastereo {
 	impl crate::cudastereo::CUDA_StereoBMTrait for CUDA_StereoBM {
 		#[inline] fn as_raw_mut_CUDA_StereoBM(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { CUDA_StereoBM, crate::cudastereo::CUDA_StereoBMTraitConst, as_raw_CUDA_StereoBM, crate::cudastereo::CUDA_StereoBMTrait, as_raw_mut_CUDA_StereoBM }
 	
 	impl CUDA_StereoBM {
 	}
@@ -573,7 +809,7 @@ pub mod cudastereo {
 		/// 
 		/// ## Overloaded parameters
 		#[inline]
-		fn compute(&mut self, left: &impl core::ToInputArray, right: &impl core::ToInputArray, disparity: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		fn compute(&mut self, left: &impl ToInputArray, right: &impl ToInputArray, disparity: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 			input_array_arg!(left);
 			input_array_arg!(right);
 			output_array_arg!(disparity);
@@ -597,11 +833,35 @@ pub mod cudastereo {
 		/// ## C++ default parameters
 		/// * stream: Stream::Null()
 		#[inline]
-		fn compute_1(&mut self, data: &impl core::ToInputArray, disparity: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		fn compute_1(&mut self, data: &impl ToInputArray, disparity: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 			input_array_arg!(data);
 			output_array_arg!(disparity);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_StereoBeliefPropagation_compute_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_CUDA_StereoBeliefPropagation(), data.as_raw__InputArray(), disparity.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Enables the stereo correspondence operator that finds the disparity for the specified data cost.
+		/// 
+		/// ## Parameters
+		/// * data: User-specified data cost, a matrix of msg_type type and
+		/// Size(\<image columns\>\*ndisp, \<image rows\>) size.
+		/// * disparity: Output disparity map. If disparity is empty, the output type is CV_16SC1 .
+		/// Otherwise, the type is retained. In 16-bit signed format, the disparity values do not have
+		/// fractional bits.
+		/// * stream: Stream for the asynchronous version.
+		/// 
+		/// ## Note
+		/// This alternative version of [CUDA_StereoBeliefPropagationTrait::compute] function uses the following default values for its arguments:
+		/// * stream: Stream::Null()
+		#[inline]
+		fn compute_def(&mut self, data: &impl ToInputArray, disparity: &mut impl ToOutputArray) -> Result<()> {
+			input_array_arg!(data);
+			output_array_arg!(disparity);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_StereoBeliefPropagation_compute_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_CUDA_StereoBeliefPropagation(), data.as_raw__InputArray(), disparity.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -674,7 +934,7 @@ pub mod cudastereo {
 	
 	/// Class computing stereo correspondence using the belief propagation algorithm. :
 	/// 
-	/// The class implements algorithm described in [Felzenszwalb2006](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Felzenszwalb2006) . It can compute own data cost
+	/// The class implements algorithm described in [Felzenszwalb2006](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Felzenszwalb2006) . It can compute own data cost
 	/// (using a truncated linear model) or use a user-provided data cost.
 	/// 
 	/// 
@@ -695,7 +955,7 @@ pub mod cudastereo {
 	/// 
 	/// ![block formula](https://latex.codecogs.com/png.latex?DiscTerm%20%3D%20%20%5Cmin%20%28disc%20%5C%5F%20single%20%5C%5F%20jump%20%20%5Ccdot%20%5Clvert%20f%5F1%2Df%5F2%20%20%5Crvert%20%2C%20max%20%5C%5F%20disc%20%5C%5F%20term%29)
 	/// 
-	/// For more details, see [Felzenszwalb2006](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Felzenszwalb2006) .
+	/// For more details, see [Felzenszwalb2006](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Felzenszwalb2006) .
 	/// 
 	/// By default, StereoBeliefPropagation uses floating-point arithmetics and the CV_32FC1 type for
 	/// messages. But it can also use fixed-point arithmetics and the CV_16SC1 message type for better
@@ -728,6 +988,8 @@ pub mod cudastereo {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { CUDA_StereoBeliefPropagation, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::calib3d::StereoMatcherTraitConst for CUDA_StereoBeliefPropagation {
 		#[inline] fn as_raw_StereoMatcher(&self) -> *const c_void { self.as_raw() }
 	}
@@ -736,6 +998,8 @@ pub mod cudastereo {
 		#[inline] fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { CUDA_StereoBeliefPropagation, crate::calib3d::StereoMatcherTraitConst, as_raw_StereoMatcher, crate::calib3d::StereoMatcherTrait, as_raw_mut_StereoMatcher }
+	
 	impl crate::cudastereo::CUDA_StereoBeliefPropagationTraitConst for CUDA_StereoBeliefPropagation {
 		#[inline] fn as_raw_CUDA_StereoBeliefPropagation(&self) -> *const c_void { self.as_raw() }
 	}
@@ -743,6 +1007,8 @@ pub mod cudastereo {
 	impl crate::cudastereo::CUDA_StereoBeliefPropagationTrait for CUDA_StereoBeliefPropagation {
 		#[inline] fn as_raw_mut_CUDA_StereoBeliefPropagation(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { CUDA_StereoBeliefPropagation, crate::cudastereo::CUDA_StereoBeliefPropagationTraitConst, as_raw_CUDA_StereoBeliefPropagation, crate::cudastereo::CUDA_StereoBeliefPropagationTrait, as_raw_mut_CUDA_StereoBeliefPropagation }
 	
 	impl CUDA_StereoBeliefPropagation {
 		/// Uses a heuristic method to compute the recommended parameters ( ndisp, iters and levels ) for the
@@ -823,7 +1089,7 @@ pub mod cudastereo {
 	
 	/// Class computing stereo correspondence using the constant space belief propagation algorithm. :
 	/// 
-	/// The class implements algorithm described in [Yang2010](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Yang2010) . StereoConstantSpaceBP supports both local
+	/// The class implements algorithm described in [Yang2010](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Yang2010) . StereoConstantSpaceBP supports both local
 	/// minimum and global minimum data cost initialization algorithms. For more details, see the paper
 	/// mentioned above. By default, a local algorithm is used. To enable a global algorithm, set
 	/// use_local_init_data_cost to false .
@@ -834,7 +1100,7 @@ pub mod cudastereo {
 	/// 
 	/// ![block formula](https://latex.codecogs.com/png.latex?DiscTerm%20%3D%20%20%5Cmin%20%28disc%20%5C%5F%20single%20%5C%5F%20jump%20%20%5Ccdot%20%5Clvert%20f%5F1%2Df%5F2%20%20%5Crvert%20%2C%20max%20%5C%5F%20disc%20%5C%5F%20term%29)
 	/// 
-	/// For more details, see [Yang2010](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Yang2010) .
+	/// For more details, see [Yang2010](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Yang2010) .
 	/// 
 	/// By default, StereoConstantSpaceBP uses floating-point arithmetics and the CV_32FC1 type for
 	/// messages. But it can also use fixed-point arithmetics and the CV_16SC1 message type for better
@@ -865,6 +1131,8 @@ pub mod cudastereo {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { CUDA_StereoConstantSpaceBP, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::cudastereo::CUDA_StereoBeliefPropagationTraitConst for CUDA_StereoConstantSpaceBP {
 		#[inline] fn as_raw_CUDA_StereoBeliefPropagation(&self) -> *const c_void { self.as_raw() }
 	}
@@ -872,6 +1140,8 @@ pub mod cudastereo {
 	impl crate::cudastereo::CUDA_StereoBeliefPropagationTrait for CUDA_StereoConstantSpaceBP {
 		#[inline] fn as_raw_mut_CUDA_StereoBeliefPropagation(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { CUDA_StereoConstantSpaceBP, crate::cudastereo::CUDA_StereoBeliefPropagationTraitConst, as_raw_CUDA_StereoBeliefPropagation, crate::cudastereo::CUDA_StereoBeliefPropagationTrait, as_raw_mut_CUDA_StereoBeliefPropagation }
 	
 	impl crate::calib3d::StereoMatcherTraitConst for CUDA_StereoConstantSpaceBP {
 		#[inline] fn as_raw_StereoMatcher(&self) -> *const c_void { self.as_raw() }
@@ -881,6 +1151,8 @@ pub mod cudastereo {
 		#[inline] fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { CUDA_StereoConstantSpaceBP, crate::calib3d::StereoMatcherTraitConst, as_raw_StereoMatcher, crate::calib3d::StereoMatcherTrait, as_raw_mut_StereoMatcher }
+	
 	impl crate::cudastereo::CUDA_StereoConstantSpaceBPTraitConst for CUDA_StereoConstantSpaceBP {
 		#[inline] fn as_raw_CUDA_StereoConstantSpaceBP(&self) -> *const c_void { self.as_raw() }
 	}
@@ -888,6 +1160,8 @@ pub mod cudastereo {
 	impl crate::cudastereo::CUDA_StereoConstantSpaceBPTrait for CUDA_StereoConstantSpaceBP {
 		#[inline] fn as_raw_mut_CUDA_StereoConstantSpaceBP(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { CUDA_StereoConstantSpaceBP, crate::cudastereo::CUDA_StereoConstantSpaceBPTraitConst, as_raw_CUDA_StereoConstantSpaceBP, crate::cudastereo::CUDA_StereoConstantSpaceBPTrait, as_raw_mut_CUDA_StereoConstantSpaceBP }
 	
 	impl CUDA_StereoConstantSpaceBP {
 		/// Uses a heuristic method to compute parameters (ndisp, iters, levelsand nrplane) for the specified
@@ -935,7 +1209,7 @@ pub mod cudastereo {
 		/// * disparity: Output disparity map. It has the same size as the input images.
 		/// StereoSGM computes 16-bit fixed-point disparity map (where each disparity value has 4 fractional bits).
 		#[inline]
-		fn compute(&mut self, left: &impl core::ToInputArray, right: &impl core::ToInputArray, disparity: &mut impl core::ToOutputArray) -> Result<()> {
+		fn compute(&mut self, left: &impl ToInputArray, right: &impl ToInputArray, disparity: &mut impl ToOutputArray) -> Result<()> {
 			input_array_arg!(left);
 			input_array_arg!(right);
 			output_array_arg!(disparity);
@@ -950,7 +1224,7 @@ pub mod cudastereo {
 		/// ## See also
 		/// compute
 		#[inline]
-		fn compute_with_stream(&mut self, left: &impl core::ToInputArray, right: &impl core::ToInputArray, disparity: &mut impl core::ToOutputArray, stream: &mut core::Stream) -> Result<()> {
+		fn compute_with_stream(&mut self, left: &impl ToInputArray, right: &impl ToInputArray, disparity: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 			input_array_arg!(left);
 			input_array_arg!(right);
 			output_array_arg!(disparity);
@@ -963,13 +1237,13 @@ pub mod cudastereo {
 		
 	}
 	
-	/// The class implements the modified H. Hirschmuller algorithm [HH08](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_HH08).
+	/// The class implements the modified H. Hirschmuller algorithm [HH08](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_HH08).
 	/// Limitation and difference are as follows:
 	/// 
 	/// *   By default, the algorithm uses only 4 directions which are horizontal and vertical path instead of 8.
 	/// Set mode=StereoSGM::MODE_HH in createStereoSGM to run the full variant of the algorithm.
 	/// *   Mutual Information cost function is not implemented.
-	/// Instead, Center-Symmetric Census Transform with ![inline formula](https://latex.codecogs.com/png.latex?9%20%5Ctimes%207) window size from [Spangenberg2013](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Spangenberg2013)
+	/// Instead, Center-Symmetric Census Transform with ![inline formula](https://latex.codecogs.com/png.latex?9%20%5Ctimes%207) window size from [Spangenberg2013](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Spangenberg2013)
 	/// is used for robustness.
 	/// ## See also
 	/// cv::StereoSGBM
@@ -996,6 +1270,8 @@ pub mod cudastereo {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { CUDA_StereoSGM, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::calib3d::StereoMatcherTraitConst for CUDA_StereoSGM {
 		#[inline] fn as_raw_StereoMatcher(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1003,6 +1279,8 @@ pub mod cudastereo {
 	impl crate::calib3d::StereoMatcherTrait for CUDA_StereoSGM {
 		#[inline] fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { CUDA_StereoSGM, crate::calib3d::StereoMatcherTraitConst, as_raw_StereoMatcher, crate::calib3d::StereoMatcherTrait, as_raw_mut_StereoMatcher }
 	
 	impl crate::calib3d::StereoSGBMTraitConst for CUDA_StereoSGM {
 		#[inline] fn as_raw_StereoSGBM(&self) -> *const c_void { self.as_raw() }
@@ -1012,6 +1290,8 @@ pub mod cudastereo {
 		#[inline] fn as_raw_mut_StereoSGBM(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { CUDA_StereoSGM, crate::calib3d::StereoSGBMTraitConst, as_raw_StereoSGBM, crate::calib3d::StereoSGBMTrait, as_raw_mut_StereoSGBM }
+	
 	impl crate::cudastereo::CUDA_StereoSGMTraitConst for CUDA_StereoSGM {
 		#[inline] fn as_raw_CUDA_StereoSGM(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1019,6 +1299,8 @@ pub mod cudastereo {
 	impl crate::cudastereo::CUDA_StereoSGMTrait for CUDA_StereoSGM {
 		#[inline] fn as_raw_mut_CUDA_StereoSGM(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { CUDA_StereoSGM, crate::cudastereo::CUDA_StereoSGMTraitConst, as_raw_CUDA_StereoSGM, crate::cudastereo::CUDA_StereoSGMTrait, as_raw_mut_CUDA_StereoSGM }
 	
 	impl CUDA_StereoSGM {
 	}

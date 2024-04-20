@@ -3,6 +3,7 @@ use std::fmt;
 
 use clang::{Entity, EntityKind};
 
+use crate::comment::strip_doxygen_comment_markers;
 use crate::debug::LocationName;
 use crate::element::ExcludeKind;
 use crate::type_ref::{CppNameStyle, NameStyle, TypeRefTypeHint};
@@ -105,7 +106,7 @@ impl Element for Typedef<'_, '_> {
 	}
 
 	fn doc_comment(&self) -> Cow<str> {
-		self.entity.get_comment().unwrap_or_default().into()
+		strip_doxygen_comment_markers(&self.entity.get_comment().unwrap_or_default()).into()
 	}
 
 	fn cpp_namespace(&self) -> Cow<str> {

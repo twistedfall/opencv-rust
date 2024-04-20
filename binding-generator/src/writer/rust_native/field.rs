@@ -19,15 +19,13 @@ impl RustElement for Field<'_, '_> {
 	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
 		match self {
 			Self::Clang { .. } => DefaultRustNativeElement::rust_leafname(self),
-			Self::Desc(desc) => reserved_rename(desc.cpp_fullname.localname().to_snake_case().into()),
+			Self::Desc(desc) => reserved_rename(desc.cpp_fullname.localname().cpp_name_to_rust_case().into()),
 		}
 	}
 
-	fn rendered_doc_comment_with_prefix(&self, prefix: &str, opencv_version: &str) -> String {
+	fn rendered_doc_comment(&self, comment_marker: &str, opencv_version: &str) -> String {
 		match self {
-			&Field::Clang { entity, .. } => {
-				DefaultRustNativeElement::rendered_doc_comment_with_prefix(entity, prefix, opencv_version)
-			}
+			&Field::Clang { entity, .. } => DefaultRustNativeElement::rendered_doc_comment(entity, comment_marker, opencv_version),
 			Field::Desc(_) => "".to_string(),
 		}
 	}

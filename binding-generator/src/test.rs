@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-use regex::Regex;
+use regex::bytes::Regex;
 
 use crate::string_ext::Indent;
 use crate::type_ref::FishStyle;
@@ -204,9 +204,8 @@ fn replace_in_place_regex_cb() {
 
 	{
 		let mut s = "ABCABCABCABAC".to_string();
-		assert!(s.replacen_in_place_regex_cb(&Regex::new("A(.)").unwrap(), 3, |s, caps| {
-			let (cap_start, cap_end) = caps.get(1).unwrap();
-			let r = &s[cap_start..cap_end];
+		assert!(s.replacen_in_place_regex_cb(&Regex::new("A(.)").unwrap(), 3, |c, caps| {
+			let r = caps.get(1).map(|(s, e)| &c[s..e]).unwrap();
 			Some(format!("!{r}").into())
 		}));
 		assert_eq!(s, "!BC!BC!BCABAC");
@@ -384,13 +383,26 @@ fn detect_indent() {
 }
 
 #[test]
-fn to_snake_case() {
-	assert_eq!("get_path_to_application", "getPathToApplication".to_snake_case());
-	assert_eq!("solve_p3p", "solveP3P".to_snake_case());
-	assert_eq!("solve_pnp", "solvePnP".to_snake_case());
-	assert_eq!("reproject_image_to_3d", "reprojectImageTo3D".to_snake_case());
-	assert_eq!("filter_2d", "filter2D".to_snake_case());
-	assert_eq!("is_umat", "isUMat".to_snake_case());
+fn cpp_name_to_rust_case() {
+	assert_eq!("get_path_to_application", "getPathToApplication".cpp_name_to_rust_case());
+	assert_eq!("solve_p3p", "solveP3P".cpp_name_to_rust_case());
+	assert_eq!("solve_pnp", "solvePnP".cpp_name_to_rust_case());
+	assert_eq!("reproject_image_to_3d", "reprojectImageTo3D".cpp_name_to_rust_case());
+	assert_eq!("filter_2d", "filter2D".cpp_name_to_rust_case());
+	assert_eq!("is_umat", "isUMat".cpp_name_to_rust_case());
+	assert_eq!("arg_1", "arg_1".cpp_name_to_rust_case());
+	assert_eq!("test_bg", "testBG".cpp_name_to_rust_case());
+	assert_eq!("an_svd_value", "anSVDValue".cpp_name_to_rust_case());
+	assert_eq!("svd_value", "SVDValue".cpp_name_to_rust_case());
+	assert_eq!("v0_compression_parameter", "V0CompressionParameter".cpp_name_to_rust_case());
+	assert_eq!("r_gripper2base", "R_gripper2base".cpp_name_to_rust_case());
+	assert_eq!("index1", "index1".cpp_name_to_rust_case());
+	assert_eq!("opencl", "OpenCL".cpp_name_to_rust_case());
+	assert_eq!("openvx", "OpenVX".cpp_name_to_rust_case());
+	assert_eq!("opengl", "OpenGl".cpp_name_to_rust_case());
+	assert_eq!("id_3d_format", "iD3DFORMAT".cpp_name_to_rust_case());
+	assert_eq!("_l2_hys_threshold", "_L2HysThreshold".cpp_name_to_rust_case());
+	assert_eq!("use_aruco3_detection", "useAruco3Detection".cpp_name_to_rust_case());
 }
 
 #[test]

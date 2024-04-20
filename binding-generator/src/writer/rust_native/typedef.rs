@@ -5,10 +5,11 @@ use once_cell::sync::Lazy;
 
 use crate::debug::NameDebug;
 use crate::type_ref::{FishStyle, NameStyle, TypeRefKind};
-use crate::{CompiledInterpolation, CppNameStyle, DefaultElement, EntityElement, GeneratorEnv, IteratorExt, StrExt, Typedef};
+use crate::writer::rust_native::type_ref::Lifetime;
+use crate::{CompiledInterpolation, CppNameStyle, DefaultElement, EntityElement, IteratorExt, StrExt, Typedef};
 
 use super::element::{DefaultRustNativeElement, RustElement};
-use super::type_ref::{Lifetime, TypeRefExt};
+use super::type_ref::TypeRefExt;
 use super::RustNativeGeneratedElement;
 
 impl RustElement for Typedef<'_, '_> {
@@ -31,8 +32,8 @@ impl RustElement for Typedef<'_, '_> {
 		}
 	}
 
-	fn rendered_doc_comment_with_prefix(&self, prefix: &str, opencv_version: &str) -> String {
-		DefaultRustNativeElement::rendered_doc_comment_with_prefix(self.entity(), prefix, opencv_version)
+	fn rendered_doc_comment(&self, comment_marker: &str, opencv_version: &str) -> String {
+		DefaultRustNativeElement::rendered_doc_comment(self.entity(), comment_marker, opencv_version)
 	}
 }
 
@@ -41,10 +42,10 @@ impl RustNativeGeneratedElement for Typedef<'_, '_> {
 		format!("{}-{}", self.rust_module(), self.rust_name(NameStyle::decl()))
 	}
 
-	fn gen_rust(&self, _opencv_version: &str, _gen_env: &GeneratorEnv) -> String {
+	fn gen_rust(&self, opencv_version: &str) -> String {
 		static TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/typedef/tpl.rs").compile_interpolation());
 		let underlying_type = self.underlying_type_ref();
-		let lifetimes = Lifetime::explicit()
+		let lifetimes = Lifetime::automatic()
 			.into_iter()
 			.take(underlying_type.rust_lifetime_count())
 			.map(|l| l.to_string())
@@ -56,13 +57,13 @@ impl RustNativeGeneratedElement for Typedef<'_, '_> {
 		};
 
 		TPL.interpolate(&HashMap::from([
-			("doc_comment", Cow::Owned(self.rendered_doc_comment(_opencv_version))),
+			("doc_comment", Cow::Owned(self.rendered_doc_comment("///", opencv_version))),
 			("debug", self.get_debug().into()),
 			("rust_local", self.rust_name(NameStyle::decl())),
 			("generic_args", generic_args.into()),
 			(
 				"definition",
-				underlying_type.rust_name_ext(NameStyle::ref_(), Lifetime::explicit()),
+				underlying_type.rust_name_ext(NameStyle::ref_(), Lifetime::automatic()),
 			),
 		]))
 	}

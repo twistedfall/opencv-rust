@@ -2,10 +2,6 @@
 
 set -xeu
 
-if [[ "$OPENCV_VERSION" == "4.5.4" ]]; then
-	rm -vf tests/*4_5_4_norun.rs
-fi
-
 echo "=== Current directory: $(pwd)"
 echo "=== Environment variable dump:"
 export
@@ -14,4 +10,5 @@ rustc --version
 rustc --print=cfg
 
 cargo update
+rm -vf examples/cuda.rs # no CUDA support in CI
 cargo check -vv --all-targets --all-features --workspace --tests

@@ -77,9 +77,9 @@ fn umat_for_rows_and_cols() -> Result<()> {
 	assert_eq!(400, mat.mat_size()[0]);
 	assert_eq!(300, mat.mat_size()[1]);
 	assert_eq!(2, mat.dims());
-	assert_eq!(2, mat.mat_step().len());
-	assert_eq!(7200, mat.mat_step()[0]);
-	assert_eq!(24, mat.mat_step()[1]);
+	assert_eq!(2, mat.mat_step().buf().len());
+	assert_eq!(7200, mat.mat_step().buf()[0]);
+	assert_eq!(24, mat.mat_step().buf()[1]);
 	assert_eq!(24, mat.elem_size()?);
 	assert_eq!(8, mat.elem_size1());
 	assert_eq!(900, mat.step1(0)?);

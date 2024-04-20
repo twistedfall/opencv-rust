@@ -36,7 +36,7 @@ pub mod tracking {
 		fn as_raw_mut_TrackerCSRT(&mut self) -> *mut c_void;
 	
 		#[inline]
-		fn set_initial_mask(&mut self, mask: &impl core::ToInputArray) -> Result<()> {
+		fn set_initial_mask(&mut self, mask: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_tracking_TrackerCSRT_setInitialMask_const__InputArrayR(self.as_raw_mut_TrackerCSRT(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
@@ -49,7 +49,7 @@ pub mod tracking {
 	
 	/// the CSRT tracker
 	/// 
-	/// The implementation is based on [Lukezic_IJCV2018](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Lukezic_IJCV2018) Discriminative Correlation Filter with Channel and Spatial Reliability
+	/// The implementation is based on [Lukezic_IJCV2018](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Lukezic_IJCV2018) Discriminative Correlation Filter with Channel and Spatial Reliability
 	pub struct TrackerCSRT {
 		ptr: *mut c_void
 	}
@@ -73,6 +73,8 @@ pub mod tracking {
 		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { TrackerCSRT, crate::video::TrackerTraitConst, as_raw_Tracker, crate::video::TrackerTrait, as_raw_mut_Tracker }
+	
 	impl crate::tracking::TrackerCSRTTraitConst for TrackerCSRT {
 		#[inline] fn as_raw_TrackerCSRT(&self) -> *const c_void { self.as_raw() }
 	}
@@ -80,6 +82,8 @@ pub mod tracking {
 	impl crate::tracking::TrackerCSRTTrait for TrackerCSRT {
 		#[inline] fn as_raw_mut_TrackerCSRT(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { TrackerCSRT, crate::tracking::TrackerCSRTTraitConst, as_raw_TrackerCSRT, crate::tracking::TrackerCSRTTrait, as_raw_mut_TrackerCSRT }
 	
 	impl TrackerCSRT {
 		/// Create CSRT tracker instance
@@ -89,9 +93,26 @@ pub mod tracking {
 		/// ## C++ default parameters
 		/// * parameters: TrackerCSRT::Params()
 		#[inline]
-		pub fn create(parameters: &crate::tracking::TrackerCSRT_Params) -> Result<core::Ptr<crate::tracking::TrackerCSRT>> {
+		pub fn create(parameters: &impl crate::tracking::TrackerCSRT_ParamsTraitConst) -> Result<core::Ptr<crate::tracking::TrackerCSRT>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_tracking_TrackerCSRT_create_const_ParamsR(parameters.as_raw_TrackerCSRT_Params(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::tracking::TrackerCSRT>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Create CSRT tracker instance
+		/// ## Parameters
+		/// * parameters: CSRT parameters TrackerCSRT::Params
+		/// 
+		/// ## Note
+		/// This alternative version of [TrackerCSRT::create] function uses the following default values for its arguments:
+		/// * parameters: TrackerCSRT::Params()
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::tracking::TrackerCSRT>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_tracking_TrackerCSRT_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::tracking::TrackerCSRT>::opencv_from_extern(ret) };
@@ -287,166 +308,166 @@ pub mod tracking {
 	
 		#[inline]
 		fn set_use_hog(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propUse_hog_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propUse_hog_const_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_use_color_names(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propUse_color_names_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propUse_color_names_const_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_use_gray(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propUse_gray_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propUse_gray_const_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_use_rgb(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propUse_rgb_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propUse_rgb_const_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_use_channel_weights(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propUse_channel_weights_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propUse_channel_weights_const_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_use_segmentation(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propUse_segmentation_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propUse_segmentation_const_bool(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		/// Window function: "hann", "cheb", "kaiser"
 		#[inline]
 		fn set_window_function(&mut self, val: &str) {
-			extern_container_arg!(nofail mut val);
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propWindow_function_string(self.as_raw_mut_TrackerCSRT_Params(), val.opencv_as_extern_mut()) };
+			extern_container_arg!(nofail val);
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propWindow_function_const_string(self.as_raw_mut_TrackerCSRT_Params(), val.opencv_as_extern()) };
 			ret
 		}
 		
 		#[inline]
 		fn set_kaiser_alpha(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propKaiser_alpha_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propKaiser_alpha_const_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_cheb_attenuation(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propCheb_attenuation_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propCheb_attenuation_const_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_template_size(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propTemplate_size_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propTemplate_size_const_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_gsl_sigma(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propGsl_sigma_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propGsl_sigma_const_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_hog_orientations(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propHog_orientations_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propHog_orientations_const_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_hog_clip(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propHog_clip_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propHog_clip_const_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_padding(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propPadding_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propPadding_const_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_filter_lr(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propFilter_lr_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propFilter_lr_const_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_weights_lr(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propWeights_lr_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propWeights_lr_const_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_num_hog_channels_used(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propNum_hog_channels_used_int(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propNum_hog_channels_used_const_int(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_admm_iterations(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propAdmm_iterations_int(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propAdmm_iterations_const_int(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_histogram_bins(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propHistogram_bins_int(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propHistogram_bins_const_int(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_histogram_lr(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propHistogram_lr_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propHistogram_lr_const_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_background_ratio(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propBackground_ratio_int(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propBackground_ratio_const_int(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_number_of_scales(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propNumber_of_scales_int(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propNumber_of_scales_const_int(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_scale_sigma_factor(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propScale_sigma_factor_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propScale_sigma_factor_const_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_scale_model_max_area(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propScale_model_max_area_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propScale_model_max_area_const_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_scale_lr(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propScale_lr_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propScale_lr_const_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_scale_step(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propScale_step_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propScale_step_const_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
 		/// we lost the target, if the psr is lower than this.
 		#[inline]
 		fn set_psr_threshold(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propPsr_threshold_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
+			let ret = unsafe { sys::cv_tracking_TrackerCSRT_Params_propPsr_threshold_const_float(self.as_raw_mut_TrackerCSRT_Params(), val) };
 			ret
 		}
 		
@@ -474,6 +495,8 @@ pub mod tracking {
 	impl crate::tracking::TrackerCSRT_ParamsTrait for TrackerCSRT_Params {
 		#[inline] fn as_raw_mut_TrackerCSRT_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { TrackerCSRT_Params, crate::tracking::TrackerCSRT_ParamsTraitConst, as_raw_TrackerCSRT_Params, crate::tracking::TrackerCSRT_ParamsTrait, as_raw_mut_TrackerCSRT_Params }
 	
 	impl TrackerCSRT_Params {
 		#[inline]
@@ -551,12 +574,24 @@ pub mod tracking {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [TrackerKCFTrait::set_feature_extractor] function uses the following default values for its arguments:
+		/// * pca_func: false
+		#[inline]
+		fn set_feature_extractor_def(&mut self, callback: crate::tracking::TrackerKCF_FeatureExtractorCallbackFN) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_tracking_TrackerKCF_setFeatureExtractor_FeatureExtractorCallbackFN(self.as_raw_mut_TrackerKCF(), callback, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	/// the KCF (Kernelized Correlation Filter) tracker
 	/// 
 	/// * KCF is a novel tracking framework that utilizes properties of circulant matrix to enhance the processing speed.
-	/// * This tracking method is an implementation of [KCF_ECCV](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_KCF_ECCV) which is extended to KCF with color-names features ([KCF_CN](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_KCF_CN)).
+	/// * This tracking method is an implementation of [KCF_ECCV](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_KCF_ECCV) which is extended to KCF with color-names features ([KCF_CN](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_KCF_CN)).
 	/// * The original paper of KCF is available at <http://www.robots.ox.ac.uk/~joao/publications/henriques_tpami2015.pdf>
 	/// * as well as the matlab implementation. For more information about KCF with color-names features, please refer to
 	/// * <http://www.cvl.isy.liu.se/research/objrec/visualtracking/colvistrack/index.html>.
@@ -583,6 +618,8 @@ pub mod tracking {
 		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { TrackerKCF, crate::video::TrackerTraitConst, as_raw_Tracker, crate::video::TrackerTrait, as_raw_mut_Tracker }
+	
 	impl crate::tracking::TrackerKCFTraitConst for TrackerKCF {
 		#[inline] fn as_raw_TrackerKCF(&self) -> *const c_void { self.as_raw() }
 	}
@@ -590,6 +627,8 @@ pub mod tracking {
 	impl crate::tracking::TrackerKCFTrait for TrackerKCF {
 		#[inline] fn as_raw_mut_TrackerKCF(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { TrackerKCF, crate::tracking::TrackerKCFTraitConst, as_raw_TrackerKCF, crate::tracking::TrackerKCFTrait, as_raw_mut_TrackerKCF }
 	
 	impl TrackerKCF {
 		/// Create KCF tracker instance
@@ -602,6 +641,23 @@ pub mod tracking {
 		pub fn create(parameters: crate::tracking::TrackerKCF_Params) -> Result<core::Ptr<crate::tracking::TrackerKCF>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_tracking_TrackerKCF_create_const_ParamsR(&parameters, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::tracking::TrackerKCF>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Create KCF tracker instance
+		/// ## Parameters
+		/// * parameters: KCF parameters TrackerKCF::Params
+		/// 
+		/// ## Note
+		/// This alternative version of [TrackerKCF::create] function uses the following default values for its arguments:
+		/// * parameters: TrackerKCF::Params()
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::tracking::TrackerKCF>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_tracking_TrackerKCF_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::tracking::TrackerKCF>::opencv_from_extern(ret) };

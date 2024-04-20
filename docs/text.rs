@@ -9,7 +9,7 @@ pub mod text {
 	//! --------------------------------------------------------
 	//! 
 	//! The scene text detection algorithm described below has been initially proposed by Lukás Neumann &
-	//! Jiri Matas [Neumann11](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Neumann11). The main idea behind Class-specific Extremal Regions is similar to the MSER
+	//! Jiri Matas [Neumann11](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Neumann11). The main idea behind Class-specific Extremal Regions is similar to the MSER
 	//! in that suitable Extremal Regions (ERs) are selected from the whole component tree of the image.
 	//! However, this technique differs from MSER in that selection of suitable ERs is done by a sequential
 	//! classifier trained for character detection, i.e. dropping the stability requirement of MSERs and
@@ -19,7 +19,7 @@ pub mod text {
 	//! from 0 to 255 and then linking the obtained connected components from successive levels in a
 	//! hierarchy by their inclusion relation:
 	//! 
-	//! ![image](https://docs.opencv.org/4.8.0/component_tree.png)
+	//! ![image](https://docs.opencv.org/4.9.0/component_tree.png)
 	//! 
 	//! The component tree may contain a huge number of regions even for a very simple image as shown in
 	//! the previous image. This number can easily reach the order of 1 x 10\^6 regions for an average 1
@@ -42,9 +42,9 @@ pub mod text {
 	//! 
 	//! After the ER filtering is done on each input channel, character candidates must be grouped in
 	//! high-level text blocks (i.e. words, text lines, paragraphs, ...). The opencv_text module implements
-	//! two different grouping algorithms: the Exhaustive Search algorithm proposed in [Neumann12](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Neumann12) for
+	//! two different grouping algorithms: the Exhaustive Search algorithm proposed in [Neumann12](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Neumann12) for
 	//! grouping horizontally aligned text, and the method proposed by Lluis Gomez and Dimosthenis Karatzas
-	//! in [Gomez13](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Gomez13) [Gomez14](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Gomez14) for grouping arbitrary oriented text (see erGrouping).
+	//! in [Gomez13](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Gomez13) [Gomez14](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Gomez14) for grouping arbitrary oriented text (see erGrouping).
 	//! 
 	//! To see the text detector at work, have a look at the textdetection demo:
 	//! <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/textdetection.cpp>
@@ -57,7 +57,7 @@ pub mod text {
 	
 	pub const ERFILTER_NM_IHSGrad: i32 = 1;
 	pub const ERFILTER_NM_RGBLGrad: i32 = 0;
-	/// Text grouping method proposed in [Gomez13](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Gomez13) [Gomez14](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Gomez14) for grouping arbitrary oriented text. Regions
+	/// Text grouping method proposed in [Gomez13](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Gomez13) [Gomez14](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Gomez14) for grouping arbitrary oriented text. Regions
 	/// are agglomerated by Single Linkage Clustering in a weighted feature space that combines proximity
 	/// (x,y coordinates) and similarity measures (color, size, gradient magnitude, stroke width, etc.).
 	/// SLC provides a dendrogram where each node represents a text group hypothesis. Then the algorithm
@@ -68,7 +68,7 @@ pub mod text {
 	/// 
 	/// Note: This mode is not supported due NFA code removal ( <https://github.com/opencv/opencv_contrib/issues/2235> )
 	pub const ERGROUPING_ORIENTATION_ANY: i32 = 1;
-	/// Exhaustive Search algorithm proposed in [Neumann11](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Neumann11) for grouping horizontally aligned text.
+	/// Exhaustive Search algorithm proposed in [Neumann11](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Neumann11) for grouping horizontally aligned text.
 	/// The algorithm models a verification function for all the possible ER sequences. The
 	/// verification fuction for ER pairs consists in a set of threshold-based pairwise rules which
 	/// compare measurements of two regions (height ratio, centroid angle, and region distance). The
@@ -119,7 +119,7 @@ pub mod text {
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum erGrouping_Modes {
-		/// Exhaustive Search algorithm proposed in [Neumann11](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Neumann11) for grouping horizontally aligned text.
+		/// Exhaustive Search algorithm proposed in [Neumann11](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Neumann11) for grouping horizontally aligned text.
 		/// The algorithm models a verification function for all the possible ER sequences. The
 		/// verification fuction for ER pairs consists in a set of threshold-based pairwise rules which
 		/// compare measurements of two regions (height ratio, centroid angle, and region distance). The
@@ -129,7 +129,7 @@ pub mod text {
 		/// approximated by verifying that the text line parameters of all (sub)sequences of length 3 are
 		/// consistent.
 		ERGROUPING_ORIENTATION_HORIZ = 0,
-		/// Text grouping method proposed in [Gomez13](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Gomez13) [Gomez14](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Gomez14) for grouping arbitrary oriented text. Regions
+		/// Text grouping method proposed in [Gomez13](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Gomez13) [Gomez14](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Gomez14) for grouping arbitrary oriented text. Regions
 		/// are agglomerated by Single Linkage Clustering in a weighted feature space that combines proximity
 		/// (x,y coordinates) and similarity measures (color, size, gradient magnitude, stroke width, etc.).
 		/// SLC provides a dendrogram where each node represents a text group hypothesis. Then the algorithm
@@ -192,7 +192,7 @@ pub mod text {
 	/// An example of MSERsToERStats in use can be found in the text detection webcam_demo:
 	/// <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/webcam_demo.cpp>
 	#[inline]
-	pub fn mse_rs_to_er_stats(image: &impl core::ToInputArray, contours: &mut core::Vector<core::Vector<core::Point>>, regions: &mut core::Vector<core::Vector<crate::text::ERStat>>) -> Result<()> {
+	pub fn mse_rs_to_er_stats(image: &impl ToInputArray, contours: &mut core::Vector<core::Vector<core::Point>>, regions: &mut core::Vector<core::Vector<crate::text::ERStat>>) -> Result<()> {
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_MSERsToERStats_const__InputArrayR_vectorLvectorLPointGGR_vectorLvectorLERStatGGR(image.as_raw__InputArray(), contours.as_raw_mut_VectorOfVectorOfPoint(), regions.as_raw_mut_VectorOfVectorOfERStat(), ocvrs_return.as_mut_ptr()) };
@@ -201,7 +201,36 @@ pub mod text {
 		Ok(ret)
 	}
 	
-	/// Compute the different channels to be processed independently in the N&M algorithm [Neumann12](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Neumann12).
+	/// Compute the different channels to be processed independently in the N&M algorithm [Neumann12](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Neumann12).
+	/// 
+	/// ## Parameters
+	/// * _src: Source image. Must be RGB CV_8UC3.
+	/// 
+	/// * _channels: Output vector\<Mat\> where computed channels are stored.
+	/// 
+	/// * _mode: Mode of operation. Currently the only available options are:
+	/// **ERFILTER_NM_RGBLGrad** (used by default) and **ERFILTER_NM_IHSGrad**.
+	/// 
+	/// In N&M algorithm, the combination of intensity (I), hue (H), saturation (S), and gradient magnitude
+	/// channels (Grad) are used in order to obtain high localization recall. This implementation also
+	/// provides an alternative combination of red (R), green (G), blue (B), lightness (L), and gradient
+	/// magnitude (Grad).
+	/// 
+	/// ## Note
+	/// This alternative version of [compute_nm_channels] function uses the following default values for its arguments:
+	/// * _mode: ERFILTER_NM_RGBLGrad
+	#[inline]
+	pub fn compute_nm_channels_def(_src: &impl ToInputArray, _channels: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(_src);
+		output_array_arg!(_channels);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_text_computeNMChannels_const__InputArrayR_const__OutputArrayR(_src.as_raw__InputArray(), _channels.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Compute the different channels to be processed independently in the N&M algorithm [Neumann12](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Neumann12).
 	/// 
 	/// ## Parameters
 	/// * _src: Source image. Must be RGB CV_8UC3.
@@ -219,7 +248,7 @@ pub mod text {
 	/// ## C++ default parameters
 	/// * _mode: ERFILTER_NM_RGBLGrad
 	#[inline]
-	pub fn compute_nm_channels(_src: &impl core::ToInputArray, _channels: &mut impl core::ToOutputArray, _mode: i32) -> Result<()> {
+	pub fn compute_nm_channels(_src: &impl ToInputArray, _channels: &mut impl ToOutputArray, _mode: i32) -> Result<()> {
 		input_array_arg!(_src);
 		output_array_arg!(_channels);
 		return_send!(via ocvrs_return);
@@ -229,7 +258,46 @@ pub mod text {
 		Ok(ret)
 	}
 	
-	/// Create an Extremal Region Filter for the 1st stage classifier of N&M algorithm [Neumann12](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Neumann12).
+	/// Create an Extremal Region Filter for the 1st stage classifier of N&M algorithm [Neumann12](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Neumann12).
+	/// 
+	/// ## Parameters
+	/// * cb: :   Callback with the classifier. Default classifier can be implicitly load with function
+	/// loadClassifierNM1, e.g. from file in samples/cpp/trained_classifierNM1.xml
+	/// * thresholdDelta: :   Threshold step in subsequent thresholds when extracting the component tree
+	/// * minArea: :   The minimum area (% of image size) allowed for retreived ER's
+	/// * maxArea: :   The maximum area (% of image size) allowed for retreived ER's
+	/// * minProbability: :   The minimum probability P(er|character) allowed for retreived ER's
+	/// * nonMaxSuppression: :   Whenever non-maximum suppression is done over the branch probabilities
+	/// * minProbabilityDiff: :   The minimum probability difference between local maxima and local minima ERs
+	/// 
+	/// The component tree of the image is extracted by a threshold increased step by step from 0 to 255,
+	/// incrementally computable descriptors (aspect_ratio, compactness, number of holes, and number of
+	/// horizontal crossings) are computed for each ER and used as features for a classifier which estimates
+	/// the class-conditional probability P(er|character). The value of P(er|character) is tracked using the
+	/// inclusion relation of ER across all thresholds and only the ERs which correspond to local maximum of
+	/// the probability P(er|character) are selected (if the local maximum of the probability is above a
+	/// global limit pmin and the difference between local maximum and local minimum is greater than
+	/// minProbabilityDiff).
+	/// 
+	/// ## Note
+	/// This alternative version of [create_er_filter_nm1] function uses the following default values for its arguments:
+	/// * threshold_delta: 1
+	/// * min_area: (float)0.00025
+	/// * max_area: (float)0.13
+	/// * min_probability: (float)0.4
+	/// * non_max_suppression: true
+	/// * min_probability_diff: (float)0.1
+	#[inline]
+	pub fn create_er_filter_nm1_def(cb: &core::Ptr<crate::text::ERFilter_Callback>) -> Result<core::Ptr<crate::text::ERFilter>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_text_createERFilterNM1_const_PtrLCallbackGR(cb.as_raw_PtrOfERFilter_Callback(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::text::ERFilter>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Create an Extremal Region Filter for the 1st stage classifier of N&M algorithm [Neumann12](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Neumann12).
 	/// 
 	/// ## Parameters
 	/// * cb: :   Callback with the classifier. Default classifier can be implicitly load with function
@@ -270,7 +338,31 @@ pub mod text {
 	/// Reads an Extremal Region Filter for the 1st stage classifier of N&M algorithm
 	///    from the provided path e.g. /path/to/cpp/trained_classifierNM1.xml
 	/// 
-	/// Create an Extremal Region Filter for the 1st stage classifier of N&M algorithm [Neumann12](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Neumann12).
+	/// @overload
+	/// 
+	/// ## Note
+	/// This alternative version of [create_er_filter_nm1_from_file] function uses the following default values for its arguments:
+	/// * threshold_delta: 1
+	/// * min_area: (float)0.00025
+	/// * max_area: (float)0.13
+	/// * min_probability: (float)0.4
+	/// * non_max_suppression: true
+	/// * min_probability_diff: (float)0.1
+	#[inline]
+	pub fn create_er_filter_nm1_from_file_def(filename: &str) -> Result<core::Ptr<crate::text::ERFilter>> {
+		extern_container_arg!(filename);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_text_createERFilterNM1_const_StringR(filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::text::ERFilter>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Reads an Extremal Region Filter for the 1st stage classifier of N&M algorithm
+	///    from the provided path e.g. /path/to/cpp/trained_classifierNM1.xml
+	/// 
+	/// Create an Extremal Region Filter for the 1st stage classifier of N&M algorithm [Neumann12](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Neumann12).
 	/// 
 	/// ## Parameters
 	/// * cb: :   Callback with the classifier. Default classifier can be implicitly load with function
@@ -311,7 +403,32 @@ pub mod text {
 		Ok(ret)
 	}
 	
-	/// Create an Extremal Region Filter for the 2nd stage classifier of N&M algorithm [Neumann12](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Neumann12).
+	/// Create an Extremal Region Filter for the 2nd stage classifier of N&M algorithm [Neumann12](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Neumann12).
+	/// 
+	/// ## Parameters
+	/// * cb: :   Callback with the classifier. Default classifier can be implicitly load with function
+	/// loadClassifierNM2, e.g. from file in samples/cpp/trained_classifierNM2.xml
+	/// * minProbability: :   The minimum probability P(er|character) allowed for retreived ER's
+	/// 
+	/// In the second stage, the ERs that passed the first stage are classified into character and
+	/// non-character classes using more informative but also more computationally expensive features. The
+	/// classifier uses all the features calculated in the first stage and the following additional
+	/// features: hole area ratio, convex hull ratio, and number of outer inflexion points.
+	/// 
+	/// ## Note
+	/// This alternative version of [create_er_filter_nm2] function uses the following default values for its arguments:
+	/// * min_probability: (float)0.3
+	#[inline]
+	pub fn create_er_filter_nm2_def(cb: &core::Ptr<crate::text::ERFilter_Callback>) -> Result<core::Ptr<crate::text::ERFilter>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_text_createERFilterNM2_const_PtrLCallbackGR(cb.as_raw_PtrOfERFilter_Callback(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::text::ERFilter>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Create an Extremal Region Filter for the 2nd stage classifier of N&M algorithm [Neumann12](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Neumann12).
 	/// 
 	/// ## Parameters
 	/// * cb: :   Callback with the classifier. Default classifier can be implicitly load with function
@@ -338,7 +455,26 @@ pub mod text {
 	/// Reads an Extremal Region Filter for the 2nd stage classifier of N&M algorithm
 	///    from the provided path e.g. /path/to/cpp/trained_classifierNM2.xml
 	/// 
-	/// Create an Extremal Region Filter for the 2nd stage classifier of N&M algorithm [Neumann12](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Neumann12).
+	/// @overload
+	/// 
+	/// ## Note
+	/// This alternative version of [create_er_filter_nm2_from_file] function uses the following default values for its arguments:
+	/// * min_probability: (float)0.3
+	#[inline]
+	pub fn create_er_filter_nm2_from_file_def(filename: &str) -> Result<core::Ptr<crate::text::ERFilter>> {
+		extern_container_arg!(filename);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_text_createERFilterNM2_const_StringR(filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::text::ERFilter>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Reads an Extremal Region Filter for the 2nd stage classifier of N&M algorithm
+	///    from the provided path e.g. /path/to/cpp/trained_classifierNM2.xml
+	/// 
+	/// Create an Extremal Region Filter for the 2nd stage classifier of N&M algorithm [Neumann12](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Neumann12).
 	/// 
 	/// ## Parameters
 	/// * cb: :   Callback with the classifier. Default classifier can be implicitly load with function
@@ -391,7 +527,7 @@ pub mod text {
 	///    *   (C++) An alternative would be to load the default generic language transition table provided in the text module samples folder (created from ispell 42869 english words list) :
 	///            <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/OCRHMM_transitions_table.xml>
 	#[inline]
-	pub fn create_ocrhmm_transitions_table(vocabulary: &mut String, lexicon: &mut core::Vector<String>, transition_probabilities_table: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn create_ocrhmm_transitions_table(vocabulary: &mut String, lexicon: &mut core::Vector<String>, transition_probabilities_table: &mut impl ToOutputArray) -> Result<()> {
 		string_arg_output_send!(via vocabulary_via);
 		output_array_arg!(transition_probabilities_table);
 		return_send!(via ocvrs_return);
@@ -406,8 +542,34 @@ pub mod text {
 	/// 
 	/// ## Parameters
 	/// * image: Source image where text blocks needs to be extracted from.  Should be CV_8UC3 (color).
-	/// * er_filter1: Extremal Region Filter for the 1st stage classifier of N&M algorithm [Neumann12](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Neumann12)
-	/// * er_filter2: Extremal Region Filter for the 2nd stage classifier of N&M algorithm [Neumann12](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Neumann12)
+	/// * er_filter1: Extremal Region Filter for the 1st stage classifier of N&M algorithm [Neumann12](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Neumann12)
+	/// * er_filter2: Extremal Region Filter for the 2nd stage classifier of N&M algorithm [Neumann12](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Neumann12)
+	/// * groups_rects: Output list of rectangle blocks with text
+	/// * method: Grouping method (see text::erGrouping_Modes). Can be one of ERGROUPING_ORIENTATION_HORIZ, ERGROUPING_ORIENTATION_ANY.
+	/// * filename: The XML or YAML file with the classifier model (e.g. samples/trained_classifier_erGrouping.xml). Only to use when grouping method is ERGROUPING_ORIENTATION_ANY.
+	/// * minProbability: The minimum probability for accepting a group. Only to use when grouping method is ERGROUPING_ORIENTATION_ANY.
+	/// 
+	/// ## Note
+	/// This alternative version of [detect_regions_from_file] function uses the following default values for its arguments:
+	/// * method: ERGROUPING_ORIENTATION_HORIZ
+	/// * filename: String()
+	/// * min_probability: (float)0.5
+	#[inline]
+	pub fn detect_regions_from_file_def(image: &impl ToInputArray, er_filter1: &core::Ptr<crate::text::ERFilter>, er_filter2: &core::Ptr<crate::text::ERFilter>, groups_rects: &mut core::Vector<core::Rect>) -> Result<()> {
+		input_array_arg!(image);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_text_detectRegions_const__InputArrayR_const_PtrLERFilterGR_const_PtrLERFilterGR_vectorLRectGR(image.as_raw__InputArray(), er_filter1.as_raw_PtrOfERFilter(), er_filter2.as_raw_PtrOfERFilter(), groups_rects.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Extracts text regions from image.
+	/// 
+	/// ## Parameters
+	/// * image: Source image where text blocks needs to be extracted from.  Should be CV_8UC3 (color).
+	/// * er_filter1: Extremal Region Filter for the 1st stage classifier of N&M algorithm [Neumann12](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Neumann12)
+	/// * er_filter2: Extremal Region Filter for the 2nd stage classifier of N&M algorithm [Neumann12](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Neumann12)
 	/// * groups_rects: Output list of rectangle blocks with text
 	/// * method: Grouping method (see text::erGrouping_Modes). Can be one of ERGROUPING_ORIENTATION_HORIZ, ERGROUPING_ORIENTATION_ANY.
 	/// * filename: The XML or YAML file with the classifier model (e.g. samples/trained_classifier_erGrouping.xml). Only to use when grouping method is ERGROUPING_ORIENTATION_ANY.
@@ -418,7 +580,7 @@ pub mod text {
 	/// * filename: String()
 	/// * min_probability: (float)0.5
 	#[inline]
-	pub fn detect_regions_from_file(image: &impl core::ToInputArray, er_filter1: &core::Ptr<crate::text::ERFilter>, er_filter2: &core::Ptr<crate::text::ERFilter>, groups_rects: &mut core::Vector<core::Rect>, method: i32, filename: &str, min_probability: f32) -> Result<()> {
+	pub fn detect_regions_from_file(image: &impl ToInputArray, er_filter1: &core::Ptr<crate::text::ERFilter>, er_filter2: &core::Ptr<crate::text::ERFilter>, groups_rects: &mut core::Vector<core::Rect>, method: i32, filename: &str, min_probability: f32) -> Result<()> {
 		input_array_arg!(image);
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
@@ -429,10 +591,32 @@ pub mod text {
 	}
 	
 	#[inline]
-	pub fn detect_regions(image: &impl core::ToInputArray, er_filter1: &core::Ptr<crate::text::ERFilter>, er_filter2: &core::Ptr<crate::text::ERFilter>, regions: &mut core::Vector<core::Vector<core::Point>>) -> Result<()> {
+	pub fn detect_regions(image: &impl ToInputArray, er_filter1: &core::Ptr<crate::text::ERFilter>, er_filter2: &core::Ptr<crate::text::ERFilter>, regions: &mut core::Vector<core::Vector<core::Point>>) -> Result<()> {
 		input_array_arg!(image);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_text_detectRegions_const__InputArrayR_const_PtrLERFilterGR_const_PtrLERFilterGR_vectorLvectorLPointGGR(image.as_raw__InputArray(), er_filter1.as_raw_PtrOfERFilter(), er_filter2.as_raw_PtrOfERFilter(), regions.as_raw_mut_VectorOfVectorOfPoint(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Applies the Stroke Width Transform operator followed by filtering of connected components of similar Stroke Widths to return letter candidates. It also chain them by proximity and size, saving the result in chainBBs.
+	/// ## Parameters
+	/// * input: the input image with 3 channels.
+	/// * result: a vector of resulting bounding boxes where probability of finding text is high
+	/// * dark_on_light: a boolean value signifying whether the text is darker or lighter than the background, it is observed to reverse the gradient obtained from Scharr operator, and significantly affect the result.
+	/// * draw: an optional Mat of type CV_8UC3 which visualises the detected letters using bounding boxes.
+	/// * chainBBs: an optional parameter which chains the letter candidates according to heuristics in the paper and returns all possible regions where text is likely to occur.
+	/// 
+	/// ## Note
+	/// This alternative version of [detect_text_swt] function uses the following default values for its arguments:
+	/// * draw: noArray()
+	/// * chain_b_bs: noArray()
+	#[inline]
+	pub fn detect_text_swt_def(input: &impl ToInputArray, result: &mut core::Vector<core::Rect>, dark_on_light: bool) -> Result<()> {
+		input_array_arg!(input);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_text_detectTextSWT_const__InputArrayR_vectorLRectGR_bool(input.as_raw__InputArray(), result.as_raw_mut_VectorOfRect(), dark_on_light, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -450,7 +634,7 @@ pub mod text {
 	/// * draw: noArray()
 	/// * chain_b_bs: noArray()
 	#[inline]
-	pub fn detect_text_swt(input: &impl core::ToInputArray, result: &mut core::Vector<core::Rect>, dark_on_light: bool, draw: &mut impl core::ToOutputArray, chain_b_bs: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn detect_text_swt(input: &impl ToInputArray, result: &mut core::Vector<core::Rect>, dark_on_light: bool, draw: &mut impl ToOutputArray, chain_b_bs: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(input);
 		output_array_arg!(draw);
 		output_array_arg!(chain_b_bs);
@@ -485,12 +669,52 @@ pub mod text {
 	/// * minProbablity: The minimum probability for accepting a group. Only to use when grouping
 	/// method is ERGROUPING_ORIENTATION_ANY.
 	/// 
+	/// ## Note
+	/// This alternative version of [er_grouping] function uses the following default values for its arguments:
+	/// * method: ERGROUPING_ORIENTATION_HORIZ
+	/// * filename: std::string()
+	/// * min_probablity: 0.5
+	#[inline]
+	pub fn er_grouping_def(img: &impl ToInputArray, channels: &impl ToInputArray, regions: &mut core::Vector<core::Vector<crate::text::ERStat>>, groups: &mut core::Vector<core::Vector<core::Vec2i>>, groups_rects: &mut core::Vector<core::Rect>) -> Result<()> {
+		input_array_arg!(img);
+		input_array_arg!(channels);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_text_erGrouping_const__InputArrayR_const__InputArrayR_vectorLvectorLERStatGGR_vectorLvectorLVec2iGGR_vectorLRectGR(img.as_raw__InputArray(), channels.as_raw__InputArray(), regions.as_raw_mut_VectorOfVectorOfERStat(), groups.as_raw_mut_VectorOfVectorOfVec2i(), groups_rects.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Find groups of Extremal Regions that are organized as text blocks.
+	/// 
+	/// ## Parameters
+	/// * img: Original RGB or Greyscale image from wich the regions were extracted.
+	/// 
+	/// * channels: Vector of single channel images CV_8UC1 from wich the regions were extracted.
+	/// 
+	/// * regions: Vector of ER's retrieved from the ERFilter algorithm from each channel.
+	/// 
+	/// * groups: The output of the algorithm is stored in this parameter as set of lists of indexes to
+	/// provided regions.
+	/// 
+	/// * groups_rects: The output of the algorithm are stored in this parameter as list of rectangles.
+	/// 
+	/// * method: Grouping method (see text::erGrouping_Modes). Can be one of ERGROUPING_ORIENTATION_HORIZ,
+	/// ERGROUPING_ORIENTATION_ANY.
+	/// 
+	/// * filename: The XML or YAML file with the classifier model (e.g.
+	/// samples/trained_classifier_erGrouping.xml). Only to use when grouping method is
+	/// ERGROUPING_ORIENTATION_ANY.
+	/// 
+	/// * minProbablity: The minimum probability for accepting a group. Only to use when grouping
+	/// method is ERGROUPING_ORIENTATION_ANY.
+	/// 
 	/// ## C++ default parameters
 	/// * method: ERGROUPING_ORIENTATION_HORIZ
 	/// * filename: std::string()
 	/// * min_probablity: 0.5
 	#[inline]
-	pub fn er_grouping(img: &impl core::ToInputArray, channels: &impl core::ToInputArray, regions: &mut core::Vector<core::Vector<crate::text::ERStat>>, groups: &mut core::Vector<core::Vector<core::Vec2i>>, groups_rects: &mut core::Vector<core::Rect>, method: i32, filename: &str, min_probablity: f32) -> Result<()> {
+	pub fn er_grouping(img: &impl ToInputArray, channels: &impl ToInputArray, regions: &mut core::Vector<core::Vector<crate::text::ERStat>>, groups: &mut core::Vector<core::Vector<core::Vec2i>>, groups_rects: &mut core::Vector<core::Rect>, method: i32, filename: &str, min_probablity: f32) -> Result<()> {
 		input_array_arg!(img);
 		input_array_arg!(channels);
 		extern_container_arg!(filename);
@@ -501,12 +725,28 @@ pub mod text {
 		Ok(ret)
 	}
 	
+	/// ## Note
+	/// This alternative version of [er_grouping_1] function uses the following default values for its arguments:
+	/// * method: ERGROUPING_ORIENTATION_HORIZ
+	/// * filename: String()
+	/// * min_probablity: (float)0.5
+	#[inline]
+	pub fn er_grouping_1_def(image: &impl ToInputArray, channel: &impl ToInputArray, mut regions: core::Vector<core::Vector<core::Point>>, groups_rects: &mut core::Vector<core::Rect>) -> Result<()> {
+		input_array_arg!(image);
+		input_array_arg!(channel);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_text_erGrouping_const__InputArrayR_const__InputArrayR_vectorLvectorLPointGG_vectorLRectGR(image.as_raw__InputArray(), channel.as_raw__InputArray(), regions.as_raw_mut_VectorOfVectorOfPoint(), groups_rects.as_raw_mut_VectorOfRect(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// ## C++ default parameters
 	/// * method: ERGROUPING_ORIENTATION_HORIZ
 	/// * filename: String()
 	/// * min_probablity: (float)0.5
 	#[inline]
-	pub fn er_grouping_1(image: &impl core::ToInputArray, channel: &impl core::ToInputArray, mut regions: core::Vector<core::Vector<core::Point>>, groups_rects: &mut core::Vector<core::Rect>, method: i32, filename: &str, min_probablity: f32) -> Result<()> {
+	pub fn er_grouping_1(image: &impl ToInputArray, channel: &impl ToInputArray, mut regions: core::Vector<core::Vector<core::Point>>, groups_rects: &mut core::Vector<core::Rect>, method: i32, filename: &str, min_probablity: f32) -> Result<()> {
 		input_array_arg!(image);
 		input_array_arg!(channel);
 		extern_container_arg!(filename);
@@ -654,10 +894,27 @@ pub mod text {
 		/// * component_confidences: NULL
 		/// * component_level: 0
 		#[inline]
-		fn run(&mut self, image: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
+		fn run(&mut self, image: &mut impl core::MatTrait, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_BaseOCR_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_BaseOCR(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			string_arg_output_receive!(output_text_via => output_text);
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [BaseOCRTrait::run] function uses the following default values for its arguments:
+		/// * component_rects: NULL
+		/// * component_texts: NULL
+		/// * component_confidences: NULL
+		/// * component_level: 0
+		#[inline]
+		fn run_def(&mut self, image: &mut impl core::MatTrait, output_text: &mut String) -> Result<()> {
+			string_arg_output_send!(via output_text_via);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_text_BaseOCR_run_MatR_stringR(self.as_raw_mut_BaseOCR(), image.as_raw_mut_Mat(), &mut output_text_via, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
@@ -670,10 +927,27 @@ pub mod text {
 		/// * component_confidences: NULL
 		/// * component_level: 0
 		#[inline]
-		fn run_mask(&mut self, image: &mut core::Mat, mask: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
+		fn run_mask(&mut self, image: &mut impl core::MatTrait, mask: &mut impl core::MatTrait, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_BaseOCR_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_BaseOCR(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			string_arg_output_receive!(output_text_via => output_text);
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [BaseOCRTrait::run_mask] function uses the following default values for its arguments:
+		/// * component_rects: NULL
+		/// * component_texts: NULL
+		/// * component_confidences: NULL
+		/// * component_level: 0
+		#[inline]
+		fn run_mask_def(&mut self, image: &mut impl core::MatTrait, mask: &mut impl core::MatTrait, output_text: &mut String) -> Result<()> {
+			string_arg_output_send!(via output_text_via);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_text_BaseOCR_run_MatR_MatR_stringR(self.as_raw_mut_BaseOCR(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
@@ -704,6 +978,8 @@ pub mod text {
 	impl crate::text::BaseOCRTrait for BaseOCR {
 		#[inline] fn as_raw_mut_BaseOCR(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { BaseOCR, crate::text::BaseOCRTraitConst, as_raw_BaseOCR, crate::text::BaseOCRTrait, as_raw_mut_BaseOCR }
 	
 	impl BaseOCR {
 	}
@@ -757,7 +1033,7 @@ pub mod text {
 		/// Extracts the component tree (if needed) and filter the extremal regions (ER's) by using a given
 		/// classifier.
 		#[inline]
-		fn run(&mut self, image: &impl core::ToInputArray, regions: &mut core::Vector<crate::text::ERStat>) -> Result<()> {
+		fn run(&mut self, image: &impl ToInputArray, regions: &mut core::Vector<crate::text::ERStat>) -> Result<()> {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_ERFilter_run_const__InputArrayR_vectorLERStatGR(self.as_raw_mut_ERFilter(), image.as_raw__InputArray(), regions.as_raw_mut_VectorOfERStat(), ocvrs_return.as_mut_ptr()) };
@@ -832,7 +1108,7 @@ pub mod text {
 		
 	}
 	
-	/// Base class for 1st and 2nd stages of Neumann and Matas scene text detection algorithm [Neumann12](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_Neumann12). :
+	/// Base class for 1st and 2nd stages of Neumann and Matas scene text detection algorithm [Neumann12](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Neumann12). :
 	/// 
 	/// Extracts the component tree (if needed) and filter the extremal regions (ER's) by using a given classifier.
 	pub struct ERFilter {
@@ -858,6 +1134,8 @@ pub mod text {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { ERFilter, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::text::ERFilterTraitConst for ERFilter {
 		#[inline] fn as_raw_ERFilter(&self) -> *const c_void { self.as_raw() }
 	}
@@ -865,6 +1143,8 @@ pub mod text {
 	impl crate::text::ERFilterTrait for ERFilter {
 		#[inline] fn as_raw_mut_ERFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { ERFilter, crate::text::ERFilterTraitConst, as_raw_ERFilter, crate::text::ERFilterTrait, as_raw_mut_ERFilter }
 	
 	impl ERFilter {
 	}
@@ -894,7 +1174,7 @@ pub mod text {
 		/// ## Parameters
 		/// * stat: :   The region to be classified
 		#[inline]
-		fn eval(&mut self, stat: &crate::text::ERStat) -> Result<f64> {
+		fn eval(&mut self, stat: &impl crate::text::ERStatTraitConst) -> Result<f64> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_ERFilter_Callback_eval_const_ERStatR(self.as_raw_mut_ERFilter_Callback(), stat.as_raw_ERStat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -930,6 +1210,8 @@ pub mod text {
 	impl crate::text::ERFilter_CallbackTrait for ERFilter_Callback {
 		#[inline] fn as_raw_mut_ERFilter_Callback(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { ERFilter_Callback, crate::text::ERFilter_CallbackTraitConst, as_raw_ERFilter_Callback, crate::text::ERFilter_CallbackTrait, as_raw_mut_ERFilter_Callback }
 	
 	impl ERFilter_Callback {
 	}
@@ -987,6 +1269,22 @@ pub mod text {
 			ret
 		}
 		
+		/// order 1 raw moments to derive the centroid
+		#[inline]
+		fn raw_moments(&self) -> &[f64; 2] {
+			let ret = unsafe { sys::cv_text_ERStat_propRaw_moments_const(self.as_raw_ERStat()) };
+			let ret = unsafe { ret.as_ref() }.expect("Function returned null pointer");
+			ret
+		}
+		
+		/// order 2 central moments to construct the covariance matrix
+		#[inline]
+		fn central_moments(&self) -> &[f64; 3] {
+			let ret = unsafe { sys::cv_text_ERStat_propCentral_moments_const(self.as_raw_ERStat()) };
+			let ret = unsafe { ret.as_ref() }.expect("Function returned null pointer");
+			ret
+		}
+		
 		/// median of the crossings at three different height levels
 		#[inline]
 		fn med_crossings(&self) -> f32 {
@@ -1036,45 +1334,45 @@ pub mod text {
 		/// seed point and the threshold (max grey-level value)
 		#[inline]
 		fn set_pixel(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_text_ERStat_propPixel_int(self.as_raw_mut_ERStat(), val) };
+			let ret = unsafe { sys::cv_text_ERStat_propPixel_const_int(self.as_raw_mut_ERStat(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_level(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_text_ERStat_propLevel_int(self.as_raw_mut_ERStat(), val) };
+			let ret = unsafe { sys::cv_text_ERStat_propLevel_const_int(self.as_raw_mut_ERStat(), val) };
 			ret
 		}
 		
 		/// incrementally computable features
 		#[inline]
 		fn set_area(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_text_ERStat_propArea_int(self.as_raw_mut_ERStat(), val) };
+			let ret = unsafe { sys::cv_text_ERStat_propArea_const_int(self.as_raw_mut_ERStat(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_perimeter(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_text_ERStat_propPerimeter_int(self.as_raw_mut_ERStat(), val) };
+			let ret = unsafe { sys::cv_text_ERStat_propPerimeter_const_int(self.as_raw_mut_ERStat(), val) };
 			ret
 		}
 		
 		/// Euler's number
 		#[inline]
 		fn set_euler(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_text_ERStat_propEuler_int(self.as_raw_mut_ERStat(), val) };
+			let ret = unsafe { sys::cv_text_ERStat_propEuler_const_int(self.as_raw_mut_ERStat(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_rect(&mut self, val: core::Rect) {
-			let ret = unsafe { sys::cv_text_ERStat_propRect_Rect(self.as_raw_mut_ERStat(), val.opencv_as_extern()) };
+			let ret = unsafe { sys::cv_text_ERStat_propRect_const_Rect(self.as_raw_mut_ERStat(), &val) };
 			ret
 		}
 		
 		/// order 1 raw moments to derive the centroid
 		#[inline]
-		fn raw_moments(&mut self) -> &mut [f64; 2] {
+		fn raw_moments_mut(&mut self) -> &mut [f64; 2] {
 			let ret = unsafe { sys::cv_text_ERStat_propRaw_moments(self.as_raw_mut_ERStat()) };
 			let ret = unsafe { ret.as_mut() }.expect("Function returned null pointer");
 			ret
@@ -1082,7 +1380,7 @@ pub mod text {
 		
 		/// order 2 central moments to construct the covariance matrix
 		#[inline]
-		fn central_moments(&mut self) -> &mut [f64; 3] {
+		fn central_moments_mut(&mut self) -> &mut [f64; 3] {
 			let ret = unsafe { sys::cv_text_ERStat_propCentral_moments(self.as_raw_mut_ERStat()) };
 			let ret = unsafe { ret.as_mut() }.expect("Function returned null pointer");
 			ret
@@ -1091,33 +1389,33 @@ pub mod text {
 		/// median of the crossings at three different height levels
 		#[inline]
 		fn set_med_crossings(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_text_ERStat_propMed_crossings_float(self.as_raw_mut_ERStat(), val) };
+			let ret = unsafe { sys::cv_text_ERStat_propMed_crossings_const_float(self.as_raw_mut_ERStat(), val) };
 			ret
 		}
 		
 		/// 2nd stage features
 		#[inline]
 		fn set_hole_area_ratio(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_text_ERStat_propHole_area_ratio_float(self.as_raw_mut_ERStat(), val) };
+			let ret = unsafe { sys::cv_text_ERStat_propHole_area_ratio_const_float(self.as_raw_mut_ERStat(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_convex_hull_ratio(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_text_ERStat_propConvex_hull_ratio_float(self.as_raw_mut_ERStat(), val) };
+			let ret = unsafe { sys::cv_text_ERStat_propConvex_hull_ratio_const_float(self.as_raw_mut_ERStat(), val) };
 			ret
 		}
 		
 		#[inline]
 		fn set_num_inflexion_points(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_text_ERStat_propNum_inflexion_points_float(self.as_raw_mut_ERStat(), val) };
+			let ret = unsafe { sys::cv_text_ERStat_propNum_inflexion_points_const_float(self.as_raw_mut_ERStat(), val) };
 			ret
 		}
 		
 		/// probability that the ER belongs to the class we are looking for
 		#[inline]
 		fn set_probability(&mut self, val: f64) {
-			let ret = unsafe { sys::cv_text_ERStat_propProbability_double(self.as_raw_mut_ERStat(), val) };
+			let ret = unsafe { sys::cv_text_ERStat_propProbability_const_double(self.as_raw_mut_ERStat(), val) };
 			ret
 		}
 		
@@ -1131,8 +1429,8 @@ pub mod text {
 		
 		/// pointers preserving the tree structure of the component tree
 		#[inline]
-		fn set_parent(&mut self, val: &mut crate::text::ERStat) {
-			let ret = unsafe { sys::cv_text_ERStat_propParent_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_mut_ERStat()) };
+		fn set_parent(&mut self, val: &impl crate::text::ERStatTraitConst) {
+			let ret = unsafe { sys::cv_text_ERStat_propParent_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_ERStat()) };
 			ret
 		}
 		
@@ -1144,8 +1442,8 @@ pub mod text {
 		}
 		
 		#[inline]
-		fn set_child(&mut self, val: &mut crate::text::ERStat) {
-			let ret = unsafe { sys::cv_text_ERStat_propChild_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_mut_ERStat()) };
+		fn set_child(&mut self, val: &impl crate::text::ERStatTraitConst) {
+			let ret = unsafe { sys::cv_text_ERStat_propChild_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_ERStat()) };
 			ret
 		}
 		
@@ -1157,8 +1455,8 @@ pub mod text {
 		}
 		
 		#[inline]
-		fn set_next(&mut self, val: &mut crate::text::ERStat) {
-			let ret = unsafe { sys::cv_text_ERStat_propNext_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_mut_ERStat()) };
+		fn set_next(&mut self, val: &impl crate::text::ERStatTraitConst) {
+			let ret = unsafe { sys::cv_text_ERStat_propNext_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_ERStat()) };
 			ret
 		}
 		
@@ -1170,15 +1468,15 @@ pub mod text {
 		}
 		
 		#[inline]
-		fn set_prev(&mut self, val: &mut crate::text::ERStat) {
-			let ret = unsafe { sys::cv_text_ERStat_propPrev_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_mut_ERStat()) };
+		fn set_prev(&mut self, val: &impl crate::text::ERStatTraitConst) {
+			let ret = unsafe { sys::cv_text_ERStat_propPrev_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_ERStat()) };
 			ret
 		}
 		
 		/// whenever the regions is a local maxima of the probability
 		#[inline]
 		fn set_local_maxima(&mut self, val: bool) {
-			let ret = unsafe { sys::cv_text_ERStat_propLocal_maxima_bool(self.as_raw_mut_ERStat(), val) };
+			let ret = unsafe { sys::cv_text_ERStat_propLocal_maxima_const_bool(self.as_raw_mut_ERStat(), val) };
 			ret
 		}
 		
@@ -1190,8 +1488,8 @@ pub mod text {
 		}
 		
 		#[inline]
-		fn set_max_probability_ancestor(&mut self, val: &mut crate::text::ERStat) {
-			let ret = unsafe { sys::cv_text_ERStat_propMax_probability_ancestor_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_mut_ERStat()) };
+		fn set_max_probability_ancestor(&mut self, val: &impl crate::text::ERStatTraitConst) {
+			let ret = unsafe { sys::cv_text_ERStat_propMax_probability_ancestor_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_ERStat()) };
 			ret
 		}
 		
@@ -1203,8 +1501,8 @@ pub mod text {
 		}
 		
 		#[inline]
-		fn set_min_probability_ancestor(&mut self, val: &mut crate::text::ERStat) {
-			let ret = unsafe { sys::cv_text_ERStat_propMin_probability_ancestor_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_mut_ERStat()) };
+		fn set_min_probability_ancestor(&mut self, val: &impl crate::text::ERStatTraitConst) {
+			let ret = unsafe { sys::cv_text_ERStat_propMin_probability_ancestor_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_ERStat()) };
 			ret
 		}
 		
@@ -1238,6 +1536,8 @@ pub mod text {
 		#[inline] fn as_raw_mut_ERStat(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { ERStat, crate::text::ERStatTraitConst, as_raw_ERStat, crate::text::ERStatTrait, as_raw_mut_ERStat }
+	
 	impl ERStat {
 		/// Constructor
 		/// 
@@ -1256,6 +1556,24 @@ pub mod text {
 			Ok(ret)
 		}
 		
+		/// Constructor
+		/// 
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * level: 256
+		/// * pixel: 0
+		/// * x: 0
+		/// * y: 0
+		#[inline]
+		pub fn new_def() -> Result<crate::text::ERStat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_text_ERStat_ERStat(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::text::ERStat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	impl std::fmt::Debug for ERStat {
@@ -1268,6 +1586,8 @@ pub mod text {
 				.field("perimeter", &crate::text::ERStatTraitConst::perimeter(self))
 				.field("euler", &crate::text::ERStatTraitConst::euler(self))
 				.field("rect", &crate::text::ERStatTraitConst::rect(self))
+				.field("raw_moments", &crate::text::ERStatTraitConst::raw_moments(self))
+				.field("central_moments", &crate::text::ERStatTraitConst::central_moments(self))
 				.field("med_crossings", &crate::text::ERStatTraitConst::med_crossings(self))
 				.field("hole_area_ratio", &crate::text::ERStatTraitConst::hole_area_ratio(self))
 				.field("convex_hull_ratio", &crate::text::ERStatTraitConst::convex_hull_ratio(self))
@@ -1316,10 +1636,49 @@ pub mod text {
 		/// * component_confidences: NULL
 		/// * component_level: 0
 		#[inline]
-		fn run_multiple(&mut self, image: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
+		fn run_multiple(&mut self, image: &mut impl core::MatTrait, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRBeamSearchDecoder_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			string_arg_output_receive!(output_text_via => output_text);
+			Ok(ret)
+		}
+		
+		/// Recognize text using Beam Search.
+		/// 
+		/// Takes image on input and returns recognized text in the output_text parameter. Optionally
+		/// provides also the Rects for individual text elements found (e.g. words), and the list of those
+		/// text elements with their confidence values.
+		/// 
+		/// ## Parameters
+		/// * image: Input binary image CV_8UC1 with a single text line (or word).
+		/// 
+		/// * output_text: Output text. Most likely character sequence found by the HMM decoder.
+		/// 
+		/// * component_rects: If provided the method will output a list of Rects for the individual
+		/// text elements found (e.g. words).
+		/// 
+		/// * component_texts: If provided the method will output a list of text strings for the
+		/// recognition of individual text elements found (e.g. words).
+		/// 
+		/// * component_confidences: If provided the method will output a list of confidence values
+		/// for the recognition of individual text elements found (e.g. words).
+		/// 
+		/// * component_level: Only OCR_LEVEL_WORD is supported.
+		/// 
+		/// ## Note
+		/// This alternative version of [OCRBeamSearchDecoderTrait::run_multiple] function uses the following default values for its arguments:
+		/// * component_rects: NULL
+		/// * component_texts: NULL
+		/// * component_confidences: NULL
+		/// * component_level: 0
+		#[inline]
+		fn run_multiple_def(&mut self, image: &mut impl core::MatTrait, output_text: &mut String) -> Result<()> {
+			string_arg_output_send!(via output_text_via);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_text_OCRBeamSearchDecoder_run_MatR_stringR(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw_mut_Mat(), &mut output_text_via, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
@@ -1332,7 +1691,7 @@ pub mod text {
 		/// * component_confidences: NULL
 		/// * component_level: 0
 		#[inline]
-		fn run_multiple_mask(&mut self, image: &mut core::Mat, mask: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
+		fn run_multiple_mask(&mut self, image: &mut impl core::MatTrait, mask: &mut impl core::MatTrait, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRBeamSearchDecoder_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
@@ -1342,10 +1701,27 @@ pub mod text {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [OCRBeamSearchDecoderTrait::run_multiple_mask] function uses the following default values for its arguments:
+		/// * component_rects: NULL
+		/// * component_texts: NULL
+		/// * component_confidences: NULL
+		/// * component_level: 0
+		#[inline]
+		fn run_multiple_mask_def(&mut self, image: &mut impl core::MatTrait, mask: &mut impl core::MatTrait, output_text: &mut String) -> Result<()> {
+			string_arg_output_send!(via output_text_via);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_text_OCRBeamSearchDecoder_run_MatR_MatR_stringR(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			string_arg_output_receive!(output_text_via => output_text);
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * component_level: 0
 		#[inline]
-		fn run(&mut self, image: &impl core::ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
+		fn run(&mut self, image: &impl ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRBeamSearchDecoder_run_const__InputArrayR_int_int(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw__InputArray(), min_confidence, component_level, ocvrs_return.as_mut_ptr()) };
@@ -1355,14 +1731,43 @@ pub mod text {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [OCRBeamSearchDecoderTrait::run] function uses the following default values for its arguments:
+		/// * component_level: 0
+		#[inline]
+		fn run_def(&mut self, image: &impl ToInputArray, min_confidence: i32) -> Result<String> {
+			input_array_arg!(image);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_text_OCRBeamSearchDecoder_run_const__InputArrayR_int(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw__InputArray(), min_confidence, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { String::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * component_level: 0
 		#[inline]
-		fn run_mask(&mut self, image: &impl core::ToInputArray, mask: &impl core::ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
+		fn run_mask(&mut self, image: &impl ToInputArray, mask: &impl ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
 			input_array_arg!(image);
 			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRBeamSearchDecoder_run_const__InputArrayR_const__InputArrayR_int_int(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw__InputArray(), mask.as_raw__InputArray(), min_confidence, component_level, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { String::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [OCRBeamSearchDecoderTrait::run_mask] function uses the following default values for its arguments:
+		/// * component_level: 0
+		#[inline]
+		fn run_mask_def(&mut self, image: &impl ToInputArray, mask: &impl ToInputArray, min_confidence: i32) -> Result<String> {
+			input_array_arg!(image);
+			input_array_arg!(mask);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_text_OCRBeamSearchDecoder_run_const__InputArrayR_const__InputArrayR_int(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw__InputArray(), mask.as_raw__InputArray(), min_confidence, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
@@ -1401,6 +1806,8 @@ pub mod text {
 		#[inline] fn as_raw_mut_BaseOCR(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { OCRBeamSearchDecoder, crate::text::BaseOCRTraitConst, as_raw_BaseOCR, crate::text::BaseOCRTrait, as_raw_mut_BaseOCR }
+	
 	impl crate::text::OCRBeamSearchDecoderTraitConst for OCRBeamSearchDecoder {
 		#[inline] fn as_raw_OCRBeamSearchDecoder(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1409,7 +1816,15 @@ pub mod text {
 		#[inline] fn as_raw_mut_OCRBeamSearchDecoder(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { OCRBeamSearchDecoder, crate::text::OCRBeamSearchDecoderTraitConst, as_raw_OCRBeamSearchDecoder, crate::text::OCRBeamSearchDecoderTrait, as_raw_mut_OCRBeamSearchDecoder }
+	
 	impl OCRBeamSearchDecoder {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_text_OCRBeamSearchDecoder_defaultNew_const()) }
+		}
+		
 		/// Creates an instance of the OCRBeamSearchDecoder class. Initializes HMMDecoder.
 		/// 
 		/// ## Parameters
@@ -1433,7 +1848,7 @@ pub mod text {
 		/// * mode: OCR_DECODER_VITERBI
 		/// * beam_size: 500
 		#[inline]
-		pub fn create(classifier: core::Ptr<crate::text::OCRBeamSearchDecoder_ClassifierCallback>, vocabulary: &str, transition_probabilities_table: &impl core::ToInputArray, emission_probabilities_table: &impl core::ToInputArray, mode: crate::text::decoder_mode, beam_size: i32) -> Result<core::Ptr<crate::text::OCRBeamSearchDecoder>> {
+		pub fn create(classifier: core::Ptr<crate::text::OCRBeamSearchDecoder_ClassifierCallback>, vocabulary: &str, transition_probabilities_table: &impl ToInputArray, emission_probabilities_table: &impl ToInputArray, mode: crate::text::decoder_mode, beam_size: i32) -> Result<core::Ptr<crate::text::OCRBeamSearchDecoder>> {
 			extern_container_arg!(vocabulary);
 			input_array_arg!(transition_probabilities_table);
 			input_array_arg!(emission_probabilities_table);
@@ -1447,7 +1862,7 @@ pub mod text {
 		
 		/// Creates an instance of the OCRBeamSearchDecoder class. Initializes HMMDecoder from the specified path.
 		/// 
-		///    Creates an instance of the OCRBeamSearchDecoder class. Initializes HMMDecoder.
+		/// Creates an instance of the OCRBeamSearchDecoder class. Initializes HMMDecoder.
 		/// 
 		/// ## Parameters
 		/// * classifier: The character classifier with built in feature extractor.
@@ -1472,13 +1887,35 @@ pub mod text {
 		/// * mode: OCR_DECODER_VITERBI
 		/// * beam_size: 500
 		#[inline]
-		pub fn create_from_file(filename: &str, vocabulary: &str, transition_probabilities_table: &impl core::ToInputArray, emission_probabilities_table: &impl core::ToInputArray, mode: crate::text::decoder_mode, beam_size: i32) -> Result<core::Ptr<crate::text::OCRBeamSearchDecoder>> {
+		pub fn create_from_file(filename: &str, vocabulary: &str, transition_probabilities_table: &impl ToInputArray, emission_probabilities_table: &impl ToInputArray, mode: crate::text::decoder_mode, beam_size: i32) -> Result<core::Ptr<crate::text::OCRBeamSearchDecoder>> {
 			extern_container_arg!(filename);
 			extern_container_arg!(vocabulary);
 			input_array_arg!(transition_probabilities_table);
 			input_array_arg!(emission_probabilities_table);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRBeamSearchDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR_decoder_mode_int(filename.opencv_as_extern(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, beam_size, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Creates an instance of the OCRBeamSearchDecoder class. Initializes HMMDecoder from the specified path.
+		/// 
+		/// @overload
+		/// 
+		/// ## Note
+		/// This alternative version of [OCRBeamSearchDecoder::create_from_file] function uses the following default values for its arguments:
+		/// * mode: OCR_DECODER_VITERBI
+		/// * beam_size: 500
+		#[inline]
+		pub fn create_from_file_def(filename: &str, vocabulary: &str, transition_probabilities_table: &impl ToInputArray, emission_probabilities_table: &impl ToInputArray) -> Result<core::Ptr<crate::text::OCRBeamSearchDecoder>> {
+			extern_container_arg!(filename);
+			extern_container_arg!(vocabulary);
+			input_array_arg!(transition_probabilities_table);
+			input_array_arg!(emission_probabilities_table);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_text_OCRBeamSearchDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR(filename.opencv_as_extern(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder>::opencv_from_extern(ret) };
@@ -1494,6 +1931,14 @@ pub mod text {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("OCRBeamSearchDecoder")
 				.finish()
+		}
+	}
+	
+	impl Default for OCRBeamSearchDecoder {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -1516,7 +1961,7 @@ pub mod text {
 		/// * oversegmentation: The classifier returns a list of N+1 character locations' x-coordinates,
 		/// including 0 as start-sequence location.
 		#[inline]
-		fn eval(&mut self, image: &impl core::ToInputArray, recognition_probabilities: &mut core::Vector<core::Vector<f64>>, oversegmentation: &mut core::Vector<i32>) -> Result<()> {
+		fn eval(&mut self, image: &impl ToInputArray, recognition_probabilities: &mut core::Vector<core::Vector<f64>>, oversegmentation: &mut core::Vector<i32>) -> Result<()> {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRBeamSearchDecoder_ClassifierCallback_eval_const__InputArrayR_vectorLvectorLdoubleGGR_vectorLintGR(self.as_raw_mut_OCRBeamSearchDecoder_ClassifierCallback(), image.as_raw__InputArray(), recognition_probabilities.as_raw_mut_VectorOfVectorOff64(), oversegmentation.as_raw_mut_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
@@ -1576,7 +2021,15 @@ pub mod text {
 		#[inline] fn as_raw_mut_OCRBeamSearchDecoder_ClassifierCallback(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { OCRBeamSearchDecoder_ClassifierCallback, crate::text::OCRBeamSearchDecoder_ClassifierCallbackTraitConst, as_raw_OCRBeamSearchDecoder_ClassifierCallback, crate::text::OCRBeamSearchDecoder_ClassifierCallbackTrait, as_raw_mut_OCRBeamSearchDecoder_ClassifierCallback }
+	
 	impl OCRBeamSearchDecoder_ClassifierCallback {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_text_OCRBeamSearchDecoder_ClassifierCallback_defaultNew_const()) }
+		}
+		
 	}
 	
 	impl std::fmt::Debug for OCRBeamSearchDecoder_ClassifierCallback {
@@ -1584,6 +2037,14 @@ pub mod text {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("OCRBeamSearchDecoder_ClassifierCallback")
 				.finish()
+		}
+	}
+	
+	impl Default for OCRBeamSearchDecoder_ClassifierCallback {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -1625,10 +2086,49 @@ pub mod text {
 		/// * component_confidences: NULL
 		/// * component_level: 0
 		#[inline]
-		fn run_multiple(&mut self, image: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
+		fn run_multiple(&mut self, image: &mut impl core::MatTrait, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRHMMDecoder_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRHMMDecoder(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			string_arg_output_receive!(output_text_via => output_text);
+			Ok(ret)
+		}
+		
+		/// Recognize text using HMM.
+		/// 
+		/// Takes binary image on input and returns recognized text in the output_text parameter. Optionally
+		/// provides also the Rects for individual text elements found (e.g. words), and the list of those
+		/// text elements with their confidence values.
+		/// 
+		/// ## Parameters
+		/// * image: Input binary image CV_8UC1 with a single text line (or word).
+		/// 
+		/// * output_text: Output text. Most likely character sequence found by the HMM decoder.
+		/// 
+		/// * component_rects: If provided the method will output a list of Rects for the individual
+		/// text elements found (e.g. words).
+		/// 
+		/// * component_texts: If provided the method will output a list of text strings for the
+		/// recognition of individual text elements found (e.g. words).
+		/// 
+		/// * component_confidences: If provided the method will output a list of confidence values
+		/// for the recognition of individual text elements found (e.g. words).
+		/// 
+		/// * component_level: Only OCR_LEVEL_WORD is supported.
+		/// 
+		/// ## Note
+		/// This alternative version of [OCRHMMDecoderTrait::run_multiple] function uses the following default values for its arguments:
+		/// * component_rects: NULL
+		/// * component_texts: NULL
+		/// * component_confidences: NULL
+		/// * component_level: 0
+		#[inline]
+		fn run_multiple_def(&mut self, image: &mut impl core::MatTrait, output_text: &mut String) -> Result<()> {
+			string_arg_output_send!(via output_text_via);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_text_OCRHMMDecoder_run_MatR_stringR(self.as_raw_mut_OCRHMMDecoder(), image.as_raw_mut_Mat(), &mut output_text_via, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
@@ -1665,7 +2165,7 @@ pub mod text {
 		/// * component_confidences: NULL
 		/// * component_level: 0
 		#[inline]
-		fn run_multiple_mask(&mut self, image: &mut core::Mat, mask: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
+		fn run_multiple_mask(&mut self, image: &mut impl core::MatTrait, mask: &mut impl core::MatTrait, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRHMMDecoder_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRHMMDecoder(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
@@ -1675,10 +2175,51 @@ pub mod text {
 			Ok(ret)
 		}
 		
+		/// Recognize text using HMM.
+		/// 
+		/// Takes an image and a mask (where each connected component corresponds to a segmented character)
+		/// on input and returns recognized text in the output_text parameter. Optionally
+		/// provides also the Rects for individual text elements found (e.g. words), and the list of those
+		/// text elements with their confidence values.
+		/// 
+		/// ## Parameters
+		/// * image: Input image CV_8UC1 or CV_8UC3 with a single text line (or word).
+		/// * mask: Input binary image CV_8UC1 same size as input image. Each connected component in mask corresponds to a segmented character in the input image.
+		/// 
+		/// * output_text: Output text. Most likely character sequence found by the HMM decoder.
+		/// 
+		/// * component_rects: If provided the method will output a list of Rects for the individual
+		/// text elements found (e.g. words).
+		/// 
+		/// * component_texts: If provided the method will output a list of text strings for the
+		/// recognition of individual text elements found (e.g. words).
+		/// 
+		/// * component_confidences: If provided the method will output a list of confidence values
+		/// for the recognition of individual text elements found (e.g. words).
+		/// 
+		/// * component_level: Only OCR_LEVEL_WORD is supported.
+		/// 
+		/// ## Note
+		/// This alternative version of [OCRHMMDecoderTrait::run_multiple_mask] function uses the following default values for its arguments:
+		/// * component_rects: NULL
+		/// * component_texts: NULL
+		/// * component_confidences: NULL
+		/// * component_level: 0
+		#[inline]
+		fn run_multiple_mask_def(&mut self, image: &mut impl core::MatTrait, mask: &mut impl core::MatTrait, output_text: &mut String) -> Result<()> {
+			string_arg_output_send!(via output_text_via);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_text_OCRHMMDecoder_run_MatR_MatR_stringR(self.as_raw_mut_OCRHMMDecoder(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			string_arg_output_receive!(output_text_via => output_text);
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * component_level: 0
 		#[inline]
-		fn run(&mut self, image: &impl core::ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
+		fn run(&mut self, image: &impl ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRHMMDecoder_run_const__InputArrayR_int_int(self.as_raw_mut_OCRHMMDecoder(), image.as_raw__InputArray(), min_confidence, component_level, ocvrs_return.as_mut_ptr()) };
@@ -1688,14 +2229,43 @@ pub mod text {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [OCRHMMDecoderTrait::run] function uses the following default values for its arguments:
+		/// * component_level: 0
+		#[inline]
+		fn run_def(&mut self, image: &impl ToInputArray, min_confidence: i32) -> Result<String> {
+			input_array_arg!(image);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_text_OCRHMMDecoder_run_const__InputArrayR_int(self.as_raw_mut_OCRHMMDecoder(), image.as_raw__InputArray(), min_confidence, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { String::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * component_level: 0
 		#[inline]
-		fn run_mask(&mut self, image: &impl core::ToInputArray, mask: &impl core::ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
+		fn run_mask(&mut self, image: &impl ToInputArray, mask: &impl ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
 			input_array_arg!(image);
 			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRHMMDecoder_run_const__InputArrayR_const__InputArrayR_int_int(self.as_raw_mut_OCRHMMDecoder(), image.as_raw__InputArray(), mask.as_raw__InputArray(), min_confidence, component_level, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { String::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [OCRHMMDecoderTrait::run_mask] function uses the following default values for its arguments:
+		/// * component_level: 0
+		#[inline]
+		fn run_mask_def(&mut self, image: &impl ToInputArray, mask: &impl ToInputArray, min_confidence: i32) -> Result<String> {
+			input_array_arg!(image);
+			input_array_arg!(mask);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_text_OCRHMMDecoder_run_const__InputArrayR_const__InputArrayR_int(self.as_raw_mut_OCRHMMDecoder(), image.as_raw__InputArray(), mask.as_raw__InputArray(), min_confidence, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
@@ -1734,6 +2304,8 @@ pub mod text {
 		#[inline] fn as_raw_mut_BaseOCR(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { OCRHMMDecoder, crate::text::BaseOCRTraitConst, as_raw_BaseOCR, crate::text::BaseOCRTrait, as_raw_mut_BaseOCR }
+	
 	impl crate::text::OCRHMMDecoderTraitConst for OCRHMMDecoder {
 		#[inline] fn as_raw_OCRHMMDecoder(&self) -> *const c_void { self.as_raw() }
 	}
@@ -1742,7 +2314,15 @@ pub mod text {
 		#[inline] fn as_raw_mut_OCRHMMDecoder(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { OCRHMMDecoder, crate::text::OCRHMMDecoderTraitConst, as_raw_OCRHMMDecoder, crate::text::OCRHMMDecoderTrait, as_raw_mut_OCRHMMDecoder }
+	
 	impl OCRHMMDecoder {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_text_OCRHMMDecoder_defaultNew_const()) }
+		}
+		
 		/// Creates an instance of the OCRHMMDecoder class. Initializes HMMDecoder.
 		/// 
 		/// ## Parameters
@@ -1763,7 +2343,7 @@ pub mod text {
 		/// ## C++ default parameters
 		/// * mode: OCR_DECODER_VITERBI
 		#[inline]
-		pub fn create(classifier: core::Ptr<crate::text::OCRHMMDecoder_ClassifierCallback>, vocabulary: &str, transition_probabilities_table: &impl core::ToInputArray, emission_probabilities_table: &impl core::ToInputArray, mode: i32) -> Result<core::Ptr<crate::text::OCRHMMDecoder>> {
+		pub fn create(classifier: core::Ptr<crate::text::OCRHMMDecoder_ClassifierCallback>, vocabulary: &str, transition_probabilities_table: &impl ToInputArray, emission_probabilities_table: &impl ToInputArray, mode: i32) -> Result<core::Ptr<crate::text::OCRHMMDecoder>> {
 			extern_container_arg!(vocabulary);
 			input_array_arg!(transition_probabilities_table);
 			input_array_arg!(emission_probabilities_table);
@@ -1775,9 +2355,42 @@ pub mod text {
 			Ok(ret)
 		}
 		
+		/// Creates an instance of the OCRHMMDecoder class. Initializes HMMDecoder.
+		/// 
+		/// ## Parameters
+		/// * classifier: The character classifier with built in feature extractor.
+		/// 
+		/// * vocabulary: The language vocabulary (chars when ascii english text). vocabulary.size()
+		/// must be equal to the number of classes of the classifier.
+		/// 
+		/// * transition_probabilities_table: Table with transition probabilities between character
+		/// pairs. cols == rows == vocabulary.size().
+		/// 
+		/// * emission_probabilities_table: Table with observation emission probabilities. cols ==
+		/// rows == vocabulary.size().
+		/// 
+		/// * mode: HMM Decoding algorithm. Only OCR_DECODER_VITERBI is available for the moment
+		/// (<http://en.wikipedia.org/wiki/Viterbi_algorithm>).
+		/// 
+		/// ## Note
+		/// This alternative version of [OCRHMMDecoder::create] function uses the following default values for its arguments:
+		/// * mode: OCR_DECODER_VITERBI
+		#[inline]
+		pub fn create_def(classifier: core::Ptr<crate::text::OCRHMMDecoder_ClassifierCallback>, vocabulary: &str, transition_probabilities_table: &impl ToInputArray, emission_probabilities_table: &impl ToInputArray) -> Result<core::Ptr<crate::text::OCRHMMDecoder>> {
+			extern_container_arg!(vocabulary);
+			input_array_arg!(transition_probabilities_table);
+			input_array_arg!(emission_probabilities_table);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_text_OCRHMMDecoder_create_const_PtrLClassifierCallbackG_const_StringR_const__InputArrayR_const__InputArrayR(classifier.as_raw_PtrOfOCRHMMDecoder_ClassifierCallback(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::text::OCRHMMDecoder>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// Creates an instance of the OCRHMMDecoder class. Loads and initializes HMMDecoder from the specified path
 		/// 
-		///      Creates an instance of the OCRHMMDecoder class. Initializes HMMDecoder.
+		/// Creates an instance of the OCRHMMDecoder class. Initializes HMMDecoder.
 		/// 
 		/// ## Parameters
 		/// * classifier: The character classifier with built in feature extractor.
@@ -1800,13 +2413,35 @@ pub mod text {
 		/// * mode: OCR_DECODER_VITERBI
 		/// * classifier: OCR_KNN_CLASSIFIER
 		#[inline]
-		pub fn create_from_file(filename: &str, vocabulary: &str, transition_probabilities_table: &impl core::ToInputArray, emission_probabilities_table: &impl core::ToInputArray, mode: i32, classifier: i32) -> Result<core::Ptr<crate::text::OCRHMMDecoder>> {
+		pub fn create_from_file(filename: &str, vocabulary: &str, transition_probabilities_table: &impl ToInputArray, emission_probabilities_table: &impl ToInputArray, mode: i32, classifier: i32) -> Result<core::Ptr<crate::text::OCRHMMDecoder>> {
 			extern_container_arg!(filename);
 			extern_container_arg!(vocabulary);
 			input_array_arg!(transition_probabilities_table);
 			input_array_arg!(emission_probabilities_table);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRHMMDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR_int_int(filename.opencv_as_extern(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, classifier, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::text::OCRHMMDecoder>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Creates an instance of the OCRHMMDecoder class. Loads and initializes HMMDecoder from the specified path
+		/// 
+		/// @overload
+		/// 
+		/// ## Note
+		/// This alternative version of [OCRHMMDecoder::create_from_file] function uses the following default values for its arguments:
+		/// * mode: OCR_DECODER_VITERBI
+		/// * classifier: OCR_KNN_CLASSIFIER
+		#[inline]
+		pub fn create_from_file_def(filename: &str, vocabulary: &str, transition_probabilities_table: &impl ToInputArray, emission_probabilities_table: &impl ToInputArray) -> Result<core::Ptr<crate::text::OCRHMMDecoder>> {
+			extern_container_arg!(filename);
+			extern_container_arg!(vocabulary);
+			input_array_arg!(transition_probabilities_table);
+			input_array_arg!(emission_probabilities_table);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_text_OCRHMMDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR(filename.opencv_as_extern(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::text::OCRHMMDecoder>::opencv_from_extern(ret) };
@@ -1822,6 +2457,14 @@ pub mod text {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("OCRHMMDecoder")
 				.finish()
+		}
+	}
+	
+	impl Default for OCRHMMDecoder {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -1844,7 +2487,7 @@ pub mod text {
 		/// * out_confidence: The classifier returns the probability of the input image
 		/// corresponding to each classes in out_class.
 		#[inline]
-		fn eval(&mut self, image: &impl core::ToInputArray, out_class: &mut core::Vector<i32>, out_confidence: &mut core::Vector<f64>) -> Result<()> {
+		fn eval(&mut self, image: &impl ToInputArray, out_class: &mut core::Vector<i32>, out_confidence: &mut core::Vector<f64>) -> Result<()> {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRHMMDecoder_ClassifierCallback_eval_const__InputArrayR_vectorLintGR_vectorLdoubleGR(self.as_raw_mut_OCRHMMDecoder_ClassifierCallback(), image.as_raw__InputArray(), out_class.as_raw_mut_VectorOfi32(), out_confidence.as_raw_mut_VectorOff64(), ocvrs_return.as_mut_ptr()) };
@@ -1886,7 +2529,15 @@ pub mod text {
 		#[inline] fn as_raw_mut_OCRHMMDecoder_ClassifierCallback(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { OCRHMMDecoder_ClassifierCallback, crate::text::OCRHMMDecoder_ClassifierCallbackTraitConst, as_raw_OCRHMMDecoder_ClassifierCallback, crate::text::OCRHMMDecoder_ClassifierCallbackTrait, as_raw_mut_OCRHMMDecoder_ClassifierCallback }
+	
 	impl OCRHMMDecoder_ClassifierCallback {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_text_OCRHMMDecoder_ClassifierCallback_defaultNew_const()) }
+		}
+		
 	}
 	
 	impl std::fmt::Debug for OCRHMMDecoder_ClassifierCallback {
@@ -1894,6 +2545,14 @@ pub mod text {
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("OCRHMMDecoder_ClassifierCallback")
 				.finish()
+		}
+	}
+	
+	impl Default for OCRHMMDecoder_ClassifierCallback {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 	
@@ -1913,10 +2572,27 @@ pub mod text {
 		/// * component_confidences: NULL
 		/// * component_level: OCR_LEVEL_WORD
 		#[inline]
-		fn run(&mut self, image: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
+		fn run(&mut self, image: &mut impl core::MatTrait, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRHolisticWordRecognizer_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRHolisticWordRecognizer(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			string_arg_output_receive!(output_text_via => output_text);
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [OCRHolisticWordRecognizerTrait::run] function uses the following default values for its arguments:
+		/// * component_rects: NULL
+		/// * component_texts: NULL
+		/// * component_confidences: NULL
+		/// * component_level: OCR_LEVEL_WORD
+		#[inline]
+		fn run_def(&mut self, image: &mut impl core::MatTrait, output_text: &mut String) -> Result<()> {
+			string_arg_output_send!(via output_text_via);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_text_OCRHolisticWordRecognizer_run_MatR_stringR(self.as_raw_mut_OCRHolisticWordRecognizer(), image.as_raw_mut_Mat(), &mut output_text_via, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
@@ -1953,10 +2629,51 @@ pub mod text {
 		/// * component_confidences: NULL
 		/// * component_level: OCR_LEVEL_WORD
 		#[inline]
-		fn run_mask(&mut self, image: &mut core::Mat, mask: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
+		fn run_mask(&mut self, image: &mut impl core::MatTrait, mask: &mut impl core::MatTrait, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRHolisticWordRecognizer_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRHolisticWordRecognizer(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			string_arg_output_receive!(output_text_via => output_text);
+			Ok(ret)
+		}
+		
+		/// Recognize text using a segmentation based word-spotting/classifier cnn.
+		/// 
+		/// Takes image on input and returns recognized text in the output_text parameter. Optionally
+		/// provides also the Rects for individual text elements found (e.g. words), and the list of those
+		/// text elements with their confidence values.
+		/// 
+		/// ## Parameters
+		/// * image: Input image CV_8UC1 or CV_8UC3
+		/// 
+		/// * mask: is totally ignored and is only available for compatibillity reasons
+		/// 
+		/// * output_text: Output text of the the word spoting, always one that exists in the dictionary.
+		/// 
+		/// * component_rects: Not applicable for word spotting can be be NULL if not, a single elemnt will
+		///    be put in the vector.
+		/// 
+		/// * component_texts: Not applicable for word spotting can be be NULL if not, a single elemnt will
+		///    be put in the vector.
+		/// 
+		/// * component_confidences: Not applicable for word spotting can be be NULL if not, a single elemnt will
+		///    be put in the vector.
+		/// 
+		/// * component_level: must be OCR_LEVEL_WORD.
+		/// 
+		/// ## Note
+		/// This alternative version of [OCRHolisticWordRecognizerTrait::run_mask] function uses the following default values for its arguments:
+		/// * component_rects: NULL
+		/// * component_texts: NULL
+		/// * component_confidences: NULL
+		/// * component_level: OCR_LEVEL_WORD
+		#[inline]
+		fn run_mask_def(&mut self, image: &mut impl core::MatTrait, mask: &mut impl core::MatTrait, output_text: &mut String) -> Result<()> {
+			string_arg_output_send!(via output_text_via);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_text_OCRHolisticWordRecognizer_run_MatR_MatR_stringR(self.as_raw_mut_OCRHolisticWordRecognizer(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
@@ -1995,6 +2712,8 @@ pub mod text {
 		#[inline] fn as_raw_mut_BaseOCR(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { OCRHolisticWordRecognizer, crate::text::BaseOCRTraitConst, as_raw_BaseOCR, crate::text::BaseOCRTrait, as_raw_mut_BaseOCR }
+	
 	impl crate::text::OCRHolisticWordRecognizerTraitConst for OCRHolisticWordRecognizer {
 		#[inline] fn as_raw_OCRHolisticWordRecognizer(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2002,6 +2721,8 @@ pub mod text {
 	impl crate::text::OCRHolisticWordRecognizerTrait for OCRHolisticWordRecognizer {
 		#[inline] fn as_raw_mut_OCRHolisticWordRecognizer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { OCRHolisticWordRecognizer, crate::text::OCRHolisticWordRecognizerTraitConst, as_raw_OCRHolisticWordRecognizer, crate::text::OCRHolisticWordRecognizerTrait, as_raw_mut_OCRHolisticWordRecognizer }
 	
 	impl OCRHolisticWordRecognizer {
 		/// Creates an instance of the OCRHolisticWordRecognizer class.
@@ -2063,10 +2784,44 @@ pub mod text {
 		/// * component_confidences: NULL
 		/// * component_level: 0
 		#[inline]
-		fn run_multiple(&mut self, image: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
+		fn run_multiple(&mut self, image: &mut impl core::MatTrait, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRTesseract_run_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRTesseract(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			string_arg_output_receive!(output_text_via => output_text);
+			Ok(ret)
+		}
+		
+		/// Recognize text using the tesseract-ocr API.
+		/// 
+		/// Takes image on input and returns recognized text in the output_text parameter. Optionally
+		/// provides also the Rects for individual text elements found (e.g. words), and the list of those
+		/// text elements with their confidence values.
+		/// 
+		/// ## Parameters
+		/// * image: Input image CV_8UC1 or CV_8UC3
+		/// * output_text: Output text of the tesseract-ocr.
+		/// * component_rects: If provided the method will output a list of Rects for the individual
+		/// text elements found (e.g. words or text lines).
+		/// * component_texts: If provided the method will output a list of text strings for the
+		/// recognition of individual text elements found (e.g. words or text lines).
+		/// * component_confidences: If provided the method will output a list of confidence values
+		/// for the recognition of individual text elements found (e.g. words or text lines).
+		/// * component_level: OCR_LEVEL_WORD (by default), or OCR_LEVEL_TEXTLINE.
+		/// 
+		/// ## Note
+		/// This alternative version of [OCRTesseractTrait::run_multiple] function uses the following default values for its arguments:
+		/// * component_rects: NULL
+		/// * component_texts: NULL
+		/// * component_confidences: NULL
+		/// * component_level: 0
+		#[inline]
+		fn run_multiple_def(&mut self, image: &mut impl core::MatTrait, output_text: &mut String) -> Result<()> {
+			string_arg_output_send!(via output_text_via);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_text_OCRTesseract_run_MatR_stringR(self.as_raw_mut_OCRTesseract(), image.as_raw_mut_Mat(), &mut output_text_via, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			string_arg_output_receive!(output_text_via => output_text);
@@ -2079,7 +2834,7 @@ pub mod text {
 		/// * component_confidences: NULL
 		/// * component_level: 0
 		#[inline]
-		fn run_multiple_mask(&mut self, image: &mut core::Mat, mask: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
+		fn run_multiple_mask(&mut self, image: &mut impl core::MatTrait, mask: &mut impl core::MatTrait, output_text: &mut String, component_rects: &mut core::Vector<core::Rect>, component_texts: &mut core::Vector<String>, component_confidences: &mut core::Vector<f32>, component_level: i32) -> Result<()> {
 			string_arg_output_send!(via output_text_via);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRTesseract_run_MatR_MatR_stringR_vectorLRectGX_vectorLstringGX_vectorLfloatGX_int(self.as_raw_mut_OCRTesseract(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level, ocvrs_return.as_mut_ptr()) };
@@ -2089,10 +2844,27 @@ pub mod text {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [OCRTesseractTrait::run_multiple_mask] function uses the following default values for its arguments:
+		/// * component_rects: NULL
+		/// * component_texts: NULL
+		/// * component_confidences: NULL
+		/// * component_level: 0
+		#[inline]
+		fn run_multiple_mask_def(&mut self, image: &mut impl core::MatTrait, mask: &mut impl core::MatTrait, output_text: &mut String) -> Result<()> {
+			string_arg_output_send!(via output_text_via);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_text_OCRTesseract_run_MatR_MatR_stringR(self.as_raw_mut_OCRTesseract(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			string_arg_output_receive!(output_text_via => output_text);
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * component_level: 0
 		#[inline]
-		fn run(&mut self, image: &impl core::ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
+		fn run(&mut self, image: &impl ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
 			input_array_arg!(image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRTesseract_run_const__InputArrayR_int_int(self.as_raw_mut_OCRTesseract(), image.as_raw__InputArray(), min_confidence, component_level, ocvrs_return.as_mut_ptr()) };
@@ -2102,14 +2874,43 @@ pub mod text {
 			Ok(ret)
 		}
 		
+		/// ## Note
+		/// This alternative version of [OCRTesseractTrait::run] function uses the following default values for its arguments:
+		/// * component_level: 0
+		#[inline]
+		fn run_def(&mut self, image: &impl ToInputArray, min_confidence: i32) -> Result<String> {
+			input_array_arg!(image);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_text_OCRTesseract_run_const__InputArrayR_int(self.as_raw_mut_OCRTesseract(), image.as_raw__InputArray(), min_confidence, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { String::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// ## C++ default parameters
 		/// * component_level: 0
 		#[inline]
-		fn run_mask(&mut self, image: &impl core::ToInputArray, mask: &impl core::ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
+		fn run_mask(&mut self, image: &impl ToInputArray, mask: &impl ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
 			input_array_arg!(image);
 			input_array_arg!(mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_OCRTesseract_run_const__InputArrayR_const__InputArrayR_int_int(self.as_raw_mut_OCRTesseract(), image.as_raw__InputArray(), mask.as_raw__InputArray(), min_confidence, component_level, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { String::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [OCRTesseractTrait::run_mask] function uses the following default values for its arguments:
+		/// * component_level: 0
+		#[inline]
+		fn run_mask_def(&mut self, image: &impl ToInputArray, mask: &impl ToInputArray, min_confidence: i32) -> Result<String> {
+			input_array_arg!(image);
+			input_array_arg!(mask);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_text_OCRTesseract_run_const__InputArrayR_const__InputArrayR_int(self.as_raw_mut_OCRTesseract(), image.as_raw__InputArray(), mask.as_raw__InputArray(), min_confidence, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
@@ -2163,6 +2964,8 @@ pub mod text {
 		#[inline] fn as_raw_mut_BaseOCR(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { OCRTesseract, crate::text::BaseOCRTraitConst, as_raw_BaseOCR, crate::text::BaseOCRTrait, as_raw_mut_BaseOCR }
+	
 	impl crate::text::OCRTesseractTraitConst for OCRTesseract {
 		#[inline] fn as_raw_OCRTesseract(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2170,6 +2973,8 @@ pub mod text {
 	impl crate::text::OCRTesseractTrait for OCRTesseract {
 		#[inline] fn as_raw_mut_OCRTesseract(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { OCRTesseract, crate::text::OCRTesseractTraitConst, as_raw_OCRTesseract, crate::text::OCRTesseractTrait, as_raw_mut_OCRTesseract }
 	
 	impl OCRTesseract {
 		/// Creates an instance of the OCRTesseract class. Initializes Tesseract.
@@ -2209,6 +3014,41 @@ pub mod text {
 			Ok(ret)
 		}
 		
+		/// Creates an instance of the OCRTesseract class. Initializes Tesseract.
+		/// 
+		/// ## Parameters
+		/// * datapath: the name of the parent directory of tessdata ended with "/", or NULL to use the
+		/// system's default directory.
+		/// * language: an ISO 639-3 code or NULL will default to "eng".
+		/// * char_whitelist: specifies the list of characters used for recognition. NULL defaults to ""
+		/// (All characters will be used for recognition).
+		/// * oem: tesseract-ocr offers different OCR Engine Modes (OEM), by default
+		/// tesseract::OEM_DEFAULT is used. See the tesseract-ocr API documentation for other possible
+		/// values.
+		/// * psmode: tesseract-ocr offers different Page Segmentation Modes (PSM) tesseract::PSM_AUTO
+		/// (fully automatic layout analysis) is used. See the tesseract-ocr API documentation for other
+		/// possible values.
+		/// 
+		/// 
+		/// Note: The char_whitelist default is changed after OpenCV 4.7.0/3.19.0 from "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" to "".
+		/// 
+		/// ## Note
+		/// This alternative version of [OCRTesseract::create] function uses the following default values for its arguments:
+		/// * datapath: NULL
+		/// * language: NULL
+		/// * char_whitelist: NULL
+		/// * oem: OEM_DEFAULT
+		/// * psmode: PSM_AUTO
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::text::OCRTesseract>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_text_OCRTesseract_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::text::OCRTesseract>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	boxed_cast_base! { OCRTesseract, crate::text::BaseOCR, cv_text_OCRTesseract_to_BaseOCR }
@@ -2238,7 +3078,7 @@ pub mod text {
 		/// * Bbox: a vector of Rect that will store the detected word bounding box
 		/// * confidence: a vector of float that will be updated with the confidence the classifier has for the selected bounding box
 		#[inline]
-		fn detect(&mut self, input_image: &impl core::ToInputArray, bbox: &mut core::Vector<core::Rect>, confidence: &mut core::Vector<f32>) -> Result<()> {
+		fn detect(&mut self, input_image: &impl ToInputArray, bbox: &mut core::Vector<core::Rect>, confidence: &mut core::Vector<f32>) -> Result<()> {
 			input_array_arg!(input_image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_TextDetector_detect_const__InputArrayR_vectorLRectGR_vectorLfloatGR(self.as_raw_mut_TextDetector(), input_image.as_raw__InputArray(), bbox.as_raw_mut_VectorOfRect(), confidence.as_raw_mut_VectorOff32(), ocvrs_return.as_mut_ptr()) };
@@ -2273,6 +3113,8 @@ pub mod text {
 		#[inline] fn as_raw_mut_TextDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { TextDetector, crate::text::TextDetectorTraitConst, as_raw_TextDetector, crate::text::TextDetectorTrait, as_raw_mut_TextDetector }
+	
 	impl TextDetector {
 	}
 	
@@ -2303,7 +3145,7 @@ pub mod text {
 		/// * Bbox: a vector of Rect that will store the detected word bounding box
 		/// * confidence: a vector of float that will be updated with the confidence the classifier has for the selected bounding box
 		#[inline]
-		fn detect(&mut self, input_image: &impl core::ToInputArray, bbox: &mut core::Vector<core::Rect>, confidence: &mut core::Vector<f32>) -> Result<()> {
+		fn detect(&mut self, input_image: &impl ToInputArray, bbox: &mut core::Vector<core::Rect>, confidence: &mut core::Vector<f32>) -> Result<()> {
 			input_array_arg!(input_image);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_text_TextDetectorCNN_detect_const__InputArrayR_vectorLRectGR_vectorLfloatGR(self.as_raw_mut_TextDetectorCNN(), input_image.as_raw__InputArray(), bbox.as_raw_mut_VectorOfRect(), confidence.as_raw_mut_VectorOff32(), ocvrs_return.as_mut_ptr()) };
@@ -2316,7 +3158,7 @@ pub mod text {
 	
 	/// TextDetectorCNN class provides the functionallity of text bounding box detection.
 	/// This class is representing to find bounding boxes of text words given an input image.
-	/// This class uses OpenCV dnn module to load pre-trained model described in [LiaoSBWL17](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_LiaoSBWL17).
+	/// This class uses OpenCV dnn module to load pre-trained model described in [LiaoSBWL17](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_LiaoSBWL17).
 	/// The original repository with the modified SSD Caffe version: <https://github.com/MhLiao/TextBoxes>.
 	/// Model can be downloaded from [DropBox](https://www.dropbox.com/s/g8pjzv2de9gty8g/TextBoxes_icdar13.caffemodel?dl=0).
 	/// Modified .prototxt file with the model description can be found in `opencv_contrib/modules/text/samples/textbox.prototxt`.
@@ -2343,6 +3185,8 @@ pub mod text {
 		#[inline] fn as_raw_mut_TextDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { TextDetectorCNN, crate::text::TextDetectorTraitConst, as_raw_TextDetector, crate::text::TextDetectorTrait, as_raw_mut_TextDetector }
+	
 	impl crate::text::TextDetectorCNNTraitConst for TextDetectorCNN {
 		#[inline] fn as_raw_TextDetectorCNN(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2351,6 +3195,8 @@ pub mod text {
 		#[inline] fn as_raw_mut_TextDetectorCNN(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { TextDetectorCNN, crate::text::TextDetectorCNNTraitConst, as_raw_TextDetectorCNN, crate::text::TextDetectorCNNTrait, as_raw_mut_TextDetectorCNN }
+	
 	impl TextDetectorCNN {
 		/// Creates an instance of the TextDetectorCNN class using the provided parameters.
 		/// 
@@ -2358,7 +3204,7 @@ pub mod text {
 		/// * modelArchFilename: the relative or absolute path to the prototxt file describing the classifiers architecture.
 		/// * modelWeightsFilename: the relative or absolute path to the file containing the pretrained weights of the model in caffe-binary form.
 		/// * detectionSizes: a list of sizes for multiscale detection. The values`[(300,300),(700,500),(700,300),(700,700),(1600,1600)]` are
-		/// recommended in [LiaoSBWL17](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_LiaoSBWL17) to achieve the best quality.
+		/// recommended in [LiaoSBWL17](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_LiaoSBWL17) to achieve the best quality.
 		#[inline]
 		pub fn create_with_sizes(model_arch_filename: &str, model_weights_filename: &str, mut detection_sizes: core::Vector<core::Size>) -> Result<core::Ptr<crate::text::TextDetectorCNN>> {
 			extern_container_arg!(model_arch_filename);
@@ -2377,7 +3223,7 @@ pub mod text {
 		/// * modelArchFilename: the relative or absolute path to the prototxt file describing the classifiers architecture.
 		/// * modelWeightsFilename: the relative or absolute path to the file containing the pretrained weights of the model in caffe-binary form.
 		/// * detectionSizes: a list of sizes for multiscale detection. The values`[(300,300),(700,500),(700,300),(700,700),(1600,1600)]` are
-		/// recommended in [LiaoSBWL17](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_LiaoSBWL17) to achieve the best quality.
+		/// recommended in [LiaoSBWL17](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_LiaoSBWL17) to achieve the best quality.
 		/// 
 		/// ## Overloaded parameters
 		#[inline]

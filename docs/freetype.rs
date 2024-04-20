@@ -41,17 +41,36 @@ pub mod freetype {
 	
 		/// Load font data.
 		/// 
-		/// The function loadFontData loads font data.
+		/// The function loadFontData loads font data from file.
 		/// 
 		/// ## Parameters
 		/// * fontFileName: FontFile Name
 		/// * idx: face_index to select a font faces in a single file.
 		#[inline]
 		fn load_font_data(&mut self, font_file_name: &str, idx: i32) -> Result<()> {
-			extern_container_arg!(mut font_file_name);
+			extern_container_arg!(font_file_name);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_freetype_FreeType2_loadFontData_String_int(self.as_raw_mut_FreeType2(), font_file_name.opencv_as_extern_mut(), idx, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_freetype_FreeType2_loadFontData_String_int(self.as_raw_mut_FreeType2(), font_file_name.opencv_as_extern(), idx, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Load font data.
+		/// 
+		/// The function loadFontData loads font data from memory.
+		/// The data is not copied, the user needs to make sure the data lives at least as long as FreeType2.
+		/// After the FreeType2 object is destroyed, the buffer can be safely deallocated.
+		/// 
+		/// ## Parameters
+		/// * pBuf: pointer to buffer containing font data
+		/// * bufSize: size of buffer
+		/// * idx: face_index to select a font faces in a single file.
+		#[inline]
+		unsafe fn load_font_data_1(&mut self, p_buf: *mut c_char, buf_size: size_t, idx: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_freetype_FreeType2_loadFontData_charX_size_t_int(self.as_raw_mut_FreeType2(), p_buf, buf_size, idx, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -87,11 +106,11 @@ pub mod freetype {
 		/// * line_type: Line type. See the line for details.
 		/// * bottomLeftOrigin: When true, the image data origin is at the bottom-left corner. Otherwise, it is at the top-left corner.
 		#[inline]
-		fn put_text(&mut self, img: &mut impl core::ToInputOutputArray, text: &str, org: core::Point, font_height: i32, color: core::Scalar, thickness: i32, line_type: i32, bottom_left_origin: bool) -> Result<()> {
+		fn put_text(&mut self, img: &mut impl ToInputOutputArray, text: &str, org: core::Point, font_height: i32, color: core::Scalar, thickness: i32, line_type: i32, bottom_left_origin: bool) -> Result<()> {
 			input_output_array_arg!(img);
 			extern_container_arg!(text);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_freetype_FreeType2_putText_const__InputOutputArrayR_const_StringR_Point_int_Scalar_int_int_bool(self.as_raw_mut_FreeType2(), img.as_raw__InputOutputArray(), text.opencv_as_extern(), org.opencv_as_extern(), font_height, color.opencv_as_extern(), thickness, line_type, bottom_left_origin, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_freetype_FreeType2_putText_const__InputOutputArrayR_const_StringR_Point_int_Scalar_int_int_bool(self.as_raw_mut_FreeType2(), img.as_raw__InputOutputArray(), text.opencv_as_extern(), &org, font_height, &color, thickness, line_type, bottom_left_origin, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -189,6 +208,8 @@ pub mod freetype {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { FreeType2, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::freetype::FreeType2TraitConst for FreeType2 {
 		#[inline] fn as_raw_FreeType2(&self) -> *const c_void { self.as_raw() }
 	}
@@ -196,6 +217,8 @@ pub mod freetype {
 	impl crate::freetype::FreeType2Trait for FreeType2 {
 		#[inline] fn as_raw_mut_FreeType2(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { FreeType2, crate::freetype::FreeType2TraitConst, as_raw_FreeType2, crate::freetype::FreeType2Trait, as_raw_mut_FreeType2 }
 	
 	impl FreeType2 {
 	}

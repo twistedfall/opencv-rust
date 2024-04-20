@@ -8,9 +8,7 @@ use dunce::canonicalize;
 use semver::Version;
 
 use super::cmake_probe::CmakeProbe;
-use super::{
-	cleanup_lib_filename, get_version_from_headers, Result, MANIFEST_DIR, OUT_DIR, TARGET_OS_WINDOWS, TARGET_VENDOR_APPLE,
-};
+use super::{cleanup_lib_filename, get_version_from_headers, Result, MANIFEST_DIR, OUT_DIR, TARGET_VENDOR_APPLE};
 
 struct PackageName;
 
@@ -98,7 +96,7 @@ pub struct Library {
 impl Library {
 	fn process_library_list(libs: impl IntoIterator<Item = impl AsRef<Path>>) -> impl Iterator<Item = String> {
 		libs.into_iter().filter_map(|x| {
-			let path: &Path = x.as_ref();
+			let path = x.as_ref();
 			let is_framework = path
 				.extension()
 				.and_then(OsStr::to_str)
@@ -135,20 +133,30 @@ impl Library {
 	fn emit_link_lib(lib: &str, typ: Option<&str>) -> String {
 		format!(
 			"cargo:rustc-link-lib={}{}",
-			typ.map_or_else(|| "".to_string(), |t| format!("{t}=")),
+			typ.map_or_else(
+				|| "".to_string(),
+				|t| {
+					let prefix = format!("{t}=");
+					if lib.starts_with(&prefix) {
+						"".to_string()
+					} else {
+						prefix
+					}
+				}
+			),
 			lib
 		)
 	}
 
 	fn process_env_var_list<'a, T: From<&'a str>>(env_list: Option<EnvList<'a>>, sys_list: Vec<T>) -> Vec<T> {
-		if let Some(include_paths) = env_list {
-			let mut includes = if include_paths.is_extend() {
+		if let Some(env_list) = env_list {
+			let mut paths = if env_list.is_extend() {
 				sys_list
 			} else {
 				vec![]
 			};
-			includes.extend(include_paths.iter().filter(|v| !v.is_empty()).map(T::from));
-			includes
+			paths.extend(env_list.iter().filter(|v| !v.is_empty()).map(T::from));
+			paths
 		} else {
 			sys_list
 		}
@@ -172,8 +180,7 @@ impl Library {
 		sys_link_libs: Vec<String>,
 		typ: Option<&'a str>,
 	) -> impl Iterator<Item = String> + 'a {
-		Self::process_library_list(Self::process_env_var_list(link_libs, sys_link_libs).into_iter())
-			.map(move |l| Self::emit_link_lib(&l, typ))
+		Self::process_library_list(Self::process_env_var_list(link_libs, sys_link_libs)).map(move |l| Self::emit_link_lib(&l, typ))
 	}
 
 	fn find_vcpkg_tool(vcpkg_root: &Path, tool_name: &str) -> Option<PathBuf> {
@@ -288,9 +295,7 @@ impl Library {
 	) -> Result<Self> {
 		eprintln!(
 			"=== Probing OpenCV library using cmake{}",
-			toolchain
-				.map(|tc| format!(" with toolchain: {}", tc.display()))
-				.unwrap_or_else(|| "".to_string())
+			toolchain.map_or_else(|| "".to_string(), |tc| format!(" with toolchain: {}", tc.display()))
 		);
 
 		let src_dir = MANIFEST_DIR.join("cmake");
@@ -418,7 +423,7 @@ impl Library {
 			|| env::var_os("OPENCV_CMAKE_NAME").is_some()
 			|| env::var_os("CMAKE_PREFIX_PATH").is_some()
 			|| env::var_os("OPENCV_CMAKE_BIN").is_some();
-		let explicit_vcpkg = env::var_os("VCPKG_ROOT").is_some() || *TARGET_OS_WINDOWS;
+		let explicit_vcpkg = env::var_os("VCPKG_ROOT").is_some();
 		eprintln!(
 			"=== Detected probe priority based on environment vars: pkg_config: {explicit_pkg_config}, cmake: {explicit_cmake}, vcpkg: {explicit_vcpkg}"
 		);
@@ -488,7 +493,7 @@ impl Library {
 					}
 				}
 			} else {
-				eprintln!("=== Skipping probe: {name} because of the environment configuration");
+				eprintln!("=== Skipping probe: {name} because it's disabled using OPENCV_DISABLE_PROBES");
 			}
 		}
 		out.ok_or_else(|| {

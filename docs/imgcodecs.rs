@@ -367,6 +367,26 @@ pub mod imgcodecs {
 	/// * filename: Name of file to be loaded.
 	/// * flags: Flag that can take values of cv::ImreadModes, default with cv::IMREAD_ANYCOLOR.
 	/// 
+	/// ## Note
+	/// This alternative version of [imcount] function uses the following default values for its arguments:
+	/// * flags: IMREAD_ANYCOLOR
+	#[inline]
+	pub fn imcount_def(filename: &str) -> Result<size_t> {
+		extern_container_arg!(filename);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_imcount_const_StringR(filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Returns the number of images inside the give file
+	/// 
+	/// The function imcount will return the number of pages in a multi-page image, or 1 for single-page images
+	/// ## Parameters
+	/// * filename: Name of file to be loaded.
+	/// * flags: Flag that can take values of cv::ImreadModes, default with cv::IMREAD_ANYCOLOR.
+	/// 
 	/// ## C++ default parameters
 	/// * flags: IMREAD_ANYCOLOR
 	#[inline]
@@ -392,7 +412,7 @@ pub mod imgcodecs {
 	/// * buf: Input array or vector of bytes.
 	/// * flags: The same flags as in cv::imread, see cv::ImreadModes.
 	#[inline]
-	pub fn imdecode(buf: &impl core::ToInputArray, flags: i32) -> Result<core::Mat> {
+	pub fn imdecode(buf: &impl ToInputArray, flags: i32) -> Result<core::Mat> {
 		input_array_arg!(buf);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imdecode_const__InputArrayR_int(buf.as_raw__InputArray(), flags, ocvrs_return.as_mut_ptr()) };
@@ -417,12 +437,12 @@ pub mod imgcodecs {
 	/// 
 	/// ## Overloaded parameters
 	/// 
-	/// * buf: 
-	/// * flags: 
+	/// * buf: Input array or vector of bytes.
+	/// * flags: The same flags as in cv::imread, see cv::ImreadModes.
 	/// * dst: The optional output placeholder for the decoded matrix. It can save the image
 	/// reallocations when the function is called repeatedly for images of the same size.
 	#[inline]
-	pub fn imdecode_to(buf: &impl core::ToInputArray, flags: i32, dst: &mut core::Mat) -> Result<core::Mat> {
+	pub fn imdecode_to(buf: &impl ToInputArray, flags: i32, dst: &mut impl core::MatTrait) -> Result<core::Mat> {
 		input_array_arg!(buf);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imdecode_const__InputArrayR_int_MatX(buf.as_raw__InputArray(), flags, dst.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
@@ -445,11 +465,68 @@ pub mod imgcodecs {
 	/// * buf: Input array or vector of bytes.
 	/// * flags: The same flags as in cv::imread, see cv::ImreadModes.
 	/// * mats: A vector of Mat objects holding each page, if more than one.
+	/// * range: A continuous selection of pages.
+	/// 
+	/// ## Note
+	/// This alternative version of [imdecodemulti] function uses the following default values for its arguments:
+	/// * range: Range::all()
 	#[inline]
-	pub fn imdecodemulti(buf: &impl core::ToInputArray, flags: i32, mats: &mut core::Vector<core::Mat>) -> Result<bool> {
+	pub fn imdecodemulti_def(buf: &impl ToInputArray, flags: i32, mats: &mut core::Vector<core::Mat>) -> Result<bool> {
 		input_array_arg!(buf);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imdecodemulti_const__InputArrayR_int_vectorLMatGR(buf.as_raw__InputArray(), flags, mats.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Reads a multi-page image from a buffer in memory.
+	/// 
+	/// The function imdecodemulti reads a multi-page image from the specified buffer in the memory. If the buffer is too short or
+	/// contains invalid data, the function returns false.
+	/// 
+	/// See cv::imreadmulti for the list of supported formats and flags description.
+	/// 
+	/// 
+	/// Note: In the case of color images, the decoded images will have the channels stored in **B G R** order.
+	/// ## Parameters
+	/// * buf: Input array or vector of bytes.
+	/// * flags: The same flags as in cv::imread, see cv::ImreadModes.
+	/// * mats: A vector of Mat objects holding each page, if more than one.
+	/// * range: A continuous selection of pages.
+	/// 
+	/// ## C++ default parameters
+	/// * range: Range::all()
+	#[inline]
+	pub fn imdecodemulti(buf: &impl ToInputArray, flags: i32, mats: &mut core::Vector<core::Mat>, range: &impl core::RangeTraitConst) -> Result<bool> {
+		input_array_arg!(buf);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_imdecodemulti_const__InputArrayR_int_vectorLMatGR_const_RangeR(buf.as_raw__InputArray(), flags, mats.as_raw_mut_VectorOfMat(), range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Encodes an image into a memory buffer.
+	/// 
+	/// The function imencode compresses the image and stores it in the memory buffer that is resized to fit the
+	/// result. See cv::imwrite for the list of supported formats and flags description.
+	/// 
+	/// ## Parameters
+	/// * ext: File extension that defines the output format. Must include a leading period.
+	/// * img: Image to be written.
+	/// * buf: Output buffer resized to fit the compressed image.
+	/// * params: Format-specific parameters. See cv::imwrite and cv::ImwriteFlags.
+	/// 
+	/// ## Note
+	/// This alternative version of [imencode] function uses the following default values for its arguments:
+	/// * params: std::vector<int>()
+	#[inline]
+	pub fn imencode_def(ext: &str, img: &impl ToInputArray, buf: &mut core::Vector<u8>) -> Result<bool> {
+		extern_container_arg!(ext);
+		input_array_arg!(img);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_imencode_const_StringR_const__InputArrayR_vectorLunsigned_charGR(ext.opencv_as_extern(), img.as_raw__InputArray(), buf.as_raw_mut_VectorOfu8(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -469,13 +546,81 @@ pub mod imgcodecs {
 	/// ## C++ default parameters
 	/// * params: std::vector<int>()
 	#[inline]
-	pub fn imencode(ext: &str, img: &impl core::ToInputArray, buf: &mut core::Vector<u8>, params: &core::Vector<i32>) -> Result<bool> {
+	pub fn imencode(ext: &str, img: &impl ToInputArray, buf: &mut core::Vector<u8>, params: &core::Vector<i32>) -> Result<bool> {
 		extern_container_arg!(ext);
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imencode_const_StringR_const__InputArrayR_vectorLunsigned_charGR_const_vectorLintGR(ext.opencv_as_extern(), img.as_raw__InputArray(), buf.as_raw_mut_VectorOfu8(), params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Loads an image from a file.
+	/// 
+	/// @anchor imread
+	/// 
+	/// The function imread loads an image from the specified file and returns it. If the image cannot be
+	/// read (because of missing file, improper permissions, unsupported or invalid format), the function
+	/// returns an empty matrix ( Mat::data==NULL ).
+	/// 
+	/// Currently, the following file formats are supported:
+	/// 
+	/// *   Windows bitmaps - \*.bmp, \*.dib (always supported)
+	/// *   JPEG files - \*.jpeg, \*.jpg, \*.jpe (see the *Note* section)
+	/// *   JPEG 2000 files - \*.jp2 (see the *Note* section)
+	/// *   Portable Network Graphics - \*.png (see the *Note* section)
+	/// *   WebP - \*.webp (see the *Note* section)
+	/// *   AVIF - \*.avif (see the *Note* section)
+	/// *   Portable image format - \*.pbm, \*.pgm, \*.ppm \*.pxm, \*.pnm (always supported)
+	/// *   PFM files - \*.pfm (see the *Note* section)
+	/// *   Sun rasters - \*.sr, \*.ras (always supported)
+	/// *   TIFF files - \*.tiff, \*.tif (see the *Note* section)
+	/// *   OpenEXR Image files - \*.exr (see the *Note* section)
+	/// *   Radiance HDR - \*.hdr, \*.pic (always supported)
+	/// *   Raster and Vector geospatial data supported by GDAL (see the *Note* section)
+	/// 
+	/// 
+	/// Note:
+	/// *   The function determines the type of an image by the content, not by the file extension.
+	/// *   In the case of color images, the decoded images will have the channels stored in **B G R** order.
+	/// *   When using IMREAD_GRAYSCALE, the codec's internal grayscale conversion will be used, if available.
+	///    Results may differ to the output of cvtColor()
+	/// *   On Microsoft Windows\* OS and MacOSX\*, the codecs shipped with an OpenCV image (libjpeg,
+	///    libpng, libtiff, and libjasper) are used by default. So, OpenCV can always read JPEGs, PNGs,
+	///    and TIFFs. On MacOSX, there is also an option to use native MacOSX image readers. But beware
+	///    that currently these native image loaders give images with different pixel values because of
+	///    the color management embedded into MacOSX.
+	/// *   On Linux\*, BSD flavors and other Unix-like open-source operating systems, OpenCV looks for
+	///    codecs supplied with an OS image. Install the relevant packages (do not forget the development
+	///    files, for example, "libjpeg-dev", in Debian\* and Ubuntu\*) to get the codec support or turn
+	///    on the OPENCV_BUILD_3RDPARTY_LIBS flag in CMake.
+	/// *   In the case you set *WITH_GDAL* flag to true in CMake and [IMREAD_LOAD_GDAL] to load the image,
+	///    then the [GDAL](http://www.gdal.org) driver will be used in order to decode the image, supporting
+	///    the following formats: [Raster](http://www.gdal.org/formats_list.html),
+	///    [Vector](http://www.gdal.org/ogr_formats.html).
+	/// *   If EXIF information is embedded in the image file, the EXIF orientation will be taken into account
+	///    and thus the image will be rotated accordingly except if the flags [IMREAD_IGNORE_ORIENTATION]
+	///    or [IMREAD_UNCHANGED] are passed.
+	/// *   Use the IMREAD_UNCHANGED flag to keep the floating point values from PFM image.
+	/// *   By default number of pixels must be less than 2^30. Limit can be set using system
+	///    variable OPENCV_IO_MAX_IMAGE_PIXELS
+	/// 
+	/// ## Parameters
+	/// * filename: Name of file to be loaded.
+	/// * flags: Flag that can take values of cv::ImreadModes
+	/// 
+	/// ## Note
+	/// This alternative version of [imread] function uses the following default values for its arguments:
+	/// * flags: IMREAD_COLOR
+	#[inline]
+	pub fn imread_def(filename: &str) -> Result<core::Mat> {
+		extern_container_arg!(filename);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_imread_const_StringR(filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -556,6 +701,29 @@ pub mod imgcodecs {
 	/// ## See also
 	/// cv::imread
 	/// 
+	/// ## Note
+	/// This alternative version of [imreadmulti] function uses the following default values for its arguments:
+	/// * flags: IMREAD_ANYCOLOR
+	#[inline]
+	pub fn imreadmulti_def(filename: &str, mats: &mut core::Vector<core::Mat>) -> Result<bool> {
+		extern_container_arg!(filename);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_imreadmulti_const_StringR_vectorLMatGR(filename.opencv_as_extern(), mats.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Loads a multi-page image from a file.
+	/// 
+	/// The function imreadmulti loads a multi-page image from the specified file into a vector of Mat objects.
+	/// ## Parameters
+	/// * filename: Name of file to be loaded.
+	/// * mats: A vector of Mat objects holding each page.
+	/// * flags: Flag that can take values of cv::ImreadModes, default with cv::IMREAD_ANYCOLOR.
+	/// ## See also
+	/// cv::imread
+	/// 
 	/// ## C++ default parameters
 	/// * flags: IMREAD_ANYCOLOR
 	#[inline]
@@ -563,6 +731,31 @@ pub mod imgcodecs {
 		extern_container_arg!(filename);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imreadmulti_const_StringR_vectorLMatGR_int(filename.opencv_as_extern(), mats.as_raw_mut_VectorOfMat(), flags, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Loads a of images of a multi-page image from a file.
+	/// 
+	/// The function imreadmulti loads a specified range from a multi-page image from the specified file into a vector of Mat objects.
+	/// ## Parameters
+	/// * filename: Name of file to be loaded.
+	/// * mats: A vector of Mat objects holding each page.
+	/// * start: Start index of the image to load
+	/// * count: Count number of images to load
+	/// * flags: Flag that can take values of cv::ImreadModes, default with cv::IMREAD_ANYCOLOR.
+	/// ## See also
+	/// cv::imread
+	/// 
+	/// ## Note
+	/// This alternative version of [imreadmulti_range] function uses the following default values for its arguments:
+	/// * flags: IMREAD_ANYCOLOR
+	#[inline]
+	pub fn imreadmulti_range_def(filename: &str, mats: &mut core::Vector<core::Mat>, start: i32, count: i32) -> Result<bool> {
+		extern_container_arg!(filename);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_imreadmulti_const_StringR_vectorLMatGR_int_int(filename.opencv_as_extern(), mats.as_raw_mut_VectorOfMat(), start, count, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -630,14 +823,82 @@ pub mod imgcodecs {
 	/// * img: (Mat or vector of Mat) Image or Images to be saved.
 	/// * params: Format-specific parameters encoded as pairs (paramId_1, paramValue_1, paramId_2, paramValue_2, ... .) see cv::ImwriteFlags
 	/// 
+	/// ## Note
+	/// This alternative version of [imwrite] function uses the following default values for its arguments:
+	/// * params: std::vector<int>()
+	#[inline]
+	pub fn imwrite_def(filename: &str, img: &impl ToInputArray) -> Result<bool> {
+		extern_container_arg!(filename);
+		input_array_arg!(img);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_imwrite_const_StringR_const__InputArrayR(filename.opencv_as_extern(), img.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Saves an image to a specified file.
+	/// 
+	/// The function imwrite saves the image to the specified file. The image format is chosen based on the
+	/// filename extension (see cv::imread for the list of extensions). In general, only 8-bit unsigned (CV_8U)
+	/// single-channel or 3-channel (with 'BGR' channel order) images
+	/// can be saved using this function, with these exceptions:
+	/// 
+	/// - With OpenEXR encoder, only 32-bit float (CV_32F) images can be saved.
+	///   - 8-bit unsigned (CV_8U) images are not supported.
+	/// - With Radiance HDR encoder, non 64-bit float (CV_64F) images can be saved.
+	///   - All images will be converted to 32-bit float (CV_32F).
+	/// - With JPEG 2000 encoder, 8-bit unsigned (CV_8U) and 16-bit unsigned (CV_16U) images can be saved.
+	/// - With PAM encoder, 8-bit unsigned (CV_8U) and 16-bit unsigned (CV_16U) images can be saved.
+	/// - With PNG encoder, 8-bit unsigned (CV_8U) and 16-bit unsigned (CV_16U) images can be saved.
+	///   - PNG images with an alpha channel can be saved using this function. To do this, create
+	///    8-bit (or 16-bit) 4-channel image BGRA, where the alpha channel goes last. Fully transparent pixels
+	///    should have alpha set to 0, fully opaque pixels should have alpha set to 255/65535 (see the code sample below).
+	/// - With PGM/PPM encoder, 8-bit unsigned (CV_8U) and 16-bit unsigned (CV_16U) images can be saved.
+	/// - With TIFF encoder, 8-bit unsigned (CV_8U), 16-bit unsigned (CV_16U),
+	///                      32-bit float (CV_32F) and 64-bit float (CV_64F) images can be saved.
+	///   - Multiple images (vector of Mat) can be saved in TIFF format (see the code sample below).
+	///   - 32-bit float 3-channel (CV_32FC3) TIFF images will be saved
+	///    using the LogLuv high dynamic range encoding (4 bytes per pixel)
+	/// 
+	/// If the image format is not supported, the image will be converted to 8-bit unsigned (CV_8U) and saved that way.
+	/// 
+	/// If the format, depth or channel order is different, use
+	/// Mat::convertTo and cv::cvtColor to convert it before saving. Or, use the universal FileStorage I/O
+	/// functions to save the image to XML or YAML format.
+	/// 
+	/// The sample below shows how to create a BGRA image, how to set custom compression parameters and save it to a PNG file.
+	/// It also demonstrates how to save multiple images in a TIFF file:
+	/// @include snippets/imgcodecs_imwrite.cpp
+	/// ## Parameters
+	/// * filename: Name of the file.
+	/// * img: (Mat or vector of Mat) Image or Images to be saved.
+	/// * params: Format-specific parameters encoded as pairs (paramId_1, paramValue_1, paramId_2, paramValue_2, ... .) see cv::ImwriteFlags
+	/// 
 	/// ## C++ default parameters
 	/// * params: std::vector<int>()
 	#[inline]
-	pub fn imwrite(filename: &str, img: &impl core::ToInputArray, params: &core::Vector<i32>) -> Result<bool> {
+	pub fn imwrite(filename: &str, img: &impl ToInputArray, params: &core::Vector<i32>) -> Result<bool> {
 		extern_container_arg!(filename);
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_imwrite_const_StringR_const__InputArrayR_const_vectorLintGR(filename.opencv_as_extern(), img.as_raw__InputArray(), params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// @overload multi-image overload for bindings
+	/// 
+	/// ## Note
+	/// This alternative version of [imwritemulti] function uses the following default values for its arguments:
+	/// * params: std::vector<int>()
+	#[inline]
+	pub fn imwritemulti_def(filename: &str, img: &impl ToInputArray) -> Result<bool> {
+		extern_container_arg!(filename);
+		input_array_arg!(img);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_imwritemulti_const_StringR_const__InputArrayR(filename.opencv_as_extern(), img.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -648,7 +909,7 @@ pub mod imgcodecs {
 	/// ## C++ default parameters
 	/// * params: std::vector<int>()
 	#[inline]
-	pub fn imwritemulti(filename: &str, img: &impl core::ToInputArray, params: &core::Vector<i32>) -> Result<bool> {
+	pub fn imwritemulti(filename: &str, img: &impl ToInputArray, params: &core::Vector<i32>) -> Result<bool> {
 		extern_container_arg!(filename);
 		input_array_arg!(img);
 		return_send!(via ocvrs_return);
@@ -773,6 +1034,8 @@ pub mod imgcodecs {
 		#[inline] fn as_raw_mut_ImageCollection(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { ImageCollection, crate::imgcodecs::ImageCollectionTraitConst, as_raw_ImageCollection, crate::imgcodecs::ImageCollectionTrait, as_raw_mut_ImageCollection }
+	
 	impl ImageCollection {
 		#[inline]
 		pub fn default() -> Result<crate::imgcodecs::ImageCollection> {
@@ -860,9 +1123,11 @@ pub mod imgcodecs {
 		#[inline] fn as_raw_mut_ImageCollection_iterator(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { ImageCollection_iterator, crate::imgcodecs::ImageCollection_iteratorTraitConst, as_raw_ImageCollection_iterator, crate::imgcodecs::ImageCollection_iteratorTrait, as_raw_mut_ImageCollection_iterator }
+	
 	impl ImageCollection_iterator {
 		#[inline]
-		pub fn new(col: &mut crate::imgcodecs::ImageCollection) -> Result<crate::imgcodecs::ImageCollection_iterator> {
+		pub fn new(col: &mut impl crate::imgcodecs::ImageCollectionTrait) -> Result<crate::imgcodecs::ImageCollection_iterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ImageCollection_iterator_iterator_ImageCollectionX(col.as_raw_mut_ImageCollection(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -872,7 +1137,7 @@ pub mod imgcodecs {
 		}
 		
 		#[inline]
-		pub fn new_1(col: &mut crate::imgcodecs::ImageCollection, end: i32) -> Result<crate::imgcodecs::ImageCollection_iterator> {
+		pub fn new_1(col: &mut impl crate::imgcodecs::ImageCollectionTrait, end: i32) -> Result<crate::imgcodecs::ImageCollection_iterator> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ImageCollection_iterator_iterator_ImageCollectionX_int(col.as_raw_mut_ImageCollection(), end, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

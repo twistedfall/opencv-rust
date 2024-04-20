@@ -1,10 +1,34 @@
 pub mod rapid {
 	//! # silhouette based 3D object tracking
 	//! 
-	//! implements "RAPID-a video rate object tracker" [harris1990rapid](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_harris1990rapid) with the dynamic control point extraction of [drummond2002real](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_drummond2002real)
+	//! implements "RAPID-a video rate object tracker" [harris1990rapid](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_harris1990rapid) with the dynamic control point extraction of [drummond2002real](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_drummond2002real)
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
 		pub use { super::Rapid_TrackerTraitConst, super::Rapid_TrackerTrait, super::Rapid_RapidTraitConst, super::Rapid_RapidTrait, super::Rapid_OLSTrackerTraitConst, super::Rapid_OLSTrackerTrait, super::Rapid_GOSTrackerTraitConst, super::Rapid_GOSTrackerTrait };
+	}
+	
+	/// Collect corresponding 2d and 3d points based on correspondencies and mask
+	/// ## Parameters
+	/// * cols: correspondence-position per line in line-bundle-space
+	/// * srcLocations: the source image location
+	/// * pts2d: 2d points
+	/// * pts3d: 3d points
+	/// * mask: mask containing non-zero values for the elements to be retained
+	/// 
+	/// ## Note
+	/// This alternative version of [convert_correspondencies] function uses the following default values for its arguments:
+	/// * pts3d: noArray()
+	/// * mask: noArray()
+	#[inline]
+	pub fn convert_correspondencies_def(cols: &impl ToInputArray, src_locations: &impl ToInputArray, pts2d: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(cols);
+		input_array_arg!(src_locations);
+		output_array_arg!(pts2d);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_rapid_convertCorrespondencies_const__InputArrayR_const__InputArrayR_const__OutputArrayR(cols.as_raw__InputArray(), src_locations.as_raw__InputArray(), pts2d.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
 	}
 	
 	/// Collect corresponding 2d and 3d points based on correspondencies and mask
@@ -19,7 +43,7 @@ pub mod rapid {
 	/// * pts3d: noArray()
 	/// * mask: noArray()
 	#[inline]
-	pub fn convert_correspondencies(cols: &impl core::ToInputArray, src_locations: &impl core::ToInputArray, pts2d: &mut impl core::ToOutputArray, pts3d: &mut impl core::ToInputOutputArray, mask: &impl core::ToInputArray) -> Result<()> {
+	pub fn convert_correspondencies(cols: &impl ToInputArray, src_locations: &impl ToInputArray, pts2d: &mut impl ToOutputArray, pts3d: &mut impl ToInputOutputArray, mask: &impl ToInputArray) -> Result<()> {
 		input_array_arg!(cols);
 		input_array_arg!(src_locations);
 		output_array_arg!(pts2d);
@@ -38,10 +62,30 @@ pub mod rapid {
 	/// * cols: column coordinates in the line bundle
 	/// * colors: colors for the markers. Defaults to white.
 	/// 
+	/// ## Note
+	/// This alternative version of [draw_correspondencies] function uses the following default values for its arguments:
+	/// * colors: noArray()
+	#[inline]
+	pub fn draw_correspondencies_def(bundle: &mut impl ToInputOutputArray, cols: &impl ToInputArray) -> Result<()> {
+		input_output_array_arg!(bundle);
+		input_array_arg!(cols);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_rapid_drawCorrespondencies_const__InputOutputArrayR_const__InputArrayR(bundle.as_raw__InputOutputArray(), cols.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Debug draw markers of matched correspondences onto a lineBundle
+	/// ## Parameters
+	/// * bundle: the lineBundle
+	/// * cols: column coordinates in the line bundle
+	/// * colors: colors for the markers. Defaults to white.
+	/// 
 	/// ## C++ default parameters
 	/// * colors: noArray()
 	#[inline]
-	pub fn draw_correspondencies(bundle: &mut impl core::ToInputOutputArray, cols: &impl core::ToInputArray, colors: &impl core::ToInputArray) -> Result<()> {
+	pub fn draw_correspondencies(bundle: &mut impl ToInputOutputArray, cols: &impl ToInputArray, colors: &impl ToInputArray) -> Result<()> {
 		input_output_array_arg!(bundle);
 		input_array_arg!(cols);
 		input_array_arg!(colors);
@@ -58,7 +102,7 @@ pub mod rapid {
 	/// * locations: the source locations of a line bundle
 	/// * color: the line color
 	#[inline]
-	pub fn draw_search_lines(img: &mut impl core::ToInputOutputArray, locations: &impl core::ToInputArray, color: core::Scalar) -> Result<()> {
+	pub fn draw_search_lines(img: &mut impl ToInputOutputArray, locations: &impl ToInputArray, color: core::Scalar) -> Result<()> {
 		input_output_array_arg!(img);
 		input_array_arg!(locations);
 		return_send!(via ocvrs_return);
@@ -77,11 +121,36 @@ pub mod rapid {
 	/// * type: line type. See [LineTypes].
 	/// * cullBackface: enable back-face culling based on CCW order
 	/// 
+	/// ## Note
+	/// This alternative version of [draw_wireframe] function uses the following default values for its arguments:
+	/// * typ: LINE_8
+	/// * cull_backface: false
+	#[inline]
+	pub fn draw_wireframe_def(img: &mut impl ToInputOutputArray, pts2d: &impl ToInputArray, tris: &impl ToInputArray, color: core::Scalar) -> Result<()> {
+		input_output_array_arg!(img);
+		input_array_arg!(pts2d);
+		input_array_arg!(tris);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_rapid_drawWireframe_const__InputOutputArrayR_const__InputArrayR_const__InputArrayR_const_ScalarR(img.as_raw__InputOutputArray(), pts2d.as_raw__InputArray(), tris.as_raw__InputArray(), &color, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Draw a wireframe of a triangle mesh
+	/// ## Parameters
+	/// * img: the output image
+	/// * pts2d: the 2d points obtained by [projectPoints]
+	/// * tris: triangle face connectivity
+	/// * color: line color
+	/// * type: line type. See [LineTypes].
+	/// * cullBackface: enable back-face culling based on CCW order
+	/// 
 	/// ## C++ default parameters
 	/// * typ: LINE_8
 	/// * cull_backface: false
 	#[inline]
-	pub fn draw_wireframe(img: &mut impl core::ToInputOutputArray, pts2d: &impl core::ToInputArray, tris: &impl core::ToInputArray, color: core::Scalar, typ: i32, cull_backface: bool) -> Result<()> {
+	pub fn draw_wireframe(img: &mut impl ToInputOutputArray, pts2d: &impl ToInputArray, tris: &impl ToInputArray, color: core::Scalar, typ: i32, cull_backface: bool) -> Result<()> {
 		input_output_array_arg!(img);
 		input_array_arg!(pts2d);
 		input_array_arg!(tris);
@@ -94,7 +163,7 @@ pub mod rapid {
 	
 	/// Extract control points from the projected silhouette of a mesh
 	/// 
-	/// see [drummond2002real](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_drummond2002real) Sec 2.1, Step b
+	/// see [drummond2002real](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_drummond2002real) Sec 2.1, Step b
 	/// ## Parameters
 	/// * num: number of control points
 	/// * len: search radius (used to restrict the ROI)
@@ -107,7 +176,7 @@ pub mod rapid {
 	/// * ctl2d: the 2D locations of the control points
 	/// * ctl3d: matching 3D points of the mesh
 	#[inline]
-	pub fn extract_control_points(num: i32, len: i32, pts3d: &impl core::ToInputArray, rvec: &impl core::ToInputArray, tvec: &impl core::ToInputArray, k: &impl core::ToInputArray, imsize: core::Size, tris: &impl core::ToInputArray, ctl2d: &mut impl core::ToOutputArray, ctl3d: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn extract_control_points(num: i32, len: i32, pts3d: &impl ToInputArray, rvec: &impl ToInputArray, tvec: &impl ToInputArray, k: &impl ToInputArray, imsize: core::Size, tris: &impl ToInputArray, ctl2d: &mut impl ToOutputArray, ctl3d: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(pts3d);
 		input_array_arg!(rvec);
 		input_array_arg!(tvec);
@@ -131,7 +200,7 @@ pub mod rapid {
 	/// * bundle: line bundle image with size `ctl2d.rows() x (2 * len + 1)` and the same type as @p img
 	/// * srcLocations: the source pixel locations of @p bundle in @p img as CV_16SC2
 	#[inline]
-	pub fn extract_line_bundle(len: i32, ctl2d: &impl core::ToInputArray, img: &impl core::ToInputArray, bundle: &mut impl core::ToOutputArray, src_locations: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn extract_line_bundle(len: i32, ctl2d: &impl ToInputArray, img: &impl ToInputArray, bundle: &mut impl ToOutputArray, src_locations: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(ctl2d);
 		input_array_arg!(img);
 		output_array_arg!(bundle);
@@ -150,10 +219,31 @@ pub mod rapid {
 	/// * cols: correspondence-position per line in line-bundle-space
 	/// * response: the sobel response for the selected point
 	/// 
+	/// ## Note
+	/// This alternative version of [find_correspondencies] function uses the following default values for its arguments:
+	/// * response: noArray()
+	#[inline]
+	pub fn find_correspondencies_def(bundle: &impl ToInputArray, cols: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(bundle);
+		output_array_arg!(cols);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_rapid_findCorrespondencies_const__InputArrayR_const__OutputArrayR(bundle.as_raw__InputArray(), cols.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Find corresponding image locations by searching for a maximal sobel edge along the search line (a single
+	/// row in the bundle)
+	/// ## Parameters
+	/// * bundle: the line bundle
+	/// * cols: correspondence-position per line in line-bundle-space
+	/// * response: the sobel response for the selected point
+	/// 
 	/// ## C++ default parameters
 	/// * response: noArray()
 	#[inline]
-	pub fn find_correspondencies(bundle: &impl core::ToInputArray, cols: &mut impl core::ToOutputArray, response: &mut impl core::ToOutputArray) -> Result<()> {
+	pub fn find_correspondencies(bundle: &impl ToInputArray, cols: &mut impl ToOutputArray, response: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(bundle);
 		output_array_arg!(cols);
 		output_array_arg!(response);
@@ -164,7 +254,46 @@ pub mod rapid {
 		Ok(ret)
 	}
 	
-	/// High level function to execute a single rapid [harris1990rapid](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_harris1990rapid) iteration
+	/// High level function to execute a single rapid [harris1990rapid](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_harris1990rapid) iteration
+	/// 
+	/// 1. [extractControlPoints]
+	/// 2. [extractLineBundle]
+	/// 3. [findCorrespondencies]
+	/// 4. [convertCorrespondencies]
+	/// 5. [solvePnPRefineLM]
+	/// 
+	/// ## Parameters
+	/// * img: the video frame
+	/// * num: number of search lines
+	/// * len: search line radius
+	/// * pts3d: the 3D points of the mesh
+	/// * tris: triangle face connectivity
+	/// * K: camera matrix
+	/// * rvec: rotation between mesh and camera. Input values are used as an initial solution.
+	/// * tvec: translation between mesh and camera. Input values are used as an initial solution.
+	/// * rmsd: the 2d reprojection difference
+	/// ## Returns
+	/// ratio of search lines that could be extracted and matched
+	/// 
+	/// ## Note
+	/// This alternative version of [rapid] function uses the following default values for its arguments:
+	/// * rmsd: 0
+	#[inline]
+	pub fn rapid_def(img: &impl ToInputArray, num: i32, len: i32, pts3d: &impl ToInputArray, tris: &impl ToInputArray, k: &impl ToInputArray, rvec: &mut impl ToInputOutputArray, tvec: &mut impl ToInputOutputArray) -> Result<f32> {
+		input_array_arg!(img);
+		input_array_arg!(pts3d);
+		input_array_arg!(tris);
+		input_array_arg!(k);
+		input_output_array_arg!(rvec);
+		input_output_array_arg!(tvec);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_rapid_rapid_const__InputArrayR_int_int_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR(img.as_raw__InputArray(), num, len, pts3d.as_raw__InputArray(), tris.as_raw__InputArray(), k.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// High level function to execute a single rapid [harris1990rapid](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_harris1990rapid) iteration
 	/// 
 	/// 1. [extractControlPoints]
 	/// 2. [extractLineBundle]
@@ -188,7 +317,7 @@ pub mod rapid {
 	/// ## C++ default parameters
 	/// * rmsd: 0
 	#[inline]
-	pub fn rapid(img: &impl core::ToInputArray, num: i32, len: i32, pts3d: &impl core::ToInputArray, tris: &impl core::ToInputArray, k: &impl core::ToInputArray, rvec: &mut impl core::ToInputOutputArray, tvec: &mut impl core::ToInputOutputArray, rmsd: &mut f64) -> Result<f32> {
+	pub fn rapid(img: &impl ToInputArray, num: i32, len: i32, pts3d: &impl ToInputArray, tris: &impl ToInputArray, k: &impl ToInputArray, rvec: &mut impl ToInputOutputArray, tvec: &mut impl ToInputOutputArray, rmsd: &mut f64) -> Result<f32> {
 		input_array_arg!(img);
 		input_array_arg!(pts3d);
 		input_array_arg!(tris);
@@ -214,7 +343,7 @@ pub mod rapid {
 	
 	}
 	
-	/// implements "Global optimal searching for textureless 3D object tracking" [wang2015global](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_wang2015global)
+	/// implements "Global optimal searching for textureless 3D object tracking" [wang2015global](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_wang2015global)
 	pub struct Rapid_GOSTracker {
 		ptr: *mut c_void
 	}
@@ -238,6 +367,8 @@ pub mod rapid {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Rapid_GOSTracker, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::rapid::Rapid_TrackerTraitConst for Rapid_GOSTracker {
 		#[inline] fn as_raw_Rapid_Tracker(&self) -> *const c_void { self.as_raw() }
 	}
@@ -245,6 +376,8 @@ pub mod rapid {
 	impl crate::rapid::Rapid_TrackerTrait for Rapid_GOSTracker {
 		#[inline] fn as_raw_mut_Rapid_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { Rapid_GOSTracker, crate::rapid::Rapid_TrackerTraitConst, as_raw_Rapid_Tracker, crate::rapid::Rapid_TrackerTrait, as_raw_mut_Rapid_Tracker }
 	
 	impl crate::rapid::Rapid_GOSTrackerTraitConst for Rapid_GOSTracker {
 		#[inline] fn as_raw_Rapid_GOSTracker(&self) -> *const c_void { self.as_raw() }
@@ -254,16 +387,34 @@ pub mod rapid {
 		#[inline] fn as_raw_mut_Rapid_GOSTracker(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Rapid_GOSTracker, crate::rapid::Rapid_GOSTrackerTraitConst, as_raw_Rapid_GOSTracker, crate::rapid::Rapid_GOSTrackerTrait, as_raw_mut_Rapid_GOSTracker }
+	
 	impl Rapid_GOSTracker {
 		/// ## C++ default parameters
 		/// * hist_bins: 4
 		/// * sobel_thesh: 10
 		#[inline]
-		pub fn create(pts3d: &impl core::ToInputArray, tris: &impl core::ToInputArray, hist_bins: i32, sobel_thesh: u8) -> Result<core::Ptr<crate::rapid::Rapid_OLSTracker>> {
+		pub fn create(pts3d: &impl ToInputArray, tris: &impl ToInputArray, hist_bins: i32, sobel_thesh: u8) -> Result<core::Ptr<crate::rapid::Rapid_OLSTracker>> {
 			input_array_arg!(pts3d);
 			input_array_arg!(tris);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rapid_GOSTracker_create_const__InputArrayR_const__InputArrayR_int_unsigned_char(pts3d.as_raw__InputArray(), tris.as_raw__InputArray(), hist_bins, sobel_thesh, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::rapid::Rapid_OLSTracker>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [Rapid_GOSTracker::create] function uses the following default values for its arguments:
+		/// * hist_bins: 4
+		/// * sobel_thesh: 10
+		#[inline]
+		pub fn create_def(pts3d: &impl ToInputArray, tris: &impl ToInputArray) -> Result<core::Ptr<crate::rapid::Rapid_OLSTracker>> {
+			input_array_arg!(pts3d);
+			input_array_arg!(tris);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_rapid_GOSTracker_create_const__InputArrayR_const__InputArrayR(pts3d.as_raw__InputArray(), tris.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rapid::Rapid_OLSTracker>::opencv_from_extern(ret) };
@@ -297,7 +448,7 @@ pub mod rapid {
 	}
 	
 	/// implements "Optimal local searching for fast and robust textureless 3D object tracking in highly
-	/// cluttered backgrounds" [seo2013optimal](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_seo2013optimal)
+	/// cluttered backgrounds" [seo2013optimal](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_seo2013optimal)
 	pub struct Rapid_OLSTracker {
 		ptr: *mut c_void
 	}
@@ -321,6 +472,8 @@ pub mod rapid {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Rapid_OLSTracker, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::rapid::Rapid_TrackerTraitConst for Rapid_OLSTracker {
 		#[inline] fn as_raw_Rapid_Tracker(&self) -> *const c_void { self.as_raw() }
 	}
@@ -328,6 +481,8 @@ pub mod rapid {
 	impl crate::rapid::Rapid_TrackerTrait for Rapid_OLSTracker {
 		#[inline] fn as_raw_mut_Rapid_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { Rapid_OLSTracker, crate::rapid::Rapid_TrackerTraitConst, as_raw_Rapid_Tracker, crate::rapid::Rapid_TrackerTrait, as_raw_mut_Rapid_Tracker }
 	
 	impl crate::rapid::Rapid_OLSTrackerTraitConst for Rapid_OLSTracker {
 		#[inline] fn as_raw_Rapid_OLSTracker(&self) -> *const c_void { self.as_raw() }
@@ -337,16 +492,34 @@ pub mod rapid {
 		#[inline] fn as_raw_mut_Rapid_OLSTracker(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Rapid_OLSTracker, crate::rapid::Rapid_OLSTrackerTraitConst, as_raw_Rapid_OLSTracker, crate::rapid::Rapid_OLSTrackerTrait, as_raw_mut_Rapid_OLSTracker }
+	
 	impl Rapid_OLSTracker {
 		/// ## C++ default parameters
 		/// * hist_bins: 8
 		/// * sobel_thesh: 10
 		#[inline]
-		pub fn create(pts3d: &impl core::ToInputArray, tris: &impl core::ToInputArray, hist_bins: i32, sobel_thesh: u8) -> Result<core::Ptr<crate::rapid::Rapid_OLSTracker>> {
+		pub fn create(pts3d: &impl ToInputArray, tris: &impl ToInputArray, hist_bins: i32, sobel_thesh: u8) -> Result<core::Ptr<crate::rapid::Rapid_OLSTracker>> {
 			input_array_arg!(pts3d);
 			input_array_arg!(tris);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rapid_OLSTracker_create_const__InputArrayR_const__InputArrayR_int_unsigned_char(pts3d.as_raw__InputArray(), tris.as_raw__InputArray(), hist_bins, sobel_thesh, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::rapid::Rapid_OLSTracker>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [Rapid_OLSTracker::create] function uses the following default values for its arguments:
+		/// * hist_bins: 8
+		/// * sobel_thesh: 10
+		#[inline]
+		pub fn create_def(pts3d: &impl ToInputArray, tris: &impl ToInputArray) -> Result<core::Ptr<crate::rapid::Rapid_OLSTracker>> {
+			input_array_arg!(pts3d);
+			input_array_arg!(tris);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_rapid_OLSTracker_create_const__InputArrayR_const__InputArrayR(pts3d.as_raw__InputArray(), tris.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::rapid::Rapid_OLSTracker>::opencv_from_extern(ret) };
@@ -403,6 +576,8 @@ pub mod rapid {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Rapid_Rapid, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::rapid::Rapid_TrackerTraitConst for Rapid_Rapid {
 		#[inline] fn as_raw_Rapid_Tracker(&self) -> *const c_void { self.as_raw() }
 	}
@@ -410,6 +585,8 @@ pub mod rapid {
 	impl crate::rapid::Rapid_TrackerTrait for Rapid_Rapid {
 		#[inline] fn as_raw_mut_Rapid_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { Rapid_Rapid, crate::rapid::Rapid_TrackerTraitConst, as_raw_Rapid_Tracker, crate::rapid::Rapid_TrackerTrait, as_raw_mut_Rapid_Tracker }
 	
 	impl crate::rapid::Rapid_RapidTraitConst for Rapid_Rapid {
 		#[inline] fn as_raw_Rapid_Rapid(&self) -> *const c_void { self.as_raw() }
@@ -419,9 +596,11 @@ pub mod rapid {
 		#[inline] fn as_raw_mut_Rapid_Rapid(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Rapid_Rapid, crate::rapid::Rapid_RapidTraitConst, as_raw_Rapid_Rapid, crate::rapid::Rapid_RapidTrait, as_raw_mut_Rapid_Rapid }
+	
 	impl Rapid_Rapid {
 		#[inline]
-		pub fn create(pts3d: &impl core::ToInputArray, tris: &impl core::ToInputArray) -> Result<core::Ptr<crate::rapid::Rapid_Rapid>> {
+		pub fn create(pts3d: &impl ToInputArray, tris: &impl ToInputArray) -> Result<core::Ptr<crate::rapid::Rapid_Rapid>> {
 			input_array_arg!(pts3d);
 			input_array_arg!(tris);
 			return_send!(via ocvrs_return);
@@ -459,13 +638,29 @@ pub mod rapid {
 		/// ## C++ default parameters
 		/// * termcrit: TermCriteria(TermCriteria::MAX_ITER|TermCriteria::EPS,5,1.5)
 		#[inline]
-		fn compute(&mut self, img: &impl core::ToInputArray, num: i32, len: i32, k: &impl core::ToInputArray, rvec: &mut impl core::ToInputOutputArray, tvec: &mut impl core::ToInputOutputArray, termcrit: core::TermCriteria) -> Result<f32> {
+		fn compute(&mut self, img: &impl ToInputArray, num: i32, len: i32, k: &impl ToInputArray, rvec: &mut impl ToInputOutputArray, tvec: &mut impl ToInputOutputArray, termcrit: core::TermCriteria) -> Result<f32> {
 			input_array_arg!(img);
 			input_array_arg!(k);
 			input_output_array_arg!(rvec);
 			input_output_array_arg!(tvec);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_rapid_Tracker_compute_const__InputArrayR_int_int_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR_const_TermCriteriaR(self.as_raw_mut_Rapid_Tracker(), img.as_raw__InputArray(), num, len, k.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), &termcrit, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// ## Note
+		/// This alternative version of [Rapid_TrackerTrait::compute] function uses the following default values for its arguments:
+		/// * termcrit: TermCriteria(TermCriteria::MAX_ITER|TermCriteria::EPS,5,1.5)
+		#[inline]
+		fn compute_def(&mut self, img: &impl ToInputArray, num: i32, len: i32, k: &impl ToInputArray, rvec: &mut impl ToInputOutputArray, tvec: &mut impl ToInputOutputArray) -> Result<f32> {
+			input_array_arg!(img);
+			input_array_arg!(k);
+			input_output_array_arg!(rvec);
+			input_output_array_arg!(tvec);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_rapid_Tracker_compute_const__InputArrayR_int_int_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR(self.as_raw_mut_Rapid_Tracker(), img.as_raw__InputArray(), num, len, k.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -506,6 +701,8 @@ pub mod rapid {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { Rapid_Tracker, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::rapid::Rapid_TrackerTraitConst for Rapid_Tracker {
 		#[inline] fn as_raw_Rapid_Tracker(&self) -> *const c_void { self.as_raw() }
 	}
@@ -513,6 +710,8 @@ pub mod rapid {
 	impl crate::rapid::Rapid_TrackerTrait for Rapid_Tracker {
 		#[inline] fn as_raw_mut_Rapid_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { Rapid_Tracker, crate::rapid::Rapid_TrackerTraitConst, as_raw_Rapid_Tracker, crate::rapid::Rapid_TrackerTrait, as_raw_mut_Rapid_Tracker }
 	
 	impl Rapid_Tracker {
 	}

@@ -13,7 +13,7 @@ pub mod phase_unwrapping {
 	//! and efficient. They follow a path that unwraps high quality pixels first,
 	//! avoiding error propagation from the start.
 	//! 
-	//! In this module, a quality-guided phase unwrapping is implemented following the approach described in [histogramUnwrapping](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_histogramUnwrapping) .
+	//! In this module, a quality-guided phase unwrapping is implemented following the approach described in [histogramUnwrapping](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_histogramUnwrapping) .
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
 		pub use { super::PhaseUnwrappingTraitConst, super::PhaseUnwrappingTrait, super::HistogramPhaseUnwrappingTraitConst, super::HistogramPhaseUnwrappingTrait };
@@ -34,7 +34,7 @@ pub mod phase_unwrapping {
 		/// ## Parameters
 		/// * reliabilityMap: Image where the reliability map is stored.
 		#[inline]
-		fn get_inverse_reliability_map(&mut self, reliability_map: &mut impl core::ToOutputArray) -> Result<()> {
+		fn get_inverse_reliability_map(&mut self, reliability_map: &mut impl ToOutputArray) -> Result<()> {
 			output_array_arg!(reliability_map);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_getInverseReliabilityMap_const__OutputArrayR(self.as_raw_mut_HistogramPhaseUnwrapping(), reliability_map.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
@@ -45,7 +45,7 @@ pub mod phase_unwrapping {
 		
 	}
 	
-	/// Class implementing two-dimensional phase unwrapping based on [histogramUnwrapping](https://docs.opencv.org/4.8.0/d0/de3/citelist.html#CITEREF_histogramUnwrapping)
+	/// Class implementing two-dimensional phase unwrapping based on [histogramUnwrapping](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_histogramUnwrapping)
 	/// This algorithm belongs to the quality-guided phase unwrapping methods.
 	/// First, it computes a reliability map from second differences between a pixel and its eight neighbours.
 	/// Reliability values lie between 0 and 16*pi*pi. Then, this reliability map is used to compute
@@ -78,6 +78,8 @@ pub mod phase_unwrapping {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { HistogramPhaseUnwrapping, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::phase_unwrapping::PhaseUnwrappingTraitConst for HistogramPhaseUnwrapping {
 		#[inline] fn as_raw_PhaseUnwrapping(&self) -> *const c_void { self.as_raw() }
 	}
@@ -86,6 +88,8 @@ pub mod phase_unwrapping {
 		#[inline] fn as_raw_mut_PhaseUnwrapping(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { HistogramPhaseUnwrapping, crate::phase_unwrapping::PhaseUnwrappingTraitConst, as_raw_PhaseUnwrapping, crate::phase_unwrapping::PhaseUnwrappingTrait, as_raw_mut_PhaseUnwrapping }
+	
 	impl crate::phase_unwrapping::HistogramPhaseUnwrappingTraitConst for HistogramPhaseUnwrapping {
 		#[inline] fn as_raw_HistogramPhaseUnwrapping(&self) -> *const c_void { self.as_raw() }
 	}
@@ -93,6 +97,8 @@ pub mod phase_unwrapping {
 	impl crate::phase_unwrapping::HistogramPhaseUnwrappingTrait for HistogramPhaseUnwrapping {
 		#[inline] fn as_raw_mut_HistogramPhaseUnwrapping(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { HistogramPhaseUnwrapping, crate::phase_unwrapping::HistogramPhaseUnwrappingTraitConst, as_raw_HistogramPhaseUnwrapping, crate::phase_unwrapping::HistogramPhaseUnwrappingTrait, as_raw_mut_HistogramPhaseUnwrapping }
 	
 	impl HistogramPhaseUnwrapping {
 		/// Constructor
@@ -106,6 +112,24 @@ pub mod phase_unwrapping {
 		pub fn create(parameters: crate::phase_unwrapping::HistogramPhaseUnwrapping_Params) -> Result<core::Ptr<crate::phase_unwrapping::HistogramPhaseUnwrapping>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_create_const_ParamsR(&parameters, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::phase_unwrapping::HistogramPhaseUnwrapping>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Constructor
+		/// 
+		/// ## Parameters
+		/// * parameters: HistogramPhaseUnwrapping parameters HistogramPhaseUnwrapping::Params: width,height of the phase map and histogram characteristics.
+		/// 
+		/// ## Note
+		/// This alternative version of [HistogramPhaseUnwrapping::create] function uses the following default values for its arguments:
+		/// * parameters: HistogramPhaseUnwrapping::Params()
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::phase_unwrapping::HistogramPhaseUnwrapping>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::phase_unwrapping::HistogramPhaseUnwrapping>::opencv_from_extern(ret) };
@@ -178,12 +202,33 @@ pub mod phase_unwrapping {
 		/// ## C++ default parameters
 		/// * shadow_mask: noArray()
 		#[inline]
-		fn unwrap_phase_map(&mut self, wrapped_phase_map: &impl core::ToInputArray, unwrapped_phase_map: &mut impl core::ToOutputArray, shadow_mask: &impl core::ToInputArray) -> Result<()> {
+		fn unwrap_phase_map(&mut self, wrapped_phase_map: &impl ToInputArray, unwrapped_phase_map: &mut impl ToOutputArray, shadow_mask: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(wrapped_phase_map);
 			output_array_arg!(unwrapped_phase_map);
 			input_array_arg!(shadow_mask);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_phase_unwrapping_PhaseUnwrapping_unwrapPhaseMap_const__InputArrayR_const__OutputArrayR_const__InputArrayR(self.as_raw_mut_PhaseUnwrapping(), wrapped_phase_map.as_raw__InputArray(), unwrapped_phase_map.as_raw__OutputArray(), shadow_mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Unwraps a 2D phase map.
+		/// 
+		/// ## Parameters
+		/// * wrappedPhaseMap: The wrapped phase map of type CV_32FC1 that needs to be unwrapped.
+		/// * unwrappedPhaseMap: The unwrapped phase map.
+		/// * shadowMask: Optional CV_8UC1 mask image used when some pixels do not hold any phase information in the wrapped phase map.
+		/// 
+		/// ## Note
+		/// This alternative version of [PhaseUnwrappingTrait::unwrap_phase_map] function uses the following default values for its arguments:
+		/// * shadow_mask: noArray()
+		#[inline]
+		fn unwrap_phase_map_def(&mut self, wrapped_phase_map: &impl ToInputArray, unwrapped_phase_map: &mut impl ToOutputArray) -> Result<()> {
+			input_array_arg!(wrapped_phase_map);
+			output_array_arg!(unwrapped_phase_map);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_phase_unwrapping_PhaseUnwrapping_unwrapPhaseMap_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_PhaseUnwrapping(), wrapped_phase_map.as_raw__InputArray(), unwrapped_phase_map.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -215,6 +260,8 @@ pub mod phase_unwrapping {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { PhaseUnwrapping, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::phase_unwrapping::PhaseUnwrappingTraitConst for PhaseUnwrapping {
 		#[inline] fn as_raw_PhaseUnwrapping(&self) -> *const c_void { self.as_raw() }
 	}
@@ -222,6 +269,8 @@ pub mod phase_unwrapping {
 	impl crate::phase_unwrapping::PhaseUnwrappingTrait for PhaseUnwrapping {
 		#[inline] fn as_raw_mut_PhaseUnwrapping(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { PhaseUnwrapping, crate::phase_unwrapping::PhaseUnwrappingTraitConst, as_raw_PhaseUnwrapping, crate::phase_unwrapping::PhaseUnwrappingTrait, as_raw_mut_PhaseUnwrapping }
 	
 	impl PhaseUnwrapping {
 	}

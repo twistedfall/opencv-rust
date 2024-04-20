@@ -1,5 +1,4 @@
-use std::ffi::{c_void, CString};
-use std::os::raw::c_char;
+use std::ffi::{c_char, c_void, CString};
 
 use crate::Result;
 
@@ -160,6 +159,13 @@ macro_rules! opencv_type_copy {
 macro_rules! opencv_type_enum {
 	($type: ty) => {
 		$crate::opencv_type_copy! { $type }
+
+		impl From<$type> for i32 {
+			#[inline]
+			fn from(v: $type) -> Self {
+				v as Self
+			}
+		}
 	};
 }
 
@@ -230,15 +236,12 @@ macro_rules! opencv_type_simple_generic {
 }
 
 pub fn cstring_new_nofail(bytes: impl Into<Vec<u8>>) -> CString {
-	match CString::new(bytes) {
-		Ok(s) => s,
-		Err(e) => {
-			let nul_pos = e.nul_position();
-			let mut bytes = e.into_vec();
-			bytes.drain(nul_pos..);
-			unsafe { CString::from_vec_unchecked(bytes) }
-		}
-	}
+	CString::new(bytes).unwrap_or_else(|e| {
+		let nul_pos = e.nul_position();
+		let mut bytes = e.into_vec();
+		bytes.drain(nul_pos..);
+		unsafe { CString::from_vec_unchecked(bytes) }
+	})
 }
 
 impl<'a> OpenCVType<'a> for String {
@@ -290,7 +293,7 @@ impl OpenCVTypeExternContainer for CString {
 
 	#[inline]
 	fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
-		self.as_ptr() as _ // fixme: use as_mut_ptr() when it's stabilized or cast_mut() when MSRV is 1.65
+		unimplemented!("Casting CString::as_ptr() to mut is UB")
 	}
 }
 
@@ -300,7 +303,7 @@ impl OpenCVType<'_> for Vec<u8> {
 
 	#[inline]
 	unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self {
-		crate::templ::receive_byte_string(s as *mut Vec<u8>)
+		crate::templ::receive_string(s.cast::<Vec<u8>>())
 	}
 }
 

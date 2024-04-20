@@ -1,7 +1,8 @@
-use crate::traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer, OpenCVTypeExternContainerMove};
 use std::ffi::c_void;
 use std::marker::PhantomData;
 use std::mem::ManuallyDrop;
+
+use crate::traits::Boxed;
 
 /// Wrapper for C++ [std::tupe](https://en.cppreference.com/w/cpp/utility/tuple) and
 /// [std::pair](https://en.cppreference.com/w/cpp/utility/pair)
@@ -35,59 +36,6 @@ where
 	#[inline]
 	fn as_raw_mut(&mut self) -> *mut c_void {
 		self.ptr
-	}
-}
-
-impl<T> OpenCVType<'_> for Tuple<T>
-where
-	Self: TupleExtern,
-{
-	type Arg = Self;
-	type ExternReceive = *mut c_void;
-
-	#[inline]
-	unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self {
-		Self::from_raw(s)
-	}
-}
-
-impl<T> OpenCVTypeArg<'_> for Tuple<T>
-where
-	Tuple<T>: TupleExtern,
-{
-	type ExternContainer = Self;
-
-	#[inline]
-	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
-		self
-	}
-}
-
-impl<T> OpenCVTypeExternContainer for Tuple<T>
-where
-	Tuple<T>: TupleExtern,
-{
-	type ExternSend = *const c_void;
-	type ExternSendMut = *mut c_void;
-
-	#[inline]
-	fn opencv_as_extern(&self) -> Self::ExternSend {
-		self.as_raw()
-	}
-
-	#[inline]
-	fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
-		self.as_raw_mut()
-	}
-}
-
-impl<T> OpenCVTypeExternContainerMove for Tuple<T>
-where
-	Tuple<T>: TupleExtern,
-{
-	#[inline]
-	fn opencv_into_extern(self) -> Self::ExternSendMut {
-		self.into_raw()
 	}
 }
 

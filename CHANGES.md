@@ -1,3 +1,108 @@
+* 0.91.0
+  * Multiple improvements for `InputArray`/`OutputArray`/`InputOutputArray` handling:
+    * It's now possible to use the following types as `InputArray`: `&[u8]`/`[u8; N]`, `Vector<bool>` `Vector<GpuMat>` and the
+      following as `InputArray`, `OutputArray` or `InputOutputArray`: `Vector<Mat>` and `Vector<UMat>`.
+    * `InputArray`/`OutputArray`/`InputOutputArray` constructors now return `BoxedRef`/`BoxedRefMut` to express the borrowing
+      semantics.
+    * Some constructors have received `_mut` suffix where appropriate.
+  * Unsafe `Mat` constructors (`*_with_data`) have received `_unsafe` suffix and safe versions have been introduced that return
+    `BoxedRef`/`BoxedRefMut`
+  * `MatSize::new` is now unsafe and accepts a pointer.
+
+* 0.90.0
+  * Automatically generate default constructors for classes where posssible.
+  * Backwards-incompatible changes:
+    * `LayerParams::default()` can no longer fail, so it returns `Self` without `Result`.
+    * `GpuMat::default()` is now `GpuMat::new_def()`.
+    * Automatically named functions (*_1) in `features2d` module were given proper names.
+    * Generate bindings to `float16_t` and `hfloat` types to fix the build with the current OpenCV master.
+
+* 0.89.0
+  * All functions accepting classes now take `impl ClassTrait` instead of `Class` directly. This allows passing other objects
+    that implement the same trait. This change should be backwards compatible.
+  * Some functions, notably `Mat::roi()`, now return a `BoxedRef<Mat>` wrapper instead of seemingly independent `Mat`. This fixes
+    old soundness hole because the returned `Mat` was actually a view into the source `Mat` and you could easily end up with 2
+    mutable references to the same memory. An additional `*_mut()` is generated for each of such function to return a
+    mutable `BoxedRefMut<Mat>`. To get 2 mutable references to the same `Mat` for the non-intersecting regions use the
+    new `Mat::roi_2_mut()` function.
+  * Slice detection improved, slice arguments in more functions are now generated automatically.
+  * Some slices in function arguments are now references to arrays of particular size. To migrate call `.try_into()` to convert
+    the slice to the array.
+  * The error message for the unspecified error (should never actually be visible) is changed to "Unspecified error, neither from
+    OpenCV nor from std".
+  * Function signature changes:
+    * A group of functions for `Mat`, `UMat`, `GpuMat` and `GpuMatND` have been given proper
+      names (`rowscols`, `roi`, `ranges`, `col_bounds`). Consequently, e.g. `roi` function can now be called on the `Mat`
+      instance (`mat.roi()`) instead of requiring a fully qualified call (`Mat::roi(&mat)`).
+    * `MatConstIterator::pos_to()` is now unsafe and takes a pointer instead of a reference.
+
+* 0.88.9
+  * Fix building on macOS with vcpkg (fixes https://github.com/twistedfall/opencv-rust/issues/549).
+
+* 0.88.8
+  * Fix the build hang with the latest version of `cc` (fixes https://github.com/twistedfall/opencv-rust/issues/480).
+  * Minimum supported Rust version is now 1.66.0.
+
+* 0.88.7
+  * Improve handling of input strings (fixes https://github.com/twistedfall/opencv-rust/issues/534).
+
+* 0.88.6
+  * Regenerate documentation with OpenCV 4.9.0.
+
+* 0.88.5
+  * Adjust to the upcoming changes in OpenCV (fixes https://github.com/twistedfall/opencv-rust/issues/518).
+
+* 0.88.4
+  * More fixes for clang 17 (kudos to PaulWagener).
+
+* 0.88.3
+  * Add `Mat::iter_mut()` and improve `Mat` iteration performance.
+
+* 0.88.2
+  * Fix build with clang 17 (fixes https://github.com/twistedfall/opencv-rust/issues/519).
+
+* 0.88.1
+  * Generate `Vector<Vector<Point2d>>` bindings for `ccalib` module.
+
+* 0.88.0
+  * Detect more cases where a Rust slice can be passed to an OpenCV function.
+  * Generate both const and mut property readers where possible. Previously only mut readers were generated.
+  * Rename some more automatically named functions.
+  * Add conversion from an enum into a `i32`.
+  * Bump minimum supported Rust version to 1.65.
+  * Generate additional `Vector` bindings for `ccalib` module.
+
+* 0.87.0
+  * This version is skipped due to the release process gone wrong.
+
+* 0.86.1
+  * Provide a clearer message for the case when `libclang` can't be loaded.
+
+* 0.86.0
+  * Add support for `operator =` via `set` method.
+  * Improve documentation generation.
+  * Fix several automatically functions.
+
+* 0.85.3
+  * Fix https://github.com/twistedfall/opencv-rust/issues/506, https://github.com/twistedfall/opencv-rust/issues/505 and
+    https://github.com/twistedfall/opencv-rust/issues/479
+
+* 0.85.2
+  * Fix binding generation using clang-6 (fixes https://github.com/twistedfall/opencv-rust/issues/496).
+  * Add more `From` implementations for `Scalar` to improve API usability.
+
+* 0.85.1
+  * Add workaround when building with rustc version before 1.66.
+
+* 0.85.0
+  * Generate companion functions `*_def()` that allow skipping the default arguments to improve API usability.
+  * Remove bindings to `SparseMatIterator--` and change `OutputArray::from_gpu_mat_vec()` to take mutable argument (instead of
+    `OutputArray::from_gpu_mat_vec_mut()` which is now removed). Those functions were often missing in the OpenCV shared
+    libraries causing linking errors.
+  * Update automatic case conversion algorithm to increase performance and improve correctness. Some function names are now
+    slightly different. Especially those containing `2d` and `3d`.
+  * Improve documentation generation.
+
 * 0.84.5
   * Improve parallel build performance (more noticeable on lower thread count).
   * Take `VCPKGRS_TRIPLET` environment var into account for crate rebuild.
@@ -67,7 +172,7 @@
   * Generate default constructors for some classes that were missing any form of construction.
 
 * 0.79.0
-  * `DataType` can now be implemented by downstream types that will allow storage of the some custom types inside `Mat`.
+  * `DataType` can now be implemented by downstream types that will allow storage of some custom types inside `Mat`.
     Previously this trait was sealed, now it's an unsafe trait because types must guarantee the memory layout.0
   * Calling `.iter()` on an empty `Mat` no longer returns an error, but an empty iterator.
   * Some functions like `Point_::new()` or `Size_::new()` are now `const`.
@@ -105,19 +210,20 @@
   * Fix build failure.
 
 * 0.76.0
-  * Change the way the generated bindings are stored. They are no longer generated under `src/`, but stored in the output directory
-    and included dynamically. Previously it didn't work very well with IDEs which resulted in missing autocomplete and documentation.
-    This looks to be no longer the case at least in `rust-analyzer` and `intellij-rust`.
+  * Change the way the generated bindings are stored. They are no longer generated under `src/`, but stored in the output
+    directory and included dynamically. Previously it didn't work very well with IDEs which resulted in missing autocomplete and
+    documentation. This looks to be working correctly now at least in `rust-analyzer` and `intellij-rust`.
   * Bump crate edition to 2021 (from 2018) and require at least Rust 1.59.0 (the MSRV check is now included in CI).
-  * Start phasing out OpenCV 3.2 support. This does not mean immediate breakage, but it's no longer going to be tested and problems
-    in generation for that outdated and unsupported version will no longer be addressed.
+  * Start phasing out OpenCV 3.2 support. This does not mean immediate breakage, but it's no longer going to be tested and
+    problems in generation for that outdated and unsupported version will no longer be addressed.
 
 * 0.75.0
   * Add support for OpenCV 4.7.0.
   * Add support for C++ function call operator: `operator ()`.
 
 * 0.74.2
-  * Adjust dependencies to ensure that `jobserver` is the appropriate version (fixes https://github.com/twistedfall/opencv-rust/issues/400).
+  * Adjust dependencies to ensure that `jobserver` is the appropriate version
+    (fixes https://github.com/twistedfall/opencv-rust/issues/400).
 
 * 0.74.1
   * Fix building when `-j1` cargo option is specified (fixes https://github.com/twistedfall/opencv-rust/issues/380).
@@ -162,9 +268,10 @@
   * Remove `gapi` feature as this module is not supported at the moment.
 
 * 0.66.0
-  * Generate `valid_pix_roi` argument of `get_optimal_new_camera_matrix` as optional argument (fixes [#349](https://github.com/twistedfall/opencv-rust/issues/349)).
-  * `clang-runtime` feature has been dropped and the associated behavior is now the default. It's caused by the changed API of the
-    `clang` crate.
+  * Generate `valid_pix_roi` argument of `get_optimal_new_camera_matrix` as optional argument
+    (fixes [#349](https://github.com/twistedfall/opencv-rust/issues/349)).
+  * `clang-runtime` feature has been dropped and the associated behavior is now the default. It's caused by the changed API of
+    the `clang` crate.
 
 * 0.65.0
   * Improve generation for OpenCV 4.6.0.
@@ -185,8 +292,10 @@
 
 * 0.63.0
   * Provide bindings for `++` and `--` operators (fixes [#319](https://github.com/twistedfall/opencv-rust/issues/319))
-  * Drop type restrictions for `Rect_`, `Point_`, `Size_`, `Point3_`, `VecN` (and related structs) (fixes [#316](https://github.com/twistedfall/opencv-rust/issues/316))
-  * Make sure that `VectorOfVectorOff64` is generated for calib3d module (fixes [#321](https://github.com/twistedfall/opencv-rust/issues/321))
+  * Drop type restrictions for `Rect_`, `Point_`, `Size_`, `Point3_`, `VecN` (and related structs)
+    (fixes [#316](https://github.com/twistedfall/opencv-rust/issues/316))
+  * Make sure that `VectorOfVectorOff64` is generated for calib3d module
+    (fixes [#321](https://github.com/twistedfall/opencv-rust/issues/321))
 
 * 0.62.0
   * Fixed a segfault when using functions that return small structures (like Point2f) with some C++ compiler combinations, e.g.
@@ -216,7 +325,8 @@
   * Infallible functions returning references should be faster now due to the streamlined error handling.
   * More simple functions are marked as infallible (e.g. `Mat::total()`, `Mat::depth()`).
   * Functions that returned references to some internal data (e.g. `Mat::ptr()`, `Mat::data_mut()`) now return raw pointers, it
-    makes more sense and allows checking for null pointer outside of call. The corresponding property setters also accept pointers.
+    makes more sense and allows checking for null pointer outside of call. The corresponding property setters also accept
+    pointers.
   * Functions that accept raw pointers are now marked as unsafe.
 
 * 0.59.0
@@ -254,7 +364,8 @@
     raw pointer instead of reference.
 
 * 0.54.0
-  * highgui::create_trackbar now takes `Option<&mut i32>` for `value` to fix the deprecation warning (fixes [#261](https://github.com/twistedfall/opencv-rust/issues/261)).
+  * highgui::create_trackbar now takes `Option<&mut i32>` for `value` to fix the deprecation warning
+    (fixes [#261](https://github.com/twistedfall/opencv-rust/issues/261)).
   * Class traits are now split into const and mut variants. So what previously was `MatTrait` is now
     `MatTraitConst` with only const methods and `MatTrait` with only mut methods.
 
@@ -294,20 +405,23 @@
     it from your `Cargo.toml` if you've been using it.
 
 * 0.51.0
-  * Make sure that casts to Ptr<Feature2D> are also generated (fixes [#218](https://github.com/twistedfall/opencv-rust/issues/218))
+  * Make sure that casts to Ptr<Feature2D> are also generated
+    (fixes [#218](https://github.com/twistedfall/opencv-rust/issues/218))
   * Port text detection example (requires OpenCV 4.5.1)
   * Adjust some function names
 
 * 0.50.0
   * Improve smart pointer handling (`Ptr`), deeper analysis now generates more necessary `Ptr<T>` bindings and
-    all `Ptr<Child>` types are now castable to `Ptr<Parent>` when it's required by the OpenCV API (fixes [#217](https://github.com/twistedfall/opencv-rust/issues/217))
+    all `Ptr<Child>` types are now castable to `Ptr<Parent>` when it's required by the OpenCV API
+    (fixes [#217](https://github.com/twistedfall/opencv-rust/issues/217))
   * Module-level documentation generation for `tracking` module is now fixed
 
 * 0.49.1
   * Improved processing of environment variables
 
 * 0.49.0
-  * Fix conversion of slice arguments, allow nullable slices (fixes [#201](https://github.com/twistedfall/opencv-rust/issues/201))
+  * Fix conversion of slice arguments, allow nullable slices
+    (fixes [#201](https://github.com/twistedfall/opencv-rust/issues/201))
 
 * 0.48.0
   * Fix binding-generator build in cross-compilation environment (kudos to tylerhawkes)
@@ -322,7 +436,8 @@
   * Specify minimum required vcpkg version
 
 * 0.46.2
-  * Bring back deprecated cmake find-package discovery as a fallback, it's still useful in [some cases](https://github.com/twistedfall/opencv-rust/issues/177)
+  * Bring back deprecated cmake find-package discovery as a fallback, it's still useful
+    in [some cases](https://github.com/twistedfall/opencv-rust/issues/177)
 
 * 0.46.1
   * Improve cmake package detection (and remove deprecated find-package)
@@ -540,4 +655,4 @@
     environment; set `OPENCV_HEADER_DIR` environment variable to override this behavior
 
 * 0.26.6
-  * ...
+  * Ancient history

@@ -1,16 +1,14 @@
 #![cfg(ocvrs_has_module_imgproc)]
 
-use opencv::{
-	core::{Mat_AUTO_STEP, Point, Point2f, Scalar, Size, Vec2f},
-	imgproc,
-	prelude::*,
-	types::VectorOfPoint,
-	Result,
-};
+use std::ffi::c_void;
+
+use opencv::core::{Point, Point2f, Rect, RotatedRect, Size, Size2f, Vec2f, Vec3b, Vector};
+use opencv::prelude::*;
+use opencv::{imgproc, Result};
 
 #[test]
 fn min_enclosing() -> Result<()> {
-	let mut pts = Mat::new_rows_cols_with_default(1, 2, Vec2f::opencv_type(), Scalar::default())?;
+	let mut pts = Mat::new_rows_cols_with_default(1, 2, Vec2f::opencv_type(), 0.into())?;
 	let points = pts.at_row_mut::<Vec2f>(0)?;
 	points[0].copy_from_slice(&[10., 10.]);
 	points[1].copy_from_slice(&[20., 10.]);
@@ -25,7 +23,7 @@ fn min_enclosing() -> Result<()> {
 
 #[test]
 fn ellipse() -> Result<()> {
-	let mut pts = VectorOfPoint::new();
+	let mut pts = Vector::<Point>::new();
 	imgproc::ellipse_2_poly(Point::new(100, 100), Size::new(200, 200), 0, 45, 90, 10, &mut pts)?;
 	assert_eq!(6, pts.len());
 	assert_eq!(Point::new(241, 241), pts.get(0)?);
@@ -45,8 +43,8 @@ fn get_rotation_matrix_2d() -> Result<()> {
 #[test]
 fn line_iterator() -> Result<()> {
 	let mut data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12u8];
-	let mat = unsafe { Mat::new_rows_cols_with_data(4, 3, u8::opencv_type(), data.as_mut_ptr() as *mut _, Mat_AUTO_STEP) }?;
-	let mut line_iter = imgproc::LineIterator::new(&mat, Point::new(0, 0), Point::new(2, 2), 8, false)?;
+	let mat = unsafe { Mat::new_rows_cols_with_data_unsafe_def(4, 3, u8::opencv_type(), data.as_mut_ptr().cast::<c_void>()) }?;
+	let mut line_iter = imgproc::LineIterator::new_def(&mat, Point::new(0, 0), Point::new(2, 2))?;
 	assert_eq!(3, line_iter.count());
 	assert_eq!(Point::new(0, 0), line_iter.pos()?);
 	assert_eq!(1, unsafe { *line_iter.try_deref_mut()?.as_ref().unwrap() });
@@ -56,5 +54,57 @@ fn line_iterator() -> Result<()> {
 	line_iter.incr()?;
 	assert_eq!(Point::new(2, 2), line_iter.pos()?);
 	assert_eq!(9, unsafe { *line_iter.try_deref_mut()?.as_ref().unwrap() });
+	Ok(())
+}
+
+#[test]
+fn call_def() -> Result<()> {
+	opencv::opencv_branch_4! {
+		use opencv::imgproc::LINE_8;
+	}
+	opencv::not_opencv_branch_4! {
+		use opencv::core::LINE_8;
+	}
+
+	let rect = Rect::new(0, 0, 3, 3);
+
+	let mut mat_full = Mat::new_size_with_default(rect.size(), Vec3b::opencv_type(), Vec3b::all(0).into())?;
+	imgproc::rectangle(&mut mat_full, rect, (255, 0, 0).into(), 1, LINE_8, 0)?;
+
+	let mut mat_expect = Mat::new_rows_cols_with_default(3, 3, Vec3b::opencv_type(), Vec3b::all(0).into())?;
+	mat_expect.data_typed_mut::<Vec3b>()?.copy_from_slice(&[
+		[255, 0, 0].into(),
+		[255, 0, 0].into(),
+		[255, 0, 0].into(),
+		[255, 0, 0].into(),
+		[0, 0, 0].into(),
+		[255, 0, 0].into(),
+		[255, 0, 0].into(),
+		[255, 0, 0].into(),
+		[255, 0, 0].into(),
+	]);
+	assert_eq!(mat_expect.data_typed::<Vec3b>()?, mat_full.data_typed()?);
+
+	let mut mat_def = Mat::new_rows_cols_with_default(3, 3, Vec3b::opencv_type(), Vec3b::all(0).into())?;
+	imgproc::rectangle_def(&mut mat_def, rect, (255, 0, 0).into())?;
+	assert_eq!(mat_def.data_typed::<Vec3b>()?, mat_full.data_typed()?);
+
+	Ok(())
+}
+
+#[test]
+fn box_points() -> Result<()> {
+	let rect = RotatedRect::new(Point2f::new(100., 100.), Size2f::new(100., 100.), 90.)?;
+
+	let mut pts = Mat::default();
+	imgproc::box_points(rect, &mut pts)?;
+	let pts = pts.reshape_def(Point2f::opencv_channels())?;
+
+	assert_eq!(Size::new(1, 4), pts.size()?);
+	assert_eq!(Point2f::new(50., 50.), *pts.at(0)?);
+	assert_eq!(Point2f::new(150., 50.), *pts.at(1)?);
+	assert_eq!(Point2f::new(150., 150.), *pts.at(2)?);
+	assert_eq!(Point2f::new(50., 150.), *pts.at(3)?);
+
 	Ok(())
 }

@@ -5,7 +5,6 @@
 		{{pre_call_args}}
 		{{call}}
 		{{post_call_args}}
-		{{cleanup_args}}
 		{{return}}
 	{{catch}}
 }

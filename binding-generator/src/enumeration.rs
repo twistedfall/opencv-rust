@@ -4,8 +4,9 @@ use std::rc::Rc;
 
 use clang::{Entity, EntityKind, EntityVisitResult};
 
+use crate::comment::strip_doxygen_comment_markers;
 use crate::debug::LocationName;
-use crate::element::{ExcludeKind, UNNAMED};
+use crate::element::ExcludeKind;
 use crate::entity::WalkAction;
 use crate::type_ref::CppNameStyle;
 use crate::{Const, DefaultElement, Element, EntityElement, EntityExt, NameDebug, StrExt};
@@ -32,7 +33,7 @@ impl<'tu> Enum<'tu> {
 	}
 
 	pub fn is_anonymous(&self) -> bool {
-		self.entity.is_anonymous() || /* for clang-6 quirk */ self.cpp_name(CppNameStyle::Declaration) == UNNAMED
+		self.entity.is_anonymous() || /* clang-6 quirk */ self.cpp_name(CppNameStyle::Declaration).starts_with("(anonymous enum")
 	}
 
 	pub fn as_typedefed(&self) -> Option<Entity> {
@@ -80,7 +81,7 @@ impl Element for Enum<'_> {
 	}
 
 	fn doc_comment(&self) -> Cow<str> {
-		self.entity.get_comment().unwrap_or_default().into()
+		strip_doxygen_comment_markers(&self.entity.get_comment().unwrap_or_default()).into()
 	}
 
 	fn cpp_namespace(&self) -> Cow<str> {

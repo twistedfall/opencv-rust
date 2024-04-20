@@ -10,6 +10,8 @@ SRC_CPP_DIR="$script_dir/../src_cpp/"
 OUT_DIR_4="$script_dir/../out/4/"
 OUT_DIR_34="$script_dir/../out/3.4/"
 
+mkdir -p "$OUT_DIR_4" "$OUT_DIR_34"
+
 cd "$script_dir/.."
 
 export RUST_BACKTRACE=full
@@ -91,17 +93,6 @@ all_modules_34="aruco
 	calib3d
 	ccalib
 	core
-	cudaarithm
-	cudabgsegm
-	cudacodec
-	cudafeatures2d
-	cudafilters
-	cudaimgproc
-	cudaobjdetect
-	cudaoptflow
-	cudastereo
-	cudawarping
-	cvv
 	dnn
 	dpm
 	face

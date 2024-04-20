@@ -32,13 +32,13 @@ macro_rules! ptr_extern {
 			}
 
 			#[inline]
-			unsafe fn extern_inner_as_ptr(&self) -> *const std::ffi::c_void {
-				$crate::sys::$extern_inner_as_ptr(self.as_raw()) as *const _
+			unsafe fn extern_inner_as_ptr(&self) -> *const ::std::ffi::c_void {
+				$crate::sys::$extern_inner_as_ptr(self.as_raw()).cast::<::std::ffi::c_void>()
 			}
 
 			#[inline]
-			unsafe fn extern_inner_as_ptr_mut(&mut self) -> *mut std::ffi::c_void {
-				$crate::sys::$extern_inner_as_ptr_mut(self.as_raw_mut()) as *mut _
+			unsafe fn extern_inner_as_ptr_mut(&mut self) -> *mut ::std::ffi::c_void {
+				$crate::sys::$extern_inner_as_ptr_mut(self.as_raw_mut()).cast::<::std::ffi::c_void>()
 			}
 		}
 	};
@@ -49,10 +49,8 @@ macro_rules! ptr_extern {
 macro_rules! ptr_extern_ctor {
 	($type: ty, $extern_new: ident) => {
 		impl $crate::core::PtrExternCtor<$type> for $crate::core::Ptr<$type> {
-			// `clippy::needless_lifetimes` needed because of the support for Rust 1.59
-			#[allow(clippy::needless_lifetimes)]
 			#[inline]
-			unsafe fn extern_new<'a>(val: extern_container_send!(mut $type: 'a)) -> extern_receive!(Self: 'a) {
+			unsafe fn extern_new(val: extern_container_send!(mut $type)) -> extern_receive!(Self) {
 				$crate::sys::$extern_new(val)
 			}
 		}

@@ -2,11 +2,12 @@ use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
 use num_traits::{NumCast, ToPrimitive, Zero};
 
-use crate::{core::Point_, opencv_type_simple_generic};
+use crate::core::Point_;
+use crate::opencv_type_simple_generic;
 
+/// [docs.opencv.org](https://docs.opencv.org/master/d6/d50/classcv_1_1Size__.html)
 #[repr(C)]
 #[derive(Copy, Clone, Debug, Default, PartialEq, Eq, PartialOrd)]
-/// [docs.opencv.org](https://docs.opencv.org/master/d6/d50/classcv_1_1Size__.html)
 pub struct Size_<T> {
 	pub width: T,
 	pub height: T,
@@ -42,6 +43,7 @@ impl<T> Size_<T> {
 		self.width <= T::zero() || self.height <= T::zero()
 	}
 
+	/// Cast `Size` to the other coord type
 	#[inline]
 	pub fn to<D: NumCast>(self) -> Option<Size_<D>>
 	where

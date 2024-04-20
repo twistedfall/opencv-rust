@@ -218,10 +218,34 @@ pub mod hfs {
 		/// ## C++ default parameters
 		/// * if_draw: true
 		#[inline]
-		fn perform_segment_gpu(&mut self, src: &impl core::ToInputArray, if_draw: bool) -> Result<core::Mat> {
+		fn perform_segment_gpu(&mut self, src: &impl ToInputArray, if_draw: bool) -> Result<core::Mat> {
 			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hfs_HfsSegment_performSegmentGpu_const__InputArrayR_bool(self.as_raw_mut_HfsSegment(), src.as_raw__InputArray(), if_draw, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// do segmentation gpu
+		/// ## Parameters
+		/// * src: : the input image
+		/// * ifDraw: : if draw the image in the returned Mat. if this parameter is false,
+		/// then the content of the returned Mat is a matrix of index, describing the region
+		/// each pixel belongs to. And it's data type is CV_16U. If this parameter is true,
+		/// then the returned Mat is a segmented picture, and color of each region is the
+		/// average color of all pixels in that region. And it's data type is the same as
+		/// the input image
+		/// 
+		/// ## Note
+		/// This alternative version of [HfsSegmentTrait::perform_segment_gpu] function uses the following default values for its arguments:
+		/// * if_draw: true
+		#[inline]
+		fn perform_segment_gpu_def(&mut self, src: &impl ToInputArray) -> Result<core::Mat> {
+			input_array_arg!(src);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_hfs_HfsSegment_performSegmentGpu_const__InputArrayR(self.as_raw_mut_HfsSegment(), src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -235,10 +259,28 @@ pub mod hfs {
 		/// ## C++ default parameters
 		/// * if_draw: true
 		#[inline]
-		fn perform_segment_cpu(&mut self, src: &impl core::ToInputArray, if_draw: bool) -> Result<core::Mat> {
+		fn perform_segment_cpu(&mut self, src: &impl ToInputArray, if_draw: bool) -> Result<core::Mat> {
 			input_array_arg!(src);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hfs_HfsSegment_performSegmentCpu_const__InputArrayR_bool(self.as_raw_mut_HfsSegment(), src.as_raw__InputArray(), if_draw, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// do segmentation with cpu
+		/// This method is only implemented for reference.
+		/// It is highly NOT recommanded to use it.
+		/// 
+		/// ## Note
+		/// This alternative version of [HfsSegmentTrait::perform_segment_cpu] function uses the following default values for its arguments:
+		/// * if_draw: true
+		#[inline]
+		fn perform_segment_cpu_def(&mut self, src: &impl ToInputArray) -> Result<core::Mat> {
+			input_array_arg!(src);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_hfs_HfsSegment_performSegmentCpu_const__InputArrayR(self.as_raw_mut_HfsSegment(), src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
@@ -270,6 +312,8 @@ pub mod hfs {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 	
+	boxed_ref! { HfsSegment, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
 	impl crate::hfs::HfsSegmentTraitConst for HfsSegment {
 		#[inline] fn as_raw_HfsSegment(&self) -> *const c_void { self.as_raw() }
 	}
@@ -277,6 +321,8 @@ pub mod hfs {
 	impl crate::hfs::HfsSegmentTrait for HfsSegment {
 		#[inline] fn as_raw_mut_HfsSegment(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+	
+	boxed_ref! { HfsSegment, crate::hfs::HfsSegmentTraitConst, as_raw_HfsSegment, crate::hfs::HfsSegmentTrait, as_raw_mut_HfsSegment }
 	
 	impl HfsSegment {
 		/// create a hfs object
@@ -303,6 +349,37 @@ pub mod hfs {
 		pub fn create(height: i32, width: i32, seg_egb_threshold_i: f32, min_region_size_i: i32, seg_egb_threshold_ii: f32, min_region_size_ii: i32, spatial_weight: f32, slic_spixel_size: i32, num_slic_iter: i32) -> Result<core::Ptr<crate::hfs::HfsSegment>> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_hfs_HfsSegment_create_int_int_float_int_float_int_float_int_int(height, width, seg_egb_threshold_i, min_region_size_i, seg_egb_threshold_ii, min_region_size_ii, spatial_weight, slic_spixel_size, num_slic_iter, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::hfs::HfsSegment>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// create a hfs object
+		/// ## Parameters
+		/// * height: : the height of the input image
+		/// * width: : the width of the input image
+		/// * segEgbThresholdI: : parameter segEgbThresholdI
+		/// * minRegionSizeI: : parameter minRegionSizeI
+		/// * segEgbThresholdII: : parameter segEgbThresholdII
+		/// * minRegionSizeII: : parameter minRegionSizeII
+		/// * spatialWeight: : parameter spatialWeight
+		/// * slicSpixelSize: : parameter slicSpixelSize
+		/// * numSlicIter: : parameter numSlicIter
+		/// 
+		/// ## Note
+		/// This alternative version of [HfsSegment::create] function uses the following default values for its arguments:
+		/// * seg_egb_threshold_i: 0.08f
+		/// * min_region_size_i: 100
+		/// * seg_egb_threshold_ii: 0.28f
+		/// * min_region_size_ii: 200
+		/// * spatial_weight: 0.6f
+		/// * slic_spixel_size: 8
+		/// * num_slic_iter: 5
+		#[inline]
+		pub fn create_def(height: i32, width: i32) -> Result<core::Ptr<crate::hfs::HfsSegment>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_hfs_HfsSegment_create_int_int(height, width, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::hfs::HfsSegment>::opencv_from_extern(ret) };

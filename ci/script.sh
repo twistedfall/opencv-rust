@@ -19,12 +19,15 @@ if [[ "$OS_FAMILY" == "Windows" ]]; then
 	echo "=== Installed chocolatey packages:"
 	choco list
 elif [[ "$OS_FAMILY" == "macOS" ]]; then
-	toolchain_path="$(xcode-select --print-path)/Toolchains/XcodeDefault.xctoolchain/"
+	xcode_select="xcode-select" # IDEA code highlighting workaround
+	toolchain_path="$($xcode_select --print-path)/Toolchains/XcodeDefault.xctoolchain/"
 	export DYLD_FALLBACK_LIBRARY_PATH="$toolchain_path/usr/lib/"
-	if [[ "${BREW_OPENCV_VERSION:-}" != "" ]]; then # brew build
-		if [[ "$BREW_OPENCV_VERSION" == "@3" ]]; then
-			export CMAKE_PREFIX_PATH="$(echo /usr/local/Cellar/opencv@3/3.4.*)"
-		fi
+	if [[ "${VCPKG_VERSION:-}" != "" ]]; then # vcpkg build
+		export VCPKG_ROOT="$HOME/build/vcpkg"
+		echo "=== Installed vcpkg packages:"
+		"$VCPKG_ROOT/vcpkg" list
+	elif [[ "${BREW_OPENCV_VERSION:-}" != "" ]]; then # brew build
+		true
 	else # framework build
 		clang_dir="$(clang --print-search-dirs | awk -F= '/^libraries: =/ { print $2 }')"
 		export OPENCV_LINK_PATHS="$HOME/build/opencv/opencv-$OPENCV_VERSION-build,$clang_dir/lib/darwin"
@@ -39,16 +42,19 @@ elif [[ "$OS_FAMILY" == "Linux" ]]; then
 		echo "=== Installed vcpkg packages:"
 		"$VCPKG_ROOT/vcpkg" list
 	else
-		non_static_version=${OPENCV_VERSION%-static}
-		if [[ "$non_static_version" != "$OPENCV_VERSION" ]]; then # static build
-			export OPENCV_LINK_LIBS=opencv_highgui,opencv_objdetect,opencv_dnn,opencv_videostab,opencv_calib3d,opencv_features2d,opencv_stitching,opencv_flann,opencv_videoio,opencv_rgbd,opencv_aruco,opencv_video,opencv_ml,opencv_imgcodecs,opencv_imgproc,opencv_core,ittnotify,tbb,liblibwebp,liblibtiff,liblibjpeg-turbo,liblibpng,liblibopenjp2,ippiw,ippicv,liblibprotobuf,quirc,zlib
+		if [[ "${OPENCV_LINKAGE:-dynamic}" == "static" ]]; then # static build
+			export OPENCV_LINK_LIBS=opencv_gapi,opencv_highgui,opencv_objdetect,opencv_dnn,opencv_videostab,opencv_calib3d,opencv_features2d,opencv_stitching,opencv_flann,opencv_videoio,opencv_rgbd,opencv_aruco,opencv_video,opencv_ml,opencv_imgcodecs,opencv_imgproc,opencv_core,ade,ittnotify,tbb,liblibwebp,liblibtiff,liblibjpeg-turbo,liblibpng,liblibopenjp2,ippiw,ippicv,liblibprotobuf,quirc,zlib
 		fi
 	fi
 fi
 
-if [[ "${OPENCV_VERSION:-}" == "4.5.4" || "${OPENCV_VERSION:-}" == "3.4.16" ]]; then
-	rm -vf tests/*4_5_4_norun.rs
+# remove tests and examples that require the latest OpenCV version so that they don't fail due to missing modules
+if [[ "${OPENCV_VERSION:-}" != "4.9.0" ]]; then
+	rm -vf tests/*_only_latest_opencv.rs
+	rm -vf examples/dnn_face_detect.rs examples/gapi_api_example.rs examples/text_detection.rs
 fi
+# the following examples don't work in CI
+rm -vf examples/cuda.rs
 
 echo "=== Current directory: $(pwd)"
 echo "=== Environment variable dump:"
@@ -56,6 +62,8 @@ export
 echo "=== Target settings:"
 rustc --version
 rustc --print=cfg
+
+export RUST_BACKTRACE=full
 
 cargo test -vv -p opencv-binding-generator
 

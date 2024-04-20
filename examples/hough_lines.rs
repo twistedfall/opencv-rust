@@ -4,10 +4,10 @@ use std::env::args;
 use std::f64::consts::PI;
 use std::sync::Mutex;
 
-use opencv::core::{find_file, Point, Point2f, Scalar};
-use opencv::highgui::{create_trackbar, imshow, named_window, wait_key, WINDOW_AUTOSIZE};
+use opencv::core::{find_file, Point, Point2f};
+use opencv::highgui::{create_trackbar, imshow, named_window, wait_key_def, WINDOW_AUTOSIZE};
 use opencv::imgcodecs::{imread, IMREAD_COLOR};
-use opencv::imgproc::{canny, cvt_color, hough_lines, hough_lines_p, line, COLOR_BGR2GRAY, COLOR_GRAY2BGR};
+use opencv::imgproc::{canny_def, cvt_color_def, hough_lines_def, hough_lines_p, line, COLOR_BGR2GRAY, COLOR_GRAY2BGR};
 use opencv::prelude::*;
 use opencv::types::{VectorOfVec2f, VectorOfVec4i};
 use opencv::Result;
@@ -46,11 +46,11 @@ fn main() -> Result<()> {
 
 	// Pass the image to gray
 	let mut src_gray = Mat::default();
-	cvt_color(&src, &mut src_gray, COLOR_BGR2GRAY, 0)?;
+	cvt_color_def(&src, &mut src_gray, COLOR_BGR2GRAY)?;
 
 	// Apply Canny edge detector
 	let mut edges = Mat::default();
-	canny(&src_gray, &mut edges, 50., 200., 3, false)?;
+	canny_def(&src_gray, &mut edges, 50., 200.)?;
 
 	// Create Trackbars for Thresholds
 	let thresh_label = format!("Thres: {} + input", MIN_THRESHOLD);
@@ -87,7 +87,7 @@ fn main() -> Result<()> {
 
 	standard_hough(&edges, s_trackbar)?;
 	probabilistic_hough(&edges, p_trackbar)?;
-	wait_key(0)?;
+	wait_key_def()?;
 	Ok(())
 }
 
@@ -95,10 +95,10 @@ fn standard_hough(edges: &Mat, s_trackbar: i32) -> Result<()> {
 	let mut s_lines = VectorOfVec2f::new();
 	let mut standard_hough = Mat::default();
 
-	cvt_color(edges, &mut standard_hough, COLOR_GRAY2BGR, 0)?;
+	cvt_color_def(edges, &mut standard_hough, COLOR_GRAY2BGR)?;
 
 	// 1. Use Standard Hough Transform
-	hough_lines(edges, &mut s_lines, 1., PI / 180., MIN_THRESHOLD + s_trackbar, 0., 0., 0., PI)?;
+	hough_lines_def(edges, &mut s_lines, 1., PI / 180., MIN_THRESHOLD + s_trackbar)?;
 
 	// Show the result
 	for s_line in s_lines {
@@ -111,7 +111,7 @@ fn standard_hough(edges: &Mat, s_trackbar: i32) -> Result<()> {
 
 		let pt1 = Point2f::new(x0 + alpha * -sin_t, y0 + alpha * cos_t).to::<i32>().unwrap();
 		let pt2 = Point2f::new(x0 - alpha * -sin_t, y0 - alpha * cos_t).to::<i32>().unwrap();
-		line(&mut standard_hough, pt1, pt2, Scalar::new(255., 0., 0., 0.), 3, LINE_AA, 0)?;
+		line(&mut standard_hough, pt1, pt2, (255, 0, 0).into(), 3, LINE_AA, 0)?;
 	}
 	imshow(STANDARD_NAME, &standard_hough)?;
 	Ok(())
@@ -121,7 +121,7 @@ fn probabilistic_hough(edges: &Mat, p_trackbar: i32) -> Result<()> {
 	let mut p_lines = VectorOfVec4i::new();
 	let mut probabalistic_hough = Mat::default();
 
-	cvt_color(edges, &mut probabalistic_hough, COLOR_GRAY2BGR, 0)?;
+	cvt_color_def(edges, &mut probabalistic_hough, COLOR_GRAY2BGR)?;
 
 	// 2. Use Probabilistic Hough Transform
 	hough_lines_p(edges, &mut p_lines, 1., PI / 180., MIN_THRESHOLD + p_trackbar, 30., 10.)?;
@@ -132,7 +132,7 @@ fn probabilistic_hough(edges: &Mat, p_trackbar: i32) -> Result<()> {
 			&mut probabalistic_hough,
 			Point::new(l[0], l[1]),
 			Point::new(l[2], l[3]),
-			Scalar::new(255., 0., 0., 0.),
+			(255, 0, 0).into(),
 			3,
 			LINE_AA,
 			0,

@@ -88,7 +88,7 @@ unsafe impl<T: DataType, const N: usize> DataType for VecN<T, N> {
 
 	#[inline]
 	fn opencv_channels() -> i32 {
-		N as i32
+		i32::try_from(N).expect("Number of channels is out of range for i32")
 	}
 }
 

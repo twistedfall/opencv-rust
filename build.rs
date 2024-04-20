@@ -9,16 +9,15 @@ use std::time::Instant;
 use once_cell::sync::{Lazy, OnceCell};
 use semver::{Version, VersionReq};
 
+use binding_generator::handle_running_binding_generator;
+use docs::handle_running_in_docsrs;
+use generator::BindingGenerator;
 use library::Library;
-
-use crate::binding_generator::handle_running_binding_generator;
-use crate::docs::handle_running_in_docsrs;
-use crate::generator::BindingGenerator;
 
 #[path = "build/binding-generator.rs"]
 mod binding_generator;
 #[path = "build/cmake_probe.rs"]
-mod cmake_probe;
+pub mod cmake_probe;
 #[path = "build/docs.rs"]
 mod docs;
 #[path = "build/generator.rs"]
@@ -39,8 +38,6 @@ static TARGET_ENV_MSVC: Lazy<bool> =
 	Lazy::new(|| env::var("CARGO_CFG_TARGET_ENV").map_or(false, |target_env| target_env == "msvc"));
 static TARGET_VENDOR_APPLE: Lazy<bool> =
 	Lazy::new(|| env::var("CARGO_CFG_TARGET_VENDOR").map_or(false, |target_vendor| target_vendor == "apple"));
-static TARGET_OS_WINDOWS: Lazy<bool> =
-	Lazy::new(|| env::var("CARGO_CFG_TARGET_OS").map_or(false, |target_os| target_os == "windows"));
 
 static OPENCV_BRANCH_32: Lazy<VersionReq> =
 	Lazy::new(|| VersionReq::parse("~3.2").expect("Can't parse OpenCV 3.2 version requirement"));
@@ -99,39 +96,36 @@ fn files_with_extension<'e>(dir: &Path, extension: impl AsRef<OsStr> + 'e) -> Re
 
 /// Returns Some(new_file_name) if some parts of the filename were removed, None otherwise
 fn cleanup_lib_filename(filename: &OsStr) -> Option<&OsStr> {
-	if let Some(mut new_filename) = Path::new(filename).file_name() {
-		// used to check for the file extension (with dots stripped) and for the part of the filename
-		const LIB_EXTS: [&str; 7] = [".so.", ".a.", ".dll.", ".lib.", ".dylib.", ".framework.", ".tbd."];
-		let filename_path = Path::new(new_filename);
-		// strip lib extension from the filename
-		if let (Some(stem), Some(extension)) = (filename_path.file_stem(), filename_path.extension().and_then(OsStr::to_str)) {
-			if LIB_EXTS.iter().any(|e| e.trim_matches('.').eq_ignore_ascii_case(extension)) {
-				new_filename = stem;
-			}
+	let mut new_filename = filename;
+	// used to check for the file extension (with dots stripped) and for the part of the filename
+	const LIB_EXTS: [&str; 7] = [".so.", ".a.", ".dll.", ".lib.", ".dylib.", ".framework.", ".tbd."];
+	let filename_path = Path::new(new_filename);
+	// strip lib extension from the filename
+	if let (Some(stem), Some(extension)) = (filename_path.file_stem(), filename_path.extension().and_then(OsStr::to_str)) {
+		if LIB_EXTS.iter().any(|e| e.trim_matches('.').eq_ignore_ascii_case(extension)) {
+			new_filename = stem;
 		}
-		if let Some(mut file) = new_filename.to_str() {
-			let orig_len = file.len();
+	}
+	if let Some(mut file) = new_filename.to_str() {
+		let orig_len = file.len();
 
-			// strip "lib" prefix from the filename unless targeting MSVC
-			if !*TARGET_ENV_MSVC {
-				file = file.strip_prefix("lib").unwrap_or(file);
-			}
+		// strip "lib" prefix from the filename unless targeting MSVC
+		if !*TARGET_ENV_MSVC {
+			file = file.strip_prefix("lib").unwrap_or(file);
+		}
 
-			// strip lib extension + suffix (e.g. .so.4.6.0) from the filename
-			LIB_EXTS.iter().for_each(|&inner_ext| {
-				if let Some(inner_ext_idx) = file.find(inner_ext) {
-					file = &file[..inner_ext_idx];
-				}
-			});
-			if orig_len != file.len() {
-				new_filename = OsStr::new(file);
+		// strip lib extension + suffix (e.g. .so.4.6.0) from the filename
+		LIB_EXTS.iter().for_each(|&inner_ext| {
+			if let Some(inner_ext_idx) = file.find(inner_ext) {
+				file = &file[..inner_ext_idx];
 			}
+		});
+		if orig_len != file.len() {
+			new_filename = OsStr::new(file);
 		}
-		if new_filename.len() != filename.len() {
-			Some(new_filename)
-		} else {
-			None
-		}
+	}
+	if new_filename.len() != filename.len() {
+		Some(new_filename)
 	} else {
 		None
 	}
@@ -223,6 +217,7 @@ fn make_modules(opencv_dir: &Path) -> Result<()> {
 fn build_compiler(opencv: &Library) -> cc::Build {
 	let mut out = cc::Build::new();
 	out.cpp(true)
+		.std("c++14") // clang says error: 'auto' return without trailing return type; deduced return types are a C++14 extension
 		.include(&*SRC_CPP_DIR)
 		.include(&*OUT_DIR)
 		.include(".")
@@ -232,11 +227,12 @@ fn build_compiler(opencv: &Library) -> cc::Build {
 		.flag_if_supported("-Wno-unused-parameter") // unused parameter ‘src’ in virtual void cv::dnn::dnn4_v20211004::ActivationLayer::forwardSlice(const float*, float*, int, size_t, int, int) const
 		.flag_if_supported("-Wno-sign-compare") // comparison of integer expressions of different signedness: ‘size_t’ {aka ‘long unsigned int’} and ‘int’ in bool cv::dnn::dnn4_v20211004::isAllOnes(const MatShape&, int, int)
 		.flag_if_supported("-Wno-comment") // multi-line comment in include/opencv4/opencv2/mcc/ccm.hpp:73:25
+		.flag_if_supported("-Wunused-but-set-variable") // /usr/local/Cellar/opencv@3/3.4.16_10.reinstall/include/opencv2/flann/index_testing.h:249:11: warning: variable 'p1' set but not used
 		// crate warnings
 		.flag_if_supported("-Wno-unused-variable") // ‘cv::CV_VERSION_OCVRS_OVERRIDE’ defined but not used
 		.flag_if_supported("-Wno-ignored-qualifiers") // type qualifiers ignored on function return type in const size_t cv_MatStep_operator___const_int(const cv::MatStep* instance, int i)
 		.flag_if_supported("-Wno-return-type-c-linkage") // warning: 'cv_aruco_CharucoBoard_getChessboardSize_const' has C-linkage specified, but returns user-defined type 'Result<cv::Size>' (aka 'Result<Size_<int> >') which is incompatible with C
-	;
+		.flag_if_supported("-Wno-overloaded-virtual");
 
 	opencv.include_paths.iter().for_each(|p| {
 		out.include(p);
@@ -245,8 +241,7 @@ fn build_compiler(opencv: &Library) -> cc::Build {
 		}
 	});
 
-	if *TARGET_ENV_MSVC {
-		out.flag_if_supported("-std=c++14"); // clang says error: 'auto' return without trailing return type; deduced return types are a C++14 extension
+	if out.get_compiler().is_like_msvc() {
 		if let Ok(crt) = env::var("OPENCV_MSVC_CRT") {
 			if crt.trim().to_lowercase() == "dynamic" {
 				out.static_crt(false);
@@ -256,10 +251,7 @@ fn build_compiler(opencv: &Library) -> cc::Build {
 				panic!("Invalid value of OPENCV_MSVC_CRT var, expected \"static\" or \"dynamic\"");
 			}
 		}
-	}
-	if out.get_compiler().is_like_msvc() {
-		out.flag("-std:c++latest")
-			.flag("-EHsc")
+		out.flag("-EHsc")
 			.flag("-bigobj")
 			.flag("-utf-8")
 			.flag("-wd4996")
@@ -270,7 +262,7 @@ fn build_compiler(opencv: &Library) -> cc::Build {
 			.flag("-wd4127") // conditional expression is constant
 			.pic(false);
 	} else {
-		out.flag("-std=c++11").flag_if_supported("-Wa,-mbig-obj");
+		out.flag_if_supported("-Wa,-mbig-obj");
 	}
 	out
 }
@@ -314,8 +306,8 @@ fn main() -> Result<()> {
 		return Ok(());
 	}
 
-	let mut args = env::args_os().peekable();
-	let build_script_path = args.next().ok_or("Can't read build script path")?;
+	let args = env::args_os().skip(1).peekable();
+	let build_script_path = env::current_exe()?;
 	if matches!(handle_running_binding_generator(args)?, GenerateFullBindings::Stop) {
 		return Ok(());
 	}
@@ -372,7 +364,7 @@ fn main() -> Result<()> {
 	if let Some(header_version) = get_version_from_headers(opencv_header_dir) {
 		if header_version != opencv.version {
 			panic!(
-				"Version from the headers: {header_version} (at {}) doesn't match version of the OpenCV library: {} (include paths: {:?})",
+				"OpenCV version from the headers: {header_version} (at {}) must match version of the OpenCV library: {} (include paths: {:?})",
 				opencv_header_dir.display(),
 				opencv.version,
 				opencv.include_paths,

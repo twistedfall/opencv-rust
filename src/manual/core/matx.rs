@@ -2,6 +2,7 @@ use std::fmt;
 
 use num_traits::{One, Zero};
 
+use crate::boxed_ref::{BoxedRef, BoxedRefMut};
 use crate::core::{ToInputArray, ToInputOutputArray, ToOutputArray, _InputArray, _InputOutputArray, _OutputArray};
 use crate::manual::core::sized::*;
 use crate::traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer};
@@ -109,7 +110,7 @@ pub struct Matx<T, A: SizedArray<T>> {
 
 impl<T, A: SizedArray<T>> Matx<T, A> {
 	#[inline]
-	pub fn from_array(s: A::Storage) -> Self {
+	pub const fn from_array(s: A::Storage) -> Self {
 		Self { val: s }
 	}
 }
@@ -230,10 +231,10 @@ where
 	Self: MatxExtern,
 {
 	#[inline]
-	fn input_array(&self) -> Result<_InputArray> {
+	fn input_array(&self) -> Result<BoxedRef<_InputArray>> {
 		unsafe { self.extern_input_array() }
 			.into_result()
-			.map(|ptr| unsafe { _InputArray::from_raw(ptr) })
+			.map(|ptr| unsafe { _InputArray::from_raw(ptr) }.into())
 	}
 }
 
@@ -242,7 +243,7 @@ where
 	Matx<T, A>: MatxExtern,
 {
 	#[inline]
-	fn input_array(&self) -> Result<_InputArray> {
+	fn input_array(&self) -> Result<BoxedRef<_InputArray>> {
 		(*self).input_array()
 	}
 }
@@ -252,10 +253,10 @@ where
 	Self: MatxExtern,
 {
 	#[inline]
-	fn output_array(&mut self) -> Result<_OutputArray> {
+	fn output_array(&mut self) -> Result<BoxedRefMut<_OutputArray>> {
 		unsafe { self.extern_output_array() }
 			.into_result()
-			.map(|ptr| unsafe { _OutputArray::from_raw(ptr) })
+			.map(|ptr| unsafe { _OutputArray::from_raw(ptr) }.into())
 	}
 }
 
@@ -264,7 +265,7 @@ where
 	Matx<T, A>: MatxExtern,
 {
 	#[inline]
-	fn output_array(&mut self) -> Result<_OutputArray> {
+	fn output_array(&mut self) -> Result<BoxedRefMut<_OutputArray>> {
 		(*self).output_array()
 	}
 }
@@ -274,10 +275,10 @@ where
 	Self: MatxExtern,
 {
 	#[inline]
-	fn input_output_array(&mut self) -> Result<_InputOutputArray> {
+	fn input_output_array(&mut self) -> Result<BoxedRefMut<_InputOutputArray>> {
 		unsafe { self.extern_input_output_array() }
 			.into_result()
-			.map(|ptr| unsafe { _InputOutputArray::from_raw(ptr) })
+			.map(|ptr| unsafe { _InputOutputArray::from_raw(ptr) }.into())
 	}
 }
 
@@ -286,7 +287,7 @@ where
 	Matx<T, A>: MatxExtern,
 {
 	#[inline]
-	fn input_output_array(&mut self) -> Result<_InputOutputArray> {
+	fn input_output_array(&mut self) -> Result<BoxedRefMut<_InputOutputArray>> {
 		(*self).input_output_array()
 	}
 }
