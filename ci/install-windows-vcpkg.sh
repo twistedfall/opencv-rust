@@ -8,10 +8,6 @@ rm -rf "$VCPKG_INSTALLATION_ROOT"
 # install llvm from choco in place of vcpkg to speed things up
 choco install -y llvm --version "$CHOCO_LLVM_VERSION"
 
-# 2024-04-15, cmake 3.29.1 doesn't work so well with vcpkg, remove this line when cmake is 3.29.2+
-# https://github.com/microsoft/vcpkg/issues/37968
-choco upgrade -y cmake --version 3.29.0
-
 export VCPKG_ROOT="$HOME/build/vcpkg"
 if [[ -e "$VCPKG_ROOT" && ! -e "$VCPKG_ROOT/.git" ]]; then
 	rm -rf "$VCPKG_ROOT"

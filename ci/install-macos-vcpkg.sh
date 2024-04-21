@@ -7,13 +7,6 @@ if [[ "${VCPKG_VERSION:-}" == "" ]]; then
 	exit 1
 fi
 
-# 2024-04-15, cmake 3.29.1 doesn't work so well with vcpkg, remove this line when cmake is 3.29.2+
-# https://github.com/microsoft/vcpkg/issues/37968
-brew list --versions
-brew -v update
-brew upgrade --force --display-times cmake
-brew list --versions
-
 export VCPKG_ROOT="$HOME/build/vcpkg"
 if [[ -e "$VCPKG_ROOT" && ! -e "$VCPKG_ROOT/.git" ]]; then
 	rm -rf "$VCPKG_ROOT"

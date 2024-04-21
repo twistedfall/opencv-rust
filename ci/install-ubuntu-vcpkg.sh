@@ -36,9 +36,6 @@ export VCPKG_DEFAULT_TRIPLET=x64-linux
 	set +e
 	which cmake
 	cmake --version
-	# 2024-04-15, cmake 3.29.1 doesn't work so well with vcpkg, remove this hack when cmake is 3.29.2+
-	# https://github.com/microsoft/vcpkg/issues/37968
-	mv -vf /usr/local/bin/cmake /usr/local/bin/cmake.bad
 	if ! ./vcpkg install --clean-after-build --recurse "opencv[contrib,nonfree,ade]"; then
 		for log in "$VCPKG_ROOT/buildtrees"/**/*out.log; do
 			echo "=== $log"
@@ -46,7 +43,6 @@ export VCPKG_DEFAULT_TRIPLET=x64-linux
 		done
 		exit 1
 	fi
-	mv -vf /usr/local/bin/cmake.bad /usr/local/bin/cmake
 )
 # remove build artifacts to save CI cache space
 rm -rf "$VCPKG_ROOT/downloads" "$VCPKG_ROOT/buildtrees" "$VCPKG_ROOT/packages"
