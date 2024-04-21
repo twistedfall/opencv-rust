@@ -987,6 +987,18 @@ pub mod imgproc {
 		ADAPTIVE_THRESH_GAUSSIAN_C = 1,
 	}
 	
+	impl TryFrom<i32> for AdaptiveThresholdTypes {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::ADAPTIVE_THRESH_MEAN_C),
+				1 => Ok(Self::ADAPTIVE_THRESH_GAUSSIAN_C),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::AdaptiveThresholdTypes"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::imgproc::AdaptiveThresholdTypes }
 	
 	/// the color conversion codes
@@ -1559,6 +1571,406 @@ pub mod imgproc {
 		COLOR_COLORCVT_MAX = 155,
 	}
 	
+	impl TryFrom<i32> for ColorConversionCodes {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::COLOR_BGR2BGRA),
+				// Duplicate of COLOR_BGR2BGRA
+				// 0 => Ok(Self::COLOR_RGB2RGBA),
+				1 => Ok(Self::COLOR_BGRA2BGR),
+				// Duplicate of COLOR_BGRA2BGR
+				// 1 => Ok(Self::COLOR_RGBA2RGB),
+				2 => Ok(Self::COLOR_BGR2RGBA),
+				// Duplicate of COLOR_BGR2RGBA
+				// 2 => Ok(Self::COLOR_RGB2BGRA),
+				3 => Ok(Self::COLOR_RGBA2BGR),
+				// Duplicate of COLOR_RGBA2BGR
+				// 3 => Ok(Self::COLOR_BGRA2RGB),
+				4 => Ok(Self::COLOR_BGR2RGB),
+				// Duplicate of COLOR_BGR2RGB
+				// 4 => Ok(Self::COLOR_RGB2BGR),
+				5 => Ok(Self::COLOR_BGRA2RGBA),
+				// Duplicate of COLOR_BGRA2RGBA
+				// 5 => Ok(Self::COLOR_RGBA2BGRA),
+				6 => Ok(Self::COLOR_BGR2GRAY),
+				7 => Ok(Self::COLOR_RGB2GRAY),
+				8 => Ok(Self::COLOR_GRAY2BGR),
+				// Duplicate of COLOR_GRAY2BGR
+				// 8 => Ok(Self::COLOR_GRAY2RGB),
+				9 => Ok(Self::COLOR_GRAY2BGRA),
+				// Duplicate of COLOR_GRAY2BGRA
+				// 9 => Ok(Self::COLOR_GRAY2RGBA),
+				10 => Ok(Self::COLOR_BGRA2GRAY),
+				11 => Ok(Self::COLOR_RGBA2GRAY),
+				12 => Ok(Self::COLOR_BGR2BGR565),
+				13 => Ok(Self::COLOR_RGB2BGR565),
+				14 => Ok(Self::COLOR_BGR5652BGR),
+				15 => Ok(Self::COLOR_BGR5652RGB),
+				16 => Ok(Self::COLOR_BGRA2BGR565),
+				17 => Ok(Self::COLOR_RGBA2BGR565),
+				18 => Ok(Self::COLOR_BGR5652BGRA),
+				19 => Ok(Self::COLOR_BGR5652RGBA),
+				20 => Ok(Self::COLOR_GRAY2BGR565),
+				21 => Ok(Self::COLOR_BGR5652GRAY),
+				22 => Ok(Self::COLOR_BGR2BGR555),
+				23 => Ok(Self::COLOR_RGB2BGR555),
+				24 => Ok(Self::COLOR_BGR5552BGR),
+				25 => Ok(Self::COLOR_BGR5552RGB),
+				26 => Ok(Self::COLOR_BGRA2BGR555),
+				27 => Ok(Self::COLOR_RGBA2BGR555),
+				28 => Ok(Self::COLOR_BGR5552BGRA),
+				29 => Ok(Self::COLOR_BGR5552RGBA),
+				30 => Ok(Self::COLOR_GRAY2BGR555),
+				31 => Ok(Self::COLOR_BGR5552GRAY),
+				32 => Ok(Self::COLOR_BGR2XYZ),
+				33 => Ok(Self::COLOR_RGB2XYZ),
+				34 => Ok(Self::COLOR_XYZ2BGR),
+				35 => Ok(Self::COLOR_XYZ2RGB),
+				36 => Ok(Self::COLOR_BGR2YCrCb),
+				37 => Ok(Self::COLOR_RGB2YCrCb),
+				38 => Ok(Self::COLOR_YCrCb2BGR),
+				39 => Ok(Self::COLOR_YCrCb2RGB),
+				40 => Ok(Self::COLOR_BGR2HSV),
+				41 => Ok(Self::COLOR_RGB2HSV),
+				44 => Ok(Self::COLOR_BGR2Lab),
+				45 => Ok(Self::COLOR_RGB2Lab),
+				50 => Ok(Self::COLOR_BGR2Luv),
+				51 => Ok(Self::COLOR_RGB2Luv),
+				52 => Ok(Self::COLOR_BGR2HLS),
+				53 => Ok(Self::COLOR_RGB2HLS),
+				54 => Ok(Self::COLOR_HSV2BGR),
+				55 => Ok(Self::COLOR_HSV2RGB),
+				56 => Ok(Self::COLOR_Lab2BGR),
+				57 => Ok(Self::COLOR_Lab2RGB),
+				58 => Ok(Self::COLOR_Luv2BGR),
+				59 => Ok(Self::COLOR_Luv2RGB),
+				60 => Ok(Self::COLOR_HLS2BGR),
+				61 => Ok(Self::COLOR_HLS2RGB),
+				66 => Ok(Self::COLOR_BGR2HSV_FULL),
+				67 => Ok(Self::COLOR_RGB2HSV_FULL),
+				68 => Ok(Self::COLOR_BGR2HLS_FULL),
+				69 => Ok(Self::COLOR_RGB2HLS_FULL),
+				70 => Ok(Self::COLOR_HSV2BGR_FULL),
+				71 => Ok(Self::COLOR_HSV2RGB_FULL),
+				72 => Ok(Self::COLOR_HLS2BGR_FULL),
+				73 => Ok(Self::COLOR_HLS2RGB_FULL),
+				74 => Ok(Self::COLOR_LBGR2Lab),
+				75 => Ok(Self::COLOR_LRGB2Lab),
+				76 => Ok(Self::COLOR_LBGR2Luv),
+				77 => Ok(Self::COLOR_LRGB2Luv),
+				78 => Ok(Self::COLOR_Lab2LBGR),
+				79 => Ok(Self::COLOR_Lab2LRGB),
+				80 => Ok(Self::COLOR_Luv2LBGR),
+				81 => Ok(Self::COLOR_Luv2LRGB),
+				82 => Ok(Self::COLOR_BGR2YUV),
+				83 => Ok(Self::COLOR_RGB2YUV),
+				84 => Ok(Self::COLOR_YUV2BGR),
+				85 => Ok(Self::COLOR_YUV2RGB),
+				90 => Ok(Self::COLOR_YUV2RGB_NV12),
+				91 => Ok(Self::COLOR_YUV2BGR_NV12),
+				92 => Ok(Self::COLOR_YUV2RGB_NV21),
+				93 => Ok(Self::COLOR_YUV2BGR_NV21),
+				// Duplicate of COLOR_YUV2RGB_NV21
+				// 92 => Ok(Self::COLOR_YUV420sp2RGB),
+				// Duplicate of COLOR_YUV2BGR_NV21
+				// 93 => Ok(Self::COLOR_YUV420sp2BGR),
+				94 => Ok(Self::COLOR_YUV2RGBA_NV12),
+				95 => Ok(Self::COLOR_YUV2BGRA_NV12),
+				96 => Ok(Self::COLOR_YUV2RGBA_NV21),
+				97 => Ok(Self::COLOR_YUV2BGRA_NV21),
+				// Duplicate of COLOR_YUV2RGBA_NV21
+				// 96 => Ok(Self::COLOR_YUV420sp2RGBA),
+				// Duplicate of COLOR_YUV2BGRA_NV21
+				// 97 => Ok(Self::COLOR_YUV420sp2BGRA),
+				98 => Ok(Self::COLOR_YUV2RGB_YV12),
+				99 => Ok(Self::COLOR_YUV2BGR_YV12),
+				100 => Ok(Self::COLOR_YUV2RGB_IYUV),
+				101 => Ok(Self::COLOR_YUV2BGR_IYUV),
+				// Duplicate of COLOR_YUV2RGB_IYUV
+				// 100 => Ok(Self::COLOR_YUV2RGB_I420),
+				// Duplicate of COLOR_YUV2BGR_IYUV
+				// 101 => Ok(Self::COLOR_YUV2BGR_I420),
+				// Duplicate of COLOR_YUV2RGB_YV12
+				// 98 => Ok(Self::COLOR_YUV420p2RGB),
+				// Duplicate of COLOR_YUV2BGR_YV12
+				// 99 => Ok(Self::COLOR_YUV420p2BGR),
+				102 => Ok(Self::COLOR_YUV2RGBA_YV12),
+				103 => Ok(Self::COLOR_YUV2BGRA_YV12),
+				104 => Ok(Self::COLOR_YUV2RGBA_IYUV),
+				105 => Ok(Self::COLOR_YUV2BGRA_IYUV),
+				// Duplicate of COLOR_YUV2RGBA_IYUV
+				// 104 => Ok(Self::COLOR_YUV2RGBA_I420),
+				// Duplicate of COLOR_YUV2BGRA_IYUV
+				// 105 => Ok(Self::COLOR_YUV2BGRA_I420),
+				// Duplicate of COLOR_YUV2RGBA_YV12
+				// 102 => Ok(Self::COLOR_YUV420p2RGBA),
+				// Duplicate of COLOR_YUV2BGRA_YV12
+				// 103 => Ok(Self::COLOR_YUV420p2BGRA),
+				106 => Ok(Self::COLOR_YUV2GRAY_420),
+				// Duplicate of COLOR_YUV2GRAY_420
+				// 106 => Ok(Self::COLOR_YUV2GRAY_NV21),
+				// Duplicate of COLOR_YUV2GRAY_NV21
+				// 106 => Ok(Self::COLOR_YUV2GRAY_NV12),
+				// Duplicate of COLOR_YUV2GRAY_NV12
+				// 106 => Ok(Self::COLOR_YUV2GRAY_YV12),
+				// Duplicate of COLOR_YUV2GRAY_YV12
+				// 106 => Ok(Self::COLOR_YUV2GRAY_IYUV),
+				// Duplicate of COLOR_YUV2GRAY_IYUV
+				// 106 => Ok(Self::COLOR_YUV2GRAY_I420),
+				// Duplicate of COLOR_YUV2GRAY_I420
+				// 106 => Ok(Self::COLOR_YUV420sp2GRAY),
+				// Duplicate of COLOR_YUV420sp2GRAY
+				// 106 => Ok(Self::COLOR_YUV420p2GRAY),
+				107 => Ok(Self::COLOR_YUV2RGB_UYVY),
+				108 => Ok(Self::COLOR_YUV2BGR_UYVY),
+				// Duplicate of COLOR_YUV2RGB_UYVY
+				// 107 => Ok(Self::COLOR_YUV2RGB_Y422),
+				// Duplicate of COLOR_YUV2BGR_UYVY
+				// 108 => Ok(Self::COLOR_YUV2BGR_Y422),
+				// Duplicate of COLOR_YUV2RGB_Y422
+				// 107 => Ok(Self::COLOR_YUV2RGB_UYNV),
+				// Duplicate of COLOR_YUV2BGR_Y422
+				// 108 => Ok(Self::COLOR_YUV2BGR_UYNV),
+				111 => Ok(Self::COLOR_YUV2RGBA_UYVY),
+				112 => Ok(Self::COLOR_YUV2BGRA_UYVY),
+				// Duplicate of COLOR_YUV2RGBA_UYVY
+				// 111 => Ok(Self::COLOR_YUV2RGBA_Y422),
+				// Duplicate of COLOR_YUV2BGRA_UYVY
+				// 112 => Ok(Self::COLOR_YUV2BGRA_Y422),
+				// Duplicate of COLOR_YUV2RGBA_Y422
+				// 111 => Ok(Self::COLOR_YUV2RGBA_UYNV),
+				// Duplicate of COLOR_YUV2BGRA_Y422
+				// 112 => Ok(Self::COLOR_YUV2BGRA_UYNV),
+				115 => Ok(Self::COLOR_YUV2RGB_YUY2),
+				116 => Ok(Self::COLOR_YUV2BGR_YUY2),
+				117 => Ok(Self::COLOR_YUV2RGB_YVYU),
+				118 => Ok(Self::COLOR_YUV2BGR_YVYU),
+				// Duplicate of COLOR_YUV2RGB_YUY2
+				// 115 => Ok(Self::COLOR_YUV2RGB_YUYV),
+				// Duplicate of COLOR_YUV2BGR_YUY2
+				// 116 => Ok(Self::COLOR_YUV2BGR_YUYV),
+				// Duplicate of COLOR_YUV2RGB_YUYV
+				// 115 => Ok(Self::COLOR_YUV2RGB_YUNV),
+				// Duplicate of COLOR_YUV2BGR_YUYV
+				// 116 => Ok(Self::COLOR_YUV2BGR_YUNV),
+				119 => Ok(Self::COLOR_YUV2RGBA_YUY2),
+				120 => Ok(Self::COLOR_YUV2BGRA_YUY2),
+				121 => Ok(Self::COLOR_YUV2RGBA_YVYU),
+				122 => Ok(Self::COLOR_YUV2BGRA_YVYU),
+				// Duplicate of COLOR_YUV2RGBA_YUY2
+				// 119 => Ok(Self::COLOR_YUV2RGBA_YUYV),
+				// Duplicate of COLOR_YUV2BGRA_YUY2
+				// 120 => Ok(Self::COLOR_YUV2BGRA_YUYV),
+				// Duplicate of COLOR_YUV2RGBA_YUYV
+				// 119 => Ok(Self::COLOR_YUV2RGBA_YUNV),
+				// Duplicate of COLOR_YUV2BGRA_YUYV
+				// 120 => Ok(Self::COLOR_YUV2BGRA_YUNV),
+				123 => Ok(Self::COLOR_YUV2GRAY_UYVY),
+				124 => Ok(Self::COLOR_YUV2GRAY_YUY2),
+				// Duplicate of COLOR_YUV2GRAY_UYVY
+				// 123 => Ok(Self::COLOR_YUV2GRAY_Y422),
+				// Duplicate of COLOR_YUV2GRAY_Y422
+				// 123 => Ok(Self::COLOR_YUV2GRAY_UYNV),
+				// Duplicate of COLOR_YUV2GRAY_YUY2
+				// 124 => Ok(Self::COLOR_YUV2GRAY_YVYU),
+				// Duplicate of COLOR_YUV2GRAY_YVYU
+				// 124 => Ok(Self::COLOR_YUV2GRAY_YUYV),
+				// Duplicate of COLOR_YUV2GRAY_YUYV
+				// 124 => Ok(Self::COLOR_YUV2GRAY_YUNV),
+				125 => Ok(Self::COLOR_RGBA2mRGBA),
+				126 => Ok(Self::COLOR_mRGBA2RGBA),
+				127 => Ok(Self::COLOR_RGB2YUV_I420),
+				128 => Ok(Self::COLOR_BGR2YUV_I420),
+				// Duplicate of COLOR_RGB2YUV_I420
+				// 127 => Ok(Self::COLOR_RGB2YUV_IYUV),
+				// Duplicate of COLOR_BGR2YUV_I420
+				// 128 => Ok(Self::COLOR_BGR2YUV_IYUV),
+				129 => Ok(Self::COLOR_RGBA2YUV_I420),
+				130 => Ok(Self::COLOR_BGRA2YUV_I420),
+				// Duplicate of COLOR_RGBA2YUV_I420
+				// 129 => Ok(Self::COLOR_RGBA2YUV_IYUV),
+				// Duplicate of COLOR_BGRA2YUV_I420
+				// 130 => Ok(Self::COLOR_BGRA2YUV_IYUV),
+				131 => Ok(Self::COLOR_RGB2YUV_YV12),
+				132 => Ok(Self::COLOR_BGR2YUV_YV12),
+				133 => Ok(Self::COLOR_RGBA2YUV_YV12),
+				134 => Ok(Self::COLOR_BGRA2YUV_YV12),
+				46 => Ok(Self::COLOR_BayerBG2BGR),
+				47 => Ok(Self::COLOR_BayerGB2BGR),
+				48 => Ok(Self::COLOR_BayerRG2BGR),
+				49 => Ok(Self::COLOR_BayerGR2BGR),
+				// Duplicate of COLOR_BayerBG2BGR
+				// 46 => Ok(Self::COLOR_BayerRGGB2BGR),
+				// Duplicate of COLOR_BayerGB2BGR
+				// 47 => Ok(Self::COLOR_BayerGRBG2BGR),
+				// Duplicate of COLOR_BayerRG2BGR
+				// 48 => Ok(Self::COLOR_BayerBGGR2BGR),
+				// Duplicate of COLOR_BayerGR2BGR
+				// 49 => Ok(Self::COLOR_BayerGBRG2BGR),
+				// Duplicate of COLOR_BayerBGGR2BGR
+				// 48 => Ok(Self::COLOR_BayerRGGB2RGB),
+				// Duplicate of COLOR_BayerGBRG2BGR
+				// 49 => Ok(Self::COLOR_BayerGRBG2RGB),
+				// Duplicate of COLOR_BayerRGGB2BGR
+				// 46 => Ok(Self::COLOR_BayerBGGR2RGB),
+				// Duplicate of COLOR_BayerGRBG2BGR
+				// 47 => Ok(Self::COLOR_BayerGBRG2RGB),
+				// Duplicate of COLOR_BayerRGGB2RGB
+				// 48 => Ok(Self::COLOR_BayerBG2RGB),
+				// Duplicate of COLOR_BayerGRBG2RGB
+				// 49 => Ok(Self::COLOR_BayerGB2RGB),
+				// Duplicate of COLOR_BayerBGGR2RGB
+				// 46 => Ok(Self::COLOR_BayerRG2RGB),
+				// Duplicate of COLOR_BayerGBRG2RGB
+				// 47 => Ok(Self::COLOR_BayerGR2RGB),
+				86 => Ok(Self::COLOR_BayerBG2GRAY),
+				87 => Ok(Self::COLOR_BayerGB2GRAY),
+				88 => Ok(Self::COLOR_BayerRG2GRAY),
+				89 => Ok(Self::COLOR_BayerGR2GRAY),
+				// Duplicate of COLOR_BayerBG2GRAY
+				// 86 => Ok(Self::COLOR_BayerRGGB2GRAY),
+				// Duplicate of COLOR_BayerGB2GRAY
+				// 87 => Ok(Self::COLOR_BayerGRBG2GRAY),
+				// Duplicate of COLOR_BayerRG2GRAY
+				// 88 => Ok(Self::COLOR_BayerBGGR2GRAY),
+				// Duplicate of COLOR_BayerGR2GRAY
+				// 89 => Ok(Self::COLOR_BayerGBRG2GRAY),
+				62 => Ok(Self::COLOR_BayerBG2BGR_VNG),
+				63 => Ok(Self::COLOR_BayerGB2BGR_VNG),
+				64 => Ok(Self::COLOR_BayerRG2BGR_VNG),
+				65 => Ok(Self::COLOR_BayerGR2BGR_VNG),
+				// Duplicate of COLOR_BayerBG2BGR_VNG
+				// 62 => Ok(Self::COLOR_BayerRGGB2BGR_VNG),
+				// Duplicate of COLOR_BayerGB2BGR_VNG
+				// 63 => Ok(Self::COLOR_BayerGRBG2BGR_VNG),
+				// Duplicate of COLOR_BayerRG2BGR_VNG
+				// 64 => Ok(Self::COLOR_BayerBGGR2BGR_VNG),
+				// Duplicate of COLOR_BayerGR2BGR_VNG
+				// 65 => Ok(Self::COLOR_BayerGBRG2BGR_VNG),
+				// Duplicate of COLOR_BayerBGGR2BGR_VNG
+				// 64 => Ok(Self::COLOR_BayerRGGB2RGB_VNG),
+				// Duplicate of COLOR_BayerGBRG2BGR_VNG
+				// 65 => Ok(Self::COLOR_BayerGRBG2RGB_VNG),
+				// Duplicate of COLOR_BayerRGGB2BGR_VNG
+				// 62 => Ok(Self::COLOR_BayerBGGR2RGB_VNG),
+				// Duplicate of COLOR_BayerGRBG2BGR_VNG
+				// 63 => Ok(Self::COLOR_BayerGBRG2RGB_VNG),
+				// Duplicate of COLOR_BayerRGGB2RGB_VNG
+				// 64 => Ok(Self::COLOR_BayerBG2RGB_VNG),
+				// Duplicate of COLOR_BayerGRBG2RGB_VNG
+				// 65 => Ok(Self::COLOR_BayerGB2RGB_VNG),
+				// Duplicate of COLOR_BayerBGGR2RGB_VNG
+				// 62 => Ok(Self::COLOR_BayerRG2RGB_VNG),
+				// Duplicate of COLOR_BayerGBRG2RGB_VNG
+				// 63 => Ok(Self::COLOR_BayerGR2RGB_VNG),
+				135 => Ok(Self::COLOR_BayerBG2BGR_EA),
+				136 => Ok(Self::COLOR_BayerGB2BGR_EA),
+				137 => Ok(Self::COLOR_BayerRG2BGR_EA),
+				138 => Ok(Self::COLOR_BayerGR2BGR_EA),
+				// Duplicate of COLOR_BayerBG2BGR_EA
+				// 135 => Ok(Self::COLOR_BayerRGGB2BGR_EA),
+				// Duplicate of COLOR_BayerGB2BGR_EA
+				// 136 => Ok(Self::COLOR_BayerGRBG2BGR_EA),
+				// Duplicate of COLOR_BayerRG2BGR_EA
+				// 137 => Ok(Self::COLOR_BayerBGGR2BGR_EA),
+				// Duplicate of COLOR_BayerGR2BGR_EA
+				// 138 => Ok(Self::COLOR_BayerGBRG2BGR_EA),
+				// Duplicate of COLOR_BayerBGGR2BGR_EA
+				// 137 => Ok(Self::COLOR_BayerRGGB2RGB_EA),
+				// Duplicate of COLOR_BayerGBRG2BGR_EA
+				// 138 => Ok(Self::COLOR_BayerGRBG2RGB_EA),
+				// Duplicate of COLOR_BayerRGGB2BGR_EA
+				// 135 => Ok(Self::COLOR_BayerBGGR2RGB_EA),
+				// Duplicate of COLOR_BayerGRBG2BGR_EA
+				// 136 => Ok(Self::COLOR_BayerGBRG2RGB_EA),
+				// Duplicate of COLOR_BayerRGGB2RGB_EA
+				// 137 => Ok(Self::COLOR_BayerBG2RGB_EA),
+				// Duplicate of COLOR_BayerGRBG2RGB_EA
+				// 138 => Ok(Self::COLOR_BayerGB2RGB_EA),
+				// Duplicate of COLOR_BayerBGGR2RGB_EA
+				// 135 => Ok(Self::COLOR_BayerRG2RGB_EA),
+				// Duplicate of COLOR_BayerGBRG2RGB_EA
+				// 136 => Ok(Self::COLOR_BayerGR2RGB_EA),
+				139 => Ok(Self::COLOR_BayerBG2BGRA),
+				140 => Ok(Self::COLOR_BayerGB2BGRA),
+				141 => Ok(Self::COLOR_BayerRG2BGRA),
+				142 => Ok(Self::COLOR_BayerGR2BGRA),
+				// Duplicate of COLOR_BayerBG2BGRA
+				// 139 => Ok(Self::COLOR_BayerRGGB2BGRA),
+				// Duplicate of COLOR_BayerGB2BGRA
+				// 140 => Ok(Self::COLOR_BayerGRBG2BGRA),
+				// Duplicate of COLOR_BayerRG2BGRA
+				// 141 => Ok(Self::COLOR_BayerBGGR2BGRA),
+				// Duplicate of COLOR_BayerGR2BGRA
+				// 142 => Ok(Self::COLOR_BayerGBRG2BGRA),
+				// Duplicate of COLOR_BayerBGGR2BGRA
+				// 141 => Ok(Self::COLOR_BayerRGGB2RGBA),
+				// Duplicate of COLOR_BayerGBRG2BGRA
+				// 142 => Ok(Self::COLOR_BayerGRBG2RGBA),
+				// Duplicate of COLOR_BayerRGGB2BGRA
+				// 139 => Ok(Self::COLOR_BayerBGGR2RGBA),
+				// Duplicate of COLOR_BayerGRBG2BGRA
+				// 140 => Ok(Self::COLOR_BayerGBRG2RGBA),
+				// Duplicate of COLOR_BayerRGGB2RGBA
+				// 141 => Ok(Self::COLOR_BayerBG2RGBA),
+				// Duplicate of COLOR_BayerGRBG2RGBA
+				// 142 => Ok(Self::COLOR_BayerGB2RGBA),
+				// Duplicate of COLOR_BayerBGGR2RGBA
+				// 139 => Ok(Self::COLOR_BayerRG2RGBA),
+				// Duplicate of COLOR_BayerGBRG2RGBA
+				// 140 => Ok(Self::COLOR_BayerGR2RGBA),
+				143 => Ok(Self::COLOR_RGB2YUV_UYVY),
+				144 => Ok(Self::COLOR_BGR2YUV_UYVY),
+				// Duplicate of COLOR_RGB2YUV_UYVY
+				// 143 => Ok(Self::COLOR_RGB2YUV_Y422),
+				// Duplicate of COLOR_BGR2YUV_UYVY
+				// 144 => Ok(Self::COLOR_BGR2YUV_Y422),
+				// Duplicate of COLOR_RGB2YUV_Y422
+				// 143 => Ok(Self::COLOR_RGB2YUV_UYNV),
+				// Duplicate of COLOR_BGR2YUV_Y422
+				// 144 => Ok(Self::COLOR_BGR2YUV_UYNV),
+				145 => Ok(Self::COLOR_RGBA2YUV_UYVY),
+				146 => Ok(Self::COLOR_BGRA2YUV_UYVY),
+				// Duplicate of COLOR_RGBA2YUV_UYVY
+				// 145 => Ok(Self::COLOR_RGBA2YUV_Y422),
+				// Duplicate of COLOR_BGRA2YUV_UYVY
+				// 146 => Ok(Self::COLOR_BGRA2YUV_Y422),
+				// Duplicate of COLOR_RGBA2YUV_Y422
+				// 145 => Ok(Self::COLOR_RGBA2YUV_UYNV),
+				// Duplicate of COLOR_BGRA2YUV_Y422
+				// 146 => Ok(Self::COLOR_BGRA2YUV_UYNV),
+				147 => Ok(Self::COLOR_RGB2YUV_YUY2),
+				148 => Ok(Self::COLOR_BGR2YUV_YUY2),
+				149 => Ok(Self::COLOR_RGB2YUV_YVYU),
+				150 => Ok(Self::COLOR_BGR2YUV_YVYU),
+				// Duplicate of COLOR_RGB2YUV_YUY2
+				// 147 => Ok(Self::COLOR_RGB2YUV_YUYV),
+				// Duplicate of COLOR_BGR2YUV_YUY2
+				// 148 => Ok(Self::COLOR_BGR2YUV_YUYV),
+				// Duplicate of COLOR_RGB2YUV_YUYV
+				// 147 => Ok(Self::COLOR_RGB2YUV_YUNV),
+				// Duplicate of COLOR_BGR2YUV_YUYV
+				// 148 => Ok(Self::COLOR_BGR2YUV_YUNV),
+				151 => Ok(Self::COLOR_RGBA2YUV_YUY2),
+				152 => Ok(Self::COLOR_BGRA2YUV_YUY2),
+				153 => Ok(Self::COLOR_RGBA2YUV_YVYU),
+				154 => Ok(Self::COLOR_BGRA2YUV_YVYU),
+				// Duplicate of COLOR_RGBA2YUV_YUY2
+				// 151 => Ok(Self::COLOR_RGBA2YUV_YUYV),
+				// Duplicate of COLOR_BGRA2YUV_YUY2
+				// 152 => Ok(Self::COLOR_BGRA2YUV_YUYV),
+				// Duplicate of COLOR_RGBA2YUV_YUYV
+				// 151 => Ok(Self::COLOR_RGBA2YUV_YUNV),
+				// Duplicate of COLOR_BGRA2YUV_YUYV
+				// 152 => Ok(Self::COLOR_BGRA2YUV_YUNV),
+				155 => Ok(Self::COLOR_COLORCVT_MAX),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::ColorConversionCodes"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::imgproc::ColorConversionCodes }
 	
 	/// GNU Octave/MATLAB equivalent colormaps
@@ -1611,6 +2023,38 @@ pub mod imgproc {
 		COLORMAP_DEEPGREEN = 21,
 	}
 	
+	impl TryFrom<i32> for ColormapTypes {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::COLORMAP_AUTUMN),
+				1 => Ok(Self::COLORMAP_BONE),
+				2 => Ok(Self::COLORMAP_JET),
+				3 => Ok(Self::COLORMAP_WINTER),
+				4 => Ok(Self::COLORMAP_RAINBOW),
+				5 => Ok(Self::COLORMAP_OCEAN),
+				6 => Ok(Self::COLORMAP_SUMMER),
+				7 => Ok(Self::COLORMAP_SPRING),
+				8 => Ok(Self::COLORMAP_COOL),
+				9 => Ok(Self::COLORMAP_HSV),
+				10 => Ok(Self::COLORMAP_PINK),
+				11 => Ok(Self::COLORMAP_HOT),
+				12 => Ok(Self::COLORMAP_PARULA),
+				13 => Ok(Self::COLORMAP_MAGMA),
+				14 => Ok(Self::COLORMAP_INFERNO),
+				15 => Ok(Self::COLORMAP_PLASMA),
+				16 => Ok(Self::COLORMAP_VIRIDIS),
+				17 => Ok(Self::COLORMAP_CIVIDIS),
+				18 => Ok(Self::COLORMAP_TWILIGHT),
+				19 => Ok(Self::COLORMAP_TWILIGHT_SHIFTED),
+				20 => Ok(Self::COLORMAP_TURBO),
+				21 => Ok(Self::COLORMAP_DEEPGREEN),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::ColormapTypes"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::imgproc::ColormapTypes }
 	
 	/// connected components algorithm
@@ -1631,6 +2075,23 @@ pub mod imgproc {
 		CCL_BBDT = 4,
 		/// Same as CCL_BOLELLI. It is preferable to use the flag with the name of the algorithm (CCL_SPAGHETTI) rather than the one with the name of the first author (CCL_BOLELLI).
 		CCL_SPAGHETTI = 5,
+	}
+	
+	impl TryFrom<i32> for ConnectedComponentsAlgorithmsTypes {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				-1 => Ok(Self::CCL_DEFAULT),
+				0 => Ok(Self::CCL_WU),
+				1 => Ok(Self::CCL_GRANA),
+				2 => Ok(Self::CCL_BOLELLI),
+				3 => Ok(Self::CCL_SAUF),
+				4 => Ok(Self::CCL_BBDT),
+				5 => Ok(Self::CCL_SPAGHETTI),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::ConnectedComponentsAlgorithmsTypes"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::imgproc::ConnectedComponentsAlgorithmsTypes }
@@ -1655,6 +2116,22 @@ pub mod imgproc {
 		CC_STAT_MAX = 5,
 	}
 	
+	impl TryFrom<i32> for ConnectedComponentsTypes {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::CC_STAT_LEFT),
+				1 => Ok(Self::CC_STAT_TOP),
+				2 => Ok(Self::CC_STAT_WIDTH),
+				3 => Ok(Self::CC_STAT_HEIGHT),
+				4 => Ok(Self::CC_STAT_AREA),
+				5 => Ok(Self::CC_STAT_MAX),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::ConnectedComponentsTypes"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::imgproc::ConnectedComponentsTypes }
 	
 	/// the contour approximation algorithm
@@ -1674,6 +2151,20 @@ pub mod imgproc {
 		CHAIN_APPROX_TC89_KCOS = 4,
 	}
 	
+	impl TryFrom<i32> for ContourApproximationModes {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				1 => Ok(Self::CHAIN_APPROX_NONE),
+				2 => Ok(Self::CHAIN_APPROX_SIMPLE),
+				3 => Ok(Self::CHAIN_APPROX_TC89_L1),
+				4 => Ok(Self::CHAIN_APPROX_TC89_KCOS),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::ContourApproximationModes"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::imgproc::ContourApproximationModes }
 	
 	/// distanceTransform algorithm flags
@@ -1687,6 +2178,18 @@ pub mod imgproc {
 		DIST_LABEL_PIXEL = 1,
 	}
 	
+	impl TryFrom<i32> for DistanceTransformLabelTypes {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::DIST_LABEL_CCOMP),
+				1 => Ok(Self::DIST_LABEL_PIXEL),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::DistanceTransformLabelTypes"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::imgproc::DistanceTransformLabelTypes }
 	
 	/// Mask size for distance transform
@@ -1698,6 +2201,19 @@ pub mod imgproc {
 		/// mask=5
 		DIST_MASK_5 = 5,
 		DIST_MASK_PRECISE = 0,
+	}
+	
+	impl TryFrom<i32> for DistanceTransformMasks {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				3 => Ok(Self::DIST_MASK_3),
+				5 => Ok(Self::DIST_MASK_5),
+				0 => Ok(Self::DIST_MASK_PRECISE),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::DistanceTransformMasks"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::imgproc::DistanceTransformMasks }
@@ -1726,6 +2242,24 @@ pub mod imgproc {
 		DIST_HUBER = 7,
 	}
 	
+	impl TryFrom<i32> for DistanceTypes {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				-1 => Ok(Self::DIST_USER),
+				1 => Ok(Self::DIST_L1),
+				2 => Ok(Self::DIST_L2),
+				3 => Ok(Self::DIST_C),
+				4 => Ok(Self::DIST_L12),
+				5 => Ok(Self::DIST_FAIR),
+				6 => Ok(Self::DIST_WELSCH),
+				7 => Ok(Self::DIST_HUBER),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::DistanceTypes"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::imgproc::DistanceTypes }
 	
 	/// floodfill algorithm flags
@@ -1739,6 +2273,18 @@ pub mod imgproc {
 		/// mask with the value specified in bits 8-16 of flags as described above. This option only make
 		/// sense in function variants that have the mask parameter.
 		FLOODFILL_MASK_ONLY = 131072,
+	}
+	
+	impl TryFrom<i32> for FloodFillFlags {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				65536 => Ok(Self::FLOODFILL_FIXED_RANGE),
+				131072 => Ok(Self::FLOODFILL_MASK_ONLY),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::FloodFillFlags"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::imgproc::FloodFillFlags }
@@ -1755,6 +2301,20 @@ pub mod imgproc {
 		GC_PR_BGD = 2,
 		/// a possible foreground pixel
 		GC_PR_FGD = 3,
+	}
+	
+	impl TryFrom<i32> for GrabCutClasses {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::GC_BGD),
+				1 => Ok(Self::GC_FGD),
+				2 => Ok(Self::GC_PR_BGD),
+				3 => Ok(Self::GC_PR_FGD),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::GrabCutClasses"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::imgproc::GrabCutClasses }
@@ -1774,6 +2334,20 @@ pub mod imgproc {
 		GC_EVAL = 2,
 		/// The value means that the algorithm should just run the grabCut algorithm (a single iteration) with the fixed model
 		GC_EVAL_FREEZE_MODEL = 3,
+	}
+	
+	impl TryFrom<i32> for GrabCutModes {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::GC_INIT_WITH_RECT),
+				1 => Ok(Self::GC_INIT_WITH_MASK),
+				2 => Ok(Self::GC_EVAL),
+				3 => Ok(Self::GC_EVAL_FREEZE_MODEL),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::GrabCutModes"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::imgproc::GrabCutModes }
@@ -1801,6 +2375,25 @@ pub mod imgproc {
 		FONT_HERSHEY_SCRIPT_COMPLEX = 7,
 		/// flag for italic font
 		FONT_ITALIC = 16,
+	}
+	
+	impl TryFrom<i32> for HersheyFonts {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::FONT_HERSHEY_SIMPLEX),
+				1 => Ok(Self::FONT_HERSHEY_PLAIN),
+				2 => Ok(Self::FONT_HERSHEY_DUPLEX),
+				3 => Ok(Self::FONT_HERSHEY_COMPLEX),
+				4 => Ok(Self::FONT_HERSHEY_TRIPLEX),
+				5 => Ok(Self::FONT_HERSHEY_COMPLEX_SMALL),
+				6 => Ok(Self::FONT_HERSHEY_SCRIPT_SIMPLEX),
+				7 => Ok(Self::FONT_HERSHEY_SCRIPT_COMPLEX),
+				16 => Ok(Self::FONT_ITALIC),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::HersheyFonts"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::imgproc::HersheyFonts }
@@ -1838,6 +2431,24 @@ pub mod imgproc {
 		HISTCMP_KL_DIV = 5,
 	}
 	
+	impl TryFrom<i32> for HistCompMethods {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::HISTCMP_CORREL),
+				1 => Ok(Self::HISTCMP_CHISQR),
+				2 => Ok(Self::HISTCMP_INTERSECT),
+				3 => Ok(Self::HISTCMP_BHATTACHARYYA),
+				// Duplicate of HISTCMP_BHATTACHARYYA
+				// 3 => Ok(Self::HISTCMP_HELLINGER),
+				4 => Ok(Self::HISTCMP_CHISQR_ALT),
+				5 => Ok(Self::HISTCMP_KL_DIV),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::HistCompMethods"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::imgproc::HistCompMethods }
 	
 	/// Variants of a Hough transform
@@ -1861,6 +2472,21 @@ pub mod imgproc {
 		HOUGH_GRADIENT = 3,
 		/// variation of HOUGH_GRADIENT to get better accuracy
 		HOUGH_GRADIENT_ALT = 4,
+	}
+	
+	impl TryFrom<i32> for HoughModes {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::HOUGH_STANDARD),
+				1 => Ok(Self::HOUGH_PROBABILISTIC),
+				2 => Ok(Self::HOUGH_MULTI_SCALE),
+				3 => Ok(Self::HOUGH_GRADIENT),
+				4 => Ok(Self::HOUGH_GRADIENT_ALT),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::HoughModes"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::imgproc::HoughModes }
@@ -1899,6 +2525,26 @@ pub mod imgproc {
 		WARP_INVERSE_MAP = 16,
 	}
 	
+	impl TryFrom<i32> for InterpolationFlags {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::INTER_NEAREST),
+				1 => Ok(Self::INTER_LINEAR),
+				2 => Ok(Self::INTER_CUBIC),
+				3 => Ok(Self::INTER_AREA),
+				4 => Ok(Self::INTER_LANCZOS4),
+				5 => Ok(Self::INTER_LINEAR_EXACT),
+				6 => Ok(Self::INTER_NEAREST_EXACT),
+				7 => Ok(Self::INTER_MAX),
+				8 => Ok(Self::WARP_FILL_OUTLIERS),
+				16 => Ok(Self::WARP_INVERSE_MAP),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::InterpolationFlags"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::imgproc::InterpolationFlags }
 	
 	#[repr(C)]
@@ -1908,6 +2554,20 @@ pub mod imgproc {
 		INTER_BITS2 = 10,
 		INTER_TAB_SIZE = 32,
 		INTER_TAB_SIZE2 = 1024,
+	}
+	
+	impl TryFrom<i32> for InterpolationMasks {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				5 => Ok(Self::INTER_BITS),
+				10 => Ok(Self::INTER_BITS2),
+				32 => Ok(Self::INTER_TAB_SIZE),
+				1024 => Ok(Self::INTER_TAB_SIZE2),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::InterpolationMasks"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::imgproc::InterpolationMasks }
@@ -1925,6 +2585,19 @@ pub mod imgproc {
 		LSD_REFINE_ADV = 2,
 	}
 	
+	impl TryFrom<i32> for LineSegmentDetectorModes {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::LSD_REFINE_NONE),
+				1 => Ok(Self::LSD_REFINE_STD),
+				2 => Ok(Self::LSD_REFINE_ADV),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::LineSegmentDetectorModes"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::imgproc::LineSegmentDetectorModes }
 	
 	/// types of line
@@ -1939,6 +2612,20 @@ pub mod imgproc {
 		LINE_8 = 8,
 		/// antialiased line
 		LINE_AA = 16,
+	}
+	
+	impl TryFrom<i32> for LineTypes {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				-1 => Ok(Self::FILLED),
+				4 => Ok(Self::LINE_4),
+				8 => Ok(Self::LINE_8),
+				16 => Ok(Self::LINE_AA),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::LineTypes"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::imgproc::LineTypes }
@@ -1964,6 +2651,23 @@ pub mod imgproc {
 		MARKER_TRIANGLE_DOWN = 6,
 	}
 	
+	impl TryFrom<i32> for MarkerTypes {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::MARKER_CROSS),
+				1 => Ok(Self::MARKER_TILTED_CROSS),
+				2 => Ok(Self::MARKER_STAR),
+				3 => Ok(Self::MARKER_DIAMOND),
+				4 => Ok(Self::MARKER_SQUARE),
+				5 => Ok(Self::MARKER_TRIANGLE_UP),
+				6 => Ok(Self::MARKER_TRIANGLE_DOWN),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::MarkerTypes"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::imgproc::MarkerTypes }
 	
 	/// shape of the structuring element
@@ -1978,6 +2682,19 @@ pub mod imgproc {
 		/// an elliptic structuring element, that is, a filled ellipse inscribed
 		/// into the rectangle Rect(0, 0, esize.width, 0.esize.height)
 		MORPH_ELLIPSE = 2,
+	}
+	
+	impl TryFrom<i32> for MorphShapes {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::MORPH_RECT),
+				1 => Ok(Self::MORPH_CROSS),
+				2 => Ok(Self::MORPH_ELLIPSE),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::MorphShapes"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::imgproc::MorphShapes }
@@ -2010,6 +2727,24 @@ pub mod imgproc {
 		MORPH_HITMISS = 7,
 	}
 	
+	impl TryFrom<i32> for MorphTypes {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::MORPH_ERODE),
+				1 => Ok(Self::MORPH_DILATE),
+				2 => Ok(Self::MORPH_OPEN),
+				3 => Ok(Self::MORPH_CLOSE),
+				4 => Ok(Self::MORPH_GRADIENT),
+				5 => Ok(Self::MORPH_TOPHAT),
+				6 => Ok(Self::MORPH_BLACKHAT),
+				7 => Ok(Self::MORPH_HITMISS),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::MorphTypes"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::imgproc::MorphTypes }
 	
 	/// types of intersection between rectangles
@@ -2022,6 +2757,19 @@ pub mod imgproc {
 		INTERSECT_PARTIAL = 1,
 		/// One of the rectangle is fully enclosed in the other
 		INTERSECT_FULL = 2,
+	}
+	
+	impl TryFrom<i32> for RectanglesIntersectTypes {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::INTERSECT_NONE),
+				1 => Ok(Self::INTERSECT_PARTIAL),
+				2 => Ok(Self::INTERSECT_FULL),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::RectanglesIntersectTypes"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::imgproc::RectanglesIntersectTypes }
@@ -2045,6 +2793,21 @@ pub mod imgproc {
 		RETR_FLOODFILL = 4,
 	}
 	
+	impl TryFrom<i32> for RetrievalModes {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::RETR_EXTERNAL),
+				1 => Ok(Self::RETR_LIST),
+				2 => Ok(Self::RETR_CCOMP),
+				3 => Ok(Self::RETR_TREE),
+				4 => Ok(Self::RETR_FLOODFILL),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::RetrievalModes"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::imgproc::RetrievalModes }
 	
 	/// Shape matching methods
@@ -2065,12 +2828,36 @@ pub mod imgproc {
 		CONTOURS_MATCH_I3 = 3,
 	}
 	
+	impl TryFrom<i32> for ShapeMatchModes {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				1 => Ok(Self::CONTOURS_MATCH_I1),
+				2 => Ok(Self::CONTOURS_MATCH_I2),
+				3 => Ok(Self::CONTOURS_MATCH_I3),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::ShapeMatchModes"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::imgproc::ShapeMatchModes }
 	
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum SpecialFilter {
 		FILTER_SCHARR = -1,
+	}
+	
+	impl TryFrom<i32> for SpecialFilter {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				-1 => Ok(Self::FILTER_SCHARR),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::SpecialFilter"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::imgproc::SpecialFilter }
@@ -2105,6 +2892,22 @@ pub mod imgproc {
 		TM_CCOEFF_NORMED = 5,
 	}
 	
+	impl TryFrom<i32> for TemplateMatchModes {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::TM_SQDIFF),
+				1 => Ok(Self::TM_SQDIFF_NORMED),
+				2 => Ok(Self::TM_CCORR),
+				3 => Ok(Self::TM_CCORR_NORMED),
+				4 => Ok(Self::TM_CCOEFF),
+				5 => Ok(Self::TM_CCOEFF_NORMED),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::TemplateMatchModes"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::imgproc::TemplateMatchModes }
 	
 	/// type of the threshold operation
@@ -2129,6 +2932,24 @@ pub mod imgproc {
 		THRESH_TRIANGLE = 16,
 	}
 	
+	impl TryFrom<i32> for ThresholdTypes {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::THRESH_BINARY),
+				1 => Ok(Self::THRESH_BINARY_INV),
+				2 => Ok(Self::THRESH_TRUNC),
+				3 => Ok(Self::THRESH_TOZERO),
+				4 => Ok(Self::THRESH_TOZERO_INV),
+				7 => Ok(Self::THRESH_MASK),
+				8 => Ok(Self::THRESH_OTSU),
+				16 => Ok(Self::THRESH_TRIANGLE),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::ThresholdTypes"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::imgproc::ThresholdTypes }
 	
 	/// \brief Specify the polar mapping mode
@@ -2141,6 +2962,18 @@ pub mod imgproc {
 		WARP_POLAR_LINEAR = 0,
 		/// Remaps an image to/from semilog-polar space.
 		WARP_POLAR_LOG = 256,
+	}
+	
+	impl TryFrom<i32> for WarpPolarMode {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::WARP_POLAR_LINEAR),
+				256 => Ok(Self::WARP_POLAR_LOG),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::WarpPolarMode"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::imgproc::WarpPolarMode }

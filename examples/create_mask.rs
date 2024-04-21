@@ -69,8 +69,10 @@ fn main() -> Result<()> {
 
 		move |event: i32, x: i32, y: i32, flags: i32| {
 			// can intercept specific mouse events here to don't update the mouse_data
-			if let Ok(mut mouse_data) = mouse_data.lock() {
-				*mouse_data = (mouse_event_from_i32(event), x, y, flags);
+			if let Ok(mouse_event) = highgui::MouseEventTypes::try_from(event) {
+				if let Ok(mut mouse_data) = mouse_data.lock() {
+					*mouse_data = (mouse_event, x, y, flags);
+				}
 			}
 			should_handle_mouse_event.store(true, Ordering::Relaxed);
 		}
@@ -171,20 +173,6 @@ fn main() -> Result<()> {
 			}
 		}
 	}
-}
-
-/// Converts an `i32` to a `opencv::highgui::MouseEventTypes`
-///
-/// # Panics
-///
-/// Panics if the argument less than 0 or greater than 11.
-fn mouse_event_from_i32(value: i32) -> highgui::MouseEventTypes {
-	(value.gt(&(highgui::MouseEventTypes::EVENT_MOUSEHWHEEL as i32/* 11 */))
-		|| (value.lt(&(highgui::MouseEventTypes::EVENT_MOUSEMOVE as i32/* 0 */))))
-	.then(|| panic!("Invalid cv::highgui::MouseEventTypes value: {}", value));
-
-	// Safe because of the previous check
-	unsafe { std::mem::transmute(value) }
 }
 
 fn state_transform(drawing_state: DrawingState, mouse_event: highgui::MouseEventTypes) -> DrawingState {

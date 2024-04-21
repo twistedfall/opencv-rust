@@ -1,3 +1,6 @@
+* 0.91.1
+  * Add `TryFrom<i32>` impls for enums to allow easy fallible conversions from `i32`.
+
 * 0.91.0
   * Multiple improvements for `InputArray`/`OutputArray`/`InputOutputArray` handling:
     * It's now possible to use the following types as `InputArray`: `&[u8]`/`[u8; N]`, `Vector<bool>` `Vector<GpuMat>` and the

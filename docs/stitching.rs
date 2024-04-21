@@ -83,6 +83,18 @@ pub mod stitching {
 		COLOR_GRAD = 1,
 	}
 	
+	impl TryFrom<i32> for Detail_DpSeamFinder_CostFunction {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::COLOR),
+				1 => Ok(Self::COLOR_GRAD),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::stitching::Detail_DpSeamFinder_CostFunction"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::stitching::Detail_DpSeamFinder_CostFunction }
 	
 	#[repr(C)]
@@ -90,6 +102,18 @@ pub mod stitching {
 	pub enum Detail_GraphCutSeamFinderBase_CostType {
 		COST_COLOR = 0,
 		COST_COLOR_GRAD = 1,
+	}
+	
+	impl TryFrom<i32> for Detail_GraphCutSeamFinderBase_CostType {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::COST_COLOR),
+				1 => Ok(Self::COST_COLOR_GRAD),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::stitching::Detail_GraphCutSeamFinderBase_CostType"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::stitching::Detail_GraphCutSeamFinderBase_CostType }
@@ -100,6 +124,19 @@ pub mod stitching {
 		WAVE_CORRECT_HORIZ = 0,
 		WAVE_CORRECT_VERT = 1,
 		WAVE_CORRECT_AUTO = 2,
+	}
+	
+	impl TryFrom<i32> for Detail_WaveCorrectKind {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::WAVE_CORRECT_HORIZ),
+				1 => Ok(Self::WAVE_CORRECT_VERT),
+				2 => Ok(Self::WAVE_CORRECT_AUTO),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::stitching::Detail_WaveCorrectKind"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::stitching::Detail_WaveCorrectKind }
@@ -119,6 +156,18 @@ pub mod stitching {
 		SCANS = 1,
 	}
 	
+	impl TryFrom<i32> for Stitcher_Mode {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::PANORAMA),
+				1 => Ok(Self::SCANS),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::stitching::Stitcher_Mode"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::stitching::Stitcher_Mode }
 	
 	#[repr(C)]
@@ -128,6 +177,20 @@ pub mod stitching {
 		ERR_NEED_MORE_IMGS = 1,
 		ERR_HOMOGRAPHY_EST_FAIL = 2,
 		ERR_CAMERA_PARAMS_ADJUST_FAIL = 3,
+	}
+	
+	impl TryFrom<i32> for Stitcher_Status {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::OK),
+				1 => Ok(Self::ERR_NEED_MORE_IMGS),
+				2 => Ok(Self::ERR_HOMOGRAPHY_EST_FAIL),
+				3 => Ok(Self::ERR_CAMERA_PARAMS_ADJUST_FAIL),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::stitching::Stitcher_Status"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::stitching::Stitcher_Status }

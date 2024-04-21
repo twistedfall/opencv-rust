@@ -30,6 +30,17 @@ pub mod rgbd {
 		DEPTH_CLEANER_NIL = 0,
 	}
 	
+	impl TryFrom<i32> for DepthCleaner_DEPTH_CLEANER_METHOD {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::DEPTH_CLEANER_NIL),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::rgbd::DepthCleaner_DEPTH_CLEANER_METHOD"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::rgbd::DepthCleaner_DEPTH_CLEANER_METHOD }
 	
 	#[repr(C)]
@@ -38,6 +49,19 @@ pub mod rgbd {
 		TSDF = 0,
 		HASHTSDF = 1,
 		COLOREDTSDF = 2,
+	}
+	
+	impl TryFrom<i32> for Kinfu_VolumeType {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::TSDF),
+				1 => Ok(Self::HASHTSDF),
+				2 => Ok(Self::COLOREDTSDF),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::rgbd::Kinfu_VolumeType"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::rgbd::Kinfu_VolumeType }
@@ -50,12 +74,36 @@ pub mod rgbd {
 		RGBD_NORMALS_METHOD_SRI = 2,
 	}
 	
+	impl TryFrom<i32> for RgbdNormals_RGBD_NORMALS_METHOD {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::RGBD_NORMALS_METHOD_FALS),
+				1 => Ok(Self::RGBD_NORMALS_METHOD_LINEMOD),
+				2 => Ok(Self::RGBD_NORMALS_METHOD_SRI),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::rgbd::RgbdNormals_RGBD_NORMALS_METHOD"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::rgbd::RgbdNormals_RGBD_NORMALS_METHOD }
 	
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum RgbdPlane_RGBD_PLANE_METHOD {
 		RGBD_PLANE_METHOD_DEFAULT = 0,
+	}
+	
+	impl TryFrom<i32> for RgbdPlane_RGBD_PLANE_METHOD {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::RGBD_PLANE_METHOD_DEFAULT),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::rgbd::RgbdPlane_RGBD_PLANE_METHOD"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::rgbd::RgbdPlane_RGBD_PLANE_METHOD }

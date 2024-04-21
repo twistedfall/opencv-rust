@@ -67,6 +67,21 @@ pub mod ovis {
 		ENTITY_CAST_SHADOWS = 4,
 	}
 	
+	impl TryFrom<i32> for EntityProperty {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::ENTITY_MATERIAL),
+				1 => Ok(Self::ENTITY_SCALE),
+				2 => Ok(Self::ENTITY_AABB_WORLD),
+				3 => Ok(Self::ENTITY_ANIMBLEND_MODE),
+				4 => Ok(Self::ENTITY_CAST_SHADOWS),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::ovis::EntityProperty"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::ovis::EntityProperty }
 	
 	#[repr(C)]
@@ -83,6 +98,27 @@ pub mod ovis {
 		MATERIAL_TEXTURE1 = 6,
 		MATERIAL_TEXTURE2 = 7,
 		MATERIAL_TEXTURE3 = 8,
+	}
+	
+	impl TryFrom<i32> for MaterialProperty {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::MATERIAL_POINT_SIZE),
+				1 => Ok(Self::MATERIAL_LINE_WIDTH),
+				2 => Ok(Self::MATERIAL_OPACITY),
+				3 => Ok(Self::MATERIAL_EMISSIVE),
+				4 => Ok(Self::MATERIAL_DIFFUSE),
+				5 => Ok(Self::MATERIAL_TEXTURE0),
+				// Duplicate of MATERIAL_TEXTURE0
+				// 5 => Ok(Self::MATERIAL_TEXTURE),
+				6 => Ok(Self::MATERIAL_TEXTURE1),
+				7 => Ok(Self::MATERIAL_TEXTURE2),
+				8 => Ok(Self::MATERIAL_TEXTURE3),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::ovis::MaterialProperty"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::ovis::MaterialProperty }
@@ -102,6 +138,22 @@ pub mod ovis {
 		SCENE_OFFSCREEN = 16,
 		/// Enable real-time shadows in the scene. All entities cast shadows by default. Control via [ENTITY_CAST_SHADOWS]
 		SCENE_SHADOWS = 32,
+	}
+	
+	impl TryFrom<i32> for SceneSettings {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				1 => Ok(Self::SCENE_SEPARATE),
+				2 => Ok(Self::SCENE_INTERACTIVE),
+				4 => Ok(Self::SCENE_SHOW_CS_CROSS),
+				8 => Ok(Self::SCENE_AA),
+				16 => Ok(Self::SCENE_OFFSCREEN),
+				32 => Ok(Self::SCENE_SHADOWS),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::ovis::SceneSettings"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::ovis::SceneSettings }

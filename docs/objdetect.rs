@@ -172,6 +172,20 @@ pub mod objdetect {
 		CORNER_REFINE_APRILTAG = 3,
 	}
 	
+	impl TryFrom<i32> for CornerRefineMethod {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::CORNER_REFINE_NONE),
+				1 => Ok(Self::CORNER_REFINE_SUBPIX),
+				2 => Ok(Self::CORNER_REFINE_CONTOUR),
+				3 => Ok(Self::CORNER_REFINE_APRILTAG),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::objdetect::CornerRefineMethod"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::objdetect::CornerRefineMethod }
 	
 	#[repr(C)]
@@ -181,6 +195,20 @@ pub mod objdetect {
 		DETECTED = 1,
 		DETECTED_TEMPORARY_LOST = 2,
 		WRONG_OBJECT = 3,
+	}
+	
+	impl TryFrom<i32> for DetectionBasedTracker_ObjectStatus {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::DETECTED_NOT_SHOWN_YET),
+				1 => Ok(Self::DETECTED),
+				2 => Ok(Self::DETECTED_TEMPORARY_LOST),
+				3 => Ok(Self::WRONG_OBJECT),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::objdetect::DetectionBasedTracker_ObjectStatus"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::objdetect::DetectionBasedTracker_ObjectStatus }
@@ -193,6 +221,18 @@ pub mod objdetect {
 		FR_NORM_L2 = 1,
 	}
 	
+	impl TryFrom<i32> for FaceRecognizerSF_DisType {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::FR_COSINE),
+				1 => Ok(Self::FR_NORM_L2),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::objdetect::FaceRecognizerSF_DisType"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::objdetect::FaceRecognizerSF_DisType }
 	
 	#[repr(C)]
@@ -202,6 +242,18 @@ pub mod objdetect {
 		DESCR_FORMAT_ROW_BY_ROW = 1,
 	}
 	
+	impl TryFrom<i32> for HOGDescriptor_DescriptorStorageFormat {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::DESCR_FORMAT_COL_BY_COL),
+				1 => Ok(Self::DESCR_FORMAT_ROW_BY_ROW),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::objdetect::HOGDescriptor_DescriptorStorageFormat"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::objdetect::HOGDescriptor_DescriptorStorageFormat }
 	
 	#[repr(C)]
@@ -209,6 +261,17 @@ pub mod objdetect {
 	pub enum HOGDescriptor_HistogramNormType {
 		/// Default histogramNormType
 		L2Hys = 0,
+	}
+	
+	impl TryFrom<i32> for HOGDescriptor_HistogramNormType {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::L2Hys),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::objdetect::HOGDescriptor_HistogramNormType"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::objdetect::HOGDescriptor_HistogramNormType }
@@ -267,6 +330,38 @@ pub mod objdetect {
 		DICT_ARUCO_MIP_36h12 = 21,
 	}
 	
+	impl TryFrom<i32> for PredefinedDictionaryType {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::DICT_4X4_50),
+				1 => Ok(Self::DICT_4X4_100),
+				2 => Ok(Self::DICT_4X4_250),
+				3 => Ok(Self::DICT_4X4_1000),
+				4 => Ok(Self::DICT_5X5_50),
+				5 => Ok(Self::DICT_5X5_100),
+				6 => Ok(Self::DICT_5X5_250),
+				7 => Ok(Self::DICT_5X5_1000),
+				8 => Ok(Self::DICT_6X6_50),
+				9 => Ok(Self::DICT_6X6_100),
+				10 => Ok(Self::DICT_6X6_250),
+				11 => Ok(Self::DICT_6X6_1000),
+				12 => Ok(Self::DICT_7X7_50),
+				13 => Ok(Self::DICT_7X7_100),
+				14 => Ok(Self::DICT_7X7_250),
+				15 => Ok(Self::DICT_7X7_1000),
+				16 => Ok(Self::DICT_ARUCO_ORIGINAL),
+				17 => Ok(Self::DICT_APRILTAG_16h5),
+				18 => Ok(Self::DICT_APRILTAG_25h9),
+				19 => Ok(Self::DICT_APRILTAG_36h10),
+				20 => Ok(Self::DICT_APRILTAG_36h11),
+				21 => Ok(Self::DICT_ARUCO_MIP_36h12),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::objdetect::PredefinedDictionaryType"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::objdetect::PredefinedDictionaryType }
 	
 	#[repr(C)]
@@ -278,12 +373,37 @@ pub mod objdetect {
 		CORRECT_LEVEL_H = 3,
 	}
 	
+	impl TryFrom<i32> for QRCodeEncoder_CorrectionLevel {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::CORRECT_LEVEL_L),
+				1 => Ok(Self::CORRECT_LEVEL_M),
+				2 => Ok(Self::CORRECT_LEVEL_Q),
+				3 => Ok(Self::CORRECT_LEVEL_H),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::objdetect::QRCodeEncoder_CorrectionLevel"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::objdetect::QRCodeEncoder_CorrectionLevel }
 	
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum QRCodeEncoder_ECIEncodings {
 		ECI_UTF8 = 26,
+	}
+	
+	impl TryFrom<i32> for QRCodeEncoder_ECIEncodings {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				26 => Ok(Self::ECI_UTF8),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::objdetect::QRCodeEncoder_ECIEncodings"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::objdetect::QRCodeEncoder_ECIEncodings }
@@ -298,6 +418,23 @@ pub mod objdetect {
 		MODE_ECI = 7,
 		MODE_KANJI = 8,
 		MODE_STRUCTURED_APPEND = 3,
+	}
+	
+	impl TryFrom<i32> for QRCodeEncoder_EncodeMode {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				-1 => Ok(Self::MODE_AUTO),
+				1 => Ok(Self::MODE_NUMERIC),
+				2 => Ok(Self::MODE_ALPHANUMERIC),
+				4 => Ok(Self::MODE_BYTE),
+				7 => Ok(Self::MODE_ECI),
+				8 => Ok(Self::MODE_KANJI),
+				3 => Ok(Self::MODE_STRUCTURED_APPEND),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::objdetect::QRCodeEncoder_EncodeMode"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::objdetect::QRCodeEncoder_EncodeMode }

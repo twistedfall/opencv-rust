@@ -894,6 +894,22 @@ pub mod core {
 		ACCESS_FAST = 67108864,
 	}
 	
+	impl TryFrom<i32> for AccessFlag {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				16777216 => Ok(Self::ACCESS_READ),
+				33554432 => Ok(Self::ACCESS_WRITE),
+				50331648 => Ok(Self::ACCESS_RW),
+				// Duplicate of ACCESS_RW
+				// 50331648 => Ok(Self::ACCESS_MASK),
+				67108864 => Ok(Self::ACCESS_FAST),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::AccessFlag"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { core::AccessFlag }
 	
 	/// Various border types, image boundaries are denoted with `|`
@@ -924,6 +940,27 @@ pub mod core {
 		BORDER_ISOLATED = 16,
 	}
 	
+	impl TryFrom<i32> for BorderTypes {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::BORDER_CONSTANT),
+				1 => Ok(Self::BORDER_REPLICATE),
+				2 => Ok(Self::BORDER_REFLECT),
+				3 => Ok(Self::BORDER_WRAP),
+				4 => Ok(Self::BORDER_REFLECT_101),
+				5 => Ok(Self::BORDER_TRANSPARENT),
+				// Duplicate of BORDER_REFLECT_101
+				// 4 => Ok(Self::BORDER_REFLECT101),
+				// Duplicate of BORDER_REFLECT101
+				// 4 => Ok(Self::BORDER_DEFAULT),
+				16 => Ok(Self::BORDER_ISOLATED),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::BorderTypes"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { core::BorderTypes }
 	
 	#[repr(C)]
@@ -932,6 +969,19 @@ pub mod core {
 		READ_ONLY = 35000,
 		WRITE_ONLY = 35001,
 		READ_WRITE = 35002,
+	}
+	
+	impl TryFrom<i32> for Buffer_Access {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				35000 => Ok(Self::READ_ONLY),
+				35001 => Ok(Self::WRITE_ONLY),
+				35002 => Ok(Self::READ_WRITE),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::Buffer_Access"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { core::Buffer_Access }
@@ -948,6 +998,20 @@ pub mod core {
 		PIXEL_PACK_BUFFER = 35051,
 		/// The buffer will be used for writing to OpenGL textures
 		PIXEL_UNPACK_BUFFER = 35052,
+	}
+	
+	impl TryFrom<i32> for Buffer_Target {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				34962 => Ok(Self::ARRAY_BUFFER),
+				34963 => Ok(Self::ELEMENT_ARRAY_BUFFER),
+				35051 => Ok(Self::PIXEL_PACK_BUFFER),
+				35052 => Ok(Self::PIXEL_UNPACK_BUFFER),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::Buffer_Target"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { core::Buffer_Target }
@@ -968,6 +1032,22 @@ pub mod core {
 		CMP_LE = 4,
 		/// src1 is unequal to src2.
 		CMP_NE = 5,
+	}
+	
+	impl TryFrom<i32> for CmpTypes {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::CMP_EQ),
+				1 => Ok(Self::CMP_GT),
+				2 => Ok(Self::CMP_GE),
+				3 => Ok(Self::CMP_LT),
+				4 => Ok(Self::CMP_LE),
+				5 => Ok(Self::CMP_NE),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::CmpTypes"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { core::CmpTypes }
@@ -1079,6 +1159,71 @@ pub mod core {
 		OpenCLNoAMDBlasFft = -223,
 	}
 	
+	impl TryFrom<i32> for Code {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::StsOk),
+				-1 => Ok(Self::StsBackTrace),
+				-2 => Ok(Self::StsError),
+				-3 => Ok(Self::StsInternal),
+				-4 => Ok(Self::StsNoMem),
+				-5 => Ok(Self::StsBadArg),
+				-6 => Ok(Self::StsBadFunc),
+				-7 => Ok(Self::StsNoConv),
+				-8 => Ok(Self::StsAutoTrace),
+				-9 => Ok(Self::HeaderIsNull),
+				-10 => Ok(Self::BadImageSize),
+				-11 => Ok(Self::BadOffset),
+				-12 => Ok(Self::BadDataPtr),
+				-13 => Ok(Self::BadStep),
+				-14 => Ok(Self::BadModelOrChSeq),
+				-15 => Ok(Self::BadNumChannels),
+				-16 => Ok(Self::BadNumChannel1U),
+				-17 => Ok(Self::BadDepth),
+				-18 => Ok(Self::BadAlphaChannel),
+				-19 => Ok(Self::BadOrder),
+				-20 => Ok(Self::BadOrigin),
+				-21 => Ok(Self::BadAlign),
+				-22 => Ok(Self::BadCallBack),
+				-23 => Ok(Self::BadTileSize),
+				-24 => Ok(Self::BadCOI),
+				-25 => Ok(Self::BadROISize),
+				-26 => Ok(Self::MaskIsTiled),
+				-27 => Ok(Self::StsNullPtr),
+				-28 => Ok(Self::StsVecLengthErr),
+				-29 => Ok(Self::StsFilterStructContentErr),
+				-30 => Ok(Self::StsKernelStructContentErr),
+				-31 => Ok(Self::StsFilterOffsetErr),
+				-201 => Ok(Self::StsBadSize),
+				-202 => Ok(Self::StsDivByZero),
+				-203 => Ok(Self::StsInplaceNotSupported),
+				-204 => Ok(Self::StsObjectNotFound),
+				-205 => Ok(Self::StsUnmatchedFormats),
+				-206 => Ok(Self::StsBadFlag),
+				-207 => Ok(Self::StsBadPoint),
+				-208 => Ok(Self::StsBadMask),
+				-209 => Ok(Self::StsUnmatchedSizes),
+				-210 => Ok(Self::StsUnsupportedFormat),
+				-211 => Ok(Self::StsOutOfRange),
+				-212 => Ok(Self::StsParseError),
+				-213 => Ok(Self::StsNotImplemented),
+				-214 => Ok(Self::StsBadMemBlock),
+				-215 => Ok(Self::StsAssert),
+				-216 => Ok(Self::GpuNotSupported),
+				-217 => Ok(Self::GpuApiCallError),
+				-218 => Ok(Self::OpenGlNotSupported),
+				-219 => Ok(Self::OpenGlApiCallError),
+				-220 => Ok(Self::OpenCLApiCallError),
+				-221 => Ok(Self::OpenCLDoubleNotSupported),
+				-222 => Ok(Self::OpenCLInitError),
+				-223 => Ok(Self::OpenCLNoAMDBlasFft),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::Code"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { core::Code }
 	
 	/// Covariation flags
@@ -1117,6 +1262,22 @@ pub mod core {
 		/// specified, all the input vectors are stored as columns of the samples matrix. mean should be a
 		/// single-column vector in this case.
 		COVAR_COLS = 16,
+	}
+	
+	impl TryFrom<i32> for CovarFlags {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::COVAR_SCRAMBLED),
+				1 => Ok(Self::COVAR_NORMAL),
+				2 => Ok(Self::COVAR_USE_AVG),
+				4 => Ok(Self::COVAR_SCALE),
+				8 => Ok(Self::COVAR_ROWS),
+				16 => Ok(Self::COVAR_COLS),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::CovarFlags"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { core::CovarFlags }
@@ -1182,6 +1343,64 @@ pub mod core {
 		CPU_MAX_FEATURE = 512,
 	}
 	
+	impl TryFrom<i32> for CpuFeatures {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				1 => Ok(Self::CPU_MMX),
+				2 => Ok(Self::CPU_SSE),
+				3 => Ok(Self::CPU_SSE2),
+				4 => Ok(Self::CPU_SSE3),
+				5 => Ok(Self::CPU_SSSE3),
+				6 => Ok(Self::CPU_SSE4_1),
+				7 => Ok(Self::CPU_SSE4_2),
+				8 => Ok(Self::CPU_POPCNT),
+				9 => Ok(Self::CPU_FP16),
+				10 => Ok(Self::CPU_AVX),
+				11 => Ok(Self::CPU_AVX2),
+				12 => Ok(Self::CPU_FMA3),
+				13 => Ok(Self::CPU_AVX_512F),
+				14 => Ok(Self::CPU_AVX_512BW),
+				15 => Ok(Self::CPU_AVX_512CD),
+				16 => Ok(Self::CPU_AVX_512DQ),
+				17 => Ok(Self::CPU_AVX_512ER),
+				18 => Ok(Self::CPU_AVX_512IFMA512),
+				// Duplicate of CPU_AVX_512IFMA512
+				// 18 => Ok(Self::CPU_AVX_512IFMA),
+				19 => Ok(Self::CPU_AVX_512PF),
+				20 => Ok(Self::CPU_AVX_512VBMI),
+				21 => Ok(Self::CPU_AVX_512VL),
+				22 => Ok(Self::CPU_AVX_512VBMI2),
+				23 => Ok(Self::CPU_AVX_512VNNI),
+				24 => Ok(Self::CPU_AVX_512BITALG),
+				25 => Ok(Self::CPU_AVX_512VPOPCNTDQ),
+				26 => Ok(Self::CPU_AVX_5124VNNIW),
+				27 => Ok(Self::CPU_AVX_5124FMAPS),
+				100 => Ok(Self::CPU_NEON),
+				101 => Ok(Self::CPU_NEON_DOTPROD),
+				102 => Ok(Self::CPU_NEON_FP16),
+				103 => Ok(Self::CPU_NEON_BF16),
+				150 => Ok(Self::CPU_MSA),
+				170 => Ok(Self::CPU_RISCVV),
+				200 => Ok(Self::CPU_VSX),
+				201 => Ok(Self::CPU_VSX3),
+				210 => Ok(Self::CPU_RVV),
+				230 => Ok(Self::CPU_LSX),
+				231 => Ok(Self::CPU_LASX),
+				256 => Ok(Self::CPU_AVX512_SKX),
+				257 => Ok(Self::CPU_AVX512_COMMON),
+				258 => Ok(Self::CPU_AVX512_KNL),
+				259 => Ok(Self::CPU_AVX512_KNM),
+				260 => Ok(Self::CPU_AVX512_CNL),
+				261 => Ok(Self::CPU_AVX512_CLX),
+				262 => Ok(Self::CPU_AVX512_ICL),
+				512 => Ok(Self::CPU_MAX_FEATURE),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::CpuFeatures"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { core::CpuFeatures }
 	
 	/// matrix decomposition types
@@ -1208,6 +1427,22 @@ pub mod core {
 		DECOMP_NORMAL = 16,
 	}
 	
+	impl TryFrom<i32> for DecompTypes {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::DECOMP_LU),
+				1 => Ok(Self::DECOMP_SVD),
+				2 => Ok(Self::DECOMP_EIG),
+				3 => Ok(Self::DECOMP_CHOLESKY),
+				4 => Ok(Self::DECOMP_QR),
+				16 => Ok(Self::DECOMP_NORMAL),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::DecompTypes"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { core::DecompTypes }
 	
 	#[repr(C)]
@@ -1223,6 +1458,24 @@ pub mod core {
 		CV__LAST_TEST_OP = 7,
 	}
 	
+	impl TryFrom<i32> for Detail_TestOp {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::TEST_CUSTOM),
+				1 => Ok(Self::TEST_EQ),
+				2 => Ok(Self::TEST_NE),
+				3 => Ok(Self::TEST_LE),
+				4 => Ok(Self::TEST_LT),
+				5 => Ok(Self::TEST_GE),
+				6 => Ok(Self::TEST_GT),
+				7 => Ok(Self::CV__LAST_TEST_OP),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::Detail_TestOp"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { core::Detail_TestOp }
 	
 	#[repr(C)]
@@ -1236,6 +1489,20 @@ pub mod core {
 		ComputeModeProhibited = 2,
 		/// < compute-exclusive-process mode (Many threads in one process will be able to use cudaSetDevice with this device)
 		ComputeModeExclusiveProcess = 3,
+	}
+	
+	impl TryFrom<i32> for DeviceInfo_ComputeMode {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::ComputeModeDefault),
+				1 => Ok(Self::ComputeModeExclusive),
+				2 => Ok(Self::ComputeModeProhibited),
+				3 => Ok(Self::ComputeModeExclusiveProcess),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::DeviceInfo_ComputeMode"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { core::DeviceInfo_ComputeMode }
@@ -1285,6 +1552,26 @@ pub mod core {
 		// DCT_ROWS = 4,
 	}
 	
+	impl TryFrom<i32> for DftFlags {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				1 => Ok(Self::DFT_INVERSE),
+				2 => Ok(Self::DFT_SCALE),
+				4 => Ok(Self::DFT_ROWS),
+				16 => Ok(Self::DFT_COMPLEX_OUTPUT),
+				32 => Ok(Self::DFT_REAL_OUTPUT),
+				64 => Ok(Self::DFT_COMPLEX_INPUT),
+				// Duplicate of DFT_INVERSE
+				// 1 => Ok(Self::DCT_INVERSE),
+				// Duplicate of DFT_ROWS
+				// 4 => Ok(Self::DCT_ROWS),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::DftFlags"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { core::DftFlags }
 	
 	#[repr(C)]
@@ -1300,6 +1587,20 @@ pub mod core {
 		INTERPROCESS = 4,
 	}
 	
+	impl TryFrom<i32> for Event_CreateFlags {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::DEFAULT),
+				1 => Ok(Self::BLOCKING_SYNC),
+				2 => Ok(Self::DISABLE_TIMING),
+				4 => Ok(Self::INTERPROCESS),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::Event_CreateFlags"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { core::Event_CreateFlags }
 	
 	#[repr(C)]
@@ -1308,6 +1609,19 @@ pub mod core {
 		FLAGS_NONE = 0,
 		FLAGS_MAPPING = 1,
 		FLAGS_EXPAND_SAME_NAMES = 2,
+	}
+	
+	impl TryFrom<i32> for FLAGS {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::FLAGS_NONE),
+				1 => Ok(Self::FLAGS_MAPPING),
+				2 => Ok(Self::FLAGS_EXPAND_SAME_NAMES),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::FLAGS"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { core::FLAGS }
@@ -1336,6 +1650,36 @@ pub mod core {
 		// WARP_SHUFFLE_FUNCTIONS = 30,
 		// Duplicate, use FEATURE_SET_COMPUTE_35 instead
 		// DYNAMIC_PARALLELISM = 35,
+	}
+	
+	impl TryFrom<i32> for FeatureSet {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				10 => Ok(Self::FEATURE_SET_COMPUTE_10),
+				11 => Ok(Self::FEATURE_SET_COMPUTE_11),
+				12 => Ok(Self::FEATURE_SET_COMPUTE_12),
+				13 => Ok(Self::FEATURE_SET_COMPUTE_13),
+				20 => Ok(Self::FEATURE_SET_COMPUTE_20),
+				21 => Ok(Self::FEATURE_SET_COMPUTE_21),
+				30 => Ok(Self::FEATURE_SET_COMPUTE_30),
+				32 => Ok(Self::FEATURE_SET_COMPUTE_32),
+				35 => Ok(Self::FEATURE_SET_COMPUTE_35),
+				50 => Ok(Self::FEATURE_SET_COMPUTE_50),
+				// Duplicate of FEATURE_SET_COMPUTE_11
+				// 11 => Ok(Self::GLOBAL_ATOMICS),
+				// Duplicate of FEATURE_SET_COMPUTE_12
+				// 12 => Ok(Self::SHARED_ATOMICS),
+				// Duplicate of FEATURE_SET_COMPUTE_13
+				// 13 => Ok(Self::NATIVE_DOUBLE),
+				// Duplicate of FEATURE_SET_COMPUTE_30
+				// 30 => Ok(Self::WARP_SHUFFLE_FUNCTIONS),
+				// Duplicate of FEATURE_SET_COMPUTE_35
+				// 35 => Ok(Self::DYNAMIC_PARALLELISM),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::FeatureSet"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { core::FeatureSet }
@@ -1370,6 +1714,28 @@ pub mod core {
 		WRITE_BASE64 = 65,
 	}
 	
+	impl TryFrom<i32> for FileStorage_Mode {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::READ),
+				1 => Ok(Self::WRITE),
+				2 => Ok(Self::APPEND),
+				4 => Ok(Self::MEMORY),
+				56 => Ok(Self::FORMAT_MASK),
+				// Duplicate of READ
+				// 0 => Ok(Self::FORMAT_AUTO),
+				8 => Ok(Self::FORMAT_XML),
+				16 => Ok(Self::FORMAT_YAML),
+				24 => Ok(Self::FORMAT_JSON),
+				64 => Ok(Self::BASE64),
+				65 => Ok(Self::WRITE_BASE64),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::FileStorage_Mode"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { core::FileStorage_Mode }
 	
 	#[repr(C)]
@@ -1379,6 +1745,20 @@ pub mod core {
 		VALUE_EXPECTED = 1,
 		NAME_EXPECTED = 2,
 		INSIDE_MAP = 4,
+	}
+	
+	impl TryFrom<i32> for FileStorage_State {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::UNDEFINED),
+				1 => Ok(Self::VALUE_EXPECTED),
+				2 => Ok(Self::NAME_EXPECTED),
+				4 => Ok(Self::INSIDE_MAP),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::FileStorage_State"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { core::FileStorage_State }
@@ -1392,6 +1772,22 @@ pub mod core {
 		FMT_PYTHON = 3,
 		FMT_NUMPY = 4,
 		FMT_C = 5,
+	}
+	
+	impl TryFrom<i32> for Formatter_FormatType {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::FMT_DEFAULT),
+				1 => Ok(Self::FMT_MATLAB),
+				2 => Ok(Self::FMT_CSV),
+				3 => Ok(Self::FMT_PYTHON),
+				4 => Ok(Self::FMT_NUMPY),
+				5 => Ok(Self::FMT_C),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::Formatter_FormatType"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { core::Formatter_FormatType }
@@ -1408,6 +1804,19 @@ pub mod core {
 		GEMM_3_T = 4,
 	}
 	
+	impl TryFrom<i32> for GemmFlags {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				1 => Ok(Self::GEMM_1_T),
+				2 => Ok(Self::GEMM_2_T),
+				4 => Ok(Self::GEMM_3_T),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::GemmFlags"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { core::GemmFlags }
 	
 	#[repr(C)]
@@ -1418,6 +1827,19 @@ pub mod core {
 		WRITE_COMBINED = 4,
 	}
 	
+	impl TryFrom<i32> for HostMem_AllocType {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				1 => Ok(Self::PAGE_LOCKED),
+				2 => Ok(Self::SHARED),
+				4 => Ok(Self::WRITE_COMBINED),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::HostMem_AllocType"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { core::HostMem_AllocType }
 	
 	#[repr(C)]
@@ -1426,6 +1848,19 @@ pub mod core {
 		IMPL_PLAIN = 0,
 		IMPL_IPP = 1,
 		IMPL_OPENCL = 2,
+	}
+	
+	impl TryFrom<i32> for IMPL {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::IMPL_PLAIN),
+				1 => Ok(Self::IMPL_IPP),
+				2 => Ok(Self::IMPL_OPENCL),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::IMPL"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { core::IMPL }
@@ -1443,6 +1878,19 @@ pub mod core {
 		/// further attempts, use the random or semi-random centers. Use one of KMEANS_\*_CENTERS flag
 		/// to specify the exact method.
 		KMEANS_USE_INITIAL_LABELS = 1,
+	}
+	
+	impl TryFrom<i32> for KmeansFlags {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::KMEANS_RANDOM_CENTERS),
+				2 => Ok(Self::KMEANS_PP_CENTERS),
+				1 => Ok(Self::KMEANS_USE_INITIAL_LABELS),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::KmeansFlags"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { core::KmeansFlags }
@@ -1466,6 +1914,24 @@ pub mod core {
 		/// Verbose (trace) messages. Requires verbosity level. Disabled in the "Release" build.
 		LOG_LEVEL_VERBOSE = 6,
 		ENUM_LOG_LEVEL_FORCE_INT = 2147483647,
+	}
+	
+	impl TryFrom<i32> for LogLevel {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::LOG_LEVEL_SILENT),
+				1 => Ok(Self::LOG_LEVEL_FATAL),
+				2 => Ok(Self::LOG_LEVEL_ERROR),
+				3 => Ok(Self::LOG_LEVEL_WARNING),
+				4 => Ok(Self::LOG_LEVEL_INFO),
+				5 => Ok(Self::LOG_LEVEL_DEBUG),
+				6 => Ok(Self::LOG_LEVEL_VERBOSE),
+				2147483647 => Ok(Self::ENUM_LOG_LEVEL_FORCE_INT),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::LogLevel"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { core::LogLevel }
@@ -1499,6 +1965,26 @@ pub mod core {
 		NORM_MINMAX = 32,
 	}
 	
+	impl TryFrom<i32> for NormTypes {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				1 => Ok(Self::NORM_INF),
+				2 => Ok(Self::NORM_L1),
+				4 => Ok(Self::NORM_L2),
+				5 => Ok(Self::NORM_L2SQR),
+				6 => Ok(Self::NORM_HAMMING),
+				7 => Ok(Self::NORM_HAMMING2),
+				// Duplicate of NORM_HAMMING2
+				// 7 => Ok(Self::NORM_TYPE_MASK),
+				8 => Ok(Self::NORM_RELATIVE),
+				32 => Ok(Self::NORM_MINMAX),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::NormTypes"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { core::NormTypes }
 	
 	#[repr(C)]
@@ -1508,6 +1994,20 @@ pub mod core {
 		OCL_VECTOR_MAX = 1,
 		// Duplicate, use OCL_VECTOR_OWN instead
 		// OCL_VECTOR_DEFAULT = 0,
+	}
+	
+	impl TryFrom<i32> for OclVectorStrategy {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::OCL_VECTOR_OWN),
+				1 => Ok(Self::OCL_VECTOR_MAX),
+				// Duplicate of OCL_VECTOR_OWN
+				// 0 => Ok(Self::OCL_VECTOR_DEFAULT),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::OclVectorStrategy"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { core::OclVectorStrategy }
@@ -1520,6 +2020,19 @@ pub mod core {
 		/// indicates that the input samples are stored as matrix columns
 		DATA_AS_COL = 1,
 		USE_AVG = 2,
+	}
+	
+	impl TryFrom<i32> for PCA_Flags {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::DATA_AS_ROW),
+				1 => Ok(Self::DATA_AS_COL),
+				2 => Ok(Self::USE_AVG),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::PCA_Flags"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { core::PCA_Flags }
@@ -1541,6 +2054,28 @@ pub mod core {
 		SCALAR = 12,
 	}
 	
+	impl TryFrom<i32> for Param {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::INT),
+				1 => Ok(Self::BOOLEAN),
+				2 => Ok(Self::REAL),
+				3 => Ok(Self::STRING),
+				4 => Ok(Self::MAT),
+				5 => Ok(Self::MAT_VECTOR),
+				6 => Ok(Self::ALGORITHM),
+				7 => Ok(Self::FLOAT),
+				8 => Ok(Self::UNSIGNED_INT),
+				9 => Ok(Self::UINT64),
+				11 => Ok(Self::UCHAR),
+				12 => Ok(Self::SCALAR),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::Param"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { core::Param }
 	
 	#[repr(C)]
@@ -1556,6 +2091,21 @@ pub mod core {
 		REDUCE_MIN = 3,
 		/// the output is the sum of all squared rows/columns of the matrix.
 		REDUCE_SUM2 = 4,
+	}
+	
+	impl TryFrom<i32> for ReduceTypes {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::REDUCE_SUM),
+				1 => Ok(Self::REDUCE_AVG),
+				2 => Ok(Self::REDUCE_MAX),
+				3 => Ok(Self::REDUCE_MIN),
+				4 => Ok(Self::REDUCE_SUM2),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::ReduceTypes"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { core::ReduceTypes }
@@ -1576,6 +2126,26 @@ pub mod core {
 		POLYGON = 9,
 	}
 	
+	impl TryFrom<i32> for RenderModes {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::POINTS),
+				1 => Ok(Self::LINES),
+				2 => Ok(Self::LINE_LOOP),
+				3 => Ok(Self::LINE_STRIP),
+				4 => Ok(Self::TRIANGLES),
+				5 => Ok(Self::TRIANGLE_STRIP),
+				6 => Ok(Self::TRIANGLE_FAN),
+				7 => Ok(Self::QUADS),
+				8 => Ok(Self::QUAD_STRIP),
+				9 => Ok(Self::POLYGON),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::RenderModes"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { core::RenderModes }
 	
 	#[repr(C)]
@@ -1587,6 +2157,19 @@ pub mod core {
 		ROTATE_180 = 1,
 		/// Rotate 270 degrees clockwise
 		ROTATE_90_COUNTERCLOCKWISE = 2,
+	}
+	
+	impl TryFrom<i32> for RotateFlags {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::ROTATE_90_CLOCKWISE),
+				1 => Ok(Self::ROTATE_180),
+				2 => Ok(Self::ROTATE_90_COUNTERCLOCKWISE),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::RotateFlags"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { core::RotateFlags }
@@ -1606,6 +2189,19 @@ pub mod core {
 		FULL_UV = 4,
 	}
 	
+	impl TryFrom<i32> for SVD_Flags {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				1 => Ok(Self::MODIFY_A),
+				2 => Ok(Self::NO_UV),
+				4 => Ok(Self::FULL_UV),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::SVD_Flags"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { core::SVD_Flags }
 	
 	/// return codes for cv::solveLP() function
@@ -1622,6 +2218,21 @@ pub mod core {
 		SOLVELP_SINGLE = 0,
 		/// there are multiple maxima for target function - the arbitrary one is returned
 		SOLVELP_MULTI = 1,
+	}
+	
+	impl TryFrom<i32> for SolveLPResult {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				-3 => Ok(Self::SOLVELP_LOST),
+				-2 => Ok(Self::SOLVELP_UNBOUNDED),
+				-1 => Ok(Self::SOLVELP_UNFEASIBLE),
+				0 => Ok(Self::SOLVELP_SINGLE),
+				1 => Ok(Self::SOLVELP_MULTI),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::SolveLPResult"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { core::SolveLPResult }
@@ -1645,6 +2256,21 @@ pub mod core {
 		SORT_DESCENDING = 16,
 	}
 	
+	impl TryFrom<i32> for SortFlags {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::SORT_EVERY_ROW),
+				1 => Ok(Self::SORT_EVERY_COLUMN),
+				// Duplicate of SORT_EVERY_ROW
+				// 0 => Ok(Self::SORT_ASCENDING),
+				16 => Ok(Self::SORT_DESCENDING),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::SortFlags"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { core::SortFlags }
 	
 	#[repr(C)]
@@ -1654,6 +2280,20 @@ pub mod core {
 		TYPE_MARKER = 1,
 		TYPE_WRAPPER = 2,
 		TYPE_FUN = 3,
+	}
+	
+	impl TryFrom<i32> for TYPE {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::TYPE_GENERAL),
+				1 => Ok(Self::TYPE_MARKER),
+				2 => Ok(Self::TYPE_WRAPPER),
+				3 => Ok(Self::TYPE_FUN),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::TYPE"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { core::TYPE }
@@ -1671,6 +2311,20 @@ pub mod core {
 		EPS = 2,
 	}
 	
+	impl TryFrom<i32> for TermCriteria_Type {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				1 => Ok(Self::COUNT),
+				// Duplicate of COUNT
+				// 1 => Ok(Self::MAX_ITER),
+				2 => Ok(Self::EPS),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::TermCriteria_Type"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { core::TermCriteria_Type }
 	
 	/// An Image Format describes the way that the images in Textures store their data.
@@ -1686,6 +2340,20 @@ pub mod core {
 		RGBA = 6408,
 	}
 	
+	impl TryFrom<i32> for Texture2D_Format {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::NONE),
+				6402 => Ok(Self::DEPTH_COMPONENT),
+				6407 => Ok(Self::RGB),
+				6408 => Ok(Self::RGBA),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::Texture2D_Format"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { core::Texture2D_Format }
 	
 	#[repr(C)]
@@ -1699,6 +2367,24 @@ pub mod core {
 		USER_ALLOCATED = 32,
 		DEVICE_MEM_MAPPED = 64,
 		ASYNC_CLEANUP = 128,
+	}
+	
+	impl TryFrom<i32> for UMatData_MemoryFlag {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				1 => Ok(Self::COPY_ON_MAP),
+				2 => Ok(Self::HOST_COPY_OBSOLETE),
+				4 => Ok(Self::DEVICE_COPY_OBSOLETE),
+				8 => Ok(Self::TEMP_UMAT),
+				24 => Ok(Self::TEMP_COPIED_UMAT),
+				32 => Ok(Self::USER_ALLOCATED),
+				64 => Ok(Self::DEVICE_MEM_MAPPED),
+				128 => Ok(Self::ASYNC_CLEANUP),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::UMatData_MemoryFlag"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { core::UMatData_MemoryFlag }
@@ -1720,6 +2406,21 @@ pub mod core {
 		USAGE_ALLOCATE_DEVICE_MEMORY = 2,
 		USAGE_ALLOCATE_SHARED_MEMORY = 4,
 		__UMAT_USAGE_FLAGS_32BIT = 2147483647,
+	}
+	
+	impl TryFrom<i32> for UMatUsageFlags {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::USAGE_DEFAULT),
+				1 => Ok(Self::USAGE_ALLOCATE_HOST_MEMORY),
+				2 => Ok(Self::USAGE_ALLOCATE_DEVICE_MEMORY),
+				4 => Ok(Self::USAGE_ALLOCATE_SHARED_MEMORY),
+				2147483647 => Ok(Self::__UMAT_USAGE_FLAGS_32BIT),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::UMatUsageFlags"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { core::UMatUsageFlags }
@@ -1751,6 +2452,36 @@ pub mod core {
 		STD_ARRAY_MAT = 983040,
 	}
 	
+	impl TryFrom<i32> for _InputArray_KindFlag {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				16 => Ok(Self::KIND_SHIFT),
+				-2147483648 => Ok(Self::FIXED_TYPE),
+				1073741824 => Ok(Self::FIXED_SIZE),
+				2031616 => Ok(Self::KIND_MASK),
+				0 => Ok(Self::NONE),
+				65536 => Ok(Self::MAT),
+				131072 => Ok(Self::MATX),
+				196608 => Ok(Self::STD_VECTOR),
+				262144 => Ok(Self::STD_VECTOR_VECTOR),
+				327680 => Ok(Self::STD_VECTOR_MAT),
+				393216 => Ok(Self::EXPR),
+				458752 => Ok(Self::OPENGL_BUFFER),
+				524288 => Ok(Self::CUDA_HOST_MEM),
+				589824 => Ok(Self::CUDA_GPU_MAT),
+				655360 => Ok(Self::UMAT),
+				720896 => Ok(Self::STD_VECTOR_UMAT),
+				786432 => Ok(Self::STD_BOOL_VECTOR),
+				851968 => Ok(Self::STD_VECTOR_CUDA_GPU_MAT),
+				917504 => Ok(Self::STD_ARRAY),
+				983040 => Ok(Self::STD_ARRAY_MAT),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::_InputArray_KindFlag"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { core::_InputArray_KindFlag }
 	
 	#[repr(C)]
@@ -1768,6 +2499,28 @@ pub mod core {
 		DEPTH_MASK_ALL_BUT_8S = 125,
 		DEPTH_MASK_ALL_16F = 255,
 		DEPTH_MASK_FLT = 96,
+	}
+	
+	impl TryFrom<i32> for _OutputArray_DepthMask {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				1 => Ok(Self::DEPTH_MASK_8U),
+				2 => Ok(Self::DEPTH_MASK_8S),
+				4 => Ok(Self::DEPTH_MASK_16U),
+				8 => Ok(Self::DEPTH_MASK_16S),
+				16 => Ok(Self::DEPTH_MASK_32S),
+				32 => Ok(Self::DEPTH_MASK_32F),
+				64 => Ok(Self::DEPTH_MASK_64F),
+				128 => Ok(Self::DEPTH_MASK_16F),
+				127 => Ok(Self::DEPTH_MASK_ALL),
+				125 => Ok(Self::DEPTH_MASK_ALL_BUT_8S),
+				255 => Ok(Self::DEPTH_MASK_ALL_16F),
+				96 => Ok(Self::DEPTH_MASK_FLT),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::_OutputArray_DepthMask"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { core::_OutputArray_DepthMask }

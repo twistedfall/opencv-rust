@@ -53,6 +53,18 @@ pub mod optflow {
 		GPC_DESCRIPTOR_WHT = 1,
 	}
 	
+	impl TryFrom<i32> for GPCDescType {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::GPC_DESCRIPTOR_DCT),
+				1 => Ok(Self::GPC_DESCRIPTOR_WHT),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::optflow::GPCDescType"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::optflow::GPCDescType }
 	
 	#[repr(C)]
@@ -64,6 +76,19 @@ pub mod optflow {
 		INTERP_EPIC = 1,
 		/// <  SLIC based robust interpolation using ximgproc::RICInterpolator, see [Hu2017](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Hu2017).
 		INTERP_RIC = 2,
+	}
+	
+	impl TryFrom<i32> for InterpolationType {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::INTERP_GEO),
+				1 => Ok(Self::INTERP_EPIC),
+				2 => Ok(Self::INTERP_RIC),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::optflow::InterpolationType"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::optflow::InterpolationType }
@@ -78,6 +103,18 @@ pub mod optflow {
 		ST_BILINEAR = 1,
 	}
 	
+	impl TryFrom<i32> for SolverType {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::ST_STANDART),
+				1 => Ok(Self::ST_BILINEAR),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::optflow::SolverType"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::optflow::SolverType }
 	
 	#[repr(C)]
@@ -88,6 +125,18 @@ pub mod optflow {
 		/// <  Apply a adaptive support region obtained by cross-based segmentation
 		/// as described in [Senst2014](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Senst2014)
 		SR_CROSS = 1,
+	}
+	
+	impl TryFrom<i32> for SupportRegionType {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::SR_FIXED),
+				1 => Ok(Self::SR_CROSS),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::optflow::SupportRegionType"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::optflow::SupportRegionType }

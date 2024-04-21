@@ -105,12 +105,35 @@ pub mod text {
 		OCR_CNN_CLASSIFIER = 1,
 	}
 	
+	impl TryFrom<i32> for classifier_type {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::OCR_KNN_CLASSIFIER),
+				1 => Ok(Self::OCR_CNN_CLASSIFIER),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::text::classifier_type"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::text::classifier_type }
 	
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum decoder_mode {
 		OCR_DECODER_VITERBI = 0,
+	}
+	
+	impl TryFrom<i32> for decoder_mode {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::OCR_DECODER_VITERBI),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::text::decoder_mode"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::text::decoder_mode }
@@ -142,6 +165,18 @@ pub mod text {
 		ERGROUPING_ORIENTATION_ANY = 1,
 	}
 	
+	impl TryFrom<i32> for erGrouping_Modes {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::ERGROUPING_ORIENTATION_HORIZ),
+				1 => Ok(Self::ERGROUPING_ORIENTATION_ANY),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::text::erGrouping_Modes"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::text::erGrouping_Modes }
 	
 	/// Tesseract.OcrEngineMode Enumeration
@@ -152,6 +187,20 @@ pub mod text {
 		OEM_CUBE_ONLY = 1,
 		OEM_TESSERACT_CUBE_COMBINED = 2,
 		OEM_DEFAULT = 3,
+	}
+	
+	impl TryFrom<i32> for ocr_engine_mode {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::OEM_TESSERACT_ONLY),
+				1 => Ok(Self::OEM_CUBE_ONLY),
+				2 => Ok(Self::OEM_TESSERACT_CUBE_COMBINED),
+				3 => Ok(Self::OEM_DEFAULT),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::text::ocr_engine_mode"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::text::ocr_engine_mode }
@@ -171,6 +220,27 @@ pub mod text {
 		PSM_SINGLE_WORD = 8,
 		PSM_CIRCLE_WORD = 9,
 		PSM_SINGLE_CHAR = 10,
+	}
+	
+	impl TryFrom<i32> for page_seg_mode {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::PSM_OSD_ONLY),
+				1 => Ok(Self::PSM_AUTO_OSD),
+				2 => Ok(Self::PSM_AUTO_ONLY),
+				3 => Ok(Self::PSM_AUTO),
+				4 => Ok(Self::PSM_SINGLE_COLUMN),
+				5 => Ok(Self::PSM_SINGLE_BLOCK_VERT_TEXT),
+				6 => Ok(Self::PSM_SINGLE_BLOCK),
+				7 => Ok(Self::PSM_SINGLE_LINE),
+				8 => Ok(Self::PSM_SINGLE_WORD),
+				9 => Ok(Self::PSM_CIRCLE_WORD),
+				10 => Ok(Self::PSM_SINGLE_CHAR),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::text::page_seg_mode"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::text::page_seg_mode }

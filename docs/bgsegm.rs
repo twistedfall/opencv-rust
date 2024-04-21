@@ -14,6 +14,18 @@ pub mod bgsegm {
 		LSBP_CAMERA_MOTION_COMPENSATION_LK = 1,
 	}
 	
+	impl TryFrom<i32> for LSBPCameraMotionCompensation {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::LSBP_CAMERA_MOTION_COMPENSATION_NONE),
+				1 => Ok(Self::LSBP_CAMERA_MOTION_COMPENSATION_LK),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::bgsegm::LSBPCameraMotionCompensation"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::bgsegm::LSBPCameraMotionCompensation }
 	
 	/// Creates a CNT Background Subtractor

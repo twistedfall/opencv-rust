@@ -103,6 +103,19 @@ pub mod line_descriptor {
 		NOT_DRAW_SINGLE_LINES = 2,
 	}
 	
+	impl TryFrom<i32> for DrawLinesMatchesFlags {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::DEFAULT),
+				1 => Ok(Self::DRAW_OVER_OUTIMG),
+				2 => Ok(Self::NOT_DRAW_SINGLE_LINES),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::line_descriptor::DrawLinesMatchesFlags"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::line_descriptor::DrawLinesMatchesFlags }
 	
 	pub type uint16 = u16;

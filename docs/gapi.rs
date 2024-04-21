@@ -65,6 +65,26 @@ pub mod gapi {
 		GOPAQUE = 7,
 	}
 	
+	impl TryFrom<i32> for Detail_ArgKind {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::OPAQUE_VAL),
+				// Duplicate of OPAQUE_VAL
+				// 0 => Ok(Self::OPAQUE),
+				1 => Ok(Self::GOBJREF),
+				2 => Ok(Self::GMAT),
+				3 => Ok(Self::GMATP),
+				4 => Ok(Self::GFRAME),
+				5 => Ok(Self::GSCALAR),
+				6 => Ok(Self::GARRAY),
+				7 => Ok(Self::GOPAQUE),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::gapi::Detail_ArgKind"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::gapi::Detail_ArgKind }
 	
 	#[repr(C)]
@@ -88,6 +108,32 @@ pub mod gapi {
 		CV_DRAW_PRIM = 15,
 	}
 	
+	impl TryFrom<i32> for Detail_OpaqueKind {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::CV_UNKNOWN),
+				1 => Ok(Self::CV_BOOL),
+				2 => Ok(Self::CV_INT),
+				3 => Ok(Self::CV_INT64),
+				4 => Ok(Self::CV_DOUBLE),
+				5 => Ok(Self::CV_FLOAT),
+				6 => Ok(Self::CV_UINT64),
+				7 => Ok(Self::CV_STRING),
+				8 => Ok(Self::CV_POINT),
+				9 => Ok(Self::CV_POINT2F),
+				10 => Ok(Self::CV_POINT3F),
+				11 => Ok(Self::CV_SIZE),
+				12 => Ok(Self::CV_RECT),
+				13 => Ok(Self::CV_SCALAR),
+				14 => Ok(Self::CV_MAT),
+				15 => Ok(Self::CV_DRAW_PRIM),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::gapi::Detail_OpaqueKind"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::gapi::Detail_OpaqueKind }
 	
 	#[repr(C)]
@@ -100,6 +146,21 @@ pub mod gapi {
 		GFRAME = 4,
 	}
 	
+	impl TryFrom<i32> for GShape {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::GMAT),
+				1 => Ok(Self::GSCALAR),
+				2 => Ok(Self::GARRAY),
+				3 => Ok(Self::GOPAQUE),
+				4 => Ok(Self::GFRAME),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::gapi::GShape"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::gapi::GShape }
 	
 	#[repr(C)]
@@ -108,6 +169,19 @@ pub mod gapi {
 		BGR = 0,
 		NV12 = 1,
 		GRAY = 2,
+	}
+	
+	impl TryFrom<i32> for MediaFormat {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::BGR),
+				1 => Ok(Self::NV12),
+				2 => Ok(Self::GRAY),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::gapi::MediaFormat"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::gapi::MediaFormat }
@@ -124,6 +198,18 @@ pub mod gapi {
 		W = 1,
 	}
 	
+	impl TryFrom<i32> for MediaFrame_Access {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::R),
+				1 => Ok(Self::W),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::gapi::MediaFrame_Access"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::gapi::MediaFrame_Access }
 	
 	#[repr(C)]
@@ -131,6 +217,18 @@ pub mod gapi {
 	pub enum RMat_Access {
 		R = 0,
 		W = 1,
+	}
+	
+	impl TryFrom<i32> for RMat_Access {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::R),
+				1 => Ok(Self::W),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::gapi::RMat_Access"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::gapi::RMat_Access }

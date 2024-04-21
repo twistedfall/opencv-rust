@@ -87,6 +87,25 @@ pub mod dnn {
 		DNN_BACKEND_CANN = 8,
 	}
 	
+	impl TryFrom<i32> for Backend {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::DNN_BACKEND_DEFAULT),
+				1 => Ok(Self::DNN_BACKEND_HALIDE),
+				2 => Ok(Self::DNN_BACKEND_INFERENCE_ENGINE),
+				3 => Ok(Self::DNN_BACKEND_OPENCV),
+				4 => Ok(Self::DNN_BACKEND_VKCOM),
+				5 => Ok(Self::DNN_BACKEND_CUDA),
+				6 => Ok(Self::DNN_BACKEND_WEBNN),
+				7 => Ok(Self::DNN_BACKEND_TIMVX),
+				8 => Ok(Self::DNN_BACKEND_CANN),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::dnn::Backend"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::dnn::Backend }
 	
 	/// Enum of data layout for model inference.
@@ -110,6 +129,23 @@ pub mod dnn {
 		DNN_LAYOUT_PLANAR = 6,
 	}
 	
+	impl TryFrom<i32> for DataLayout {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::DNN_LAYOUT_UNKNOWN),
+				1 => Ok(Self::DNN_LAYOUT_ND),
+				2 => Ok(Self::DNN_LAYOUT_NCHW),
+				3 => Ok(Self::DNN_LAYOUT_NCDHW),
+				4 => Ok(Self::DNN_LAYOUT_NHWC),
+				5 => Ok(Self::DNN_LAYOUT_NDHWC),
+				6 => Ok(Self::DNN_LAYOUT_PLANAR),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::dnn::DataLayout"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::dnn::DataLayout }
 	
 	/// Enum of image processing mode.
@@ -125,6 +161,19 @@ pub mod dnn {
 		DNN_PMODE_LETTERBOX = 2,
 	}
 	
+	impl TryFrom<i32> for ImagePaddingMode {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::DNN_PMODE_NULL),
+				1 => Ok(Self::DNN_PMODE_CROP_CENTER),
+				2 => Ok(Self::DNN_PMODE_LETTERBOX),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::dnn::ImagePaddingMode"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::dnn::ImagePaddingMode }
 	
 	/// Enum of Soft NMS methods.
@@ -135,6 +184,18 @@ pub mod dnn {
 	pub enum SoftNMSMethod {
 		SOFTNMS_LINEAR = 1,
 		SOFTNMS_GAUSSIAN = 2,
+	}
+	
+	impl TryFrom<i32> for SoftNMSMethod {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				1 => Ok(Self::SOFTNMS_LINEAR),
+				2 => Ok(Self::SOFTNMS_GAUSSIAN),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::dnn::SoftNMSMethod"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::dnn::SoftNMSMethod }
@@ -157,6 +218,27 @@ pub mod dnn {
 		DNN_TARGET_HDDL = 8,
 		DNN_TARGET_NPU = 9,
 		DNN_TARGET_CPU_FP16 = 10,
+	}
+	
+	impl TryFrom<i32> for Target {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::DNN_TARGET_CPU),
+				1 => Ok(Self::DNN_TARGET_OPENCL),
+				2 => Ok(Self::DNN_TARGET_OPENCL_FP16),
+				3 => Ok(Self::DNN_TARGET_MYRIAD),
+				4 => Ok(Self::DNN_TARGET_VULKAN),
+				5 => Ok(Self::DNN_TARGET_FPGA),
+				6 => Ok(Self::DNN_TARGET_CUDA),
+				7 => Ok(Self::DNN_TARGET_CUDA_FP16),
+				8 => Ok(Self::DNN_TARGET_HDDL),
+				9 => Ok(Self::DNN_TARGET_NPU),
+				10 => Ok(Self::DNN_TARGET_CPU_FP16),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::dnn::Target"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::dnn::Target }

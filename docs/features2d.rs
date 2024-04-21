@@ -75,6 +75,20 @@ pub mod features2d {
 		DESCRIPTOR_MLDB = 5,
 	}
 	
+	impl TryFrom<i32> for AKAZE_DescriptorType {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				2 => Ok(Self::DESCRIPTOR_KAZE_UPRIGHT),
+				3 => Ok(Self::DESCRIPTOR_KAZE),
+				4 => Ok(Self::DESCRIPTOR_MLDB_UPRIGHT),
+				5 => Ok(Self::DESCRIPTOR_MLDB),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::features2d::AKAZE_DescriptorType"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::features2d::AKAZE_DescriptorType }
 	
 	#[repr(C)]
@@ -84,6 +98,20 @@ pub mod features2d {
 		AGAST_7_12d = 1,
 		AGAST_7_12s = 2,
 		OAST_9_16 = 3,
+	}
+	
+	impl TryFrom<i32> for AgastFeatureDetector_DetectorType {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::AGAST_5_8),
+				1 => Ok(Self::AGAST_7_12d),
+				2 => Ok(Self::AGAST_7_12s),
+				3 => Ok(Self::OAST_9_16),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::features2d::AgastFeatureDetector_DetectorType"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::features2d::AgastFeatureDetector_DetectorType }
@@ -97,6 +125,22 @@ pub mod features2d {
 		BRUTEFORCE_HAMMING = 4,
 		BRUTEFORCE_HAMMINGLUT = 5,
 		BRUTEFORCE_SL2 = 6,
+	}
+	
+	impl TryFrom<i32> for DescriptorMatcher_MatcherType {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				1 => Ok(Self::FLANNBASED),
+				2 => Ok(Self::BRUTEFORCE),
+				3 => Ok(Self::BRUTEFORCE_L1),
+				4 => Ok(Self::BRUTEFORCE_HAMMING),
+				5 => Ok(Self::BRUTEFORCE_HAMMINGLUT),
+				6 => Ok(Self::BRUTEFORCE_SL2),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::features2d::DescriptorMatcher_MatcherType"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::features2d::DescriptorMatcher_MatcherType }
@@ -120,6 +164,20 @@ pub mod features2d {
 		DRAW_RICH_KEYPOINTS = 4,
 	}
 	
+	impl TryFrom<i32> for DrawMatchesFlags {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::DEFAULT),
+				1 => Ok(Self::DRAW_OVER_OUTIMG),
+				2 => Ok(Self::NOT_DRAW_SINGLE_POINTS),
+				4 => Ok(Self::DRAW_RICH_KEYPOINTS),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::features2d::DrawMatchesFlags"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::features2d::DrawMatchesFlags }
 	
 	#[repr(C)]
@@ -128,6 +186,19 @@ pub mod features2d {
 		TYPE_5_8 = 0,
 		TYPE_7_12 = 1,
 		TYPE_9_16 = 2,
+	}
+	
+	impl TryFrom<i32> for FastFeatureDetector_DetectorType {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::TYPE_5_8),
+				1 => Ok(Self::TYPE_7_12),
+				2 => Ok(Self::TYPE_9_16),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::features2d::FastFeatureDetector_DetectorType"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::features2d::FastFeatureDetector_DetectorType }
@@ -141,6 +212,20 @@ pub mod features2d {
 		DIFF_CHARBONNIER = 3,
 	}
 	
+	impl TryFrom<i32> for KAZE_DiffusivityType {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::DIFF_PM_G1),
+				1 => Ok(Self::DIFF_PM_G2),
+				2 => Ok(Self::DIFF_WEICKERT),
+				3 => Ok(Self::DIFF_CHARBONNIER),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::features2d::KAZE_DiffusivityType"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::features2d::KAZE_DiffusivityType }
 	
 	#[repr(C)]
@@ -148,6 +233,18 @@ pub mod features2d {
 	pub enum ORB_ScoreType {
 		HARRIS_SCORE = 0,
 		FAST_SCORE = 1,
+	}
+	
+	impl TryFrom<i32> for ORB_ScoreType {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::HARRIS_SCORE),
+				1 => Ok(Self::FAST_SCORE),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::features2d::ORB_ScoreType"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::features2d::ORB_ScoreType }

@@ -229,6 +229,22 @@ pub mod highgui {
 		EVENT_FLAG_ALTKEY = 32,
 	}
 	
+	impl TryFrom<i32> for MouseEventFlags {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				1 => Ok(Self::EVENT_FLAG_LBUTTON),
+				2 => Ok(Self::EVENT_FLAG_RBUTTON),
+				4 => Ok(Self::EVENT_FLAG_MBUTTON),
+				8 => Ok(Self::EVENT_FLAG_CTRLKEY),
+				16 => Ok(Self::EVENT_FLAG_SHIFTKEY),
+				32 => Ok(Self::EVENT_FLAG_ALTKEY),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::highgui::MouseEventFlags"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::highgui::MouseEventFlags }
 	
 	/// Mouse Events see cv::MouseCallback
@@ -261,6 +277,28 @@ pub mod highgui {
 		EVENT_MOUSEHWHEEL = 11,
 	}
 	
+	impl TryFrom<i32> for MouseEventTypes {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::EVENT_MOUSEMOVE),
+				1 => Ok(Self::EVENT_LBUTTONDOWN),
+				2 => Ok(Self::EVENT_RBUTTONDOWN),
+				3 => Ok(Self::EVENT_MBUTTONDOWN),
+				4 => Ok(Self::EVENT_LBUTTONUP),
+				5 => Ok(Self::EVENT_RBUTTONUP),
+				6 => Ok(Self::EVENT_MBUTTONUP),
+				7 => Ok(Self::EVENT_LBUTTONDBLCLK),
+				8 => Ok(Self::EVENT_RBUTTONDBLCLK),
+				9 => Ok(Self::EVENT_MBUTTONDBLCLK),
+				10 => Ok(Self::EVENT_MOUSEWHEEL),
+				11 => Ok(Self::EVENT_MOUSEHWHEEL),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::highgui::MouseEventTypes"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::highgui::MouseEventTypes }
 	
 	/// Qt "button" type
@@ -277,6 +315,20 @@ pub mod highgui {
 		QT_NEW_BUTTONBAR = 1024,
 	}
 	
+	impl TryFrom<i32> for QtButtonTypes {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::QT_PUSH_BUTTON),
+				1 => Ok(Self::QT_CHECKBOX),
+				2 => Ok(Self::QT_RADIOBOX),
+				1024 => Ok(Self::QT_NEW_BUTTONBAR),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::highgui::QtButtonTypes"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::highgui::QtButtonTypes }
 	
 	/// Qt font style
@@ -289,6 +341,19 @@ pub mod highgui {
 		QT_STYLE_ITALIC = 1,
 		/// Oblique font.
 		QT_STYLE_OBLIQUE = 2,
+	}
+	
+	impl TryFrom<i32> for QtFontStyles {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::QT_STYLE_NORMAL),
+				1 => Ok(Self::QT_STYLE_ITALIC),
+				2 => Ok(Self::QT_STYLE_OBLIQUE),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::highgui::QtFontStyles"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::highgui::QtFontStyles }
@@ -307,6 +372,21 @@ pub mod highgui {
 		QT_FONT_BOLD = 75,
 		/// Weight of 87
 		QT_FONT_BLACK = 87,
+	}
+	
+	impl TryFrom<i32> for QtFontWeights {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				25 => Ok(Self::QT_FONT_LIGHT),
+				50 => Ok(Self::QT_FONT_NORMAL),
+				63 => Ok(Self::QT_FONT_DEMIBOLD),
+				75 => Ok(Self::QT_FONT_BOLD),
+				87 => Ok(Self::QT_FONT_BLACK),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::highgui::QtFontWeights"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::highgui::QtFontWeights }
@@ -336,6 +416,27 @@ pub mod highgui {
 		WINDOW_GUI_NORMAL = 16,
 	}
 	
+	impl TryFrom<i32> for WindowFlags {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::WINDOW_NORMAL),
+				1 => Ok(Self::WINDOW_AUTOSIZE),
+				4096 => Ok(Self::WINDOW_OPENGL),
+				// Duplicate of WINDOW_AUTOSIZE
+				// 1 => Ok(Self::WINDOW_FULLSCREEN),
+				256 => Ok(Self::WINDOW_FREERATIO),
+				// Duplicate of WINDOW_NORMAL
+				// 0 => Ok(Self::WINDOW_KEEPRATIO),
+				// Duplicate of WINDOW_KEEPRATIO
+				// 0 => Ok(Self::WINDOW_GUI_EXPANDED),
+				16 => Ok(Self::WINDOW_GUI_NORMAL),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::highgui::WindowFlags"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::highgui::WindowFlags }
 	
 	/// Flags for cv::setWindowProperty / cv::getWindowProperty
@@ -356,6 +457,23 @@ pub mod highgui {
 		WND_PROP_TOPMOST = 5,
 		/// enable or disable VSYNC (in OpenGL mode)
 		WND_PROP_VSYNC = 6,
+	}
+	
+	impl TryFrom<i32> for WindowPropertyFlags {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::WND_PROP_FULLSCREEN),
+				1 => Ok(Self::WND_PROP_AUTOSIZE),
+				2 => Ok(Self::WND_PROP_ASPECT_RATIO),
+				3 => Ok(Self::WND_PROP_OPENGL),
+				4 => Ok(Self::WND_PROP_VISIBLE),
+				5 => Ok(Self::WND_PROP_TOPMOST),
+				6 => Ok(Self::WND_PROP_VSYNC),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::highgui::WindowPropertyFlags"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::highgui::WindowPropertyFlags }

@@ -41,40 +41,53 @@ impl RustNativeGeneratedElement for Enum<'_> {
 		static CONST_IGNORED_TPL: Lazy<CompiledInterpolation> =
 			Lazy::new(|| include_str!("tpl/enum/const_ignored.tpl.rs").compile_interpolation());
 
+		static FROM_CONST_TPL: Lazy<CompiledInterpolation> =
+			Lazy::new(|| include_str!("tpl/enum/from_const.tpl.rs").compile_interpolation());
+
+		static FROM_CONST_IGNORED_TPL: Lazy<CompiledInterpolation> =
+			Lazy::new(|| include_str!("tpl/enum/from_const_ignored.tpl.rs").compile_interpolation());
+
 		let consts = self.consts();
-		let mut generated_values = HashMap::with_capacity(consts.len());
-		let consts = consts
-			.into_iter()
-			.map(|c| {
-				let name = c.rust_leafname(FishStyle::No).into_owned();
-				let value = c.value().expect("Can't get value of enum variant").to_string();
-				let duplicate_name = generated_values.get(&value).cloned();
-				let tpl = if duplicate_name.is_some() {
-					&CONST_IGNORED_TPL
-				} else {
-					&CONST_TPL
-				};
-				let comment_marker = if duplicate_name.is_some() {
-					"//"
-				} else {
-					"///"
-				};
-				let doc_comment = c.rendered_doc_comment(comment_marker, opencv_version);
-				generated_values.insert(value.clone(), name.clone());
-				tpl.interpolate(&HashMap::from([
-					("doc_comment", doc_comment),
-					("duplicate_name", duplicate_name.unwrap_or_default()),
-					("name", name),
-					("value", value),
-				]))
-			})
-			.collect::<Vec<_>>();
+
+		let mut enum_consts = Vec::with_capacity(consts.len());
+		let mut from_consts = Vec::with_capacity(consts.len());
+
+		let mut generated_values = HashMap::<String, String>::with_capacity(consts.len());
+		for c in consts {
+			let name = c.rust_leafname(FishStyle::No).into_owned();
+			let value = c.value().expect("Can't get value of enum variant").to_string();
+			let duplicate_name = generated_values.get(&value).map(|s| s.as_str());
+			let (enum_const_tpl, from_const_tpl) = if duplicate_name.is_some() {
+				(&CONST_IGNORED_TPL, &FROM_CONST_IGNORED_TPL)
+			} else {
+				(&CONST_TPL, &FROM_CONST_TPL)
+			};
+			let comment_marker = if duplicate_name.is_some() {
+				"//"
+			} else {
+				"///"
+			};
+			let doc_comment = c.rendered_doc_comment(comment_marker, opencv_version);
+
+			let inter_vars = HashMap::from([
+				("name", name.as_str()),
+				("value", value.as_str()),
+				("doc_comment", &doc_comment),
+				("duplicate_name", duplicate_name.unwrap_or("")),
+			]);
+			enum_consts.push(enum_const_tpl.interpolate(&inter_vars));
+			from_consts.push(from_const_tpl.interpolate(&inter_vars));
+
+			generated_values.insert(value, name);
+		}
+
 		ENUM_TPL.interpolate(&HashMap::from([
-			("doc_comment", self.rendered_doc_comment("///", opencv_version).into()),
-			("debug", self.get_debug().into()),
-			("rust_local", self.rust_name(NameStyle::decl())),
-			("rust_full", self.rust_name(NameStyle::ref_())),
-			("consts", consts.join("").into()),
+			("rust_local", self.rust_name(NameStyle::decl()).as_ref()),
+			("rust_full", self.rust_name(NameStyle::ref_()).as_ref()),
+			("doc_comment", &self.rendered_doc_comment("///", opencv_version)),
+			("debug", &self.get_debug()),
+			("enum_consts", &enum_consts.join("")),
+			("from_consts", &from_consts.join("")),
 		]))
 	}
 }

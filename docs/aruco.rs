@@ -60,6 +60,18 @@ pub mod aruco {
 		ARUCO_CW_TOP_LEFT_CORNER = 1,
 	}
 	
+	impl TryFrom<i32> for PatternPositionType {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::ARUCO_CCW_CENTER),
+				1 => Ok(Self::ARUCO_CW_TOP_LEFT_CORNER),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::aruco::PatternPositionType"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::aruco::PatternPositionType }
 	
 	/// @overload

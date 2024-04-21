@@ -72,6 +72,29 @@ pub mod cudaimgproc {
 		ALPHA_PREMUL = 12,
 	}
 	
+	impl TryFrom<i32> for CUDA_AlphaCompTypes {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::ALPHA_OVER),
+				1 => Ok(Self::ALPHA_IN),
+				2 => Ok(Self::ALPHA_OUT),
+				3 => Ok(Self::ALPHA_ATOP),
+				4 => Ok(Self::ALPHA_XOR),
+				5 => Ok(Self::ALPHA_PLUS),
+				6 => Ok(Self::ALPHA_OVER_PREMUL),
+				7 => Ok(Self::ALPHA_IN_PREMUL),
+				8 => Ok(Self::ALPHA_OUT_PREMUL),
+				9 => Ok(Self::ALPHA_ATOP_PREMUL),
+				10 => Ok(Self::ALPHA_XOR_PREMUL),
+				11 => Ok(Self::ALPHA_PLUS_PREMUL),
+				12 => Ok(Self::ALPHA_PREMUL),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudaimgproc::CUDA_AlphaCompTypes"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::cudaimgproc::CUDA_AlphaCompTypes }
 	
 	/// Connected Components Algorithm
@@ -82,6 +105,18 @@ pub mod cudaimgproc {
 		CCL_DEFAULT = -1,
 		/// BKE [Allegretti2019](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
 		CCL_BKE = 0,
+	}
+	
+	impl TryFrom<i32> for CUDA_ConnectedComponentsAlgorithmsTypes {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				-1 => Ok(Self::CCL_DEFAULT),
+				0 => Ok(Self::CCL_BKE),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudaimgproc::CUDA_ConnectedComponentsAlgorithmsTypes"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::cudaimgproc::CUDA_ConnectedComponentsAlgorithmsTypes }
@@ -119,6 +154,32 @@ pub mod cudaimgproc {
 		COLOR_BayerGR2GRAY_MHT = 263,
 	}
 	
+	impl TryFrom<i32> for CUDA_DemosaicTypes {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				256 => Ok(Self::COLOR_BayerBG2BGR_MHT),
+				257 => Ok(Self::COLOR_BayerGB2BGR_MHT),
+				258 => Ok(Self::COLOR_BayerRG2BGR_MHT),
+				259 => Ok(Self::COLOR_BayerGR2BGR_MHT),
+				// Duplicate of COLOR_BayerRG2BGR_MHT
+				// 258 => Ok(Self::COLOR_BayerBG2RGB_MHT),
+				// Duplicate of COLOR_BayerGR2BGR_MHT
+				// 259 => Ok(Self::COLOR_BayerGB2RGB_MHT),
+				// Duplicate of COLOR_BayerBG2BGR_MHT
+				// 256 => Ok(Self::COLOR_BayerRG2RGB_MHT),
+				// Duplicate of COLOR_BayerGB2BGR_MHT
+				// 257 => Ok(Self::COLOR_BayerGR2RGB_MHT),
+				260 => Ok(Self::COLOR_BayerBG2GRAY_MHT),
+				261 => Ok(Self::COLOR_BayerGB2GRAY_MHT),
+				262 => Ok(Self::COLOR_BayerRG2GRAY_MHT),
+				263 => Ok(Self::COLOR_BayerGR2GRAY_MHT),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudaimgproc::CUDA_DemosaicTypes"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::cudaimgproc::CUDA_DemosaicTypes }
 	
 	/// Order of image moments.
@@ -132,6 +193,19 @@ pub mod cudaimgproc {
 		FIRST_ORDER_MOMENTS = 1,
 		SECOND_ORDER_MOMENTS = 2,
 		THIRD_ORDER_MOMENTS = 3,
+	}
+	
+	impl TryFrom<i32> for CUDA_MomentsOrder {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				1 => Ok(Self::FIRST_ORDER_MOMENTS),
+				2 => Ok(Self::SECOND_ORDER_MOMENTS),
+				3 => Ok(Self::THIRD_ORDER_MOMENTS),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudaimgproc::CUDA_MomentsOrder"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::cudaimgproc::CUDA_MomentsOrder }

@@ -418,6 +418,18 @@ pub mod calib3d {
 		ASYMMETRIC_GRID = 1,
 	}
 	
+	impl TryFrom<i32> for CirclesGridFinderParameters_GridType {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::SYMMETRIC_GRID),
+				1 => Ok(Self::ASYMMETRIC_GRID),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::calib3d::CirclesGridFinderParameters_GridType"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::calib3d::CirclesGridFinderParameters_GridType }
 	
 	#[repr(C)]
@@ -435,6 +447,21 @@ pub mod calib3d {
 		CALIB_HAND_EYE_DANIILIDIS = 4,
 	}
 	
+	impl TryFrom<i32> for HandEyeCalibrationMethod {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::CALIB_HAND_EYE_TSAI),
+				1 => Ok(Self::CALIB_HAND_EYE_PARK),
+				2 => Ok(Self::CALIB_HAND_EYE_HORAUD),
+				3 => Ok(Self::CALIB_HAND_EYE_ANDREFF),
+				4 => Ok(Self::CALIB_HAND_EYE_DANIILIDIS),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::calib3d::HandEyeCalibrationMethod"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::calib3d::HandEyeCalibrationMethod }
 	
 	#[repr(C)]
@@ -447,6 +474,21 @@ pub mod calib3d {
 		LOCAL_OPTIM_SIGMA = 4,
 	}
 	
+	impl TryFrom<i32> for LocalOptimMethod {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::LOCAL_OPTIM_NULL),
+				1 => Ok(Self::LOCAL_OPTIM_INNER_LO),
+				2 => Ok(Self::LOCAL_OPTIM_INNER_AND_ITER_LO),
+				3 => Ok(Self::LOCAL_OPTIM_GC),
+				4 => Ok(Self::LOCAL_OPTIM_SIGMA),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::calib3d::LocalOptimMethod"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::calib3d::LocalOptimMethod }
 	
 	#[repr(C)]
@@ -455,6 +497,19 @@ pub mod calib3d {
 		NEIGH_FLANN_KNN = 0,
 		NEIGH_GRID = 1,
 		NEIGH_FLANN_RADIUS = 2,
+	}
+	
+	impl TryFrom<i32> for NeighborSearchMethod {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::NEIGH_FLANN_KNN),
+				1 => Ok(Self::NEIGH_GRID),
+				2 => Ok(Self::NEIGH_FLANN_RADIUS),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::calib3d::NeighborSearchMethod"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::calib3d::NeighborSearchMethod }
@@ -468,6 +523,20 @@ pub mod calib3d {
 		COV_POLISHER = 3,
 	}
 	
+	impl TryFrom<i32> for PolishingMethod {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::NONE_POLISHER),
+				1 => Ok(Self::LSQ_POLISHER),
+				2 => Ok(Self::MAGSAC),
+				3 => Ok(Self::COV_POLISHER),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::calib3d::PolishingMethod"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::calib3d::PolishingMethod }
 	
 	#[repr(C)]
@@ -477,6 +546,18 @@ pub mod calib3d {
 		CALIB_ROBOT_WORLD_HAND_EYE_SHAH = 0,
 		/// Simultaneous robot-world and hand-eye calibration using dual-quaternions and kronecker product [Li2010SimultaneousRA](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Li2010SimultaneousRA)
 		CALIB_ROBOT_WORLD_HAND_EYE_LI = 1,
+	}
+	
+	impl TryFrom<i32> for RobotWorldHandEyeCalibrationMethod {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::CALIB_ROBOT_WORLD_HAND_EYE_SHAH),
+				1 => Ok(Self::CALIB_ROBOT_WORLD_HAND_EYE_LI),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::calib3d::RobotWorldHandEyeCalibrationMethod"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::calib3d::RobotWorldHandEyeCalibrationMethod }
@@ -490,6 +571,20 @@ pub mod calib3d {
 		SAMPLING_PROSAC = 3,
 	}
 	
+	impl TryFrom<i32> for SamplingMethod {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::SAMPLING_UNIFORM),
+				1 => Ok(Self::SAMPLING_PROGRESSIVE_NAPSAC),
+				2 => Ok(Self::SAMPLING_NAPSAC),
+				3 => Ok(Self::SAMPLING_PROSAC),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::calib3d::SamplingMethod"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::calib3d::SamplingMethod }
 	
 	#[repr(C)]
@@ -499,6 +594,20 @@ pub mod calib3d {
 		SCORE_METHOD_MSAC = 1,
 		SCORE_METHOD_MAGSAC = 2,
 		SCORE_METHOD_LMEDS = 3,
+	}
+	
+	impl TryFrom<i32> for ScoreMethod {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::SCORE_METHOD_RANSAC),
+				1 => Ok(Self::SCORE_METHOD_MSAC),
+				2 => Ok(Self::SCORE_METHOD_MAGSAC),
+				3 => Ok(Self::SCORE_METHOD_LMEDS),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::calib3d::ScoreMethod"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::calib3d::ScoreMethod }
@@ -546,6 +655,26 @@ pub mod calib3d {
 		SOLVEPNP_MAX_COUNT = 9,
 	}
 	
+	impl TryFrom<i32> for SolvePnPMethod {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::SOLVEPNP_ITERATIVE),
+				1 => Ok(Self::SOLVEPNP_EPNP),
+				2 => Ok(Self::SOLVEPNP_P3P),
+				3 => Ok(Self::SOLVEPNP_DLS),
+				4 => Ok(Self::SOLVEPNP_UPNP),
+				5 => Ok(Self::SOLVEPNP_AP3P),
+				6 => Ok(Self::SOLVEPNP_IPPE),
+				7 => Ok(Self::SOLVEPNP_IPPE_SQUARE),
+				8 => Ok(Self::SOLVEPNP_SQPNP),
+				9 => Ok(Self::SOLVEPNP_MAX_COUNT),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::calib3d::SolvePnPMethod"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::calib3d::SolvePnPMethod }
 	
 	/// cv::undistort mode
@@ -554,6 +683,18 @@ pub mod calib3d {
 	pub enum UndistortTypes {
 		PROJ_SPHERICAL_ORTHO = 0,
 		PROJ_SPHERICAL_EQRECT = 1,
+	}
+	
+	impl TryFrom<i32> for UndistortTypes {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::PROJ_SPHERICAL_ORTHO),
+				1 => Ok(Self::PROJ_SPHERICAL_EQRECT),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::calib3d::UndistortTypes"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::calib3d::UndistortTypes }

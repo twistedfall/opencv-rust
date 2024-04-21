@@ -120,6 +120,28 @@ pub mod flann {
 		// LAST_VALUE_FLANN_INDEX_TYPE = 9,
 	}
 	
+	impl TryFrom<i32> for FlannIndexType {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::FLANN_INDEX_TYPE_8U),
+				1 => Ok(Self::FLANN_INDEX_TYPE_8S),
+				2 => Ok(Self::FLANN_INDEX_TYPE_16U),
+				3 => Ok(Self::FLANN_INDEX_TYPE_16S),
+				4 => Ok(Self::FLANN_INDEX_TYPE_32S),
+				5 => Ok(Self::FLANN_INDEX_TYPE_32F),
+				6 => Ok(Self::FLANN_INDEX_TYPE_64F),
+				7 => Ok(Self::FLANN_INDEX_TYPE_STRING),
+				8 => Ok(Self::FLANN_INDEX_TYPE_BOOL),
+				9 => Ok(Self::FLANN_INDEX_TYPE_ALGORITHM),
+				// Duplicate of FLANN_INDEX_TYPE_ALGORITHM
+				// 9 => Ok(Self::LAST_VALUE_FLANN_INDEX_TYPE),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::flann::FlannIndexType"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::flann::FlannIndexType }
 	
 	#[repr(C)]
@@ -150,6 +172,39 @@ pub mod flann {
 		// AUTOTUNED = 255,
 	}
 	
+	impl TryFrom<i32> for flann_algorithm_t {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::FLANN_INDEX_LINEAR),
+				1 => Ok(Self::FLANN_INDEX_KDTREE),
+				2 => Ok(Self::FLANN_INDEX_KMEANS),
+				3 => Ok(Self::FLANN_INDEX_COMPOSITE),
+				4 => Ok(Self::FLANN_INDEX_KDTREE_SINGLE),
+				5 => Ok(Self::FLANN_INDEX_HIERARCHICAL),
+				6 => Ok(Self::FLANN_INDEX_LSH),
+				254 => Ok(Self::FLANN_INDEX_SAVED),
+				255 => Ok(Self::FLANN_INDEX_AUTOTUNED),
+				// Duplicate of FLANN_INDEX_LINEAR
+				// 0 => Ok(Self::LINEAR),
+				// Duplicate of FLANN_INDEX_KDTREE
+				// 1 => Ok(Self::KDTREE),
+				// Duplicate of FLANN_INDEX_KMEANS
+				// 2 => Ok(Self::KMEANS),
+				// Duplicate of FLANN_INDEX_COMPOSITE
+				// 3 => Ok(Self::COMPOSITE),
+				// Duplicate of FLANN_INDEX_KDTREE_SINGLE
+				// 4 => Ok(Self::KDTREE_SINGLE),
+				// Duplicate of FLANN_INDEX_SAVED
+				// 254 => Ok(Self::SAVED),
+				// Duplicate of FLANN_INDEX_AUTOTUNED
+				// 255 => Ok(Self::AUTOTUNED),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::flann::flann_algorithm_t"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::flann::flann_algorithm_t }
 	
 	#[repr(C)]
@@ -167,6 +222,26 @@ pub mod flann {
 		// CENTERS_KMEANSPP = 2,
 	}
 	
+	impl TryFrom<i32> for flann_centers_init_t {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::FLANN_CENTERS_RANDOM),
+				1 => Ok(Self::FLANN_CENTERS_GONZALES),
+				2 => Ok(Self::FLANN_CENTERS_KMEANSPP),
+				3 => Ok(Self::FLANN_CENTERS_GROUPWISE),
+				// Duplicate of FLANN_CENTERS_RANDOM
+				// 0 => Ok(Self::CENTERS_RANDOM),
+				// Duplicate of FLANN_CENTERS_GONZALES
+				// 1 => Ok(Self::CENTERS_GONZALES),
+				// Duplicate of FLANN_CENTERS_KMEANSPP
+				// 2 => Ok(Self::CENTERS_KMEANSPP),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::flann::flann_centers_init_t"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::flann::flann_centers_init_t }
 	
 	#[repr(C)]
@@ -182,6 +257,26 @@ pub mod flann {
 		FLANN_UINT64 = 7,
 		FLANN_FLOAT32 = 8,
 		FLANN_FLOAT64 = 9,
+	}
+	
+	impl TryFrom<i32> for flann_datatype_t {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::FLANN_INT8),
+				1 => Ok(Self::FLANN_INT16),
+				2 => Ok(Self::FLANN_INT32),
+				3 => Ok(Self::FLANN_INT64),
+				4 => Ok(Self::FLANN_UINT8),
+				5 => Ok(Self::FLANN_UINT16),
+				6 => Ok(Self::FLANN_UINT32),
+				7 => Ok(Self::FLANN_UINT64),
+				8 => Ok(Self::FLANN_FLOAT32),
+				9 => Ok(Self::FLANN_FLOAT64),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::flann::flann_datatype_t"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::flann::flann_datatype_t }
@@ -227,6 +322,52 @@ pub mod flann {
 		// KULLBACK_LEIBLER = 8,
 	}
 	
+	impl TryFrom<i32> for flann_distance_t {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				1 => Ok(Self::FLANN_DIST_EUCLIDEAN),
+				// Duplicate of FLANN_DIST_EUCLIDEAN
+				// 1 => Ok(Self::FLANN_DIST_L2),
+				2 => Ok(Self::FLANN_DIST_MANHATTAN),
+				// Duplicate of FLANN_DIST_MANHATTAN
+				// 2 => Ok(Self::FLANN_DIST_L1),
+				3 => Ok(Self::FLANN_DIST_MINKOWSKI),
+				4 => Ok(Self::FLANN_DIST_MAX),
+				5 => Ok(Self::FLANN_DIST_HIST_INTERSECT),
+				6 => Ok(Self::FLANN_DIST_HELLINGER),
+				7 => Ok(Self::FLANN_DIST_CHI_SQUARE),
+				// Duplicate of FLANN_DIST_CHI_SQUARE
+				// 7 => Ok(Self::FLANN_DIST_CS),
+				8 => Ok(Self::FLANN_DIST_KULLBACK_LEIBLER),
+				// Duplicate of FLANN_DIST_KULLBACK_LEIBLER
+				// 8 => Ok(Self::FLANN_DIST_KL),
+				9 => Ok(Self::FLANN_DIST_HAMMING),
+				10 => Ok(Self::FLANN_DIST_DNAMMING),
+				// Duplicate of FLANN_DIST_L2
+				// 1 => Ok(Self::EUCLIDEAN),
+				// Duplicate of FLANN_DIST_L1
+				// 2 => Ok(Self::MANHATTAN),
+				// Duplicate of FLANN_DIST_MINKOWSKI
+				// 3 => Ok(Self::MINKOWSKI),
+				// Duplicate of FLANN_DIST_MAX
+				// 4 => Ok(Self::MAX_DIST),
+				// Duplicate of FLANN_DIST_HIST_INTERSECT
+				// 5 => Ok(Self::HIST_INTERSECT),
+				// Duplicate of FLANN_DIST_HELLINGER
+				// 6 => Ok(Self::HELLINGER),
+				// Duplicate of FLANN_DIST_CS
+				// 7 => Ok(Self::CS),
+				// Duplicate of FLANN_DIST_KL
+				// 8 => Ok(Self::KL),
+				// Duplicate of KL
+				// 8 => Ok(Self::KULLBACK_LEIBLER),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::flann::flann_distance_t"))),
+			}
+		}
+	}
+	
 	opencv_type_enum! { crate::flann::flann_distance_t }
 	
 	#[repr(C)]
@@ -237,6 +378,21 @@ pub mod flann {
 		FLANN_LOG_ERROR = 2,
 		FLANN_LOG_WARN = 3,
 		FLANN_LOG_INFO = 4,
+	}
+	
+	impl TryFrom<i32> for flann_log_level_t {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::FLANN_LOG_NONE),
+				1 => Ok(Self::FLANN_LOG_FATAL),
+				2 => Ok(Self::FLANN_LOG_ERROR),
+				3 => Ok(Self::FLANN_LOG_WARN),
+				4 => Ok(Self::FLANN_LOG_INFO),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::flann::flann_log_level_t"))),
+			}
+		}
 	}
 	
 	opencv_type_enum! { crate::flann::flann_log_level_t }
