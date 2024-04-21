@@ -1,21 +1,22 @@
 //! # Create Mask
-//! Reference: [opencv/samples/cpp/create_mask.cpp](https://github.com/opencv/opencv/blob/4.x/samples/cpp/create_mask.cpp)
+//! Reference: [opencv/samples/cpp/create_mask.cpp](https://github.com/opencv/opencv/blob/4.9.0/samples/cpp/create_mask.cpp)
 
-use opencv::{
-	core::{bitwise_and, find_file, CommandLineParser, Point, Scalar, CV_8UC1, CV_8UC3},
-	highgui::{self, imshow},
-	imgcodecs::{imread, IMREAD_COLOR},
-	imgproc,
-	prelude::*,
-};
+use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::{Arc, Mutex};
+use std::{env, process};
 
-use std::{
-	env, process,
-	sync::{
-		atomic::{self, AtomicBool},
-		Arc, Mutex,
-	},
-};
+use opencv::core::{bitwise_and, find_file, CommandLineParser, Point, Scalar, Vec3b};
+use opencv::highgui::imshow;
+use opencv::imgcodecs::{imread, IMREAD_COLOR};
+use opencv::prelude::*;
+use opencv::{highgui, imgproc, not_opencv_branch_4, opencv_branch_4, Result};
+
+opencv_branch_4! {
+	use opencv::imgproc::LINE_8;
+}
+not_opencv_branch_4! {
+	use opencv::core::LINE_8;
+}
 
 const SOURCE_WINDOW: &str = "Source image";
 
@@ -29,13 +30,13 @@ enum DrawingState {
 	Resetting,
 }
 
-fn main() {
+fn main() -> Result<()> {
 	let args: Vec<String> = env::args().collect();
 	let (argc, argv) = (args.len() as i32, args.iter().map(|s| s.as_str()).collect::<Vec<&str>>());
 
-	let mut parser = CommandLineParser::new(argc, &argv, "{@input | lena.jpg | input image}").unwrap();
-	parser.about("This program demonstrates using mouse events\n").unwrap();
-	parser.print_message().unwrap();
+	let mut parser = CommandLineParser::new(argc, &argv, "{@input | lena.jpg | input image}")?;
+	parser.about("This program demonstrates using mouse events\n")?;
+	parser.print_message()?;
 	println!(
 		"\n\tleft mouse button - set a point to create mask shape\n\
             \tright mouse button - create mask from points\n\
@@ -52,13 +53,13 @@ fn main() {
 		.unwrap_or_else(|_| panic!("Cannot find input_image: {}", input_image));
 
 	let [src, mut next_frame, mut mask, mut final_img]: [Mat; 4];
-	src = imread(&input_image_path, IMREAD_COLOR).unwrap();
+	src = imread(&input_image_path, IMREAD_COLOR)?;
 	if src.empty() {
 		eprintln!("Error opening image: {}", input_image);
 		process::exit(-1);
 	}
 
-	highgui::named_window(SOURCE_WINDOW, highgui::WINDOW_AUTOSIZE).unwrap();
+	highgui::named_window(SOURCE_WINDOW, highgui::WINDOW_AUTOSIZE)?;
 	let mouse_event_data = (highgui::MouseEventTypes::EVENT_MOUSEWHEEL, 0, 0, 0);
 	let (mouse_event_data, should_handle_mouse_event) = (Arc::new(Mutex::new(mouse_event_data)), Arc::new(AtomicBool::new(false)));
 
@@ -71,28 +72,28 @@ fn main() {
 			if let Ok(mut mouse_data) = mouse_data.lock() {
 				*mouse_data = (mouse_event_from_i32(event), x, y, flags);
 			}
-			should_handle_mouse_event.store(true, atomic::Ordering::Relaxed);
+			should_handle_mouse_event.store(true, Ordering::Relaxed);
 		}
 	};
 	highgui::set_mouse_callback(SOURCE_WINDOW, Some(Box::new(mouse_event_dispatcher))).expect("Cannot set mouse callback");
 
-	highgui::imshow(SOURCE_WINDOW, &src).unwrap();
+	imshow(SOURCE_WINDOW, &src)?;
 
 	let (mut marker_points, mut drawing_state) = (Vec::<Point>::new(), DrawingState::Init);
 
-	next_frame = Mat::zeros_size(src.size().unwrap(), CV_8UC3).unwrap().to_mat().unwrap();
+	next_frame = Mat::zeros_size(src.size()?, Vec3b::opencv_type())?.to_mat()?;
 
 	loop {
 		// Press Esc to exit
-		if highgui::wait_key(10).unwrap() == 27 {
-			break;
+		if highgui::wait_key(10)? == 27 {
+			break Ok(());
 		}
 
 		let (mouse_event, x, y, _) = {
-			if !should_handle_mouse_event.load(atomic::Ordering::Relaxed) {
+			if !should_handle_mouse_event.load(Ordering::Relaxed) {
 				continue;
 			} else {
-				should_handle_mouse_event.store(false, atomic::Ordering::Relaxed);
+				should_handle_mouse_event.store(false, Ordering::Relaxed);
 
 				if let Ok(mouse_event_data) = mouse_event_data.lock() {
 					*mouse_event_data
@@ -102,7 +103,7 @@ fn main() {
 			}
 		};
 
-		drawing_state = self::state_transform(drawing_state, mouse_event);
+		drawing_state = state_transform(drawing_state, mouse_event);
 
 		match drawing_state {
 			DrawingState::Init | DrawingState::DrawingMarkerPointFinished => { /* do nothing */ }
@@ -112,16 +113,7 @@ fn main() {
 				}
 
 				let point = Point::new(x, y);
-				imgproc::circle(
-					&mut next_frame,
-					point,
-					2,
-					Scalar::new(0., 0., 255., 0.),
-					-1,
-					imgproc::LINE_8,
-					0,
-				)
-				.unwrap();
+				imgproc::circle(&mut next_frame, point, 2, Scalar::new(0., 0., 255., 0.), -1, LINE_8, 0)?;
 				marker_points.push(point);
 
 				if marker_points.len() > 1 {
@@ -131,13 +123,12 @@ fn main() {
 						point,
 						Scalar::new(0., 0., 255., 0.),
 						2,
-						imgproc::LINE_8,
+						LINE_8,
 						0,
-					)
-					.unwrap();
+					)?;
 				}
 
-				imshow(SOURCE_WINDOW, &next_frame).unwrap();
+				imshow(SOURCE_WINDOW, &next_frame)?;
 			}
 			DrawingState::DrawingMask => {
 				if !marker_points.is_empty() {
@@ -145,38 +136,29 @@ fn main() {
 
 					imgproc::polylines(
 						&mut next_frame,
-						&Mat::from_slice(marker_points.as_slice()).unwrap(),
+						&Mat::from_slice(marker_points.as_slice())?,
 						true,
 						Scalar::new(0., 0., 0., 0.),
 						2,
-						imgproc::LINE_8,
+						LINE_8,
 						0,
-					)
-					.unwrap();
+					)?;
 
-					imshow(SOURCE_WINDOW, &next_frame).unwrap();
+					imshow(SOURCE_WINDOW, &next_frame)?;
 				}
 			}
 			DrawingState::DrawingMaskFinished => {
 				if !marker_points.is_empty() {
-					final_img = Mat::zeros_size(src.size().unwrap(), CV_8UC3).unwrap().to_mat().unwrap();
-					mask = Mat::zeros_size(src.size().unwrap(), CV_8UC1).unwrap().to_mat().unwrap();
+					final_img = Mat::zeros_size(src.size()?, Vec3b::opencv_type())?.to_mat()?;
+					mask = Mat::zeros_size(src.size()?, u8::opencv_type())?.to_mat()?;
 
-					imgproc::fill_poly(
-						&mut mask,
-						&Mat::from_slice(marker_points.as_slice()).unwrap(),
-						Scalar::new(255., 255., 255., 255.),
-						imgproc::LINE_8,
-						0,
-						Point::default(),
-					)
-					.unwrap();
+					imgproc::fill_poly_def(&mut mask, &Mat::from_slice(marker_points.as_slice())?, Scalar::all(255.))?;
 
-					bitwise_and(&src, &src, &mut final_img, &mask).unwrap();
+					bitwise_and(&src, &src, &mut final_img, &mask)?;
 
-					imshow("Mask", &mask).unwrap();
-					imshow("Result", &final_img).unwrap();
-					imshow(SOURCE_WINDOW, &next_frame).unwrap();
+					imshow("Mask", &mask)?;
+					imshow("Result", &final_img)?;
+					imshow(SOURCE_WINDOW, &next_frame)?;
 				}
 			}
 			DrawingState::Resetting => {
@@ -184,7 +166,7 @@ fn main() {
 					marker_points.clear();
 					next_frame = src.clone();
 
-					imshow(SOURCE_WINDOW, &next_frame).unwrap();
+					imshow(SOURCE_WINDOW, &next_frame)?;
 				}
 			}
 		}
@@ -196,9 +178,9 @@ fn main() {
 /// # Panics
 ///
 /// Panics if the argument less than 0 or greater than 11.
-fn mouse_event_from_i32(value: i32) -> opencv::highgui::MouseEventTypes {
-	(value.gt(&(opencv::highgui::MouseEventTypes::EVENT_MOUSEHWHEEL as i32/* 11 */))
-		|| (value.lt(&(opencv::highgui::MouseEventTypes::EVENT_MOUSEMOVE as i32/* 0 */))))
+fn mouse_event_from_i32(value: i32) -> highgui::MouseEventTypes {
+	(value.gt(&(highgui::MouseEventTypes::EVENT_MOUSEHWHEEL as i32/* 11 */))
+		|| (value.lt(&(highgui::MouseEventTypes::EVENT_MOUSEMOVE as i32/* 0 */))))
 	.then(|| panic!("Invalid cv::highgui::MouseEventTypes value: {}", value));
 
 	// Safe because of the previous check
