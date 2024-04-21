@@ -73,6 +73,29 @@ Get OpenCV from homebrew:
   --install`), XCode (from AppStore) or `llvm` (from Brew). You most probably need to also check the item 7 of the
   troubleshooting below.
 
+  If using system LLVM doesn't work for you you can get it from homebrew:
+  ```shell script
+  brew install llvm
+  ```
+
+  If you have already installed OpenCV via Homebrew, there is no need to configure any environment variables specifically for OpenCV on macOS. The OpenCV installation can be automatically detected if it was installed through Homebrew.
+
+  To take advantage of this automatic detection, refrain from setting the following environment variables:
+
+  `OPENCV_LINK_LIBS`, `OPENCV_LINK_PATHS`, and `OPENCV_INCLUDE_PATHS`.
+
+  However, make sure you have configured the following environment variables:
+
+  `DYLD_FALLBACK_LIBRARY_PATH`, `LDFLAGS` and `LD_LIBRARY_PATH`.
+
+  If you have not made any custom changes to your installation, the following settings should work for your setup:
+
+  ```
+  export DYLD_FALLBACK_LIBRARY_PATH="$(xcode-select --print-path)/Toolchains/XcodeDefault.xctoolchain/usr/lib/"
+  export LDFLAGS=-L/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib
+  export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/lib  
+  ```
+
 ### Manual build
 
 You can of course always compile OpenCV of the version you prefer manually. This is also supported, but it
