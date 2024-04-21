@@ -1,3 +1,5 @@
+use matches::assert_matches;
+
 use opencv::core::{add_mat_mat, ElemMul, Scalar, StsBadArg};
 use opencv::prelude::*;
 use opencv::{Error, Result};
@@ -33,7 +35,7 @@ fn mat_ops() -> Result<()> {
 		let rhs = Mat::new_rows_cols_with_default(3, 3, u8::opencv_type(), 8.into())?;
 		let rhs2 = Mat::default();
 		let res = (&lhs + &rhs - &rhs2).into_result();
-		assert!(matches!(res, Err(Error { code: StsBadArg, .. })));
+		assert_matches!(res, Err(Error { code: StsBadArg, .. }));
 	}
 
 	// 1st operand error
@@ -42,14 +44,14 @@ fn mat_ops() -> Result<()> {
 		let rhs = Mat::new_rows_cols_with_default(3, 3, u8::opencv_type(), 8.into())?;
 		let rhs2 = Mat::new_rows_cols_with_default(3, 3, u8::opencv_type(), 20.into())?;
 		let res = (&lhs + &rhs - &rhs2).into_result();
-		assert!(matches!(res, Err(Error { code: StsBadArg, .. })));
+		assert_matches!(res, Err(Error { code: StsBadArg, .. }));
 	}
 
 	// result + operand error
 	{
 		let m = Mat::default();
 		let res = (&m + &m - (&m + &m)).into_result();
-		assert!(matches!(res, Err(Error { code: StsBadArg, .. })));
+		assert_matches!(res, Err(Error { code: StsBadArg, .. }));
 		assert!(res.err().unwrap().message.starts_with("Both sides of operator have error"));
 	}
 
@@ -58,7 +60,7 @@ fn mat_ops() -> Result<()> {
 		let lhs = Mat::default();
 		let rhs = Mat::default();
 		let res = (lhs + rhs).into_result();
-		assert!(matches!(res, Err(Error { code: StsBadArg, .. })));
+		assert_matches!(res, Err(Error { code: StsBadArg, .. }));
 	}
 
 	// ElemMul
