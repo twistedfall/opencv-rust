@@ -15,7 +15,7 @@ use slice_arg_finder::SliceArgFinder;
 use crate::comment::strip_doxygen_comment_markers;
 use crate::debug::{DefinitionLocation, LocationName};
 use crate::element::ExcludeKind;
-use crate::entity::WalkAction;
+use crate::entity::{ToEntity, WalkAction};
 use crate::field::FieldDesc;
 use crate::settings::{TypeRefFactory, ARG_OVERRIDE_SELF};
 use crate::type_ref::{Constness, CppNameStyle, TypeRefDesc, TypeRefTypeHint};
@@ -608,6 +608,15 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		match self {
 			Self::Clang { .. } => &FuncCppBody::Auto,
 			Self::Desc(desc) => &desc.cpp_body,
+		}
+	}
+}
+
+impl<'tu> ToEntity<'tu> for &Func<'tu, '_> {
+	fn to_entity(self) -> Option<Entity<'tu>> {
+		match self {
+			Func::Clang { entity, .. } => Some(*entity),
+			Func::Desc(_) => None,
 		}
 	}
 }

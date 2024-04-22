@@ -17,7 +17,7 @@ use crate::element::ExcludeKind;
 use crate::renderer::{CppExternReturnRenderer, CppRenderer, TypeRefRenderer};
 use crate::vector::VectorDesc;
 use crate::writer::rust_native::type_ref::TypeRefExt;
-use crate::{settings, AbstractRefWrapper, ClassSimplicity, ExportConfig};
+use crate::{settings, AbstractRefWrapper, ClassKindOverride, ExportConfig};
 use crate::{Class, Element, GeneratedType, GeneratorEnv, SmartPtr, Vector};
 
 mod desc;
@@ -109,12 +109,12 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		} else {
 			let simplicity = settings::DATA_TYPES
 				.contains(cpp_refname)
-				.then_some(ClassSimplicity::Simple)
+				.then_some(ClassKindOverride::Simple)
 				.unwrap_or_else(|| {
 					settings::ELEMENT_EXPORT_TWEAK
 						.get(cpp_refname)
 						.and_then(|export_tweak| export_tweak(ExportConfig::default()))
-						.map_or(ClassSimplicity::Boxed, |e| e.simplicity)
+						.map_or(ClassKindOverride::Boxed, |e| e.class_kind_override)
 				});
 			let cls = if simplicity.is_boxed() {
 				ClassDesc::boxed(cpp_refname, rust_module)

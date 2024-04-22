@@ -12,7 +12,7 @@ use crate::type_ref::{CppNameStyle, FishStyle, TypeRef, TypeRefKind};
 use crate::typedef::NewTypedefResult;
 use crate::writer::rust_native::element::RustElement;
 use crate::{
-	get_definition_text, line_reader, settings, AbstractRefWrapper, Class, ClassSimplicity, Const, Element, EntityExt,
+	get_definition_text, line_reader, settings, AbstractRefWrapper, Class, ClassKindOverride, Const, Element, EntityExt,
 	EntityWalkerExt, EntityWalkerVisitor, Enum, Func, GeneratorEnv, LineReaderAction, SmartPtr, Tuple, Typedef, Vector,
 };
 
@@ -101,7 +101,7 @@ impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCvWalker<'tu, '_
 					if BOXED.contains(&name.as_str()) {
 						self.gen_env.make_export_config(entity);
 					} else if SIMPLE.contains(&name.as_str()) {
-						self.gen_env.make_export_config(entity).simplicity = ClassSimplicity::Simple;
+						self.gen_env.make_export_config(entity).class_kind_override = ClassKindOverride::Simple;
 					} else if let Some(rename_macro) = RENAME.iter().find(|&r| r == &name) {
 						if let Some(new_name) = get_definition_text(entity)
 							.strip_prefix(rename_macro)
@@ -177,10 +177,10 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 				});
 				class_decl.walk_classes_while(|sub_cls| {
 					if !gen_env.get_export_config(sub_cls).is_some() {
-						gen_env.make_export_config(sub_cls).simplicity = if Class::new(sub_cls, gen_env).can_be_simple() {
-							ClassSimplicity::Simple
+						gen_env.make_export_config(sub_cls).class_kind_override = if Class::new(sub_cls, gen_env).can_be_simple() {
+							ClassKindOverride::Simple
 						} else {
-							ClassSimplicity::Boxed
+							ClassKindOverride::Boxed
 						};
 					}
 					Self::process_class(visitor, gen_env, sub_cls);

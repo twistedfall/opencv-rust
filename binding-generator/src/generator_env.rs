@@ -16,24 +16,25 @@ use crate::{
 };
 
 #[derive(Copy, Clone, Debug)]
-pub enum ClassSimplicity {
+pub enum ClassKindOverride {
 	Boxed,
 	Simple,
 	BoxedForced,
+	System,
 }
 
-impl ClassSimplicity {
+impl ClassKindOverride {
 	pub fn is_boxed(self) -> bool {
 		match self {
-			ClassSimplicity::Boxed | ClassSimplicity::BoxedForced => true,
-			ClassSimplicity::Simple => false,
+			ClassKindOverride::Boxed | ClassKindOverride::BoxedForced => true,
+			ClassKindOverride::Simple | ClassKindOverride::System => false,
 		}
 	}
 }
 
 #[derive(Clone, Debug)]
 pub struct ExportConfig {
-	pub simplicity: ClassSimplicity,
+	pub class_kind_override: ClassKindOverride,
 	pub deprecated: bool,
 	pub no_return: bool,
 	pub no_except: bool,
@@ -45,7 +46,7 @@ pub struct ExportConfig {
 impl Default for ExportConfig {
 	fn default() -> Self {
 		Self {
-			simplicity: ClassSimplicity::Boxed,
+			class_kind_override: ClassKindOverride::Boxed,
 			deprecated: false,
 			no_return: false,
 			no_except: false,
@@ -66,17 +67,22 @@ impl ExportConfig {
 	}
 
 	pub fn override_boxed(mut src: ExportConfig) -> Option<ExportConfig> {
-		src.simplicity = ClassSimplicity::Boxed;
+		src.class_kind_override = ClassKindOverride::Boxed;
 		Some(src)
 	}
 
 	pub fn force_boxed(mut src: ExportConfig) -> Option<ExportConfig> {
-		src.simplicity = ClassSimplicity::BoxedForced;
+		src.class_kind_override = ClassKindOverride::BoxedForced;
 		Some(src)
 	}
 
 	pub fn simple(mut src: ExportConfig) -> Option<ExportConfig> {
-		src.simplicity = ClassSimplicity::Simple;
+		src.class_kind_override = ClassKindOverride::Simple;
+		Some(src)
+	}
+
+	pub fn system(mut src: ExportConfig) -> Option<ExportConfig> {
+		src.class_kind_override = ClassKindOverride::System;
 		Some(src)
 	}
 }

@@ -420,6 +420,7 @@ impl StrExt for str {
 		out.replacen_in_place("p3_p", 1, "p3p");
 		out.replacen_in_place("_u_mat", 1, "_umat");
 		out.replacen_in_place("i_d3_d", 1, "id_3d_");
+		out.replacen_in_place("d3_d", 1, "d3d");
 		out.replacen_in_place("2_d", 1, "_2d");
 		out.replacen_in_place("3_d", 1, "_3d");
 		out.replacen_in_place("open_gl", 1, "opengl");

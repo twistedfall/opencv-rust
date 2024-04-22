@@ -4,6 +4,7 @@ use std::borrow::Cow::{Borrowed, Owned};
 pub use lifetime::{Lifetime, LifetimeIterator};
 pub use nullability::NullabilityExt;
 
+use crate::class::ClassKind;
 use crate::renderer::TypeRefRenderer;
 use crate::type_ref::{
 	Constness, Dir, ExternDir, FishStyle, InputOutputArrayKind, NameStyle, TypeRef, TypeRefKind, TypeRefTypeHint,
@@ -108,15 +109,17 @@ impl TypeRefExt for TypeRef<'_, '_> {
 								))
 							} else {
 								let cls_kind = cls.kind();
-								if cls_kind.is_simple() {
-									RenderLane::SimpleClass(SimpleClassRenderLane::from_non_canonical_indirection(
+								match cls_kind {
+									ClassKind::Simple => RenderLane::SimpleClass(SimpleClassRenderLane::from_non_canonical_indirection(
 										tref.into_owned(),
 										indirection,
-									))
-								} else if cls_kind.is_boxed() {
-									RenderLane::CppPassByVoidPtr(CppPassByVoidPtrRenderLane::from_non_canonical(tref.into_owned()))
-								} else {
-									unreachable!("Any other kind of class shouldn't be generated")
+									)),
+									ClassKind::Boxed | ClassKind::BoxedForced | ClassKind::System => {
+										RenderLane::CppPassByVoidPtr(CppPassByVoidPtrRenderLane::from_non_canonical(tref.into_owned()))
+									}
+									ClassKind::Other => {
+										unreachable!("Any other kind of class shouldn't be generated")
+									}
 								}
 							}
 						}

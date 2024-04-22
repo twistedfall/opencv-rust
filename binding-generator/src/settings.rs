@@ -17,6 +17,10 @@ pub use func_replace::{FuncInheritFactory, FUNC_REPLACE};
 pub use func_specialize::{TypeRefFactory, FUNC_SPECIALIZE};
 pub use func_unsafe::FUNC_UNSAFE;
 pub use generator_module_tweaks::{ModuleTweak, GENERATOR_MODULE_TWEAKS};
+pub use implemented::{
+	IMPLEMENTED_CONST_GENERICS, IMPLEMENTED_FUNCTION_LIKE_MACROS, IMPLEMENTED_GENERICS, IMPLEMENTED_MANUAL_DEBUG,
+	IMPLEMENTED_SYSTEM_CLASSES,
+};
 
 mod argument_names;
 mod argument_override;
@@ -31,15 +35,7 @@ mod func_replace;
 mod func_specialize;
 mod func_unsafe;
 mod generator_module_tweaks;
-
-pub static IMPLEMENTED_FUNCTION_LIKE_MACROS: Lazy<HashSet<&str>> = Lazy::new(|| HashSet::from(["CV_MAKETYPE"]));
-
-pub static IMPLEMENTED_SYSTEM_CLASSES: Lazy<HashSet<&str>> =
-	Lazy::new(|| HashSet::from(["std::pair", "std::string", "std::tuple", "std::vector"]));
-
-/// classes that have a manual `Debug` implementation, element is cpp_name(Reference)
-pub static IMPLEMENTED_MANUAL_DEBUG: Lazy<HashSet<&str>> =
-	Lazy::new(|| HashSet::from(["cv::Mat", "cv::MatSize", "cv::dnn::DictValue"]));
+mod implemented;
 
 // fixme, generalize, make it use constant::ValueKind
 pub static CONST_TYPE_USIZE: Lazy<HashSet<&str>> = Lazy::new(|| HashSet::from(["Mat_AUTO_STEP"]));
@@ -138,25 +134,6 @@ pub static DATA_TYPES: Lazy<HashSet<&str>> = Lazy::new(|| {
 		"cv::Rect2f",
 		"cv::Rect2d",
 	])
-});
-
-/// cpp_name(Reference)
-pub static IMPLEMENTED_CONST_GENERICS: Lazy<HashSet<&str>> = Lazy::new(|| HashSet::from(["cv::Vec"]));
-
-/// cpp_name(Reference)
-pub static IMPLEMENTED_GENERICS: Lazy<HashSet<&str>> = Lazy::new(|| {
-	let mut out = HashSet::from([
-		"cv::Affine3",
-		"cv::Mat_",
-		"cv::Matx",
-		"cv::Point3_",
-		"cv::Point_",
-		"cv::Rect_",
-		"cv::Scalar_",
-		"cv::Size_",
-	]);
-	out.extend(&*IMPLEMENTED_CONST_GENERICS);
-	out
 });
 
 pub static NO_SKIP_NAMESPACE_IN_LOCALNAME: Lazy<HashMap<&str, HashMap<&str, &str>>> = Lazy::new(|| {

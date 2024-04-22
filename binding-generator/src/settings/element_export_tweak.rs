@@ -11,6 +11,13 @@ pub static ELEMENT_EXPORT_TWEAK: Lazy<HashMap<&str, fn(ExportConfig) -> Option<E
 	HashMap::from([
 		("VADisplay", ExportConfig::export as _),
 		("VASurfaceID", ExportConfig::export as _),
+		("ID3D11Device", ExportConfig::system as _),
+		("ID3D11Texture2D", ExportConfig::system as _),
+		("ID3D10Device", ExportConfig::system as _),
+		("ID3D10Texture2D", ExportConfig::system as _),
+		("IDirect3DDevice9", ExportConfig::system as _),
+		("IDirect3DDevice9Ex", ExportConfig::system as _),
+		("IDirect3DSurface9", ExportConfig::system as _),
 		("cv::AffineWarper", ExportConfig::export as _), // 3.2 3.4 stitching warpers
 		("cv::CompressedRectilinearPortraitWarper", ExportConfig::export as _), // 3.2 3.4 stitching warpers
 		("cv::CompressedRectilinearWarper", ExportConfig::export as _), // 3.2 3.4 stitching warpers

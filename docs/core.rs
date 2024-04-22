@@ -5201,6 +5201,128 @@ pub mod core {
 		Ok(ret)
 	}
 	
+	/// ## Parameters
+	/// * pD3D10Texture2D: - source D3D10 texture
+	/// * dst: - destination OutputArray
+	#[inline]
+	pub fn convert_from_d3d10_texture_2d(p_d3d10_texture_2d: &mut impl core::ID3D10Texture2DTrait, dst: &mut impl ToOutputArray) -> Result<()> {
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_directx_convertFromD3D10Texture2D_ID3D10Texture2DX_const__OutputArrayR(p_d3d10_texture_2d.as_raw_mut_ID3D10Texture2D(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// ## Parameters
+	/// * pD3D11Texture2D: - source D3D11 texture
+	/// * dst: - destination OutputArray
+	#[inline]
+	pub fn convert_from_d3d11_texture_2d(p_d3d11_texture_2d: &mut impl core::ID3D11Texture2DTrait, dst: &mut impl ToOutputArray) -> Result<()> {
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_directx_convertFromD3D11Texture2D_ID3D11Texture2DX_const__OutputArrayR(p_d3d11_texture_2d.as_raw_mut_ID3D11Texture2D(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// ## Parameters
+	/// * pDirect3DSurface9: - source D3D10 texture
+	/// * dst: - destination OutputArray
+	/// * surfaceSharedHandle: - shared handle
+	/// 
+	/// ## Note
+	/// This alternative version of [convert_from_direct_3d_surface9] function uses the following default values for its arguments:
+	/// * surface_shared_handle: NULL
+	#[inline]
+	pub fn convert_from_direct_3d_surface9_def(p_direct_3d_surface9: &mut impl core::IDirect3DSurface9Trait, dst: &mut impl ToOutputArray) -> Result<()> {
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_directx_convertFromDirect3DSurface9_IDirect3DSurface9X_const__OutputArrayR(p_direct_3d_surface9.as_raw_mut_IDirect3DSurface9(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// ## Parameters
+	/// * pDirect3DSurface9: - source D3D10 texture
+	/// * dst: - destination OutputArray
+	/// * surfaceSharedHandle: - shared handle
+	/// 
+	/// ## C++ default parameters
+	/// * surface_shared_handle: NULL
+	#[inline]
+	pub unsafe fn convert_from_direct_3d_surface9(p_direct_3d_surface9: &mut impl core::IDirect3DSurface9Trait, dst: &mut impl ToOutputArray, surface_shared_handle: *mut c_void) -> Result<()> {
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		{ sys::cv_directx_convertFromDirect3DSurface9_IDirect3DSurface9X_const__OutputArrayR_voidX(p_direct_3d_surface9.as_raw_mut_IDirect3DSurface9(), dst.as_raw__OutputArray(), surface_shared_handle, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// ## Parameters
+	/// * src: - source InputArray
+	/// * pD3D10Texture2D: - destination D3D10 texture
+	#[inline]
+	pub fn convert_to_d3d10_texture_2d(src: &impl ToInputArray, p_d3d10_texture_2d: &mut impl core::ID3D10Texture2DTrait) -> Result<()> {
+		input_array_arg!(src);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_directx_convertToD3D10Texture2D_const__InputArrayR_ID3D10Texture2DX(src.as_raw__InputArray(), p_d3d10_texture_2d.as_raw_mut_ID3D10Texture2D(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// ## Parameters
+	/// * src: - source InputArray
+	/// * pD3D11Texture2D: - destination D3D11 texture
+	#[inline]
+	pub fn convert_to_d3d11_texture_2d(src: &impl ToInputArray, p_d3d11_texture_2d: &mut impl core::ID3D11Texture2DTrait) -> Result<()> {
+		input_array_arg!(src);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_directx_convertToD3D11Texture2D_const__InputArrayR_ID3D11Texture2DX(src.as_raw__InputArray(), p_d3d11_texture_2d.as_raw_mut_ID3D11Texture2D(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// ## Parameters
+	/// * src: - source InputArray
+	/// * pDirect3DSurface9: - destination D3D10 texture
+	/// * surfaceSharedHandle: - shared handle
+	/// 
+	/// ## Note
+	/// This alternative version of [convert_to_direct_3d_surface9] function uses the following default values for its arguments:
+	/// * surface_shared_handle: NULL
+	#[inline]
+	pub fn convert_to_direct_3d_surface9_def(src: &impl ToInputArray, p_direct_3d_surface9: &mut impl core::IDirect3DSurface9Trait) -> Result<()> {
+		input_array_arg!(src);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_directx_convertToDirect3DSurface9_const__InputArrayR_IDirect3DSurface9X(src.as_raw__InputArray(), p_direct_3d_surface9.as_raw_mut_IDirect3DSurface9(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// ## Parameters
+	/// * src: - source InputArray
+	/// * pDirect3DSurface9: - destination D3D10 texture
+	/// * surfaceSharedHandle: - shared handle
+	/// 
+	/// ## C++ default parameters
+	/// * surface_shared_handle: NULL
+	#[inline]
+	pub unsafe fn convert_to_direct_3d_surface9(src: &impl ToInputArray, p_direct_3d_surface9: &mut impl core::IDirect3DSurface9Trait, surface_shared_handle: *mut c_void) -> Result<()> {
+		input_array_arg!(src);
+		return_send!(via ocvrs_return);
+		{ sys::cv_directx_convertToDirect3DSurface9_const__InputArrayR_IDirect3DSurface9X_voidX(src.as_raw__InputArray(), p_direct_3d_surface9.as_raw_mut_IDirect3DSurface9(), surface_shared_handle, ocvrs_return.as_mut_ptr()) };
+		return_receive!(ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// Get OpenCV type from DirectX type
 	/// ## Parameters
 	/// * iD3DFORMAT: - enum D3DTYPE for D3D9
@@ -5226,6 +5348,62 @@ pub mod core {
 		unsafe { sys::cv_directx_getTypeFromDXGI_FORMAT_const_int(i_dxgi_format, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// ## Parameters
+	/// * pD3D10Device: - pointer to D3D10 device
+	/// ## Returns
+	/// Returns reference to OpenCL Context
+	#[inline]
+	pub fn initialize_context_from_d3d10_device(p_d3d10_device: &mut impl core::ID3D10DeviceTrait) -> Result<core::Context> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_directx_ocl_initializeContextFromD3D10Device_ID3D10DeviceX(p_d3d10_device.as_raw_mut_ID3D10Device(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Context::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// ## Parameters
+	/// * pD3D11Device: - pointer to D3D11 device
+	/// ## Returns
+	/// Returns reference to OpenCL Context
+	#[inline]
+	pub fn initialize_context_from_d3d11_device(p_d3d11_device: &mut impl core::ID3D11DeviceTrait) -> Result<core::Context> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_directx_ocl_initializeContextFromD3D11Device_ID3D11DeviceX(p_d3d11_device.as_raw_mut_ID3D11Device(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Context::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// ## Parameters
+	/// * pDirect3DDevice9Ex: - pointer to Direct3DDevice9Ex device
+	/// ## Returns
+	/// Returns reference to OpenCL Context
+	#[inline]
+	pub fn initialize_context_from_direct_3d_device9_ex(p_direct_3d_device9_ex: &mut impl core::IDirect3DDevice9ExTrait) -> Result<core::Context> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_directx_ocl_initializeContextFromDirect3DDevice9Ex_IDirect3DDevice9ExX(p_direct_3d_device9_ex.as_raw_mut_IDirect3DDevice9Ex(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Context::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// ## Parameters
+	/// * pDirect3DDevice9: - pointer to Direct3Device9 device
+	/// ## Returns
+	/// Returns reference to OpenCL Context
+	#[inline]
+	pub fn initialize_context_from_direct_3d_device9(p_direct_3d_device9: &mut impl core::IDirect3DDevice9Trait) -> Result<core::Context> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_directx_ocl_initializeContextFromDirect3DDevice9_IDirect3DDevice9X(p_direct_3d_device9.as_raw_mut_IDirect3DDevice9(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Context::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	

@@ -8,7 +8,6 @@ use super::{Class, ClassKind, TemplateKind};
 pub struct ClassDesc<'tu, 'ge> {
 	pub kind: ClassKind,
 	pub is_abstract: bool,
-	pub is_system: bool,
 	pub is_public: bool,
 	pub exclude_kind: ExcludeKind,
 	pub template_kind: TemplateKind<'tu, 'ge>,
@@ -22,7 +21,6 @@ impl<'tu, 'ge> ClassDesc<'tu, 'ge> {
 		Self {
 			kind: ClassKind::Boxed,
 			is_abstract: false,
-			is_system: false,
 			is_public: true,
 			exclude_kind: ExcludeKind::Included,
 			template_kind: TemplateKind::No,

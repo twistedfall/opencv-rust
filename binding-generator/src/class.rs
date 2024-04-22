@@ -11,13 +11,13 @@ pub use desc::ClassDesc;
 use crate::comment::strip_doxygen_comment_markers;
 use crate::debug::{DefinitionLocation, LocationName};
 use crate::element::ExcludeKind;
-use crate::entity::{WalkAction, WalkResult};
+use crate::entity::{ToEntity, WalkAction, WalkResult};
 use crate::field::FieldDesc;
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, FuncRustExtern, ReturnKind};
 use crate::type_ref::{Constness, CppNameStyle, StrEnc, StrType, TypeRef, TypeRefDesc, TypeRefTypeHint};
 use crate::writer::rust_native::element::RustElement;
 use crate::{
-	settings, ClassSimplicity, Const, DefaultElement, Element, EntityExt, Enum, Field, Func, FuncTypeHint, GeneratedType,
+	settings, ClassKindOverride, Const, DefaultElement, Element, EntityExt, Enum, Field, Func, FuncTypeHint, GeneratedType,
 	GeneratorEnv, NameDebug, StrExt,
 };
 
@@ -80,16 +80,17 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 				{
 					return ClassKind::Other;
 				}
-				match gen_env.get_export_config(entity).map(|c| c.simplicity) {
-					Some(ClassSimplicity::Simple) => {
+				match gen_env.get_export_config(entity).map(|c| c.class_kind_override) {
+					Some(ClassKindOverride::Simple) => {
 						if self.can_be_simple() {
 							ClassKind::Simple
 						} else {
 							ClassKind::BoxedForced
 						}
 					}
-					Some(ClassSimplicity::Boxed) => ClassKind::Boxed,
-					Some(ClassSimplicity::BoxedForced) => ClassKind::BoxedForced,
+					Some(ClassKindOverride::Boxed) => ClassKind::Boxed,
+					Some(ClassKindOverride::BoxedForced) => ClassKind::BoxedForced,
+					Some(ClassKindOverride::System) => ClassKind::System,
 					None => {
 						if self.is_system() {
 							ClassKind::System
@@ -589,20 +590,37 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	}
 }
 
+impl<'tu> ToEntity<'tu> for &Class<'tu, '_> {
+	fn to_entity(self) -> Option<Entity<'tu>> {
+		match self {
+			Class::Clang { entity, .. } => Some(*entity),
+			Class::Desc(_) => None,
+		}
+	}
+}
+
 impl Element for Class<'_, '_> {
 	fn exclude_kind(&self) -> ExcludeKind {
 		match self {
-			Self::Clang { .. } => {
-				DefaultElement::exclude_kind(self)
-					.with_is_excluded(|| self.has_private_destructor())
-					.with_is_ignored(|| match self.template_kind() {
-						TemplateKind::No => !self.is_definition(),
+			Self::Clang { .. } => DefaultElement::exclude_kind(self)
+				.with_is_ignored(|| match self.kind() {
+					ClassKind::Other => true,
+					ClassKind::System => {
+						!settings::IMPLEMENTED_SYSTEM_CLASSES.contains(self.cpp_name(CppNameStyle::Reference).as_ref())
+					}
+					ClassKind::Simple | ClassKind::Boxed | ClassKind::BoxedForced => match self.template_kind() {
 						TemplateKind::Template => true,
-						TemplateKind::Specialization(_) => !settings::IMPLEMENTED_GENERICS.contains(self.cpp_name(CppNameStyle::Reference).as_ref()),
-					} || self.is_system() && !settings::IMPLEMENTED_SYSTEM_CLASSES.contains(self.cpp_name(CppNameStyle::Reference).as_ref())
-						|| matches!(self.kind(), ClassKind::Other)
-						|| self.cpp_namespace() == "")
-			}
+						TemplateKind::No => !self.is_definition() || self.cpp_namespace() == "",
+						TemplateKind::Specialization(_) => {
+							!settings::IMPLEMENTED_GENERICS.contains(self.cpp_name(CppNameStyle::Reference).as_ref())
+						}
+					},
+				})
+				.with_is_excluded(|| match self.kind() {
+					ClassKind::System | ClassKind::Other => true,
+					ClassKind::Simple => false,
+					ClassKind::Boxed | ClassKind::BoxedForced => self.has_private_destructor(),
+				}),
 			Self::Desc(desc) => desc.exclude_kind,
 		}
 	}
@@ -610,7 +628,7 @@ impl Element for Class<'_, '_> {
 	fn is_system(&self) -> bool {
 		match self {
 			&Self::Clang { entity, .. } => DefaultElement::is_system(entity),
-			Self::Desc(desc) => desc.is_system,
+			Self::Desc(desc) => matches!(desc.kind, ClassKind::System),
 		}
 	}
 
@@ -782,8 +800,9 @@ impl ClassKind {
 
 	pub fn is_boxed(self) -> bool {
 		match self {
-			Self::Boxed | Self::BoxedForced => true,
-			Self::Simple | Self::System | Self::Other => false,
+			// fixme: Self::System to return true is kind of hack to make sure that system classes are passed by void*, probably better to handle in explicitly in CppPassByVoidPtrRenderLane
+			Self::Boxed | Self::BoxedForced | Self::System => true,
+			Self::Simple | Self::Other => false,
 		}
 	}
 }

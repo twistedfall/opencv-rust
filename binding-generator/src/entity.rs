@@ -35,6 +35,16 @@ impl Element for Entity<'_> {
 	}
 }
 
+pub trait ToEntity<'tu> {
+	fn to_entity(self) -> Option<Entity<'tu>>;
+}
+
+impl<'tu> ToEntity<'tu> for &Entity<'tu> {
+	fn to_entity(self) -> Option<Entity<'tu>> {
+		Some(*self)
+	}
+}
+
 #[derive(Copy, Clone)]
 pub enum WalkAction {
 	Continue,
@@ -156,7 +166,7 @@ impl<'tu> EntityExt<'tu> for Entity<'tu> {
 }
 
 #[allow(unused)]
-pub fn dbg_clang_entity(entity: Entity) {
+pub fn dbg_clang_entity<'tu>(entity: impl ToEntity<'tu>) {
 	struct EntityWrapper<'tu>(Entity<'tu>);
 
 	impl fmt::Debug for EntityWrapper<'_> {
@@ -244,5 +254,7 @@ pub fn dbg_clang_entity(entity: Entity) {
 				.finish()
 		}
 	}
-	eprintln!("{:#?}", EntityWrapper(entity));
+	if let Some(entity) = entity.to_entity() {
+		eprintln!("{:#?}", EntityWrapper(entity));
+	}
 }

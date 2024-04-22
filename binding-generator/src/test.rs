@@ -403,6 +403,10 @@ fn cpp_name_to_rust_case() {
 	assert_eq!("id_3d_format", "iD3DFORMAT".cpp_name_to_rust_case());
 	assert_eq!("_l2_hys_threshold", "_L2HysThreshold".cpp_name_to_rust_case());
 	assert_eq!("use_aruco3_detection", "useAruco3Detection".cpp_name_to_rust_case());
+	assert_eq!(
+		"initialize_context_from_d3d11_device",
+		"initializeContextFromD3D11Device".cpp_name_to_rust_case()
+	);
 }
 
 #[test]

@@ -32,7 +32,7 @@ pub use enumeration::Enum;
 use field::Field;
 pub use func::{Func, FuncId, FuncTypeHint};
 pub use generator::{GeneratedType, Generator, GeneratorVisitor};
-pub use generator_env::{ClassSimplicity, ExportConfig, GeneratorEnv};
+pub use generator_env::{ClassKindOverride, ExportConfig, GeneratorEnv};
 pub use iterator_ext::IteratorExt;
 use memoize::{MemoizeMap, MemoizeMapExt};
 use name_pool::NamePool;
