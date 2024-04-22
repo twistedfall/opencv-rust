@@ -70,10 +70,10 @@ Get OpenCV from homebrew:
   brew install opencv
   ```
   You will also need a working C++ compiler and libclang, you can install Command Line Tools (`xcode-select
-  --install`), XCode (from AppStore) or `llvm` (from Brew). You most probably need to also check the item 7 of the
-  troubleshooting below.
+  --install`), XCode (from App Store) or `llvm` (from Brew). You most probably need to also check the item 7 of the
+  [troubleshooting](https://github.com/twistedfall/opencv-rust/blob/master/TROUBLESHOOTING.md).
 
-  If using system LLVM doesn't work for you you can get it from homebrew:
+  If using system LLVM doesn't work for you, you can get it from homebrew:
   ```shell script
   brew install llvm
   ```
