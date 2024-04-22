@@ -6,7 +6,7 @@ use matches::assert_matches;
 use opencv::core::{MatConstIterator, MatIter, Point, Point2d, Rect, Scalar, Size, Vec2b, Vec2s, Vec3d, Vec3f, Vec4w};
 use opencv::prelude::*;
 use opencv::types::{VectorOfMat, VectorOfi32};
-use opencv::{core, Error, Result};
+use opencv::{core, imgproc, Error, Result};
 
 const PIXEL: &[u8] = include_bytes!("pixel.png");
 
@@ -1024,6 +1024,38 @@ fn mat_from_slice() -> Result<()> {
 		let mut mat = Mat::new_nd_with_data_mut(&[5, 2], &mut src_u8)?;
 		*mat.at_nd_mut::<u8>(&[3, 0])? = 111;
 		assert_eq!(111, src_u8[6]);
+	}
+
+	{
+		let mut src_u8 = src_u8;
+		let mut mat = Mat::from_slice_mut(&mut src_u8)?;
+		core::divide_def(100., &[2; 10], &mut mat)?;
+		assert_eq!([50; 10], src_u8);
+	}
+
+	{
+		let src: &[u8] = &[];
+		let mat_res = Mat::new_nd_with_data(&[], src);
+		assert_matches!(
+			mat_res,
+			Err(Error {
+				code: core::StsUnmatchedSizes,
+				..
+			})
+		);
+	}
+
+	{
+		let src = [1u8; 20];
+		let src_mat = Mat::new_rows_cols_with_data(4, 5, &src)?;
+		let mut dst = [0u8; 10];
+		let mut dst_mat = Mat::new_rows_cols_with_data_mut(2, 5, &mut dst)?;
+		assert_eq!(Size::new(5, 2), dst_mat.size()?);
+		// this reallocates a `Mat` and disconnects in from the `dst` internally, so it's left untouched
+		imgproc::cvt_color_def(&src_mat, &mut dst_mat, imgproc::COLOR_GRAY2BGR)?;
+		assert_eq!(3, dst_mat.channels());
+		assert_eq!(Size::new(5, 4), dst_mat.size()?);
+		assert_eq!([0; 10], dst);
 	}
 
 	{

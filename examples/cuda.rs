@@ -1,8 +1,9 @@
 use std::{env, time};
+use time::Instant;
 
-use opencv::core::{GpuMat, Size};
+use opencv::core::Size;
 use opencv::prelude::*;
-use opencv::{core, cudafilters, cudaimgproc, imgcodecs, imgproc, Result};
+use opencv::{core, imgcodecs, imgproc, Result};
 
 const ITERATIONS: usize = 100;
 
@@ -25,40 +26,36 @@ fn main() -> Result<()> {
 		}
 	);
 	println!("Timing CPU implementation... ");
-	let img = imgcodecs::imread(&img_file, imgcodecs::IMREAD_COLOR)?;
-	let start = time::Instant::now();
+	let img = imgcodecs::imread_def(&img_file)?;
+	let start = Instant::now();
 	for _ in 0..ITERATIONS {
 		let mut gray = Mat::default();
-		imgproc::cvt_color(&img, &mut gray, imgproc::COLOR_BGR2GRAY, 0)?;
+		imgproc::cvt_color_def(&img, &mut gray, imgproc::COLOR_BGR2GRAY)?;
 		let mut blurred = Mat::default();
-		imgproc::gaussian_blur(&gray, &mut blurred, Size::new(7, 7), 1.5, 0., core::BORDER_DEFAULT)?;
+		imgproc::gaussian_blur_def(&gray, &mut blurred, Size::new(7, 7), 1.5)?;
 		let mut edges = Mat::default();
-		imgproc::canny(&blurred, &mut edges, 0., 50., 3, false)?;
+		imgproc::canny_def(&blurred, &mut edges, 0., 50.)?;
 	}
 	println!("{:#?}", start.elapsed());
+	#[cfg(all(ocvrs_has_module_cudafilters, ocvrs_has_module_cudaimgproc))]
 	if cuda_available {
+		use opencv::core::GpuMat;
+		use opencv::{cudafilters, cudaimgproc};
+
 		println!("Timing CUDA implementation... ");
-		let img = imgcodecs::imread(&img_file, imgcodecs::IMREAD_COLOR)?;
+		let img = imgcodecs::imread_def(&img_file)?;
 		let mut img_gpu = GpuMat::new_def()?;
 		img_gpu.upload(&img)?;
 		let mut stream = core::Stream::default()?;
-		let start = time::Instant::now();
+		let start = Instant::now();
 		for _ in 0..ITERATIONS {
 			let mut gray = GpuMat::new_def()?;
 			cudaimgproc::cvt_color(&img_gpu, &mut gray, imgproc::COLOR_BGR2GRAY, 0, &mut stream)?;
 			let mut blurred = GpuMat::new_def()?;
-			let mut filter = cudafilters::create_gaussian_filter(
-				gray.typ()?,
-				blurred.typ()?,
-				Size::new(7, 7),
-				1.5,
-				0.,
-				core::BORDER_DEFAULT,
-				core::BORDER_DEFAULT,
-			)?;
+			let mut filter = cudafilters::create_gaussian_filter_def(gray.typ()?, blurred.typ()?, Size::new(7, 7), 1.5)?;
 			filter.apply(&gray, &mut blurred, &mut stream)?;
 			let mut edges = GpuMat::new_def()?;
-			let mut detector = cudaimgproc::create_canny_edge_detector(0., 50., 3, false)?;
+			let mut detector = cudaimgproc::create_canny_edge_detector_def(0., 50.)?;
 			detector.detect(&blurred, &mut edges, &mut stream)?;
 			stream.wait_for_completion()?;
 		}

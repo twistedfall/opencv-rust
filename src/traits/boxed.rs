@@ -75,22 +75,22 @@ macro_rules! opencv_type_boxed {
 	($type: ty) => {
 		impl $crate::traits::Boxed for $type {
 			#[inline]
-			unsafe fn from_raw(ptr: extern_receive!($type)) -> Self {
+			unsafe fn from_raw(ptr: $crate::extern_receive!($type)) -> Self {
 				Self { ptr }
 			}
 
 			#[inline]
-			fn into_raw(self) -> extern_send!(mut $type) {
+			fn into_raw(self) -> $crate::extern_send!(mut $type) {
 				::std::mem::ManuallyDrop::new(self).ptr
 			}
 
 			#[inline]
-			fn as_raw(&self) -> extern_send!($type) {
+			fn as_raw(&self) -> $crate::extern_send!($type) {
 				self.ptr
 			}
 
 			#[inline]
-			fn as_raw_mut(&mut self) -> extern_send!(mut $type) {
+			fn as_raw_mut(&mut self) -> $crate::extern_send!(mut $type) {
 				self.ptr
 			}
 		}

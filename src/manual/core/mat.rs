@@ -100,11 +100,14 @@ fn match_is_continuous(mat: &(impl MatTraitConst + ?Sized)) -> Result<()> {
 
 #[inline]
 fn match_length(sizes: &[i32], len: usize) -> Result<()> {
+	if sizes.is_empty() {
+		return Err(Error::new(core::StsUnmatchedSizes, "Dimensions must not be empty"));
+	}
 	let data_len = i32::try_from(len)?;
 	if sizes.iter().product::<i32>() != data_len {
 		let msg = if sizes.len() == 2 {
 			format!(
-				"The length of the slice: {data_len} must match the passed row count: {rows} and column count: {cols} exactly",
+				"The length of the slice: {data_len} must match the passed row: {rows} and column: {cols} counts exactly",
 				rows = sizes[0],
 				cols = sizes[1],
 			)
@@ -204,7 +207,7 @@ impl Mat {
 		Ok(out)
 	}
 
-	/// Create a new `Mat` from a single-dimensional slice with custom shape
+	/// Create a new `Mat` that references a single-dimensional slice with custom shape
 	#[inline]
 	pub fn new_rows_cols_with_data<T: DataType>(rows: i32, cols: i32, data: &[T]) -> Result<BoxedRef<Self>> {
 		match_length(&[rows, cols], data.len())?;
@@ -214,6 +217,7 @@ impl Mat {
 		Ok(<BoxedRef<Mat>>::from(m))
 	}
 
+	/// Create a new `Mat` that references a single-dimensional slice with custom shape
 	#[inline]
 	pub fn new_rows_cols_with_data_mut<T: DataType>(rows: i32, cols: i32, data: &mut [T]) -> Result<BoxedRefMut<Self>> {
 		match_length(&[rows, cols], data.len())?;
@@ -222,6 +226,7 @@ impl Mat {
 		Ok(<BoxedRefMut<Mat>>::from(m))
 	}
 
+	/// Create a new `Mat` that references a single-dimensional slice with custom shape
 	#[inline]
 	pub fn new_size_with_data<T: DataType>(size: Size, data: &[T]) -> Result<BoxedRef<Self>> {
 		match_length(&[size.width, size.height], data.len())?;
@@ -229,6 +234,7 @@ impl Mat {
 		Ok(<BoxedRef<Mat>>::from(m))
 	}
 
+	/// Create a new `Mat` that references a single-dimensional slice with custom shape
 	#[inline]
 	pub fn new_size_with_data_mut<T: DataType>(size: Size, data: &mut [T]) -> Result<BoxedRefMut<Self>> {
 		match_length(&[size.width, size.height], data.len())?;
@@ -236,6 +242,7 @@ impl Mat {
 		Ok(<BoxedRefMut<Mat>>::from(m))
 	}
 
+	/// Create a new `Mat` that references a single-dimensional slice with custom shape
 	#[inline]
 	pub fn new_nd_with_data<'data, T: DataType>(sizes: &[i32], data: &'data [T]) -> Result<BoxedRef<'data, Self>> {
 		match_length(sizes, data.len())?;
@@ -243,6 +250,7 @@ impl Mat {
 		Ok(<BoxedRef<Mat>>::from(m))
 	}
 
+	/// Create a new `Mat` that references a single-dimensional slice with custom shape
 	#[inline]
 	pub fn new_nd_with_data_mut<'data, T: DataType>(sizes: &[i32], data: &'data mut [T]) -> Result<BoxedRefMut<'data, Self>> {
 		match_length(sizes, data.len())?;

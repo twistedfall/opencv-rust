@@ -629,7 +629,7 @@ impl Element for Func<'_, '_> {
 				};
 				is_unavailable
 					|| settings::FUNC_EXCLUDE.contains(identifier.as_str())
-					|| (self.is_generic())
+					|| self.is_generic()
 					|| self.arguments().iter().any(|a| a.type_ref().exclude_kind().is_ignored())
 					|| kind.as_operator().map_or(false, |(_, kind)| match kind {
 						OperatorKind::Unsupported => true,

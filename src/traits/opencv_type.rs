@@ -72,7 +72,7 @@ pub trait OpenCVTypeExternContainerMove: OpenCVTypeExternContainer {
 #[macro_export]
 macro_rules! extern_receive {
 	($typ: ty) => {
-		extern_receive!($typ: '_)
+		$crate::extern_receive!($typ: '_)
 	};
 	($typ: ty: $lt: lifetime) => {
 		<$typ as $crate::traits::OpenCVType<$lt>>::ExternReceive
@@ -96,16 +96,16 @@ macro_rules! extern_send {
 #[macro_export]
 macro_rules! extern_container_send {
 	(mut $typ: ty: $lt: lifetime) => {
-		extern_send!(mut <$typ as $crate::traits::OpenCVTypeArg<$lt>>::ExternContainer)
+		$crate::extern_send!(mut <$typ as $crate::traits::OpenCVTypeArg<$lt>>::ExternContainer)
 	};
 	($typ: ty: $lt: lifetime) => {
-		extern_send!(<$typ as $crate::traits::OpenCVTypeArg<$lt>>::ExternContainer)
+		$crate::extern_send!(<$typ as $crate::traits::OpenCVTypeArg<$lt>>::ExternContainer)
 	};
 	(mut $typ: ty) => {
-		extern_container_send!(mut $typ: '_)
+		$crate::extern_container_send!(mut $typ: '_)
 	};
 	($typ: ty) => {
-		extern_container_send!($typ: '_)
+		$crate::extern_container_send!($typ: '_)
 	};
 }
 
@@ -114,10 +114,10 @@ macro_rules! extern_container_send {
 #[macro_export]
 macro_rules! extern_arg_send {
 	(mut $typ: ty: $lt: lifetime) => {
-		extern_container_send!(mut <$typ as $crate::traits::OpenCVType<$lt>>::Arg: $lt)
+		$crate::extern_container_send!(mut <$typ as $crate::traits::OpenCVType<$lt>>::Arg: $lt)
 	};
 	($typ: ty: $lt: lifetime) => {
-		extern_container_send!(<$typ as $crate::traits::OpenCVType<$lt>>::Arg: $lt)
+		$crate::extern_container_send!(<$typ as $crate::traits::OpenCVType<$lt>>::Arg: $lt)
 	};
 }
 

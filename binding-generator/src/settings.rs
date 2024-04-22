@@ -85,6 +85,8 @@ pub static PRIMITIVE_TYPEDEFS: Lazy<HashMap<&str, (&str, &str)>> = Lazy::new(|| 
 
 pub static STATIC_MODULES: Lazy<BTreeSet<&str>> = Lazy::new(|| BTreeSet::from(["core", "sys", "types"]));
 
+/// Types that can be used as `Mat` element
+/// cpp_name(Reference)
 pub static DATA_TYPES: Lazy<HashSet<&str>> = Lazy::new(|| {
 	HashSet::from([
 		"unsigned char",

@@ -1,7 +1,7 @@
 use crate::core::Vector;
 use crate::platform_types::size_t;
 use crate::traits::OpenCVType;
-use crate::{extern_arg_send, extern_container_send, extern_receive, extern_send};
+use crate::{extern_arg_send, extern_container_send, extern_receive};
 
 /// This trait is implemented by any type that can be stored inside `Vector`.
 ///

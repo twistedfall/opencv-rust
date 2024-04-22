@@ -53,8 +53,6 @@ if [[ "${OPENCV_VERSION:-}" != "4.9.0" ]]; then
 	rm -vf tests/*_only_latest_opencv.rs
 	rm -vf examples/dnn_face_detect.rs examples/gapi_api_example.rs examples/text_detection.rs
 fi
-# the following examples don't work in CI
-rm -vf examples/cuda.rs
 
 echo "=== Current directory: $(pwd)"
 echo "=== Environment variable dump:"

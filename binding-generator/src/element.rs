@@ -60,7 +60,8 @@ impl DefaultElement {
 				| EntityKind::ClassTemplate
 				| EntityKind::ClassTemplatePartialSpecialization
 				| EntityKind::FunctionTemplate
-				| EntityKind::Method => {
+				| EntityKind::Method
+				| EntityKind::FunctionDecl => {
 					// handle anonymous enums inside classes and anonymous namespaces
 					if let Some(parent_name) = parent.get_name() {
 						parts.push(parent_name);

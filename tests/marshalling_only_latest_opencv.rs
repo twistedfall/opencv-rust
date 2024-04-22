@@ -1,13 +1,11 @@
 //! Tests that will not be run in CI on OpenCV 4.2.0, 4.5.4 and 3.4.16 due to missing classes
 
-use opencv::prelude::*;
-use opencv::Result;
-
 /// Setting and getting fields through Ptr
 #[test]
-fn field_access_on_ptr() -> Result<()> {
-	#![cfg(all(ocvrs_has_module_aruco, any(ocvrs_opencv_branch_34, ocvrs_opencv_branch_4)))]
+#[cfg(all(ocvrs_has_module_aruco, any(ocvrs_opencv_branch_34, ocvrs_opencv_branch_4)))]
+fn field_access_on_ptr() -> opencv::Result<()> {
 	use opencv::aruco::EstimateParameters;
+	use opencv::prelude::*;
 	// the location and parameters are wildly different between even the minor release in the OpenCV branches, so for now
 	// let's just limit to only those fields that are stable
 	// #[cfg(ocvrs_opencv_branch_34)]

@@ -194,80 +194,56 @@ impl<const N: usize> ToInputArray for [u8; N] {
 	}
 }
 
-impl<T> ToInputArray for BoxedRef<'_, T>
-where
-	T: Boxed + ToInputArray,
-{
+impl<T: Boxed + ToInputArray> ToInputArray for BoxedRef<'_, T> {
 	#[inline]
 	fn input_array(&self) -> Result<BoxedRef<_InputArray>> {
 		self.reference.input_array()
 	}
 }
 
-impl<T> ToInputArray for &BoxedRef<'_, T>
-where
-	T: Boxed + ToInputArray,
-{
+impl<T: Boxed + ToInputArray> ToInputArray for &BoxedRef<'_, T> {
 	#[inline]
 	fn input_array(&self) -> Result<BoxedRef<_InputArray>> {
 		(*self).input_array()
 	}
 }
 
-impl<T> ToInputArray for BoxedRefMut<'_, T>
-where
-	T: Boxed + ToInputArray,
-{
+impl<T: Boxed + ToInputArray> ToInputArray for BoxedRefMut<'_, T> {
 	#[inline]
 	fn input_array(&self) -> Result<BoxedRef<_InputArray>> {
 		self.reference.input_array()
 	}
 }
 
-impl<T> ToInputArray for &BoxedRefMut<'_, T>
-where
-	T: Boxed + ToInputArray,
-{
+impl<T: Boxed + ToInputArray> ToInputArray for &BoxedRefMut<'_, T> {
 	#[inline]
 	fn input_array(&self) -> Result<BoxedRef<_InputArray>> {
 		(*self).input_array()
 	}
 }
 
-impl<T> ToOutputArray for BoxedRefMut<'_, T>
-where
-	T: Boxed + ToOutputArray,
-{
+impl<T: Boxed + ToOutputArray> ToOutputArray for BoxedRefMut<'_, T> {
 	#[inline]
 	fn output_array(&mut self) -> Result<BoxedRefMut<_OutputArray>> {
 		self.reference.output_array()
 	}
 }
 
-impl<T> ToOutputArray for &mut BoxedRefMut<'_, T>
-where
-	T: Boxed + ToOutputArray,
-{
+impl<T: Boxed + ToOutputArray> ToOutputArray for &mut BoxedRefMut<'_, T> {
 	#[inline]
 	fn output_array(&mut self) -> Result<BoxedRefMut<_OutputArray>> {
 		(*self).output_array()
 	}
 }
 
-impl<T> ToInputOutputArray for BoxedRefMut<'_, T>
-where
-	T: Boxed + ToInputOutputArray,
-{
+impl<T: Boxed + ToInputOutputArray> ToInputOutputArray for BoxedRefMut<'_, T> {
 	#[inline]
 	fn input_output_array(&mut self) -> Result<BoxedRefMut<_InputOutputArray>> {
 		self.reference.input_output_array()
 	}
 }
 
-impl<T> ToInputOutputArray for &mut BoxedRefMut<'_, T>
-where
-	T: Boxed + ToInputOutputArray,
-{
+impl<T: Boxed + ToInputOutputArray> ToInputOutputArray for &mut BoxedRefMut<'_, T> {
 	#[inline]
 	fn input_output_array(&mut self) -> Result<BoxedRefMut<_InputOutputArray>> {
 		(*self).input_output_array()

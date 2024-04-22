@@ -9,7 +9,8 @@
       semantics.
     * Some constructors have received `_mut` suffix where appropriate.
   * Unsafe `Mat` constructors (`*_with_data`) have received `_unsafe` suffix and safe versions have been introduced that return
-    `BoxedRef`/`BoxedRefMut`
+    `BoxedRef`/`BoxedRefMut`. Consequently, `Mat::from_slice_rows_cols` was replaced by `Mat::new_rows_cols_with_data`, note the
+    different order and types of the arguments.
   * `MatSize::new` is now unsafe and accepts a pointer.
 
 * 0.90.0

@@ -10,5 +10,4 @@ rustc --version
 rustc --print=cfg
 
 cargo update
-rm -vf examples/cuda.rs # no CUDA support in CI
 cargo check -vv --all-targets --all-features --workspace --tests
