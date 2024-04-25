@@ -6,7 +6,7 @@ use std::mem::ManuallyDrop;
 use std::{fmt, slice};
 
 pub use iter::{VectorIterator, VectorRefIterator};
-pub use vector_extern::{VectorElement, VectorExtern, VectorExternCopyNonBool};
+pub use vector_extern::{VectorExtern, VectorExternCopyNonBool};
 
 use crate::platform_types::size_t;
 use crate::traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer};
@@ -16,7 +16,7 @@ mod iter;
 mod vector_extern;
 
 /// Wrapper for C++ [std::vector](https://en.cppreference.com/w/cpp/container/vector)
-pub struct Vector<T: VectorElement>
+pub struct Vector<T: for<'o> OpenCVType<'o>>
 where
 	Self: VectorExtern<T>,
 {
@@ -24,7 +24,7 @@ where
 	_d: PhantomData<T>,
 }
 
-impl<T: VectorElement> Vector<T>
+impl<T: for<'o> OpenCVType<'o>> Vector<T>
 where
 	Self: VectorExtern<T>,
 {
@@ -191,7 +191,7 @@ where
 
 	/// Return slice to the elements of the array.
 	///
-	/// This method is only available for OpenCV types that are Copy, with the exception of bool
+	/// This method is only available for OpenCV types that are Copy, except for bool
 	/// because bool is handled in a special way on the C++ side.
 	#[inline]
 	pub fn as_slice(&self) -> &[T]
@@ -203,7 +203,7 @@ where
 
 	/// Return mutable slice to the elements of the array.
 	///
-	/// This method is only available for OpenCV types that are Copy, with the exception of bool
+	/// This method is only available for OpenCV types that are Copy, except for bool
 	/// because bool is handled in a special way on the C++ side.
 	#[inline]
 	pub fn as_mut_slice(&mut self) -> &mut [T]
@@ -212,14 +212,14 @@ where
 	{
 		unsafe { slice::from_raw_parts_mut(self.extern_data_mut(), self.len()) }
 	}
-
-	#[inline]
-	pub fn to_vec(&self) -> Vec<T> {
-		T::opencv_vector_to_vec(self)
-	}
 }
 
-impl<T: VectorElement> Default for Vector<T>
+pub trait VectorToVec<T> {
+	/// Convert `Vector` to `Vec`
+	fn to_vec(&self) -> Vec<T>;
+}
+
+impl<T: for<'o> OpenCVType<'o>> Default for Vector<T>
 where
 	Self: VectorExtern<T>,
 {
@@ -229,9 +229,9 @@ where
 	}
 }
 
-impl<T: VectorElement> From<Vector<T>> for Vec<T>
+impl<T: for<'o> OpenCVType<'o>> From<Vector<T>> for Vec<T>
 where
-	Vector<T>: VectorExtern<T>,
+	Vector<T>: VectorExtern<T> + VectorToVec<T>,
 {
 	#[inline]
 	fn from(from: Vector<T>) -> Self {
@@ -239,7 +239,7 @@ where
 	}
 }
 
-impl<T: VectorElement> From<Vec<<T as OpenCVType<'_>>::Arg>> for Vector<T>
+impl<T: for<'o> OpenCVType<'o>> From<Vec<<T as OpenCVType<'_>>::Arg>> for Vector<T>
 where
 	Vector<T>: VectorExtern<T>,
 {
@@ -249,7 +249,7 @@ where
 	}
 }
 
-impl<'a, T: VectorElement> FromIterator<<T as OpenCVType<'a>>::Arg> for Vector<T>
+impl<'a, T: for<'o> OpenCVType<'o>> FromIterator<<T as OpenCVType<'a>>::Arg> for Vector<T>
 where
 	Self: VectorExtern<T>,
 {
@@ -259,7 +259,7 @@ where
 	}
 }
 
-impl<T: VectorElement> AsRef<[T]> for Vector<T>
+impl<T: for<'o> OpenCVType<'o>> AsRef<[T]> for Vector<T>
 where
 	Self: VectorExtern<T> + VectorExternCopyNonBool<T>,
 {
@@ -269,7 +269,7 @@ where
 	}
 }
 
-impl<T: VectorElement> Borrow<[T]> for Vector<T>
+impl<T: for<'o> OpenCVType<'o>> Borrow<[T]> for Vector<T>
 where
 	Self: VectorExtern<T> + VectorExternCopyNonBool<T>,
 {
@@ -279,7 +279,7 @@ where
 	}
 }
 
-impl<T: VectorElement + fmt::Debug> fmt::Debug for Vector<T>
+impl<T: for<'o> OpenCVType<'o> + fmt::Debug> fmt::Debug for Vector<T>
 where
 	Self: VectorExtern<T>,
 {
@@ -289,7 +289,7 @@ where
 	}
 }
 
-impl<T: VectorElement> Drop for Vector<T>
+impl<T: for<'o> OpenCVType<'o>> Drop for Vector<T>
 where
 	Self: VectorExtern<T>,
 {
@@ -298,11 +298,11 @@ where
 	}
 }
 
-unsafe impl<T: Send + VectorElement> Send for Vector<T> where Self: VectorExtern<T> {}
+unsafe impl<T: for<'o> OpenCVType<'o> + Send> Send for Vector<T> where Self: VectorExtern<T> {}
 
-unsafe impl<T: Sync + VectorElement> Sync for Vector<T> where Self: VectorExtern<T> {}
+unsafe impl<T: for<'o> OpenCVType<'o> + Sync> Sync for Vector<T> where Self: VectorExtern<T> {}
 
-impl<'a, T: VectorElement> Extend<<T as OpenCVType<'a>>::Arg> for Vector<T>
+impl<'a, T: for<'o> OpenCVType<'o>> Extend<<T as OpenCVType<'a>>::Arg> for Vector<T>
 where
 	Self: VectorExtern<T>,
 {
@@ -316,7 +316,7 @@ where
 	}
 }
 
-impl<T: VectorElement> Boxed for Vector<T>
+impl<T: for<'o> OpenCVType<'o>> Boxed for Vector<T>
 where
 	Self: VectorExtern<T>,
 {

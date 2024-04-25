@@ -1,11 +1,10 @@
 use std::iter::FusedIterator;
 
-use crate::{
-	core::{Vector, VectorElement, VectorExtern},
-	platform_types::size_t,
-};
+use crate::core::{Vector, VectorExtern};
+use crate::platform_types::size_t;
+use crate::traits::OpenCVType;
 
-impl<T: VectorElement> IntoIterator for Vector<T>
+impl<T: for<'o> OpenCVType<'o>> IntoIterator for Vector<T>
 where
 	Vector<T>: VectorExtern<T>,
 {
@@ -18,7 +17,7 @@ where
 	}
 }
 
-impl<'v, T: VectorElement> IntoIterator for &'v Vector<T>
+impl<'v, T: for<'o> OpenCVType<'o>> IntoIterator for &'v Vector<T>
 where
 	Vector<T>: VectorExtern<T>,
 {
@@ -31,7 +30,7 @@ where
 	}
 }
 
-pub struct VectorIterator<T: VectorElement>
+pub struct VectorIterator<T: for<'o> OpenCVType<'o>>
 where
 	Vector<T>: VectorExtern<T>,
 {
@@ -40,7 +39,7 @@ where
 	len: size_t,
 }
 
-impl<T: VectorElement> VectorIterator<T>
+impl<T: for<'o> OpenCVType<'o>> VectorIterator<T>
 where
 	Vector<T>: VectorExtern<T>,
 {
@@ -54,7 +53,7 @@ where
 	}
 }
 
-impl<T: VectorElement> Iterator for VectorIterator<T>
+impl<T: for<'o> OpenCVType<'o>> Iterator for VectorIterator<T>
 where
 	Vector<T>: VectorExtern<T>,
 {
@@ -85,11 +84,11 @@ where
 	}
 }
 
-impl<T: VectorElement> ExactSizeIterator for VectorIterator<T> where Vector<T>: VectorExtern<T> {}
+impl<T: for<'o> OpenCVType<'o>> ExactSizeIterator for VectorIterator<T> where Vector<T>: VectorExtern<T> {}
 
-impl<T: VectorElement> FusedIterator for VectorIterator<T> where Vector<T>: VectorExtern<T> {}
+impl<T: for<'o> OpenCVType<'o>> FusedIterator for VectorIterator<T> where Vector<T>: VectorExtern<T> {}
 
-pub struct VectorRefIterator<'v, T: VectorElement>
+pub struct VectorRefIterator<'v, T: for<'o> OpenCVType<'o>>
 where
 	Vector<T>: VectorExtern<T>,
 {
@@ -98,7 +97,7 @@ where
 	len: size_t,
 }
 
-impl<'v, T: VectorElement> VectorRefIterator<'v, T>
+impl<'v, T: for<'o> OpenCVType<'o>> VectorRefIterator<'v, T>
 where
 	Vector<T>: VectorExtern<T>,
 {
@@ -112,7 +111,7 @@ where
 	}
 }
 
-impl<T: VectorElement> Iterator for VectorRefIterator<'_, T>
+impl<T: for<'o> OpenCVType<'o>> Iterator for VectorRefIterator<'_, T>
 where
 	Vector<T>: VectorExtern<T>,
 {
@@ -143,11 +142,11 @@ where
 	}
 }
 
-impl<T: VectorElement> ExactSizeIterator for VectorRefIterator<'_, T> where Vector<T>: VectorExtern<T> {}
+impl<T: for<'o> OpenCVType<'o>> ExactSizeIterator for VectorRefIterator<'_, T> where Vector<T>: VectorExtern<T> {}
 
-impl<T: VectorElement> FusedIterator for VectorRefIterator<'_, T> where Vector<T>: VectorExtern<T> {}
+impl<T: for<'o> OpenCVType<'o>> FusedIterator for VectorRefIterator<'_, T> where Vector<T>: VectorExtern<T> {}
 
-impl<T: VectorElement> Clone for VectorRefIterator<'_, T>
+impl<T: for<'o> OpenCVType<'o>> Clone for VectorRefIterator<'_, T>
 where
 	Vector<T>: VectorExtern<T>,
 {

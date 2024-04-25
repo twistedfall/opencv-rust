@@ -3,18 +3,6 @@ use crate::platform_types::size_t;
 use crate::traits::OpenCVType;
 use crate::{extern_arg_send, extern_container_send, extern_receive};
 
-/// This trait is implemented by any type that can be stored inside `Vector`.
-///
-/// It is mostly used internally, feasibility of implementing it for your own types hasn't been
-/// considered. Use is mostly for external type constraints.
-pub trait VectorElement: for<'a> OpenCVType<'a>
-where
-	Vector<Self>: VectorExtern<Self>,
-{
-	#[doc(hidden)]
-	fn opencv_vector_to_vec(v: &Vector<Self>) -> Vec<Self>;
-}
-
 #[doc(hidden)]
 pub trait VectorExtern<T: for<'a> OpenCVType<'a>> {
 	#[doc(hidden)]
@@ -154,7 +142,7 @@ macro_rules! vector_extern {
 }
 
 #[doc(hidden)]
-pub trait VectorExternCopyNonBool<T: VectorElement>
+pub trait VectorExternCopyNonBool<T: for<'o> OpenCVType<'o>>
 where
 	Vector<T>: VectorExtern<T>,
 {
@@ -176,13 +164,10 @@ macro_rules! vector_copy_non_bool {
 		$extern_from_slice: ident,
 		$extern_clone: ident $(,)?
 	) => {
-		impl $crate::core::VectorElement for $type
-		where
-			$crate::core::Vector<$type>: $crate::core::VectorExtern<$type>,
-		{
+		impl $crate::core::VectorToVec<$type> for $crate::core::Vector<$type> {
 			#[inline]
-			fn opencv_vector_to_vec(v: &$crate::core::Vector<$type>) -> std::vec::Vec<$type> {
-				v.as_slice().to_vec()
+			fn to_vec(&self) -> std::vec::Vec<$type> {
+				self.as_slice().to_vec()
 			}
 		}
 
@@ -233,13 +218,10 @@ macro_rules! vector_non_copy_or_bool {
 		vector_non_copy_or_bool! { $type }
 	};
 	($type: ty) => {
-		impl $crate::core::VectorElement for $type
-		where
-			$crate::core::Vector<$type>: $crate::core::VectorExtern<$type>,
-		{
+		impl $crate::core::VectorToVec<$type> for $crate::core::Vector<$type> {
 			#[inline]
-			fn opencv_vector_to_vec(v: &$crate::core::Vector<$type>) -> std::vec::Vec<$type> {
-				(0..v.len()).map(|x| unsafe { v.get_unchecked(x) }).collect()
+			fn to_vec(&self) -> std::vec::Vec<$type> {
+				(0..self.len()).map(|x| unsafe { self.get_unchecked(x) }).collect()
 			}
 		}
 	};
