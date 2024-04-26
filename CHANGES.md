@@ -1,3 +1,7 @@
+* 0.91.2
+  * Generate functions for converting DirectX objects to OpenCL.
+  * Allow creation of `Vector<BoxedRef<T>>` and using it as `ToInputArray` (fixes https://github.com/twistedfall/opencv-rust/issues/555).
+
 * 0.91.1
   * Add `TryFrom<i32>` impls for enums to allow easy fallible conversions from `i32`.
 
