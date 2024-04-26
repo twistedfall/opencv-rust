@@ -8,8 +8,8 @@ Experimental Rust bindings for OpenCV 3 and 4.
 
 The API is usable, but unstable and not very battle-tested; use at your own risk.
 
-[Changelog](https://github.com/twistedfall/opencv-rust/blob/master/CHANGES.md)
-[Troubleshooting](https://github.com/twistedfall/opencv-rust/blob/master/TROUBLESHOOTING.md)
+[Changelog](https://github.com/twistedfall/opencv-rust/blob/master/CHANGES.md) |
+[Troubleshooting](https://github.com/twistedfall/opencv-rust/blob/master/TROUBLESHOOTING.md) |
 [Support the project](https://github.com/sponsors/twistedfall)
 
 ## Quickstart
@@ -18,11 +18,13 @@ Make sure the supported OpenCV version (3.4 or 4.x) and Clang (part of LLVM, nee
 generation) are installed in your system.
 
 Update your Cargo.toml
+
 ```toml
 opencv = "0.91.2"
 ```
 
 Import prelude
+
 ```rust
 use opencv::prelude::*;
 ```
@@ -124,12 +126,13 @@ The following variables affect the building the of the `opencv` crate, but belon
 * `PATH`
   Windows searches for `*.dll`s in `PATH` among other places, be sure to set it up, or copy required OpenCV
   `*.dll`s next to your binary. Be sure to specify paths in UNIX style (/C/Program Files/Dir) because colon
-   in `PATH` might be interpreted as the entry separator. Summary [here](https://stackoverflow.com/a/6546427).
+  in `PATH` might be interpreted as the entry separator. Summary [here](https://stackoverflow.com/a/6546427).
 
 * clang crate environment variables
   See crate's [README](https://github.com/KyleMayes/clang-sys/blob/master/README.md#environment-variables)
 
 ## Cargo features
+
 * There is a feature named after each OpenCV module (e.g. `imgproc`, `highgui`, etc.). They are all enabled by
   default, but if a corresponding module is not found then it will silently be ignored. If you need to select a
   specific set of modules be sure to disable the default features and provide the required feature set:
@@ -147,6 +150,7 @@ as well.
 ### OpenCV version support
 
 The following OpenCV versions are supported at the moment:
+
 * 3.4
 * 4.x
 
@@ -183,14 +187,17 @@ or functions that are marked CV_NOEXCEPT in the OpenCV headers are infallible an
 
 `CV_MAKETYPE` and related `CV_MAT_DEPTH` constant functions are available to replace the corresponding OpenCV macros.
 Yet it's usually easier to call `::opencv_type()` function on the corresponding Rust type. E.g.:
+
 ```rust
 let t = u16::opencv_type(); // equivalent to CV_MAKETYPE(CV_16U, 1)
 let t = Vec2f::opencv_type(); // equivalent to CV_MAKETYPE(CV_32F, 2)
 ```
 
 ### C++ operators
+
 Some C++ operators are supported, they are converted to the corresponding functions on Rust side. Here is the
 list with the corresponding function name:
+
 * `[]` → `get()` or `get_mut()`
 * `+`, `-` → `add()`, `sub()`
 * `*`, `/` → `mul()`, `div()`
@@ -257,6 +264,7 @@ values, but they are reported in the API documentation.
 Overloaded methods have been mostly manually given different names or automatically renamed to *_1, *_2, etc.
 
 ## Older OpenCV branches support
+
 ### OpenCV 2
 
 If you can't use OpenCV 3.x or higher, the (no longer maintained) `0.2.4` version of this crate is known to
