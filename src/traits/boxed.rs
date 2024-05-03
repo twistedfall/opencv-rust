@@ -14,6 +14,7 @@ pub trait Boxed: Sized {
 	///
 	/// This will *not* free object referenced by this pointer, so you can use this pointer indefinitely. Be sure
 	/// to free it (by e.g. calling `from_raw()` with the same wrapper type) to avoid leaking memory.
+	#[must_use]
 	fn into_raw(self) -> *mut c_void;
 
 	/// Return the underlying raw pointer.
