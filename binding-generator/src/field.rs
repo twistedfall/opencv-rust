@@ -135,27 +135,37 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 	pub fn default_value(&self) -> Option<Cow<str>> {
 		match self {
 			&Self::Clang { entity, .. } => {
-				let mut children = vec![];
-				let mut skipping_typeref = true;
-				entity.visit_children(|c, _| {
-					if skipping_typeref && c.get_kind() != EntityKind::TypeRef {
-						skipping_typeref = false;
-					}
-					if !skipping_typeref {
-						children.push(c);
-						EntityVisitResult::Recurse
-					} else {
-						EntityVisitResult::Continue
-					}
+				// fixme: clang-2.0.0 contains a bug that causes rust-1.78.0+ to panic when calling .tokenize()
+				// https://github.com/KyleMayes/clang-rs/pull/58
+				// this seems to be happening on entries marked as CV_DEPRECATED_EXTERNAL which don't have default args
+				let has_literal_children = entity.visit_children(|c, _| match c.get_kind() {
+					EntityKind::BoolLiteralExpr
+					| EntityKind::CompoundLiteralExpr
+					| EntityKind::UnexposedExpr
+					| EntityKind::DeclRefExpr
+					| EntityKind::CallExpr
+					| EntityKind::StaticCastExpr
+					| EntityKind::CStyleCastExpr
+					| EntityKind::InitListExpr
+					| EntityKind::ParenExpr
+					| EntityKind::IntegerLiteral
+					| EntityKind::FloatingLiteral
+					| EntityKind::CharacterLiteral
+					| EntityKind::StringLiteral
+					| EntityKind::UnaryOperator
+					| EntityKind::BinaryOperator => EntityVisitResult::Break,
+					_ => EntityVisitResult::Continue,
 				});
 
-				if let Some(range) = entity.get_range() {
-					let tokens = range.tokenize();
-					let equal_pos = tokens
-						.iter()
-						.position(|t| t.get_kind() == TokenKind::Punctuation && t.get_spelling() == "=");
-					if let Some(equal_pos) = equal_pos {
-						return Some(constant::render_constant_cpp(&tokens[equal_pos + 1..]).into());
+				if has_literal_children {
+					if let Some(range) = entity.get_range() {
+						let tokens = range.tokenize();
+						let default_value_tokens = tokens
+							.splitn(2, |t| t.get_kind() == TokenKind::Punctuation && t.get_spelling() == "=")
+							.nth(1);
+						if let Some(default_value_tokens) = default_value_tokens {
+							return Some(constant::render_constant_cpp(default_value_tokens).into());
+						}
 					}
 				}
 				None
