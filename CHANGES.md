@@ -1,3 +1,6 @@
+* 0.91.3
+  * Add workaround for https://github.com/twistedfall/opencv-rust/issues/548.
+
 * 0.91.2
   * Generate functions for converting DirectX objects to OpenCL.
   * Allow creation of `Vector<BoxedRef<T>>` and using it as `ToInputArray` (fixes https://github.com/twistedfall/opencv-rust/issues/555).
@@ -18,7 +21,7 @@
   * `MatSize::new` is now unsafe and accepts a pointer.
 
 * 0.90.0
-  * Automatically generate default constructors for classes where posssible.
+  * Automatically generate default constructors for classes where possible.
   * Backwards-incompatible changes:
     * `LayerParams::default()` can no longer fail, so it returns `Self` without `Result`.
     * `GpuMat::default()` is now `GpuMat::new_def()`.
