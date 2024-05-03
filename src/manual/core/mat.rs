@@ -473,7 +473,13 @@ pub trait MatTraitConstManual: MatTraitConst {
 	unsafe fn at_row_unchecked<T: DataType>(&self, row: i32) -> Result<&[T]> {
 		// safe because Mat::size() can't be negative
 		let width = self.size()?.width as usize;
-		self.ptr(row).map(|x| slice::from_raw_parts(convert_ptr(x), width))
+		self.ptr(row).map(|row| {
+			if row.is_null() {
+				&[]
+			} else {
+				slice::from_raw_parts(convert_ptr(row), width)
+			}
+		})
 	}
 
 	#[inline]
@@ -481,16 +487,16 @@ pub trait MatTraitConstManual: MatTraitConst {
 		!self.data().is_null()
 	}
 
-	/// Returns underlying data array as byte slice, Mat must be continuous.
+	/// Returns underlying data array as byte slice, `Mat` must be continuous
 	#[inline]
 	fn data_bytes(&self) -> Result<&[u8]> {
 		match_is_continuous(self).and_then(|_| {
 			let data = self.data();
-			if data.is_null() {
-				Err(Error::new(core::StsNullPtr, "Function returned null pointer"))
+			Ok(if data.is_null() {
+				&[]
 			} else {
-				Ok(unsafe { slice::from_raw_parts(data, self.total() * self.elem_size()?) })
-			}
+				unsafe { slice::from_raw_parts(data, self.total() * self.elem_size()?) }
+			})
 		})
 	}
 
@@ -502,15 +508,15 @@ pub trait MatTraitConstManual: MatTraitConst {
 	}
 
 	/// # Safety
-	/// Caller must ensure that the `T` type argument corresponds to the data stored in the `Mat`
+	/// Caller must ensure that the `T` type argument corresponds to the data stored in the `Mat` and `Mat` is continuous
 	#[inline]
 	unsafe fn data_typed_unchecked<T: DataType>(&self) -> Result<&[T]> {
 		let data = self.data();
-		if data.is_null() {
-			Err(Error::new(core::StsNullPtr, "Function returned null pointer"))
+		Ok(if data.is_null() {
+			&[]
 		} else {
-			Ok(slice::from_raw_parts(data.cast::<T>(), self.total()))
-		}
+			slice::from_raw_parts(data.cast::<T>(), self.total())
+		})
 	}
 
 	fn to_vec_2d<T: DataType>(&self) -> Result<Vec<Vec<T>>> {
@@ -624,16 +630,26 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 	unsafe fn at_row_unchecked_mut<T: DataType>(&mut self, row: i32) -> Result<&mut [T]> {
 		// safe because Mat::size() can't be negative
 		let width = self.size()?.width as usize;
-		self
-			.ptr_mut(row)
-			.map(|x| slice::from_raw_parts_mut(convert_ptr_mut(x), width))
+		self.ptr_mut(row).map(|x| {
+			if x.is_null() {
+				&mut []
+			} else {
+				slice::from_raw_parts_mut(convert_ptr_mut(x), width)
+			}
+		})
 	}
 
 	/// Returns underlying data array as mutable byte slice, Mat must be continuous.
 	#[inline]
 	fn data_bytes_mut(&mut self) -> Result<&mut [u8]> {
-		match_is_continuous(self)
-			.and_then(|_| Ok(unsafe { slice::from_raw_parts_mut(self.data_mut(), self.total() * self.elem_size()?) }))
+		match_is_continuous(self).and_then(|_| {
+			let data = self.data_mut();
+			Ok(if data.is_null() {
+				&mut []
+			} else {
+				unsafe { slice::from_raw_parts_mut(self.data_mut(), self.total() * self.elem_size()?) }
+			})
+		})
 	}
 
 	#[inline]
@@ -643,11 +659,16 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 	}
 
 	/// # Safety
-	/// Caller must ensure that the `T` type argument corresponds to the data stored in the `Mat`
+	/// Caller must ensure that the `T` type argument corresponds to the data stored in the `Mat` and `Mat` is continuous
 	#[inline]
 	unsafe fn data_typed_unchecked_mut<T: DataType>(&mut self) -> Result<&mut [T]> {
 		let total = self.total();
-		Ok(slice::from_raw_parts_mut(self.data_mut().cast::<T>(), total))
+		let data = self.data_mut();
+		Ok(if data.is_null() {
+			&mut []
+		} else {
+			slice::from_raw_parts_mut(data.cast::<T>(), total)
+		})
 	}
 
 	/// Returns a mutable iterator over `Mat` elements and their positions
@@ -707,9 +728,14 @@ impl Deref for MatSize {
 
 	#[inline]
 	fn deref(&self) -> &Self::Target {
-		// safe because `Mat::dims()` returns value >= 2
-		let dims = self.dims() as usize;
-		unsafe { slice::from_raw_parts(self.p(), dims) }
+		let p = self.p();
+		if p.is_null() {
+			&[]
+		} else {
+			// safe because `Mat::dims()` returns value >= 2
+			let dims = self.dims() as usize;
+			unsafe { slice::from_raw_parts(p, dims) }
+		}
 	}
 }
 

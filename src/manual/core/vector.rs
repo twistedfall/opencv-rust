@@ -199,7 +199,12 @@ where
 	where
 		Self: VectorExternCopyNonBool<T>,
 	{
-		unsafe { slice::from_raw_parts(self.extern_data(), self.len()) }
+		let data = unsafe { self.extern_data() };
+		if data.is_null() {
+			&[]
+		} else {
+			unsafe { slice::from_raw_parts(data, self.len()) }
+		}
 	}
 
 	/// Return mutable slice to the elements of the array.
@@ -211,7 +216,12 @@ where
 	where
 		Self: VectorExternCopyNonBool<T>,
 	{
-		unsafe { slice::from_raw_parts_mut(self.extern_data_mut(), self.len()) }
+		let data = unsafe { self.extern_data_mut() };
+		if data.is_null() {
+			&mut []
+		} else {
+			unsafe { slice::from_raw_parts_mut(data, self.len()) }
+		}
 	}
 }
 

@@ -119,7 +119,12 @@ unsafe extern "C" fn ocvrs_create_string(s: *const c_char) -> *mut String {
 /// The return type of this function goes into `receive_byte_string`
 #[no_mangle]
 unsafe extern "C" fn ocvrs_create_byte_string(v: *const u8, len: size_t) -> *mut Vec<u8> {
-	let v = slice::from_raw_parts(v, len).to_vec();
+	let byte_slice = if v.is_null() {
+		&[]
+	} else {
+		slice::from_raw_parts(v, len)
+	};
+	let v = byte_slice.to_vec();
 	Box::into_raw(Box::new(v))
 }
 
