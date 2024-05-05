@@ -1,4 +1,4 @@
-use std::borrow::Cow;
+use std::borrow::{Borrow, Cow};
 use std::collections::HashMap;
 use std::iter;
 
@@ -369,7 +369,7 @@ impl CompiledInterpolation<'_> {
 }
 
 pub trait StrExt {
-	fn cpp_name_to_rust_case(&self) -> String;
+	fn cpp_name_to_rust_fn_case(&self) -> String;
 	fn lines_with_nl(&self) -> LinesWithNl;
 	fn detect_indent(&self) -> Indent;
 	fn compile_interpolation(&self) -> CompiledInterpolation;
@@ -385,7 +385,7 @@ pub trait StrExt {
 }
 
 impl StrExt for str {
-	fn cpp_name_to_rust_case(&self) -> String {
+	fn cpp_name_to_rust_fn_case(&self) -> String {
 		let mut out = String::with_capacity(self.len() + 8);
 		#[derive(Copy, Clone)]
 		enum State {
@@ -534,6 +534,33 @@ impl StrExt for str {
 		match style {
 			CppNameStyle::Declaration => self.localname(),
 			CppNameStyle::Reference => self,
+		}
+	}
+}
+
+pub trait CowMapBorrowedExt<'b, IN, OUT>
+where
+	IN: 'b + ToOwned + ?Sized,
+	OUT: 'b + ToOwned + ?Sized,
+{
+	fn map_borrowed<F>(self, f: F) -> Cow<'b, OUT>
+	where
+		F: for<'f> FnOnce(&'f IN) -> Cow<'f, OUT>;
+}
+
+impl<'b, IN, OUT> CowMapBorrowedExt<'b, IN, OUT> for Cow<'b, IN>
+where
+	IN: 'b + ToOwned + ?Sized,
+	OUT: 'b + ToOwned + ?Sized,
+{
+	#[inline(always)]
+	fn map_borrowed<F>(self, f: F) -> Cow<'b, OUT>
+	where
+		F: for<'f> FnOnce(&'f IN) -> Cow<'f, OUT>,
+	{
+		match self {
+			Cow::Borrowed(v) => f(v),
+			Cow::Owned(v) => Cow::Owned(f(v.borrow()).into_owned()),
 		}
 	}
 }

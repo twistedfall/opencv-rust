@@ -1,3 +1,4 @@
+use std::cmp::Reverse;
 use std::collections::{HashMap, HashSet};
 use std::convert::TryFrom;
 use std::fmt;
@@ -115,7 +116,7 @@ impl<'tu> GeneratorEnvPopulator<'tu, '_> {
 			let defs = self.gen_env.func_comments.entry(name).or_default();
 			defs.push((line, raw_comment.into_owned()));
 			// reverse sort due to how we're querying this; the amount of elements in this Vec doesn't go above 7
-			defs.sort_unstable_by(|(left_line, _), (right_line, _)| right_line.cmp(left_line));
+			defs.sort_unstable_by_key(|(line, _)| Reverse(*line));
 		}
 	}
 

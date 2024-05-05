@@ -52,11 +52,11 @@ impl RustNativeGeneratedElement for Enum<'_> {
 		let mut enum_consts = Vec::with_capacity(consts.len());
 		let mut from_consts = Vec::with_capacity(consts.len());
 
-		let mut generated_values = HashMap::<String, String>::with_capacity(consts.len());
-		for c in consts {
-			let name = c.rust_leafname(FishStyle::No).into_owned();
+		let mut generated_values = HashMap::<String, Cow<str>>::with_capacity(consts.len());
+		for c in &consts {
+			let name = c.rust_leafname(FishStyle::No);
 			let value = c.value().expect("Can't get value of enum variant").to_string();
-			let duplicate_name = generated_values.get(&value).map(|s| s.as_str());
+			let duplicate_name = generated_values.get(&value).map(|s| s.as_ref());
 			let (enum_const_tpl, from_const_tpl) = if duplicate_name.is_some() {
 				(&CONST_IGNORED_TPL, &FROM_CONST_IGNORED_TPL)
 			} else {
@@ -70,7 +70,7 @@ impl RustNativeGeneratedElement for Enum<'_> {
 			let doc_comment = c.rendered_doc_comment(comment_marker, opencv_version);
 
 			let inter_vars = HashMap::from([
-				("name", name.as_str()),
+				("name", name.as_ref()),
 				("value", value.as_str()),
 				("doc_comment", &doc_comment),
 				("duplicate_name", duplicate_name.unwrap_or("")),

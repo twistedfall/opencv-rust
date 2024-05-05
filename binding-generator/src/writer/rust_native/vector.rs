@@ -8,8 +8,7 @@ use crate::field::{Field, FieldDesc};
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
 use crate::settings::ARG_OVERRIDE_SELF;
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle, TypeRefDesc, TypeRefTypeHint};
-use crate::writer::rust_native::RustStringExt;
-use crate::{settings, Class, CompiledInterpolation, Func, IteratorExt, StrExt, TypeRef, Vector};
+use crate::{settings, Class, CompiledInterpolation, Func, IteratorExt, StrExt, StringExt, TypeRef, Vector};
 
 use super::element::RustElement;
 use super::type_ref::{Lifetime, TypeRefExt};
@@ -21,21 +20,21 @@ impl RustElement for Vector<'_, '_> {
 	}
 
 	fn rust_name(&self, style: NameStyle) -> Cow<str> {
-		format!(
-			"{}::{}",
-			self.rust_module_reference(),
-			self.rust_leafname(style.turbo_fish_style())
-		)
-		.as_str()
-		.rust_name_from_fullname(style)
-		.into_owned()
-		.into()
+		let decl_name = self.rust_leafname(style.turbo_fish_style());
+		match style {
+			NameStyle::Declaration => decl_name,
+			NameStyle::Reference(_) => {
+				let mut out = self.rust_module_reference().into_owned();
+				out.extend_sep("::", &decl_name);
+				out.into()
+			}
+		}
 	}
 
 	fn rust_leafname(&self, fish_style: FishStyle) -> Cow<str> {
 		let mut inner_typ = self.element_type();
 		if let Some(inner) = inner_typ.kind().as_pointer() {
-			// fixme, implement references properly, use MatRef/Mut type
+			// fixme, implement references properly, use VectorRef/Mut type
 			inner_typ = inner.into_owned();
 		}
 		format!(

@@ -235,8 +235,8 @@ macro_rules! vector_non_copy_or_bool {
 #[macro_export]
 macro_rules! vector_boxed_ref {
 	($type: ty) => {
-		impl<'b> $crate::core::VectorToVec for $crate::core::Vector<BoxedRef<'b, $type>> {
-			type Element = BoxedRef<'b, $type>;
+		impl<'b> $crate::core::VectorToVec for $crate::core::Vector<$crate::boxed_ref::BoxedRef<'b, $type>> {
+			type Element = $crate::boxed_ref::BoxedRef<'b, $type>;
 
 			#[inline]
 			fn to_vec(&self) -> std::vec::Vec<Self::Element> {

@@ -2,7 +2,7 @@ use std::borrow::Cow;
 
 use crate::function::Function;
 use crate::type_ref::{ExternDir, Nullability};
-use crate::{IteratorExt, NameStyle};
+use crate::{NameStyle, StringExt};
 
 use super::element::RustElement;
 use super::type_ref::{NullabilityExt, TypeRefExt};
@@ -16,15 +16,15 @@ impl RustElement for Function<'_, '_> {
 		let ret = self.return_type();
 		let args = self.arguments();
 		if let Some(userdata_idx) = args.iter().position(|a| a.is_user_data()) {
-			let args = args
-				.into_iter()
-				.enumerate()
-				.filter(|(idx, _)| *idx != userdata_idx)
-				.map(|(_, arg)| arg.type_ref().rust_extern(ExternDir::Contained).into_owned())
-				.join(", ");
+			let mut args_str = String::with_capacity(args.len() * 16);
+			for (idx, arg) in args.iter().enumerate() {
+				if idx != userdata_idx {
+					args_str.extend_sep(", ", arg.type_ref().rust_extern(ExternDir::Contained).as_ref());
+				}
+			}
 			Nullability::Nullable.rust_wrap_nullable_decl(
 				format!(
-					"Box{fish}<dyn FnMut({args}) -> {ret} + Send + Sync + 'static>",
+					"Box{fish}<dyn FnMut({args_str}) -> {ret} + Send + Sync + 'static>",
 					fish = style.rust_turbo_fish_qual(),
 					ret = ret.rust_extern(ExternDir::Contained),
 				)
@@ -47,16 +47,15 @@ pub trait FunctionExt<'tu, 'ge> {
 
 impl<'tu, 'ge> FunctionExt<'tu, 'ge> for Function<'tu, 'ge> {
 	fn rust_extern(&self) -> Cow<str> {
-		let args = self
-			.arguments()
-			.into_iter()
-			.map(|a| a.type_ref().rust_extern(ExternDir::Contained).into_owned())
-			.join(", ");
+		let args = self.arguments();
+		let mut args_str = String::with_capacity(args.len() * 16);
+		for arg in &args {
+			args_str.extend_sep(", ", arg.type_ref().rust_extern(ExternDir::Contained).as_ref());
+		}
 		let ret = self.return_type();
 		Nullability::Nullable.rust_wrap_nullable_decl(
 			format!(
-				r#"unsafe extern "C" fn({args}) -> {ret}"#,
-				args = args,
+				r#"unsafe extern "C" fn({args_str}) -> {ret}"#,
 				ret = ret.rust_extern(ExternDir::Contained)
 			)
 			.into(),

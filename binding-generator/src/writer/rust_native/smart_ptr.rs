@@ -9,8 +9,7 @@ use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
 use crate::smart_ptr::SmartPtrDesc;
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle, TypeRef, TypeRefKind};
 use crate::writer::rust_native::class::rust_generate_debug_fields;
-use crate::writer::rust_native::RustStringExt;
-use crate::{Class, CompiledInterpolation, Element, Func, IteratorExt, SmartPtr, StrExt};
+use crate::{Class, CompiledInterpolation, CowMapBorrowedExt, Element, Func, IteratorExt, SmartPtr, StrExt, StringExt};
 
 use super::class::ClassExt;
 use super::element::{DefaultRustNativeElement, RustElement};
@@ -19,7 +18,7 @@ use super::RustNativeGeneratedElement;
 
 impl RustElement for SmartPtr<'_, '_> {
 	fn rust_module(&self) -> Cow<str> {
-		self.pointee().rust_module().into_owned().into()
+		self.pointee().map_borrowed(TypeRef::rust_module)
 	}
 
 	// fixme, we shouldn't override the rust_module_reference and rely on rust_module to provide the correct module
@@ -28,15 +27,15 @@ impl RustElement for SmartPtr<'_, '_> {
 	}
 
 	fn rust_name(&self, style: NameStyle) -> Cow<str> {
-		format!(
-			"{}::{}",
-			self.rust_module_reference(),
-			self.rust_leafname(style.turbo_fish_style())
-		)
-		.as_str()
-		.rust_name_from_fullname(style)
-		.into_owned()
-		.into()
+		let decl_name = self.rust_leafname(style.turbo_fish_style());
+		match style {
+			NameStyle::Declaration => decl_name,
+			NameStyle::Reference(_) => {
+				let mut out = self.rust_module_reference().into_owned();
+				out.extend_sep("::", &decl_name);
+				out.into()
+			}
+		}
 	}
 
 	fn rust_leafname(&self, fish_style: FishStyle) -> Cow<str> {
@@ -80,44 +79,27 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		let rust_full = self.rust_name(NameStyle::ref_());
 		let pointee_type = self.pointee();
 		let pointee_kind = pointee_type.kind();
+		let inner_rust_full = pointee_type.rust_name(NameStyle::ref_());
 		let type_ref = self.type_ref();
 		let smartptr_class = smartptr_class(&type_ref);
 
-		let extern_delete = FuncDesc::method_delete(smartptr_class.clone()).identifier();
 		let extern_get_inner_ptr =
 			method_get_inner_ptr(smartptr_class.clone(), pointee_type.with_inherent_constness(Constness::Const)).identifier();
 		let extern_get_inner_ptr_mut =
 			method_get_inner_ptr(smartptr_class.clone(), pointee_type.with_inherent_constness(Constness::Mut)).identifier();
 
-		let mut inter_vars = HashMap::from([
-			("rust_localalias", rust_localalias.clone()),
-			("rust_as_raw_const", type_ref.rust_as_raw_name(Constness::Const).into()),
-			("rust_as_raw_mut", type_ref.rust_as_raw_name(Constness::Mut).into()),
-			("rust_full", rust_full.clone()),
-			(
-				"inner_rust_full",
-				pointee_type.rust_name(NameStyle::ref_()).into_owned().into(),
-			),
-			("extern_delete", extern_delete.into()),
-			("extern_get_inner_ptr", extern_get_inner_ptr.into()),
-			("extern_get_inner_ptr_mut", extern_get_inner_ptr_mut.into()),
-		]);
-
 		let mut impls = String::new();
 		if let Some(cls) = pointee_kind.as_class().filter(|cls| cls.kind().is_trait()) {
-			inter_vars.extend([
-				("base_rust_as_raw_const", cls.rust_as_raw_name(Constness::Const).into()),
-				("base_rust_as_raw_mut", cls.rust_as_raw_name(Constness::Mut).into()),
-				(
-					"base_rust_full_mut",
-					cls.rust_trait_name(NameStyle::ref_(), Constness::Mut).into_owned().into(),
-				),
+			impls += &TRAIT_RAW_TPL.interpolate(&HashMap::from([
+				("rust_full", rust_full.as_ref()),
+				("base_rust_as_raw_const", &cls.rust_as_raw_name(Constness::Const)),
+				("base_rust_as_raw_mut", &cls.rust_as_raw_name(Constness::Mut)),
+				("base_rust_full_mut", &cls.rust_trait_name(NameStyle::ref_(), Constness::Mut)),
 				(
 					"base_rust_full_const",
-					cls.rust_trait_name(NameStyle::ref_(), Constness::Const).into_owned().into(),
+					&cls.rust_trait_name(NameStyle::ref_(), Constness::Const),
 				),
-			]);
-			impls += &TRAIT_RAW_TPL.interpolate(&inter_vars);
+			]));
 			let fields = cls.fields();
 			let mut field_const_methods = cls.field_methods(
 				fields.iter().filter(|f| f.exclude_kind().is_included()),
@@ -125,27 +107,25 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 			);
 			for base in all_bases(&cls) {
 				let base_rust_local = base.rust_name(NameStyle::decl());
-				inter_vars.extend([
-					("base_rust_as_raw_const", base.rust_as_raw_name(Constness::Const).into()),
-					("base_rust_as_raw_mut", base.rust_as_raw_name(Constness::Mut).into()),
-					(
-						"base_rust_full_mut",
-						base.rust_trait_name(NameStyle::ref_(), Constness::Mut).into_owned().into(),
-					),
+				impls += &TRAIT_RAW_TPL.interpolate(&HashMap::from([
+					("rust_full", rust_full.as_ref()),
+					("base_rust_as_raw_const", &base.rust_as_raw_name(Constness::Const)),
+					("base_rust_as_raw_mut", &base.rust_as_raw_name(Constness::Mut)),
+					("base_rust_full_mut", &base.rust_trait_name(NameStyle::ref_(), Constness::Mut)),
 					(
 						"base_rust_full_const",
-						base.rust_trait_name(NameStyle::ref_(), Constness::Const).into_owned().into(),
+						&base.rust_trait_name(NameStyle::ref_(), Constness::Const),
 					),
-					("base_rust_full_ref", base.rust_name(NameStyle::ref_()).into_owned().into()),
-				]);
-				impls += &TRAIT_RAW_TPL.interpolate(&inter_vars);
+				]));
 
 				let extern_cast_to_base = method_cast_to_base(smartptr_class.clone(), base.type_ref(), &base_rust_local).identifier();
-				inter_vars.insert("extern_cast_to_base", extern_cast_to_base.into());
-				impls += &BASE_CAST_TPL.interpolate(&inter_vars);
-				let base_fields = base.fields();
+				impls += &BASE_CAST_TPL.interpolate(&HashMap::from([
+					("rust_full", rust_full.as_ref()),
+					("base_rust_full_ref", &base.rust_name(NameStyle::ref_())),
+					("extern_cast_to_base", &extern_cast_to_base),
+				]));
 				let base_field_const_methods = base.field_methods(
-					base_fields.iter().filter(|f| f.exclude_kind().is_included()),
+					base.fields().iter().filter(|f| f.exclude_kind().is_included()),
 					Some(Constness::Const),
 				);
 				field_const_methods.extend(base_field_const_methods);
@@ -153,19 +133,37 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 			let debug_fields = rust_generate_debug_fields(field_const_methods);
 			impls += &IMPL_DEBUG_TPL.interpolate(&HashMap::from([
 				("rust_full", rust_full.as_ref()),
-				("rust_localalias", rust_localalias.as_ref()),
+				("rust_localalias", &rust_localalias),
 				("debug_fields", &debug_fields),
 			]));
 		};
-		if gen_ctor(&pointee_kind) {
-			let extern_new = method_new(smartptr_class, type_ref, pointee_type).identifier();
-			inter_vars.insert("extern_new", extern_new.into());
-			inter_vars.insert("ctor", CTOR_TPL.interpolate(&inter_vars).into());
+
+		let rust_as_raw_const = type_ref.rust_as_raw_name(Constness::Const);
+		let rust_as_raw_mut = type_ref.rust_as_raw_name(Constness::Mut);
+
+		let ctor = if gen_ctor(&pointee_kind) {
+			let extern_new = method_new(smartptr_class.clone(), type_ref, pointee_type.as_ref().clone()).identifier();
+			CTOR_TPL.interpolate(&HashMap::from([
+				("inner_rust_full", inner_rust_full.as_ref()),
+				("extern_new", &extern_new),
+			]))
 		} else {
-			inter_vars.insert("ctor", "".into());
-		}
-		inter_vars.insert("impls", impls.into());
-		TPL.interpolate(&inter_vars)
+			"".to_string()
+		};
+
+		let extern_delete = FuncDesc::method_delete(smartptr_class).identifier();
+		TPL.interpolate(&HashMap::from([
+			("rust_localalias", rust_localalias.as_ref()),
+			("rust_as_raw_const", &rust_as_raw_const),
+			("rust_as_raw_mut", &rust_as_raw_mut),
+			("rust_full", &rust_full),
+			("inner_rust_full", &inner_rust_full),
+			("extern_delete", &extern_delete),
+			("extern_get_inner_ptr", &extern_get_inner_ptr),
+			("extern_get_inner_ptr_mut", &extern_get_inner_ptr_mut),
+			("ctor", &ctor),
+			("impls", &impls),
+		]))
 	}
 
 	fn gen_rust_externs(&self) -> String {
@@ -205,7 +203,7 @@ fn extern_functions<'tu, 'ge>(ptr: &SmartPtr<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
 		}
 	}
 	if gen_ctor(&pointee_kind) {
-		out.push(method_new(smartptr_class, type_ref, pointee_type));
+		out.push(method_new(smartptr_class, type_ref, pointee_type.into_owned()));
 	}
 	out
 }
@@ -224,7 +222,11 @@ fn all_bases<'tu, 'ge>(cls: &Class<'tu, 'ge>) -> Vec<Class<'tu, 'ge>> {
 		.into_iter()
 		.filter(|b| b.exclude_kind().is_included())
 		.collect::<Vec<_>>();
-	out.sort_unstable_by(|a, b| a.cpp_name(CppNameStyle::Reference).cmp(&b.cpp_name(CppNameStyle::Reference)));
+	out.sort_unstable_by(|left, right| {
+		left
+			.cpp_name(CppNameStyle::Reference)
+			.cmp(&right.cpp_name(CppNameStyle::Reference))
+	});
 	out
 }
 

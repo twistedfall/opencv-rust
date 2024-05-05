@@ -132,7 +132,7 @@ impl<T, const N: usize> OpenCVType<'_> for VecN<T, N> {
 	type ExternReceive = Self;
 
 	#[inline]
-	unsafe fn opencv_from_extern(s: Self) -> Self {
+	unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self {
 		s
 	}
 }
@@ -141,7 +141,7 @@ impl<T, const N: usize> OpenCVTypeArg<'_> for VecN<T, N> {
 	type ExternContainer = Self;
 
 	#[inline]
-	fn opencv_into_extern_container_nofail(self) -> Self {
+	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {
 		self
 	}
 }

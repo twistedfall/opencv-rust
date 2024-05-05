@@ -164,8 +164,8 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 	}
 
-	/// TypeRef with all of the typedef's traversed
-	pub fn canonical(&self) -> TypeRef<'tu, 'ge> {
+	/// TypeRef with all the typedef's traversed
+	pub fn canonical(&self) -> Self {
 		match self.kind().as_ref() {
 			TypeRefKind::Typedef(tdef) => tdef.underlying_type_ref().canonical(),
 			_ => self.clone(),
@@ -173,7 +173,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	}
 
 	/// Like canonical(), but also removes indirection by pointer and reference
-	pub fn source(&self) -> TypeRef<'tu, 'ge> {
+	pub fn source(&self) -> Self {
 		match self.kind().as_ref() {
 			TypeRefKind::Pointer(inner) | TypeRefKind::Reference(inner) | TypeRefKind::RValueReference(inner) => inner.source(),
 			TypeRefKind::Typedef(tdef) => tdef.underlying_type_ref().source(),
@@ -182,7 +182,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	}
 
 	/// Like source(), but also removes indirection by `Ptr`
-	pub fn source_smart(&self) -> TypeRef<'tu, 'ge> {
+	pub fn source_smart(&self) -> Self {
 		match self.kind().as_ref() {
 			TypeRefKind::Pointer(inner) | TypeRefKind::Reference(inner) | TypeRefKind::RValueReference(inner) => {
 				inner.source_smart()
@@ -194,7 +194,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	}
 
 	/// Like source(), but digs down to the elements of arrays
-	pub fn base(&self) -> TypeRef<'tu, 'ge> {
+	pub fn base(&self) -> Self {
 		match self.kind().as_ref() {
 			TypeRefKind::Pointer(inner) | TypeRefKind::Reference(inner) | TypeRefKind::RValueReference(inner) => inner.base(),
 			TypeRefKind::Typedef(tdef) => tdef.underlying_type_ref().base(),
@@ -365,7 +365,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 							// C++ char can be signed or unsigned based on the platform and that can lead to duplicate definitions when
 							// we generate Vector<u8> together with Vector<c_char>
 							out.push(source.map_vector(|_| TypeRefDesc::uchar()).try_into().expect("Known Vector"));
-							out.push(source.map_vector(|_| TypeRefDesc::schar()).try_into().expect("Known vector"));
+							out.push(source.map_vector(|_| TypeRefDesc::schar()).try_into().expect("Known Vector"));
 							out.push(GeneratedType::Vector(vec));
 						} else {
 							out.push(GeneratedType::Vector(vec));

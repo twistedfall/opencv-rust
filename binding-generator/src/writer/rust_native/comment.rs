@@ -92,7 +92,7 @@ impl RenderComment {
 			let name = caps.get(1).map(|(s, e)| &comment[s..e]).expect("Impossible");
 			let space = caps.get(2).map(|(s, e)| &comment[s..e]).expect("Impossible");
 			let name = if name.contains(char::is_lowercase) {
-				Cow::Owned(name.cpp_name_to_rust_case())
+				Cow::Owned(name.cpp_name_to_rust_fn_case())
 			} else {
 				Cow::Borrowed(name)
 			};
@@ -176,45 +176,45 @@ impl RenderComment {
 
 fn preprocess_formula(formula: &str) -> String {
 	const ARG_REGEX: &str = r"\s*\{([^}]*?)\}";
-	static MACROS: Lazy<Vec<(Regex, &str)>> = Lazy::new(|| {
-		vec![
-		(
-			Regex::new(&format!("\\\\matTT{}", ARG_REGEX.repeat(9))).unwrap(),
-			"\\[ \\left|\\begin{array}{ccc} $1 & $2 & $3\\\\ $4 & $5 & $6\\\\ $7 & $8 & $9 \\end{array}\\right| \\]",
-		),
-		(
-			Regex::new(&format!("\\\\fork{}", ARG_REGEX.repeat(4))).unwrap(),
-			"\\left\\{ \\begin{array}{l l} $1 & \\mbox{$2}\\\\ $3 & \\mbox{$4}\\\\ \\end{array} \\right.",
-		),
-		(
-			Regex::new(&format!("\\\\forkthree{}", ARG_REGEX.repeat(6))).unwrap(),
-			"\\left\\{ \\begin{array}{l l} $1 & \\mbox{$2}\\\\ $3 & \\mbox{$4}\\\\ $5 & \\mbox{$6}\\\\ \\end{array} \\right.",
-		),
-		(
-			Regex::new(&format!("\\\\forkfour{}", ARG_REGEX.repeat(8))).unwrap(),
-			"\\left\\{ \\begin{array}{l l} $1 & \\mbox{$2}\\\\ $3 & \\mbox{$4}\\\\ $5 & \\mbox{$6}\\\\ $7 & \\mbox{$8}\\\\ \\end{array} \\right.",
-		),
-		(
-			Regex::new(&format!("\\\\vecthree{}", ARG_REGEX.repeat(3))).unwrap(),
-			"\\begin{bmatrix} $1\\\\ $2\\\\ $3 \\end{bmatrix}",
-		),
-		(
-			Regex::new(&format!("\\\\vecthreethree{}", ARG_REGEX.repeat(9))).unwrap(),
-			"\\begin{bmatrix} $1 & $2 & $3\\\\ $4 & $5 & $6\\\\ $7 & $8 & $9 \\end{bmatrix}",
-		),
-		(
-			Regex::new(&format!("\\\\hdotsfor{ARG_REGEX}")).unwrap(),
-			"\\dots",
-		),
-		(
-			Regex::new(&format!("\\\\mathbbm{ARG_REGEX}")).unwrap(),
-			"\\mathbb{$1}",
-		),
-		(
-			Regex::new(&format!("\\\\bordermatrix{}", ARG_REGEX.repeat(9))).unwrap(),
-			"\\matrix{$1}",
-		),
-	]
+	static MACROS: Lazy<[(Regex, &str); 9]> = Lazy::new(|| {
+		[
+			(
+				Regex::new(&format!("\\\\matTT{}", ARG_REGEX.repeat(9))).unwrap(),
+				"\\[ \\left|\\begin{array}{ccc} $1 & $2 & $3\\\\ $4 & $5 & $6\\\\ $7 & $8 & $9 \\end{array}\\right| \\]",
+			),
+			(
+				Regex::new(&format!("\\\\fork{}", ARG_REGEX.repeat(4))).unwrap(),
+				"\\left\\{ \\begin{array}{l l} $1 & \\mbox{$2}\\\\ $3 & \\mbox{$4}\\\\ \\end{array} \\right.",
+			),
+			(
+				Regex::new(&format!("\\\\forkthree{}", ARG_REGEX.repeat(6))).unwrap(),
+				"\\left\\{ \\begin{array}{l l} $1 & \\mbox{$2}\\\\ $3 & \\mbox{$4}\\\\ $5 & \\mbox{$6}\\\\ \\end{array} \\right.",
+			),
+			(
+				Regex::new(&format!("\\\\forkfour{}", ARG_REGEX.repeat(8))).unwrap(),
+				"\\left\\{ \\begin{array}{l l} $1 & \\mbox{$2}\\\\ $3 & \\mbox{$4}\\\\ $5 & \\mbox{$6}\\\\ $7 & \\mbox{$8}\\\\ \\end{array} \\right.",
+			),
+			(
+				Regex::new(&format!("\\\\vecthree{}", ARG_REGEX.repeat(3))).unwrap(),
+				"\\begin{bmatrix} $1\\\\ $2\\\\ $3 \\end{bmatrix}",
+			),
+			(
+				Regex::new(&format!("\\\\vecthreethree{}", ARG_REGEX.repeat(9))).unwrap(),
+				"\\begin{bmatrix} $1 & $2 & $3\\\\ $4 & $5 & $6\\\\ $7 & $8 & $9 \\end{bmatrix}",
+			),
+			(
+				Regex::new(&format!("\\\\hdotsfor{ARG_REGEX}")).unwrap(),
+				"\\dots",
+			),
+			(
+				Regex::new(&format!("\\\\mathbbm{ARG_REGEX}")).unwrap(),
+				"\\mathbb{$1}",
+			),
+			(
+				Regex::new(&format!("\\\\bordermatrix{}", ARG_REGEX.repeat(9))).unwrap(),
+				"\\matrix{$1}",
+			),
+		]
 	});
 
 	let mut out = formula.to_string();
@@ -257,7 +257,7 @@ pub fn render_ref<'r>(referenced: &'r Func, force_cpp_name: Option<&str>) -> Cow
 	match referenced.kind().as_ref() {
 		FuncKind::Function | FuncKind::GenericFunction => force_cpp_name
 			.map_or_else(|| referenced.cpp_name(CppNameStyle::Declaration), Cow::Borrowed)
-			.cpp_name_to_rust_case()
+			.cpp_name_to_rust_fn_case()
 			.into(),
 		FuncKind::FunctionOperator(_) | FuncKind::Constructor(_) => referenced.rust_leafname(FishStyle::No),
 		FuncKind::InstanceMethod(cls) | FuncKind::GenericInstanceMethod(cls) => format!(
@@ -265,7 +265,7 @@ pub fn render_ref<'r>(referenced: &'r Func, force_cpp_name: Option<&str>) -> Cow
 			cls.rust_trait_name(NameStyle::Declaration, referenced.constness()),
 			force_cpp_name
 				.map_or_else(|| referenced.cpp_name(CppNameStyle::Declaration), Cow::Borrowed)
-				.cpp_name_to_rust_case()
+				.cpp_name_to_rust_fn_case()
 		)
 		.into(),
 		FuncKind::StaticMethod(cls) => format!(
@@ -273,7 +273,7 @@ pub fn render_ref<'r>(referenced: &'r Func, force_cpp_name: Option<&str>) -> Cow
 			cls.rust_name(NameStyle::Declaration),
 			force_cpp_name
 				.map_or_else(|| referenced.cpp_name(CppNameStyle::Declaration), Cow::Borrowed)
-				.cpp_name_to_rust_case()
+				.cpp_name_to_rust_fn_case()
 		)
 		.into(),
 		FuncKind::ConversionMethod(cls) | FuncKind::InstanceOperator(cls, _) | FuncKind::FieldAccessor(cls, _) => format!(

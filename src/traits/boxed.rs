@@ -30,6 +30,16 @@ pub trait Boxed: Sized {
 	fn as_raw_mut(&mut self) -> *mut c_void;
 }
 
+impl<T: Boxed> OpenCVType<'_> for T {
+	type Arg = Self;
+	type ExternReceive = *mut c_void;
+
+	#[inline]
+	unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self {
+		Self::from_raw(s)
+	}
+}
+
 impl<T: Boxed> OpenCVTypeArg<'_> for T {
 	type ExternContainer = Self;
 
@@ -50,16 +60,6 @@ impl<T: Boxed> OpenCVTypeExternContainer for T {
 	#[inline]
 	fn opencv_as_extern_mut(&mut self) -> Self::ExternSendMut {
 		self.as_raw_mut()
-	}
-}
-
-impl<T: Boxed> OpenCVType<'_> for T {
-	type Arg = Self;
-	type ExternReceive = *mut c_void;
-
-	#[inline]
-	unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self {
-		Self::from_raw(s)
 	}
 }
 

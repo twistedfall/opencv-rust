@@ -6,9 +6,9 @@ pub struct SliceArgFinder {
 }
 
 impl SliceArgFinder {
-	pub fn new() -> Self {
+	pub fn with_capacity(capacity: usize) -> Self {
 		Self {
-			slice_args: vec![],
+			slice_args: Vec::with_capacity(capacity),
 			state: None,
 		}
 	}

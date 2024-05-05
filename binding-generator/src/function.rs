@@ -4,7 +4,7 @@ use std::fmt;
 use clang::{Entity, EntityKind, EntityVisitResult, Type};
 
 use crate::type_ref::CppNameStyle;
-use crate::{Element, Field, GeneratorEnv, IteratorExt, TypeRef};
+use crate::{CowMapBorrowedExt, Element, Field, GeneratorEnv, IteratorExt, TypeRef};
 
 #[derive(Clone)]
 pub struct Function<'tu, 'ge> {
@@ -58,8 +58,11 @@ impl Element for Function<'_, '_> {
 	fn cpp_name(&self, _style: CppNameStyle) -> Cow<str> {
 		let args = self
 			.arguments()
-			.into_iter()
-			.map(|a| a.type_ref().cpp_name_ext(CppNameStyle::Reference, "", false).into_owned())
+			.iter()
+			.map(|a| {
+				a.type_ref()
+					.map_borrowed(|tref| tref.cpp_name_ext(CppNameStyle::Reference, "", false))
+			})
 			.join(", ");
 		let ret = self.return_type();
 		format!("{ret} (*)({args})", args = args, ret = ret.cpp_name(CppNameStyle::Reference)).into()

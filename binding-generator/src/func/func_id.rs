@@ -39,7 +39,6 @@ impl<'f> FuncId<'f> {
 	}
 
 	pub fn from_entity(entity: Entity) -> FuncId<'static> {
-		let name = entity.cpp_name(CppNameStyle::Reference).into_owned().into();
 		let args = if let EntityKind::FunctionTemplate = entity.get_kind() {
 			let mut args = Vec::with_capacity(8);
 			entity.walk_children_while(|child| {
@@ -58,7 +57,7 @@ impl<'f> FuncId<'f> {
 				.collect()
 		};
 		FuncId {
-			name,
+			name: entity.cpp_name(CppNameStyle::Reference).into_owned().into(),
 			constness: Constness::from_is_const(entity.is_const_method()),
 			args,
 		}

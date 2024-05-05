@@ -20,7 +20,7 @@ impl NamePool {
 			name.to_mut().bump_counter();
 			out = MakeUniqueNameResult::Changed;
 		}
-		self.names.insert(name.clone().into_owned());
+		self.names.insert(name.to_string());
 		out
 	}
 

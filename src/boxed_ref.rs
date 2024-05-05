@@ -16,6 +16,7 @@ pub struct BoxedRef<'r, T: Boxed> {
 }
 
 impl<T: Boxed> From<T> for BoxedRef<'_, T> {
+	#[inline]
 	fn from(value: T) -> Self {
 		Self {
 			reference: value,
@@ -84,6 +85,7 @@ pub struct BoxedRefMut<'r, T: Boxed> {
 }
 
 impl<T: Boxed> From<T> for BoxedRefMut<'_, T> {
+	#[inline]
 	fn from(value: T) -> Self {
 		Self {
 			reference: value,

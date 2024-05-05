@@ -11,5 +11,5 @@ pub static ARGUMENT_NAMES_USERDATA: Lazy<HashSet<&str>> =
 /// List of C++ argument names that are forbidden to be slice arguments
 pub static ARGUMENT_NAMES_NOT_SLICE: Lazy<HashSet<&str>> = Lazy::new(|| HashSet::from(["rmsd"]));
 
-/// List of C++ argument names that are can hint on multiple connected slice arguments in a function
+/// List of C++ argument names that can hint on multiple connected slice arguments in a function
 pub static ARGUMENT_NAMES_MULTIPLE_SLICE: Lazy<HashSet<&str>> = Lazy::new(|| HashSet::from(["a", "b", "src", "dst", "lut"]));

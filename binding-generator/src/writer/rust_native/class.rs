@@ -100,14 +100,14 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 		let bases = c.bases();
 		let mut bases_const = Vec::with_capacity(bases.len());
 		let mut bases_mut = Vec::with_capacity(bases.len() + 1);
-		bases_mut.push(c.rust_trait_name(NameStyle::ref_(), Constness::Const).into_owned());
+		bases_mut.push(c.rust_trait_name(NameStyle::ref_(), Constness::Const));
 		// todo, allow extension of simple classes for e.g. Elliptic_KeyPoint
 		for b in bases
 			.iter()
 			.filter(|b| b.exclude_kind().is_included() && !b.kind().is_simple())
 		{
-			bases_const.push(b.rust_trait_name(NameStyle::ref_(), Constness::Const).into_owned());
-			bases_mut.push(b.rust_trait_name(NameStyle::ref_(), Constness::Mut).into_owned());
+			bases_const.push(b.rust_trait_name(NameStyle::ref_(), Constness::Const));
+			bases_mut.push(b.rust_trait_name(NameStyle::ref_(), Constness::Mut));
 		}
 		bases_const.sort_unstable();
 		bases_mut.sort_unstable();

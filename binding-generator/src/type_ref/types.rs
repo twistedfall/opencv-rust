@@ -1,5 +1,6 @@
 use std::borrow::Cow;
 use std::fmt;
+use std::sync::Arc;
 
 use clang::Type;
 
@@ -14,9 +15,9 @@ pub enum TypeRefTypeHint {
 	/// Treat this pointer argument as slice
 	Slice,
 	/// This argument specified the length of the slice, arguments are (rust_arg_name, divisor)
-	LenForSlice(Vec<String>, usize),
+	LenForSlice(Arc<[String]>, usize),
 	/// Treat C++ string as a byte buffer (`Vec<u8>`) instead of an actual string, argument is optional cpp_arg_name of the argument that specifies the buffer byte length
-	StringAsBytes(Option<String>),
+	StringAsBytes(Option<Arc<str>>),
 	/// when C++ char needs to be represented as Rust char
 	CharAsRustChar,
 	/// for the cases when `char *` should not be treated as string, but as a pointer to single char

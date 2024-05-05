@@ -168,7 +168,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 					let children = entity.get_children();
 					if let [single] = children.as_slice() {
 						if matches!(single.get_kind(), EntityKind::EnumDecl) {
-							Some(Enum::new_ext(*single, self.cpp_name(CppNameStyle::Declaration).into_owned()))
+							Some(Enum::new_ext(*single, self.cpp_name(CppNameStyle::Declaration).as_ref()))
 						} else {
 							None
 						}
@@ -416,16 +416,16 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 				out.extend(fields.flat_map(|fld| {
 					iter::from_fn({
 						let doc_comment = Rc::from(fld.doc_comment());
-						let mut fld_type_ref = fld.type_ref().into_owned();
+						let mut fld_type_ref = fld.type_ref();
 						let fld_type_kind = fld_type_ref.kind();
 						if fld_type_kind
 							.as_pointer()
 							.map_or(false, |inner| inner.kind().as_primitive().is_some())
 							&& !fld_type_kind.is_char_ptr_string(fld_type_ref.type_hint())
 						{
-							fld_type_ref.set_type_hint(TypeRefTypeHint::PrimitivePtrAsRaw);
+							fld_type_ref.to_mut().set_type_hint(TypeRefTypeHint::PrimitivePtrAsRaw);
 						} else if fld_type_kind.as_class().map_or(false, |cls| cls.kind().is_trait()) {
-							fld_type_ref.set_type_hint(TypeRefTypeHint::TraitClassConcrete);
+							fld_type_ref.to_mut().set_type_hint(TypeRefTypeHint::TraitClassConcrete);
 						}
 						let fld_type_kind = fld_type_ref.kind();
 						let fld_type_ref_return_as_naked = fld_type_kind.return_as_naked(fld_type_ref.type_hint());
@@ -490,7 +490,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 									def_loc: fld.file_line_name().location,
 									rust_generic_decls: Rc::new([]),
 									arguments: Rc::new([]),
-									return_type_ref: fld_type_ref.clone(),
+									return_type_ref: fld_type_ref.as_ref().clone(),
 									cpp_body: FuncCppBody::ManualCall("{{name}}".into()),
 									rust_body: FuncRustBody::Auto,
 									rust_extern_definition: FuncRustExtern::Auto,

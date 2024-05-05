@@ -37,7 +37,7 @@ pub use iterator_ext::IteratorExt;
 use memoize::{MemoizeMap, MemoizeMapExt};
 use name_pool::NamePool;
 use smart_ptr::SmartPtr;
-pub use string_ext::{CompiledInterpolation, StrExt, StringExt};
+pub use string_ext::{CompiledInterpolation, CowMapBorrowedExt, StrExt, StringExt};
 use tuple::Tuple;
 #[allow(unused)]
 use type_ref::dbg_clang_type;

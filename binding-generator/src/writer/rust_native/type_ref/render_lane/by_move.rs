@@ -40,11 +40,8 @@ impl RenderLaneTrait for ByMoveRenderLane<'_, '_> {
 		rust_arg_func_decl(name, Constness::Const, &self.non_canonical.rust_extern(ExternDir::ToCpp))
 	}
 
-	fn cpp_arg_func_decl(&self, name: &str) -> String {
-		self
-			.non_canonical
-			.cpp_name_ext(CppNameStyle::Reference, name, true)
-			.into_owned()
+	fn cpp_arg_func_decl(&self, name: &str) -> Cow<str> {
+		self.non_canonical.cpp_name_ext(CppNameStyle::Reference, name, true)
 	}
 
 	fn cpp_arg_func_call(&self, name: &str) -> String {

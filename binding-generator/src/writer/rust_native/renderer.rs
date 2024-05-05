@@ -9,7 +9,7 @@ use crate::writer::rust_native::element::RustElement;
 use crate::writer::rust_native::function::FunctionExt;
 use crate::writer::rust_native::type_ref::TypeRefExt;
 use crate::writer::rust_native::type_ref::{Lifetime, NullabilityExt};
-use crate::{settings, Element};
+use crate::{settings, CowMapBorrowedExt, Element};
 
 fn render_rust_tpl<'a>(renderer: impl TypeRefRenderer<'a>, type_ref: &TypeRef, fish_style: FishStyle) -> String {
 	let generic_types = type_ref.template_specialization_args();
@@ -80,7 +80,7 @@ impl TypeRefRenderer<'_> for RustRenderer {
 			}
 			.into()
 		} else {
-			match kind.as_ref() {
+			kind.map_borrowed(|kind| match kind {
 				TypeRefKind::Primitive(rust, _) => (*rust).into(),
 				TypeRefKind::Array(elem, size) => {
 					let typ = RustRenderer::format_as_array(type_ref.constness(), &self.recurse().render(elem), *size);
@@ -89,9 +89,9 @@ impl TypeRefRenderer<'_> for RustRenderer {
 						.nullability()
 						.rust_wrap_nullable_decl(typ.into(), self.name_style)
 				}
-				TypeRefKind::StdVector(vec) => vec.rust_name(self.name_style).into_owned().into(),
-				TypeRefKind::StdTuple(tuple) => tuple.rust_name(self.name_style).into_owned().into(),
-				TypeRefKind::RValueReference(inner) => self.recurse().render(inner).into_owned().into(),
+				TypeRefKind::StdVector(vec) => vec.rust_name(self.name_style),
+				TypeRefKind::StdTuple(tuple) => tuple.rust_name(self.name_style),
+				TypeRefKind::RValueReference(inner) => self.recurse().render(inner),
 				kind @ TypeRefKind::Pointer(inner) if kind.is_rust_by_ptr(type_ref.type_hint()) => {
 					let typ = if inner.kind().is_void() {
 						"c_void".into()
@@ -113,11 +113,11 @@ impl TypeRefRenderer<'_> for RustRenderer {
 						.rust_wrap_nullable_decl(typ.into(), self.name_style)
 				}
 				TypeRefKind::SmartPtr(ptr) => {
-					let typ = ptr.rust_name(self.name_style).into_owned();
+					let typ = ptr.rust_name(self.name_style);
 					type_ref
 						.type_hint()
 						.nullability()
-						.rust_wrap_nullable_decl(typ.into(), self.name_style)
+						.rust_wrap_nullable_decl(typ, self.name_style)
 				}
 				TypeRefKind::Class(cls) => {
 					let fish_style = self.name_style.turbo_fish_style();
@@ -128,19 +128,19 @@ impl TypeRefRenderer<'_> for RustRenderer {
 					)
 					.into()
 				}
-				TypeRefKind::Enum(enm) => enm.rust_name(self.name_style).into_owned().into(),
+				TypeRefKind::Enum(enm) => enm.rust_name(self.name_style),
 				TypeRefKind::Typedef(decl) => {
-					let mut out: String = decl.rust_name(self.name_style).into_owned();
+					let mut out = decl.rust_name(self.name_style);
 					let lifetime_count = decl.underlying_type_ref().rust_lifetime_count();
 					if lifetime_count >= 1 && self.lifetime.is_explicit() {
-						write!(out, "<{}>", self.lifetime).expect("Impossible");
+						write!(out.to_mut(), "<{}>", self.lifetime).expect("Impossible");
 					}
-					out.into()
+					out
 				}
-				TypeRefKind::Generic(name) => name.clone().into(),
-				TypeRefKind::Function(func) => func.rust_name(self.name_style).into_owned().into(),
+				TypeRefKind::Generic(name) => name.into(),
+				TypeRefKind::Function(func) => func.rust_name(self.name_style),
 				TypeRefKind::Ignored => "<ignored>".into(),
-			}
+			})
 		}
 	}
 
@@ -185,42 +185,44 @@ impl TypeRefRenderer<'_> for RustExternRenderer {
 				.into_owned()
 				.into()
 		} else {
-			match kind.as_ref() {
-				TypeRefKind::Pointer(inner) | TypeRefKind::Reference(inner) | TypeRefKind::RValueReference(inner) => {
-					let typ = if inner.kind().is_void() {
-						"c_void".into()
-					} else {
-						inner.rust_extern(ExternDir::Contained)
-					};
-					format!("*{cnst}{typ}", cnst = type_ref.constness().rust_qual_ptr()).into()
+			kind.map_borrowed(|kind| {
+				match kind {
+					TypeRefKind::Pointer(inner) | TypeRefKind::Reference(inner) | TypeRefKind::RValueReference(inner) => {
+						let typ = if inner.kind().is_void() {
+							"c_void".into()
+						} else {
+							inner.rust_extern(ExternDir::Contained)
+						};
+						format!("*{cnst}{typ}", cnst = type_ref.constness().rust_qual_ptr()).into()
+					}
+					TypeRefKind::Array(elem, None) => {
+						let typ = if matches!(elem.kind().as_string(elem.type_hint()), Some((Dir::Out, StrType::CharPtr(_)))) {
+							// kind of special casing for cv_startLoop_int__X__int__charXX__int_charXX, without that
+							// argv is treated as array of output arguments, and it doesn't seem to be meant this way
+							format!("*{cnst}c_char", cnst = elem.inherent_constness().rust_qual_ptr()).into()
+						} else {
+							elem.rust_extern(ExternDir::Contained)
+						};
+						format!("*{cnst}{typ}", cnst = type_ref.constness().rust_qual_ptr()).into()
+					}
+					TypeRefKind::Array(elem, Some(len)) => format!(
+						"*{cnst}[{typ}; {len}]",
+						cnst = type_ref.constness().rust_qual_ptr(),
+						typ = elem.rust_extern(ExternDir::Contained),
+					)
+					.into(),
+					TypeRefKind::Function(func) => func.rust_extern(),
+					TypeRefKind::Primitive(_, _)
+					| TypeRefKind::StdVector(_)
+					| TypeRefKind::StdTuple(_)
+					| TypeRefKind::SmartPtr(_)
+					| TypeRefKind::Enum(_)
+					| TypeRefKind::Typedef(_)
+					| TypeRefKind::Generic(_)
+					| TypeRefKind::Class(_)
+					| TypeRefKind::Ignored => type_ref.rust_name(NameStyle::ref_()),
 				}
-				TypeRefKind::Array(elem, None) => {
-					let typ = if matches!(elem.kind().as_string(elem.type_hint()), Some((Dir::Out, StrType::CharPtr(_)))) {
-						// kind of special casing for cv_startLoop_int__X__int__charXX__int_charXX, without that
-						// argv is treated as array of output arguments, and it doesn't seem to be meant this way
-						format!("*{cnst}c_char", cnst = elem.inherent_constness().rust_qual_ptr()).into()
-					} else {
-						elem.rust_extern(ExternDir::Contained)
-					};
-					format!("*{cnst}{typ}", cnst = type_ref.constness().rust_qual_ptr()).into()
-				}
-				TypeRefKind::Array(elem, Some(len)) => format!(
-					"*{cnst}[{typ}; {len}]",
-					cnst = type_ref.constness().rust_qual_ptr(),
-					typ = elem.rust_extern(ExternDir::Contained),
-				)
-				.into(),
-				TypeRefKind::Function(func) => func.rust_extern().into_owned().into(),
-				TypeRefKind::Primitive(_, _)
-				| TypeRefKind::StdVector(_)
-				| TypeRefKind::StdTuple(_)
-				| TypeRefKind::SmartPtr(_)
-				| TypeRefKind::Enum(_)
-				| TypeRefKind::Typedef(_)
-				| TypeRefKind::Generic(_)
-				| TypeRefKind::Class(_)
-				| TypeRefKind::Ignored => type_ref.rust_name(NameStyle::ref_()),
-			}
+			})
 		}
 	}
 

@@ -1,7 +1,7 @@
 use std::borrow::Cow;
 
 use crate::type_ref::{TemplateArg, TypeRef, TypeRefDesc, TypeRefKind};
-use crate::{CppNameStyle, Element, IteratorExt, StringExt};
+use crate::{CowMapBorrowedExt, CppNameStyle, Element, IteratorExt};
 
 pub trait TypeRefRenderer<'a> {
 	type Recursed: TypeRefRenderer<'a> + Sized;
@@ -39,13 +39,23 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 		} else {
 			(format!(" {}", self.name), format!(" {}{}", cnst, self.name))
 		};
-		let kind = type_ref.kind();
-		match kind.as_ref() {
-			TypeRefKind::Primitive(_, cpp) => {
-				format!("{cnst}{cpp}{space_name}")
+		let prepend_cnst_append_name = |out: &mut Cow<str>| {
+			if !cnst.is_empty() {
+				out.to_mut().insert_str(0, cnst);
 			}
-			TypeRefKind::Array(inner, size) => {
-				if let Some(size) = size {
+			if !self.name.is_empty() {
+				out.to_mut().push_str(&space_name);
+			}
+		};
+
+		type_ref.kind().map_borrowed(|kind| {
+			match kind {
+				TypeRefKind::Primitive(_, cpp) => {
+					let mut out = Cow::Borrowed(*cpp);
+					prepend_cnst_append_name(&mut out);
+					out
+				}
+				TypeRefKind::Array(inner, size) => if let Some(size) = size {
 					if self.name.is_empty() {
 						format!("{cnst}{typ}**", typ = self.recurse().render(inner))
 					} else {
@@ -58,86 +68,87 @@ impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
 				} else {
 					format!("{typ}*{space_name}", typ = self.recurse().render(inner))
 				}
-			}
-			TypeRefKind::StdVector(vec) => {
-				format!(
+				.into(),
+				TypeRefKind::StdVector(vec) => format!(
 					"{cnst}{vec_type}<{elem_type}>{space_name}",
 					vec_type = vec.cpp_name(self.name_style),
 					elem_type = self.recurse().render(&vec.element_type()),
 				)
-			}
-			TypeRefKind::StdTuple(tuple) => {
-				let elem_types = tuple
-					.elements()
-					.iter()
-					.map(|tref| {
-						// fixme: hack to keep backwards compatible behavior after tuple rendering changes
-						// ideal fix would be to use CppName::Reference in the recurse() function globally
-						// but it changes the function identifier generation
-						let mut renderer = self.recurse();
-						renderer.name_style = CppNameStyle::Reference;
-						renderer.render(tref)
-					})
-					.join(", ");
-				format!("{cnst}{typ}<{elem_types}>{space_name}", typ = tuple.cpp_name(self.name_style))
-			}
-			TypeRefKind::Reference(inner) if !self.extern_types => {
-				format!("{typ}&{name}", typ = self.recurse().render(inner), name = space_const_name)
-			}
-			TypeRefKind::RValueReference(inner) if !self.extern_types => {
-				format!("{typ}&&{name}", typ = self.recurse().render(inner), name = space_const_name)
-			}
-			TypeRefKind::Pointer(inner) | TypeRefKind::Reference(inner) | TypeRefKind::RValueReference(inner) => {
-				format!("{typ}*{space_const_name}", typ = self.recurse().render(inner))
-			}
-			TypeRefKind::SmartPtr(ptr) => {
-				format!(
+				.into(),
+				TypeRefKind::StdTuple(tuple) => {
+					let elem_types = tuple
+						.elements()
+						.iter()
+						.map(|tref| {
+							// fixme: hack to keep backwards compatible behavior after tuple rendering changes
+							// ideal fix would be to use CppName::Reference in the recurse() function globally
+							// but it changes the function identifier generation
+							let mut renderer = self.recurse();
+							renderer.name_style = CppNameStyle::Reference;
+							renderer.render(tref)
+						})
+						.join(", ");
+					format!("{cnst}{typ}<{elem_types}>{space_name}", typ = tuple.cpp_name(self.name_style)).into()
+				}
+				TypeRefKind::Reference(inner) if !self.extern_types => {
+					format!("{typ}&{space_const_name}", typ = self.recurse().render(inner)).into()
+				}
+				TypeRefKind::RValueReference(inner) if !self.extern_types => {
+					format!("{typ}&&{space_const_name}", typ = self.recurse().render(inner)).into()
+				}
+				TypeRefKind::Pointer(inner) | TypeRefKind::Reference(inner) | TypeRefKind::RValueReference(inner) => {
+					format!("{typ}*{space_const_name}", typ = self.recurse().render(inner)).into()
+				}
+				TypeRefKind::SmartPtr(ptr) => format!(
 					"{cnst}{ptr_type}<{inner_type}>{space_name}",
 					ptr_type = ptr.cpp_name(self.name_style),
 					inner_type = self.recurse().render(&ptr.pointee()),
 				)
-			}
-			TypeRefKind::Class(cls) => {
-				let mut out = cls.cpp_name(self.name_style).into_owned();
-				if !kind.is_std_string(type_ref.type_hint()) {
-					// fixme prevents emission of std::string<char>
-					out += &render_cpp_tpl(self, type_ref);
-				}
-				format!("{cnst}{out}{space_name}")
-			}
-			TypeRefKind::Enum(enm) => {
-				format!("{cnst}{typ}{space_name}", typ = enm.cpp_name(self.name_style))
-			}
-			TypeRefKind::Typedef(tdef) => {
-				let underlying_type = tdef.underlying_type_ref();
-				let typ = if underlying_type.kind().as_reference().is_some() {
-					// references can't be used in lvalue position
-					self.recurse().render(&underlying_type)
-				} else {
-					tdef.cpp_name(self.name_style).into_owned().into()
-				};
-				format!("{cnst}{typ}{space_name}")
-			}
-			TypeRefKind::Generic(generic_name) => {
-				format!("{cnst}{generic_name}{space_name}")
-			}
-			TypeRefKind::Function(func) => {
-				let mut typ = func.cpp_name(self.name_style);
-				if typ.contains("(*)") {
-					if !self.name.is_empty() {
-						typ.to_mut()
-							.replacen_in_place("(*)", 1, &format!("(*{name})", name = self.name));
+				.into(),
+				TypeRefKind::Class(cls) => {
+					let mut out = cls.cpp_name(self.name_style);
+					if !kind.is_std_string(type_ref.type_hint()) {
+						// fixme prevents emission of std::string<char>
+						out.to_mut().push_str(&render_cpp_tpl(&self, type_ref));
 					}
-					typ.into_owned()
-				} else {
-					format!("{typ}{space_name}")
+					prepend_cnst_append_name(&mut out);
+					out
+				}
+				TypeRefKind::Enum(enm) => {
+					let mut out = enm.cpp_name(self.name_style);
+					prepend_cnst_append_name(&mut out);
+					out
+				}
+				TypeRefKind::Typedef(tdef) => {
+					let underlying_type = tdef.underlying_type_ref();
+					let mut out = if underlying_type.kind().as_reference().is_some() {
+						// references can't be used in lvalue position
+						self.recurse().render(&underlying_type).into_owned().into()
+					} else {
+						tdef.cpp_name(self.name_style)
+					};
+					prepend_cnst_append_name(&mut out);
+					out
+				}
+				TypeRefKind::Generic(generic_name) => format!("{cnst}{generic_name}{space_name}").into(),
+				TypeRefKind::Function(func) => {
+					let mut out = func.cpp_name(self.name_style);
+					if !self.name.is_empty() {
+						if let Some(paren_start) = out.find("(*)") {
+							out.to_mut().insert_str(paren_start + 2, self.name);
+						} else {
+							out.to_mut().push_str(&space_name);
+						}
+					}
+					out
+				}
+				TypeRefKind::Ignored => {
+					let mut out = Cow::Borrowed("<ignored>");
+					prepend_cnst_append_name(&mut out);
+					out
 				}
 			}
-			TypeRefKind::Ignored => {
-				format!("<ignored>{space_name}")
-			}
-		}
-		.into()
+		})
 	}
 
 	fn recurse(&self) -> Self::Recursed {
@@ -172,7 +183,7 @@ impl<'a> TypeRefRenderer<'a> for CppExternReturnRenderer {
 	}
 }
 
-fn render_cpp_tpl<'a>(renderer: impl TypeRefRenderer<'a>, type_ref: &TypeRef) -> String {
+fn render_cpp_tpl<'a>(renderer: &impl TypeRefRenderer<'a>, type_ref: &TypeRef) -> String {
 	let generic_types = type_ref.template_specialization_args();
 	if generic_types.is_empty() {
 		return "".to_string();

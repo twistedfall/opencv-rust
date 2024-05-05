@@ -180,7 +180,7 @@ impl<T, A: SizedArray<T>> OpenCVType<'_> for Matx<T, A> {
 	type ExternReceive = Self;
 
 	#[inline]
-	unsafe fn opencv_from_extern(s: Self) -> Self {
+	unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self {
 		s
 	}
 }

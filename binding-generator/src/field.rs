@@ -187,9 +187,10 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 			.filter(|inner| inner.kind().is_copy(inner.type_hint()))
 			.map_or(SliceArgEligibility::NotEligible, |_| {
 				let name = self.cpp_name(CppNameStyle::Declaration);
-				if ARGUMENT_NAMES_NOT_SLICE.contains(name.as_ref()) {
+				let name = name.as_ref();
+				if ARGUMENT_NAMES_NOT_SLICE.contains(name) {
 					SliceArgEligibility::NotEligible
-				} else if ARGUMENT_NAMES_MULTIPLE_SLICE.contains(name.as_ref()) {
+				} else if ARGUMENT_NAMES_MULTIPLE_SLICE.contains(name) {
 					SliceArgEligibility::EligibleWithMultiple
 				} else {
 					SliceArgEligibility::Eligible
@@ -198,17 +199,19 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 	}
 
 	pub fn can_be_slice_arg_len(&self) -> bool {
-		let name = self.cpp_name(CppNameStyle::Declaration);
 		let type_ref = self.type_ref();
-		type_ref
-			.kind()
-			.as_primitive()
-			.map_or(false, |(_, cpp)| cpp == "int" || cpp == "size_t")
-			&& (name.ends_with('s') && name.contains('n') && name != "thickness" // fixme: have to exclude thickness
-				|| name.contains("dims")
-				|| name == "size"
-				|| name.ends_with("Size")
-				|| name == "len")
+		type_ref.kind().as_primitive().map_or(false, |(_, cpp)| {
+			if cpp == "int" || cpp == "size_t" {
+				let name = self.cpp_name(CppNameStyle::Declaration);
+				name.ends_with('s') && name.contains('n') && name != "thickness" // fixme: have to exclude thickness
+							|| name.contains("dims")
+							|| name == "size"
+							|| name.ends_with("Size")
+							|| name == "len"
+			} else {
+				false
+			}
+		})
 	}
 }
 

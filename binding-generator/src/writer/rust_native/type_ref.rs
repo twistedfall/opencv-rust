@@ -14,7 +14,7 @@ use crate::writer::rust_native::type_ref::render_lane::{
 	IndirectRenderLane, Indirection, InputArrayRenderLane, InputOutputArrayRenderLane, OutStringRenderLane, OutputArrayRenderLane,
 	PrimitiveRenderLane, RenderLane, SimpleClassRenderLane, TraitClassRenderLane, VariableArrayRenderLane, VoidSliceRenderLane,
 };
-use crate::StringExt;
+use crate::{CowMapBorrowedExt, StringExt};
 
 use super::element::RustElement;
 use super::renderer::{RustExternRenderer, RustRenderer, RustReturnRenderer};
@@ -180,23 +180,25 @@ impl TypeRefExt for TypeRef<'_, '_> {
 	}
 
 	fn rust_module(&self) -> Cow<str> {
-		match self.kind().as_ref() {
-			TypeRefKind::Primitive(..) => "core".into(),
-			TypeRefKind::StdVector(vec) => vec.rust_element_module().into_owned().into(),
-			TypeRefKind::StdTuple(tuple) => tuple.rust_element_module().into_owned().into(),
-			TypeRefKind::Array(inner, ..)
-			| TypeRefKind::Pointer(inner)
-			| TypeRefKind::Reference(inner)
-			| TypeRefKind::RValueReference(inner) => inner.rust_module().into_owned().into(),
-			TypeRefKind::SmartPtr(ptr) => ptr.rust_module().into_owned().into(),
-			TypeRefKind::Class(cls) => cls.rust_module().into_owned().into(),
-			TypeRefKind::Enum(enm) => enm.rust_module().into_owned().into(),
-			TypeRefKind::Function(..) => {
-				"core".into() // fixme
+		self.kind().map_borrowed(|kind| {
+			match kind {
+				TypeRefKind::Primitive(..) => "core".into(),
+				TypeRefKind::StdVector(vec) => vec.rust_element_module(),
+				TypeRefKind::StdTuple(tuple) => tuple.rust_element_module(),
+				TypeRefKind::Array(inner, ..)
+				| TypeRefKind::Pointer(inner)
+				| TypeRefKind::Reference(inner)
+				| TypeRefKind::RValueReference(inner) => inner.rust_module(),
+				TypeRefKind::SmartPtr(ptr) => ptr.rust_module(),
+				TypeRefKind::Class(cls) => cls.rust_module(),
+				TypeRefKind::Enum(enm) => enm.rust_module(),
+				TypeRefKind::Function(..) => {
+					"core".into() // fixme
+				}
+				TypeRefKind::Typedef(tdef) => tdef.rust_module(),
+				TypeRefKind::Generic(..) | TypeRefKind::Ignored => "core".into(),
 			}
-			TypeRefKind::Typedef(tdef) => tdef.rust_module().into_owned().into(),
-			TypeRefKind::Generic(..) | TypeRefKind::Ignored => "core".into(),
-		}
+		})
 	}
 
 	fn rust_simple_name(&self) -> String {

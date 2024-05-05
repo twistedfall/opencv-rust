@@ -1,8 +1,9 @@
 use std::borrow::Cow;
+use std::borrow::Cow::{Borrowed, Owned};
 
 use crate::type_ref::{Constness, ExternDir, TypeRef};
 use crate::writer::rust_native::type_ref::{Lifetime, TypeRefExt};
-use crate::CppNameStyle;
+use crate::{CowMapBorrowedExt, CppNameStyle};
 
 use super::{rust_arg_func_decl, rust_self_func_decl, void_ptr_rust_arg_func_call, RenderLaneTrait};
 
@@ -37,14 +38,15 @@ impl RenderLaneTrait for InputArrayRenderLane<'_, '_> {
 		rust_arg_func_decl(name, Constness::Const, &self.canonical.rust_extern(ExternDir::ToCpp))
 	}
 
-	fn cpp_arg_func_decl(&self, name: &str) -> String {
-		if self.canonical.kind().as_reference().is_some() {
-			self.canonical.cpp_name_ext(CppNameStyle::Reference, name, true).into_owned()
+	fn cpp_arg_func_decl(&self, name: &str) -> Cow<str> {
+		let typ = if self.canonical.kind().as_reference().is_some() {
+			Borrowed(&self.canonical)
 		} else {
-			TypeRef::new_pointer(self.canonical.with_inherent_constness(self.canonical.constness()))
-				.cpp_name_ext(CppNameStyle::Reference, name, true)
-				.into_owned()
-		}
+			Owned(TypeRef::new_pointer(
+				self.canonical.with_inherent_constness(self.canonical.constness()),
+			))
+		};
+		typ.map_borrowed(|typ| typ.cpp_name_ext(CppNameStyle::Reference, name, true))
 	}
 
 	fn cpp_arg_func_call(&self, name: &str) -> String {
@@ -84,14 +86,15 @@ impl RenderLaneTrait for OutputArrayRenderLane<'_, '_> {
 		rust_arg_func_decl(name, Constness::Const, &self.canonical.rust_extern(ExternDir::ToCpp))
 	}
 
-	fn cpp_arg_func_decl(&self, name: &str) -> String {
-		if self.canonical.kind().as_reference().is_some() {
-			self.canonical.cpp_name_ext(CppNameStyle::Reference, name, true).into_owned()
+	fn cpp_arg_func_decl(&self, name: &str) -> Cow<str> {
+		let typ = if self.canonical.kind().as_reference().is_some() {
+			Borrowed(&self.canonical)
 		} else {
-			TypeRef::new_pointer(self.canonical.with_inherent_constness(self.canonical.constness()))
-				.cpp_name_ext(CppNameStyle::Reference, name, true)
-				.into_owned()
-		}
+			Owned(TypeRef::new_pointer(
+				self.canonical.with_inherent_constness(self.canonical.constness()),
+			))
+		};
+		typ.map_borrowed(|typ| typ.cpp_name_ext(CppNameStyle::Reference, name, true))
 	}
 
 	fn cpp_arg_func_call(&self, name: &str) -> String {
@@ -131,14 +134,15 @@ impl RenderLaneTrait for InputOutputArrayRenderLane<'_, '_> {
 		rust_arg_func_decl(name, Constness::Const, &self.canonical.rust_extern(ExternDir::ToCpp))
 	}
 
-	fn cpp_arg_func_decl(&self, name: &str) -> String {
-		if self.canonical.kind().as_reference().is_some() {
-			self.canonical.cpp_name_ext(CppNameStyle::Reference, name, true).into_owned()
+	fn cpp_arg_func_decl(&self, name: &str) -> Cow<str> {
+		let typ = if self.canonical.kind().as_reference().is_some() {
+			Borrowed(&self.canonical)
 		} else {
-			TypeRef::new_pointer(self.canonical.with_inherent_constness(self.canonical.constness()))
-				.cpp_name_ext(CppNameStyle::Reference, name, true)
-				.into_owned()
-		}
+			Owned(TypeRef::new_pointer(
+				self.canonical.with_inherent_constness(self.canonical.constness()),
+			))
+		};
+		typ.map_borrowed(|typ| typ.cpp_name_ext(CppNameStyle::Reference, name, true))
 	}
 
 	fn cpp_arg_func_call(&self, name: &str) -> String {

@@ -44,7 +44,7 @@ pub trait RenderLaneTrait {
 
 	fn rust_extern_arg_func_decl(&self, name: &str) -> String;
 
-	fn cpp_arg_func_decl(&self, name: &str) -> String;
+	fn cpp_arg_func_decl(&self, name: &str) -> Cow<str>;
 
 	fn cpp_arg_pre_call(&self, _name: &str) -> String {
 		"".to_string()

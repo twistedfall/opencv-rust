@@ -46,8 +46,8 @@ impl RenderLaneTrait for InStringRenderLane<'_, '_> {
 		rust_arg_func_decl(name, Constness::Const, &self.non_canonical.rust_extern(ExternDir::ToCpp))
 	}
 
-	fn cpp_arg_func_decl(&self, name: &str) -> String {
-		format!("const char* {name}")
+	fn cpp_arg_func_decl(&self, name: &str) -> Cow<str> {
+		format!("const char* {name}").into()
 	}
 
 	fn cpp_arg_func_call(&self, name: &str) -> String {
@@ -100,8 +100,8 @@ impl RenderLaneTrait for OutStringRenderLane<'_, '_> {
 		rust_arg_func_decl(name, Constness::Const, &self.canonical.rust_extern(ExternDir::ToCpp))
 	}
 
-	fn cpp_arg_func_decl(&self, name: &str) -> String {
-		format!("void** {name}")
+	fn cpp_arg_func_decl(&self, name: &str) -> Cow<str> {
+		format!("void** {name}").into()
 	}
 
 	fn cpp_arg_pre_call(&self, name: &str) -> String {
@@ -111,7 +111,7 @@ impl RenderLaneTrait for OutStringRenderLane<'_, '_> {
 			StrType::CharPtr(str_enc) => {
 				let len = if matches!(str_enc, StrEnc::Binary) {
 					if let TypeRefTypeHint::StringAsBytes(Some(len_arg_name)) = self.canonical.type_hint() {
-						len_arg_name.as_str()
+						len_arg_name.as_ref()
 					} else {
 						"1024"
 					}

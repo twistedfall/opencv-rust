@@ -103,7 +103,8 @@ impl RustElement for Func<'_, '_> {
 			} else if kind.as_conversion_method().is_some() {
 				let mut name = self.return_type_ref().rust_name(NameStyle::decl()).into_owned();
 				name.cleanup_name();
-				format!("to_{name}").into()
+				name.insert_str(0, "to_");
+				name.into()
 			} else if let Some((cls, kind)) = kind.as_operator() {
 				if cpp_name.starts_with("operator") {
 					let name = match kind {
@@ -172,12 +173,12 @@ impl RustElement for Func<'_, '_> {
 		};
 		if let Some(&name) = settings::FUNC_RENAME.get(self.identifier().as_str()) {
 			if name.contains('+') {
-				reserved_rename(name.replace('+', rust_name.as_ref()).cpp_name_to_rust_case().into())
+				reserved_rename(name.replace('+', rust_name.as_ref()).cpp_name_to_rust_fn_case().into())
 			} else {
 				name.into()
 			}
 		} else {
-			reserved_rename(rust_name.cpp_name_to_rust_case().into())
+			reserved_rename(rust_name.cpp_name_to_rust_fn_case().into())
 		}
 	}
 
@@ -435,14 +436,15 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 					.with_inherent_constness(self.constness())
 					.render_lane()
 					.to_dyn()
-					.cpp_arg_func_decl("instance"),
+					.cpp_arg_func_decl("instance")
+					.into_owned(),
 			);
 		}
 		for (name, arg) in &args {
 			let arg_type_ref = arg.type_ref();
 			let render_lane = arg_type_ref.render_lane();
 			let render_lane = render_lane.to_dyn();
-			decl_args.push(render_lane.cpp_arg_func_decl(name));
+			decl_args.push(render_lane.cpp_arg_func_decl(name).into_owned());
 			pre_post_arg_handle(render_lane.cpp_arg_pre_call(name), &mut pre_call_args);
 			call_args.push(render_lane.cpp_arg_func_call(name));
 			pre_post_arg_handle(render_lane.cpp_arg_post_call(name), &mut post_call_args);
@@ -479,33 +481,27 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 			"try {"
 		};
 		let catch = if return_kind.is_infallible() {
-			"".into()
+			"".to_string()
 		} else {
-			format!("}} OCVRS_CATCH({ocv_ret_name});").into()
+			format!("}} OCVRS_CATCH({ocv_ret_name});")
 		};
 
 		TPL.interpolate(&HashMap::from([
-			("attributes_begin", attributes_begin.into()),
-			("debug", self.get_debug().into()),
-			("return_spec", return_spec),
-			("identifier", identifier.into()),
-			("decl_args", decl_args.join(", ").into()),
-			("try", func_try.into()),
-			("pre_call_args", pre_call_args.join("\n").into()),
-			("call", cpp_call(self, &kind, &call_args, &return_type_ref).into()),
-			("post_call_args", post_call_args.join("\n").into()),
+			("attributes_begin", attributes_begin.as_str()),
+			("debug", &self.get_debug()),
+			("return_spec", &return_spec),
+			("identifier", &identifier),
+			("decl_args", &decl_args.join(", ")),
+			("try", func_try),
+			("pre_call_args", &pre_call_args.join("\n")),
+			("call", &cpp_call(self, &kind, &call_args, &return_type_ref)),
+			("post_call_args", &post_call_args.join("\n")),
 			(
 				"return",
-				cpp_return(
-					self,
-					return_kind,
-					&ret,
-					ret_cast.then(|| ret_full.as_ref().into()),
-					ocv_ret_name,
-				),
+				&cpp_return(self, return_kind, &ret, ret_cast.then(|| ret_full.as_ref()), ocv_ret_name),
 			),
-			("catch", catch),
-			("attributes_end", attributes_end.into()),
+			("catch", &catch),
+			("attributes_end", &attributes_end),
 		]))
 	}
 }
@@ -716,7 +712,7 @@ fn cpp_call(f: &Func, kind: &FuncKind, call_args: &[String], return_type_ref: &T
 	tpl.interpolate(&inter_vars)
 }
 
-fn cpp_return(f: &Func, return_kind: ReturnKind, ret: &str, ret_cast: Option<Cow<str>>, ocv_ret_name: &str) -> Cow<'static, str> {
+fn cpp_return(f: &Func, return_kind: ReturnKind, ret: &str, ret_cast: Option<&str>, ocv_ret_name: &str) -> Cow<'static, str> {
 	match &f.cpp_body() {
 		FuncCppBody::Auto | FuncCppBody::ManualCall(_) => match return_kind {
 			ReturnKind::InfallibleNaked => {
@@ -724,7 +720,7 @@ fn cpp_return(f: &Func, return_kind: ReturnKind, ret: &str, ret_cast: Option<Cow
 					"".into()
 				} else {
 					let cast = if let Some(ret_type) = ret_cast {
-						format!("({typ})", typ = ret_type.as_ref())
+						format!("({ret_type})")
 					} else {
 						"".to_string()
 					};
@@ -743,7 +739,7 @@ fn cpp_return(f: &Func, return_kind: ReturnKind, ret: &str, ret_cast: Option<Cow
 					format!("Ok({ocv_ret_name});").into()
 				} else {
 					let cast = if let Some(ret_type) = ret_cast {
-						format!("<{typ}>", typ = ret_type.as_ref())
+						format!("<{ret_type}>")
 					} else {
 						"".to_string()
 					};

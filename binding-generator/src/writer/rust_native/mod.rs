@@ -168,12 +168,11 @@ impl GeneratorVisitor for RustNativeBindingWriter<'_> {
 		if class.kind().is_trait() {
 			self.prelude_traits.push(format!(
 				"super::{}",
-				class.rust_trait_name(NameStyle::decl(), Constness::Const).into_owned()
+				class.rust_trait_name(NameStyle::decl(), Constness::Const)
 			));
-			self.prelude_traits.push(format!(
-				"super::{}",
-				class.rust_trait_name(NameStyle::decl(), Constness::Mut).into_owned()
-			));
+			self
+				.prelude_traits
+				.push(format!("super::{}", class.rust_trait_name(NameStyle::decl(), Constness::Mut)));
 		}
 		let name = class.cpp_name(CppNameStyle::Reference).into_owned();
 		self.rust_classes.push((name.clone(), class.gen_rust(self.opencv_version)));
@@ -246,18 +245,17 @@ impl Drop for RustNativeBindingWriter<'_> {
 		rust += &join(&mut self.rust_funcs);
 		rust += &join(&mut self.rust_classes);
 		let prelude = RUST_PRELUDE.interpolate(&HashMap::from([("traits", self.prelude_traits.join(", "))]));
-		let comment = RenderComment::new(&self.comment, self.opencv_version)
-			.render_with_comment_marker("//!")
-			.into_owned();
+		let comment = RenderComment::new(&self.comment, self.opencv_version);
+		let comment = comment.render_with_comment_marker("//!");
 		File::create(&self.rust_path)
 			.expect("Can't create rust file")
 			.write_all(
 				RUST
 					.interpolate(&HashMap::from([
-						("static_modules", settings::STATIC_MODULES.iter().join(", ")),
-						("comment", comment),
-						("prelude", prelude),
-						("code", rust),
+						("static_modules", settings::STATIC_MODULES.iter().join(", ").as_str()),
+						("comment", comment.as_ref()),
+						("prelude", &prelude),
+						("code", &rust),
 					]))
 					.as_bytes(),
 			)

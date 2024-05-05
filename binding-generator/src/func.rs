@@ -1,4 +1,5 @@
 use std::borrow::Cow;
+use std::borrow::Cow::{Borrowed, Owned};
 use std::collections::HashMap;
 use std::fmt;
 use std::rc::Rc;
@@ -22,8 +23,8 @@ use crate::type_ref::{Constness, CppNameStyle, TypeRefDesc, TypeRefTypeHint};
 use crate::writer::rust_native::element::RustElement;
 use crate::writer::rust_native::type_ref::TypeRefExt;
 use crate::{
-	debug, settings, Class, DefaultElement, Element, EntityExt, Field, GeneratedType, GeneratorEnv, IteratorExt, NameDebug,
-	NameStyle, StrExt, StringExt, TypeRef,
+	debug, settings, Class, CowMapBorrowedExt, DefaultElement, Element, EntityExt, Field, GeneratedType, GeneratorEnv,
+	IteratorExt, NameDebug, NameStyle, StrExt, StringExt, TypeRef,
 };
 
 mod desc;
@@ -120,16 +121,18 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			FuncKind::GenericInstanceMethod(cls) => FuncKind::InstanceMethod(cls),
 			kind => kind,
 		};
-		let generic = spec
-			.values()
-			.map(|s| s().cpp_name(CppNameStyle::Reference).into_owned())
-			.join(", ");
+		let spec_values = spec.values();
+		let mut generic = String::with_capacity(spec_values.len() * 16);
+		for spec in spec_values {
+			let spec = spec();
+			generic.extend_sep(", ", &spec.cpp_name(CppNameStyle::Reference));
+		}
 		let mut desc = self.to_desc(InheritConfig::empty().kind().arguments().return_type_ref());
 		let desc_mut = Rc::make_mut(&mut desc);
 		desc_mut.kind = kind;
 		desc_mut.type_hint = FuncTypeHint::Specialized;
 		desc_mut.arguments = arguments;
-		desc_mut.return_type_ref = specialized(&return_type_ref).unwrap_or(return_type_ref);
+		desc_mut.return_type_ref = specialized(&return_type_ref).unwrap_or_else(|| return_type_ref.into_owned());
 		desc_mut.cpp_body = FuncCppBody::ManualCall(format!("{{{{name}}}}<{generic}>({{{{args}}}})").into());
 		Self::Desc(desc)
 	}
@@ -160,7 +163,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 				let return_type_ref = if skip_config.return_type_ref {
 					TypeRefDesc::void()
 				} else {
-					self.return_type_ref()
+					self.return_type_ref().into_owned()
 				};
 				let def_loc = if skip_config.definition_location {
 					DefinitionLocation::Generated
@@ -227,7 +230,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 				desc.arguments = ancestor.arguments().into();
 			}
 			if config.return_type_ref {
-				desc.return_type_ref = ancestor.return_type_ref();
+				desc.return_type_ref = ancestor.return_type_ref().into_owned();
 			}
 			if config.definition_location {
 				desc.def_loc = ancestor.file_line_name().location;
@@ -261,7 +264,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		match self {
 			&Self::Clang { entity, gen_env, .. } => {
 				const OPERATOR: &str = "operator";
-				Cow::Owned(match entity.get_kind() {
+				Owned(match entity.get_kind() {
 					EntityKind::FunctionDecl => {
 						if let Some(operator) = entity.cpp_name(CppNameStyle::Declaration).strip_prefix(OPERATOR) {
 							let arg_count = entity.get_arguments().map_or(0, |v| v.len());
@@ -299,7 +302,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 					_ => unreachable!("Unknown function entity: {:#?}", entity),
 				})
 			}
-			Self::Desc(desc) => Cow::Borrowed(&desc.kind),
+			Self::Desc(desc) => Borrowed(&desc.kind),
 		}
 	}
 
@@ -341,7 +344,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 				const OVERLOAD: &str = "@overload";
 				if let Some(idx) = out.find(OVERLOAD) {
 					let rep = if let Some(copy) = gen_env.get_func_comment(line, self.cpp_name(CppNameStyle::Reference).as_ref()) {
-						Cow::Owned(format!("{copy}\n\n## Overloaded parameters\n"))
+						Owned(format!("{copy}\n\n## Overloaded parameters\n"))
 					} else {
 						"This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.".into()
 					};
@@ -422,7 +425,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		}
 	}
 
-	pub fn return_type_ref(&self) -> TypeRef<'tu, 'ge> {
+	pub fn return_type_ref(&self) -> Cow<TypeRef<'tu, 'ge>> {
 		match self {
 			&Self::Clang { entity, gen_env, .. } => {
 				let mut out = match self.kind().as_ref() {
@@ -461,9 +464,9 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 				} else if !out.kind().is_char_ptr_string(out.type_hint()) {
 					out.set_type_hint(TypeRefTypeHint::PrimitivePtrAsRaw);
 				}
-				out
+				Owned(out)
 			}
-			Self::Desc(desc) => desc.return_type_ref.clone(),
+			Self::Desc(desc) => Borrowed(&desc.return_type_ref),
 		}
 	}
 
@@ -497,10 +500,10 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 	pub fn arguments(&self) -> Cow<[Field<'tu, 'ge>]> {
 		match self {
 			&Self::Clang { entity, gen_env, .. } => {
-				let mut slice_arg_finder = SliceArgFinder::new();
 				let arg_overrides = settings::ARGUMENT_OVERRIDE.get(&self.func_id());
-				let mut out = self
-					.clang_arguments(entity)
+				let arguments = self.clang_arguments(entity);
+				let mut slice_arg_finder = SliceArgFinder::with_capacity(arguments.len());
+				let mut out = arguments
 					.into_iter()
 					.enumerate()
 					.map(|(idx, a)| {
@@ -527,7 +530,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 					} else {
 						1
 					};
-					slice_len_arg.set_type_ref_type_hint(TypeRefTypeHint::LenForSlice(slice_arg_names, divisor));
+					slice_len_arg.set_type_ref_type_hint(TypeRefTypeHint::LenForSlice(slice_arg_names.into(), divisor));
 				}
 				out.into()
 			}
@@ -567,8 +570,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		// this to all of the functions, but it's too much work to rename all those entries in FUNC_RENAME
 		if self.is_specialized() {
 			out.push('_');
-			let ret = self.return_type_ref();
-			out.push_str(&ret.cpp_name(CppNameStyle::Reference));
+			out.push_str(&self.return_type_ref().cpp_name(CppNameStyle::Reference));
 		}
 		if self.constness().is_const() {
 			out.push_str("_const");
@@ -673,7 +675,7 @@ impl Element for Func<'_, '_> {
 	fn cpp_namespace(&self) -> Cow<str> {
 		match self {
 			&Self::Clang { entity, .. } => DefaultElement::cpp_namespace(entity).into(),
-			Self::Desc(desc) => match self.kind().as_ref() {
+			Self::Desc(desc) => self.kind().map_borrowed(|kind| match kind {
 				FuncKind::Function | FuncKind::FunctionOperator(_) | FuncKind::GenericFunction => desc.cpp_name.namespace().into(),
 				FuncKind::Constructor(cls)
 				| FuncKind::InstanceMethod(cls)
@@ -681,8 +683,8 @@ impl Element for Func<'_, '_> {
 				| FuncKind::FieldAccessor(cls, _)
 				| FuncKind::ConversionMethod(cls)
 				| FuncKind::InstanceOperator(cls, _)
-				| FuncKind::GenericInstanceMethod(cls) => cls.cpp_name(CppNameStyle::Reference).into_owned().into(),
-			},
+				| FuncKind::GenericInstanceMethod(cls) => cls.cpp_name(CppNameStyle::Reference),
+			}),
 		}
 	}
 

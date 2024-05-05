@@ -1,5 +1,5 @@
 use std::borrow::Cow;
-use std::collections::{HashMap, HashSet};
+use std::collections::HashMap;
 
 use once_cell::sync::Lazy;
 
@@ -115,48 +115,48 @@ pub trait TupleExt {
 
 impl TupleExt for Tuple<'_, '_> {
 	fn rust_localalias(&self) -> Cow<str> {
-		format!(
-			"TupleOf{typ}",
-			typ = self
-				.elements()
-				.into_iter()
-				.map(|e| e.rust_safe_id(true).into_owned())
-				.join("_")
-		)
-		.into()
+		const PREFIX: &str = "TupleOf";
+
+		let elems = self.elements();
+		let mut out = String::with_capacity(PREFIX.len() + elems.len() * 16);
+		out.push_str(PREFIX);
+		for (i, elem) in elems.into_iter().enumerate() {
+			if i != 0 {
+				out.push('_');
+			}
+			out.push_str(&elem.rust_safe_id(true))
+		}
+		out.into()
 	}
 
 	fn rust_inner(&self) -> String {
-		let mut out = "(".to_string();
-		out.push_str(
-			&self
-				.elements()
-				.into_iter()
-				.map(|e| e.rust_name(NameStyle::ref_()).into_owned())
-				.join(", "),
-		);
+		let elems = self.elements();
+		let mut out = String::with_capacity(2 + elems.len() * 16);
+		out.push('(');
+		for (i, elem) in elems.into_iter().enumerate() {
+			if i != 0 {
+				out.push_str(", ");
+			}
+			out.push_str(&elem.rust_name(NameStyle::ref_()));
+		}
 		out.push(')');
 		out
 	}
 
 	fn rust_element_module(&self) -> Cow<str> {
-		let mut elem_modules = self
+		self
 			.elements()
-			.into_iter()
-			.map(|elem_type| elem_type.rust_module().into_owned())
-			.collect::<HashSet<_>>()
-			.into_iter()
+			.iter()
+			.map(|elem_type| elem_type.rust_module())
 			.filter(|m| m != "core")
-			.collect::<Vec<_>>();
-		if let Some(module) = elem_modules.pop() {
-			if elem_modules.is_empty() {
-				module.into()
-			} else {
-				panic!("Too many element modules: {module:?} + {elem_modules:?}")
-			}
-		} else {
-			self.rust_module()
-		}
+			.reduce(|single_module, elem_module| {
+				if single_module != elem_module {
+					panic!("Too many element modules: {single_module:?} and at least {elem_module:?}")
+				} else {
+					single_module
+				}
+			})
+			.map_or_else(|| self.rust_module(), |single_module| single_module.into_owned().into())
 	}
 }
 

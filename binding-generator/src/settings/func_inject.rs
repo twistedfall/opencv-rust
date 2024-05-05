@@ -70,7 +70,8 @@ pub static FUNC_INJECT: Lazy<HashMap<&str, Vec<FuncFactory>>> = Lazy::new(|| {
 						)),
 						Field::new_desc(FieldDesc::new(
 							"n",
-							TypeRefDesc::int().with_type_hint(TypeRefTypeHint::LenForSlice(vec!["vec".to_string()], 1)),
+							// todo, MSRV: remove `as_slice()` when MSRV allows
+							TypeRefDesc::int().with_type_hint(TypeRefTypeHint::LenForSlice(["vec".to_string()].as_slice().into(), 1)),
 						)),
 					],
 					FuncCppBody::Auto,

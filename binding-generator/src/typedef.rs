@@ -39,14 +39,10 @@ impl<'tu, 'ge> Typedef<'tu, 'ge> {
 			if child_unnamed_or_same_name {
 				match child.get_kind() {
 					EntityKind::StructDecl => {
-						out = NewTypedefResult::Class(Class::new_ext(
-							child,
-							entity.cpp_name(CppNameStyle::Reference).into_owned(),
-							gen_env,
-						));
+						out = NewTypedefResult::Class(Class::new_ext(child, entity.cpp_name(CppNameStyle::Reference), gen_env));
 					}
 					EntityKind::EnumDecl => {
-						out = NewTypedefResult::Enum(Enum::new_ext(child, entity.cpp_name(CppNameStyle::Reference).into_owned()));
+						out = NewTypedefResult::Enum(Enum::new_ext(child, entity.cpp_name(CppNameStyle::Reference)));
 					}
 					_ => {}
 				}

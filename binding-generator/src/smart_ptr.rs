@@ -1,4 +1,5 @@
 use std::borrow::Cow;
+use std::borrow::Cow::{Borrowed, Owned};
 use std::fmt;
 use std::rc::Rc;
 
@@ -37,16 +38,18 @@ impl<'tu, 'ge> SmartPtr<'tu, 'ge> {
 		}
 	}
 
-	pub fn pointee(&self) -> TypeRef<'tu, 'ge> {
+	pub fn pointee(&self) -> Cow<TypeRef<'tu, 'ge>> {
 		match self {
-			&Self::Clang { .. } => self
-				.type_ref()
-				.template_specialization_args()
-				.iter()
-				.find_map(|arg| arg.as_typename())
-				.cloned()
-				.expect("Smart pointer template argument list is empty"),
-			Self::Desc(desc) => desc.pointee_type_ref.clone(),
+			&Self::Clang { .. } => Owned(
+				self
+					.type_ref()
+					.template_specialization_args()
+					.iter()
+					.find_map(|arg| arg.as_typename())
+					.cloned()
+					.expect("Smart pointer template argument list is empty"),
+			),
+			Self::Desc(desc) => Borrowed(&desc.pointee_type_ref),
 		}
 	}
 

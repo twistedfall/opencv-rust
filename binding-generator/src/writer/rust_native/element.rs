@@ -35,12 +35,12 @@ impl DefaultRustNativeElement {
 	}
 
 	pub fn rust_leafname(this: &(impl Element + ?Sized)) -> Cow<str> {
-		reserved_rename(this.cpp_name(CppNameStyle::Declaration).cpp_name_to_rust_case().into())
+		reserved_rename(this.cpp_name(CppNameStyle::Declaration).cpp_name_to_rust_fn_case().into())
 	}
 
 	pub fn rust_name(this: &(impl RustElement + ?Sized), entity: Entity, name_style: NameStyle) -> String {
 		let mut parts = Vec::with_capacity(4);
-		parts.push(this.rust_leafname(name_style.turbo_fish_style()).into_owned());
+		parts.push(this.rust_leafname(name_style.turbo_fish_style()));
 		let mut entity = entity;
 		let module = Self::rust_module(entity);
 		while let Some(parent) = entity.get_semantic_parent() {
@@ -48,12 +48,12 @@ impl DefaultRustNativeElement {
 				EntityKind::ClassDecl | EntityKind::StructDecl | EntityKind::ClassTemplate => {
 					let parent_name = parent.get_name().expect("Can't get parent name");
 					if parts.last().map_or(true, |last| last != &parent_name) {
-						parts.push(parent_name);
+						parts.push(parent_name.into());
 					}
 				}
 				EntityKind::EnumDecl => {
 					if parent.is_scoped() {
-						parts.push(parent.get_name().expect("Can't get parent name"));
+						parts.push(parent.get_name().expect("Can't get parent name").into());
 					}
 				}
 				EntityKind::TranslationUnit | EntityKind::UnexposedDecl | EntityKind::FunctionTemplate => {
@@ -70,7 +70,7 @@ impl DefaultRustNativeElement {
 								.and_then(|generic| generic.get(parent_namespace.as_str()))
 						});
 					if let Some(&prefix) = no_skip_prefix {
-						parts.push(prefix.to_string());
+						parts.push(prefix.into());
 					} else {
 						break;
 					}
