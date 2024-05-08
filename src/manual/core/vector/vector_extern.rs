@@ -153,7 +153,7 @@ macro_rules! vector_extern {
 }
 
 #[doc(hidden)]
-pub trait VectorExternCopyNonBool<T: for<'o> OpenCVType<'o>>
+pub trait VectorExternCopyNonBool<T>
 where
 	Vector<T>: VectorExtern<T>,
 {

@@ -10,14 +10,14 @@ pub use vector_extern::{VectorExtern, VectorExternCopyNonBool};
 
 use crate::boxed_ref::BoxedRef;
 use crate::platform_types::size_t;
-use crate::traits::{Boxed, OpenCVIntoExternContainer, OpenCVType, OpenCVTypeExternContainer};
+use crate::traits::{Boxed, OpenCVFromExtern, OpenCVIntoExternContainer, OpenCVType, OpenCVTypeExternContainer};
 use crate::Result;
 
 mod iter;
 mod vector_extern;
 
 /// Wrapper for C++ [std::vector](https://en.cppreference.com/w/cpp/container/vector)
-pub struct Vector<T: for<'o> OpenCVType<'o>>
+pub struct Vector<T>
 where
 	Self: VectorExtern<T>,
 {
@@ -25,7 +25,7 @@ where
 	_d: PhantomData<T>,
 }
 
-impl<T: for<'o> OpenCVType<'o>> Vector<T>
+impl<T> Vector<T>
 where
 	Self: VectorExtern<T>,
 {
@@ -45,7 +45,10 @@ where
 
 	/// Create a Vector from iterator
 	#[inline]
-	pub fn from_iter<'a>(s: impl IntoIterator<Item = <T as OpenCVType<'a>>::Arg>) -> Self {
+	pub fn from_iter<'a>(s: impl IntoIterator<Item = <T as OpenCVType<'a>>::Arg>) -> Self
+	where
+		T: for<'t> OpenCVType<'t>,
+	{
 		#![allow(clippy::should_implement_trait)]
 		let mut out = Self::new();
 		out.extend(s);
@@ -64,6 +67,7 @@ where
 	#[inline]
 	pub fn from_elem<'a>(elem: <T as OpenCVType<'a>>::Arg, n: size_t) -> Self
 	where
+		T: for<'t> OpenCVType<'t>,
 		<T as OpenCVType<'a>>::Arg: Clone,
 	{
 		let mut out = Self::with_capacity(n);
@@ -131,20 +135,29 @@ where
 
 	/// Add new element
 	#[inline]
-	pub fn push(&mut self, val: <T as OpenCVType>::Arg) {
+	pub fn push(&mut self, val: <T as OpenCVType>::Arg)
+	where
+		T: for<'t> OpenCVType<'t>,
+	{
 		let val = val.opencv_into_extern_container_nofail();
 		unsafe { self.extern_push(val.opencv_as_extern()) }
 	}
 
 	#[inline]
-	pub(crate) fn push_owned(&mut self, val: T) {
+	pub(crate) fn push_owned(&mut self, val: T)
+	where
+		T: OpenCVIntoExternContainer,
+	{
 		let val = val.opencv_into_extern_container_nofail();
 		unsafe { self.extern_push_owned(val.opencv_as_extern()) }
 	}
 
 	/// Insert a new element at the specified `index`
 	#[inline]
-	pub fn insert(&mut self, index: size_t, val: <T as OpenCVType>::Arg) -> Result<()> {
+	pub fn insert(&mut self, index: size_t, val: <T as OpenCVType>::Arg) -> Result<()>
+	where
+		T: for<'t> OpenCVType<'t>,
+	{
 		vector_index_check(index, self.len() + 1)?;
 		let val = val.opencv_into_extern_container()?;
 		unsafe { self.extern_insert(index, val.opencv_as_extern()) }
@@ -153,7 +166,10 @@ where
 
 	/// Set element at the specified `index`
 	#[inline]
-	pub fn set(&mut self, index: size_t, val: <T as OpenCVType>::Arg) -> Result<()> {
+	pub fn set(&mut self, index: size_t, val: <T as OpenCVType>::Arg) -> Result<()>
+	where
+		T: for<'t> OpenCVType<'t>,
+	{
 		vector_index_check(index, self.len())?;
 		let val = val.opencv_into_extern_container()?;
 		unsafe { self.extern_set(index, val.opencv_as_extern()) }
@@ -164,14 +180,20 @@ where
 	/// # Safety
 	/// Caller must ensure that the specified `index` is within the `Vector` bounds
 	#[inline]
-	pub unsafe fn set_unchecked(&mut self, index: size_t, val: <T as OpenCVType>::Arg) {
+	pub unsafe fn set_unchecked(&mut self, index: size_t, val: <T as OpenCVType>::Arg)
+	where
+		T: for<'t> OpenCVType<'t>,
+	{
 		let val = val.opencv_into_extern_container_nofail();
 		self.extern_set(index, val.opencv_as_extern())
 	}
 
 	/// Get element at the specified `index`
 	#[inline]
-	pub fn get(&self, index: size_t) -> Result<T> {
+	pub fn get(&self, index: size_t) -> Result<T>
+	where
+		T: OpenCVFromExtern,
+	{
 		vector_index_check(index, self.len())?;
 		Ok(unsafe { self.get_unchecked(index) })
 	}
@@ -180,7 +202,10 @@ where
 	/// # Safety
 	/// Caller must ensure that the specified `index` is within the `Vector` bounds
 	#[inline]
-	pub unsafe fn get_unchecked(&self, index: size_t) -> T {
+	pub unsafe fn get_unchecked(&self, index: size_t) -> T
+	where
+		T: OpenCVFromExtern,
+	{
 		let val = self.extern_get(index);
 		T::opencv_from_extern(val)
 	}
@@ -232,7 +257,7 @@ pub trait VectorToVec {
 	fn to_vec(&self) -> Vec<Self::Element>;
 }
 
-impl<T: for<'o> OpenCVType<'o>> Default for Vector<T>
+impl<T> Default for Vector<T>
 where
 	Self: VectorExtern<T>,
 {
@@ -242,7 +267,7 @@ where
 	}
 }
 
-impl<T: for<'o> OpenCVType<'o>> From<Vector<T>> for Vec<T>
+impl<T> From<Vector<T>> for Vec<T>
 where
 	Vector<T>: VectorExtern<T> + VectorToVec<Element = T>,
 {
@@ -272,7 +297,7 @@ where
 	}
 }
 
-impl<T: for<'o> OpenCVType<'o>> AsRef<[T]> for Vector<T>
+impl<T> AsRef<[T]> for Vector<T>
 where
 	Self: VectorExtern<T> + VectorExternCopyNonBool<T>,
 {
@@ -282,7 +307,7 @@ where
 	}
 }
 
-impl<T: for<'o> OpenCVType<'o>> Borrow<[T]> for Vector<T>
+impl<T> Borrow<[T]> for Vector<T>
 where
 	Self: VectorExtern<T> + VectorExternCopyNonBool<T>,
 {
@@ -292,7 +317,7 @@ where
 	}
 }
 
-impl<T: for<'o> OpenCVType<'o> + fmt::Debug> fmt::Debug for Vector<T>
+impl<T: OpenCVFromExtern + fmt::Debug> fmt::Debug for Vector<T>
 where
 	Self: VectorExtern<T>,
 {
@@ -302,7 +327,7 @@ where
 	}
 }
 
-impl<T: for<'o> OpenCVType<'o>> Drop for Vector<T>
+impl<T> Drop for Vector<T>
 where
 	Self: VectorExtern<T>,
 {
@@ -311,9 +336,9 @@ where
 	}
 }
 
-unsafe impl<T: for<'o> OpenCVType<'o> + Send> Send for Vector<T> where Self: VectorExtern<T> {}
+unsafe impl<T: Send> Send for Vector<T> where Self: VectorExtern<T> {}
 
-unsafe impl<T: for<'o> OpenCVType<'o> + Sync> Sync for Vector<T> where Self: VectorExtern<T> {}
+unsafe impl<T: Sync> Sync for Vector<T> where Self: VectorExtern<T> {}
 
 impl<'a, T: for<'o> OpenCVType<'o>> Extend<<T as OpenCVType<'a>>::Arg> for Vector<T>
 where
@@ -329,7 +354,7 @@ where
 	}
 }
 
-impl<T: for<'o> OpenCVType<'o>> Boxed for Vector<T>
+impl<T> Boxed for Vector<T>
 where
 	Self: VectorExtern<T>,
 {
@@ -356,8 +381,7 @@ where
 
 impl<'b, T: Boxed> Vector<BoxedRef<'b, T>>
 where
-	BoxedRef<'b, T>: for<'o> OpenCVType<'o>,
-	Vector<BoxedRef<'b, T>>: VectorExtern<BoxedRef<'b, T>>,
+	Self: VectorExtern<BoxedRef<'b, T>>,
 	Vector<T>: VectorExtern<T>,
 {
 	/// Transmutes a `&Vector<BoxedRef<T>>` into a `&Vector<T>`. This is safe as `BoxedRef` is a transparent wrapper around `T`,

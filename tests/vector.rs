@@ -503,6 +503,7 @@ fn iter() -> Result<()> {
 		}
 	}
 
+	// .into_iter()
 	{
 		let vec = Vector::<i32>::from_iter(vec![1, 2, 3, 4]);
 		let mut vec_iter = vec.into_iter();
@@ -517,6 +518,7 @@ fn iter() -> Result<()> {
 		assert_eq!((0, Some(0)), vec_iter.size_hint());
 	}
 
+	// .iter()
 	{
 		let vec = Vector::<i32>::from_iter(vec![1, 2, 3, 4]);
 		let mut vec_iter = vec.iter();
@@ -531,6 +533,39 @@ fn iter() -> Result<()> {
 		assert_eq!((0, Some(0)), vec_iter.size_hint());
 	}
 
+	// double-ended .into_iter()
+	{
+		let vec = Vector::<i32>::from_iter(vec![1, 2, 3, 4]);
+		let mut vec_iter = vec.into_iter();
+		assert_eq!(Some(1), vec_iter.next());
+		assert_eq!(Some(4), vec_iter.next_back());
+		assert_eq!(Some(2), vec_iter.next());
+		assert_eq!(Some(3), vec_iter.next_back());
+		assert_eq!(None, vec_iter.next());
+
+		let vec = Vector::<i32>::from_iter(vec![1, 2, 3, 4]);
+		let mut vec_iter = vec.into_iter();
+		assert_eq!(Some(1), vec_iter.nth_back(3));
+		assert_eq!(None, vec_iter.next());
+	}
+
+	// double-ended .iter()
+	{
+		let vec = Vector::<i32>::from_iter(vec![1, 2, 3, 4]);
+		let mut vec_iter = vec.iter();
+		assert_eq!(Some(1), vec_iter.next());
+		assert_eq!(Some(4), vec_iter.next_back());
+		assert_eq!(Some(2), vec_iter.next());
+		assert_eq!(Some(3), vec_iter.next_back());
+		assert_eq!(None, vec_iter.next());
+
+		let vec = Vector::<i32>::from_iter(vec![1, 2, 3, 4]);
+		let mut vec_iter = vec.iter();
+		assert_eq!(Some(1), vec_iter.nth_back(3));
+		assert_eq!(None, vec_iter.next());
+	}
+
+	// .clone()
 	{
 		let vec = Vector::<i32>::from_iter(vec![1, 2, 3, 4]);
 		let mut vec_iter = vec.iter();
