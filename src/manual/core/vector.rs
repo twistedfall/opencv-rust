@@ -10,7 +10,7 @@ pub use vector_extern::{VectorExtern, VectorExternCopyNonBool};
 
 use crate::boxed_ref::BoxedRef;
 use crate::platform_types::size_t;
-use crate::traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer};
+use crate::traits::{Boxed, OpenCVIntoExternContainer, OpenCVType, OpenCVTypeExternContainer};
 use crate::Result;
 
 mod iter;

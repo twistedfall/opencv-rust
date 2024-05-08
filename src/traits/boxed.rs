@@ -1,6 +1,8 @@
 use std::ffi::c_void;
 
-use crate::traits::{OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer, OpenCVTypeExternContainerMove};
+use crate::traits::{
+	OpenCVFromExtern, OpenCVIntoExternContainer, OpenCVType, OpenCVTypeExternContainer, OpenCVTypeExternContainerMove,
+};
 
 /// Trait for structures that are created on the C++ side, usually only the raw void pointer is stored to point to the allocated
 /// data on the heap.
@@ -32,6 +34,9 @@ pub trait Boxed: Sized {
 
 impl<T: Boxed> OpenCVType<'_> for T {
 	type Arg = Self;
+}
+
+impl<T: Boxed> OpenCVFromExtern for T {
 	type ExternReceive = *mut c_void;
 
 	#[inline]
@@ -40,7 +45,7 @@ impl<T: Boxed> OpenCVType<'_> for T {
 	}
 }
 
-impl<T: Boxed> OpenCVTypeArg<'_> for T {
+impl<T: Boxed> OpenCVIntoExternContainer for T {
 	type ExternContainer = Self;
 
 	fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer {

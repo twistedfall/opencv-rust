@@ -5,7 +5,7 @@ use num_traits::{Float, NumCast, ToPrimitive};
 
 use crate::boxed_ref::{BoxedRef, BoxedRefMut};
 use crate::core::{ToInputArray, ToInputOutputArray, ToOutputArray, _InputArray, _InputOutputArray, _OutputArray};
-use crate::traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer};
+use crate::traits::{Boxed, OpenCVFromExtern, OpenCVIntoExternContainer, OpenCVType, OpenCVTypeExternContainer};
 use crate::{extern_receive, extern_send, sys, Result};
 
 mod operations;
@@ -129,6 +129,9 @@ impl<F: Float> VecN<F, 4> {
 
 impl<T, const N: usize> OpenCVType<'_> for VecN<T, N> {
 	type Arg = Self;
+}
+
+impl<T, const N: usize> OpenCVFromExtern for VecN<T, N> {
 	type ExternReceive = Self;
 
 	#[inline]
@@ -137,7 +140,7 @@ impl<T, const N: usize> OpenCVType<'_> for VecN<T, N> {
 	}
 }
 
-impl<T, const N: usize> OpenCVTypeArg<'_> for VecN<T, N> {
+impl<T, const N: usize> OpenCVIntoExternContainer for VecN<T, N> {
 	type ExternContainer = Self;
 
 	#[inline]

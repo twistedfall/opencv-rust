@@ -1,8 +1,9 @@
 use std::ffi::{c_char, c_void, CString};
 
 use crate::templ::receive_string;
+use crate::traits::OpenCVFromExtern;
 
-use super::{OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer};
+use super::{OpenCVIntoExternContainer, OpenCVType, OpenCVTypeExternContainer};
 
 fn cstring_new_nofail(bytes: impl Into<Vec<u8>>) -> CString {
 	CString::new(bytes).unwrap_or_else(|e| {
@@ -15,6 +16,9 @@ fn cstring_new_nofail(bytes: impl Into<Vec<u8>>) -> CString {
 
 impl<'a> OpenCVType<'a> for String {
 	type Arg = &'a str;
+}
+
+impl OpenCVFromExtern for String {
 	type ExternReceive = *mut c_void;
 
 	#[inline]
@@ -23,7 +27,7 @@ impl<'a> OpenCVType<'a> for String {
 	}
 }
 
-impl OpenCVTypeArg<'_> for String {
+impl OpenCVIntoExternContainer for String {
 	type ExternContainer = CString;
 
 	#[inline]
@@ -37,7 +41,7 @@ impl OpenCVTypeArg<'_> for String {
 	}
 }
 
-impl OpenCVTypeArg<'_> for &str {
+impl OpenCVIntoExternContainer for &str {
 	type ExternContainer = CString;
 
 	#[inline]
@@ -68,6 +72,9 @@ impl OpenCVTypeExternContainer for CString {
 
 impl OpenCVType<'_> for Vec<u8> {
 	type Arg = Self;
+}
+
+impl OpenCVFromExtern for Vec<u8> {
 	type ExternReceive = *mut c_void;
 
 	#[inline]
@@ -76,7 +83,7 @@ impl OpenCVType<'_> for Vec<u8> {
 	}
 }
 
-impl OpenCVTypeArg<'_> for Vec<u8> {
+impl OpenCVIntoExternContainer for Vec<u8> {
 	type ExternContainer = Self;
 
 	#[inline]

@@ -185,7 +185,7 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 					impls += &BOXED_REF_TPL.interpolate(&inter_vars);
 					inter_vars.insert(
 						"inner_rust_full",
-						format!("BoxedRef<'_, {}>", inter_vars["inner_rust_full"]).into(),
+						format!("BoxedRef<'t, {}>", inter_vars["inner_rust_full"]).into(),
 					);
 					impls += &EXTERN_TPL.interpolate(&inter_vars);
 					if element_type.is_element_data_type() {

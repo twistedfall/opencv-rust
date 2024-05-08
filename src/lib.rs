@@ -30,7 +30,7 @@ pub(crate) mod mod_prelude_sys {
 	pub use std::ffi::{c_char, c_void};
 
 	pub use crate::platform_types::*;
-	pub use crate::traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer};
+	pub use crate::traits::{Boxed, OpenCVFromExtern, OpenCVIntoExternContainer, OpenCVTypeExternContainer};
 }
 
 /// Prelude for generated modules and types

@@ -1,14 +1,14 @@
 use crate::core::Vector;
 use crate::platform_types::size_t;
-use crate::traits::OpenCVType;
+use crate::traits::{OpenCVFromExtern, OpenCVIntoExternContainer, OpenCVType};
 use crate::{extern_arg_send, extern_container_send, extern_receive};
 
 #[doc(hidden)]
-pub trait VectorExtern<T: for<'a> OpenCVType<'a>> {
+pub trait VectorExtern<T> {
 	#[doc(hidden)]
-	unsafe fn extern_new<'a>() -> extern_receive!(Self: 'a)
+	unsafe fn extern_new() -> extern_receive!(Self)
 	where
-		Self: OpenCVType<'a>;
+		Self: OpenCVFromExtern;
 	#[doc(hidden)]
 	unsafe fn extern_delete(&mut self);
 	#[doc(hidden)]
@@ -28,17 +28,28 @@ pub trait VectorExtern<T: for<'a> OpenCVType<'a>> {
 	#[doc(hidden)]
 	unsafe fn extern_clear(&mut self);
 	#[doc(hidden)]
-	unsafe fn extern_get(&self, index: size_t) -> extern_receive!(T);
+	unsafe fn extern_get(&self, index: size_t) -> extern_receive!(T)
+	where
+		T: OpenCVFromExtern;
 	#[doc(hidden)]
-	unsafe fn extern_push<'a>(&mut self, val: extern_arg_send!(T: 'a));
+	unsafe fn extern_push(&mut self, val: extern_arg_send!(T: '_))
+	where
+		T: for<'t> OpenCVType<'t>;
 	#[doc(hidden)]
-	unsafe fn extern_push_owned(&mut self, val: extern_container_send!(T));
+	unsafe fn extern_push_owned(&mut self, val: extern_container_send!(T))
+	where
+		T: OpenCVIntoExternContainer;
 	#[doc(hidden)]
-	unsafe fn extern_insert<'a>(&mut self, index: size_t, val: extern_arg_send!(T: 'a));
+	unsafe fn extern_insert(&mut self, index: size_t, val: extern_arg_send!(T: '_))
+	where
+		T: for<'t> OpenCVType<'t>;
 	#[doc(hidden)]
-	unsafe fn extern_set<'a>(&mut self, index: size_t, val: extern_arg_send!(T: 'a));
+	unsafe fn extern_set(&mut self, index: size_t, val: extern_arg_send!(T: '_))
+	where
+		T: for<'t> OpenCVType<'t>;
 }
 
+// The 't lifetime is used for BoxedRef<'t> otherwise the extern_get return would bind to self
 #[doc(hidden)]
 #[macro_export]
 macro_rules! vector_extern {
@@ -59,9 +70,9 @@ macro_rules! vector_extern {
 		$extern_push: ident,
 		$extern_insert: ident $(,)?
 	) => {
-		impl $crate::core::VectorExtern<$type> for $crate::core::Vector<$type> {
+		impl<'t> $crate::core::VectorExtern<$type> for $crate::core::Vector<$type> {
 			#[inline]
-			unsafe fn extern_new<'a>() -> extern_receive!(Self: 'a) {
+			unsafe fn extern_new() -> extern_receive!(Self) {
 				$crate::sys::$extern_new()
 			}
 
@@ -119,7 +130,7 @@ macro_rules! vector_extern {
 			}
 
 			#[inline]
-			unsafe fn extern_push<'a>(&mut self, val: extern_arg_send!($type: 'a)) {
+			unsafe fn extern_push(&mut self, val: extern_arg_send!($type: '_)) {
 				$crate::sys::$extern_push(self.as_raw_mut(), val)
 			}
 
@@ -129,12 +140,12 @@ macro_rules! vector_extern {
 			}
 
 			#[inline]
-			unsafe fn extern_insert<'a>(&mut self, index: $crate::platform_types::size_t, val: extern_arg_send!($type: 'a)) {
+			unsafe fn extern_insert(&mut self, index: $crate::platform_types::size_t, val: extern_arg_send!($type: '_)) {
 				$crate::sys::$extern_insert(self.as_raw_mut(), index, val)
 			}
 
 			#[inline]
-			unsafe fn extern_set<'a>(&mut self, index: $crate::platform_types::size_t, val: extern_arg_send!($type: 'a)) {
+			unsafe fn extern_set(&mut self, index: $crate::platform_types::size_t, val: extern_arg_send!($type: '_)) {
 				$crate::sys::$extern_set(self.as_raw_mut(), index, val)
 			}
 		}
@@ -151,7 +162,7 @@ where
 	#[doc(hidden)]
 	unsafe fn extern_data_mut(&mut self) -> *mut T;
 	#[doc(hidden)]
-	unsafe fn extern_from_slice<'a>(data: *const T, len: size_t) -> extern_receive!(Vector<T>: 'a);
+	unsafe fn extern_from_slice(data: *const T, len: size_t) -> extern_receive!(Vector<T>);
 }
 
 #[doc(hidden)]
@@ -195,7 +206,7 @@ macro_rules! vector_copy_non_bool {
 			}
 
 			#[inline]
-			unsafe fn extern_from_slice<'a>(data: *const $type, len: $crate::platform_types::size_t) -> extern_receive!(Self: 'a) {
+			unsafe fn extern_from_slice(data: *const $type, len: $crate::platform_types::size_t) -> extern_receive!(Self) {
 				$crate::sys::$extern_from_slice(data, len)
 			}
 		}

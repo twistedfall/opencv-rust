@@ -9,11 +9,15 @@ mod string;
 /// This trait is somewhat unnecessary complex because of the need of handling String, we need to be able to
 /// pass &str as argument to functions that expect String and do necessary conversion through CString.
 #[doc(hidden)]
-pub trait OpenCVType<'a>: OpenCVTypeArg<'a> {
+pub trait OpenCVType<'a>: OpenCVIntoExternContainer + OpenCVFromExtern {
 	/// Type when passed as argument to function, e.g. &str for String, for most other types it's Self
 	#[doc(hidden)]
-	type Arg: OpenCVTypeArg<'a>;
+	type Arg: OpenCVIntoExternContainer;
+}
 
+/// Trail to create OpenCV type from the data received from C++ side
+#[doc(hidden)]
+pub trait OpenCVFromExtern {
 	/// Return type when this type is returned over the FFI boundary from the C++ function, Self for simple
 	/// types, *mut c_void for complex ones
 	#[doc(hidden)]
@@ -28,7 +32,7 @@ pub trait OpenCVType<'a>: OpenCVTypeArg<'a> {
 ///
 /// Mostly necessary to be able to pass `&str` argument for types that otherwise have `String` Rust representation.
 #[doc(hidden)]
-pub trait OpenCVTypeArg<'a>: Sized {
+pub trait OpenCVIntoExternContainer: Sized {
 	/// Container to help marshall type over FFI boundary, e.g. CString for String or &str, for most other
 	/// types it's Self
 	#[doc(hidden)]
@@ -77,10 +81,7 @@ pub trait OpenCVTypeExternContainerMove: OpenCVTypeExternContainer {
 #[macro_export]
 macro_rules! extern_receive {
 	($typ: ty) => {
-		$crate::extern_receive!($typ: '_)
-	};
-	($typ: ty: $lt: lifetime) => {
-		<$typ as $crate::traits::OpenCVType<$lt>>::ExternReceive
+		<$typ as $crate::traits::OpenCVFromExtern>::ExternReceive
 	};
 }
 
@@ -100,17 +101,11 @@ macro_rules! extern_send {
 #[doc(hidden)]
 #[macro_export]
 macro_rules! extern_container_send {
-	(mut $typ: ty: $lt: lifetime) => {
-		$crate::extern_send!(mut <$typ as $crate::traits::OpenCVTypeArg<$lt>>::ExternContainer)
-	};
-	($typ: ty: $lt: lifetime) => {
-		$crate::extern_send!(<$typ as $crate::traits::OpenCVTypeArg<$lt>>::ExternContainer)
-	};
 	(mut $typ: ty) => {
-		$crate::extern_container_send!(mut $typ: '_)
+		$crate::extern_send!(mut <$typ as $crate::traits::OpenCVIntoExternContainer>::ExternContainer)
 	};
 	($typ: ty) => {
-		$crate::extern_container_send!($typ: '_)
+		$crate::extern_send!(<$typ as $crate::traits::OpenCVIntoExternContainer>::ExternContainer)
 	};
 }
 
@@ -119,10 +114,10 @@ macro_rules! extern_container_send {
 #[macro_export]
 macro_rules! extern_arg_send {
 	(mut $typ: ty: $lt: lifetime) => {
-		$crate::extern_container_send!(mut <$typ as $crate::traits::OpenCVType<$lt>>::Arg: $lt)
+		$crate::extern_container_send!(mut <$typ as $crate::traits::OpenCVType<$lt>>::Arg)
 	};
 	($typ: ty: $lt: lifetime) => {
-		$crate::extern_container_send!(<$typ as $crate::traits::OpenCVType<$lt>>::Arg: $lt)
+		$crate::extern_container_send!(<$typ as $crate::traits::OpenCVType<$lt>>::Arg)
 	};
 }
 
@@ -133,12 +128,15 @@ macro_rules! opencv_type_copy {
 		$(
 			impl $crate::traits::OpenCVType<'_> for $type {
 				type Arg = Self;
+			}
+
+			impl $crate::traits::OpenCVFromExtern for $type {
 				type ExternReceive = Self;
 
 				#[inline] unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self { s }
 			}
 
-			impl $crate::traits::OpenCVTypeArg<'_> for $type {
+			impl $crate::traits::OpenCVIntoExternContainer for $type {
 				type ExternContainer = Self;
 
 				#[inline] fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer { self }
@@ -180,6 +178,9 @@ macro_rules! opencv_type_simple {
 	($type: ty) => {
 		impl $crate::traits::OpenCVType<'_> for $type {
 			type Arg = Self;
+		}
+
+		impl $crate::traits::OpenCVFromExtern for $type {
 			type ExternReceive = Self;
 
 			#[inline]
@@ -188,7 +189,7 @@ macro_rules! opencv_type_simple {
 			}
 		}
 
-		impl $crate::traits::OpenCVTypeArg<'_> for $type {
+		impl $crate::traits::OpenCVIntoExternContainer for $type {
 			type ExternContainer = Self;
 
 			#[inline]
@@ -219,12 +220,15 @@ macro_rules! opencv_type_simple_generic {
 	($type: ident<$trait: ident $( + $more: ident)*>) => {
 		impl<T: $trait$( + $more)*> $crate::traits::OpenCVType<'_> for $type<T> {
 			type Arg = Self;
+		}
+
+		impl<T: $trait$( + $more)*> $crate::traits::OpenCVFromExtern for $type<T> {
 			type ExternReceive = Self;
 
 			#[inline] unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self { s }
 		}
 
-		impl<T: $trait$( + $more)*> $crate::traits::OpenCVTypeArg<'_> for $type<T> {
+		impl<T: $trait$( + $more)*> $crate::traits::OpenCVIntoExternContainer for $type<T> {
 			type ExternContainer = Self;
 
 			#[inline] fn opencv_into_extern_container_nofail(self) -> Self::ExternContainer { self }

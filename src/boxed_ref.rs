@@ -2,7 +2,7 @@ use std::fmt;
 use std::marker::PhantomData;
 
 use crate::mod_prelude::OpenCVTypeExternContainer;
-use crate::traits::{Boxed, OpenCVType, OpenCVTypeArg};
+use crate::traits::{Boxed, OpenCVFromExtern, OpenCVIntoExternContainer, OpenCVType};
 
 /// Wrapper for the type implementing [Boxed] trait that allows to retain the lifetime of the referenced object.
 ///
@@ -40,7 +40,7 @@ impl<T: Boxed + Clone> BoxedRef<'_, T> {
 	}
 }
 
-impl<'t, T: OpenCVTypeArg<'t> + Boxed> OpenCVTypeArg<'t> for BoxedRef<'_, T> {
+impl<T: OpenCVIntoExternContainer + Boxed> OpenCVIntoExternContainer for BoxedRef<'_, T> {
 	type ExternContainer = T::ExternContainer;
 
 	#[inline]
@@ -51,6 +51,9 @@ impl<'t, T: OpenCVTypeArg<'t> + Boxed> OpenCVTypeArg<'t> for BoxedRef<'_, T> {
 
 impl<'t, 'b, T: OpenCVType<'t> + Boxed> OpenCVType<'t> for BoxedRef<'b, T> {
 	type Arg = BoxedRef<'b, T>;
+}
+
+impl<T: OpenCVFromExtern + Boxed> OpenCVFromExtern for BoxedRef<'_, T> {
 	type ExternReceive = T::ExternReceive;
 
 	#[inline]
@@ -109,7 +112,7 @@ impl<T: Boxed + Clone> BoxedRefMut<'_, T> {
 	}
 }
 
-impl<'t, T: OpenCVTypeArg<'t> + Boxed> OpenCVTypeArg<'t> for BoxedRefMut<'_, T> {
+impl<T: OpenCVIntoExternContainer + Boxed> OpenCVIntoExternContainer for BoxedRefMut<'_, T> {
 	type ExternContainer = T::ExternContainer;
 
 	#[inline]
@@ -120,6 +123,9 @@ impl<'t, T: OpenCVTypeArg<'t> + Boxed> OpenCVTypeArg<'t> for BoxedRefMut<'_, T> 
 
 impl<'t, 'b, T: OpenCVType<'t> + Boxed> OpenCVType<'t> for BoxedRefMut<'b, T> {
 	type Arg = BoxedRefMut<'b, T>;
+}
+
+impl<T: OpenCVFromExtern + Boxed> OpenCVFromExtern for BoxedRefMut<'_, T> {
 	type ExternReceive = T::ExternReceive;
 
 	#[inline]

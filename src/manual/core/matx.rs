@@ -5,7 +5,7 @@ use num_traits::{One, Zero};
 use crate::boxed_ref::{BoxedRef, BoxedRefMut};
 use crate::core::{ToInputArray, ToInputOutputArray, ToOutputArray, _InputArray, _InputOutputArray, _OutputArray};
 use crate::manual::core::sized::*;
-use crate::traits::{Boxed, OpenCVType, OpenCVTypeArg, OpenCVTypeExternContainer};
+use crate::traits::{Boxed, OpenCVFromExtern, OpenCVIntoExternContainer, OpenCVType, OpenCVTypeExternContainer};
 use crate::{core, extern_receive, extern_send, sys, Error, Result};
 
 fn index_check(idx: (usize, usize), rows: usize, cols: usize) -> Result<()> {
@@ -177,6 +177,9 @@ impl<T, A: SizedArray<T>> std::ops::IndexMut<(usize, usize)> for Matx<T, A> {
 
 impl<T, A: SizedArray<T>> OpenCVType<'_> for Matx<T, A> {
 	type Arg = Self;
+}
+
+impl<T, A: SizedArray<T>> OpenCVFromExtern for Matx<T, A> {
 	type ExternReceive = Self;
 
 	#[inline]
@@ -185,7 +188,7 @@ impl<T, A: SizedArray<T>> OpenCVType<'_> for Matx<T, A> {
 	}
 }
 
-impl<T, A: SizedArray<T>> OpenCVTypeArg<'_> for Matx<T, A> {
+impl<T, A: SizedArray<T>> OpenCVIntoExternContainer for Matx<T, A> {
 	type ExternContainer = Self;
 
 	#[inline]
