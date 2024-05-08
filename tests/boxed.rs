@@ -1,9 +1,9 @@
 use std::ffi::c_void;
 use std::mem::transmute;
 
-use opencv::core::{Algorithm, KeyPoint, Scalar, Vec4f};
+use opencv::core::{Algorithm, KeyPoint, Ptr, Scalar, Vec4f, Vector};
+use opencv::features2d::Feature2D;
 use opencv::prelude::*;
-use opencv::types::{PtrOfFeature2D, VectorOfVec4f};
 use opencv::Result;
 
 #[test]
@@ -23,16 +23,16 @@ fn layout() -> Result<()> {
 fn into_raw() -> Result<()> {
 	{
 		#[inline(never)]
-		fn into_raw(a: VectorOfVec4f) -> *mut c_void {
+		fn into_raw(a: Vector<Vec4f>) -> *mut c_void {
 			a.into_raw()
 		}
 
-		let mut a = VectorOfVec4f::new();
+		let mut a = Vector::<Vec4f>::new();
 		a.push(Vec4f::all(1.));
 		a.push(Vec4f::all(2.));
 		a.push(Vec4f::all(3.));
 		let ptr = into_raw(a);
-		let b = unsafe { VectorOfVec4f::from_raw(ptr) };
+		let b = unsafe { Vector::<Vec4f>::from_raw(ptr) };
 		assert_eq!(3, b.len());
 		assert_eq!(Vec4f::all(1.), b.get(0)?);
 		assert_eq!(Vec4f::all(2.), b.get(1)?);
@@ -89,7 +89,7 @@ fn smart_ptr_cast_base() -> Result<()> {
 	let d = AKAZE::create_def()?;
 	assert!(Feature2DTraitConst::empty(&d)?);
 	assert_eq!("Feature2D.AKAZE", Feature2DTraitConst::get_default_name(&d)?);
-	let a = PtrOfFeature2D::from(d);
+	let a = Ptr::<Feature2D>::from(d);
 	assert!(Feature2DTraitConst::empty(&a)?);
 	assert_eq!("Feature2D.AKAZE", Feature2DTraitConst::get_default_name(&a)?);
 	Ok(())
@@ -112,8 +112,9 @@ fn cast_base() -> Result<()> {
 #[test]
 fn cast_descendant() -> Result<()> {
 	#![cfg(ocvrs_has_module_rgbd)]
-	use opencv::rgbd::{OdometryFrame, RgbdFrame};
 	use std::convert::TryFrom;
+
+	use opencv::rgbd::{OdometryFrame, RgbdFrame};
 
 	let image = Mat::new_rows_cols_with_default(1, 2, i32::opencv_type(), 1.into())?;
 	let depth = Mat::default();
@@ -136,12 +137,10 @@ fn cast_descendant() -> Result<()> {
 #[test]
 fn cast_descendant_fail() -> Result<()> {
 	#![cfg(ocvrs_has_module_stitching)]
-	use opencv::{
-		core,
-		stitching::{Detail_Blender, Detail_FeatherBlender, Detail_MultiBandBlender},
-		Error,
-	};
 	use std::convert::TryFrom;
+
+	use opencv::stitching::{Detail_Blender, Detail_FeatherBlender, Detail_MultiBandBlender};
+	use opencv::{core, Error};
 
 	let child = Detail_FeatherBlender::new(43.)?;
 	assert_eq!(43., child.sharpness()?);

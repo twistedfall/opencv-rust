@@ -1,3 +1,4 @@
+#[deprecated = "Use the the non-alias form `{{rust_full}}` instead, removal in Nov 2024"]
 pub type {{rust_localalias}} = {{rust_full}};
 
 impl {{rust_full}} {

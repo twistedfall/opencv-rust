@@ -3,11 +3,9 @@ use std::mem;
 
 use matches::assert_matches;
 
-use opencv::core::{MatConstIterator, MatIter, Point, Point2d, Rect, Scalar, Size, Vec2b, Vec2s, Vec3d, Vec3f, Vec4w};
+use opencv::core::{MatConstIterator, MatIter, Point, Point2d, Rect, Scalar, Size, Vec2b, Vec2s, Vec3d, Vec3f, Vec4w, Vector};
 use opencv::prelude::*;
-use opencv::types::{VectorOfMat, VectorOfi32};
 use opencv::{core, imgproc, Error, Result};
-
 const PIXEL: &[u8] = include_bytes!("pixel.png");
 
 #[test]
@@ -43,7 +41,7 @@ fn mat_create() -> Result<()> {
 #[test]
 fn mat_from_iter() -> Result<()> {
 	{
-		let mut vec = VectorOfi32::new();
+		let mut vec = Vector::<i32>::new();
 		vec.push(1);
 		vec.push(2);
 		vec.push(3);
@@ -115,7 +113,7 @@ fn mat_nd() -> Result<()> {
 	}
 
 	{
-		let dims = VectorOfi32::from_iter(vec![2, 3, 4, 5, 6, 7]);
+		let dims = Vector::<i32>::from_iter(vec![2, 3, 4, 5, 6, 7]);
 		let mut mat = Mat::new_nd_vec_with_default(&dims, Vec4w::opencv_type(), 0.into())?;
 		assert_eq!(-1, mat.rows());
 		assert_eq!(-1, mat.cols());
@@ -451,7 +449,7 @@ fn mat_vec() -> Result<()> {
 	}
 
 	{
-		let mut dims = VectorOfi32::new();
+		let mut dims = Vector::<i32>::new();
 		dims.push(3);
 		dims.push(3);
 		dims.push(3);
@@ -545,7 +543,7 @@ fn mat_continuous() -> Result<()> {
 
 #[test]
 fn mat_merge_split() -> Result<()> {
-	let mut src = VectorOfMat::new();
+	let mut src = Vector::<Mat>::new();
 	src.push(Mat::new_rows_cols_with_default(1, 3, u8::opencv_type(), 1.into())?);
 	src.push(Mat::new_rows_cols_with_default(1, 3, u8::opencv_type(), 2.into())?);
 	let mut merged = Mat::default();
@@ -554,7 +552,7 @@ fn mat_merge_split() -> Result<()> {
 	assert_eq!(merged.at_2d::<Vec2b>(0, 1)?[0], 1);
 	assert_eq!(merged.at_2d::<Vec2b>(0, 2)?[1], 2);
 
-	let mut split = VectorOfMat::new();
+	let mut split = Vector::<Mat>::new();
 	core::split(&merged, &mut split)?;
 	assert_eq!(2, split.len());
 	let mat = split.get(0)?;

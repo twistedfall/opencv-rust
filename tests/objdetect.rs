@@ -2,7 +2,9 @@
 
 use std::path::Path;
 
-use opencv::{core, imgcodecs, objdetect, prelude::*, types::VectorOfPoint, Result};
+use opencv::core::{Point, Vector};
+use opencv::prelude::*;
+use opencv::{core, imgcodecs, objdetect, Result};
 
 #[test]
 fn qr_code() -> Result<()> {
@@ -17,7 +19,7 @@ fn qr_code() -> Result<()> {
 		#[allow(unused_mut)]
 		let mut detector = objdetect::QRCodeDetector::default()?;
 		let src = imgcodecs::imread(qr_path.to_str().unwrap(), imgcodecs::IMREAD_COLOR)?;
-		let mut pts = VectorOfPoint::new();
+		let mut pts = Vector::<Point>::new();
 		let mut straight = Mat::default();
 		let res = detector.detect_and_decode(&src, &mut pts, &mut straight)?;
 		assert_eq!(4, pts.len());
@@ -34,7 +36,7 @@ fn qr_code() -> Result<()> {
 		#[allow(unused_mut)]
 		let mut detector = objdetect::QRCodeDetector::default()?;
 		let src = imgcodecs::imread(qr_path.to_str().unwrap(), imgcodecs::IMREAD_COLOR)?;
-		let mut pts = VectorOfPoint::new();
+		let mut pts = Vector::<Point>::new();
 		let res = detector.detect(&src, &mut pts)?;
 		assert!(res);
 		assert_eq!(4, pts.len());
@@ -55,7 +57,7 @@ fn qr_code() -> Result<()> {
 		#[allow(unused_mut)]
 		let mut detector = objdetect::QRCodeDetector::default()?;
 		let src = imgcodecs::imread(binary_qr_path.to_str().unwrap(), imgcodecs::IMREAD_COLOR)?;
-		let mut pts = VectorOfPoint::new();
+		let mut pts = Vector::<Point>::new();
 		let mut straight = Mat::default();
 		let res = detector.detect_and_decode(&src, &mut pts, &mut straight)?;
 		assert_eq!(4, pts.len());
@@ -78,7 +80,7 @@ fn output_byte_string() -> Result<()> {
 	let qr_path = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/qr.png");
 
 	let src = imgcodecs::imread(qr_path.to_str().unwrap(), imgcodecs::IMREAD_COLOR)?;
-	let mut pts = VectorOfPoint::new();
+	let mut pts = Vector::<Point>::new();
 	let res = objdetect::detect_qr_code(&src, &mut pts, 0.2, 0.1)?;
 	assert!(res);
 	assert_eq!(4, pts.len());

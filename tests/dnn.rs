@@ -2,13 +2,10 @@
 
 use matches::assert_matches;
 
-use opencv::{
-	core,
-	dnn::{DictValue, LayerParams, Net},
-	prelude::*,
-	types::VectorOfMat,
-	Error, Result,
-};
+use opencv::core::Vector;
+use opencv::dnn::{DictValue, LayerParams, Net};
+use opencv::prelude::*;
+use opencv::{core, Error, Result};
 
 /// Specialization, passing Vector of boxed objects
 #[test]
@@ -38,7 +35,7 @@ fn net() -> Result<()> {
 	let res = net.add_layer("layer", "type", &mut params)?;
 	assert_ne!(-1, res);
 	assert!(!net.empty()?);
-	let mut blobs = VectorOfMat::new();
+	let mut blobs = Vector::<Mat>::new();
 	blobs.push(Mat::default());
 	params.set_blobs(blobs);
 	let blobs = params.blobs();

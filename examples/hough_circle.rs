@@ -4,12 +4,11 @@ use std::env::args;
 use std::sync::atomic::{AtomicI32, Ordering};
 use std::sync::Arc;
 
-use opencv::core::{find_file, Point, Point2i, Size2i, BORDER_DEFAULT};
+use opencv::core::{find_file, Point, Point2i, Size2i, Vec3f, Vector, BORDER_DEFAULT};
 use opencv::highgui::{create_trackbar, imshow, named_window, wait_key, WINDOW_AUTOSIZE};
 use opencv::imgcodecs::{imread, IMREAD_COLOR};
 use opencv::imgproc::{circle, cvt_color_def, gaussian_blur, hough_circles, COLOR_BGR2GRAY, HOUGH_GRADIENT};
 use opencv::prelude::*;
-use opencv::types::VectorOfVec3f;
 use opencv::Result;
 
 opencv::opencv_branch_4! {
@@ -32,7 +31,7 @@ const MAX_ACCUMULATOR_THRESHOLD: i32 = 200;
 
 fn hough_detection(src_gray: &Mat, src_display: &Mat, canny_threshold: i32, accumulator_threshold: i32) -> Result<()> {
 	// Will hold the results of the detection
-	let mut circles = VectorOfVec3f::new();
+	let mut circles = Vector::<Vec3f>::new();
 
 	// Runs the actual detection
 	hough_circles(

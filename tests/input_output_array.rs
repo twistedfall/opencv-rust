@@ -12,7 +12,6 @@ use opencv::core::{
 };
 use opencv::core::{_InputArray, _InputOutputArray, _OutputArray};
 use opencv::prelude::*;
-use opencv::types::{VectorOff64, VectorOfu8};
 use opencv::{core, Result};
 
 #[test]
@@ -170,7 +169,7 @@ fn input_output_array() -> Result<()> {
 		let mat = Mat::new_rows_cols_with_default(1, 3, u8::opencv_type(), Scalar::all(3.))?;
 		let umat = mat.get_umat_def(ACCESS_READ)?;
 		{
-			let mut trg = VectorOfu8::new();
+			let mut trg = Vector::<u8>::new();
 			core::add(&mat_expr, &umat, &mut trg, &core::no_array(), -1)?;
 			assert_eq!(3, trg.len());
 			assert_eq!(4, trg.get(0)?);
@@ -179,7 +178,7 @@ fn input_output_array() -> Result<()> {
 		}
 
 		{
-			let mut trg = VectorOfu8::new();
+			let mut trg = Vector::<u8>::new();
 			core::add(&&mat_expr, &&umat, &mut &mut trg, &core::no_array(), -1)?;
 			assert_eq!(3, trg.len());
 			assert_eq!(4, trg.get(0)?);
@@ -189,7 +188,7 @@ fn input_output_array() -> Result<()> {
 	}
 
 	{
-		let mut t = VectorOff64::new();
+		let mut t = Vector::<f64>::new();
 		core::add(&2.5, &4., &mut t, &core::no_array(), -1)?;
 		assert_eq!(6.5, t.get(0)?);
 	}

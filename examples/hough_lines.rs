@@ -4,12 +4,11 @@ use std::env::args;
 use std::f64::consts::PI;
 use std::sync::Mutex;
 
-use opencv::core::{find_file, Point, Point2f};
+use opencv::core::{find_file, Point, Point2f, Vec2f, Vec4i, Vector};
 use opencv::highgui::{create_trackbar, imshow, named_window, wait_key_def, WINDOW_AUTOSIZE};
 use opencv::imgcodecs::{imread, IMREAD_COLOR};
 use opencv::imgproc::{canny_def, cvt_color_def, hough_lines_def, hough_lines_p, line, COLOR_BGR2GRAY, COLOR_GRAY2BGR};
 use opencv::prelude::*;
-use opencv::types::{VectorOfVec2f, VectorOfVec4i};
 use opencv::Result;
 
 opencv::opencv_branch_4! {
@@ -92,7 +91,7 @@ fn main() -> Result<()> {
 }
 
 fn standard_hough(edges: &Mat, s_trackbar: i32) -> Result<()> {
-	let mut s_lines = VectorOfVec2f::new();
+	let mut s_lines = Vector::<Vec2f>::new();
 	let mut standard_hough = Mat::default();
 
 	cvt_color_def(edges, &mut standard_hough, COLOR_GRAY2BGR)?;
@@ -118,7 +117,7 @@ fn standard_hough(edges: &Mat, s_trackbar: i32) -> Result<()> {
 }
 
 fn probabilistic_hough(edges: &Mat, p_trackbar: i32) -> Result<()> {
-	let mut p_lines = VectorOfVec4i::new();
+	let mut p_lines = Vector::<Vec4i>::new();
 	let mut probabalistic_hough = Mat::default();
 
 	cvt_color_def(edges, &mut probabalistic_hough, COLOR_GRAY2BGR)?;

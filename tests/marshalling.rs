@@ -1,18 +1,19 @@
 //! Contains all tests that cover marshalling types to and from C++
 
-use opencv::core::{self, Scalar};
+use opencv::core;
+use opencv::core::{Scalar, Tuple};
 use opencv::prelude::*;
 use opencv::Result;
 
 /// Passing simple struct as argument
 #[test]
 fn simple_struct_arg() -> Result<()> {
-	use opencv::{
-		core::{Point, Size},
-		imgproc,
-	};
+	#![cfg(ocvrs_has_module_imgproc)]
 
-	let res = imgproc::get_structuring_element(imgproc::MORPH_CROSS, Size { width: 100, height: 100 }, Point { x: 50, y: 50 })?;
+	use opencv::core::{Point, Size};
+	use opencv::imgproc;
+
+	let res = imgproc::get_structuring_element(imgproc::MORPH_CROSS, Size::new(100, 100), Point::new(50, 50))?;
 	assert_eq!(res.typ(), 0);
 	let size = res.size()?;
 	assert_eq!(size.width, 100);
@@ -208,10 +209,8 @@ fn simple_struct_return_infallible() -> Result<()> {
 fn tuple() -> Result<()> {
 	#[cfg(all(ocvrs_has_module_imgproc, ocvrs_opencv_branch_4))]
 	{
-		use opencv::types::TupleOfi32_f32;
-
 		let src_tuple = (10, 20.);
-		let tuple = TupleOfi32_f32::new(src_tuple);
+		let tuple = Tuple::<(i32, f32)>::new(src_tuple);
 		assert_eq!(10, tuple.get_0());
 		assert_eq!(20., tuple.get_1());
 		assert_eq!(src_tuple, tuple.into_tuple());
@@ -220,10 +219,9 @@ fn tuple() -> Result<()> {
 	#[cfg(ocvrs_has_module_objdetect)]
 	{
 		use opencv::core::Rect;
-		use opencv::types::TupleOfRect_i32;
 
 		let src_tuple = (Rect::new(1, 2, 3, 4), 98);
-		let tuple = TupleOfRect_i32::new(src_tuple);
+		let tuple = Tuple::<(Rect, i32)>::new(src_tuple);
 		assert_eq!(Rect::new(1, 2, 3, 4), tuple.get_0());
 		assert_eq!(98, tuple.get_1());
 		assert_eq!(src_tuple, tuple.into_tuple());
@@ -231,12 +229,11 @@ fn tuple() -> Result<()> {
 
 	#[cfg(all(ocvrs_has_module_stitching, ocvrs_opencv_branch_4))]
 	{
-		use opencv::core::{AccessFlag, UMatUsageFlags};
-		use opencv::types::TupleOfUMat_u8;
+		use opencv::core::{AccessFlag, UMat, UMatUsageFlags};
 
 		let mat = Mat::new_rows_cols_with_default(10, 20, f64::opencv_type(), Scalar::all(76.))?;
 		let src_tuple = (mat.get_umat(AccessFlag::ACCESS_READ, UMatUsageFlags::USAGE_DEFAULT)?, 8);
-		let tuple = TupleOfUMat_u8::new(src_tuple);
+		let tuple = Tuple::<(UMat, u8)>::new(src_tuple);
 		assert_eq!(10, tuple.get_0().rows());
 		assert_eq!(8, tuple.get_1());
 		let (res_umat, res_val) = tuple.into_tuple();

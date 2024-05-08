@@ -2,12 +2,9 @@
 use opencv::core::AccessFlag::ACCESS_READ;
 #[cfg(not(ocvrs_opencv_branch_4))]
 use opencv::core::ACCESS_READ;
-use opencv::{
-	core::{Rect, Size, UMat, UMatUsageFlags, Vec3d},
-	prelude::*,
-	types::VectorOfi32,
-	Result,
-};
+use opencv::core::{Rect, Size, UMat, UMatUsageFlags, Vec3d, Vector};
+use opencv::prelude::*;
+use opencv::Result;
 
 #[test]
 fn umat_default() -> Result<()> {
@@ -32,7 +29,7 @@ fn umat_create() -> Result<()> {
 #[test]
 fn umat_to_mat() -> Result<()> {
 	{
-		let mut vec = VectorOfi32::new();
+		let mut vec = Vector::<i32>::new();
 		vec.push(1);
 		vec.push(2);
 		vec.push(3);
