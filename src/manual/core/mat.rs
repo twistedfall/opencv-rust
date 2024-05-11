@@ -8,6 +8,7 @@ pub use mat_::*;
 
 use crate::boxed_ref::{BoxedRef, BoxedRefMut};
 use crate::core::{MatConstIterator, MatExpr, MatSize, Point, Rect, Scalar, Size, UMat};
+use crate::manual::core::DataType;
 use crate::prelude::*;
 use crate::{core, input_output_array, input_output_array_vector, Error, Result};
 
@@ -42,30 +43,28 @@ fn match_format<T: DataType>(mat_type: i32) -> Result<()> {
 	}
 }
 
-#[inline]
-fn match_dims(mat: &(impl MatTraitConst + ?Sized), dims: usize) -> Result<()> {
-	// safe because `Mat::dims()` returns value >= 2
-	let mat_dims = mat.dims() as usize;
-	if mat_dims == dims {
-		Ok(())
-	} else {
-		Err(Error::new(
-			core::StsUnmatchedSizes,
-			format!("Mat dims is: {mat_dims}, but requested dims is: {dims}"),
-		))
-	}
-}
-
 fn match_indices(mat: &(impl MatTraitConst + ?Sized), idx: &[i32]) -> Result<()> {
-	let size = mat.mat_size();
-	match_dims(mat, idx.len())?;
-	if let Some((out_dim, out_size)) = size.iter().enumerate().find(|&(i, &x)| idx[i] < 0 || idx[i] >= x) {
+	let mat_size = mat.mat_size();
+	let size = &*mat_size;
+	if size.len() != idx.len() {
+		return Err(Error::new(
+			core::StsUnmatchedSizes,
+			format!(
+				"Amount of Mat dimensions: {} doesn't match the amount of requested indices: {}",
+				size.len(),
+				idx.len()
+			),
+		));
+	}
+	if let Some((out_idx, (out_idx_val, out_size))) = idx
+		.iter()
+		.zip(size)
+		.enumerate()
+		.find(|(_, (idx_val, &size))| !(0..size).contains(idx_val))
+	{
 		Err(Error::new(
 			core::StsOutOfRange,
-			format!(
-				"Index: {} along dimension: {} out of bounds 0..{}",
-				idx[out_dim], out_dim, out_size
-			),
+			format!("Index: {out_idx_val} along dimension: {out_idx} out of bounds 0..{out_size}"),
 		))
 	} else {
 		Ok(())
@@ -98,21 +97,23 @@ fn match_is_continuous(mat: &(impl MatTraitConst + ?Sized)) -> Result<()> {
 	}
 }
 
-#[inline]
 fn match_length(sizes: &[i32], len: usize) -> Result<()> {
 	if sizes.is_empty() {
 		return Err(Error::new(core::StsUnmatchedSizes, "Dimensions must not be empty"));
 	}
-	let data_len = i32::try_from(len)?;
-	if sizes.iter().product::<i32>() != data_len {
-		let msg = if sizes.len() == 2 {
-			format!(
-				"The length of the slice: {data_len} must match the passed row: {rows} and column: {cols} counts exactly",
-				rows = sizes[0],
-				cols = sizes[1],
-			)
-		} else {
-			format!("The length of the slice: {data_len} must match the passed dimensions: {sizes:?} exactly")
+	let mut volume: u64 = 1;
+	for (i, size) in sizes.iter().enumerate() {
+		let size =
+			u64::try_from(*size).map_err(|_| Error::new(core::StsOutOfRange, format!("Dimension {i} must not be negative")))?;
+		volume = volume.saturating_mul(size);
+	}
+	let data_len = u64::try_from(len).map_err(|_| Error::new(core::StsOutOfRange, "Length must fit in u64"))?;
+	if volume != data_len {
+		let msg = match sizes {
+			[rows, cols] => {
+				format!("The length of the slice: {data_len} must match the passed row: {rows} and column: {cols} counts exactly")
+			}
+			_ => format!("The length of the slice: {data_len} must match the passed dimensions: {sizes:?} exactly"),
 		};
 		return Err(Error::new(core::StsUnmatchedSizes, msg));
 	}
@@ -344,16 +345,13 @@ pub(crate) mod mat_forward {
 	#[inline]
 	pub fn at<T: DataType>(mat: &(impl MatTraitConst + ?Sized), i0: i32) -> Result<&T> {
 		match_format::<T>(mat.typ())
-			.and_then(|_| match_dims(mat, 2))
 			.and_then(|_| match_total(mat, i0))
 			.and_then(|_| unsafe { mat.at_unchecked(i0) })
 	}
 
 	#[inline]
 	pub fn at_mut<T: DataType>(mat: &mut (impl MatTrait + ?Sized), i0: i32) -> Result<&mut T> {
-		match_format::<T>(mat.typ())
-			.and_then(|_| match_dims(mat, 2))
-			.and_then(|_| match_total(mat, i0))?;
+		match_format::<T>(mat.typ()).and_then(|_| match_total(mat, i0))?;
 		unsafe { mat.at_unchecked_mut(i0) }
 	}
 
@@ -520,8 +518,19 @@ pub trait MatTraitConstManual: MatTraitConst {
 	}
 
 	fn to_vec_2d<T: DataType>(&self) -> Result<Vec<Vec<T>>> {
-		match_format::<T>(self.typ()).and_then(|_| match_dims(self, 2)).and_then(|_| {
-			let size = self.size()?;
+		match_format::<T>(self.typ()).and_then(|_| {
+			let size = match *self.mat_size() {
+				[rows, cols] => Size::new(cols, rows),
+				ref mat_size => {
+					return Err(Error::new(
+						core::StsUnmatchedSizes,
+						format!(
+							"Mat must have 2 dimensions for this operation, but it has: {}",
+							mat_size.len()
+						),
+					))
+				}
+			};
 			// safe because Mat size can't be negative
 			let width = size.width as usize;
 			if self.is_continuous() {

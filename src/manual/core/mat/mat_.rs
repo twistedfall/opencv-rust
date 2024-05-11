@@ -5,19 +5,19 @@ use std::marker::PhantomData;
 
 use crate::boxed_ref::{BoxedRef, BoxedRefMut};
 use crate::core::{
-	Mat, MatTrait, MatTraitConst, MatTraitConstManual, MatTraitManual, ToInputArray, ToInputOutputArray, ToOutputArray,
+	Mat, MatTrait, MatTraitConst, MatTraitConstManual, MatTraitManual, Point, ToInputArray, ToInputOutputArray, ToOutputArray,
 	_InputArray, _InputOutputArray, _OutputArray,
 };
 use crate::traits::Boxed;
 use crate::{Error, Result};
 
-use super::{match_dims, match_format, match_is_continuous, match_total, DataType};
+use super::{match_format, match_indices, match_is_continuous, match_total, DataType};
 
 /// [docs.opencv.org](https://docs.opencv.org/master/df/dfc/classcv_1_1Mat__.html)
 ///
 /// This struct is freely convertible into and from `Mat` using `into` and `try_from` methods. You might want
 /// to convert `Mat` to `Mat_` before calling typed methods (like `at`, `data_typed`) when more performance is
-/// required because this way you will skip the data type checks (still WIP, not all methods are covered).
+/// required because this way you will skip the data type checks.
 pub struct Mat_<T> {
 	inner: Mat,
 	_type: PhantomData<T>,
@@ -65,24 +65,77 @@ impl<T: DataType> Mat_<T> {
 		self.as_raw_mut_Mat()
 	}
 
+	/// See [Mat::at]
 	#[inline]
 	pub fn at(&self, i0: i32) -> Result<&T> {
-		match_dims(self, 2)
-			.and_then(|_| match_total(self, i0))
-			.and_then(|_| unsafe { self.at_unchecked(i0) })
+		match_total(self, i0).and_then(|_| unsafe { self.at_unchecked(i0) })
 	}
 
+	/// See [Mat::at_2d]
+	#[inline]
+	pub fn at_2d(&self, row: i32, col: i32) -> Result<&T> {
+		match_indices(self, &[row, col]).and_then(|_| unsafe { self.at_2d_unchecked(row, col) })
+	}
+
+	/// See [Mat::at_3d]
+	#[inline]
+	pub fn at_3d(&self, i0: i32, i1: i32, i2: i32) -> Result<&T> {
+		match_indices(self, &[i0, i1, i2]).and_then(|_| unsafe { self.at_3d_unchecked(i0, i1, i2) })
+	}
+
+	/// See [Mat::at_nd]
+	#[inline]
+	pub fn at_nd(&self, idx: &[i32]) -> Result<&T> {
+		match_indices(self, idx).and_then(|_| unsafe { self.at_nd_unchecked(idx) })
+	}
+
+	/// See [Mat::at_pt]
+	#[inline]
+	pub fn at_pt(&self, pt: Point) -> Result<&T> {
+		self.at_2d(pt.y, pt.x)
+	}
+
+	/// See [Mat::at_mut]
 	#[inline]
 	pub fn at_mut(&mut self, i0: i32) -> Result<&mut T> {
-		match_dims(self, 2).and_then(|_| match_total(self, i0))?;
+		match_total(self, i0)?;
 		unsafe { self.at_unchecked_mut(i0) }
 	}
 
+	/// See [Mat::at_2d_mut]
+	#[inline]
+	pub fn at_2d_mut(&mut self, row: i32, col: i32) -> Result<&mut T> {
+		match_indices(self, &[row, col])?;
+		unsafe { self.at_2d_unchecked_mut(row, col) }
+	}
+
+	/// See [Mat::at_3d_mut]
+	#[inline]
+	pub fn at_3d_mut(&mut self, i0: i32, i1: i32, i2: i32) -> Result<&mut T> {
+		match_indices(self, &[i0, i1, i2])?;
+		unsafe { self.at_3d_unchecked_mut(i0, i1, i2) }
+	}
+
+	/// See [Mat::at_nd_mut]
+	#[inline]
+	pub fn at_nd_mut(&mut self, idx: &[i32]) -> Result<&mut T> {
+		match_indices(self, idx)?;
+		unsafe { self.at_nd_unchecked_mut(idx) }
+	}
+
+	/// See [Mat::at_pt_mut]
+	#[inline]
+	pub fn at_pt_mut(&mut self, pt: Point) -> Result<&mut T> {
+		self.at_2d_mut(pt.y, pt.x)
+	}
+
+	/// See [Mat::data_typed]
 	#[inline]
 	pub fn data_typed(&self) -> Result<&[T]> {
 		match_is_continuous(self).and_then(|_| unsafe { self.data_typed_unchecked() })
 	}
 
+	/// See [Mat::data_typed_mut]
 	#[inline]
 	pub fn data_typed_mut(&mut self) -> Result<&mut [T]> {
 		match_is_continuous(self)?;

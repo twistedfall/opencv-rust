@@ -97,10 +97,11 @@ fn mat_for_rows_and_cols() -> Result<()> {
 fn mat_nd() -> Result<()> {
 	{
 		let mut mat = Mat::new_nd_with_default(&[3, 3, 3], Vec4w::opencv_type(), 0.into())?;
+		assert_eq!(&Vec4w::new(0, 0, 0, 0), mat.at::<Vec4w>(1)?);
 		assert_matches!(
-			mat.at::<Vec4w>(0),
+			mat.at::<Vec4w>(27),
 			Err(Error {
-				code: core::StsUnmatchedSizes,
+				code: core::StsOutOfRange,
 				..
 			})
 		);
