@@ -1,0 +1,7210 @@
+//! # 3D Visualizer
+//!
+//! This section describes 3D visualization window as well as classes and methods that are used to
+//! interact with it.
+//!
+//! 3D visualization window (see Viz3d) is used to display widgets (see Widget), and it provides several
+//! methods to interact with scene and widgets.
+//!    # Widget
+//!
+//!    In this section, the widget framework is explained. Widgets represent 2D or 3D objects, varying from
+//!    simple ones such as lines to complex ones such as point clouds and meshes.
+//!
+//!    Widgets are **implicitly shared**. Therefore, one can add a widget to the scene, and modify the
+//!    widget without re-adding the widget.
+//!
+//!    ```C++
+//!    // Create a cloud widget
+//!    viz::WCloud cw(cloud, viz::Color::red());
+//!    // Display it in a window
+//!    myWindow.showWidget("CloudWidget1", cw);
+//!    // Modify it, and it will be modified in the window.
+//!    cw.setColor(viz::Color::yellow());
+//!    ```
+//!
+use crate::mod_prelude::*;
+use crate::{core, sys, types};
+pub mod prelude {
+	pub use super::{CameraTrait, CameraTraitConst, ColorTrait, ColorTraitConst, KeyboardEventTrait, KeyboardEventTraitConst, MeshTrait, MeshTraitConst, MouseEventTrait, MouseEventTraitConst, Viz3dTrait, Viz3dTraitConst, WArrowTrait, WArrowTraitConst, WCameraPositionTrait, WCameraPositionTraitConst, WCircleTrait, WCircleTraitConst, WCloudCollectionTrait, WCloudCollectionTraitConst, WCloudNormalsTrait, WCloudNormalsTraitConst, WCloudTrait, WCloudTraitConst, WConeTrait, WConeTraitConst, WCoordinateSystemTrait, WCoordinateSystemTraitConst, WCubeTrait, WCubeTraitConst, WCylinderTrait, WCylinderTraitConst, WGridTrait, WGridTraitConst, WImage3DTrait, WImage3DTraitConst, WImageOverlayTrait, WImageOverlayTraitConst, WLineTrait, WLineTraitConst, WMeshTrait, WMeshTraitConst, WPaintedCloudTrait, WPaintedCloudTraitConst, WPlaneTrait, WPlaneTraitConst, WPolyLineTrait, WPolyLineTraitConst, WSphereTrait, WSphereTraitConst, WText3DTrait, WText3DTraitConst, WTextTrait, WTextTraitConst, WTrajectoryFrustumsTrait, WTrajectoryFrustumsTraitConst, WTrajectorySpheresTrait, WTrajectorySpheresTraitConst, WTrajectoryTrait, WTrajectoryTraitConst, WWidgetMergerTrait, WWidgetMergerTraitConst, Widget2DTrait, Widget2DTraitConst, Widget3DTrait, Widget3DTraitConst, WidgetTrait, WidgetTraitConst};
+}
+
+// AMBIENT /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:70
+pub const AMBIENT: i32 = 7;
+// FONT_SIZE /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:66
+pub const FONT_SIZE: i32 = 3;
+// IMMEDIATE_RENDERING /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:68
+pub const IMMEDIATE_RENDERING: i32 = 5;
+// ALT /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:290
+pub const KeyboardEvent_ALT: i32 = 1;
+// CTRL /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:290
+pub const KeyboardEvent_CTRL: i32 = 2;
+// KEY_DOWN /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:291
+pub const KeyboardEvent_KEY_DOWN: i32 = 1;
+// KEY_UP /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:291
+pub const KeyboardEvent_KEY_UP: i32 = 0;
+// NONE /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:290
+pub const KeyboardEvent_NONE: i32 = 0;
+// SHIFT /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:290
+pub const KeyboardEvent_SHIFT: i32 = 4;
+// LIGHTING /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:71
+pub const LIGHTING: i32 = 8;
+// LINE_WIDTH /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:65
+pub const LINE_WIDTH: i32 = 2;
+// LOAD_AUTO /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:124
+pub const Mesh_LOAD_AUTO: i32 = 0;
+// LOAD_OBJ /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:126
+pub const Mesh_LOAD_OBJ: i32 = 2;
+// LOAD_PLY /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:125
+pub const Mesh_LOAD_PLY: i32 = 1;
+// LeftButton /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:314
+pub const MouseEvent_LeftButton: i32 = 1;
+// MiddleButton /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:314
+pub const MouseEvent_MiddleButton: i32 = 2;
+// MouseButtonPress /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:313
+pub const MouseEvent_MouseButtonPress: i32 = 2;
+// MouseButtonRelease /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:313
+pub const MouseEvent_MouseButtonRelease: i32 = 3;
+// MouseDblClick /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:313
+pub const MouseEvent_MouseDblClick: i32 = 6;
+// MouseMove /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:313
+pub const MouseEvent_MouseMove: i32 = 1;
+// MouseScrollDown /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:313
+pub const MouseEvent_MouseScrollDown: i32 = 4;
+// MouseScrollUp /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:313
+pub const MouseEvent_MouseScrollUp: i32 = 5;
+// NoButton /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:314
+pub const MouseEvent_NoButton: i32 = 0;
+// RightButton /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:314
+pub const MouseEvent_RightButton: i32 = 3;
+// VScroll /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:314
+pub const MouseEvent_VScroll: i32 = 4;
+// OPACITY /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:64
+pub const OPACITY: i32 = 1;
+// POINT_SIZE /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:63
+pub const POINT_SIZE: i32 = 0;
+// REPRESENTATION /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:67
+pub const REPRESENTATION: i32 = 4;
+// REPRESENTATION_POINTS /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:76
+pub const REPRESENTATION_POINTS: i32 = 0;
+// REPRESENTATION_SURFACE /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:78
+pub const REPRESENTATION_SURFACE: i32 = 2;
+// REPRESENTATION_WIREFRAME /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:77
+pub const REPRESENTATION_WIREFRAME: i32 = 1;
+// SHADING /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:69
+pub const SHADING: i32 = 6;
+// SHADING_FLAT /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:83
+pub const SHADING_FLAT: i32 = 0;
+// SHADING_GOURAUD /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:84
+pub const SHADING_GOURAUD: i32 = 1;
+// SHADING_PHONG /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:85
+pub const SHADING_PHONG: i32 = 2;
+// BOTH /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:607
+pub const WTrajectory_BOTH: i32 = 3;
+// FRAMES /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:607
+pub const WTrajectory_FRAMES: i32 = 1;
+// PATH /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:607
+pub const WTrajectory_PATH: i32 = 2;
+// Action /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:291
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+pub enum KeyboardEvent_Action {
+	KEY_UP = 0,
+	KEY_DOWN = 1,
+}
+
+impl TryFrom<i32> for KeyboardEvent_Action {
+	type Error = crate::Error;
+
+	fn try_from(value: i32) -> Result<Self, Self::Error> {
+		match value {
+			0 => Ok(Self::KEY_UP),
+			1 => Ok(Self::KEY_DOWN),
+			_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::viz::KeyboardEvent_Action"))),
+		}
+	}
+}
+
+opencv_type_enum! { crate::viz::KeyboardEvent_Action }
+
+// MouseButton /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:314
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+pub enum MouseEvent_MouseButton {
+	NoButton = 0,
+	LeftButton = 1,
+	MiddleButton = 2,
+	RightButton = 3,
+	VScroll = 4,
+}
+
+impl TryFrom<i32> for MouseEvent_MouseButton {
+	type Error = crate::Error;
+
+	fn try_from(value: i32) -> Result<Self, Self::Error> {
+		match value {
+			0 => Ok(Self::NoButton),
+			1 => Ok(Self::LeftButton),
+			2 => Ok(Self::MiddleButton),
+			3 => Ok(Self::RightButton),
+			4 => Ok(Self::VScroll),
+			_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::viz::MouseEvent_MouseButton"))),
+		}
+	}
+}
+
+opencv_type_enum! { crate::viz::MouseEvent_MouseButton }
+
+// Type /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:313
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+pub enum MouseEvent_Type {
+	MouseMove = 1,
+	MouseButtonPress = 2,
+	MouseButtonRelease = 3,
+	MouseScrollDown = 4,
+	MouseScrollUp = 5,
+	MouseDblClick = 6,
+}
+
+impl TryFrom<i32> for MouseEvent_Type {
+	type Error = crate::Error;
+
+	fn try_from(value: i32) -> Result<Self, Self::Error> {
+		match value {
+			1 => Ok(Self::MouseMove),
+			2 => Ok(Self::MouseButtonPress),
+			3 => Ok(Self::MouseButtonRelease),
+			4 => Ok(Self::MouseScrollDown),
+			5 => Ok(Self::MouseScrollUp),
+			6 => Ok(Self::MouseDblClick),
+			_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::viz::MouseEvent_Type"))),
+		}
+	}
+}
+
+opencv_type_enum! { crate::viz::MouseEvent_Type }
+
+/// //////////////////////////////////////////////////////////////////////////
+/// Widget rendering properties
+// RenderingProperties /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:61
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+pub enum RenderingProperties {
+	POINT_SIZE = 0,
+	OPACITY = 1,
+	LINE_WIDTH = 2,
+	FONT_SIZE = 3,
+	REPRESENTATION = 4,
+	IMMEDIATE_RENDERING = 5,
+	SHADING = 6,
+	AMBIENT = 7,
+	LIGHTING = 8,
+}
+
+impl TryFrom<i32> for RenderingProperties {
+	type Error = crate::Error;
+
+	fn try_from(value: i32) -> Result<Self, Self::Error> {
+		match value {
+			0 => Ok(Self::POINT_SIZE),
+			1 => Ok(Self::OPACITY),
+			2 => Ok(Self::LINE_WIDTH),
+			3 => Ok(Self::FONT_SIZE),
+			4 => Ok(Self::REPRESENTATION),
+			5 => Ok(Self::IMMEDIATE_RENDERING),
+			6 => Ok(Self::SHADING),
+			7 => Ok(Self::AMBIENT),
+			8 => Ok(Self::LIGHTING),
+			_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::viz::RenderingProperties"))),
+		}
+	}
+}
+
+opencv_type_enum! { crate::viz::RenderingProperties }
+
+// RepresentationValues /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:74
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+pub enum RepresentationValues {
+	REPRESENTATION_POINTS = 0,
+	REPRESENTATION_WIREFRAME = 1,
+	REPRESENTATION_SURFACE = 2,
+}
+
+impl TryFrom<i32> for RepresentationValues {
+	type Error = crate::Error;
+
+	fn try_from(value: i32) -> Result<Self, Self::Error> {
+		match value {
+			0 => Ok(Self::REPRESENTATION_POINTS),
+			1 => Ok(Self::REPRESENTATION_WIREFRAME),
+			2 => Ok(Self::REPRESENTATION_SURFACE),
+			_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::viz::RepresentationValues"))),
+		}
+	}
+}
+
+opencv_type_enum! { crate::viz::RepresentationValues }
+
+// ShadingValues /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:81
+#[repr(C)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+pub enum ShadingValues {
+	SHADING_FLAT = 0,
+	SHADING_GOURAUD = 1,
+	SHADING_PHONG = 2,
+}
+
+impl TryFrom<i32> for ShadingValues {
+	type Error = crate::Error;
+
+	fn try_from(value: i32) -> Result<Self, Self::Error> {
+		match value {
+			0 => Ok(Self::SHADING_FLAT),
+			1 => Ok(Self::SHADING_GOURAUD),
+			2 => Ok(Self::SHADING_PHONG),
+			_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::viz::ShadingValues"))),
+		}
+	}
+}
+
+opencv_type_enum! { crate::viz::ShadingValues }
+
+// Color /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:70
+pub type Viz3d_Color = crate::viz::Color;
+// KeyboardCallback /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:71
+pub type Viz3d_KeyboardCallback = Option<Box<dyn FnMut(*const c_void) -> () + Send + Sync + 'static>>;
+// MouseCallback /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:72
+pub type Viz3d_MouseCallback = Option<Box<dyn FnMut(*const c_void) -> () + Send + Sync + 'static>>;
+/// ////////////////////////////////////////////////////////////////////////////////////////////
+/// Computing normals for mesh
+/// ## Parameters
+/// * mesh: Input mesh.
+/// * normals: Normals at very point in the mesh of type CV_64FC3.
+// computeNormals(const Mesh &, OutputArray)(TraitClass, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/vizcore.hpp:214
+// ("cv::viz::computeNormals", vec![(pred!(mut, ["mesh", "normals"], ["const cv::viz::Mesh*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn compute_normals(mesh: &impl crate::viz::MeshTraitConst, normals: &mut impl ToOutputArray) -> Result<()> {
+	output_array_arg!(normals);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_viz_computeNormals_const_MeshR_const__OutputArrayR(mesh.as_raw_Mesh(), normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Retrieves a window by its name.
+///
+/// ## Parameters
+/// * window_name: Name of the window that is to be retrieved.
+///
+/// This function returns a Viz3d object with the given name.
+///
+///
+/// Note: If the window with that name already exists, that window is returned. Otherwise, new window is
+/// created with the given name, and it is returned.
+// getWindowByName(const String &)(InString) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/vizcore.hpp:97
+// ("cv::viz::getWindowByName", vec![(pred!(mut, ["window_name"], ["const cv::String*"]), _)]),
+#[inline]
+pub fn get_window_by_name(window_name: &str) -> Result<crate::viz::Viz3d> {
+	extern_container_arg!(window_name);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_viz_getWindowByName_const_StringR(window_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	let ret = unsafe { crate::viz::Viz3d::opencv_from_extern(ret) };
+	Ok(ret)
+}
+
+/// Displays image in specified window
+///
+/// ## Note
+/// This alternative version of [imshow] function uses the following default values for its arguments:
+/// * window_size: Size(-1,-1)
+// cv::viz::imshow(InString, InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/vizcore.hpp:103
+// ("cv::viz::imshow", vec![(pred!(mut, ["window_name", "image"], ["const cv::String*", "const cv::_InputArray*"]), _)]),
+#[inline]
+pub fn imshow_def(window_name: &str, image: &impl ToInputArray) -> Result<crate::viz::Viz3d> {
+	extern_container_arg!(window_name);
+	input_array_arg!(image);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_viz_imshow_const_StringR_const__InputArrayR(window_name.opencv_as_extern(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	let ret = unsafe { crate::viz::Viz3d::opencv_from_extern(ret) };
+	Ok(ret)
+}
+
+/// Displays image in specified window
+///
+/// ## C++ default parameters
+/// * window_size: Size(-1,-1)
+// imshow(const String &, InputArray, const Size &)(InString, InputArray, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/vizcore.hpp:103
+// ("cv::viz::imshow", vec![(pred!(mut, ["window_name", "image", "window_size"], ["const cv::String*", "const cv::_InputArray*", "const cv::Size*"]), _)]),
+#[inline]
+pub fn imshow(window_name: &str, image: &impl ToInputArray, window_size: core::Size) -> Result<crate::viz::Viz3d> {
+	extern_container_arg!(window_name);
+	input_array_arg!(image);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_viz_imshow_const_StringR_const__InputArrayR_const_SizeR(window_name.opencv_as_extern(), image.as_raw__InputArray(), &window_size, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	let ret = unsafe { crate::viz::Viz3d::opencv_from_extern(ret) };
+	Ok(ret)
+}
+
+/// Constructs camera pose from position, focal_point and up_vector (see gluLookAt() for more
+/// information).
+///
+/// ## Parameters
+/// * position: Position of the camera in global coordinate frame.
+/// * focal_point: Focal point of the camera in global coordinate frame.
+/// * y_dir: Up vector of the camera in global coordinate frame.
+///
+/// This function returns pose of the camera in global coordinate frame.
+// makeCameraPose(const Vec3d &, const Vec3d &, const Vec3d &)(SimpleClass, SimpleClass, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/vizcore.hpp:84
+// ("cv::viz::makeCameraPose", vec![(pred!(mut, ["position", "focal_point", "y_dir"], ["const cv::Vec3d*", "const cv::Vec3d*", "const cv::Vec3d*"]), _)]),
+#[inline]
+pub fn make_camera_pose(position: core::Vec3d, focal_point: core::Vec3d, y_dir: core::Vec3d) -> Result<core::Affine3d> {
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_viz_makeCameraPose_const_Vec3dR_const_Vec3dR_const_Vec3dR(&position, &focal_point, &y_dir, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Takes coordinate frame data and builds transform to global coordinate frame.
+///
+/// ## Parameters
+/// * axis_x: X axis vector in global coordinate frame.
+/// * axis_y: Y axis vector in global coordinate frame.
+/// * axis_z: Z axis vector in global coordinate frame.
+/// * origin: Origin of the coordinate frame in global coordinate frame.
+///
+/// ## Returns
+/// An affine transform that describes transformation between global coordinate frame
+/// and a given coordinate frame.
+/// The returned transforms can transform a point in the given coordinate frame to the global
+/// coordinate frame.
+///
+/// ## Note
+/// This alternative version of [make_transform_to_global] function uses the following default values for its arguments:
+/// * origin: Vec3d::all(0)
+// cv::viz::makeTransformToGlobal(SimpleClass, SimpleClass, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/vizcore.hpp:73
+// ("cv::viz::makeTransformToGlobal", vec![(pred!(mut, ["axis_x", "axis_y", "axis_z"], ["const cv::Vec3d*", "const cv::Vec3d*", "const cv::Vec3d*"]), _)]),
+#[inline]
+pub fn make_transform_to_global_def(axis_x: core::Vec3d, axis_y: core::Vec3d, axis_z: core::Vec3d) -> Result<core::Affine3d> {
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_viz_makeTransformToGlobal_const_Vec3dR_const_Vec3dR_const_Vec3dR(&axis_x, &axis_y, &axis_z, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Takes coordinate frame data and builds transform to global coordinate frame.
+///
+/// ## Parameters
+/// * axis_x: X axis vector in global coordinate frame.
+/// * axis_y: Y axis vector in global coordinate frame.
+/// * axis_z: Z axis vector in global coordinate frame.
+/// * origin: Origin of the coordinate frame in global coordinate frame.
+///
+/// ## Returns
+/// An affine transform that describes transformation between global coordinate frame
+/// and a given coordinate frame.
+/// The returned transforms can transform a point in the given coordinate frame to the global
+/// coordinate frame.
+///
+/// ## C++ default parameters
+/// * origin: Vec3d::all(0)
+// makeTransformToGlobal(const Vec3d &, const Vec3d &, const Vec3d &, const Vec3d &)(SimpleClass, SimpleClass, SimpleClass, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/vizcore.hpp:73
+// ("cv::viz::makeTransformToGlobal", vec![(pred!(mut, ["axis_x", "axis_y", "axis_z", "origin"], ["const cv::Vec3d*", "const cv::Vec3d*", "const cv::Vec3d*", "const cv::Vec3d*"]), _)]),
+#[inline]
+pub fn make_transform_to_global(axis_x: core::Vec3d, axis_y: core::Vec3d, axis_z: core::Vec3d, origin: core::Vec3d) -> Result<core::Affine3d> {
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_viz_makeTransformToGlobal_const_Vec3dR_const_Vec3dR_const_Vec3dR_const_Vec3dR(&axis_x, &axis_y, &axis_z, &origin, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// ## Parameters
+/// * file: Filename with extension. Supported formats: PLY, XYZ, OBJ and STL.
+/// * colors: Used by PLY and STL formats only.
+/// * normals: Used by PLY, OBJ and STL formats only.
+/// ## Returns
+/// A mat containing the point coordinates with depth CV_32F or CV_64F and number of
+///        channels 3 or 4 with only 1 row.
+///
+/// ## Note
+/// This alternative version of [read_cloud] function uses the following default values for its arguments:
+/// * colors: noArray()
+/// * normals: noArray()
+// cv::viz::readCloud(InString) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/vizcore.hpp:160
+// ("cv::viz::readCloud", vec![(pred!(mut, ["file"], ["const cv::String*"]), _)]),
+#[inline]
+pub fn read_cloud_def(file: &str) -> Result<core::Mat> {
+	extern_container_arg!(file);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_viz_readCloud_const_StringR(file.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+	Ok(ret)
+}
+
+/// ## Parameters
+/// * file: Filename with extension. Supported formats: PLY, XYZ, OBJ and STL.
+/// * colors: Used by PLY and STL formats only.
+/// * normals: Used by PLY, OBJ and STL formats only.
+/// ## Returns
+/// A mat containing the point coordinates with depth CV_32F or CV_64F and number of
+///        channels 3 or 4 with only 1 row.
+///
+/// ## C++ default parameters
+/// * colors: noArray()
+/// * normals: noArray()
+// readCloud(const String &, OutputArray, OutputArray)(InString, OutputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/vizcore.hpp:160
+// ("cv::viz::readCloud", vec![(pred!(mut, ["file", "colors", "normals"], ["const cv::String*", "const cv::_OutputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn read_cloud(file: &str, colors: &mut impl ToOutputArray, normals: &mut impl ToOutputArray) -> Result<core::Mat> {
+	extern_container_arg!(file);
+	output_array_arg!(colors);
+	output_array_arg!(normals);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_viz_readCloud_const_StringR_const__OutputArrayR_const__OutputArrayR(file.opencv_as_extern(), colors.as_raw__OutputArray(), normals.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+	Ok(ret)
+}
+
+/// ////////////////////////////////////////////////////////////////////////////////////////////
+/// Reads mesh. Only ply format is supported now and no texture load support
+// readMesh(const String &)(InString) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/vizcore.hpp:165
+// ("cv::viz::readMesh", vec![(pred!(mut, ["file"], ["const cv::String*"]), _)]),
+#[inline]
+pub fn read_mesh(file: &str) -> Result<crate::viz::Mesh> {
+	extern_container_arg!(file);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_viz_readMesh_const_StringR(file.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	let ret = unsafe { crate::viz::Mesh::opencv_from_extern(ret) };
+	Ok(ret)
+}
+
+/// ## Parameters
+/// * file: Filename of type supported by cv::FileStorage.
+/// * pose: Output matrix.
+/// * tag: Name of the pose in the file.
+///
+/// ## Note
+/// This alternative version of [read_pose] function uses the following default values for its arguments:
+/// * tag: "pose"
+// cv::viz::readPose(InString, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/vizcore.hpp:175
+// ("cv::viz::readPose", vec![(pred!(mut, ["file", "pose"], ["const cv::String*", "cv::Affine3d*"]), _)]),
+#[inline]
+pub fn read_pose_def(file: &str, pose: &mut core::Affine3d) -> Result<bool> {
+	extern_container_arg!(file);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_viz_readPose_const_StringR_Affine3dR(file.opencv_as_extern(), pose, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// ## Parameters
+/// * file: Filename of type supported by cv::FileStorage.
+/// * pose: Output matrix.
+/// * tag: Name of the pose in the file.
+///
+/// ## C++ default parameters
+/// * tag: "pose"
+// readPose(const String &, Affine3d &, const String &)(InString, SimpleClass, InString) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/vizcore.hpp:175
+// ("cv::viz::readPose", vec![(pred!(mut, ["file", "pose", "tag"], ["const cv::String*", "cv::Affine3d*", "const cv::String*"]), _)]),
+#[inline]
+pub fn read_pose(file: &str, pose: &mut core::Affine3d, tag: &str) -> Result<bool> {
+	extern_container_arg!(file);
+	extern_container_arg!(tag);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_viz_readPose_const_StringR_Affine3dR_const_StringR(file.opencv_as_extern(), pose, tag.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// takes vector<Affine3<T>> with T = float/double and loads poses from sequence of files
+///
+/// ## Parameters
+/// * traj: Output array containing a lists of poses. It can be
+///            - std::vector<cv::Affine3f>, std::vector<cv::Affine3d>
+///            - cv::Mat
+/// * files_format: Format specifier string for constructing filenames.
+///                    The only placeholder in the string should support `int`.
+/// * start: The initial counter for files_format. It must be greater than or equal to 0.
+/// * end: The final  counter for files_format.
+/// * tag: Name of the matrix in the file.
+///
+/// ## Note
+/// This alternative version of [read_trajectory] function uses the following default values for its arguments:
+/// * files_format: "pose%05d.xml"
+/// * start: 0
+/// * end: INT_MAX
+/// * tag: "pose"
+// cv::viz::readTrajectory(OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/vizcore.hpp:206
+// ("cv::viz::readTrajectory", vec![(pred!(mut, ["traj"], ["const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn read_trajectory_def(traj: &mut impl ToOutputArray) -> Result<()> {
+	output_array_arg!(traj);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_viz_readTrajectory_const__OutputArrayR(traj.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// takes vector<Affine3<T>> with T = float/double and loads poses from sequence of files
+///
+/// ## Parameters
+/// * traj: Output array containing a lists of poses. It can be
+///            - std::vector<cv::Affine3f>, std::vector<cv::Affine3d>
+///            - cv::Mat
+/// * files_format: Format specifier string for constructing filenames.
+///                    The only placeholder in the string should support `int`.
+/// * start: The initial counter for files_format. It must be greater than or equal to 0.
+/// * end: The final  counter for files_format.
+/// * tag: Name of the matrix in the file.
+///
+/// ## C++ default parameters
+/// * files_format: "pose%05d.xml"
+/// * start: 0
+/// * end: INT_MAX
+/// * tag: "pose"
+// readTrajectory(OutputArray, const String &, int, int, const String &)(OutputArray, InString, Primitive, Primitive, InString) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/vizcore.hpp:206
+// ("cv::viz::readTrajectory", vec![(pred!(mut, ["traj", "files_format", "start", "end", "tag"], ["const cv::_OutputArray*", "const cv::String*", "int", "int", "const cv::String*"]), _)]),
+#[inline]
+pub fn read_trajectory(traj: &mut impl ToOutputArray, files_format: &str, start: i32, end: i32, tag: &str) -> Result<()> {
+	output_array_arg!(traj);
+	extern_container_arg!(files_format);
+	extern_container_arg!(tag);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_viz_readTrajectory_const__OutputArrayR_const_StringR_int_int_const_StringR(traj.as_raw__OutputArray(), files_format.opencv_as_extern(), start, end, tag.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Unregisters all Viz windows from internal database. After it 'getWindowByName()' will create new windows instead of getting existing from the database.
+// unregisterAllWindows()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/vizcore.hpp:100
+// ("cv::viz::unregisterAllWindows", vec![(pred!(mut, [], []), _)]),
+#[inline]
+pub fn unregister_all_windows() -> Result<()> {
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_viz_unregisterAllWindows(ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// ## Parameters
+/// * file: Filename with extension. Supported formats: PLY, XYZ and OBJ.
+/// * cloud: Supported depths: CV_32F and CV_64F. Supported channels: 3 and 4.
+/// * colors: Used by PLY format only. Supported depth: CV_8U. Supported channels: 1, 3 and 4.
+/// * normals: Used by PLY and OBJ format only. Supported depths: CV_32F and CV_64F.
+///                Supported channels: 3 and 4.
+/// * binary: Used only for PLY format.
+///
+/// ## Note
+/// This alternative version of [write_cloud] function uses the following default values for its arguments:
+/// * colors: noArray()
+/// * normals: noArray()
+/// * binary: false
+// cv::viz::writeCloud(InString, InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/vizcore.hpp:151
+// ("cv::viz::writeCloud", vec![(pred!(mut, ["file", "cloud"], ["const cv::String*", "const cv::_InputArray*"]), _)]),
+#[inline]
+pub fn write_cloud_def(file: &str, cloud: &impl ToInputArray) -> Result<()> {
+	extern_container_arg!(file);
+	input_array_arg!(cloud);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_viz_writeCloud_const_StringR_const__InputArrayR(file.opencv_as_extern(), cloud.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// ## Parameters
+/// * file: Filename with extension. Supported formats: PLY, XYZ and OBJ.
+/// * cloud: Supported depths: CV_32F and CV_64F. Supported channels: 3 and 4.
+/// * colors: Used by PLY format only. Supported depth: CV_8U. Supported channels: 1, 3 and 4.
+/// * normals: Used by PLY and OBJ format only. Supported depths: CV_32F and CV_64F.
+///                Supported channels: 3 and 4.
+/// * binary: Used only for PLY format.
+///
+/// ## C++ default parameters
+/// * colors: noArray()
+/// * normals: noArray()
+/// * binary: false
+// writeCloud(const String &, InputArray, InputArray, InputArray, bool)(InString, InputArray, InputArray, InputArray, Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/vizcore.hpp:151
+// ("cv::viz::writeCloud", vec![(pred!(mut, ["file", "cloud", "colors", "normals", "binary"], ["const cv::String*", "const cv::_InputArray*", "const cv::_InputArray*", "const cv::_InputArray*", "bool"]), _)]),
+#[inline]
+pub fn write_cloud(file: &str, cloud: &impl ToInputArray, colors: &impl ToInputArray, normals: &impl ToInputArray, binary: bool) -> Result<()> {
+	extern_container_arg!(file);
+	input_array_arg!(cloud);
+	input_array_arg!(colors);
+	input_array_arg!(normals);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_viz_writeCloud_const_StringR_const__InputArrayR_const__InputArrayR_const__InputArrayR_bool(file.opencv_as_extern(), cloud.as_raw__InputArray(), colors.as_raw__InputArray(), normals.as_raw__InputArray(), binary, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// ## Parameters
+/// * file: Filename.
+/// * pose: Input matrix.
+/// * tag: Name of the pose to be saved into the given file.
+///
+/// ## Note
+/// This alternative version of [write_pose] function uses the following default values for its arguments:
+/// * tag: "pose"
+// cv::viz::writePose(InString, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/vizcore.hpp:181
+// ("cv::viz::writePose", vec![(pred!(mut, ["file", "pose"], ["const cv::String*", "const cv::Affine3d*"]), _)]),
+#[inline]
+pub fn write_pose_def(file: &str, pose: core::Affine3d) -> Result<()> {
+	extern_container_arg!(file);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_viz_writePose_const_StringR_const_Affine3dR(file.opencv_as_extern(), &pose, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// ## Parameters
+/// * file: Filename.
+/// * pose: Input matrix.
+/// * tag: Name of the pose to be saved into the given file.
+///
+/// ## C++ default parameters
+/// * tag: "pose"
+// writePose(const String &, const Affine3d &, const String &)(InString, SimpleClass, InString) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/vizcore.hpp:181
+// ("cv::viz::writePose", vec![(pred!(mut, ["file", "pose", "tag"], ["const cv::String*", "const cv::Affine3d*", "const cv::String*"]), _)]),
+#[inline]
+pub fn write_pose(file: &str, pose: core::Affine3d, tag: &str) -> Result<()> {
+	extern_container_arg!(file);
+	extern_container_arg!(tag);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_viz_writePose_const_StringR_const_Affine3dR_const_StringR(file.opencv_as_extern(), &pose, tag.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// takes vector<Affine3<T>> with T = float/double and writes to a sequence of files with given filename format
+/// ## Parameters
+/// * traj: Trajectory containing a list of poses. It can be
+///          - std::vector<cv::Mat>, each cv::Mat is of type CV_32F16 or CV_64FC16
+///          - std::vector<cv::Affine3f>, std::vector<cv::Affine3d>
+///          - cv::Mat of type CV_32FC16 OR CV_64F16
+/// * files_format: Format specifier string for constructing filenames.
+///                    The only placeholder in the string should support `int`.
+/// * start: The initial counter for files_format.
+/// * tag: Name of the matrix in the file.
+///
+/// ## Note
+/// This alternative version of [write_trajectory] function uses the following default values for its arguments:
+/// * files_format: "pose%05d.xml"
+/// * start: 0
+/// * tag: "pose"
+// cv::viz::writeTrajectory(InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/vizcore.hpp:193
+// ("cv::viz::writeTrajectory", vec![(pred!(mut, ["traj"], ["const cv::_InputArray*"]), _)]),
+#[inline]
+pub fn write_trajectory_def(traj: &impl ToInputArray) -> Result<()> {
+	input_array_arg!(traj);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_viz_writeTrajectory_const__InputArrayR(traj.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// takes vector<Affine3<T>> with T = float/double and writes to a sequence of files with given filename format
+/// ## Parameters
+/// * traj: Trajectory containing a list of poses. It can be
+///          - std::vector<cv::Mat>, each cv::Mat is of type CV_32F16 or CV_64FC16
+///          - std::vector<cv::Affine3f>, std::vector<cv::Affine3d>
+///          - cv::Mat of type CV_32FC16 OR CV_64F16
+/// * files_format: Format specifier string for constructing filenames.
+///                    The only placeholder in the string should support `int`.
+/// * start: The initial counter for files_format.
+/// * tag: Name of the matrix in the file.
+///
+/// ## C++ default parameters
+/// * files_format: "pose%05d.xml"
+/// * start: 0
+/// * tag: "pose"
+// writeTrajectory(InputArray, const String &, int, const String &)(InputArray, InString, Primitive, InString) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/vizcore.hpp:193
+// ("cv::viz::writeTrajectory", vec![(pred!(mut, ["traj", "files_format", "start", "tag"], ["const cv::_InputArray*", "const cv::String*", "int", "const cv::String*"]), _)]),
+#[inline]
+pub fn write_trajectory(traj: &impl ToInputArray, files_format: &str, start: i32, tag: &str) -> Result<()> {
+	input_array_arg!(traj);
+	extern_container_arg!(files_format);
+	extern_container_arg!(tag);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_viz_writeTrajectory_const__InputArrayR_const_StringR_int_const_StringR(traj.as_raw__InputArray(), files_format.opencv_as_extern(), start, tag.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Constant methods for [crate::viz::Camera]
+// Camera /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:163
+pub trait CameraTraitConst {
+	fn as_raw_Camera(&self) -> *const c_void;
+
+	// getClip()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:215
+	// ("cv::viz::Camera::getClip", vec![(pred!(const, [], []), _)]),
+	#[inline]
+	fn get_clip(&self) -> Result<core::Vec2d> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Camera_getClip_const(self.as_raw_Camera(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	// getWindowSize()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:218
+	// ("cv::viz::Camera::getWindowSize", vec![(pred!(const, [], []), _)]),
+	#[inline]
+	fn get_window_size(&self) -> Result<core::Size> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Camera_getWindowSize_const(self.as_raw_Camera(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	// getFov()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:221
+	// ("cv::viz::Camera::getFov", vec![(pred!(const, [], []), _)]),
+	#[inline]
+	fn get_fov(&self) -> Result<core::Vec2d> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Camera_getFov_const(self.as_raw_Camera(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	// getPrincipalPoint()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:224
+	// ("cv::viz::Camera::getPrincipalPoint", vec![(pred!(const, [], []), _)]),
+	#[inline]
+	fn get_principal_point(&self) -> Result<core::Vec2d> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Camera_getPrincipalPoint_const(self.as_raw_Camera(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	// getFocalLength()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:225
+	// ("cv::viz::Camera::getFocalLength", vec![(pred!(const, [], []), _)]),
+	#[inline]
+	fn get_focal_length(&self) -> Result<core::Vec2d> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Camera_getFocalLength_const(self.as_raw_Camera(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Computes projection matrix using intrinsic parameters of the camera.
+	///
+	///
+	/// ## Parameters
+	/// * proj: Output projection matrix with the following form
+	/// ![block formula](https://latex.codecogs.com/png.latex?%0A%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20%5Cfrac%7B2n%7D%7Br%2Dl%7D%20%26%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%26%20%5Cfrac%7Br%2Bl%7D%7Br%2Dl%7D%20%20%26%200%5C%5C%0A%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%20%26%20%5Cfrac%7B2n%7D%7Bt%2Db%7D%20%26%20%5Cfrac%7Bt%2Bb%7D%7Bt%2Db%7D%20%20%26%200%5C%5C%0A%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%20%26%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%26%20%2D%5Cfrac%7Bf%2Bn%7D%7Bf%2Dn%7D%20%26%20%2D%5Cfrac%7B2fn%7D%7Bf%2Dn%7D%5C%5C%0A%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%20%26%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%26%20%2D1%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%26%200%5C%5C%0A%20%20%5Cend%7Bbmatrix%7D%0A)
+	// computeProjectionMatrix(Matx44d &)(SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:240
+	// ("cv::viz::Camera::computeProjectionMatrix", vec![(pred!(const, ["proj"], ["cv::Matx44d*"]), _)]),
+	#[inline]
+	fn compute_projection_matrix(&self, proj: &mut core::Matx44d) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Camera_computeProjectionMatrix_const_Matx44dR(self.as_raw_Camera(), proj, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+}
+
+/// Mutable methods for [crate::viz::Camera]
+pub trait CameraTrait: crate::viz::CameraTraitConst {
+	fn as_raw_mut_Camera(&mut self) -> *mut c_void;
+
+	// setClip(const Vec2d &)(SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:216
+	// ("cv::viz::Camera::setClip", vec![(pred!(mut, ["clip"], ["const cv::Vec2d*"]), _)]),
+	#[inline]
+	fn set_clip(&mut self, clip: core::Vec2d) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Camera_setClip_const_Vec2dR(self.as_raw_mut_Camera(), &clip, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	// setWindowSize(const Size &)(SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:219
+	// ("cv::viz::Camera::setWindowSize", vec![(pred!(mut, ["window_size"], ["const cv::Size*"]), _)]),
+	#[inline]
+	fn set_window_size(&mut self, window_size: core::Size) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Camera_setWindowSize_const_SizeR(self.as_raw_mut_Camera(), &window_size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	// setFov(const Vec2d &)(SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:222
+	// ("cv::viz::Camera::setFov", vec![(pred!(mut, ["fov"], ["const cv::Vec2d*"]), _)]),
+	#[inline]
+	fn set_fov(&mut self, fov: core::Vec2d) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Camera_setFov_const_Vec2dR(self.as_raw_mut_Camera(), &fov, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+}
+
+/// This class wraps intrinsic parameters of a camera.
+///
+/// It provides several constructors that can extract the intrinsic parameters from field of
+/// view, intrinsic matrix and projection matrix. :
+// Camera /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:163
+pub struct Camera {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { Camera }
+
+impl Drop for Camera {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_viz_Camera_delete(self.as_raw_mut_Camera()) };
+	}
+}
+
+unsafe impl Send for Camera {}
+
+impl crate::viz::CameraTraitConst for Camera {
+	#[inline] fn as_raw_Camera(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::CameraTrait for Camera {
+	#[inline] fn as_raw_mut_Camera(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { Camera, crate::viz::CameraTraitConst, as_raw_Camera, crate::viz::CameraTrait, as_raw_mut_Camera }
+
+impl Camera {
+	/// Constructs a Camera.
+	///
+	/// ## Parameters
+	/// * fx: Horizontal focal length.
+	/// * fy: Vertical focal length.
+	/// * cx: x coordinate of the principal point.
+	/// * cy: y coordinate of the principal point.
+	/// * window_size: Size of the window. This together with focal length and principal
+	/// point determines the field of view.
+	// Camera(double, double, double, double, const Size &)(Primitive, Primitive, Primitive, Primitive, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:176
+	// ("cv::viz::Camera::Camera", vec![(pred!(mut, ["fx", "fy", "cx", "cy", "window_size"], ["double", "double", "double", "double", "const cv::Size*"]), _)]),
+	#[inline]
+	pub fn new(fx: f64, fy: f64, cx: f64, cy: f64, window_size: core::Size) -> Result<crate::viz::Camera> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Camera_Camera_double_double_double_double_const_SizeR(fx, fy, cx, cy, &window_size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Camera::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Constructs a Camera.
+	///
+	/// ## Parameters
+	/// * fx: Horizontal focal length.
+	/// * fy: Vertical focal length.
+	/// * cx: x coordinate of the principal point.
+	/// * cy: y coordinate of the principal point.
+	/// * window_size: Size of the window. This together with focal length and principal
+	/// point determines the field of view.
+	///
+	/// ## Overloaded parameters
+	///
+	/// * fov: Field of view (horizontal, vertical) in radians
+	/// * window_size: Size of the window. Principal point is at the center of the window
+	/// by default.
+	// Camera(const Vec2d &, const Size &)(SimpleClass, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:183
+	// ("cv::viz::Camera::Camera", vec![(pred!(mut, ["fov", "window_size"], ["const cv::Vec2d*", "const cv::Size*"]), _)]),
+	#[inline]
+	pub fn new_1(fov: core::Vec2d, window_size: core::Size) -> Result<crate::viz::Camera> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Camera_Camera_const_Vec2dR_const_SizeR(&fov, &window_size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Camera::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Constructs a Camera.
+	///
+	/// ## Parameters
+	/// * fx: Horizontal focal length.
+	/// * fy: Vertical focal length.
+	/// * cx: x coordinate of the principal point.
+	/// * cy: y coordinate of the principal point.
+	/// * window_size: Size of the window. This together with focal length and principal
+	/// point determines the field of view.
+	///
+	/// ## Overloaded parameters
+	///
+	/// * K: Intrinsic matrix of the camera with the following form
+	/// ![block formula](https://latex.codecogs.com/png.latex?%0A%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20f%5Fx%20%26%20%20%200%20%26%20c%5Fx%5C%5C%0A%20%20%20%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%0A%20%20%20%200%20%26%20%20%200%20%26%20%20%201%5C%5C%0A%20%20%5Cend%7Bbmatrix%7D%0A)
+	/// * window_size: Size of the window. This together with intrinsic matrix determines
+	/// the field of view.
+	// Camera(const Matx33d &, const Size &)(SimpleClass, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:197
+	// ("cv::viz::Camera::Camera", vec![(pred!(mut, ["K", "window_size"], ["const cv::Matx33d*", "const cv::Size*"]), _)]),
+	#[inline]
+	pub fn new_2(k: core::Matx33d, window_size: core::Size) -> Result<crate::viz::Camera> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Camera_Camera_const_Matx33dR_const_SizeR(&k, &window_size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Camera::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Constructs a Camera.
+	///
+	/// ## Parameters
+	/// * fx: Horizontal focal length.
+	/// * fy: Vertical focal length.
+	/// * cx: x coordinate of the principal point.
+	/// * cy: y coordinate of the principal point.
+	/// * window_size: Size of the window. This together with focal length and principal
+	/// point determines the field of view.
+	///
+	/// ## Overloaded parameters
+	///
+	/// * proj: Projection matrix of the camera with the following form
+	/// ![block formula](https://latex.codecogs.com/png.latex?%0A%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20%5Cfrac%7B2n%7D%7Br%2Dl%7D%20%26%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%26%20%5Cfrac%7Br%2Bl%7D%7Br%2Dl%7D%20%20%26%200%5C%5C%0A%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%20%26%20%5Cfrac%7B2n%7D%7Bt%2Db%7D%20%26%20%5Cfrac%7Bt%2Bb%7D%7Bt%2Db%7D%20%20%26%200%5C%5C%0A%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%20%26%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%26%20%2D%5Cfrac%7Bf%2Bn%7D%7Bf%2Dn%7D%20%26%20%2D%5Cfrac%7B2fn%7D%7Bf%2Dn%7D%5C%5C%0A%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%20%26%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%26%20%2D1%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%26%200%5C%5C%0A%20%20%5Cend%7Bbmatrix%7D%0A)
+	///
+	/// * window_size: Size of the window. This together with projection matrix determines
+	/// the field of view.
+	// Camera(const Matx44d &, const Size &)(SimpleClass, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:213
+	// ("cv::viz::Camera::Camera", vec![(pred!(mut, ["proj", "window_size"], ["const cv::Matx44d*", "const cv::Size*"]), _)]),
+	#[inline]
+	pub fn new_3(proj: core::Matx44d, window_size: core::Size) -> Result<crate::viz::Camera> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Camera_Camera_const_Matx44dR_const_SizeR(&proj, &window_size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Camera::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Creates a Kinect Camera with
+	///   - fx = fy = 525
+	///   - cx = 320
+	///   - cy = 240
+	///
+	/// ## Parameters
+	/// * window_size: Size of the window. This together with intrinsic matrix of a Kinect Camera
+	/// determines the field of view.
+	// KinectCamera(const Size &)(SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:250
+	// ("cv::viz::Camera::KinectCamera", vec![(pred!(mut, ["window_size"], ["const cv::Size*"]), _)]),
+	#[inline]
+	pub fn kinect_camera(window_size: core::Size) -> Result<crate::viz::Camera> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Camera_KinectCamera_const_SizeR(&window_size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Camera::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+impl std::fmt::Debug for Camera {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("Camera")
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::viz::Color]
+// Color /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:63
+pub trait ColorTraitConst {
+	fn as_raw_Color(&self) -> *const c_void;
+
+	// operator Vec()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:73
+	// ("cv::viz::Color::operator cv::Vec3b", vec![(pred!(const, [], []), _)]),
+	#[inline]
+	fn to_vec3b(&self) -> Result<core::Vec3b> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_operator_cv_Vec3b_const(self.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+}
+
+/// Mutable methods for [crate::viz::Color]
+pub trait ColorTrait: crate::viz::ColorTraitConst {
+	fn as_raw_mut_Color(&mut self) -> *mut c_void;
+
+}
+
+/// This class represents color in BGR order.
+// Color /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:63
+pub struct Color {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { Color }
+
+impl Drop for Color {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_viz_Color_delete(self.as_raw_mut_Color()) };
+	}
+}
+
+unsafe impl Send for Color {}
+
+impl crate::viz::ColorTraitConst for Color {
+	#[inline] fn as_raw_Color(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::ColorTrait for Color {
+	#[inline] fn as_raw_mut_Color(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { Color, crate::viz::ColorTraitConst, as_raw_Color, crate::viz::ColorTrait, as_raw_mut_Color }
+
+impl Color {
+	/// ///////////////////////////////////////////////////////////////////////////////////////////////////
+	/// cv::viz::Color
+	// Color()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:66
+	// ("cv::viz::Color::Color", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn default() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_Color(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// The three channels will have the same value equal to gray.
+	// Color(double)(Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:68
+	// ("cv::viz::Color::Color", vec![(pred!(mut, ["gray"], ["double"]), _)]),
+	#[inline]
+	pub fn new(gray: f64) -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_Color_double(gray, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// Color(double, double, double)(Primitive, Primitive, Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:69
+	// ("cv::viz::Color::Color", vec![(pred!(mut, ["blue", "green", "red"], ["double", "double", "double"]), _)]),
+	#[inline]
+	pub fn new_1(blue: f64, green: f64, red: f64) -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_Color_double_double_double(blue, green, red, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// Color(const Scalar &)(SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:71
+	// ("cv::viz::Color::Color", vec![(pred!(mut, ["color"], ["const cv::Scalar*"]), _)]),
+	#[inline]
+	pub fn new_2(color: core::Scalar) -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_Color_const_ScalarR(&color, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// black()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:75
+	// ("cv::viz::Color::black", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn black() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_black(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// blue()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:76
+	// ("cv::viz::Color::blue", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn blue() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_blue(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// green()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:77
+	// ("cv::viz::Color::green", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn green() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_green(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// red()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:78
+	// ("cv::viz::Color::red", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn red() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_red(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// cyan()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:79
+	// ("cv::viz::Color::cyan", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn cyan() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_cyan(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// yellow()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:80
+	// ("cv::viz::Color::yellow", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn yellow() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_yellow(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// magenta()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:81
+	// ("cv::viz::Color::magenta", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn magenta() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_magenta(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// white()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:82
+	// ("cv::viz::Color::white", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn white() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_white(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// gray()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:84
+	// ("cv::viz::Color::gray", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn gray() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_gray(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// silver()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:85
+	// ("cv::viz::Color::silver", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn silver() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_silver(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// mlab()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:87
+	// ("cv::viz::Color::mlab", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn mlab() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_mlab(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// navy()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:89
+	// ("cv::viz::Color::navy", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn navy() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_navy(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// maroon()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:90
+	// ("cv::viz::Color::maroon", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn maroon() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_maroon(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// teal()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:91
+	// ("cv::viz::Color::teal", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn teal() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_teal(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// olive()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:92
+	// ("cv::viz::Color::olive", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn olive() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_olive(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// purple()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:93
+	// ("cv::viz::Color::purple", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn purple() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_purple(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// azure()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:94
+	// ("cv::viz::Color::azure", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn azure() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_azure(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// chartreuse()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:95
+	// ("cv::viz::Color::chartreuse", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn chartreuse() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_chartreuse(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// rose()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:96
+	// ("cv::viz::Color::rose", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn rose() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_rose(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// lime()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:98
+	// ("cv::viz::Color::lime", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn lime() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_lime(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// gold()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:99
+	// ("cv::viz::Color::gold", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn gold() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_gold(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// orange()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:100
+	// ("cv::viz::Color::orange", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn orange() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_orange(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// orange_red()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:101
+	// ("cv::viz::Color::orange_red", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn orange_red() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_orange_red(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// indigo()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:102
+	// ("cv::viz::Color::indigo", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn indigo() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_indigo(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// brown()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:104
+	// ("cv::viz::Color::brown", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn brown() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_brown(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// apricot()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:105
+	// ("cv::viz::Color::apricot", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn apricot() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_apricot(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// pink()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:106
+	// ("cv::viz::Color::pink", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn pink() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_pink(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// raspberry()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:107
+	// ("cv::viz::Color::raspberry", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn raspberry() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_raspberry(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// cherry()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:108
+	// ("cv::viz::Color::cherry", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn cherry() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_cherry(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// violet()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:109
+	// ("cv::viz::Color::violet", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn violet() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_violet(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// amethyst()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:110
+	// ("cv::viz::Color::amethyst", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn amethyst() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_amethyst(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// bluberry()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:111
+	// ("cv::viz::Color::bluberry", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn bluberry() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_bluberry(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// celestial_blue()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:112
+	// ("cv::viz::Color::celestial_blue", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn celestial_blue() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_celestial_blue(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// turquoise()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:113
+	// ("cv::viz::Color::turquoise", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn turquoise() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_turquoise(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// not_set()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:115
+	// ("cv::viz::Color::not_set", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn not_set() -> Result<crate::viz::Color> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Color_not_set(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Color::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+impl std::fmt::Debug for Color {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("Color")
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::viz::KeyboardEvent]
+// KeyboardEvent /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:287
+pub trait KeyboardEventTraitConst {
+	fn as_raw_KeyboardEvent(&self) -> *const c_void;
+
+	// cv::viz::KeyboardEvent::action() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:302
+	// ("cv::viz::KeyboardEvent::action", vec![(pred!(const, [], []), _)]),
+	#[inline]
+	fn action(&self) -> crate::viz::KeyboardEvent_Action {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_KeyboardEvent_propAction_const(self.as_raw_KeyboardEvent(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		ret
+	}
+
+	// cv::viz::KeyboardEvent::symbol() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:303
+	// ("cv::viz::KeyboardEvent::symbol", vec![(pred!(const, [], []), _)]),
+	#[inline]
+	fn symbol(&self) -> String {
+		let ret = unsafe { sys::cv_viz_KeyboardEvent_propSymbol_const(self.as_raw_KeyboardEvent()) };
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		ret
+	}
+
+	// cv::viz::KeyboardEvent::code() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:304
+	// ("cv::viz::KeyboardEvent::code", vec![(pred!(const, [], []), _)]),
+	#[inline]
+	fn code(&self) -> u8 {
+		let ret = unsafe { sys::cv_viz_KeyboardEvent_propCode_const(self.as_raw_KeyboardEvent()) };
+		ret
+	}
+
+	// cv::viz::KeyboardEvent::modifiers() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:305
+	// ("cv::viz::KeyboardEvent::modifiers", vec![(pred!(const, [], []), _)]),
+	#[inline]
+	fn modifiers(&self) -> i32 {
+		let ret = unsafe { sys::cv_viz_KeyboardEvent_propModifiers_const(self.as_raw_KeyboardEvent()) };
+		ret
+	}
+
+}
+
+/// Mutable methods for [crate::viz::KeyboardEvent]
+pub trait KeyboardEventTrait: crate::viz::KeyboardEventTraitConst {
+	fn as_raw_mut_KeyboardEvent(&mut self) -> *mut c_void;
+
+	// cv::viz::KeyboardEvent::setAction(Enum) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:302
+	// ("cv::viz::KeyboardEvent::setAction", vec![(pred!(mut, ["val"], ["const cv::viz::KeyboardEvent::Action"]), _)]),
+	#[inline]
+	fn set_action(&mut self, val: crate::viz::KeyboardEvent_Action) {
+		let ret = unsafe { sys::cv_viz_KeyboardEvent_propAction_const_Action(self.as_raw_mut_KeyboardEvent(), val) };
+		ret
+	}
+
+	// cv::viz::KeyboardEvent::setSymbol(InString) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:303
+	// ("cv::viz::KeyboardEvent::setSymbol", vec![(pred!(mut, ["val"], ["const cv::String"]), _)]),
+	#[inline]
+	fn set_symbol(&mut self, val: &str) {
+		extern_container_arg!(nofail val);
+		let ret = unsafe { sys::cv_viz_KeyboardEvent_propSymbol_const_String(self.as_raw_mut_KeyboardEvent(), val.opencv_as_extern()) };
+		ret
+	}
+
+	// cv::viz::KeyboardEvent::setCode(Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:304
+	// ("cv::viz::KeyboardEvent::setCode", vec![(pred!(mut, ["val"], ["const unsigned char"]), _)]),
+	#[inline]
+	fn set_code(&mut self, val: u8) {
+		let ret = unsafe { sys::cv_viz_KeyboardEvent_propCode_const_unsigned_char(self.as_raw_mut_KeyboardEvent(), val) };
+		ret
+	}
+
+	// cv::viz::KeyboardEvent::setModifiers(Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:305
+	// ("cv::viz::KeyboardEvent::setModifiers", vec![(pred!(mut, ["val"], ["const int"]), _)]),
+	#[inline]
+	fn set_modifiers(&mut self, val: i32) {
+		let ret = unsafe { sys::cv_viz_KeyboardEvent_propModifiers_const_int(self.as_raw_mut_KeyboardEvent(), val) };
+		ret
+	}
+
+}
+
+/// This class represents a keyboard event.
+// KeyboardEvent /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:287
+pub struct KeyboardEvent {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { KeyboardEvent }
+
+impl Drop for KeyboardEvent {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_viz_KeyboardEvent_delete(self.as_raw_mut_KeyboardEvent()) };
+	}
+}
+
+unsafe impl Send for KeyboardEvent {}
+
+impl crate::viz::KeyboardEventTraitConst for KeyboardEvent {
+	#[inline] fn as_raw_KeyboardEvent(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::KeyboardEventTrait for KeyboardEvent {
+	#[inline] fn as_raw_mut_KeyboardEvent(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { KeyboardEvent, crate::viz::KeyboardEventTraitConst, as_raw_KeyboardEvent, crate::viz::KeyboardEventTrait, as_raw_mut_KeyboardEvent }
+
+impl KeyboardEvent {
+	/// Constructs a KeyboardEvent.
+	///
+	/// ## Parameters
+	/// * action: Signals if key is pressed or released.
+	/// * symbol: Name of the key.
+	/// * code: Code of the key.
+	/// * modifiers: Signals if alt, ctrl or shift are pressed or their combination.
+	// KeyboardEvent(Action, const String &, unsigned char, int)(Enum, InString, Primitive, Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:300
+	// ("cv::viz::KeyboardEvent::KeyboardEvent", vec![(pred!(mut, ["action", "symbol", "code", "modifiers"], ["cv::viz::KeyboardEvent::Action", "const cv::String*", "unsigned char", "int"]), _)]),
+	#[inline]
+	pub fn new(action: crate::viz::KeyboardEvent_Action, symbol: &str, code: u8, modifiers: i32) -> Result<crate::viz::KeyboardEvent> {
+		extern_container_arg!(symbol);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_KeyboardEvent_KeyboardEvent_Action_const_StringR_unsigned_char_int(action, symbol.opencv_as_extern(), code, modifiers, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::KeyboardEvent::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+impl std::fmt::Debug for KeyboardEvent {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("KeyboardEvent")
+			.field("action", &crate::viz::KeyboardEventTraitConst::action(self))
+			.field("symbol", &crate::viz::KeyboardEventTraitConst::symbol(self))
+			.field("code", &crate::viz::KeyboardEventTraitConst::code(self))
+			.field("modifiers", &crate::viz::KeyboardEventTraitConst::modifiers(self))
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::viz::Mesh]
+// Mesh /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:120
+pub trait MeshTraitConst {
+	fn as_raw_Mesh(&self) -> *const c_void;
+
+	/// point coordinates of type CV_32FC3 or CV_64FC3 with only 1 row
+	// cv::viz::Mesh::cloud() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:129
+	// ("cv::viz::Mesh::cloud", vec![(pred!(const, [], []), _)]),
+	#[inline]
+	fn cloud(&self) -> core::Mat {
+		let ret = unsafe { sys::cv_viz_Mesh_propCloud_const(self.as_raw_Mesh()) };
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		ret
+	}
+
+	/// point color of type CV_8UC3 or CV_8UC4 with only 1 row
+	// cv::viz::Mesh::colors() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:130
+	// ("cv::viz::Mesh::colors", vec![(pred!(const, [], []), _)]),
+	#[inline]
+	fn colors(&self) -> core::Mat {
+		let ret = unsafe { sys::cv_viz_Mesh_propColors_const(self.as_raw_Mesh()) };
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		ret
+	}
+
+	/// point normals of type CV_32FC3, CV_32FC4, CV_64FC3 or CV_64FC4 with only 1 row
+	// cv::viz::Mesh::normals() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:131
+	// ("cv::viz::Mesh::normals", vec![(pred!(const, [], []), _)]),
+	#[inline]
+	fn normals(&self) -> core::Mat {
+		let ret = unsafe { sys::cv_viz_Mesh_propNormals_const(self.as_raw_Mesh()) };
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		ret
+	}
+
+	/// CV_32SC1 with only 1 row
+	// cv::viz::Mesh::polygons() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:135
+	// ("cv::viz::Mesh::polygons", vec![(pred!(const, [], []), _)]),
+	#[inline]
+	fn polygons(&self) -> core::Mat {
+		let ret = unsafe { sys::cv_viz_Mesh_propPolygons_const(self.as_raw_Mesh()) };
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		ret
+	}
+
+	// cv::viz::Mesh::texture() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:137
+	// ("cv::viz::Mesh::texture", vec![(pred!(const, [], []), _)]),
+	#[inline]
+	fn texture(&self) -> core::Mat {
+		let ret = unsafe { sys::cv_viz_Mesh_propTexture_const(self.as_raw_Mesh()) };
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		ret
+	}
+
+	/// CV_32FC2 or CV_64FC2 with only 1 row
+	// cv::viz::Mesh::tcoords() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:138
+	// ("cv::viz::Mesh::tcoords", vec![(pred!(const, [], []), _)]),
+	#[inline]
+	fn tcoords(&self) -> core::Mat {
+		let ret = unsafe { sys::cv_viz_Mesh_propTcoords_const(self.as_raw_Mesh()) };
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		ret
+	}
+
+}
+
+/// Mutable methods for [crate::viz::Mesh]
+pub trait MeshTrait: crate::viz::MeshTraitConst {
+	fn as_raw_mut_Mesh(&mut self) -> *mut c_void;
+
+	/// point coordinates of type CV_32FC3 or CV_64FC3 with only 1 row
+	// cv::viz::Mesh::setCloud(TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:129
+	// ("cv::viz::Mesh::setCloud", vec![(pred!(mut, ["val"], ["const cv::Mat"]), _)]),
+	#[inline]
+	fn set_cloud(&mut self, val: core::Mat) {
+		let ret = unsafe { sys::cv_viz_Mesh_propCloud_const_Mat(self.as_raw_mut_Mesh(), val.as_raw_Mat()) };
+		ret
+	}
+
+	/// point color of type CV_8UC3 or CV_8UC4 with only 1 row
+	// cv::viz::Mesh::setColors(TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:130
+	// ("cv::viz::Mesh::setColors", vec![(pred!(mut, ["val"], ["const cv::Mat"]), _)]),
+	#[inline]
+	fn set_colors(&mut self, val: core::Mat) {
+		let ret = unsafe { sys::cv_viz_Mesh_propColors_const_Mat(self.as_raw_mut_Mesh(), val.as_raw_Mat()) };
+		ret
+	}
+
+	/// point normals of type CV_32FC3, CV_32FC4, CV_64FC3 or CV_64FC4 with only 1 row
+	// cv::viz::Mesh::setNormals(TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:131
+	// ("cv::viz::Mesh::setNormals", vec![(pred!(mut, ["val"], ["const cv::Mat"]), _)]),
+	#[inline]
+	fn set_normals(&mut self, val: core::Mat) {
+		let ret = unsafe { sys::cv_viz_Mesh_propNormals_const_Mat(self.as_raw_mut_Mesh(), val.as_raw_Mat()) };
+		ret
+	}
+
+	/// CV_32SC1 with only 1 row
+	// cv::viz::Mesh::setPolygons(TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:135
+	// ("cv::viz::Mesh::setPolygons", vec![(pred!(mut, ["val"], ["const cv::Mat"]), _)]),
+	#[inline]
+	fn set_polygons(&mut self, val: core::Mat) {
+		let ret = unsafe { sys::cv_viz_Mesh_propPolygons_const_Mat(self.as_raw_mut_Mesh(), val.as_raw_Mat()) };
+		ret
+	}
+
+	// cv::viz::Mesh::setTexture(TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:137
+	// ("cv::viz::Mesh::setTexture", vec![(pred!(mut, ["val"], ["const cv::Mat"]), _)]),
+	#[inline]
+	fn set_texture(&mut self, val: core::Mat) {
+		let ret = unsafe { sys::cv_viz_Mesh_propTexture_const_Mat(self.as_raw_mut_Mesh(), val.as_raw_Mat()) };
+		ret
+	}
+
+	/// CV_32FC2 or CV_64FC2 with only 1 row
+	// cv::viz::Mesh::setTcoords(TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:138
+	// ("cv::viz::Mesh::setTcoords", vec![(pred!(mut, ["val"], ["const cv::Mat"]), _)]),
+	#[inline]
+	fn set_tcoords(&mut self, val: core::Mat) {
+		let ret = unsafe { sys::cv_viz_Mesh_propTcoords_const_Mat(self.as_raw_mut_Mesh(), val.as_raw_Mat()) };
+		ret
+	}
+
+}
+
+/// This class wraps mesh attributes, and it can load a mesh from a ply file. :
+// Mesh /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:120
+pub struct Mesh {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { Mesh }
+
+impl Drop for Mesh {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_viz_Mesh_delete(self.as_raw_mut_Mesh()) };
+	}
+}
+
+unsafe impl Send for Mesh {}
+
+impl crate::viz::MeshTraitConst for Mesh {
+	#[inline] fn as_raw_Mesh(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::MeshTrait for Mesh {
+	#[inline] fn as_raw_mut_Mesh(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { Mesh, crate::viz::MeshTraitConst, as_raw_Mesh, crate::viz::MeshTrait, as_raw_mut_Mesh }
+
+impl Mesh {
+	// Mesh()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:140
+	// ("cv::viz::Mesh::Mesh", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn default() -> Result<crate::viz::Mesh> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Mesh_Mesh(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Mesh::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Loads a mesh from a ply or a obj file.
+	///
+	/// ## Parameters
+	/// * file: File name
+	/// * type: File type (for now only PLY and OBJ are supported)
+	///
+	/// **File type** can be one of the following:
+	/// *   **LOAD_PLY**
+	/// *   **LOAD_OBJ**
+	///
+	/// ## C++ default parameters
+	/// * typ: LOAD_PLY
+	// load(const String &, int)(InString, Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:154
+	// ("cv::viz::Mesh::load", vec![(pred!(mut, ["file", "type"], ["const cv::String*", "int"]), _)]),
+	#[inline]
+	pub fn load(file: &str, typ: i32) -> Result<crate::viz::Mesh> {
+		extern_container_arg!(file);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Mesh_load_const_StringR_int(file.opencv_as_extern(), typ, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Mesh::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Loads a mesh from a ply or a obj file.
+	///
+	/// ## Parameters
+	/// * file: File name
+	/// * type: File type (for now only PLY and OBJ are supported)
+	///
+	/// **File type** can be one of the following:
+	/// *   **LOAD_PLY**
+	/// *   **LOAD_OBJ**
+	///
+	/// ## Note
+	/// This alternative version of [Mesh::load] function uses the following default values for its arguments:
+	/// * typ: LOAD_PLY
+	// cv::viz::Mesh::load(InString) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:154
+	// ("cv::viz::Mesh::load", vec![(pred!(mut, ["file"], ["const cv::String*"]), _)]),
+	#[inline]
+	pub fn load_def(file: &str) -> Result<crate::viz::Mesh> {
+		extern_container_arg!(file);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Mesh_load_const_StringR(file.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Mesh::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+impl Clone for Mesh {
+	#[inline]
+	fn clone(&self) -> Self {
+		unsafe { Self::from_raw(sys::cv_viz_Mesh_implicitClone_const(self.as_raw_Mesh())) }
+	}
+}
+
+impl std::fmt::Debug for Mesh {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("Mesh")
+			.field("cloud", &crate::viz::MeshTraitConst::cloud(self))
+			.field("colors", &crate::viz::MeshTraitConst::colors(self))
+			.field("normals", &crate::viz::MeshTraitConst::normals(self))
+			.field("polygons", &crate::viz::MeshTraitConst::polygons(self))
+			.field("texture", &crate::viz::MeshTraitConst::texture(self))
+			.field("tcoords", &crate::viz::MeshTraitConst::tcoords(self))
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::viz::MouseEvent]
+// MouseEvent /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:310
+pub trait MouseEventTraitConst {
+	fn as_raw_MouseEvent(&self) -> *const c_void;
+
+	// cv::viz::MouseEvent::type() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:327
+	// ("cv::viz::MouseEvent::type", vec![(pred!(const, [], []), _)]),
+	#[inline]
+	fn typ(&self) -> crate::viz::MouseEvent_Type {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_MouseEvent_propType_const(self.as_raw_MouseEvent(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		ret
+	}
+
+	// cv::viz::MouseEvent::button() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:328
+	// ("cv::viz::MouseEvent::button", vec![(pred!(const, [], []), _)]),
+	#[inline]
+	fn button(&self) -> crate::viz::MouseEvent_MouseButton {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_MouseEvent_propButton_const(self.as_raw_MouseEvent(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		ret
+	}
+
+	// cv::viz::MouseEvent::pointer() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:329
+	// ("cv::viz::MouseEvent::pointer", vec![(pred!(const, [], []), _)]),
+	#[inline]
+	fn pointer(&self) -> core::Point {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_MouseEvent_propPointer_const(self.as_raw_MouseEvent(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		ret
+	}
+
+	// cv::viz::MouseEvent::modifiers() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:330
+	// ("cv::viz::MouseEvent::modifiers", vec![(pred!(const, [], []), _)]),
+	#[inline]
+	fn modifiers(&self) -> i32 {
+		let ret = unsafe { sys::cv_viz_MouseEvent_propModifiers_const(self.as_raw_MouseEvent()) };
+		ret
+	}
+
+}
+
+/// Mutable methods for [crate::viz::MouseEvent]
+pub trait MouseEventTrait: crate::viz::MouseEventTraitConst {
+	fn as_raw_mut_MouseEvent(&mut self) -> *mut c_void;
+
+	// cv::viz::MouseEvent::setType(Enum) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:327
+	// ("cv::viz::MouseEvent::setType", vec![(pred!(mut, ["val"], ["const cv::viz::MouseEvent::Type"]), _)]),
+	#[inline]
+	fn set_type(&mut self, val: crate::viz::MouseEvent_Type) {
+		let ret = unsafe { sys::cv_viz_MouseEvent_propType_const_Type(self.as_raw_mut_MouseEvent(), val) };
+		ret
+	}
+
+	// cv::viz::MouseEvent::setButton(Enum) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:328
+	// ("cv::viz::MouseEvent::setButton", vec![(pred!(mut, ["val"], ["const cv::viz::MouseEvent::MouseButton"]), _)]),
+	#[inline]
+	fn set_button(&mut self, val: crate::viz::MouseEvent_MouseButton) {
+		let ret = unsafe { sys::cv_viz_MouseEvent_propButton_const_MouseButton(self.as_raw_mut_MouseEvent(), val) };
+		ret
+	}
+
+	// cv::viz::MouseEvent::setPointer(SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:329
+	// ("cv::viz::MouseEvent::setPointer", vec![(pred!(mut, ["val"], ["const cv::Point"]), _)]),
+	#[inline]
+	fn set_pointer(&mut self, val: core::Point) {
+		let ret = unsafe { sys::cv_viz_MouseEvent_propPointer_const_Point(self.as_raw_mut_MouseEvent(), &val) };
+		ret
+	}
+
+	// cv::viz::MouseEvent::setModifiers(Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:330
+	// ("cv::viz::MouseEvent::setModifiers", vec![(pred!(mut, ["val"], ["const int"]), _)]),
+	#[inline]
+	fn set_modifiers(&mut self, val: i32) {
+		let ret = unsafe { sys::cv_viz_MouseEvent_propModifiers_const_int(self.as_raw_mut_MouseEvent(), val) };
+		ret
+	}
+
+}
+
+/// This class represents a mouse event.
+// MouseEvent /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:310
+pub struct MouseEvent {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { MouseEvent }
+
+impl Drop for MouseEvent {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_viz_MouseEvent_delete(self.as_raw_mut_MouseEvent()) };
+	}
+}
+
+unsafe impl Send for MouseEvent {}
+
+impl crate::viz::MouseEventTraitConst for MouseEvent {
+	#[inline] fn as_raw_MouseEvent(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::MouseEventTrait for MouseEvent {
+	#[inline] fn as_raw_mut_MouseEvent(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { MouseEvent, crate::viz::MouseEventTraitConst, as_raw_MouseEvent, crate::viz::MouseEventTrait, as_raw_mut_MouseEvent }
+
+impl MouseEvent {
+	/// Constructs a MouseEvent.
+	///
+	/// ## Parameters
+	/// * type: Type of the event. This can be **MouseMove**, **MouseButtonPress**,
+	/// **MouseButtonRelease**, **MouseScrollDown**, **MouseScrollUp**, **MouseDblClick**.
+	/// * button: Mouse button. This can be **NoButton**, **LeftButton**, **MiddleButton**,
+	/// **RightButton**, **VScroll**.
+	/// * pointer: Position of the event.
+	/// * modifiers: Signals if alt, ctrl or shift are pressed or their combination.
+	// MouseEvent(const Type &, const MouseButton &, const Point &, int)(Enum, Enum, SimpleClass, Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/types.hpp:325
+	// ("cv::viz::MouseEvent::MouseEvent", vec![(pred!(mut, ["type", "button", "pointer", "modifiers"], ["const cv::viz::MouseEvent::Type*", "const cv::viz::MouseEvent::MouseButton*", "const cv::Point*", "int"]), _)]),
+	#[inline]
+	pub fn new(typ: crate::viz::MouseEvent_Type, button: crate::viz::MouseEvent_MouseButton, pointer: core::Point, modifiers: i32) -> Result<crate::viz::MouseEvent> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_MouseEvent_MouseEvent_const_TypeR_const_MouseButtonR_const_PointR_int(typ, button, &pointer, modifiers, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::MouseEvent::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+impl std::fmt::Debug for MouseEvent {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("MouseEvent")
+			.field("typ", &crate::viz::MouseEventTraitConst::typ(self))
+			.field("button", &crate::viz::MouseEventTraitConst::button(self))
+			.field("pointer", &crate::viz::MouseEventTraitConst::pointer(self))
+			.field("modifiers", &crate::viz::MouseEventTraitConst::modifiers(self))
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::viz::Viz3d]
+// Viz3d /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:67
+pub trait Viz3dTraitConst {
+	fn as_raw_Viz3d(&self) -> *const c_void;
+
+	/// Retrieves a widget from the window.
+	///
+	/// A widget is implicitly shared; that is, if the returned widget is modified, the changes
+	/// will be immediately visible in the window.
+	///
+	/// ## Parameters
+	/// * id: The id of the widget that will be returned.
+	// getWidget(const String &)(InString) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:103
+	// ("cv::viz::Viz3d::getWidget", vec![(pred!(const, ["id"], ["const cv::String*"]), _)]),
+	#[inline]
+	fn get_widget(&self, id: &str) -> Result<crate::viz::Widget> {
+		extern_container_arg!(id);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_getWidget_const_const_StringR(self.as_raw_Viz3d(), id.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Widget::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Returns the current pose of a widget in the window.
+	///
+	/// ## Parameters
+	/// * id: The id of the widget whose pose will be returned.
+	// getWidgetPose(const String &)(InString) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:133
+	// ("cv::viz::Viz3d::getWidgetPose", vec![(pred!(const, ["id"], ["const cv::String*"]), _)]),
+	#[inline]
+	fn get_widget_pose(&self, id: &str) -> Result<core::Affine3d> {
+		extern_container_arg!(id);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_getWidgetPose_const_const_StringR(self.as_raw_Viz3d(), id.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Returns a camera object that contains intrinsic parameters of the current viewer.
+	// getCamera()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:143
+	// ("cv::viz::Viz3d::getCamera", vec![(pred!(const, [], []), _)]),
+	#[inline]
+	fn get_camera(&self) -> Result<crate::viz::Camera> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_getCamera_const(self.as_raw_Viz3d(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Camera::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Returns the current pose of the viewer.
+	// getViewerPose()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:147
+	// ("cv::viz::Viz3d::getViewerPose", vec![(pred!(const, [], []), _)]),
+	#[inline]
+	fn get_viewer_pose(&self) -> Result<core::Affine3d> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_getViewerPose_const(self.as_raw_Viz3d(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Returns the current size of the window.
+	// getWindowSize()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:181
+	// ("cv::viz::Viz3d::getWindowSize", vec![(pred!(const, [], []), _)]),
+	#[inline]
+	fn get_window_size(&self) -> Result<core::Size> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_getWindowSize_const(self.as_raw_Viz3d(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Returns the name of the window which has been set in the constructor.
+	/// `Viz - ` is prepended to the name if necessary.
+	// getWindowName()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:191
+	// ("cv::viz::Viz3d::getWindowName", vec![(pred!(const, [], []), _)]),
+	#[inline]
+	fn get_window_name(&self) -> Result<String> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_getWindowName_const(self.as_raw_Viz3d(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Returns the Mat screenshot of the current scene.
+	// getScreenshot()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:195
+	// ("cv::viz::Viz3d::getScreenshot", vec![(pred!(const, [], []), _)]),
+	#[inline]
+	fn get_screenshot(&self) -> Result<core::Mat> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_getScreenshot_const(self.as_raw_Viz3d(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Returns whether the event loop has been stopped.
+	// wasStopped()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:255
+	// ("cv::viz::Viz3d::wasStopped", vec![(pred!(const, [], []), _)]),
+	#[inline]
+	fn was_stopped(&self) -> Result<bool> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_wasStopped_const(self.as_raw_Viz3d(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+}
+
+/// Mutable methods for [crate::viz::Viz3d]
+pub trait Viz3dTrait: crate::viz::Viz3dTraitConst {
+	fn as_raw_mut_Viz3d(&mut self) -> *mut c_void;
+
+	// operator=(const Viz3d &)(TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:80
+	// ("cv::viz::Viz3d::operator=", vec![(pred!(mut, ["unnamed"], ["const cv::viz::Viz3d*"]), _)]),
+	#[inline]
+	fn set(&mut self, unnamed: &impl crate::viz::Viz3dTraitConst) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_operatorST_const_Viz3dR(self.as_raw_mut_Viz3d(), unnamed.as_raw_Viz3d(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Shows a widget in the window.
+	///
+	/// ## Parameters
+	/// * id: A unique id for the widget. @param widget The widget to be displayed in the window.
+	/// * pose: Pose of the widget.
+	///
+	/// ## C++ default parameters
+	/// * pose: Affine3d::Identity()
+	// showWidget(const String &, const Widget &, const Affine3d &)(InString, TraitClass, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:88
+	// ("cv::viz::Viz3d::showWidget", vec![(pred!(mut, ["id", "widget", "pose"], ["const cv::String*", "const cv::viz::Widget*", "const cv::Affine3d*"]), _)]),
+	#[inline]
+	fn show_widget(&mut self, id: &str, widget: &impl crate::viz::WidgetTraitConst, pose: core::Affine3d) -> Result<()> {
+		extern_container_arg!(id);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_showWidget_const_StringR_const_WidgetR_const_Affine3dR(self.as_raw_mut_Viz3d(), id.opencv_as_extern(), widget.as_raw_Widget(), &pose, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Shows a widget in the window.
+	///
+	/// ## Parameters
+	/// * id: A unique id for the widget. @param widget The widget to be displayed in the window.
+	/// * pose: Pose of the widget.
+	///
+	/// ## Note
+	/// This alternative version of [Viz3dTrait::show_widget] function uses the following default values for its arguments:
+	/// * pose: Affine3d::Identity()
+	// cv::viz::Viz3d::showWidget(InString, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:88
+	// ("cv::viz::Viz3d::showWidget", vec![(pred!(mut, ["id", "widget"], ["const cv::String*", "const cv::viz::Widget*"]), _)]),
+	#[inline]
+	fn show_widget_def(&mut self, id: &str, widget: &impl crate::viz::WidgetTraitConst) -> Result<()> {
+		extern_container_arg!(id);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_showWidget_const_StringR_const_WidgetR(self.as_raw_mut_Viz3d(), id.opencv_as_extern(), widget.as_raw_Widget(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Removes a widget from the window.
+	///
+	/// ## Parameters
+	/// * id: The id of the widget that will be removed.
+	// removeWidget(const String &)(InString) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:94
+	// ("cv::viz::Viz3d::removeWidget", vec![(pred!(mut, ["id"], ["const cv::String*"]), _)]),
+	#[inline]
+	fn remove_widget(&mut self, id: &str) -> Result<()> {
+		extern_container_arg!(id);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_removeWidget_const_StringR(self.as_raw_mut_Viz3d(), id.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Removes all widgets from the window.
+	// removeAllWidgets()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:107
+	// ("cv::viz::Viz3d::removeAllWidgets", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	fn remove_all_widgets(&mut self) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_removeAllWidgets(self.as_raw_mut_Viz3d(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Removed all widgets and displays image scaled to whole window area.
+	///
+	/// ## Parameters
+	/// * image: Image to be displayed.
+	/// * window_size: Size of Viz3d window. Default value means no change.
+	///
+	/// ## C++ default parameters
+	/// * window_size: Size(-1,-1)
+	// showImage(InputArray, const Size &)(InputArray, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:114
+	// ("cv::viz::Viz3d::showImage", vec![(pred!(mut, ["image", "window_size"], ["const cv::_InputArray*", "const cv::Size*"]), _)]),
+	#[inline]
+	fn show_image(&mut self, image: &impl ToInputArray, window_size: core::Size) -> Result<()> {
+		input_array_arg!(image);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_showImage_const__InputArrayR_const_SizeR(self.as_raw_mut_Viz3d(), image.as_raw__InputArray(), &window_size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Removed all widgets and displays image scaled to whole window area.
+	///
+	/// ## Parameters
+	/// * image: Image to be displayed.
+	/// * window_size: Size of Viz3d window. Default value means no change.
+	///
+	/// ## Note
+	/// This alternative version of [Viz3dTrait::show_image] function uses the following default values for its arguments:
+	/// * window_size: Size(-1,-1)
+	// cv::viz::Viz3d::showImage(InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:114
+	// ("cv::viz::Viz3d::showImage", vec![(pred!(mut, ["image"], ["const cv::_InputArray*"]), _)]),
+	#[inline]
+	fn show_image_def(&mut self, image: &impl ToInputArray) -> Result<()> {
+		input_array_arg!(image);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_showImage_const__InputArrayR(self.as_raw_mut_Viz3d(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Sets pose of a widget in the window.
+	///
+	/// ## Parameters
+	/// * id: The id of the widget whose pose will be set. @param pose The new pose of the widget.
+	// setWidgetPose(const String &, const Affine3d &)(InString, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:120
+	// ("cv::viz::Viz3d::setWidgetPose", vec![(pred!(mut, ["id", "pose"], ["const cv::String*", "const cv::Affine3d*"]), _)]),
+	#[inline]
+	fn set_widget_pose(&mut self, id: &str, pose: core::Affine3d) -> Result<()> {
+		extern_container_arg!(id);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_setWidgetPose_const_StringR_const_Affine3dR(self.as_raw_mut_Viz3d(), id.opencv_as_extern(), &pose, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Updates pose of a widget in the window by pre-multiplying its current pose.
+	///
+	/// ## Parameters
+	/// * id: The id of the widget whose pose will be updated. @param pose The pose that the current
+	/// pose of the widget will be pre-multiplied by.
+	// updateWidgetPose(const String &, const Affine3d &)(InString, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:127
+	// ("cv::viz::Viz3d::updateWidgetPose", vec![(pred!(mut, ["id", "pose"], ["const cv::String*", "const cv::Affine3d*"]), _)]),
+	#[inline]
+	fn update_widget_pose(&mut self, id: &str, pose: core::Affine3d) -> Result<()> {
+		extern_container_arg!(id);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_updateWidgetPose_const_StringR_const_Affine3dR(self.as_raw_mut_Viz3d(), id.opencv_as_extern(), &pose, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Sets the intrinsic parameters of the viewer using Camera.
+	///
+	/// ## Parameters
+	/// * camera: Camera object wrapping intrinsic parameters.
+	// setCamera(const Camera &)(TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:139
+	// ("cv::viz::Viz3d::setCamera", vec![(pred!(mut, ["camera"], ["const cv::viz::Camera*"]), _)]),
+	#[inline]
+	fn set_camera(&mut self, camera: &impl crate::viz::CameraTraitConst) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_setCamera_const_CameraR(self.as_raw_mut_Viz3d(), camera.as_raw_Camera(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Sets pose of the viewer.
+	///
+	/// ## Parameters
+	/// * pose: The new pose of the viewer.
+	// setViewerPose(const Affine3d &)(SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:153
+	// ("cv::viz::Viz3d::setViewerPose", vec![(pred!(mut, ["pose"], ["const cv::Affine3d*"]), _)]),
+	#[inline]
+	fn set_viewer_pose(&mut self, pose: core::Affine3d) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_setViewerPose_const_Affine3dR(self.as_raw_mut_Viz3d(), &pose, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Resets camera viewpoint to a 3D widget in the scene.
+	///
+	/// ## Parameters
+	/// * id: Id of a 3D widget.
+	// resetCameraViewpoint(const String &)(InString) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:159
+	// ("cv::viz::Viz3d::resetCameraViewpoint", vec![(pred!(mut, ["id"], ["const cv::String*"]), _)]),
+	#[inline]
+	fn reset_camera_viewpoint(&mut self, id: &str) -> Result<()> {
+		extern_container_arg!(id);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_resetCameraViewpoint_const_StringR(self.as_raw_mut_Viz3d(), id.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Resets camera.
+	// resetCamera()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:163
+	// ("cv::viz::Viz3d::resetCamera", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	fn reset_camera(&mut self) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_resetCamera(self.as_raw_mut_Viz3d(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Transforms a point in world coordinate system to window coordinate system.
+	///
+	/// ## Parameters
+	/// * pt: Point in world coordinate system.
+	/// * window_coord: Output point in window coordinate system.
+	// convertToWindowCoordinates(const Point3d &, Point3d &)(SimpleClass, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:170
+	// ("cv::viz::Viz3d::convertToWindowCoordinates", vec![(pred!(mut, ["pt", "window_coord"], ["const cv::Point3d*", "cv::Point3d*"]), _)]),
+	#[inline]
+	fn convert_to_window_coordinates(&mut self, pt: core::Point3d, window_coord: &mut core::Point3d) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_convertToWindowCoordinates_const_Point3dR_Point3dR(self.as_raw_mut_Viz3d(), &pt, window_coord, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Transforms a point in window coordinate system to a 3D ray in world coordinate system.
+	///
+	/// ## Parameters
+	/// * window_coord: Point in window coordinate system. @param origin Output origin of the ray.
+	/// * direction: Output direction of the ray.
+	// converTo3DRay(const Point3d &, Point3d &, Vec3d &)(SimpleClass, SimpleClass, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:177
+	// ("cv::viz::Viz3d::converTo3DRay", vec![(pred!(mut, ["window_coord", "origin", "direction"], ["const cv::Point3d*", "cv::Point3d*", "cv::Vec3d*"]), _)]),
+	#[inline]
+	fn conver_to_3d_ray(&mut self, window_coord: core::Point3d, origin: &mut core::Point3d, direction: &mut core::Vec3d) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_converTo3DRay_const_Point3dR_Point3dR_Vec3dR(self.as_raw_mut_Viz3d(), &window_coord, origin, direction, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Sets the size of the window.
+	///
+	/// ## Parameters
+	/// * window_size: New size of the window.
+	// setWindowSize(const Size &)(SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:186
+	// ("cv::viz::Viz3d::setWindowSize", vec![(pred!(mut, ["window_size"], ["const cv::Size*"]), _)]),
+	#[inline]
+	fn set_window_size(&mut self, window_size: core::Size) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_setWindowSize_const_SizeR(self.as_raw_mut_Viz3d(), &window_size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Saves screenshot of the current scene.
+	///
+	/// ## Parameters
+	/// * file: Name of the file.
+	// saveScreenshot(const String &)(InString) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:201
+	// ("cv::viz::Viz3d::saveScreenshot", vec![(pred!(mut, ["file"], ["const cv::String*"]), _)]),
+	#[inline]
+	fn save_screenshot(&mut self, file: &str) -> Result<()> {
+		extern_container_arg!(file);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_saveScreenshot_const_StringR(self.as_raw_mut_Viz3d(), file.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Sets the position of the window in the screen.
+	///
+	/// ## Parameters
+	/// * window_position: coordinates of the window
+	// setWindowPosition(const Point &)(SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:207
+	// ("cv::viz::Viz3d::setWindowPosition", vec![(pred!(mut, ["window_position"], ["const cv::Point*"]), _)]),
+	#[inline]
+	fn set_window_position(&mut self, window_position: core::Point) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_setWindowPosition_const_PointR(self.as_raw_mut_Viz3d(), &window_position, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Sets or unsets full-screen rendering mode.
+	///
+	/// ## Parameters
+	/// * mode: If true, window will use full-screen mode.
+	///
+	/// ## C++ default parameters
+	/// * mode: true
+	// setFullScreen(bool)(Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:213
+	// ("cv::viz::Viz3d::setFullScreen", vec![(pred!(mut, ["mode"], ["bool"]), _)]),
+	#[inline]
+	fn set_full_screen(&mut self, mode: bool) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_setFullScreen_bool(self.as_raw_mut_Viz3d(), mode, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Sets or unsets full-screen rendering mode.
+	///
+	/// ## Parameters
+	/// * mode: If true, window will use full-screen mode.
+	///
+	/// ## Note
+	/// This alternative version of [Viz3dTrait::set_full_screen] function uses the following default values for its arguments:
+	/// * mode: true
+	// cv::viz::Viz3d::setFullScreen() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:213
+	// ("cv::viz::Viz3d::setFullScreen", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	fn set_full_screen_def(&mut self) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_setFullScreen(self.as_raw_mut_Viz3d(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Sets background color.
+	///
+	/// ## C++ default parameters
+	/// * color: Color::black()
+	/// * color2: Color::not_set()
+	// setBackgroundColor(const Color &, const Color &)(TraitClass, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:217
+	// ("cv::viz::Viz3d::setBackgroundColor", vec![(pred!(mut, ["color", "color2"], ["const cv::viz::Viz3d::Color*", "const cv::viz::Viz3d::Color*"]), _)]),
+	#[inline]
+	fn set_background_color(&mut self, color: &impl crate::viz::ColorTraitConst, color2: &impl crate::viz::ColorTraitConst) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_setBackgroundColor_const_ColorR_const_ColorR(self.as_raw_mut_Viz3d(), color.as_raw_Color(), color2.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Sets background color.
+	///
+	/// ## Note
+	/// This alternative version of [Viz3dTrait::set_background_color] function uses the following default values for its arguments:
+	/// * color: Color::black()
+	/// * color2: Color::not_set()
+	// cv::viz::Viz3d::setBackgroundColor() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:217
+	// ("cv::viz::Viz3d::setBackgroundColor", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	fn set_background_color_def(&mut self) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_setBackgroundColor(self.as_raw_mut_Viz3d(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// ## C++ default parameters
+	/// * image: noArray()
+	// setBackgroundTexture(InputArray)(InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:218
+	// ("cv::viz::Viz3d::setBackgroundTexture", vec![(pred!(mut, ["image"], ["const cv::_InputArray*"]), _)]),
+	#[inline]
+	fn set_background_texture(&mut self, image: &impl ToInputArray) -> Result<()> {
+		input_array_arg!(image);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_setBackgroundTexture_const__InputArrayR(self.as_raw_mut_Viz3d(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// ## Note
+	/// This alternative version of [Viz3dTrait::set_background_texture] function uses the following default values for its arguments:
+	/// * image: noArray()
+	// cv::viz::Viz3d::setBackgroundTexture() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:218
+	// ("cv::viz::Viz3d::setBackgroundTexture", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	fn set_background_texture_def(&mut self) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_setBackgroundTexture(self.as_raw_mut_Viz3d(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	// setBackgroundMeshLab()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:219
+	// ("cv::viz::Viz3d::setBackgroundMeshLab", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	fn set_background_mesh_lab(&mut self) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_setBackgroundMeshLab(self.as_raw_mut_Viz3d(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// The window renders and starts the event loop.
+	// spin()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:223
+	// ("cv::viz::Viz3d::spin", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	fn spin(&mut self) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_spin(self.as_raw_mut_Viz3d(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Starts the event loop for a given time.
+	///
+	/// ## Parameters
+	/// * time: Amount of time in milliseconds for the event loop to keep running.
+	/// * force_redraw: If true, window renders.
+	///
+	/// ## C++ default parameters
+	/// * time: 1
+	/// * force_redraw: false
+	// spinOnce(int, bool)(Primitive, Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:230
+	// ("cv::viz::Viz3d::spinOnce", vec![(pred!(mut, ["time", "force_redraw"], ["int", "bool"]), _)]),
+	#[inline]
+	fn spin_once(&mut self, time: i32, force_redraw: bool) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_spinOnce_int_bool(self.as_raw_mut_Viz3d(), time, force_redraw, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Starts the event loop for a given time.
+	///
+	/// ## Parameters
+	/// * time: Amount of time in milliseconds for the event loop to keep running.
+	/// * force_redraw: If true, window renders.
+	///
+	/// ## Note
+	/// This alternative version of [Viz3dTrait::spin_once] function uses the following default values for its arguments:
+	/// * time: 1
+	/// * force_redraw: false
+	// cv::viz::Viz3d::spinOnce() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:230
+	// ("cv::viz::Viz3d::spinOnce", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	fn spin_once_def(&mut self) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_spinOnce(self.as_raw_mut_Viz3d(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Create a window in memory instead of on the screen.
+	// setOffScreenRendering()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:234
+	// ("cv::viz::Viz3d::setOffScreenRendering", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	fn set_off_screen_rendering(&mut self) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_setOffScreenRendering(self.as_raw_mut_Viz3d(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Remove all lights from the current scene.
+	// removeAllLights()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:238
+	// ("cv::viz::Viz3d::removeAllLights", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	fn remove_all_lights(&mut self) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_removeAllLights(self.as_raw_mut_Viz3d(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Add a light in the scene.
+	///
+	/// ## Parameters
+	/// * position: The position of the light.
+	/// * focalPoint: The point at which the light is shining
+	/// * color: The color of the light
+	/// * diffuseColor: The diffuse color of the light
+	/// * ambientColor: The ambient color of the light
+	/// * specularColor: The specular color of the light
+	///
+	/// ## C++ default parameters
+	/// * focal_point: Vec3d(0,0,0)
+	/// * color: Color::white()
+	/// * diffuse_color: Color::white()
+	/// * ambient_color: Color::black()
+	/// * specular_color: Color::white()
+	// addLight(const Vec3d &, const Vec3d &, const Color &, const Color &, const Color &, const Color &)(SimpleClass, SimpleClass, TraitClass, TraitClass, TraitClass, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:249
+	// ("cv::viz::Viz3d::addLight", vec![(pred!(mut, ["position", "focalPoint", "color", "diffuseColor", "ambientColor", "specularColor"], ["const cv::Vec3d*", "const cv::Vec3d*", "const cv::viz::Viz3d::Color*", "const cv::viz::Viz3d::Color*", "const cv::viz::Viz3d::Color*", "const cv::viz::Viz3d::Color*"]), _)]),
+	#[inline]
+	fn add_light(&mut self, position: core::Vec3d, focal_point: core::Vec3d, color: &impl crate::viz::ColorTraitConst, diffuse_color: &impl crate::viz::ColorTraitConst, ambient_color: &impl crate::viz::ColorTraitConst, specular_color: &impl crate::viz::ColorTraitConst) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_addLight_const_Vec3dR_const_Vec3dR_const_ColorR_const_ColorR_const_ColorR_const_ColorR(self.as_raw_mut_Viz3d(), &position, &focal_point, color.as_raw_Color(), diffuse_color.as_raw_Color(), ambient_color.as_raw_Color(), specular_color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Add a light in the scene.
+	///
+	/// ## Parameters
+	/// * position: The position of the light.
+	/// * focalPoint: The point at which the light is shining
+	/// * color: The color of the light
+	/// * diffuseColor: The diffuse color of the light
+	/// * ambientColor: The ambient color of the light
+	/// * specularColor: The specular color of the light
+	///
+	/// ## Note
+	/// This alternative version of [Viz3dTrait::add_light] function uses the following default values for its arguments:
+	/// * focal_point: Vec3d(0,0,0)
+	/// * color: Color::white()
+	/// * diffuse_color: Color::white()
+	/// * ambient_color: Color::black()
+	/// * specular_color: Color::white()
+	// cv::viz::Viz3d::addLight(SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:249
+	// ("cv::viz::Viz3d::addLight", vec![(pred!(mut, ["position"], ["const cv::Vec3d*"]), _)]),
+	#[inline]
+	fn add_light_def(&mut self, position: core::Vec3d) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_addLight_const_Vec3dR(self.as_raw_mut_Viz3d(), &position, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	// close()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:256
+	// ("cv::viz::Viz3d::close", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	fn close(&mut self) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_close(self.as_raw_mut_Viz3d(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Sets keyboard handler.
+	///
+	/// ## Parameters
+	/// * callback: Keyboard callback (void (\*KeyboardCallbackFunction(const
+	/// KeyboardEvent&, void\*)).
+	/// * cookie: The optional parameter passed to the callback.
+	// registerKeyboardCallback(KeyboardCallback, void *)(Function, Indirect) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:264
+	// ("cv::viz::Viz3d::registerKeyboardCallback", vec![(pred!(mut, ["callback", "cookie"], ["cv::viz::Viz3d::KeyboardCallback", "void*"]), _)]),
+	#[inline]
+	fn register_keyboard_callback(&mut self, callback: crate::viz::Viz3d_KeyboardCallback) -> Result<()> {
+		callback_arg!(callback_trampoline(unnamed: *const c_void, unnamed_1: *mut c_void) -> () => unnamed_1 in callback(unnamed: *const c_void) -> ());
+		userdata_arg!(cookie: *mut c_void => callback);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_registerKeyboardCallback_KeyboardCallback_voidX(self.as_raw_mut_Viz3d(), callback_trampoline, cookie, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Sets mouse handler.
+	///
+	/// ## Parameters
+	/// * callback: Mouse callback (void (\*MouseCallback)(const MouseEvent&, void\*)).
+	/// * cookie: The optional parameter passed to the callback.
+	// registerMouseCallback(MouseCallback, void *)(Function, Indirect) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:271
+	// ("cv::viz::Viz3d::registerMouseCallback", vec![(pred!(mut, ["callback", "cookie"], ["cv::viz::Viz3d::MouseCallback", "void*"]), _)]),
+	#[inline]
+	fn register_mouse_callback(&mut self, callback: crate::viz::Viz3d_MouseCallback) -> Result<()> {
+		callback_arg!(callback_trampoline(unnamed: *const c_void, unnamed_1: *mut c_void) -> () => unnamed_1 in callback(unnamed: *const c_void) -> ());
+		userdata_arg!(cookie: *mut c_void => callback);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_registerMouseCallback_MouseCallback_voidX(self.as_raw_mut_Viz3d(), callback_trampoline, cookie, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Sets rendering property of a widget.
+	///
+	/// ## Parameters
+	/// * id: Id of the widget.
+	/// * property: Property that will be modified.
+	/// * value: The new value of the property.
+	///
+	/// Rendering property can be one of the following:
+	/// *   **POINT_SIZE**
+	/// *   **OPACITY**
+	/// *   **LINE_WIDTH**
+	/// *   **FONT_SIZE**
+	///
+	/// REPRESENTATION: Expected values are
+	/// *   **REPRESENTATION_POINTS**
+	/// *   **REPRESENTATION_WIREFRAME**
+	/// *   **REPRESENTATION_SURFACE**
+	///
+	/// IMMEDIATE_RENDERING:
+	/// *   Turn on immediate rendering by setting the value to 1.
+	/// *   Turn off immediate rendering by setting the value to 0.
+	///
+	/// SHADING: Expected values are
+	/// *   **SHADING_FLAT**
+	/// *   **SHADING_GOURAUD**
+	/// *   **SHADING_PHONG**
+	// setRenderingProperty(const String &, int, double)(InString, Primitive, Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:299
+	// ("cv::viz::Viz3d::setRenderingProperty", vec![(pred!(mut, ["id", "property", "value"], ["const cv::String*", "int", "double"]), _)]),
+	#[inline]
+	fn set_rendering_property(&mut self, id: &str, property: i32, value: f64) -> Result<()> {
+		extern_container_arg!(id);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_setRenderingProperty_const_StringR_int_double(self.as_raw_mut_Viz3d(), id.opencv_as_extern(), property, value, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Returns rendering property of a widget.
+	///
+	/// ## Parameters
+	/// * id: Id of the widget.
+	/// * property: Property.
+	///
+	/// Rendering property can be one of the following:
+	/// *   **POINT_SIZE**
+	/// *   **OPACITY**
+	/// *   **LINE_WIDTH**
+	/// *   **FONT_SIZE**
+	///
+	/// REPRESENTATION: Expected values are
+	/// *   **REPRESENTATION_POINTS**
+	/// *   **REPRESENTATION_WIREFRAME**
+	/// *   **REPRESENTATION_SURFACE**
+	///
+	/// IMMEDIATE_RENDERING:
+	/// *   Turn on immediate rendering by setting the value to 1.
+	/// *   Turn off immediate rendering by setting the value to 0.
+	///
+	/// SHADING: Expected values are
+	/// *   **SHADING_FLAT**
+	/// *   **SHADING_GOURAUD**
+	/// *   **SHADING_PHONG**
+	// getRenderingProperty(const String &, int)(InString, Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:325
+	// ("cv::viz::Viz3d::getRenderingProperty", vec![(pred!(mut, ["id", "property"], ["const cv::String*", "int"]), _)]),
+	#[inline]
+	fn get_rendering_property(&mut self, id: &str, property: i32) -> Result<f64> {
+		extern_container_arg!(id);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_getRenderingProperty_const_StringR_int(self.as_raw_mut_Viz3d(), id.opencv_as_extern(), property, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Sets geometry representation of the widgets to surface, wireframe or points.
+	///
+	/// ## Parameters
+	/// * representation: Geometry representation which can be one of the following:
+	/// *   **REPRESENTATION_POINTS**
+	/// *   **REPRESENTATION_WIREFRAME**
+	/// *   **REPRESENTATION_SURFACE**
+	// setRepresentation(int)(Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:334
+	// ("cv::viz::Viz3d::setRepresentation", vec![(pred!(mut, ["representation"], ["int"]), _)]),
+	#[inline]
+	fn set_representation(&mut self, representation: i32) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_setRepresentation_int(self.as_raw_mut_Viz3d(), representation, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// ## C++ default parameters
+	/// * enabled: false
+	// setGlobalWarnings(bool)(Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:336
+	// ("cv::viz::Viz3d::setGlobalWarnings", vec![(pred!(mut, ["enabled"], ["bool"]), _)]),
+	#[inline]
+	fn set_global_warnings(&mut self, enabled: bool) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_setGlobalWarnings_bool(self.as_raw_mut_Viz3d(), enabled, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// ## Note
+	/// This alternative version of [Viz3dTrait::set_global_warnings] function uses the following default values for its arguments:
+	/// * enabled: false
+	// cv::viz::Viz3d::setGlobalWarnings() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:336
+	// ("cv::viz::Viz3d::setGlobalWarnings", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	fn set_global_warnings_def(&mut self) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_setGlobalWarnings(self.as_raw_mut_Viz3d(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+}
+
+/// The Viz3d class represents a 3D visualizer window. This class is implicitly shared.
+// Viz3d /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:67
+pub struct Viz3d {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { Viz3d }
+
+impl Drop for Viz3d {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_viz_Viz3d_delete(self.as_raw_mut_Viz3d()) };
+	}
+}
+
+unsafe impl Send for Viz3d {}
+
+impl crate::viz::Viz3dTraitConst for Viz3d {
+	#[inline] fn as_raw_Viz3d(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::Viz3dTrait for Viz3d {
+	#[inline] fn as_raw_mut_Viz3d(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { Viz3d, crate::viz::Viz3dTraitConst, as_raw_Viz3d, crate::viz::Viz3dTrait, as_raw_mut_Viz3d }
+
+impl Viz3d {
+	/// The constructors.
+	///
+	/// ## Parameters
+	/// * window_name: Name of the window.
+	///
+	/// ## C++ default parameters
+	/// * window_name: String()
+	// Viz3d(const String &)(InString) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:78
+	// ("cv::viz::Viz3d::Viz3d", vec![(pred!(mut, ["window_name"], ["const cv::String*"]), _)]),
+	#[inline]
+	pub fn new(window_name: &str) -> Result<crate::viz::Viz3d> {
+		extern_container_arg!(window_name);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_Viz3d_const_StringR(window_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Viz3d::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// The constructors.
+	///
+	/// ## Parameters
+	/// * window_name: Name of the window.
+	///
+	/// ## Note
+	/// This alternative version of [new] function uses the following default values for its arguments:
+	/// * window_name: String()
+	// cv::viz::Viz3d::Viz3d() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:78
+	// ("cv::viz::Viz3d::Viz3d", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn new_def() -> Result<crate::viz::Viz3d> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_Viz3d(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Viz3d::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// Viz3d(const Viz3d &)(TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/viz3d.hpp:79
+	// ("cv::viz::Viz3d::Viz3d", vec![(pred!(mut, ["unnamed"], ["const cv::viz::Viz3d*"]), _)]),
+	#[inline]
+	pub fn copy(unnamed: &impl crate::viz::Viz3dTraitConst) -> Result<crate::viz::Viz3d> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Viz3d_Viz3d_const_Viz3dR(unnamed.as_raw_Viz3d(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Viz3d::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+impl std::fmt::Debug for Viz3d {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("Viz3d")
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::viz::WArrow]
+// WArrow /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:288
+pub trait WArrowTraitConst: crate::viz::Widget3DTraitConst {
+	fn as_raw_WArrow(&self) -> *const c_void;
+
+}
+
+/// Mutable methods for [crate::viz::WArrow]
+pub trait WArrowTrait: crate::viz::WArrowTraitConst + crate::viz::Widget3DTrait {
+	fn as_raw_mut_WArrow(&mut self) -> *mut c_void;
+
+}
+
+/// This 3D Widget defines an arrow.
+// WArrow /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:288
+pub struct WArrow {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { WArrow }
+
+impl Drop for WArrow {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_viz_WArrow_delete(self.as_raw_mut_WArrow()) };
+	}
+}
+
+unsafe impl Send for WArrow {}
+
+impl crate::viz::WidgetTraitConst for WArrow {
+	#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WidgetTrait for WArrow {
+	#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WArrow, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+impl crate::viz::Widget3DTraitConst for WArrow {
+	#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::Widget3DTrait for WArrow {
+	#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WArrow, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+impl crate::viz::WArrowTraitConst for WArrow {
+	#[inline] fn as_raw_WArrow(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WArrowTrait for WArrow {
+	#[inline] fn as_raw_mut_WArrow(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WArrow, crate::viz::WArrowTraitConst, as_raw_WArrow, crate::viz::WArrowTrait, as_raw_mut_WArrow }
+
+impl WArrow {
+	/// Constructs an WArrow.
+	///
+	/// ## Parameters
+	/// * pt1: Start point of the arrow.
+	/// * pt2: End point of the arrow.
+	/// * thickness: Thickness of the arrow. Thickness of arrow head is also adjusted
+	/// accordingly.
+	/// * color: Color of the arrow.
+	///
+	/// Arrow head is located at the end point of the arrow.
+	///
+	/// ## C++ default parameters
+	/// * thickness: 0.03
+	/// * color: Color::white()
+	// WArrow(const Point3d &, const Point3d &, double, const Color &)(SimpleClass, SimpleClass, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:301
+	// ("cv::viz::WArrow::WArrow", vec![(pred!(mut, ["pt1", "pt2", "thickness", "color"], ["const cv::Point3d*", "const cv::Point3d*", "double", "const cv::viz::Color*"]), _)]),
+	#[inline]
+	pub fn new(pt1: core::Point3d, pt2: core::Point3d, thickness: f64, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WArrow> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WArrow_WArrow_const_Point3dR_const_Point3dR_double_const_ColorR(&pt1, &pt2, thickness, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WArrow::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Constructs an WArrow.
+	///
+	/// ## Parameters
+	/// * pt1: Start point of the arrow.
+	/// * pt2: End point of the arrow.
+	/// * thickness: Thickness of the arrow. Thickness of arrow head is also adjusted
+	/// accordingly.
+	/// * color: Color of the arrow.
+	///
+	/// Arrow head is located at the end point of the arrow.
+	///
+	/// ## Note
+	/// This alternative version of [new] function uses the following default values for its arguments:
+	/// * thickness: 0.03
+	/// * color: Color::white()
+	// cv::viz::WArrow::WArrow(SimpleClass, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:301
+	// ("cv::viz::WArrow::WArrow", vec![(pred!(mut, ["pt1", "pt2"], ["const cv::Point3d*", "const cv::Point3d*"]), _)]),
+	#[inline]
+	pub fn new_def(pt1: core::Point3d, pt2: core::Point3d) -> Result<crate::viz::WArrow> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WArrow_WArrow_const_Point3dR_const_Point3dR(&pt1, &pt2, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WArrow::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+boxed_cast_base! { WArrow, crate::viz::Widget, cv_viz_WArrow_to_Widget }
+
+boxed_cast_base! { WArrow, crate::viz::Widget3D, cv_viz_WArrow_to_Widget3D }
+
+impl std::fmt::Debug for WArrow {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("WArrow")
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::viz::WCameraPosition]
+// WCameraPosition /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:543
+pub trait WCameraPositionTraitConst: crate::viz::Widget3DTraitConst {
+	fn as_raw_WCameraPosition(&self) -> *const c_void;
+
+}
+
+/// Mutable methods for [crate::viz::WCameraPosition]
+pub trait WCameraPositionTrait: crate::viz::WCameraPositionTraitConst + crate::viz::Widget3DTrait {
+	fn as_raw_mut_WCameraPosition(&mut self) -> *mut c_void;
+
+}
+
+/// This 3D Widget represents camera position in a scene by its axes or viewing frustum. :
+// WCameraPosition /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:543
+pub struct WCameraPosition {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { WCameraPosition }
+
+impl Drop for WCameraPosition {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_viz_WCameraPosition_delete(self.as_raw_mut_WCameraPosition()) };
+	}
+}
+
+unsafe impl Send for WCameraPosition {}
+
+impl crate::viz::WidgetTraitConst for WCameraPosition {
+	#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WidgetTrait for WCameraPosition {
+	#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WCameraPosition, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+impl crate::viz::Widget3DTraitConst for WCameraPosition {
+	#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::Widget3DTrait for WCameraPosition {
+	#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WCameraPosition, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+impl crate::viz::WCameraPositionTraitConst for WCameraPosition {
+	#[inline] fn as_raw_WCameraPosition(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WCameraPositionTrait for WCameraPosition {
+	#[inline] fn as_raw_mut_WCameraPosition(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WCameraPosition, crate::viz::WCameraPositionTraitConst, as_raw_WCameraPosition, crate::viz::WCameraPositionTrait, as_raw_mut_WCameraPosition }
+
+impl WCameraPosition {
+	/// Creates camera coordinate frame at the origin.
+	///
+	/// ![Camera coordinate frame](https://docs.opencv.org/5.0.0/cpw1.png)
+	///
+	/// ## C++ default parameters
+	/// * scale: 1.0
+	// WCameraPosition(double)(Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:550
+	// ("cv::viz::WCameraPosition::WCameraPosition", vec![(pred!(mut, ["scale"], ["double"]), _)]),
+	#[inline]
+	pub fn new(scale: f64) -> Result<crate::viz::WCameraPosition> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_double(scale, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WCameraPosition::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Creates camera coordinate frame at the origin.
+	///
+	/// ![Camera coordinate frame](https://docs.opencv.org/5.0.0/cpw1.png)
+	///
+	/// ## Note
+	/// This alternative version of [new] function uses the following default values for its arguments:
+	/// * scale: 1.0
+	// cv::viz::WCameraPosition::WCameraPosition() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:550
+	// ("cv::viz::WCameraPosition::WCameraPosition", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn new_def() -> Result<crate::viz::WCameraPosition> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCameraPosition_WCameraPosition(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WCameraPosition::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Display the viewing frustum
+	/// ## Parameters
+	/// * K: Intrinsic matrix of the camera.
+	/// * scale: Scale of the frustum.
+	/// * color: Color of the frustum.
+	///
+	/// Creates viewing frustum of the camera based on its intrinsic matrix K.
+	///
+	/// ![Camera viewing frustum](https://docs.opencv.org/5.0.0/cpw2.png)
+	///
+	/// ## C++ default parameters
+	/// * scale: 1.0
+	/// * color: Color::white()
+	// WCameraPosition(const Matx33d &, double, const Color &)(SimpleClass, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:560
+	// ("cv::viz::WCameraPosition::WCameraPosition", vec![(pred!(mut, ["K", "scale", "color"], ["const cv::Matx33d*", "double", "const cv::viz::Color*"]), _)]),
+	#[inline]
+	pub fn new_1(k: core::Matx33d, scale: f64, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WCameraPosition> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Matx33dR_double_const_ColorR(&k, scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WCameraPosition::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Display the viewing frustum
+	/// ## Parameters
+	/// * K: Intrinsic matrix of the camera.
+	/// * scale: Scale of the frustum.
+	/// * color: Color of the frustum.
+	///
+	/// Creates viewing frustum of the camera based on its intrinsic matrix K.
+	///
+	/// ![Camera viewing frustum](https://docs.opencv.org/5.0.0/cpw2.png)
+	///
+	/// ## Note
+	/// This alternative version of [new] function uses the following default values for its arguments:
+	/// * scale: 1.0
+	/// * color: Color::white()
+	// cv::viz::WCameraPosition::WCameraPosition(SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:560
+	// ("cv::viz::WCameraPosition::WCameraPosition", vec![(pred!(mut, ["K"], ["const cv::Matx33d*"]), _)]),
+	#[inline]
+	pub fn new_def_1(k: core::Matx33d) -> Result<crate::viz::WCameraPosition> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Matx33dR(&k, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WCameraPosition::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Display the viewing frustum
+	/// ## Parameters
+	/// * fov: Field of view of the camera (horizontal, vertical).
+	/// * scale: Scale of the frustum.
+	/// * color: Color of the frustum.
+	///
+	/// Creates viewing frustum of the camera based on its field of view fov.
+	///
+	/// ![Camera viewing frustum](https://docs.opencv.org/5.0.0/cpw2.png)
+	///
+	/// ## C++ default parameters
+	/// * scale: 1.0
+	/// * color: Color::white()
+	// WCameraPosition(const Vec2d &, double, const Color &)(SimpleClass, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:570
+	// ("cv::viz::WCameraPosition::WCameraPosition", vec![(pred!(mut, ["fov", "scale", "color"], ["const cv::Vec2d*", "double", "const cv::viz::Color*"]), _)]),
+	#[inline]
+	pub fn new_2(fov: core::Vec2d, scale: f64, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WCameraPosition> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Vec2dR_double_const_ColorR(&fov, scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WCameraPosition::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Display the viewing frustum
+	/// ## Parameters
+	/// * fov: Field of view of the camera (horizontal, vertical).
+	/// * scale: Scale of the frustum.
+	/// * color: Color of the frustum.
+	///
+	/// Creates viewing frustum of the camera based on its field of view fov.
+	///
+	/// ![Camera viewing frustum](https://docs.opencv.org/5.0.0/cpw2.png)
+	///
+	/// ## Note
+	/// This alternative version of [new] function uses the following default values for its arguments:
+	/// * scale: 1.0
+	/// * color: Color::white()
+	// cv::viz::WCameraPosition::WCameraPosition(SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:570
+	// ("cv::viz::WCameraPosition::WCameraPosition", vec![(pred!(mut, ["fov"], ["const cv::Vec2d*"]), _)]),
+	#[inline]
+	pub fn new_def_2(fov: core::Vec2d) -> Result<crate::viz::WCameraPosition> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Vec2dR(&fov, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WCameraPosition::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Display image on the far plane of the viewing frustum
+	///
+	/// ## Parameters
+	/// * K: Intrinsic matrix of the camera.
+	/// * image: BGR or Gray-Scale image that is going to be displayed on the far plane of the frustum.
+	/// * scale: Scale of the frustum and image.
+	/// * color: Color of the frustum.
+	///
+	/// Creates viewing frustum of the camera based on its intrinsic matrix K, and displays image on
+	/// the far end plane.
+	///
+	/// ![Camera viewing frustum with image](https://docs.opencv.org/5.0.0/cpw3.png)
+	///
+	/// ## C++ default parameters
+	/// * scale: 1.0
+	/// * color: Color::white()
+	// WCameraPosition(const Matx33d &, InputArray, double, const Color &)(SimpleClass, InputArray, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:583
+	// ("cv::viz::WCameraPosition::WCameraPosition", vec![(pred!(mut, ["K", "image", "scale", "color"], ["const cv::Matx33d*", "const cv::_InputArray*", "double", "const cv::viz::Color*"]), _)]),
+	#[inline]
+	pub fn new_3(k: core::Matx33d, image: &impl ToInputArray, scale: f64, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WCameraPosition> {
+		input_array_arg!(image);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Matx33dR_const__InputArrayR_double_const_ColorR(&k, image.as_raw__InputArray(), scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WCameraPosition::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Display image on the far plane of the viewing frustum
+	///
+	/// ## Parameters
+	/// * K: Intrinsic matrix of the camera.
+	/// * image: BGR or Gray-Scale image that is going to be displayed on the far plane of the frustum.
+	/// * scale: Scale of the frustum and image.
+	/// * color: Color of the frustum.
+	///
+	/// Creates viewing frustum of the camera based on its intrinsic matrix K, and displays image on
+	/// the far end plane.
+	///
+	/// ![Camera viewing frustum with image](https://docs.opencv.org/5.0.0/cpw3.png)
+	///
+	/// ## Note
+	/// This alternative version of [new] function uses the following default values for its arguments:
+	/// * scale: 1.0
+	/// * color: Color::white()
+	// cv::viz::WCameraPosition::WCameraPosition(SimpleClass, InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:583
+	// ("cv::viz::WCameraPosition::WCameraPosition", vec![(pred!(mut, ["K", "image"], ["const cv::Matx33d*", "const cv::_InputArray*"]), _)]),
+	#[inline]
+	pub fn new_def_3(k: core::Matx33d, image: &impl ToInputArray) -> Result<crate::viz::WCameraPosition> {
+		input_array_arg!(image);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Matx33dR_const__InputArrayR(&k, image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WCameraPosition::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Display image on the far plane of the viewing frustum
+	///
+	/// ## Parameters
+	/// * fov: Field of view of the camera (horizontal, vertical).
+	/// * image: BGR or Gray-Scale image that is going to be displayed on the far plane of the frustum.
+	/// * scale: Scale of the frustum and image.
+	/// * color: Color of the frustum.
+	///
+	/// Creates viewing frustum of the camera based on its intrinsic matrix K, and displays image on
+	/// the far end plane.
+	///
+	/// ![Camera viewing frustum with image](https://docs.opencv.org/5.0.0/cpw3.png)
+	///
+	/// ## C++ default parameters
+	/// * scale: 1.0
+	/// * color: Color::white()
+	// WCameraPosition(const Vec2d &, InputArray, double, const Color &)(SimpleClass, InputArray, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:596
+	// ("cv::viz::WCameraPosition::WCameraPosition", vec![(pred!(mut, ["fov", "image", "scale", "color"], ["const cv::Vec2d*", "const cv::_InputArray*", "double", "const cv::viz::Color*"]), _)]),
+	#[inline]
+	pub fn new_4(fov: core::Vec2d, image: &impl ToInputArray, scale: f64, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WCameraPosition> {
+		input_array_arg!(image);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Vec2dR_const__InputArrayR_double_const_ColorR(&fov, image.as_raw__InputArray(), scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WCameraPosition::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Display image on the far plane of the viewing frustum
+	///
+	/// ## Parameters
+	/// * fov: Field of view of the camera (horizontal, vertical).
+	/// * image: BGR or Gray-Scale image that is going to be displayed on the far plane of the frustum.
+	/// * scale: Scale of the frustum and image.
+	/// * color: Color of the frustum.
+	///
+	/// Creates viewing frustum of the camera based on its intrinsic matrix K, and displays image on
+	/// the far end plane.
+	///
+	/// ![Camera viewing frustum with image](https://docs.opencv.org/5.0.0/cpw3.png)
+	///
+	/// ## Note
+	/// This alternative version of [new] function uses the following default values for its arguments:
+	/// * scale: 1.0
+	/// * color: Color::white()
+	// cv::viz::WCameraPosition::WCameraPosition(SimpleClass, InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:596
+	// ("cv::viz::WCameraPosition::WCameraPosition", vec![(pred!(mut, ["fov", "image"], ["const cv::Vec2d*", "const cv::_InputArray*"]), _)]),
+	#[inline]
+	pub fn new_def_4(fov: core::Vec2d, image: &impl ToInputArray) -> Result<crate::viz::WCameraPosition> {
+		input_array_arg!(image);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Vec2dR_const__InputArrayR(&fov, image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WCameraPosition::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+boxed_cast_base! { WCameraPosition, crate::viz::Widget, cv_viz_WCameraPosition_to_Widget }
+
+boxed_cast_base! { WCameraPosition, crate::viz::Widget3D, cv_viz_WCameraPosition_to_Widget3D }
+
+impl std::fmt::Debug for WCameraPosition {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("WCameraPosition")
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::viz::WCircle]
+// WCircle /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:306
+pub trait WCircleTraitConst: crate::viz::Widget3DTraitConst {
+	fn as_raw_WCircle(&self) -> *const c_void;
+
+}
+
+/// Mutable methods for [crate::viz::WCircle]
+pub trait WCircleTrait: crate::viz::WCircleTraitConst + crate::viz::Widget3DTrait {
+	fn as_raw_mut_WCircle(&mut self) -> *mut c_void;
+
+}
+
+/// This 3D Widget defines a circle.
+// WCircle /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:306
+pub struct WCircle {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { WCircle }
+
+impl Drop for WCircle {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_viz_WCircle_delete(self.as_raw_mut_WCircle()) };
+	}
+}
+
+unsafe impl Send for WCircle {}
+
+impl crate::viz::WidgetTraitConst for WCircle {
+	#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WidgetTrait for WCircle {
+	#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WCircle, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+impl crate::viz::Widget3DTraitConst for WCircle {
+	#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::Widget3DTrait for WCircle {
+	#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WCircle, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+impl crate::viz::WCircleTraitConst for WCircle {
+	#[inline] fn as_raw_WCircle(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WCircleTrait for WCircle {
+	#[inline] fn as_raw_mut_WCircle(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WCircle, crate::viz::WCircleTraitConst, as_raw_WCircle, crate::viz::WCircleTrait, as_raw_mut_WCircle }
+
+impl WCircle {
+	/// Constructs default planar circle centered at origin with plane normal along z-axis
+	///
+	/// ## Parameters
+	/// * radius: Radius of the circle.
+	/// * thickness: Thickness of the circle.
+	/// * color: Color of the circle.
+	///
+	/// ## C++ default parameters
+	/// * thickness: 0.01
+	/// * color: Color::white()
+	// WCircle(double, double, const Color &)(Primitive, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:315
+	// ("cv::viz::WCircle::WCircle", vec![(pred!(mut, ["radius", "thickness", "color"], ["double", "double", "const cv::viz::Color*"]), _)]),
+	#[inline]
+	pub fn new(radius: f64, thickness: f64, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WCircle> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCircle_WCircle_double_double_const_ColorR(radius, thickness, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WCircle::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Constructs default planar circle centered at origin with plane normal along z-axis
+	///
+	/// ## Parameters
+	/// * radius: Radius of the circle.
+	/// * thickness: Thickness of the circle.
+	/// * color: Color of the circle.
+	///
+	/// ## Note
+	/// This alternative version of [new] function uses the following default values for its arguments:
+	/// * thickness: 0.01
+	/// * color: Color::white()
+	// cv::viz::WCircle::WCircle(Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:315
+	// ("cv::viz::WCircle::WCircle", vec![(pred!(mut, ["radius"], ["double"]), _)]),
+	#[inline]
+	pub fn new_def(radius: f64) -> Result<crate::viz::WCircle> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCircle_WCircle_double(radius, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WCircle::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Constructs repositioned planar circle.
+	///
+	/// ## Parameters
+	/// * radius: Radius of the circle.
+	/// * center: Center of the circle.
+	/// * normal: Normal of the plane in which the circle lies.
+	/// * thickness: Thickness of the circle.
+	/// * color: Color of the circle.
+	///
+	/// ## C++ default parameters
+	/// * thickness: 0.01
+	/// * color: Color::white()
+	// WCircle(double, const Point3d &, const Vec3d &, double, const Color &)(Primitive, SimpleClass, SimpleClass, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:325
+	// ("cv::viz::WCircle::WCircle", vec![(pred!(mut, ["radius", "center", "normal", "thickness", "color"], ["double", "const cv::Point3d*", "const cv::Vec3d*", "double", "const cv::viz::Color*"]), _)]),
+	#[inline]
+	pub fn new_1(radius: f64, center: core::Point3d, normal: core::Vec3d, thickness: f64, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WCircle> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCircle_WCircle_double_const_Point3dR_const_Vec3dR_double_const_ColorR(radius, &center, &normal, thickness, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WCircle::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Constructs repositioned planar circle.
+	///
+	/// ## Parameters
+	/// * radius: Radius of the circle.
+	/// * center: Center of the circle.
+	/// * normal: Normal of the plane in which the circle lies.
+	/// * thickness: Thickness of the circle.
+	/// * color: Color of the circle.
+	///
+	/// ## Note
+	/// This alternative version of [new] function uses the following default values for its arguments:
+	/// * thickness: 0.01
+	/// * color: Color::white()
+	// cv::viz::WCircle::WCircle(Primitive, SimpleClass, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:325
+	// ("cv::viz::WCircle::WCircle", vec![(pred!(mut, ["radius", "center", "normal"], ["double", "const cv::Point3d*", "const cv::Vec3d*"]), _)]),
+	#[inline]
+	pub fn new_def_1(radius: f64, center: core::Point3d, normal: core::Vec3d) -> Result<crate::viz::WCircle> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCircle_WCircle_double_const_Point3dR_const_Vec3dR(radius, &center, &normal, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WCircle::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+boxed_cast_base! { WCircle, crate::viz::Widget, cv_viz_WCircle_to_Widget }
+
+boxed_cast_base! { WCircle, crate::viz::Widget3D, cv_viz_WCircle_to_Widget3D }
+
+impl std::fmt::Debug for WCircle {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("WCircle")
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::viz::WCloud]
+// WCloud /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:680
+pub trait WCloudTraitConst: crate::viz::Widget3DTraitConst {
+	fn as_raw_WCloud(&self) -> *const c_void;
+
+}
+
+/// Mutable methods for [crate::viz::WCloud]
+pub trait WCloudTrait: crate::viz::WCloudTraitConst + crate::viz::Widget3DTrait {
+	fn as_raw_mut_WCloud(&mut self) -> *mut c_void;
+
+}
+
+/// This 3D Widget defines a point cloud. :
+///
+///
+/// Note: In case there are four channels in the cloud, fourth channel is ignored.
+// WCloud /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:680
+pub struct WCloud {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { WCloud }
+
+impl Drop for WCloud {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_viz_WCloud_delete(self.as_raw_mut_WCloud()) };
+	}
+}
+
+unsafe impl Send for WCloud {}
+
+impl crate::viz::WidgetTraitConst for WCloud {
+	#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WidgetTrait for WCloud {
+	#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WCloud, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+impl crate::viz::Widget3DTraitConst for WCloud {
+	#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::Widget3DTrait for WCloud {
+	#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WCloud, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+impl crate::viz::WCloudTraitConst for WCloud {
+	#[inline] fn as_raw_WCloud(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WCloudTrait for WCloud {
+	#[inline] fn as_raw_mut_WCloud(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WCloud, crate::viz::WCloudTraitConst, as_raw_WCloud, crate::viz::WCloudTrait, as_raw_mut_WCloud }
+
+impl WCloud {
+	/// Constructs a WCloud.
+	///
+	/// ## Parameters
+	/// * cloud: Set of points which can be of type: CV_32FC3, CV_32FC4, CV_64FC3, CV_64FC4.
+	/// * colors: Set of colors. It has to be of the same size with cloud.
+	///
+	/// Points in the cloud belong to mask when they are set to (NaN, NaN, NaN).
+	// WCloud(InputArray, InputArray)(InputArray, InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:690
+	// ("cv::viz::WCloud::WCloud", vec![(pred!(mut, ["cloud", "colors"], ["const cv::_InputArray*", "const cv::_InputArray*"]), _)]),
+	#[inline]
+	pub fn new(cloud: &impl ToInputArray, colors: &impl ToInputArray) -> Result<crate::viz::WCloud> {
+		input_array_arg!(cloud);
+		input_array_arg!(colors);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCloud_WCloud_const__InputArrayR_const__InputArrayR(cloud.as_raw__InputArray(), colors.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WCloud::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Constructs a WCloud.
+	/// ## Parameters
+	/// * cloud: Set of points which can be of type: CV_32FC3, CV_32FC4, CV_64FC3, CV_64FC4.
+	/// * color: A single Color for the whole cloud.
+	///
+	/// Points in the cloud belong to mask when they are set to (NaN, NaN, NaN).
+	///
+	/// ## C++ default parameters
+	/// * color: Color::white()
+	// WCloud(InputArray, const Color &)(InputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:698
+	// ("cv::viz::WCloud::WCloud", vec![(pred!(mut, ["cloud", "color"], ["const cv::_InputArray*", "const cv::viz::Color*"]), _)]),
+	#[inline]
+	pub fn new_1(cloud: &impl ToInputArray, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WCloud> {
+		input_array_arg!(cloud);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCloud_WCloud_const__InputArrayR_const_ColorR(cloud.as_raw__InputArray(), color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WCloud::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Constructs a WCloud.
+	/// ## Parameters
+	/// * cloud: Set of points which can be of type: CV_32FC3, CV_32FC4, CV_64FC3, CV_64FC4.
+	/// * color: A single Color for the whole cloud.
+	///
+	/// Points in the cloud belong to mask when they are set to (NaN, NaN, NaN).
+	///
+	/// ## Note
+	/// This alternative version of [new] function uses the following default values for its arguments:
+	/// * color: Color::white()
+	// cv::viz::WCloud::WCloud(InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:698
+	// ("cv::viz::WCloud::WCloud", vec![(pred!(mut, ["cloud"], ["const cv::_InputArray*"]), _)]),
+	#[inline]
+	pub fn new_def(cloud: &impl ToInputArray) -> Result<crate::viz::WCloud> {
+		input_array_arg!(cloud);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCloud_WCloud_const__InputArrayR(cloud.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WCloud::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Constructs a WCloud.
+	/// ## Parameters
+	/// * cloud: Set of points which can be of type: CV_32FC3, CV_32FC4, CV_64FC3, CV_64FC4.
+	/// * colors: Set of colors. It has to be of the same size with cloud.
+	/// * normals: Normals for each point in cloud. Size and type should match with the cloud parameter.
+	///
+	/// Points in the cloud belong to mask when they are set to (NaN, NaN, NaN).
+	// WCloud(InputArray, InputArray, InputArray)(InputArray, InputArray, InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:707
+	// ("cv::viz::WCloud::WCloud", vec![(pred!(mut, ["cloud", "colors", "normals"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_InputArray*"]), _)]),
+	#[inline]
+	pub fn new_2(cloud: &impl ToInputArray, colors: &impl ToInputArray, normals: &impl ToInputArray) -> Result<crate::viz::WCloud> {
+		input_array_arg!(cloud);
+		input_array_arg!(colors);
+		input_array_arg!(normals);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCloud_WCloud_const__InputArrayR_const__InputArrayR_const__InputArrayR(cloud.as_raw__InputArray(), colors.as_raw__InputArray(), normals.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WCloud::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Constructs a WCloud.
+	/// ## Parameters
+	/// * cloud: Set of points which can be of type: CV_32FC3, CV_32FC4, CV_64FC3, CV_64FC4.
+	/// * color: A single Color for the whole cloud.
+	/// * normals: Normals for each point in cloud.
+	///
+	/// Size and type should match with the cloud parameter.
+	/// Points in the cloud belong to mask when they are set to (NaN, NaN, NaN).
+	// WCloud(InputArray, const Color &, InputArray)(InputArray, TraitClass, InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:717
+	// ("cv::viz::WCloud::WCloud", vec![(pred!(mut, ["cloud", "color", "normals"], ["const cv::_InputArray*", "const cv::viz::Color*", "const cv::_InputArray*"]), _)]),
+	#[inline]
+	pub fn new_3(cloud: &impl ToInputArray, color: &impl crate::viz::ColorTraitConst, normals: &impl ToInputArray) -> Result<crate::viz::WCloud> {
+		input_array_arg!(cloud);
+		input_array_arg!(normals);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCloud_WCloud_const__InputArrayR_const_ColorR_const__InputArrayR(cloud.as_raw__InputArray(), color.as_raw_Color(), normals.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WCloud::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+boxed_cast_base! { WCloud, crate::viz::Widget, cv_viz_WCloud_to_Widget }
+
+boxed_cast_base! { WCloud, crate::viz::Widget3D, cv_viz_WCloud_to_Widget3D }
+
+impl std::fmt::Debug for WCloud {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("WCloud")
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::viz::WCloudCollection]
+// WCloudCollection /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:736
+pub trait WCloudCollectionTraitConst: crate::viz::Widget3DTraitConst {
+	fn as_raw_WCloudCollection(&self) -> *const c_void;
+
+}
+
+/// Mutable methods for [crate::viz::WCloudCollection]
+pub trait WCloudCollectionTrait: crate::viz::WCloudCollectionTraitConst + crate::viz::Widget3DTrait {
+	fn as_raw_mut_WCloudCollection(&mut self) -> *mut c_void;
+
+	/// Adds a cloud to the collection.
+	///
+	/// ## Parameters
+	/// * cloud: Point set which can be of type: CV_32FC3, CV_32FC4, CV_64FC3, CV_64FC4.
+	/// * colors: Set of colors. It has to be of the same size with cloud.
+	/// * pose: Pose of the cloud. Points in the cloud belong to mask when they are set to (NaN, NaN, NaN).
+	///
+	/// ## C++ default parameters
+	/// * pose: Affine3d::Identity()
+	// addCloud(InputArray, InputArray, const Affine3d &)(InputArray, InputArray, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:747
+	// ("cv::viz::WCloudCollection::addCloud", vec![(pred!(mut, ["cloud", "colors", "pose"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::Affine3d*"]), _)]),
+	#[inline]
+	fn add_cloud(&mut self, cloud: &impl ToInputArray, colors: &impl ToInputArray, pose: core::Affine3d) -> Result<()> {
+		input_array_arg!(cloud);
+		input_array_arg!(colors);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCloudCollection_addCloud_const__InputArrayR_const__InputArrayR_const_Affine3dR(self.as_raw_mut_WCloudCollection(), cloud.as_raw__InputArray(), colors.as_raw__InputArray(), &pose, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Adds a cloud to the collection.
+	///
+	/// ## Parameters
+	/// * cloud: Point set which can be of type: CV_32FC3, CV_32FC4, CV_64FC3, CV_64FC4.
+	/// * colors: Set of colors. It has to be of the same size with cloud.
+	/// * pose: Pose of the cloud. Points in the cloud belong to mask when they are set to (NaN, NaN, NaN).
+	///
+	/// ## Note
+	/// This alternative version of [WCloudCollectionTrait::add_cloud] function uses the following default values for its arguments:
+	/// * pose: Affine3d::Identity()
+	// cv::viz::WCloudCollection::addCloud(InputArray, InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:747
+	// ("cv::viz::WCloudCollection::addCloud", vec![(pred!(mut, ["cloud", "colors"], ["const cv::_InputArray*", "const cv::_InputArray*"]), _)]),
+	#[inline]
+	fn add_cloud_def(&mut self, cloud: &impl ToInputArray, colors: &impl ToInputArray) -> Result<()> {
+		input_array_arg!(cloud);
+		input_array_arg!(colors);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCloudCollection_addCloud_const__InputArrayR_const__InputArrayR(self.as_raw_mut_WCloudCollection(), cloud.as_raw__InputArray(), colors.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Adds a cloud to the collection.
+	///
+	/// ## Parameters
+	/// * cloud: Point set which can be of type: CV_32FC3, CV_32FC4, CV_64FC3, CV_64FC4.
+	/// * color: A single Color for the whole cloud.
+	/// * pose: Pose of the cloud. Points in the cloud belong to mask when they are set to (NaN, NaN, NaN).
+	///
+	/// ## C++ default parameters
+	/// * color: Color::white()
+	/// * pose: Affine3d::Identity()
+	// addCloud(InputArray, const Color &, const Affine3d &)(InputArray, TraitClass, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:754
+	// ("cv::viz::WCloudCollection::addCloud", vec![(pred!(mut, ["cloud", "color", "pose"], ["const cv::_InputArray*", "const cv::viz::Color*", "const cv::Affine3d*"]), _)]),
+	#[inline]
+	fn add_cloud_1(&mut self, cloud: &impl ToInputArray, color: &impl crate::viz::ColorTraitConst, pose: core::Affine3d) -> Result<()> {
+		input_array_arg!(cloud);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCloudCollection_addCloud_const__InputArrayR_const_ColorR_const_Affine3dR(self.as_raw_mut_WCloudCollection(), cloud.as_raw__InputArray(), color.as_raw_Color(), &pose, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Adds a cloud to the collection.
+	///
+	/// ## Parameters
+	/// * cloud: Point set which can be of type: CV_32FC3, CV_32FC4, CV_64FC3, CV_64FC4.
+	/// * color: A single Color for the whole cloud.
+	/// * pose: Pose of the cloud. Points in the cloud belong to mask when they are set to (NaN, NaN, NaN).
+	///
+	/// ## Note
+	/// This alternative version of [WCloudCollectionTrait::add_cloud] function uses the following default values for its arguments:
+	/// * color: Color::white()
+	/// * pose: Affine3d::Identity()
+	// cv::viz::WCloudCollection::addCloud(InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:754
+	// ("cv::viz::WCloudCollection::addCloud", vec![(pred!(mut, ["cloud"], ["const cv::_InputArray*"]), _)]),
+	#[inline]
+	fn add_cloud_def_1(&mut self, cloud: &impl ToInputArray) -> Result<()> {
+		input_array_arg!(cloud);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCloudCollection_addCloud_const__InputArrayR(self.as_raw_mut_WCloudCollection(), cloud.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Finalizes cloud data by repacking to single cloud.
+	///
+	/// Useful for large cloud collections to reduce memory usage
+	// finalize()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:759
+	// ("cv::viz::WCloudCollection::finalize", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	fn finalize(&mut self) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCloudCollection_finalize(self.as_raw_mut_WCloudCollection(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+}
+
+/// This 3D Widget defines a collection of clouds. :
+///
+/// Note: In case there are four channels in the cloud, fourth channel is ignored.
+// WCloudCollection /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:736
+pub struct WCloudCollection {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { WCloudCollection }
+
+impl Drop for WCloudCollection {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_viz_WCloudCollection_delete(self.as_raw_mut_WCloudCollection()) };
+	}
+}
+
+unsafe impl Send for WCloudCollection {}
+
+impl crate::viz::WidgetTraitConst for WCloudCollection {
+	#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WidgetTrait for WCloudCollection {
+	#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WCloudCollection, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+impl crate::viz::Widget3DTraitConst for WCloudCollection {
+	#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::Widget3DTrait for WCloudCollection {
+	#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WCloudCollection, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+impl crate::viz::WCloudCollectionTraitConst for WCloudCollection {
+	#[inline] fn as_raw_WCloudCollection(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WCloudCollectionTrait for WCloudCollection {
+	#[inline] fn as_raw_mut_WCloudCollection(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WCloudCollection, crate::viz::WCloudCollectionTraitConst, as_raw_WCloudCollection, crate::viz::WCloudCollectionTrait, as_raw_mut_WCloudCollection }
+
+impl WCloudCollection {
+	// WCloudCollection()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:739
+	// ("cv::viz::WCloudCollection::WCloudCollection", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn default() -> Result<crate::viz::WCloudCollection> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCloudCollection_WCloudCollection(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WCloudCollection::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+boxed_cast_base! { WCloudCollection, crate::viz::Widget, cv_viz_WCloudCollection_to_Widget }
+
+boxed_cast_base! { WCloudCollection, crate::viz::Widget3D, cv_viz_WCloudCollection_to_Widget3D }
+
+impl std::fmt::Debug for WCloudCollection {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("WCloudCollection")
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::viz::WCloudNormals]
+// WCloudNormals /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:764
+pub trait WCloudNormalsTraitConst: crate::viz::Widget3DTraitConst {
+	fn as_raw_WCloudNormals(&self) -> *const c_void;
+
+}
+
+/// Mutable methods for [crate::viz::WCloudNormals]
+pub trait WCloudNormalsTrait: crate::viz::WCloudNormalsTraitConst + crate::viz::Widget3DTrait {
+	fn as_raw_mut_WCloudNormals(&mut self) -> *mut c_void;
+
+}
+
+/// This 3D Widget represents normals of a point cloud. :
+// WCloudNormals /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:764
+pub struct WCloudNormals {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { WCloudNormals }
+
+impl Drop for WCloudNormals {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_viz_WCloudNormals_delete(self.as_raw_mut_WCloudNormals()) };
+	}
+}
+
+unsafe impl Send for WCloudNormals {}
+
+impl crate::viz::WidgetTraitConst for WCloudNormals {
+	#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WidgetTrait for WCloudNormals {
+	#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WCloudNormals, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+impl crate::viz::Widget3DTraitConst for WCloudNormals {
+	#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::Widget3DTrait for WCloudNormals {
+	#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WCloudNormals, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+impl crate::viz::WCloudNormalsTraitConst for WCloudNormals {
+	#[inline] fn as_raw_WCloudNormals(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WCloudNormalsTrait for WCloudNormals {
+	#[inline] fn as_raw_mut_WCloudNormals(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WCloudNormals, crate::viz::WCloudNormalsTraitConst, as_raw_WCloudNormals, crate::viz::WCloudNormalsTrait, as_raw_mut_WCloudNormals }
+
+impl WCloudNormals {
+	/// Constructs a WCloudNormals.
+	///
+	/// ## Parameters
+	/// * cloud: Point set which can be of type: CV_32FC3, CV_32FC4, CV_64FC3, CV_64FC4.
+	/// * normals: A set of normals that has to be of same type with cloud.
+	/// * level: Display only every level th normal.
+	/// * scale: Scale of the arrows that represent normals.
+	/// * color: Color of the arrows that represent normals.
+	///
+	///
+	/// Note: In case there are four channels in the cloud, fourth channel is ignored.
+	///
+	/// ## C++ default parameters
+	/// * level: 64
+	/// * scale: 0.1
+	/// * color: Color::white()
+	// WCloudNormals(InputArray, InputArray, int, double, const Color &)(InputArray, InputArray, Primitive, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:777
+	// ("cv::viz::WCloudNormals::WCloudNormals", vec![(pred!(mut, ["cloud", "normals", "level", "scale", "color"], ["const cv::_InputArray*", "const cv::_InputArray*", "int", "double", "const cv::viz::Color*"]), _)]),
+	#[inline]
+	pub fn new(cloud: &impl ToInputArray, normals: &impl ToInputArray, level: i32, scale: f64, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WCloudNormals> {
+		input_array_arg!(cloud);
+		input_array_arg!(normals);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCloudNormals_WCloudNormals_const__InputArrayR_const__InputArrayR_int_double_const_ColorR(cloud.as_raw__InputArray(), normals.as_raw__InputArray(), level, scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WCloudNormals::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Constructs a WCloudNormals.
+	///
+	/// ## Parameters
+	/// * cloud: Point set which can be of type: CV_32FC3, CV_32FC4, CV_64FC3, CV_64FC4.
+	/// * normals: A set of normals that has to be of same type with cloud.
+	/// * level: Display only every level th normal.
+	/// * scale: Scale of the arrows that represent normals.
+	/// * color: Color of the arrows that represent normals.
+	///
+	///
+	/// Note: In case there are four channels in the cloud, fourth channel is ignored.
+	///
+	/// ## Note
+	/// This alternative version of [new] function uses the following default values for its arguments:
+	/// * level: 64
+	/// * scale: 0.1
+	/// * color: Color::white()
+	// cv::viz::WCloudNormals::WCloudNormals(InputArray, InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:777
+	// ("cv::viz::WCloudNormals::WCloudNormals", vec![(pred!(mut, ["cloud", "normals"], ["const cv::_InputArray*", "const cv::_InputArray*"]), _)]),
+	#[inline]
+	pub fn new_def(cloud: &impl ToInputArray, normals: &impl ToInputArray) -> Result<crate::viz::WCloudNormals> {
+		input_array_arg!(cloud);
+		input_array_arg!(normals);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCloudNormals_WCloudNormals_const__InputArrayR_const__InputArrayR(cloud.as_raw__InputArray(), normals.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WCloudNormals::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+boxed_cast_base! { WCloudNormals, crate::viz::Widget, cv_viz_WCloudNormals_to_Widget }
+
+boxed_cast_base! { WCloudNormals, crate::viz::Widget3D, cv_viz_WCloudNormals_to_Widget3D }
+
+impl std::fmt::Debug for WCloudNormals {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("WCloudNormals")
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::viz::WCone]
+// WCone /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:330
+pub trait WConeTraitConst: crate::viz::Widget3DTraitConst {
+	fn as_raw_WCone(&self) -> *const c_void;
+
+}
+
+/// Mutable methods for [crate::viz::WCone]
+pub trait WConeTrait: crate::viz::WConeTraitConst + crate::viz::Widget3DTrait {
+	fn as_raw_mut_WCone(&mut self) -> *mut c_void;
+
+}
+
+/// This 3D Widget defines a cone. :
+// WCone /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:330
+pub struct WCone {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { WCone }
+
+impl Drop for WCone {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_viz_WCone_delete(self.as_raw_mut_WCone()) };
+	}
+}
+
+unsafe impl Send for WCone {}
+
+impl crate::viz::WidgetTraitConst for WCone {
+	#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WidgetTrait for WCone {
+	#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WCone, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+impl crate::viz::Widget3DTraitConst for WCone {
+	#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::Widget3DTrait for WCone {
+	#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WCone, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+impl crate::viz::WConeTraitConst for WCone {
+	#[inline] fn as_raw_WCone(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WConeTrait for WCone {
+	#[inline] fn as_raw_mut_WCone(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WCone, crate::viz::WConeTraitConst, as_raw_WCone, crate::viz::WConeTrait, as_raw_mut_WCone }
+
+impl WCone {
+	/// Constructs default cone oriented along x-axis with center of its base located at origin
+	///
+	/// ## Parameters
+	/// * length: Length of the cone.
+	/// * radius: Radius of the cone.
+	/// * resolution: Resolution of the cone.
+	/// * color: Color of the cone.
+	///
+	/// ## C++ default parameters
+	/// * resolution: 6
+	/// * color: Color::white()
+	// WCone(double, double, int, const Color &)(Primitive, Primitive, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:340
+	// ("cv::viz::WCone::WCone", vec![(pred!(mut, ["length", "radius", "resolution", "color"], ["double", "double", "int", "const cv::viz::Color*"]), _)]),
+	#[inline]
+	pub fn new(length: f64, radius: f64, resolution: i32, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WCone> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCone_WCone_double_double_int_const_ColorR(length, radius, resolution, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WCone::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Constructs default cone oriented along x-axis with center of its base located at origin
+	///
+	/// ## Parameters
+	/// * length: Length of the cone.
+	/// * radius: Radius of the cone.
+	/// * resolution: Resolution of the cone.
+	/// * color: Color of the cone.
+	///
+	/// ## Note
+	/// This alternative version of [new] function uses the following default values for its arguments:
+	/// * resolution: 6
+	/// * color: Color::white()
+	// cv::viz::WCone::WCone(Primitive, Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:340
+	// ("cv::viz::WCone::WCone", vec![(pred!(mut, ["length", "radius"], ["double", "double"]), _)]),
+	#[inline]
+	pub fn new_def(length: f64, radius: f64) -> Result<crate::viz::WCone> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCone_WCone_double_double(length, radius, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WCone::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Constructs repositioned planar cone.
+	///
+	/// ## Parameters
+	/// * radius: Radius of the cone.
+	/// * center: Center of the cone base.
+	/// * tip: Tip of the cone.
+	/// * resolution: Resolution of the cone.
+	/// * color: Color of the cone.
+	///
+	/// ## C++ default parameters
+	/// * resolution: 6
+	/// * color: Color::white()
+	// WCone(double, const Point3d &, const Point3d &, int, const Color &)(Primitive, SimpleClass, SimpleClass, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:351
+	// ("cv::viz::WCone::WCone", vec![(pred!(mut, ["radius", "center", "tip", "resolution", "color"], ["double", "const cv::Point3d*", "const cv::Point3d*", "int", "const cv::viz::Color*"]), _)]),
+	#[inline]
+	pub fn new_1(radius: f64, center: core::Point3d, tip: core::Point3d, resolution: i32, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WCone> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCone_WCone_double_const_Point3dR_const_Point3dR_int_const_ColorR(radius, &center, &tip, resolution, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WCone::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Constructs repositioned planar cone.
+	///
+	/// ## Parameters
+	/// * radius: Radius of the cone.
+	/// * center: Center of the cone base.
+	/// * tip: Tip of the cone.
+	/// * resolution: Resolution of the cone.
+	/// * color: Color of the cone.
+	///
+	/// ## Note
+	/// This alternative version of [new] function uses the following default values for its arguments:
+	/// * resolution: 6
+	/// * color: Color::white()
+	// cv::viz::WCone::WCone(Primitive, SimpleClass, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:351
+	// ("cv::viz::WCone::WCone", vec![(pred!(mut, ["radius", "center", "tip"], ["double", "const cv::Point3d*", "const cv::Point3d*"]), _)]),
+	#[inline]
+	pub fn new_def_1(radius: f64, center: core::Point3d, tip: core::Point3d) -> Result<crate::viz::WCone> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCone_WCone_double_const_Point3dR_const_Point3dR(radius, &center, &tip, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WCone::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+boxed_cast_base! { WCone, crate::viz::Widget, cv_viz_WCone_to_Widget }
+
+boxed_cast_base! { WCone, crate::viz::Widget3D, cv_viz_WCone_to_Widget3D }
+
+impl std::fmt::Debug for WCone {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("WCone")
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::viz::WCoordinateSystem]
+// WCoordinateSystem /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:513
+pub trait WCoordinateSystemTraitConst: crate::viz::Widget3DTraitConst {
+	fn as_raw_WCoordinateSystem(&self) -> *const c_void;
+
+}
+
+/// Mutable methods for [crate::viz::WCoordinateSystem]
+pub trait WCoordinateSystemTrait: crate::viz::WCoordinateSystemTraitConst + crate::viz::Widget3DTrait {
+	fn as_raw_mut_WCoordinateSystem(&mut self) -> *mut c_void;
+
+}
+
+/// This 3D Widget represents a coordinate system. :
+// WCoordinateSystem /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:513
+pub struct WCoordinateSystem {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { WCoordinateSystem }
+
+impl Drop for WCoordinateSystem {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_viz_WCoordinateSystem_delete(self.as_raw_mut_WCoordinateSystem()) };
+	}
+}
+
+unsafe impl Send for WCoordinateSystem {}
+
+impl crate::viz::WidgetTraitConst for WCoordinateSystem {
+	#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WidgetTrait for WCoordinateSystem {
+	#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WCoordinateSystem, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+impl crate::viz::Widget3DTraitConst for WCoordinateSystem {
+	#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::Widget3DTrait for WCoordinateSystem {
+	#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WCoordinateSystem, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+impl crate::viz::WCoordinateSystemTraitConst for WCoordinateSystem {
+	#[inline] fn as_raw_WCoordinateSystem(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WCoordinateSystemTrait for WCoordinateSystem {
+	#[inline] fn as_raw_mut_WCoordinateSystem(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WCoordinateSystem, crate::viz::WCoordinateSystemTraitConst, as_raw_WCoordinateSystem, crate::viz::WCoordinateSystemTrait, as_raw_mut_WCoordinateSystem }
+
+impl WCoordinateSystem {
+	/// Constructs a WCoordinateSystem.
+	///
+	/// ## Parameters
+	/// * scale: Determines the size of the axes.
+	///
+	/// ## C++ default parameters
+	/// * scale: 1.0
+	// WCoordinateSystem(double)(Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:520
+	// ("cv::viz::WCoordinateSystem::WCoordinateSystem", vec![(pred!(mut, ["scale"], ["double"]), _)]),
+	#[inline]
+	pub fn new(scale: f64) -> Result<crate::viz::WCoordinateSystem> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCoordinateSystem_WCoordinateSystem_double(scale, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WCoordinateSystem::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Constructs a WCoordinateSystem.
+	///
+	/// ## Parameters
+	/// * scale: Determines the size of the axes.
+	///
+	/// ## Note
+	/// This alternative version of [new] function uses the following default values for its arguments:
+	/// * scale: 1.0
+	// cv::viz::WCoordinateSystem::WCoordinateSystem() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:520
+	// ("cv::viz::WCoordinateSystem::WCoordinateSystem", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn new_def() -> Result<crate::viz::WCoordinateSystem> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCoordinateSystem_WCoordinateSystem(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WCoordinateSystem::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+boxed_cast_base! { WCoordinateSystem, crate::viz::Widget, cv_viz_WCoordinateSystem_to_Widget }
+
+boxed_cast_base! { WCoordinateSystem, crate::viz::Widget3D, cv_viz_WCoordinateSystem_to_Widget3D }
+
+impl std::fmt::Debug for WCoordinateSystem {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("WCoordinateSystem")
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::viz::WCube]
+// WCube /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:372
+pub trait WCubeTraitConst: crate::viz::Widget3DTraitConst {
+	fn as_raw_WCube(&self) -> *const c_void;
+
+}
+
+/// Mutable methods for [crate::viz::WCube]
+pub trait WCubeTrait: crate::viz::WCubeTraitConst + crate::viz::Widget3DTrait {
+	fn as_raw_mut_WCube(&mut self) -> *mut c_void;
+
+}
+
+/// This 3D Widget defines a cube.
+// WCube /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:372
+pub struct WCube {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { WCube }
+
+impl Drop for WCube {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_viz_WCube_delete(self.as_raw_mut_WCube()) };
+	}
+}
+
+unsafe impl Send for WCube {}
+
+impl crate::viz::WidgetTraitConst for WCube {
+	#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WidgetTrait for WCube {
+	#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WCube, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+impl crate::viz::Widget3DTraitConst for WCube {
+	#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::Widget3DTrait for WCube {
+	#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WCube, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+impl crate::viz::WCubeTraitConst for WCube {
+	#[inline] fn as_raw_WCube(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WCubeTrait for WCube {
+	#[inline] fn as_raw_mut_WCube(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WCube, crate::viz::WCubeTraitConst, as_raw_WCube, crate::viz::WCubeTrait, as_raw_mut_WCube }
+
+impl WCube {
+	/// Constructs a WCube.
+	///
+	/// ## Parameters
+	/// * min_point: Specifies minimum (or maximum) point of the bounding box.
+	/// * max_point: Specifies maximum (or minimum) point of the bounding box, opposite to the first parameter.
+	/// * wire_frame: If true, cube is represented as wireframe.
+	/// * color: Color of the cube.
+	///
+	/// ![Cube Widget](https://docs.opencv.org/5.0.0/cube_widget.png)
+	///
+	/// ## C++ default parameters
+	/// * min_point: Vec3d::all(-0.5)
+	/// * max_point: Vec3d::all(0.5)
+	/// * wire_frame: true
+	/// * color: Color::white()
+	// WCube(const Point3d &, const Point3d &, bool, const Color &)(SimpleClass, SimpleClass, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:384
+	// ("cv::viz::WCube::WCube", vec![(pred!(mut, ["min_point", "max_point", "wire_frame", "color"], ["const cv::Point3d*", "const cv::Point3d*", "bool", "const cv::viz::Color*"]), _)]),
+	#[inline]
+	pub fn new(min_point: core::Point3d, max_point: core::Point3d, wire_frame: bool, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WCube> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCube_WCube_const_Point3dR_const_Point3dR_bool_const_ColorR(&min_point, &max_point, wire_frame, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WCube::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Constructs a WCube.
+	///
+	/// ## Parameters
+	/// * min_point: Specifies minimum (or maximum) point of the bounding box.
+	/// * max_point: Specifies maximum (or minimum) point of the bounding box, opposite to the first parameter.
+	/// * wire_frame: If true, cube is represented as wireframe.
+	/// * color: Color of the cube.
+	///
+	/// ![Cube Widget](https://docs.opencv.org/5.0.0/cube_widget.png)
+	///
+	/// ## Note
+	/// This alternative version of [new] function uses the following default values for its arguments:
+	/// * min_point: Vec3d::all(-0.5)
+	/// * max_point: Vec3d::all(0.5)
+	/// * wire_frame: true
+	/// * color: Color::white()
+	// cv::viz::WCube::WCube() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:384
+	// ("cv::viz::WCube::WCube", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn new_def() -> Result<crate::viz::WCube> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCube_WCube(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WCube::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+boxed_cast_base! { WCube, crate::viz::Widget, cv_viz_WCube_to_Widget }
+
+boxed_cast_base! { WCube, crate::viz::Widget3D, cv_viz_WCube_to_Widget3D }
+
+impl std::fmt::Debug for WCube {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("WCube")
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::viz::WCylinder]
+// WCylinder /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:356
+pub trait WCylinderTraitConst: crate::viz::Widget3DTraitConst {
+	fn as_raw_WCylinder(&self) -> *const c_void;
+
+}
+
+/// Mutable methods for [crate::viz::WCylinder]
+pub trait WCylinderTrait: crate::viz::WCylinderTraitConst + crate::viz::Widget3DTrait {
+	fn as_raw_mut_WCylinder(&mut self) -> *mut c_void;
+
+}
+
+/// This 3D Widget defines a cylinder. :
+// WCylinder /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:356
+pub struct WCylinder {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { WCylinder }
+
+impl Drop for WCylinder {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_viz_WCylinder_delete(self.as_raw_mut_WCylinder()) };
+	}
+}
+
+unsafe impl Send for WCylinder {}
+
+impl crate::viz::WidgetTraitConst for WCylinder {
+	#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WidgetTrait for WCylinder {
+	#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WCylinder, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+impl crate::viz::Widget3DTraitConst for WCylinder {
+	#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::Widget3DTrait for WCylinder {
+	#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WCylinder, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+impl crate::viz::WCylinderTraitConst for WCylinder {
+	#[inline] fn as_raw_WCylinder(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WCylinderTrait for WCylinder {
+	#[inline] fn as_raw_mut_WCylinder(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WCylinder, crate::viz::WCylinderTraitConst, as_raw_WCylinder, crate::viz::WCylinderTrait, as_raw_mut_WCylinder }
+
+impl WCylinder {
+	/// Constructs a WCylinder.
+	///
+	/// ## Parameters
+	/// * axis_point1: A point1 on the axis of the cylinder.
+	/// * axis_point2: A point2 on the axis of the cylinder.
+	/// * radius: Radius of the cylinder.
+	/// * numsides: Resolution of the cylinder.
+	/// * color: Color of the cylinder.
+	///
+	/// ## C++ default parameters
+	/// * numsides: 30
+	/// * color: Color::white()
+	// WCylinder(const Point3d &, const Point3d &, double, int, const Color &)(SimpleClass, SimpleClass, Primitive, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:367
+	// ("cv::viz::WCylinder::WCylinder", vec![(pred!(mut, ["axis_point1", "axis_point2", "radius", "numsides", "color"], ["const cv::Point3d*", "const cv::Point3d*", "double", "int", "const cv::viz::Color*"]), _)]),
+	#[inline]
+	pub fn new(axis_point1: core::Point3d, axis_point2: core::Point3d, radius: f64, numsides: i32, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WCylinder> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCylinder_WCylinder_const_Point3dR_const_Point3dR_double_int_const_ColorR(&axis_point1, &axis_point2, radius, numsides, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WCylinder::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Constructs a WCylinder.
+	///
+	/// ## Parameters
+	/// * axis_point1: A point1 on the axis of the cylinder.
+	/// * axis_point2: A point2 on the axis of the cylinder.
+	/// * radius: Radius of the cylinder.
+	/// * numsides: Resolution of the cylinder.
+	/// * color: Color of the cylinder.
+	///
+	/// ## Note
+	/// This alternative version of [new] function uses the following default values for its arguments:
+	/// * numsides: 30
+	/// * color: Color::white()
+	// cv::viz::WCylinder::WCylinder(SimpleClass, SimpleClass, Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:367
+	// ("cv::viz::WCylinder::WCylinder", vec![(pred!(mut, ["axis_point1", "axis_point2", "radius"], ["const cv::Point3d*", "const cv::Point3d*", "double"]), _)]),
+	#[inline]
+	pub fn new_def(axis_point1: core::Point3d, axis_point2: core::Point3d, radius: f64) -> Result<crate::viz::WCylinder> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WCylinder_WCylinder_const_Point3dR_const_Point3dR_double(&axis_point1, &axis_point2, radius, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WCylinder::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+boxed_cast_base! { WCylinder, crate::viz::Widget, cv_viz_WCylinder_to_Widget }
+
+boxed_cast_base! { WCylinder, crate::viz::Widget3D, cv_viz_WCylinder_to_Widget3D }
+
+impl std::fmt::Debug for WCylinder {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("WCylinder")
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::viz::WGrid]
+// WGrid /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:525
+pub trait WGridTraitConst: crate::viz::Widget3DTraitConst {
+	fn as_raw_WGrid(&self) -> *const c_void;
+
+}
+
+/// Mutable methods for [crate::viz::WGrid]
+pub trait WGridTrait: crate::viz::WGridTraitConst + crate::viz::Widget3DTrait {
+	fn as_raw_mut_WGrid(&mut self) -> *mut c_void;
+
+}
+
+/// This 3D Widget defines a grid. :
+// WGrid /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:525
+pub struct WGrid {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { WGrid }
+
+impl Drop for WGrid {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_viz_WGrid_delete(self.as_raw_mut_WGrid()) };
+	}
+}
+
+unsafe impl Send for WGrid {}
+
+impl crate::viz::WidgetTraitConst for WGrid {
+	#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WidgetTrait for WGrid {
+	#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WGrid, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+impl crate::viz::Widget3DTraitConst for WGrid {
+	#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::Widget3DTrait for WGrid {
+	#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WGrid, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+impl crate::viz::WGridTraitConst for WGrid {
+	#[inline] fn as_raw_WGrid(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WGridTrait for WGrid {
+	#[inline] fn as_raw_mut_WGrid(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WGrid, crate::viz::WGridTraitConst, as_raw_WGrid, crate::viz::WGridTrait, as_raw_mut_WGrid }
+
+impl WGrid {
+	/// Constructs a WGrid.
+	///
+	/// ## Parameters
+	/// * cells: Number of cell columns and rows, respectively.
+	/// * cells_spacing: Size of each cell, respectively.
+	/// * color: Color of the grid.
+	///
+	/// ## C++ default parameters
+	/// * cells: Vec2i::all(10)
+	/// * cells_spacing: Vec2d::all(1.0)
+	/// * color: Color::white()
+	// WGrid(const Vec2i &, const Vec2d &, const Color &)(SimpleClass, SimpleClass, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:534
+	// ("cv::viz::WGrid::WGrid", vec![(pred!(mut, ["cells", "cells_spacing", "color"], ["const cv::Vec2i*", "const cv::Vec2d*", "const cv::viz::Color*"]), _)]),
+	#[inline]
+	pub fn new(cells: core::Vec2i, cells_spacing: core::Vec2d, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WGrid> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WGrid_WGrid_const_Vec2iR_const_Vec2dR_const_ColorR(&cells, &cells_spacing, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WGrid::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Constructs a WGrid.
+	///
+	/// ## Parameters
+	/// * cells: Number of cell columns and rows, respectively.
+	/// * cells_spacing: Size of each cell, respectively.
+	/// * color: Color of the grid.
+	///
+	/// ## Note
+	/// This alternative version of [new] function uses the following default values for its arguments:
+	/// * cells: Vec2i::all(10)
+	/// * cells_spacing: Vec2d::all(1.0)
+	/// * color: Color::white()
+	// cv::viz::WGrid::WGrid() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:534
+	// ("cv::viz::WGrid::WGrid", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn new_def() -> Result<crate::viz::WGrid> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WGrid_WGrid(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WGrid::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Creates repositioned grid
+	///
+	/// ## C++ default parameters
+	/// * cells: Vec2i::all(10)
+	/// * cells_spacing: Vec2d::all(1.0)
+	/// * color: Color::white()
+	// WGrid(const Point3d &, const Vec3d &, const Vec3d &, const Vec2i &, const Vec2d &, const Color &)(SimpleClass, SimpleClass, SimpleClass, SimpleClass, SimpleClass, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:537
+	// ("cv::viz::WGrid::WGrid", vec![(pred!(mut, ["center", "normal", "new_yaxis", "cells", "cells_spacing", "color"], ["const cv::Point3d*", "const cv::Vec3d*", "const cv::Vec3d*", "const cv::Vec2i*", "const cv::Vec2d*", "const cv::viz::Color*"]), _)]),
+	#[inline]
+	pub fn new_1(center: core::Point3d, normal: core::Vec3d, new_yaxis: core::Vec3d, cells: core::Vec2i, cells_spacing: core::Vec2d, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WGrid> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WGrid_WGrid_const_Point3dR_const_Vec3dR_const_Vec3dR_const_Vec2iR_const_Vec2dR_const_ColorR(&center, &normal, &new_yaxis, &cells, &cells_spacing, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WGrid::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Creates repositioned grid
+	///
+	/// ## Note
+	/// This alternative version of [new] function uses the following default values for its arguments:
+	/// * cells: Vec2i::all(10)
+	/// * cells_spacing: Vec2d::all(1.0)
+	/// * color: Color::white()
+	// cv::viz::WGrid::WGrid(SimpleClass, SimpleClass, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:537
+	// ("cv::viz::WGrid::WGrid", vec![(pred!(mut, ["center", "normal", "new_yaxis"], ["const cv::Point3d*", "const cv::Vec3d*", "const cv::Vec3d*"]), _)]),
+	#[inline]
+	pub fn new_def_1(center: core::Point3d, normal: core::Vec3d, new_yaxis: core::Vec3d) -> Result<crate::viz::WGrid> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WGrid_WGrid_const_Point3dR_const_Vec3dR_const_Vec3dR(&center, &normal, &new_yaxis, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WGrid::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+boxed_cast_base! { WGrid, crate::viz::Widget, cv_viz_WGrid_to_Widget }
+
+boxed_cast_base! { WGrid, crate::viz::Widget3D, cv_viz_WGrid_to_Widget3D }
+
+impl std::fmt::Debug for WGrid {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("WGrid")
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::viz::WImage3D]
+// WImage3D /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:475
+pub trait WImage3DTraitConst: crate::viz::Widget3DTraitConst {
+	fn as_raw_WImage3D(&self) -> *const c_void;
+
+}
+
+/// Mutable methods for [crate::viz::WImage3D]
+pub trait WImage3DTrait: crate::viz::WImage3DTraitConst + crate::viz::Widget3DTrait {
+	fn as_raw_mut_WImage3D(&mut self) -> *mut c_void;
+
+	/// Sets the image content of the widget.
+	///
+	/// ## Parameters
+	/// * image: BGR or Gray-Scale image.
+	// setImage(InputArray)(InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:499
+	// ("cv::viz::WImage3D::setImage", vec![(pred!(mut, ["image"], ["const cv::_InputArray*"]), _)]),
+	#[inline]
+	fn set_image(&mut self, image: &impl ToInputArray) -> Result<()> {
+		input_array_arg!(image);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WImage3D_setImage_const__InputArrayR(self.as_raw_mut_WImage3D(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Sets the image size of the widget.
+	///
+	/// ## Parameters
+	/// * size: the new size of the image.
+	// setSize(const Size &)(SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:505
+	// ("cv::viz::WImage3D::setSize", vec![(pred!(mut, ["size"], ["const cv::Size*"]), _)]),
+	#[inline]
+	fn set_size(&mut self, size: core::Size) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WImage3D_setSize_const_SizeR(self.as_raw_mut_WImage3D(), &size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+}
+
+/// This 3D Widget represents an image in 3D space. :
+// WImage3D /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:475
+pub struct WImage3D {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { WImage3D }
+
+impl Drop for WImage3D {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_viz_WImage3D_delete(self.as_raw_mut_WImage3D()) };
+	}
+}
+
+unsafe impl Send for WImage3D {}
+
+impl crate::viz::WidgetTraitConst for WImage3D {
+	#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WidgetTrait for WImage3D {
+	#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WImage3D, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+impl crate::viz::Widget3DTraitConst for WImage3D {
+	#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::Widget3DTrait for WImage3D {
+	#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WImage3D, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+impl crate::viz::WImage3DTraitConst for WImage3D {
+	#[inline] fn as_raw_WImage3D(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WImage3DTrait for WImage3D {
+	#[inline] fn as_raw_mut_WImage3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WImage3D, crate::viz::WImage3DTraitConst, as_raw_WImage3D, crate::viz::WImage3DTrait, as_raw_mut_WImage3D }
+
+impl WImage3D {
+	/// Constructs an WImage3D.
+	///
+	/// ## Parameters
+	/// * image: BGR or Gray-Scale image.
+	/// * size: Size of the image.
+	// WImage3D(InputArray, const Size2d &)(InputArray, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:483
+	// ("cv::viz::WImage3D::WImage3D", vec![(pred!(mut, ["image", "size"], ["const cv::_InputArray*", "const cv::Size2d*"]), _)]),
+	#[inline]
+	pub fn new(image: &impl ToInputArray, size: core::Size2d) -> Result<crate::viz::WImage3D> {
+		input_array_arg!(image);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WImage3D_WImage3D_const__InputArrayR_const_Size2dR(image.as_raw__InputArray(), &size, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WImage3D::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Constructs an WImage3D.
+	///
+	/// ## Parameters
+	/// * image: BGR or Gray-Scale image.
+	/// * size: Size of the image.
+	/// * center: Position of the image.
+	/// * normal: Normal of the plane that represents the image.
+	/// * up_vector: Determines orientation of the image.
+	// WImage3D(InputArray, const Size2d &, const Vec3d &, const Vec3d &, const Vec3d &)(InputArray, SimpleClass, SimpleClass, SimpleClass, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:493
+	// ("cv::viz::WImage3D::WImage3D", vec![(pred!(mut, ["image", "size", "center", "normal", "up_vector"], ["const cv::_InputArray*", "const cv::Size2d*", "const cv::Vec3d*", "const cv::Vec3d*", "const cv::Vec3d*"]), _)]),
+	#[inline]
+	pub fn new_1(image: &impl ToInputArray, size: core::Size2d, center: core::Vec3d, normal: core::Vec3d, up_vector: core::Vec3d) -> Result<crate::viz::WImage3D> {
+		input_array_arg!(image);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WImage3D_WImage3D_const__InputArrayR_const_Size2dR_const_Vec3dR_const_Vec3dR_const_Vec3dR(image.as_raw__InputArray(), &size, &center, &normal, &up_vector, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WImage3D::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+boxed_cast_base! { WImage3D, crate::viz::Widget, cv_viz_WImage3D_to_Widget }
+
+boxed_cast_base! { WImage3D, crate::viz::Widget3D, cv_viz_WImage3D_to_Widget3D }
+
+impl std::fmt::Debug for WImage3D {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("WImage3D")
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::viz::WImageOverlay]
+// WImageOverlay /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:457
+pub trait WImageOverlayTraitConst: crate::viz::Widget2DTraitConst {
+	fn as_raw_WImageOverlay(&self) -> *const c_void;
+
+}
+
+/// Mutable methods for [crate::viz::WImageOverlay]
+pub trait WImageOverlayTrait: crate::viz::WImageOverlayTraitConst + crate::viz::Widget2DTrait {
+	fn as_raw_mut_WImageOverlay(&mut self) -> *mut c_void;
+
+	/// Sets the image content of the widget.
+	///
+	/// ## Parameters
+	/// * image: BGR or Gray-Scale image.
+	// setImage(InputArray)(InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:470
+	// ("cv::viz::WImageOverlay::setImage", vec![(pred!(mut, ["image"], ["const cv::_InputArray*"]), _)]),
+	#[inline]
+	fn set_image(&mut self, image: &impl ToInputArray) -> Result<()> {
+		input_array_arg!(image);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WImageOverlay_setImage_const__InputArrayR(self.as_raw_mut_WImageOverlay(), image.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+}
+
+/// This 2D Widget represents an image overlay. :
+// WImageOverlay /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:457
+pub struct WImageOverlay {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { WImageOverlay }
+
+impl Drop for WImageOverlay {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_viz_WImageOverlay_delete(self.as_raw_mut_WImageOverlay()) };
+	}
+}
+
+unsafe impl Send for WImageOverlay {}
+
+impl crate::viz::WidgetTraitConst for WImageOverlay {
+	#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WidgetTrait for WImageOverlay {
+	#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WImageOverlay, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+impl crate::viz::Widget2DTraitConst for WImageOverlay {
+	#[inline] fn as_raw_Widget2D(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::Widget2DTrait for WImageOverlay {
+	#[inline] fn as_raw_mut_Widget2D(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WImageOverlay, crate::viz::Widget2DTraitConst, as_raw_Widget2D, crate::viz::Widget2DTrait, as_raw_mut_Widget2D }
+
+impl crate::viz::WImageOverlayTraitConst for WImageOverlay {
+	#[inline] fn as_raw_WImageOverlay(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WImageOverlayTrait for WImageOverlay {
+	#[inline] fn as_raw_mut_WImageOverlay(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WImageOverlay, crate::viz::WImageOverlayTraitConst, as_raw_WImageOverlay, crate::viz::WImageOverlayTrait, as_raw_mut_WImageOverlay }
+
+impl WImageOverlay {
+	/// Constructs an WImageOverlay.
+	///
+	/// ## Parameters
+	/// * image: BGR or Gray-Scale image.
+	/// * rect: Image is scaled and positioned based on rect.
+	// WImageOverlay(InputArray, const Rect &)(InputArray, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:465
+	// ("cv::viz::WImageOverlay::WImageOverlay", vec![(pred!(mut, ["image", "rect"], ["const cv::_InputArray*", "const cv::Rect*"]), _)]),
+	#[inline]
+	pub fn new(image: &impl ToInputArray, rect: core::Rect) -> Result<crate::viz::WImageOverlay> {
+		input_array_arg!(image);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WImageOverlay_WImageOverlay_const__InputArrayR_const_RectR(image.as_raw__InputArray(), &rect, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WImageOverlay::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+boxed_cast_base! { WImageOverlay, crate::viz::Widget, cv_viz_WImageOverlay_to_Widget }
+
+boxed_cast_base! { WImageOverlay, crate::viz::Widget2D, cv_viz_WImageOverlay_to_Widget2D }
+
+impl std::fmt::Debug for WImageOverlay {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("WImageOverlay")
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::viz::WLine]
+// WLine /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:235
+pub trait WLineTraitConst: crate::viz::Widget3DTraitConst {
+	fn as_raw_WLine(&self) -> *const c_void;
+
+}
+
+/// Mutable methods for [crate::viz::WLine]
+pub trait WLineTrait: crate::viz::WLineTraitConst + crate::viz::Widget3DTrait {
+	fn as_raw_mut_WLine(&mut self) -> *mut c_void;
+
+}
+
+/// This 3D Widget defines a finite line.
+// WLine /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:235
+pub struct WLine {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { WLine }
+
+impl Drop for WLine {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_viz_WLine_delete(self.as_raw_mut_WLine()) };
+	}
+}
+
+unsafe impl Send for WLine {}
+
+impl crate::viz::WidgetTraitConst for WLine {
+	#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WidgetTrait for WLine {
+	#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WLine, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+impl crate::viz::Widget3DTraitConst for WLine {
+	#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::Widget3DTrait for WLine {
+	#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WLine, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+impl crate::viz::WLineTraitConst for WLine {
+	#[inline] fn as_raw_WLine(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WLineTrait for WLine {
+	#[inline] fn as_raw_mut_WLine(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WLine, crate::viz::WLineTraitConst, as_raw_WLine, crate::viz::WLineTrait, as_raw_mut_WLine }
+
+impl WLine {
+	/// Constructs a WLine.
+	///
+	/// ## Parameters
+	/// * pt1: Start point of the line.
+	/// * pt2: End point of the line.
+	/// * color: Color of the line.
+	///
+	/// ## C++ default parameters
+	/// * color: Color::white()
+	// WLine(const Point3d &, const Point3d &, const Color &)(SimpleClass, SimpleClass, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:244
+	// ("cv::viz::WLine::WLine", vec![(pred!(mut, ["pt1", "pt2", "color"], ["const cv::Point3d*", "const cv::Point3d*", "const cv::viz::Color*"]), _)]),
+	#[inline]
+	pub fn new(pt1: core::Point3d, pt2: core::Point3d, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WLine> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WLine_WLine_const_Point3dR_const_Point3dR_const_ColorR(&pt1, &pt2, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WLine::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Constructs a WLine.
+	///
+	/// ## Parameters
+	/// * pt1: Start point of the line.
+	/// * pt2: End point of the line.
+	/// * color: Color of the line.
+	///
+	/// ## Note
+	/// This alternative version of [new] function uses the following default values for its arguments:
+	/// * color: Color::white()
+	// cv::viz::WLine::WLine(SimpleClass, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:244
+	// ("cv::viz::WLine::WLine", vec![(pred!(mut, ["pt1", "pt2"], ["const cv::Point3d*", "const cv::Point3d*"]), _)]),
+	#[inline]
+	pub fn new_def(pt1: core::Point3d, pt2: core::Point3d) -> Result<crate::viz::WLine> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WLine_WLine_const_Point3dR_const_Point3dR(&pt1, &pt2, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WLine::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+boxed_cast_base! { WLine, crate::viz::Widget, cv_viz_WLine_to_Widget }
+
+boxed_cast_base! { WLine, crate::viz::Widget3D, cv_viz_WLine_to_Widget3D }
+
+impl std::fmt::Debug for WLine {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("WLine")
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::viz::WMesh]
+// WMesh /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:788
+pub trait WMeshTraitConst: crate::viz::Widget3DTraitConst {
+	fn as_raw_WMesh(&self) -> *const c_void;
+
+}
+
+/// Mutable methods for [crate::viz::WMesh]
+pub trait WMeshTrait: crate::viz::WMeshTraitConst + crate::viz::Widget3DTrait {
+	fn as_raw_mut_WMesh(&mut self) -> *mut c_void;
+
+}
+
+/// Constructs a WMesh.
+///
+/// ## Parameters
+/// * mesh: Mesh object that will be displayed.
+/// * cloud: Points of the mesh object.
+/// * polygons: Points of the mesh object.
+/// * colors: Point colors.
+/// * normals: Point normals.
+// WMesh /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:788
+pub struct WMesh {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { WMesh }
+
+impl Drop for WMesh {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_viz_WMesh_delete(self.as_raw_mut_WMesh()) };
+	}
+}
+
+unsafe impl Send for WMesh {}
+
+impl crate::viz::WidgetTraitConst for WMesh {
+	#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WidgetTrait for WMesh {
+	#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WMesh, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+impl crate::viz::Widget3DTraitConst for WMesh {
+	#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::Widget3DTrait for WMesh {
+	#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WMesh, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+impl crate::viz::WMeshTraitConst for WMesh {
+	#[inline] fn as_raw_WMesh(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WMeshTrait for WMesh {
+	#[inline] fn as_raw_mut_WMesh(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WMesh, crate::viz::WMeshTraitConst, as_raw_WMesh, crate::viz::WMeshTrait, as_raw_mut_WMesh }
+
+impl WMesh {
+	// WMesh(const Mesh &)(TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:794
+	// ("cv::viz::WMesh::WMesh", vec![(pred!(mut, ["mesh"], ["const cv::viz::Mesh*"]), _)]),
+	#[inline]
+	pub fn new(mesh: &impl crate::viz::MeshTraitConst) -> Result<crate::viz::WMesh> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WMesh_WMesh_const_MeshR(mesh.as_raw_Mesh(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WMesh::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// ## C++ default parameters
+	/// * colors: noArray()
+	/// * normals: noArray()
+	// WMesh(InputArray, InputArray, InputArray, InputArray)(InputArray, InputArray, InputArray, InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:795
+	// ("cv::viz::WMesh::WMesh", vec![(pred!(mut, ["cloud", "polygons", "colors", "normals"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_InputArray*", "const cv::_InputArray*"]), _)]),
+	#[inline]
+	pub fn new_1(cloud: &impl ToInputArray, polygons: &impl ToInputArray, colors: &impl ToInputArray, normals: &impl ToInputArray) -> Result<crate::viz::WMesh> {
+		input_array_arg!(cloud);
+		input_array_arg!(polygons);
+		input_array_arg!(colors);
+		input_array_arg!(normals);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WMesh_WMesh_const__InputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(cloud.as_raw__InputArray(), polygons.as_raw__InputArray(), colors.as_raw__InputArray(), normals.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WMesh::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// ## Note
+	/// This alternative version of [new] function uses the following default values for its arguments:
+	/// * colors: noArray()
+	/// * normals: noArray()
+	// cv::viz::WMesh::WMesh(InputArray, InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:795
+	// ("cv::viz::WMesh::WMesh", vec![(pred!(mut, ["cloud", "polygons"], ["const cv::_InputArray*", "const cv::_InputArray*"]), _)]),
+	#[inline]
+	pub fn new_def(cloud: &impl ToInputArray, polygons: &impl ToInputArray) -> Result<crate::viz::WMesh> {
+		input_array_arg!(cloud);
+		input_array_arg!(polygons);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WMesh_WMesh_const__InputArrayR_const__InputArrayR(cloud.as_raw__InputArray(), polygons.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WMesh::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+boxed_cast_base! { WMesh, crate::viz::Widget, cv_viz_WMesh_to_Widget }
+
+boxed_cast_base! { WMesh, crate::viz::Widget3D, cv_viz_WMesh_to_Widget3D }
+
+impl std::fmt::Debug for WMesh {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("WMesh")
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::viz::WPaintedCloud]
+// WPaintedCloud /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:720
+pub trait WPaintedCloudTraitConst: crate::viz::Widget3DTraitConst {
+	fn as_raw_WPaintedCloud(&self) -> *const c_void;
+
+}
+
+/// Mutable methods for [crate::viz::WPaintedCloud]
+pub trait WPaintedCloudTrait: crate::viz::WPaintedCloudTraitConst + crate::viz::Widget3DTrait {
+	fn as_raw_mut_WPaintedCloud(&mut self) -> *mut c_void;
+
+}
+
+// WPaintedCloud /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:720
+pub struct WPaintedCloud {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { WPaintedCloud }
+
+impl Drop for WPaintedCloud {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_viz_WPaintedCloud_delete(self.as_raw_mut_WPaintedCloud()) };
+	}
+}
+
+unsafe impl Send for WPaintedCloud {}
+
+impl crate::viz::WidgetTraitConst for WPaintedCloud {
+	#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WidgetTrait for WPaintedCloud {
+	#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WPaintedCloud, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+impl crate::viz::Widget3DTraitConst for WPaintedCloud {
+	#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::Widget3DTrait for WPaintedCloud {
+	#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WPaintedCloud, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+impl crate::viz::WPaintedCloudTraitConst for WPaintedCloud {
+	#[inline] fn as_raw_WPaintedCloud(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WPaintedCloudTrait for WPaintedCloud {
+	#[inline] fn as_raw_mut_WPaintedCloud(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WPaintedCloud, crate::viz::WPaintedCloudTraitConst, as_raw_WPaintedCloud, crate::viz::WPaintedCloudTrait, as_raw_mut_WPaintedCloud }
+
+impl WPaintedCloud {
+	/// Paint cloud with default gradient between cloud bounds points
+	// WPaintedCloud(InputArray)(InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:724
+	// ("cv::viz::WPaintedCloud::WPaintedCloud", vec![(pred!(mut, ["cloud"], ["const cv::_InputArray*"]), _)]),
+	#[inline]
+	pub fn new(cloud: &impl ToInputArray) -> Result<crate::viz::WPaintedCloud> {
+		input_array_arg!(cloud);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WPaintedCloud_WPaintedCloud_const__InputArrayR(cloud.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WPaintedCloud::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Paint cloud with default gradient between given points
+	// WPaintedCloud(InputArray, const Point3d &, const Point3d &)(InputArray, SimpleClass, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:727
+	// ("cv::viz::WPaintedCloud::WPaintedCloud", vec![(pred!(mut, ["cloud", "p1", "p2"], ["const cv::_InputArray*", "const cv::Point3d*", "const cv::Point3d*"]), _)]),
+	#[inline]
+	pub fn new_1(cloud: &impl ToInputArray, p1: core::Point3d, p2: core::Point3d) -> Result<crate::viz::WPaintedCloud> {
+		input_array_arg!(cloud);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WPaintedCloud_WPaintedCloud_const__InputArrayR_const_Point3dR_const_Point3dR(cloud.as_raw__InputArray(), &p1, &p2, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WPaintedCloud::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Paint cloud with gradient specified by given colors between given points
+	// WPaintedCloud(InputArray, const Point3d &, const Point3d &, const Color &, const Color)(InputArray, SimpleClass, SimpleClass, TraitClass, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:730
+	// ("cv::viz::WPaintedCloud::WPaintedCloud", vec![(pred!(mut, ["cloud", "p1", "p2", "c1", "c2"], ["const cv::_InputArray*", "const cv::Point3d*", "const cv::Point3d*", "const cv::viz::Color*", "const cv::viz::Color"]), _)]),
+	#[inline]
+	pub fn new_2(cloud: &impl ToInputArray, p1: core::Point3d, p2: core::Point3d, c1: &impl crate::viz::ColorTraitConst, c2: impl crate::viz::ColorTraitConst) -> Result<crate::viz::WPaintedCloud> {
+		input_array_arg!(cloud);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WPaintedCloud_WPaintedCloud_const__InputArrayR_const_Point3dR_const_Point3dR_const_ColorR_const_Color(cloud.as_raw__InputArray(), &p1, &p2, c1.as_raw_Color(), c2.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WPaintedCloud::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+boxed_cast_base! { WPaintedCloud, crate::viz::Widget, cv_viz_WPaintedCloud_to_Widget }
+
+boxed_cast_base! { WPaintedCloud, crate::viz::Widget3D, cv_viz_WPaintedCloud_to_Widget3D }
+
+impl std::fmt::Debug for WPaintedCloud {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("WPaintedCloud")
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::viz::WPlane]
+// WPlane /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:249
+pub trait WPlaneTraitConst: crate::viz::Widget3DTraitConst {
+	fn as_raw_WPlane(&self) -> *const c_void;
+
+}
+
+/// Mutable methods for [crate::viz::WPlane]
+pub trait WPlaneTrait: crate::viz::WPlaneTraitConst + crate::viz::Widget3DTrait {
+	fn as_raw_mut_WPlane(&mut self) -> *mut c_void;
+
+}
+
+/// This 3D Widget defines a finite plane.
+// WPlane /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:249
+pub struct WPlane {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { WPlane }
+
+impl Drop for WPlane {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_viz_WPlane_delete(self.as_raw_mut_WPlane()) };
+	}
+}
+
+unsafe impl Send for WPlane {}
+
+impl crate::viz::WidgetTraitConst for WPlane {
+	#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WidgetTrait for WPlane {
+	#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WPlane, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+impl crate::viz::Widget3DTraitConst for WPlane {
+	#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::Widget3DTrait for WPlane {
+	#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WPlane, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+impl crate::viz::WPlaneTraitConst for WPlane {
+	#[inline] fn as_raw_WPlane(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WPlaneTrait for WPlane {
+	#[inline] fn as_raw_mut_WPlane(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WPlane, crate::viz::WPlaneTraitConst, as_raw_WPlane, crate::viz::WPlaneTrait, as_raw_mut_WPlane }
+
+impl WPlane {
+	/// Constructs a default plane with center point at origin and normal oriented along z-axis.
+	///
+	/// ## Parameters
+	/// * size: Size of the plane
+	/// * color: Color of the plane.
+	///
+	/// ## C++ default parameters
+	/// * size: Size2d(1.0,1.0)
+	/// * color: Color::white()
+	// WPlane(const Size2d &, const Color &)(SimpleClass, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:257
+	// ("cv::viz::WPlane::WPlane", vec![(pred!(mut, ["size", "color"], ["const cv::Size2d*", "const cv::viz::Color*"]), _)]),
+	#[inline]
+	pub fn new(size: core::Size2d, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WPlane> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WPlane_WPlane_const_Size2dR_const_ColorR(&size, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WPlane::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Constructs a default plane with center point at origin and normal oriented along z-axis.
+	///
+	/// ## Parameters
+	/// * size: Size of the plane
+	/// * color: Color of the plane.
+	///
+	/// ## Note
+	/// This alternative version of [new] function uses the following default values for its arguments:
+	/// * size: Size2d(1.0,1.0)
+	/// * color: Color::white()
+	// cv::viz::WPlane::WPlane() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:257
+	// ("cv::viz::WPlane::WPlane", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn new_def() -> Result<crate::viz::WPlane> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WPlane_WPlane(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WPlane::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Constructs a repositioned plane
+	///
+	/// ## Parameters
+	/// * center: Center of the plane
+	/// * normal: Plane normal orientation
+	/// * new_yaxis: Up-vector. New orientation of plane y-axis.
+	/// * size: 
+	/// * color: Color of the plane.
+	///
+	/// ## C++ default parameters
+	/// * size: Size2d(1.0,1.0)
+	/// * color: Color::white()
+	// WPlane(const Point3d &, const Vec3d &, const Vec3d &, const Size2d &, const Color &)(SimpleClass, SimpleClass, SimpleClass, SimpleClass, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:267
+	// ("cv::viz::WPlane::WPlane", vec![(pred!(mut, ["center", "normal", "new_yaxis", "size", "color"], ["const cv::Point3d*", "const cv::Vec3d*", "const cv::Vec3d*", "const cv::Size2d*", "const cv::viz::Color*"]), _)]),
+	#[inline]
+	pub fn new_1(center: core::Point3d, normal: core::Vec3d, new_yaxis: core::Vec3d, size: core::Size2d, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WPlane> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WPlane_WPlane_const_Point3dR_const_Vec3dR_const_Vec3dR_const_Size2dR_const_ColorR(&center, &normal, &new_yaxis, &size, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WPlane::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Constructs a repositioned plane
+	///
+	/// ## Parameters
+	/// * center: Center of the plane
+	/// * normal: Plane normal orientation
+	/// * new_yaxis: Up-vector. New orientation of plane y-axis.
+	/// * size: 
+	/// * color: Color of the plane.
+	///
+	/// ## Note
+	/// This alternative version of [new] function uses the following default values for its arguments:
+	/// * size: Size2d(1.0,1.0)
+	/// * color: Color::white()
+	// cv::viz::WPlane::WPlane(SimpleClass, SimpleClass, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:267
+	// ("cv::viz::WPlane::WPlane", vec![(pred!(mut, ["center", "normal", "new_yaxis"], ["const cv::Point3d*", "const cv::Vec3d*", "const cv::Vec3d*"]), _)]),
+	#[inline]
+	pub fn new_def_1(center: core::Point3d, normal: core::Vec3d, new_yaxis: core::Vec3d) -> Result<crate::viz::WPlane> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WPlane_WPlane_const_Point3dR_const_Vec3dR_const_Vec3dR(&center, &normal, &new_yaxis, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WPlane::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+boxed_cast_base! { WPlane, crate::viz::Widget, cv_viz_WPlane_to_Widget }
+
+boxed_cast_base! { WPlane, crate::viz::Widget3D, cv_viz_WPlane_to_Widget3D }
+
+impl std::fmt::Debug for WPlane {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("WPlane")
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::viz::WPolyLine]
+// WPolyLine /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:390
+pub trait WPolyLineTraitConst: crate::viz::Widget3DTraitConst {
+	fn as_raw_WPolyLine(&self) -> *const c_void;
+
+}
+
+/// Mutable methods for [crate::viz::WPolyLine]
+pub trait WPolyLineTrait: crate::viz::WPolyLineTraitConst + crate::viz::Widget3DTrait {
+	fn as_raw_mut_WPolyLine(&mut self) -> *mut c_void;
+
+}
+
+/// This 3D Widget defines a poly line. :
+// WPolyLine /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:390
+pub struct WPolyLine {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { WPolyLine }
+
+impl Drop for WPolyLine {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_viz_WPolyLine_delete(self.as_raw_mut_WPolyLine()) };
+	}
+}
+
+unsafe impl Send for WPolyLine {}
+
+impl crate::viz::WidgetTraitConst for WPolyLine {
+	#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WidgetTrait for WPolyLine {
+	#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WPolyLine, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+impl crate::viz::Widget3DTraitConst for WPolyLine {
+	#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::Widget3DTrait for WPolyLine {
+	#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WPolyLine, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+impl crate::viz::WPolyLineTraitConst for WPolyLine {
+	#[inline] fn as_raw_WPolyLine(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WPolyLineTrait for WPolyLine {
+	#[inline] fn as_raw_mut_WPolyLine(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WPolyLine, crate::viz::WPolyLineTraitConst, as_raw_WPolyLine, crate::viz::WPolyLineTrait, as_raw_mut_WPolyLine }
+
+impl WPolyLine {
+	// WPolyLine(InputArray, InputArray)(InputArray, InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:393
+	// ("cv::viz::WPolyLine::WPolyLine", vec![(pred!(mut, ["points", "colors"], ["const cv::_InputArray*", "const cv::_InputArray*"]), _)]),
+	#[inline]
+	pub fn new(points: &impl ToInputArray, colors: &impl ToInputArray) -> Result<crate::viz::WPolyLine> {
+		input_array_arg!(points);
+		input_array_arg!(colors);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WPolyLine_WPolyLine_const__InputArrayR_const__InputArrayR(points.as_raw__InputArray(), colors.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WPolyLine::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Constructs a WPolyLine.
+	///
+	/// ## Parameters
+	/// * points: Point set.
+	/// * color: Color of the poly line.
+	///
+	/// ## C++ default parameters
+	/// * color: Color::white()
+	// WPolyLine(InputArray, const Color &)(InputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:399
+	// ("cv::viz::WPolyLine::WPolyLine", vec![(pred!(mut, ["points", "color"], ["const cv::_InputArray*", "const cv::viz::Color*"]), _)]),
+	#[inline]
+	pub fn new_1(points: &impl ToInputArray, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WPolyLine> {
+		input_array_arg!(points);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WPolyLine_WPolyLine_const__InputArrayR_const_ColorR(points.as_raw__InputArray(), color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WPolyLine::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Constructs a WPolyLine.
+	///
+	/// ## Parameters
+	/// * points: Point set.
+	/// * color: Color of the poly line.
+	///
+	/// ## Note
+	/// This alternative version of [new] function uses the following default values for its arguments:
+	/// * color: Color::white()
+	// cv::viz::WPolyLine::WPolyLine(InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:399
+	// ("cv::viz::WPolyLine::WPolyLine", vec![(pred!(mut, ["points"], ["const cv::_InputArray*"]), _)]),
+	#[inline]
+	pub fn new_def(points: &impl ToInputArray) -> Result<crate::viz::WPolyLine> {
+		input_array_arg!(points);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WPolyLine_WPolyLine_const__InputArrayR(points.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WPolyLine::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+boxed_cast_base! { WPolyLine, crate::viz::Widget, cv_viz_WPolyLine_to_Widget }
+
+boxed_cast_base! { WPolyLine, crate::viz::Widget3D, cv_viz_WPolyLine_to_Widget3D }
+
+impl std::fmt::Debug for WPolyLine {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("WPolyLine")
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::viz::WSphere]
+// WSphere /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:273
+pub trait WSphereTraitConst: crate::viz::Widget3DTraitConst {
+	fn as_raw_WSphere(&self) -> *const c_void;
+
+}
+
+/// Mutable methods for [crate::viz::WSphere]
+pub trait WSphereTrait: crate::viz::WSphereTraitConst + crate::viz::Widget3DTrait {
+	fn as_raw_mut_WSphere(&mut self) -> *mut c_void;
+
+}
+
+/// This 3D Widget defines a sphere. :
+// WSphere /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:273
+pub struct WSphere {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { WSphere }
+
+impl Drop for WSphere {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_viz_WSphere_delete(self.as_raw_mut_WSphere()) };
+	}
+}
+
+unsafe impl Send for WSphere {}
+
+impl crate::viz::WidgetTraitConst for WSphere {
+	#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WidgetTrait for WSphere {
+	#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WSphere, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+impl crate::viz::Widget3DTraitConst for WSphere {
+	#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::Widget3DTrait for WSphere {
+	#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WSphere, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+impl crate::viz::WSphereTraitConst for WSphere {
+	#[inline] fn as_raw_WSphere(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WSphereTrait for WSphere {
+	#[inline] fn as_raw_mut_WSphere(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WSphere, crate::viz::WSphereTraitConst, as_raw_WSphere, crate::viz::WSphereTrait, as_raw_mut_WSphere }
+
+impl WSphere {
+	/// Constructs a WSphere.
+	///
+	/// ## Parameters
+	/// * center: Center of the sphere.
+	/// * radius: Radius of the sphere.
+	/// * sphere_resolution: Resolution of the sphere.
+	/// * color: Color of the sphere.
+	///
+	/// ## C++ default parameters
+	/// * sphere_resolution: 10
+	/// * color: Color::white()
+	// WSphere(const cv::Point3d &, double, int, const Color &)(SimpleClass, Primitive, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:283
+	// ("cv::viz::WSphere::WSphere", vec![(pred!(mut, ["center", "radius", "sphere_resolution", "color"], ["const cv::Point3d*", "double", "int", "const cv::viz::Color*"]), _)]),
+	#[inline]
+	pub fn new(center: core::Point3d, radius: f64, sphere_resolution: i32, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WSphere> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WSphere_WSphere_const_Point3dR_double_int_const_ColorR(&center, radius, sphere_resolution, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WSphere::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Constructs a WSphere.
+	///
+	/// ## Parameters
+	/// * center: Center of the sphere.
+	/// * radius: Radius of the sphere.
+	/// * sphere_resolution: Resolution of the sphere.
+	/// * color: Color of the sphere.
+	///
+	/// ## Note
+	/// This alternative version of [new] function uses the following default values for its arguments:
+	/// * sphere_resolution: 10
+	/// * color: Color::white()
+	// cv::viz::WSphere::WSphere(SimpleClass, Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:283
+	// ("cv::viz::WSphere::WSphere", vec![(pred!(mut, ["center", "radius"], ["const cv::Point3d*", "double"]), _)]),
+	#[inline]
+	pub fn new_def(center: core::Point3d, radius: f64) -> Result<crate::viz::WSphere> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WSphere_WSphere_const_Point3dR_double(&center, radius, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WSphere::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+boxed_cast_base! { WSphere, crate::viz::Widget, cv_viz_WSphere_to_Widget }
+
+boxed_cast_base! { WSphere, crate::viz::Widget3D, cv_viz_WSphere_to_Widget3D }
+
+impl std::fmt::Debug for WSphere {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("WSphere")
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::viz::WText]
+// WText /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:407
+pub trait WTextTraitConst: crate::viz::Widget2DTraitConst {
+	fn as_raw_WText(&self) -> *const c_void;
+
+	/// Returns the current text content of the widget.
+	// getText()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:426
+	// ("cv::viz::WText::getText", vec![(pred!(const, [], []), _)]),
+	#[inline]
+	fn get_text(&self) -> Result<String> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WText_getText_const(self.as_raw_WText(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+/// Mutable methods for [crate::viz::WText]
+pub trait WTextTrait: crate::viz::WTextTraitConst + crate::viz::Widget2DTrait {
+	fn as_raw_mut_WText(&mut self) -> *mut c_void;
+
+	/// Sets the text content of the widget.
+	///
+	/// ## Parameters
+	/// * text: Text content of the widget.
+	// setText(const String &)(InString) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:423
+	// ("cv::viz::WText::setText", vec![(pred!(mut, ["text"], ["const cv::String*"]), _)]),
+	#[inline]
+	fn set_text(&mut self, text: &str) -> Result<()> {
+		extern_container_arg!(text);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WText_setText_const_StringR(self.as_raw_mut_WText(), text.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+}
+
+/// This 2D Widget represents text overlay.
+// WText /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:407
+pub struct WText {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { WText }
+
+impl Drop for WText {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_viz_WText_delete(self.as_raw_mut_WText()) };
+	}
+}
+
+unsafe impl Send for WText {}
+
+impl crate::viz::WidgetTraitConst for WText {
+	#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WidgetTrait for WText {
+	#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WText, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+impl crate::viz::Widget2DTraitConst for WText {
+	#[inline] fn as_raw_Widget2D(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::Widget2DTrait for WText {
+	#[inline] fn as_raw_mut_Widget2D(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WText, crate::viz::Widget2DTraitConst, as_raw_Widget2D, crate::viz::Widget2DTrait, as_raw_mut_Widget2D }
+
+impl crate::viz::WTextTraitConst for WText {
+	#[inline] fn as_raw_WText(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WTextTrait for WText {
+	#[inline] fn as_raw_mut_WText(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WText, crate::viz::WTextTraitConst, as_raw_WText, crate::viz::WTextTrait, as_raw_mut_WText }
+
+impl WText {
+	/// Constructs a WText.
+	///
+	/// ## Parameters
+	/// * text: Text content of the widget.
+	/// * pos: Position of the text.
+	/// * font_size: Font size.
+	/// * color: Color of the text.
+	///
+	/// ## C++ default parameters
+	/// * font_size: 20
+	/// * color: Color::white()
+	// WText(const String &, const Point &, int, const Color &)(InString, SimpleClass, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:417
+	// ("cv::viz::WText::WText", vec![(pred!(mut, ["text", "pos", "font_size", "color"], ["const cv::String*", "const cv::Point*", "int", "const cv::viz::Color*"]), _)]),
+	#[inline]
+	pub fn new(text: &str, pos: core::Point, font_size: i32, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WText> {
+		extern_container_arg!(text);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WText_WText_const_StringR_const_PointR_int_const_ColorR(text.opencv_as_extern(), &pos, font_size, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WText::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Constructs a WText.
+	///
+	/// ## Parameters
+	/// * text: Text content of the widget.
+	/// * pos: Position of the text.
+	/// * font_size: Font size.
+	/// * color: Color of the text.
+	///
+	/// ## Note
+	/// This alternative version of [new] function uses the following default values for its arguments:
+	/// * font_size: 20
+	/// * color: Color::white()
+	// cv::viz::WText::WText(InString, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:417
+	// ("cv::viz::WText::WText", vec![(pred!(mut, ["text", "pos"], ["const cv::String*", "const cv::Point*"]), _)]),
+	#[inline]
+	pub fn new_def(text: &str, pos: core::Point) -> Result<crate::viz::WText> {
+		extern_container_arg!(text);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WText_WText_const_StringR_const_PointR(text.opencv_as_extern(), &pos, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WText::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+boxed_cast_base! { WText, crate::viz::Widget, cv_viz_WText_to_Widget }
+
+boxed_cast_base! { WText, crate::viz::Widget2D, cv_viz_WText_to_Widget2D }
+
+impl std::fmt::Debug for WText {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("WText")
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::viz::WText3D]
+// WText3D /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:431
+pub trait WText3DTraitConst: crate::viz::Widget3DTraitConst {
+	fn as_raw_WText3D(&self) -> *const c_void;
+
+	/// Returns the current text content of the widget.
+	// getText()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:452
+	// ("cv::viz::WText3D::getText", vec![(pred!(const, [], []), _)]),
+	#[inline]
+	fn get_text(&self) -> Result<String> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WText3D_getText_const(self.as_raw_WText3D(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+/// Mutable methods for [crate::viz::WText3D]
+pub trait WText3DTrait: crate::viz::WText3DTraitConst + crate::viz::Widget3DTrait {
+	fn as_raw_mut_WText3D(&mut self) -> *mut c_void;
+
+	/// Sets the text content of the widget.
+	///
+	/// ## Parameters
+	/// * text: Text content of the widget.
+	// setText(const String &)(InString) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:449
+	// ("cv::viz::WText3D::setText", vec![(pred!(mut, ["text"], ["const cv::String*"]), _)]),
+	#[inline]
+	fn set_text(&mut self, text: &str) -> Result<()> {
+		extern_container_arg!(text);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WText3D_setText_const_StringR(self.as_raw_mut_WText3D(), text.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+}
+
+/// This 3D Widget represents 3D text. The text always faces the camera.
+// WText3D /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:431
+pub struct WText3D {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { WText3D }
+
+impl Drop for WText3D {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_viz_WText3D_delete(self.as_raw_mut_WText3D()) };
+	}
+}
+
+unsafe impl Send for WText3D {}
+
+impl crate::viz::WidgetTraitConst for WText3D {
+	#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WidgetTrait for WText3D {
+	#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WText3D, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+impl crate::viz::Widget3DTraitConst for WText3D {
+	#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::Widget3DTrait for WText3D {
+	#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WText3D, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+impl crate::viz::WText3DTraitConst for WText3D {
+	#[inline] fn as_raw_WText3D(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WText3DTrait for WText3D {
+	#[inline] fn as_raw_mut_WText3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WText3D, crate::viz::WText3DTraitConst, as_raw_WText3D, crate::viz::WText3DTrait, as_raw_mut_WText3D }
+
+impl WText3D {
+	/// Constructs a WText3D.
+	///
+	/// ## Parameters
+	/// * text: Text content of the widget.
+	/// * position: Position of the text.
+	/// * text_scale: Size of the text.
+	/// * face_camera: If true, text always faces the camera.
+	/// * color: Color of the text.
+	///
+	/// ## C++ default parameters
+	/// * text_scale: 1.
+	/// * face_camera: true
+	/// * color: Color::white()
+	// WText3D(const String &, const Point3d &, double, bool, const Color &)(InString, SimpleClass, Primitive, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:442
+	// ("cv::viz::WText3D::WText3D", vec![(pred!(mut, ["text", "position", "text_scale", "face_camera", "color"], ["const cv::String*", "const cv::Point3d*", "double", "bool", "const cv::viz::Color*"]), _)]),
+	#[inline]
+	pub fn new(text: &str, position: core::Point3d, text_scale: f64, face_camera: bool, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WText3D> {
+		extern_container_arg!(text);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WText3D_WText3D_const_StringR_const_Point3dR_double_bool_const_ColorR(text.opencv_as_extern(), &position, text_scale, face_camera, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WText3D::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Constructs a WText3D.
+	///
+	/// ## Parameters
+	/// * text: Text content of the widget.
+	/// * position: Position of the text.
+	/// * text_scale: Size of the text.
+	/// * face_camera: If true, text always faces the camera.
+	/// * color: Color of the text.
+	///
+	/// ## Note
+	/// This alternative version of [new] function uses the following default values for its arguments:
+	/// * text_scale: 1.
+	/// * face_camera: true
+	/// * color: Color::white()
+	// cv::viz::WText3D::WText3D(InString, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:442
+	// ("cv::viz::WText3D::WText3D", vec![(pred!(mut, ["text", "position"], ["const cv::String*", "const cv::Point3d*"]), _)]),
+	#[inline]
+	pub fn new_def(text: &str, position: core::Point3d) -> Result<crate::viz::WText3D> {
+		extern_container_arg!(text);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WText3D_WText3D_const_StringR_const_Point3dR(text.opencv_as_extern(), &position, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WText3D::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+boxed_cast_base! { WText3D, crate::viz::Widget, cv_viz_WText3D_to_Widget }
+
+boxed_cast_base! { WText3D, crate::viz::Widget3D, cv_viz_WText3D_to_Widget3D }
+
+impl std::fmt::Debug for WText3D {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("WText3D")
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::viz::WTrajectory]
+// WTrajectory /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:604
+pub trait WTrajectoryTraitConst: crate::viz::Widget3DTraitConst {
+	fn as_raw_WTrajectory(&self) -> *const c_void;
+
+}
+
+/// Mutable methods for [crate::viz::WTrajectory]
+pub trait WTrajectoryTrait: crate::viz::WTrajectoryTraitConst + crate::viz::Widget3DTrait {
+	fn as_raw_mut_WTrajectory(&mut self) -> *mut c_void;
+
+}
+
+/// This 3D Widget represents a trajectory. :
+// WTrajectory /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:604
+pub struct WTrajectory {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { WTrajectory }
+
+impl Drop for WTrajectory {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_viz_WTrajectory_delete(self.as_raw_mut_WTrajectory()) };
+	}
+}
+
+unsafe impl Send for WTrajectory {}
+
+impl crate::viz::WidgetTraitConst for WTrajectory {
+	#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WidgetTrait for WTrajectory {
+	#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WTrajectory, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+impl crate::viz::Widget3DTraitConst for WTrajectory {
+	#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::Widget3DTrait for WTrajectory {
+	#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WTrajectory, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+impl crate::viz::WTrajectoryTraitConst for WTrajectory {
+	#[inline] fn as_raw_WTrajectory(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WTrajectoryTrait for WTrajectory {
+	#[inline] fn as_raw_mut_WTrajectory(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WTrajectory, crate::viz::WTrajectoryTraitConst, as_raw_WTrajectory, crate::viz::WTrajectoryTrait, as_raw_mut_WTrajectory }
+
+impl WTrajectory {
+	/// Constructs a WTrajectory.
+	///
+	/// ## Parameters
+	/// * path: List of poses on a trajectory. Takes std::vector\<Affine\<T\>\> with T == [float | double]
+	/// * display_mode: Display mode. This can be PATH, FRAMES, and BOTH.
+	/// * scale: Scale of the frames. Polyline is not affected.
+	/// * color: Color of the polyline that represents path.
+	///
+	/// Frames are not affected.
+	/// Displays trajectory of the given path as follows:
+	/// *   PATH : Displays a poly line that represents the path.
+	/// *   FRAMES : Displays coordinate frames at each pose.
+	/// *   PATH & FRAMES : Displays both poly line and coordinate frames.
+	///
+	/// ## C++ default parameters
+	/// * display_mode: WTrajectory::PATH
+	/// * scale: 1.0
+	/// * color: Color::white()
+	// WTrajectory(InputArray, int, double, const Color &)(InputArray, Primitive, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:622
+	// ("cv::viz::WTrajectory::WTrajectory", vec![(pred!(mut, ["path", "display_mode", "scale", "color"], ["const cv::_InputArray*", "int", "double", "const cv::viz::Color*"]), _)]),
+	#[inline]
+	pub fn new(path: &impl ToInputArray, display_mode: i32, scale: f64, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WTrajectory> {
+		input_array_arg!(path);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WTrajectory_WTrajectory_const__InputArrayR_int_double_const_ColorR(path.as_raw__InputArray(), display_mode, scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WTrajectory::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Constructs a WTrajectory.
+	///
+	/// ## Parameters
+	/// * path: List of poses on a trajectory. Takes std::vector\<Affine\<T\>\> with T == [float | double]
+	/// * display_mode: Display mode. This can be PATH, FRAMES, and BOTH.
+	/// * scale: Scale of the frames. Polyline is not affected.
+	/// * color: Color of the polyline that represents path.
+	///
+	/// Frames are not affected.
+	/// Displays trajectory of the given path as follows:
+	/// *   PATH : Displays a poly line that represents the path.
+	/// *   FRAMES : Displays coordinate frames at each pose.
+	/// *   PATH & FRAMES : Displays both poly line and coordinate frames.
+	///
+	/// ## Note
+	/// This alternative version of [new] function uses the following default values for its arguments:
+	/// * display_mode: WTrajectory::PATH
+	/// * scale: 1.0
+	/// * color: Color::white()
+	// cv::viz::WTrajectory::WTrajectory(InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:622
+	// ("cv::viz::WTrajectory::WTrajectory", vec![(pred!(mut, ["path"], ["const cv::_InputArray*"]), _)]),
+	#[inline]
+	pub fn new_def(path: &impl ToInputArray) -> Result<crate::viz::WTrajectory> {
+		input_array_arg!(path);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WTrajectory_WTrajectory_const__InputArrayR(path.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WTrajectory::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+boxed_cast_base! { WTrajectory, crate::viz::Widget, cv_viz_WTrajectory_to_Widget }
+
+boxed_cast_base! { WTrajectory, crate::viz::Widget3D, cv_viz_WTrajectory_to_Widget3D }
+
+impl std::fmt::Debug for WTrajectory {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("WTrajectory")
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::viz::WTrajectoryFrustums]
+// WTrajectoryFrustums /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:627
+pub trait WTrajectoryFrustumsTraitConst: crate::viz::Widget3DTraitConst {
+	fn as_raw_WTrajectoryFrustums(&self) -> *const c_void;
+
+}
+
+/// Mutable methods for [crate::viz::WTrajectoryFrustums]
+pub trait WTrajectoryFrustumsTrait: crate::viz::WTrajectoryFrustumsTraitConst + crate::viz::Widget3DTrait {
+	fn as_raw_mut_WTrajectoryFrustums(&mut self) -> *mut c_void;
+
+}
+
+/// This 3D Widget represents a trajectory. :
+// WTrajectoryFrustums /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:627
+pub struct WTrajectoryFrustums {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { WTrajectoryFrustums }
+
+impl Drop for WTrajectoryFrustums {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_viz_WTrajectoryFrustums_delete(self.as_raw_mut_WTrajectoryFrustums()) };
+	}
+}
+
+unsafe impl Send for WTrajectoryFrustums {}
+
+impl crate::viz::WidgetTraitConst for WTrajectoryFrustums {
+	#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WidgetTrait for WTrajectoryFrustums {
+	#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WTrajectoryFrustums, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+impl crate::viz::Widget3DTraitConst for WTrajectoryFrustums {
+	#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::Widget3DTrait for WTrajectoryFrustums {
+	#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WTrajectoryFrustums, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+impl crate::viz::WTrajectoryFrustumsTraitConst for WTrajectoryFrustums {
+	#[inline] fn as_raw_WTrajectoryFrustums(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WTrajectoryFrustumsTrait for WTrajectoryFrustums {
+	#[inline] fn as_raw_mut_WTrajectoryFrustums(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WTrajectoryFrustums, crate::viz::WTrajectoryFrustumsTraitConst, as_raw_WTrajectoryFrustums, crate::viz::WTrajectoryFrustumsTrait, as_raw_mut_WTrajectoryFrustums }
+
+impl WTrajectoryFrustums {
+	/// Constructs a WTrajectoryFrustums.
+	///
+	/// ## Parameters
+	/// * path: List of poses on a trajectory. Takes std::vector\<Affine\<T\>\> with T == [float | double]
+	/// * K: Intrinsic matrix of the camera.
+	/// * scale: Scale of the frustums.
+	/// * color: Color of the frustums.
+	///
+	/// Displays frustums at each pose of the trajectory.
+	///
+	/// ## C++ default parameters
+	/// * scale: 1.
+	/// * color: Color::white()
+	// WTrajectoryFrustums(InputArray, const Matx33d &, double, const Color &)(InputArray, SimpleClass, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:639
+	// ("cv::viz::WTrajectoryFrustums::WTrajectoryFrustums", vec![(pred!(mut, ["path", "K", "scale", "color"], ["const cv::_InputArray*", "const cv::Matx33d*", "double", "const cv::viz::Color*"]), _)]),
+	#[inline]
+	pub fn new(path: &impl ToInputArray, k: core::Matx33d, scale: f64, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WTrajectoryFrustums> {
+		input_array_arg!(path);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WTrajectoryFrustums_WTrajectoryFrustums_const__InputArrayR_const_Matx33dR_double_const_ColorR(path.as_raw__InputArray(), &k, scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WTrajectoryFrustums::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Constructs a WTrajectoryFrustums.
+	///
+	/// ## Parameters
+	/// * path: List of poses on a trajectory. Takes std::vector\<Affine\<T\>\> with T == [float | double]
+	/// * K: Intrinsic matrix of the camera.
+	/// * scale: Scale of the frustums.
+	/// * color: Color of the frustums.
+	///
+	/// Displays frustums at each pose of the trajectory.
+	///
+	/// ## Note
+	/// This alternative version of [new] function uses the following default values for its arguments:
+	/// * scale: 1.
+	/// * color: Color::white()
+	// cv::viz::WTrajectoryFrustums::WTrajectoryFrustums(InputArray, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:639
+	// ("cv::viz::WTrajectoryFrustums::WTrajectoryFrustums", vec![(pred!(mut, ["path", "K"], ["const cv::_InputArray*", "const cv::Matx33d*"]), _)]),
+	#[inline]
+	pub fn new_def(path: &impl ToInputArray, k: core::Matx33d) -> Result<crate::viz::WTrajectoryFrustums> {
+		input_array_arg!(path);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WTrajectoryFrustums_WTrajectoryFrustums_const__InputArrayR_const_Matx33dR(path.as_raw__InputArray(), &k, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WTrajectoryFrustums::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Constructs a WTrajectoryFrustums.
+	///
+	/// ## Parameters
+	/// * path: List of poses on a trajectory. Takes std::vector\<Affine\<T\>\> with T == [float | double]
+	/// * fov: Field of view of the camera (horizontal, vertical).
+	/// * scale: Scale of the frustums.
+	/// * color: Color of the frustums.
+	///
+	/// Displays frustums at each pose of the trajectory.
+	///
+	/// ## C++ default parameters
+	/// * scale: 1.
+	/// * color: Color::white()
+	// WTrajectoryFrustums(InputArray, const Vec2d &, double, const Color &)(InputArray, SimpleClass, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:650
+	// ("cv::viz::WTrajectoryFrustums::WTrajectoryFrustums", vec![(pred!(mut, ["path", "fov", "scale", "color"], ["const cv::_InputArray*", "const cv::Vec2d*", "double", "const cv::viz::Color*"]), _)]),
+	#[inline]
+	pub fn new_1(path: &impl ToInputArray, fov: core::Vec2d, scale: f64, color: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WTrajectoryFrustums> {
+		input_array_arg!(path);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WTrajectoryFrustums_WTrajectoryFrustums_const__InputArrayR_const_Vec2dR_double_const_ColorR(path.as_raw__InputArray(), &fov, scale, color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WTrajectoryFrustums::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Constructs a WTrajectoryFrustums.
+	///
+	/// ## Parameters
+	/// * path: List of poses on a trajectory. Takes std::vector\<Affine\<T\>\> with T == [float | double]
+	/// * fov: Field of view of the camera (horizontal, vertical).
+	/// * scale: Scale of the frustums.
+	/// * color: Color of the frustums.
+	///
+	/// Displays frustums at each pose of the trajectory.
+	///
+	/// ## Note
+	/// This alternative version of [new] function uses the following default values for its arguments:
+	/// * scale: 1.
+	/// * color: Color::white()
+	// cv::viz::WTrajectoryFrustums::WTrajectoryFrustums(InputArray, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:650
+	// ("cv::viz::WTrajectoryFrustums::WTrajectoryFrustums", vec![(pred!(mut, ["path", "fov"], ["const cv::_InputArray*", "const cv::Vec2d*"]), _)]),
+	#[inline]
+	pub fn new_def_1(path: &impl ToInputArray, fov: core::Vec2d) -> Result<crate::viz::WTrajectoryFrustums> {
+		input_array_arg!(path);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WTrajectoryFrustums_WTrajectoryFrustums_const__InputArrayR_const_Vec2dR(path.as_raw__InputArray(), &fov, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WTrajectoryFrustums::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+boxed_cast_base! { WTrajectoryFrustums, crate::viz::Widget, cv_viz_WTrajectoryFrustums_to_Widget }
+
+boxed_cast_base! { WTrajectoryFrustums, crate::viz::Widget3D, cv_viz_WTrajectoryFrustums_to_Widget3D }
+
+impl std::fmt::Debug for WTrajectoryFrustums {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("WTrajectoryFrustums")
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::viz::WTrajectorySpheres]
+// WTrajectorySpheres /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:658
+pub trait WTrajectorySpheresTraitConst: crate::viz::Widget3DTraitConst {
+	fn as_raw_WTrajectorySpheres(&self) -> *const c_void;
+
+}
+
+/// Mutable methods for [crate::viz::WTrajectorySpheres]
+pub trait WTrajectorySpheresTrait: crate::viz::WTrajectorySpheresTraitConst + crate::viz::Widget3DTrait {
+	fn as_raw_mut_WTrajectorySpheres(&mut self) -> *mut c_void;
+
+}
+
+/// This 3D Widget represents a trajectory using spheres and lines
+///
+/// where spheres represent the positions of the camera, and lines represent the direction from
+/// previous position to the current. :
+// WTrajectorySpheres /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:658
+pub struct WTrajectorySpheres {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { WTrajectorySpheres }
+
+impl Drop for WTrajectorySpheres {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_viz_WTrajectorySpheres_delete(self.as_raw_mut_WTrajectorySpheres()) };
+	}
+}
+
+unsafe impl Send for WTrajectorySpheres {}
+
+impl crate::viz::WidgetTraitConst for WTrajectorySpheres {
+	#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WidgetTrait for WTrajectorySpheres {
+	#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WTrajectorySpheres, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+impl crate::viz::Widget3DTraitConst for WTrajectorySpheres {
+	#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::Widget3DTrait for WTrajectorySpheres {
+	#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WTrajectorySpheres, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+impl crate::viz::WTrajectorySpheresTraitConst for WTrajectorySpheres {
+	#[inline] fn as_raw_WTrajectorySpheres(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WTrajectorySpheresTrait for WTrajectorySpheres {
+	#[inline] fn as_raw_mut_WTrajectorySpheres(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WTrajectorySpheres, crate::viz::WTrajectorySpheresTraitConst, as_raw_WTrajectorySpheres, crate::viz::WTrajectorySpheresTrait, as_raw_mut_WTrajectorySpheres }
+
+impl WTrajectorySpheres {
+	/// Constructs a WTrajectorySpheres.
+	///
+	/// ## Parameters
+	/// * path: List of poses on a trajectory. Takes std::vector\<Affine\<T\>\> with T == [float | double]
+	/// * line_length: Max length of the lines which point to previous position
+	/// * radius: Radius of the spheres.
+	/// * from: Color for first sphere.
+	/// * to: Color for last sphere. Intermediate spheres will have interpolated color.
+	///
+	/// ## C++ default parameters
+	/// * line_length: 0.05
+	/// * radius: 0.007
+	/// * from: Color::red()
+	/// * to: Color::white()
+	// WTrajectorySpheres(InputArray, double, double, const Color &, const Color &)(InputArray, Primitive, Primitive, TraitClass, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:669
+	// ("cv::viz::WTrajectorySpheres::WTrajectorySpheres", vec![(pred!(mut, ["path", "line_length", "radius", "from", "to"], ["const cv::_InputArray*", "double", "double", "const cv::viz::Color*", "const cv::viz::Color*"]), _)]),
+	#[inline]
+	pub fn new(path: &impl ToInputArray, line_length: f64, radius: f64, from: &impl crate::viz::ColorTraitConst, to: &impl crate::viz::ColorTraitConst) -> Result<crate::viz::WTrajectorySpheres> {
+		input_array_arg!(path);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WTrajectorySpheres_WTrajectorySpheres_const__InputArrayR_double_double_const_ColorR_const_ColorR(path.as_raw__InputArray(), line_length, radius, from.as_raw_Color(), to.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WTrajectorySpheres::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Constructs a WTrajectorySpheres.
+	///
+	/// ## Parameters
+	/// * path: List of poses on a trajectory. Takes std::vector\<Affine\<T\>\> with T == [float | double]
+	/// * line_length: Max length of the lines which point to previous position
+	/// * radius: Radius of the spheres.
+	/// * from: Color for first sphere.
+	/// * to: Color for last sphere. Intermediate spheres will have interpolated color.
+	///
+	/// ## Note
+	/// This alternative version of [new] function uses the following default values for its arguments:
+	/// * line_length: 0.05
+	/// * radius: 0.007
+	/// * from: Color::red()
+	/// * to: Color::white()
+	// cv::viz::WTrajectorySpheres::WTrajectorySpheres(InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:669
+	// ("cv::viz::WTrajectorySpheres::WTrajectorySpheres", vec![(pred!(mut, ["path"], ["const cv::_InputArray*"]), _)]),
+	#[inline]
+	pub fn new_def(path: &impl ToInputArray) -> Result<crate::viz::WTrajectorySpheres> {
+		input_array_arg!(path);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WTrajectorySpheres_WTrajectorySpheres_const__InputArrayR(path.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WTrajectorySpheres::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+boxed_cast_base! { WTrajectorySpheres, crate::viz::Widget, cv_viz_WTrajectorySpheres_to_Widget }
+
+boxed_cast_base! { WTrajectorySpheres, crate::viz::Widget3D, cv_viz_WTrajectorySpheres_to_Widget3D }
+
+impl std::fmt::Debug for WTrajectorySpheres {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("WTrajectorySpheres")
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::viz::WWidgetMerger]
+// WWidgetMerger /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:805
+pub trait WWidgetMergerTraitConst: crate::viz::Widget3DTraitConst {
+	fn as_raw_WWidgetMerger(&self) -> *const c_void;
+
+}
+
+/// Mutable methods for [crate::viz::WWidgetMerger]
+pub trait WWidgetMergerTrait: crate::viz::WWidgetMergerTraitConst + crate::viz::Widget3DTrait {
+	fn as_raw_mut_WWidgetMerger(&mut self) -> *mut c_void;
+
+	/// Add widget to merge with optional position change
+	///
+	/// ## C++ default parameters
+	/// * pose: Affine3d::Identity()
+	// addWidget(const Widget3D &, const Affine3d &)(TraitClass, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:811
+	// ("cv::viz::WWidgetMerger::addWidget", vec![(pred!(mut, ["widget", "pose"], ["const cv::viz::Widget3D*", "const cv::Affine3d*"]), _)]),
+	#[inline]
+	fn add_widget(&mut self, widget: &impl crate::viz::Widget3DTraitConst, pose: core::Affine3d) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WWidgetMerger_addWidget_const_Widget3DR_const_Affine3dR(self.as_raw_mut_WWidgetMerger(), widget.as_raw_Widget3D(), &pose, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Add widget to merge with optional position change
+	///
+	/// ## Note
+	/// This alternative version of [WWidgetMergerTrait::add_widget] function uses the following default values for its arguments:
+	/// * pose: Affine3d::Identity()
+	// cv::viz::WWidgetMerger::addWidget(TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:811
+	// ("cv::viz::WWidgetMerger::addWidget", vec![(pred!(mut, ["widget"], ["const cv::viz::Widget3D*"]), _)]),
+	#[inline]
+	fn add_widget_def(&mut self, widget: &impl crate::viz::Widget3DTraitConst) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WWidgetMerger_addWidget_const_Widget3DR(self.as_raw_mut_WWidgetMerger(), widget.as_raw_Widget3D(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Repacks internal structure to single widget
+	// finalize()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:814
+	// ("cv::viz::WWidgetMerger::finalize", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	fn finalize(&mut self) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WWidgetMerger_finalize(self.as_raw_mut_WWidgetMerger(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+}
+
+/// This class allows to merge several widgets to single one.
+///
+/// It has quite limited functionality and can't merge widgets with different attributes. For
+/// instance, if widgetA has color array and widgetB has only global color defined, then result
+/// of merge won't have color at all. The class is suitable for merging large amount of similar
+/// widgets. :
+// WWidgetMerger /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:805
+pub struct WWidgetMerger {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { WWidgetMerger }
+
+impl Drop for WWidgetMerger {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_viz_WWidgetMerger_delete(self.as_raw_mut_WWidgetMerger()) };
+	}
+}
+
+unsafe impl Send for WWidgetMerger {}
+
+impl crate::viz::WidgetTraitConst for WWidgetMerger {
+	#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WidgetTrait for WWidgetMerger {
+	#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WWidgetMerger, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+impl crate::viz::Widget3DTraitConst for WWidgetMerger {
+	#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::Widget3DTrait for WWidgetMerger {
+	#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WWidgetMerger, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+impl crate::viz::WWidgetMergerTraitConst for WWidgetMerger {
+	#[inline] fn as_raw_WWidgetMerger(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WWidgetMergerTrait for WWidgetMerger {
+	#[inline] fn as_raw_mut_WWidgetMerger(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { WWidgetMerger, crate::viz::WWidgetMergerTraitConst, as_raw_WWidgetMerger, crate::viz::WWidgetMergerTrait, as_raw_mut_WWidgetMerger }
+
+impl WWidgetMerger {
+	// WWidgetMerger()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:808
+	// ("cv::viz::WWidgetMerger::WWidgetMerger", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn default() -> Result<crate::viz::WWidgetMerger> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_WWidgetMerger_WWidgetMerger(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::WWidgetMerger::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+boxed_cast_base! { WWidgetMerger, crate::viz::Widget, cv_viz_WWidgetMerger_to_Widget }
+
+boxed_cast_base! { WWidgetMerger, crate::viz::Widget3D, cv_viz_WWidgetMerger_to_Widget3D }
+
+impl std::fmt::Debug for WWidgetMerger {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("WWidgetMerger")
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::viz::Widget]
+// Widget /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:92
+pub trait WidgetTraitConst {
+	fn as_raw_Widget(&self) -> *const c_void;
+
+	/// Returns rendering property of the widget.
+	///
+	/// ## Parameters
+	/// * property: Property.
+	///
+	/// Rendering property can be one of the following:
+	/// *   **POINT_SIZE**
+	/// *   **OPACITY**
+	/// *   **LINE_WIDTH**
+	/// *   **FONT_SIZE**
+	/// *   **AMBIENT**
+	///
+	/// REPRESENTATION: Expected values are
+	/// *   **REPRESENTATION_POINTS**
+	/// *   **REPRESENTATION_WIREFRAME**
+	/// *   **REPRESENTATION_SURFACE**
+	///
+	/// **IMMEDIATE_RENDERING**:
+	/// *   Turn on immediate rendering by setting the value to 1.
+	/// *   Turn off immediate rendering by setting the value to 0.
+	///
+	/// SHADING: Expected values are
+	/// *   **SHADING_FLAT**
+	/// *   **SHADING_GOURAUD**
+	/// *   **SHADING_PHONG**
+	// getRenderingProperty(int)(Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:157
+	// ("cv::viz::Widget::getRenderingProperty", vec![(pred!(const, ["property"], ["int"]), _)]),
+	#[inline]
+	fn get_rendering_property(&self, property: i32) -> Result<f64> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Widget_getRenderingProperty_const_int(self.as_raw_Widget(), property, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+}
+
+/// Mutable methods for [crate::viz::Widget]
+pub trait WidgetTrait: crate::viz::WidgetTraitConst {
+	fn as_raw_mut_Widget(&mut self) -> *mut c_void;
+
+	// operator=(const Widget &)(TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:97
+	// ("cv::viz::Widget::operator=", vec![(pred!(mut, ["other"], ["const cv::viz::Widget*"]), _)]),
+	#[inline]
+	fn set(&mut self, other: &impl crate::viz::WidgetTraitConst) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Widget_operatorST_const_WidgetR(self.as_raw_mut_Widget(), other.as_raw_Widget(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Sets rendering property of the widget.
+	///
+	/// ## Parameters
+	/// * property: Property that will be modified.
+	/// * value: The new value of the property.
+	///
+	/// Rendering property can be one of the following:
+	/// *   **POINT_SIZE**
+	/// *   **OPACITY**
+	/// *   **LINE_WIDTH**
+	/// *   **FONT_SIZE**
+	///
+	/// REPRESENTATION: Expected values are
+	/// *   **REPRESENTATION_POINTS**
+	/// *   **REPRESENTATION_WIREFRAME**
+	/// *   **REPRESENTATION_SURFACE**
+	///
+	/// IMMEDIATE_RENDERING:
+	/// *   Turn on immediate rendering by setting the value to 1.
+	/// *   Turn off immediate rendering by setting the value to 0.
+	///
+	/// SHADING: Expected values are
+	/// *   **SHADING_FLAT**
+	/// *   **SHADING_GOURAUD**
+	/// *   **SHADING_PHONG**
+	// setRenderingProperty(int, double)(Primitive, Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:131
+	// ("cv::viz::Widget::setRenderingProperty", vec![(pred!(mut, ["property", "value"], ["int", "double"]), _)]),
+	#[inline]
+	fn set_rendering_property(&mut self, property: i32, value: f64) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Widget_setRenderingProperty_int_double(self.as_raw_mut_Widget(), property, value, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+}
+
+/// Base class of all widgets. Widget is implicitly shared.
+// Widget /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:92
+pub struct Widget {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { Widget }
+
+impl Drop for Widget {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_viz_Widget_delete(self.as_raw_mut_Widget()) };
+	}
+}
+
+unsafe impl Send for Widget {}
+
+impl crate::viz::WidgetTraitConst for Widget {
+	#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WidgetTrait for Widget {
+	#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { Widget, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+impl Widget {
+	// Widget()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:95
+	// ("cv::viz::Widget::Widget", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn default() -> Result<crate::viz::Widget> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Widget_Widget(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Widget::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	// Widget(const Widget &)(TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:96
+	// ("cv::viz::Widget::Widget", vec![(pred!(mut, ["other"], ["const cv::viz::Widget*"]), _)]),
+	#[inline]
+	pub fn copy(other: &impl crate::viz::WidgetTraitConst) -> Result<crate::viz::Widget> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Widget_Widget_const_WidgetR(other.as_raw_Widget(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Widget::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Creates a widget from ply file.
+	///
+	/// ## Parameters
+	/// * file_name: Ply file name.
+	// fromPlyFile(const String &)(InString) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:104
+	// ("cv::viz::Widget::fromPlyFile", vec![(pred!(mut, ["file_name"], ["const cv::String*"]), _)]),
+	#[inline]
+	pub fn from_ply_file(file_name: &str) -> Result<crate::viz::Widget> {
+		extern_container_arg!(file_name);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Widget_fromPlyFile_const_StringR(file_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Widget::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+impl std::fmt::Debug for Widget {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("Widget")
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::viz::Widget2D]
+// Widget2D /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:218
+pub trait Widget2DTraitConst: crate::viz::WidgetTraitConst {
+	fn as_raw_Widget2D(&self) -> *const c_void;
+
+}
+
+/// Mutable methods for [crate::viz::Widget2D]
+pub trait Widget2DTrait: crate::viz::Widget2DTraitConst + crate::viz::WidgetTrait {
+	fn as_raw_mut_Widget2D(&mut self) -> *mut c_void;
+
+	/// Sets the color of the widget.
+	///
+	/// ## Parameters
+	/// * color: color of type Color
+	// setColor(const Color &)(TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:227
+	// ("cv::viz::Widget2D::setColor", vec![(pred!(mut, ["color"], ["const cv::viz::Color*"]), _)]),
+	#[inline]
+	fn set_color(&mut self, color: &impl crate::viz::ColorTraitConst) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Widget2D_setColor_const_ColorR(self.as_raw_mut_Widget2D(), color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+}
+
+/// Base class of all 2D widgets.
+// Widget2D /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:218
+pub struct Widget2D {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { Widget2D }
+
+impl Drop for Widget2D {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_viz_Widget2D_delete(self.as_raw_mut_Widget2D()) };
+	}
+}
+
+unsafe impl Send for Widget2D {}
+
+impl crate::viz::WidgetTraitConst for Widget2D {
+	#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WidgetTrait for Widget2D {
+	#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { Widget2D, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+impl crate::viz::Widget2DTraitConst for Widget2D {
+	#[inline] fn as_raw_Widget2D(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::Widget2DTrait for Widget2D {
+	#[inline] fn as_raw_mut_Widget2D(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { Widget2D, crate::viz::Widget2DTraitConst, as_raw_Widget2D, crate::viz::Widget2DTrait, as_raw_mut_Widget2D }
+
+impl Widget2D {
+	// Widget2D()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:221
+	// ("cv::viz::Widget2D::Widget2D", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn default() -> Result<crate::viz::Widget2D> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Widget2D_Widget2D(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Widget2D::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+boxed_cast_base! { Widget2D, crate::viz::Widget, cv_viz_Widget2D_to_Widget }
+
+impl std::fmt::Debug for Widget2D {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("Widget2D")
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::viz::Widget3D]
+// Widget3D /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:181
+pub trait Widget3DTraitConst: crate::viz::WidgetTraitConst {
+	fn as_raw_Widget3D(&self) -> *const c_void;
+
+	/// Returns the current pose of the widget.
+	// getPose()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:198
+	// ("cv::viz::Widget3D::getPose", vec![(pred!(const, [], []), _)]),
+	#[inline]
+	fn get_pose(&self) -> Result<core::Affine3d> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Widget3D_getPose_const(self.as_raw_Widget3D(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+}
+
+/// Mutable methods for [crate::viz::Widget3D]
+pub trait Widget3DTrait: crate::viz::Widget3DTraitConst + crate::viz::WidgetTrait {
+	fn as_raw_mut_Widget3D(&mut self) -> *mut c_void;
+
+	/// Sets pose of the widget.
+	///
+	/// ## Parameters
+	/// * pose: The new pose of the widget.
+	// setPose(const Affine3d &)(SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:190
+	// ("cv::viz::Widget3D::setPose", vec![(pred!(mut, ["pose"], ["const cv::Affine3d*"]), _)]),
+	#[inline]
+	fn set_pose(&mut self, pose: core::Affine3d) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Widget3D_setPose_const_Affine3dR(self.as_raw_mut_Widget3D(), &pose, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Updates pose of the widget by pre-multiplying its current pose.
+	///
+	/// ## Parameters
+	/// * pose: The pose that the current pose of the widget will be pre-multiplied by.
+	// updatePose(const Affine3d &)(SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:195
+	// ("cv::viz::Widget3D::updatePose", vec![(pred!(mut, ["pose"], ["const cv::Affine3d*"]), _)]),
+	#[inline]
+	fn update_pose(&mut self, pose: core::Affine3d) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Widget3D_updatePose_const_Affine3dR(self.as_raw_mut_Widget3D(), &pose, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Transforms internal widget data (i.e. points, normals) using the given transform.
+	///
+	/// ## Parameters
+	/// * transform: Specified transformation to apply.
+	// applyTransform(const Affine3d &)(SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:204
+	// ("cv::viz::Widget3D::applyTransform", vec![(pred!(mut, ["transform"], ["const cv::Affine3d*"]), _)]),
+	#[inline]
+	fn apply_transform(&mut self, transform: core::Affine3d) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Widget3D_applyTransform_const_Affine3dR(self.as_raw_mut_Widget3D(), &transform, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Sets the color of the widget.
+	///
+	/// ## Parameters
+	/// * color: color of type Color
+	// setColor(const Color &)(TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:210
+	// ("cv::viz::Widget3D::setColor", vec![(pred!(mut, ["color"], ["const cv::viz::Color*"]), _)]),
+	#[inline]
+	fn set_color(&mut self, color: &impl crate::viz::ColorTraitConst) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Widget3D_setColor_const_ColorR(self.as_raw_mut_Widget3D(), color.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+}
+
+/// Base class of all 3D widgets.
+// Widget3D /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:181
+pub struct Widget3D {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { Widget3D }
+
+impl Drop for Widget3D {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_viz_Widget3D_delete(self.as_raw_mut_Widget3D()) };
+	}
+}
+
+unsafe impl Send for Widget3D {}
+
+impl crate::viz::WidgetTraitConst for Widget3D {
+	#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::WidgetTrait for Widget3D {
+	#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { Widget3D, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+impl crate::viz::Widget3DTraitConst for Widget3D {
+	#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::viz::Widget3DTrait for Widget3D {
+	#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { Widget3D, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+impl Widget3D {
+	// Widget3D()() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/viz/widgets.hpp:184
+	// ("cv::viz::Widget3D::Widget3D", vec![(pred!(mut, [], []), _)]),
+	#[inline]
+	pub fn default() -> Result<crate::viz::Widget3D> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_viz_Widget3D_Widget3D(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { crate::viz::Widget3D::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+}
+
+boxed_cast_base! { Widget3D, crate::viz::Widget, cv_viz_Widget3D_to_Widget }
+
+impl std::fmt::Debug for Widget3D {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("Widget3D")
+			.finish()
+	}
+}

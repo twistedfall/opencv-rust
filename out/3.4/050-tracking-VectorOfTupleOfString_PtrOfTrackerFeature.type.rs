@@ -1,0 +1,18 @@
+impl core::Vector<core::Tuple<(String, core::Ptr<crate::tracking::TrackerFeature>)>> {
+	pub fn as_raw_VectorOfTupleOfString_PtrOfTrackerFeature(&self) -> extern_send!(Self) { self.as_raw() }
+	pub fn as_raw_mut_VectorOfTupleOfString_PtrOfTrackerFeature(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+}
+
+vector_extern! { core::Tuple<(String, core::Ptr<crate::tracking::TrackerFeature>)>,
+	std_vectorLstd_pairLcv_String__cv_PtrLcv_TrackerFeatureGGG_new_const, std_vectorLstd_pairLcv_String__cv_PtrLcv_TrackerFeatureGGG_delete,
+	std_vectorLstd_pairLcv_String__cv_PtrLcv_TrackerFeatureGGG_len_const, std_vectorLstd_pairLcv_String__cv_PtrLcv_TrackerFeatureGGG_isEmpty_const,
+	std_vectorLstd_pairLcv_String__cv_PtrLcv_TrackerFeatureGGG_capacity_const, std_vectorLstd_pairLcv_String__cv_PtrLcv_TrackerFeatureGGG_shrinkToFit,
+	std_vectorLstd_pairLcv_String__cv_PtrLcv_TrackerFeatureGGG_reserve_size_t, std_vectorLstd_pairLcv_String__cv_PtrLcv_TrackerFeatureGGG_remove_size_t,
+	std_vectorLstd_pairLcv_String__cv_PtrLcv_TrackerFeatureGGG_swap_size_t_size_t, std_vectorLstd_pairLcv_String__cv_PtrLcv_TrackerFeatureGGG_clear,
+	std_vectorLstd_pairLcv_String__cv_PtrLcv_TrackerFeatureGGG_get_const_size_t, std_vectorLstd_pairLcv_String__cv_PtrLcv_TrackerFeatureGGG_set_size_t_const_pairLcv_String__cv_PtrLcv_TrackerFeatureGG,
+	std_vectorLstd_pairLcv_String__cv_PtrLcv_TrackerFeatureGGG_push_const_pairLcv_String__cv_PtrLcv_TrackerFeatureGG, std_vectorLstd_pairLcv_String__cv_PtrLcv_TrackerFeatureGGG_insert_size_t_const_pairLcv_String__cv_PtrLcv_TrackerFeatureGG,
+}
+
+vector_non_copy_or_bool! { core::Tuple<(String, core::Ptr<crate::tracking::TrackerFeature>)> }
+
+

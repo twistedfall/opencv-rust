@@ -1,0 +1,181 @@
+//! # The module brings implementations of intensity transformation algorithms to adjust image contrast.
+//!
+//! Namespace for all functions is `cv::intensity_transform`.
+//!
+//! ### Supported Algorithms
+//! - Autoscaling
+//! - Log Transformations
+//! - Power-Law (Gamma) Transformations
+//! - Contrast Stretching
+//! - BIMEF, A Bio-Inspired Multi-Exposure Fusion Framework for Low-light Image Enhancement [ying2017bio](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_ying2017bio) [ying2017new](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_ying2017new)
+//!
+//! References from following book and websites:
+//! - Digital Image Processing 4th Edition Chapter 3 [Rafael C. Gonzalez, Richard E. Woods] [Gonzalez2018](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_Gonzalez2018)
+//! - <http://www.cs.uregina.ca/Links/class-info/425/Lab3/> [lcs435lab](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_lcs435lab)
+//! - <https://theailearner.com/2019/01/30/contrast-stretching/> [theailearner](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_theailearner)
+use crate::mod_prelude::*;
+use crate::{core, sys, types};
+pub mod prelude {
+}
+
+/// Given an input color image, enhance low-light images using the BIMEF method ([ying2017bio](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_ying2017bio) [ying2017new](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_ying2017new)).
+///
+/// ## Parameters
+/// * input: input color image.
+/// * output: resulting image.
+/// * mu: enhancement ratio.
+/// * a: a-parameter in the Camera Response Function (CRF).
+/// * b: b-parameter in the Camera Response Function (CRF).
+///
+/// @warning This is a C++ implementation of the [original MATLAB algorithm](https://github.com/baidut/BIMEF).
+/// Compared to the original code, this implementation is a little bit slower and does not provide the same results.
+/// In particular, quality of the image enhancement is degraded for the bright areas in certain conditions.
+///
+/// ## Note
+/// This alternative version of [bimef] function uses the following default values for its arguments:
+/// * mu: 0.5f
+/// * a: -0.3293f
+/// * b: 1.1258f
+// cv::intensity_transform::BIMEF(InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/intensity_transform.hpp:88
+// ("cv::intensity_transform::BIMEF", vec![(pred!(mut, ["input", "output"], ["const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn bimef_def(input: &impl ToInputArray, output: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(input);
+	output_array_arg!(output);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_intensity_transform_BIMEF_const__InputArrayR_const__OutputArrayR(input.as_raw__InputArray(), output.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Given an input color image, enhance low-light images using the BIMEF method ([ying2017bio](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_ying2017bio) [ying2017new](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_ying2017new)).
+///
+/// ## Parameters
+/// * input: input color image.
+/// * output: resulting image.
+/// * mu: enhancement ratio.
+/// * a: a-parameter in the Camera Response Function (CRF).
+/// * b: b-parameter in the Camera Response Function (CRF).
+///
+/// @warning This is a C++ implementation of the [original MATLAB algorithm](https://github.com/baidut/BIMEF).
+/// Compared to the original code, this implementation is a little bit slower and does not provide the same results.
+/// In particular, quality of the image enhancement is degraded for the bright areas in certain conditions.
+///
+/// ## C++ default parameters
+/// * mu: 0.5f
+/// * a: -0.3293f
+/// * b: 1.1258f
+// BIMEF(InputArray, OutputArray, float, float, float)(InputArray, OutputArray, Primitive, Primitive, Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/intensity_transform.hpp:88
+// ("cv::intensity_transform::BIMEF", vec![(pred!(mut, ["input", "output", "mu", "a", "b"], ["const cv::_InputArray*", "const cv::_OutputArray*", "float", "float", "float"]), _)]),
+#[inline]
+pub fn bimef(input: &impl ToInputArray, output: &mut impl ToOutputArray, mu: f32, a: f32, b: f32) -> Result<()> {
+	input_array_arg!(input);
+	output_array_arg!(output);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_intensity_transform_BIMEF_const__InputArrayR_const__OutputArrayR_float_float_float(input.as_raw__InputArray(), output.as_raw__OutputArray(), mu, a, b, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Given an input color image, enhance low-light images using the BIMEF method ([ying2017bio](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_ying2017bio) [ying2017new](https://docs.opencv.org/5.0.0/d0/de3/citelist.html#CITEREF_ying2017new)).
+///
+/// This is an overloaded function with the exposure ratio given as parameter.
+///
+/// ## Parameters
+/// * input: input color image.
+/// * output: resulting image.
+/// * k: exposure ratio.
+/// * mu: enhancement ratio.
+/// * a: a-parameter in the Camera Response Function (CRF).
+/// * b: b-parameter in the Camera Response Function (CRF).
+///
+/// @warning This is a C++ implementation of the [original MATLAB algorithm](https://github.com/baidut/BIMEF).
+/// Compared to the original code, this implementation is a little bit slower and does not provide the same results.
+/// In particular, quality of the image enhancement is degraded for the bright areas in certain conditions.
+// BIMEF(InputArray, OutputArray, float, float, float, float)(InputArray, OutputArray, Primitive, Primitive, Primitive, Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/intensity_transform.hpp:106
+// ("cv::intensity_transform::BIMEF", vec![(pred!(mut, ["input", "output", "k", "mu", "a", "b"], ["const cv::_InputArray*", "const cv::_OutputArray*", "float", "float", "float", "float"]), _)]),
+#[inline]
+pub fn bimef2(input: &impl ToInputArray, output: &mut impl ToOutputArray, k: f32, mu: f32, a: f32, b: f32) -> Result<()> {
+	input_array_arg!(input);
+	output_array_arg!(output);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_intensity_transform_BIMEF_const__InputArrayR_const__OutputArrayR_float_float_float_float(input.as_raw__InputArray(), output.as_raw__OutputArray(), k, mu, a, b, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Given an input bgr or grayscale image, apply autoscaling on domain [0, 255] to increase
+/// the contrast of the input image and return the resulting image.
+///
+/// ## Parameters
+/// * input: input bgr or grayscale image.
+/// * output: resulting image of autoscaling.
+// autoscaling(const Mat, Mat &)(TraitClass, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/intensity_transform.hpp:60
+// ("cv::intensity_transform::autoscaling", vec![(pred!(mut, ["input", "output"], ["const cv::Mat", "cv::Mat*"]), _)]),
+#[inline]
+pub fn autoscaling(input: impl core::MatTraitConst, output: &mut impl core::MatTrait) -> Result<()> {
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_intensity_transform_autoscaling_const_Mat_MatR(input.as_raw_Mat(), output.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Given an input bgr or grayscale image, apply linear contrast stretching on domain [0, 255]
+/// and return the resulting image.
+///
+/// ## Parameters
+/// * input: input bgr or grayscale image.
+/// * output: resulting image of contrast stretching.
+/// * r1: x coordinate of first point (r1, s1) in the transformation function.
+/// * s1: y coordinate of first point (r1, s1) in the transformation function.
+/// * r2: x coordinate of second point (r2, s2) in the transformation function.
+/// * s2: y coordinate of second point (r2, s2) in the transformation function.
+// contrastStretching(const Mat, Mat &, const int, const int, const int, const int)(TraitClass, TraitClass, Primitive, Primitive, Primitive, Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/intensity_transform.hpp:73
+// ("cv::intensity_transform::contrastStretching", vec![(pred!(mut, ["input", "output", "r1", "s1", "r2", "s2"], ["const cv::Mat", "cv::Mat*", "const int", "const int", "const int", "const int"]), _)]),
+#[inline]
+pub fn contrast_stretching(input: impl core::MatTraitConst, output: &mut impl core::MatTrait, r1: i32, s1: i32, r2: i32, s2: i32) -> Result<()> {
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_intensity_transform_contrastStretching_const_Mat_MatR_const_int_const_int_const_int_const_int(input.as_raw_Mat(), output.as_raw_mut_Mat(), r1, s1, r2, s2, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Given an input bgr or grayscale image and constant gamma, apply power-law transformation,
+/// a.k.a. gamma correction to the image on domain [0, 255] and return the resulting image.
+///
+/// ## Parameters
+/// * input: input bgr or grayscale image.
+/// * output: resulting image of gamma corrections.
+/// * gamma: constant in c*r^gamma where r is pixel value.
+// gammaCorrection(const Mat, Mat &, const float)(TraitClass, TraitClass, Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/intensity_transform.hpp:51
+// ("cv::intensity_transform::gammaCorrection", vec![(pred!(mut, ["input", "output", "gamma"], ["const cv::Mat", "cv::Mat*", "const float"]), _)]),
+#[inline]
+pub fn gamma_correction(input: impl core::MatTraitConst, output: &mut impl core::MatTrait, gamma: f32) -> Result<()> {
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_intensity_transform_gammaCorrection_const_Mat_MatR_const_float(input.as_raw_Mat(), output.as_raw_mut_Mat(), gamma, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Given an input bgr or grayscale image and constant c, apply log transformation to the image
+/// on domain [0, 255] and return the resulting image.
+///
+/// ## Parameters
+/// * input: input bgr or grayscale image.
+/// * output: resulting image of log transformations.
+// logTransform(const Mat, Mat &)(TraitClass, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/intensity_transform.hpp:41
+// ("cv::intensity_transform::logTransform", vec![(pred!(mut, ["input", "output"], ["const cv::Mat", "cv::Mat*"]), _)]),
+#[inline]
+pub fn log_transform(input: impl core::MatTraitConst, output: &mut impl core::MatTrait) -> Result<()> {
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_intensity_transform_logTransform_const_Mat_MatR(input.as_raw_Mat(), output.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}

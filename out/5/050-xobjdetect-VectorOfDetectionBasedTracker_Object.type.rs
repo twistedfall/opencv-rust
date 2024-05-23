@@ -1,0 +1,18 @@
+impl core::Vector<crate::xobjdetect::DetectionBasedTracker_Object> {
+	pub fn as_raw_VectorOfDetectionBasedTracker_Object(&self) -> extern_send!(Self) { self.as_raw() }
+	pub fn as_raw_mut_VectorOfDetectionBasedTracker_Object(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+}
+
+vector_extern! { crate::xobjdetect::DetectionBasedTracker_Object,
+	std_vectorLcv_DetectionBasedTracker_ObjectG_new_const, std_vectorLcv_DetectionBasedTracker_ObjectG_delete,
+	std_vectorLcv_DetectionBasedTracker_ObjectG_len_const, std_vectorLcv_DetectionBasedTracker_ObjectG_isEmpty_const,
+	std_vectorLcv_DetectionBasedTracker_ObjectG_capacity_const, std_vectorLcv_DetectionBasedTracker_ObjectG_shrinkToFit,
+	std_vectorLcv_DetectionBasedTracker_ObjectG_reserve_size_t, std_vectorLcv_DetectionBasedTracker_ObjectG_remove_size_t,
+	std_vectorLcv_DetectionBasedTracker_ObjectG_swap_size_t_size_t, std_vectorLcv_DetectionBasedTracker_ObjectG_clear,
+	std_vectorLcv_DetectionBasedTracker_ObjectG_get_const_size_t, std_vectorLcv_DetectionBasedTracker_ObjectG_set_size_t_const_Object,
+	std_vectorLcv_DetectionBasedTracker_ObjectG_push_const_Object, std_vectorLcv_DetectionBasedTracker_ObjectG_insert_size_t_const_Object,
+}
+
+vector_non_copy_or_bool! { crate::xobjdetect::DetectionBasedTracker_Object }
+
+

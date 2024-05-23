@@ -1,0 +1,18 @@
+impl core::Vector<core::Tuple<(core::Ptr<crate::tracking::TrackerTargetState>, f32)>> {
+	pub fn as_raw_VectorOfTupleOfPtrOfTrackerTargetState_f32(&self) -> extern_send!(Self) { self.as_raw() }
+	pub fn as_raw_mut_VectorOfTupleOfPtrOfTrackerTargetState_f32(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+}
+
+vector_extern! { core::Tuple<(core::Ptr<crate::tracking::TrackerTargetState>, f32)>,
+	std_vectorLstd_pairLcv_PtrLcv_TrackerTargetStateG__floatGG_new_const, std_vectorLstd_pairLcv_PtrLcv_TrackerTargetStateG__floatGG_delete,
+	std_vectorLstd_pairLcv_PtrLcv_TrackerTargetStateG__floatGG_len_const, std_vectorLstd_pairLcv_PtrLcv_TrackerTargetStateG__floatGG_isEmpty_const,
+	std_vectorLstd_pairLcv_PtrLcv_TrackerTargetStateG__floatGG_capacity_const, std_vectorLstd_pairLcv_PtrLcv_TrackerTargetStateG__floatGG_shrinkToFit,
+	std_vectorLstd_pairLcv_PtrLcv_TrackerTargetStateG__floatGG_reserve_size_t, std_vectorLstd_pairLcv_PtrLcv_TrackerTargetStateG__floatGG_remove_size_t,
+	std_vectorLstd_pairLcv_PtrLcv_TrackerTargetStateG__floatGG_swap_size_t_size_t, std_vectorLstd_pairLcv_PtrLcv_TrackerTargetStateG__floatGG_clear,
+	std_vectorLstd_pairLcv_PtrLcv_TrackerTargetStateG__floatGG_get_const_size_t, std_vectorLstd_pairLcv_PtrLcv_TrackerTargetStateG__floatGG_set_size_t_const_pairLcv_PtrLcv_TrackerTargetStateG__floatG,
+	std_vectorLstd_pairLcv_PtrLcv_TrackerTargetStateG__floatGG_push_const_pairLcv_PtrLcv_TrackerTargetStateG__floatG, std_vectorLstd_pairLcv_PtrLcv_TrackerTargetStateG__floatGG_insert_size_t_const_pairLcv_PtrLcv_TrackerTargetStateG__floatG,
+}
+
+vector_non_copy_or_bool! { core::Tuple<(core::Ptr<crate::tracking::TrackerTargetState>, f32)> }
+
+

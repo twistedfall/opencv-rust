@@ -1,0 +1,3 @@
+// resampleSignal(InputArray, OutputArray, const int, const int)(InputArray, OutputArray, Primitive, Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/signal/signal_resample.hpp:26
+// ("cv::signal::resampleSignal", vec![(pred!(mut, ["inputSignal", "outSignal", "inFreq", "outFreq"], ["const cv::_InputArray*", "const cv::_OutputArray*", "const int", "const int"]), _)]),
+pub fn cv_signal_resampleSignal_const__InputArrayR_const__OutputArrayR_const_int_const_int(input_signal: *const c_void, out_signal: *const c_void, in_freq: i32, out_freq: i32, ocvrs_return: *mut Result<()>);

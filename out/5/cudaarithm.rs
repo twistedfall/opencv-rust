@@ -1,0 +1,4986 @@
+//! # Operations on Matrices
+//!       # Core Operations on Matrices
+//!       # Per-element Operations
+//!       # Matrix Reductions
+//!       # Arithm Operations on Matrices
+use crate::mod_prelude::*;
+use crate::{core, sys, types};
+pub mod prelude {
+	pub use super::{ConvolutionTrait, ConvolutionTraitConst, DFTTrait, DFTTraitConst, LookUpTableTrait, LookUpTableTraitConst};
+}
+
+/// Returns the sum of absolute values for matrix elements.
+///
+/// ## Parameters
+/// * src: Source image of any depth except for CV_64F .
+/// * mask: optional operation mask; it must have the same size as src1 and CV_8UC1 type.
+///
+/// ## Note
+/// This alternative version of [abs_sum] function uses the following default values for its arguments:
+/// * mask: noArray()
+// cv::cuda::absSum(InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:852
+// ("cv::cuda::absSum", vec![(pred!(mut, ["src"], ["const cv::_InputArray*"]), _)]),
+#[inline]
+pub fn abs_sum_def(src: &impl ToInputArray) -> Result<core::Scalar> {
+	input_array_arg!(src);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_absSum_const__InputArrayR(src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Returns the sum of absolute values for matrix elements.
+///
+/// ## Parameters
+/// * src: Source image of any depth except for CV_64F .
+/// * mask: optional operation mask; it must have the same size as src1 and CV_8UC1 type.
+///
+/// ## C++ default parameters
+/// * mask: noArray()
+// absSum(InputArray, InputArray)(InputArray, InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:852
+// ("cv::cuda::absSum", vec![(pred!(mut, ["src", "mask"], ["const cv::_InputArray*", "const cv::_InputArray*"]), _)]),
+#[inline]
+pub fn abs_sum(src: &impl ToInputArray, mask: &impl ToInputArray) -> Result<core::Scalar> {
+	input_array_arg!(src);
+	input_array_arg!(mask);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_absSum_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes an absolute value of each matrix element.
+///
+/// ## Parameters
+/// * src: Source matrix.
+/// * dst: Destination matrix with the same size and type as src .
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// abs
+///
+/// ## Note
+/// This alternative version of [abs] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::abs(InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:243
+// ("cv::cuda::abs", vec![(pred!(mut, ["src", "dst"], ["const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn abs_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_abs_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes an absolute value of each matrix element.
+///
+/// ## Parameters
+/// * src: Source matrix.
+/// * dst: Destination matrix with the same size and type as src .
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// abs
+///
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// abs(InputArray, OutputArray, Stream &)(InputArray, OutputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:243
+// ("cv::cuda::abs", vec![(pred!(mut, ["src", "dst", "stream"], ["const cv::_InputArray*", "const cv::_OutputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn abs(src: &impl ToInputArray, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_abs_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes per-element absolute difference of a matrix and scalar.
+///
+/// ## Parameters
+/// * src1: First source matrix.
+/// * src2: Second source scalar.
+/// * dst: Destination matrix that has the same size and type as the input array.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// absdiff
+///
+/// ## Note
+/// This alternative version of [absdiff_with_scalar] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::absdiffWithScalar(InputArray, SimpleClass, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:231
+// ("cv::cuda::absdiffWithScalar", vec![(pred!(mut, ["src1", "src2", "dst"], ["const cv::_InputArray*", "cv::Scalar", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn absdiff_with_scalar_def(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src1);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_absdiffWithScalar_const__InputArrayR_Scalar_const__OutputArrayR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes per-element absolute difference of a matrix and scalar.
+///
+/// ## Parameters
+/// * src1: First source matrix.
+/// * src2: Second source scalar.
+/// * dst: Destination matrix that has the same size and type as the input array.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// absdiff
+///
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// absdiffWithScalar(InputArray, Scalar, OutputArray, Stream &)(InputArray, SimpleClass, OutputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:231
+// ("cv::cuda::absdiffWithScalar", vec![(pred!(mut, ["src1", "src2", "dst", "stream"], ["const cv::_InputArray*", "cv::Scalar", "const cv::_OutputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn absdiff_with_scalar(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src1);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_absdiffWithScalar_const__InputArrayR_Scalar_const__OutputArrayR_StreamR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes per-element absolute difference of two matrices (or of a matrix and scalar).
+///
+/// ## Parameters
+/// * src1: First source matrix or scalar.
+/// * src2: Second source matrix or scalar.
+/// * dst: Destination matrix that has the same size and type as the input array(s).
+/// * stream: Stream for the asynchronous version.
+///
+/// @warning In python both @p src1 and @p src2 have to be matrices, see [absdiffWithScalar] for scalar overload.
+/// ## See also
+/// cv::absdiff, absdiffWithScalar
+///
+/// ## Note
+/// This alternative version of [absdiff] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::absdiff(InputArray, InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:220
+// ("cv::cuda::absdiff", vec![(pred!(mut, ["src1", "src2", "dst"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn absdiff_def(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src1);
+	input_array_arg!(src2);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_absdiff_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes per-element absolute difference of two matrices (or of a matrix and scalar).
+///
+/// ## Parameters
+/// * src1: First source matrix or scalar.
+/// * src2: Second source matrix or scalar.
+/// * dst: Destination matrix that has the same size and type as the input array(s).
+/// * stream: Stream for the asynchronous version.
+///
+/// @warning In python both @p src1 and @p src2 have to be matrices, see [absdiffWithScalar] for scalar overload.
+/// ## See also
+/// cv::absdiff, absdiffWithScalar
+///
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// absdiff(InputArray, InputArray, OutputArray, Stream &)(InputArray, InputArray, OutputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:220
+// ("cv::cuda::absdiff", vec![(pred!(mut, ["src1", "src2", "dst", "stream"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn absdiff(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src1);
+	input_array_arg!(src2);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_absdiff_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes the weighted sum of two arrays.
+///
+/// ## Parameters
+/// * src1: First source array.
+/// * alpha: Weight for the first array elements.
+/// * src2: Second source array of the same size and channel number as src1 .
+/// * beta: Weight for the second array elements.
+/// * dst: Destination array that has the same size and number of channels as the input arrays.
+/// * gamma: Scalar added to each sum.
+/// * dtype: Optional depth of the destination array. When both input arrays have the same depth,
+/// dtype can be set to -1, which will be equivalent to src1.depth().
+/// * stream: Stream for the asynchronous version.
+///
+/// The function addWeighted calculates the weighted sum of two arrays as follows:
+///
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Bsaturate%7D%20%28%20%5Ctexttt%7Bsrc1%7D%20%28I%29%2A%20%5Ctexttt%7Balpha%7D%20%2B%20%20%5Ctexttt%7Bsrc2%7D%20%28I%29%2A%20%5Ctexttt%7Bbeta%7D%20%2B%20%20%5Ctexttt%7Bgamma%7D%20%29)
+///
+/// where I is a multi-dimensional index of array elements. In case of multi-channel arrays, each
+/// channel is processed independently.
+/// ## See also
+/// addWeighted
+///
+/// ## Note
+/// This alternative version of [add_weighted] function uses the following default values for its arguments:
+/// * dtype: -1
+/// * stream: Stream::Null()
+// cv::cuda::addWeighted(InputArray, Primitive, InputArray, Primitive, Primitive, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:538
+// ("cv::cuda::addWeighted", vec![(pred!(mut, ["src1", "alpha", "src2", "beta", "gamma", "dst"], ["const cv::_InputArray*", "double", "const cv::_InputArray*", "double", "double", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn add_weighted_def(src1: &impl ToInputArray, alpha: f64, src2: &impl ToInputArray, beta: f64, gamma: f64, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src1);
+	input_array_arg!(src2);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_addWeighted_const__InputArrayR_double_const__InputArrayR_double_double_const__OutputArrayR(src1.as_raw__InputArray(), alpha, src2.as_raw__InputArray(), beta, gamma, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes the weighted sum of two arrays.
+///
+/// ## Parameters
+/// * src1: First source array.
+/// * alpha: Weight for the first array elements.
+/// * src2: Second source array of the same size and channel number as src1 .
+/// * beta: Weight for the second array elements.
+/// * dst: Destination array that has the same size and number of channels as the input arrays.
+/// * gamma: Scalar added to each sum.
+/// * dtype: Optional depth of the destination array. When both input arrays have the same depth,
+/// dtype can be set to -1, which will be equivalent to src1.depth().
+/// * stream: Stream for the asynchronous version.
+///
+/// The function addWeighted calculates the weighted sum of two arrays as follows:
+///
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Bsaturate%7D%20%28%20%5Ctexttt%7Bsrc1%7D%20%28I%29%2A%20%5Ctexttt%7Balpha%7D%20%2B%20%20%5Ctexttt%7Bsrc2%7D%20%28I%29%2A%20%5Ctexttt%7Bbeta%7D%20%2B%20%20%5Ctexttt%7Bgamma%7D%20%29)
+///
+/// where I is a multi-dimensional index of array elements. In case of multi-channel arrays, each
+/// channel is processed independently.
+/// ## See also
+/// addWeighted
+///
+/// ## C++ default parameters
+/// * dtype: -1
+/// * stream: Stream::Null()
+// addWeighted(InputArray, double, InputArray, double, double, OutputArray, int, Stream &)(InputArray, Primitive, InputArray, Primitive, Primitive, OutputArray, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:538
+// ("cv::cuda::addWeighted", vec![(pred!(mut, ["src1", "alpha", "src2", "beta", "gamma", "dst", "dtype", "stream"], ["const cv::_InputArray*", "double", "const cv::_InputArray*", "double", "double", "const cv::_OutputArray*", "int", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn add_weighted(src1: &impl ToInputArray, alpha: f64, src2: &impl ToInputArray, beta: f64, gamma: f64, dst: &mut impl ToOutputArray, dtype: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src1);
+	input_array_arg!(src2);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_addWeighted_const__InputArrayR_double_const__InputArrayR_double_double_const__OutputArrayR_int_StreamR(src1.as_raw__InputArray(), alpha, src2.as_raw__InputArray(), beta, gamma, dst.as_raw__OutputArray(), dtype, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes a matrix-scalar sum.
+///
+/// ## Parameters
+/// * src1: First source matrix.
+/// * src2: Second source scalar.
+/// * dst: Destination matrix that has the same size and number of channels as the input array.
+/// The depth is defined by dtype or @p src1 depth.
+/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
+/// destination array to be changed. The mask can be used only with single channel images.
+/// * dtype: Optional depth of the output array.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// add
+///
+/// ## Note
+/// This alternative version of [add_with_scalar] function uses the following default values for its arguments:
+/// * mask: noArray()
+/// * dtype: -1
+/// * stream: Stream::Null()
+// cv::cuda::addWithScalar(InputArray, SimpleClass, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:103
+// ("cv::cuda::addWithScalar", vec![(pred!(mut, ["src1", "src2", "dst"], ["const cv::_InputArray*", "cv::Scalar", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn add_with_scalar_def(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src1);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_addWithScalar_const__InputArrayR_Scalar_const__OutputArrayR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes a matrix-scalar sum.
+///
+/// ## Parameters
+/// * src1: First source matrix.
+/// * src2: Second source scalar.
+/// * dst: Destination matrix that has the same size and number of channels as the input array.
+/// The depth is defined by dtype or @p src1 depth.
+/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
+/// destination array to be changed. The mask can be used only with single channel images.
+/// * dtype: Optional depth of the output array.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// add
+///
+/// ## C++ default parameters
+/// * mask: noArray()
+/// * dtype: -1
+/// * stream: Stream::Null()
+// addWithScalar(InputArray, Scalar, OutputArray, InputArray, int, Stream &)(InputArray, SimpleClass, OutputArray, InputArray, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:103
+// ("cv::cuda::addWithScalar", vec![(pred!(mut, ["src1", "src2", "dst", "mask", "dtype", "stream"], ["const cv::_InputArray*", "cv::Scalar", "const cv::_OutputArray*", "const cv::_InputArray*", "int", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn add_with_scalar(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray, mask: &impl ToInputArray, dtype: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src1);
+	output_array_arg!(dst);
+	input_array_arg!(mask);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_addWithScalar_const__InputArrayR_Scalar_const__OutputArrayR_const__InputArrayR_int_StreamR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), mask.as_raw__InputArray(), dtype, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes a matrix-matrix or matrix-scalar sum.
+///
+/// ## Parameters
+/// * src1: First source matrix or scalar.
+/// * src2: Second source matrix or scalar. Matrix should have the same size and type as src1 .
+/// * dst: Destination matrix that has the same size and number of channels as the input array(s).
+/// The depth is defined by dtype or @p src1 depth.
+/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
+/// destination array to be changed. The mask can be used only with single channel images.
+/// * dtype: Optional depth of the output array.
+/// * stream: Stream for the asynchronous version.
+///
+/// @warning In python both @p src1 and @p src2 have to be matrices, see [addWithScalar] for scalar overload.
+/// ## See also
+/// cv::add, addWithScalar
+///
+/// ## Note
+/// This alternative version of [add] function uses the following default values for its arguments:
+/// * mask: noArray()
+/// * dtype: -1
+/// * stream: Stream::Null()
+// cv::cuda::add(InputArray, InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:88
+// ("cv::cuda::add", vec![(pred!(mut, ["src1", "src2", "dst"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn add_def(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src1);
+	input_array_arg!(src2);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_add_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes a matrix-matrix or matrix-scalar sum.
+///
+/// ## Parameters
+/// * src1: First source matrix or scalar.
+/// * src2: Second source matrix or scalar. Matrix should have the same size and type as src1 .
+/// * dst: Destination matrix that has the same size and number of channels as the input array(s).
+/// The depth is defined by dtype or @p src1 depth.
+/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
+/// destination array to be changed. The mask can be used only with single channel images.
+/// * dtype: Optional depth of the output array.
+/// * stream: Stream for the asynchronous version.
+///
+/// @warning In python both @p src1 and @p src2 have to be matrices, see [addWithScalar] for scalar overload.
+/// ## See also
+/// cv::add, addWithScalar
+///
+/// ## C++ default parameters
+/// * mask: noArray()
+/// * dtype: -1
+/// * stream: Stream::Null()
+// add(InputArray, InputArray, OutputArray, InputArray, int, Stream &)(InputArray, InputArray, OutputArray, InputArray, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:88
+// ("cv::cuda::add", vec![(pred!(mut, ["src1", "src2", "dst", "mask", "dtype", "stream"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*", "const cv::_InputArray*", "int", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn add(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, mask: &impl ToInputArray, dtype: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src1);
+	input_array_arg!(src2);
+	output_array_arg!(dst);
+	input_array_arg!(mask);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_add_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_int_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), dtype, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Performs a per-element bitwise conjunction of two matrices (or of matrix and scalar).
+///
+/// ## Parameters
+/// * src1: First source matrix or scalar.
+/// * src2: Second source matrix or scalar.
+/// * dst: Destination matrix that has the same size and type as the input array(s).
+/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
+/// destination array to be changed. The mask can be used only with single channel images.
+/// * stream: Stream for the asynchronous version.
+///
+/// @warning In python both @p src1 and @p src2 have to be matrices, see [bitwise_and_with_scalar] for scalar overload.
+/// ## See also
+/// bitwise_and_with_scalar
+///
+/// ## Note
+/// This alternative version of [bitwise_and] function uses the following default values for its arguments:
+/// * mask: noArray()
+/// * stream: Stream::Null()
+// cv::cuda::bitwise_and(InputArray, InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:391
+// ("cv::cuda::bitwise_and", vec![(pred!(mut, ["src1", "src2", "dst"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn bitwise_and_def(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src1);
+	input_array_arg!(src2);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_bitwise_and_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Performs a per-element bitwise conjunction of two matrices (or of matrix and scalar).
+///
+/// ## Parameters
+/// * src1: First source matrix or scalar.
+/// * src2: Second source matrix or scalar.
+/// * dst: Destination matrix that has the same size and type as the input array(s).
+/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
+/// destination array to be changed. The mask can be used only with single channel images.
+/// * stream: Stream for the asynchronous version.
+///
+/// @warning In python both @p src1 and @p src2 have to be matrices, see [bitwise_and_with_scalar] for scalar overload.
+/// ## See also
+/// bitwise_and_with_scalar
+///
+/// ## C++ default parameters
+/// * mask: noArray()
+/// * stream: Stream::Null()
+// bitwise_and(InputArray, InputArray, OutputArray, InputArray, Stream &)(InputArray, InputArray, OutputArray, InputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:391
+// ("cv::cuda::bitwise_and", vec![(pred!(mut, ["src1", "src2", "dst", "mask", "stream"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*", "const cv::_InputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn bitwise_and(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src1);
+	input_array_arg!(src2);
+	output_array_arg!(dst);
+	input_array_arg!(mask);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_bitwise_and_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Performs a per-element bitwise conjunction of a matrix and a scalar.
+///
+/// ## Parameters
+/// * src1: First source matrix.
+/// * src2: Second source scalar.
+/// * dst: Destination matrix that has the same size and type as the input array.
+/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
+/// destination array to be changed. The mask can be used only with single channel images.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// bitwise_and
+///
+/// ## Note
+/// This alternative version of [bitwise_and_with_scalar] function uses the following default values for its arguments:
+/// * mask: noArray()
+/// * stream: Stream::Null()
+// cv::cuda::bitwise_and_with_scalar(InputArray, SimpleClass, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:404
+// ("cv::cuda::bitwise_and_with_scalar", vec![(pred!(mut, ["src1", "src2", "dst"], ["const cv::_InputArray*", "cv::Scalar", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn bitwise_and_with_scalar_def(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src1);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_bitwise_and_with_scalar_const__InputArrayR_Scalar_const__OutputArrayR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Performs a per-element bitwise conjunction of a matrix and a scalar.
+///
+/// ## Parameters
+/// * src1: First source matrix.
+/// * src2: Second source scalar.
+/// * dst: Destination matrix that has the same size and type as the input array.
+/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
+/// destination array to be changed. The mask can be used only with single channel images.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// bitwise_and
+///
+/// ## C++ default parameters
+/// * mask: noArray()
+/// * stream: Stream::Null()
+// bitwise_and_with_scalar(InputArray, Scalar, OutputArray, InputArray, Stream &)(InputArray, SimpleClass, OutputArray, InputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:404
+// ("cv::cuda::bitwise_and_with_scalar", vec![(pred!(mut, ["src1", "src2", "dst", "mask", "stream"], ["const cv::_InputArray*", "cv::Scalar", "const cv::_OutputArray*", "const cv::_InputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn bitwise_and_with_scalar(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src1);
+	output_array_arg!(dst);
+	input_array_arg!(mask);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_bitwise_and_with_scalar_const__InputArrayR_Scalar_const__OutputArrayR_const__InputArrayR_StreamR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Performs a per-element bitwise inversion.
+///
+/// ## Parameters
+/// * src: Source matrix.
+/// * dst: Destination matrix with the same size and type as src .
+/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
+/// destination array to be changed. The mask can be used only with single channel images.
+/// * stream: Stream for the asynchronous version.
+///
+/// ## Note
+/// This alternative version of [bitwise_not] function uses the following default values for its arguments:
+/// * mask: noArray()
+/// * stream: Stream::Null()
+// cv::cuda::bitwise_not(InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:346
+// ("cv::cuda::bitwise_not", vec![(pred!(mut, ["src", "dst"], ["const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn bitwise_not_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_bitwise_not_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Performs a per-element bitwise inversion.
+///
+/// ## Parameters
+/// * src: Source matrix.
+/// * dst: Destination matrix with the same size and type as src .
+/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
+/// destination array to be changed. The mask can be used only with single channel images.
+/// * stream: Stream for the asynchronous version.
+///
+/// ## C++ default parameters
+/// * mask: noArray()
+/// * stream: Stream::Null()
+// bitwise_not(InputArray, OutputArray, InputArray, Stream &)(InputArray, OutputArray, InputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:346
+// ("cv::cuda::bitwise_not", vec![(pred!(mut, ["src", "dst", "mask", "stream"], ["const cv::_InputArray*", "const cv::_OutputArray*", "const cv::_InputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn bitwise_not(src: &impl ToInputArray, dst: &mut impl ToOutputArray, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	input_array_arg!(mask);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_bitwise_not_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Performs a per-element bitwise disjunction of two matrices (or of matrix and scalar).
+///
+/// ## Parameters
+/// * src1: First source matrix or scalar.
+/// * src2: Second source matrix or scalar.
+/// * dst: Destination matrix that has the same size and type as the input array(s).
+/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
+/// destination array to be changed. The mask can be used only with single channel images.
+/// * stream: Stream for the asynchronous version.
+///
+/// @warning In python both @p src1 and @p src2 have to be matrices, see [bitwise_or_with_scalar] for scalar overload.
+/// ## See also
+/// cv::bitwise_or, bitwise_or_with_scalar
+///
+/// ## Note
+/// This alternative version of [bitwise_or] function uses the following default values for its arguments:
+/// * mask: noArray()
+/// * stream: Stream::Null()
+// cv::cuda::bitwise_or(InputArray, InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:361
+// ("cv::cuda::bitwise_or", vec![(pred!(mut, ["src1", "src2", "dst"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn bitwise_or_def(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src1);
+	input_array_arg!(src2);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_bitwise_or_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Performs a per-element bitwise disjunction of two matrices (or of matrix and scalar).
+///
+/// ## Parameters
+/// * src1: First source matrix or scalar.
+/// * src2: Second source matrix or scalar.
+/// * dst: Destination matrix that has the same size and type as the input array(s).
+/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
+/// destination array to be changed. The mask can be used only with single channel images.
+/// * stream: Stream for the asynchronous version.
+///
+/// @warning In python both @p src1 and @p src2 have to be matrices, see [bitwise_or_with_scalar] for scalar overload.
+/// ## See also
+/// cv::bitwise_or, bitwise_or_with_scalar
+///
+/// ## C++ default parameters
+/// * mask: noArray()
+/// * stream: Stream::Null()
+// bitwise_or(InputArray, InputArray, OutputArray, InputArray, Stream &)(InputArray, InputArray, OutputArray, InputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:361
+// ("cv::cuda::bitwise_or", vec![(pred!(mut, ["src1", "src2", "dst", "mask", "stream"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*", "const cv::_InputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn bitwise_or(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src1);
+	input_array_arg!(src2);
+	output_array_arg!(dst);
+	input_array_arg!(mask);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_bitwise_or_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Performs a per-element bitwise disjunction of a matrix and scalar.
+///
+/// ## Parameters
+/// * src1: First source matrix.
+/// * src2: Second source scalar.
+/// * dst: Destination matrix that has the same size and type as the input array.
+/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
+/// destination array to be changed. The mask can be used only with single channel images.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// bitwise_or
+///
+/// ## Note
+/// This alternative version of [bitwise_or_with_scalar] function uses the following default values for its arguments:
+/// * mask: noArray()
+/// * stream: Stream::Null()
+// cv::cuda::bitwise_or_with_scalar(InputArray, SimpleClass, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:374
+// ("cv::cuda::bitwise_or_with_scalar", vec![(pred!(mut, ["src1", "src2", "dst"], ["const cv::_InputArray*", "cv::Scalar", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn bitwise_or_with_scalar_def(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src1);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_bitwise_or_with_scalar_const__InputArrayR_Scalar_const__OutputArrayR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Performs a per-element bitwise disjunction of a matrix and scalar.
+///
+/// ## Parameters
+/// * src1: First source matrix.
+/// * src2: Second source scalar.
+/// * dst: Destination matrix that has the same size and type as the input array.
+/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
+/// destination array to be changed. The mask can be used only with single channel images.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// bitwise_or
+///
+/// ## C++ default parameters
+/// * mask: noArray()
+/// * stream: Stream::Null()
+// bitwise_or_with_scalar(InputArray, Scalar, OutputArray, InputArray, Stream &)(InputArray, SimpleClass, OutputArray, InputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:374
+// ("cv::cuda::bitwise_or_with_scalar", vec![(pred!(mut, ["src1", "src2", "dst", "mask", "stream"], ["const cv::_InputArray*", "cv::Scalar", "const cv::_OutputArray*", "const cv::_InputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn bitwise_or_with_scalar(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src1);
+	output_array_arg!(dst);
+	input_array_arg!(mask);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_bitwise_or_with_scalar_const__InputArrayR_Scalar_const__OutputArrayR_const__InputArrayR_StreamR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Performs a per-element bitwise exclusive or operation of two matrices (or of matrix and scalar).
+///
+/// ## Parameters
+/// * src1: First source matrix or scalar.
+/// * src2: Second source matrix or scalar.
+/// * dst: Destination matrix that has the same size and type as the input array.
+/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
+/// destination array to be changed. The mask can be used only with single channel images.
+/// * stream: Stream for the asynchronous version.
+///
+/// @warning In python both @p src1 and @p src2 have to be matrices, see [bitwise_xor_with_scalar] for scalar overload.
+/// ## See also
+/// cv::bitwise_xor, bitwise_xor_with_scalar
+///
+/// ## Note
+/// This alternative version of [bitwise_xor] function uses the following default values for its arguments:
+/// * mask: noArray()
+/// * stream: Stream::Null()
+// cv::cuda::bitwise_xor(InputArray, InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:421
+// ("cv::cuda::bitwise_xor", vec![(pred!(mut, ["src1", "src2", "dst"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn bitwise_xor_def(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src1);
+	input_array_arg!(src2);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_bitwise_xor_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Performs a per-element bitwise exclusive or operation of two matrices (or of matrix and scalar).
+///
+/// ## Parameters
+/// * src1: First source matrix or scalar.
+/// * src2: Second source matrix or scalar.
+/// * dst: Destination matrix that has the same size and type as the input array.
+/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
+/// destination array to be changed. The mask can be used only with single channel images.
+/// * stream: Stream for the asynchronous version.
+///
+/// @warning In python both @p src1 and @p src2 have to be matrices, see [bitwise_xor_with_scalar] for scalar overload.
+/// ## See also
+/// cv::bitwise_xor, bitwise_xor_with_scalar
+///
+/// ## C++ default parameters
+/// * mask: noArray()
+/// * stream: Stream::Null()
+// bitwise_xor(InputArray, InputArray, OutputArray, InputArray, Stream &)(InputArray, InputArray, OutputArray, InputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:421
+// ("cv::cuda::bitwise_xor", vec![(pred!(mut, ["src1", "src2", "dst", "mask", "stream"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*", "const cv::_InputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn bitwise_xor(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src1);
+	input_array_arg!(src2);
+	output_array_arg!(dst);
+	input_array_arg!(mask);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_bitwise_xor_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Performs a per-element bitwise exclusive or operation of a matrix and a scalar.
+///
+/// ## Parameters
+/// * src1: First source matrix.
+/// * src2: Second source scalar.
+/// * dst: Destination matrix that has the same size and type as the input array(s).
+/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
+/// destination array to be changed. The mask can be used only with single channel images.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// bitwise_xor
+///
+/// ## Note
+/// This alternative version of [bitwise_xor_with_scalar] function uses the following default values for its arguments:
+/// * mask: noArray()
+/// * stream: Stream::Null()
+// cv::cuda::bitwise_xor_with_scalar(InputArray, SimpleClass, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:434
+// ("cv::cuda::bitwise_xor_with_scalar", vec![(pred!(mut, ["src1", "src2", "dst"], ["const cv::_InputArray*", "cv::Scalar", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn bitwise_xor_with_scalar_def(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src1);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_bitwise_xor_with_scalar_const__InputArrayR_Scalar_const__OutputArrayR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Performs a per-element bitwise exclusive or operation of a matrix and a scalar.
+///
+/// ## Parameters
+/// * src1: First source matrix.
+/// * src2: Second source scalar.
+/// * dst: Destination matrix that has the same size and type as the input array(s).
+/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
+/// destination array to be changed. The mask can be used only with single channel images.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// bitwise_xor
+///
+/// ## C++ default parameters
+/// * mask: noArray()
+/// * stream: Stream::Null()
+// bitwise_xor_with_scalar(InputArray, Scalar, OutputArray, InputArray, Stream &)(InputArray, SimpleClass, OutputArray, InputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:434
+// ("cv::cuda::bitwise_xor_with_scalar", vec![(pred!(mut, ["src1", "src2", "dst", "mask", "stream"], ["const cv::_InputArray*", "cv::Scalar", "const cv::_OutputArray*", "const cv::_InputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn bitwise_xor_with_scalar(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src1);
+	output_array_arg!(dst);
+	input_array_arg!(mask);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_bitwise_xor_with_scalar_const__InputArrayR_Scalar_const__OutputArrayR_const__InputArrayR_StreamR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// @overload
+///
+/// ## Note
+/// This alternative version of [calc_abs_sum] function uses the following default values for its arguments:
+/// * mask: noArray()
+/// * stream: Stream::Null()
+// cv::cuda::calcAbsSum(InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:854
+// ("cv::cuda::calcAbsSum", vec![(pred!(mut, ["src", "dst"], ["const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn calc_abs_sum_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_calcAbsSum_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+///
+/// ## C++ default parameters
+/// * mask: noArray()
+/// * stream: Stream::Null()
+// calcAbsSum(InputArray, OutputArray, InputArray, Stream &)(InputArray, OutputArray, InputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:854
+// ("cv::cuda::calcAbsSum", vec![(pred!(mut, ["src", "dst", "mask", "stream"], ["const cv::_InputArray*", "const cv::_OutputArray*", "const cv::_InputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn calc_abs_sum(src: &impl ToInputArray, dst: &mut impl ToOutputArray, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	input_array_arg!(mask);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_calcAbsSum_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// @overload
+///
+/// ## Note
+/// This alternative version of [calc_norm_diff] function uses the following default values for its arguments:
+/// * norm_type: NORM_L2
+/// * stream: Stream::Null()
+// cv::cuda::calcNormDiff(InputArray, InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:834
+// ("cv::cuda::calcNormDiff", vec![(pred!(mut, ["src1", "src2", "dst"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn calc_norm_diff_def(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src1);
+	input_array_arg!(src2);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_calcNormDiff_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+///
+/// ## C++ default parameters
+/// * norm_type: NORM_L2
+/// * stream: Stream::Null()
+// calcNormDiff(InputArray, InputArray, OutputArray, int, Stream &)(InputArray, InputArray, OutputArray, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:834
+// ("cv::cuda::calcNormDiff", vec![(pred!(mut, ["src1", "src2", "dst", "normType", "stream"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*", "int", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn calc_norm_diff(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, norm_type: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src1);
+	input_array_arg!(src2);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_calcNormDiff_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), norm_type, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// @overload
+///
+/// ## Note
+/// This alternative version of [calc_norm] function uses the following default values for its arguments:
+/// * mask: noArray()
+/// * stream: Stream::Null()
+// cv::cuda::calcNorm(InputArray, OutputArray, Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:822
+// ("cv::cuda::calcNorm", vec![(pred!(mut, ["src", "dst", "normType"], ["const cv::_InputArray*", "const cv::_OutputArray*", "int"]), _)]),
+#[inline]
+pub fn calc_norm_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, norm_type: i32) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_calcNorm_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), norm_type, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+///
+/// ## C++ default parameters
+/// * mask: noArray()
+/// * stream: Stream::Null()
+// calcNorm(InputArray, OutputArray, int, InputArray, Stream &)(InputArray, OutputArray, Primitive, InputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:822
+// ("cv::cuda::calcNorm", vec![(pred!(mut, ["src", "dst", "normType", "mask", "stream"], ["const cv::_InputArray*", "const cv::_OutputArray*", "int", "const cv::_InputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn calc_norm(src: &impl ToInputArray, dst: &mut impl ToOutputArray, norm_type: i32, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	input_array_arg!(mask);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_calcNorm_const__InputArrayR_const__OutputArrayR_int_const__InputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), norm_type, mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// @overload
+///
+/// ## Note
+/// This alternative version of [calc_sqr_sum] function uses the following default values for its arguments:
+/// * mask: noArray()
+/// * stream: Stream::Null()
+// cv::cuda::calcSqrSum(InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:863
+// ("cv::cuda::calcSqrSum", vec![(pred!(mut, ["src", "dst"], ["const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn calc_sqr_sum_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_calcSqrSum_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+///
+/// ## C++ default parameters
+/// * mask: noArray()
+/// * stream: Stream::Null()
+// calcSqrSum(InputArray, OutputArray, InputArray, Stream &)(InputArray, OutputArray, InputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:863
+// ("cv::cuda::calcSqrSum", vec![(pred!(mut, ["src", "dst", "mask", "stream"], ["const cv::_InputArray*", "const cv::_OutputArray*", "const cv::_InputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn calc_sqr_sum(src: &impl ToInputArray, dst: &mut impl ToOutputArray, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	input_array_arg!(mask);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_calcSqrSum_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// @overload
+///
+/// ## Note
+/// This alternative version of [calc_sum] function uses the following default values for its arguments:
+/// * mask: noArray()
+/// * stream: Stream::Null()
+// cv::cuda::calcSum(InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:845
+// ("cv::cuda::calcSum", vec![(pred!(mut, ["src", "dst"], ["const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn calc_sum_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_calcSum_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+///
+/// ## C++ default parameters
+/// * mask: noArray()
+/// * stream: Stream::Null()
+// calcSum(InputArray, OutputArray, InputArray, Stream &)(InputArray, OutputArray, InputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:845
+// ("cv::cuda::calcSum", vec![(pred!(mut, ["src", "dst", "mask", "stream"], ["const cv::_InputArray*", "const cv::_OutputArray*", "const cv::_InputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn calc_sum(src: &impl ToInputArray, dst: &mut impl ToOutputArray, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	input_array_arg!(mask);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_calcSum_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Converts Cartesian coordinates into polar.
+///
+/// ## Parameters
+/// * x: Source matrix containing real components ( CV_32FC1 ).
+/// * y: Source matrix containing imaginary components ( CV_32FC1 ).
+/// * magnitude: Destination matrix of float magnitudes ( CV_32FC1 ).
+/// * angle: Destination matrix of angles ( CV_32FC1 ).
+/// * angleInDegrees: Flag for angles that must be evaluated in degrees.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// cartToPolar
+///
+/// ## Note
+/// This alternative version of [cart_to_polar] function uses the following default values for its arguments:
+/// * angle_in_degrees: false
+/// * stream: Stream::Null()
+// cv::cuda::cartToPolar(InputArray, InputArray, OutputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:658
+// ("cv::cuda::cartToPolar", vec![(pred!(mut, ["x", "y", "magnitude", "angle"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn cart_to_polar_def(x: &impl ToInputArray, y: &impl ToInputArray, magnitude: &mut impl ToOutputArray, angle: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(x);
+	input_array_arg!(y);
+	output_array_arg!(magnitude);
+	output_array_arg!(angle);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_cartToPolar_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(x.as_raw__InputArray(), y.as_raw__InputArray(), magnitude.as_raw__OutputArray(), angle.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Converts Cartesian coordinates into polar.
+///
+/// ## Parameters
+/// * x: Source matrix containing real components ( CV_32FC1 ).
+/// * y: Source matrix containing imaginary components ( CV_32FC1 ).
+/// * magnitude: Destination matrix of float magnitudes ( CV_32FC1 ).
+/// * angle: Destination matrix of angles ( CV_32FC1 ).
+/// * angleInDegrees: Flag for angles that must be evaluated in degrees.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// cartToPolar
+///
+/// ## C++ default parameters
+/// * angle_in_degrees: false
+/// * stream: Stream::Null()
+// cartToPolar(InputArray, InputArray, OutputArray, OutputArray, bool, Stream &)(InputArray, InputArray, OutputArray, OutputArray, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:658
+// ("cv::cuda::cartToPolar", vec![(pred!(mut, ["x", "y", "magnitude", "angle", "angleInDegrees", "stream"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*", "const cv::_OutputArray*", "bool", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn cart_to_polar(x: &impl ToInputArray, y: &impl ToInputArray, magnitude: &mut impl ToOutputArray, angle: &mut impl ToOutputArray, angle_in_degrees: bool, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(x);
+	input_array_arg!(y);
+	output_array_arg!(magnitude);
+	output_array_arg!(angle);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_cartToPolar_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool_StreamR(x.as_raw__InputArray(), y.as_raw__InputArray(), magnitude.as_raw__OutputArray(), angle.as_raw__OutputArray(), angle_in_degrees, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Converts Cartesian coordinates into polar.
+///
+/// ## Parameters
+/// * xy: Source matrix containing real and imaginary components ( CV_32FC2 ).
+/// * magnitudeAngle: Destination matrix of float magnitudes and angles ( CV_32FC2 ).
+/// * angleInDegrees: Flag for angles that must be evaluated in degrees.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// cartToPolar
+///
+/// ## Note
+/// This alternative version of [cart_to_polar_2] function uses the following default values for its arguments:
+/// * angle_in_degrees: false
+/// * stream: Stream::Null()
+// cv::cuda::cartToPolar(InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:681
+// ("cv::cuda::cartToPolar", vec![(pred!(mut, ["xy", "magnitudeAngle"], ["const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn cart_to_polar_2_def(xy: &impl ToInputArray, magnitude_angle: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(xy);
+	output_array_arg!(magnitude_angle);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_cartToPolar_const__InputArrayR_const__OutputArrayR(xy.as_raw__InputArray(), magnitude_angle.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Converts Cartesian coordinates into polar.
+///
+/// ## Parameters
+/// * xy: Source matrix containing real and imaginary components ( CV_32FC2 ).
+/// * magnitudeAngle: Destination matrix of float magnitudes and angles ( CV_32FC2 ).
+/// * angleInDegrees: Flag for angles that must be evaluated in degrees.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// cartToPolar
+///
+/// ## C++ default parameters
+/// * angle_in_degrees: false
+/// * stream: Stream::Null()
+// cartToPolar(InputArray, OutputArray, bool, Stream &)(InputArray, OutputArray, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:681
+// ("cv::cuda::cartToPolar", vec![(pred!(mut, ["xy", "magnitudeAngle", "angleInDegrees", "stream"], ["const cv::_InputArray*", "const cv::_OutputArray*", "bool", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn cart_to_polar_2(xy: &impl ToInputArray, magnitude_angle: &mut impl ToOutputArray, angle_in_degrees: bool, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(xy);
+	output_array_arg!(magnitude_angle);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_cartToPolar_const__InputArrayR_const__OutputArrayR_bool_StreamR(xy.as_raw__InputArray(), magnitude_angle.as_raw__OutputArray(), angle_in_degrees, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Converts Cartesian coordinates into polar.
+///
+/// ## Parameters
+/// * xy: Source matrix containing real and imaginary components ( CV_32FC2 ).
+/// * magnitude: Destination matrix of float magnitudes ( CV_32FC1 ).
+/// * angle: Destination matrix of angles ( CV_32FC1 ).
+/// * angleInDegrees: Flag for angles that must be evaluated in degrees.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// cartToPolar
+///
+/// ## Note
+/// This alternative version of [cart_to_polar_1] function uses the following default values for its arguments:
+/// * angle_in_degrees: false
+/// * stream: Stream::Null()
+// cv::cuda::cartToPolar(InputArray, OutputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:670
+// ("cv::cuda::cartToPolar", vec![(pred!(mut, ["xy", "magnitude", "angle"], ["const cv::_InputArray*", "const cv::_OutputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn cart_to_polar_1_def(xy: &impl ToInputArray, magnitude: &mut impl ToOutputArray, angle: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(xy);
+	output_array_arg!(magnitude);
+	output_array_arg!(angle);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_cartToPolar_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(xy.as_raw__InputArray(), magnitude.as_raw__OutputArray(), angle.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Converts Cartesian coordinates into polar.
+///
+/// ## Parameters
+/// * xy: Source matrix containing real and imaginary components ( CV_32FC2 ).
+/// * magnitude: Destination matrix of float magnitudes ( CV_32FC1 ).
+/// * angle: Destination matrix of angles ( CV_32FC1 ).
+/// * angleInDegrees: Flag for angles that must be evaluated in degrees.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// cartToPolar
+///
+/// ## C++ default parameters
+/// * angle_in_degrees: false
+/// * stream: Stream::Null()
+// cartToPolar(InputArray, OutputArray, OutputArray, bool, Stream &)(InputArray, OutputArray, OutputArray, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:670
+// ("cv::cuda::cartToPolar", vec![(pred!(mut, ["xy", "magnitude", "angle", "angleInDegrees", "stream"], ["const cv::_InputArray*", "const cv::_OutputArray*", "const cv::_OutputArray*", "bool", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn cart_to_polar_1(xy: &impl ToInputArray, magnitude: &mut impl ToOutputArray, angle: &mut impl ToOutputArray, angle_in_degrees: bool, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(xy);
+	output_array_arg!(magnitude);
+	output_array_arg!(angle);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_cartToPolar_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool_StreamR(xy.as_raw__InputArray(), magnitude.as_raw__OutputArray(), angle.as_raw__OutputArray(), angle_in_degrees, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Compares elements of a matrix and scalar.
+///
+/// ## Parameters
+/// * src1: First source matrix.
+/// * src2: Second source scalar.
+/// * dst: Destination matrix that has the same size as the input array and type \ref CV_8U.
+/// * cmpop: Flag specifying the relation between the elements to be checked:
+/// *   **CMP_EQ:** a(.) == b(.)
+/// *   **CMP_GT:** a(.) \> b(.)
+/// *   **CMP_GE:** a(.) \>= b(.)
+/// *   **CMP_LT:** a(.) \< b(.)
+/// *   **CMP_LE:** a(.) \<= b(.)
+/// *   **CMP_NE:** a(.) != b(.)
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// compare
+///
+/// ## Note
+/// This alternative version of [compare_with_scalar] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::compareWithScalar(InputArray, SimpleClass, OutputArray, Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:334
+// ("cv::cuda::compareWithScalar", vec![(pred!(mut, ["src1", "src2", "dst", "cmpop"], ["const cv::_InputArray*", "cv::Scalar", "const cv::_OutputArray*", "int"]), _)]),
+#[inline]
+pub fn compare_with_scalar_def(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray, cmpop: i32) -> Result<()> {
+	input_array_arg!(src1);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_compareWithScalar_const__InputArrayR_Scalar_const__OutputArrayR_int(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), cmpop, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Compares elements of a matrix and scalar.
+///
+/// ## Parameters
+/// * src1: First source matrix.
+/// * src2: Second source scalar.
+/// * dst: Destination matrix that has the same size as the input array and type \ref CV_8U.
+/// * cmpop: Flag specifying the relation between the elements to be checked:
+/// *   **CMP_EQ:** a(.) == b(.)
+/// *   **CMP_GT:** a(.) \> b(.)
+/// *   **CMP_GE:** a(.) \>= b(.)
+/// *   **CMP_LT:** a(.) \< b(.)
+/// *   **CMP_LE:** a(.) \<= b(.)
+/// *   **CMP_NE:** a(.) != b(.)
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// compare
+///
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// compareWithScalar(InputArray, Scalar, OutputArray, int, Stream &)(InputArray, SimpleClass, OutputArray, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:334
+// ("cv::cuda::compareWithScalar", vec![(pred!(mut, ["src1", "src2", "dst", "cmpop", "stream"], ["const cv::_InputArray*", "cv::Scalar", "const cv::_OutputArray*", "int", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn compare_with_scalar(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray, cmpop: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src1);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_compareWithScalar_const__InputArrayR_Scalar_const__OutputArrayR_int_StreamR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), cmpop, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Compares elements of two matrices (or of a matrix and scalar).
+///
+/// ## Parameters
+/// * src1: First source matrix or scalar.
+/// * src2: Second source matrix or scalar.
+/// * dst: Destination matrix that has the same size as the input array(s) and type CV_8U.
+/// * cmpop: Flag specifying the relation between the elements to be checked:
+/// *   **CMP_EQ:** a(.) == b(.)
+/// *   **CMP_GT:** a(.) \> b(.)
+/// *   **CMP_GE:** a(.) \>= b(.)
+/// *   **CMP_LT:** a(.) \< b(.)
+/// *   **CMP_LE:** a(.) \<= b(.)
+/// *   **CMP_NE:** a(.) != b(.)
+/// * stream: Stream for the asynchronous version.
+///
+/// @warning In python both @p src1 and @p src2 have to be matrices, see [compareWithScalar] for scalar overload.
+/// ## See also
+/// cv::compare, compareWithScalar
+///
+/// ## Note
+/// This alternative version of [compare] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::compare(InputArray, InputArray, OutputArray, Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:316
+// ("cv::cuda::compare", vec![(pred!(mut, ["src1", "src2", "dst", "cmpop"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*", "int"]), _)]),
+#[inline]
+pub fn compare_def(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, cmpop: i32) -> Result<()> {
+	input_array_arg!(src1);
+	input_array_arg!(src2);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_compare_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), cmpop, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Compares elements of two matrices (or of a matrix and scalar).
+///
+/// ## Parameters
+/// * src1: First source matrix or scalar.
+/// * src2: Second source matrix or scalar.
+/// * dst: Destination matrix that has the same size as the input array(s) and type CV_8U.
+/// * cmpop: Flag specifying the relation between the elements to be checked:
+/// *   **CMP_EQ:** a(.) == b(.)
+/// *   **CMP_GT:** a(.) \> b(.)
+/// *   **CMP_GE:** a(.) \>= b(.)
+/// *   **CMP_LT:** a(.) \< b(.)
+/// *   **CMP_LE:** a(.) \<= b(.)
+/// *   **CMP_NE:** a(.) != b(.)
+/// * stream: Stream for the asynchronous version.
+///
+/// @warning In python both @p src1 and @p src2 have to be matrices, see [compareWithScalar] for scalar overload.
+/// ## See also
+/// cv::compare, compareWithScalar
+///
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// compare(InputArray, InputArray, OutputArray, int, Stream &)(InputArray, InputArray, OutputArray, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:316
+// ("cv::cuda::compare", vec![(pred!(mut, ["src1", "src2", "dst", "cmpop", "stream"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*", "int", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn compare(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, cmpop: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src1);
+	input_array_arg!(src2);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_compare_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), cmpop, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Forms a border around an image.
+///
+/// ## Parameters
+/// * src: Source image. CV_8UC1 , CV_8UC4 , CV_32SC1 , and CV_32FC1 types are supported.
+/// * dst: Destination image with the same type as src. The size is
+/// Size(src.cols+left+right, src.rows+top+bottom) .
+/// * top: Number of top pixels
+/// * bottom: Number of bottom pixels
+/// * left: Number of left pixels
+/// * right: Number of pixels in each direction from the source image rectangle to extrapolate.
+/// For example: top=1, bottom=1, left=1, right=1 mean that 1 pixel-wide border needs to be built.
+/// * borderType: Border type. See borderInterpolate for details. BORDER_REFLECT101 ,
+/// BORDER_REPLICATE , BORDER_CONSTANT , BORDER_REFLECT and BORDER_WRAP are supported for now.
+/// * value: Border value.
+/// * stream: Stream for the asynchronous version.
+///
+/// ## Note
+/// This alternative version of [copy_make_border] function uses the following default values for its arguments:
+/// * value: Scalar()
+/// * stream: Stream::Null()
+// cv::cuda::copyMakeBorder(InputArray, OutputArray, Primitive, Primitive, Primitive, Primitive, Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:804
+// ("cv::cuda::copyMakeBorder", vec![(pred!(mut, ["src", "dst", "top", "bottom", "left", "right", "borderType"], ["const cv::_InputArray*", "const cv::_OutputArray*", "int", "int", "int", "int", "int"]), _)]),
+#[inline]
+pub fn copy_make_border_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, top: i32, bottom: i32, left: i32, right: i32, border_type: i32) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_copyMakeBorder_const__InputArrayR_const__OutputArrayR_int_int_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), top, bottom, left, right, border_type, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Forms a border around an image.
+///
+/// ## Parameters
+/// * src: Source image. CV_8UC1 , CV_8UC4 , CV_32SC1 , and CV_32FC1 types are supported.
+/// * dst: Destination image with the same type as src. The size is
+/// Size(src.cols+left+right, src.rows+top+bottom) .
+/// * top: Number of top pixels
+/// * bottom: Number of bottom pixels
+/// * left: Number of left pixels
+/// * right: Number of pixels in each direction from the source image rectangle to extrapolate.
+/// For example: top=1, bottom=1, left=1, right=1 mean that 1 pixel-wide border needs to be built.
+/// * borderType: Border type. See borderInterpolate for details. BORDER_REFLECT101 ,
+/// BORDER_REPLICATE , BORDER_CONSTANT , BORDER_REFLECT and BORDER_WRAP are supported for now.
+/// * value: Border value.
+/// * stream: Stream for the asynchronous version.
+///
+/// ## C++ default parameters
+/// * value: Scalar()
+/// * stream: Stream::Null()
+// copyMakeBorder(InputArray, OutputArray, int, int, int, int, int, Scalar, Stream &)(InputArray, OutputArray, Primitive, Primitive, Primitive, Primitive, Primitive, SimpleClass, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:804
+// ("cv::cuda::copyMakeBorder", vec![(pred!(mut, ["src", "dst", "top", "bottom", "left", "right", "borderType", "value", "stream"], ["const cv::_InputArray*", "const cv::_OutputArray*", "int", "int", "int", "int", "int", "cv::Scalar", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn copy_make_border(src: &impl ToInputArray, dst: &mut impl ToOutputArray, top: i32, bottom: i32, left: i32, right: i32, border_type: i32, value: core::Scalar, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_copyMakeBorder_const__InputArrayR_const__OutputArrayR_int_int_int_int_int_Scalar_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), top, bottom, left, right, border_type, &value, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Counts non-zero matrix elements.
+///
+/// ## Parameters
+/// * src: Single-channel source image.
+///
+/// The function does not work with CV_64F images on GPUs with the compute capability \< 1.3.
+/// ## See also
+/// countNonZero
+// countNonZero(InputArray)(InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:907
+// ("cv::cuda::countNonZero", vec![(pred!(mut, ["src"], ["const cv::_InputArray*"]), _)]),
+#[inline]
+pub fn count_non_zero(src: &impl ToInputArray) -> Result<i32> {
+	input_array_arg!(src);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_countNonZero_const__InputArrayR(src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// @overload
+///
+/// ## Note
+/// This alternative version of [count_non_zero_1] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::countNonZero(InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:909
+// ("cv::cuda::countNonZero", vec![(pred!(mut, ["src", "dst"], ["const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn count_non_zero_1_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_countNonZero_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Counts non-zero matrix elements.
+///
+/// ## Parameters
+/// * src: Single-channel source image.
+///
+/// The function does not work with CV_64F images on GPUs with the compute capability \< 1.3.
+/// ## See also
+/// countNonZero
+///
+/// ## Overloaded parameters
+///
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// countNonZero(InputArray, OutputArray, Stream &)(InputArray, OutputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:909
+// ("cv::cuda::countNonZero", vec![(pred!(mut, ["src", "dst", "stream"], ["const cv::_InputArray*", "const cv::_OutputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn count_non_zero_1(src: &impl ToInputArray, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_countNonZero_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Creates implementation for cuda::Convolution .
+///
+/// ## Parameters
+/// * user_block_size: Block size. If you leave default value Size(0,0) then automatic
+/// estimation of block size will be used (which is optimized for speed). By varying user_block_size
+/// you can reduce memory requirements at the cost of speed.
+///
+/// ## Note
+/// This alternative version of [create_convolution] function uses the following default values for its arguments:
+/// * user_block_size: Size()
+// cv::cuda::createConvolution() /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:1174
+// ("cv::cuda::createConvolution", vec![(pred!(mut, [], []), _)]),
+#[inline]
+pub fn create_convolution_def() -> Result<core::Ptr<crate::cudaarithm::Convolution>> {
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_createConvolution(ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	let ret = unsafe { core::Ptr::<crate::cudaarithm::Convolution>::opencv_from_extern(ret) };
+	Ok(ret)
+}
+
+/// Creates implementation for cuda::Convolution .
+///
+/// ## Parameters
+/// * user_block_size: Block size. If you leave default value Size(0,0) then automatic
+/// estimation of block size will be used (which is optimized for speed). By varying user_block_size
+/// you can reduce memory requirements at the cost of speed.
+///
+/// ## C++ default parameters
+/// * user_block_size: Size()
+// createConvolution(Size)(SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:1174
+// ("cv::cuda::createConvolution", vec![(pred!(mut, ["user_block_size"], ["cv::Size"]), _)]),
+#[inline]
+pub fn create_convolution(user_block_size: core::Size) -> Result<core::Ptr<crate::cudaarithm::Convolution>> {
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_createConvolution_Size(&user_block_size, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	let ret = unsafe { core::Ptr::<crate::cudaarithm::Convolution>::opencv_from_extern(ret) };
+	Ok(ret)
+}
+
+/// Creates implementation for cuda::DFT.
+///
+/// ## Parameters
+/// * dft_size: The image size.
+/// * flags: Optional flags:
+/// *   **DFT_ROWS** transforms each individual row of the source matrix.
+/// *   **DFT_SCALE** scales the result: divide it by the number of elements in the transform
+/// (obtained from dft_size ).
+/// *   **DFT_INVERSE** inverts DFT. Use for complex-complex cases (real-complex and complex-real
+/// cases are always forward and inverse, respectively).
+/// *   **DFT_COMPLEX_INPUT** Specifies that inputs will be complex with 2 channels.
+/// *   **DFT_REAL_OUTPUT** specifies the output as real. The source matrix is the result of
+/// real-complex transform, so the destination matrix must be real.
+// createDFT(Size, int)(SimpleClass, Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:1148
+// ("cv::cuda::createDFT", vec![(pred!(mut, ["dft_size", "flags"], ["cv::Size", "int"]), _)]),
+#[inline]
+pub fn create_dft(dft_size: core::Size, flags: i32) -> Result<core::Ptr<crate::cudaarithm::DFT>> {
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_createDFT_Size_int(&dft_size, flags, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	let ret = unsafe { core::Ptr::<crate::cudaarithm::DFT>::opencv_from_extern(ret) };
+	Ok(ret)
+}
+
+/// Creates implementation for cuda::LookUpTable .
+///
+/// ## Parameters
+/// * lut: Look-up table of 256 elements. It is a continuous CV_8U matrix.
+// createLookUpTable(InputArray)(InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:787
+// ("cv::cuda::createLookUpTable", vec![(pred!(mut, ["lut"], ["const cv::_InputArray*"]), _)]),
+#[inline]
+pub fn create_look_up_table(lut: &impl ToInputArray) -> Result<core::Ptr<crate::cudaarithm::LookUpTable>> {
+	input_array_arg!(lut);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_createLookUpTable_const__InputArrayR(lut.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	let ret = unsafe { core::Ptr::<crate::cudaarithm::LookUpTable>::opencv_from_extern(ret) };
+	Ok(ret)
+}
+
+/// Performs a forward or inverse discrete Fourier transform (1D or 2D) of the floating point matrix.
+///
+/// ## Parameters
+/// * src: Source matrix (real or complex).
+/// * dst: Destination matrix (real or complex).
+/// * dft_size: Size of a discrete Fourier transform.
+/// * flags: Optional flags:
+/// *   **DFT_ROWS** transforms each individual row of the source matrix.
+/// *   **DFT_SCALE** scales the result: divide it by the number of elements in the transform
+/// (obtained from dft_size ).
+/// *   **DFT_INVERSE** inverts DFT. Use for complex-complex cases (real-complex and complex-real
+/// cases are always forward and inverse, respectively).
+/// *   **DFT_COMPLEX_INPUT** Specifies that input is complex input with 2 channels.
+/// *   **DFT_REAL_OUTPUT** specifies the output as real. The source matrix is the result of
+/// real-complex transform, so the destination matrix must be real.
+/// * stream: Stream for the asynchronous version.
+///
+/// Use to handle real matrices ( CV32FC1 ) and complex matrices in the interleaved format ( CV32FC2 ).
+///
+/// The source matrix should be continuous, otherwise reallocation and data copying is performed. The
+/// function chooses an operation mode depending on the flags, size, and channel count of the source
+/// matrix:
+///
+/// *   If the source matrix is complex and the output is not specified as real, the destination
+/// matrix is complex and has the dft_size size and CV_32FC2 type. The destination matrix
+/// contains a full result of the DFT (forward or inverse).
+/// *   If the source matrix is complex and the output is specified as real, the function assumes that
+/// its input is the result of the forward transform (see the next item). The destination matrix
+/// has the dft_size size and CV_32FC1 type. It contains the result of the inverse DFT.
+/// *   If the source matrix is real (its type is CV_32FC1 ), forward DFT is performed. The result of
+/// the DFT is packed into complex ( CV_32FC2 ) matrix. So, the width of the destination matrix
+/// is dft_size.width / 2 + 1 . But if the source is a single column, the height is reduced
+/// instead of the width.
+/// ## See also
+/// dft
+///
+/// ## Note
+/// This alternative version of [dft] function uses the following default values for its arguments:
+/// * flags: 0
+/// * stream: Stream::Null()
+// cv::cuda::dft(InputArray, OutputArray, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:1119
+// ("cv::cuda::dft", vec![(pred!(mut, ["src", "dst", "dft_size"], ["const cv::_InputArray*", "const cv::_OutputArray*", "cv::Size"]), _)]),
+#[inline]
+pub fn dft_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, dft_size: core::Size) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_dft_const__InputArrayR_const__OutputArrayR_Size(src.as_raw__InputArray(), dst.as_raw__OutputArray(), &dft_size, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Performs a forward or inverse discrete Fourier transform (1D or 2D) of the floating point matrix.
+///
+/// ## Parameters
+/// * src: Source matrix (real or complex).
+/// * dst: Destination matrix (real or complex).
+/// * dft_size: Size of a discrete Fourier transform.
+/// * flags: Optional flags:
+/// *   **DFT_ROWS** transforms each individual row of the source matrix.
+/// *   **DFT_SCALE** scales the result: divide it by the number of elements in the transform
+/// (obtained from dft_size ).
+/// *   **DFT_INVERSE** inverts DFT. Use for complex-complex cases (real-complex and complex-real
+/// cases are always forward and inverse, respectively).
+/// *   **DFT_COMPLEX_INPUT** Specifies that input is complex input with 2 channels.
+/// *   **DFT_REAL_OUTPUT** specifies the output as real. The source matrix is the result of
+/// real-complex transform, so the destination matrix must be real.
+/// * stream: Stream for the asynchronous version.
+///
+/// Use to handle real matrices ( CV32FC1 ) and complex matrices in the interleaved format ( CV32FC2 ).
+///
+/// The source matrix should be continuous, otherwise reallocation and data copying is performed. The
+/// function chooses an operation mode depending on the flags, size, and channel count of the source
+/// matrix:
+///
+/// *   If the source matrix is complex and the output is not specified as real, the destination
+/// matrix is complex and has the dft_size size and CV_32FC2 type. The destination matrix
+/// contains a full result of the DFT (forward or inverse).
+/// *   If the source matrix is complex and the output is specified as real, the function assumes that
+/// its input is the result of the forward transform (see the next item). The destination matrix
+/// has the dft_size size and CV_32FC1 type. It contains the result of the inverse DFT.
+/// *   If the source matrix is real (its type is CV_32FC1 ), forward DFT is performed. The result of
+/// the DFT is packed into complex ( CV_32FC2 ) matrix. So, the width of the destination matrix
+/// is dft_size.width / 2 + 1 . But if the source is a single column, the height is reduced
+/// instead of the width.
+/// ## See also
+/// dft
+///
+/// ## C++ default parameters
+/// * flags: 0
+/// * stream: Stream::Null()
+// dft(InputArray, OutputArray, Size, int, Stream &)(InputArray, OutputArray, SimpleClass, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:1119
+// ("cv::cuda::dft", vec![(pred!(mut, ["src", "dst", "dft_size", "flags", "stream"], ["const cv::_InputArray*", "const cv::_OutputArray*", "cv::Size", "int", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn dft(src: &impl ToInputArray, dst: &mut impl ToOutputArray, dft_size: core::Size, flags: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_dft_const__InputArrayR_const__OutputArrayR_Size_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), &dft_size, flags, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes a matrix-scalar division.
+///
+/// ## Parameters
+/// * src1: First source matrix.
+/// * src2: Second source scalar.
+/// * dst: Destination matrix that has the same size and number of channels as the input array.
+/// The depth is defined by dtype or @p src1 depth.
+/// * scale: Optional scale factor.
+/// * dtype: Optional depth of the output array.
+/// * stream: Stream for the asynchronous version.
+///
+/// This function, in contrast to divide, uses a round-down rounding mode.
+/// ## See also
+/// divide
+///
+/// ## Note
+/// This alternative version of [divide_with_scalar] function uses the following default values for its arguments:
+/// * scale: 1
+/// * dtype: -1
+/// * stream: Stream::Null()
+// cv::cuda::divideWithScalar(InputArray, SimpleClass, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:205
+// ("cv::cuda::divideWithScalar", vec![(pred!(mut, ["src1", "src2", "dst"], ["const cv::_InputArray*", "cv::Scalar", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn divide_with_scalar_def(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src1);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_divideWithScalar_const__InputArrayR_Scalar_const__OutputArrayR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes a matrix-scalar division.
+///
+/// ## Parameters
+/// * src1: First source matrix.
+/// * src2: Second source scalar.
+/// * dst: Destination matrix that has the same size and number of channels as the input array.
+/// The depth is defined by dtype or @p src1 depth.
+/// * scale: Optional scale factor.
+/// * dtype: Optional depth of the output array.
+/// * stream: Stream for the asynchronous version.
+///
+/// This function, in contrast to divide, uses a round-down rounding mode.
+/// ## See also
+/// divide
+///
+/// ## C++ default parameters
+/// * scale: 1
+/// * dtype: -1
+/// * stream: Stream::Null()
+// divideWithScalar(InputArray, Scalar, OutputArray, double, int, Stream &)(InputArray, SimpleClass, OutputArray, Primitive, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:205
+// ("cv::cuda::divideWithScalar", vec![(pred!(mut, ["src1", "src2", "dst", "scale", "dtype", "stream"], ["const cv::_InputArray*", "cv::Scalar", "const cv::_OutputArray*", "double", "int", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn divide_with_scalar(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray, scale: f64, dtype: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src1);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_divideWithScalar_const__InputArrayR_Scalar_const__OutputArrayR_double_int_StreamR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), scale, dtype, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes a matrix-matrix or matrix-scalar division.
+///
+/// ## Parameters
+/// * src1: First source matrix or scalar.
+/// * src2: Second source matrix or scalar.
+/// * dst: Destination matrix that has the same size and number of channels as the input array(s).
+/// The depth is defined by dtype or @p src1 depth.
+/// * scale: Optional scale factor.
+/// * dtype: Optional depth of the output array.
+/// * stream: Stream for the asynchronous version.
+///
+/// This function, in contrast to divide, uses a round-down rounding mode.
+///
+/// @warning In python both @p src1 and @p src2 have to be matrices, see [divideWithScalar] for scalar overload.
+/// ## See also
+/// cv::divide, divideWithScalar
+///
+/// ## Note
+/// This alternative version of [divide] function uses the following default values for its arguments:
+/// * scale: 1
+/// * dtype: -1
+/// * stream: Stream::Null()
+// cv::cuda::divide(InputArray, InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:189
+// ("cv::cuda::divide", vec![(pred!(mut, ["src1", "src2", "dst"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn divide_def(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src1);
+	input_array_arg!(src2);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_divide_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes a matrix-matrix or matrix-scalar division.
+///
+/// ## Parameters
+/// * src1: First source matrix or scalar.
+/// * src2: Second source matrix or scalar.
+/// * dst: Destination matrix that has the same size and number of channels as the input array(s).
+/// The depth is defined by dtype or @p src1 depth.
+/// * scale: Optional scale factor.
+/// * dtype: Optional depth of the output array.
+/// * stream: Stream for the asynchronous version.
+///
+/// This function, in contrast to divide, uses a round-down rounding mode.
+///
+/// @warning In python both @p src1 and @p src2 have to be matrices, see [divideWithScalar] for scalar overload.
+/// ## See also
+/// cv::divide, divideWithScalar
+///
+/// ## C++ default parameters
+/// * scale: 1
+/// * dtype: -1
+/// * stream: Stream::Null()
+// divide(InputArray, InputArray, OutputArray, double, int, Stream &)(InputArray, InputArray, OutputArray, Primitive, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:189
+// ("cv::cuda::divide", vec![(pred!(mut, ["src1", "src2", "dst", "scale", "dtype", "stream"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*", "double", "int", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn divide(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, scale: f64, dtype: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src1);
+	input_array_arg!(src2);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_divide_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_int_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), scale, dtype, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes an exponent of each matrix element.
+///
+/// ## Parameters
+/// * src: Source matrix.
+/// * dst: Destination matrix with the same size and type as src .
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// exp
+///
+/// ## Note
+/// This alternative version of [exp] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::exp(InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:271
+// ("cv::cuda::exp", vec![(pred!(mut, ["src", "dst"], ["const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn exp_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_exp_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes an exponent of each matrix element.
+///
+/// ## Parameters
+/// * src: Source matrix.
+/// * dst: Destination matrix with the same size and type as src .
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// exp
+///
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// exp(InputArray, OutputArray, Stream &)(InputArray, OutputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:271
+// ("cv::cuda::exp", vec![(pred!(mut, ["src", "dst", "stream"], ["const cv::_InputArray*", "const cv::_OutputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn exp(src: &impl ToInputArray, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_exp_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// @overload
+///
+/// ## Note
+/// This alternative version of [find_min_max_loc] function uses the following default values for its arguments:
+/// * mask: noArray()
+/// * stream: Stream::Null()
+// cv::cuda::findMinMaxLoc(InputArray, OutputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:896
+// ("cv::cuda::findMinMaxLoc", vec![(pred!(mut, ["src", "minMaxVals", "loc"], ["const cv::_InputArray*", "const cv::_OutputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn find_min_max_loc_def(src: &impl ToInputArray, min_max_vals: &mut impl ToOutputArray, loc: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(min_max_vals);
+	output_array_arg!(loc);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_findMinMaxLoc_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(src.as_raw__InputArray(), min_max_vals.as_raw__OutputArray(), loc.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+///
+/// ## C++ default parameters
+/// * mask: noArray()
+/// * stream: Stream::Null()
+// findMinMaxLoc(InputArray, OutputArray, OutputArray, InputArray, Stream &)(InputArray, OutputArray, OutputArray, InputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:896
+// ("cv::cuda::findMinMaxLoc", vec![(pred!(mut, ["src", "minMaxVals", "loc", "mask", "stream"], ["const cv::_InputArray*", "const cv::_OutputArray*", "const cv::_OutputArray*", "const cv::_InputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn find_min_max_loc(src: &impl ToInputArray, min_max_vals: &mut impl ToOutputArray, loc: &mut impl ToOutputArray, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(min_max_vals);
+	output_array_arg!(loc);
+	input_array_arg!(mask);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_findMinMaxLoc_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src.as_raw__InputArray(), min_max_vals.as_raw__OutputArray(), loc.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// @overload
+///
+/// ## Note
+/// This alternative version of [find_min_max] function uses the following default values for its arguments:
+/// * mask: noArray()
+/// * stream: Stream::Null()
+// cv::cuda::findMinMax(InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:878
+// ("cv::cuda::findMinMax", vec![(pred!(mut, ["src", "dst"], ["const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn find_min_max_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_findMinMax_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+///
+/// ## C++ default parameters
+/// * mask: noArray()
+/// * stream: Stream::Null()
+// findMinMax(InputArray, OutputArray, InputArray, Stream &)(InputArray, OutputArray, InputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:878
+// ("cv::cuda::findMinMax", vec![(pred!(mut, ["src", "dst", "mask", "stream"], ["const cv::_InputArray*", "const cv::_OutputArray*", "const cv::_InputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn find_min_max(src: &impl ToInputArray, dst: &mut impl ToOutputArray, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	input_array_arg!(mask);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_findMinMax_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Flips a 2D matrix around vertical, horizontal, or both axes.
+///
+/// ## Parameters
+/// * src: Source matrix. Supports 1, 3 and 4 channels images with CV_8U, CV_16U, CV_32S or
+/// CV_32F depth.
+/// * dst: Destination matrix.
+/// * flipCode: Flip mode for the source:
+/// *   0 Flips around x-axis.
+/// *   \> 0 Flips around y-axis.
+/// *   \< 0 Flips around both axes.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// flip
+///
+/// ## Note
+/// This alternative version of [flip] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::flip(InputArray, OutputArray, Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:766
+// ("cv::cuda::flip", vec![(pred!(mut, ["src", "dst", "flipCode"], ["const cv::_InputArray*", "const cv::_OutputArray*", "int"]), _)]),
+#[inline]
+pub fn flip_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, flip_code: i32) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_flip_const__InputArrayR_const__OutputArrayR_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flip_code, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Flips a 2D matrix around vertical, horizontal, or both axes.
+///
+/// ## Parameters
+/// * src: Source matrix. Supports 1, 3 and 4 channels images with CV_8U, CV_16U, CV_32S or
+/// CV_32F depth.
+/// * dst: Destination matrix.
+/// * flipCode: Flip mode for the source:
+/// *   0 Flips around x-axis.
+/// *   \> 0 Flips around y-axis.
+/// *   \< 0 Flips around both axes.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// flip
+///
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// flip(InputArray, OutputArray, int, Stream &)(InputArray, OutputArray, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:766
+// ("cv::cuda::flip", vec![(pred!(mut, ["src", "dst", "flipCode", "stream"], ["const cv::_InputArray*", "const cv::_OutputArray*", "int", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn flip(src: &impl ToInputArray, dst: &mut impl ToOutputArray, flip_code: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_flip_const__InputArrayR_const__OutputArrayR_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flip_code, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Performs generalized matrix multiplication.
+///
+/// ## Parameters
+/// * src1: First multiplied input matrix that should have CV_32FC1 , CV_64FC1 , CV_32FC2 , or
+/// CV_64FC2 type.
+/// * src2: Second multiplied input matrix of the same type as src1 .
+/// * alpha: Weight of the matrix product.
+/// * src3: Third optional delta matrix added to the matrix product. It should have the same type
+/// as src1 and src2 .
+/// * beta: Weight of src3 .
+/// * dst: Destination matrix. It has the proper size and the same type as input matrices.
+/// * flags: Operation flags:
+/// *   **GEMM_1_T** transpose src1
+/// *   **GEMM_2_T** transpose src2
+/// *   **GEMM_3_T** transpose src3
+/// * stream: Stream for the asynchronous version.
+///
+/// The function performs generalized matrix multiplication similar to the gemm functions in BLAS level
+/// 3. For example, gemm(src1, src2, alpha, src3, beta, dst, GEMM_1_T + GEMM_3_T) corresponds to
+///
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%20%5Ctexttt%7Balpha%7D%20%5Ccdot%20%5Ctexttt%7Bsrc1%7D%20%5ET%20%20%5Ccdot%20%5Ctexttt%7Bsrc2%7D%20%2B%20%20%5Ctexttt%7Bbeta%7D%20%5Ccdot%20%5Ctexttt%7Bsrc3%7D%20%5ET)
+///
+///
+/// Note: Transposition operation doesn't support CV_64FC2 input type.
+/// ## See also
+/// gemm
+///
+/// ## Note
+/// This alternative version of [gemm] function uses the following default values for its arguments:
+/// * flags: 0
+/// * stream: Stream::Null()
+// cv::cuda::gemm(InputArray, InputArray, Primitive, InputArray, Primitive, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:1048
+// ("cv::cuda::gemm", vec![(pred!(mut, ["src1", "src2", "alpha", "src3", "beta", "dst"], ["const cv::_InputArray*", "const cv::_InputArray*", "double", "const cv::_InputArray*", "double", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn gemm_def(src1: &impl ToInputArray, src2: &impl ToInputArray, alpha: f64, src3: &impl ToInputArray, beta: f64, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src1);
+	input_array_arg!(src2);
+	input_array_arg!(src3);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_gemm_const__InputArrayR_const__InputArrayR_double_const__InputArrayR_double_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), alpha, src3.as_raw__InputArray(), beta, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Performs generalized matrix multiplication.
+///
+/// ## Parameters
+/// * src1: First multiplied input matrix that should have CV_32FC1 , CV_64FC1 , CV_32FC2 , or
+/// CV_64FC2 type.
+/// * src2: Second multiplied input matrix of the same type as src1 .
+/// * alpha: Weight of the matrix product.
+/// * src3: Third optional delta matrix added to the matrix product. It should have the same type
+/// as src1 and src2 .
+/// * beta: Weight of src3 .
+/// * dst: Destination matrix. It has the proper size and the same type as input matrices.
+/// * flags: Operation flags:
+/// *   **GEMM_1_T** transpose src1
+/// *   **GEMM_2_T** transpose src2
+/// *   **GEMM_3_T** transpose src3
+/// * stream: Stream for the asynchronous version.
+///
+/// The function performs generalized matrix multiplication similar to the gemm functions in BLAS level
+/// 3. For example, gemm(src1, src2, alpha, src3, beta, dst, GEMM_1_T + GEMM_3_T) corresponds to
+///
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%20%5Ctexttt%7Balpha%7D%20%5Ccdot%20%5Ctexttt%7Bsrc1%7D%20%5ET%20%20%5Ccdot%20%5Ctexttt%7Bsrc2%7D%20%2B%20%20%5Ctexttt%7Bbeta%7D%20%5Ccdot%20%5Ctexttt%7Bsrc3%7D%20%5ET)
+///
+///
+/// Note: Transposition operation doesn't support CV_64FC2 input type.
+/// ## See also
+/// gemm
+///
+/// ## C++ default parameters
+/// * flags: 0
+/// * stream: Stream::Null()
+// gemm(InputArray, InputArray, double, InputArray, double, OutputArray, int, Stream &)(InputArray, InputArray, Primitive, InputArray, Primitive, OutputArray, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:1048
+// ("cv::cuda::gemm", vec![(pred!(mut, ["src1", "src2", "alpha", "src3", "beta", "dst", "flags", "stream"], ["const cv::_InputArray*", "const cv::_InputArray*", "double", "const cv::_InputArray*", "double", "const cv::_OutputArray*", "int", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn gemm(src1: &impl ToInputArray, src2: &impl ToInputArray, alpha: f64, src3: &impl ToInputArray, beta: f64, dst: &mut impl ToOutputArray, flags: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src1);
+	input_array_arg!(src2);
+	input_array_arg!(src3);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_gemm_const__InputArrayR_const__InputArrayR_double_const__InputArrayR_double_const__OutputArrayR_int_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), alpha, src3.as_raw__InputArray(), beta, dst.as_raw__OutputArray(), flags, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Checks if array elements lie between two scalars.
+///
+/// The function checks the range as follows:
+/// *   For every element of a single-channel input array:
+///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Blowerb%7D%5F0%20%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28I%29%5F0%20%5Cleq%20%20%5Ctexttt%7Bupperb%7D%5F0)
+/// *   For two-channel arrays:
+///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Blowerb%7D%5F0%20%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28I%29%5F0%20%5Cleq%20%20%5Ctexttt%7Bupperb%7D%5F0%20%20%5Cland%20%5Ctexttt%7Blowerb%7D%5F1%20%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28I%29%5F1%20%5Cleq%20%20%5Ctexttt%7Bupperb%7D%5F1)
+/// *   and so forth.
+///
+/// That is, dst (I) is set to 255 (all 1 -bits) if src (I) is within the
+/// specified 1D, 2D, 3D, ... box and 0 otherwise.
+///
+/// Note that unlike the CPU inRange, this does NOT accept an array for lowerb or
+/// upperb, only a cv::Scalar.
+///
+/// ## Parameters
+/// * src: first input array.
+/// * lowerb: inclusive lower boundary cv::Scalar.
+/// * upperb: inclusive upper boundary cv::Scalar.
+/// * dst: output array of the same size as src and CV_8U type.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// cv::inRange
+///
+/// ## Note
+/// This alternative version of [in_range] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::inRange(InputArray, SimpleClass, SimpleClass, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:584
+// ("cv::cuda::inRange", vec![(pred!(mut, ["src", "lowerb", "upperb", "dst"], ["const cv::_InputArray*", "const cv::Scalar*", "const cv::Scalar*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn in_range_def(src: &impl ToInputArray, lowerb: core::Scalar, upperb: core::Scalar, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_inRange_const__InputArrayR_const_ScalarR_const_ScalarR_const__OutputArrayR(src.as_raw__InputArray(), &lowerb, &upperb, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Checks if array elements lie between two scalars.
+///
+/// The function checks the range as follows:
+/// *   For every element of a single-channel input array:
+///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Blowerb%7D%5F0%20%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28I%29%5F0%20%5Cleq%20%20%5Ctexttt%7Bupperb%7D%5F0)
+/// *   For two-channel arrays:
+///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Blowerb%7D%5F0%20%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28I%29%5F0%20%5Cleq%20%20%5Ctexttt%7Bupperb%7D%5F0%20%20%5Cland%20%5Ctexttt%7Blowerb%7D%5F1%20%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28I%29%5F1%20%5Cleq%20%20%5Ctexttt%7Bupperb%7D%5F1)
+/// *   and so forth.
+///
+/// That is, dst (I) is set to 255 (all 1 -bits) if src (I) is within the
+/// specified 1D, 2D, 3D, ... box and 0 otherwise.
+///
+/// Note that unlike the CPU inRange, this does NOT accept an array for lowerb or
+/// upperb, only a cv::Scalar.
+///
+/// ## Parameters
+/// * src: first input array.
+/// * lowerb: inclusive lower boundary cv::Scalar.
+/// * upperb: inclusive upper boundary cv::Scalar.
+/// * dst: output array of the same size as src and CV_8U type.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// cv::inRange
+///
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// inRange(InputArray, const Scalar &, const Scalar &, OutputArray, Stream &)(InputArray, SimpleClass, SimpleClass, OutputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:584
+// ("cv::cuda::inRange", vec![(pred!(mut, ["src", "lowerb", "upperb", "dst", "stream"], ["const cv::_InputArray*", "const cv::Scalar*", "const cv::Scalar*", "const cv::_OutputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn in_range(src: &impl ToInputArray, lowerb: core::Scalar, upperb: core::Scalar, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_inRange_const__InputArrayR_const_ScalarR_const_ScalarR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), &lowerb, &upperb, dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes an integral image.
+///
+/// ## Parameters
+/// * src: Source image. Only CV_8UC1 images are supported for now.
+/// * sum: Integral image containing 32-bit unsigned integer values packed into CV_32SC1 .
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// integral
+///
+/// ## Note
+/// This alternative version of [integral] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::integral(InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:1007
+// ("cv::cuda::integral", vec![(pred!(mut, ["src", "sum"], ["const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn integral_def(src: &impl ToInputArray, sum: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(sum);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_integral_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), sum.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes an integral image.
+///
+/// ## Parameters
+/// * src: Source image. Only CV_8UC1 images are supported for now.
+/// * sum: Integral image containing 32-bit unsigned integer values packed into CV_32SC1 .
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// integral
+///
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// integral(InputArray, OutputArray, Stream &)(InputArray, OutputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:1007
+// ("cv::cuda::integral", vec![(pred!(mut, ["src", "sum", "stream"], ["const cv::_InputArray*", "const cv::_OutputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn integral(src: &impl ToInputArray, sum: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(sum);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_integral_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), sum.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes a natural logarithm of absolute value of each matrix element.
+///
+/// ## Parameters
+/// * src: Source matrix.
+/// * dst: Destination matrix with the same size and type as src .
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// log
+///
+/// ## Note
+/// This alternative version of [log] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::log(InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:281
+// ("cv::cuda::log", vec![(pred!(mut, ["src", "dst"], ["const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn log_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_log_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes a natural logarithm of absolute value of each matrix element.
+///
+/// ## Parameters
+/// * src: Source matrix.
+/// * dst: Destination matrix with the same size and type as src .
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// log
+///
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// log(InputArray, OutputArray, Stream &)(InputArray, OutputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:281
+// ("cv::cuda::log", vec![(pred!(mut, ["src", "dst", "stream"], ["const cv::_InputArray*", "const cv::_OutputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn log(src: &impl ToInputArray, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_log_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Performs pixel by pixel right left of an image by a constant value.
+///
+/// ## Parameters
+/// * src: Source matrix. Supports 1, 3 and 4 channels images with CV_8U , CV_16U or CV_32S
+/// depth.
+/// * val: Constant values, one per channel.
+/// * dst: Destination matrix with the same size and type as src .
+/// * stream: Stream for the asynchronous version.
+///
+/// ## Note
+/// This alternative version of [lshift] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::lshift(InputArray, SimpleClass, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:459
+// ("cv::cuda::lshift", vec![(pred!(mut, ["src", "val", "dst"], ["const cv::_InputArray*", "cv::Scalar_<int>", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn lshift_def(src: &impl ToInputArray, val: core::Scalar_<i32>, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_lshift_const__InputArrayR_Scalar_LintG_const__OutputArrayR(src.as_raw__InputArray(), &val, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Performs pixel by pixel right left of an image by a constant value.
+///
+/// ## Parameters
+/// * src: Source matrix. Supports 1, 3 and 4 channels images with CV_8U , CV_16U or CV_32S
+/// depth.
+/// * val: Constant values, one per channel.
+/// * dst: Destination matrix with the same size and type as src .
+/// * stream: Stream for the asynchronous version.
+///
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// lshift(InputArray, Scalar_<int>, OutputArray, Stream &)(InputArray, SimpleClass, OutputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:459
+// ("cv::cuda::lshift", vec![(pred!(mut, ["src", "val", "dst", "stream"], ["const cv::_InputArray*", "cv::Scalar_<int>", "const cv::_OutputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn lshift(src: &impl ToInputArray, val: core::Scalar_<i32>, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_lshift_const__InputArrayR_Scalar_LintG_const__OutputArrayR_StreamR(src.as_raw__InputArray(), &val, dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// ## Note
+/// This alternative version of [lshift_1] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::lshift(InputArray, SimpleClass, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:461
+// ("cv::cuda::lshift", vec![(pred!(mut, ["src", "val", "dst"], ["const cv::_InputArray*", "cv::Scalar", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn lshift_1_def(src: &impl ToInputArray, val: core::Scalar, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_lshift_const__InputArrayR_Scalar_const__OutputArrayR(src.as_raw__InputArray(), &val, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// lshift(InputArray, Scalar, OutputArray, Stream &)(InputArray, SimpleClass, OutputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:461
+// ("cv::cuda::lshift", vec![(pred!(mut, ["src", "val", "dst", "stream"], ["const cv::_InputArray*", "cv::Scalar", "const cv::_OutputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn lshift_1(src: &impl ToInputArray, val: core::Scalar, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_lshift_const__InputArrayR_Scalar_const__OutputArrayR_StreamR(src.as_raw__InputArray(), &val, dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// @overload
+///  computes squared magnitude of each (x(i), y(i)) vector
+///  supports only floating-point source
+/// ## Parameters
+/// * x: Source matrix containing real components ( CV_32FC1 ).
+/// * y: Source matrix containing imaginary components ( CV_32FC1 ).
+/// * magnitude: Destination matrix of float magnitude squares ( CV_32FC1 ).
+/// * stream: Stream for the asynchronous version.
+///
+/// ## Note
+/// This alternative version of [magnitude_sqr_1] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::magnitudeSqr(InputArray, InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:622
+// ("cv::cuda::magnitudeSqr", vec![(pred!(mut, ["x", "y", "magnitude"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn magnitude_sqr_1_def(x: &impl ToInputArray, y: &impl ToInputArray, magnitude: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(x);
+	input_array_arg!(y);
+	output_array_arg!(magnitude);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_magnitudeSqr_const__InputArrayR_const__InputArrayR_const__OutputArrayR(x.as_raw__InputArray(), y.as_raw__InputArray(), magnitude.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes squared magnitudes of complex matrix elements.
+///
+/// ## Parameters
+/// * xy: Source complex matrix in the interleaved format ( CV_32FC2 ).
+/// * magnitude: Destination matrix of float magnitude squares ( CV_32FC1 ).
+/// * stream: Stream for the asynchronous version.
+///
+/// ## Overloaded parameters
+///
+///  computes squared magnitude of each (x(i), y(i)) vector
+///  supports only floating-point source
+/// * x: Source matrix containing real components ( CV_32FC1 ).
+/// * y: Source matrix containing imaginary components ( CV_32FC1 ).
+/// * magnitude: Destination matrix of float magnitude squares ( CV_32FC1 ).
+/// * stream: Stream for the asynchronous version.
+///
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// magnitudeSqr(InputArray, InputArray, OutputArray, Stream &)(InputArray, InputArray, OutputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:622
+// ("cv::cuda::magnitudeSqr", vec![(pred!(mut, ["x", "y", "magnitude", "stream"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn magnitude_sqr_1(x: &impl ToInputArray, y: &impl ToInputArray, magnitude: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(x);
+	input_array_arg!(y);
+	output_array_arg!(magnitude);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_magnitudeSqr_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(x.as_raw__InputArray(), y.as_raw__InputArray(), magnitude.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes squared magnitudes of complex matrix elements.
+///
+/// ## Parameters
+/// * xy: Source complex matrix in the interleaved format ( CV_32FC2 ).
+/// * magnitude: Destination matrix of float magnitude squares ( CV_32FC1 ).
+/// * stream: Stream for the asynchronous version.
+///
+/// ## Note
+/// This alternative version of [magnitude_sqr] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::magnitudeSqr(InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:602
+// ("cv::cuda::magnitudeSqr", vec![(pred!(mut, ["xy", "magnitude"], ["const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn magnitude_sqr_def(xy: &impl ToInputArray, magnitude: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(xy);
+	output_array_arg!(magnitude);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_magnitudeSqr_const__InputArrayR_const__OutputArrayR(xy.as_raw__InputArray(), magnitude.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes squared magnitudes of complex matrix elements.
+///
+/// ## Parameters
+/// * xy: Source complex matrix in the interleaved format ( CV_32FC2 ).
+/// * magnitude: Destination matrix of float magnitude squares ( CV_32FC1 ).
+/// * stream: Stream for the asynchronous version.
+///
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// magnitudeSqr(InputArray, OutputArray, Stream &)(InputArray, OutputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:602
+// ("cv::cuda::magnitudeSqr", vec![(pred!(mut, ["xy", "magnitude", "stream"], ["const cv::_InputArray*", "const cv::_OutputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn magnitude_sqr(xy: &impl ToInputArray, magnitude: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(xy);
+	output_array_arg!(magnitude);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_magnitudeSqr_const__InputArrayR_const__OutputArrayR_StreamR(xy.as_raw__InputArray(), magnitude.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// @overload
+///  computes magnitude of each (x(i), y(i)) vector
+///  supports only floating-point source
+/// ## Parameters
+/// * x: Source matrix containing real components ( CV_32FC1 ).
+/// * y: Source matrix containing imaginary components ( CV_32FC1 ).
+/// * magnitude: Destination matrix of float magnitudes ( CV_32FC1 ).
+/// * stream: Stream for the asynchronous version.
+///
+/// ## Note
+/// This alternative version of [magnitude_1] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::magnitude(InputArray, InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:612
+// ("cv::cuda::magnitude", vec![(pred!(mut, ["x", "y", "magnitude"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn magnitude_1_def(x: &impl ToInputArray, y: &impl ToInputArray, magnitude: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(x);
+	input_array_arg!(y);
+	output_array_arg!(magnitude);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_magnitude_const__InputArrayR_const__InputArrayR_const__OutputArrayR(x.as_raw__InputArray(), y.as_raw__InputArray(), magnitude.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes magnitudes of complex matrix elements.
+///
+/// ## Parameters
+/// * xy: Source complex matrix in the interleaved format ( CV_32FC2 ).
+/// * magnitude: Destination matrix of float magnitudes ( CV_32FC1 ).
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// magnitude
+///
+/// ## Overloaded parameters
+///
+///  computes magnitude of each (x(i), y(i)) vector
+///  supports only floating-point source
+/// * x: Source matrix containing real components ( CV_32FC1 ).
+/// * y: Source matrix containing imaginary components ( CV_32FC1 ).
+/// * magnitude: Destination matrix of float magnitudes ( CV_32FC1 ).
+/// * stream: Stream for the asynchronous version.
+///
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// magnitude(InputArray, InputArray, OutputArray, Stream &)(InputArray, InputArray, OutputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:612
+// ("cv::cuda::magnitude", vec![(pred!(mut, ["x", "y", "magnitude", "stream"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn magnitude_1(x: &impl ToInputArray, y: &impl ToInputArray, magnitude: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(x);
+	input_array_arg!(y);
+	output_array_arg!(magnitude);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_magnitude_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(x.as_raw__InputArray(), y.as_raw__InputArray(), magnitude.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes magnitudes of complex matrix elements.
+///
+/// ## Parameters
+/// * xy: Source complex matrix in the interleaved format ( CV_32FC2 ).
+/// * magnitude: Destination matrix of float magnitudes ( CV_32FC1 ).
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// magnitude
+///
+/// ## Note
+/// This alternative version of [magnitude] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::magnitude(InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:594
+// ("cv::cuda::magnitude", vec![(pred!(mut, ["xy", "magnitude"], ["const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn magnitude_def(xy: &impl ToInputArray, magnitude: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(xy);
+	output_array_arg!(magnitude);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_magnitude_const__InputArrayR_const__OutputArrayR(xy.as_raw__InputArray(), magnitude.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes magnitudes of complex matrix elements.
+///
+/// ## Parameters
+/// * xy: Source complex matrix in the interleaved format ( CV_32FC2 ).
+/// * magnitude: Destination matrix of float magnitudes ( CV_32FC1 ).
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// magnitude
+///
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// magnitude(InputArray, OutputArray, Stream &)(InputArray, OutputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:594
+// ("cv::cuda::magnitude", vec![(pred!(mut, ["xy", "magnitude", "stream"], ["const cv::_InputArray*", "const cv::_OutputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn magnitude(xy: &impl ToInputArray, magnitude: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(xy);
+	output_array_arg!(magnitude);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_magnitude_const__InputArrayR_const__OutputArrayR_StreamR(xy.as_raw__InputArray(), magnitude.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes the per-element maximum of a matrix and a scalar.
+///
+/// ## Parameters
+/// * src1: First source matrix.
+/// * src2: Second source scalar.
+/// * dst: Destination matrix that has the same size and type as the input array.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// max
+///
+/// ## Note
+/// This alternative version of [max_with_scalar] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::maxWithScalar(InputArray, SimpleClass, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:513
+// ("cv::cuda::maxWithScalar", vec![(pred!(mut, ["src1", "src2", "dst"], ["const cv::_InputArray*", "cv::Scalar", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn max_with_scalar_def(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src1);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_maxWithScalar_const__InputArrayR_Scalar_const__OutputArrayR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes the per-element maximum of a matrix and a scalar.
+///
+/// ## Parameters
+/// * src1: First source matrix.
+/// * src2: Second source scalar.
+/// * dst: Destination matrix that has the same size and type as the input array.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// max
+///
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// maxWithScalar(InputArray, Scalar, OutputArray, Stream &)(InputArray, SimpleClass, OutputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:513
+// ("cv::cuda::maxWithScalar", vec![(pred!(mut, ["src1", "src2", "dst", "stream"], ["const cv::_InputArray*", "cv::Scalar", "const cv::_OutputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn max_with_scalar(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src1);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_maxWithScalar_const__InputArrayR_Scalar_const__OutputArrayR_StreamR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes the per-element maximum of two matrices (or a matrix and a scalar).
+///
+/// ## Parameters
+/// * src1: First source matrix or scalar.
+/// * src2: Second source matrix or scalar.
+/// * dst: Destination matrix that has the same size and type as the input array(s).
+/// * stream: Stream for the asynchronous version.
+///
+/// @warning In python both @p src1 and @p src2 have to be matrices, see [maxWithScalar] for scalar overload.
+/// ## See also
+/// cv::max, maxWithScalar
+///
+/// ## Note
+/// This alternative version of [max] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::max(InputArray, InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:502
+// ("cv::cuda::max", vec![(pred!(mut, ["src1", "src2", "dst"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn max_def(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src1);
+	input_array_arg!(src2);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_max_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes the per-element maximum of two matrices (or a matrix and a scalar).
+///
+/// ## Parameters
+/// * src1: First source matrix or scalar.
+/// * src2: Second source matrix or scalar.
+/// * dst: Destination matrix that has the same size and type as the input array(s).
+/// * stream: Stream for the asynchronous version.
+///
+/// @warning In python both @p src1 and @p src2 have to be matrices, see [maxWithScalar] for scalar overload.
+/// ## See also
+/// cv::max, maxWithScalar
+///
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// max(InputArray, InputArray, OutputArray, Stream &)(InputArray, InputArray, OutputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:502
+// ("cv::cuda::max", vec![(pred!(mut, ["src1", "src2", "dst", "stream"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn max(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src1);
+	input_array_arg!(src2);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_max_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes a mean value and a standard deviation of matrix elements.
+///
+/// ## Parameters
+/// * src: Source matrix. CV_8UC1 and CV_32FC1 matrices are supported for now.
+/// * dst: Target GpuMat with size 1x2 and type CV_64FC1. The first value is mean, the second - stddev.
+/// * mask: Operation mask.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// meanStdDev
+///
+/// ## Overloaded parameters
+///
+/// * mtx: Source matrix. CV_8UC1 and CV_32FC1 matrices are supported for now.
+/// * mean: Mean value.
+/// * stddev: Standard deviation value.
+// meanStdDev(InputArray, Scalar &, Scalar &)(InputArray, SimpleClass, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:967
+// ("cv::cuda::meanStdDev", vec![(pred!(mut, ["mtx", "mean", "stddev"], ["const cv::_InputArray*", "cv::Scalar*", "cv::Scalar*"]), _)]),
+#[inline]
+pub fn mean_std_dev_3(mtx: &impl ToInputArray, mean: &mut core::Scalar, stddev: &mut core::Scalar) -> Result<()> {
+	input_array_arg!(mtx);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_meanStdDev_const__InputArrayR_ScalarR_ScalarR(mtx.as_raw__InputArray(), mean, stddev, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes a mean value and a standard deviation of matrix elements.
+///
+/// ## Parameters
+/// * src: Source matrix. CV_8UC1 and CV_32FC1 matrices are supported for now.
+/// * dst: Target GpuMat with size 1x2 and type CV_64FC1. The first value is mean, the second - stddev.
+/// * mask: Operation mask.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// meanStdDev
+///
+/// ## Overloaded parameters
+///
+/// * src: Source matrix. CV_8UC1 and CV_32FC1 matrices are supported for now.
+/// * mean: Mean value.
+/// * stddev: Standard deviation value.
+/// * mask: Operation mask.
+// meanStdDev(InputArray, Scalar &, Scalar &, InputArray)(InputArray, SimpleClass, SimpleClass, InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:961
+// ("cv::cuda::meanStdDev", vec![(pred!(mut, ["src", "mean", "stddev", "mask"], ["const cv::_InputArray*", "cv::Scalar*", "cv::Scalar*", "const cv::_InputArray*"]), _)]),
+#[inline]
+pub fn mean_std_dev_2(src: &impl ToInputArray, mean: &mut core::Scalar, stddev: &mut core::Scalar, mask: &impl ToInputArray) -> Result<()> {
+	input_array_arg!(src);
+	input_array_arg!(mask);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_meanStdDev_const__InputArrayR_ScalarR_ScalarR_const__InputArrayR(src.as_raw__InputArray(), mean, stddev, mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// @overload
+/// ## Parameters
+/// * mtx: Source matrix. CV_8UC1 and CV_32FC1 matrices are supported for now.
+/// * dst: Target GpuMat with size 1x2 and type CV_64FC1. The first value is mean, the second - stddev.
+/// * stream: Stream for the asynchronous version.
+///
+/// ## Note
+/// This alternative version of [mean_std_dev_1] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::meanStdDev(InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:954
+// ("cv::cuda::meanStdDev", vec![(pred!(mut, ["mtx", "dst"], ["const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn mean_std_dev_1_def(mtx: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(mtx);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_meanStdDev_const__InputArrayR_const__OutputArrayR(mtx.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes a mean value and a standard deviation of matrix elements.
+///
+/// ## Parameters
+/// * src: Source matrix. CV_8UC1 and CV_32FC1 matrices are supported for now.
+/// * dst: Target GpuMat with size 1x2 and type CV_64FC1. The first value is mean, the second - stddev.
+/// * mask: Operation mask.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// meanStdDev
+///
+/// ## Overloaded parameters
+///
+/// * mtx: Source matrix. CV_8UC1 and CV_32FC1 matrices are supported for now.
+/// * dst: Target GpuMat with size 1x2 and type CV_64FC1. The first value is mean, the second - stddev.
+/// * stream: Stream for the asynchronous version.
+///
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// meanStdDev(InputArray, OutputArray, Stream &)(InputArray, OutputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:954
+// ("cv::cuda::meanStdDev", vec![(pred!(mut, ["mtx", "dst", "stream"], ["const cv::_InputArray*", "const cv::_OutputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn mean_std_dev_1(mtx: &impl ToInputArray, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(mtx);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_meanStdDev_const__InputArrayR_const__OutputArrayR_StreamR(mtx.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes a mean value and a standard deviation of matrix elements.
+///
+/// ## Parameters
+/// * src: Source matrix. CV_8UC1 and CV_32FC1 matrices are supported for now.
+/// * dst: Target GpuMat with size 1x2 and type CV_64FC1. The first value is mean, the second - stddev.
+/// * mask: Operation mask.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// meanStdDev
+///
+/// ## Note
+/// This alternative version of [mean_std_dev] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::meanStdDev(InputArray, OutputArray, InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:948
+// ("cv::cuda::meanStdDev", vec![(pred!(mut, ["src", "dst", "mask"], ["const cv::_InputArray*", "const cv::_OutputArray*", "const cv::_InputArray*"]), _)]),
+#[inline]
+pub fn mean_std_dev_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, mask: &impl ToInputArray) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	input_array_arg!(mask);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_meanStdDev_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes a mean value and a standard deviation of matrix elements.
+///
+/// ## Parameters
+/// * src: Source matrix. CV_8UC1 and CV_32FC1 matrices are supported for now.
+/// * dst: Target GpuMat with size 1x2 and type CV_64FC1. The first value is mean, the second - stddev.
+/// * mask: Operation mask.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// meanStdDev
+///
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// meanStdDev(InputArray, OutputArray, InputArray, Stream &)(InputArray, OutputArray, InputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:948
+// ("cv::cuda::meanStdDev", vec![(pred!(mut, ["src", "dst", "mask", "stream"], ["const cv::_InputArray*", "const cv::_OutputArray*", "const cv::_InputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn mean_std_dev(src: &impl ToInputArray, dst: &mut impl ToOutputArray, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	input_array_arg!(mask);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_meanStdDev_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Makes a multi-channel matrix out of several single-channel matrices.
+///
+/// ## Parameters
+/// * src: Array/vector of source matrices.
+/// * n: Number of source matrices.
+/// * dst: Destination matrix.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// merge
+///
+/// ## Note
+/// This alternative version of [merge] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::merge(TraitClass, Primitive, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:727
+// ("cv::cuda::merge", vec![(pred!(mut, ["src", "n", "dst"], ["const cv::cuda::GpuMat*", "size_t", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn merge_def(src: &impl core::GpuMatTraitConst, n: size_t, dst: &mut impl ToOutputArray) -> Result<()> {
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_merge_const_GpuMatX_size_t_const__OutputArrayR(src.as_raw_GpuMat(), n, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Makes a multi-channel matrix out of several single-channel matrices.
+///
+/// ## Parameters
+/// * src: Array/vector of source matrices.
+/// * n: Number of source matrices.
+/// * dst: Destination matrix.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// merge
+///
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// merge(const GpuMat *, size_t, OutputArray, Stream &)(TraitClass, Primitive, OutputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:727
+// ("cv::cuda::merge", vec![(pred!(mut, ["src", "n", "dst", "stream"], ["const cv::cuda::GpuMat*", "size_t", "const cv::_OutputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn merge(src: &impl core::GpuMatTraitConst, n: size_t, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_merge_const_GpuMatX_size_t_const__OutputArrayR_StreamR(src.as_raw_GpuMat(), n, dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// @overload
+///
+/// ## Note
+/// This alternative version of [merge_1] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::merge(CppPassByVoidPtr, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:729
+// ("cv::cuda::merge", vec![(pred!(mut, ["src", "dst"], ["const std::vector<cv::cuda::GpuMat>*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn merge_1_def(src: &core::Vector<core::GpuMat>, dst: &mut impl ToOutputArray) -> Result<()> {
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_merge_const_vectorLGpuMatGR_const__OutputArrayR(src.as_raw_VectorOfGpuMat(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Makes a multi-channel matrix out of several single-channel matrices.
+///
+/// ## Parameters
+/// * src: Array/vector of source matrices.
+/// * n: Number of source matrices.
+/// * dst: Destination matrix.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// merge
+///
+/// ## Overloaded parameters
+///
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// merge(const std::vector<GpuMat> &, OutputArray, Stream &)(CppPassByVoidPtr, OutputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:729
+// ("cv::cuda::merge", vec![(pred!(mut, ["src", "dst", "stream"], ["const std::vector<cv::cuda::GpuMat>*", "const cv::_OutputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn merge_1(src: &core::Vector<core::GpuMat>, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_merge_const_vectorLGpuMatGR_const__OutputArrayR_StreamR(src.as_raw_VectorOfGpuMat(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Finds global minimum and maximum matrix elements and returns their values with locations.
+///
+/// ## Parameters
+/// * src: Single-channel source image.
+/// * minVal: Pointer to the returned minimum value. Use NULL if not required.
+/// * maxVal: Pointer to the returned maximum value. Use NULL if not required.
+/// * minLoc: Pointer to the returned minimum location. Use NULL if not required.
+/// * maxLoc: Pointer to the returned maximum location. Use NULL if not required.
+/// * mask: Optional mask to select a sub-matrix.
+///
+/// The function does not work with CV_64F images on GPU with the compute capability \< 1.3.
+/// ## See also
+/// minMaxLoc
+///
+/// ## Note
+/// This alternative version of [min_max_loc] function uses the following default values for its arguments:
+/// * mask: noArray()
+// cv::cuda::minMaxLoc(InputArray, Indirect, Indirect, SimpleClass, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:893
+// ("cv::cuda::minMaxLoc", vec![(pred!(mut, ["src", "minVal", "maxVal", "minLoc", "maxLoc"], ["const cv::_InputArray*", "double*", "double*", "cv::Point*", "cv::Point*"]), _)]),
+#[inline]
+pub fn min_max_loc_def(src: &impl ToInputArray, min_val: &mut f64, max_val: &mut f64, min_loc: &mut core::Point, max_loc: &mut core::Point) -> Result<()> {
+	input_array_arg!(src);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_minMaxLoc_const__InputArrayR_doubleX_doubleX_PointX_PointX(src.as_raw__InputArray(), min_val, max_val, min_loc, max_loc, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Finds global minimum and maximum matrix elements and returns their values with locations.
+///
+/// ## Parameters
+/// * src: Single-channel source image.
+/// * minVal: Pointer to the returned minimum value. Use NULL if not required.
+/// * maxVal: Pointer to the returned maximum value. Use NULL if not required.
+/// * minLoc: Pointer to the returned minimum location. Use NULL if not required.
+/// * maxLoc: Pointer to the returned maximum location. Use NULL if not required.
+/// * mask: Optional mask to select a sub-matrix.
+///
+/// The function does not work with CV_64F images on GPU with the compute capability \< 1.3.
+/// ## See also
+/// minMaxLoc
+///
+/// ## C++ default parameters
+/// * mask: noArray()
+// minMaxLoc(InputArray, double *, double *, Point *, Point *, InputArray)(InputArray, Indirect, Indirect, SimpleClass, SimpleClass, InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:893
+// ("cv::cuda::minMaxLoc", vec![(pred!(mut, ["src", "minVal", "maxVal", "minLoc", "maxLoc", "mask"], ["const cv::_InputArray*", "double*", "double*", "cv::Point*", "cv::Point*", "const cv::_InputArray*"]), _)]),
+#[inline]
+pub fn min_max_loc(src: &impl ToInputArray, min_val: &mut f64, max_val: &mut f64, min_loc: &mut core::Point, max_loc: &mut core::Point, mask: &impl ToInputArray) -> Result<()> {
+	input_array_arg!(src);
+	input_array_arg!(mask);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_minMaxLoc_const__InputArrayR_doubleX_doubleX_PointX_PointX_const__InputArrayR(src.as_raw__InputArray(), min_val, max_val, min_loc, max_loc, mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Finds global minimum and maximum matrix elements and returns their values.
+///
+/// ## Parameters
+/// * src: Single-channel source image.
+/// * minVal: Pointer to the returned minimum value. Use NULL if not required.
+/// * maxVal: Pointer to the returned maximum value. Use NULL if not required.
+/// * mask: Optional mask to select a sub-matrix.
+///
+/// The function does not work with CV_64F images on GPUs with the compute capability \< 1.3.
+/// ## See also
+/// minMaxLoc
+///
+/// ## Note
+/// This alternative version of [min_max] function uses the following default values for its arguments:
+/// * mask: noArray()
+// cv::cuda::minMax(InputArray, Indirect, Indirect) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:876
+// ("cv::cuda::minMax", vec![(pred!(mut, ["src", "minVal", "maxVal"], ["const cv::_InputArray*", "double*", "double*"]), _)]),
+#[inline]
+pub fn min_max_def(src: &impl ToInputArray, min_val: &mut f64, max_val: &mut f64) -> Result<()> {
+	input_array_arg!(src);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_minMax_const__InputArrayR_doubleX_doubleX(src.as_raw__InputArray(), min_val, max_val, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Finds global minimum and maximum matrix elements and returns their values.
+///
+/// ## Parameters
+/// * src: Single-channel source image.
+/// * minVal: Pointer to the returned minimum value. Use NULL if not required.
+/// * maxVal: Pointer to the returned maximum value. Use NULL if not required.
+/// * mask: Optional mask to select a sub-matrix.
+///
+/// The function does not work with CV_64F images on GPUs with the compute capability \< 1.3.
+/// ## See also
+/// minMaxLoc
+///
+/// ## C++ default parameters
+/// * mask: noArray()
+// minMax(InputArray, double *, double *, InputArray)(InputArray, Indirect, Indirect, InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:876
+// ("cv::cuda::minMax", vec![(pred!(mut, ["src", "minVal", "maxVal", "mask"], ["const cv::_InputArray*", "double*", "double*", "const cv::_InputArray*"]), _)]),
+#[inline]
+pub fn min_max(src: &impl ToInputArray, min_val: &mut f64, max_val: &mut f64, mask: &impl ToInputArray) -> Result<()> {
+	input_array_arg!(src);
+	input_array_arg!(mask);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_minMax_const__InputArrayR_doubleX_doubleX_const__InputArrayR(src.as_raw__InputArray(), min_val, max_val, mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes the per-element minimum or a matrix and a scalar.
+///
+/// ## Parameters
+/// * src1: First source matrix.
+/// * src2: Second source scalar.
+/// * dst: Destination matrix that has the same size and type as the input array.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// min
+///
+/// ## Note
+/// This alternative version of [min_with_scalar] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::minWithScalar(InputArray, SimpleClass, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:487
+// ("cv::cuda::minWithScalar", vec![(pred!(mut, ["src1", "src2", "dst"], ["const cv::_InputArray*", "cv::Scalar", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn min_with_scalar_def(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src1);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_minWithScalar_const__InputArrayR_Scalar_const__OutputArrayR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes the per-element minimum or a matrix and a scalar.
+///
+/// ## Parameters
+/// * src1: First source matrix.
+/// * src2: Second source scalar.
+/// * dst: Destination matrix that has the same size and type as the input array.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// min
+///
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// minWithScalar(InputArray, Scalar, OutputArray, Stream &)(InputArray, SimpleClass, OutputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:487
+// ("cv::cuda::minWithScalar", vec![(pred!(mut, ["src1", "src2", "dst", "stream"], ["const cv::_InputArray*", "cv::Scalar", "const cv::_OutputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn min_with_scalar(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src1);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_minWithScalar_const__InputArrayR_Scalar_const__OutputArrayR_StreamR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes the per-element minimum of two matrices (or a matrix and a scalar).
+///
+/// ## Parameters
+/// * src1: First source matrix or scalar.
+/// * src2: Second source matrix or scalar.
+/// * dst: Destination matrix that has the same size and type as the input array(s).
+/// * stream: Stream for the asynchronous version.
+///
+/// @warning In python both @p src1 and @p src2 have to be matrices, see [minWithScalar] for scalar overload.
+/// ## See also
+/// cv::min, minWithScalar
+///
+/// ## Note
+/// This alternative version of [min] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::min(InputArray, InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:476
+// ("cv::cuda::min", vec![(pred!(mut, ["src1", "src2", "dst"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn min_def(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src1);
+	input_array_arg!(src2);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_min_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes the per-element minimum of two matrices (or a matrix and a scalar).
+///
+/// ## Parameters
+/// * src1: First source matrix or scalar.
+/// * src2: Second source matrix or scalar.
+/// * dst: Destination matrix that has the same size and type as the input array(s).
+/// * stream: Stream for the asynchronous version.
+///
+/// @warning In python both @p src1 and @p src2 have to be matrices, see [minWithScalar] for scalar overload.
+/// ## See also
+/// cv::min, minWithScalar
+///
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// min(InputArray, InputArray, OutputArray, Stream &)(InputArray, InputArray, OutputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:476
+// ("cv::cuda::min", vec![(pred!(mut, ["src1", "src2", "dst", "stream"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn min(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src1);
+	input_array_arg!(src2);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_min_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Performs a per-element multiplication of two Fourier spectrums and scales the result.
+///
+/// ## Parameters
+/// * src1: First spectrum.
+/// * src2: Second spectrum with the same size and type as a .
+/// * dst: Destination spectrum.
+/// * flags: Mock parameter used for CPU/CUDA interfaces similarity, simply add a `0` value.
+/// * scale: Scale constant.
+/// * conjB: Optional flag to specify if the second spectrum needs to be conjugated before the
+/// multiplication.
+/// * stream: Stream for the asynchronous version.
+///
+/// Only full (not packed) CV_32FC2 complex spectrums in the interleaved format are supported for now.
+/// ## See also
+/// mulSpectrums
+///
+/// ## Note
+/// This alternative version of [mul_and_scale_spectrums] function uses the following default values for its arguments:
+/// * conj_b: false
+/// * stream: Stream::Null()
+// cv::cuda::mulAndScaleSpectrums(InputArray, InputArray, OutputArray, Primitive, Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:1082
+// ("cv::cuda::mulAndScaleSpectrums", vec![(pred!(mut, ["src1", "src2", "dst", "flags", "scale"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*", "int", "float"]), _)]),
+#[inline]
+pub fn mul_and_scale_spectrums_def(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, flags: i32, scale: f32) -> Result<()> {
+	input_array_arg!(src1);
+	input_array_arg!(src2);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_mulAndScaleSpectrums_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_float(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, scale, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Performs a per-element multiplication of two Fourier spectrums and scales the result.
+///
+/// ## Parameters
+/// * src1: First spectrum.
+/// * src2: Second spectrum with the same size and type as a .
+/// * dst: Destination spectrum.
+/// * flags: Mock parameter used for CPU/CUDA interfaces similarity, simply add a `0` value.
+/// * scale: Scale constant.
+/// * conjB: Optional flag to specify if the second spectrum needs to be conjugated before the
+/// multiplication.
+/// * stream: Stream for the asynchronous version.
+///
+/// Only full (not packed) CV_32FC2 complex spectrums in the interleaved format are supported for now.
+/// ## See also
+/// mulSpectrums
+///
+/// ## C++ default parameters
+/// * conj_b: false
+/// * stream: Stream::Null()
+// mulAndScaleSpectrums(InputArray, InputArray, OutputArray, int, float, bool, Stream &)(InputArray, InputArray, OutputArray, Primitive, Primitive, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:1082
+// ("cv::cuda::mulAndScaleSpectrums", vec![(pred!(mut, ["src1", "src2", "dst", "flags", "scale", "conjB", "stream"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*", "int", "float", "bool", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn mul_and_scale_spectrums(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, flags: i32, scale: f32, conj_b: bool, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src1);
+	input_array_arg!(src2);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_mulAndScaleSpectrums_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_float_bool_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, scale, conj_b, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Performs a per-element multiplication of two Fourier spectrums.
+///
+/// ## Parameters
+/// * src1: First spectrum.
+/// * src2: Second spectrum with the same size and type as a .
+/// * dst: Destination spectrum.
+/// * flags: Mock parameter used for CPU/CUDA interfaces similarity.
+/// * conjB: Optional flag to specify if the second spectrum needs to be conjugated before the
+/// multiplication.
+/// * stream: Stream for the asynchronous version.
+///
+/// Only full (not packed) CV_32FC2 complex spectrums in the interleaved format are supported for now.
+/// ## See also
+/// mulSpectrums
+///
+/// ## Note
+/// This alternative version of [mul_spectrums] function uses the following default values for its arguments:
+/// * conj_b: false
+/// * stream: Stream::Null()
+// cv::cuda::mulSpectrums(InputArray, InputArray, OutputArray, Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:1065
+// ("cv::cuda::mulSpectrums", vec![(pred!(mut, ["src1", "src2", "dst", "flags"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*", "int"]), _)]),
+#[inline]
+pub fn mul_spectrums_def(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, flags: i32) -> Result<()> {
+	input_array_arg!(src1);
+	input_array_arg!(src2);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_mulSpectrums_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Performs a per-element multiplication of two Fourier spectrums.
+///
+/// ## Parameters
+/// * src1: First spectrum.
+/// * src2: Second spectrum with the same size and type as a .
+/// * dst: Destination spectrum.
+/// * flags: Mock parameter used for CPU/CUDA interfaces similarity.
+/// * conjB: Optional flag to specify if the second spectrum needs to be conjugated before the
+/// multiplication.
+/// * stream: Stream for the asynchronous version.
+///
+/// Only full (not packed) CV_32FC2 complex spectrums in the interleaved format are supported for now.
+/// ## See also
+/// mulSpectrums
+///
+/// ## C++ default parameters
+/// * conj_b: false
+/// * stream: Stream::Null()
+// mulSpectrums(InputArray, InputArray, OutputArray, int, bool, Stream &)(InputArray, InputArray, OutputArray, Primitive, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:1065
+// ("cv::cuda::mulSpectrums", vec![(pred!(mut, ["src1", "src2", "dst", "flags", "conjB", "stream"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*", "int", "bool", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn mul_spectrums(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, flags: i32, conj_b: bool, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src1);
+	input_array_arg!(src2);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_mulSpectrums_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_bool_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, conj_b, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes a matrix-scalar per-element product.
+///
+/// ## Parameters
+/// * src1: First source matrix.
+/// * src2: Second source scalar.
+/// * dst: Destination matrix that has the same size and number of channels as the input array.
+/// The depth is defined by dtype or @p src1 depth.
+/// * scale: Optional scale factor.
+/// * dtype: Optional depth of the output array.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// multiply
+///
+/// ## Note
+/// This alternative version of [multiply_with_scalar] function uses the following default values for its arguments:
+/// * scale: 1
+/// * dtype: -1
+/// * stream: Stream::Null()
+// cv::cuda::multiplyWithScalar(InputArray, SimpleClass, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:169
+// ("cv::cuda::multiplyWithScalar", vec![(pred!(mut, ["src1", "src2", "dst"], ["const cv::_InputArray*", "cv::Scalar", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn multiply_with_scalar_def(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src1);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_multiplyWithScalar_const__InputArrayR_Scalar_const__OutputArrayR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes a matrix-scalar per-element product.
+///
+/// ## Parameters
+/// * src1: First source matrix.
+/// * src2: Second source scalar.
+/// * dst: Destination matrix that has the same size and number of channels as the input array.
+/// The depth is defined by dtype or @p src1 depth.
+/// * scale: Optional scale factor.
+/// * dtype: Optional depth of the output array.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// multiply
+///
+/// ## C++ default parameters
+/// * scale: 1
+/// * dtype: -1
+/// * stream: Stream::Null()
+// multiplyWithScalar(InputArray, Scalar, OutputArray, double, int, Stream &)(InputArray, SimpleClass, OutputArray, Primitive, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:169
+// ("cv::cuda::multiplyWithScalar", vec![(pred!(mut, ["src1", "src2", "dst", "scale", "dtype", "stream"], ["const cv::_InputArray*", "cv::Scalar", "const cv::_OutputArray*", "double", "int", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn multiply_with_scalar(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray, scale: f64, dtype: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src1);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_multiplyWithScalar_const__InputArrayR_Scalar_const__OutputArrayR_double_int_StreamR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), scale, dtype, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes a matrix-matrix or matrix-scalar per-element product.
+///
+/// ## Parameters
+/// * src1: First source matrix or scalar.
+/// * src2: Second source matrix or scalar.
+/// * dst: Destination matrix that has the same size and number of channels as the input array(s).
+/// The depth is defined by dtype or @p src1 depth.
+/// * scale: Optional scale factor.
+/// * dtype: Optional depth of the output array.
+/// * stream: Stream for the asynchronous version.
+///
+/// @warning In python both @p src1 and @p src2 have to be matrices, see [multiplyWithScalar] for scalar overload.
+/// ## See also
+/// cv::multiply, multiplyWithScalar
+///
+/// ## Note
+/// This alternative version of [multiply] function uses the following default values for its arguments:
+/// * scale: 1
+/// * dtype: -1
+/// * stream: Stream::Null()
+// cv::cuda::multiply(InputArray, InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:155
+// ("cv::cuda::multiply", vec![(pred!(mut, ["src1", "src2", "dst"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn multiply_def(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src1);
+	input_array_arg!(src2);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_multiply_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes a matrix-matrix or matrix-scalar per-element product.
+///
+/// ## Parameters
+/// * src1: First source matrix or scalar.
+/// * src2: Second source matrix or scalar.
+/// * dst: Destination matrix that has the same size and number of channels as the input array(s).
+/// The depth is defined by dtype or @p src1 depth.
+/// * scale: Optional scale factor.
+/// * dtype: Optional depth of the output array.
+/// * stream: Stream for the asynchronous version.
+///
+/// @warning In python both @p src1 and @p src2 have to be matrices, see [multiplyWithScalar] for scalar overload.
+/// ## See also
+/// cv::multiply, multiplyWithScalar
+///
+/// ## C++ default parameters
+/// * scale: 1
+/// * dtype: -1
+/// * stream: Stream::Null()
+// multiply(InputArray, InputArray, OutputArray, double, int, Stream &)(InputArray, InputArray, OutputArray, Primitive, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:155
+// ("cv::cuda::multiply", vec![(pred!(mut, ["src1", "src2", "dst", "scale", "dtype", "stream"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*", "double", "int", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn multiply(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, scale: f64, dtype: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src1);
+	input_array_arg!(src2);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_multiply_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_int_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), scale, dtype, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Returns the difference of two matrices.
+///
+/// ## Parameters
+/// * src1: Source matrix. Any matrices except 64F are supported.
+/// * src2: Second source matrix (if any) with the same size and type as src1.
+/// * normType: Norm type. NORM_L1 , NORM_L2 , and NORM_INF are supported for now.
+/// ## See also
+/// norm
+///
+/// ## Note
+/// This alternative version of [norm_1] function uses the following default values for its arguments:
+/// * norm_type: NORM_L2
+// cv::cuda::norm(InputArray, InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:832
+// ("cv::cuda::norm", vec![(pred!(mut, ["src1", "src2"], ["const cv::_InputArray*", "const cv::_InputArray*"]), _)]),
+#[inline]
+pub fn norm_1_def(src1: &impl ToInputArray, src2: &impl ToInputArray) -> Result<f64> {
+	input_array_arg!(src1);
+	input_array_arg!(src2);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_norm_const__InputArrayR_const__InputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Returns the difference of two matrices.
+///
+/// ## Parameters
+/// * src1: Source matrix. Any matrices except 64F are supported.
+/// * src2: Second source matrix (if any) with the same size and type as src1.
+/// * normType: Norm type. NORM_L1 , NORM_L2 , and NORM_INF are supported for now.
+/// ## See also
+/// norm
+///
+/// ## C++ default parameters
+/// * norm_type: NORM_L2
+// norm(InputArray, InputArray, int)(InputArray, InputArray, Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:832
+// ("cv::cuda::norm", vec![(pred!(mut, ["src1", "src2", "normType"], ["const cv::_InputArray*", "const cv::_InputArray*", "int"]), _)]),
+#[inline]
+pub fn norm_1(src1: &impl ToInputArray, src2: &impl ToInputArray, norm_type: i32) -> Result<f64> {
+	input_array_arg!(src1);
+	input_array_arg!(src2);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_norm_const__InputArrayR_const__InputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), norm_type, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Returns the norm of a matrix (or difference of two matrices).
+///
+/// ## Parameters
+/// * src1: Source matrix. Any matrices except 64F are supported.
+/// * normType: Norm type. NORM_L1 , NORM_L2 , and NORM_INF are supported for now.
+/// * mask: optional operation mask; it must have the same size as src1 and CV_8UC1 type.
+/// ## See also
+/// norm
+///
+/// ## Note
+/// This alternative version of [norm] function uses the following default values for its arguments:
+/// * mask: noArray()
+// cv::cuda::norm(InputArray, Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:820
+// ("cv::cuda::norm", vec![(pred!(mut, ["src1", "normType"], ["const cv::_InputArray*", "int"]), _)]),
+#[inline]
+pub fn norm_def(src1: &impl ToInputArray, norm_type: i32) -> Result<f64> {
+	input_array_arg!(src1);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_norm_const__InputArrayR_int(src1.as_raw__InputArray(), norm_type, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Returns the norm of a matrix (or difference of two matrices).
+///
+/// ## Parameters
+/// * src1: Source matrix. Any matrices except 64F are supported.
+/// * normType: Norm type. NORM_L1 , NORM_L2 , and NORM_INF are supported for now.
+/// * mask: optional operation mask; it must have the same size as src1 and CV_8UC1 type.
+/// ## See also
+/// norm
+///
+/// ## C++ default parameters
+/// * mask: noArray()
+// norm(InputArray, int, InputArray)(InputArray, Primitive, InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:820
+// ("cv::cuda::norm", vec![(pred!(mut, ["src1", "normType", "mask"], ["const cv::_InputArray*", "int", "const cv::_InputArray*"]), _)]),
+#[inline]
+pub fn norm(src1: &impl ToInputArray, norm_type: i32, mask: &impl ToInputArray) -> Result<f64> {
+	input_array_arg!(src1);
+	input_array_arg!(mask);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_norm_const__InputArrayR_int_const__InputArrayR(src1.as_raw__InputArray(), norm_type, mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Normalizes the norm or value range of an array.
+///
+/// ## Parameters
+/// * src: Input array.
+/// * dst: Output array of the same size as src .
+/// * alpha: Norm value to normalize to or the lower range boundary in case of the range
+/// normalization.
+/// * beta: Upper range boundary in case of the range normalization; it is not used for the norm
+/// normalization.
+/// * norm_type: Normalization type ( NORM_MINMAX , NORM_L2 , NORM_L1 or NORM_INF ).
+/// * dtype: When negative, the output array has the same type as src; otherwise, it has the same
+/// number of channels as src and the depth =CV_MAT_DEPTH(dtype).
+/// * mask: Optional operation mask.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// normalize
+///
+/// ## Note
+/// This alternative version of [normalize] function uses the following default values for its arguments:
+/// * mask: noArray()
+/// * stream: Stream::Null()
+// cv::cuda::normalize(InputArray, OutputArray, Primitive, Primitive, Primitive, Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:995
+// ("cv::cuda::normalize", vec![(pred!(mut, ["src", "dst", "alpha", "beta", "norm_type", "dtype"], ["const cv::_InputArray*", "const cv::_OutputArray*", "double", "double", "int", "int"]), _)]),
+#[inline]
+pub fn normalize_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, alpha: f64, beta: f64, norm_type: i32, dtype: i32) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_normalize_const__InputArrayR_const__OutputArrayR_double_double_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), alpha, beta, norm_type, dtype, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Normalizes the norm or value range of an array.
+///
+/// ## Parameters
+/// * src: Input array.
+/// * dst: Output array of the same size as src .
+/// * alpha: Norm value to normalize to or the lower range boundary in case of the range
+/// normalization.
+/// * beta: Upper range boundary in case of the range normalization; it is not used for the norm
+/// normalization.
+/// * norm_type: Normalization type ( NORM_MINMAX , NORM_L2 , NORM_L1 or NORM_INF ).
+/// * dtype: When negative, the output array has the same type as src; otherwise, it has the same
+/// number of channels as src and the depth =CV_MAT_DEPTH(dtype).
+/// * mask: Optional operation mask.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// normalize
+///
+/// ## C++ default parameters
+/// * mask: noArray()
+/// * stream: Stream::Null()
+// normalize(InputArray, OutputArray, double, double, int, int, InputArray, Stream &)(InputArray, OutputArray, Primitive, Primitive, Primitive, Primitive, InputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:995
+// ("cv::cuda::normalize", vec![(pred!(mut, ["src", "dst", "alpha", "beta", "norm_type", "dtype", "mask", "stream"], ["const cv::_InputArray*", "const cv::_OutputArray*", "double", "double", "int", "int", "const cv::_InputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn normalize(src: &impl ToInputArray, dst: &mut impl ToOutputArray, alpha: f64, beta: f64, norm_type: i32, dtype: i32, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	input_array_arg!(mask);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_normalize_const__InputArrayR_const__OutputArrayR_double_double_int_int_const__InputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), alpha, beta, norm_type, dtype, mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes polar angles of complex matrix elements.
+///
+/// ## Parameters
+/// * x: Source matrix containing real components ( CV_32FC1 ).
+/// * y: Source matrix containing imaginary components ( CV_32FC1 ).
+/// * angle: Destination matrix of angles ( CV_32FC1 ).
+/// * angleInDegrees: Flag for angles that must be evaluated in degrees.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// phase
+///
+/// ## Note
+/// This alternative version of [phase] function uses the following default values for its arguments:
+/// * angle_in_degrees: false
+/// * stream: Stream::Null()
+// cv::cuda::phase(InputArray, InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:634
+// ("cv::cuda::phase", vec![(pred!(mut, ["x", "y", "angle"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn phase_def(x: &impl ToInputArray, y: &impl ToInputArray, angle: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(x);
+	input_array_arg!(y);
+	output_array_arg!(angle);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_phase_const__InputArrayR_const__InputArrayR_const__OutputArrayR(x.as_raw__InputArray(), y.as_raw__InputArray(), angle.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes polar angles of complex matrix elements.
+///
+/// ## Parameters
+/// * x: Source matrix containing real components ( CV_32FC1 ).
+/// * y: Source matrix containing imaginary components ( CV_32FC1 ).
+/// * angle: Destination matrix of angles ( CV_32FC1 ).
+/// * angleInDegrees: Flag for angles that must be evaluated in degrees.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// phase
+///
+/// ## C++ default parameters
+/// * angle_in_degrees: false
+/// * stream: Stream::Null()
+// phase(InputArray, InputArray, OutputArray, bool, Stream &)(InputArray, InputArray, OutputArray, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:634
+// ("cv::cuda::phase", vec![(pred!(mut, ["x", "y", "angle", "angleInDegrees", "stream"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*", "bool", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn phase(x: &impl ToInputArray, y: &impl ToInputArray, angle: &mut impl ToOutputArray, angle_in_degrees: bool, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(x);
+	input_array_arg!(y);
+	output_array_arg!(angle);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_phase_const__InputArrayR_const__InputArrayR_const__OutputArrayR_bool_StreamR(x.as_raw__InputArray(), y.as_raw__InputArray(), angle.as_raw__OutputArray(), angle_in_degrees, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes polar angles of complex matrix elements.
+///
+/// ## Parameters
+/// * xy: Source matrix containing real and imaginary components ( CV_32FC2 ).
+/// * angle: Destination matrix of angles ( CV_32FC1 ).
+/// * angleInDegrees: Flag for angles that must be evaluated in degrees.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// phase
+///
+/// ## Note
+/// This alternative version of [phase_1] function uses the following default values for its arguments:
+/// * angle_in_degrees: false
+/// * stream: Stream::Null()
+// cv::cuda::phase(InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:645
+// ("cv::cuda::phase", vec![(pred!(mut, ["xy", "angle"], ["const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn phase_1_def(xy: &impl ToInputArray, angle: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(xy);
+	output_array_arg!(angle);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_phase_const__InputArrayR_const__OutputArrayR(xy.as_raw__InputArray(), angle.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes polar angles of complex matrix elements.
+///
+/// ## Parameters
+/// * xy: Source matrix containing real and imaginary components ( CV_32FC2 ).
+/// * angle: Destination matrix of angles ( CV_32FC1 ).
+/// * angleInDegrees: Flag for angles that must be evaluated in degrees.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// phase
+///
+/// ## C++ default parameters
+/// * angle_in_degrees: false
+/// * stream: Stream::Null()
+// phase(InputArray, OutputArray, bool, Stream &)(InputArray, OutputArray, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:645
+// ("cv::cuda::phase", vec![(pred!(mut, ["xy", "angle", "angleInDegrees", "stream"], ["const cv::_InputArray*", "const cv::_OutputArray*", "bool", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn phase_1(xy: &impl ToInputArray, angle: &mut impl ToOutputArray, angle_in_degrees: bool, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(xy);
+	output_array_arg!(angle);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_phase_const__InputArrayR_const__OutputArrayR_bool_StreamR(xy.as_raw__InputArray(), angle.as_raw__OutputArray(), angle_in_degrees, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Converts polar coordinates into Cartesian.
+///
+/// ## Parameters
+/// * magnitude: Source matrix containing magnitudes ( CV_32FC1 or CV_64FC1 ).
+/// * angle: Source matrix containing angles ( same type as magnitude ).
+/// * xy: Destination matrix of real and imaginary components ( same depth as magnitude, i.e. CV_32FC2 or CV_64FC2 ).
+/// * angleInDegrees: Flag that indicates angles in degrees.
+/// * stream: Stream for the asynchronous version.
+///
+/// ## Note
+/// This alternative version of [polar_to_cart_1] function uses the following default values for its arguments:
+/// * angle_in_degrees: false
+/// * stream: Stream::Null()
+// cv::cuda::polarToCart(InputArray, InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:702
+// ("cv::cuda::polarToCart", vec![(pred!(mut, ["magnitude", "angle", "xy"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn polar_to_cart_1_def(magnitude: &impl ToInputArray, angle: &impl ToInputArray, xy: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(magnitude);
+	input_array_arg!(angle);
+	output_array_arg!(xy);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_polarToCart_const__InputArrayR_const__InputArrayR_const__OutputArrayR(magnitude.as_raw__InputArray(), angle.as_raw__InputArray(), xy.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Converts polar coordinates into Cartesian.
+///
+/// ## Parameters
+/// * magnitude: Source matrix containing magnitudes ( CV_32FC1 or CV_64FC1 ).
+/// * angle: Source matrix containing angles ( same type as magnitude ).
+/// * xy: Destination matrix of real and imaginary components ( same depth as magnitude, i.e. CV_32FC2 or CV_64FC2 ).
+/// * angleInDegrees: Flag that indicates angles in degrees.
+/// * stream: Stream for the asynchronous version.
+///
+/// ## C++ default parameters
+/// * angle_in_degrees: false
+/// * stream: Stream::Null()
+// polarToCart(InputArray, InputArray, OutputArray, bool, Stream &)(InputArray, InputArray, OutputArray, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:702
+// ("cv::cuda::polarToCart", vec![(pred!(mut, ["magnitude", "angle", "xy", "angleInDegrees", "stream"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*", "bool", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn polar_to_cart_1(magnitude: &impl ToInputArray, angle: &impl ToInputArray, xy: &mut impl ToOutputArray, angle_in_degrees: bool, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(magnitude);
+	input_array_arg!(angle);
+	output_array_arg!(xy);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_polarToCart_const__InputArrayR_const__InputArrayR_const__OutputArrayR_bool_StreamR(magnitude.as_raw__InputArray(), angle.as_raw__InputArray(), xy.as_raw__OutputArray(), angle_in_degrees, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Converts polar coordinates into Cartesian.
+///
+/// ## Parameters
+/// * magnitude: Source matrix containing magnitudes ( CV_32FC1 or CV_64FC1 ).
+/// * angle: Source matrix containing angles ( same type as magnitude ).
+/// * x: Destination matrix of real components ( same type as magnitude ).
+/// * y: Destination matrix of imaginary components ( same type as magnitude ).
+/// * angleInDegrees: Flag that indicates angles in degrees.
+/// * stream: Stream for the asynchronous version.
+///
+/// ## Note
+/// This alternative version of [polar_to_cart] function uses the following default values for its arguments:
+/// * angle_in_degrees: false
+/// * stream: Stream::Null()
+// cv::cuda::polarToCart(InputArray, InputArray, OutputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:692
+// ("cv::cuda::polarToCart", vec![(pred!(mut, ["magnitude", "angle", "x", "y"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn polar_to_cart_def(magnitude: &impl ToInputArray, angle: &impl ToInputArray, x: &mut impl ToOutputArray, y: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(magnitude);
+	input_array_arg!(angle);
+	output_array_arg!(x);
+	output_array_arg!(y);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_polarToCart_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(magnitude.as_raw__InputArray(), angle.as_raw__InputArray(), x.as_raw__OutputArray(), y.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Converts polar coordinates into Cartesian.
+///
+/// ## Parameters
+/// * magnitude: Source matrix containing magnitudes ( CV_32FC1 or CV_64FC1 ).
+/// * angle: Source matrix containing angles ( same type as magnitude ).
+/// * x: Destination matrix of real components ( same type as magnitude ).
+/// * y: Destination matrix of imaginary components ( same type as magnitude ).
+/// * angleInDegrees: Flag that indicates angles in degrees.
+/// * stream: Stream for the asynchronous version.
+///
+/// ## C++ default parameters
+/// * angle_in_degrees: false
+/// * stream: Stream::Null()
+// polarToCart(InputArray, InputArray, OutputArray, OutputArray, bool, Stream &)(InputArray, InputArray, OutputArray, OutputArray, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:692
+// ("cv::cuda::polarToCart", vec![(pred!(mut, ["magnitude", "angle", "x", "y", "angleInDegrees", "stream"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*", "const cv::_OutputArray*", "bool", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn polar_to_cart(magnitude: &impl ToInputArray, angle: &impl ToInputArray, x: &mut impl ToOutputArray, y: &mut impl ToOutputArray, angle_in_degrees: bool, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(magnitude);
+	input_array_arg!(angle);
+	output_array_arg!(x);
+	output_array_arg!(y);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_polarToCart_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool_StreamR(magnitude.as_raw__InputArray(), angle.as_raw__InputArray(), x.as_raw__OutputArray(), y.as_raw__OutputArray(), angle_in_degrees, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Converts polar coordinates into Cartesian.
+///
+/// ## Parameters
+/// * magnitudeAngle: Source matrix containing magnitudes and angles ( CV_32FC2 or CV_64FC2 ).
+/// * xy: Destination matrix of real and imaginary components ( same depth as source ).
+/// * angleInDegrees: Flag that indicates angles in degrees.
+/// * stream: Stream for the asynchronous version.
+///
+/// ## Note
+/// This alternative version of [polar_to_cart_2] function uses the following default values for its arguments:
+/// * angle_in_degrees: false
+/// * stream: Stream::Null()
+// cv::cuda::polarToCart(InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:711
+// ("cv::cuda::polarToCart", vec![(pred!(mut, ["magnitudeAngle", "xy"], ["const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn polar_to_cart_2_def(magnitude_angle: &impl ToInputArray, xy: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(magnitude_angle);
+	output_array_arg!(xy);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_polarToCart_const__InputArrayR_const__OutputArrayR(magnitude_angle.as_raw__InputArray(), xy.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Converts polar coordinates into Cartesian.
+///
+/// ## Parameters
+/// * magnitudeAngle: Source matrix containing magnitudes and angles ( CV_32FC2 or CV_64FC2 ).
+/// * xy: Destination matrix of real and imaginary components ( same depth as source ).
+/// * angleInDegrees: Flag that indicates angles in degrees.
+/// * stream: Stream for the asynchronous version.
+///
+/// ## C++ default parameters
+/// * angle_in_degrees: false
+/// * stream: Stream::Null()
+// polarToCart(InputArray, OutputArray, bool, Stream &)(InputArray, OutputArray, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:711
+// ("cv::cuda::polarToCart", vec![(pred!(mut, ["magnitudeAngle", "xy", "angleInDegrees", "stream"], ["const cv::_InputArray*", "const cv::_OutputArray*", "bool", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn polar_to_cart_2(magnitude_angle: &impl ToInputArray, xy: &mut impl ToOutputArray, angle_in_degrees: bool, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(magnitude_angle);
+	output_array_arg!(xy);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_polarToCart_const__InputArrayR_const__OutputArrayR_bool_StreamR(magnitude_angle.as_raw__InputArray(), xy.as_raw__OutputArray(), angle_in_degrees, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Raises every matrix element to a power.
+///
+/// ## Parameters
+/// * src: Source matrix.
+/// * power: Exponent of power.
+/// * dst: Destination matrix with the same size and type as src .
+/// * stream: Stream for the asynchronous version.
+///
+/// The function pow raises every element of the input matrix to power :
+///
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%20%3D%20%20%5Cfork%7B%5Ctexttt%7Bsrc%7D%28I%29%5Epower%7D%7Bif%20%5Ctexttt%7Bpower%7D%20is%20integer%7D%7B%7C%5Ctexttt%7Bsrc%7D%28I%29%7C%5Epower%7D%7Botherwise%7D)
+/// ## See also
+/// pow
+///
+/// ## Note
+/// This alternative version of [pow] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::pow(InputArray, Primitive, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:296
+// ("cv::cuda::pow", vec![(pred!(mut, ["src", "power", "dst"], ["const cv::_InputArray*", "double", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn pow_def(src: &impl ToInputArray, power: f64, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_pow_const__InputArrayR_double_const__OutputArrayR(src.as_raw__InputArray(), power, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Raises every matrix element to a power.
+///
+/// ## Parameters
+/// * src: Source matrix.
+/// * power: Exponent of power.
+/// * dst: Destination matrix with the same size and type as src .
+/// * stream: Stream for the asynchronous version.
+///
+/// The function pow raises every element of the input matrix to power :
+///
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%20%3D%20%20%5Cfork%7B%5Ctexttt%7Bsrc%7D%28I%29%5Epower%7D%7Bif%20%5Ctexttt%7Bpower%7D%20is%20integer%7D%7B%7C%5Ctexttt%7Bsrc%7D%28I%29%7C%5Epower%7D%7Botherwise%7D)
+/// ## See also
+/// pow
+///
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// pow(InputArray, double, OutputArray, Stream &)(InputArray, Primitive, OutputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:296
+// ("cv::cuda::pow", vec![(pred!(mut, ["src", "power", "dst", "stream"], ["const cv::_InputArray*", "double", "const cv::_OutputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn pow(src: &impl ToInputArray, power: f64, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_pow_const__InputArrayR_double_const__OutputArrayR_StreamR(src.as_raw__InputArray(), power, dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes a standard deviation of integral images.
+///
+/// ## Parameters
+/// * src: Source image. Only the CV_32SC1 type is supported.
+/// * sqr: Squared source image. Only the CV_32FC1 type is supported.
+/// * dst: Destination image with the same type and size as src.
+/// * rect: Rectangular window.
+/// * stream: Stream for the asynchronous version.
+///
+/// ## Note
+/// This alternative version of [rect_std_dev] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::rectStdDev(InputArray, InputArray, OutputArray, SimpleClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:977
+// ("cv::cuda::rectStdDev", vec![(pred!(mut, ["src", "sqr", "dst", "rect"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*", "cv::Rect"]), _)]),
+#[inline]
+pub fn rect_std_dev_def(src: &impl ToInputArray, sqr: &impl ToInputArray, dst: &mut impl ToOutputArray, rect: core::Rect) -> Result<()> {
+	input_array_arg!(src);
+	input_array_arg!(sqr);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_rectStdDev_const__InputArrayR_const__InputArrayR_const__OutputArrayR_Rect(src.as_raw__InputArray(), sqr.as_raw__InputArray(), dst.as_raw__OutputArray(), &rect, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes a standard deviation of integral images.
+///
+/// ## Parameters
+/// * src: Source image. Only the CV_32SC1 type is supported.
+/// * sqr: Squared source image. Only the CV_32FC1 type is supported.
+/// * dst: Destination image with the same type and size as src.
+/// * rect: Rectangular window.
+/// * stream: Stream for the asynchronous version.
+///
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// rectStdDev(InputArray, InputArray, OutputArray, Rect, Stream &)(InputArray, InputArray, OutputArray, SimpleClass, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:977
+// ("cv::cuda::rectStdDev", vec![(pred!(mut, ["src", "sqr", "dst", "rect", "stream"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*", "cv::Rect", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn rect_std_dev(src: &impl ToInputArray, sqr: &impl ToInputArray, dst: &mut impl ToOutputArray, rect: core::Rect, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src);
+	input_array_arg!(sqr);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_rectStdDev_const__InputArrayR_const__InputArrayR_const__OutputArrayR_Rect_StreamR(src.as_raw__InputArray(), sqr.as_raw__InputArray(), dst.as_raw__OutputArray(), &rect, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Reduces a matrix to a vector.
+///
+/// ## Parameters
+/// * mtx: Source 2D matrix.
+/// * vec: Destination vector. Its size and type is defined by dim and dtype parameters.
+/// * dim: Dimension index along which the matrix is reduced. 0 means that the matrix is reduced
+/// to a single row. 1 means that the matrix is reduced to a single column.
+/// * reduceOp: Reduction operation that could be one of the following:
+/// *   **REDUCE_SUM** The output is the sum of all rows/columns of the matrix.
+/// *   **REDUCE_AVG** The output is the mean vector of all rows/columns of the matrix.
+/// *   **REDUCE_MAX** The output is the maximum (column/row-wise) of all rows/columns of the
+/// matrix.
+/// *   **REDUCE_MIN** The output is the minimum (column/row-wise) of all rows/columns of the
+/// matrix.
+/// * dtype: When it is negative, the destination vector will have the same type as the source
+/// matrix. Otherwise, its type will be CV_MAKE_TYPE(CV_MAT_DEPTH(dtype), mtx.channels()) .
+/// * stream: Stream for the asynchronous version.
+///
+/// The function reduce reduces the matrix to a vector by treating the matrix rows/columns as a set of
+/// 1D vectors and performing the specified operation on the vectors until a single row/column is
+/// obtained. For example, the function can be used to compute horizontal and vertical projections of a
+/// raster image. In case of REDUCE_SUM and REDUCE_AVG , the output may have a larger element
+/// bit-depth to preserve accuracy. And multi-channel arrays are also supported in these two reduction
+/// modes.
+/// ## See also
+/// reduce
+///
+/// ## Note
+/// This alternative version of [reduce] function uses the following default values for its arguments:
+/// * dtype: -1
+/// * stream: Stream::Null()
+// cv::cuda::reduce(InputArray, OutputArray, Primitive, Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:937
+// ("cv::cuda::reduce", vec![(pred!(mut, ["mtx", "vec", "dim", "reduceOp"], ["const cv::_InputArray*", "const cv::_OutputArray*", "int", "int"]), _)]),
+#[inline]
+pub fn reduce_def(mtx: &impl ToInputArray, vec: &mut impl ToOutputArray, dim: i32, reduce_op: i32) -> Result<()> {
+	input_array_arg!(mtx);
+	output_array_arg!(vec);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_reduce_const__InputArrayR_const__OutputArrayR_int_int(mtx.as_raw__InputArray(), vec.as_raw__OutputArray(), dim, reduce_op, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Reduces a matrix to a vector.
+///
+/// ## Parameters
+/// * mtx: Source 2D matrix.
+/// * vec: Destination vector. Its size and type is defined by dim and dtype parameters.
+/// * dim: Dimension index along which the matrix is reduced. 0 means that the matrix is reduced
+/// to a single row. 1 means that the matrix is reduced to a single column.
+/// * reduceOp: Reduction operation that could be one of the following:
+/// *   **REDUCE_SUM** The output is the sum of all rows/columns of the matrix.
+/// *   **REDUCE_AVG** The output is the mean vector of all rows/columns of the matrix.
+/// *   **REDUCE_MAX** The output is the maximum (column/row-wise) of all rows/columns of the
+/// matrix.
+/// *   **REDUCE_MIN** The output is the minimum (column/row-wise) of all rows/columns of the
+/// matrix.
+/// * dtype: When it is negative, the destination vector will have the same type as the source
+/// matrix. Otherwise, its type will be CV_MAKE_TYPE(CV_MAT_DEPTH(dtype), mtx.channels()) .
+/// * stream: Stream for the asynchronous version.
+///
+/// The function reduce reduces the matrix to a vector by treating the matrix rows/columns as a set of
+/// 1D vectors and performing the specified operation on the vectors until a single row/column is
+/// obtained. For example, the function can be used to compute horizontal and vertical projections of a
+/// raster image. In case of REDUCE_SUM and REDUCE_AVG , the output may have a larger element
+/// bit-depth to preserve accuracy. And multi-channel arrays are also supported in these two reduction
+/// modes.
+/// ## See also
+/// reduce
+///
+/// ## C++ default parameters
+/// * dtype: -1
+/// * stream: Stream::Null()
+// reduce(InputArray, OutputArray, int, int, int, Stream &)(InputArray, OutputArray, Primitive, Primitive, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:937
+// ("cv::cuda::reduce", vec![(pred!(mut, ["mtx", "vec", "dim", "reduceOp", "dtype", "stream"], ["const cv::_InputArray*", "const cv::_OutputArray*", "int", "int", "int", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn reduce(mtx: &impl ToInputArray, vec: &mut impl ToOutputArray, dim: i32, reduce_op: i32, dtype: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(mtx);
+	output_array_arg!(vec);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_reduce_const__InputArrayR_const__OutputArrayR_int_int_int_StreamR(mtx.as_raw__InputArray(), vec.as_raw__OutputArray(), dim, reduce_op, dtype, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Performs pixel by pixel right shift of an image by a constant value.
+///
+/// ## Parameters
+/// * src: Source matrix. Supports 1, 3 and 4 channels images with integers elements.
+/// * val: Constant values, one per channel.
+/// * dst: Destination matrix with the same size and type as src .
+/// * stream: Stream for the asynchronous version.
+///
+/// ## Note
+/// This alternative version of [rshift] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::rshift(InputArray, SimpleClass, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:445
+// ("cv::cuda::rshift", vec![(pred!(mut, ["src", "val", "dst"], ["const cv::_InputArray*", "cv::Scalar_<int>", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn rshift_def(src: &impl ToInputArray, val: core::Scalar_<i32>, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_rshift_const__InputArrayR_Scalar_LintG_const__OutputArrayR(src.as_raw__InputArray(), &val, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Performs pixel by pixel right shift of an image by a constant value.
+///
+/// ## Parameters
+/// * src: Source matrix. Supports 1, 3 and 4 channels images with integers elements.
+/// * val: Constant values, one per channel.
+/// * dst: Destination matrix with the same size and type as src .
+/// * stream: Stream for the asynchronous version.
+///
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// rshift(InputArray, Scalar_<int>, OutputArray, Stream &)(InputArray, SimpleClass, OutputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:445
+// ("cv::cuda::rshift", vec![(pred!(mut, ["src", "val", "dst", "stream"], ["const cv::_InputArray*", "cv::Scalar_<int>", "const cv::_OutputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn rshift(src: &impl ToInputArray, val: core::Scalar_<i32>, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_rshift_const__InputArrayR_Scalar_LintG_const__OutputArrayR_StreamR(src.as_raw__InputArray(), &val, dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// ## Note
+/// This alternative version of [rshift_1] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::rshift(InputArray, SimpleClass, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:447
+// ("cv::cuda::rshift", vec![(pred!(mut, ["src", "val", "dst"], ["const cv::_InputArray*", "cv::Scalar", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn rshift_1_def(src: &impl ToInputArray, val: core::Scalar, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_rshift_const__InputArrayR_Scalar_const__OutputArrayR(src.as_raw__InputArray(), &val, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// rshift(InputArray, Scalar, OutputArray, Stream &)(InputArray, SimpleClass, OutputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:447
+// ("cv::cuda::rshift", vec![(pred!(mut, ["src", "val", "dst", "stream"], ["const cv::_InputArray*", "cv::Scalar", "const cv::_OutputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn rshift_1(src: &impl ToInputArray, val: core::Scalar, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_rshift_const__InputArrayR_Scalar_const__OutputArrayR_StreamR(src.as_raw__InputArray(), &val, dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Copies each plane of a multi-channel matrix into an array.
+///
+/// ## Parameters
+/// * src: Source matrix.
+/// * dst: Destination array/vector of single-channel matrices.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// split
+///
+/// ## Note
+/// This alternative version of [split] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::split(InputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:739
+// ("cv::cuda::split", vec![(pred!(mut, ["src", "dst"], ["const cv::_InputArray*", "cv::cuda::GpuMat*"]), _)]),
+#[inline]
+pub fn split_def(src: &impl ToInputArray, dst: &mut impl core::GpuMatTrait) -> Result<()> {
+	input_array_arg!(src);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_split_const__InputArrayR_GpuMatX(src.as_raw__InputArray(), dst.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Copies each plane of a multi-channel matrix into an array.
+///
+/// ## Parameters
+/// * src: Source matrix.
+/// * dst: Destination array/vector of single-channel matrices.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// split
+///
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// split(InputArray, GpuMat *, Stream &)(InputArray, TraitClass, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:739
+// ("cv::cuda::split", vec![(pred!(mut, ["src", "dst", "stream"], ["const cv::_InputArray*", "cv::cuda::GpuMat*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn split(src: &impl ToInputArray, dst: &mut impl core::GpuMatTrait, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_split_const__InputArrayR_GpuMatX_StreamR(src.as_raw__InputArray(), dst.as_raw_mut_GpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// @overload
+///
+/// ## Note
+/// This alternative version of [split_1] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::split(InputArray, CppPassByVoidPtr) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:741
+// ("cv::cuda::split", vec![(pred!(mut, ["src", "dst"], ["const cv::_InputArray*", "std::vector<cv::cuda::GpuMat>*"]), _)]),
+#[inline]
+pub fn split_1_def(src: &impl ToInputArray, dst: &mut core::Vector<core::GpuMat>) -> Result<()> {
+	input_array_arg!(src);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_split_const__InputArrayR_vectorLGpuMatGR(src.as_raw__InputArray(), dst.as_raw_mut_VectorOfGpuMat(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Copies each plane of a multi-channel matrix into an array.
+///
+/// ## Parameters
+/// * src: Source matrix.
+/// * dst: Destination array/vector of single-channel matrices.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// split
+///
+/// ## Overloaded parameters
+///
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// split(InputArray, std::vector<GpuMat> &, Stream &)(InputArray, CppPassByVoidPtr, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:741
+// ("cv::cuda::split", vec![(pred!(mut, ["src", "dst", "stream"], ["const cv::_InputArray*", "std::vector<cv::cuda::GpuMat>*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn split_1(src: &impl ToInputArray, dst: &mut core::Vector<core::GpuMat>, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_split_const__InputArrayR_vectorLGpuMatGR_StreamR(src.as_raw__InputArray(), dst.as_raw_mut_VectorOfGpuMat(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes a squared integral image.
+///
+/// ## Parameters
+/// * src: Source image. Only CV_8UC1 images are supported for now.
+/// * sqsum: Squared integral image containing 64-bit unsigned integer values packed into
+/// CV_64FC1 .
+/// * stream: Stream for the asynchronous version.
+///
+/// ## Note
+/// This alternative version of [sqr_integral] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::sqrIntegral(InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:1016
+// ("cv::cuda::sqrIntegral", vec![(pred!(mut, ["src", "sqsum"], ["const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn sqr_integral_def(src: &impl ToInputArray, sqsum: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(sqsum);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_sqrIntegral_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), sqsum.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes a squared integral image.
+///
+/// ## Parameters
+/// * src: Source image. Only CV_8UC1 images are supported for now.
+/// * sqsum: Squared integral image containing 64-bit unsigned integer values packed into
+/// CV_64FC1 .
+/// * stream: Stream for the asynchronous version.
+///
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// sqrIntegral(InputArray, OutputArray, Stream &)(InputArray, OutputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:1016
+// ("cv::cuda::sqrIntegral", vec![(pred!(mut, ["src", "sqsum", "stream"], ["const cv::_InputArray*", "const cv::_OutputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn sqr_integral(src: &impl ToInputArray, sqsum: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(sqsum);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_sqrIntegral_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), sqsum.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Returns the squared sum of matrix elements.
+///
+/// ## Parameters
+/// * src: Source image of any depth except for CV_64F .
+/// * mask: optional operation mask; it must have the same size as src1 and CV_8UC1 type.
+///
+/// ## Note
+/// This alternative version of [sqr_sum] function uses the following default values for its arguments:
+/// * mask: noArray()
+// cv::cuda::sqrSum(InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:861
+// ("cv::cuda::sqrSum", vec![(pred!(mut, ["src"], ["const cv::_InputArray*"]), _)]),
+#[inline]
+pub fn sqr_sum_def(src: &impl ToInputArray) -> Result<core::Scalar> {
+	input_array_arg!(src);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_sqrSum_const__InputArrayR(src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Returns the squared sum of matrix elements.
+///
+/// ## Parameters
+/// * src: Source image of any depth except for CV_64F .
+/// * mask: optional operation mask; it must have the same size as src1 and CV_8UC1 type.
+///
+/// ## C++ default parameters
+/// * mask: noArray()
+// sqrSum(InputArray, InputArray)(InputArray, InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:861
+// ("cv::cuda::sqrSum", vec![(pred!(mut, ["src", "mask"], ["const cv::_InputArray*", "const cv::_InputArray*"]), _)]),
+#[inline]
+pub fn sqr_sum(src: &impl ToInputArray, mask: &impl ToInputArray) -> Result<core::Scalar> {
+	input_array_arg!(src);
+	input_array_arg!(mask);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_sqrSum_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes a square value of each matrix element.
+///
+/// ## Parameters
+/// * src: Source matrix.
+/// * dst: Destination matrix with the same size and type as src .
+/// * stream: Stream for the asynchronous version.
+///
+/// ## Note
+/// This alternative version of [sqr] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::sqr(InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:251
+// ("cv::cuda::sqr", vec![(pred!(mut, ["src", "dst"], ["const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn sqr_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_sqr_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes a square value of each matrix element.
+///
+/// ## Parameters
+/// * src: Source matrix.
+/// * dst: Destination matrix with the same size and type as src .
+/// * stream: Stream for the asynchronous version.
+///
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// sqr(InputArray, OutputArray, Stream &)(InputArray, OutputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:251
+// ("cv::cuda::sqr", vec![(pred!(mut, ["src", "dst", "stream"], ["const cv::_InputArray*", "const cv::_OutputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn sqr(src: &impl ToInputArray, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_sqr_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes a square root of each matrix element.
+///
+/// ## Parameters
+/// * src: Source matrix.
+/// * dst: Destination matrix with the same size and type as src .
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// sqrt
+///
+/// ## Note
+/// This alternative version of [sqrt] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::sqrt(InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:261
+// ("cv::cuda::sqrt", vec![(pred!(mut, ["src", "dst"], ["const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn sqrt_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_sqrt_const__InputArrayR_const__OutputArrayR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes a square root of each matrix element.
+///
+/// ## Parameters
+/// * src: Source matrix.
+/// * dst: Destination matrix with the same size and type as src .
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// sqrt
+///
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// sqrt(InputArray, OutputArray, Stream &)(InputArray, OutputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:261
+// ("cv::cuda::sqrt", vec![(pred!(mut, ["src", "dst", "stream"], ["const cv::_InputArray*", "const cv::_OutputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn sqrt(src: &impl ToInputArray, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_sqrt_const__InputArrayR_const__OutputArrayR_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes matrix-scalar difference.
+///
+/// ## Parameters
+/// * src1: First source matrix.
+/// * src2: Second source scalar.
+/// * dst: Destination matrix that has the same size and number of channels as the input array.
+/// The depth is defined by dtype or @p src1 depth.
+/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
+/// destination array to be changed. The mask can be used only with single channel images.
+/// * dtype: Optional depth of the output array.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// cv::subtract
+///
+/// ## Note
+/// This alternative version of [subtract_with_scalar] function uses the following default values for its arguments:
+/// * mask: noArray()
+/// * dtype: -1
+/// * stream: Stream::Null()
+// cv::cuda::subtractWithScalar(InputArray, SimpleClass, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:137
+// ("cv::cuda::subtractWithScalar", vec![(pred!(mut, ["src1", "src2", "dst"], ["const cv::_InputArray*", "cv::Scalar", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn subtract_with_scalar_def(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src1);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_subtractWithScalar_const__InputArrayR_Scalar_const__OutputArrayR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes matrix-scalar difference.
+///
+/// ## Parameters
+/// * src1: First source matrix.
+/// * src2: Second source scalar.
+/// * dst: Destination matrix that has the same size and number of channels as the input array.
+/// The depth is defined by dtype or @p src1 depth.
+/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
+/// destination array to be changed. The mask can be used only with single channel images.
+/// * dtype: Optional depth of the output array.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// cv::subtract
+///
+/// ## C++ default parameters
+/// * mask: noArray()
+/// * dtype: -1
+/// * stream: Stream::Null()
+// subtractWithScalar(InputArray, Scalar, OutputArray, InputArray, int, Stream &)(InputArray, SimpleClass, OutputArray, InputArray, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:137
+// ("cv::cuda::subtractWithScalar", vec![(pred!(mut, ["src1", "src2", "dst", "mask", "dtype", "stream"], ["const cv::_InputArray*", "cv::Scalar", "const cv::_OutputArray*", "const cv::_InputArray*", "int", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn subtract_with_scalar(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray, mask: &impl ToInputArray, dtype: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src1);
+	output_array_arg!(dst);
+	input_array_arg!(mask);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_subtractWithScalar_const__InputArrayR_Scalar_const__OutputArrayR_const__InputArrayR_int_StreamR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), mask.as_raw__InputArray(), dtype, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes a matrix-matrix or matrix-scalar difference.
+///
+/// ## Parameters
+/// * src1: First source matrix or scalar.
+/// * src2: Second source matrix or scalar. Matrix should have the same size and type as @p src1.
+/// * dst: Destination matrix that has the same size and number of channels as the input array(s).
+/// The depth is defined by dtype or @p src1 depth.
+/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
+/// destination array to be changed. The mask can be used only with single channel images.
+/// * dtype: Optional depth of the output array.
+/// * stream: Stream for the asynchronous version.
+///
+/// @warning In python both @p src1 and @p src2 have to be matrices, see [subtractWithScalar] for scalar overload.
+/// ## See also
+/// cv::subtract, subtractWithScalar
+///
+/// ## Note
+/// This alternative version of [subtract] function uses the following default values for its arguments:
+/// * mask: noArray()
+/// * dtype: -1
+/// * stream: Stream::Null()
+// cv::cuda::subtract(InputArray, InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:122
+// ("cv::cuda::subtract", vec![(pred!(mut, ["src1", "src2", "dst"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn subtract_def(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src1);
+	input_array_arg!(src2);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_subtract_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Computes a matrix-matrix or matrix-scalar difference.
+///
+/// ## Parameters
+/// * src1: First source matrix or scalar.
+/// * src2: Second source matrix or scalar. Matrix should have the same size and type as @p src1.
+/// * dst: Destination matrix that has the same size and number of channels as the input array(s).
+/// The depth is defined by dtype or @p src1 depth.
+/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
+/// destination array to be changed. The mask can be used only with single channel images.
+/// * dtype: Optional depth of the output array.
+/// * stream: Stream for the asynchronous version.
+///
+/// @warning In python both @p src1 and @p src2 have to be matrices, see [subtractWithScalar] for scalar overload.
+/// ## See also
+/// cv::subtract, subtractWithScalar
+///
+/// ## C++ default parameters
+/// * mask: noArray()
+/// * dtype: -1
+/// * stream: Stream::Null()
+// subtract(InputArray, InputArray, OutputArray, InputArray, int, Stream &)(InputArray, InputArray, OutputArray, InputArray, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:122
+// ("cv::cuda::subtract", vec![(pred!(mut, ["src1", "src2", "dst", "mask", "dtype", "stream"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*", "const cv::_InputArray*", "int", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn subtract(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, mask: &impl ToInputArray, dtype: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src1);
+	input_array_arg!(src2);
+	output_array_arg!(dst);
+	input_array_arg!(mask);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_subtract_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_int_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), dtype, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Returns the sum of matrix elements.
+///
+/// ## Parameters
+/// * src: Source image of any depth except for CV_64F .
+/// * mask: optional operation mask; it must have the same size as src1 and CV_8UC1 type.
+/// ## See also
+/// sum
+///
+/// ## Note
+/// This alternative version of [sum] function uses the following default values for its arguments:
+/// * mask: noArray()
+// cv::cuda::sum(InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:843
+// ("cv::cuda::sum", vec![(pred!(mut, ["src"], ["const cv::_InputArray*"]), _)]),
+#[inline]
+pub fn sum_def(src: &impl ToInputArray) -> Result<core::Scalar> {
+	input_array_arg!(src);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_sum_const__InputArrayR(src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Returns the sum of matrix elements.
+///
+/// ## Parameters
+/// * src: Source image of any depth except for CV_64F .
+/// * mask: optional operation mask; it must have the same size as src1 and CV_8UC1 type.
+/// ## See also
+/// sum
+///
+/// ## C++ default parameters
+/// * mask: noArray()
+// sum(InputArray, InputArray)(InputArray, InputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:843
+// ("cv::cuda::sum", vec![(pred!(mut, ["src", "mask"], ["const cv::_InputArray*", "const cv::_InputArray*"]), _)]),
+#[inline]
+pub fn sum(src: &impl ToInputArray, mask: &impl ToInputArray) -> Result<core::Scalar> {
+	input_array_arg!(src);
+	input_array_arg!(mask);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_sum_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), mask.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Applies a fixed-level threshold to each array element.
+///
+/// ## Parameters
+/// * src: Source array (single-channel).
+/// * dst: Destination array with the same size and type as src .
+/// * thresh: Threshold value.
+/// * maxval: Maximum value to use with THRESH_BINARY and THRESH_BINARY_INV threshold types.
+/// * type: Threshold type. For details, see threshold . The THRESH_OTSU and THRESH_TRIANGLE
+/// threshold types are not supported.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// threshold
+///
+/// ## Note
+/// This alternative version of [threshold] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::threshold(InputArray, OutputArray, Primitive, Primitive, Primitive) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:559
+// ("cv::cuda::threshold", vec![(pred!(mut, ["src", "dst", "thresh", "maxval", "type"], ["const cv::_InputArray*", "const cv::_OutputArray*", "double", "double", "int"]), _)]),
+#[inline]
+pub fn threshold_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, thresh: f64, maxval: f64, typ: i32) -> Result<f64> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_threshold_const__InputArrayR_const__OutputArrayR_double_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), thresh, maxval, typ, ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Applies a fixed-level threshold to each array element.
+///
+/// ## Parameters
+/// * src: Source array (single-channel).
+/// * dst: Destination array with the same size and type as src .
+/// * thresh: Threshold value.
+/// * maxval: Maximum value to use with THRESH_BINARY and THRESH_BINARY_INV threshold types.
+/// * type: Threshold type. For details, see threshold . The THRESH_OTSU and THRESH_TRIANGLE
+/// threshold types are not supported.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// threshold
+///
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// threshold(InputArray, OutputArray, double, double, int, Stream &)(InputArray, OutputArray, Primitive, Primitive, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:559
+// ("cv::cuda::threshold", vec![(pred!(mut, ["src", "dst", "thresh", "maxval", "type", "stream"], ["const cv::_InputArray*", "const cv::_OutputArray*", "double", "double", "int", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn threshold(src: &impl ToInputArray, dst: &mut impl ToOutputArray, thresh: f64, maxval: f64, typ: i32, stream: &mut impl core::StreamTrait) -> Result<f64> {
+	input_array_arg!(src);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_threshold_const__InputArrayR_const__OutputArrayR_double_double_int_StreamR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), thresh, maxval, typ, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Transposes a matrix.
+///
+/// ## Parameters
+/// * src1: Source matrix. 1-, 4-, 8-byte element sizes are supported for now.
+/// * dst: Destination matrix.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// transpose
+///
+/// ## Note
+/// This alternative version of [transpose] function uses the following default values for its arguments:
+/// * stream: Stream::Null()
+// cv::cuda::transpose(InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:751
+// ("cv::cuda::transpose", vec![(pred!(mut, ["src1", "dst"], ["const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+#[inline]
+pub fn transpose_def(src1: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
+	input_array_arg!(src1);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_transpose_const__InputArrayR_const__OutputArrayR(src1.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Transposes a matrix.
+///
+/// ## Parameters
+/// * src1: Source matrix. 1-, 4-, 8-byte element sizes are supported for now.
+/// * dst: Destination matrix.
+/// * stream: Stream for the asynchronous version.
+/// ## See also
+/// transpose
+///
+/// ## C++ default parameters
+/// * stream: Stream::Null()
+// transpose(InputArray, OutputArray, Stream &)(InputArray, OutputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:751
+// ("cv::cuda::transpose", vec![(pred!(mut, ["src1", "dst", "stream"], ["const cv::_InputArray*", "const cv::_OutputArray*", "cv::cuda::Stream*"]), _)]),
+#[inline]
+pub fn transpose(src1: &impl ToInputArray, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+	input_array_arg!(src1);
+	output_array_arg!(dst);
+	return_send!(via ocvrs_return);
+	unsafe { sys::cv_cuda_transpose_const__InputArrayR_const__OutputArrayR_StreamR(src1.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+	return_receive!(unsafe ocvrs_return => ret);
+	let ret = ret.into_result()?;
+	Ok(ret)
+}
+
+/// Constant methods for [crate::cudaarithm::Convolution]
+// Convolution /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:1152
+pub trait ConvolutionTraitConst: core::AlgorithmTraitConst {
+	fn as_raw_Convolution(&self) -> *const c_void;
+
+}
+
+/// Mutable methods for [crate::cudaarithm::Convolution]
+pub trait ConvolutionTrait: core::AlgorithmTrait + crate::cudaarithm::ConvolutionTraitConst {
+	fn as_raw_mut_Convolution(&mut self) -> *mut c_void;
+
+	/// Computes a convolution (or cross-correlation) of two images.
+	///
+	/// ## Parameters
+	/// * image: Source image. Only CV_32FC1 images are supported for now.
+	/// * templ: Template image. The size is not greater than the image size. The type is the same as
+	/// image .
+	/// * result: Result image. If image is *W x H* and templ is *w x h*, then result must be *W-w+1 x
+	/// H-h+1*.
+	/// * ccorr: Flags to evaluate cross-correlation instead of convolution.
+	/// * stream: Stream for the asynchronous version.
+	///
+	/// ## C++ default parameters
+	/// * ccorr: false
+	/// * stream: Stream::Null()
+	// convolve(InputArray, InputArray, OutputArray, bool, Stream &)(InputArray, InputArray, OutputArray, Primitive, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:1165
+	// ("cv::cuda::Convolution::convolve", vec![(pred!(mut, ["image", "templ", "result", "ccorr", "stream"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*", "bool", "cv::cuda::Stream*"]), _)]),
+	#[inline]
+	fn convolve(&mut self, image: &impl ToInputArray, templ: &impl ToInputArray, result: &mut impl ToOutputArray, ccorr: bool, stream: &mut impl core::StreamTrait) -> Result<()> {
+		input_array_arg!(image);
+		input_array_arg!(templ);
+		output_array_arg!(result);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_Convolution_convolve_const__InputArrayR_const__InputArrayR_const__OutputArrayR_bool_StreamR(self.as_raw_mut_Convolution(), image.as_raw__InputArray(), templ.as_raw__InputArray(), result.as_raw__OutputArray(), ccorr, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Computes a convolution (or cross-correlation) of two images.
+	///
+	/// ## Parameters
+	/// * image: Source image. Only CV_32FC1 images are supported for now.
+	/// * templ: Template image. The size is not greater than the image size. The type is the same as
+	/// image .
+	/// * result: Result image. If image is *W x H* and templ is *w x h*, then result must be *W-w+1 x
+	/// H-h+1*.
+	/// * ccorr: Flags to evaluate cross-correlation instead of convolution.
+	/// * stream: Stream for the asynchronous version.
+	///
+	/// ## Note
+	/// This alternative version of [ConvolutionTrait::convolve] function uses the following default values for its arguments:
+	/// * ccorr: false
+	/// * stream: Stream::Null()
+	// cv::cuda::Convolution::convolve(InputArray, InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:1165
+	// ("cv::cuda::Convolution::convolve", vec![(pred!(mut, ["image", "templ", "result"], ["const cv::_InputArray*", "const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+	#[inline]
+	fn convolve_def(&mut self, image: &impl ToInputArray, templ: &impl ToInputArray, result: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(image);
+		input_array_arg!(templ);
+		output_array_arg!(result);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_Convolution_convolve_const__InputArrayR_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_Convolution(), image.as_raw__InputArray(), templ.as_raw__InputArray(), result.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+}
+
+/// Base class for convolution (or cross-correlation) operator. :
+// Convolution /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:1152
+pub struct Convolution {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { Convolution }
+
+impl Drop for Convolution {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_cuda_Convolution_delete(self.as_raw_mut_Convolution()) };
+	}
+}
+
+unsafe impl Send for Convolution {}
+
+impl core::AlgorithmTraitConst for Convolution {
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+}
+
+impl core::AlgorithmTrait for Convolution {
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { Convolution, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+
+impl crate::cudaarithm::ConvolutionTraitConst for Convolution {
+	#[inline] fn as_raw_Convolution(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::cudaarithm::ConvolutionTrait for Convolution {
+	#[inline] fn as_raw_mut_Convolution(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { Convolution, crate::cudaarithm::ConvolutionTraitConst, as_raw_Convolution, crate::cudaarithm::ConvolutionTrait, as_raw_mut_Convolution }
+
+impl Convolution {
+}
+
+boxed_cast_base! { Convolution, core::Algorithm, cv_cuda_Convolution_to_Algorithm }
+
+impl std::fmt::Debug for Convolution {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("Convolution")
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::cudaarithm::DFT]
+// DFT /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:1123
+pub trait DFTTraitConst: core::AlgorithmTraitConst {
+	fn as_raw_DFT(&self) -> *const c_void;
+
+}
+
+/// Mutable methods for [crate::cudaarithm::DFT]
+pub trait DFTTrait: core::AlgorithmTrait + crate::cudaarithm::DFTTraitConst {
+	fn as_raw_mut_DFT(&mut self) -> *mut c_void;
+
+	/// Computes an FFT of a given image.
+	///
+	/// ## Parameters
+	/// * image: Source image. Only CV_32FC1 images are supported for now.
+	/// * result: Result image.
+	/// * stream: Stream for the asynchronous version.
+	///
+	/// ## C++ default parameters
+	/// * stream: Stream::Null()
+	// compute(InputArray, OutputArray, Stream &)(InputArray, OutputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:1132
+	// ("cv::cuda::DFT::compute", vec![(pred!(mut, ["image", "result", "stream"], ["const cv::_InputArray*", "const cv::_OutputArray*", "cv::cuda::Stream*"]), _)]),
+	#[inline]
+	fn compute(&mut self, image: &impl ToInputArray, result: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+		input_array_arg!(image);
+		output_array_arg!(result);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_DFT_compute_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_DFT(), image.as_raw__InputArray(), result.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Computes an FFT of a given image.
+	///
+	/// ## Parameters
+	/// * image: Source image. Only CV_32FC1 images are supported for now.
+	/// * result: Result image.
+	/// * stream: Stream for the asynchronous version.
+	///
+	/// ## Note
+	/// This alternative version of [DFTTrait::compute] function uses the following default values for its arguments:
+	/// * stream: Stream::Null()
+	// cv::cuda::DFT::compute(InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:1132
+	// ("cv::cuda::DFT::compute", vec![(pred!(mut, ["image", "result"], ["const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+	#[inline]
+	fn compute_def(&mut self, image: &impl ToInputArray, result: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(image);
+		output_array_arg!(result);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_DFT_compute_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_DFT(), image.as_raw__InputArray(), result.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+}
+
+/// Base class for DFT operator as a cv::Algorithm. :
+// DFT /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:1123
+pub struct DFT {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { DFT }
+
+impl Drop for DFT {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_cuda_DFT_delete(self.as_raw_mut_DFT()) };
+	}
+}
+
+unsafe impl Send for DFT {}
+
+impl core::AlgorithmTraitConst for DFT {
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+}
+
+impl core::AlgorithmTrait for DFT {
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { DFT, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+
+impl crate::cudaarithm::DFTTraitConst for DFT {
+	#[inline] fn as_raw_DFT(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::cudaarithm::DFTTrait for DFT {
+	#[inline] fn as_raw_mut_DFT(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { DFT, crate::cudaarithm::DFTTraitConst, as_raw_DFT, crate::cudaarithm::DFTTrait, as_raw_mut_DFT }
+
+impl DFT {
+}
+
+boxed_cast_base! { DFT, core::Algorithm, cv_cuda_DFT_to_Algorithm }
+
+impl std::fmt::Debug for DFT {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("DFT")
+			.finish()
+	}
+}
+
+/// Constant methods for [crate::cudaarithm::LookUpTable]
+// LookUpTable /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:770
+pub trait LookUpTableTraitConst: core::AlgorithmTraitConst {
+	fn as_raw_LookUpTable(&self) -> *const c_void;
+
+}
+
+/// Mutable methods for [crate::cudaarithm::LookUpTable]
+pub trait LookUpTableTrait: core::AlgorithmTrait + crate::cudaarithm::LookUpTableTraitConst {
+	fn as_raw_mut_LookUpTable(&mut self) -> *mut c_void;
+
+	/// Transforms the source matrix into the destination matrix using the given look-up table:
+	/// dst(I) = lut(src(I)) .
+	///
+	/// ## Parameters
+	/// * src: Source matrix. CV_8UC1 and CV_8UC3 matrices are supported for now.
+	/// * dst: Destination matrix.
+	/// * stream: Stream for the asynchronous version.
+	///
+	/// ## C++ default parameters
+	/// * stream: Stream::Null()
+	// transform(InputArray, OutputArray, Stream &)(InputArray, OutputArray, TraitClass) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:780
+	// ("cv::cuda::LookUpTable::transform", vec![(pred!(mut, ["src", "dst", "stream"], ["const cv::_InputArray*", "const cv::_OutputArray*", "cv::cuda::Stream*"]), _)]),
+	#[inline]
+	fn transform(&mut self, src: &impl ToInputArray, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_LookUpTable_transform_const__InputArrayR_const__OutputArrayR_StreamR(self.as_raw_mut_LookUpTable(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Transforms the source matrix into the destination matrix using the given look-up table:
+	/// dst(I) = lut(src(I)) .
+	///
+	/// ## Parameters
+	/// * src: Source matrix. CV_8UC1 and CV_8UC3 matrices are supported for now.
+	/// * dst: Destination matrix.
+	/// * stream: Stream for the asynchronous version.
+	///
+	/// ## Note
+	/// This alternative version of [LookUpTableTrait::transform] function uses the following default values for its arguments:
+	/// * stream: Stream::Null()
+	// cv::cuda::LookUpTable::transform(InputArray, OutputArray) /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:780
+	// ("cv::cuda::LookUpTable::transform", vec![(pred!(mut, ["src", "dst"], ["const cv::_InputArray*", "const cv::_OutputArray*"]), _)]),
+	#[inline]
+	fn transform_def(&mut self, src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(src);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_LookUpTable_transform_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_LookUpTable(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+}
+
+/// Base class for transform using lookup table.
+// LookUpTable /home/pro/projects/opencv-lib/opencv-5/install/include/opencv5/opencv2/cudaarithm.hpp:770
+pub struct LookUpTable {
+	ptr: *mut c_void,
+}
+
+opencv_type_boxed! { LookUpTable }
+
+impl Drop for LookUpTable {
+	#[inline]
+	fn drop(&mut self) {
+		unsafe { sys::cv_cuda_LookUpTable_delete(self.as_raw_mut_LookUpTable()) };
+	}
+}
+
+unsafe impl Send for LookUpTable {}
+
+impl core::AlgorithmTraitConst for LookUpTable {
+	#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+}
+
+impl core::AlgorithmTrait for LookUpTable {
+	#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { LookUpTable, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+
+impl crate::cudaarithm::LookUpTableTraitConst for LookUpTable {
+	#[inline] fn as_raw_LookUpTable(&self) -> *const c_void { self.as_raw() }
+}
+
+impl crate::cudaarithm::LookUpTableTrait for LookUpTable {
+	#[inline] fn as_raw_mut_LookUpTable(&mut self) -> *mut c_void { self.as_raw_mut() }
+}
+
+boxed_ref! { LookUpTable, crate::cudaarithm::LookUpTableTraitConst, as_raw_LookUpTable, crate::cudaarithm::LookUpTableTrait, as_raw_mut_LookUpTable }
+
+impl LookUpTable {
+}
+
+boxed_cast_base! { LookUpTable, core::Algorithm, cv_cuda_LookUpTable_to_Algorithm }
+
+impl std::fmt::Debug for LookUpTable {
+	#[inline]
+	fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+		f.debug_struct("LookUpTable")
+			.finish()
+	}
+}
