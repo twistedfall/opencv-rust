@@ -10,7 +10,7 @@ use crate::func::FuncKind;
 use crate::type_ref::FishStyle;
 use crate::writer::rust_native::class::ClassExt;
 use crate::writer::rust_native::element::RustElement;
-use crate::{CppNameStyle, Element, Func, NameStyle, StrExt, StringExt};
+use crate::{CowMapBorrowedExt, CppNameStyle, Element, Func, NameStyle, StrExt, StringExt};
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct RenderComment {
@@ -92,7 +92,7 @@ impl RenderComment {
 			let name = caps.get(1).map(|(s, e)| &comment[s..e]).expect("Impossible");
 			let space = caps.get(2).map(|(s, e)| &comment[s..e]).expect("Impossible");
 			let name = if name.contains(char::is_lowercase) {
-				Cow::Owned(name.cpp_name_to_rust_fn_case())
+				name.cpp_name_to_rust_fn_case()
 			} else {
 				Cow::Borrowed(name)
 			};
@@ -253,12 +253,11 @@ pub fn render_cpp_default_args(args: &[Field]) -> String {
 	out
 }
 
-pub fn render_ref<'r>(referenced: &'r Func, force_cpp_name: Option<&str>) -> Cow<'r, str> {
+pub fn render_ref<'r>(referenced: &'r Func, force_cpp_name: Option<&'r str>) -> Cow<'r, str> {
 	match referenced.kind().as_ref() {
 		FuncKind::Function | FuncKind::GenericFunction => force_cpp_name
 			.map_or_else(|| referenced.cpp_name(CppNameStyle::Declaration), Cow::Borrowed)
-			.cpp_name_to_rust_fn_case()
-			.into(),
+			.map_borrowed(|s| s.cpp_name_to_rust_fn_case()),
 		FuncKind::FunctionOperator(_) | FuncKind::Constructor(_) => referenced.rust_leafname(FishStyle::No),
 		FuncKind::InstanceMethod(cls) | FuncKind::GenericInstanceMethod(cls) => format!(
 			"{}::{}",

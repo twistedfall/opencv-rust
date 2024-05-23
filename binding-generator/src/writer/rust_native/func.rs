@@ -11,7 +11,9 @@ use crate::func::{FuncCppBody, FuncKind, FuncRustBody, FuncRustExtern, InheritCo
 use crate::name_pool::NamePool;
 use crate::settings::ARG_OVERRIDE_SELF;
 use crate::type_ref::{Constness, CppNameStyle, ExternDir, FishStyle, NameStyle, StrEnc, StrType, TypeRef, TypeRefTypeHint};
-use crate::{reserved_rename, settings, CompiledInterpolation, Element, Func, IteratorExt, NameDebug, StrExt, StringExt};
+use crate::{
+	reserved_rename, settings, CompiledInterpolation, CowMapBorrowedExt, Element, Func, IteratorExt, NameDebug, StrExt, StringExt,
+};
 
 use super::comment::{render_ref, RenderComment};
 use super::element::{DefaultRustNativeElement, RustElement};
@@ -173,12 +175,12 @@ impl RustElement for Func<'_, '_> {
 		};
 		if let Some(&name) = settings::FUNC_RENAME.get(self.identifier().as_str()) {
 			if name.contains('+') {
-				reserved_rename(name.replace('+', rust_name.as_ref()).cpp_name_to_rust_fn_case().into())
+				reserved_rename(Owned::<str>(name.replace('+', rust_name.as_ref())).map_borrowed(|s| s.cpp_name_to_rust_fn_case()))
 			} else {
 				name.into()
 			}
 		} else {
-			reserved_rename(rust_name.cpp_name_to_rust_fn_case().into())
+			reserved_rename(Owned::<str>(rust_name.into_owned()).map_borrowed(|s| s.cpp_name_to_rust_fn_case()))
 		}
 	}
 

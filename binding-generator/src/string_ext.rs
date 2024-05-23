@@ -369,7 +369,7 @@ impl CompiledInterpolation<'_> {
 }
 
 pub trait StrExt {
-	fn cpp_name_to_rust_fn_case(&self) -> String;
+	fn cpp_name_to_rust_fn_case(&self) -> Cow<str>;
 	fn lines_with_nl(&self) -> LinesWithNl;
 	fn detect_indent(&self) -> Indent;
 	fn compile_interpolation(&self) -> CompiledInterpolation;
@@ -385,7 +385,7 @@ pub trait StrExt {
 }
 
 impl StrExt for str {
-	fn cpp_name_to_rust_fn_case(&self) -> String {
+	fn cpp_name_to_rust_fn_case(&self) -> Cow<str> {
 		let mut out = String::with_capacity(self.len() + 8);
 		#[derive(Copy, Clone)]
 		enum State {
@@ -394,8 +394,8 @@ impl StrExt for str {
 			LastUppercase,
 		}
 		let mut state = State::StartOrLastUnderscore;
-		let mut chars = self.chars().peekable();
-		while let Some(cur_c) = chars.next() {
+		let mut chars = self.as_bytes().iter().peekable();
+		while let Some(&cur_c) = chars.next() {
 			let (add_c, new_state) = match cur_c {
 				_ if cur_c.is_ascii_uppercase() => {
 					match state {
@@ -403,17 +403,17 @@ impl StrExt for str {
 						State::LastLowercase => out.push('_'),
 						State::LastUppercase => {
 							// SVDValue => svd_value
-							if chars.peek().map_or(false, |next_c| next_c.is_lowercase()) {
+							if chars.peek().map_or(false, |next_c| next_c.is_ascii_lowercase()) {
 								out.push('_');
 							}
 						}
 					}
 					(cur_c.to_ascii_lowercase(), State::LastUppercase)
 				}
-				'_' => (cur_c, State::StartOrLastUnderscore),
+				b'_' => (b'_', State::StartOrLastUnderscore),
 				_ => (cur_c, State::LastLowercase),
 			};
-			out.push(add_c);
+			out.push(char::from(add_c));
 			state = new_state;
 		}
 		out.replacen_in_place("pn_p", 1, "pnp");
@@ -427,7 +427,7 @@ impl StrExt for str {
 		out.replacen_in_place("open_cl", 1, "opencl");
 		out.replacen_in_place("open_vx", 1, "openvx");
 		out.replacen_in_place("aruco_3detect", 1, "aruco3_detect");
-		out
+		out.into()
 	}
 
 	fn lines_with_nl(&self) -> LinesWithNl {

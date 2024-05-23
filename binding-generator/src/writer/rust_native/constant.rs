@@ -7,7 +7,7 @@ use once_cell::sync::Lazy;
 use crate::constant::ValueKind;
 use crate::debug::NameDebug;
 use crate::type_ref::{FishStyle, NameStyle};
-use crate::{settings, CompiledInterpolation, Const, CppNameStyle, Element, EntityElement, StrExt};
+use crate::{settings, CompiledInterpolation, Const, EntityElement, StrExt};
 
 use super::element::{DefaultRustNativeElement, RustElement};
 use super::RustNativeGeneratedElement;
@@ -24,10 +24,6 @@ impl RustElement for Const<'_> {
 			out.truncate(new_len);
 		}
 		out.into()
-	}
-
-	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
-		self.cpp_name(CppNameStyle::Declaration)
 	}
 
 	fn rendered_doc_comment(&self, comment_marker: &str, opencv_version: &str) -> String {

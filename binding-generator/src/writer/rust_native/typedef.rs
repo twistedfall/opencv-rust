@@ -4,9 +4,9 @@ use std::collections::HashMap;
 use once_cell::sync::Lazy;
 
 use crate::debug::NameDebug;
-use crate::type_ref::{FishStyle, NameStyle, TypeRefKind};
+use crate::type_ref::NameStyle;
 use crate::writer::rust_native::type_ref::Lifetime;
-use crate::{CompiledInterpolation, CppNameStyle, DefaultElement, EntityElement, IteratorExt, StrExt, Typedef};
+use crate::{CompiledInterpolation, EntityElement, IteratorExt, StrExt, Typedef};
 
 use super::element::{DefaultRustNativeElement, RustElement};
 use super::type_ref::TypeRefExt;
@@ -19,17 +19,6 @@ impl RustElement for Typedef<'_, '_> {
 
 	fn rust_name(&self, style: NameStyle) -> Cow<str> {
 		DefaultRustNativeElement::rust_name(self, self.entity(), style).into()
-	}
-
-	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
-		match self.underlying_type_ref().source().kind().as_ref() {
-			TypeRefKind::Class(..)
-			| TypeRefKind::Function(..)
-			| TypeRefKind::StdVector(..)
-			| TypeRefKind::SmartPtr(..)
-			| TypeRefKind::StdTuple(..) => DefaultElement::cpp_name(self, self.entity(), CppNameStyle::Declaration),
-			_ => DefaultRustNativeElement::rust_leafname(self),
-		}
 	}
 
 	fn rendered_doc_comment(&self, comment_marker: &str, opencv_version: &str) -> String {

@@ -3,7 +3,7 @@ use std::borrow::Cow;
 use crate::field::Field;
 use crate::type_ref::FishStyle;
 use crate::writer::rust_native::element::DebugRust;
-use crate::{reserved_rename, NameStyle, StrExt};
+use crate::{reserved_rename, CowMapBorrowedExt, NameStyle, StrExt};
 
 use super::element::{DefaultRustNativeElement, RustElement};
 
@@ -18,8 +18,8 @@ impl RustElement for Field<'_, '_> {
 
 	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
 		match self {
-			Self::Clang { .. } => DefaultRustNativeElement::rust_leafname(self),
-			Self::Desc(desc) => reserved_rename(desc.cpp_fullname.localname().cpp_name_to_rust_fn_case().into()),
+			Self::Clang { .. } => DefaultRustNativeElement::rust_leafname(self).map_borrowed(|s| s.cpp_name_to_rust_fn_case()),
+			Self::Desc(desc) => reserved_rename(desc.cpp_fullname.localname().cpp_name_to_rust_fn_case()),
 		}
 	}
 

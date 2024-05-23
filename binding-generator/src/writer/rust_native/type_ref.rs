@@ -138,6 +138,7 @@ impl TypeRefExt for TypeRef<'_, '_> {
 	fn rust_as_raw_name(&self, constness: Constness) -> String {
 		match self.kind().as_ref() {
 			TypeRefKind::Class(cls) => cls.rust_as_raw_name(constness),
+			TypeRefKind::Typedef(inner) => inner.underlying_type_ref().rust_as_raw_name(constness),
 			_ => format!(
 				"as_raw{const_qual}_{rust_safe_id}",
 				const_qual = constness.rust_function_name_qual(),

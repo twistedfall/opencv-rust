@@ -5,8 +5,7 @@ use clang::{Entity, EntityKind};
 
 use crate::type_ref::FishStyle;
 use crate::{
-	opencv_module_from_path, reserved_rename, settings, CppNameStyle, Element, GeneratedType, IteratorExt, NameStyle, StrExt,
-	StringExt,
+	opencv_module_from_path, reserved_rename, settings, CppNameStyle, Element, GeneratedType, IteratorExt, NameStyle, StringExt,
 };
 
 use super::comment::RenderComment;
@@ -35,7 +34,7 @@ impl DefaultRustNativeElement {
 	}
 
 	pub fn rust_leafname(this: &(impl Element + ?Sized)) -> Cow<str> {
-		reserved_rename(this.cpp_name(CppNameStyle::Declaration).cpp_name_to_rust_fn_case().into())
+		reserved_rename(this.cpp_name(CppNameStyle::Declaration))
 	}
 
 	pub fn rust_name(this: &(impl RustElement + ?Sized), entity: Entity, name_style: NameStyle) -> String {

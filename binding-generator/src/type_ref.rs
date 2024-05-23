@@ -176,7 +176,15 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	pub fn source(&self) -> Self {
 		match self.kind().as_ref() {
 			TypeRefKind::Pointer(inner) | TypeRefKind::Reference(inner) | TypeRefKind::RValueReference(inner) => inner.source(),
-			TypeRefKind::Typedef(tdef) => tdef.underlying_type_ref().source(),
+			TypeRefKind::Typedef(tdef) => {
+				let underlying_type = tdef.underlying_type_ref();
+				match underlying_type.kind().as_ref() {
+					TypeRefKind::Pointer(inner) | TypeRefKind::Reference(inner) | TypeRefKind::RValueReference(inner) => {
+						inner.source()
+					}
+					_ => self.clone(),
+				}
+			}
 			_ => self.clone(),
 		}
 	}

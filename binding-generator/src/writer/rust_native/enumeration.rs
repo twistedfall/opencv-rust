@@ -5,7 +5,7 @@ use once_cell::sync::Lazy;
 
 use crate::debug::NameDebug;
 use crate::type_ref::{FishStyle, NameStyle};
-use crate::{CompiledInterpolation, CppNameStyle, Element, EntityElement, Enum, StrExt};
+use crate::{CompiledInterpolation, EntityElement, Enum, StrExt};
 
 use super::element::{DefaultRustNativeElement, RustElement};
 use super::RustNativeGeneratedElement;
@@ -17,10 +17,6 @@ impl RustElement for Enum<'_> {
 
 	fn rust_name(&self, style: NameStyle) -> Cow<str> {
 		DefaultRustNativeElement::rust_name(self, self.entity(), style).into()
-	}
-
-	fn rust_leafname(&self, _fish_style: FishStyle) -> Cow<str> {
-		self.cpp_name(CppNameStyle::Declaration)
 	}
 
 	fn rendered_doc_comment(&self, comment_marker: &str, opencv_version: &str) -> String {
