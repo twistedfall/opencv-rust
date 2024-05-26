@@ -1,3 +1,13 @@
+* 0.92.0
+  * Add `DoubleEndedIterator` impl for `Vector` and simplify trait bounds.
+  * Type aliases for `Vector` (`VectorOf...`), `Ptr` and `Tuple` are now deprecated.
+  * Add missing `Mat_` methods, speed up `Mat::at*()` and `Mat_::at*()` methods slightly. Allow calling `at()` method on a `Mat`
+    with more than 2 dimensions.
+  * Improved typedef generation that led to changing of some typedef names, e.g. `va_display` → `VADisplay`. Typedefed types are
+    now also preserved in function signatures.
+  * Fix several cases where returned objects were not usable and led to a segfault, e.g. `SparseMap::hdr()`.
+  * Add a helper to accommodate calling OpenCV functions that can modify a `Mat` in place, use `modify_inplace()` method.
+
 * 0.91.3
   * Add workaround for https://github.com/twistedfall/opencv-rust/issues/548.
 

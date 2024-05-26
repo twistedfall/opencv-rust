@@ -860,12 +860,12 @@ pub mod dnn {
 	}
 	
 	#[inline]
-	pub fn concat(a: &crate::dnn::MatShape, b: &crate::dnn::MatShape) -> Result<core::Vector<i32>> {
+	pub fn concat(a: &crate::dnn::MatShape, b: &crate::dnn::MatShape) -> Result<crate::dnn::MatShape> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dnn_concat_const_MatShapeR_const_MatShapeR(a.as_raw_VectorOfi32(), b.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
+		let ret = unsafe { crate::dnn::MatShape::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -1863,42 +1863,42 @@ pub mod dnn {
 	}
 	
 	#[inline]
-	pub fn shape_1(mat: &impl core::MatTraitConst) -> Result<core::Vector<i32>> {
+	pub fn shape_1(mat: &impl core::MatTraitConst) -> Result<crate::dnn::MatShape> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dnn_shape_const_MatR(mat.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
+		let ret = unsafe { crate::dnn::MatShape::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
-	pub fn shape_2(sz: &impl core::MatSizeTraitConst) -> Result<core::Vector<i32>> {
+	pub fn shape_2(sz: &impl core::MatSizeTraitConst) -> Result<crate::dnn::MatShape> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dnn_shape_const_MatSizeR(sz.as_raw_MatSize(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
+		let ret = unsafe { crate::dnn::MatShape::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
-	pub fn shape_3(mat: &impl core::UMatTraitConst) -> Result<core::Vector<i32>> {
+	pub fn shape_3(mat: &impl core::UMatTraitConst) -> Result<crate::dnn::MatShape> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dnn_shape_const_UMatR(mat.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
+		let ret = unsafe { crate::dnn::MatShape::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
 	#[inline]
-	pub fn shape(dims: &i32, n: i32) -> Result<core::Vector<i32>> {
+	pub fn shape(dims: &i32, n: i32) -> Result<crate::dnn::MatShape> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dnn_shape_const_intX_const_int(dims, n, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
+		let ret = unsafe { crate::dnn::MatShape::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -1908,12 +1908,12 @@ pub mod dnn {
 	/// * a2: -1
 	/// * a3: -1
 	#[inline]
-	pub fn shape_4_def(a0: i32) -> Result<core::Vector<i32>> {
+	pub fn shape_4_def(a0: i32) -> Result<crate::dnn::MatShape> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dnn_shape_int(a0, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
+		let ret = unsafe { crate::dnn::MatShape::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -1922,12 +1922,12 @@ pub mod dnn {
 	/// * a2: -1
 	/// * a3: -1
 	#[inline]
-	pub fn shape_4(a0: i32, a1: i32, a2: i32, a3: i32) -> Result<core::Vector<i32>> {
+	pub fn shape_4(a0: i32, a1: i32, a2: i32, a3: i32) -> Result<crate::dnn::MatShape> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_dnn_shape_int_int_int_int(a0, a1, a2, a3, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
-		let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
+		let ret = unsafe { crate::dnn::MatShape::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 	
@@ -16765,9 +16765,9 @@ pub mod dnn {
 		fn as_raw_ReshapeLayer(&self) -> *const c_void;
 	
 		#[inline]
-		fn new_shape_desc(&self) -> core::Vector<i32> {
+		fn new_shape_desc(&self) -> crate::dnn::MatShape {
 			let ret = unsafe { sys::cv_dnn_ReshapeLayer_propNewShapeDesc_const(self.as_raw_ReshapeLayer()) };
-			let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
+			let ret = unsafe { crate::dnn::MatShape::opencv_from_extern(ret) };
 			ret
 		}
 		

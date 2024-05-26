@@ -398,11 +398,11 @@ pub mod flann {
 	opencv_type_enum! { crate::flann::flann_log_level_t }
 	
 	/// A bucket in an LSH table
-	pub type Bucket = core::Vector<crate::flann::feature_index>;
+	pub type Bucket = core::Vector<crate::flann::FeatureIndex>;
 	/// The id from which we can get a bucket back in an LSH table
-	pub type bucket_key = u32;
+	pub type BucketKey = u32;
 	/// What is stored in an LSH bucket
-	pub type feature_index = u32;
+	pub type FeatureIndex = u32;
 	#[inline]
 	pub fn flann_distance_type() -> Result<crate::flann::flann_distance_t> {
 		return_send!(via ocvrs_return);

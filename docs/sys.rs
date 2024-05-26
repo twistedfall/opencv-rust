@@ -1075,10 +1075,10 @@ mod core_sys {
 		pub fn cv_utils_testReservedKeywordConversion_int_int_int(positional_argument: i32, lambda: i32, from: i32, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_utils_testRotatedRectVector_float_float_float_float_float(x: f32, y: f32, w: f32, h: f32, angle: f32, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_utils_testRotatedRect_float_float_float_float_float(x: f32, y: f32, w: f32, h: f32, angle: f32, ocvrs_return: *mut Result<core::RotatedRect>);
-		pub fn cv_va_intel_convertFromVASurface_VADisplay_VASurfaceID_Size_const__OutputArrayR(display: core::va_display, surface: core::va_surface_id, size: *const core::Size, dst: *const c_void, ocvrs_return: *mut ResultVoid);
-		pub fn cv_va_intel_convertToVASurface_VADisplay_const__InputArrayR_VASurfaceID_Size(display: core::va_display, src: *const c_void, surface: core::va_surface_id, size: *const core::Size, ocvrs_return: *mut ResultVoid);
-		pub fn cv_va_intel_ocl_initializeContextFromVA_VADisplay(display: core::va_display, ocvrs_return: *mut Result<*mut c_void>);
-		pub fn cv_va_intel_ocl_initializeContextFromVA_VADisplay_bool(display: core::va_display, try_interop: bool, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_va_intel_convertFromVASurface_VADisplay_VASurfaceID_Size_const__OutputArrayR(display: core::VADisplay, surface: core::VASurfaceID, size: *const core::Size, dst: *const c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_va_intel_convertToVASurface_VADisplay_const__InputArrayR_VASurfaceID_Size(display: core::VADisplay, src: *const c_void, surface: core::VASurfaceID, size: *const core::Size, ocvrs_return: *mut ResultVoid);
+		pub fn cv_va_intel_ocl_initializeContextFromVA_VADisplay(display: core::VADisplay, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_va_intel_ocl_initializeContextFromVA_VADisplay_bool(display: core::VADisplay, try_interop: bool, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_vconcat_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1: *const c_void, src2: *const c_void, dst: *const c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_vconcat_const__InputArrayR_const__OutputArrayR(src: *const c_void, dst: *const c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_writeScalar_FileStorageR_const_StringR(fs: *mut c_void, value: *const c_char, ocvrs_return: *mut ResultVoid);
@@ -1294,7 +1294,7 @@ mod core_sys {
 		pub fn cv_Formatter_get_FormatType(fmt: core::Formatter_FormatType, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_Formatter_get(ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_Formatter_delete(instance: *mut c_void);
-		pub fn cv_Hamming_operator___const_const_unsigned_charX_const_unsigned_charX_int(instance: *const c_void, a: *const u8, b: *const u8, size: i32, ocvrs_return: *mut Result<core::Hamming_result_type>);
+		pub fn cv_Hamming_operator___const_const_unsigned_charX_const_unsigned_charX_int(instance: *const c_void, a: *const u8, b: *const u8, size: i32, ocvrs_return: *mut Result<core::Hamming_ResultType>);
 		pub fn cv_Hamming_defaultNew_const() -> *mut c_void;
 		pub fn cv_Hamming_delete(instance: *mut c_void);
 		pub fn cv_KeyPoint_KeyPoint(ocvrs_return: *mut Result<*mut c_void>);
@@ -8382,6 +8382,24 @@ mod flann_sys {
 		pub fn cv_PtrLcv_flann_SearchParamsG_delete(instance: *mut c_void);
 		pub fn cv_PtrLcv_flann_SearchParamsG_to_PtrOfIndexParams(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_PtrLcv_flann_SearchParamsG_new_const_SearchParams(val: *mut c_void) -> *mut c_void;
+		pub fn std_vectorLcvflann_lsh_FeatureIndexG_new_const() -> *mut c_void;
+		pub fn std_vectorLcvflann_lsh_FeatureIndexG_delete(instance: *mut c_void);
+		pub fn std_vectorLcvflann_lsh_FeatureIndexG_len_const(instance: *const c_void) -> size_t;
+		pub fn std_vectorLcvflann_lsh_FeatureIndexG_isEmpty_const(instance: *const c_void) -> bool;
+		pub fn std_vectorLcvflann_lsh_FeatureIndexG_capacity_const(instance: *const c_void) -> size_t;
+		pub fn std_vectorLcvflann_lsh_FeatureIndexG_shrinkToFit(instance: *mut c_void);
+		pub fn std_vectorLcvflann_lsh_FeatureIndexG_reserve_size_t(instance: *mut c_void, additional: size_t);
+		pub fn std_vectorLcvflann_lsh_FeatureIndexG_remove_size_t(instance: *mut c_void, index: size_t);
+		pub fn std_vectorLcvflann_lsh_FeatureIndexG_swap_size_t_size_t(instance: *mut c_void, index1: size_t, index2: size_t);
+		pub fn std_vectorLcvflann_lsh_FeatureIndexG_clear(instance: *mut c_void);
+		pub fn std_vectorLcvflann_lsh_FeatureIndexG_push_const_FeatureIndex(instance: *mut c_void, val: crate::flann::FeatureIndex);
+		pub fn std_vectorLcvflann_lsh_FeatureIndexG_insert_size_t_const_FeatureIndex(instance: *mut c_void, index: size_t, val: crate::flann::FeatureIndex);
+		pub fn std_vectorLcvflann_lsh_FeatureIndexG_get_const_size_t(instance: *const c_void, index: size_t, ocvrs_return: *mut crate::flann::FeatureIndex);
+		pub fn std_vectorLcvflann_lsh_FeatureIndexG_set_size_t_const_FeatureIndex(instance: *mut c_void, index: size_t, val: crate::flann::FeatureIndex);
+		pub fn std_vectorLcvflann_lsh_FeatureIndexG_clone_const(instance: *const c_void) -> *mut c_void;
+		pub fn std_vectorLcvflann_lsh_FeatureIndexG_data_const(instance: *const c_void) -> *const crate::flann::FeatureIndex;
+		pub fn std_vectorLcvflann_lsh_FeatureIndexG_dataMut(instance: *mut c_void) -> *mut crate::flann::FeatureIndex;
+		pub fn cv_fromSlice_const_const_FeatureIndexX_size_t(data: *const crate::flann::FeatureIndex, len: size_t) -> *mut c_void;
 		pub fn std_vectorLcv_flann_FlannIndexTypeG_new_const() -> *mut c_void;
 		pub fn std_vectorLcv_flann_FlannIndexTypeG_delete(instance: *mut c_void);
 		pub fn std_vectorLcv_flann_FlannIndexTypeG_len_const(instance: *const c_void) -> size_t;
@@ -8400,24 +8418,6 @@ mod flann_sys {
 		pub fn std_vectorLcv_flann_FlannIndexTypeG_data_const(instance: *const c_void) -> *const crate::flann::FlannIndexType;
 		pub fn std_vectorLcv_flann_FlannIndexTypeG_dataMut(instance: *mut c_void) -> *mut crate::flann::FlannIndexType;
 		pub fn cv_fromSlice_const_const_FlannIndexTypeX_size_t(data: *const crate::flann::FlannIndexType, len: size_t) -> *mut c_void;
-		pub fn std_vectorLcvflann_lsh_FeatureIndexG_new_const() -> *mut c_void;
-		pub fn std_vectorLcvflann_lsh_FeatureIndexG_delete(instance: *mut c_void);
-		pub fn std_vectorLcvflann_lsh_FeatureIndexG_len_const(instance: *const c_void) -> size_t;
-		pub fn std_vectorLcvflann_lsh_FeatureIndexG_isEmpty_const(instance: *const c_void) -> bool;
-		pub fn std_vectorLcvflann_lsh_FeatureIndexG_capacity_const(instance: *const c_void) -> size_t;
-		pub fn std_vectorLcvflann_lsh_FeatureIndexG_shrinkToFit(instance: *mut c_void);
-		pub fn std_vectorLcvflann_lsh_FeatureIndexG_reserve_size_t(instance: *mut c_void, additional: size_t);
-		pub fn std_vectorLcvflann_lsh_FeatureIndexG_remove_size_t(instance: *mut c_void, index: size_t);
-		pub fn std_vectorLcvflann_lsh_FeatureIndexG_swap_size_t_size_t(instance: *mut c_void, index1: size_t, index2: size_t);
-		pub fn std_vectorLcvflann_lsh_FeatureIndexG_clear(instance: *mut c_void);
-		pub fn std_vectorLcvflann_lsh_FeatureIndexG_push_const_FeatureIndex(instance: *mut c_void, val: crate::flann::feature_index);
-		pub fn std_vectorLcvflann_lsh_FeatureIndexG_insert_size_t_const_FeatureIndex(instance: *mut c_void, index: size_t, val: crate::flann::feature_index);
-		pub fn std_vectorLcvflann_lsh_FeatureIndexG_get_const_size_t(instance: *const c_void, index: size_t, ocvrs_return: *mut crate::flann::feature_index);
-		pub fn std_vectorLcvflann_lsh_FeatureIndexG_set_size_t_const_FeatureIndex(instance: *mut c_void, index: size_t, val: crate::flann::feature_index);
-		pub fn std_vectorLcvflann_lsh_FeatureIndexG_clone_const(instance: *const c_void) -> *mut c_void;
-		pub fn std_vectorLcvflann_lsh_FeatureIndexG_data_const(instance: *const c_void) -> *const crate::flann::feature_index;
-		pub fn std_vectorLcvflann_lsh_FeatureIndexG_dataMut(instance: *mut c_void) -> *mut crate::flann::feature_index;
-		pub fn cv_fromSlice_const_const_FeatureIndexX_size_t(data: *const crate::flann::feature_index, len: size_t) -> *mut c_void;
 	}
 }
 #[cfg(ocvrs_has_module_flann)]

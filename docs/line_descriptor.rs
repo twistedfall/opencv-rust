@@ -118,10 +118,10 @@ pub mod line_descriptor {
 	
 	opencv_type_enum! { crate::line_descriptor::DrawLinesMatchesFlags }
 	
-	pub type uint16 = u16;
-	pub type uint32 = u32;
-	pub type uint64 = u64;
-	pub type uint8 = u8;
+	pub type UINT16 = u16;
+	pub type UINT32 = u32;
+	pub type UINT64 = u64;
+	pub type UINT8 = u8;
 	/// Draws keylines.
 	/// 
 	/// ## Parameters

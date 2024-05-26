@@ -245,10 +245,10 @@ pub mod gapi {
 	pub type GMat3 = core::Tuple<(crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat)>;
 	pub type GMat4 = core::Tuple<(crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat)>;
 	pub type GMatScalar = core::Tuple<(crate::gapi::GMat, crate::gapi::GScalar)>;
-	pub type ImgProc_cont_method = crate::imgproc::ContourApproximationModes;
+	pub type ImgProc_ContMethod = crate::imgproc::ContourApproximationModes;
 	pub type ImgProc_GMat2 = core::Tuple<(crate::gapi::GMat, crate::gapi::GMat)>;
 	pub type ImgProc_GMat3 = core::Tuple<(crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat)>;
-	pub type ImgProc_retr_mode = crate::imgproc::RetrievalModes;
+	pub type ImgProc_RetrMode = crate::imgproc::RetrievalModes;
 	#[inline]
 	pub fn descr_of_2(mat: &impl core::MatTraitConst) -> Result<crate::gapi::GMatDesc> {
 		return_send!(via ocvrs_return);
@@ -6886,12 +6886,12 @@ pub mod gapi {
 		/// ## C++ default parameters
 		/// * args: {}
 		#[inline]
-		fn apply(&mut self, callback: &impl crate::gapi::Detail_ExtractArgsCallbackTraitConst, mut args: crate::gapi::GCompileArgs) -> Result<core::Vector<crate::gapi::GRunArg>> {
+		fn apply(&mut self, callback: &impl crate::gapi::Detail_ExtractArgsCallbackTraitConst, mut args: crate::gapi::GCompileArgs) -> Result<crate::gapi::GRunArgs> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GComputation_apply_const_ExtractArgsCallbackR_GCompileArgsRR(self.as_raw_mut_GComputation(), callback.as_raw_Detail_ExtractArgsCallback(), args.as_raw_mut_VectorOfGCompileArg(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Vector::<crate::gapi::GRunArg>::opencv_from_extern(ret) };
+			let ret = unsafe { crate::gapi::GRunArgs::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
@@ -6901,12 +6901,12 @@ pub mod gapi {
 		/// This alternative version of [GComputationTrait::apply] function uses the following default values for its arguments:
 		/// * args: {}
 		#[inline]
-		fn apply_def(&mut self, callback: &impl crate::gapi::Detail_ExtractArgsCallbackTraitConst) -> Result<core::Vector<crate::gapi::GRunArg>> {
+		fn apply_def(&mut self, callback: &impl crate::gapi::Detail_ExtractArgsCallbackTraitConst) -> Result<crate::gapi::GRunArgs> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_GComputation_apply_const_ExtractArgsCallbackR(self.as_raw_mut_GComputation(), callback.as_raw_Detail_ExtractArgsCallback(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Vector::<crate::gapi::GRunArg>::opencv_from_extern(ret) };
+			let ret = unsafe { crate::gapi::GRunArgs::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
@@ -7763,23 +7763,23 @@ pub mod gapi {
 		}
 		
 		#[inline]
-		fn out_shapes(&self) -> core::Vector<crate::gapi::GShape> {
+		fn out_shapes(&self) -> crate::gapi::GShapes {
 			let ret = unsafe { sys::cv_GKernel_propOutShapes_const(self.as_raw_GKernel()) };
-			let ret = unsafe { core::Vector::<crate::gapi::GShape>::opencv_from_extern(ret) };
+			let ret = unsafe { crate::gapi::GShapes::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
-		fn in_kinds(&self) -> core::Vector<crate::gapi::Detail_OpaqueKind> {
+		fn in_kinds(&self) -> crate::gapi::GKinds {
 			let ret = unsafe { sys::cv_GKernel_propInKinds_const(self.as_raw_GKernel()) };
-			let ret = unsafe { core::Vector::<crate::gapi::Detail_OpaqueKind>::opencv_from_extern(ret) };
+			let ret = unsafe { crate::gapi::GKinds::opencv_from_extern(ret) };
 			ret
 		}
 		
 		#[inline]
-		fn out_kinds(&self) -> core::Vector<crate::gapi::Detail_OpaqueKind> {
+		fn out_kinds(&self) -> crate::gapi::GKinds {
 			let ret = unsafe { sys::cv_GKernel_propOutKinds_const(self.as_raw_GKernel()) };
-			let ret = unsafe { core::Vector::<crate::gapi::Detail_OpaqueKind>::opencv_from_extern(ret) };
+			let ret = unsafe { crate::gapi::GKinds::opencv_from_extern(ret) };
 			ret
 		}
 		
@@ -9952,12 +9952,12 @@ pub mod gapi {
 		}
 		
 		#[inline]
-		fn steps(&self) -> Result<core::Vector<size_t>> {
+		fn steps(&self) -> Result<crate::gapi::RMat_View_stepsT> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RMat_View_steps_const(self.as_raw_RMat_View(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Vector::<size_t>::opencv_from_extern(ret) };
+			let ret = unsafe { crate::gapi::RMat_View_stepsT::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
@@ -10041,12 +10041,12 @@ pub mod gapi {
 		fn as_raw_Detail_ExtractArgsCallback(&self) -> *const c_void;
 	
 		#[inline]
-		fn apply(&self, info: &crate::gapi::GTypesInfo) -> Result<core::Vector<crate::gapi::GRunArg>> {
+		fn apply(&self, info: &crate::gapi::GTypesInfo) -> Result<crate::gapi::GRunArgs> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_detail_ExtractArgsCallback_operator___const_const_GTypesInfoR(self.as_raw_Detail_ExtractArgsCallback(), info.as_raw_VectorOfGTypeInfo(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Vector::<crate::gapi::GRunArg>::opencv_from_extern(ret) };
+			let ret = unsafe { crate::gapi::GRunArgs::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		

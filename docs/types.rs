@@ -3,6 +3,7 @@
 mod aruco_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::aruco::EstimateParameters>` instead, removal in Nov 2024"]
 	pub type PtrOfEstimateParameters = core::Ptr<crate::aruco::EstimateParameters>;
 	
 	ptr_extern! { crate::aruco::EstimateParameters,
@@ -42,6 +43,7 @@ pub use aruco_types::*;
 mod bgsegm_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::bgsegm::BackgroundSubtractorCNT>` instead, removal in Nov 2024"]
 	pub type PtrOfBackgroundSubtractorCNT = core::Ptr<crate::bgsegm::BackgroundSubtractorCNT>;
 	
 	ptr_extern! { crate::bgsegm::BackgroundSubtractorCNT,
@@ -69,7 +71,7 @@ mod bgsegm_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBackgroundSubtractorCNT, core::Ptr<core::Algorithm>, cv_PtrLcv_bgsegm_BackgroundSubtractorCNTG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::bgsegm::BackgroundSubtractorCNT>, core::Ptr<core::Algorithm>, cv_PtrLcv_bgsegm_BackgroundSubtractorCNTG_to_PtrOfAlgorithm }
 	
 	impl crate::video::BackgroundSubtractorTraitConst for core::Ptr<crate::bgsegm::BackgroundSubtractorCNT> {
 		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.inner_as_raw() }
@@ -79,7 +81,7 @@ mod bgsegm_types {
 		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBackgroundSubtractorCNT, core::Ptr<crate::video::BackgroundSubtractor>, cv_PtrLcv_bgsegm_BackgroundSubtractorCNTG_to_PtrOfBackgroundSubtractor }
+	ptr_cast_base! { core::Ptr<crate::bgsegm::BackgroundSubtractorCNT>, core::Ptr<crate::video::BackgroundSubtractor>, cv_PtrLcv_bgsegm_BackgroundSubtractorCNTG_to_PtrOfBackgroundSubtractor }
 	
 	impl std::fmt::Debug for core::Ptr<crate::bgsegm::BackgroundSubtractorCNT> {
 		#[inline]
@@ -89,6 +91,7 @@ mod bgsegm_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::bgsegm::BackgroundSubtractorGMG>` instead, removal in Nov 2024"]
 	pub type PtrOfBackgroundSubtractorGMG = core::Ptr<crate::bgsegm::BackgroundSubtractorGMG>;
 	
 	ptr_extern! { crate::bgsegm::BackgroundSubtractorGMG,
@@ -116,7 +119,7 @@ mod bgsegm_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBackgroundSubtractorGMG, core::Ptr<core::Algorithm>, cv_PtrLcv_bgsegm_BackgroundSubtractorGMGG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::bgsegm::BackgroundSubtractorGMG>, core::Ptr<core::Algorithm>, cv_PtrLcv_bgsegm_BackgroundSubtractorGMGG_to_PtrOfAlgorithm }
 	
 	impl crate::video::BackgroundSubtractorTraitConst for core::Ptr<crate::bgsegm::BackgroundSubtractorGMG> {
 		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.inner_as_raw() }
@@ -126,7 +129,7 @@ mod bgsegm_types {
 		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBackgroundSubtractorGMG, core::Ptr<crate::video::BackgroundSubtractor>, cv_PtrLcv_bgsegm_BackgroundSubtractorGMGG_to_PtrOfBackgroundSubtractor }
+	ptr_cast_base! { core::Ptr<crate::bgsegm::BackgroundSubtractorGMG>, core::Ptr<crate::video::BackgroundSubtractor>, cv_PtrLcv_bgsegm_BackgroundSubtractorGMGG_to_PtrOfBackgroundSubtractor }
 	
 	impl std::fmt::Debug for core::Ptr<crate::bgsegm::BackgroundSubtractorGMG> {
 		#[inline]
@@ -136,6 +139,7 @@ mod bgsegm_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::bgsegm::BackgroundSubtractorGSOC>` instead, removal in Nov 2024"]
 	pub type PtrOfBackgroundSubtractorGSOC = core::Ptr<crate::bgsegm::BackgroundSubtractorGSOC>;
 	
 	ptr_extern! { crate::bgsegm::BackgroundSubtractorGSOC,
@@ -163,7 +167,7 @@ mod bgsegm_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBackgroundSubtractorGSOC, core::Ptr<core::Algorithm>, cv_PtrLcv_bgsegm_BackgroundSubtractorGSOCG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::bgsegm::BackgroundSubtractorGSOC>, core::Ptr<core::Algorithm>, cv_PtrLcv_bgsegm_BackgroundSubtractorGSOCG_to_PtrOfAlgorithm }
 	
 	impl crate::video::BackgroundSubtractorTraitConst for core::Ptr<crate::bgsegm::BackgroundSubtractorGSOC> {
 		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.inner_as_raw() }
@@ -173,7 +177,7 @@ mod bgsegm_types {
 		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBackgroundSubtractorGSOC, core::Ptr<crate::video::BackgroundSubtractor>, cv_PtrLcv_bgsegm_BackgroundSubtractorGSOCG_to_PtrOfBackgroundSubtractor }
+	ptr_cast_base! { core::Ptr<crate::bgsegm::BackgroundSubtractorGSOC>, core::Ptr<crate::video::BackgroundSubtractor>, cv_PtrLcv_bgsegm_BackgroundSubtractorGSOCG_to_PtrOfBackgroundSubtractor }
 	
 	impl std::fmt::Debug for core::Ptr<crate::bgsegm::BackgroundSubtractorGSOC> {
 		#[inline]
@@ -183,6 +187,7 @@ mod bgsegm_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::bgsegm::BackgroundSubtractorLSBP>` instead, removal in Nov 2024"]
 	pub type PtrOfBackgroundSubtractorLSBP = core::Ptr<crate::bgsegm::BackgroundSubtractorLSBP>;
 	
 	ptr_extern! { crate::bgsegm::BackgroundSubtractorLSBP,
@@ -210,7 +215,7 @@ mod bgsegm_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBackgroundSubtractorLSBP, core::Ptr<core::Algorithm>, cv_PtrLcv_bgsegm_BackgroundSubtractorLSBPG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::bgsegm::BackgroundSubtractorLSBP>, core::Ptr<core::Algorithm>, cv_PtrLcv_bgsegm_BackgroundSubtractorLSBPG_to_PtrOfAlgorithm }
 	
 	impl crate::video::BackgroundSubtractorTraitConst for core::Ptr<crate::bgsegm::BackgroundSubtractorLSBP> {
 		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.inner_as_raw() }
@@ -220,7 +225,7 @@ mod bgsegm_types {
 		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBackgroundSubtractorLSBP, core::Ptr<crate::video::BackgroundSubtractor>, cv_PtrLcv_bgsegm_BackgroundSubtractorLSBPG_to_PtrOfBackgroundSubtractor }
+	ptr_cast_base! { core::Ptr<crate::bgsegm::BackgroundSubtractorLSBP>, core::Ptr<crate::video::BackgroundSubtractor>, cv_PtrLcv_bgsegm_BackgroundSubtractorLSBPG_to_PtrOfBackgroundSubtractor }
 	
 	impl std::fmt::Debug for core::Ptr<crate::bgsegm::BackgroundSubtractorLSBP> {
 		#[inline]
@@ -230,6 +235,7 @@ mod bgsegm_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::bgsegm::BackgroundSubtractorMOG>` instead, removal in Nov 2024"]
 	pub type PtrOfBackgroundSubtractorMOG = core::Ptr<crate::bgsegm::BackgroundSubtractorMOG>;
 	
 	ptr_extern! { crate::bgsegm::BackgroundSubtractorMOG,
@@ -257,7 +263,7 @@ mod bgsegm_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBackgroundSubtractorMOG, core::Ptr<core::Algorithm>, cv_PtrLcv_bgsegm_BackgroundSubtractorMOGG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::bgsegm::BackgroundSubtractorMOG>, core::Ptr<core::Algorithm>, cv_PtrLcv_bgsegm_BackgroundSubtractorMOGG_to_PtrOfAlgorithm }
 	
 	impl crate::video::BackgroundSubtractorTraitConst for core::Ptr<crate::bgsegm::BackgroundSubtractorMOG> {
 		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.inner_as_raw() }
@@ -267,7 +273,7 @@ mod bgsegm_types {
 		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBackgroundSubtractorMOG, core::Ptr<crate::video::BackgroundSubtractor>, cv_PtrLcv_bgsegm_BackgroundSubtractorMOGG_to_PtrOfBackgroundSubtractor }
+	ptr_cast_base! { core::Ptr<crate::bgsegm::BackgroundSubtractorMOG>, core::Ptr<crate::video::BackgroundSubtractor>, cv_PtrLcv_bgsegm_BackgroundSubtractorMOGG_to_PtrOfBackgroundSubtractor }
 	
 	impl std::fmt::Debug for core::Ptr<crate::bgsegm::BackgroundSubtractorMOG> {
 		#[inline]
@@ -277,6 +283,7 @@ mod bgsegm_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::bgsegm::SyntheticSequenceGenerator>` instead, removal in Nov 2024"]
 	pub type PtrOfSyntheticSequenceGenerator = core::Ptr<crate::bgsegm::SyntheticSequenceGenerator>;
 	
 	ptr_extern! { crate::bgsegm::SyntheticSequenceGenerator,
@@ -305,7 +312,7 @@ mod bgsegm_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSyntheticSequenceGenerator, core::Ptr<core::Algorithm>, cv_PtrLcv_bgsegm_SyntheticSequenceGeneratorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::bgsegm::SyntheticSequenceGenerator>, core::Ptr<core::Algorithm>, cv_PtrLcv_bgsegm_SyntheticSequenceGeneratorG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::bgsegm::SyntheticSequenceGenerator> {
 		#[inline]
@@ -323,6 +330,7 @@ pub use bgsegm_types::*;
 mod bioinspired_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::bioinspired::Retina>` instead, removal in Nov 2024"]
 	pub type PtrOfRetina = core::Ptr<crate::bioinspired::Retina>;
 	
 	ptr_extern! { crate::bioinspired::Retina,
@@ -350,7 +358,7 @@ mod bioinspired_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfRetina, core::Ptr<core::Algorithm>, cv_PtrLcv_bioinspired_RetinaG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::bioinspired::Retina>, core::Ptr<core::Algorithm>, cv_PtrLcv_bioinspired_RetinaG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::bioinspired::Retina> {
 		#[inline]
@@ -360,6 +368,7 @@ mod bioinspired_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::bioinspired::RetinaFastToneMapping>` instead, removal in Nov 2024"]
 	pub type PtrOfRetinaFastToneMapping = core::Ptr<crate::bioinspired::RetinaFastToneMapping>;
 	
 	ptr_extern! { crate::bioinspired::RetinaFastToneMapping,
@@ -387,7 +396,7 @@ mod bioinspired_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfRetinaFastToneMapping, core::Ptr<core::Algorithm>, cv_PtrLcv_bioinspired_RetinaFastToneMappingG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::bioinspired::RetinaFastToneMapping>, core::Ptr<core::Algorithm>, cv_PtrLcv_bioinspired_RetinaFastToneMappingG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::bioinspired::RetinaFastToneMapping> {
 		#[inline]
@@ -397,6 +406,7 @@ mod bioinspired_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::bioinspired::TransientAreasSegmentationModule>` instead, removal in Nov 2024"]
 	pub type PtrOfTransientAreasSegmentationModule = core::Ptr<crate::bioinspired::TransientAreasSegmentationModule>;
 	
 	ptr_extern! { crate::bioinspired::TransientAreasSegmentationModule,
@@ -424,7 +434,7 @@ mod bioinspired_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTransientAreasSegmentationModule, core::Ptr<core::Algorithm>, cv_PtrLcv_bioinspired_TransientAreasSegmentationModuleG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::bioinspired::TransientAreasSegmentationModule>, core::Ptr<core::Algorithm>, cv_PtrLcv_bioinspired_TransientAreasSegmentationModuleG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::bioinspired::TransientAreasSegmentationModule> {
 		#[inline]
@@ -442,6 +452,7 @@ pub use bioinspired_types::*;
 mod calib3d_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::calib3d::LMSolver>` instead, removal in Nov 2024"]
 	pub type PtrOfLMSolver = core::Ptr<crate::calib3d::LMSolver>;
 	
 	ptr_extern! { crate::calib3d::LMSolver,
@@ -469,7 +480,7 @@ mod calib3d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfLMSolver, core::Ptr<core::Algorithm>, cv_PtrLcv_LMSolverG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::calib3d::LMSolver>, core::Ptr<core::Algorithm>, cv_PtrLcv_LMSolverG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::calib3d::LMSolver> {
 		#[inline]
@@ -479,6 +490,7 @@ mod calib3d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::calib3d::LMSolver_Callback>` instead, removal in Nov 2024"]
 	pub type PtrOfLMSolver_Callback = core::Ptr<crate::calib3d::LMSolver_Callback>;
 	
 	ptr_extern! { crate::calib3d::LMSolver_Callback,
@@ -506,6 +518,7 @@ mod calib3d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::calib3d::StereoBM>` instead, removal in Nov 2024"]
 	pub type PtrOfStereoBM = core::Ptr<crate::calib3d::StereoBM>;
 	
 	ptr_extern! { crate::calib3d::StereoBM,
@@ -533,7 +546,7 @@ mod calib3d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfStereoBM, core::Ptr<core::Algorithm>, cv_PtrLcv_StereoBMG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::calib3d::StereoBM>, core::Ptr<core::Algorithm>, cv_PtrLcv_StereoBMG_to_PtrOfAlgorithm }
 	
 	impl crate::calib3d::StereoMatcherTraitConst for core::Ptr<crate::calib3d::StereoBM> {
 		#[inline] fn as_raw_StereoMatcher(&self) -> *const c_void { self.inner_as_raw() }
@@ -543,7 +556,7 @@ mod calib3d_types {
 		#[inline] fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfStereoBM, core::Ptr<crate::calib3d::StereoMatcher>, cv_PtrLcv_StereoBMG_to_PtrOfStereoMatcher }
+	ptr_cast_base! { core::Ptr<crate::calib3d::StereoBM>, core::Ptr<crate::calib3d::StereoMatcher>, cv_PtrLcv_StereoBMG_to_PtrOfStereoMatcher }
 	
 	impl std::fmt::Debug for core::Ptr<crate::calib3d::StereoBM> {
 		#[inline]
@@ -553,6 +566,7 @@ mod calib3d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::calib3d::StereoMatcher>` instead, removal in Nov 2024"]
 	pub type PtrOfStereoMatcher = core::Ptr<crate::calib3d::StereoMatcher>;
 	
 	ptr_extern! { crate::calib3d::StereoMatcher,
@@ -580,7 +594,7 @@ mod calib3d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfStereoMatcher, core::Ptr<core::Algorithm>, cv_PtrLcv_StereoMatcherG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::calib3d::StereoMatcher>, core::Ptr<core::Algorithm>, cv_PtrLcv_StereoMatcherG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::calib3d::StereoMatcher> {
 		#[inline]
@@ -590,6 +604,7 @@ mod calib3d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::calib3d::StereoSGBM>` instead, removal in Nov 2024"]
 	pub type PtrOfStereoSGBM = core::Ptr<crate::calib3d::StereoSGBM>;
 	
 	ptr_extern! { crate::calib3d::StereoSGBM,
@@ -617,7 +632,7 @@ mod calib3d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfStereoSGBM, core::Ptr<core::Algorithm>, cv_PtrLcv_StereoSGBMG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::calib3d::StereoSGBM>, core::Ptr<core::Algorithm>, cv_PtrLcv_StereoSGBMG_to_PtrOfAlgorithm }
 	
 	impl crate::calib3d::StereoMatcherTraitConst for core::Ptr<crate::calib3d::StereoSGBM> {
 		#[inline] fn as_raw_StereoMatcher(&self) -> *const c_void { self.inner_as_raw() }
@@ -627,7 +642,7 @@ mod calib3d_types {
 		#[inline] fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfStereoSGBM, core::Ptr<crate::calib3d::StereoMatcher>, cv_PtrLcv_StereoSGBMG_to_PtrOfStereoMatcher }
+	ptr_cast_base! { core::Ptr<crate::calib3d::StereoSGBM>, core::Ptr<crate::calib3d::StereoMatcher>, cv_PtrLcv_StereoSGBMG_to_PtrOfStereoMatcher }
 	
 	impl std::fmt::Debug for core::Ptr<crate::calib3d::StereoSGBM> {
 		#[inline]
@@ -645,6 +660,7 @@ pub use calib3d_types::*;
 mod ccalib_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ccalib::CustomPattern>` instead, removal in Nov 2024"]
 	pub type PtrOfCustomPattern = core::Ptr<crate::ccalib::CustomPattern>;
 	
 	ptr_extern! { crate::ccalib::CustomPattern,
@@ -673,7 +689,7 @@ mod ccalib_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCustomPattern, core::Ptr<core::Algorithm>, cv_PtrLcv_ccalib_CustomPatternG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ccalib::CustomPattern>, core::Ptr<core::Algorithm>, cv_PtrLcv_ccalib_CustomPatternG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ccalib::CustomPattern> {
 		#[inline]
@@ -707,6 +723,7 @@ mod core_types {
 		#[inline] fn as_raw_mut_MatOp(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<core::Algorithm>` instead, removal in Nov 2024"]
 	pub type PtrOfAlgorithm = core::Ptr<core::Algorithm>;
 	
 	ptr_extern! { core::Algorithm,
@@ -735,6 +752,7 @@ mod core_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<core::ConjGradSolver>` instead, removal in Nov 2024"]
 	pub type PtrOfConjGradSolver = core::Ptr<core::ConjGradSolver>;
 	
 	ptr_extern! { core::ConjGradSolver,
@@ -762,7 +780,7 @@ mod core_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfConjGradSolver, core::Ptr<core::Algorithm>, cv_PtrLcv_ConjGradSolverG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<core::ConjGradSolver>, core::Ptr<core::Algorithm>, cv_PtrLcv_ConjGradSolverG_to_PtrOfAlgorithm }
 	
 	impl core::MinProblemSolverTraitConst for core::Ptr<core::ConjGradSolver> {
 		#[inline] fn as_raw_MinProblemSolver(&self) -> *const c_void { self.inner_as_raw() }
@@ -772,7 +790,7 @@ mod core_types {
 		#[inline] fn as_raw_mut_MinProblemSolver(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfConjGradSolver, core::Ptr<core::MinProblemSolver>, cv_PtrLcv_ConjGradSolverG_to_PtrOfMinProblemSolver }
+	ptr_cast_base! { core::Ptr<core::ConjGradSolver>, core::Ptr<core::MinProblemSolver>, cv_PtrLcv_ConjGradSolverG_to_PtrOfMinProblemSolver }
 	
 	impl std::fmt::Debug for core::Ptr<core::ConjGradSolver> {
 		#[inline]
@@ -782,6 +800,7 @@ mod core_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<core::DownhillSolver>` instead, removal in Nov 2024"]
 	pub type PtrOfDownhillSolver = core::Ptr<core::DownhillSolver>;
 	
 	ptr_extern! { core::DownhillSolver,
@@ -809,7 +828,7 @@ mod core_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDownhillSolver, core::Ptr<core::Algorithm>, cv_PtrLcv_DownhillSolverG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<core::DownhillSolver>, core::Ptr<core::Algorithm>, cv_PtrLcv_DownhillSolverG_to_PtrOfAlgorithm }
 	
 	impl core::MinProblemSolverTraitConst for core::Ptr<core::DownhillSolver> {
 		#[inline] fn as_raw_MinProblemSolver(&self) -> *const c_void { self.inner_as_raw() }
@@ -819,7 +838,7 @@ mod core_types {
 		#[inline] fn as_raw_mut_MinProblemSolver(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDownhillSolver, core::Ptr<core::MinProblemSolver>, cv_PtrLcv_DownhillSolverG_to_PtrOfMinProblemSolver }
+	ptr_cast_base! { core::Ptr<core::DownhillSolver>, core::Ptr<core::MinProblemSolver>, cv_PtrLcv_DownhillSolverG_to_PtrOfMinProblemSolver }
 	
 	impl std::fmt::Debug for core::Ptr<core::DownhillSolver> {
 		#[inline]
@@ -829,6 +848,7 @@ mod core_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<core::FileStorage>` instead, removal in Nov 2024"]
 	pub type PtrOfFileStorage = core::Ptr<core::FileStorage>;
 	
 	ptr_extern! { core::FileStorage,
@@ -859,6 +879,7 @@ mod core_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<core::Formatted>` instead, removal in Nov 2024"]
 	pub type PtrOfFormatted = core::Ptr<core::Formatted>;
 	
 	ptr_extern! { core::Formatted,
@@ -886,6 +907,7 @@ mod core_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<core::Formatter>` instead, removal in Nov 2024"]
 	pub type PtrOfFormatter = core::Ptr<core::Formatter>;
 	
 	ptr_extern! { core::Formatter,
@@ -913,6 +935,7 @@ mod core_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<core::GpuMat_Allocator>` instead, removal in Nov 2024"]
 	pub type PtrOfGpuMat_Allocator = core::Ptr<core::GpuMat_Allocator>;
 	
 	ptr_extern! { core::GpuMat_Allocator,
@@ -940,6 +963,7 @@ mod core_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<core::MinProblemSolver>` instead, removal in Nov 2024"]
 	pub type PtrOfMinProblemSolver = core::Ptr<core::MinProblemSolver>;
 	
 	ptr_extern! { core::MinProblemSolver,
@@ -967,7 +991,7 @@ mod core_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMinProblemSolver, core::Ptr<core::Algorithm>, cv_PtrLcv_MinProblemSolverG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<core::MinProblemSolver>, core::Ptr<core::Algorithm>, cv_PtrLcv_MinProblemSolverG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<core::MinProblemSolver> {
 		#[inline]
@@ -977,6 +1001,7 @@ mod core_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<core::MinProblemSolver_Function>` instead, removal in Nov 2024"]
 	pub type PtrOfMinProblemSolver_Function = core::Ptr<core::MinProblemSolver_Function>;
 	
 	ptr_extern! { core::MinProblemSolver_Function,
@@ -1004,6 +1029,7 @@ mod core_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<core::OriginalClassName>` instead, removal in Nov 2024"]
 	pub type PtrOfOriginalClassName = core::Ptr<core::OriginalClassName>;
 	
 	ptr_extern! { core::OriginalClassName,
@@ -1032,6 +1058,7 @@ mod core_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<f32>` instead, removal in Nov 2024"]
 	pub type PtrOff32 = core::Ptr<f32>;
 	
 	ptr_extern! { f32,
@@ -1044,6 +1071,7 @@ mod core_types {
 		#[inline] pub fn as_raw_mut_PtrOff32(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Tuple<(core::Point2i, core::Point2i)>` instead, removal in Nov 2024"]
 	pub type TupleOfPoint2i_Point2i = core::Tuple<(core::Point2i, core::Point2i)>;
 	
 	impl core::Tuple<(core::Point2i, core::Point2i)> {
@@ -1057,6 +1085,7 @@ mod core_types {
 		1 = arg_1: core::Point2i, get_1 via std_pairLcv_Point2i__cv_Point2iG_get_1_const
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Tuple<(core::Rect, i32)>` instead, removal in Nov 2024"]
 	pub type TupleOfRect_i32 = core::Tuple<(core::Rect, i32)>;
 	
 	impl core::Tuple<(core::Rect, i32)> {
@@ -1070,6 +1099,7 @@ mod core_types {
 		1 = arg_1: i32, get_1 via std_pairLcv_Rect__intG_get_1_const
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Tuple<(core::UMat, u8)>` instead, removal in Nov 2024"]
 	pub type TupleOfUMat_u8 = core::Tuple<(core::UMat, u8)>;
 	
 	impl core::Tuple<(core::UMat, u8)> {
@@ -1083,6 +1113,7 @@ mod core_types {
 		1 = arg_1: u8, get_1 via std_pairLcv_UMat__unsigned_charG_get_1_const
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Tuple<(i32, f32)>` instead, removal in Nov 2024"]
 	pub type TupleOfi32_f32 = core::Tuple<(i32, f32)>;
 	
 	impl core::Tuple<(i32, f32)> {
@@ -1096,6 +1127,7 @@ mod core_types {
 		1 = arg_1: f32, get_1 via std_pairLint__floatG_get_1_const
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Tuple<(i32, f64)>` instead, removal in Nov 2024"]
 	pub type TupleOfi32_f64 = core::Tuple<(i32, f64)>;
 	
 	impl core::Tuple<(i32, f64)> {
@@ -1109,6 +1141,7 @@ mod core_types {
 		1 = arg_1: f64, get_1 via std_pairLint__doubleG_get_1_const
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::DMatch>` instead, removal in Nov 2024"]
 	pub type VectorOfDMatch = core::Vector<core::DMatch>;
 	
 	impl core::Vector<core::DMatch> {
@@ -1132,6 +1165,7 @@ mod core_types {
 	}
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::GpuMat>` instead, removal in Nov 2024"]
 	pub type VectorOfGpuMat = core::Vector<core::GpuMat>;
 	
 	impl core::Vector<core::GpuMat> {
@@ -1153,7 +1187,7 @@ mod core_types {
 	
 	vector_boxed_ref! { core::GpuMat }
 	
-	vector_extern! { BoxedRef<'_, core::GpuMat>,
+	vector_extern! { BoxedRef<'t, core::GpuMat>,
 		std_vectorLcv_cuda_GpuMatG_new_const, std_vectorLcv_cuda_GpuMatG_delete,
 		std_vectorLcv_cuda_GpuMatG_len_const, std_vectorLcv_cuda_GpuMatG_isEmpty_const,
 		std_vectorLcv_cuda_GpuMatG_capacity_const, std_vectorLcv_cuda_GpuMatG_shrinkToFit,
@@ -1164,6 +1198,7 @@ mod core_types {
 	}
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::KeyPoint>` instead, removal in Nov 2024"]
 	pub type VectorOfKeyPoint = core::Vector<core::KeyPoint>;
 	
 	impl core::Vector<core::KeyPoint> {
@@ -1185,7 +1220,7 @@ mod core_types {
 	
 	vector_boxed_ref! { core::KeyPoint }
 	
-	vector_extern! { BoxedRef<'_, core::KeyPoint>,
+	vector_extern! { BoxedRef<'t, core::KeyPoint>,
 		std_vectorLcv_KeyPointG_new_const, std_vectorLcv_KeyPointG_delete,
 		std_vectorLcv_KeyPointG_len_const, std_vectorLcv_KeyPointG_isEmpty_const,
 		std_vectorLcv_KeyPointG_capacity_const, std_vectorLcv_KeyPointG_shrinkToFit,
@@ -1196,6 +1231,7 @@ mod core_types {
 	}
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Mat>` instead, removal in Nov 2024"]
 	pub type VectorOfMat = core::Vector<core::Mat>;
 	
 	impl core::Vector<core::Mat> {
@@ -1217,7 +1253,7 @@ mod core_types {
 	
 	vector_boxed_ref! { core::Mat }
 	
-	vector_extern! { BoxedRef<'_, core::Mat>,
+	vector_extern! { BoxedRef<'t, core::Mat>,
 		std_vectorLcv_MatG_new_const, std_vectorLcv_MatG_delete,
 		std_vectorLcv_MatG_len_const, std_vectorLcv_MatG_isEmpty_const,
 		std_vectorLcv_MatG_capacity_const, std_vectorLcv_MatG_shrinkToFit,
@@ -1228,6 +1264,7 @@ mod core_types {
 	}
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::PlatformInfo>` instead, removal in Nov 2024"]
 	pub type VectorOfPlatformInfo = core::Vector<core::PlatformInfo>;
 	
 	impl core::Vector<core::PlatformInfo> {
@@ -1249,7 +1286,7 @@ mod core_types {
 	
 	vector_boxed_ref! { core::PlatformInfo }
 	
-	vector_extern! { BoxedRef<'_, core::PlatformInfo>,
+	vector_extern! { BoxedRef<'t, core::PlatformInfo>,
 		std_vectorLcv_ocl_PlatformInfoG_new_const, std_vectorLcv_ocl_PlatformInfoG_delete,
 		std_vectorLcv_ocl_PlatformInfoG_len_const, std_vectorLcv_ocl_PlatformInfoG_isEmpty_const,
 		std_vectorLcv_ocl_PlatformInfoG_capacity_const, std_vectorLcv_ocl_PlatformInfoG_shrinkToFit,
@@ -1260,6 +1297,7 @@ mod core_types {
 	}
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Point>` instead, removal in Nov 2024"]
 	pub type VectorOfPoint = core::Vector<core::Point>;
 	
 	impl core::Vector<core::Point> {
@@ -1325,6 +1363,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<core::Point> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Point2d>` instead, removal in Nov 2024"]
 	pub type VectorOfPoint2d = core::Vector<core::Point2d>;
 	
 	impl core::Vector<core::Point2d> {
@@ -1390,6 +1429,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<core::Point2d> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Point2f>` instead, removal in Nov 2024"]
 	pub type VectorOfPoint2f = core::Vector<core::Point2f>;
 	
 	impl core::Vector<core::Point2f> {
@@ -1455,6 +1495,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<core::Point2f> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Point3d>` instead, removal in Nov 2024"]
 	pub type VectorOfPoint3d = core::Vector<core::Point3d>;
 	
 	impl core::Vector<core::Point3d> {
@@ -1520,6 +1561,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<core::Point3d> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Point3f>` instead, removal in Nov 2024"]
 	pub type VectorOfPoint3f = core::Vector<core::Point3f>;
 	
 	impl core::Vector<core::Point3f> {
@@ -1585,6 +1627,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<core::Point3f> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Point3i>` instead, removal in Nov 2024"]
 	pub type VectorOfPoint3i = core::Vector<core::Point3i>;
 	
 	impl core::Vector<core::Point3i> {
@@ -1650,6 +1693,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<core::Point3i> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Range>` instead, removal in Nov 2024"]
 	pub type VectorOfRange = core::Vector<core::Range>;
 	
 	impl core::Vector<core::Range> {
@@ -1671,7 +1715,7 @@ mod core_types {
 	
 	vector_boxed_ref! { core::Range }
 	
-	vector_extern! { BoxedRef<'_, core::Range>,
+	vector_extern! { BoxedRef<'t, core::Range>,
 		std_vectorLcv_RangeG_new_const, std_vectorLcv_RangeG_delete,
 		std_vectorLcv_RangeG_len_const, std_vectorLcv_RangeG_isEmpty_const,
 		std_vectorLcv_RangeG_capacity_const, std_vectorLcv_RangeG_shrinkToFit,
@@ -1682,6 +1726,7 @@ mod core_types {
 	}
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Rect>` instead, removal in Nov 2024"]
 	pub type VectorOfRect = core::Vector<core::Rect>;
 	
 	impl core::Vector<core::Rect> {
@@ -1747,6 +1792,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<core::Rect> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Rect2d>` instead, removal in Nov 2024"]
 	pub type VectorOfRect2d = core::Vector<core::Rect2d>;
 	
 	impl core::Vector<core::Rect2d> {
@@ -1812,6 +1858,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<core::Rect2d> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::RotatedRect>` instead, removal in Nov 2024"]
 	pub type VectorOfRotatedRect = core::Vector<core::RotatedRect>;
 	
 	impl core::Vector<core::RotatedRect> {
@@ -1835,6 +1882,7 @@ mod core_types {
 	}
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Scalar>` instead, removal in Nov 2024"]
 	pub type VectorOfScalar = core::Vector<core::Scalar>;
 	
 	impl core::Vector<core::Scalar> {
@@ -1900,6 +1948,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<core::Scalar> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Size>` instead, removal in Nov 2024"]
 	pub type VectorOfSize = core::Vector<core::Size>;
 	
 	impl core::Vector<core::Size> {
@@ -1965,6 +2014,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<core::Size> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<String>` instead, removal in Nov 2024"]
 	pub type VectorOfString = core::Vector<String>;
 	
 	impl core::Vector<String> {
@@ -1985,6 +2035,7 @@ mod core_types {
 	vector_non_copy_or_bool! { String }
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Tuple<(core::Point2i, core::Point2i)>>` instead, removal in Nov 2024"]
 	pub type VectorOfTupleOfPoint2i_Point2i = core::Vector<core::Tuple<(core::Point2i, core::Point2i)>>;
 	
 	impl core::Vector<core::Tuple<(core::Point2i, core::Point2i)>> {
@@ -2005,6 +2056,7 @@ mod core_types {
 	vector_non_copy_or_bool! { core::Tuple<(core::Point2i, core::Point2i)> }
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Tuple<(core::UMat, u8)>>` instead, removal in Nov 2024"]
 	pub type VectorOfTupleOfUMat_u8 = core::Vector<core::Tuple<(core::UMat, u8)>>;
 	
 	impl core::Vector<core::Tuple<(core::UMat, u8)>> {
@@ -2025,6 +2077,7 @@ mod core_types {
 	vector_non_copy_or_bool! { core::Tuple<(core::UMat, u8)> }
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Tuple<(i32, f64)>>` instead, removal in Nov 2024"]
 	pub type VectorOfTupleOfi32_f64 = core::Vector<core::Tuple<(i32, f64)>>;
 	
 	impl core::Vector<core::Tuple<(i32, f64)>> {
@@ -2045,6 +2098,7 @@ mod core_types {
 	vector_non_copy_or_bool! { core::Tuple<(i32, f64)> }
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::UMat>` instead, removal in Nov 2024"]
 	pub type VectorOfUMat = core::Vector<core::UMat>;
 	
 	impl core::Vector<core::UMat> {
@@ -2066,7 +2120,7 @@ mod core_types {
 	
 	vector_boxed_ref! { core::UMat }
 	
-	vector_extern! { BoxedRef<'_, core::UMat>,
+	vector_extern! { BoxedRef<'t, core::UMat>,
 		std_vectorLcv_UMatG_new_const, std_vectorLcv_UMatG_delete,
 		std_vectorLcv_UMatG_len_const, std_vectorLcv_UMatG_isEmpty_const,
 		std_vectorLcv_UMatG_capacity_const, std_vectorLcv_UMatG_shrinkToFit,
@@ -2077,6 +2131,7 @@ mod core_types {
 	}
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Vec2d>` instead, removal in Nov 2024"]
 	pub type VectorOfVec2d = core::Vector<core::Vec2d>;
 	
 	impl core::Vector<core::Vec2d> {
@@ -2142,6 +2197,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<core::Vec2d> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Vec2f>` instead, removal in Nov 2024"]
 	pub type VectorOfVec2f = core::Vector<core::Vec2f>;
 	
 	impl core::Vector<core::Vec2f> {
@@ -2207,6 +2263,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<core::Vec2f> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Vec2i>` instead, removal in Nov 2024"]
 	pub type VectorOfVec2i = core::Vector<core::Vec2i>;
 	
 	impl core::Vector<core::Vec2i> {
@@ -2272,6 +2329,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<core::Vec2i> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Vec3d>` instead, removal in Nov 2024"]
 	pub type VectorOfVec3d = core::Vector<core::Vec3d>;
 	
 	impl core::Vector<core::Vec3d> {
@@ -2337,6 +2395,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<core::Vec3d> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Vec3f>` instead, removal in Nov 2024"]
 	pub type VectorOfVec3f = core::Vector<core::Vec3f>;
 	
 	impl core::Vector<core::Vec3f> {
@@ -2402,6 +2461,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<core::Vec3f> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Vec3i>` instead, removal in Nov 2024"]
 	pub type VectorOfVec3i = core::Vector<core::Vec3i>;
 	
 	impl core::Vector<core::Vec3i> {
@@ -2467,6 +2527,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<core::Vec3i> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Vec4f>` instead, removal in Nov 2024"]
 	pub type VectorOfVec4f = core::Vector<core::Vec4f>;
 	
 	impl core::Vector<core::Vec4f> {
@@ -2532,6 +2593,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<core::Vec4f> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Vec4i>` instead, removal in Nov 2024"]
 	pub type VectorOfVec4i = core::Vector<core::Vec4i>;
 	
 	impl core::Vector<core::Vec4i> {
@@ -2597,6 +2659,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<core::Vec4i> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Vec6f>` instead, removal in Nov 2024"]
 	pub type VectorOfVec6f = core::Vector<core::Vec6f>;
 	
 	impl core::Vector<core::Vec6f> {
@@ -2662,6 +2725,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<core::Vec6f> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<core::DMatch>>` instead, removal in Nov 2024"]
 	pub type VectorOfVectorOfDMatch = core::Vector<core::Vector<core::DMatch>>;
 	
 	impl core::Vector<core::Vector<core::DMatch>> {
@@ -2682,6 +2746,7 @@ mod core_types {
 	vector_non_copy_or_bool! { clone core::Vector<core::DMatch> }
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<core::KeyPoint>>` instead, removal in Nov 2024"]
 	pub type VectorOfVectorOfKeyPoint = core::Vector<core::Vector<core::KeyPoint>>;
 	
 	impl core::Vector<core::Vector<core::KeyPoint>> {
@@ -2702,6 +2767,7 @@ mod core_types {
 	vector_non_copy_or_bool! { clone core::Vector<core::KeyPoint> }
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<core::Mat>>` instead, removal in Nov 2024"]
 	pub type VectorOfVectorOfMat = core::Vector<core::Vector<core::Mat>>;
 	
 	impl core::Vector<core::Vector<core::Mat>> {
@@ -2722,6 +2788,7 @@ mod core_types {
 	vector_non_copy_or_bool! { clone core::Vector<core::Mat> }
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<core::Point>>` instead, removal in Nov 2024"]
 	pub type VectorOfVectorOfPoint = core::Vector<core::Vector<core::Point>>;
 	
 	impl core::Vector<core::Vector<core::Point>> {
@@ -2784,6 +2851,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<core::Vector<core::Point>> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<core::Point2d>>` instead, removal in Nov 2024"]
 	pub type VectorOfVectorOfPoint2d = core::Vector<core::Vector<core::Point2d>>;
 	
 	impl core::Vector<core::Vector<core::Point2d>> {
@@ -2846,6 +2914,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<core::Vector<core::Point2d>> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<core::Point2f>>` instead, removal in Nov 2024"]
 	pub type VectorOfVectorOfPoint2f = core::Vector<core::Vector<core::Point2f>>;
 	
 	impl core::Vector<core::Vector<core::Point2f>> {
@@ -2908,6 +2977,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<core::Vector<core::Point2f>> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<core::Point3d>>` instead, removal in Nov 2024"]
 	pub type VectorOfVectorOfPoint3d = core::Vector<core::Vector<core::Point3d>>;
 	
 	impl core::Vector<core::Vector<core::Point3d>> {
@@ -2970,6 +3040,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<core::Vector<core::Point3d>> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<core::Point3f>>` instead, removal in Nov 2024"]
 	pub type VectorOfVectorOfPoint3f = core::Vector<core::Vector<core::Point3f>>;
 	
 	impl core::Vector<core::Vector<core::Point3f>> {
@@ -3032,6 +3103,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<core::Vector<core::Point3f>> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<core::Point3i>>` instead, removal in Nov 2024"]
 	pub type VectorOfVectorOfPoint3i = core::Vector<core::Vector<core::Point3i>>;
 	
 	impl core::Vector<core::Vector<core::Point3i>> {
@@ -3094,6 +3166,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<core::Vector<core::Point3i>> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<core::Range>>` instead, removal in Nov 2024"]
 	pub type VectorOfVectorOfRange = core::Vector<core::Vector<core::Range>>;
 	
 	impl core::Vector<core::Vector<core::Range>> {
@@ -3114,6 +3187,7 @@ mod core_types {
 	vector_non_copy_or_bool! { core::Vector<core::Range> }
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<core::Vec2d>>` instead, removal in Nov 2024"]
 	pub type VectorOfVectorOfVec2d = core::Vector<core::Vector<core::Vec2d>>;
 	
 	impl core::Vector<core::Vector<core::Vec2d>> {
@@ -3176,6 +3250,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<core::Vector<core::Vec2d>> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<core::Vec2f>>` instead, removal in Nov 2024"]
 	pub type VectorOfVectorOfVec2f = core::Vector<core::Vector<core::Vec2f>>;
 	
 	impl core::Vector<core::Vector<core::Vec2f>> {
@@ -3238,6 +3313,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<core::Vector<core::Vec2f>> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<core::Vec2i>>` instead, removal in Nov 2024"]
 	pub type VectorOfVectorOfVec2i = core::Vector<core::Vector<core::Vec2i>>;
 	
 	impl core::Vector<core::Vector<core::Vec2i>> {
@@ -3300,6 +3376,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<core::Vector<core::Vec2i>> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<core::Vec3d>>` instead, removal in Nov 2024"]
 	pub type VectorOfVectorOfVec3d = core::Vector<core::Vector<core::Vec3d>>;
 	
 	impl core::Vector<core::Vector<core::Vec3d>> {
@@ -3362,6 +3439,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<core::Vector<core::Vec3d>> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<core::Vec3f>>` instead, removal in Nov 2024"]
 	pub type VectorOfVectorOfVec3f = core::Vector<core::Vector<core::Vec3f>>;
 	
 	impl core::Vector<core::Vector<core::Vec3f>> {
@@ -3424,6 +3502,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<core::Vector<core::Vec3f>> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<c_char>>` instead, removal in Nov 2024"]
 	pub type VectorOfVectorOfc_char = core::Vector<core::Vector<c_char>>;
 	
 	impl core::Vector<core::Vector<c_char>> {
@@ -3431,6 +3510,7 @@ mod core_types {
 		pub fn as_raw_mut_VectorOfVectorOfc_char(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<f32>>` instead, removal in Nov 2024"]
 	pub type VectorOfVectorOff32 = core::Vector<core::Vector<f32>>;
 	
 	impl core::Vector<core::Vector<f32>> {
@@ -3493,6 +3573,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<core::Vector<f32>> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<f64>>` instead, removal in Nov 2024"]
 	pub type VectorOfVectorOff64 = core::Vector<core::Vector<f64>>;
 	
 	impl core::Vector<core::Vector<f64>> {
@@ -3555,6 +3636,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<core::Vector<f64>> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<i32>>` instead, removal in Nov 2024"]
 	pub type VectorOfVectorOfi32 = core::Vector<core::Vector<i32>>;
 	
 	impl core::Vector<core::Vector<i32>> {
@@ -3617,6 +3699,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<core::Vector<i32>> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<i8>>` instead, removal in Nov 2024"]
 	pub type VectorOfVectorOfi8 = core::Vector<core::Vector<i8>>;
 	
 	impl core::Vector<core::Vector<i8>> {
@@ -3637,6 +3720,7 @@ mod core_types {
 	vector_non_copy_or_bool! { clone core::Vector<i8> }
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<u8>>` instead, removal in Nov 2024"]
 	pub type VectorOfVectorOfu8 = core::Vector<core::Vector<u8>>;
 	
 	impl core::Vector<core::Vector<u8>> {
@@ -3699,6 +3783,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<core::Vector<u8>> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<bool>` instead, removal in Nov 2024"]
 	pub type VectorOfbool = core::Vector<bool>;
 	
 	impl core::Vector<bool> {
@@ -3733,6 +3818,7 @@ mod core_types {
 	
 	input_array_ref_forward! { core::Vector<bool> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<c_char>` instead, removal in Nov 2024"]
 	pub type VectorOfc_char = core::Vector<c_char>;
 	
 	impl core::Vector<c_char> {
@@ -3740,6 +3826,7 @@ mod core_types {
 		pub fn as_raw_mut_VectorOfc_char(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<f32>` instead, removal in Nov 2024"]
 	pub type VectorOff32 = core::Vector<f32>;
 	
 	impl core::Vector<f32> {
@@ -3805,6 +3892,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<f32> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<f64>` instead, removal in Nov 2024"]
 	pub type VectorOff64 = core::Vector<f64>;
 	
 	impl core::Vector<f64> {
@@ -3870,6 +3958,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<f64> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<i32>` instead, removal in Nov 2024"]
 	pub type VectorOfi32 = core::Vector<i32>;
 	
 	impl core::Vector<i32> {
@@ -3935,6 +4024,7 @@ mod core_types {
 	
 	output_array_ref_forward! { core::Vector<i32> }
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<i8>` instead, removal in Nov 2024"]
 	pub type VectorOfi8 = core::Vector<i8>;
 	
 	impl core::Vector<i8> {
@@ -3958,6 +4048,7 @@ mod core_types {
 	}
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<size_t>` instead, removal in Nov 2024"]
 	pub type VectorOfsize_t = core::Vector<size_t>;
 	
 	impl core::Vector<size_t> {
@@ -3981,6 +4072,7 @@ mod core_types {
 	}
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<u8>` instead, removal in Nov 2024"]
 	pub type VectorOfu8 = core::Vector<u8>;
 	
 	impl core::Vector<u8> {
@@ -4054,6 +4146,7 @@ pub use core_types::*;
 mod cudaarithm_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaarithm::Convolution>` instead, removal in Nov 2024"]
 	pub type PtrOfConvolution = core::Ptr<crate::cudaarithm::Convolution>;
 	
 	ptr_extern! { crate::cudaarithm::Convolution,
@@ -4081,7 +4174,7 @@ mod cudaarithm_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfConvolution, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_ConvolutionG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudaarithm::Convolution>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_ConvolutionG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudaarithm::Convolution> {
 		#[inline]
@@ -4091,6 +4184,7 @@ mod cudaarithm_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaarithm::DFT>` instead, removal in Nov 2024"]
 	pub type PtrOfDFT = core::Ptr<crate::cudaarithm::DFT>;
 	
 	ptr_extern! { crate::cudaarithm::DFT,
@@ -4118,7 +4212,7 @@ mod cudaarithm_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDFT, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_DFTG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudaarithm::DFT>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_DFTG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudaarithm::DFT> {
 		#[inline]
@@ -4128,6 +4222,7 @@ mod cudaarithm_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaarithm::LookUpTable>` instead, removal in Nov 2024"]
 	pub type PtrOfLookUpTable = core::Ptr<crate::cudaarithm::LookUpTable>;
 	
 	ptr_extern! { crate::cudaarithm::LookUpTable,
@@ -4155,7 +4250,7 @@ mod cudaarithm_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfLookUpTable, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_LookUpTableG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudaarithm::LookUpTable>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_LookUpTableG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudaarithm::LookUpTable> {
 		#[inline]
@@ -4173,6 +4268,7 @@ pub use cudaarithm_types::*;
 mod cudabgsegm_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_BackgroundSubtractorMOG = core::Ptr<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG>;
 	
 	ptr_extern! { crate::cudabgsegm::CUDA_BackgroundSubtractorMOG,
@@ -4200,7 +4296,7 @@ mod cudabgsegm_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_BackgroundSubtractorMOG, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_BackgroundSubtractorMOGG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_BackgroundSubtractorMOGG_to_PtrOfAlgorithm }
 	
 	impl crate::video::BackgroundSubtractorTraitConst for core::Ptr<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG> {
 		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.inner_as_raw() }
@@ -4210,7 +4306,7 @@ mod cudabgsegm_types {
 		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_BackgroundSubtractorMOG, core::Ptr<crate::video::BackgroundSubtractor>, cv_PtrLcv_cuda_BackgroundSubtractorMOGG_to_PtrOfBackgroundSubtractor }
+	ptr_cast_base! { core::Ptr<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG>, core::Ptr<crate::video::BackgroundSubtractor>, cv_PtrLcv_cuda_BackgroundSubtractorMOGG_to_PtrOfBackgroundSubtractor }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG> {
 		#[inline]
@@ -4220,6 +4316,7 @@ mod cudabgsegm_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_BackgroundSubtractorMOG2 = core::Ptr<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2>;
 	
 	ptr_extern! { crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2,
@@ -4247,7 +4344,7 @@ mod cudabgsegm_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_BackgroundSubtractorMOG2, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_BackgroundSubtractorMOG2G_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_BackgroundSubtractorMOG2G_to_PtrOfAlgorithm }
 	
 	impl crate::video::BackgroundSubtractorTraitConst for core::Ptr<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2> {
 		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.inner_as_raw() }
@@ -4257,7 +4354,7 @@ mod cudabgsegm_types {
 		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_BackgroundSubtractorMOG2, core::Ptr<crate::video::BackgroundSubtractor>, cv_PtrLcv_cuda_BackgroundSubtractorMOG2G_to_PtrOfBackgroundSubtractor }
+	ptr_cast_base! { core::Ptr<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2>, core::Ptr<crate::video::BackgroundSubtractor>, cv_PtrLcv_cuda_BackgroundSubtractorMOG2G_to_PtrOfBackgroundSubtractor }
 	
 	impl crate::video::BackgroundSubtractorMOG2TraitConst for core::Ptr<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2> {
 		#[inline] fn as_raw_BackgroundSubtractorMOG2(&self) -> *const c_void { self.inner_as_raw() }
@@ -4267,7 +4364,7 @@ mod cudabgsegm_types {
 		#[inline] fn as_raw_mut_BackgroundSubtractorMOG2(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_BackgroundSubtractorMOG2, core::Ptr<crate::video::BackgroundSubtractorMOG2>, cv_PtrLcv_cuda_BackgroundSubtractorMOG2G_to_PtrOfBackgroundSubtractorMOG2 }
+	ptr_cast_base! { core::Ptr<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2>, core::Ptr<crate::video::BackgroundSubtractorMOG2>, cv_PtrLcv_cuda_BackgroundSubtractorMOG2G_to_PtrOfBackgroundSubtractorMOG2 }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2> {
 		#[inline]
@@ -4285,6 +4382,7 @@ pub use cudabgsegm_types::*;
 mod cudacodec_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudacodec::CUDA_EncoderCallback>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_EncoderCallback = core::Ptr<crate::cudacodec::CUDA_EncoderCallback>;
 	
 	ptr_extern! { crate::cudacodec::CUDA_EncoderCallback,
@@ -4312,6 +4410,7 @@ mod cudacodec_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudacodec::CUDA_RawVideoSource>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_RawVideoSource = core::Ptr<crate::cudacodec::CUDA_RawVideoSource>;
 	
 	ptr_extern! { crate::cudacodec::CUDA_RawVideoSource,
@@ -4339,6 +4438,7 @@ mod cudacodec_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudacodec::CUDA_VideoReader>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_VideoReader = core::Ptr<crate::cudacodec::CUDA_VideoReader>;
 	
 	ptr_extern! { crate::cudacodec::CUDA_VideoReader,
@@ -4366,6 +4466,7 @@ mod cudacodec_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudacodec::CUDA_VideoWriter>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_VideoWriter = core::Ptr<crate::cudacodec::CUDA_VideoWriter>;
 	
 	ptr_extern! { crate::cudacodec::CUDA_VideoWriter,
@@ -4401,6 +4502,7 @@ pub use cudacodec_types::*;
 mod cudafeatures2d_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudafeatures2d::CUDA_DescriptorMatcher>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_DescriptorMatcher = core::Ptr<crate::cudafeatures2d::CUDA_DescriptorMatcher>;
 	
 	ptr_extern! { crate::cudafeatures2d::CUDA_DescriptorMatcher,
@@ -4428,7 +4530,7 @@ mod cudafeatures2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_DescriptorMatcher, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_DescriptorMatcherG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudafeatures2d::CUDA_DescriptorMatcher>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_DescriptorMatcherG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudafeatures2d::CUDA_DescriptorMatcher> {
 		#[inline]
@@ -4438,6 +4540,7 @@ mod cudafeatures2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudafeatures2d::CUDA_FastFeatureDetector>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_FastFeatureDetector = core::Ptr<crate::cudafeatures2d::CUDA_FastFeatureDetector>;
 	
 	ptr_extern! { crate::cudafeatures2d::CUDA_FastFeatureDetector,
@@ -4465,7 +4568,7 @@ mod cudafeatures2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_FastFeatureDetector, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_FastFeatureDetectorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudafeatures2d::CUDA_FastFeatureDetector>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_FastFeatureDetectorG_to_PtrOfAlgorithm }
 	
 	impl crate::features2d::Feature2DTraitConst for core::Ptr<crate::cudafeatures2d::CUDA_FastFeatureDetector> {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
@@ -4475,7 +4578,7 @@ mod cudafeatures2d_types {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_FastFeatureDetector, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_cuda_FastFeatureDetectorG_to_PtrOfFeature2D }
+	ptr_cast_base! { core::Ptr<crate::cudafeatures2d::CUDA_FastFeatureDetector>, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_cuda_FastFeatureDetectorG_to_PtrOfFeature2D }
 	
 	impl crate::cudafeatures2d::CUDA_Feature2DAsyncTraitConst for core::Ptr<crate::cudafeatures2d::CUDA_FastFeatureDetector> {
 		#[inline] fn as_raw_CUDA_Feature2DAsync(&self) -> *const c_void { self.inner_as_raw() }
@@ -4485,7 +4588,7 @@ mod cudafeatures2d_types {
 		#[inline] fn as_raw_mut_CUDA_Feature2DAsync(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_FastFeatureDetector, core::Ptr<crate::cudafeatures2d::CUDA_Feature2DAsync>, cv_PtrLcv_cuda_FastFeatureDetectorG_to_PtrOfCUDA_Feature2DAsync }
+	ptr_cast_base! { core::Ptr<crate::cudafeatures2d::CUDA_FastFeatureDetector>, core::Ptr<crate::cudafeatures2d::CUDA_Feature2DAsync>, cv_PtrLcv_cuda_FastFeatureDetectorG_to_PtrOfCUDA_Feature2DAsync }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudafeatures2d::CUDA_FastFeatureDetector> {
 		#[inline]
@@ -4495,6 +4598,7 @@ mod cudafeatures2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudafeatures2d::CUDA_Feature2DAsync>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_Feature2DAsync = core::Ptr<crate::cudafeatures2d::CUDA_Feature2DAsync>;
 	
 	ptr_extern! { crate::cudafeatures2d::CUDA_Feature2DAsync,
@@ -4522,7 +4626,7 @@ mod cudafeatures2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_Feature2DAsync, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_Feature2DAsyncG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudafeatures2d::CUDA_Feature2DAsync>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_Feature2DAsyncG_to_PtrOfAlgorithm }
 	
 	impl crate::features2d::Feature2DTraitConst for core::Ptr<crate::cudafeatures2d::CUDA_Feature2DAsync> {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
@@ -4532,7 +4636,7 @@ mod cudafeatures2d_types {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_Feature2DAsync, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_cuda_Feature2DAsyncG_to_PtrOfFeature2D }
+	ptr_cast_base! { core::Ptr<crate::cudafeatures2d::CUDA_Feature2DAsync>, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_cuda_Feature2DAsyncG_to_PtrOfFeature2D }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudafeatures2d::CUDA_Feature2DAsync> {
 		#[inline]
@@ -4542,6 +4646,7 @@ mod cudafeatures2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudafeatures2d::CUDA_ORB>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_ORB = core::Ptr<crate::cudafeatures2d::CUDA_ORB>;
 	
 	ptr_extern! { crate::cudafeatures2d::CUDA_ORB,
@@ -4569,7 +4674,7 @@ mod cudafeatures2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_ORB, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_ORBG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudafeatures2d::CUDA_ORB>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_ORBG_to_PtrOfAlgorithm }
 	
 	impl crate::features2d::Feature2DTraitConst for core::Ptr<crate::cudafeatures2d::CUDA_ORB> {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
@@ -4579,7 +4684,7 @@ mod cudafeatures2d_types {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_ORB, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_cuda_ORBG_to_PtrOfFeature2D }
+	ptr_cast_base! { core::Ptr<crate::cudafeatures2d::CUDA_ORB>, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_cuda_ORBG_to_PtrOfFeature2D }
 	
 	impl crate::cudafeatures2d::CUDA_Feature2DAsyncTraitConst for core::Ptr<crate::cudafeatures2d::CUDA_ORB> {
 		#[inline] fn as_raw_CUDA_Feature2DAsync(&self) -> *const c_void { self.inner_as_raw() }
@@ -4589,7 +4694,7 @@ mod cudafeatures2d_types {
 		#[inline] fn as_raw_mut_CUDA_Feature2DAsync(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_ORB, core::Ptr<crate::cudafeatures2d::CUDA_Feature2DAsync>, cv_PtrLcv_cuda_ORBG_to_PtrOfCUDA_Feature2DAsync }
+	ptr_cast_base! { core::Ptr<crate::cudafeatures2d::CUDA_ORB>, core::Ptr<crate::cudafeatures2d::CUDA_Feature2DAsync>, cv_PtrLcv_cuda_ORBG_to_PtrOfCUDA_Feature2DAsync }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudafeatures2d::CUDA_ORB> {
 		#[inline]
@@ -4607,6 +4712,7 @@ pub use cudafeatures2d_types::*;
 mod cudafilters_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudafilters::Filter>` instead, removal in Nov 2024"]
 	pub type PtrOfFilter = core::Ptr<crate::cudafilters::Filter>;
 	
 	ptr_extern! { crate::cudafilters::Filter,
@@ -4634,7 +4740,7 @@ mod cudafilters_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFilter, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_FilterG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudafilters::Filter>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_FilterG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudafilters::Filter> {
 		#[inline]
@@ -4652,6 +4758,7 @@ pub use cudafilters_types::*;
 mod cudaimgproc_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaimgproc::CUDA_CLAHE>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_CLAHE = core::Ptr<crate::cudaimgproc::CUDA_CLAHE>;
 	
 	ptr_extern! { crate::cudaimgproc::CUDA_CLAHE,
@@ -4679,7 +4786,7 @@ mod cudaimgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_CLAHE, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_CLAHEG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudaimgproc::CUDA_CLAHE>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_CLAHEG_to_PtrOfAlgorithm }
 	
 	impl crate::imgproc::CLAHETraitConst for core::Ptr<crate::cudaimgproc::CUDA_CLAHE> {
 		#[inline] fn as_raw_CLAHE(&self) -> *const c_void { self.inner_as_raw() }
@@ -4689,7 +4796,7 @@ mod cudaimgproc_types {
 		#[inline] fn as_raw_mut_CLAHE(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_CLAHE, core::Ptr<crate::imgproc::CLAHE>, cv_PtrLcv_cuda_CLAHEG_to_PtrOfCLAHE }
+	ptr_cast_base! { core::Ptr<crate::cudaimgproc::CUDA_CLAHE>, core::Ptr<crate::imgproc::CLAHE>, cv_PtrLcv_cuda_CLAHEG_to_PtrOfCLAHE }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudaimgproc::CUDA_CLAHE> {
 		#[inline]
@@ -4699,6 +4806,7 @@ mod cudaimgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaimgproc::CUDA_CannyEdgeDetector>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_CannyEdgeDetector = core::Ptr<crate::cudaimgproc::CUDA_CannyEdgeDetector>;
 	
 	ptr_extern! { crate::cudaimgproc::CUDA_CannyEdgeDetector,
@@ -4726,7 +4834,7 @@ mod cudaimgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_CannyEdgeDetector, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_CannyEdgeDetectorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudaimgproc::CUDA_CannyEdgeDetector>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_CannyEdgeDetectorG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudaimgproc::CUDA_CannyEdgeDetector> {
 		#[inline]
@@ -4736,6 +4844,7 @@ mod cudaimgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaimgproc::CUDA_CornernessCriteria>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_CornernessCriteria = core::Ptr<crate::cudaimgproc::CUDA_CornernessCriteria>;
 	
 	ptr_extern! { crate::cudaimgproc::CUDA_CornernessCriteria,
@@ -4763,7 +4872,7 @@ mod cudaimgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_CornernessCriteria, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_CornernessCriteriaG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudaimgproc::CUDA_CornernessCriteria>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_CornernessCriteriaG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudaimgproc::CUDA_CornernessCriteria> {
 		#[inline]
@@ -4773,6 +4882,7 @@ mod cudaimgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaimgproc::CUDA_CornersDetector>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_CornersDetector = core::Ptr<crate::cudaimgproc::CUDA_CornersDetector>;
 	
 	ptr_extern! { crate::cudaimgproc::CUDA_CornersDetector,
@@ -4800,7 +4910,7 @@ mod cudaimgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_CornersDetector, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_CornersDetectorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudaimgproc::CUDA_CornersDetector>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_CornersDetectorG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudaimgproc::CUDA_CornersDetector> {
 		#[inline]
@@ -4810,6 +4920,7 @@ mod cudaimgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaimgproc::CUDA_HoughCirclesDetector>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_HoughCirclesDetector = core::Ptr<crate::cudaimgproc::CUDA_HoughCirclesDetector>;
 	
 	ptr_extern! { crate::cudaimgproc::CUDA_HoughCirclesDetector,
@@ -4837,7 +4948,7 @@ mod cudaimgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_HoughCirclesDetector, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_HoughCirclesDetectorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudaimgproc::CUDA_HoughCirclesDetector>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_HoughCirclesDetectorG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudaimgproc::CUDA_HoughCirclesDetector> {
 		#[inline]
@@ -4847,6 +4958,7 @@ mod cudaimgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaimgproc::CUDA_HoughLinesDetector>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_HoughLinesDetector = core::Ptr<crate::cudaimgproc::CUDA_HoughLinesDetector>;
 	
 	ptr_extern! { crate::cudaimgproc::CUDA_HoughLinesDetector,
@@ -4874,7 +4986,7 @@ mod cudaimgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_HoughLinesDetector, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_HoughLinesDetectorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudaimgproc::CUDA_HoughLinesDetector>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_HoughLinesDetectorG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudaimgproc::CUDA_HoughLinesDetector> {
 		#[inline]
@@ -4884,6 +4996,7 @@ mod cudaimgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaimgproc::CUDA_HoughSegmentDetector>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_HoughSegmentDetector = core::Ptr<crate::cudaimgproc::CUDA_HoughSegmentDetector>;
 	
 	ptr_extern! { crate::cudaimgproc::CUDA_HoughSegmentDetector,
@@ -4911,7 +5024,7 @@ mod cudaimgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_HoughSegmentDetector, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_HoughSegmentDetectorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudaimgproc::CUDA_HoughSegmentDetector>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_HoughSegmentDetectorG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudaimgproc::CUDA_HoughSegmentDetector> {
 		#[inline]
@@ -4921,6 +5034,7 @@ mod cudaimgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaimgproc::CUDA_TemplateMatching>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_TemplateMatching = core::Ptr<crate::cudaimgproc::CUDA_TemplateMatching>;
 	
 	ptr_extern! { crate::cudaimgproc::CUDA_TemplateMatching,
@@ -4948,7 +5062,7 @@ mod cudaimgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_TemplateMatching, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_TemplateMatchingG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudaimgproc::CUDA_TemplateMatching>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_TemplateMatchingG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudaimgproc::CUDA_TemplateMatching> {
 		#[inline]
@@ -4966,6 +5080,7 @@ pub use cudaimgproc_types::*;
 mod cudaobjdetect_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaobjdetect::CUDA_CascadeClassifier>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_CascadeClassifier = core::Ptr<crate::cudaobjdetect::CUDA_CascadeClassifier>;
 	
 	ptr_extern! { crate::cudaobjdetect::CUDA_CascadeClassifier,
@@ -4993,7 +5108,7 @@ mod cudaobjdetect_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_CascadeClassifier, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_CascadeClassifierG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudaobjdetect::CUDA_CascadeClassifier>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_CascadeClassifierG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudaobjdetect::CUDA_CascadeClassifier> {
 		#[inline]
@@ -5003,6 +5118,7 @@ mod cudaobjdetect_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaobjdetect::CUDA_HOG>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_HOG = core::Ptr<crate::cudaobjdetect::CUDA_HOG>;
 	
 	ptr_extern! { crate::cudaobjdetect::CUDA_HOG,
@@ -5030,7 +5146,7 @@ mod cudaobjdetect_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_HOG, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_HOGG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudaobjdetect::CUDA_HOG>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_HOGG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudaobjdetect::CUDA_HOG> {
 		#[inline]
@@ -5048,6 +5164,7 @@ pub use cudaobjdetect_types::*;
 mod cudaoptflow_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaoptflow::CUDA_BroxOpticalFlow>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_BroxOpticalFlow = core::Ptr<crate::cudaoptflow::CUDA_BroxOpticalFlow>;
 	
 	ptr_extern! { crate::cudaoptflow::CUDA_BroxOpticalFlow,
@@ -5075,7 +5192,7 @@ mod cudaoptflow_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_BroxOpticalFlow, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_BroxOpticalFlowG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudaoptflow::CUDA_BroxOpticalFlow>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_BroxOpticalFlowG_to_PtrOfAlgorithm }
 	
 	impl crate::cudaoptflow::CUDA_DenseOpticalFlowTraitConst for core::Ptr<crate::cudaoptflow::CUDA_BroxOpticalFlow> {
 		#[inline] fn as_raw_CUDA_DenseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
@@ -5085,7 +5202,7 @@ mod cudaoptflow_types {
 		#[inline] fn as_raw_mut_CUDA_DenseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_BroxOpticalFlow, core::Ptr<crate::cudaoptflow::CUDA_DenseOpticalFlow>, cv_PtrLcv_cuda_BroxOpticalFlowG_to_PtrOfCUDA_DenseOpticalFlow }
+	ptr_cast_base! { core::Ptr<crate::cudaoptflow::CUDA_BroxOpticalFlow>, core::Ptr<crate::cudaoptflow::CUDA_DenseOpticalFlow>, cv_PtrLcv_cuda_BroxOpticalFlowG_to_PtrOfCUDA_DenseOpticalFlow }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudaoptflow::CUDA_BroxOpticalFlow> {
 		#[inline]
@@ -5095,6 +5212,7 @@ mod cudaoptflow_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaoptflow::CUDA_DenseOpticalFlow>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_DenseOpticalFlow = core::Ptr<crate::cudaoptflow::CUDA_DenseOpticalFlow>;
 	
 	ptr_extern! { crate::cudaoptflow::CUDA_DenseOpticalFlow,
@@ -5122,7 +5240,7 @@ mod cudaoptflow_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_DenseOpticalFlow, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_DenseOpticalFlowG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudaoptflow::CUDA_DenseOpticalFlow>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_DenseOpticalFlowG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudaoptflow::CUDA_DenseOpticalFlow> {
 		#[inline]
@@ -5132,6 +5250,7 @@ mod cudaoptflow_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_DensePyrLKOpticalFlow = core::Ptr<crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow>;
 	
 	ptr_extern! { crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow,
@@ -5159,7 +5278,7 @@ mod cudaoptflow_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_DensePyrLKOpticalFlow, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_DensePyrLKOpticalFlowG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_DensePyrLKOpticalFlowG_to_PtrOfAlgorithm }
 	
 	impl crate::cudaoptflow::CUDA_DenseOpticalFlowTraitConst for core::Ptr<crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow> {
 		#[inline] fn as_raw_CUDA_DenseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
@@ -5169,7 +5288,7 @@ mod cudaoptflow_types {
 		#[inline] fn as_raw_mut_CUDA_DenseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_DensePyrLKOpticalFlow, core::Ptr<crate::cudaoptflow::CUDA_DenseOpticalFlow>, cv_PtrLcv_cuda_DensePyrLKOpticalFlowG_to_PtrOfCUDA_DenseOpticalFlow }
+	ptr_cast_base! { core::Ptr<crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow>, core::Ptr<crate::cudaoptflow::CUDA_DenseOpticalFlow>, cv_PtrLcv_cuda_DensePyrLKOpticalFlowG_to_PtrOfCUDA_DenseOpticalFlow }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow> {
 		#[inline]
@@ -5179,6 +5298,7 @@ mod cudaoptflow_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaoptflow::CUDA_FarnebackOpticalFlow>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_FarnebackOpticalFlow = core::Ptr<crate::cudaoptflow::CUDA_FarnebackOpticalFlow>;
 	
 	ptr_extern! { crate::cudaoptflow::CUDA_FarnebackOpticalFlow,
@@ -5206,7 +5326,7 @@ mod cudaoptflow_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_FarnebackOpticalFlow, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_FarnebackOpticalFlowG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudaoptflow::CUDA_FarnebackOpticalFlow>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_FarnebackOpticalFlowG_to_PtrOfAlgorithm }
 	
 	impl crate::cudaoptflow::CUDA_DenseOpticalFlowTraitConst for core::Ptr<crate::cudaoptflow::CUDA_FarnebackOpticalFlow> {
 		#[inline] fn as_raw_CUDA_DenseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
@@ -5216,7 +5336,7 @@ mod cudaoptflow_types {
 		#[inline] fn as_raw_mut_CUDA_DenseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_FarnebackOpticalFlow, core::Ptr<crate::cudaoptflow::CUDA_DenseOpticalFlow>, cv_PtrLcv_cuda_FarnebackOpticalFlowG_to_PtrOfCUDA_DenseOpticalFlow }
+	ptr_cast_base! { core::Ptr<crate::cudaoptflow::CUDA_FarnebackOpticalFlow>, core::Ptr<crate::cudaoptflow::CUDA_DenseOpticalFlow>, cv_PtrLcv_cuda_FarnebackOpticalFlowG_to_PtrOfCUDA_DenseOpticalFlow }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudaoptflow::CUDA_FarnebackOpticalFlow> {
 		#[inline]
@@ -5226,6 +5346,7 @@ mod cudaoptflow_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaoptflow::CUDA_NvidiaHWOpticalFlow>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_NvidiaHWOpticalFlow = core::Ptr<crate::cudaoptflow::CUDA_NvidiaHWOpticalFlow>;
 	
 	ptr_extern! { crate::cudaoptflow::CUDA_NvidiaHWOpticalFlow,
@@ -5253,7 +5374,7 @@ mod cudaoptflow_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_NvidiaHWOpticalFlow, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_NvidiaHWOpticalFlowG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudaoptflow::CUDA_NvidiaHWOpticalFlow>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_NvidiaHWOpticalFlowG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudaoptflow::CUDA_NvidiaHWOpticalFlow> {
 		#[inline]
@@ -5263,6 +5384,7 @@ mod cudaoptflow_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_NvidiaOpticalFlow_1_0 = core::Ptr<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0>;
 	
 	ptr_extern! { crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0,
@@ -5290,7 +5412,7 @@ mod cudaoptflow_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_NvidiaOpticalFlow_1_0, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_NvidiaOpticalFlow_1_0G_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_NvidiaOpticalFlow_1_0G_to_PtrOfAlgorithm }
 	
 	impl crate::cudaoptflow::CUDA_NvidiaHWOpticalFlowTraitConst for core::Ptr<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0> {
 		#[inline] fn as_raw_CUDA_NvidiaHWOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
@@ -5300,7 +5422,7 @@ mod cudaoptflow_types {
 		#[inline] fn as_raw_mut_CUDA_NvidiaHWOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_NvidiaOpticalFlow_1_0, core::Ptr<crate::cudaoptflow::CUDA_NvidiaHWOpticalFlow>, cv_PtrLcv_cuda_NvidiaOpticalFlow_1_0G_to_PtrOfCUDA_NvidiaHWOpticalFlow }
+	ptr_cast_base! { core::Ptr<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0>, core::Ptr<crate::cudaoptflow::CUDA_NvidiaHWOpticalFlow>, cv_PtrLcv_cuda_NvidiaOpticalFlow_1_0G_to_PtrOfCUDA_NvidiaHWOpticalFlow }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0> {
 		#[inline]
@@ -5310,6 +5432,7 @@ mod cudaoptflow_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_NvidiaOpticalFlow_2_0 = core::Ptr<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0>;
 	
 	ptr_extern! { crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0,
@@ -5337,7 +5460,7 @@ mod cudaoptflow_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_NvidiaOpticalFlow_2_0, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_NvidiaOpticalFlow_2_0G_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_NvidiaOpticalFlow_2_0G_to_PtrOfAlgorithm }
 	
 	impl crate::cudaoptflow::CUDA_NvidiaHWOpticalFlowTraitConst for core::Ptr<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0> {
 		#[inline] fn as_raw_CUDA_NvidiaHWOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
@@ -5347,7 +5470,7 @@ mod cudaoptflow_types {
 		#[inline] fn as_raw_mut_CUDA_NvidiaHWOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_NvidiaOpticalFlow_2_0, core::Ptr<crate::cudaoptflow::CUDA_NvidiaHWOpticalFlow>, cv_PtrLcv_cuda_NvidiaOpticalFlow_2_0G_to_PtrOfCUDA_NvidiaHWOpticalFlow }
+	ptr_cast_base! { core::Ptr<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0>, core::Ptr<crate::cudaoptflow::CUDA_NvidiaHWOpticalFlow>, cv_PtrLcv_cuda_NvidiaOpticalFlow_2_0G_to_PtrOfCUDA_NvidiaHWOpticalFlow }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0> {
 		#[inline]
@@ -5357,6 +5480,7 @@ mod cudaoptflow_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_OpticalFlowDual_TVL1 = core::Ptr<crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1>;
 	
 	ptr_extern! { crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1,
@@ -5384,7 +5508,7 @@ mod cudaoptflow_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_OpticalFlowDual_TVL1, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_OpticalFlowDual_TVL1G_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_OpticalFlowDual_TVL1G_to_PtrOfAlgorithm }
 	
 	impl crate::cudaoptflow::CUDA_DenseOpticalFlowTraitConst for core::Ptr<crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1> {
 		#[inline] fn as_raw_CUDA_DenseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
@@ -5394,7 +5518,7 @@ mod cudaoptflow_types {
 		#[inline] fn as_raw_mut_CUDA_DenseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_OpticalFlowDual_TVL1, core::Ptr<crate::cudaoptflow::CUDA_DenseOpticalFlow>, cv_PtrLcv_cuda_OpticalFlowDual_TVL1G_to_PtrOfCUDA_DenseOpticalFlow }
+	ptr_cast_base! { core::Ptr<crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1>, core::Ptr<crate::cudaoptflow::CUDA_DenseOpticalFlow>, cv_PtrLcv_cuda_OpticalFlowDual_TVL1G_to_PtrOfCUDA_DenseOpticalFlow }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1> {
 		#[inline]
@@ -5404,6 +5528,7 @@ mod cudaoptflow_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaoptflow::CUDA_SparseOpticalFlow>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_SparseOpticalFlow = core::Ptr<crate::cudaoptflow::CUDA_SparseOpticalFlow>;
 	
 	ptr_extern! { crate::cudaoptflow::CUDA_SparseOpticalFlow,
@@ -5431,7 +5556,7 @@ mod cudaoptflow_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_SparseOpticalFlow, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_SparseOpticalFlowG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudaoptflow::CUDA_SparseOpticalFlow>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_SparseOpticalFlowG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudaoptflow::CUDA_SparseOpticalFlow> {
 		#[inline]
@@ -5441,6 +5566,7 @@ mod cudaoptflow_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_SparsePyrLKOpticalFlow = core::Ptr<crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow>;
 	
 	ptr_extern! { crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow,
@@ -5468,7 +5594,7 @@ mod cudaoptflow_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_SparsePyrLKOpticalFlow, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_SparsePyrLKOpticalFlowG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_SparsePyrLKOpticalFlowG_to_PtrOfAlgorithm }
 	
 	impl crate::cudaoptflow::CUDA_SparseOpticalFlowTraitConst for core::Ptr<crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow> {
 		#[inline] fn as_raw_CUDA_SparseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
@@ -5478,7 +5604,7 @@ mod cudaoptflow_types {
 		#[inline] fn as_raw_mut_CUDA_SparseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_SparsePyrLKOpticalFlow, core::Ptr<crate::cudaoptflow::CUDA_SparseOpticalFlow>, cv_PtrLcv_cuda_SparsePyrLKOpticalFlowG_to_PtrOfCUDA_SparseOpticalFlow }
+	ptr_cast_base! { core::Ptr<crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow>, core::Ptr<crate::cudaoptflow::CUDA_SparseOpticalFlow>, cv_PtrLcv_cuda_SparsePyrLKOpticalFlowG_to_PtrOfCUDA_SparseOpticalFlow }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow> {
 		#[inline]
@@ -5496,6 +5622,7 @@ pub use cudaoptflow_types::*;
 mod cudastereo_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudastereo::CUDA_DisparityBilateralFilter>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_DisparityBilateralFilter = core::Ptr<crate::cudastereo::CUDA_DisparityBilateralFilter>;
 	
 	ptr_extern! { crate::cudastereo::CUDA_DisparityBilateralFilter,
@@ -5523,7 +5650,7 @@ mod cudastereo_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_DisparityBilateralFilter, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_DisparityBilateralFilterG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudastereo::CUDA_DisparityBilateralFilter>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_DisparityBilateralFilterG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudastereo::CUDA_DisparityBilateralFilter> {
 		#[inline]
@@ -5533,6 +5660,7 @@ mod cudastereo_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudastereo::CUDA_StereoBM>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_StereoBM = core::Ptr<crate::cudastereo::CUDA_StereoBM>;
 	
 	ptr_extern! { crate::cudastereo::CUDA_StereoBM,
@@ -5560,7 +5688,7 @@ mod cudastereo_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_StereoBM, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_StereoBMG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudastereo::CUDA_StereoBM>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_StereoBMG_to_PtrOfAlgorithm }
 	
 	impl crate::calib3d::StereoBMTraitConst for core::Ptr<crate::cudastereo::CUDA_StereoBM> {
 		#[inline] fn as_raw_StereoBM(&self) -> *const c_void { self.inner_as_raw() }
@@ -5570,7 +5698,7 @@ mod cudastereo_types {
 		#[inline] fn as_raw_mut_StereoBM(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_StereoBM, core::Ptr<crate::calib3d::StereoBM>, cv_PtrLcv_cuda_StereoBMG_to_PtrOfStereoBM }
+	ptr_cast_base! { core::Ptr<crate::cudastereo::CUDA_StereoBM>, core::Ptr<crate::calib3d::StereoBM>, cv_PtrLcv_cuda_StereoBMG_to_PtrOfStereoBM }
 	
 	impl crate::calib3d::StereoMatcherTraitConst for core::Ptr<crate::cudastereo::CUDA_StereoBM> {
 		#[inline] fn as_raw_StereoMatcher(&self) -> *const c_void { self.inner_as_raw() }
@@ -5580,7 +5708,7 @@ mod cudastereo_types {
 		#[inline] fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_StereoBM, core::Ptr<crate::calib3d::StereoMatcher>, cv_PtrLcv_cuda_StereoBMG_to_PtrOfStereoMatcher }
+	ptr_cast_base! { core::Ptr<crate::cudastereo::CUDA_StereoBM>, core::Ptr<crate::calib3d::StereoMatcher>, cv_PtrLcv_cuda_StereoBMG_to_PtrOfStereoMatcher }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudastereo::CUDA_StereoBM> {
 		#[inline]
@@ -5590,6 +5718,7 @@ mod cudastereo_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudastereo::CUDA_StereoBeliefPropagation>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_StereoBeliefPropagation = core::Ptr<crate::cudastereo::CUDA_StereoBeliefPropagation>;
 	
 	ptr_extern! { crate::cudastereo::CUDA_StereoBeliefPropagation,
@@ -5617,7 +5746,7 @@ mod cudastereo_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_StereoBeliefPropagation, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_StereoBeliefPropagationG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudastereo::CUDA_StereoBeliefPropagation>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_StereoBeliefPropagationG_to_PtrOfAlgorithm }
 	
 	impl crate::calib3d::StereoMatcherTraitConst for core::Ptr<crate::cudastereo::CUDA_StereoBeliefPropagation> {
 		#[inline] fn as_raw_StereoMatcher(&self) -> *const c_void { self.inner_as_raw() }
@@ -5627,7 +5756,7 @@ mod cudastereo_types {
 		#[inline] fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_StereoBeliefPropagation, core::Ptr<crate::calib3d::StereoMatcher>, cv_PtrLcv_cuda_StereoBeliefPropagationG_to_PtrOfStereoMatcher }
+	ptr_cast_base! { core::Ptr<crate::cudastereo::CUDA_StereoBeliefPropagation>, core::Ptr<crate::calib3d::StereoMatcher>, cv_PtrLcv_cuda_StereoBeliefPropagationG_to_PtrOfStereoMatcher }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudastereo::CUDA_StereoBeliefPropagation> {
 		#[inline]
@@ -5637,6 +5766,7 @@ mod cudastereo_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudastereo::CUDA_StereoConstantSpaceBP>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_StereoConstantSpaceBP = core::Ptr<crate::cudastereo::CUDA_StereoConstantSpaceBP>;
 	
 	ptr_extern! { crate::cudastereo::CUDA_StereoConstantSpaceBP,
@@ -5664,7 +5794,7 @@ mod cudastereo_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_StereoConstantSpaceBP, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_StereoConstantSpaceBPG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudastereo::CUDA_StereoConstantSpaceBP>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_StereoConstantSpaceBPG_to_PtrOfAlgorithm }
 	
 	impl crate::calib3d::StereoMatcherTraitConst for core::Ptr<crate::cudastereo::CUDA_StereoConstantSpaceBP> {
 		#[inline] fn as_raw_StereoMatcher(&self) -> *const c_void { self.inner_as_raw() }
@@ -5674,7 +5804,7 @@ mod cudastereo_types {
 		#[inline] fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_StereoConstantSpaceBP, core::Ptr<crate::calib3d::StereoMatcher>, cv_PtrLcv_cuda_StereoConstantSpaceBPG_to_PtrOfStereoMatcher }
+	ptr_cast_base! { core::Ptr<crate::cudastereo::CUDA_StereoConstantSpaceBP>, core::Ptr<crate::calib3d::StereoMatcher>, cv_PtrLcv_cuda_StereoConstantSpaceBPG_to_PtrOfStereoMatcher }
 	
 	impl crate::cudastereo::CUDA_StereoBeliefPropagationTraitConst for core::Ptr<crate::cudastereo::CUDA_StereoConstantSpaceBP> {
 		#[inline] fn as_raw_CUDA_StereoBeliefPropagation(&self) -> *const c_void { self.inner_as_raw() }
@@ -5684,7 +5814,7 @@ mod cudastereo_types {
 		#[inline] fn as_raw_mut_CUDA_StereoBeliefPropagation(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_StereoConstantSpaceBP, core::Ptr<crate::cudastereo::CUDA_StereoBeliefPropagation>, cv_PtrLcv_cuda_StereoConstantSpaceBPG_to_PtrOfCUDA_StereoBeliefPropagation }
+	ptr_cast_base! { core::Ptr<crate::cudastereo::CUDA_StereoConstantSpaceBP>, core::Ptr<crate::cudastereo::CUDA_StereoBeliefPropagation>, cv_PtrLcv_cuda_StereoConstantSpaceBPG_to_PtrOfCUDA_StereoBeliefPropagation }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudastereo::CUDA_StereoConstantSpaceBP> {
 		#[inline]
@@ -5694,6 +5824,7 @@ mod cudastereo_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudastereo::CUDA_StereoSGM>` instead, removal in Nov 2024"]
 	pub type PtrOfCUDA_StereoSGM = core::Ptr<crate::cudastereo::CUDA_StereoSGM>;
 	
 	ptr_extern! { crate::cudastereo::CUDA_StereoSGM,
@@ -5721,7 +5852,7 @@ mod cudastereo_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_StereoSGM, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_StereoSGMG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::cudastereo::CUDA_StereoSGM>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_StereoSGMG_to_PtrOfAlgorithm }
 	
 	impl crate::calib3d::StereoMatcherTraitConst for core::Ptr<crate::cudastereo::CUDA_StereoSGM> {
 		#[inline] fn as_raw_StereoMatcher(&self) -> *const c_void { self.inner_as_raw() }
@@ -5731,7 +5862,7 @@ mod cudastereo_types {
 		#[inline] fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_StereoSGM, core::Ptr<crate::calib3d::StereoMatcher>, cv_PtrLcv_cuda_StereoSGMG_to_PtrOfStereoMatcher }
+	ptr_cast_base! { core::Ptr<crate::cudastereo::CUDA_StereoSGM>, core::Ptr<crate::calib3d::StereoMatcher>, cv_PtrLcv_cuda_StereoSGMG_to_PtrOfStereoMatcher }
 	
 	impl crate::calib3d::StereoSGBMTraitConst for core::Ptr<crate::cudastereo::CUDA_StereoSGM> {
 		#[inline] fn as_raw_StereoSGBM(&self) -> *const c_void { self.inner_as_raw() }
@@ -5741,7 +5872,7 @@ mod cudastereo_types {
 		#[inline] fn as_raw_mut_StereoSGBM(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCUDA_StereoSGM, core::Ptr<crate::calib3d::StereoSGBM>, cv_PtrLcv_cuda_StereoSGMG_to_PtrOfStereoSGBM }
+	ptr_cast_base! { core::Ptr<crate::cudastereo::CUDA_StereoSGM>, core::Ptr<crate::calib3d::StereoSGBM>, cv_PtrLcv_cuda_StereoSGMG_to_PtrOfStereoSGBM }
 	
 	impl std::fmt::Debug for core::Ptr<crate::cudastereo::CUDA_StereoSGM> {
 		#[inline]
@@ -5759,6 +5890,7 @@ pub use cudastereo_types::*;
 mod dnn_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::AbsLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfAbsLayer = core::Ptr<crate::dnn::AbsLayer>;
 	
 	ptr_extern! { crate::dnn::AbsLayer,
@@ -5787,7 +5919,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAbsLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_AbsLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::AbsLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_AbsLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::AbsLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -5797,7 +5929,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAbsLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_AbsLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::AbsLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_AbsLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::AbsLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -5807,7 +5939,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAbsLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AbsLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::AbsLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AbsLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::AbsLayer> {
 		#[inline]
@@ -5821,6 +5953,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::AccumLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfAccumLayer = core::Ptr<crate::dnn::AccumLayer>;
 	
 	ptr_extern! { crate::dnn::AccumLayer,
@@ -5849,7 +5982,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAccumLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_AccumLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::AccumLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_AccumLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::AccumLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -5859,7 +5992,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAccumLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AccumLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::AccumLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AccumLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::AccumLayer> {
 		#[inline]
@@ -5873,6 +6006,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::AcosLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfAcosLayer = core::Ptr<crate::dnn::AcosLayer>;
 	
 	ptr_extern! { crate::dnn::AcosLayer,
@@ -5901,7 +6035,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAcosLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_AcosLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::AcosLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_AcosLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::AcosLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -5911,7 +6045,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAcosLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_AcosLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::AcosLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_AcosLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::AcosLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -5921,7 +6055,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAcosLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AcosLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::AcosLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AcosLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::AcosLayer> {
 		#[inline]
@@ -5935,6 +6069,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::AcoshLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfAcoshLayer = core::Ptr<crate::dnn::AcoshLayer>;
 	
 	ptr_extern! { crate::dnn::AcoshLayer,
@@ -5963,7 +6098,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAcoshLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_AcoshLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::AcoshLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_AcoshLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::AcoshLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -5973,7 +6108,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAcoshLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_AcoshLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::AcoshLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_AcoshLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::AcoshLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -5983,7 +6118,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAcoshLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AcoshLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::AcoshLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AcoshLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::AcoshLayer> {
 		#[inline]
@@ -5997,6 +6132,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ActivationLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfActivationLayer = core::Ptr<crate::dnn::ActivationLayer>;
 	
 	ptr_extern! { crate::dnn::ActivationLayer,
@@ -6025,7 +6161,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfActivationLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ActivationLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::ActivationLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ActivationLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ActivationLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -6035,7 +6171,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfActivationLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ActivationLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ActivationLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ActivationLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::ActivationLayer> {
 		#[inline]
@@ -6049,6 +6185,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ActivationLayerInt8>` instead, removal in Nov 2024"]
 	pub type PtrOfActivationLayerInt8 = core::Ptr<crate::dnn::ActivationLayerInt8>;
 	
 	ptr_extern! { crate::dnn::ActivationLayerInt8,
@@ -6077,7 +6214,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfActivationLayerInt8, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ActivationLayerInt8G_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::ActivationLayerInt8>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ActivationLayerInt8G_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::ActivationLayerInt8> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -6087,7 +6224,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfActivationLayerInt8, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_ActivationLayerInt8G_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ActivationLayerInt8>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_ActivationLayerInt8G_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ActivationLayerInt8> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -6097,7 +6234,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfActivationLayerInt8, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ActivationLayerInt8G_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ActivationLayerInt8>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ActivationLayerInt8G_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::ActivationLayerInt8> {
 		#[inline]
@@ -6111,6 +6248,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ArgLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfArgLayer = core::Ptr<crate::dnn::ArgLayer>;
 	
 	ptr_extern! { crate::dnn::ArgLayer,
@@ -6139,7 +6277,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfArgLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ArgLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::ArgLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ArgLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ArgLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -6149,7 +6287,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfArgLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ArgLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ArgLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ArgLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::ArgLayer> {
 		#[inline]
@@ -6163,6 +6301,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::AsinLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfAsinLayer = core::Ptr<crate::dnn::AsinLayer>;
 	
 	ptr_extern! { crate::dnn::AsinLayer,
@@ -6191,7 +6330,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAsinLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_AsinLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::AsinLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_AsinLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::AsinLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -6201,7 +6340,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAsinLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_AsinLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::AsinLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_AsinLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::AsinLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -6211,7 +6350,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAsinLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AsinLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::AsinLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AsinLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::AsinLayer> {
 		#[inline]
@@ -6225,6 +6364,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::AsinhLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfAsinhLayer = core::Ptr<crate::dnn::AsinhLayer>;
 	
 	ptr_extern! { crate::dnn::AsinhLayer,
@@ -6253,7 +6393,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAsinhLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_AsinhLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::AsinhLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_AsinhLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::AsinhLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -6263,7 +6403,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAsinhLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_AsinhLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::AsinhLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_AsinhLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::AsinhLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -6273,7 +6413,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAsinhLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AsinhLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::AsinhLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AsinhLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::AsinhLayer> {
 		#[inline]
@@ -6287,6 +6427,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::AtanLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfAtanLayer = core::Ptr<crate::dnn::AtanLayer>;
 	
 	ptr_extern! { crate::dnn::AtanLayer,
@@ -6315,7 +6456,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAtanLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_AtanLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::AtanLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_AtanLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::AtanLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -6325,7 +6466,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAtanLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_AtanLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::AtanLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_AtanLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::AtanLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -6335,7 +6476,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAtanLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AtanLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::AtanLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AtanLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::AtanLayer> {
 		#[inline]
@@ -6349,6 +6490,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::AtanhLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfAtanhLayer = core::Ptr<crate::dnn::AtanhLayer>;
 	
 	ptr_extern! { crate::dnn::AtanhLayer,
@@ -6377,7 +6519,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAtanhLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_AtanhLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::AtanhLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_AtanhLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::AtanhLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -6387,7 +6529,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAtanhLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_AtanhLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::AtanhLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_AtanhLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::AtanhLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -6397,7 +6539,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAtanhLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AtanhLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::AtanhLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AtanhLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::AtanhLayer> {
 		#[inline]
@@ -6411,6 +6553,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::AttentionLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfAttentionLayer = core::Ptr<crate::dnn::AttentionLayer>;
 	
 	ptr_extern! { crate::dnn::AttentionLayer,
@@ -6439,7 +6582,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAttentionLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_AttentionLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::AttentionLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_AttentionLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::AttentionLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -6449,7 +6592,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAttentionLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AttentionLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::AttentionLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_AttentionLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::AttentionLayer> {
 		#[inline]
@@ -6463,6 +6606,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::BNLLLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfBNLLLayer = core::Ptr<crate::dnn::BNLLLayer>;
 	
 	ptr_extern! { crate::dnn::BNLLLayer,
@@ -6491,7 +6635,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBNLLLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_BNLLLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::BNLLLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_BNLLLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::BNLLLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -6501,7 +6645,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBNLLLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_BNLLLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::BNLLLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_BNLLLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::BNLLLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -6511,7 +6655,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBNLLLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_BNLLLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::BNLLLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_BNLLLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::BNLLLayer> {
 		#[inline]
@@ -6525,6 +6669,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::BackendNode>` instead, removal in Nov 2024"]
 	pub type PtrOfBackendNode = core::Ptr<crate::dnn::BackendNode>;
 	
 	ptr_extern! { crate::dnn::BackendNode,
@@ -6554,6 +6699,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::BackendWrapper>` instead, removal in Nov 2024"]
 	pub type PtrOfBackendWrapper = core::Ptr<crate::dnn::BackendWrapper>;
 	
 	ptr_extern! { crate::dnn::BackendWrapper,
@@ -6583,6 +6729,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::BaseConvolutionLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfBaseConvolutionLayer = core::Ptr<crate::dnn::BaseConvolutionLayer>;
 	
 	ptr_extern! { crate::dnn::BaseConvolutionLayer,
@@ -6611,7 +6758,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBaseConvolutionLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_BaseConvolutionLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::BaseConvolutionLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_BaseConvolutionLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::BaseConvolutionLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -6621,7 +6768,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBaseConvolutionLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_BaseConvolutionLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::BaseConvolutionLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_BaseConvolutionLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::BaseConvolutionLayer> {
 		#[inline]
@@ -6648,6 +6795,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::BatchNormLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfBatchNormLayer = core::Ptr<crate::dnn::BatchNormLayer>;
 	
 	ptr_extern! { crate::dnn::BatchNormLayer,
@@ -6676,7 +6824,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBatchNormLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_BatchNormLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::BatchNormLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_BatchNormLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::BatchNormLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -6686,7 +6834,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBatchNormLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_BatchNormLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::BatchNormLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_BatchNormLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::BatchNormLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -6696,7 +6844,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBatchNormLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_BatchNormLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::BatchNormLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_BatchNormLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::BatchNormLayer> {
 		#[inline]
@@ -6713,6 +6861,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::BatchNormLayerInt8>` instead, removal in Nov 2024"]
 	pub type PtrOfBatchNormLayerInt8 = core::Ptr<crate::dnn::BatchNormLayerInt8>;
 	
 	ptr_extern! { crate::dnn::BatchNormLayerInt8,
@@ -6741,7 +6890,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBatchNormLayerInt8, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_BatchNormLayerInt8G_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::BatchNormLayerInt8>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_BatchNormLayerInt8G_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::BatchNormLayerInt8> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -6751,7 +6900,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBatchNormLayerInt8, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_BatchNormLayerInt8G_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::BatchNormLayerInt8>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_BatchNormLayerInt8G_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::BatchNormLayerTraitConst for core::Ptr<crate::dnn::BatchNormLayerInt8> {
 		#[inline] fn as_raw_BatchNormLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -6761,7 +6910,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_BatchNormLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBatchNormLayerInt8, core::Ptr<crate::dnn::BatchNormLayer>, cv_PtrLcv_dnn_BatchNormLayerInt8G_to_PtrOfBatchNormLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::BatchNormLayerInt8>, core::Ptr<crate::dnn::BatchNormLayer>, cv_PtrLcv_dnn_BatchNormLayerInt8G_to_PtrOfBatchNormLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::BatchNormLayerInt8> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -6771,7 +6920,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBatchNormLayerInt8, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_BatchNormLayerInt8G_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::BatchNormLayerInt8>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_BatchNormLayerInt8G_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::BatchNormLayerInt8> {
 		#[inline]
@@ -6792,6 +6941,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::BlankLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfBlankLayer = core::Ptr<crate::dnn::BlankLayer>;
 	
 	ptr_extern! { crate::dnn::BlankLayer,
@@ -6820,7 +6970,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBlankLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_BlankLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::BlankLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_BlankLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::BlankLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -6830,7 +6980,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBlankLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_BlankLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::BlankLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_BlankLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::BlankLayer> {
 		#[inline]
@@ -6844,6 +6994,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::CeilLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfCeilLayer = core::Ptr<crate::dnn::CeilLayer>;
 	
 	ptr_extern! { crate::dnn::CeilLayer,
@@ -6872,7 +7023,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCeilLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_CeilLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::CeilLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_CeilLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::CeilLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -6882,7 +7033,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCeilLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_CeilLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::CeilLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_CeilLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::CeilLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -6892,7 +7043,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCeilLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CeilLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::CeilLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CeilLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::CeilLayer> {
 		#[inline]
@@ -6906,6 +7057,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::CeluLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfCeluLayer = core::Ptr<crate::dnn::CeluLayer>;
 	
 	ptr_extern! { crate::dnn::CeluLayer,
@@ -6934,7 +7086,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCeluLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_CeluLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::CeluLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_CeluLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::CeluLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -6944,7 +7096,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCeluLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_CeluLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::CeluLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_CeluLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::CeluLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -6954,7 +7106,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCeluLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CeluLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::CeluLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CeluLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::CeluLayer> {
 		#[inline]
@@ -6969,6 +7121,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ChannelsPReLULayer>` instead, removal in Nov 2024"]
 	pub type PtrOfChannelsPReLULayer = core::Ptr<crate::dnn::ChannelsPReLULayer>;
 	
 	ptr_extern! { crate::dnn::ChannelsPReLULayer,
@@ -6997,7 +7150,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfChannelsPReLULayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ChannelsPReLULayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::ChannelsPReLULayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ChannelsPReLULayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::ChannelsPReLULayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -7007,7 +7160,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfChannelsPReLULayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_ChannelsPReLULayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ChannelsPReLULayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_ChannelsPReLULayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ChannelsPReLULayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -7017,7 +7170,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfChannelsPReLULayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ChannelsPReLULayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ChannelsPReLULayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ChannelsPReLULayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::ChannelsPReLULayer> {
 		#[inline]
@@ -7031,6 +7184,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::CompareLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfCompareLayer = core::Ptr<crate::dnn::CompareLayer>;
 	
 	ptr_extern! { crate::dnn::CompareLayer,
@@ -7059,7 +7213,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCompareLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_CompareLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::CompareLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_CompareLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::CompareLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -7069,7 +7223,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCompareLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CompareLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::CompareLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CompareLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::CompareLayer> {
 		#[inline]
@@ -7083,6 +7237,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ConcatLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfConcatLayer = core::Ptr<crate::dnn::ConcatLayer>;
 	
 	ptr_extern! { crate::dnn::ConcatLayer,
@@ -7111,7 +7266,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfConcatLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ConcatLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::ConcatLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ConcatLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ConcatLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -7121,7 +7276,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfConcatLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ConcatLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ConcatLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ConcatLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::ConcatLayer> {
 		#[inline]
@@ -7138,6 +7293,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ConstLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfConstLayer = core::Ptr<crate::dnn::ConstLayer>;
 	
 	ptr_extern! { crate::dnn::ConstLayer,
@@ -7166,7 +7322,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfConstLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ConstLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::ConstLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ConstLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ConstLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -7176,7 +7332,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfConstLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ConstLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ConstLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ConstLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::ConstLayer> {
 		#[inline]
@@ -7190,6 +7346,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ConvolutionLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfConvolutionLayer = core::Ptr<crate::dnn::ConvolutionLayer>;
 	
 	ptr_extern! { crate::dnn::ConvolutionLayer,
@@ -7218,7 +7375,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfConvolutionLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ConvolutionLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::ConvolutionLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ConvolutionLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::BaseConvolutionLayerTraitConst for core::Ptr<crate::dnn::ConvolutionLayer> {
 		#[inline] fn as_raw_BaseConvolutionLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -7228,7 +7385,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_BaseConvolutionLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfConvolutionLayer, core::Ptr<crate::dnn::BaseConvolutionLayer>, cv_PtrLcv_dnn_ConvolutionLayerG_to_PtrOfBaseConvolutionLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ConvolutionLayer>, core::Ptr<crate::dnn::BaseConvolutionLayer>, cv_PtrLcv_dnn_ConvolutionLayerG_to_PtrOfBaseConvolutionLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ConvolutionLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -7238,7 +7395,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfConvolutionLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ConvolutionLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ConvolutionLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ConvolutionLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::ConvolutionLayer> {
 		#[inline]
@@ -7268,6 +7425,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ConvolutionLayerInt8>` instead, removal in Nov 2024"]
 	pub type PtrOfConvolutionLayerInt8 = core::Ptr<crate::dnn::ConvolutionLayerInt8>;
 	
 	ptr_extern! { crate::dnn::ConvolutionLayerInt8,
@@ -7296,7 +7454,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfConvolutionLayerInt8, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ConvolutionLayerInt8G_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::ConvolutionLayerInt8>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ConvolutionLayerInt8G_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::BaseConvolutionLayerTraitConst for core::Ptr<crate::dnn::ConvolutionLayerInt8> {
 		#[inline] fn as_raw_BaseConvolutionLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -7306,7 +7464,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_BaseConvolutionLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfConvolutionLayerInt8, core::Ptr<crate::dnn::BaseConvolutionLayer>, cv_PtrLcv_dnn_ConvolutionLayerInt8G_to_PtrOfBaseConvolutionLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ConvolutionLayerInt8>, core::Ptr<crate::dnn::BaseConvolutionLayer>, cv_PtrLcv_dnn_ConvolutionLayerInt8G_to_PtrOfBaseConvolutionLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ConvolutionLayerInt8> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -7316,7 +7474,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfConvolutionLayerInt8, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ConvolutionLayerInt8G_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ConvolutionLayerInt8>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ConvolutionLayerInt8G_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::ConvolutionLayerInt8> {
 		#[inline]
@@ -7349,6 +7507,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::CorrelationLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfCorrelationLayer = core::Ptr<crate::dnn::CorrelationLayer>;
 	
 	ptr_extern! { crate::dnn::CorrelationLayer,
@@ -7377,7 +7536,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCorrelationLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_CorrelationLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::CorrelationLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_CorrelationLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::CorrelationLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -7387,7 +7546,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCorrelationLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CorrelationLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::CorrelationLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CorrelationLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::CorrelationLayer> {
 		#[inline]
@@ -7401,6 +7560,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::CosLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfCosLayer = core::Ptr<crate::dnn::CosLayer>;
 	
 	ptr_extern! { crate::dnn::CosLayer,
@@ -7429,7 +7589,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCosLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_CosLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::CosLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_CosLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::CosLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -7439,7 +7599,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCosLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_CosLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::CosLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_CosLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::CosLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -7449,7 +7609,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCosLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CosLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::CosLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CosLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::CosLayer> {
 		#[inline]
@@ -7463,6 +7623,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::CoshLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfCoshLayer = core::Ptr<crate::dnn::CoshLayer>;
 	
 	ptr_extern! { crate::dnn::CoshLayer,
@@ -7491,7 +7652,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCoshLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_CoshLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::CoshLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_CoshLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::CoshLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -7501,7 +7662,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCoshLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_CoshLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::CoshLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_CoshLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::CoshLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -7511,7 +7672,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCoshLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CoshLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::CoshLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CoshLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::CoshLayer> {
 		#[inline]
@@ -7525,6 +7686,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::CropAndResizeLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfCropAndResizeLayer = core::Ptr<crate::dnn::CropAndResizeLayer>;
 	
 	ptr_extern! { crate::dnn::CropAndResizeLayer,
@@ -7553,7 +7715,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCropAndResizeLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_CropAndResizeLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::CropAndResizeLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_CropAndResizeLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::CropAndResizeLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -7563,7 +7725,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCropAndResizeLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CropAndResizeLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::CropAndResizeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CropAndResizeLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::CropAndResizeLayer> {
 		#[inline]
@@ -7577,6 +7739,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::CropLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfCropLayer = core::Ptr<crate::dnn::CropLayer>;
 	
 	ptr_extern! { crate::dnn::CropLayer,
@@ -7605,7 +7768,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCropLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_CropLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::CropLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_CropLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::CropLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -7615,7 +7778,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCropLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CropLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::CropLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CropLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::CropLayer> {
 		#[inline]
@@ -7629,6 +7792,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::CumSumLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfCumSumLayer = core::Ptr<crate::dnn::CumSumLayer>;
 	
 	ptr_extern! { crate::dnn::CumSumLayer,
@@ -7657,7 +7821,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCumSumLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_CumSumLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::CumSumLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_CumSumLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::CumSumLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -7667,7 +7831,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCumSumLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CumSumLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::CumSumLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_CumSumLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::CumSumLayer> {
 		#[inline]
@@ -7683,6 +7847,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::DataAugmentationLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfDataAugmentationLayer = core::Ptr<crate::dnn::DataAugmentationLayer>;
 	
 	ptr_extern! { crate::dnn::DataAugmentationLayer,
@@ -7711,7 +7876,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDataAugmentationLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_DataAugmentationLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::DataAugmentationLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_DataAugmentationLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::DataAugmentationLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -7721,7 +7886,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDataAugmentationLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_DataAugmentationLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::DataAugmentationLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_DataAugmentationLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::DataAugmentationLayer> {
 		#[inline]
@@ -7735,6 +7900,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::DeconvolutionLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfDeconvolutionLayer = core::Ptr<crate::dnn::DeconvolutionLayer>;
 	
 	ptr_extern! { crate::dnn::DeconvolutionLayer,
@@ -7763,7 +7929,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDeconvolutionLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_DeconvolutionLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::DeconvolutionLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_DeconvolutionLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::BaseConvolutionLayerTraitConst for core::Ptr<crate::dnn::DeconvolutionLayer> {
 		#[inline] fn as_raw_BaseConvolutionLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -7773,7 +7939,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_BaseConvolutionLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDeconvolutionLayer, core::Ptr<crate::dnn::BaseConvolutionLayer>, cv_PtrLcv_dnn_DeconvolutionLayerG_to_PtrOfBaseConvolutionLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::DeconvolutionLayer>, core::Ptr<crate::dnn::BaseConvolutionLayer>, cv_PtrLcv_dnn_DeconvolutionLayerG_to_PtrOfBaseConvolutionLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::DeconvolutionLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -7783,7 +7949,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDeconvolutionLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_DeconvolutionLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::DeconvolutionLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_DeconvolutionLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::DeconvolutionLayer> {
 		#[inline]
@@ -7810,6 +7976,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::DequantizeLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfDequantizeLayer = core::Ptr<crate::dnn::DequantizeLayer>;
 	
 	ptr_extern! { crate::dnn::DequantizeLayer,
@@ -7838,7 +8005,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDequantizeLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_DequantizeLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::DequantizeLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_DequantizeLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::DequantizeLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -7848,7 +8015,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDequantizeLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_DequantizeLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::DequantizeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_DequantizeLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::DequantizeLayer> {
 		#[inline]
@@ -7864,6 +8031,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::DetectionOutputLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfDetectionOutputLayer = core::Ptr<crate::dnn::DetectionOutputLayer>;
 	
 	ptr_extern! { crate::dnn::DetectionOutputLayer,
@@ -7892,7 +8060,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetectionOutputLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_DetectionOutputLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::DetectionOutputLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_DetectionOutputLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::DetectionOutputLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -7902,7 +8070,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetectionOutputLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_DetectionOutputLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::DetectionOutputLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_DetectionOutputLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::DetectionOutputLayer> {
 		#[inline]
@@ -7916,6 +8084,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ELULayer>` instead, removal in Nov 2024"]
 	pub type PtrOfELULayer = core::Ptr<crate::dnn::ELULayer>;
 	
 	ptr_extern! { crate::dnn::ELULayer,
@@ -7944,7 +8113,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfELULayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ELULayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::ELULayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ELULayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::ELULayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -7954,7 +8123,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfELULayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_ELULayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ELULayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_ELULayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ELULayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -7964,7 +8133,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfELULayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ELULayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ELULayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ELULayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::ELULayer> {
 		#[inline]
@@ -7979,6 +8148,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::EinsumLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfEinsumLayer = core::Ptr<crate::dnn::EinsumLayer>;
 	
 	ptr_extern! { crate::dnn::EinsumLayer,
@@ -8007,7 +8177,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfEinsumLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_EinsumLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::EinsumLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_EinsumLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::EinsumLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -8017,7 +8187,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfEinsumLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_EinsumLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::EinsumLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_EinsumLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::EinsumLayer> {
 		#[inline]
@@ -8031,6 +8201,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::EltwiseLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfEltwiseLayer = core::Ptr<crate::dnn::EltwiseLayer>;
 	
 	ptr_extern! { crate::dnn::EltwiseLayer,
@@ -8059,7 +8230,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfEltwiseLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_EltwiseLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::EltwiseLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_EltwiseLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::EltwiseLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -8069,7 +8240,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfEltwiseLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_EltwiseLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::EltwiseLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_EltwiseLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::EltwiseLayer> {
 		#[inline]
@@ -8083,6 +8254,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::EltwiseLayerInt8>` instead, removal in Nov 2024"]
 	pub type PtrOfEltwiseLayerInt8 = core::Ptr<crate::dnn::EltwiseLayerInt8>;
 	
 	ptr_extern! { crate::dnn::EltwiseLayerInt8,
@@ -8111,7 +8283,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfEltwiseLayerInt8, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_EltwiseLayerInt8G_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::EltwiseLayerInt8>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_EltwiseLayerInt8G_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::EltwiseLayerInt8> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -8121,7 +8293,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfEltwiseLayerInt8, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_EltwiseLayerInt8G_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::EltwiseLayerInt8>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_EltwiseLayerInt8G_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::EltwiseLayerInt8> {
 		#[inline]
@@ -8135,6 +8307,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ErfLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfErfLayer = core::Ptr<crate::dnn::ErfLayer>;
 	
 	ptr_extern! { crate::dnn::ErfLayer,
@@ -8163,7 +8336,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfErfLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ErfLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::ErfLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ErfLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::ErfLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -8173,7 +8346,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfErfLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_ErfLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ErfLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_ErfLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ErfLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -8183,7 +8356,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfErfLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ErfLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ErfLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ErfLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::ErfLayer> {
 		#[inline]
@@ -8197,6 +8370,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ExpLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfExpLayer = core::Ptr<crate::dnn::ExpLayer>;
 	
 	ptr_extern! { crate::dnn::ExpLayer,
@@ -8225,7 +8399,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfExpLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ExpLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::ExpLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ExpLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::ExpLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -8235,7 +8409,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfExpLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_ExpLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ExpLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_ExpLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ExpLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -8245,7 +8419,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfExpLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ExpLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ExpLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ExpLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::ExpLayer> {
 		#[inline]
@@ -8262,6 +8436,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ExpandLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfExpandLayer = core::Ptr<crate::dnn::ExpandLayer>;
 	
 	ptr_extern! { crate::dnn::ExpandLayer,
@@ -8290,7 +8465,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfExpandLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ExpandLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::ExpandLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ExpandLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ExpandLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -8300,7 +8475,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfExpandLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ExpandLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ExpandLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ExpandLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::ExpandLayer> {
 		#[inline]
@@ -8314,6 +8489,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::FlattenLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfFlattenLayer = core::Ptr<crate::dnn::FlattenLayer>;
 	
 	ptr_extern! { crate::dnn::FlattenLayer,
@@ -8342,7 +8518,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFlattenLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_FlattenLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::FlattenLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_FlattenLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::FlattenLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -8352,7 +8528,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFlattenLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_FlattenLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::FlattenLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_FlattenLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::FlattenLayer> {
 		#[inline]
@@ -8366,6 +8542,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::FloorLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfFloorLayer = core::Ptr<crate::dnn::FloorLayer>;
 	
 	ptr_extern! { crate::dnn::FloorLayer,
@@ -8394,7 +8571,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFloorLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_FloorLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::FloorLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_FloorLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::FloorLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -8404,7 +8581,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFloorLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_FloorLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::FloorLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_FloorLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::FloorLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -8414,7 +8591,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFloorLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_FloorLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::FloorLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_FloorLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::FloorLayer> {
 		#[inline]
@@ -8428,6 +8605,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::FlowWarpLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfFlowWarpLayer = core::Ptr<crate::dnn::FlowWarpLayer>;
 	
 	ptr_extern! { crate::dnn::FlowWarpLayer,
@@ -8456,7 +8634,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFlowWarpLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_FlowWarpLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::FlowWarpLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_FlowWarpLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::FlowWarpLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -8466,7 +8644,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFlowWarpLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_FlowWarpLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::FlowWarpLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_FlowWarpLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::FlowWarpLayer> {
 		#[inline]
@@ -8480,6 +8658,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::GRULayer>` instead, removal in Nov 2024"]
 	pub type PtrOfGRULayer = core::Ptr<crate::dnn::GRULayer>;
 	
 	ptr_extern! { crate::dnn::GRULayer,
@@ -8508,7 +8687,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfGRULayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_GRULayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::GRULayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_GRULayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::GRULayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -8518,7 +8697,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfGRULayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_GRULayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::GRULayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_GRULayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::GRULayer> {
 		#[inline]
@@ -8532,6 +8711,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::GatherElementsLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfGatherElementsLayer = core::Ptr<crate::dnn::GatherElementsLayer>;
 	
 	ptr_extern! { crate::dnn::GatherElementsLayer,
@@ -8560,7 +8740,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfGatherElementsLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_GatherElementsLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::GatherElementsLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_GatherElementsLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::GatherElementsLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -8570,7 +8750,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfGatherElementsLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_GatherElementsLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::GatherElementsLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_GatherElementsLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::GatherElementsLayer> {
 		#[inline]
@@ -8584,6 +8764,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::GatherLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfGatherLayer = core::Ptr<crate::dnn::GatherLayer>;
 	
 	ptr_extern! { crate::dnn::GatherLayer,
@@ -8612,7 +8793,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfGatherLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_GatherLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::GatherLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_GatherLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::GatherLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -8622,7 +8803,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfGatherLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_GatherLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::GatherLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_GatherLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::GatherLayer> {
 		#[inline]
@@ -8636,6 +8817,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::GeluApproximationLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfGeluApproximationLayer = core::Ptr<crate::dnn::GeluApproximationLayer>;
 	
 	ptr_extern! { crate::dnn::GeluApproximationLayer,
@@ -8664,7 +8846,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfGeluApproximationLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_GeluApproximationLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::GeluApproximationLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_GeluApproximationLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::GeluApproximationLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -8674,7 +8856,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfGeluApproximationLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_GeluApproximationLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::GeluApproximationLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_GeluApproximationLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::GeluApproximationLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -8684,7 +8866,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfGeluApproximationLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_GeluApproximationLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::GeluApproximationLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_GeluApproximationLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::GeluApproximationLayer> {
 		#[inline]
@@ -8698,6 +8880,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::GeluLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfGeluLayer = core::Ptr<crate::dnn::GeluLayer>;
 	
 	ptr_extern! { crate::dnn::GeluLayer,
@@ -8726,7 +8909,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfGeluLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_GeluLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::GeluLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_GeluLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::GeluLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -8736,7 +8919,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfGeluLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_GeluLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::GeluLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_GeluLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::GeluLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -8746,7 +8929,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfGeluLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_GeluLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::GeluLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_GeluLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::GeluLayer> {
 		#[inline]
@@ -8760,6 +8943,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::GemmLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfGemmLayer = core::Ptr<crate::dnn::GemmLayer>;
 	
 	ptr_extern! { crate::dnn::GemmLayer,
@@ -8788,7 +8972,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfGemmLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_GemmLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::GemmLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_GemmLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::GemmLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -8798,7 +8982,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfGemmLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_GemmLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::GemmLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_GemmLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::GemmLayer> {
 		#[inline]
@@ -8816,6 +9000,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::HardSigmoidLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfHardSigmoidLayer = core::Ptr<crate::dnn::HardSigmoidLayer>;
 	
 	ptr_extern! { crate::dnn::HardSigmoidLayer,
@@ -8844,7 +9029,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfHardSigmoidLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_HardSigmoidLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::HardSigmoidLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_HardSigmoidLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::HardSigmoidLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -8854,7 +9039,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfHardSigmoidLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_HardSigmoidLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::HardSigmoidLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_HardSigmoidLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::HardSigmoidLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -8864,7 +9049,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfHardSigmoidLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_HardSigmoidLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::HardSigmoidLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_HardSigmoidLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::HardSigmoidLayer> {
 		#[inline]
@@ -8880,6 +9065,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::HardSwishLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfHardSwishLayer = core::Ptr<crate::dnn::HardSwishLayer>;
 	
 	ptr_extern! { crate::dnn::HardSwishLayer,
@@ -8908,7 +9094,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfHardSwishLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_HardSwishLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::HardSwishLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_HardSwishLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::HardSwishLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -8918,7 +9104,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfHardSwishLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_HardSwishLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::HardSwishLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_HardSwishLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::HardSwishLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -8928,7 +9114,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfHardSwishLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_HardSwishLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::HardSwishLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_HardSwishLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::HardSwishLayer> {
 		#[inline]
@@ -8942,6 +9128,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::InnerProductLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfInnerProductLayer = core::Ptr<crate::dnn::InnerProductLayer>;
 	
 	ptr_extern! { crate::dnn::InnerProductLayer,
@@ -8970,7 +9157,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfInnerProductLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_InnerProductLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::InnerProductLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_InnerProductLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::InnerProductLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -8980,7 +9167,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfInnerProductLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_InnerProductLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::InnerProductLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_InnerProductLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::InnerProductLayer> {
 		#[inline]
@@ -8995,6 +9182,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::InnerProductLayerInt8>` instead, removal in Nov 2024"]
 	pub type PtrOfInnerProductLayerInt8 = core::Ptr<crate::dnn::InnerProductLayerInt8>;
 	
 	ptr_extern! { crate::dnn::InnerProductLayerInt8,
@@ -9023,7 +9211,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfInnerProductLayerInt8, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_InnerProductLayerInt8G_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::InnerProductLayerInt8>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_InnerProductLayerInt8G_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::InnerProductLayerTraitConst for core::Ptr<crate::dnn::InnerProductLayerInt8> {
 		#[inline] fn as_raw_InnerProductLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -9033,7 +9221,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_InnerProductLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfInnerProductLayerInt8, core::Ptr<crate::dnn::InnerProductLayer>, cv_PtrLcv_dnn_InnerProductLayerInt8G_to_PtrOfInnerProductLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::InnerProductLayerInt8>, core::Ptr<crate::dnn::InnerProductLayer>, cv_PtrLcv_dnn_InnerProductLayerInt8G_to_PtrOfInnerProductLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::InnerProductLayerInt8> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -9043,7 +9231,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfInnerProductLayerInt8, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_InnerProductLayerInt8G_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::InnerProductLayerInt8>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_InnerProductLayerInt8G_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::InnerProductLayerInt8> {
 		#[inline]
@@ -9063,6 +9251,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::InstanceNormLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfInstanceNormLayer = core::Ptr<crate::dnn::InstanceNormLayer>;
 	
 	ptr_extern! { crate::dnn::InstanceNormLayer,
@@ -9091,7 +9280,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfInstanceNormLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_InstanceNormLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::InstanceNormLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_InstanceNormLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::InstanceNormLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -9101,7 +9290,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfInstanceNormLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_InstanceNormLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::InstanceNormLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_InstanceNormLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::InstanceNormLayer> {
 		#[inline]
@@ -9116,6 +9305,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::InterpLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfInterpLayer = core::Ptr<crate::dnn::InterpLayer>;
 	
 	ptr_extern! { crate::dnn::InterpLayer,
@@ -9144,7 +9334,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfInterpLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_InterpLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::InterpLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_InterpLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::InterpLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -9154,7 +9344,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfInterpLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_InterpLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::InterpLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_InterpLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::InterpLayer> {
 		#[inline]
@@ -9168,6 +9358,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::LRNLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfLRNLayer = core::Ptr<crate::dnn::LRNLayer>;
 	
 	ptr_extern! { crate::dnn::LRNLayer,
@@ -9196,7 +9387,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfLRNLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_LRNLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::LRNLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_LRNLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::LRNLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -9206,7 +9397,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfLRNLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_LRNLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::LRNLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_LRNLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::LRNLayer> {
 		#[inline]
@@ -9226,6 +9417,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::LSTMLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfLSTMLayer = core::Ptr<crate::dnn::LSTMLayer>;
 	
 	ptr_extern! { crate::dnn::LSTMLayer,
@@ -9253,7 +9445,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfLSTMLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_LSTMLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::LSTMLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_LSTMLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::LSTMLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -9263,7 +9455,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfLSTMLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_LSTMLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::LSTMLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_LSTMLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::LSTMLayer> {
 		#[inline]
@@ -9277,6 +9469,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::Layer>` instead, removal in Nov 2024"]
 	pub type PtrOfLayer = core::Ptr<crate::dnn::Layer>;
 	
 	ptr_extern! { crate::dnn::Layer,
@@ -9305,7 +9498,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_LayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::Layer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_LayerG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::Layer> {
 		#[inline]
@@ -9319,6 +9512,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::LayerNormLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfLayerNormLayer = core::Ptr<crate::dnn::LayerNormLayer>;
 	
 	ptr_extern! { crate::dnn::LayerNormLayer,
@@ -9347,7 +9541,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfLayerNormLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_LayerNormLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::LayerNormLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_LayerNormLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::LayerNormLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -9357,7 +9551,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfLayerNormLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_LayerNormLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::LayerNormLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_LayerNormLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::LayerNormLayer> {
 		#[inline]
@@ -9374,6 +9568,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::LogLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfLogLayer = core::Ptr<crate::dnn::LogLayer>;
 	
 	ptr_extern! { crate::dnn::LogLayer,
@@ -9402,7 +9597,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfLogLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_LogLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::LogLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_LogLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::LogLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -9412,7 +9607,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfLogLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_LogLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::LogLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_LogLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::LogLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -9422,7 +9617,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfLogLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_LogLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::LogLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_LogLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::LogLayer> {
 		#[inline]
@@ -9436,6 +9631,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::MVNLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfMVNLayer = core::Ptr<crate::dnn::MVNLayer>;
 	
 	ptr_extern! { crate::dnn::MVNLayer,
@@ -9464,7 +9660,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMVNLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_MVNLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::MVNLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_MVNLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::MVNLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -9474,7 +9670,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMVNLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_MVNLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::MVNLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_MVNLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::MVNLayer> {
 		#[inline]
@@ -9491,6 +9687,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::MatMulLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfMatMulLayer = core::Ptr<crate::dnn::MatMulLayer>;
 	
 	ptr_extern! { crate::dnn::MatMulLayer,
@@ -9519,7 +9716,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMatMulLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_MatMulLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::MatMulLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_MatMulLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::MatMulLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -9529,7 +9726,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMatMulLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_MatMulLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::MatMulLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_MatMulLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::MatMulLayer> {
 		#[inline]
@@ -9543,6 +9740,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::MaxUnpoolLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfMaxUnpoolLayer = core::Ptr<crate::dnn::MaxUnpoolLayer>;
 	
 	ptr_extern! { crate::dnn::MaxUnpoolLayer,
@@ -9571,7 +9769,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMaxUnpoolLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_MaxUnpoolLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::MaxUnpoolLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_MaxUnpoolLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::MaxUnpoolLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -9581,7 +9779,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMaxUnpoolLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_MaxUnpoolLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::MaxUnpoolLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_MaxUnpoolLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::MaxUnpoolLayer> {
 		#[inline]
@@ -9598,6 +9796,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::MishLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfMishLayer = core::Ptr<crate::dnn::MishLayer>;
 	
 	ptr_extern! { crate::dnn::MishLayer,
@@ -9626,7 +9825,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMishLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_MishLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::MishLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_MishLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::MishLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -9636,7 +9835,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMishLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_MishLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::MishLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_MishLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::MishLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -9646,7 +9845,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMishLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_MishLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::MishLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_MishLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::MishLayer> {
 		#[inline]
@@ -9660,6 +9859,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::NaryEltwiseLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfNaryEltwiseLayer = core::Ptr<crate::dnn::NaryEltwiseLayer>;
 	
 	ptr_extern! { crate::dnn::NaryEltwiseLayer,
@@ -9688,7 +9888,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfNaryEltwiseLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_NaryEltwiseLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::NaryEltwiseLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_NaryEltwiseLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::NaryEltwiseLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -9698,7 +9898,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfNaryEltwiseLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_NaryEltwiseLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::NaryEltwiseLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_NaryEltwiseLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::NaryEltwiseLayer> {
 		#[inline]
@@ -9712,6 +9912,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::NormalizeBBoxLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfNormalizeBBoxLayer = core::Ptr<crate::dnn::NormalizeBBoxLayer>;
 	
 	ptr_extern! { crate::dnn::NormalizeBBoxLayer,
@@ -9740,7 +9941,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfNormalizeBBoxLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_NormalizeBBoxLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::NormalizeBBoxLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_NormalizeBBoxLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::NormalizeBBoxLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -9750,7 +9951,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfNormalizeBBoxLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_NormalizeBBoxLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::NormalizeBBoxLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_NormalizeBBoxLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::NormalizeBBoxLayer> {
 		#[inline]
@@ -9767,6 +9968,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::NotLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfNotLayer = core::Ptr<crate::dnn::NotLayer>;
 	
 	ptr_extern! { crate::dnn::NotLayer,
@@ -9795,7 +9997,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfNotLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_NotLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::NotLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_NotLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::NotLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -9805,7 +10007,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfNotLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_NotLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::NotLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_NotLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::NotLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -9815,7 +10017,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfNotLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_NotLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::NotLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_NotLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::NotLayer> {
 		#[inline]
@@ -9829,6 +10031,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::PaddingLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfPaddingLayer = core::Ptr<crate::dnn::PaddingLayer>;
 	
 	ptr_extern! { crate::dnn::PaddingLayer,
@@ -9857,7 +10060,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfPaddingLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_PaddingLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::PaddingLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_PaddingLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::PaddingLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -9867,7 +10070,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfPaddingLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_PaddingLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::PaddingLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_PaddingLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::PaddingLayer> {
 		#[inline]
@@ -9881,6 +10084,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::PermuteLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfPermuteLayer = core::Ptr<crate::dnn::PermuteLayer>;
 	
 	ptr_extern! { crate::dnn::PermuteLayer,
@@ -9909,7 +10113,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfPermuteLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_PermuteLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::PermuteLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_PermuteLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::PermuteLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -9919,7 +10123,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfPermuteLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_PermuteLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::PermuteLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_PermuteLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::PermuteLayer> {
 		#[inline]
@@ -9933,6 +10137,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::PoolingLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfPoolingLayer = core::Ptr<crate::dnn::PoolingLayer>;
 	
 	ptr_extern! { crate::dnn::PoolingLayer,
@@ -9961,7 +10166,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfPoolingLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_PoolingLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::PoolingLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_PoolingLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::PoolingLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -9971,7 +10176,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfPoolingLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_PoolingLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::PoolingLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_PoolingLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::PoolingLayer> {
 		#[inline]
@@ -9999,6 +10204,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::PoolingLayerInt8>` instead, removal in Nov 2024"]
 	pub type PtrOfPoolingLayerInt8 = core::Ptr<crate::dnn::PoolingLayerInt8>;
 	
 	ptr_extern! { crate::dnn::PoolingLayerInt8,
@@ -10027,7 +10233,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfPoolingLayerInt8, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_PoolingLayerInt8G_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::PoolingLayerInt8>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_PoolingLayerInt8G_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::PoolingLayerInt8> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -10037,7 +10243,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfPoolingLayerInt8, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_PoolingLayerInt8G_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::PoolingLayerInt8>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_PoolingLayerInt8G_to_PtrOfLayer }
 	
 	impl crate::dnn::PoolingLayerTraitConst for core::Ptr<crate::dnn::PoolingLayerInt8> {
 		#[inline] fn as_raw_PoolingLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -10047,7 +10253,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_PoolingLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfPoolingLayerInt8, core::Ptr<crate::dnn::PoolingLayer>, cv_PtrLcv_dnn_PoolingLayerInt8G_to_PtrOfPoolingLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::PoolingLayerInt8>, core::Ptr<crate::dnn::PoolingLayer>, cv_PtrLcv_dnn_PoolingLayerInt8G_to_PtrOfPoolingLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::PoolingLayerInt8> {
 		#[inline]
@@ -10079,6 +10285,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::PowerLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfPowerLayer = core::Ptr<crate::dnn::PowerLayer>;
 	
 	ptr_extern! { crate::dnn::PowerLayer,
@@ -10107,7 +10314,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfPowerLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_PowerLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::PowerLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_PowerLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::PowerLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -10117,7 +10324,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfPowerLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_PowerLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::PowerLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_PowerLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::PowerLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -10127,7 +10334,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfPowerLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_PowerLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::PowerLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_PowerLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::PowerLayer> {
 		#[inline]
@@ -10144,6 +10351,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::PriorBoxLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfPriorBoxLayer = core::Ptr<crate::dnn::PriorBoxLayer>;
 	
 	ptr_extern! { crate::dnn::PriorBoxLayer,
@@ -10172,7 +10380,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfPriorBoxLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_PriorBoxLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::PriorBoxLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_PriorBoxLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::PriorBoxLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -10182,7 +10390,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfPriorBoxLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_PriorBoxLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::PriorBoxLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_PriorBoxLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::PriorBoxLayer> {
 		#[inline]
@@ -10196,6 +10404,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ProposalLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfProposalLayer = core::Ptr<crate::dnn::ProposalLayer>;
 	
 	ptr_extern! { crate::dnn::ProposalLayer,
@@ -10224,7 +10433,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfProposalLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ProposalLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::ProposalLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ProposalLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ProposalLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -10234,7 +10443,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfProposalLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ProposalLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ProposalLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ProposalLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::ProposalLayer> {
 		#[inline]
@@ -10248,6 +10457,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::QuantizeLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfQuantizeLayer = core::Ptr<crate::dnn::QuantizeLayer>;
 	
 	ptr_extern! { crate::dnn::QuantizeLayer,
@@ -10276,7 +10486,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfQuantizeLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_QuantizeLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::QuantizeLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_QuantizeLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::QuantizeLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -10286,7 +10496,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfQuantizeLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_QuantizeLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::QuantizeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_QuantizeLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::QuantizeLayer> {
 		#[inline]
@@ -10302,6 +10512,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::RNNLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfRNNLayer = core::Ptr<crate::dnn::RNNLayer>;
 	
 	ptr_extern! { crate::dnn::RNNLayer,
@@ -10329,7 +10540,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfRNNLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_RNNLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::RNNLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_RNNLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::RNNLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -10339,7 +10550,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfRNNLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_RNNLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::RNNLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_RNNLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::RNNLayer> {
 		#[inline]
@@ -10353,6 +10564,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ReLU6Layer>` instead, removal in Nov 2024"]
 	pub type PtrOfReLU6Layer = core::Ptr<crate::dnn::ReLU6Layer>;
 	
 	ptr_extern! { crate::dnn::ReLU6Layer,
@@ -10381,7 +10593,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfReLU6Layer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ReLU6LayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::ReLU6Layer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ReLU6LayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::ReLU6Layer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -10391,7 +10603,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfReLU6Layer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_ReLU6LayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ReLU6Layer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_ReLU6LayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ReLU6Layer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -10401,7 +10613,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfReLU6Layer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ReLU6LayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ReLU6Layer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ReLU6LayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::ReLU6Layer> {
 		#[inline]
@@ -10417,6 +10629,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ReLULayer>` instead, removal in Nov 2024"]
 	pub type PtrOfReLULayer = core::Ptr<crate::dnn::ReLULayer>;
 	
 	ptr_extern! { crate::dnn::ReLULayer,
@@ -10445,7 +10658,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfReLULayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ReLULayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::ReLULayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ReLULayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::ReLULayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -10455,7 +10668,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfReLULayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_ReLULayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ReLULayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_ReLULayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ReLULayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -10465,7 +10678,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfReLULayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ReLULayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ReLULayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ReLULayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::ReLULayer> {
 		#[inline]
@@ -10480,6 +10693,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ReciprocalLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfReciprocalLayer = core::Ptr<crate::dnn::ReciprocalLayer>;
 	
 	ptr_extern! { crate::dnn::ReciprocalLayer,
@@ -10508,7 +10722,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfReciprocalLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ReciprocalLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::ReciprocalLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ReciprocalLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::ReciprocalLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -10518,7 +10732,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfReciprocalLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_ReciprocalLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ReciprocalLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_ReciprocalLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ReciprocalLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -10528,7 +10742,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfReciprocalLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ReciprocalLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ReciprocalLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ReciprocalLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::ReciprocalLayer> {
 		#[inline]
@@ -10542,6 +10756,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ReduceLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfReduceLayer = core::Ptr<crate::dnn::ReduceLayer>;
 	
 	ptr_extern! { crate::dnn::ReduceLayer,
@@ -10570,7 +10785,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfReduceLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ReduceLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::ReduceLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ReduceLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ReduceLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -10580,7 +10795,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfReduceLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ReduceLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ReduceLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ReduceLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::ReduceLayer> {
 		#[inline]
@@ -10594,6 +10809,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::RegionLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfRegionLayer = core::Ptr<crate::dnn::RegionLayer>;
 	
 	ptr_extern! { crate::dnn::RegionLayer,
@@ -10622,7 +10838,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfRegionLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_RegionLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::RegionLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_RegionLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::RegionLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -10632,7 +10848,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfRegionLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_RegionLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::RegionLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_RegionLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::RegionLayer> {
 		#[inline]
@@ -10647,6 +10863,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ReorgLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfReorgLayer = core::Ptr<crate::dnn::ReorgLayer>;
 	
 	ptr_extern! { crate::dnn::ReorgLayer,
@@ -10675,7 +10892,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfReorgLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ReorgLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::ReorgLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ReorgLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ReorgLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -10685,7 +10902,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfReorgLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ReorgLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ReorgLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ReorgLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::ReorgLayer> {
 		#[inline]
@@ -10699,6 +10916,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::RequantizeLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfRequantizeLayer = core::Ptr<crate::dnn::RequantizeLayer>;
 	
 	ptr_extern! { crate::dnn::RequantizeLayer,
@@ -10727,7 +10945,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfRequantizeLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_RequantizeLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::RequantizeLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_RequantizeLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::RequantizeLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -10737,7 +10955,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfRequantizeLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_RequantizeLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::RequantizeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_RequantizeLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::RequantizeLayer> {
 		#[inline]
@@ -10753,6 +10971,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ReshapeLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfReshapeLayer = core::Ptr<crate::dnn::ReshapeLayer>;
 	
 	ptr_extern! { crate::dnn::ReshapeLayer,
@@ -10781,7 +11000,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfReshapeLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ReshapeLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::ReshapeLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ReshapeLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ReshapeLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -10791,7 +11010,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfReshapeLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ReshapeLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ReshapeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ReshapeLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::ReshapeLayer> {
 		#[inline]
@@ -10807,6 +11026,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ResizeLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfResizeLayer = core::Ptr<crate::dnn::ResizeLayer>;
 	
 	ptr_extern! { crate::dnn::ResizeLayer,
@@ -10835,7 +11055,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfResizeLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ResizeLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::ResizeLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ResizeLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ResizeLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -10845,7 +11065,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfResizeLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ResizeLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ResizeLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ResizeLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::ResizeLayer> {
 		#[inline]
@@ -10859,6 +11079,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::RoundLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfRoundLayer = core::Ptr<crate::dnn::RoundLayer>;
 	
 	ptr_extern! { crate::dnn::RoundLayer,
@@ -10887,7 +11108,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfRoundLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_RoundLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::RoundLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_RoundLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::RoundLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -10897,7 +11118,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfRoundLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_RoundLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::RoundLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_RoundLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::RoundLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -10907,7 +11128,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfRoundLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_RoundLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::RoundLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_RoundLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::RoundLayer> {
 		#[inline]
@@ -10921,6 +11142,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ScaleLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfScaleLayer = core::Ptr<crate::dnn::ScaleLayer>;
 	
 	ptr_extern! { crate::dnn::ScaleLayer,
@@ -10949,7 +11171,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfScaleLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ScaleLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::ScaleLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ScaleLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ScaleLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -10959,7 +11181,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfScaleLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ScaleLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ScaleLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ScaleLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::ScaleLayer> {
 		#[inline]
@@ -10976,6 +11198,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ScaleLayerInt8>` instead, removal in Nov 2024"]
 	pub type PtrOfScaleLayerInt8 = core::Ptr<crate::dnn::ScaleLayerInt8>;
 	
 	ptr_extern! { crate::dnn::ScaleLayerInt8,
@@ -11004,7 +11227,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfScaleLayerInt8, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ScaleLayerInt8G_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::ScaleLayerInt8>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ScaleLayerInt8G_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ScaleLayerInt8> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -11014,7 +11237,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfScaleLayerInt8, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ScaleLayerInt8G_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ScaleLayerInt8>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ScaleLayerInt8G_to_PtrOfLayer }
 	
 	impl crate::dnn::ScaleLayerTraitConst for core::Ptr<crate::dnn::ScaleLayerInt8> {
 		#[inline] fn as_raw_ScaleLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -11024,7 +11247,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ScaleLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfScaleLayerInt8, core::Ptr<crate::dnn::ScaleLayer>, cv_PtrLcv_dnn_ScaleLayerInt8G_to_PtrOfScaleLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ScaleLayerInt8>, core::Ptr<crate::dnn::ScaleLayer>, cv_PtrLcv_dnn_ScaleLayerInt8G_to_PtrOfScaleLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::ScaleLayerInt8> {
 		#[inline]
@@ -11043,6 +11266,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ScatterLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfScatterLayer = core::Ptr<crate::dnn::ScatterLayer>;
 	
 	ptr_extern! { crate::dnn::ScatterLayer,
@@ -11071,7 +11295,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfScatterLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ScatterLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::ScatterLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ScatterLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ScatterLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -11081,7 +11305,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfScatterLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ScatterLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ScatterLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ScatterLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::ScatterLayer> {
 		#[inline]
@@ -11095,6 +11319,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ScatterNDLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfScatterNDLayer = core::Ptr<crate::dnn::ScatterNDLayer>;
 	
 	ptr_extern! { crate::dnn::ScatterNDLayer,
@@ -11123,7 +11348,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfScatterNDLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ScatterNDLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::ScatterNDLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ScatterNDLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ScatterNDLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -11133,7 +11358,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfScatterNDLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ScatterNDLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ScatterNDLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ScatterNDLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::ScatterNDLayer> {
 		#[inline]
@@ -11147,6 +11372,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::SeluLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfSeluLayer = core::Ptr<crate::dnn::SeluLayer>;
 	
 	ptr_extern! { crate::dnn::SeluLayer,
@@ -11175,7 +11401,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSeluLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SeluLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::SeluLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SeluLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::SeluLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -11185,7 +11411,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSeluLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_SeluLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::SeluLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_SeluLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::SeluLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -11195,7 +11421,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSeluLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SeluLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::SeluLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SeluLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::SeluLayer> {
 		#[inline]
@@ -11211,6 +11437,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ShiftLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfShiftLayer = core::Ptr<crate::dnn::ShiftLayer>;
 	
 	ptr_extern! { crate::dnn::ShiftLayer,
@@ -11239,7 +11466,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfShiftLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ShiftLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::ShiftLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ShiftLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ShiftLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -11249,7 +11476,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfShiftLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ShiftLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ShiftLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ShiftLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::ShiftLayer> {
 		#[inline]
@@ -11263,6 +11490,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ShiftLayerInt8>` instead, removal in Nov 2024"]
 	pub type PtrOfShiftLayerInt8 = core::Ptr<crate::dnn::ShiftLayerInt8>;
 	
 	ptr_extern! { crate::dnn::ShiftLayerInt8,
@@ -11291,7 +11519,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfShiftLayerInt8, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ShiftLayerInt8G_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::ShiftLayerInt8>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ShiftLayerInt8G_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ShiftLayerInt8> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -11301,7 +11529,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfShiftLayerInt8, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ShiftLayerInt8G_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ShiftLayerInt8>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ShiftLayerInt8G_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::ShiftLayerInt8> {
 		#[inline]
@@ -11315,6 +11543,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ShrinkLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfShrinkLayer = core::Ptr<crate::dnn::ShrinkLayer>;
 	
 	ptr_extern! { crate::dnn::ShrinkLayer,
@@ -11343,7 +11572,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfShrinkLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ShrinkLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::ShrinkLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ShrinkLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::ShrinkLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -11353,7 +11582,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfShrinkLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_ShrinkLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ShrinkLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_ShrinkLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ShrinkLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -11363,7 +11592,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfShrinkLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ShrinkLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ShrinkLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ShrinkLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::ShrinkLayer> {
 		#[inline]
@@ -11379,6 +11608,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ShuffleChannelLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfShuffleChannelLayer = core::Ptr<crate::dnn::ShuffleChannelLayer>;
 	
 	ptr_extern! { crate::dnn::ShuffleChannelLayer,
@@ -11407,7 +11637,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfShuffleChannelLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ShuffleChannelLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::ShuffleChannelLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ShuffleChannelLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ShuffleChannelLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -11417,7 +11647,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfShuffleChannelLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ShuffleChannelLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ShuffleChannelLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ShuffleChannelLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::ShuffleChannelLayer> {
 		#[inline]
@@ -11432,6 +11662,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::SigmoidLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfSigmoidLayer = core::Ptr<crate::dnn::SigmoidLayer>;
 	
 	ptr_extern! { crate::dnn::SigmoidLayer,
@@ -11460,7 +11691,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSigmoidLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SigmoidLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::SigmoidLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SigmoidLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::SigmoidLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -11470,7 +11701,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSigmoidLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_SigmoidLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::SigmoidLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_SigmoidLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::SigmoidLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -11480,7 +11711,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSigmoidLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SigmoidLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::SigmoidLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SigmoidLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::SigmoidLayer> {
 		#[inline]
@@ -11494,6 +11725,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::SignLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfSignLayer = core::Ptr<crate::dnn::SignLayer>;
 	
 	ptr_extern! { crate::dnn::SignLayer,
@@ -11522,7 +11754,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSignLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SignLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::SignLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SignLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::SignLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -11532,7 +11764,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSignLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_SignLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::SignLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_SignLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::SignLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -11542,7 +11774,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSignLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SignLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::SignLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SignLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::SignLayer> {
 		#[inline]
@@ -11556,6 +11788,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::SinLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfSinLayer = core::Ptr<crate::dnn::SinLayer>;
 	
 	ptr_extern! { crate::dnn::SinLayer,
@@ -11584,7 +11817,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSinLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SinLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::SinLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SinLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::SinLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -11594,7 +11827,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSinLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_SinLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::SinLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_SinLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::SinLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -11604,7 +11837,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSinLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SinLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::SinLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SinLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::SinLayer> {
 		#[inline]
@@ -11618,6 +11851,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::SinhLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfSinhLayer = core::Ptr<crate::dnn::SinhLayer>;
 	
 	ptr_extern! { crate::dnn::SinhLayer,
@@ -11646,7 +11880,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSinhLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SinhLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::SinhLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SinhLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::SinhLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -11656,7 +11890,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSinhLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_SinhLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::SinhLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_SinhLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::SinhLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -11666,7 +11900,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSinhLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SinhLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::SinhLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SinhLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::SinhLayer> {
 		#[inline]
@@ -11680,6 +11914,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::SliceLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfSliceLayer = core::Ptr<crate::dnn::SliceLayer>;
 	
 	ptr_extern! { crate::dnn::SliceLayer,
@@ -11708,7 +11943,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSliceLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SliceLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::SliceLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SliceLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::SliceLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -11718,7 +11953,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSliceLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SliceLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::SliceLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SliceLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::SliceLayer> {
 		#[inline]
@@ -11736,6 +11971,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::SoftmaxLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfSoftmaxLayer = core::Ptr<crate::dnn::SoftmaxLayer>;
 	
 	ptr_extern! { crate::dnn::SoftmaxLayer,
@@ -11764,7 +12000,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSoftmaxLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SoftmaxLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::SoftmaxLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SoftmaxLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::SoftmaxLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -11774,7 +12010,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSoftmaxLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SoftmaxLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::SoftmaxLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SoftmaxLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::SoftmaxLayer> {
 		#[inline]
@@ -11789,6 +12025,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::SoftmaxLayerInt8>` instead, removal in Nov 2024"]
 	pub type PtrOfSoftmaxLayerInt8 = core::Ptr<crate::dnn::SoftmaxLayerInt8>;
 	
 	ptr_extern! { crate::dnn::SoftmaxLayerInt8,
@@ -11817,7 +12054,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSoftmaxLayerInt8, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SoftmaxLayerInt8G_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::SoftmaxLayerInt8>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SoftmaxLayerInt8G_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::SoftmaxLayerInt8> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -11827,7 +12064,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSoftmaxLayerInt8, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SoftmaxLayerInt8G_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::SoftmaxLayerInt8>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SoftmaxLayerInt8G_to_PtrOfLayer }
 	
 	impl crate::dnn::SoftmaxLayerTraitConst for core::Ptr<crate::dnn::SoftmaxLayerInt8> {
 		#[inline] fn as_raw_SoftmaxLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -11837,7 +12074,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_SoftmaxLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSoftmaxLayerInt8, core::Ptr<crate::dnn::SoftmaxLayer>, cv_PtrLcv_dnn_SoftmaxLayerInt8G_to_PtrOfSoftmaxLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::SoftmaxLayerInt8>, core::Ptr<crate::dnn::SoftmaxLayer>, cv_PtrLcv_dnn_SoftmaxLayerInt8G_to_PtrOfSoftmaxLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::SoftmaxLayerInt8> {
 		#[inline]
@@ -11854,6 +12091,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::SoftplusLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfSoftplusLayer = core::Ptr<crate::dnn::SoftplusLayer>;
 	
 	ptr_extern! { crate::dnn::SoftplusLayer,
@@ -11882,7 +12120,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSoftplusLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SoftplusLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::SoftplusLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SoftplusLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::SoftplusLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -11892,7 +12130,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSoftplusLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_SoftplusLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::SoftplusLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_SoftplusLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::SoftplusLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -11902,7 +12140,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSoftplusLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SoftplusLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::SoftplusLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SoftplusLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::SoftplusLayer> {
 		#[inline]
@@ -11916,6 +12154,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::SoftsignLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfSoftsignLayer = core::Ptr<crate::dnn::SoftsignLayer>;
 	
 	ptr_extern! { crate::dnn::SoftsignLayer,
@@ -11944,7 +12183,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSoftsignLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SoftsignLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::SoftsignLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SoftsignLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::SoftsignLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -11954,7 +12193,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSoftsignLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_SoftsignLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::SoftsignLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_SoftsignLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::SoftsignLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -11964,7 +12203,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSoftsignLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SoftsignLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::SoftsignLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SoftsignLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::SoftsignLayer> {
 		#[inline]
@@ -11978,6 +12217,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::SplitLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfSplitLayer = core::Ptr<crate::dnn::SplitLayer>;
 	
 	ptr_extern! { crate::dnn::SplitLayer,
@@ -12006,7 +12246,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSplitLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SplitLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::SplitLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SplitLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::SplitLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -12016,7 +12256,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSplitLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SplitLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::SplitLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SplitLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::SplitLayer> {
 		#[inline]
@@ -12031,6 +12271,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::SqrtLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfSqrtLayer = core::Ptr<crate::dnn::SqrtLayer>;
 	
 	ptr_extern! { crate::dnn::SqrtLayer,
@@ -12059,7 +12300,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSqrtLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SqrtLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::SqrtLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SqrtLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::SqrtLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -12069,7 +12310,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSqrtLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_SqrtLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::SqrtLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_SqrtLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::SqrtLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -12079,7 +12320,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSqrtLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SqrtLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::SqrtLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SqrtLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::SqrtLayer> {
 		#[inline]
@@ -12093,6 +12334,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::SwishLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfSwishLayer = core::Ptr<crate::dnn::SwishLayer>;
 	
 	ptr_extern! { crate::dnn::SwishLayer,
@@ -12121,7 +12363,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSwishLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SwishLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::SwishLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SwishLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::SwishLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -12131,7 +12373,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSwishLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_SwishLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::SwishLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_SwishLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::SwishLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -12141,7 +12383,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSwishLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SwishLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::SwishLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SwishLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::SwishLayer> {
 		#[inline]
@@ -12155,6 +12397,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::TanHLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfTanHLayer = core::Ptr<crate::dnn::TanHLayer>;
 	
 	ptr_extern! { crate::dnn::TanHLayer,
@@ -12183,7 +12426,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTanHLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_TanHLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::TanHLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_TanHLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::TanHLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -12193,7 +12436,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTanHLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_TanHLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::TanHLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_TanHLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::TanHLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -12203,7 +12446,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTanHLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_TanHLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::TanHLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_TanHLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::TanHLayer> {
 		#[inline]
@@ -12217,6 +12460,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::TanLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfTanLayer = core::Ptr<crate::dnn::TanLayer>;
 	
 	ptr_extern! { crate::dnn::TanLayer,
@@ -12245,7 +12489,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTanLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_TanLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::TanLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_TanLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::TanLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -12255,7 +12499,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTanLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_TanLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::TanLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_TanLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::TanLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -12265,7 +12509,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTanLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_TanLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::TanLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_TanLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::TanLayer> {
 		#[inline]
@@ -12279,6 +12523,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ThresholdedReluLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfThresholdedReluLayer = core::Ptr<crate::dnn::ThresholdedReluLayer>;
 	
 	ptr_extern! { crate::dnn::ThresholdedReluLayer,
@@ -12307,7 +12552,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfThresholdedReluLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ThresholdedReluLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::ThresholdedReluLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_ThresholdedReluLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::ActivationLayerTraitConst for core::Ptr<crate::dnn::ThresholdedReluLayer> {
 		#[inline] fn as_raw_ActivationLayer(&self) -> *const c_void { self.inner_as_raw() }
@@ -12317,7 +12562,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_ActivationLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfThresholdedReluLayer, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_ThresholdedReluLayerG_to_PtrOfActivationLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ThresholdedReluLayer>, core::Ptr<crate::dnn::ActivationLayer>, cv_PtrLcv_dnn_ThresholdedReluLayerG_to_PtrOfActivationLayer }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::ThresholdedReluLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -12327,7 +12572,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfThresholdedReluLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ThresholdedReluLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::ThresholdedReluLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_ThresholdedReluLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::ThresholdedReluLayer> {
 		#[inline]
@@ -12342,6 +12587,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::TileLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfTileLayer = core::Ptr<crate::dnn::TileLayer>;
 	
 	ptr_extern! { crate::dnn::TileLayer,
@@ -12370,7 +12616,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTileLayer, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_TileLayerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::dnn::TileLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_TileLayerG_to_PtrOfAlgorithm }
 	
 	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::TileLayer> {
 		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
@@ -12380,7 +12626,7 @@ mod dnn_types {
 		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTileLayer, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_TileLayerG_to_PtrOfLayer }
+	ptr_cast_base! { core::Ptr<crate::dnn::TileLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_TileLayerG_to_PtrOfLayer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::dnn::TileLayer> {
 		#[inline]
@@ -12394,6 +12640,7 @@ mod dnn_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Tuple<(crate::dnn::Backend, crate::dnn::Target)>` instead, removal in Nov 2024"]
 	pub type TupleOfBackend_Target = core::Tuple<(crate::dnn::Backend, crate::dnn::Target)>;
 	
 	impl core::Tuple<(crate::dnn::Backend, crate::dnn::Target)> {
@@ -12407,6 +12654,7 @@ mod dnn_types {
 		1 = arg_1: crate::dnn::Target, get_1 via std_pairLcv_dnn_Backend__cv_dnn_TargetG_get_1_const
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::dnn::MatShape>` instead, removal in Nov 2024"]
 	pub type VectorOfMatShape = core::Vector<crate::dnn::MatShape>;
 	
 	impl core::Vector<crate::dnn::MatShape> {
@@ -12414,6 +12662,7 @@ mod dnn_types {
 		pub fn as_raw_mut_VectorOfMatShape(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Ptr<crate::dnn::BackendNode>>` instead, removal in Nov 2024"]
 	pub type VectorOfPtrOfBackendNode = core::Vector<core::Ptr<crate::dnn::BackendNode>>;
 	
 	impl core::Vector<core::Ptr<crate::dnn::BackendNode>> {
@@ -12434,6 +12683,7 @@ mod dnn_types {
 	vector_non_copy_or_bool! { core::Ptr<crate::dnn::BackendNode> }
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Ptr<crate::dnn::BackendWrapper>>` instead, removal in Nov 2024"]
 	pub type VectorOfPtrOfBackendWrapper = core::Vector<core::Ptr<crate::dnn::BackendWrapper>>;
 	
 	impl core::Vector<core::Ptr<crate::dnn::BackendWrapper>> {
@@ -12454,6 +12704,7 @@ mod dnn_types {
 	vector_non_copy_or_bool! { core::Ptr<crate::dnn::BackendWrapper> }
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Ptr<crate::dnn::Layer>>` instead, removal in Nov 2024"]
 	pub type VectorOfPtrOfLayer = core::Vector<core::Ptr<crate::dnn::Layer>>;
 	
 	impl core::Vector<core::Ptr<crate::dnn::Layer>> {
@@ -12474,6 +12725,7 @@ mod dnn_types {
 	vector_non_copy_or_bool! { core::Ptr<crate::dnn::Layer> }
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::dnn::Target>` instead, removal in Nov 2024"]
 	pub type VectorOfTarget = core::Vector<crate::dnn::Target>;
 	
 	impl core::Vector<crate::dnn::Target> {
@@ -12497,6 +12749,7 @@ mod dnn_types {
 	}
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Tuple<(crate::dnn::Backend, crate::dnn::Target)>>` instead, removal in Nov 2024"]
 	pub type VectorOfTupleOfBackend_Target = core::Vector<core::Tuple<(crate::dnn::Backend, crate::dnn::Target)>>;
 	
 	impl core::Vector<core::Tuple<(crate::dnn::Backend, crate::dnn::Target)>> {
@@ -12517,6 +12770,7 @@ mod dnn_types {
 	vector_non_copy_or_bool! { core::Tuple<(crate::dnn::Backend, crate::dnn::Target)> }
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<crate::dnn::MatShape>>` instead, removal in Nov 2024"]
 	pub type VectorOfVectorOfMatShape = core::Vector<core::Vector<crate::dnn::MatShape>>;
 	
 	impl core::Vector<core::Vector<crate::dnn::MatShape>> {
@@ -12545,6 +12799,7 @@ pub use dnn_types::*;
 mod dnn_superres_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn_superres::DnnSuperResImpl>` instead, removal in Nov 2024"]
 	pub type PtrOfDnnSuperResImpl = core::Ptr<crate::dnn_superres::DnnSuperResImpl>;
 	
 	ptr_extern! { crate::dnn_superres::DnnSuperResImpl,
@@ -12581,6 +12836,7 @@ pub use dnn_superres_types::*;
 mod dpm_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dpm::DPMDetector>` instead, removal in Nov 2024"]
 	pub type PtrOfDPMDetector = core::Ptr<crate::dpm::DPMDetector>;
 	
 	ptr_extern! { crate::dpm::DPMDetector,
@@ -12608,6 +12864,7 @@ mod dpm_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::dpm::DPMDetector_ObjectDetection>` instead, removal in Nov 2024"]
 	pub type VectorOfDPMDetector_ObjectDetection = core::Vector<crate::dpm::DPMDetector_ObjectDetection>;
 	
 	impl core::Vector<crate::dpm::DPMDetector_ObjectDetection> {
@@ -12629,7 +12886,7 @@ mod dpm_types {
 	
 	vector_boxed_ref! { crate::dpm::DPMDetector_ObjectDetection }
 	
-	vector_extern! { BoxedRef<'_, crate::dpm::DPMDetector_ObjectDetection>,
+	vector_extern! { BoxedRef<'t, crate::dpm::DPMDetector_ObjectDetection>,
 		std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_new_const, std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_delete,
 		std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_len_const, std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_isEmpty_const,
 		std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_capacity_const, std_vectorLcv_dpm_DPMDetector_ObjectDetectionG_shrinkToFit,
@@ -12648,6 +12905,7 @@ pub use dpm_types::*;
 mod face_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::face::BIF>` instead, removal in Nov 2024"]
 	pub type PtrOfBIF = core::Ptr<crate::face::BIF>;
 	
 	ptr_extern! { crate::face::BIF,
@@ -12675,7 +12933,7 @@ mod face_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBIF, core::Ptr<core::Algorithm>, cv_PtrLcv_face_BIFG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::face::BIF>, core::Ptr<core::Algorithm>, cv_PtrLcv_face_BIFG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::face::BIF> {
 		#[inline]
@@ -12685,6 +12943,7 @@ mod face_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::face::BasicFaceRecognizer>` instead, removal in Nov 2024"]
 	pub type PtrOfBasicFaceRecognizer = core::Ptr<crate::face::BasicFaceRecognizer>;
 	
 	ptr_extern! { crate::face::BasicFaceRecognizer,
@@ -12712,7 +12971,7 @@ mod face_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBasicFaceRecognizer, core::Ptr<core::Algorithm>, cv_PtrLcv_face_BasicFaceRecognizerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::face::BasicFaceRecognizer>, core::Ptr<core::Algorithm>, cv_PtrLcv_face_BasicFaceRecognizerG_to_PtrOfAlgorithm }
 	
 	impl crate::face::FaceRecognizerTraitConst for core::Ptr<crate::face::BasicFaceRecognizer> {
 		#[inline] fn as_raw_FaceRecognizer(&self) -> *const c_void { self.inner_as_raw() }
@@ -12722,7 +12981,7 @@ mod face_types {
 		#[inline] fn as_raw_mut_FaceRecognizer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBasicFaceRecognizer, core::Ptr<crate::face::FaceRecognizer>, cv_PtrLcv_face_BasicFaceRecognizerG_to_PtrOfFaceRecognizer }
+	ptr_cast_base! { core::Ptr<crate::face::BasicFaceRecognizer>, core::Ptr<crate::face::FaceRecognizer>, cv_PtrLcv_face_BasicFaceRecognizerG_to_PtrOfFaceRecognizer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::face::BasicFaceRecognizer> {
 		#[inline]
@@ -12732,6 +12991,7 @@ mod face_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::face::EigenFaceRecognizer>` instead, removal in Nov 2024"]
 	pub type PtrOfEigenFaceRecognizer = core::Ptr<crate::face::EigenFaceRecognizer>;
 	
 	ptr_extern! { crate::face::EigenFaceRecognizer,
@@ -12759,7 +13019,7 @@ mod face_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfEigenFaceRecognizer, core::Ptr<core::Algorithm>, cv_PtrLcv_face_EigenFaceRecognizerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::face::EigenFaceRecognizer>, core::Ptr<core::Algorithm>, cv_PtrLcv_face_EigenFaceRecognizerG_to_PtrOfAlgorithm }
 	
 	impl crate::face::BasicFaceRecognizerTraitConst for core::Ptr<crate::face::EigenFaceRecognizer> {
 		#[inline] fn as_raw_BasicFaceRecognizer(&self) -> *const c_void { self.inner_as_raw() }
@@ -12769,7 +13029,7 @@ mod face_types {
 		#[inline] fn as_raw_mut_BasicFaceRecognizer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfEigenFaceRecognizer, core::Ptr<crate::face::BasicFaceRecognizer>, cv_PtrLcv_face_EigenFaceRecognizerG_to_PtrOfBasicFaceRecognizer }
+	ptr_cast_base! { core::Ptr<crate::face::EigenFaceRecognizer>, core::Ptr<crate::face::BasicFaceRecognizer>, cv_PtrLcv_face_EigenFaceRecognizerG_to_PtrOfBasicFaceRecognizer }
 	
 	impl crate::face::FaceRecognizerTraitConst for core::Ptr<crate::face::EigenFaceRecognizer> {
 		#[inline] fn as_raw_FaceRecognizer(&self) -> *const c_void { self.inner_as_raw() }
@@ -12779,7 +13039,7 @@ mod face_types {
 		#[inline] fn as_raw_mut_FaceRecognizer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfEigenFaceRecognizer, core::Ptr<crate::face::FaceRecognizer>, cv_PtrLcv_face_EigenFaceRecognizerG_to_PtrOfFaceRecognizer }
+	ptr_cast_base! { core::Ptr<crate::face::EigenFaceRecognizer>, core::Ptr<crate::face::FaceRecognizer>, cv_PtrLcv_face_EigenFaceRecognizerG_to_PtrOfFaceRecognizer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::face::EigenFaceRecognizer> {
 		#[inline]
@@ -12789,6 +13049,7 @@ mod face_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::face::FaceRecognizer>` instead, removal in Nov 2024"]
 	pub type PtrOfFaceRecognizer = core::Ptr<crate::face::FaceRecognizer>;
 	
 	ptr_extern! { crate::face::FaceRecognizer,
@@ -12816,7 +13077,7 @@ mod face_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFaceRecognizer, core::Ptr<core::Algorithm>, cv_PtrLcv_face_FaceRecognizerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::face::FaceRecognizer>, core::Ptr<core::Algorithm>, cv_PtrLcv_face_FaceRecognizerG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::face::FaceRecognizer> {
 		#[inline]
@@ -12826,6 +13087,7 @@ mod face_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::face::Facemark>` instead, removal in Nov 2024"]
 	pub type PtrOfFacemark = core::Ptr<crate::face::Facemark>;
 	
 	ptr_extern! { crate::face::Facemark,
@@ -12853,7 +13115,7 @@ mod face_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFacemark, core::Ptr<core::Algorithm>, cv_PtrLcv_face_FacemarkG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::face::Facemark>, core::Ptr<core::Algorithm>, cv_PtrLcv_face_FacemarkG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::face::Facemark> {
 		#[inline]
@@ -12863,6 +13125,7 @@ mod face_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::face::FacemarkAAM>` instead, removal in Nov 2024"]
 	pub type PtrOfFacemarkAAM = core::Ptr<crate::face::FacemarkAAM>;
 	
 	ptr_extern! { crate::face::FacemarkAAM,
@@ -12890,7 +13153,7 @@ mod face_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFacemarkAAM, core::Ptr<core::Algorithm>, cv_PtrLcv_face_FacemarkAAMG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::face::FacemarkAAM>, core::Ptr<core::Algorithm>, cv_PtrLcv_face_FacemarkAAMG_to_PtrOfAlgorithm }
 	
 	impl crate::face::FacemarkTraitConst for core::Ptr<crate::face::FacemarkAAM> {
 		#[inline] fn as_raw_Facemark(&self) -> *const c_void { self.inner_as_raw() }
@@ -12900,7 +13163,7 @@ mod face_types {
 		#[inline] fn as_raw_mut_Facemark(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFacemarkAAM, core::Ptr<crate::face::Facemark>, cv_PtrLcv_face_FacemarkAAMG_to_PtrOfFacemark }
+	ptr_cast_base! { core::Ptr<crate::face::FacemarkAAM>, core::Ptr<crate::face::Facemark>, cv_PtrLcv_face_FacemarkAAMG_to_PtrOfFacemark }
 	
 	impl crate::face::FacemarkTrainTraitConst for core::Ptr<crate::face::FacemarkAAM> {
 		#[inline] fn as_raw_FacemarkTrain(&self) -> *const c_void { self.inner_as_raw() }
@@ -12910,7 +13173,7 @@ mod face_types {
 		#[inline] fn as_raw_mut_FacemarkTrain(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFacemarkAAM, core::Ptr<crate::face::FacemarkTrain>, cv_PtrLcv_face_FacemarkAAMG_to_PtrOfFacemarkTrain }
+	ptr_cast_base! { core::Ptr<crate::face::FacemarkAAM>, core::Ptr<crate::face::FacemarkTrain>, cv_PtrLcv_face_FacemarkAAMG_to_PtrOfFacemarkTrain }
 	
 	impl std::fmt::Debug for core::Ptr<crate::face::FacemarkAAM> {
 		#[inline]
@@ -12920,6 +13183,7 @@ mod face_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::face::FacemarkKazemi>` instead, removal in Nov 2024"]
 	pub type PtrOfFacemarkKazemi = core::Ptr<crate::face::FacemarkKazemi>;
 	
 	ptr_extern! { crate::face::FacemarkKazemi,
@@ -12947,7 +13211,7 @@ mod face_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFacemarkKazemi, core::Ptr<core::Algorithm>, cv_PtrLcv_face_FacemarkKazemiG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::face::FacemarkKazemi>, core::Ptr<core::Algorithm>, cv_PtrLcv_face_FacemarkKazemiG_to_PtrOfAlgorithm }
 	
 	impl crate::face::FacemarkTraitConst for core::Ptr<crate::face::FacemarkKazemi> {
 		#[inline] fn as_raw_Facemark(&self) -> *const c_void { self.inner_as_raw() }
@@ -12957,7 +13221,7 @@ mod face_types {
 		#[inline] fn as_raw_mut_Facemark(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFacemarkKazemi, core::Ptr<crate::face::Facemark>, cv_PtrLcv_face_FacemarkKazemiG_to_PtrOfFacemark }
+	ptr_cast_base! { core::Ptr<crate::face::FacemarkKazemi>, core::Ptr<crate::face::Facemark>, cv_PtrLcv_face_FacemarkKazemiG_to_PtrOfFacemark }
 	
 	impl std::fmt::Debug for core::Ptr<crate::face::FacemarkKazemi> {
 		#[inline]
@@ -12967,6 +13231,7 @@ mod face_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::face::FacemarkLBF>` instead, removal in Nov 2024"]
 	pub type PtrOfFacemarkLBF = core::Ptr<crate::face::FacemarkLBF>;
 	
 	ptr_extern! { crate::face::FacemarkLBF,
@@ -12994,7 +13259,7 @@ mod face_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFacemarkLBF, core::Ptr<core::Algorithm>, cv_PtrLcv_face_FacemarkLBFG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::face::FacemarkLBF>, core::Ptr<core::Algorithm>, cv_PtrLcv_face_FacemarkLBFG_to_PtrOfAlgorithm }
 	
 	impl crate::face::FacemarkTraitConst for core::Ptr<crate::face::FacemarkLBF> {
 		#[inline] fn as_raw_Facemark(&self) -> *const c_void { self.inner_as_raw() }
@@ -13004,7 +13269,7 @@ mod face_types {
 		#[inline] fn as_raw_mut_Facemark(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFacemarkLBF, core::Ptr<crate::face::Facemark>, cv_PtrLcv_face_FacemarkLBFG_to_PtrOfFacemark }
+	ptr_cast_base! { core::Ptr<crate::face::FacemarkLBF>, core::Ptr<crate::face::Facemark>, cv_PtrLcv_face_FacemarkLBFG_to_PtrOfFacemark }
 	
 	impl crate::face::FacemarkTrainTraitConst for core::Ptr<crate::face::FacemarkLBF> {
 		#[inline] fn as_raw_FacemarkTrain(&self) -> *const c_void { self.inner_as_raw() }
@@ -13014,7 +13279,7 @@ mod face_types {
 		#[inline] fn as_raw_mut_FacemarkTrain(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFacemarkLBF, core::Ptr<crate::face::FacemarkTrain>, cv_PtrLcv_face_FacemarkLBFG_to_PtrOfFacemarkTrain }
+	ptr_cast_base! { core::Ptr<crate::face::FacemarkLBF>, core::Ptr<crate::face::FacemarkTrain>, cv_PtrLcv_face_FacemarkLBFG_to_PtrOfFacemarkTrain }
 	
 	impl std::fmt::Debug for core::Ptr<crate::face::FacemarkLBF> {
 		#[inline]
@@ -13024,6 +13289,7 @@ mod face_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::face::FacemarkTrain>` instead, removal in Nov 2024"]
 	pub type PtrOfFacemarkTrain = core::Ptr<crate::face::FacemarkTrain>;
 	
 	ptr_extern! { crate::face::FacemarkTrain,
@@ -13051,7 +13317,7 @@ mod face_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFacemarkTrain, core::Ptr<core::Algorithm>, cv_PtrLcv_face_FacemarkTrainG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::face::FacemarkTrain>, core::Ptr<core::Algorithm>, cv_PtrLcv_face_FacemarkTrainG_to_PtrOfAlgorithm }
 	
 	impl crate::face::FacemarkTraitConst for core::Ptr<crate::face::FacemarkTrain> {
 		#[inline] fn as_raw_Facemark(&self) -> *const c_void { self.inner_as_raw() }
@@ -13061,7 +13327,7 @@ mod face_types {
 		#[inline] fn as_raw_mut_Facemark(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFacemarkTrain, core::Ptr<crate::face::Facemark>, cv_PtrLcv_face_FacemarkTrainG_to_PtrOfFacemark }
+	ptr_cast_base! { core::Ptr<crate::face::FacemarkTrain>, core::Ptr<crate::face::Facemark>, cv_PtrLcv_face_FacemarkTrainG_to_PtrOfFacemark }
 	
 	impl std::fmt::Debug for core::Ptr<crate::face::FacemarkTrain> {
 		#[inline]
@@ -13071,6 +13337,7 @@ mod face_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::face::FisherFaceRecognizer>` instead, removal in Nov 2024"]
 	pub type PtrOfFisherFaceRecognizer = core::Ptr<crate::face::FisherFaceRecognizer>;
 	
 	ptr_extern! { crate::face::FisherFaceRecognizer,
@@ -13098,7 +13365,7 @@ mod face_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFisherFaceRecognizer, core::Ptr<core::Algorithm>, cv_PtrLcv_face_FisherFaceRecognizerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::face::FisherFaceRecognizer>, core::Ptr<core::Algorithm>, cv_PtrLcv_face_FisherFaceRecognizerG_to_PtrOfAlgorithm }
 	
 	impl crate::face::BasicFaceRecognizerTraitConst for core::Ptr<crate::face::FisherFaceRecognizer> {
 		#[inline] fn as_raw_BasicFaceRecognizer(&self) -> *const c_void { self.inner_as_raw() }
@@ -13108,7 +13375,7 @@ mod face_types {
 		#[inline] fn as_raw_mut_BasicFaceRecognizer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFisherFaceRecognizer, core::Ptr<crate::face::BasicFaceRecognizer>, cv_PtrLcv_face_FisherFaceRecognizerG_to_PtrOfBasicFaceRecognizer }
+	ptr_cast_base! { core::Ptr<crate::face::FisherFaceRecognizer>, core::Ptr<crate::face::BasicFaceRecognizer>, cv_PtrLcv_face_FisherFaceRecognizerG_to_PtrOfBasicFaceRecognizer }
 	
 	impl crate::face::FaceRecognizerTraitConst for core::Ptr<crate::face::FisherFaceRecognizer> {
 		#[inline] fn as_raw_FaceRecognizer(&self) -> *const c_void { self.inner_as_raw() }
@@ -13118,7 +13385,7 @@ mod face_types {
 		#[inline] fn as_raw_mut_FaceRecognizer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFisherFaceRecognizer, core::Ptr<crate::face::FaceRecognizer>, cv_PtrLcv_face_FisherFaceRecognizerG_to_PtrOfFaceRecognizer }
+	ptr_cast_base! { core::Ptr<crate::face::FisherFaceRecognizer>, core::Ptr<crate::face::FaceRecognizer>, cv_PtrLcv_face_FisherFaceRecognizerG_to_PtrOfFaceRecognizer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::face::FisherFaceRecognizer> {
 		#[inline]
@@ -13128,6 +13395,7 @@ mod face_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::face::LBPHFaceRecognizer>` instead, removal in Nov 2024"]
 	pub type PtrOfLBPHFaceRecognizer = core::Ptr<crate::face::LBPHFaceRecognizer>;
 	
 	ptr_extern! { crate::face::LBPHFaceRecognizer,
@@ -13155,7 +13423,7 @@ mod face_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfLBPHFaceRecognizer, core::Ptr<core::Algorithm>, cv_PtrLcv_face_LBPHFaceRecognizerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::face::LBPHFaceRecognizer>, core::Ptr<core::Algorithm>, cv_PtrLcv_face_LBPHFaceRecognizerG_to_PtrOfAlgorithm }
 	
 	impl crate::face::FaceRecognizerTraitConst for core::Ptr<crate::face::LBPHFaceRecognizer> {
 		#[inline] fn as_raw_FaceRecognizer(&self) -> *const c_void { self.inner_as_raw() }
@@ -13165,7 +13433,7 @@ mod face_types {
 		#[inline] fn as_raw_mut_FaceRecognizer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfLBPHFaceRecognizer, core::Ptr<crate::face::FaceRecognizer>, cv_PtrLcv_face_LBPHFaceRecognizerG_to_PtrOfFaceRecognizer }
+	ptr_cast_base! { core::Ptr<crate::face::LBPHFaceRecognizer>, core::Ptr<crate::face::FaceRecognizer>, cv_PtrLcv_face_LBPHFaceRecognizerG_to_PtrOfFaceRecognizer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::face::LBPHFaceRecognizer> {
 		#[inline]
@@ -13175,6 +13443,7 @@ mod face_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::face::MACE>` instead, removal in Nov 2024"]
 	pub type PtrOfMACE = core::Ptr<crate::face::MACE>;
 	
 	ptr_extern! { crate::face::MACE,
@@ -13202,7 +13471,7 @@ mod face_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMACE, core::Ptr<core::Algorithm>, cv_PtrLcv_face_MACEG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::face::MACE>, core::Ptr<core::Algorithm>, cv_PtrLcv_face_MACEG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::face::MACE> {
 		#[inline]
@@ -13212,6 +13481,7 @@ mod face_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::face::PredictCollector>` instead, removal in Nov 2024"]
 	pub type PtrOfPredictCollector = core::Ptr<crate::face::PredictCollector>;
 	
 	ptr_extern! { crate::face::PredictCollector,
@@ -13239,6 +13509,7 @@ mod face_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::face::StandardCollector>` instead, removal in Nov 2024"]
 	pub type PtrOfStandardCollector = core::Ptr<crate::face::StandardCollector>;
 	
 	ptr_extern! { crate::face::StandardCollector,
@@ -13267,7 +13538,7 @@ mod face_types {
 		#[inline] fn as_raw_mut_PredictCollector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfStandardCollector, core::Ptr<crate::face::PredictCollector>, cv_PtrLcv_face_StandardCollectorG_to_PtrOfPredictCollector }
+	ptr_cast_base! { core::Ptr<crate::face::StandardCollector>, core::Ptr<crate::face::PredictCollector>, cv_PtrLcv_face_StandardCollectorG_to_PtrOfPredictCollector }
 	
 	impl std::fmt::Debug for core::Ptr<crate::face::StandardCollector> {
 		#[inline]
@@ -13277,6 +13548,7 @@ mod face_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::face::FacemarkAAM_Config>` instead, removal in Nov 2024"]
 	pub type VectorOfFacemarkAAM_Config = core::Vector<crate::face::FacemarkAAM_Config>;
 	
 	impl core::Vector<crate::face::FacemarkAAM_Config> {
@@ -13298,7 +13570,7 @@ mod face_types {
 	
 	vector_boxed_ref! { crate::face::FacemarkAAM_Config }
 	
-	vector_extern! { BoxedRef<'_, crate::face::FacemarkAAM_Config>,
+	vector_extern! { BoxedRef<'t, crate::face::FacemarkAAM_Config>,
 		std_vectorLcv_face_FacemarkAAM_ConfigG_new_const, std_vectorLcv_face_FacemarkAAM_ConfigG_delete,
 		std_vectorLcv_face_FacemarkAAM_ConfigG_len_const, std_vectorLcv_face_FacemarkAAM_ConfigG_isEmpty_const,
 		std_vectorLcv_face_FacemarkAAM_ConfigG_capacity_const, std_vectorLcv_face_FacemarkAAM_ConfigG_shrinkToFit,
@@ -13309,6 +13581,7 @@ mod face_types {
 	}
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::face::FacemarkAAM_Model_Texture>` instead, removal in Nov 2024"]
 	pub type VectorOfFacemarkAAM_Model_Texture = core::Vector<crate::face::FacemarkAAM_Model_Texture>;
 	
 	impl core::Vector<crate::face::FacemarkAAM_Model_Texture> {
@@ -13330,7 +13603,7 @@ mod face_types {
 	
 	vector_boxed_ref! { crate::face::FacemarkAAM_Model_Texture }
 	
-	vector_extern! { BoxedRef<'_, crate::face::FacemarkAAM_Model_Texture>,
+	vector_extern! { BoxedRef<'t, crate::face::FacemarkAAM_Model_Texture>,
 		std_vectorLcv_face_FacemarkAAM_Model_TextureG_new_const, std_vectorLcv_face_FacemarkAAM_Model_TextureG_delete,
 		std_vectorLcv_face_FacemarkAAM_Model_TextureG_len_const, std_vectorLcv_face_FacemarkAAM_Model_TextureG_isEmpty_const,
 		std_vectorLcv_face_FacemarkAAM_Model_TextureG_capacity_const, std_vectorLcv_face_FacemarkAAM_Model_TextureG_shrinkToFit,
@@ -13349,6 +13622,7 @@ pub use face_types::*;
 mod features2d_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::features2d::AKAZE>` instead, removal in Nov 2024"]
 	pub type PtrOfAKAZE = core::Ptr<crate::features2d::AKAZE>;
 	
 	ptr_extern! { crate::features2d::AKAZE,
@@ -13376,7 +13650,7 @@ mod features2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAKAZE, core::Ptr<core::Algorithm>, cv_PtrLcv_AKAZEG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::features2d::AKAZE>, core::Ptr<core::Algorithm>, cv_PtrLcv_AKAZEG_to_PtrOfAlgorithm }
 	
 	impl crate::features2d::Feature2DTraitConst for core::Ptr<crate::features2d::AKAZE> {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
@@ -13386,7 +13660,7 @@ mod features2d_types {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAKAZE, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_AKAZEG_to_PtrOfFeature2D }
+	ptr_cast_base! { core::Ptr<crate::features2d::AKAZE>, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_AKAZEG_to_PtrOfFeature2D }
 	
 	impl std::fmt::Debug for core::Ptr<crate::features2d::AKAZE> {
 		#[inline]
@@ -13396,6 +13670,7 @@ mod features2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::features2d::AffineFeature>` instead, removal in Nov 2024"]
 	pub type PtrOfAffineFeature = core::Ptr<crate::features2d::AffineFeature>;
 	
 	ptr_extern! { crate::features2d::AffineFeature,
@@ -13423,7 +13698,7 @@ mod features2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAffineFeature, core::Ptr<core::Algorithm>, cv_PtrLcv_AffineFeatureG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::features2d::AffineFeature>, core::Ptr<core::Algorithm>, cv_PtrLcv_AffineFeatureG_to_PtrOfAlgorithm }
 	
 	impl crate::features2d::Feature2DTraitConst for core::Ptr<crate::features2d::AffineFeature> {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
@@ -13433,7 +13708,7 @@ mod features2d_types {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAffineFeature, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_AffineFeatureG_to_PtrOfFeature2D }
+	ptr_cast_base! { core::Ptr<crate::features2d::AffineFeature>, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_AffineFeatureG_to_PtrOfFeature2D }
 	
 	impl std::fmt::Debug for core::Ptr<crate::features2d::AffineFeature> {
 		#[inline]
@@ -13443,6 +13718,7 @@ mod features2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::features2d::AgastFeatureDetector>` instead, removal in Nov 2024"]
 	pub type PtrOfAgastFeatureDetector = core::Ptr<crate::features2d::AgastFeatureDetector>;
 	
 	ptr_extern! { crate::features2d::AgastFeatureDetector,
@@ -13470,7 +13746,7 @@ mod features2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAgastFeatureDetector, core::Ptr<core::Algorithm>, cv_PtrLcv_AgastFeatureDetectorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::features2d::AgastFeatureDetector>, core::Ptr<core::Algorithm>, cv_PtrLcv_AgastFeatureDetectorG_to_PtrOfAlgorithm }
 	
 	impl crate::features2d::Feature2DTraitConst for core::Ptr<crate::features2d::AgastFeatureDetector> {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
@@ -13480,7 +13756,7 @@ mod features2d_types {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAgastFeatureDetector, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_AgastFeatureDetectorG_to_PtrOfFeature2D }
+	ptr_cast_base! { core::Ptr<crate::features2d::AgastFeatureDetector>, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_AgastFeatureDetectorG_to_PtrOfFeature2D }
 	
 	impl std::fmt::Debug for core::Ptr<crate::features2d::AgastFeatureDetector> {
 		#[inline]
@@ -13490,6 +13766,7 @@ mod features2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::features2d::BFMatcher>` instead, removal in Nov 2024"]
 	pub type PtrOfBFMatcher = core::Ptr<crate::features2d::BFMatcher>;
 	
 	ptr_extern! { crate::features2d::BFMatcher,
@@ -13518,7 +13795,7 @@ mod features2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBFMatcher, core::Ptr<core::Algorithm>, cv_PtrLcv_BFMatcherG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::features2d::BFMatcher>, core::Ptr<core::Algorithm>, cv_PtrLcv_BFMatcherG_to_PtrOfAlgorithm }
 	
 	impl crate::features2d::DescriptorMatcherTraitConst for core::Ptr<crate::features2d::BFMatcher> {
 		#[inline] fn as_raw_DescriptorMatcher(&self) -> *const c_void { self.inner_as_raw() }
@@ -13528,7 +13805,7 @@ mod features2d_types {
 		#[inline] fn as_raw_mut_DescriptorMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBFMatcher, core::Ptr<crate::features2d::DescriptorMatcher>, cv_PtrLcv_BFMatcherG_to_PtrOfDescriptorMatcher }
+	ptr_cast_base! { core::Ptr<crate::features2d::BFMatcher>, core::Ptr<crate::features2d::DescriptorMatcher>, cv_PtrLcv_BFMatcherG_to_PtrOfDescriptorMatcher }
 	
 	impl std::fmt::Debug for core::Ptr<crate::features2d::BFMatcher> {
 		#[inline]
@@ -13538,6 +13815,7 @@ mod features2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::features2d::BRISK>` instead, removal in Nov 2024"]
 	pub type PtrOfBRISK = core::Ptr<crate::features2d::BRISK>;
 	
 	ptr_extern! { crate::features2d::BRISK,
@@ -13565,7 +13843,7 @@ mod features2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBRISK, core::Ptr<core::Algorithm>, cv_PtrLcv_BRISKG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::features2d::BRISK>, core::Ptr<core::Algorithm>, cv_PtrLcv_BRISKG_to_PtrOfAlgorithm }
 	
 	impl crate::features2d::Feature2DTraitConst for core::Ptr<crate::features2d::BRISK> {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
@@ -13575,7 +13853,7 @@ mod features2d_types {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBRISK, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_BRISKG_to_PtrOfFeature2D }
+	ptr_cast_base! { core::Ptr<crate::features2d::BRISK>, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_BRISKG_to_PtrOfFeature2D }
 	
 	impl std::fmt::Debug for core::Ptr<crate::features2d::BRISK> {
 		#[inline]
@@ -13585,6 +13863,7 @@ mod features2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::features2d::DescriptorMatcher>` instead, removal in Nov 2024"]
 	pub type PtrOfDescriptorMatcher = core::Ptr<crate::features2d::DescriptorMatcher>;
 	
 	ptr_extern! { crate::features2d::DescriptorMatcher,
@@ -13612,7 +13891,7 @@ mod features2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDescriptorMatcher, core::Ptr<core::Algorithm>, cv_PtrLcv_DescriptorMatcherG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::features2d::DescriptorMatcher>, core::Ptr<core::Algorithm>, cv_PtrLcv_DescriptorMatcherG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::features2d::DescriptorMatcher> {
 		#[inline]
@@ -13622,6 +13901,7 @@ mod features2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::features2d::FastFeatureDetector>` instead, removal in Nov 2024"]
 	pub type PtrOfFastFeatureDetector = core::Ptr<crate::features2d::FastFeatureDetector>;
 	
 	ptr_extern! { crate::features2d::FastFeatureDetector,
@@ -13649,7 +13929,7 @@ mod features2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFastFeatureDetector, core::Ptr<core::Algorithm>, cv_PtrLcv_FastFeatureDetectorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::features2d::FastFeatureDetector>, core::Ptr<core::Algorithm>, cv_PtrLcv_FastFeatureDetectorG_to_PtrOfAlgorithm }
 	
 	impl crate::features2d::Feature2DTraitConst for core::Ptr<crate::features2d::FastFeatureDetector> {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
@@ -13659,7 +13939,7 @@ mod features2d_types {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFastFeatureDetector, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_FastFeatureDetectorG_to_PtrOfFeature2D }
+	ptr_cast_base! { core::Ptr<crate::features2d::FastFeatureDetector>, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_FastFeatureDetectorG_to_PtrOfFeature2D }
 	
 	impl std::fmt::Debug for core::Ptr<crate::features2d::FastFeatureDetector> {
 		#[inline]
@@ -13669,6 +13949,7 @@ mod features2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::features2d::Feature2D>` instead, removal in Nov 2024"]
 	pub type PtrOfFeature2D = core::Ptr<crate::features2d::Feature2D>;
 	
 	ptr_extern! { crate::features2d::Feature2D,
@@ -13697,7 +13978,7 @@ mod features2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFeature2D, core::Ptr<core::Algorithm>, cv_PtrLcv_Feature2DG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::features2d::Feature2D>, core::Ptr<core::Algorithm>, cv_PtrLcv_Feature2DG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::features2d::Feature2D> {
 		#[inline]
@@ -13707,6 +13988,7 @@ mod features2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::features2d::FlannBasedMatcher>` instead, removal in Nov 2024"]
 	pub type PtrOfFlannBasedMatcher = core::Ptr<crate::features2d::FlannBasedMatcher>;
 	
 	ptr_extern! { crate::features2d::FlannBasedMatcher,
@@ -13735,7 +14017,7 @@ mod features2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFlannBasedMatcher, core::Ptr<core::Algorithm>, cv_PtrLcv_FlannBasedMatcherG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::features2d::FlannBasedMatcher>, core::Ptr<core::Algorithm>, cv_PtrLcv_FlannBasedMatcherG_to_PtrOfAlgorithm }
 	
 	impl crate::features2d::DescriptorMatcherTraitConst for core::Ptr<crate::features2d::FlannBasedMatcher> {
 		#[inline] fn as_raw_DescriptorMatcher(&self) -> *const c_void { self.inner_as_raw() }
@@ -13745,7 +14027,7 @@ mod features2d_types {
 		#[inline] fn as_raw_mut_DescriptorMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFlannBasedMatcher, core::Ptr<crate::features2d::DescriptorMatcher>, cv_PtrLcv_FlannBasedMatcherG_to_PtrOfDescriptorMatcher }
+	ptr_cast_base! { core::Ptr<crate::features2d::FlannBasedMatcher>, core::Ptr<crate::features2d::DescriptorMatcher>, cv_PtrLcv_FlannBasedMatcherG_to_PtrOfDescriptorMatcher }
 	
 	impl std::fmt::Debug for core::Ptr<crate::features2d::FlannBasedMatcher> {
 		#[inline]
@@ -13755,6 +14037,7 @@ mod features2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::features2d::GFTTDetector>` instead, removal in Nov 2024"]
 	pub type PtrOfGFTTDetector = core::Ptr<crate::features2d::GFTTDetector>;
 	
 	ptr_extern! { crate::features2d::GFTTDetector,
@@ -13782,7 +14065,7 @@ mod features2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfGFTTDetector, core::Ptr<core::Algorithm>, cv_PtrLcv_GFTTDetectorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::features2d::GFTTDetector>, core::Ptr<core::Algorithm>, cv_PtrLcv_GFTTDetectorG_to_PtrOfAlgorithm }
 	
 	impl crate::features2d::Feature2DTraitConst for core::Ptr<crate::features2d::GFTTDetector> {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
@@ -13792,7 +14075,7 @@ mod features2d_types {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfGFTTDetector, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_GFTTDetectorG_to_PtrOfFeature2D }
+	ptr_cast_base! { core::Ptr<crate::features2d::GFTTDetector>, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_GFTTDetectorG_to_PtrOfFeature2D }
 	
 	impl std::fmt::Debug for core::Ptr<crate::features2d::GFTTDetector> {
 		#[inline]
@@ -13802,6 +14085,7 @@ mod features2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::features2d::KAZE>` instead, removal in Nov 2024"]
 	pub type PtrOfKAZE = core::Ptr<crate::features2d::KAZE>;
 	
 	ptr_extern! { crate::features2d::KAZE,
@@ -13829,7 +14113,7 @@ mod features2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfKAZE, core::Ptr<core::Algorithm>, cv_PtrLcv_KAZEG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::features2d::KAZE>, core::Ptr<core::Algorithm>, cv_PtrLcv_KAZEG_to_PtrOfAlgorithm }
 	
 	impl crate::features2d::Feature2DTraitConst for core::Ptr<crate::features2d::KAZE> {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
@@ -13839,7 +14123,7 @@ mod features2d_types {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfKAZE, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_KAZEG_to_PtrOfFeature2D }
+	ptr_cast_base! { core::Ptr<crate::features2d::KAZE>, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_KAZEG_to_PtrOfFeature2D }
 	
 	impl std::fmt::Debug for core::Ptr<crate::features2d::KAZE> {
 		#[inline]
@@ -13849,6 +14133,7 @@ mod features2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::features2d::MSER>` instead, removal in Nov 2024"]
 	pub type PtrOfMSER = core::Ptr<crate::features2d::MSER>;
 	
 	ptr_extern! { crate::features2d::MSER,
@@ -13876,7 +14161,7 @@ mod features2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMSER, core::Ptr<core::Algorithm>, cv_PtrLcv_MSERG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::features2d::MSER>, core::Ptr<core::Algorithm>, cv_PtrLcv_MSERG_to_PtrOfAlgorithm }
 	
 	impl crate::features2d::Feature2DTraitConst for core::Ptr<crate::features2d::MSER> {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
@@ -13886,7 +14171,7 @@ mod features2d_types {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMSER, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_MSERG_to_PtrOfFeature2D }
+	ptr_cast_base! { core::Ptr<crate::features2d::MSER>, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_MSERG_to_PtrOfFeature2D }
 	
 	impl std::fmt::Debug for core::Ptr<crate::features2d::MSER> {
 		#[inline]
@@ -13896,6 +14181,7 @@ mod features2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::features2d::ORB>` instead, removal in Nov 2024"]
 	pub type PtrOfORB = core::Ptr<crate::features2d::ORB>;
 	
 	ptr_extern! { crate::features2d::ORB,
@@ -13923,7 +14209,7 @@ mod features2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfORB, core::Ptr<core::Algorithm>, cv_PtrLcv_ORBG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::features2d::ORB>, core::Ptr<core::Algorithm>, cv_PtrLcv_ORBG_to_PtrOfAlgorithm }
 	
 	impl crate::features2d::Feature2DTraitConst for core::Ptr<crate::features2d::ORB> {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
@@ -13933,7 +14219,7 @@ mod features2d_types {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfORB, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_ORBG_to_PtrOfFeature2D }
+	ptr_cast_base! { core::Ptr<crate::features2d::ORB>, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_ORBG_to_PtrOfFeature2D }
 	
 	impl std::fmt::Debug for core::Ptr<crate::features2d::ORB> {
 		#[inline]
@@ -13943,6 +14229,7 @@ mod features2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::features2d::SIFT>` instead, removal in Nov 2024"]
 	pub type PtrOfSIFT = core::Ptr<crate::features2d::SIFT>;
 	
 	ptr_extern! { crate::features2d::SIFT,
@@ -13970,7 +14257,7 @@ mod features2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSIFT, core::Ptr<core::Algorithm>, cv_PtrLcv_SIFTG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::features2d::SIFT>, core::Ptr<core::Algorithm>, cv_PtrLcv_SIFTG_to_PtrOfAlgorithm }
 	
 	impl crate::features2d::Feature2DTraitConst for core::Ptr<crate::features2d::SIFT> {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
@@ -13980,7 +14267,7 @@ mod features2d_types {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSIFT, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_SIFTG_to_PtrOfFeature2D }
+	ptr_cast_base! { core::Ptr<crate::features2d::SIFT>, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_SIFTG_to_PtrOfFeature2D }
 	
 	impl std::fmt::Debug for core::Ptr<crate::features2d::SIFT> {
 		#[inline]
@@ -13990,6 +14277,7 @@ mod features2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::features2d::SimpleBlobDetector>` instead, removal in Nov 2024"]
 	pub type PtrOfSimpleBlobDetector = core::Ptr<crate::features2d::SimpleBlobDetector>;
 	
 	ptr_extern! { crate::features2d::SimpleBlobDetector,
@@ -14017,7 +14305,7 @@ mod features2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSimpleBlobDetector, core::Ptr<core::Algorithm>, cv_PtrLcv_SimpleBlobDetectorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::features2d::SimpleBlobDetector>, core::Ptr<core::Algorithm>, cv_PtrLcv_SimpleBlobDetectorG_to_PtrOfAlgorithm }
 	
 	impl crate::features2d::Feature2DTraitConst for core::Ptr<crate::features2d::SimpleBlobDetector> {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
@@ -14027,7 +14315,7 @@ mod features2d_types {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSimpleBlobDetector, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_SimpleBlobDetectorG_to_PtrOfFeature2D }
+	ptr_cast_base! { core::Ptr<crate::features2d::SimpleBlobDetector>, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_SimpleBlobDetectorG_to_PtrOfFeature2D }
 	
 	impl std::fmt::Debug for core::Ptr<crate::features2d::SimpleBlobDetector> {
 		#[inline]
@@ -14045,6 +14333,7 @@ pub use features2d_types::*;
 mod flann_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::flann::AutotunedIndexParams>` instead, removal in Nov 2024"]
 	pub type PtrOfAutotunedIndexParams = core::Ptr<crate::flann::AutotunedIndexParams>;
 	
 	ptr_extern! { crate::flann::AutotunedIndexParams,
@@ -14073,7 +14362,7 @@ mod flann_types {
 		#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAutotunedIndexParams, core::Ptr<crate::flann::IndexParams>, cv_PtrLcv_flann_AutotunedIndexParamsG_to_PtrOfIndexParams }
+	ptr_cast_base! { core::Ptr<crate::flann::AutotunedIndexParams>, core::Ptr<crate::flann::IndexParams>, cv_PtrLcv_flann_AutotunedIndexParamsG_to_PtrOfIndexParams }
 	
 	impl std::fmt::Debug for core::Ptr<crate::flann::AutotunedIndexParams> {
 		#[inline]
@@ -14083,6 +14372,7 @@ mod flann_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::flann::CompositeIndexParams>` instead, removal in Nov 2024"]
 	pub type PtrOfCompositeIndexParams = core::Ptr<crate::flann::CompositeIndexParams>;
 	
 	ptr_extern! { crate::flann::CompositeIndexParams,
@@ -14111,7 +14401,7 @@ mod flann_types {
 		#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCompositeIndexParams, core::Ptr<crate::flann::IndexParams>, cv_PtrLcv_flann_CompositeIndexParamsG_to_PtrOfIndexParams }
+	ptr_cast_base! { core::Ptr<crate::flann::CompositeIndexParams>, core::Ptr<crate::flann::IndexParams>, cv_PtrLcv_flann_CompositeIndexParamsG_to_PtrOfIndexParams }
 	
 	impl std::fmt::Debug for core::Ptr<crate::flann::CompositeIndexParams> {
 		#[inline]
@@ -14121,6 +14411,7 @@ mod flann_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::flann::HierarchicalClusteringIndexParams>` instead, removal in Nov 2024"]
 	pub type PtrOfHierarchicalClusteringIndexParams = core::Ptr<crate::flann::HierarchicalClusteringIndexParams>;
 	
 	ptr_extern! { crate::flann::HierarchicalClusteringIndexParams,
@@ -14149,7 +14440,7 @@ mod flann_types {
 		#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfHierarchicalClusteringIndexParams, core::Ptr<crate::flann::IndexParams>, cv_PtrLcv_flann_HierarchicalClusteringIndexParamsG_to_PtrOfIndexParams }
+	ptr_cast_base! { core::Ptr<crate::flann::HierarchicalClusteringIndexParams>, core::Ptr<crate::flann::IndexParams>, cv_PtrLcv_flann_HierarchicalClusteringIndexParamsG_to_PtrOfIndexParams }
 	
 	impl std::fmt::Debug for core::Ptr<crate::flann::HierarchicalClusteringIndexParams> {
 		#[inline]
@@ -14159,6 +14450,7 @@ mod flann_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::flann::IndexParams>` instead, removal in Nov 2024"]
 	pub type PtrOfIndexParams = core::Ptr<crate::flann::IndexParams>;
 	
 	ptr_extern! { crate::flann::IndexParams,
@@ -14187,6 +14479,7 @@ mod flann_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::flann::KDTreeIndexParams>` instead, removal in Nov 2024"]
 	pub type PtrOfKDTreeIndexParams = core::Ptr<crate::flann::KDTreeIndexParams>;
 	
 	ptr_extern! { crate::flann::KDTreeIndexParams,
@@ -14215,7 +14508,7 @@ mod flann_types {
 		#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfKDTreeIndexParams, core::Ptr<crate::flann::IndexParams>, cv_PtrLcv_flann_KDTreeIndexParamsG_to_PtrOfIndexParams }
+	ptr_cast_base! { core::Ptr<crate::flann::KDTreeIndexParams>, core::Ptr<crate::flann::IndexParams>, cv_PtrLcv_flann_KDTreeIndexParamsG_to_PtrOfIndexParams }
 	
 	impl std::fmt::Debug for core::Ptr<crate::flann::KDTreeIndexParams> {
 		#[inline]
@@ -14225,6 +14518,7 @@ mod flann_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::flann::KMeansIndexParams>` instead, removal in Nov 2024"]
 	pub type PtrOfKMeansIndexParams = core::Ptr<crate::flann::KMeansIndexParams>;
 	
 	ptr_extern! { crate::flann::KMeansIndexParams,
@@ -14253,7 +14547,7 @@ mod flann_types {
 		#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfKMeansIndexParams, core::Ptr<crate::flann::IndexParams>, cv_PtrLcv_flann_KMeansIndexParamsG_to_PtrOfIndexParams }
+	ptr_cast_base! { core::Ptr<crate::flann::KMeansIndexParams>, core::Ptr<crate::flann::IndexParams>, cv_PtrLcv_flann_KMeansIndexParamsG_to_PtrOfIndexParams }
 	
 	impl std::fmt::Debug for core::Ptr<crate::flann::KMeansIndexParams> {
 		#[inline]
@@ -14263,6 +14557,7 @@ mod flann_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::flann::LinearIndexParams>` instead, removal in Nov 2024"]
 	pub type PtrOfLinearIndexParams = core::Ptr<crate::flann::LinearIndexParams>;
 	
 	ptr_extern! { crate::flann::LinearIndexParams,
@@ -14291,7 +14586,7 @@ mod flann_types {
 		#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfLinearIndexParams, core::Ptr<crate::flann::IndexParams>, cv_PtrLcv_flann_LinearIndexParamsG_to_PtrOfIndexParams }
+	ptr_cast_base! { core::Ptr<crate::flann::LinearIndexParams>, core::Ptr<crate::flann::IndexParams>, cv_PtrLcv_flann_LinearIndexParamsG_to_PtrOfIndexParams }
 	
 	impl std::fmt::Debug for core::Ptr<crate::flann::LinearIndexParams> {
 		#[inline]
@@ -14301,6 +14596,7 @@ mod flann_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::flann::LshIndexParams>` instead, removal in Nov 2024"]
 	pub type PtrOfLshIndexParams = core::Ptr<crate::flann::LshIndexParams>;
 	
 	ptr_extern! { crate::flann::LshIndexParams,
@@ -14329,7 +14625,7 @@ mod flann_types {
 		#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfLshIndexParams, core::Ptr<crate::flann::IndexParams>, cv_PtrLcv_flann_LshIndexParamsG_to_PtrOfIndexParams }
+	ptr_cast_base! { core::Ptr<crate::flann::LshIndexParams>, core::Ptr<crate::flann::IndexParams>, cv_PtrLcv_flann_LshIndexParamsG_to_PtrOfIndexParams }
 	
 	impl std::fmt::Debug for core::Ptr<crate::flann::LshIndexParams> {
 		#[inline]
@@ -14339,6 +14635,7 @@ mod flann_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::flann::SavedIndexParams>` instead, removal in Nov 2024"]
 	pub type PtrOfSavedIndexParams = core::Ptr<crate::flann::SavedIndexParams>;
 	
 	ptr_extern! { crate::flann::SavedIndexParams,
@@ -14367,7 +14664,7 @@ mod flann_types {
 		#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSavedIndexParams, core::Ptr<crate::flann::IndexParams>, cv_PtrLcv_flann_SavedIndexParamsG_to_PtrOfIndexParams }
+	ptr_cast_base! { core::Ptr<crate::flann::SavedIndexParams>, core::Ptr<crate::flann::IndexParams>, cv_PtrLcv_flann_SavedIndexParamsG_to_PtrOfIndexParams }
 	
 	impl std::fmt::Debug for core::Ptr<crate::flann::SavedIndexParams> {
 		#[inline]
@@ -14377,6 +14674,7 @@ mod flann_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::flann::SearchParams>` instead, removal in Nov 2024"]
 	pub type PtrOfSearchParams = core::Ptr<crate::flann::SearchParams>;
 	
 	ptr_extern! { crate::flann::SearchParams,
@@ -14405,7 +14703,7 @@ mod flann_types {
 		#[inline] fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSearchParams, core::Ptr<crate::flann::IndexParams>, cv_PtrLcv_flann_SearchParamsG_to_PtrOfIndexParams }
+	ptr_cast_base! { core::Ptr<crate::flann::SearchParams>, core::Ptr<crate::flann::IndexParams>, cv_PtrLcv_flann_SearchParamsG_to_PtrOfIndexParams }
 	
 	impl std::fmt::Debug for core::Ptr<crate::flann::SearchParams> {
 		#[inline]
@@ -14415,6 +14713,31 @@ mod flann_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::flann::FeatureIndex>` instead, removal in Nov 2024"]
+	pub type VectorOfFeatureIndex = core::Vector<crate::flann::FeatureIndex>;
+	
+	impl core::Vector<crate::flann::FeatureIndex> {
+		pub fn as_raw_VectorOfFeatureIndex(&self) -> extern_send!(Self) { self.as_raw() }
+		pub fn as_raw_mut_VectorOfFeatureIndex(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+	
+	vector_extern! { crate::flann::FeatureIndex,
+		std_vectorLcvflann_lsh_FeatureIndexG_new_const, std_vectorLcvflann_lsh_FeatureIndexG_delete,
+		std_vectorLcvflann_lsh_FeatureIndexG_len_const, std_vectorLcvflann_lsh_FeatureIndexG_isEmpty_const,
+		std_vectorLcvflann_lsh_FeatureIndexG_capacity_const, std_vectorLcvflann_lsh_FeatureIndexG_shrinkToFit,
+		std_vectorLcvflann_lsh_FeatureIndexG_reserve_size_t, std_vectorLcvflann_lsh_FeatureIndexG_remove_size_t,
+		std_vectorLcvflann_lsh_FeatureIndexG_swap_size_t_size_t, std_vectorLcvflann_lsh_FeatureIndexG_clear,
+		std_vectorLcvflann_lsh_FeatureIndexG_get_const_size_t, std_vectorLcvflann_lsh_FeatureIndexG_set_size_t_const_FeatureIndex,
+		std_vectorLcvflann_lsh_FeatureIndexG_push_const_FeatureIndex, std_vectorLcvflann_lsh_FeatureIndexG_insert_size_t_const_FeatureIndex,
+	}
+	
+	vector_copy_non_bool! { crate::flann::FeatureIndex,
+		std_vectorLcvflann_lsh_FeatureIndexG_data_const, std_vectorLcvflann_lsh_FeatureIndexG_dataMut, cv_fromSlice_const_const_FeatureIndexX_size_t,
+		std_vectorLcvflann_lsh_FeatureIndexG_clone_const,
+	}
+	
+	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::flann::FlannIndexType>` instead, removal in Nov 2024"]
 	pub type VectorOfFlannIndexType = core::Vector<crate::flann::FlannIndexType>;
 	
 	impl core::Vector<crate::flann::FlannIndexType> {
@@ -14438,29 +14761,6 @@ mod flann_types {
 	}
 	
 	
-	pub type VectorOffeature_index = core::Vector<crate::flann::feature_index>;
-	
-	impl core::Vector<crate::flann::feature_index> {
-		pub fn as_raw_VectorOffeature_index(&self) -> extern_send!(Self) { self.as_raw() }
-		pub fn as_raw_mut_VectorOffeature_index(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
-	}
-	
-	vector_extern! { crate::flann::feature_index,
-		std_vectorLcvflann_lsh_FeatureIndexG_new_const, std_vectorLcvflann_lsh_FeatureIndexG_delete,
-		std_vectorLcvflann_lsh_FeatureIndexG_len_const, std_vectorLcvflann_lsh_FeatureIndexG_isEmpty_const,
-		std_vectorLcvflann_lsh_FeatureIndexG_capacity_const, std_vectorLcvflann_lsh_FeatureIndexG_shrinkToFit,
-		std_vectorLcvflann_lsh_FeatureIndexG_reserve_size_t, std_vectorLcvflann_lsh_FeatureIndexG_remove_size_t,
-		std_vectorLcvflann_lsh_FeatureIndexG_swap_size_t_size_t, std_vectorLcvflann_lsh_FeatureIndexG_clear,
-		std_vectorLcvflann_lsh_FeatureIndexG_get_const_size_t, std_vectorLcvflann_lsh_FeatureIndexG_set_size_t_const_FeatureIndex,
-		std_vectorLcvflann_lsh_FeatureIndexG_push_const_FeatureIndex, std_vectorLcvflann_lsh_FeatureIndexG_insert_size_t_const_FeatureIndex,
-	}
-	
-	vector_copy_non_bool! { crate::flann::feature_index,
-		std_vectorLcvflann_lsh_FeatureIndexG_data_const, std_vectorLcvflann_lsh_FeatureIndexG_dataMut, cv_fromSlice_const_const_FeatureIndexX_size_t,
-		std_vectorLcvflann_lsh_FeatureIndexG_clone_const,
-	}
-	
-	
 }
 #[cfg(ocvrs_has_module_flann)]
 pub use flann_types::*;
@@ -14469,6 +14769,7 @@ pub use flann_types::*;
 mod freetype_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::freetype::FreeType2>` instead, removal in Nov 2024"]
 	pub type PtrOfFreeType2 = core::Ptr<crate::freetype::FreeType2>;
 	
 	ptr_extern! { crate::freetype::FreeType2,
@@ -14496,7 +14797,7 @@ mod freetype_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFreeType2, core::Ptr<core::Algorithm>, cv_PtrLcv_freetype_FreeType2G_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::freetype::FreeType2>, core::Ptr<core::Algorithm>, cv_PtrLcv_freetype_FreeType2G_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::freetype::FreeType2> {
 		#[inline]
@@ -14514,6 +14815,7 @@ pub use freetype_types::*;
 mod gapi_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Tuple<(crate::gapi::GBackend, crate::gapi::GKernelImpl)>` instead, removal in Nov 2024"]
 	pub type TupleOfGBackend_GKernelImpl = core::Tuple<(crate::gapi::GBackend, crate::gapi::GKernelImpl)>;
 	
 	impl core::Tuple<(crate::gapi::GBackend, crate::gapi::GKernelImpl)> {
@@ -14527,6 +14829,7 @@ mod gapi_types {
 		1 = arg_1: crate::gapi::GKernelImpl, get_1 via std_pairLcv_gapi_GBackend__cv_GKernelImplG_get_1_const
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Tuple<(crate::gapi::GMat, crate::gapi::GMat)>` instead, removal in Nov 2024"]
 	pub type TupleOfGMat_GMat = core::Tuple<(crate::gapi::GMat, crate::gapi::GMat)>;
 	
 	impl core::Tuple<(crate::gapi::GMat, crate::gapi::GMat)> {
@@ -14540,6 +14843,7 @@ mod gapi_types {
 		1 = arg_1: crate::gapi::GMat, get_1 via std_tupleLcv_GMat__cv_GMatG_get_1_const
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Tuple<(crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat)>` instead, removal in Nov 2024"]
 	pub type TupleOfGMat_GMat_GMat = core::Tuple<(crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat)>;
 	
 	impl core::Tuple<(crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat)> {
@@ -14554,6 +14858,7 @@ mod gapi_types {
 		2 = arg_2: crate::gapi::GMat, get_2 via std_tupleLcv_GMat__cv_GMat__cv_GMatG_get_2_const
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Tuple<(crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat)>` instead, removal in Nov 2024"]
 	pub type TupleOfGMat_GMat_GMat_GMat = core::Tuple<(crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat)>;
 	
 	impl core::Tuple<(crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat)> {
@@ -14569,6 +14874,7 @@ mod gapi_types {
 		3 = arg_3: crate::gapi::GMat, get_3 via std_tupleLcv_GMat__cv_GMat__cv_GMat__cv_GMatG_get_3_const
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Tuple<(crate::gapi::GMat, crate::gapi::GScalar)>` instead, removal in Nov 2024"]
 	pub type TupleOfGMat_GScalar = core::Tuple<(crate::gapi::GMat, crate::gapi::GScalar)>;
 	
 	impl core::Tuple<(crate::gapi::GMat, crate::gapi::GScalar)> {
@@ -14582,6 +14888,7 @@ mod gapi_types {
 		1 = arg_1: crate::gapi::GScalar, get_1 via std_tupleLcv_GMat__cv_GScalarG_get_1_const
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::gapi::Detail_OpaqueKind>` instead, removal in Nov 2024"]
 	pub type VectorOfDetail_OpaqueKind = core::Vector<crate::gapi::Detail_OpaqueKind>;
 	
 	impl core::Vector<crate::gapi::Detail_OpaqueKind> {
@@ -14605,6 +14912,7 @@ mod gapi_types {
 	}
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::gapi::GArg>` instead, removal in Nov 2024"]
 	pub type VectorOfGArg = core::Vector<crate::gapi::GArg>;
 	
 	impl core::Vector<crate::gapi::GArg> {
@@ -14626,7 +14934,7 @@ mod gapi_types {
 	
 	vector_boxed_ref! { crate::gapi::GArg }
 	
-	vector_extern! { BoxedRef<'_, crate::gapi::GArg>,
+	vector_extern! { BoxedRef<'t, crate::gapi::GArg>,
 		std_vectorLcv_GArgG_new_const, std_vectorLcv_GArgG_delete,
 		std_vectorLcv_GArgG_len_const, std_vectorLcv_GArgG_isEmpty_const,
 		std_vectorLcv_GArgG_capacity_const, std_vectorLcv_GArgG_shrinkToFit,
@@ -14637,6 +14945,7 @@ mod gapi_types {
 	}
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::gapi::GBackend>` instead, removal in Nov 2024"]
 	pub type VectorOfGBackend = core::Vector<crate::gapi::GBackend>;
 	
 	impl core::Vector<crate::gapi::GBackend> {
@@ -14658,7 +14967,7 @@ mod gapi_types {
 	
 	vector_boxed_ref! { crate::gapi::GBackend }
 	
-	vector_extern! { BoxedRef<'_, crate::gapi::GBackend>,
+	vector_extern! { BoxedRef<'t, crate::gapi::GBackend>,
 		std_vectorLcv_gapi_GBackendG_new_const, std_vectorLcv_gapi_GBackendG_delete,
 		std_vectorLcv_gapi_GBackendG_len_const, std_vectorLcv_gapi_GBackendG_isEmpty_const,
 		std_vectorLcv_gapi_GBackendG_capacity_const, std_vectorLcv_gapi_GBackendG_shrinkToFit,
@@ -14669,6 +14978,7 @@ mod gapi_types {
 	}
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::gapi::GCompileArg>` instead, removal in Nov 2024"]
 	pub type VectorOfGCompileArg = core::Vector<crate::gapi::GCompileArg>;
 	
 	impl core::Vector<crate::gapi::GCompileArg> {
@@ -14690,7 +15000,7 @@ mod gapi_types {
 	
 	vector_boxed_ref! { crate::gapi::GCompileArg }
 	
-	vector_extern! { BoxedRef<'_, crate::gapi::GCompileArg>,
+	vector_extern! { BoxedRef<'t, crate::gapi::GCompileArg>,
 		std_vectorLcv_GCompileArgG_new_const, std_vectorLcv_GCompileArgG_delete,
 		std_vectorLcv_GCompileArgG_len_const, std_vectorLcv_GCompileArgG_isEmpty_const,
 		std_vectorLcv_GCompileArgG_capacity_const, std_vectorLcv_GCompileArgG_shrinkToFit,
@@ -14701,6 +15011,7 @@ mod gapi_types {
 	}
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::gapi::GMat>` instead, removal in Nov 2024"]
 	pub type VectorOfGMat = core::Vector<crate::gapi::GMat>;
 	
 	impl core::Vector<crate::gapi::GMat> {
@@ -14722,7 +15033,7 @@ mod gapi_types {
 	
 	vector_boxed_ref! { crate::gapi::GMat }
 	
-	vector_extern! { BoxedRef<'_, crate::gapi::GMat>,
+	vector_extern! { BoxedRef<'t, crate::gapi::GMat>,
 		std_vectorLcv_GMatG_new_const, std_vectorLcv_GMatG_delete,
 		std_vectorLcv_GMatG_len_const, std_vectorLcv_GMatG_isEmpty_const,
 		std_vectorLcv_GMatG_capacity_const, std_vectorLcv_GMatG_shrinkToFit,
@@ -14733,6 +15044,7 @@ mod gapi_types {
 	}
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::gapi::GRunArg>` instead, removal in Nov 2024"]
 	pub type VectorOfGRunArg = core::Vector<crate::gapi::GRunArg>;
 	
 	impl core::Vector<crate::gapi::GRunArg> {
@@ -14754,7 +15066,7 @@ mod gapi_types {
 	
 	vector_boxed_ref! { crate::gapi::GRunArg }
 	
-	vector_extern! { BoxedRef<'_, crate::gapi::GRunArg>,
+	vector_extern! { BoxedRef<'t, crate::gapi::GRunArg>,
 		std_vectorLcv_GRunArgG_new_const, std_vectorLcv_GRunArgG_delete,
 		std_vectorLcv_GRunArgG_len_const, std_vectorLcv_GRunArgG_isEmpty_const,
 		std_vectorLcv_GRunArgG_capacity_const, std_vectorLcv_GRunArgG_shrinkToFit,
@@ -14765,6 +15077,7 @@ mod gapi_types {
 	}
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::gapi::GShape>` instead, removal in Nov 2024"]
 	pub type VectorOfGShape = core::Vector<crate::gapi::GShape>;
 	
 	impl core::Vector<crate::gapi::GShape> {
@@ -14788,6 +15101,7 @@ mod gapi_types {
 	}
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::gapi::GTransform>` instead, removal in Nov 2024"]
 	pub type VectorOfGTransform = core::Vector<crate::gapi::GTransform>;
 	
 	impl core::Vector<crate::gapi::GTransform> {
@@ -14809,7 +15123,7 @@ mod gapi_types {
 	
 	vector_boxed_ref! { crate::gapi::GTransform }
 	
-	vector_extern! { BoxedRef<'_, crate::gapi::GTransform>,
+	vector_extern! { BoxedRef<'t, crate::gapi::GTransform>,
 		std_vectorLcv_GTransformG_new_const, std_vectorLcv_GTransformG_delete,
 		std_vectorLcv_GTransformG_len_const, std_vectorLcv_GTransformG_isEmpty_const,
 		std_vectorLcv_GTransformG_capacity_const, std_vectorLcv_GTransformG_shrinkToFit,
@@ -14820,6 +15134,7 @@ mod gapi_types {
 	}
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::gapi::GTypeInfo>` instead, removal in Nov 2024"]
 	pub type VectorOfGTypeInfo = core::Vector<crate::gapi::GTypeInfo>;
 	
 	impl core::Vector<crate::gapi::GTypeInfo> {
@@ -14841,7 +15156,7 @@ mod gapi_types {
 	
 	vector_boxed_ref! { crate::gapi::GTypeInfo }
 	
-	vector_extern! { BoxedRef<'_, crate::gapi::GTypeInfo>,
+	vector_extern! { BoxedRef<'t, crate::gapi::GTypeInfo>,
 		std_vectorLcv_GTypeInfoG_new_const, std_vectorLcv_GTypeInfoG_delete,
 		std_vectorLcv_GTypeInfoG_len_const, std_vectorLcv_GTypeInfoG_isEmpty_const,
 		std_vectorLcv_GTypeInfoG_capacity_const, std_vectorLcv_GTypeInfoG_shrinkToFit,
@@ -14860,6 +15175,7 @@ pub use gapi_types::*;
 mod hdf_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::hdf::HDF5>` instead, removal in Nov 2024"]
 	pub type PtrOfHDF5 = core::Ptr<crate::hdf::HDF5>;
 	
 	ptr_extern! { crate::hdf::HDF5,
@@ -14895,6 +15211,7 @@ pub use hdf_types::*;
 mod hfs_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::hfs::HfsSegment>` instead, removal in Nov 2024"]
 	pub type PtrOfHfsSegment = core::Ptr<crate::hfs::HfsSegment>;
 	
 	ptr_extern! { crate::hfs::HfsSegment,
@@ -14922,7 +15239,7 @@ mod hfs_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfHfsSegment, core::Ptr<core::Algorithm>, cv_PtrLcv_hfs_HfsSegmentG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::hfs::HfsSegment>, core::Ptr<core::Algorithm>, cv_PtrLcv_hfs_HfsSegmentG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::hfs::HfsSegment> {
 		#[inline]
@@ -14940,6 +15257,7 @@ pub use hfs_types::*;
 mod img_hash_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::img_hash::AverageHash>` instead, removal in Nov 2024"]
 	pub type PtrOfAverageHash = core::Ptr<crate::img_hash::AverageHash>;
 	
 	ptr_extern! { crate::img_hash::AverageHash,
@@ -14968,7 +15286,7 @@ mod img_hash_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAverageHash, core::Ptr<core::Algorithm>, cv_PtrLcv_img_hash_AverageHashG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::img_hash::AverageHash>, core::Ptr<core::Algorithm>, cv_PtrLcv_img_hash_AverageHashG_to_PtrOfAlgorithm }
 	
 	impl crate::img_hash::ImgHashBaseTraitConst for core::Ptr<crate::img_hash::AverageHash> {
 		#[inline] fn as_raw_ImgHashBase(&self) -> *const c_void { self.inner_as_raw() }
@@ -14978,7 +15296,7 @@ mod img_hash_types {
 		#[inline] fn as_raw_mut_ImgHashBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAverageHash, core::Ptr<crate::img_hash::ImgHashBase>, cv_PtrLcv_img_hash_AverageHashG_to_PtrOfImgHashBase }
+	ptr_cast_base! { core::Ptr<crate::img_hash::AverageHash>, core::Ptr<crate::img_hash::ImgHashBase>, cv_PtrLcv_img_hash_AverageHashG_to_PtrOfImgHashBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::img_hash::AverageHash> {
 		#[inline]
@@ -14988,6 +15306,7 @@ mod img_hash_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::img_hash::BlockMeanHash>` instead, removal in Nov 2024"]
 	pub type PtrOfBlockMeanHash = core::Ptr<crate::img_hash::BlockMeanHash>;
 	
 	ptr_extern! { crate::img_hash::BlockMeanHash,
@@ -15016,7 +15335,7 @@ mod img_hash_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBlockMeanHash, core::Ptr<core::Algorithm>, cv_PtrLcv_img_hash_BlockMeanHashG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::img_hash::BlockMeanHash>, core::Ptr<core::Algorithm>, cv_PtrLcv_img_hash_BlockMeanHashG_to_PtrOfAlgorithm }
 	
 	impl crate::img_hash::ImgHashBaseTraitConst for core::Ptr<crate::img_hash::BlockMeanHash> {
 		#[inline] fn as_raw_ImgHashBase(&self) -> *const c_void { self.inner_as_raw() }
@@ -15026,7 +15345,7 @@ mod img_hash_types {
 		#[inline] fn as_raw_mut_ImgHashBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBlockMeanHash, core::Ptr<crate::img_hash::ImgHashBase>, cv_PtrLcv_img_hash_BlockMeanHashG_to_PtrOfImgHashBase }
+	ptr_cast_base! { core::Ptr<crate::img_hash::BlockMeanHash>, core::Ptr<crate::img_hash::ImgHashBase>, cv_PtrLcv_img_hash_BlockMeanHashG_to_PtrOfImgHashBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::img_hash::BlockMeanHash> {
 		#[inline]
@@ -15036,6 +15355,7 @@ mod img_hash_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::img_hash::ColorMomentHash>` instead, removal in Nov 2024"]
 	pub type PtrOfColorMomentHash = core::Ptr<crate::img_hash::ColorMomentHash>;
 	
 	ptr_extern! { crate::img_hash::ColorMomentHash,
@@ -15064,7 +15384,7 @@ mod img_hash_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfColorMomentHash, core::Ptr<core::Algorithm>, cv_PtrLcv_img_hash_ColorMomentHashG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::img_hash::ColorMomentHash>, core::Ptr<core::Algorithm>, cv_PtrLcv_img_hash_ColorMomentHashG_to_PtrOfAlgorithm }
 	
 	impl crate::img_hash::ImgHashBaseTraitConst for core::Ptr<crate::img_hash::ColorMomentHash> {
 		#[inline] fn as_raw_ImgHashBase(&self) -> *const c_void { self.inner_as_raw() }
@@ -15074,7 +15394,7 @@ mod img_hash_types {
 		#[inline] fn as_raw_mut_ImgHashBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfColorMomentHash, core::Ptr<crate::img_hash::ImgHashBase>, cv_PtrLcv_img_hash_ColorMomentHashG_to_PtrOfImgHashBase }
+	ptr_cast_base! { core::Ptr<crate::img_hash::ColorMomentHash>, core::Ptr<crate::img_hash::ImgHashBase>, cv_PtrLcv_img_hash_ColorMomentHashG_to_PtrOfImgHashBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::img_hash::ColorMomentHash> {
 		#[inline]
@@ -15084,6 +15404,7 @@ mod img_hash_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::img_hash::ImgHashBase>` instead, removal in Nov 2024"]
 	pub type PtrOfImgHashBase = core::Ptr<crate::img_hash::ImgHashBase>;
 	
 	ptr_extern! { crate::img_hash::ImgHashBase,
@@ -15112,7 +15433,7 @@ mod img_hash_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfImgHashBase, core::Ptr<core::Algorithm>, cv_PtrLcv_img_hash_ImgHashBaseG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::img_hash::ImgHashBase>, core::Ptr<core::Algorithm>, cv_PtrLcv_img_hash_ImgHashBaseG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::img_hash::ImgHashBase> {
 		#[inline]
@@ -15122,6 +15443,7 @@ mod img_hash_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::img_hash::MarrHildrethHash>` instead, removal in Nov 2024"]
 	pub type PtrOfMarrHildrethHash = core::Ptr<crate::img_hash::MarrHildrethHash>;
 	
 	ptr_extern! { crate::img_hash::MarrHildrethHash,
@@ -15150,7 +15472,7 @@ mod img_hash_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMarrHildrethHash, core::Ptr<core::Algorithm>, cv_PtrLcv_img_hash_MarrHildrethHashG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::img_hash::MarrHildrethHash>, core::Ptr<core::Algorithm>, cv_PtrLcv_img_hash_MarrHildrethHashG_to_PtrOfAlgorithm }
 	
 	impl crate::img_hash::ImgHashBaseTraitConst for core::Ptr<crate::img_hash::MarrHildrethHash> {
 		#[inline] fn as_raw_ImgHashBase(&self) -> *const c_void { self.inner_as_raw() }
@@ -15160,7 +15482,7 @@ mod img_hash_types {
 		#[inline] fn as_raw_mut_ImgHashBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMarrHildrethHash, core::Ptr<crate::img_hash::ImgHashBase>, cv_PtrLcv_img_hash_MarrHildrethHashG_to_PtrOfImgHashBase }
+	ptr_cast_base! { core::Ptr<crate::img_hash::MarrHildrethHash>, core::Ptr<crate::img_hash::ImgHashBase>, cv_PtrLcv_img_hash_MarrHildrethHashG_to_PtrOfImgHashBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::img_hash::MarrHildrethHash> {
 		#[inline]
@@ -15170,6 +15492,7 @@ mod img_hash_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::img_hash::PHash>` instead, removal in Nov 2024"]
 	pub type PtrOfPHash = core::Ptr<crate::img_hash::PHash>;
 	
 	ptr_extern! { crate::img_hash::PHash,
@@ -15198,7 +15521,7 @@ mod img_hash_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfPHash, core::Ptr<core::Algorithm>, cv_PtrLcv_img_hash_PHashG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::img_hash::PHash>, core::Ptr<core::Algorithm>, cv_PtrLcv_img_hash_PHashG_to_PtrOfAlgorithm }
 	
 	impl crate::img_hash::ImgHashBaseTraitConst for core::Ptr<crate::img_hash::PHash> {
 		#[inline] fn as_raw_ImgHashBase(&self) -> *const c_void { self.inner_as_raw() }
@@ -15208,7 +15531,7 @@ mod img_hash_types {
 		#[inline] fn as_raw_mut_ImgHashBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfPHash, core::Ptr<crate::img_hash::ImgHashBase>, cv_PtrLcv_img_hash_PHashG_to_PtrOfImgHashBase }
+	ptr_cast_base! { core::Ptr<crate::img_hash::PHash>, core::Ptr<crate::img_hash::ImgHashBase>, cv_PtrLcv_img_hash_PHashG_to_PtrOfImgHashBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::img_hash::PHash> {
 		#[inline]
@@ -15218,6 +15541,7 @@ mod img_hash_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::img_hash::RadialVarianceHash>` instead, removal in Nov 2024"]
 	pub type PtrOfRadialVarianceHash = core::Ptr<crate::img_hash::RadialVarianceHash>;
 	
 	ptr_extern! { crate::img_hash::RadialVarianceHash,
@@ -15246,7 +15570,7 @@ mod img_hash_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfRadialVarianceHash, core::Ptr<core::Algorithm>, cv_PtrLcv_img_hash_RadialVarianceHashG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::img_hash::RadialVarianceHash>, core::Ptr<core::Algorithm>, cv_PtrLcv_img_hash_RadialVarianceHashG_to_PtrOfAlgorithm }
 	
 	impl crate::img_hash::ImgHashBaseTraitConst for core::Ptr<crate::img_hash::RadialVarianceHash> {
 		#[inline] fn as_raw_ImgHashBase(&self) -> *const c_void { self.inner_as_raw() }
@@ -15256,7 +15580,7 @@ mod img_hash_types {
 		#[inline] fn as_raw_mut_ImgHashBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfRadialVarianceHash, core::Ptr<crate::img_hash::ImgHashBase>, cv_PtrLcv_img_hash_RadialVarianceHashG_to_PtrOfImgHashBase }
+	ptr_cast_base! { core::Ptr<crate::img_hash::RadialVarianceHash>, core::Ptr<crate::img_hash::ImgHashBase>, cv_PtrLcv_img_hash_RadialVarianceHashG_to_PtrOfImgHashBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::img_hash::RadialVarianceHash> {
 		#[inline]
@@ -15274,6 +15598,7 @@ pub use img_hash_types::*;
 mod imgproc_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::imgproc::CLAHE>` instead, removal in Nov 2024"]
 	pub type PtrOfCLAHE = core::Ptr<crate::imgproc::CLAHE>;
 	
 	ptr_extern! { crate::imgproc::CLAHE,
@@ -15301,7 +15626,7 @@ mod imgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCLAHE, core::Ptr<core::Algorithm>, cv_PtrLcv_CLAHEG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::imgproc::CLAHE>, core::Ptr<core::Algorithm>, cv_PtrLcv_CLAHEG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::imgproc::CLAHE> {
 		#[inline]
@@ -15311,6 +15636,7 @@ mod imgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::imgproc::GeneralizedHough>` instead, removal in Nov 2024"]
 	pub type PtrOfGeneralizedHough = core::Ptr<crate::imgproc::GeneralizedHough>;
 	
 	ptr_extern! { crate::imgproc::GeneralizedHough,
@@ -15338,7 +15664,7 @@ mod imgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfGeneralizedHough, core::Ptr<core::Algorithm>, cv_PtrLcv_GeneralizedHoughG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::imgproc::GeneralizedHough>, core::Ptr<core::Algorithm>, cv_PtrLcv_GeneralizedHoughG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::imgproc::GeneralizedHough> {
 		#[inline]
@@ -15348,6 +15674,7 @@ mod imgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::imgproc::GeneralizedHoughBallard>` instead, removal in Nov 2024"]
 	pub type PtrOfGeneralizedHoughBallard = core::Ptr<crate::imgproc::GeneralizedHoughBallard>;
 	
 	ptr_extern! { crate::imgproc::GeneralizedHoughBallard,
@@ -15375,7 +15702,7 @@ mod imgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfGeneralizedHoughBallard, core::Ptr<core::Algorithm>, cv_PtrLcv_GeneralizedHoughBallardG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::imgproc::GeneralizedHoughBallard>, core::Ptr<core::Algorithm>, cv_PtrLcv_GeneralizedHoughBallardG_to_PtrOfAlgorithm }
 	
 	impl crate::imgproc::GeneralizedHoughTraitConst for core::Ptr<crate::imgproc::GeneralizedHoughBallard> {
 		#[inline] fn as_raw_GeneralizedHough(&self) -> *const c_void { self.inner_as_raw() }
@@ -15385,7 +15712,7 @@ mod imgproc_types {
 		#[inline] fn as_raw_mut_GeneralizedHough(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfGeneralizedHoughBallard, core::Ptr<crate::imgproc::GeneralizedHough>, cv_PtrLcv_GeneralizedHoughBallardG_to_PtrOfGeneralizedHough }
+	ptr_cast_base! { core::Ptr<crate::imgproc::GeneralizedHoughBallard>, core::Ptr<crate::imgproc::GeneralizedHough>, cv_PtrLcv_GeneralizedHoughBallardG_to_PtrOfGeneralizedHough }
 	
 	impl std::fmt::Debug for core::Ptr<crate::imgproc::GeneralizedHoughBallard> {
 		#[inline]
@@ -15395,6 +15722,7 @@ mod imgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::imgproc::GeneralizedHoughGuil>` instead, removal in Nov 2024"]
 	pub type PtrOfGeneralizedHoughGuil = core::Ptr<crate::imgproc::GeneralizedHoughGuil>;
 	
 	ptr_extern! { crate::imgproc::GeneralizedHoughGuil,
@@ -15422,7 +15750,7 @@ mod imgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfGeneralizedHoughGuil, core::Ptr<core::Algorithm>, cv_PtrLcv_GeneralizedHoughGuilG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::imgproc::GeneralizedHoughGuil>, core::Ptr<core::Algorithm>, cv_PtrLcv_GeneralizedHoughGuilG_to_PtrOfAlgorithm }
 	
 	impl crate::imgproc::GeneralizedHoughTraitConst for core::Ptr<crate::imgproc::GeneralizedHoughGuil> {
 		#[inline] fn as_raw_GeneralizedHough(&self) -> *const c_void { self.inner_as_raw() }
@@ -15432,7 +15760,7 @@ mod imgproc_types {
 		#[inline] fn as_raw_mut_GeneralizedHough(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfGeneralizedHoughGuil, core::Ptr<crate::imgproc::GeneralizedHough>, cv_PtrLcv_GeneralizedHoughGuilG_to_PtrOfGeneralizedHough }
+	ptr_cast_base! { core::Ptr<crate::imgproc::GeneralizedHoughGuil>, core::Ptr<crate::imgproc::GeneralizedHough>, cv_PtrLcv_GeneralizedHoughGuilG_to_PtrOfGeneralizedHough }
 	
 	impl std::fmt::Debug for core::Ptr<crate::imgproc::GeneralizedHoughGuil> {
 		#[inline]
@@ -15442,6 +15770,7 @@ mod imgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::imgproc::LineSegmentDetector>` instead, removal in Nov 2024"]
 	pub type PtrOfLineSegmentDetector = core::Ptr<crate::imgproc::LineSegmentDetector>;
 	
 	ptr_extern! { crate::imgproc::LineSegmentDetector,
@@ -15469,7 +15798,7 @@ mod imgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfLineSegmentDetector, core::Ptr<core::Algorithm>, cv_PtrLcv_LineSegmentDetectorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::imgproc::LineSegmentDetector>, core::Ptr<core::Algorithm>, cv_PtrLcv_LineSegmentDetectorG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::imgproc::LineSegmentDetector> {
 		#[inline]
@@ -15487,6 +15816,7 @@ pub use imgproc_types::*;
 mod line_descriptor_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::line_descriptor::BinaryDescriptor>` instead, removal in Nov 2024"]
 	pub type PtrOfBinaryDescriptor = core::Ptr<crate::line_descriptor::BinaryDescriptor>;
 	
 	ptr_extern! { crate::line_descriptor::BinaryDescriptor,
@@ -15515,7 +15845,7 @@ mod line_descriptor_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBinaryDescriptor, core::Ptr<core::Algorithm>, cv_PtrLcv_line_descriptor_BinaryDescriptorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::line_descriptor::BinaryDescriptor>, core::Ptr<core::Algorithm>, cv_PtrLcv_line_descriptor_BinaryDescriptorG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::line_descriptor::BinaryDescriptor> {
 		#[inline]
@@ -15525,6 +15855,7 @@ mod line_descriptor_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::line_descriptor::BinaryDescriptorMatcher>` instead, removal in Nov 2024"]
 	pub type PtrOfBinaryDescriptorMatcher = core::Ptr<crate::line_descriptor::BinaryDescriptorMatcher>;
 	
 	ptr_extern! { crate::line_descriptor::BinaryDescriptorMatcher,
@@ -15553,7 +15884,7 @@ mod line_descriptor_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBinaryDescriptorMatcher, core::Ptr<core::Algorithm>, cv_PtrLcv_line_descriptor_BinaryDescriptorMatcherG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::line_descriptor::BinaryDescriptorMatcher>, core::Ptr<core::Algorithm>, cv_PtrLcv_line_descriptor_BinaryDescriptorMatcherG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::line_descriptor::BinaryDescriptorMatcher> {
 		#[inline]
@@ -15563,6 +15894,7 @@ mod line_descriptor_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::line_descriptor::LSDDetector>` instead, removal in Nov 2024"]
 	pub type PtrOfLSDDetector = core::Ptr<crate::line_descriptor::LSDDetector>;
 	
 	ptr_extern! { crate::line_descriptor::LSDDetector,
@@ -15591,7 +15923,7 @@ mod line_descriptor_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfLSDDetector, core::Ptr<core::Algorithm>, cv_PtrLcv_line_descriptor_LSDDetectorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::line_descriptor::LSDDetector>, core::Ptr<core::Algorithm>, cv_PtrLcv_line_descriptor_LSDDetectorG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::line_descriptor::LSDDetector> {
 		#[inline]
@@ -15601,6 +15933,7 @@ mod line_descriptor_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::line_descriptor::KeyLine>` instead, removal in Nov 2024"]
 	pub type VectorOfKeyLine = core::Vector<crate::line_descriptor::KeyLine>;
 	
 	impl core::Vector<crate::line_descriptor::KeyLine> {
@@ -15624,6 +15957,7 @@ mod line_descriptor_types {
 	}
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<crate::line_descriptor::KeyLine>>` instead, removal in Nov 2024"]
 	pub type VectorOfVectorOfKeyLine = core::Vector<core::Vector<crate::line_descriptor::KeyLine>>;
 	
 	impl core::Vector<core::Vector<crate::line_descriptor::KeyLine>> {
@@ -15652,6 +15986,7 @@ pub use line_descriptor_types::*;
 mod mcc_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::mcc::MCC_CChecker>` instead, removal in Nov 2024"]
 	pub type PtrOfMCC_CChecker = core::Ptr<crate::mcc::MCC_CChecker>;
 	
 	ptr_extern! { crate::mcc::MCC_CChecker,
@@ -15679,6 +16014,7 @@ mod mcc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::mcc::MCC_CCheckerDetector>` instead, removal in Nov 2024"]
 	pub type PtrOfMCC_CCheckerDetector = core::Ptr<crate::mcc::MCC_CCheckerDetector>;
 	
 	ptr_extern! { crate::mcc::MCC_CCheckerDetector,
@@ -15706,7 +16042,7 @@ mod mcc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMCC_CCheckerDetector, core::Ptr<core::Algorithm>, cv_PtrLcv_mcc_CCheckerDetectorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::mcc::MCC_CCheckerDetector>, core::Ptr<core::Algorithm>, cv_PtrLcv_mcc_CCheckerDetectorG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::mcc::MCC_CCheckerDetector> {
 		#[inline]
@@ -15716,6 +16052,7 @@ mod mcc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::mcc::MCC_CCheckerDraw>` instead, removal in Nov 2024"]
 	pub type PtrOfMCC_CCheckerDraw = core::Ptr<crate::mcc::MCC_CCheckerDraw>;
 	
 	ptr_extern! { crate::mcc::MCC_CCheckerDraw,
@@ -15743,6 +16080,7 @@ mod mcc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::mcc::MCC_DetectorParameters>` instead, removal in Nov 2024"]
 	pub type PtrOfMCC_DetectorParameters = core::Ptr<crate::mcc::MCC_DetectorParameters>;
 	
 	ptr_extern! { crate::mcc::MCC_DetectorParameters,
@@ -15789,6 +16127,7 @@ mod mcc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Ptr<crate::mcc::MCC_CChecker>>` instead, removal in Nov 2024"]
 	pub type VectorOfPtrOfMCC_CChecker = core::Vector<core::Ptr<crate::mcc::MCC_CChecker>>;
 	
 	impl core::Vector<core::Ptr<crate::mcc::MCC_CChecker>> {
@@ -15817,6 +16156,7 @@ pub use mcc_types::*;
 mod ml_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ml::ANN_MLP>` instead, removal in Nov 2024"]
 	pub type PtrOfANN_MLP = core::Ptr<crate::ml::ANN_MLP>;
 	
 	ptr_extern! { crate::ml::ANN_MLP,
@@ -15844,7 +16184,7 @@ mod ml_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfANN_MLP, core::Ptr<core::Algorithm>, cv_PtrLcv_ml_ANN_MLPG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ml::ANN_MLP>, core::Ptr<core::Algorithm>, cv_PtrLcv_ml_ANN_MLPG_to_PtrOfAlgorithm }
 	
 	impl crate::ml::StatModelTraitConst for core::Ptr<crate::ml::ANN_MLP> {
 		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.inner_as_raw() }
@@ -15854,7 +16194,7 @@ mod ml_types {
 		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfANN_MLP, core::Ptr<crate::ml::StatModel>, cv_PtrLcv_ml_ANN_MLPG_to_PtrOfStatModel }
+	ptr_cast_base! { core::Ptr<crate::ml::ANN_MLP>, core::Ptr<crate::ml::StatModel>, cv_PtrLcv_ml_ANN_MLPG_to_PtrOfStatModel }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ml::ANN_MLP> {
 		#[inline]
@@ -15864,6 +16204,7 @@ mod ml_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ml::Boost>` instead, removal in Nov 2024"]
 	pub type PtrOfBoost = core::Ptr<crate::ml::Boost>;
 	
 	ptr_extern! { crate::ml::Boost,
@@ -15891,7 +16232,7 @@ mod ml_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBoost, core::Ptr<core::Algorithm>, cv_PtrLcv_ml_BoostG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ml::Boost>, core::Ptr<core::Algorithm>, cv_PtrLcv_ml_BoostG_to_PtrOfAlgorithm }
 	
 	impl crate::ml::DTreesTraitConst for core::Ptr<crate::ml::Boost> {
 		#[inline] fn as_raw_DTrees(&self) -> *const c_void { self.inner_as_raw() }
@@ -15901,7 +16242,7 @@ mod ml_types {
 		#[inline] fn as_raw_mut_DTrees(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBoost, core::Ptr<crate::ml::DTrees>, cv_PtrLcv_ml_BoostG_to_PtrOfDTrees }
+	ptr_cast_base! { core::Ptr<crate::ml::Boost>, core::Ptr<crate::ml::DTrees>, cv_PtrLcv_ml_BoostG_to_PtrOfDTrees }
 	
 	impl crate::ml::StatModelTraitConst for core::Ptr<crate::ml::Boost> {
 		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.inner_as_raw() }
@@ -15911,7 +16252,7 @@ mod ml_types {
 		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBoost, core::Ptr<crate::ml::StatModel>, cv_PtrLcv_ml_BoostG_to_PtrOfStatModel }
+	ptr_cast_base! { core::Ptr<crate::ml::Boost>, core::Ptr<crate::ml::StatModel>, cv_PtrLcv_ml_BoostG_to_PtrOfStatModel }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ml::Boost> {
 		#[inline]
@@ -15921,6 +16262,7 @@ mod ml_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ml::DTrees>` instead, removal in Nov 2024"]
 	pub type PtrOfDTrees = core::Ptr<crate::ml::DTrees>;
 	
 	ptr_extern! { crate::ml::DTrees,
@@ -15948,7 +16290,7 @@ mod ml_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDTrees, core::Ptr<core::Algorithm>, cv_PtrLcv_ml_DTreesG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ml::DTrees>, core::Ptr<core::Algorithm>, cv_PtrLcv_ml_DTreesG_to_PtrOfAlgorithm }
 	
 	impl crate::ml::StatModelTraitConst for core::Ptr<crate::ml::DTrees> {
 		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.inner_as_raw() }
@@ -15958,7 +16300,7 @@ mod ml_types {
 		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDTrees, core::Ptr<crate::ml::StatModel>, cv_PtrLcv_ml_DTreesG_to_PtrOfStatModel }
+	ptr_cast_base! { core::Ptr<crate::ml::DTrees>, core::Ptr<crate::ml::StatModel>, cv_PtrLcv_ml_DTreesG_to_PtrOfStatModel }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ml::DTrees> {
 		#[inline]
@@ -15968,6 +16310,7 @@ mod ml_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ml::EM>` instead, removal in Nov 2024"]
 	pub type PtrOfEM = core::Ptr<crate::ml::EM>;
 	
 	ptr_extern! { crate::ml::EM,
@@ -15995,7 +16338,7 @@ mod ml_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfEM, core::Ptr<core::Algorithm>, cv_PtrLcv_ml_EMG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ml::EM>, core::Ptr<core::Algorithm>, cv_PtrLcv_ml_EMG_to_PtrOfAlgorithm }
 	
 	impl crate::ml::StatModelTraitConst for core::Ptr<crate::ml::EM> {
 		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.inner_as_raw() }
@@ -16005,7 +16348,7 @@ mod ml_types {
 		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfEM, core::Ptr<crate::ml::StatModel>, cv_PtrLcv_ml_EMG_to_PtrOfStatModel }
+	ptr_cast_base! { core::Ptr<crate::ml::EM>, core::Ptr<crate::ml::StatModel>, cv_PtrLcv_ml_EMG_to_PtrOfStatModel }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ml::EM> {
 		#[inline]
@@ -16015,6 +16358,7 @@ mod ml_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ml::KNearest>` instead, removal in Nov 2024"]
 	pub type PtrOfKNearest = core::Ptr<crate::ml::KNearest>;
 	
 	ptr_extern! { crate::ml::KNearest,
@@ -16042,7 +16386,7 @@ mod ml_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfKNearest, core::Ptr<core::Algorithm>, cv_PtrLcv_ml_KNearestG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ml::KNearest>, core::Ptr<core::Algorithm>, cv_PtrLcv_ml_KNearestG_to_PtrOfAlgorithm }
 	
 	impl crate::ml::StatModelTraitConst for core::Ptr<crate::ml::KNearest> {
 		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.inner_as_raw() }
@@ -16052,7 +16396,7 @@ mod ml_types {
 		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfKNearest, core::Ptr<crate::ml::StatModel>, cv_PtrLcv_ml_KNearestG_to_PtrOfStatModel }
+	ptr_cast_base! { core::Ptr<crate::ml::KNearest>, core::Ptr<crate::ml::StatModel>, cv_PtrLcv_ml_KNearestG_to_PtrOfStatModel }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ml::KNearest> {
 		#[inline]
@@ -16062,6 +16406,7 @@ mod ml_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ml::LogisticRegression>` instead, removal in Nov 2024"]
 	pub type PtrOfLogisticRegression = core::Ptr<crate::ml::LogisticRegression>;
 	
 	ptr_extern! { crate::ml::LogisticRegression,
@@ -16089,7 +16434,7 @@ mod ml_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfLogisticRegression, core::Ptr<core::Algorithm>, cv_PtrLcv_ml_LogisticRegressionG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ml::LogisticRegression>, core::Ptr<core::Algorithm>, cv_PtrLcv_ml_LogisticRegressionG_to_PtrOfAlgorithm }
 	
 	impl crate::ml::StatModelTraitConst for core::Ptr<crate::ml::LogisticRegression> {
 		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.inner_as_raw() }
@@ -16099,7 +16444,7 @@ mod ml_types {
 		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfLogisticRegression, core::Ptr<crate::ml::StatModel>, cv_PtrLcv_ml_LogisticRegressionG_to_PtrOfStatModel }
+	ptr_cast_base! { core::Ptr<crate::ml::LogisticRegression>, core::Ptr<crate::ml::StatModel>, cv_PtrLcv_ml_LogisticRegressionG_to_PtrOfStatModel }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ml::LogisticRegression> {
 		#[inline]
@@ -16109,6 +16454,7 @@ mod ml_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ml::NormalBayesClassifier>` instead, removal in Nov 2024"]
 	pub type PtrOfNormalBayesClassifier = core::Ptr<crate::ml::NormalBayesClassifier>;
 	
 	ptr_extern! { crate::ml::NormalBayesClassifier,
@@ -16136,7 +16482,7 @@ mod ml_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfNormalBayesClassifier, core::Ptr<core::Algorithm>, cv_PtrLcv_ml_NormalBayesClassifierG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ml::NormalBayesClassifier>, core::Ptr<core::Algorithm>, cv_PtrLcv_ml_NormalBayesClassifierG_to_PtrOfAlgorithm }
 	
 	impl crate::ml::StatModelTraitConst for core::Ptr<crate::ml::NormalBayesClassifier> {
 		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.inner_as_raw() }
@@ -16146,7 +16492,7 @@ mod ml_types {
 		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfNormalBayesClassifier, core::Ptr<crate::ml::StatModel>, cv_PtrLcv_ml_NormalBayesClassifierG_to_PtrOfStatModel }
+	ptr_cast_base! { core::Ptr<crate::ml::NormalBayesClassifier>, core::Ptr<crate::ml::StatModel>, cv_PtrLcv_ml_NormalBayesClassifierG_to_PtrOfStatModel }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ml::NormalBayesClassifier> {
 		#[inline]
@@ -16156,6 +16502,7 @@ mod ml_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ml::ParamGrid>` instead, removal in Nov 2024"]
 	pub type PtrOfParamGrid = core::Ptr<crate::ml::ParamGrid>;
 	
 	ptr_extern! { crate::ml::ParamGrid,
@@ -16187,6 +16534,7 @@ mod ml_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ml::RTrees>` instead, removal in Nov 2024"]
 	pub type PtrOfRTrees = core::Ptr<crate::ml::RTrees>;
 	
 	ptr_extern! { crate::ml::RTrees,
@@ -16214,7 +16562,7 @@ mod ml_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfRTrees, core::Ptr<core::Algorithm>, cv_PtrLcv_ml_RTreesG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ml::RTrees>, core::Ptr<core::Algorithm>, cv_PtrLcv_ml_RTreesG_to_PtrOfAlgorithm }
 	
 	impl crate::ml::DTreesTraitConst for core::Ptr<crate::ml::RTrees> {
 		#[inline] fn as_raw_DTrees(&self) -> *const c_void { self.inner_as_raw() }
@@ -16224,7 +16572,7 @@ mod ml_types {
 		#[inline] fn as_raw_mut_DTrees(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfRTrees, core::Ptr<crate::ml::DTrees>, cv_PtrLcv_ml_RTreesG_to_PtrOfDTrees }
+	ptr_cast_base! { core::Ptr<crate::ml::RTrees>, core::Ptr<crate::ml::DTrees>, cv_PtrLcv_ml_RTreesG_to_PtrOfDTrees }
 	
 	impl crate::ml::StatModelTraitConst for core::Ptr<crate::ml::RTrees> {
 		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.inner_as_raw() }
@@ -16234,7 +16582,7 @@ mod ml_types {
 		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfRTrees, core::Ptr<crate::ml::StatModel>, cv_PtrLcv_ml_RTreesG_to_PtrOfStatModel }
+	ptr_cast_base! { core::Ptr<crate::ml::RTrees>, core::Ptr<crate::ml::StatModel>, cv_PtrLcv_ml_RTreesG_to_PtrOfStatModel }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ml::RTrees> {
 		#[inline]
@@ -16244,6 +16592,7 @@ mod ml_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ml::SVM>` instead, removal in Nov 2024"]
 	pub type PtrOfSVM = core::Ptr<crate::ml::SVM>;
 	
 	ptr_extern! { crate::ml::SVM,
@@ -16271,7 +16620,7 @@ mod ml_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSVM, core::Ptr<core::Algorithm>, cv_PtrLcv_ml_SVMG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ml::SVM>, core::Ptr<core::Algorithm>, cv_PtrLcv_ml_SVMG_to_PtrOfAlgorithm }
 	
 	impl crate::ml::StatModelTraitConst for core::Ptr<crate::ml::SVM> {
 		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.inner_as_raw() }
@@ -16281,7 +16630,7 @@ mod ml_types {
 		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSVM, core::Ptr<crate::ml::StatModel>, cv_PtrLcv_ml_SVMG_to_PtrOfStatModel }
+	ptr_cast_base! { core::Ptr<crate::ml::SVM>, core::Ptr<crate::ml::StatModel>, cv_PtrLcv_ml_SVMG_to_PtrOfStatModel }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ml::SVM> {
 		#[inline]
@@ -16291,6 +16640,7 @@ mod ml_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ml::SVMSGD>` instead, removal in Nov 2024"]
 	pub type PtrOfSVMSGD = core::Ptr<crate::ml::SVMSGD>;
 	
 	ptr_extern! { crate::ml::SVMSGD,
@@ -16318,7 +16668,7 @@ mod ml_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSVMSGD, core::Ptr<core::Algorithm>, cv_PtrLcv_ml_SVMSGDG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ml::SVMSGD>, core::Ptr<core::Algorithm>, cv_PtrLcv_ml_SVMSGDG_to_PtrOfAlgorithm }
 	
 	impl crate::ml::StatModelTraitConst for core::Ptr<crate::ml::SVMSGD> {
 		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.inner_as_raw() }
@@ -16328,7 +16678,7 @@ mod ml_types {
 		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSVMSGD, core::Ptr<crate::ml::StatModel>, cv_PtrLcv_ml_SVMSGDG_to_PtrOfStatModel }
+	ptr_cast_base! { core::Ptr<crate::ml::SVMSGD>, core::Ptr<crate::ml::StatModel>, cv_PtrLcv_ml_SVMSGDG_to_PtrOfStatModel }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ml::SVMSGD> {
 		#[inline]
@@ -16338,6 +16688,7 @@ mod ml_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ml::SVM_Kernel>` instead, removal in Nov 2024"]
 	pub type PtrOfSVM_Kernel = core::Ptr<crate::ml::SVM_Kernel>;
 	
 	ptr_extern! { crate::ml::SVM_Kernel,
@@ -16365,7 +16716,7 @@ mod ml_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSVM_Kernel, core::Ptr<core::Algorithm>, cv_PtrLcv_ml_SVM_KernelG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ml::SVM_Kernel>, core::Ptr<core::Algorithm>, cv_PtrLcv_ml_SVM_KernelG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ml::SVM_Kernel> {
 		#[inline]
@@ -16375,6 +16726,7 @@ mod ml_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ml::StatModel>` instead, removal in Nov 2024"]
 	pub type PtrOfStatModel = core::Ptr<crate::ml::StatModel>;
 	
 	ptr_extern! { crate::ml::StatModel,
@@ -16402,7 +16754,7 @@ mod ml_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfStatModel, core::Ptr<core::Algorithm>, cv_PtrLcv_ml_StatModelG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ml::StatModel>, core::Ptr<core::Algorithm>, cv_PtrLcv_ml_StatModelG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ml::StatModel> {
 		#[inline]
@@ -16412,6 +16764,7 @@ mod ml_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ml::TrainData>` instead, removal in Nov 2024"]
 	pub type PtrOfTrainData = core::Ptr<crate::ml::TrainData>;
 	
 	ptr_extern! { crate::ml::TrainData,
@@ -16439,6 +16792,7 @@ mod ml_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::ml::DTrees_Node>` instead, removal in Nov 2024"]
 	pub type VectorOfDTrees_Node = core::Vector<crate::ml::DTrees_Node>;
 	
 	impl core::Vector<crate::ml::DTrees_Node> {
@@ -16460,7 +16814,7 @@ mod ml_types {
 	
 	vector_boxed_ref! { crate::ml::DTrees_Node }
 	
-	vector_extern! { BoxedRef<'_, crate::ml::DTrees_Node>,
+	vector_extern! { BoxedRef<'t, crate::ml::DTrees_Node>,
 		std_vectorLcv_ml_DTrees_NodeG_new_const, std_vectorLcv_ml_DTrees_NodeG_delete,
 		std_vectorLcv_ml_DTrees_NodeG_len_const, std_vectorLcv_ml_DTrees_NodeG_isEmpty_const,
 		std_vectorLcv_ml_DTrees_NodeG_capacity_const, std_vectorLcv_ml_DTrees_NodeG_shrinkToFit,
@@ -16471,6 +16825,7 @@ mod ml_types {
 	}
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::ml::DTrees_Split>` instead, removal in Nov 2024"]
 	pub type VectorOfDTrees_Split = core::Vector<crate::ml::DTrees_Split>;
 	
 	impl core::Vector<crate::ml::DTrees_Split> {
@@ -16492,7 +16847,7 @@ mod ml_types {
 	
 	vector_boxed_ref! { crate::ml::DTrees_Split }
 	
-	vector_extern! { BoxedRef<'_, crate::ml::DTrees_Split>,
+	vector_extern! { BoxedRef<'t, crate::ml::DTrees_Split>,
 		std_vectorLcv_ml_DTrees_SplitG_new_const, std_vectorLcv_ml_DTrees_SplitG_delete,
 		std_vectorLcv_ml_DTrees_SplitG_len_const, std_vectorLcv_ml_DTrees_SplitG_isEmpty_const,
 		std_vectorLcv_ml_DTrees_SplitG_capacity_const, std_vectorLcv_ml_DTrees_SplitG_shrinkToFit,
@@ -16511,6 +16866,7 @@ pub use ml_types::*;
 mod objdetect_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::objdetect::ArucoDetector>` instead, removal in Nov 2024"]
 	pub type PtrOfArucoDetector = core::Ptr<crate::objdetect::ArucoDetector>;
 	
 	ptr_extern! { crate::objdetect::ArucoDetector,
@@ -16539,7 +16895,7 @@ mod objdetect_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfArucoDetector, core::Ptr<core::Algorithm>, cv_PtrLcv_aruco_ArucoDetectorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::objdetect::ArucoDetector>, core::Ptr<core::Algorithm>, cv_PtrLcv_aruco_ArucoDetectorG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::objdetect::ArucoDetector> {
 		#[inline]
@@ -16549,6 +16905,7 @@ mod objdetect_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::objdetect::BaseCascadeClassifier>` instead, removal in Nov 2024"]
 	pub type PtrOfBaseCascadeClassifier = core::Ptr<crate::objdetect::BaseCascadeClassifier>;
 	
 	ptr_extern! { crate::objdetect::BaseCascadeClassifier,
@@ -16576,7 +16933,7 @@ mod objdetect_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBaseCascadeClassifier, core::Ptr<core::Algorithm>, cv_PtrLcv_BaseCascadeClassifierG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::objdetect::BaseCascadeClassifier>, core::Ptr<core::Algorithm>, cv_PtrLcv_BaseCascadeClassifierG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::objdetect::BaseCascadeClassifier> {
 		#[inline]
@@ -16586,6 +16943,7 @@ mod objdetect_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::objdetect::BaseCascadeClassifier_MaskGenerator>` instead, removal in Nov 2024"]
 	pub type PtrOfBaseCascadeClassifier_MaskGenerator = core::Ptr<crate::objdetect::BaseCascadeClassifier_MaskGenerator>;
 	
 	ptr_extern! { crate::objdetect::BaseCascadeClassifier_MaskGenerator,
@@ -16613,6 +16971,7 @@ mod objdetect_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::objdetect::Board>` instead, removal in Nov 2024"]
 	pub type PtrOfBoard = core::Ptr<crate::objdetect::Board>;
 	
 	ptr_extern! { crate::objdetect::Board,
@@ -16641,6 +17000,7 @@ mod objdetect_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::objdetect::CharucoBoard>` instead, removal in Nov 2024"]
 	pub type PtrOfCharucoBoard = core::Ptr<crate::objdetect::CharucoBoard>;
 	
 	ptr_extern! { crate::objdetect::CharucoBoard,
@@ -16669,7 +17029,7 @@ mod objdetect_types {
 		#[inline] fn as_raw_mut_Board(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCharucoBoard, core::Ptr<crate::objdetect::Board>, cv_PtrLcv_aruco_CharucoBoardG_to_PtrOfBoard }
+	ptr_cast_base! { core::Ptr<crate::objdetect::CharucoBoard>, core::Ptr<crate::objdetect::Board>, cv_PtrLcv_aruco_CharucoBoardG_to_PtrOfBoard }
 	
 	impl std::fmt::Debug for core::Ptr<crate::objdetect::CharucoBoard> {
 		#[inline]
@@ -16679,6 +17039,7 @@ mod objdetect_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::objdetect::CharucoDetector>` instead, removal in Nov 2024"]
 	pub type PtrOfCharucoDetector = core::Ptr<crate::objdetect::CharucoDetector>;
 	
 	ptr_extern! { crate::objdetect::CharucoDetector,
@@ -16707,7 +17068,7 @@ mod objdetect_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCharucoDetector, core::Ptr<core::Algorithm>, cv_PtrLcv_aruco_CharucoDetectorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::objdetect::CharucoDetector>, core::Ptr<core::Algorithm>, cv_PtrLcv_aruco_CharucoDetectorG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::objdetect::CharucoDetector> {
 		#[inline]
@@ -16717,6 +17078,7 @@ mod objdetect_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::objdetect::DetectionBasedTracker_IDetector>` instead, removal in Nov 2024"]
 	pub type PtrOfDetectionBasedTracker_IDetector = core::Ptr<crate::objdetect::DetectionBasedTracker_IDetector>;
 	
 	ptr_extern! { crate::objdetect::DetectionBasedTracker_IDetector,
@@ -16744,6 +17106,7 @@ mod objdetect_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::objdetect::DetectorParameters>` instead, removal in Nov 2024"]
 	pub type PtrOfDetectorParameters = core::Ptr<crate::objdetect::DetectorParameters>;
 	
 	ptr_extern! { crate::objdetect::DetectorParameters,
@@ -16806,6 +17169,7 @@ mod objdetect_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::objdetect::Dictionary>` instead, removal in Nov 2024"]
 	pub type PtrOfDictionary = core::Ptr<crate::objdetect::Dictionary>;
 	
 	ptr_extern! { crate::objdetect::Dictionary,
@@ -16837,6 +17201,7 @@ mod objdetect_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::objdetect::FaceDetectorYN>` instead, removal in Nov 2024"]
 	pub type PtrOfFaceDetectorYN = core::Ptr<crate::objdetect::FaceDetectorYN>;
 	
 	ptr_extern! { crate::objdetect::FaceDetectorYN,
@@ -16864,6 +17229,7 @@ mod objdetect_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::objdetect::FaceRecognizerSF>` instead, removal in Nov 2024"]
 	pub type PtrOfFaceRecognizerSF = core::Ptr<crate::objdetect::FaceRecognizerSF>;
 	
 	ptr_extern! { crate::objdetect::FaceRecognizerSF,
@@ -16891,6 +17257,7 @@ mod objdetect_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::objdetect::GridBoard>` instead, removal in Nov 2024"]
 	pub type PtrOfGridBoard = core::Ptr<crate::objdetect::GridBoard>;
 	
 	ptr_extern! { crate::objdetect::GridBoard,
@@ -16919,7 +17286,7 @@ mod objdetect_types {
 		#[inline] fn as_raw_mut_Board(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfGridBoard, core::Ptr<crate::objdetect::Board>, cv_PtrLcv_aruco_GridBoardG_to_PtrOfBoard }
+	ptr_cast_base! { core::Ptr<crate::objdetect::GridBoard>, core::Ptr<crate::objdetect::Board>, cv_PtrLcv_aruco_GridBoardG_to_PtrOfBoard }
 	
 	impl std::fmt::Debug for core::Ptr<crate::objdetect::GridBoard> {
 		#[inline]
@@ -16929,6 +17296,7 @@ mod objdetect_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::objdetect::QRCodeEncoder>` instead, removal in Nov 2024"]
 	pub type PtrOfQRCodeEncoder = core::Ptr<crate::objdetect::QRCodeEncoder>;
 	
 	ptr_extern! { crate::objdetect::QRCodeEncoder,
@@ -16956,6 +17324,7 @@ mod objdetect_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::objdetect::DetectionBasedTracker_ExtObject>` instead, removal in Nov 2024"]
 	pub type VectorOfDetectionBasedTracker_ExtObject = core::Vector<crate::objdetect::DetectionBasedTracker_ExtObject>;
 	
 	impl core::Vector<crate::objdetect::DetectionBasedTracker_ExtObject> {
@@ -16977,7 +17346,7 @@ mod objdetect_types {
 	
 	vector_boxed_ref! { crate::objdetect::DetectionBasedTracker_ExtObject }
 	
-	vector_extern! { BoxedRef<'_, crate::objdetect::DetectionBasedTracker_ExtObject>,
+	vector_extern! { BoxedRef<'t, crate::objdetect::DetectionBasedTracker_ExtObject>,
 		std_vectorLcv_DetectionBasedTracker_ExtObjectG_new_const, std_vectorLcv_DetectionBasedTracker_ExtObjectG_delete,
 		std_vectorLcv_DetectionBasedTracker_ExtObjectG_len_const, std_vectorLcv_DetectionBasedTracker_ExtObjectG_isEmpty_const,
 		std_vectorLcv_DetectionBasedTracker_ExtObjectG_capacity_const, std_vectorLcv_DetectionBasedTracker_ExtObjectG_shrinkToFit,
@@ -16988,6 +17357,7 @@ mod objdetect_types {
 	}
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::objdetect::DetectionBasedTracker_Object>` instead, removal in Nov 2024"]
 	pub type VectorOfDetectionBasedTracker_Object = core::Vector<crate::objdetect::DetectionBasedTracker_Object>;
 	
 	impl core::Vector<crate::objdetect::DetectionBasedTracker_Object> {
@@ -17008,6 +17378,7 @@ mod objdetect_types {
 	vector_non_copy_or_bool! { crate::objdetect::DetectionBasedTracker_Object }
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::objdetect::DetectionROI>` instead, removal in Nov 2024"]
 	pub type VectorOfDetectionROI = core::Vector<crate::objdetect::DetectionROI>;
 	
 	impl core::Vector<crate::objdetect::DetectionROI> {
@@ -17029,7 +17400,7 @@ mod objdetect_types {
 	
 	vector_boxed_ref! { crate::objdetect::DetectionROI }
 	
-	vector_extern! { BoxedRef<'_, crate::objdetect::DetectionROI>,
+	vector_extern! { BoxedRef<'t, crate::objdetect::DetectionROI>,
 		std_vectorLcv_DetectionROIG_new_const, std_vectorLcv_DetectionROIG_delete,
 		std_vectorLcv_DetectionROIG_len_const, std_vectorLcv_DetectionROIG_isEmpty_const,
 		std_vectorLcv_DetectionROIG_capacity_const, std_vectorLcv_DetectionROIG_shrinkToFit,
@@ -17048,6 +17419,7 @@ pub use objdetect_types::*;
 mod optflow_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::optflow::DenseRLOFOpticalFlow>` instead, removal in Nov 2024"]
 	pub type PtrOfDenseRLOFOpticalFlow = core::Ptr<crate::optflow::DenseRLOFOpticalFlow>;
 	
 	ptr_extern! { crate::optflow::DenseRLOFOpticalFlow,
@@ -17075,7 +17447,7 @@ mod optflow_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDenseRLOFOpticalFlow, core::Ptr<core::Algorithm>, cv_PtrLcv_optflow_DenseRLOFOpticalFlowG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::optflow::DenseRLOFOpticalFlow>, core::Ptr<core::Algorithm>, cv_PtrLcv_optflow_DenseRLOFOpticalFlowG_to_PtrOfAlgorithm }
 	
 	impl crate::video::DenseOpticalFlowTraitConst for core::Ptr<crate::optflow::DenseRLOFOpticalFlow> {
 		#[inline] fn as_raw_DenseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
@@ -17085,7 +17457,7 @@ mod optflow_types {
 		#[inline] fn as_raw_mut_DenseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDenseRLOFOpticalFlow, core::Ptr<crate::video::DenseOpticalFlow>, cv_PtrLcv_optflow_DenseRLOFOpticalFlowG_to_PtrOfDenseOpticalFlow }
+	ptr_cast_base! { core::Ptr<crate::optflow::DenseRLOFOpticalFlow>, core::Ptr<crate::video::DenseOpticalFlow>, cv_PtrLcv_optflow_DenseRLOFOpticalFlowG_to_PtrOfDenseOpticalFlow }
 	
 	impl std::fmt::Debug for core::Ptr<crate::optflow::DenseRLOFOpticalFlow> {
 		#[inline]
@@ -17095,6 +17467,7 @@ mod optflow_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::optflow::DualTVL1OpticalFlow>` instead, removal in Nov 2024"]
 	pub type PtrOfDualTVL1OpticalFlow = core::Ptr<crate::optflow::DualTVL1OpticalFlow>;
 	
 	ptr_extern! { crate::optflow::DualTVL1OpticalFlow,
@@ -17122,7 +17495,7 @@ mod optflow_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDualTVL1OpticalFlow, core::Ptr<core::Algorithm>, cv_PtrLcv_optflow_DualTVL1OpticalFlowG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::optflow::DualTVL1OpticalFlow>, core::Ptr<core::Algorithm>, cv_PtrLcv_optflow_DualTVL1OpticalFlowG_to_PtrOfAlgorithm }
 	
 	impl crate::video::DenseOpticalFlowTraitConst for core::Ptr<crate::optflow::DualTVL1OpticalFlow> {
 		#[inline] fn as_raw_DenseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
@@ -17132,7 +17505,7 @@ mod optflow_types {
 		#[inline] fn as_raw_mut_DenseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDualTVL1OpticalFlow, core::Ptr<crate::video::DenseOpticalFlow>, cv_PtrLcv_optflow_DualTVL1OpticalFlowG_to_PtrOfDenseOpticalFlow }
+	ptr_cast_base! { core::Ptr<crate::optflow::DualTVL1OpticalFlow>, core::Ptr<crate::video::DenseOpticalFlow>, cv_PtrLcv_optflow_DualTVL1OpticalFlowG_to_PtrOfDenseOpticalFlow }
 	
 	impl std::fmt::Debug for core::Ptr<crate::optflow::DualTVL1OpticalFlow> {
 		#[inline]
@@ -17142,6 +17515,7 @@ mod optflow_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::optflow::GPCTrainingSamples>` instead, removal in Nov 2024"]
 	pub type PtrOfGPCTrainingSamples = core::Ptr<crate::optflow::GPCTrainingSamples>;
 	
 	ptr_extern! { crate::optflow::GPCTrainingSamples,
@@ -17170,6 +17544,7 @@ mod optflow_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::optflow::GPCTree>` instead, removal in Nov 2024"]
 	pub type PtrOfGPCTree = core::Ptr<crate::optflow::GPCTree>;
 	
 	ptr_extern! { crate::optflow::GPCTree,
@@ -17198,7 +17573,7 @@ mod optflow_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfGPCTree, core::Ptr<core::Algorithm>, cv_PtrLcv_optflow_GPCTreeG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::optflow::GPCTree>, core::Ptr<core::Algorithm>, cv_PtrLcv_optflow_GPCTreeG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::optflow::GPCTree> {
 		#[inline]
@@ -17208,6 +17583,7 @@ mod optflow_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::optflow::OpticalFlowPCAFlow>` instead, removal in Nov 2024"]
 	pub type PtrOfOpticalFlowPCAFlow = core::Ptr<crate::optflow::OpticalFlowPCAFlow>;
 	
 	ptr_extern! { crate::optflow::OpticalFlowPCAFlow,
@@ -17236,7 +17612,7 @@ mod optflow_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfOpticalFlowPCAFlow, core::Ptr<core::Algorithm>, cv_PtrLcv_optflow_OpticalFlowPCAFlowG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::optflow::OpticalFlowPCAFlow>, core::Ptr<core::Algorithm>, cv_PtrLcv_optflow_OpticalFlowPCAFlowG_to_PtrOfAlgorithm }
 	
 	impl crate::video::DenseOpticalFlowTraitConst for core::Ptr<crate::optflow::OpticalFlowPCAFlow> {
 		#[inline] fn as_raw_DenseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
@@ -17246,7 +17622,7 @@ mod optflow_types {
 		#[inline] fn as_raw_mut_DenseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfOpticalFlowPCAFlow, core::Ptr<crate::video::DenseOpticalFlow>, cv_PtrLcv_optflow_OpticalFlowPCAFlowG_to_PtrOfDenseOpticalFlow }
+	ptr_cast_base! { core::Ptr<crate::optflow::OpticalFlowPCAFlow>, core::Ptr<crate::video::DenseOpticalFlow>, cv_PtrLcv_optflow_OpticalFlowPCAFlowG_to_PtrOfDenseOpticalFlow }
 	
 	impl std::fmt::Debug for core::Ptr<crate::optflow::OpticalFlowPCAFlow> {
 		#[inline]
@@ -17256,6 +17632,7 @@ mod optflow_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::optflow::PCAPrior>` instead, removal in Nov 2024"]
 	pub type PtrOfPCAPrior = core::Ptr<crate::optflow::PCAPrior>;
 	
 	ptr_extern! { crate::optflow::PCAPrior,
@@ -17284,6 +17661,7 @@ mod optflow_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::optflow::RLOFOpticalFlowParameter>` instead, removal in Nov 2024"]
 	pub type PtrOfRLOFOpticalFlowParameter = core::Ptr<crate::optflow::RLOFOpticalFlowParameter>;
 	
 	ptr_extern! { crate::optflow::RLOFOpticalFlowParameter,
@@ -17326,6 +17704,7 @@ mod optflow_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::optflow::SparseRLOFOpticalFlow>` instead, removal in Nov 2024"]
 	pub type PtrOfSparseRLOFOpticalFlow = core::Ptr<crate::optflow::SparseRLOFOpticalFlow>;
 	
 	ptr_extern! { crate::optflow::SparseRLOFOpticalFlow,
@@ -17353,7 +17732,7 @@ mod optflow_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSparseRLOFOpticalFlow, core::Ptr<core::Algorithm>, cv_PtrLcv_optflow_SparseRLOFOpticalFlowG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::optflow::SparseRLOFOpticalFlow>, core::Ptr<core::Algorithm>, cv_PtrLcv_optflow_SparseRLOFOpticalFlowG_to_PtrOfAlgorithm }
 	
 	impl crate::video::SparseOpticalFlowTraitConst for core::Ptr<crate::optflow::SparseRLOFOpticalFlow> {
 		#[inline] fn as_raw_SparseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
@@ -17363,7 +17742,7 @@ mod optflow_types {
 		#[inline] fn as_raw_mut_SparseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSparseRLOFOpticalFlow, core::Ptr<crate::video::SparseOpticalFlow>, cv_PtrLcv_optflow_SparseRLOFOpticalFlowG_to_PtrOfSparseOpticalFlow }
+	ptr_cast_base! { core::Ptr<crate::optflow::SparseRLOFOpticalFlow>, core::Ptr<crate::video::SparseOpticalFlow>, cv_PtrLcv_optflow_SparseRLOFOpticalFlowG_to_PtrOfSparseOpticalFlow }
 	
 	impl std::fmt::Debug for core::Ptr<crate::optflow::SparseRLOFOpticalFlow> {
 		#[inline]
@@ -17373,6 +17752,7 @@ mod optflow_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::optflow::GPCPatchDescriptor>` instead, removal in Nov 2024"]
 	pub type VectorOfGPCPatchDescriptor = core::Vector<crate::optflow::GPCPatchDescriptor>;
 	
 	impl core::Vector<crate::optflow::GPCPatchDescriptor> {
@@ -17394,7 +17774,7 @@ mod optflow_types {
 	
 	vector_boxed_ref! { crate::optflow::GPCPatchDescriptor }
 	
-	vector_extern! { BoxedRef<'_, crate::optflow::GPCPatchDescriptor>,
+	vector_extern! { BoxedRef<'t, crate::optflow::GPCPatchDescriptor>,
 		std_vectorLcv_optflow_GPCPatchDescriptorG_new_const, std_vectorLcv_optflow_GPCPatchDescriptorG_delete,
 		std_vectorLcv_optflow_GPCPatchDescriptorG_len_const, std_vectorLcv_optflow_GPCPatchDescriptorG_isEmpty_const,
 		std_vectorLcv_optflow_GPCPatchDescriptorG_capacity_const, std_vectorLcv_optflow_GPCPatchDescriptorG_shrinkToFit,
@@ -17405,6 +17785,7 @@ mod optflow_types {
 	}
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::optflow::GPCPatchSample>` instead, removal in Nov 2024"]
 	pub type VectorOfGPCPatchSample = core::Vector<crate::optflow::GPCPatchSample>;
 	
 	impl core::Vector<crate::optflow::GPCPatchSample> {
@@ -17426,7 +17807,7 @@ mod optflow_types {
 	
 	vector_boxed_ref! { crate::optflow::GPCPatchSample }
 	
-	vector_extern! { BoxedRef<'_, crate::optflow::GPCPatchSample>,
+	vector_extern! { BoxedRef<'t, crate::optflow::GPCPatchSample>,
 		std_vectorLcv_optflow_GPCPatchSampleG_new_const, std_vectorLcv_optflow_GPCPatchSampleG_delete,
 		std_vectorLcv_optflow_GPCPatchSampleG_len_const, std_vectorLcv_optflow_GPCPatchSampleG_isEmpty_const,
 		std_vectorLcv_optflow_GPCPatchSampleG_capacity_const, std_vectorLcv_optflow_GPCPatchSampleG_shrinkToFit,
@@ -17445,6 +17826,7 @@ pub use optflow_types::*;
 mod ovis_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ovis::WindowScene>` instead, removal in Nov 2024"]
 	pub type PtrOfWindowScene = core::Ptr<crate::ovis::WindowScene>;
 	
 	ptr_extern! { crate::ovis::WindowScene,
@@ -17480,6 +17862,7 @@ pub use ovis_types::*;
 mod phase_unwrapping_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::phase_unwrapping::HistogramPhaseUnwrapping>` instead, removal in Nov 2024"]
 	pub type PtrOfHistogramPhaseUnwrapping = core::Ptr<crate::phase_unwrapping::HistogramPhaseUnwrapping>;
 	
 	ptr_extern! { crate::phase_unwrapping::HistogramPhaseUnwrapping,
@@ -17507,7 +17890,7 @@ mod phase_unwrapping_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfHistogramPhaseUnwrapping, core::Ptr<core::Algorithm>, cv_PtrLcv_phase_unwrapping_HistogramPhaseUnwrappingG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::phase_unwrapping::HistogramPhaseUnwrapping>, core::Ptr<core::Algorithm>, cv_PtrLcv_phase_unwrapping_HistogramPhaseUnwrappingG_to_PtrOfAlgorithm }
 	
 	impl crate::phase_unwrapping::PhaseUnwrappingTraitConst for core::Ptr<crate::phase_unwrapping::HistogramPhaseUnwrapping> {
 		#[inline] fn as_raw_PhaseUnwrapping(&self) -> *const c_void { self.inner_as_raw() }
@@ -17517,7 +17900,7 @@ mod phase_unwrapping_types {
 		#[inline] fn as_raw_mut_PhaseUnwrapping(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfHistogramPhaseUnwrapping, core::Ptr<crate::phase_unwrapping::PhaseUnwrapping>, cv_PtrLcv_phase_unwrapping_HistogramPhaseUnwrappingG_to_PtrOfPhaseUnwrapping }
+	ptr_cast_base! { core::Ptr<crate::phase_unwrapping::HistogramPhaseUnwrapping>, core::Ptr<crate::phase_unwrapping::PhaseUnwrapping>, cv_PtrLcv_phase_unwrapping_HistogramPhaseUnwrappingG_to_PtrOfPhaseUnwrapping }
 	
 	impl std::fmt::Debug for core::Ptr<crate::phase_unwrapping::HistogramPhaseUnwrapping> {
 		#[inline]
@@ -17527,6 +17910,7 @@ mod phase_unwrapping_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::phase_unwrapping::PhaseUnwrapping>` instead, removal in Nov 2024"]
 	pub type PtrOfPhaseUnwrapping = core::Ptr<crate::phase_unwrapping::PhaseUnwrapping>;
 	
 	ptr_extern! { crate::phase_unwrapping::PhaseUnwrapping,
@@ -17554,7 +17938,7 @@ mod phase_unwrapping_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfPhaseUnwrapping, core::Ptr<core::Algorithm>, cv_PtrLcv_phase_unwrapping_PhaseUnwrappingG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::phase_unwrapping::PhaseUnwrapping>, core::Ptr<core::Algorithm>, cv_PtrLcv_phase_unwrapping_PhaseUnwrappingG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::phase_unwrapping::PhaseUnwrapping> {
 		#[inline]
@@ -17572,6 +17956,7 @@ pub use phase_unwrapping_types::*;
 mod photo_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::photo::AlignExposures>` instead, removal in Nov 2024"]
 	pub type PtrOfAlignExposures = core::Ptr<crate::photo::AlignExposures>;
 	
 	ptr_extern! { crate::photo::AlignExposures,
@@ -17599,7 +17984,7 @@ mod photo_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAlignExposures, core::Ptr<core::Algorithm>, cv_PtrLcv_AlignExposuresG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::photo::AlignExposures>, core::Ptr<core::Algorithm>, cv_PtrLcv_AlignExposuresG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::photo::AlignExposures> {
 		#[inline]
@@ -17609,6 +17994,7 @@ mod photo_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::photo::AlignMTB>` instead, removal in Nov 2024"]
 	pub type PtrOfAlignMTB = core::Ptr<crate::photo::AlignMTB>;
 	
 	ptr_extern! { crate::photo::AlignMTB,
@@ -17636,7 +18022,7 @@ mod photo_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAlignMTB, core::Ptr<core::Algorithm>, cv_PtrLcv_AlignMTBG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::photo::AlignMTB>, core::Ptr<core::Algorithm>, cv_PtrLcv_AlignMTBG_to_PtrOfAlgorithm }
 	
 	impl crate::photo::AlignExposuresTraitConst for core::Ptr<crate::photo::AlignMTB> {
 		#[inline] fn as_raw_AlignExposures(&self) -> *const c_void { self.inner_as_raw() }
@@ -17646,7 +18032,7 @@ mod photo_types {
 		#[inline] fn as_raw_mut_AlignExposures(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAlignMTB, core::Ptr<crate::photo::AlignExposures>, cv_PtrLcv_AlignMTBG_to_PtrOfAlignExposures }
+	ptr_cast_base! { core::Ptr<crate::photo::AlignMTB>, core::Ptr<crate::photo::AlignExposures>, cv_PtrLcv_AlignMTBG_to_PtrOfAlignExposures }
 	
 	impl std::fmt::Debug for core::Ptr<crate::photo::AlignMTB> {
 		#[inline]
@@ -17656,6 +18042,7 @@ mod photo_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::photo::CalibrateCRF>` instead, removal in Nov 2024"]
 	pub type PtrOfCalibrateCRF = core::Ptr<crate::photo::CalibrateCRF>;
 	
 	ptr_extern! { crate::photo::CalibrateCRF,
@@ -17683,7 +18070,7 @@ mod photo_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCalibrateCRF, core::Ptr<core::Algorithm>, cv_PtrLcv_CalibrateCRFG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::photo::CalibrateCRF>, core::Ptr<core::Algorithm>, cv_PtrLcv_CalibrateCRFG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::photo::CalibrateCRF> {
 		#[inline]
@@ -17693,6 +18080,7 @@ mod photo_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::photo::CalibrateDebevec>` instead, removal in Nov 2024"]
 	pub type PtrOfCalibrateDebevec = core::Ptr<crate::photo::CalibrateDebevec>;
 	
 	ptr_extern! { crate::photo::CalibrateDebevec,
@@ -17720,7 +18108,7 @@ mod photo_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCalibrateDebevec, core::Ptr<core::Algorithm>, cv_PtrLcv_CalibrateDebevecG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::photo::CalibrateDebevec>, core::Ptr<core::Algorithm>, cv_PtrLcv_CalibrateDebevecG_to_PtrOfAlgorithm }
 	
 	impl crate::photo::CalibrateCRFTraitConst for core::Ptr<crate::photo::CalibrateDebevec> {
 		#[inline] fn as_raw_CalibrateCRF(&self) -> *const c_void { self.inner_as_raw() }
@@ -17730,7 +18118,7 @@ mod photo_types {
 		#[inline] fn as_raw_mut_CalibrateCRF(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCalibrateDebevec, core::Ptr<crate::photo::CalibrateCRF>, cv_PtrLcv_CalibrateDebevecG_to_PtrOfCalibrateCRF }
+	ptr_cast_base! { core::Ptr<crate::photo::CalibrateDebevec>, core::Ptr<crate::photo::CalibrateCRF>, cv_PtrLcv_CalibrateDebevecG_to_PtrOfCalibrateCRF }
 	
 	impl std::fmt::Debug for core::Ptr<crate::photo::CalibrateDebevec> {
 		#[inline]
@@ -17740,6 +18128,7 @@ mod photo_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::photo::CalibrateRobertson>` instead, removal in Nov 2024"]
 	pub type PtrOfCalibrateRobertson = core::Ptr<crate::photo::CalibrateRobertson>;
 	
 	ptr_extern! { crate::photo::CalibrateRobertson,
@@ -17767,7 +18156,7 @@ mod photo_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCalibrateRobertson, core::Ptr<core::Algorithm>, cv_PtrLcv_CalibrateRobertsonG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::photo::CalibrateRobertson>, core::Ptr<core::Algorithm>, cv_PtrLcv_CalibrateRobertsonG_to_PtrOfAlgorithm }
 	
 	impl crate::photo::CalibrateCRFTraitConst for core::Ptr<crate::photo::CalibrateRobertson> {
 		#[inline] fn as_raw_CalibrateCRF(&self) -> *const c_void { self.inner_as_raw() }
@@ -17777,7 +18166,7 @@ mod photo_types {
 		#[inline] fn as_raw_mut_CalibrateCRF(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCalibrateRobertson, core::Ptr<crate::photo::CalibrateCRF>, cv_PtrLcv_CalibrateRobertsonG_to_PtrOfCalibrateCRF }
+	ptr_cast_base! { core::Ptr<crate::photo::CalibrateRobertson>, core::Ptr<crate::photo::CalibrateCRF>, cv_PtrLcv_CalibrateRobertsonG_to_PtrOfCalibrateCRF }
 	
 	impl std::fmt::Debug for core::Ptr<crate::photo::CalibrateRobertson> {
 		#[inline]
@@ -17787,6 +18176,7 @@ mod photo_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::photo::MergeDebevec>` instead, removal in Nov 2024"]
 	pub type PtrOfMergeDebevec = core::Ptr<crate::photo::MergeDebevec>;
 	
 	ptr_extern! { crate::photo::MergeDebevec,
@@ -17814,7 +18204,7 @@ mod photo_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMergeDebevec, core::Ptr<core::Algorithm>, cv_PtrLcv_MergeDebevecG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::photo::MergeDebevec>, core::Ptr<core::Algorithm>, cv_PtrLcv_MergeDebevecG_to_PtrOfAlgorithm }
 	
 	impl crate::photo::MergeExposuresTraitConst for core::Ptr<crate::photo::MergeDebevec> {
 		#[inline] fn as_raw_MergeExposures(&self) -> *const c_void { self.inner_as_raw() }
@@ -17824,7 +18214,7 @@ mod photo_types {
 		#[inline] fn as_raw_mut_MergeExposures(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMergeDebevec, core::Ptr<crate::photo::MergeExposures>, cv_PtrLcv_MergeDebevecG_to_PtrOfMergeExposures }
+	ptr_cast_base! { core::Ptr<crate::photo::MergeDebevec>, core::Ptr<crate::photo::MergeExposures>, cv_PtrLcv_MergeDebevecG_to_PtrOfMergeExposures }
 	
 	impl std::fmt::Debug for core::Ptr<crate::photo::MergeDebevec> {
 		#[inline]
@@ -17834,6 +18224,7 @@ mod photo_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::photo::MergeExposures>` instead, removal in Nov 2024"]
 	pub type PtrOfMergeExposures = core::Ptr<crate::photo::MergeExposures>;
 	
 	ptr_extern! { crate::photo::MergeExposures,
@@ -17861,7 +18252,7 @@ mod photo_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMergeExposures, core::Ptr<core::Algorithm>, cv_PtrLcv_MergeExposuresG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::photo::MergeExposures>, core::Ptr<core::Algorithm>, cv_PtrLcv_MergeExposuresG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::photo::MergeExposures> {
 		#[inline]
@@ -17871,6 +18262,7 @@ mod photo_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::photo::MergeMertens>` instead, removal in Nov 2024"]
 	pub type PtrOfMergeMertens = core::Ptr<crate::photo::MergeMertens>;
 	
 	ptr_extern! { crate::photo::MergeMertens,
@@ -17898,7 +18290,7 @@ mod photo_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMergeMertens, core::Ptr<core::Algorithm>, cv_PtrLcv_MergeMertensG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::photo::MergeMertens>, core::Ptr<core::Algorithm>, cv_PtrLcv_MergeMertensG_to_PtrOfAlgorithm }
 	
 	impl crate::photo::MergeExposuresTraitConst for core::Ptr<crate::photo::MergeMertens> {
 		#[inline] fn as_raw_MergeExposures(&self) -> *const c_void { self.inner_as_raw() }
@@ -17908,7 +18300,7 @@ mod photo_types {
 		#[inline] fn as_raw_mut_MergeExposures(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMergeMertens, core::Ptr<crate::photo::MergeExposures>, cv_PtrLcv_MergeMertensG_to_PtrOfMergeExposures }
+	ptr_cast_base! { core::Ptr<crate::photo::MergeMertens>, core::Ptr<crate::photo::MergeExposures>, cv_PtrLcv_MergeMertensG_to_PtrOfMergeExposures }
 	
 	impl std::fmt::Debug for core::Ptr<crate::photo::MergeMertens> {
 		#[inline]
@@ -17918,6 +18310,7 @@ mod photo_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::photo::MergeRobertson>` instead, removal in Nov 2024"]
 	pub type PtrOfMergeRobertson = core::Ptr<crate::photo::MergeRobertson>;
 	
 	ptr_extern! { crate::photo::MergeRobertson,
@@ -17945,7 +18338,7 @@ mod photo_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMergeRobertson, core::Ptr<core::Algorithm>, cv_PtrLcv_MergeRobertsonG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::photo::MergeRobertson>, core::Ptr<core::Algorithm>, cv_PtrLcv_MergeRobertsonG_to_PtrOfAlgorithm }
 	
 	impl crate::photo::MergeExposuresTraitConst for core::Ptr<crate::photo::MergeRobertson> {
 		#[inline] fn as_raw_MergeExposures(&self) -> *const c_void { self.inner_as_raw() }
@@ -17955,7 +18348,7 @@ mod photo_types {
 		#[inline] fn as_raw_mut_MergeExposures(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMergeRobertson, core::Ptr<crate::photo::MergeExposures>, cv_PtrLcv_MergeRobertsonG_to_PtrOfMergeExposures }
+	ptr_cast_base! { core::Ptr<crate::photo::MergeRobertson>, core::Ptr<crate::photo::MergeExposures>, cv_PtrLcv_MergeRobertsonG_to_PtrOfMergeExposures }
 	
 	impl std::fmt::Debug for core::Ptr<crate::photo::MergeRobertson> {
 		#[inline]
@@ -17965,6 +18358,7 @@ mod photo_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::photo::Tonemap>` instead, removal in Nov 2024"]
 	pub type PtrOfTonemap = core::Ptr<crate::photo::Tonemap>;
 	
 	ptr_extern! { crate::photo::Tonemap,
@@ -17992,7 +18386,7 @@ mod photo_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTonemap, core::Ptr<core::Algorithm>, cv_PtrLcv_TonemapG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::photo::Tonemap>, core::Ptr<core::Algorithm>, cv_PtrLcv_TonemapG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::photo::Tonemap> {
 		#[inline]
@@ -18002,6 +18396,7 @@ mod photo_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::photo::TonemapDrago>` instead, removal in Nov 2024"]
 	pub type PtrOfTonemapDrago = core::Ptr<crate::photo::TonemapDrago>;
 	
 	ptr_extern! { crate::photo::TonemapDrago,
@@ -18029,7 +18424,7 @@ mod photo_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTonemapDrago, core::Ptr<core::Algorithm>, cv_PtrLcv_TonemapDragoG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::photo::TonemapDrago>, core::Ptr<core::Algorithm>, cv_PtrLcv_TonemapDragoG_to_PtrOfAlgorithm }
 	
 	impl crate::photo::TonemapTraitConst for core::Ptr<crate::photo::TonemapDrago> {
 		#[inline] fn as_raw_Tonemap(&self) -> *const c_void { self.inner_as_raw() }
@@ -18039,7 +18434,7 @@ mod photo_types {
 		#[inline] fn as_raw_mut_Tonemap(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTonemapDrago, core::Ptr<crate::photo::Tonemap>, cv_PtrLcv_TonemapDragoG_to_PtrOfTonemap }
+	ptr_cast_base! { core::Ptr<crate::photo::TonemapDrago>, core::Ptr<crate::photo::Tonemap>, cv_PtrLcv_TonemapDragoG_to_PtrOfTonemap }
 	
 	impl std::fmt::Debug for core::Ptr<crate::photo::TonemapDrago> {
 		#[inline]
@@ -18049,6 +18444,7 @@ mod photo_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::photo::TonemapMantiuk>` instead, removal in Nov 2024"]
 	pub type PtrOfTonemapMantiuk = core::Ptr<crate::photo::TonemapMantiuk>;
 	
 	ptr_extern! { crate::photo::TonemapMantiuk,
@@ -18076,7 +18472,7 @@ mod photo_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTonemapMantiuk, core::Ptr<core::Algorithm>, cv_PtrLcv_TonemapMantiukG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::photo::TonemapMantiuk>, core::Ptr<core::Algorithm>, cv_PtrLcv_TonemapMantiukG_to_PtrOfAlgorithm }
 	
 	impl crate::photo::TonemapTraitConst for core::Ptr<crate::photo::TonemapMantiuk> {
 		#[inline] fn as_raw_Tonemap(&self) -> *const c_void { self.inner_as_raw() }
@@ -18086,7 +18482,7 @@ mod photo_types {
 		#[inline] fn as_raw_mut_Tonemap(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTonemapMantiuk, core::Ptr<crate::photo::Tonemap>, cv_PtrLcv_TonemapMantiukG_to_PtrOfTonemap }
+	ptr_cast_base! { core::Ptr<crate::photo::TonemapMantiuk>, core::Ptr<crate::photo::Tonemap>, cv_PtrLcv_TonemapMantiukG_to_PtrOfTonemap }
 	
 	impl std::fmt::Debug for core::Ptr<crate::photo::TonemapMantiuk> {
 		#[inline]
@@ -18096,6 +18492,7 @@ mod photo_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::photo::TonemapReinhard>` instead, removal in Nov 2024"]
 	pub type PtrOfTonemapReinhard = core::Ptr<crate::photo::TonemapReinhard>;
 	
 	ptr_extern! { crate::photo::TonemapReinhard,
@@ -18123,7 +18520,7 @@ mod photo_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTonemapReinhard, core::Ptr<core::Algorithm>, cv_PtrLcv_TonemapReinhardG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::photo::TonemapReinhard>, core::Ptr<core::Algorithm>, cv_PtrLcv_TonemapReinhardG_to_PtrOfAlgorithm }
 	
 	impl crate::photo::TonemapTraitConst for core::Ptr<crate::photo::TonemapReinhard> {
 		#[inline] fn as_raw_Tonemap(&self) -> *const c_void { self.inner_as_raw() }
@@ -18133,7 +18530,7 @@ mod photo_types {
 		#[inline] fn as_raw_mut_Tonemap(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTonemapReinhard, core::Ptr<crate::photo::Tonemap>, cv_PtrLcv_TonemapReinhardG_to_PtrOfTonemap }
+	ptr_cast_base! { core::Ptr<crate::photo::TonemapReinhard>, core::Ptr<crate::photo::Tonemap>, cv_PtrLcv_TonemapReinhardG_to_PtrOfTonemap }
 	
 	impl std::fmt::Debug for core::Ptr<crate::photo::TonemapReinhard> {
 		#[inline]
@@ -18151,6 +18548,7 @@ pub use photo_types::*;
 mod plot_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::plot::Plot2d>` instead, removal in Nov 2024"]
 	pub type PtrOfPlot2d = core::Ptr<crate::plot::Plot2d>;
 	
 	ptr_extern! { crate::plot::Plot2d,
@@ -18178,7 +18576,7 @@ mod plot_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfPlot2d, core::Ptr<core::Algorithm>, cv_PtrLcv_plot_Plot2dG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::plot::Plot2d>, core::Ptr<core::Algorithm>, cv_PtrLcv_plot_Plot2dG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::plot::Plot2d> {
 		#[inline]
@@ -18196,6 +18594,7 @@ pub use plot_types::*;
 mod quality_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::quality::QualityBRISQUE>` instead, removal in Nov 2024"]
 	pub type PtrOfQualityBRISQUE = core::Ptr<crate::quality::QualityBRISQUE>;
 	
 	ptr_extern! { crate::quality::QualityBRISQUE,
@@ -18224,7 +18623,7 @@ mod quality_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfQualityBRISQUE, core::Ptr<core::Algorithm>, cv_PtrLcv_quality_QualityBRISQUEG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::quality::QualityBRISQUE>, core::Ptr<core::Algorithm>, cv_PtrLcv_quality_QualityBRISQUEG_to_PtrOfAlgorithm }
 	
 	impl crate::quality::QualityBaseTraitConst for core::Ptr<crate::quality::QualityBRISQUE> {
 		#[inline] fn as_raw_QualityBase(&self) -> *const c_void { self.inner_as_raw() }
@@ -18234,7 +18633,7 @@ mod quality_types {
 		#[inline] fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfQualityBRISQUE, core::Ptr<crate::quality::QualityBase>, cv_PtrLcv_quality_QualityBRISQUEG_to_PtrOfQualityBase }
+	ptr_cast_base! { core::Ptr<crate::quality::QualityBRISQUE>, core::Ptr<crate::quality::QualityBase>, cv_PtrLcv_quality_QualityBRISQUEG_to_PtrOfQualityBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::quality::QualityBRISQUE> {
 		#[inline]
@@ -18244,6 +18643,7 @@ mod quality_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::quality::QualityBase>` instead, removal in Nov 2024"]
 	pub type PtrOfQualityBase = core::Ptr<crate::quality::QualityBase>;
 	
 	ptr_extern! { crate::quality::QualityBase,
@@ -18271,7 +18671,7 @@ mod quality_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfQualityBase, core::Ptr<core::Algorithm>, cv_PtrLcv_quality_QualityBaseG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::quality::QualityBase>, core::Ptr<core::Algorithm>, cv_PtrLcv_quality_QualityBaseG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::quality::QualityBase> {
 		#[inline]
@@ -18281,6 +18681,7 @@ mod quality_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::quality::QualityGMSD>` instead, removal in Nov 2024"]
 	pub type PtrOfQualityGMSD = core::Ptr<crate::quality::QualityGMSD>;
 	
 	ptr_extern! { crate::quality::QualityGMSD,
@@ -18309,7 +18710,7 @@ mod quality_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfQualityGMSD, core::Ptr<core::Algorithm>, cv_PtrLcv_quality_QualityGMSDG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::quality::QualityGMSD>, core::Ptr<core::Algorithm>, cv_PtrLcv_quality_QualityGMSDG_to_PtrOfAlgorithm }
 	
 	impl crate::quality::QualityBaseTraitConst for core::Ptr<crate::quality::QualityGMSD> {
 		#[inline] fn as_raw_QualityBase(&self) -> *const c_void { self.inner_as_raw() }
@@ -18319,7 +18720,7 @@ mod quality_types {
 		#[inline] fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfQualityGMSD, core::Ptr<crate::quality::QualityBase>, cv_PtrLcv_quality_QualityGMSDG_to_PtrOfQualityBase }
+	ptr_cast_base! { core::Ptr<crate::quality::QualityGMSD>, core::Ptr<crate::quality::QualityBase>, cv_PtrLcv_quality_QualityGMSDG_to_PtrOfQualityBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::quality::QualityGMSD> {
 		#[inline]
@@ -18329,6 +18730,7 @@ mod quality_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::quality::QualityMSE>` instead, removal in Nov 2024"]
 	pub type PtrOfQualityMSE = core::Ptr<crate::quality::QualityMSE>;
 	
 	ptr_extern! { crate::quality::QualityMSE,
@@ -18357,7 +18759,7 @@ mod quality_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfQualityMSE, core::Ptr<core::Algorithm>, cv_PtrLcv_quality_QualityMSEG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::quality::QualityMSE>, core::Ptr<core::Algorithm>, cv_PtrLcv_quality_QualityMSEG_to_PtrOfAlgorithm }
 	
 	impl crate::quality::QualityBaseTraitConst for core::Ptr<crate::quality::QualityMSE> {
 		#[inline] fn as_raw_QualityBase(&self) -> *const c_void { self.inner_as_raw() }
@@ -18367,7 +18769,7 @@ mod quality_types {
 		#[inline] fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfQualityMSE, core::Ptr<crate::quality::QualityBase>, cv_PtrLcv_quality_QualityMSEG_to_PtrOfQualityBase }
+	ptr_cast_base! { core::Ptr<crate::quality::QualityMSE>, core::Ptr<crate::quality::QualityBase>, cv_PtrLcv_quality_QualityMSEG_to_PtrOfQualityBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::quality::QualityMSE> {
 		#[inline]
@@ -18377,6 +18779,7 @@ mod quality_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::quality::QualityPSNR>` instead, removal in Nov 2024"]
 	pub type PtrOfQualityPSNR = core::Ptr<crate::quality::QualityPSNR>;
 	
 	ptr_extern! { crate::quality::QualityPSNR,
@@ -18405,7 +18808,7 @@ mod quality_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfQualityPSNR, core::Ptr<core::Algorithm>, cv_PtrLcv_quality_QualityPSNRG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::quality::QualityPSNR>, core::Ptr<core::Algorithm>, cv_PtrLcv_quality_QualityPSNRG_to_PtrOfAlgorithm }
 	
 	impl crate::quality::QualityBaseTraitConst for core::Ptr<crate::quality::QualityPSNR> {
 		#[inline] fn as_raw_QualityBase(&self) -> *const c_void { self.inner_as_raw() }
@@ -18415,7 +18818,7 @@ mod quality_types {
 		#[inline] fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfQualityPSNR, core::Ptr<crate::quality::QualityBase>, cv_PtrLcv_quality_QualityPSNRG_to_PtrOfQualityBase }
+	ptr_cast_base! { core::Ptr<crate::quality::QualityPSNR>, core::Ptr<crate::quality::QualityBase>, cv_PtrLcv_quality_QualityPSNRG_to_PtrOfQualityBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::quality::QualityPSNR> {
 		#[inline]
@@ -18425,6 +18828,7 @@ mod quality_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::quality::QualitySSIM>` instead, removal in Nov 2024"]
 	pub type PtrOfQualitySSIM = core::Ptr<crate::quality::QualitySSIM>;
 	
 	ptr_extern! { crate::quality::QualitySSIM,
@@ -18453,7 +18857,7 @@ mod quality_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfQualitySSIM, core::Ptr<core::Algorithm>, cv_PtrLcv_quality_QualitySSIMG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::quality::QualitySSIM>, core::Ptr<core::Algorithm>, cv_PtrLcv_quality_QualitySSIMG_to_PtrOfAlgorithm }
 	
 	impl crate::quality::QualityBaseTraitConst for core::Ptr<crate::quality::QualitySSIM> {
 		#[inline] fn as_raw_QualityBase(&self) -> *const c_void { self.inner_as_raw() }
@@ -18463,7 +18867,7 @@ mod quality_types {
 		#[inline] fn as_raw_mut_QualityBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfQualitySSIM, core::Ptr<crate::quality::QualityBase>, cv_PtrLcv_quality_QualitySSIMG_to_PtrOfQualityBase }
+	ptr_cast_base! { core::Ptr<crate::quality::QualitySSIM>, core::Ptr<crate::quality::QualityBase>, cv_PtrLcv_quality_QualitySSIMG_to_PtrOfQualityBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::quality::QualitySSIM> {
 		#[inline]
@@ -18481,6 +18885,7 @@ pub use quality_types::*;
 mod rapid_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rapid::Rapid_GOSTracker>` instead, removal in Nov 2024"]
 	pub type PtrOfRapid_GOSTracker = core::Ptr<crate::rapid::Rapid_GOSTracker>;
 	
 	ptr_extern! { crate::rapid::Rapid_GOSTracker,
@@ -18508,7 +18913,7 @@ mod rapid_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfRapid_GOSTracker, core::Ptr<core::Algorithm>, cv_PtrLcv_rapid_GOSTrackerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::rapid::Rapid_GOSTracker>, core::Ptr<core::Algorithm>, cv_PtrLcv_rapid_GOSTrackerG_to_PtrOfAlgorithm }
 	
 	impl crate::rapid::Rapid_TrackerTraitConst for core::Ptr<crate::rapid::Rapid_GOSTracker> {
 		#[inline] fn as_raw_Rapid_Tracker(&self) -> *const c_void { self.inner_as_raw() }
@@ -18518,7 +18923,7 @@ mod rapid_types {
 		#[inline] fn as_raw_mut_Rapid_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfRapid_GOSTracker, core::Ptr<crate::rapid::Rapid_Tracker>, cv_PtrLcv_rapid_GOSTrackerG_to_PtrOfRapid_Tracker }
+	ptr_cast_base! { core::Ptr<crate::rapid::Rapid_GOSTracker>, core::Ptr<crate::rapid::Rapid_Tracker>, cv_PtrLcv_rapid_GOSTrackerG_to_PtrOfRapid_Tracker }
 	
 	impl std::fmt::Debug for core::Ptr<crate::rapid::Rapid_GOSTracker> {
 		#[inline]
@@ -18528,6 +18933,7 @@ mod rapid_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rapid::Rapid_OLSTracker>` instead, removal in Nov 2024"]
 	pub type PtrOfRapid_OLSTracker = core::Ptr<crate::rapid::Rapid_OLSTracker>;
 	
 	ptr_extern! { crate::rapid::Rapid_OLSTracker,
@@ -18555,7 +18961,7 @@ mod rapid_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfRapid_OLSTracker, core::Ptr<core::Algorithm>, cv_PtrLcv_rapid_OLSTrackerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::rapid::Rapid_OLSTracker>, core::Ptr<core::Algorithm>, cv_PtrLcv_rapid_OLSTrackerG_to_PtrOfAlgorithm }
 	
 	impl crate::rapid::Rapid_TrackerTraitConst for core::Ptr<crate::rapid::Rapid_OLSTracker> {
 		#[inline] fn as_raw_Rapid_Tracker(&self) -> *const c_void { self.inner_as_raw() }
@@ -18565,7 +18971,7 @@ mod rapid_types {
 		#[inline] fn as_raw_mut_Rapid_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfRapid_OLSTracker, core::Ptr<crate::rapid::Rapid_Tracker>, cv_PtrLcv_rapid_OLSTrackerG_to_PtrOfRapid_Tracker }
+	ptr_cast_base! { core::Ptr<crate::rapid::Rapid_OLSTracker>, core::Ptr<crate::rapid::Rapid_Tracker>, cv_PtrLcv_rapid_OLSTrackerG_to_PtrOfRapid_Tracker }
 	
 	impl std::fmt::Debug for core::Ptr<crate::rapid::Rapid_OLSTracker> {
 		#[inline]
@@ -18575,6 +18981,7 @@ mod rapid_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rapid::Rapid_Rapid>` instead, removal in Nov 2024"]
 	pub type PtrOfRapid_Rapid = core::Ptr<crate::rapid::Rapid_Rapid>;
 	
 	ptr_extern! { crate::rapid::Rapid_Rapid,
@@ -18602,7 +19009,7 @@ mod rapid_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfRapid_Rapid, core::Ptr<core::Algorithm>, cv_PtrLcv_rapid_RapidG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::rapid::Rapid_Rapid>, core::Ptr<core::Algorithm>, cv_PtrLcv_rapid_RapidG_to_PtrOfAlgorithm }
 	
 	impl crate::rapid::Rapid_TrackerTraitConst for core::Ptr<crate::rapid::Rapid_Rapid> {
 		#[inline] fn as_raw_Rapid_Tracker(&self) -> *const c_void { self.inner_as_raw() }
@@ -18612,7 +19019,7 @@ mod rapid_types {
 		#[inline] fn as_raw_mut_Rapid_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfRapid_Rapid, core::Ptr<crate::rapid::Rapid_Tracker>, cv_PtrLcv_rapid_RapidG_to_PtrOfRapid_Tracker }
+	ptr_cast_base! { core::Ptr<crate::rapid::Rapid_Rapid>, core::Ptr<crate::rapid::Rapid_Tracker>, cv_PtrLcv_rapid_RapidG_to_PtrOfRapid_Tracker }
 	
 	impl std::fmt::Debug for core::Ptr<crate::rapid::Rapid_Rapid> {
 		#[inline]
@@ -18622,6 +19029,7 @@ mod rapid_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rapid::Rapid_Tracker>` instead, removal in Nov 2024"]
 	pub type PtrOfRapid_Tracker = core::Ptr<crate::rapid::Rapid_Tracker>;
 	
 	ptr_extern! { crate::rapid::Rapid_Tracker,
@@ -18649,7 +19057,7 @@ mod rapid_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfRapid_Tracker, core::Ptr<core::Algorithm>, cv_PtrLcv_rapid_TrackerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::rapid::Rapid_Tracker>, core::Ptr<core::Algorithm>, cv_PtrLcv_rapid_TrackerG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::rapid::Rapid_Tracker> {
 		#[inline]
@@ -18667,6 +19075,7 @@ pub use rapid_types::*;
 mod rgbd_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::ColoredKinfu_ColoredKinFu>` instead, removal in Nov 2024"]
 	pub type PtrOfColoredKinfu_ColoredKinFu = core::Ptr<crate::rgbd::ColoredKinfu_ColoredKinFu>;
 	
 	ptr_extern! { crate::rgbd::ColoredKinfu_ColoredKinFu,
@@ -18694,6 +19103,7 @@ mod rgbd_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::ColoredKinfu_Params>` instead, removal in Nov 2024"]
 	pub type PtrOfColoredKinfu_Params = core::Ptr<crate::rgbd::ColoredKinfu_Params>;
 	
 	ptr_extern! { crate::rgbd::ColoredKinfu_Params,
@@ -18744,6 +19154,7 @@ mod rgbd_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::DepthCleaner>` instead, removal in Nov 2024"]
 	pub type PtrOfDepthCleaner = core::Ptr<crate::rgbd::DepthCleaner>;
 	
 	ptr_extern! { crate::rgbd::DepthCleaner,
@@ -18772,7 +19183,7 @@ mod rgbd_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDepthCleaner, core::Ptr<core::Algorithm>, cv_PtrLcv_rgbd_DepthCleanerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::rgbd::DepthCleaner>, core::Ptr<core::Algorithm>, cv_PtrLcv_rgbd_DepthCleanerG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::rgbd::DepthCleaner> {
 		#[inline]
@@ -18782,6 +19193,7 @@ mod rgbd_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::Dynafu_DynaFu>` instead, removal in Nov 2024"]
 	pub type PtrOfDynafu_DynaFu = core::Ptr<crate::rgbd::Dynafu_DynaFu>;
 	
 	ptr_extern! { crate::rgbd::Dynafu_DynaFu,
@@ -18809,6 +19221,7 @@ mod rgbd_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::FastICPOdometry>` instead, removal in Nov 2024"]
 	pub type PtrOfFastICPOdometry = core::Ptr<crate::rgbd::FastICPOdometry>;
 	
 	ptr_extern! { crate::rgbd::FastICPOdometry,
@@ -18837,7 +19250,7 @@ mod rgbd_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFastICPOdometry, core::Ptr<core::Algorithm>, cv_PtrLcv_rgbd_FastICPOdometryG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::rgbd::FastICPOdometry>, core::Ptr<core::Algorithm>, cv_PtrLcv_rgbd_FastICPOdometryG_to_PtrOfAlgorithm }
 	
 	impl crate::rgbd::OdometryTraitConst for core::Ptr<crate::rgbd::FastICPOdometry> {
 		#[inline] fn as_raw_Odometry(&self) -> *const c_void { self.inner_as_raw() }
@@ -18847,7 +19260,7 @@ mod rgbd_types {
 		#[inline] fn as_raw_mut_Odometry(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFastICPOdometry, core::Ptr<crate::rgbd::Odometry>, cv_PtrLcv_rgbd_FastICPOdometryG_to_PtrOfOdometry }
+	ptr_cast_base! { core::Ptr<crate::rgbd::FastICPOdometry>, core::Ptr<crate::rgbd::Odometry>, cv_PtrLcv_rgbd_FastICPOdometryG_to_PtrOfOdometry }
 	
 	impl std::fmt::Debug for core::Ptr<crate::rgbd::FastICPOdometry> {
 		#[inline]
@@ -18857,6 +19270,7 @@ mod rgbd_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::ICPOdometry>` instead, removal in Nov 2024"]
 	pub type PtrOfICPOdometry = core::Ptr<crate::rgbd::ICPOdometry>;
 	
 	ptr_extern! { crate::rgbd::ICPOdometry,
@@ -18885,7 +19299,7 @@ mod rgbd_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfICPOdometry, core::Ptr<core::Algorithm>, cv_PtrLcv_rgbd_ICPOdometryG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::rgbd::ICPOdometry>, core::Ptr<core::Algorithm>, cv_PtrLcv_rgbd_ICPOdometryG_to_PtrOfAlgorithm }
 	
 	impl crate::rgbd::OdometryTraitConst for core::Ptr<crate::rgbd::ICPOdometry> {
 		#[inline] fn as_raw_Odometry(&self) -> *const c_void { self.inner_as_raw() }
@@ -18895,7 +19309,7 @@ mod rgbd_types {
 		#[inline] fn as_raw_mut_Odometry(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfICPOdometry, core::Ptr<crate::rgbd::Odometry>, cv_PtrLcv_rgbd_ICPOdometryG_to_PtrOfOdometry }
+	ptr_cast_base! { core::Ptr<crate::rgbd::ICPOdometry>, core::Ptr<crate::rgbd::Odometry>, cv_PtrLcv_rgbd_ICPOdometryG_to_PtrOfOdometry }
 	
 	impl std::fmt::Debug for core::Ptr<crate::rgbd::ICPOdometry> {
 		#[inline]
@@ -18905,6 +19319,7 @@ mod rgbd_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::Kinfu_Detail_PoseGraph>` instead, removal in Nov 2024"]
 	pub type PtrOfKinfu_Detail_PoseGraph = core::Ptr<crate::rgbd::Kinfu_Detail_PoseGraph>;
 	
 	ptr_extern! { crate::rgbd::Kinfu_Detail_PoseGraph,
@@ -18932,6 +19347,7 @@ mod rgbd_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::Kinfu_KinFu>` instead, removal in Nov 2024"]
 	pub type PtrOfKinfu_KinFu = core::Ptr<crate::rgbd::Kinfu_KinFu>;
 	
 	ptr_extern! { crate::rgbd::Kinfu_KinFu,
@@ -18959,6 +19375,7 @@ mod rgbd_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::Kinfu_Params>` instead, removal in Nov 2024"]
 	pub type PtrOfKinfu_Params = core::Ptr<crate::rgbd::Kinfu_Params>;
 	
 	ptr_extern! { crate::rgbd::Kinfu_Params,
@@ -19008,6 +19425,7 @@ mod rgbd_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::Kinfu_Volume>` instead, removal in Nov 2024"]
 	pub type PtrOfKinfu_Volume = core::Ptr<crate::rgbd::Kinfu_Volume>;
 	
 	ptr_extern! { crate::rgbd::Kinfu_Volume,
@@ -19039,6 +19457,7 @@ mod rgbd_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::Kinfu_VolumeParams>` instead, removal in Nov 2024"]
 	pub type PtrOfKinfu_VolumeParams = core::Ptr<crate::rgbd::Kinfu_VolumeParams>;
 	
 	ptr_extern! { crate::rgbd::Kinfu_VolumeParams,
@@ -19076,6 +19495,7 @@ mod rgbd_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::LargeKinfu>` instead, removal in Nov 2024"]
 	pub type PtrOfLargeKinfu = core::Ptr<crate::rgbd::LargeKinfu>;
 	
 	ptr_extern! { crate::rgbd::LargeKinfu,
@@ -19103,6 +19523,7 @@ mod rgbd_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::LineMod_ColorGradient>` instead, removal in Nov 2024"]
 	pub type PtrOfLineMod_ColorGradient = core::Ptr<crate::rgbd::LineMod_ColorGradient>;
 	
 	ptr_extern! { crate::rgbd::LineMod_ColorGradient,
@@ -19131,7 +19552,7 @@ mod rgbd_types {
 		#[inline] fn as_raw_mut_LineMod_Modality(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfLineMod_ColorGradient, core::Ptr<crate::rgbd::LineMod_Modality>, cv_PtrLcv_linemod_ColorGradientG_to_PtrOfLineMod_Modality }
+	ptr_cast_base! { core::Ptr<crate::rgbd::LineMod_ColorGradient>, core::Ptr<crate::rgbd::LineMod_Modality>, cv_PtrLcv_linemod_ColorGradientG_to_PtrOfLineMod_Modality }
 	
 	impl std::fmt::Debug for core::Ptr<crate::rgbd::LineMod_ColorGradient> {
 		#[inline]
@@ -19144,6 +19565,7 @@ mod rgbd_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::LineMod_DepthNormal>` instead, removal in Nov 2024"]
 	pub type PtrOfLineMod_DepthNormal = core::Ptr<crate::rgbd::LineMod_DepthNormal>;
 	
 	ptr_extern! { crate::rgbd::LineMod_DepthNormal,
@@ -19172,7 +19594,7 @@ mod rgbd_types {
 		#[inline] fn as_raw_mut_LineMod_Modality(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfLineMod_DepthNormal, core::Ptr<crate::rgbd::LineMod_Modality>, cv_PtrLcv_linemod_DepthNormalG_to_PtrOfLineMod_Modality }
+	ptr_cast_base! { core::Ptr<crate::rgbd::LineMod_DepthNormal>, core::Ptr<crate::rgbd::LineMod_Modality>, cv_PtrLcv_linemod_DepthNormalG_to_PtrOfLineMod_Modality }
 	
 	impl std::fmt::Debug for core::Ptr<crate::rgbd::LineMod_DepthNormal> {
 		#[inline]
@@ -19186,6 +19608,7 @@ mod rgbd_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::LineMod_Detector>` instead, removal in Nov 2024"]
 	pub type PtrOfLineMod_Detector = core::Ptr<crate::rgbd::LineMod_Detector>;
 	
 	ptr_extern! { crate::rgbd::LineMod_Detector,
@@ -19214,6 +19637,7 @@ mod rgbd_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::LineMod_Modality>` instead, removal in Nov 2024"]
 	pub type PtrOfLineMod_Modality = core::Ptr<crate::rgbd::LineMod_Modality>;
 	
 	ptr_extern! { crate::rgbd::LineMod_Modality,
@@ -19241,6 +19665,7 @@ mod rgbd_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::LineMod_QuantizedPyramid>` instead, removal in Nov 2024"]
 	pub type PtrOfLineMod_QuantizedPyramid = core::Ptr<crate::rgbd::LineMod_QuantizedPyramid>;
 	
 	ptr_extern! { crate::rgbd::LineMod_QuantizedPyramid,
@@ -19268,6 +19693,7 @@ mod rgbd_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::Odometry>` instead, removal in Nov 2024"]
 	pub type PtrOfOdometry = core::Ptr<crate::rgbd::Odometry>;
 	
 	ptr_extern! { crate::rgbd::Odometry,
@@ -19295,7 +19721,7 @@ mod rgbd_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfOdometry, core::Ptr<core::Algorithm>, cv_PtrLcv_rgbd_OdometryG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::rgbd::Odometry>, core::Ptr<core::Algorithm>, cv_PtrLcv_rgbd_OdometryG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::rgbd::Odometry> {
 		#[inline]
@@ -19305,6 +19731,7 @@ mod rgbd_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::OdometryFrame>` instead, removal in Nov 2024"]
 	pub type PtrOfOdometryFrame = core::Ptr<crate::rgbd::OdometryFrame>;
 	
 	ptr_extern! { crate::rgbd::OdometryFrame,
@@ -19333,7 +19760,7 @@ mod rgbd_types {
 		#[inline] fn as_raw_mut_RgbdFrame(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfOdometryFrame, core::Ptr<crate::rgbd::RgbdFrame>, cv_PtrLcv_rgbd_OdometryFrameG_to_PtrOfRgbdFrame }
+	ptr_cast_base! { core::Ptr<crate::rgbd::OdometryFrame>, core::Ptr<crate::rgbd::RgbdFrame>, cv_PtrLcv_rgbd_OdometryFrameG_to_PtrOfRgbdFrame }
 	
 	impl std::fmt::Debug for core::Ptr<crate::rgbd::OdometryFrame> {
 		#[inline]
@@ -19357,6 +19784,7 @@ mod rgbd_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::Params>` instead, removal in Nov 2024"]
 	pub type PtrOfParams = core::Ptr<crate::rgbd::Params>;
 	
 	ptr_extern! { crate::rgbd::Params,
@@ -19400,6 +19828,7 @@ mod rgbd_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::RgbdFrame>` instead, removal in Nov 2024"]
 	pub type PtrOfRgbdFrame = core::Ptr<crate::rgbd::RgbdFrame>;
 	
 	ptr_extern! { crate::rgbd::RgbdFrame,
@@ -19433,6 +19862,7 @@ mod rgbd_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::RgbdICPOdometry>` instead, removal in Nov 2024"]
 	pub type PtrOfRgbdICPOdometry = core::Ptr<crate::rgbd::RgbdICPOdometry>;
 	
 	ptr_extern! { crate::rgbd::RgbdICPOdometry,
@@ -19461,7 +19891,7 @@ mod rgbd_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfRgbdICPOdometry, core::Ptr<core::Algorithm>, cv_PtrLcv_rgbd_RgbdICPOdometryG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::rgbd::RgbdICPOdometry>, core::Ptr<core::Algorithm>, cv_PtrLcv_rgbd_RgbdICPOdometryG_to_PtrOfAlgorithm }
 	
 	impl crate::rgbd::OdometryTraitConst for core::Ptr<crate::rgbd::RgbdICPOdometry> {
 		#[inline] fn as_raw_Odometry(&self) -> *const c_void { self.inner_as_raw() }
@@ -19471,7 +19901,7 @@ mod rgbd_types {
 		#[inline] fn as_raw_mut_Odometry(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfRgbdICPOdometry, core::Ptr<crate::rgbd::Odometry>, cv_PtrLcv_rgbd_RgbdICPOdometryG_to_PtrOfOdometry }
+	ptr_cast_base! { core::Ptr<crate::rgbd::RgbdICPOdometry>, core::Ptr<crate::rgbd::Odometry>, cv_PtrLcv_rgbd_RgbdICPOdometryG_to_PtrOfOdometry }
 	
 	impl std::fmt::Debug for core::Ptr<crate::rgbd::RgbdICPOdometry> {
 		#[inline]
@@ -19481,6 +19911,7 @@ mod rgbd_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::RgbdNormals>` instead, removal in Nov 2024"]
 	pub type PtrOfRgbdNormals = core::Ptr<crate::rgbd::RgbdNormals>;
 	
 	ptr_extern! { crate::rgbd::RgbdNormals,
@@ -19509,7 +19940,7 @@ mod rgbd_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfRgbdNormals, core::Ptr<core::Algorithm>, cv_PtrLcv_rgbd_RgbdNormalsG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::rgbd::RgbdNormals>, core::Ptr<core::Algorithm>, cv_PtrLcv_rgbd_RgbdNormalsG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::rgbd::RgbdNormals> {
 		#[inline]
@@ -19519,6 +19950,7 @@ mod rgbd_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::RgbdOdometry>` instead, removal in Nov 2024"]
 	pub type PtrOfRgbdOdometry = core::Ptr<crate::rgbd::RgbdOdometry>;
 	
 	ptr_extern! { crate::rgbd::RgbdOdometry,
@@ -19547,7 +19979,7 @@ mod rgbd_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfRgbdOdometry, core::Ptr<core::Algorithm>, cv_PtrLcv_rgbd_RgbdOdometryG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::rgbd::RgbdOdometry>, core::Ptr<core::Algorithm>, cv_PtrLcv_rgbd_RgbdOdometryG_to_PtrOfAlgorithm }
 	
 	impl crate::rgbd::OdometryTraitConst for core::Ptr<crate::rgbd::RgbdOdometry> {
 		#[inline] fn as_raw_Odometry(&self) -> *const c_void { self.inner_as_raw() }
@@ -19557,7 +19989,7 @@ mod rgbd_types {
 		#[inline] fn as_raw_mut_Odometry(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfRgbdOdometry, core::Ptr<crate::rgbd::Odometry>, cv_PtrLcv_rgbd_RgbdOdometryG_to_PtrOfOdometry }
+	ptr_cast_base! { core::Ptr<crate::rgbd::RgbdOdometry>, core::Ptr<crate::rgbd::Odometry>, cv_PtrLcv_rgbd_RgbdOdometryG_to_PtrOfOdometry }
 	
 	impl std::fmt::Debug for core::Ptr<crate::rgbd::RgbdOdometry> {
 		#[inline]
@@ -19567,6 +19999,7 @@ mod rgbd_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::RgbdPlane>` instead, removal in Nov 2024"]
 	pub type PtrOfRgbdPlane = core::Ptr<crate::rgbd::RgbdPlane>;
 	
 	ptr_extern! { crate::rgbd::RgbdPlane,
@@ -19595,7 +20028,7 @@ mod rgbd_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfRgbdPlane, core::Ptr<core::Algorithm>, cv_PtrLcv_rgbd_RgbdPlaneG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::rgbd::RgbdPlane>, core::Ptr<core::Algorithm>, cv_PtrLcv_rgbd_RgbdPlaneG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::rgbd::RgbdPlane> {
 		#[inline]
@@ -19605,6 +20038,7 @@ mod rgbd_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::rgbd::LineMod_Feature>` instead, removal in Nov 2024"]
 	pub type VectorOfLineMod_Feature = core::Vector<crate::rgbd::LineMod_Feature>;
 	
 	impl core::Vector<crate::rgbd::LineMod_Feature> {
@@ -19628,6 +20062,7 @@ mod rgbd_types {
 	}
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::rgbd::LineMod_Match>` instead, removal in Nov 2024"]
 	pub type VectorOfLineMod_Match = core::Vector<crate::rgbd::LineMod_Match>;
 	
 	impl core::Vector<crate::rgbd::LineMod_Match> {
@@ -19649,7 +20084,7 @@ mod rgbd_types {
 	
 	vector_boxed_ref! { crate::rgbd::LineMod_Match }
 	
-	vector_extern! { BoxedRef<'_, crate::rgbd::LineMod_Match>,
+	vector_extern! { BoxedRef<'t, crate::rgbd::LineMod_Match>,
 		std_vectorLcv_linemod_MatchG_new_const, std_vectorLcv_linemod_MatchG_delete,
 		std_vectorLcv_linemod_MatchG_len_const, std_vectorLcv_linemod_MatchG_isEmpty_const,
 		std_vectorLcv_linemod_MatchG_capacity_const, std_vectorLcv_linemod_MatchG_shrinkToFit,
@@ -19660,6 +20095,7 @@ mod rgbd_types {
 	}
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::rgbd::LineMod_Template>` instead, removal in Nov 2024"]
 	pub type VectorOfLineMod_Template = core::Vector<crate::rgbd::LineMod_Template>;
 	
 	impl core::Vector<crate::rgbd::LineMod_Template> {
@@ -19681,7 +20117,7 @@ mod rgbd_types {
 	
 	vector_boxed_ref! { crate::rgbd::LineMod_Template }
 	
-	vector_extern! { BoxedRef<'_, crate::rgbd::LineMod_Template>,
+	vector_extern! { BoxedRef<'t, crate::rgbd::LineMod_Template>,
 		std_vectorLcv_linemod_TemplateG_new_const, std_vectorLcv_linemod_TemplateG_delete,
 		std_vectorLcv_linemod_TemplateG_len_const, std_vectorLcv_linemod_TemplateG_isEmpty_const,
 		std_vectorLcv_linemod_TemplateG_capacity_const, std_vectorLcv_linemod_TemplateG_shrinkToFit,
@@ -19692,6 +20128,7 @@ mod rgbd_types {
 	}
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Ptr<crate::rgbd::LineMod_Modality>>` instead, removal in Nov 2024"]
 	pub type VectorOfPtrOfLineMod_Modality = core::Vector<core::Ptr<crate::rgbd::LineMod_Modality>>;
 	
 	impl core::Vector<core::Ptr<crate::rgbd::LineMod_Modality>> {
@@ -19720,6 +20157,7 @@ pub use rgbd_types::*;
 mod saliency_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::saliency::MotionSaliency>` instead, removal in Nov 2024"]
 	pub type PtrOfMotionSaliency = core::Ptr<crate::saliency::MotionSaliency>;
 	
 	ptr_extern! { crate::saliency::MotionSaliency,
@@ -19747,7 +20185,7 @@ mod saliency_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMotionSaliency, core::Ptr<core::Algorithm>, cv_PtrLcv_saliency_MotionSaliencyG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::saliency::MotionSaliency>, core::Ptr<core::Algorithm>, cv_PtrLcv_saliency_MotionSaliencyG_to_PtrOfAlgorithm }
 	
 	impl crate::saliency::SaliencyTraitConst for core::Ptr<crate::saliency::MotionSaliency> {
 		#[inline] fn as_raw_Saliency(&self) -> *const c_void { self.inner_as_raw() }
@@ -19757,7 +20195,7 @@ mod saliency_types {
 		#[inline] fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMotionSaliency, core::Ptr<crate::saliency::Saliency>, cv_PtrLcv_saliency_MotionSaliencyG_to_PtrOfSaliency }
+	ptr_cast_base! { core::Ptr<crate::saliency::MotionSaliency>, core::Ptr<crate::saliency::Saliency>, cv_PtrLcv_saliency_MotionSaliencyG_to_PtrOfSaliency }
 	
 	impl std::fmt::Debug for core::Ptr<crate::saliency::MotionSaliency> {
 		#[inline]
@@ -19767,6 +20205,7 @@ mod saliency_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::saliency::MotionSaliencyBinWangApr2014>` instead, removal in Nov 2024"]
 	pub type PtrOfMotionSaliencyBinWangApr2014 = core::Ptr<crate::saliency::MotionSaliencyBinWangApr2014>;
 	
 	ptr_extern! { crate::saliency::MotionSaliencyBinWangApr2014,
@@ -19795,7 +20234,7 @@ mod saliency_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMotionSaliencyBinWangApr2014, core::Ptr<core::Algorithm>, cv_PtrLcv_saliency_MotionSaliencyBinWangApr2014G_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::saliency::MotionSaliencyBinWangApr2014>, core::Ptr<core::Algorithm>, cv_PtrLcv_saliency_MotionSaliencyBinWangApr2014G_to_PtrOfAlgorithm }
 	
 	impl crate::saliency::MotionSaliencyTraitConst for core::Ptr<crate::saliency::MotionSaliencyBinWangApr2014> {
 		#[inline] fn as_raw_MotionSaliency(&self) -> *const c_void { self.inner_as_raw() }
@@ -19805,7 +20244,7 @@ mod saliency_types {
 		#[inline] fn as_raw_mut_MotionSaliency(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMotionSaliencyBinWangApr2014, core::Ptr<crate::saliency::MotionSaliency>, cv_PtrLcv_saliency_MotionSaliencyBinWangApr2014G_to_PtrOfMotionSaliency }
+	ptr_cast_base! { core::Ptr<crate::saliency::MotionSaliencyBinWangApr2014>, core::Ptr<crate::saliency::MotionSaliency>, cv_PtrLcv_saliency_MotionSaliencyBinWangApr2014G_to_PtrOfMotionSaliency }
 	
 	impl crate::saliency::SaliencyTraitConst for core::Ptr<crate::saliency::MotionSaliencyBinWangApr2014> {
 		#[inline] fn as_raw_Saliency(&self) -> *const c_void { self.inner_as_raw() }
@@ -19815,7 +20254,7 @@ mod saliency_types {
 		#[inline] fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMotionSaliencyBinWangApr2014, core::Ptr<crate::saliency::Saliency>, cv_PtrLcv_saliency_MotionSaliencyBinWangApr2014G_to_PtrOfSaliency }
+	ptr_cast_base! { core::Ptr<crate::saliency::MotionSaliencyBinWangApr2014>, core::Ptr<crate::saliency::Saliency>, cv_PtrLcv_saliency_MotionSaliencyBinWangApr2014G_to_PtrOfSaliency }
 	
 	impl std::fmt::Debug for core::Ptr<crate::saliency::MotionSaliencyBinWangApr2014> {
 		#[inline]
@@ -19825,6 +20264,7 @@ mod saliency_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::saliency::Objectness>` instead, removal in Nov 2024"]
 	pub type PtrOfObjectness = core::Ptr<crate::saliency::Objectness>;
 	
 	ptr_extern! { crate::saliency::Objectness,
@@ -19852,7 +20292,7 @@ mod saliency_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfObjectness, core::Ptr<core::Algorithm>, cv_PtrLcv_saliency_ObjectnessG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::saliency::Objectness>, core::Ptr<core::Algorithm>, cv_PtrLcv_saliency_ObjectnessG_to_PtrOfAlgorithm }
 	
 	impl crate::saliency::SaliencyTraitConst for core::Ptr<crate::saliency::Objectness> {
 		#[inline] fn as_raw_Saliency(&self) -> *const c_void { self.inner_as_raw() }
@@ -19862,7 +20302,7 @@ mod saliency_types {
 		#[inline] fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfObjectness, core::Ptr<crate::saliency::Saliency>, cv_PtrLcv_saliency_ObjectnessG_to_PtrOfSaliency }
+	ptr_cast_base! { core::Ptr<crate::saliency::Objectness>, core::Ptr<crate::saliency::Saliency>, cv_PtrLcv_saliency_ObjectnessG_to_PtrOfSaliency }
 	
 	impl std::fmt::Debug for core::Ptr<crate::saliency::Objectness> {
 		#[inline]
@@ -19872,6 +20312,7 @@ mod saliency_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::saliency::ObjectnessBING>` instead, removal in Nov 2024"]
 	pub type PtrOfObjectnessBING = core::Ptr<crate::saliency::ObjectnessBING>;
 	
 	ptr_extern! { crate::saliency::ObjectnessBING,
@@ -19900,7 +20341,7 @@ mod saliency_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfObjectnessBING, core::Ptr<core::Algorithm>, cv_PtrLcv_saliency_ObjectnessBINGG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::saliency::ObjectnessBING>, core::Ptr<core::Algorithm>, cv_PtrLcv_saliency_ObjectnessBINGG_to_PtrOfAlgorithm }
 	
 	impl crate::saliency::ObjectnessTraitConst for core::Ptr<crate::saliency::ObjectnessBING> {
 		#[inline] fn as_raw_Objectness(&self) -> *const c_void { self.inner_as_raw() }
@@ -19910,7 +20351,7 @@ mod saliency_types {
 		#[inline] fn as_raw_mut_Objectness(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfObjectnessBING, core::Ptr<crate::saliency::Objectness>, cv_PtrLcv_saliency_ObjectnessBINGG_to_PtrOfObjectness }
+	ptr_cast_base! { core::Ptr<crate::saliency::ObjectnessBING>, core::Ptr<crate::saliency::Objectness>, cv_PtrLcv_saliency_ObjectnessBINGG_to_PtrOfObjectness }
 	
 	impl crate::saliency::SaliencyTraitConst for core::Ptr<crate::saliency::ObjectnessBING> {
 		#[inline] fn as_raw_Saliency(&self) -> *const c_void { self.inner_as_raw() }
@@ -19920,7 +20361,7 @@ mod saliency_types {
 		#[inline] fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfObjectnessBING, core::Ptr<crate::saliency::Saliency>, cv_PtrLcv_saliency_ObjectnessBINGG_to_PtrOfSaliency }
+	ptr_cast_base! { core::Ptr<crate::saliency::ObjectnessBING>, core::Ptr<crate::saliency::Saliency>, cv_PtrLcv_saliency_ObjectnessBINGG_to_PtrOfSaliency }
 	
 	impl std::fmt::Debug for core::Ptr<crate::saliency::ObjectnessBING> {
 		#[inline]
@@ -19930,6 +20371,7 @@ mod saliency_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::saliency::Saliency>` instead, removal in Nov 2024"]
 	pub type PtrOfSaliency = core::Ptr<crate::saliency::Saliency>;
 	
 	ptr_extern! { crate::saliency::Saliency,
@@ -19957,7 +20399,7 @@ mod saliency_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSaliency, core::Ptr<core::Algorithm>, cv_PtrLcv_saliency_SaliencyG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::saliency::Saliency>, core::Ptr<core::Algorithm>, cv_PtrLcv_saliency_SaliencyG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::saliency::Saliency> {
 		#[inline]
@@ -19967,6 +20409,7 @@ mod saliency_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::saliency::StaticSaliency>` instead, removal in Nov 2024"]
 	pub type PtrOfStaticSaliency = core::Ptr<crate::saliency::StaticSaliency>;
 	
 	ptr_extern! { crate::saliency::StaticSaliency,
@@ -19994,7 +20437,7 @@ mod saliency_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfStaticSaliency, core::Ptr<core::Algorithm>, cv_PtrLcv_saliency_StaticSaliencyG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::saliency::StaticSaliency>, core::Ptr<core::Algorithm>, cv_PtrLcv_saliency_StaticSaliencyG_to_PtrOfAlgorithm }
 	
 	impl crate::saliency::SaliencyTraitConst for core::Ptr<crate::saliency::StaticSaliency> {
 		#[inline] fn as_raw_Saliency(&self) -> *const c_void { self.inner_as_raw() }
@@ -20004,7 +20447,7 @@ mod saliency_types {
 		#[inline] fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfStaticSaliency, core::Ptr<crate::saliency::Saliency>, cv_PtrLcv_saliency_StaticSaliencyG_to_PtrOfSaliency }
+	ptr_cast_base! { core::Ptr<crate::saliency::StaticSaliency>, core::Ptr<crate::saliency::Saliency>, cv_PtrLcv_saliency_StaticSaliencyG_to_PtrOfSaliency }
 	
 	impl std::fmt::Debug for core::Ptr<crate::saliency::StaticSaliency> {
 		#[inline]
@@ -20014,6 +20457,7 @@ mod saliency_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::saliency::StaticSaliencyFineGrained>` instead, removal in Nov 2024"]
 	pub type PtrOfStaticSaliencyFineGrained = core::Ptr<crate::saliency::StaticSaliencyFineGrained>;
 	
 	ptr_extern! { crate::saliency::StaticSaliencyFineGrained,
@@ -20042,7 +20486,7 @@ mod saliency_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfStaticSaliencyFineGrained, core::Ptr<core::Algorithm>, cv_PtrLcv_saliency_StaticSaliencyFineGrainedG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::saliency::StaticSaliencyFineGrained>, core::Ptr<core::Algorithm>, cv_PtrLcv_saliency_StaticSaliencyFineGrainedG_to_PtrOfAlgorithm }
 	
 	impl crate::saliency::SaliencyTraitConst for core::Ptr<crate::saliency::StaticSaliencyFineGrained> {
 		#[inline] fn as_raw_Saliency(&self) -> *const c_void { self.inner_as_raw() }
@@ -20052,7 +20496,7 @@ mod saliency_types {
 		#[inline] fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfStaticSaliencyFineGrained, core::Ptr<crate::saliency::Saliency>, cv_PtrLcv_saliency_StaticSaliencyFineGrainedG_to_PtrOfSaliency }
+	ptr_cast_base! { core::Ptr<crate::saliency::StaticSaliencyFineGrained>, core::Ptr<crate::saliency::Saliency>, cv_PtrLcv_saliency_StaticSaliencyFineGrainedG_to_PtrOfSaliency }
 	
 	impl crate::saliency::StaticSaliencyTraitConst for core::Ptr<crate::saliency::StaticSaliencyFineGrained> {
 		#[inline] fn as_raw_StaticSaliency(&self) -> *const c_void { self.inner_as_raw() }
@@ -20062,7 +20506,7 @@ mod saliency_types {
 		#[inline] fn as_raw_mut_StaticSaliency(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfStaticSaliencyFineGrained, core::Ptr<crate::saliency::StaticSaliency>, cv_PtrLcv_saliency_StaticSaliencyFineGrainedG_to_PtrOfStaticSaliency }
+	ptr_cast_base! { core::Ptr<crate::saliency::StaticSaliencyFineGrained>, core::Ptr<crate::saliency::StaticSaliency>, cv_PtrLcv_saliency_StaticSaliencyFineGrainedG_to_PtrOfStaticSaliency }
 	
 	impl std::fmt::Debug for core::Ptr<crate::saliency::StaticSaliencyFineGrained> {
 		#[inline]
@@ -20072,6 +20516,7 @@ mod saliency_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::saliency::StaticSaliencySpectralResidual>` instead, removal in Nov 2024"]
 	pub type PtrOfStaticSaliencySpectralResidual = core::Ptr<crate::saliency::StaticSaliencySpectralResidual>;
 	
 	ptr_extern! { crate::saliency::StaticSaliencySpectralResidual,
@@ -20100,7 +20545,7 @@ mod saliency_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfStaticSaliencySpectralResidual, core::Ptr<core::Algorithm>, cv_PtrLcv_saliency_StaticSaliencySpectralResidualG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::saliency::StaticSaliencySpectralResidual>, core::Ptr<core::Algorithm>, cv_PtrLcv_saliency_StaticSaliencySpectralResidualG_to_PtrOfAlgorithm }
 	
 	impl crate::saliency::SaliencyTraitConst for core::Ptr<crate::saliency::StaticSaliencySpectralResidual> {
 		#[inline] fn as_raw_Saliency(&self) -> *const c_void { self.inner_as_raw() }
@@ -20110,7 +20555,7 @@ mod saliency_types {
 		#[inline] fn as_raw_mut_Saliency(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfStaticSaliencySpectralResidual, core::Ptr<crate::saliency::Saliency>, cv_PtrLcv_saliency_StaticSaliencySpectralResidualG_to_PtrOfSaliency }
+	ptr_cast_base! { core::Ptr<crate::saliency::StaticSaliencySpectralResidual>, core::Ptr<crate::saliency::Saliency>, cv_PtrLcv_saliency_StaticSaliencySpectralResidualG_to_PtrOfSaliency }
 	
 	impl crate::saliency::StaticSaliencyTraitConst for core::Ptr<crate::saliency::StaticSaliencySpectralResidual> {
 		#[inline] fn as_raw_StaticSaliency(&self) -> *const c_void { self.inner_as_raw() }
@@ -20120,7 +20565,7 @@ mod saliency_types {
 		#[inline] fn as_raw_mut_StaticSaliency(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfStaticSaliencySpectralResidual, core::Ptr<crate::saliency::StaticSaliency>, cv_PtrLcv_saliency_StaticSaliencySpectralResidualG_to_PtrOfStaticSaliency }
+	ptr_cast_base! { core::Ptr<crate::saliency::StaticSaliencySpectralResidual>, core::Ptr<crate::saliency::StaticSaliency>, cv_PtrLcv_saliency_StaticSaliencySpectralResidualG_to_PtrOfStaticSaliency }
 	
 	impl std::fmt::Debug for core::Ptr<crate::saliency::StaticSaliencySpectralResidual> {
 		#[inline]
@@ -20138,6 +20583,7 @@ pub use saliency_types::*;
 mod sfm_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::sfm::BaseSFM>` instead, removal in Nov 2024"]
 	pub type PtrOfBaseSFM = core::Ptr<crate::sfm::BaseSFM>;
 	
 	ptr_extern! { crate::sfm::BaseSFM,
@@ -20165,6 +20611,7 @@ mod sfm_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::sfm::SFMLibmvEuclideanReconstruction>` instead, removal in Nov 2024"]
 	pub type PtrOfSFMLibmvEuclideanReconstruction = core::Ptr<crate::sfm::SFMLibmvEuclideanReconstruction>;
 	
 	ptr_extern! { crate::sfm::SFMLibmvEuclideanReconstruction,
@@ -20192,7 +20639,7 @@ mod sfm_types {
 		#[inline] fn as_raw_mut_BaseSFM(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSFMLibmvEuclideanReconstruction, core::Ptr<crate::sfm::BaseSFM>, cv_PtrLcv_sfm_SFMLibmvEuclideanReconstructionG_to_PtrOfBaseSFM }
+	ptr_cast_base! { core::Ptr<crate::sfm::SFMLibmvEuclideanReconstruction>, core::Ptr<crate::sfm::BaseSFM>, cv_PtrLcv_sfm_SFMLibmvEuclideanReconstructionG_to_PtrOfBaseSFM }
 	
 	impl std::fmt::Debug for core::Ptr<crate::sfm::SFMLibmvEuclideanReconstruction> {
 		#[inline]
@@ -20210,6 +20657,7 @@ pub use sfm_types::*;
 mod shape_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::shape::AffineTransformer>` instead, removal in Nov 2024"]
 	pub type PtrOfAffineTransformer = core::Ptr<crate::shape::AffineTransformer>;
 	
 	ptr_extern! { crate::shape::AffineTransformer,
@@ -20237,7 +20685,7 @@ mod shape_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAffineTransformer, core::Ptr<core::Algorithm>, cv_PtrLcv_AffineTransformerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::shape::AffineTransformer>, core::Ptr<core::Algorithm>, cv_PtrLcv_AffineTransformerG_to_PtrOfAlgorithm }
 	
 	impl crate::shape::ShapeTransformerTraitConst for core::Ptr<crate::shape::AffineTransformer> {
 		#[inline] fn as_raw_ShapeTransformer(&self) -> *const c_void { self.inner_as_raw() }
@@ -20247,7 +20695,7 @@ mod shape_types {
 		#[inline] fn as_raw_mut_ShapeTransformer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAffineTransformer, core::Ptr<crate::shape::ShapeTransformer>, cv_PtrLcv_AffineTransformerG_to_PtrOfShapeTransformer }
+	ptr_cast_base! { core::Ptr<crate::shape::AffineTransformer>, core::Ptr<crate::shape::ShapeTransformer>, cv_PtrLcv_AffineTransformerG_to_PtrOfShapeTransformer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::shape::AffineTransformer> {
 		#[inline]
@@ -20257,6 +20705,7 @@ mod shape_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::shape::ChiHistogramCostExtractor>` instead, removal in Nov 2024"]
 	pub type PtrOfChiHistogramCostExtractor = core::Ptr<crate::shape::ChiHistogramCostExtractor>;
 	
 	ptr_extern! { crate::shape::ChiHistogramCostExtractor,
@@ -20284,7 +20733,7 @@ mod shape_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfChiHistogramCostExtractor, core::Ptr<core::Algorithm>, cv_PtrLcv_ChiHistogramCostExtractorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::shape::ChiHistogramCostExtractor>, core::Ptr<core::Algorithm>, cv_PtrLcv_ChiHistogramCostExtractorG_to_PtrOfAlgorithm }
 	
 	impl crate::shape::HistogramCostExtractorTraitConst for core::Ptr<crate::shape::ChiHistogramCostExtractor> {
 		#[inline] fn as_raw_HistogramCostExtractor(&self) -> *const c_void { self.inner_as_raw() }
@@ -20294,7 +20743,7 @@ mod shape_types {
 		#[inline] fn as_raw_mut_HistogramCostExtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfChiHistogramCostExtractor, core::Ptr<crate::shape::HistogramCostExtractor>, cv_PtrLcv_ChiHistogramCostExtractorG_to_PtrOfHistogramCostExtractor }
+	ptr_cast_base! { core::Ptr<crate::shape::ChiHistogramCostExtractor>, core::Ptr<crate::shape::HistogramCostExtractor>, cv_PtrLcv_ChiHistogramCostExtractorG_to_PtrOfHistogramCostExtractor }
 	
 	impl std::fmt::Debug for core::Ptr<crate::shape::ChiHistogramCostExtractor> {
 		#[inline]
@@ -20304,6 +20753,7 @@ mod shape_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::shape::EMDHistogramCostExtractor>` instead, removal in Nov 2024"]
 	pub type PtrOfEMDHistogramCostExtractor = core::Ptr<crate::shape::EMDHistogramCostExtractor>;
 	
 	ptr_extern! { crate::shape::EMDHistogramCostExtractor,
@@ -20331,7 +20781,7 @@ mod shape_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfEMDHistogramCostExtractor, core::Ptr<core::Algorithm>, cv_PtrLcv_EMDHistogramCostExtractorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::shape::EMDHistogramCostExtractor>, core::Ptr<core::Algorithm>, cv_PtrLcv_EMDHistogramCostExtractorG_to_PtrOfAlgorithm }
 	
 	impl crate::shape::HistogramCostExtractorTraitConst for core::Ptr<crate::shape::EMDHistogramCostExtractor> {
 		#[inline] fn as_raw_HistogramCostExtractor(&self) -> *const c_void { self.inner_as_raw() }
@@ -20341,7 +20791,7 @@ mod shape_types {
 		#[inline] fn as_raw_mut_HistogramCostExtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfEMDHistogramCostExtractor, core::Ptr<crate::shape::HistogramCostExtractor>, cv_PtrLcv_EMDHistogramCostExtractorG_to_PtrOfHistogramCostExtractor }
+	ptr_cast_base! { core::Ptr<crate::shape::EMDHistogramCostExtractor>, core::Ptr<crate::shape::HistogramCostExtractor>, cv_PtrLcv_EMDHistogramCostExtractorG_to_PtrOfHistogramCostExtractor }
 	
 	impl std::fmt::Debug for core::Ptr<crate::shape::EMDHistogramCostExtractor> {
 		#[inline]
@@ -20351,6 +20801,7 @@ mod shape_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::shape::EMDL1HistogramCostExtractor>` instead, removal in Nov 2024"]
 	pub type PtrOfEMDL1HistogramCostExtractor = core::Ptr<crate::shape::EMDL1HistogramCostExtractor>;
 	
 	ptr_extern! { crate::shape::EMDL1HistogramCostExtractor,
@@ -20378,7 +20829,7 @@ mod shape_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfEMDL1HistogramCostExtractor, core::Ptr<core::Algorithm>, cv_PtrLcv_EMDL1HistogramCostExtractorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::shape::EMDL1HistogramCostExtractor>, core::Ptr<core::Algorithm>, cv_PtrLcv_EMDL1HistogramCostExtractorG_to_PtrOfAlgorithm }
 	
 	impl crate::shape::HistogramCostExtractorTraitConst for core::Ptr<crate::shape::EMDL1HistogramCostExtractor> {
 		#[inline] fn as_raw_HistogramCostExtractor(&self) -> *const c_void { self.inner_as_raw() }
@@ -20388,7 +20839,7 @@ mod shape_types {
 		#[inline] fn as_raw_mut_HistogramCostExtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfEMDL1HistogramCostExtractor, core::Ptr<crate::shape::HistogramCostExtractor>, cv_PtrLcv_EMDL1HistogramCostExtractorG_to_PtrOfHistogramCostExtractor }
+	ptr_cast_base! { core::Ptr<crate::shape::EMDL1HistogramCostExtractor>, core::Ptr<crate::shape::HistogramCostExtractor>, cv_PtrLcv_EMDL1HistogramCostExtractorG_to_PtrOfHistogramCostExtractor }
 	
 	impl std::fmt::Debug for core::Ptr<crate::shape::EMDL1HistogramCostExtractor> {
 		#[inline]
@@ -20398,6 +20849,7 @@ mod shape_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::shape::HausdorffDistanceExtractor>` instead, removal in Nov 2024"]
 	pub type PtrOfHausdorffDistanceExtractor = core::Ptr<crate::shape::HausdorffDistanceExtractor>;
 	
 	ptr_extern! { crate::shape::HausdorffDistanceExtractor,
@@ -20425,7 +20877,7 @@ mod shape_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfHausdorffDistanceExtractor, core::Ptr<core::Algorithm>, cv_PtrLcv_HausdorffDistanceExtractorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::shape::HausdorffDistanceExtractor>, core::Ptr<core::Algorithm>, cv_PtrLcv_HausdorffDistanceExtractorG_to_PtrOfAlgorithm }
 	
 	impl crate::shape::ShapeDistanceExtractorTraitConst for core::Ptr<crate::shape::HausdorffDistanceExtractor> {
 		#[inline] fn as_raw_ShapeDistanceExtractor(&self) -> *const c_void { self.inner_as_raw() }
@@ -20435,7 +20887,7 @@ mod shape_types {
 		#[inline] fn as_raw_mut_ShapeDistanceExtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfHausdorffDistanceExtractor, core::Ptr<crate::shape::ShapeDistanceExtractor>, cv_PtrLcv_HausdorffDistanceExtractorG_to_PtrOfShapeDistanceExtractor }
+	ptr_cast_base! { core::Ptr<crate::shape::HausdorffDistanceExtractor>, core::Ptr<crate::shape::ShapeDistanceExtractor>, cv_PtrLcv_HausdorffDistanceExtractorG_to_PtrOfShapeDistanceExtractor }
 	
 	impl std::fmt::Debug for core::Ptr<crate::shape::HausdorffDistanceExtractor> {
 		#[inline]
@@ -20445,6 +20897,7 @@ mod shape_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::shape::HistogramCostExtractor>` instead, removal in Nov 2024"]
 	pub type PtrOfHistogramCostExtractor = core::Ptr<crate::shape::HistogramCostExtractor>;
 	
 	ptr_extern! { crate::shape::HistogramCostExtractor,
@@ -20472,7 +20925,7 @@ mod shape_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfHistogramCostExtractor, core::Ptr<core::Algorithm>, cv_PtrLcv_HistogramCostExtractorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::shape::HistogramCostExtractor>, core::Ptr<core::Algorithm>, cv_PtrLcv_HistogramCostExtractorG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::shape::HistogramCostExtractor> {
 		#[inline]
@@ -20482,6 +20935,7 @@ mod shape_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::shape::NormHistogramCostExtractor>` instead, removal in Nov 2024"]
 	pub type PtrOfNormHistogramCostExtractor = core::Ptr<crate::shape::NormHistogramCostExtractor>;
 	
 	ptr_extern! { crate::shape::NormHistogramCostExtractor,
@@ -20509,7 +20963,7 @@ mod shape_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfNormHistogramCostExtractor, core::Ptr<core::Algorithm>, cv_PtrLcv_NormHistogramCostExtractorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::shape::NormHistogramCostExtractor>, core::Ptr<core::Algorithm>, cv_PtrLcv_NormHistogramCostExtractorG_to_PtrOfAlgorithm }
 	
 	impl crate::shape::HistogramCostExtractorTraitConst for core::Ptr<crate::shape::NormHistogramCostExtractor> {
 		#[inline] fn as_raw_HistogramCostExtractor(&self) -> *const c_void { self.inner_as_raw() }
@@ -20519,7 +20973,7 @@ mod shape_types {
 		#[inline] fn as_raw_mut_HistogramCostExtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfNormHistogramCostExtractor, core::Ptr<crate::shape::HistogramCostExtractor>, cv_PtrLcv_NormHistogramCostExtractorG_to_PtrOfHistogramCostExtractor }
+	ptr_cast_base! { core::Ptr<crate::shape::NormHistogramCostExtractor>, core::Ptr<crate::shape::HistogramCostExtractor>, cv_PtrLcv_NormHistogramCostExtractorG_to_PtrOfHistogramCostExtractor }
 	
 	impl std::fmt::Debug for core::Ptr<crate::shape::NormHistogramCostExtractor> {
 		#[inline]
@@ -20529,6 +20983,7 @@ mod shape_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::shape::ShapeContextDistanceExtractor>` instead, removal in Nov 2024"]
 	pub type PtrOfShapeContextDistanceExtractor = core::Ptr<crate::shape::ShapeContextDistanceExtractor>;
 	
 	ptr_extern! { crate::shape::ShapeContextDistanceExtractor,
@@ -20556,7 +21011,7 @@ mod shape_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfShapeContextDistanceExtractor, core::Ptr<core::Algorithm>, cv_PtrLcv_ShapeContextDistanceExtractorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::shape::ShapeContextDistanceExtractor>, core::Ptr<core::Algorithm>, cv_PtrLcv_ShapeContextDistanceExtractorG_to_PtrOfAlgorithm }
 	
 	impl crate::shape::ShapeDistanceExtractorTraitConst for core::Ptr<crate::shape::ShapeContextDistanceExtractor> {
 		#[inline] fn as_raw_ShapeDistanceExtractor(&self) -> *const c_void { self.inner_as_raw() }
@@ -20566,7 +21021,7 @@ mod shape_types {
 		#[inline] fn as_raw_mut_ShapeDistanceExtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfShapeContextDistanceExtractor, core::Ptr<crate::shape::ShapeDistanceExtractor>, cv_PtrLcv_ShapeContextDistanceExtractorG_to_PtrOfShapeDistanceExtractor }
+	ptr_cast_base! { core::Ptr<crate::shape::ShapeContextDistanceExtractor>, core::Ptr<crate::shape::ShapeDistanceExtractor>, cv_PtrLcv_ShapeContextDistanceExtractorG_to_PtrOfShapeDistanceExtractor }
 	
 	impl std::fmt::Debug for core::Ptr<crate::shape::ShapeContextDistanceExtractor> {
 		#[inline]
@@ -20576,6 +21031,7 @@ mod shape_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::shape::ShapeDistanceExtractor>` instead, removal in Nov 2024"]
 	pub type PtrOfShapeDistanceExtractor = core::Ptr<crate::shape::ShapeDistanceExtractor>;
 	
 	ptr_extern! { crate::shape::ShapeDistanceExtractor,
@@ -20603,7 +21059,7 @@ mod shape_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfShapeDistanceExtractor, core::Ptr<core::Algorithm>, cv_PtrLcv_ShapeDistanceExtractorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::shape::ShapeDistanceExtractor>, core::Ptr<core::Algorithm>, cv_PtrLcv_ShapeDistanceExtractorG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::shape::ShapeDistanceExtractor> {
 		#[inline]
@@ -20613,6 +21069,7 @@ mod shape_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::shape::ShapeTransformer>` instead, removal in Nov 2024"]
 	pub type PtrOfShapeTransformer = core::Ptr<crate::shape::ShapeTransformer>;
 	
 	ptr_extern! { crate::shape::ShapeTransformer,
@@ -20640,7 +21097,7 @@ mod shape_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfShapeTransformer, core::Ptr<core::Algorithm>, cv_PtrLcv_ShapeTransformerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::shape::ShapeTransformer>, core::Ptr<core::Algorithm>, cv_PtrLcv_ShapeTransformerG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::shape::ShapeTransformer> {
 		#[inline]
@@ -20650,6 +21107,7 @@ mod shape_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::shape::ThinPlateSplineShapeTransformer>` instead, removal in Nov 2024"]
 	pub type PtrOfThinPlateSplineShapeTransformer = core::Ptr<crate::shape::ThinPlateSplineShapeTransformer>;
 	
 	ptr_extern! { crate::shape::ThinPlateSplineShapeTransformer,
@@ -20677,7 +21135,7 @@ mod shape_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfThinPlateSplineShapeTransformer, core::Ptr<core::Algorithm>, cv_PtrLcv_ThinPlateSplineShapeTransformerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::shape::ThinPlateSplineShapeTransformer>, core::Ptr<core::Algorithm>, cv_PtrLcv_ThinPlateSplineShapeTransformerG_to_PtrOfAlgorithm }
 	
 	impl crate::shape::ShapeTransformerTraitConst for core::Ptr<crate::shape::ThinPlateSplineShapeTransformer> {
 		#[inline] fn as_raw_ShapeTransformer(&self) -> *const c_void { self.inner_as_raw() }
@@ -20687,7 +21145,7 @@ mod shape_types {
 		#[inline] fn as_raw_mut_ShapeTransformer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfThinPlateSplineShapeTransformer, core::Ptr<crate::shape::ShapeTransformer>, cv_PtrLcv_ThinPlateSplineShapeTransformerG_to_PtrOfShapeTransformer }
+	ptr_cast_base! { core::Ptr<crate::shape::ThinPlateSplineShapeTransformer>, core::Ptr<crate::shape::ShapeTransformer>, cv_PtrLcv_ThinPlateSplineShapeTransformerG_to_PtrOfShapeTransformer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::shape::ThinPlateSplineShapeTransformer> {
 		#[inline]
@@ -20705,6 +21163,7 @@ pub use shape_types::*;
 mod stereo_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stereo::QuasiDenseStereo>` instead, removal in Nov 2024"]
 	pub type PtrOfQuasiDenseStereo = core::Ptr<crate::stereo::QuasiDenseStereo>;
 	
 	ptr_extern! { crate::stereo::QuasiDenseStereo,
@@ -20733,6 +21192,7 @@ mod stereo_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::stereo::MatchQuasiDense>` instead, removal in Nov 2024"]
 	pub type VectorOfMatchQuasiDense = core::Vector<crate::stereo::MatchQuasiDense>;
 	
 	impl core::Vector<crate::stereo::MatchQuasiDense> {
@@ -20764,6 +21224,7 @@ pub use stereo_types::*;
 mod stitching_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::AffineWarper>` instead, removal in Nov 2024"]
 	pub type PtrOfAffineWarper = core::Ptr<crate::stitching::AffineWarper>;
 	
 	ptr_extern! { crate::stitching::AffineWarper,
@@ -20792,7 +21253,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAffineWarper, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_AffineWarperG_to_PtrOfWarperCreator }
+	ptr_cast_base! { core::Ptr<crate::stitching::AffineWarper>, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_AffineWarperG_to_PtrOfWarperCreator }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::AffineWarper> {
 		#[inline]
@@ -20802,6 +21263,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::CompressedRectilinearPortraitWarper>` instead, removal in Nov 2024"]
 	pub type PtrOfCompressedRectilinearPortraitWarper = core::Ptr<crate::stitching::CompressedRectilinearPortraitWarper>;
 	
 	ptr_extern! { crate::stitching::CompressedRectilinearPortraitWarper,
@@ -20830,7 +21292,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCompressedRectilinearPortraitWarper, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_CompressedRectilinearPortraitWarperG_to_PtrOfWarperCreator }
+	ptr_cast_base! { core::Ptr<crate::stitching::CompressedRectilinearPortraitWarper>, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_CompressedRectilinearPortraitWarperG_to_PtrOfWarperCreator }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::CompressedRectilinearPortraitWarper> {
 		#[inline]
@@ -20840,6 +21302,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::CompressedRectilinearWarper>` instead, removal in Nov 2024"]
 	pub type PtrOfCompressedRectilinearWarper = core::Ptr<crate::stitching::CompressedRectilinearWarper>;
 	
 	ptr_extern! { crate::stitching::CompressedRectilinearWarper,
@@ -20868,7 +21331,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCompressedRectilinearWarper, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_CompressedRectilinearWarperG_to_PtrOfWarperCreator }
+	ptr_cast_base! { core::Ptr<crate::stitching::CompressedRectilinearWarper>, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_CompressedRectilinearWarperG_to_PtrOfWarperCreator }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::CompressedRectilinearWarper> {
 		#[inline]
@@ -20878,6 +21341,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::CylindricalWarper>` instead, removal in Nov 2024"]
 	pub type PtrOfCylindricalWarper = core::Ptr<crate::stitching::CylindricalWarper>;
 	
 	ptr_extern! { crate::stitching::CylindricalWarper,
@@ -20906,7 +21370,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCylindricalWarper, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_CylindricalWarperG_to_PtrOfWarperCreator }
+	ptr_cast_base! { core::Ptr<crate::stitching::CylindricalWarper>, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_CylindricalWarperG_to_PtrOfWarperCreator }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::CylindricalWarper> {
 		#[inline]
@@ -20916,6 +21380,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::CylindricalWarperGpu>` instead, removal in Nov 2024"]
 	pub type PtrOfCylindricalWarperGpu = core::Ptr<crate::stitching::CylindricalWarperGpu>;
 	
 	ptr_extern! { crate::stitching::CylindricalWarperGpu,
@@ -20944,7 +21409,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfCylindricalWarperGpu, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_CylindricalWarperGpuG_to_PtrOfWarperCreator }
+	ptr_cast_base! { core::Ptr<crate::stitching::CylindricalWarperGpu>, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_CylindricalWarperGpuG_to_PtrOfWarperCreator }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::CylindricalWarperGpu> {
 		#[inline]
@@ -20954,6 +21419,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_AffineBasedEstimator>` instead, removal in Nov 2024"]
 	pub type PtrOfDetail_AffineBasedEstimator = core::Ptr<crate::stitching::Detail_AffineBasedEstimator>;
 	
 	ptr_extern! { crate::stitching::Detail_AffineBasedEstimator,
@@ -20982,7 +21448,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_Estimator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_AffineBasedEstimator, core::Ptr<crate::stitching::Detail_Estimator>, cv_PtrLcv_detail_AffineBasedEstimatorG_to_PtrOfDetail_Estimator }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_AffineBasedEstimator>, core::Ptr<crate::stitching::Detail_Estimator>, cv_PtrLcv_detail_AffineBasedEstimatorG_to_PtrOfDetail_Estimator }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_AffineBasedEstimator> {
 		#[inline]
@@ -20992,6 +21458,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_AffineBestOf2NearestMatcher>` instead, removal in Nov 2024"]
 	pub type PtrOfDetail_AffineBestOf2NearestMatcher = core::Ptr<crate::stitching::Detail_AffineBestOf2NearestMatcher>;
 	
 	ptr_extern! { crate::stitching::Detail_AffineBestOf2NearestMatcher,
@@ -21020,7 +21487,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_BestOf2NearestMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_AffineBestOf2NearestMatcher, core::Ptr<crate::stitching::Detail_BestOf2NearestMatcher>, cv_PtrLcv_detail_AffineBestOf2NearestMatcherG_to_PtrOfDetail_BestOf2NearestMatcher }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_AffineBestOf2NearestMatcher>, core::Ptr<crate::stitching::Detail_BestOf2NearestMatcher>, cv_PtrLcv_detail_AffineBestOf2NearestMatcherG_to_PtrOfDetail_BestOf2NearestMatcher }
 	
 	impl crate::stitching::Detail_FeaturesMatcherTraitConst for core::Ptr<crate::stitching::Detail_AffineBestOf2NearestMatcher> {
 		#[inline] fn as_raw_Detail_FeaturesMatcher(&self) -> *const c_void { self.inner_as_raw() }
@@ -21030,7 +21497,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_FeaturesMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_AffineBestOf2NearestMatcher, core::Ptr<crate::stitching::Detail_FeaturesMatcher>, cv_PtrLcv_detail_AffineBestOf2NearestMatcherG_to_PtrOfDetail_FeaturesMatcher }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_AffineBestOf2NearestMatcher>, core::Ptr<crate::stitching::Detail_FeaturesMatcher>, cv_PtrLcv_detail_AffineBestOf2NearestMatcherG_to_PtrOfDetail_FeaturesMatcher }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_AffineBestOf2NearestMatcher> {
 		#[inline]
@@ -21040,6 +21507,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_BestOf2NearestMatcher>` instead, removal in Nov 2024"]
 	pub type PtrOfDetail_BestOf2NearestMatcher = core::Ptr<crate::stitching::Detail_BestOf2NearestMatcher>;
 	
 	ptr_extern! { crate::stitching::Detail_BestOf2NearestMatcher,
@@ -21068,7 +21536,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_FeaturesMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_BestOf2NearestMatcher, core::Ptr<crate::stitching::Detail_FeaturesMatcher>, cv_PtrLcv_detail_BestOf2NearestMatcherG_to_PtrOfDetail_FeaturesMatcher }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_BestOf2NearestMatcher>, core::Ptr<crate::stitching::Detail_FeaturesMatcher>, cv_PtrLcv_detail_BestOf2NearestMatcherG_to_PtrOfDetail_FeaturesMatcher }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_BestOf2NearestMatcher> {
 		#[inline]
@@ -21078,6 +21546,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_BestOf2NearestRangeMatcher>` instead, removal in Nov 2024"]
 	pub type PtrOfDetail_BestOf2NearestRangeMatcher = core::Ptr<crate::stitching::Detail_BestOf2NearestRangeMatcher>;
 	
 	ptr_extern! { crate::stitching::Detail_BestOf2NearestRangeMatcher,
@@ -21106,7 +21575,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_BestOf2NearestMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_BestOf2NearestRangeMatcher, core::Ptr<crate::stitching::Detail_BestOf2NearestMatcher>, cv_PtrLcv_detail_BestOf2NearestRangeMatcherG_to_PtrOfDetail_BestOf2NearestMatcher }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_BestOf2NearestRangeMatcher>, core::Ptr<crate::stitching::Detail_BestOf2NearestMatcher>, cv_PtrLcv_detail_BestOf2NearestRangeMatcherG_to_PtrOfDetail_BestOf2NearestMatcher }
 	
 	impl crate::stitching::Detail_FeaturesMatcherTraitConst for core::Ptr<crate::stitching::Detail_BestOf2NearestRangeMatcher> {
 		#[inline] fn as_raw_Detail_FeaturesMatcher(&self) -> *const c_void { self.inner_as_raw() }
@@ -21116,7 +21585,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_FeaturesMatcher(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_BestOf2NearestRangeMatcher, core::Ptr<crate::stitching::Detail_FeaturesMatcher>, cv_PtrLcv_detail_BestOf2NearestRangeMatcherG_to_PtrOfDetail_FeaturesMatcher }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_BestOf2NearestRangeMatcher>, core::Ptr<crate::stitching::Detail_FeaturesMatcher>, cv_PtrLcv_detail_BestOf2NearestRangeMatcherG_to_PtrOfDetail_FeaturesMatcher }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_BestOf2NearestRangeMatcher> {
 		#[inline]
@@ -21126,6 +21595,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_Blender>` instead, removal in Nov 2024"]
 	pub type PtrOfDetail_Blender = core::Ptr<crate::stitching::Detail_Blender>;
 	
 	ptr_extern! { crate::stitching::Detail_Blender,
@@ -21154,6 +21624,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_BlocksChannelsCompensator>` instead, removal in Nov 2024"]
 	pub type PtrOfDetail_BlocksChannelsCompensator = core::Ptr<crate::stitching::Detail_BlocksChannelsCompensator>;
 	
 	ptr_extern! { crate::stitching::Detail_BlocksChannelsCompensator,
@@ -21182,7 +21653,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_BlocksCompensator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_BlocksChannelsCompensator, core::Ptr<crate::stitching::Detail_BlocksCompensator>, cv_PtrLcv_detail_BlocksChannelsCompensatorG_to_PtrOfDetail_BlocksCompensator }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_BlocksChannelsCompensator>, core::Ptr<crate::stitching::Detail_BlocksCompensator>, cv_PtrLcv_detail_BlocksChannelsCompensatorG_to_PtrOfDetail_BlocksCompensator }
 	
 	impl crate::stitching::Detail_ExposureCompensatorTraitConst for core::Ptr<crate::stitching::Detail_BlocksChannelsCompensator> {
 		#[inline] fn as_raw_Detail_ExposureCompensator(&self) -> *const c_void { self.inner_as_raw() }
@@ -21192,7 +21663,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_ExposureCompensator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_BlocksChannelsCompensator, core::Ptr<crate::stitching::Detail_ExposureCompensator>, cv_PtrLcv_detail_BlocksChannelsCompensatorG_to_PtrOfDetail_ExposureCompensator }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_BlocksChannelsCompensator>, core::Ptr<crate::stitching::Detail_ExposureCompensator>, cv_PtrLcv_detail_BlocksChannelsCompensatorG_to_PtrOfDetail_ExposureCompensator }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_BlocksChannelsCompensator> {
 		#[inline]
@@ -21202,6 +21673,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_BlocksCompensator>` instead, removal in Nov 2024"]
 	pub type PtrOfDetail_BlocksCompensator = core::Ptr<crate::stitching::Detail_BlocksCompensator>;
 	
 	ptr_extern! { crate::stitching::Detail_BlocksCompensator,
@@ -21229,7 +21701,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_ExposureCompensator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_BlocksCompensator, core::Ptr<crate::stitching::Detail_ExposureCompensator>, cv_PtrLcv_detail_BlocksCompensatorG_to_PtrOfDetail_ExposureCompensator }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_BlocksCompensator>, core::Ptr<crate::stitching::Detail_ExposureCompensator>, cv_PtrLcv_detail_BlocksCompensatorG_to_PtrOfDetail_ExposureCompensator }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_BlocksCompensator> {
 		#[inline]
@@ -21239,6 +21711,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_BlocksGainCompensator>` instead, removal in Nov 2024"]
 	pub type PtrOfDetail_BlocksGainCompensator = core::Ptr<crate::stitching::Detail_BlocksGainCompensator>;
 	
 	ptr_extern! { crate::stitching::Detail_BlocksGainCompensator,
@@ -21267,7 +21740,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_BlocksCompensator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_BlocksGainCompensator, core::Ptr<crate::stitching::Detail_BlocksCompensator>, cv_PtrLcv_detail_BlocksGainCompensatorG_to_PtrOfDetail_BlocksCompensator }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_BlocksGainCompensator>, core::Ptr<crate::stitching::Detail_BlocksCompensator>, cv_PtrLcv_detail_BlocksGainCompensatorG_to_PtrOfDetail_BlocksCompensator }
 	
 	impl crate::stitching::Detail_ExposureCompensatorTraitConst for core::Ptr<crate::stitching::Detail_BlocksGainCompensator> {
 		#[inline] fn as_raw_Detail_ExposureCompensator(&self) -> *const c_void { self.inner_as_raw() }
@@ -21277,7 +21750,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_ExposureCompensator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_BlocksGainCompensator, core::Ptr<crate::stitching::Detail_ExposureCompensator>, cv_PtrLcv_detail_BlocksGainCompensatorG_to_PtrOfDetail_ExposureCompensator }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_BlocksGainCompensator>, core::Ptr<crate::stitching::Detail_ExposureCompensator>, cv_PtrLcv_detail_BlocksGainCompensatorG_to_PtrOfDetail_ExposureCompensator }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_BlocksGainCompensator> {
 		#[inline]
@@ -21287,6 +21760,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_BundleAdjusterAffine>` instead, removal in Nov 2024"]
 	pub type PtrOfDetail_BundleAdjusterAffine = core::Ptr<crate::stitching::Detail_BundleAdjusterAffine>;
 	
 	ptr_extern! { crate::stitching::Detail_BundleAdjusterAffine,
@@ -21315,7 +21789,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_BundleAdjusterBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_BundleAdjusterAffine, core::Ptr<crate::stitching::Detail_BundleAdjusterBase>, cv_PtrLcv_detail_BundleAdjusterAffineG_to_PtrOfDetail_BundleAdjusterBase }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_BundleAdjusterAffine>, core::Ptr<crate::stitching::Detail_BundleAdjusterBase>, cv_PtrLcv_detail_BundleAdjusterAffineG_to_PtrOfDetail_BundleAdjusterBase }
 	
 	impl crate::stitching::Detail_EstimatorTraitConst for core::Ptr<crate::stitching::Detail_BundleAdjusterAffine> {
 		#[inline] fn as_raw_Detail_Estimator(&self) -> *const c_void { self.inner_as_raw() }
@@ -21325,7 +21799,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_Estimator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_BundleAdjusterAffine, core::Ptr<crate::stitching::Detail_Estimator>, cv_PtrLcv_detail_BundleAdjusterAffineG_to_PtrOfDetail_Estimator }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_BundleAdjusterAffine>, core::Ptr<crate::stitching::Detail_Estimator>, cv_PtrLcv_detail_BundleAdjusterAffineG_to_PtrOfDetail_Estimator }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_BundleAdjusterAffine> {
 		#[inline]
@@ -21335,6 +21809,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_BundleAdjusterAffinePartial>` instead, removal in Nov 2024"]
 	pub type PtrOfDetail_BundleAdjusterAffinePartial = core::Ptr<crate::stitching::Detail_BundleAdjusterAffinePartial>;
 	
 	ptr_extern! { crate::stitching::Detail_BundleAdjusterAffinePartial,
@@ -21363,7 +21838,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_BundleAdjusterBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_BundleAdjusterAffinePartial, core::Ptr<crate::stitching::Detail_BundleAdjusterBase>, cv_PtrLcv_detail_BundleAdjusterAffinePartialG_to_PtrOfDetail_BundleAdjusterBase }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_BundleAdjusterAffinePartial>, core::Ptr<crate::stitching::Detail_BundleAdjusterBase>, cv_PtrLcv_detail_BundleAdjusterAffinePartialG_to_PtrOfDetail_BundleAdjusterBase }
 	
 	impl crate::stitching::Detail_EstimatorTraitConst for core::Ptr<crate::stitching::Detail_BundleAdjusterAffinePartial> {
 		#[inline] fn as_raw_Detail_Estimator(&self) -> *const c_void { self.inner_as_raw() }
@@ -21373,7 +21848,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_Estimator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_BundleAdjusterAffinePartial, core::Ptr<crate::stitching::Detail_Estimator>, cv_PtrLcv_detail_BundleAdjusterAffinePartialG_to_PtrOfDetail_Estimator }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_BundleAdjusterAffinePartial>, core::Ptr<crate::stitching::Detail_Estimator>, cv_PtrLcv_detail_BundleAdjusterAffinePartialG_to_PtrOfDetail_Estimator }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_BundleAdjusterAffinePartial> {
 		#[inline]
@@ -21383,6 +21858,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_BundleAdjusterBase>` instead, removal in Nov 2024"]
 	pub type PtrOfDetail_BundleAdjusterBase = core::Ptr<crate::stitching::Detail_BundleAdjusterBase>;
 	
 	ptr_extern! { crate::stitching::Detail_BundleAdjusterBase,
@@ -21410,7 +21886,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_Estimator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_BundleAdjusterBase, core::Ptr<crate::stitching::Detail_Estimator>, cv_PtrLcv_detail_BundleAdjusterBaseG_to_PtrOfDetail_Estimator }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_BundleAdjusterBase>, core::Ptr<crate::stitching::Detail_Estimator>, cv_PtrLcv_detail_BundleAdjusterBaseG_to_PtrOfDetail_Estimator }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_BundleAdjusterBase> {
 		#[inline]
@@ -21420,6 +21896,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_BundleAdjusterRay>` instead, removal in Nov 2024"]
 	pub type PtrOfDetail_BundleAdjusterRay = core::Ptr<crate::stitching::Detail_BundleAdjusterRay>;
 	
 	ptr_extern! { crate::stitching::Detail_BundleAdjusterRay,
@@ -21448,7 +21925,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_BundleAdjusterBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_BundleAdjusterRay, core::Ptr<crate::stitching::Detail_BundleAdjusterBase>, cv_PtrLcv_detail_BundleAdjusterRayG_to_PtrOfDetail_BundleAdjusterBase }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_BundleAdjusterRay>, core::Ptr<crate::stitching::Detail_BundleAdjusterBase>, cv_PtrLcv_detail_BundleAdjusterRayG_to_PtrOfDetail_BundleAdjusterBase }
 	
 	impl crate::stitching::Detail_EstimatorTraitConst for core::Ptr<crate::stitching::Detail_BundleAdjusterRay> {
 		#[inline] fn as_raw_Detail_Estimator(&self) -> *const c_void { self.inner_as_raw() }
@@ -21458,7 +21935,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_Estimator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_BundleAdjusterRay, core::Ptr<crate::stitching::Detail_Estimator>, cv_PtrLcv_detail_BundleAdjusterRayG_to_PtrOfDetail_Estimator }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_BundleAdjusterRay>, core::Ptr<crate::stitching::Detail_Estimator>, cv_PtrLcv_detail_BundleAdjusterRayG_to_PtrOfDetail_Estimator }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_BundleAdjusterRay> {
 		#[inline]
@@ -21468,6 +21945,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_BundleAdjusterReproj>` instead, removal in Nov 2024"]
 	pub type PtrOfDetail_BundleAdjusterReproj = core::Ptr<crate::stitching::Detail_BundleAdjusterReproj>;
 	
 	ptr_extern! { crate::stitching::Detail_BundleAdjusterReproj,
@@ -21496,7 +21974,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_BundleAdjusterBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_BundleAdjusterReproj, core::Ptr<crate::stitching::Detail_BundleAdjusterBase>, cv_PtrLcv_detail_BundleAdjusterReprojG_to_PtrOfDetail_BundleAdjusterBase }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_BundleAdjusterReproj>, core::Ptr<crate::stitching::Detail_BundleAdjusterBase>, cv_PtrLcv_detail_BundleAdjusterReprojG_to_PtrOfDetail_BundleAdjusterBase }
 	
 	impl crate::stitching::Detail_EstimatorTraitConst for core::Ptr<crate::stitching::Detail_BundleAdjusterReproj> {
 		#[inline] fn as_raw_Detail_Estimator(&self) -> *const c_void { self.inner_as_raw() }
@@ -21506,7 +21984,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_Estimator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_BundleAdjusterReproj, core::Ptr<crate::stitching::Detail_Estimator>, cv_PtrLcv_detail_BundleAdjusterReprojG_to_PtrOfDetail_Estimator }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_BundleAdjusterReproj>, core::Ptr<crate::stitching::Detail_Estimator>, cv_PtrLcv_detail_BundleAdjusterReprojG_to_PtrOfDetail_Estimator }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_BundleAdjusterReproj> {
 		#[inline]
@@ -21516,6 +21994,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_ChannelsCompensator>` instead, removal in Nov 2024"]
 	pub type PtrOfDetail_ChannelsCompensator = core::Ptr<crate::stitching::Detail_ChannelsCompensator>;
 	
 	ptr_extern! { crate::stitching::Detail_ChannelsCompensator,
@@ -21544,7 +22023,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_ExposureCompensator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_ChannelsCompensator, core::Ptr<crate::stitching::Detail_ExposureCompensator>, cv_PtrLcv_detail_ChannelsCompensatorG_to_PtrOfDetail_ExposureCompensator }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_ChannelsCompensator>, core::Ptr<crate::stitching::Detail_ExposureCompensator>, cv_PtrLcv_detail_ChannelsCompensatorG_to_PtrOfDetail_ExposureCompensator }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_ChannelsCompensator> {
 		#[inline]
@@ -21554,6 +22033,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_DpSeamFinder>` instead, removal in Nov 2024"]
 	pub type PtrOfDetail_DpSeamFinder = core::Ptr<crate::stitching::Detail_DpSeamFinder>;
 	
 	ptr_extern! { crate::stitching::Detail_DpSeamFinder,
@@ -21582,7 +22062,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_SeamFinder(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_DpSeamFinder, core::Ptr<crate::stitching::Detail_SeamFinder>, cv_PtrLcv_detail_DpSeamFinderG_to_PtrOfDetail_SeamFinder }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_DpSeamFinder>, core::Ptr<crate::stitching::Detail_SeamFinder>, cv_PtrLcv_detail_DpSeamFinderG_to_PtrOfDetail_SeamFinder }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_DpSeamFinder> {
 		#[inline]
@@ -21592,6 +22072,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_Estimator>` instead, removal in Nov 2024"]
 	pub type PtrOfDetail_Estimator = core::Ptr<crate::stitching::Detail_Estimator>;
 	
 	ptr_extern! { crate::stitching::Detail_Estimator,
@@ -21619,6 +22100,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_ExposureCompensator>` instead, removal in Nov 2024"]
 	pub type PtrOfDetail_ExposureCompensator = core::Ptr<crate::stitching::Detail_ExposureCompensator>;
 	
 	ptr_extern! { crate::stitching::Detail_ExposureCompensator,
@@ -21646,6 +22128,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_FeatherBlender>` instead, removal in Nov 2024"]
 	pub type PtrOfDetail_FeatherBlender = core::Ptr<crate::stitching::Detail_FeatherBlender>;
 	
 	ptr_extern! { crate::stitching::Detail_FeatherBlender,
@@ -21674,7 +22157,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_Blender(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_FeatherBlender, core::Ptr<crate::stitching::Detail_Blender>, cv_PtrLcv_detail_FeatherBlenderG_to_PtrOfDetail_Blender }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_FeatherBlender>, core::Ptr<crate::stitching::Detail_Blender>, cv_PtrLcv_detail_FeatherBlenderG_to_PtrOfDetail_Blender }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_FeatherBlender> {
 		#[inline]
@@ -21684,6 +22167,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_FeaturesMatcher>` instead, removal in Nov 2024"]
 	pub type PtrOfDetail_FeaturesMatcher = core::Ptr<crate::stitching::Detail_FeaturesMatcher>;
 	
 	ptr_extern! { crate::stitching::Detail_FeaturesMatcher,
@@ -21711,6 +22195,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_GainCompensator>` instead, removal in Nov 2024"]
 	pub type PtrOfDetail_GainCompensator = core::Ptr<crate::stitching::Detail_GainCompensator>;
 	
 	ptr_extern! { crate::stitching::Detail_GainCompensator,
@@ -21739,7 +22224,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_ExposureCompensator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_GainCompensator, core::Ptr<crate::stitching::Detail_ExposureCompensator>, cv_PtrLcv_detail_GainCompensatorG_to_PtrOfDetail_ExposureCompensator }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_GainCompensator>, core::Ptr<crate::stitching::Detail_ExposureCompensator>, cv_PtrLcv_detail_GainCompensatorG_to_PtrOfDetail_ExposureCompensator }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_GainCompensator> {
 		#[inline]
@@ -21749,6 +22234,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_GraphCutSeamFinder>` instead, removal in Nov 2024"]
 	pub type PtrOfDetail_GraphCutSeamFinder = core::Ptr<crate::stitching::Detail_GraphCutSeamFinder>;
 	
 	ptr_extern! { crate::stitching::Detail_GraphCutSeamFinder,
@@ -21777,7 +22263,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_GraphCutSeamFinderBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_GraphCutSeamFinder, core::Ptr<crate::stitching::Detail_GraphCutSeamFinderBase>, cv_PtrLcv_detail_GraphCutSeamFinderG_to_PtrOfDetail_GraphCutSeamFinderBase }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_GraphCutSeamFinder>, core::Ptr<crate::stitching::Detail_GraphCutSeamFinderBase>, cv_PtrLcv_detail_GraphCutSeamFinderG_to_PtrOfDetail_GraphCutSeamFinderBase }
 	
 	impl crate::stitching::Detail_SeamFinderTraitConst for core::Ptr<crate::stitching::Detail_GraphCutSeamFinder> {
 		#[inline] fn as_raw_Detail_SeamFinder(&self) -> *const c_void { self.inner_as_raw() }
@@ -21787,7 +22273,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_SeamFinder(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_GraphCutSeamFinder, core::Ptr<crate::stitching::Detail_SeamFinder>, cv_PtrLcv_detail_GraphCutSeamFinderG_to_PtrOfDetail_SeamFinder }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_GraphCutSeamFinder>, core::Ptr<crate::stitching::Detail_SeamFinder>, cv_PtrLcv_detail_GraphCutSeamFinderG_to_PtrOfDetail_SeamFinder }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_GraphCutSeamFinder> {
 		#[inline]
@@ -21797,6 +22283,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_GraphCutSeamFinderBase>` instead, removal in Nov 2024"]
 	pub type PtrOfDetail_GraphCutSeamFinderBase = core::Ptr<crate::stitching::Detail_GraphCutSeamFinderBase>;
 	
 	ptr_extern! { crate::stitching::Detail_GraphCutSeamFinderBase,
@@ -21825,6 +22312,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_GraphCutSeamFinderGpu>` instead, removal in Nov 2024"]
 	pub type PtrOfDetail_GraphCutSeamFinderGpu = core::Ptr<crate::stitching::Detail_GraphCutSeamFinderGpu>;
 	
 	ptr_extern! { crate::stitching::Detail_GraphCutSeamFinderGpu,
@@ -21853,7 +22341,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_GraphCutSeamFinderBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_GraphCutSeamFinderGpu, core::Ptr<crate::stitching::Detail_GraphCutSeamFinderBase>, cv_PtrLcv_detail_GraphCutSeamFinderGpuG_to_PtrOfDetail_GraphCutSeamFinderBase }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_GraphCutSeamFinderGpu>, core::Ptr<crate::stitching::Detail_GraphCutSeamFinderBase>, cv_PtrLcv_detail_GraphCutSeamFinderGpuG_to_PtrOfDetail_GraphCutSeamFinderBase }
 	
 	impl crate::stitching::Detail_PairwiseSeamFinderTraitConst for core::Ptr<crate::stitching::Detail_GraphCutSeamFinderGpu> {
 		#[inline] fn as_raw_Detail_PairwiseSeamFinder(&self) -> *const c_void { self.inner_as_raw() }
@@ -21863,7 +22351,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_PairwiseSeamFinder(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_GraphCutSeamFinderGpu, core::Ptr<crate::stitching::Detail_PairwiseSeamFinder>, cv_PtrLcv_detail_GraphCutSeamFinderGpuG_to_PtrOfDetail_PairwiseSeamFinder }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_GraphCutSeamFinderGpu>, core::Ptr<crate::stitching::Detail_PairwiseSeamFinder>, cv_PtrLcv_detail_GraphCutSeamFinderGpuG_to_PtrOfDetail_PairwiseSeamFinder }
 	
 	impl crate::stitching::Detail_SeamFinderTraitConst for core::Ptr<crate::stitching::Detail_GraphCutSeamFinderGpu> {
 		#[inline] fn as_raw_Detail_SeamFinder(&self) -> *const c_void { self.inner_as_raw() }
@@ -21873,7 +22361,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_SeamFinder(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_GraphCutSeamFinderGpu, core::Ptr<crate::stitching::Detail_SeamFinder>, cv_PtrLcv_detail_GraphCutSeamFinderGpuG_to_PtrOfDetail_SeamFinder }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_GraphCutSeamFinderGpu>, core::Ptr<crate::stitching::Detail_SeamFinder>, cv_PtrLcv_detail_GraphCutSeamFinderGpuG_to_PtrOfDetail_SeamFinder }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_GraphCutSeamFinderGpu> {
 		#[inline]
@@ -21883,6 +22371,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_HomographyBasedEstimator>` instead, removal in Nov 2024"]
 	pub type PtrOfDetail_HomographyBasedEstimator = core::Ptr<crate::stitching::Detail_HomographyBasedEstimator>;
 	
 	ptr_extern! { crate::stitching::Detail_HomographyBasedEstimator,
@@ -21911,7 +22400,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_Estimator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_HomographyBasedEstimator, core::Ptr<crate::stitching::Detail_Estimator>, cv_PtrLcv_detail_HomographyBasedEstimatorG_to_PtrOfDetail_Estimator }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_HomographyBasedEstimator>, core::Ptr<crate::stitching::Detail_Estimator>, cv_PtrLcv_detail_HomographyBasedEstimatorG_to_PtrOfDetail_Estimator }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_HomographyBasedEstimator> {
 		#[inline]
@@ -21921,6 +22410,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_MultiBandBlender>` instead, removal in Nov 2024"]
 	pub type PtrOfDetail_MultiBandBlender = core::Ptr<crate::stitching::Detail_MultiBandBlender>;
 	
 	ptr_extern! { crate::stitching::Detail_MultiBandBlender,
@@ -21949,7 +22439,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_Blender(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_MultiBandBlender, core::Ptr<crate::stitching::Detail_Blender>, cv_PtrLcv_detail_MultiBandBlenderG_to_PtrOfDetail_Blender }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_MultiBandBlender>, core::Ptr<crate::stitching::Detail_Blender>, cv_PtrLcv_detail_MultiBandBlenderG_to_PtrOfDetail_Blender }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_MultiBandBlender> {
 		#[inline]
@@ -21959,6 +22449,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_NoBundleAdjuster>` instead, removal in Nov 2024"]
 	pub type PtrOfDetail_NoBundleAdjuster = core::Ptr<crate::stitching::Detail_NoBundleAdjuster>;
 	
 	ptr_extern! { crate::stitching::Detail_NoBundleAdjuster,
@@ -21987,7 +22478,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_BundleAdjusterBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_NoBundleAdjuster, core::Ptr<crate::stitching::Detail_BundleAdjusterBase>, cv_PtrLcv_detail_NoBundleAdjusterG_to_PtrOfDetail_BundleAdjusterBase }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_NoBundleAdjuster>, core::Ptr<crate::stitching::Detail_BundleAdjusterBase>, cv_PtrLcv_detail_NoBundleAdjusterG_to_PtrOfDetail_BundleAdjusterBase }
 	
 	impl crate::stitching::Detail_EstimatorTraitConst for core::Ptr<crate::stitching::Detail_NoBundleAdjuster> {
 		#[inline] fn as_raw_Detail_Estimator(&self) -> *const c_void { self.inner_as_raw() }
@@ -21997,7 +22488,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_Estimator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_NoBundleAdjuster, core::Ptr<crate::stitching::Detail_Estimator>, cv_PtrLcv_detail_NoBundleAdjusterG_to_PtrOfDetail_Estimator }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_NoBundleAdjuster>, core::Ptr<crate::stitching::Detail_Estimator>, cv_PtrLcv_detail_NoBundleAdjusterG_to_PtrOfDetail_Estimator }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_NoBundleAdjuster> {
 		#[inline]
@@ -22007,6 +22498,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_NoExposureCompensator>` instead, removal in Nov 2024"]
 	pub type PtrOfDetail_NoExposureCompensator = core::Ptr<crate::stitching::Detail_NoExposureCompensator>;
 	
 	ptr_extern! { crate::stitching::Detail_NoExposureCompensator,
@@ -22035,7 +22527,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_ExposureCompensator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_NoExposureCompensator, core::Ptr<crate::stitching::Detail_ExposureCompensator>, cv_PtrLcv_detail_NoExposureCompensatorG_to_PtrOfDetail_ExposureCompensator }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_NoExposureCompensator>, core::Ptr<crate::stitching::Detail_ExposureCompensator>, cv_PtrLcv_detail_NoExposureCompensatorG_to_PtrOfDetail_ExposureCompensator }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_NoExposureCompensator> {
 		#[inline]
@@ -22045,6 +22537,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_NoSeamFinder>` instead, removal in Nov 2024"]
 	pub type PtrOfDetail_NoSeamFinder = core::Ptr<crate::stitching::Detail_NoSeamFinder>;
 	
 	ptr_extern! { crate::stitching::Detail_NoSeamFinder,
@@ -22073,7 +22566,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_SeamFinder(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_NoSeamFinder, core::Ptr<crate::stitching::Detail_SeamFinder>, cv_PtrLcv_detail_NoSeamFinderG_to_PtrOfDetail_SeamFinder }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_NoSeamFinder>, core::Ptr<crate::stitching::Detail_SeamFinder>, cv_PtrLcv_detail_NoSeamFinderG_to_PtrOfDetail_SeamFinder }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_NoSeamFinder> {
 		#[inline]
@@ -22083,6 +22576,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_PairwiseSeamFinder>` instead, removal in Nov 2024"]
 	pub type PtrOfDetail_PairwiseSeamFinder = core::Ptr<crate::stitching::Detail_PairwiseSeamFinder>;
 	
 	ptr_extern! { crate::stitching::Detail_PairwiseSeamFinder,
@@ -22110,7 +22604,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_SeamFinder(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_PairwiseSeamFinder, core::Ptr<crate::stitching::Detail_SeamFinder>, cv_PtrLcv_detail_PairwiseSeamFinderG_to_PtrOfDetail_SeamFinder }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_PairwiseSeamFinder>, core::Ptr<crate::stitching::Detail_SeamFinder>, cv_PtrLcv_detail_PairwiseSeamFinderG_to_PtrOfDetail_SeamFinder }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_PairwiseSeamFinder> {
 		#[inline]
@@ -22120,6 +22614,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_RotationWarper>` instead, removal in Nov 2024"]
 	pub type PtrOfDetail_RotationWarper = core::Ptr<crate::stitching::Detail_RotationWarper>;
 	
 	ptr_extern! { crate::stitching::Detail_RotationWarper,
@@ -22147,6 +22642,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_SeamFinder>` instead, removal in Nov 2024"]
 	pub type PtrOfDetail_SeamFinder = core::Ptr<crate::stitching::Detail_SeamFinder>;
 	
 	ptr_extern! { crate::stitching::Detail_SeamFinder,
@@ -22174,6 +22670,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_VoronoiSeamFinder>` instead, removal in Nov 2024"]
 	pub type PtrOfDetail_VoronoiSeamFinder = core::Ptr<crate::stitching::Detail_VoronoiSeamFinder>;
 	
 	ptr_extern! { crate::stitching::Detail_VoronoiSeamFinder,
@@ -22202,7 +22699,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_PairwiseSeamFinder(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_VoronoiSeamFinder, core::Ptr<crate::stitching::Detail_PairwiseSeamFinder>, cv_PtrLcv_detail_VoronoiSeamFinderG_to_PtrOfDetail_PairwiseSeamFinder }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_VoronoiSeamFinder>, core::Ptr<crate::stitching::Detail_PairwiseSeamFinder>, cv_PtrLcv_detail_VoronoiSeamFinderG_to_PtrOfDetail_PairwiseSeamFinder }
 	
 	impl crate::stitching::Detail_SeamFinderTraitConst for core::Ptr<crate::stitching::Detail_VoronoiSeamFinder> {
 		#[inline] fn as_raw_Detail_SeamFinder(&self) -> *const c_void { self.inner_as_raw() }
@@ -22212,7 +22709,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_Detail_SeamFinder(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDetail_VoronoiSeamFinder, core::Ptr<crate::stitching::Detail_SeamFinder>, cv_PtrLcv_detail_VoronoiSeamFinderG_to_PtrOfDetail_SeamFinder }
+	ptr_cast_base! { core::Ptr<crate::stitching::Detail_VoronoiSeamFinder>, core::Ptr<crate::stitching::Detail_SeamFinder>, cv_PtrLcv_detail_VoronoiSeamFinderG_to_PtrOfDetail_SeamFinder }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::Detail_VoronoiSeamFinder> {
 		#[inline]
@@ -22222,6 +22719,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::FisheyeWarper>` instead, removal in Nov 2024"]
 	pub type PtrOfFisheyeWarper = core::Ptr<crate::stitching::FisheyeWarper>;
 	
 	ptr_extern! { crate::stitching::FisheyeWarper,
@@ -22250,7 +22748,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFisheyeWarper, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_FisheyeWarperG_to_PtrOfWarperCreator }
+	ptr_cast_base! { core::Ptr<crate::stitching::FisheyeWarper>, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_FisheyeWarperG_to_PtrOfWarperCreator }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::FisheyeWarper> {
 		#[inline]
@@ -22260,6 +22758,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::MercatorWarper>` instead, removal in Nov 2024"]
 	pub type PtrOfMercatorWarper = core::Ptr<crate::stitching::MercatorWarper>;
 	
 	ptr_extern! { crate::stitching::MercatorWarper,
@@ -22288,7 +22787,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMercatorWarper, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_MercatorWarperG_to_PtrOfWarperCreator }
+	ptr_cast_base! { core::Ptr<crate::stitching::MercatorWarper>, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_MercatorWarperG_to_PtrOfWarperCreator }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::MercatorWarper> {
 		#[inline]
@@ -22298,6 +22797,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::PaniniPortraitWarper>` instead, removal in Nov 2024"]
 	pub type PtrOfPaniniPortraitWarper = core::Ptr<crate::stitching::PaniniPortraitWarper>;
 	
 	ptr_extern! { crate::stitching::PaniniPortraitWarper,
@@ -22326,7 +22826,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfPaniniPortraitWarper, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_PaniniPortraitWarperG_to_PtrOfWarperCreator }
+	ptr_cast_base! { core::Ptr<crate::stitching::PaniniPortraitWarper>, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_PaniniPortraitWarperG_to_PtrOfWarperCreator }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::PaniniPortraitWarper> {
 		#[inline]
@@ -22336,6 +22836,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::PaniniWarper>` instead, removal in Nov 2024"]
 	pub type PtrOfPaniniWarper = core::Ptr<crate::stitching::PaniniWarper>;
 	
 	ptr_extern! { crate::stitching::PaniniWarper,
@@ -22364,7 +22865,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfPaniniWarper, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_PaniniWarperG_to_PtrOfWarperCreator }
+	ptr_cast_base! { core::Ptr<crate::stitching::PaniniWarper>, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_PaniniWarperG_to_PtrOfWarperCreator }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::PaniniWarper> {
 		#[inline]
@@ -22374,6 +22875,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::PlaneWarper>` instead, removal in Nov 2024"]
 	pub type PtrOfPlaneWarper = core::Ptr<crate::stitching::PlaneWarper>;
 	
 	ptr_extern! { crate::stitching::PlaneWarper,
@@ -22402,7 +22904,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfPlaneWarper, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_PlaneWarperG_to_PtrOfWarperCreator }
+	ptr_cast_base! { core::Ptr<crate::stitching::PlaneWarper>, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_PlaneWarperG_to_PtrOfWarperCreator }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::PlaneWarper> {
 		#[inline]
@@ -22412,6 +22914,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::PlaneWarperGpu>` instead, removal in Nov 2024"]
 	pub type PtrOfPlaneWarperGpu = core::Ptr<crate::stitching::PlaneWarperGpu>;
 	
 	ptr_extern! { crate::stitching::PlaneWarperGpu,
@@ -22440,7 +22943,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfPlaneWarperGpu, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_PlaneWarperGpuG_to_PtrOfWarperCreator }
+	ptr_cast_base! { core::Ptr<crate::stitching::PlaneWarperGpu>, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_PlaneWarperGpuG_to_PtrOfWarperCreator }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::PlaneWarperGpu> {
 		#[inline]
@@ -22450,6 +22953,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::SphericalWarper>` instead, removal in Nov 2024"]
 	pub type PtrOfSphericalWarper = core::Ptr<crate::stitching::SphericalWarper>;
 	
 	ptr_extern! { crate::stitching::SphericalWarper,
@@ -22478,7 +22982,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSphericalWarper, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_SphericalWarperG_to_PtrOfWarperCreator }
+	ptr_cast_base! { core::Ptr<crate::stitching::SphericalWarper>, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_SphericalWarperG_to_PtrOfWarperCreator }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::SphericalWarper> {
 		#[inline]
@@ -22488,6 +22992,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::SphericalWarperGpu>` instead, removal in Nov 2024"]
 	pub type PtrOfSphericalWarperGpu = core::Ptr<crate::stitching::SphericalWarperGpu>;
 	
 	ptr_extern! { crate::stitching::SphericalWarperGpu,
@@ -22516,7 +23021,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSphericalWarperGpu, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_SphericalWarperGpuG_to_PtrOfWarperCreator }
+	ptr_cast_base! { core::Ptr<crate::stitching::SphericalWarperGpu>, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_SphericalWarperGpuG_to_PtrOfWarperCreator }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::SphericalWarperGpu> {
 		#[inline]
@@ -22526,6 +23031,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::StereographicWarper>` instead, removal in Nov 2024"]
 	pub type PtrOfStereographicWarper = core::Ptr<crate::stitching::StereographicWarper>;
 	
 	ptr_extern! { crate::stitching::StereographicWarper,
@@ -22554,7 +23060,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfStereographicWarper, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_StereographicWarperG_to_PtrOfWarperCreator }
+	ptr_cast_base! { core::Ptr<crate::stitching::StereographicWarper>, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_StereographicWarperG_to_PtrOfWarperCreator }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::StereographicWarper> {
 		#[inline]
@@ -22564,6 +23070,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Stitcher>` instead, removal in Nov 2024"]
 	pub type PtrOfStitcher = core::Ptr<crate::stitching::Stitcher>;
 	
 	ptr_extern! { crate::stitching::Stitcher,
@@ -22592,6 +23099,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::TransverseMercatorWarper>` instead, removal in Nov 2024"]
 	pub type PtrOfTransverseMercatorWarper = core::Ptr<crate::stitching::TransverseMercatorWarper>;
 	
 	ptr_extern! { crate::stitching::TransverseMercatorWarper,
@@ -22620,7 +23128,7 @@ mod stitching_types {
 		#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTransverseMercatorWarper, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_TransverseMercatorWarperG_to_PtrOfWarperCreator }
+	ptr_cast_base! { core::Ptr<crate::stitching::TransverseMercatorWarper>, core::Ptr<crate::stitching::WarperCreator>, cv_PtrLcv_TransverseMercatorWarperG_to_PtrOfWarperCreator }
 	
 	impl std::fmt::Debug for core::Ptr<crate::stitching::TransverseMercatorWarper> {
 		#[inline]
@@ -22630,6 +23138,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::WarperCreator>` instead, removal in Nov 2024"]
 	pub type PtrOfWarperCreator = core::Ptr<crate::stitching::WarperCreator>;
 	
 	ptr_extern! { crate::stitching::WarperCreator,
@@ -22657,6 +23166,7 @@ mod stitching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::stitching::Detail_CameraParams>` instead, removal in Nov 2024"]
 	pub type VectorOfDetail_CameraParams = core::Vector<crate::stitching::Detail_CameraParams>;
 	
 	impl core::Vector<crate::stitching::Detail_CameraParams> {
@@ -22678,7 +23188,7 @@ mod stitching_types {
 	
 	vector_boxed_ref! { crate::stitching::Detail_CameraParams }
 	
-	vector_extern! { BoxedRef<'_, crate::stitching::Detail_CameraParams>,
+	vector_extern! { BoxedRef<'t, crate::stitching::Detail_CameraParams>,
 		std_vectorLcv_detail_CameraParamsG_new_const, std_vectorLcv_detail_CameraParamsG_delete,
 		std_vectorLcv_detail_CameraParamsG_len_const, std_vectorLcv_detail_CameraParamsG_isEmpty_const,
 		std_vectorLcv_detail_CameraParamsG_capacity_const, std_vectorLcv_detail_CameraParamsG_shrinkToFit,
@@ -22689,6 +23199,7 @@ mod stitching_types {
 	}
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::stitching::Detail_ImageFeatures>` instead, removal in Nov 2024"]
 	pub type VectorOfDetail_ImageFeatures = core::Vector<crate::stitching::Detail_ImageFeatures>;
 	
 	impl core::Vector<crate::stitching::Detail_ImageFeatures> {
@@ -22710,7 +23221,7 @@ mod stitching_types {
 	
 	vector_boxed_ref! { crate::stitching::Detail_ImageFeatures }
 	
-	vector_extern! { BoxedRef<'_, crate::stitching::Detail_ImageFeatures>,
+	vector_extern! { BoxedRef<'t, crate::stitching::Detail_ImageFeatures>,
 		std_vectorLcv_detail_ImageFeaturesG_new_const, std_vectorLcv_detail_ImageFeaturesG_delete,
 		std_vectorLcv_detail_ImageFeaturesG_len_const, std_vectorLcv_detail_ImageFeaturesG_isEmpty_const,
 		std_vectorLcv_detail_ImageFeaturesG_capacity_const, std_vectorLcv_detail_ImageFeaturesG_shrinkToFit,
@@ -22721,6 +23232,7 @@ mod stitching_types {
 	}
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::stitching::Detail_MatchesInfo>` instead, removal in Nov 2024"]
 	pub type VectorOfDetail_MatchesInfo = core::Vector<crate::stitching::Detail_MatchesInfo>;
 	
 	impl core::Vector<crate::stitching::Detail_MatchesInfo> {
@@ -22742,7 +23254,7 @@ mod stitching_types {
 	
 	vector_boxed_ref! { crate::stitching::Detail_MatchesInfo }
 	
-	vector_extern! { BoxedRef<'_, crate::stitching::Detail_MatchesInfo>,
+	vector_extern! { BoxedRef<'t, crate::stitching::Detail_MatchesInfo>,
 		std_vectorLcv_detail_MatchesInfoG_new_const, std_vectorLcv_detail_MatchesInfoG_delete,
 		std_vectorLcv_detail_MatchesInfoG_len_const, std_vectorLcv_detail_MatchesInfoG_isEmpty_const,
 		std_vectorLcv_detail_MatchesInfoG_capacity_const, std_vectorLcv_detail_MatchesInfoG_shrinkToFit,
@@ -22761,6 +23273,7 @@ pub use stitching_types::*;
 mod structured_light_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::structured_light::GrayCodePattern>` instead, removal in Nov 2024"]
 	pub type PtrOfGrayCodePattern = core::Ptr<crate::structured_light::GrayCodePattern>;
 	
 	ptr_extern! { crate::structured_light::GrayCodePattern,
@@ -22788,7 +23301,7 @@ mod structured_light_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfGrayCodePattern, core::Ptr<core::Algorithm>, cv_PtrLcv_structured_light_GrayCodePatternG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::structured_light::GrayCodePattern>, core::Ptr<core::Algorithm>, cv_PtrLcv_structured_light_GrayCodePatternG_to_PtrOfAlgorithm }
 	
 	impl crate::structured_light::StructuredLightPatternTraitConst for core::Ptr<crate::structured_light::GrayCodePattern> {
 		#[inline] fn as_raw_StructuredLightPattern(&self) -> *const c_void { self.inner_as_raw() }
@@ -22798,7 +23311,7 @@ mod structured_light_types {
 		#[inline] fn as_raw_mut_StructuredLightPattern(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfGrayCodePattern, core::Ptr<crate::structured_light::StructuredLightPattern>, cv_PtrLcv_structured_light_GrayCodePatternG_to_PtrOfStructuredLightPattern }
+	ptr_cast_base! { core::Ptr<crate::structured_light::GrayCodePattern>, core::Ptr<crate::structured_light::StructuredLightPattern>, cv_PtrLcv_structured_light_GrayCodePatternG_to_PtrOfStructuredLightPattern }
 	
 	impl std::fmt::Debug for core::Ptr<crate::structured_light::GrayCodePattern> {
 		#[inline]
@@ -22808,6 +23321,7 @@ mod structured_light_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::structured_light::SinusoidalPattern>` instead, removal in Nov 2024"]
 	pub type PtrOfSinusoidalPattern = core::Ptr<crate::structured_light::SinusoidalPattern>;
 	
 	ptr_extern! { crate::structured_light::SinusoidalPattern,
@@ -22835,7 +23349,7 @@ mod structured_light_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSinusoidalPattern, core::Ptr<core::Algorithm>, cv_PtrLcv_structured_light_SinusoidalPatternG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::structured_light::SinusoidalPattern>, core::Ptr<core::Algorithm>, cv_PtrLcv_structured_light_SinusoidalPatternG_to_PtrOfAlgorithm }
 	
 	impl crate::structured_light::StructuredLightPatternTraitConst for core::Ptr<crate::structured_light::SinusoidalPattern> {
 		#[inline] fn as_raw_StructuredLightPattern(&self) -> *const c_void { self.inner_as_raw() }
@@ -22845,7 +23359,7 @@ mod structured_light_types {
 		#[inline] fn as_raw_mut_StructuredLightPattern(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSinusoidalPattern, core::Ptr<crate::structured_light::StructuredLightPattern>, cv_PtrLcv_structured_light_SinusoidalPatternG_to_PtrOfStructuredLightPattern }
+	ptr_cast_base! { core::Ptr<crate::structured_light::SinusoidalPattern>, core::Ptr<crate::structured_light::StructuredLightPattern>, cv_PtrLcv_structured_light_SinusoidalPatternG_to_PtrOfStructuredLightPattern }
 	
 	impl std::fmt::Debug for core::Ptr<crate::structured_light::SinusoidalPattern> {
 		#[inline]
@@ -22855,6 +23369,7 @@ mod structured_light_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::structured_light::SinusoidalPattern_Params>` instead, removal in Nov 2024"]
 	pub type PtrOfSinusoidalPattern_Params = core::Ptr<crate::structured_light::SinusoidalPattern_Params>;
 	
 	ptr_extern! { crate::structured_light::SinusoidalPattern_Params,
@@ -22892,6 +23407,7 @@ mod structured_light_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::structured_light::StructuredLightPattern>` instead, removal in Nov 2024"]
 	pub type PtrOfStructuredLightPattern = core::Ptr<crate::structured_light::StructuredLightPattern>;
 	
 	ptr_extern! { crate::structured_light::StructuredLightPattern,
@@ -22919,7 +23435,7 @@ mod structured_light_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfStructuredLightPattern, core::Ptr<core::Algorithm>, cv_PtrLcv_structured_light_StructuredLightPatternG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::structured_light::StructuredLightPattern>, core::Ptr<core::Algorithm>, cv_PtrLcv_structured_light_StructuredLightPatternG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::structured_light::StructuredLightPattern> {
 		#[inline]
@@ -22937,6 +23453,7 @@ pub use structured_light_types::*;
 mod superres_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::superres::SuperRes_BroxOpticalFlow>` instead, removal in Nov 2024"]
 	pub type PtrOfSuperRes_BroxOpticalFlow = core::Ptr<crate::superres::SuperRes_BroxOpticalFlow>;
 	
 	ptr_extern! { crate::superres::SuperRes_BroxOpticalFlow,
@@ -22964,7 +23481,7 @@ mod superres_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSuperRes_BroxOpticalFlow, core::Ptr<core::Algorithm>, cv_PtrLcv_superres_BroxOpticalFlowG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::superres::SuperRes_BroxOpticalFlow>, core::Ptr<core::Algorithm>, cv_PtrLcv_superres_BroxOpticalFlowG_to_PtrOfAlgorithm }
 	
 	impl crate::superres::SuperRes_DenseOpticalFlowExtTraitConst for core::Ptr<crate::superres::SuperRes_BroxOpticalFlow> {
 		#[inline] fn as_raw_SuperRes_DenseOpticalFlowExt(&self) -> *const c_void { self.inner_as_raw() }
@@ -22974,7 +23491,7 @@ mod superres_types {
 		#[inline] fn as_raw_mut_SuperRes_DenseOpticalFlowExt(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSuperRes_BroxOpticalFlow, core::Ptr<crate::superres::SuperRes_DenseOpticalFlowExt>, cv_PtrLcv_superres_BroxOpticalFlowG_to_PtrOfSuperRes_DenseOpticalFlowExt }
+	ptr_cast_base! { core::Ptr<crate::superres::SuperRes_BroxOpticalFlow>, core::Ptr<crate::superres::SuperRes_DenseOpticalFlowExt>, cv_PtrLcv_superres_BroxOpticalFlowG_to_PtrOfSuperRes_DenseOpticalFlowExt }
 	
 	impl std::fmt::Debug for core::Ptr<crate::superres::SuperRes_BroxOpticalFlow> {
 		#[inline]
@@ -22984,6 +23501,7 @@ mod superres_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::superres::SuperRes_DenseOpticalFlowExt>` instead, removal in Nov 2024"]
 	pub type PtrOfSuperRes_DenseOpticalFlowExt = core::Ptr<crate::superres::SuperRes_DenseOpticalFlowExt>;
 	
 	ptr_extern! { crate::superres::SuperRes_DenseOpticalFlowExt,
@@ -23011,7 +23529,7 @@ mod superres_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSuperRes_DenseOpticalFlowExt, core::Ptr<core::Algorithm>, cv_PtrLcv_superres_DenseOpticalFlowExtG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::superres::SuperRes_DenseOpticalFlowExt>, core::Ptr<core::Algorithm>, cv_PtrLcv_superres_DenseOpticalFlowExtG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::superres::SuperRes_DenseOpticalFlowExt> {
 		#[inline]
@@ -23021,6 +23539,7 @@ mod superres_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::superres::SuperRes_DualTVL1OpticalFlow>` instead, removal in Nov 2024"]
 	pub type PtrOfSuperRes_DualTVL1OpticalFlow = core::Ptr<crate::superres::SuperRes_DualTVL1OpticalFlow>;
 	
 	ptr_extern! { crate::superres::SuperRes_DualTVL1OpticalFlow,
@@ -23048,7 +23567,7 @@ mod superres_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSuperRes_DualTVL1OpticalFlow, core::Ptr<core::Algorithm>, cv_PtrLcv_superres_DualTVL1OpticalFlowG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::superres::SuperRes_DualTVL1OpticalFlow>, core::Ptr<core::Algorithm>, cv_PtrLcv_superres_DualTVL1OpticalFlowG_to_PtrOfAlgorithm }
 	
 	impl crate::superres::SuperRes_DenseOpticalFlowExtTraitConst for core::Ptr<crate::superres::SuperRes_DualTVL1OpticalFlow> {
 		#[inline] fn as_raw_SuperRes_DenseOpticalFlowExt(&self) -> *const c_void { self.inner_as_raw() }
@@ -23058,7 +23577,7 @@ mod superres_types {
 		#[inline] fn as_raw_mut_SuperRes_DenseOpticalFlowExt(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSuperRes_DualTVL1OpticalFlow, core::Ptr<crate::superres::SuperRes_DenseOpticalFlowExt>, cv_PtrLcv_superres_DualTVL1OpticalFlowG_to_PtrOfSuperRes_DenseOpticalFlowExt }
+	ptr_cast_base! { core::Ptr<crate::superres::SuperRes_DualTVL1OpticalFlow>, core::Ptr<crate::superres::SuperRes_DenseOpticalFlowExt>, cv_PtrLcv_superres_DualTVL1OpticalFlowG_to_PtrOfSuperRes_DenseOpticalFlowExt }
 	
 	impl std::fmt::Debug for core::Ptr<crate::superres::SuperRes_DualTVL1OpticalFlow> {
 		#[inline]
@@ -23068,6 +23587,7 @@ mod superres_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::superres::SuperRes_FarnebackOpticalFlow>` instead, removal in Nov 2024"]
 	pub type PtrOfSuperRes_FarnebackOpticalFlow = core::Ptr<crate::superres::SuperRes_FarnebackOpticalFlow>;
 	
 	ptr_extern! { crate::superres::SuperRes_FarnebackOpticalFlow,
@@ -23095,7 +23615,7 @@ mod superres_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSuperRes_FarnebackOpticalFlow, core::Ptr<core::Algorithm>, cv_PtrLcv_superres_FarnebackOpticalFlowG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::superres::SuperRes_FarnebackOpticalFlow>, core::Ptr<core::Algorithm>, cv_PtrLcv_superres_FarnebackOpticalFlowG_to_PtrOfAlgorithm }
 	
 	impl crate::superres::SuperRes_DenseOpticalFlowExtTraitConst for core::Ptr<crate::superres::SuperRes_FarnebackOpticalFlow> {
 		#[inline] fn as_raw_SuperRes_DenseOpticalFlowExt(&self) -> *const c_void { self.inner_as_raw() }
@@ -23105,7 +23625,7 @@ mod superres_types {
 		#[inline] fn as_raw_mut_SuperRes_DenseOpticalFlowExt(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSuperRes_FarnebackOpticalFlow, core::Ptr<crate::superres::SuperRes_DenseOpticalFlowExt>, cv_PtrLcv_superres_FarnebackOpticalFlowG_to_PtrOfSuperRes_DenseOpticalFlowExt }
+	ptr_cast_base! { core::Ptr<crate::superres::SuperRes_FarnebackOpticalFlow>, core::Ptr<crate::superres::SuperRes_DenseOpticalFlowExt>, cv_PtrLcv_superres_FarnebackOpticalFlowG_to_PtrOfSuperRes_DenseOpticalFlowExt }
 	
 	impl std::fmt::Debug for core::Ptr<crate::superres::SuperRes_FarnebackOpticalFlow> {
 		#[inline]
@@ -23115,6 +23635,7 @@ mod superres_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::superres::SuperRes_FrameSource>` instead, removal in Nov 2024"]
 	pub type PtrOfSuperRes_FrameSource = core::Ptr<crate::superres::SuperRes_FrameSource>;
 	
 	ptr_extern! { crate::superres::SuperRes_FrameSource,
@@ -23142,6 +23663,7 @@ mod superres_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::superres::SuperRes_PyrLKOpticalFlow>` instead, removal in Nov 2024"]
 	pub type PtrOfSuperRes_PyrLKOpticalFlow = core::Ptr<crate::superres::SuperRes_PyrLKOpticalFlow>;
 	
 	ptr_extern! { crate::superres::SuperRes_PyrLKOpticalFlow,
@@ -23169,7 +23691,7 @@ mod superres_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSuperRes_PyrLKOpticalFlow, core::Ptr<core::Algorithm>, cv_PtrLcv_superres_PyrLKOpticalFlowG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::superres::SuperRes_PyrLKOpticalFlow>, core::Ptr<core::Algorithm>, cv_PtrLcv_superres_PyrLKOpticalFlowG_to_PtrOfAlgorithm }
 	
 	impl crate::superres::SuperRes_DenseOpticalFlowExtTraitConst for core::Ptr<crate::superres::SuperRes_PyrLKOpticalFlow> {
 		#[inline] fn as_raw_SuperRes_DenseOpticalFlowExt(&self) -> *const c_void { self.inner_as_raw() }
@@ -23179,7 +23701,7 @@ mod superres_types {
 		#[inline] fn as_raw_mut_SuperRes_DenseOpticalFlowExt(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSuperRes_PyrLKOpticalFlow, core::Ptr<crate::superres::SuperRes_DenseOpticalFlowExt>, cv_PtrLcv_superres_PyrLKOpticalFlowG_to_PtrOfSuperRes_DenseOpticalFlowExt }
+	ptr_cast_base! { core::Ptr<crate::superres::SuperRes_PyrLKOpticalFlow>, core::Ptr<crate::superres::SuperRes_DenseOpticalFlowExt>, cv_PtrLcv_superres_PyrLKOpticalFlowG_to_PtrOfSuperRes_DenseOpticalFlowExt }
 	
 	impl std::fmt::Debug for core::Ptr<crate::superres::SuperRes_PyrLKOpticalFlow> {
 		#[inline]
@@ -23189,6 +23711,7 @@ mod superres_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::superres::SuperRes_SuperResolution>` instead, removal in Nov 2024"]
 	pub type PtrOfSuperRes_SuperResolution = core::Ptr<crate::superres::SuperRes_SuperResolution>;
 	
 	ptr_extern! { crate::superres::SuperRes_SuperResolution,
@@ -23216,7 +23739,7 @@ mod superres_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSuperRes_SuperResolution, core::Ptr<core::Algorithm>, cv_PtrLcv_superres_SuperResolutionG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::superres::SuperRes_SuperResolution>, core::Ptr<core::Algorithm>, cv_PtrLcv_superres_SuperResolutionG_to_PtrOfAlgorithm }
 	
 	impl crate::superres::SuperRes_FrameSourceTraitConst for core::Ptr<crate::superres::SuperRes_SuperResolution> {
 		#[inline] fn as_raw_SuperRes_FrameSource(&self) -> *const c_void { self.inner_as_raw() }
@@ -23226,7 +23749,7 @@ mod superres_types {
 		#[inline] fn as_raw_mut_SuperRes_FrameSource(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSuperRes_SuperResolution, core::Ptr<crate::superres::SuperRes_FrameSource>, cv_PtrLcv_superres_SuperResolutionG_to_PtrOfSuperRes_FrameSource }
+	ptr_cast_base! { core::Ptr<crate::superres::SuperRes_SuperResolution>, core::Ptr<crate::superres::SuperRes_FrameSource>, cv_PtrLcv_superres_SuperResolutionG_to_PtrOfSuperRes_FrameSource }
 	
 	impl std::fmt::Debug for core::Ptr<crate::superres::SuperRes_SuperResolution> {
 		#[inline]
@@ -23244,6 +23767,7 @@ pub use superres_types::*;
 mod surface_matching_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::surface_matching::Pose3D>` instead, removal in Nov 2024"]
 	pub type PtrOfPose3D = core::Ptr<crate::surface_matching::Pose3D>;
 	
 	ptr_extern! { crate::surface_matching::Pose3D,
@@ -23280,6 +23804,7 @@ mod surface_matching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::surface_matching::PoseCluster3D>` instead, removal in Nov 2024"]
 	pub type PtrOfPoseCluster3D = core::Ptr<crate::surface_matching::PoseCluster3D>;
 	
 	ptr_extern! { crate::surface_matching::PoseCluster3D,
@@ -23311,6 +23836,7 @@ mod surface_matching_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::surface_matching::Pose3DPtr>` instead, removal in Nov 2024"]
 	pub type VectorOfPose3DPtr = core::Vector<crate::surface_matching::Pose3DPtr>;
 	
 	impl core::Vector<crate::surface_matching::Pose3DPtr> {
@@ -23339,6 +23865,7 @@ pub use surface_matching_types::*;
 mod text_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::text::BaseOCR>` instead, removal in Nov 2024"]
 	pub type PtrOfBaseOCR = core::Ptr<crate::text::BaseOCR>;
 	
 	ptr_extern! { crate::text::BaseOCR,
@@ -23366,6 +23893,7 @@ mod text_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::text::ERFilter>` instead, removal in Nov 2024"]
 	pub type PtrOfERFilter = core::Ptr<crate::text::ERFilter>;
 	
 	ptr_extern! { crate::text::ERFilter,
@@ -23393,7 +23921,7 @@ mod text_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfERFilter, core::Ptr<core::Algorithm>, cv_PtrLcv_text_ERFilterG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::text::ERFilter>, core::Ptr<core::Algorithm>, cv_PtrLcv_text_ERFilterG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::text::ERFilter> {
 		#[inline]
@@ -23403,6 +23931,7 @@ mod text_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::text::ERFilter_Callback>` instead, removal in Nov 2024"]
 	pub type PtrOfERFilter_Callback = core::Ptr<crate::text::ERFilter_Callback>;
 	
 	ptr_extern! { crate::text::ERFilter_Callback,
@@ -23430,6 +23959,7 @@ mod text_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::text::OCRBeamSearchDecoder>` instead, removal in Nov 2024"]
 	pub type PtrOfOCRBeamSearchDecoder = core::Ptr<crate::text::OCRBeamSearchDecoder>;
 	
 	ptr_extern! { crate::text::OCRBeamSearchDecoder,
@@ -23458,7 +23988,7 @@ mod text_types {
 		#[inline] fn as_raw_mut_BaseOCR(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfOCRBeamSearchDecoder, core::Ptr<crate::text::BaseOCR>, cv_PtrLcv_text_OCRBeamSearchDecoderG_to_PtrOfBaseOCR }
+	ptr_cast_base! { core::Ptr<crate::text::OCRBeamSearchDecoder>, core::Ptr<crate::text::BaseOCR>, cv_PtrLcv_text_OCRBeamSearchDecoderG_to_PtrOfBaseOCR }
 	
 	impl std::fmt::Debug for core::Ptr<crate::text::OCRBeamSearchDecoder> {
 		#[inline]
@@ -23468,6 +23998,7 @@ mod text_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::text::OCRBeamSearchDecoder_ClassifierCallback>` instead, removal in Nov 2024"]
 	pub type PtrOfOCRBeamSearchDecoder_ClassifierCallback = core::Ptr<crate::text::OCRBeamSearchDecoder_ClassifierCallback>;
 	
 	ptr_extern! { crate::text::OCRBeamSearchDecoder_ClassifierCallback,
@@ -23496,6 +24027,7 @@ mod text_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::text::OCRHMMDecoder>` instead, removal in Nov 2024"]
 	pub type PtrOfOCRHMMDecoder = core::Ptr<crate::text::OCRHMMDecoder>;
 	
 	ptr_extern! { crate::text::OCRHMMDecoder,
@@ -23524,7 +24056,7 @@ mod text_types {
 		#[inline] fn as_raw_mut_BaseOCR(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfOCRHMMDecoder, core::Ptr<crate::text::BaseOCR>, cv_PtrLcv_text_OCRHMMDecoderG_to_PtrOfBaseOCR }
+	ptr_cast_base! { core::Ptr<crate::text::OCRHMMDecoder>, core::Ptr<crate::text::BaseOCR>, cv_PtrLcv_text_OCRHMMDecoderG_to_PtrOfBaseOCR }
 	
 	impl std::fmt::Debug for core::Ptr<crate::text::OCRHMMDecoder> {
 		#[inline]
@@ -23534,6 +24066,7 @@ mod text_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::text::OCRHMMDecoder_ClassifierCallback>` instead, removal in Nov 2024"]
 	pub type PtrOfOCRHMMDecoder_ClassifierCallback = core::Ptr<crate::text::OCRHMMDecoder_ClassifierCallback>;
 	
 	ptr_extern! { crate::text::OCRHMMDecoder_ClassifierCallback,
@@ -23562,6 +24095,7 @@ mod text_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::text::OCRHolisticWordRecognizer>` instead, removal in Nov 2024"]
 	pub type PtrOfOCRHolisticWordRecognizer = core::Ptr<crate::text::OCRHolisticWordRecognizer>;
 	
 	ptr_extern! { crate::text::OCRHolisticWordRecognizer,
@@ -23589,7 +24123,7 @@ mod text_types {
 		#[inline] fn as_raw_mut_BaseOCR(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfOCRHolisticWordRecognizer, core::Ptr<crate::text::BaseOCR>, cv_PtrLcv_text_OCRHolisticWordRecognizerG_to_PtrOfBaseOCR }
+	ptr_cast_base! { core::Ptr<crate::text::OCRHolisticWordRecognizer>, core::Ptr<crate::text::BaseOCR>, cv_PtrLcv_text_OCRHolisticWordRecognizerG_to_PtrOfBaseOCR }
 	
 	impl std::fmt::Debug for core::Ptr<crate::text::OCRHolisticWordRecognizer> {
 		#[inline]
@@ -23599,6 +24133,7 @@ mod text_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::text::OCRTesseract>` instead, removal in Nov 2024"]
 	pub type PtrOfOCRTesseract = core::Ptr<crate::text::OCRTesseract>;
 	
 	ptr_extern! { crate::text::OCRTesseract,
@@ -23626,7 +24161,7 @@ mod text_types {
 		#[inline] fn as_raw_mut_BaseOCR(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfOCRTesseract, core::Ptr<crate::text::BaseOCR>, cv_PtrLcv_text_OCRTesseractG_to_PtrOfBaseOCR }
+	ptr_cast_base! { core::Ptr<crate::text::OCRTesseract>, core::Ptr<crate::text::BaseOCR>, cv_PtrLcv_text_OCRTesseractG_to_PtrOfBaseOCR }
 	
 	impl std::fmt::Debug for core::Ptr<crate::text::OCRTesseract> {
 		#[inline]
@@ -23636,6 +24171,7 @@ mod text_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::text::TextDetector>` instead, removal in Nov 2024"]
 	pub type PtrOfTextDetector = core::Ptr<crate::text::TextDetector>;
 	
 	ptr_extern! { crate::text::TextDetector,
@@ -23663,6 +24199,7 @@ mod text_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::text::TextDetectorCNN>` instead, removal in Nov 2024"]
 	pub type PtrOfTextDetectorCNN = core::Ptr<crate::text::TextDetectorCNN>;
 	
 	ptr_extern! { crate::text::TextDetectorCNN,
@@ -23690,7 +24227,7 @@ mod text_types {
 		#[inline] fn as_raw_mut_TextDetector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTextDetectorCNN, core::Ptr<crate::text::TextDetector>, cv_PtrLcv_text_TextDetectorCNNG_to_PtrOfTextDetector }
+	ptr_cast_base! { core::Ptr<crate::text::TextDetectorCNN>, core::Ptr<crate::text::TextDetector>, cv_PtrLcv_text_TextDetectorCNNG_to_PtrOfTextDetector }
 	
 	impl std::fmt::Debug for core::Ptr<crate::text::TextDetectorCNN> {
 		#[inline]
@@ -23700,6 +24237,7 @@ mod text_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::text::ERStat>` instead, removal in Nov 2024"]
 	pub type VectorOfERStat = core::Vector<crate::text::ERStat>;
 	
 	impl core::Vector<crate::text::ERStat> {
@@ -23721,7 +24259,7 @@ mod text_types {
 	
 	vector_boxed_ref! { crate::text::ERStat }
 	
-	vector_extern! { BoxedRef<'_, crate::text::ERStat>,
+	vector_extern! { BoxedRef<'t, crate::text::ERStat>,
 		std_vectorLcv_text_ERStatG_new_const, std_vectorLcv_text_ERStatG_delete,
 		std_vectorLcv_text_ERStatG_len_const, std_vectorLcv_text_ERStatG_isEmpty_const,
 		std_vectorLcv_text_ERStatG_capacity_const, std_vectorLcv_text_ERStatG_shrinkToFit,
@@ -23732,6 +24270,7 @@ mod text_types {
 	}
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<crate::text::ERStat>>` instead, removal in Nov 2024"]
 	pub type VectorOfVectorOfERStat = core::Vector<core::Vector<crate::text::ERStat>>;
 	
 	impl core::Vector<core::Vector<crate::text::ERStat>> {
@@ -23760,6 +24299,7 @@ pub use text_types::*;
 mod tracking_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::tracking::TrackerCSRT>` instead, removal in Nov 2024"]
 	pub type PtrOfTrackerCSRT = core::Ptr<crate::tracking::TrackerCSRT>;
 	
 	ptr_extern! { crate::tracking::TrackerCSRT,
@@ -23787,7 +24327,7 @@ mod tracking_types {
 		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTrackerCSRT, core::Ptr<crate::video::Tracker>, cv_PtrLcv_tracking_TrackerCSRTG_to_PtrOfTracker }
+	ptr_cast_base! { core::Ptr<crate::tracking::TrackerCSRT>, core::Ptr<crate::video::Tracker>, cv_PtrLcv_tracking_TrackerCSRTG_to_PtrOfTracker }
 	
 	impl std::fmt::Debug for core::Ptr<crate::tracking::TrackerCSRT> {
 		#[inline]
@@ -23797,6 +24337,7 @@ mod tracking_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::tracking::TrackerKCF>` instead, removal in Nov 2024"]
 	pub type PtrOfTrackerKCF = core::Ptr<crate::tracking::TrackerKCF>;
 	
 	ptr_extern! { crate::tracking::TrackerKCF,
@@ -23824,7 +24365,7 @@ mod tracking_types {
 		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTrackerKCF, core::Ptr<crate::video::Tracker>, cv_PtrLcv_tracking_TrackerKCFG_to_PtrOfTracker }
+	ptr_cast_base! { core::Ptr<crate::tracking::TrackerKCF>, core::Ptr<crate::video::Tracker>, cv_PtrLcv_tracking_TrackerKCFG_to_PtrOfTracker }
 	
 	impl std::fmt::Debug for core::Ptr<crate::tracking::TrackerKCF> {
 		#[inline]
@@ -23842,6 +24383,7 @@ pub use tracking_types::*;
 mod video_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::video::BackgroundSubtractor>` instead, removal in Nov 2024"]
 	pub type PtrOfBackgroundSubtractor = core::Ptr<crate::video::BackgroundSubtractor>;
 	
 	ptr_extern! { crate::video::BackgroundSubtractor,
@@ -23869,7 +24411,7 @@ mod video_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBackgroundSubtractor, core::Ptr<core::Algorithm>, cv_PtrLcv_BackgroundSubtractorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::video::BackgroundSubtractor>, core::Ptr<core::Algorithm>, cv_PtrLcv_BackgroundSubtractorG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::video::BackgroundSubtractor> {
 		#[inline]
@@ -23879,6 +24421,7 @@ mod video_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::video::BackgroundSubtractorKNN>` instead, removal in Nov 2024"]
 	pub type PtrOfBackgroundSubtractorKNN = core::Ptr<crate::video::BackgroundSubtractorKNN>;
 	
 	ptr_extern! { crate::video::BackgroundSubtractorKNN,
@@ -23906,7 +24449,7 @@ mod video_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBackgroundSubtractorKNN, core::Ptr<core::Algorithm>, cv_PtrLcv_BackgroundSubtractorKNNG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::video::BackgroundSubtractorKNN>, core::Ptr<core::Algorithm>, cv_PtrLcv_BackgroundSubtractorKNNG_to_PtrOfAlgorithm }
 	
 	impl crate::video::BackgroundSubtractorTraitConst for core::Ptr<crate::video::BackgroundSubtractorKNN> {
 		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.inner_as_raw() }
@@ -23916,7 +24459,7 @@ mod video_types {
 		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBackgroundSubtractorKNN, core::Ptr<crate::video::BackgroundSubtractor>, cv_PtrLcv_BackgroundSubtractorKNNG_to_PtrOfBackgroundSubtractor }
+	ptr_cast_base! { core::Ptr<crate::video::BackgroundSubtractorKNN>, core::Ptr<crate::video::BackgroundSubtractor>, cv_PtrLcv_BackgroundSubtractorKNNG_to_PtrOfBackgroundSubtractor }
 	
 	impl std::fmt::Debug for core::Ptr<crate::video::BackgroundSubtractorKNN> {
 		#[inline]
@@ -23926,6 +24469,7 @@ mod video_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::video::BackgroundSubtractorMOG2>` instead, removal in Nov 2024"]
 	pub type PtrOfBackgroundSubtractorMOG2 = core::Ptr<crate::video::BackgroundSubtractorMOG2>;
 	
 	ptr_extern! { crate::video::BackgroundSubtractorMOG2,
@@ -23953,7 +24497,7 @@ mod video_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBackgroundSubtractorMOG2, core::Ptr<core::Algorithm>, cv_PtrLcv_BackgroundSubtractorMOG2G_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::video::BackgroundSubtractorMOG2>, core::Ptr<core::Algorithm>, cv_PtrLcv_BackgroundSubtractorMOG2G_to_PtrOfAlgorithm }
 	
 	impl crate::video::BackgroundSubtractorTraitConst for core::Ptr<crate::video::BackgroundSubtractorMOG2> {
 		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.inner_as_raw() }
@@ -23963,7 +24507,7 @@ mod video_types {
 		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBackgroundSubtractorMOG2, core::Ptr<crate::video::BackgroundSubtractor>, cv_PtrLcv_BackgroundSubtractorMOG2G_to_PtrOfBackgroundSubtractor }
+	ptr_cast_base! { core::Ptr<crate::video::BackgroundSubtractorMOG2>, core::Ptr<crate::video::BackgroundSubtractor>, cv_PtrLcv_BackgroundSubtractorMOG2G_to_PtrOfBackgroundSubtractor }
 	
 	impl std::fmt::Debug for core::Ptr<crate::video::BackgroundSubtractorMOG2> {
 		#[inline]
@@ -23973,6 +24517,7 @@ mod video_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::video::DISOpticalFlow>` instead, removal in Nov 2024"]
 	pub type PtrOfDISOpticalFlow = core::Ptr<crate::video::DISOpticalFlow>;
 	
 	ptr_extern! { crate::video::DISOpticalFlow,
@@ -24000,7 +24545,7 @@ mod video_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDISOpticalFlow, core::Ptr<core::Algorithm>, cv_PtrLcv_DISOpticalFlowG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::video::DISOpticalFlow>, core::Ptr<core::Algorithm>, cv_PtrLcv_DISOpticalFlowG_to_PtrOfAlgorithm }
 	
 	impl crate::video::DenseOpticalFlowTraitConst for core::Ptr<crate::video::DISOpticalFlow> {
 		#[inline] fn as_raw_DenseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
@@ -24010,7 +24555,7 @@ mod video_types {
 		#[inline] fn as_raw_mut_DenseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDISOpticalFlow, core::Ptr<crate::video::DenseOpticalFlow>, cv_PtrLcv_DISOpticalFlowG_to_PtrOfDenseOpticalFlow }
+	ptr_cast_base! { core::Ptr<crate::video::DISOpticalFlow>, core::Ptr<crate::video::DenseOpticalFlow>, cv_PtrLcv_DISOpticalFlowG_to_PtrOfDenseOpticalFlow }
 	
 	impl std::fmt::Debug for core::Ptr<crate::video::DISOpticalFlow> {
 		#[inline]
@@ -24020,6 +24565,7 @@ mod video_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::video::DenseOpticalFlow>` instead, removal in Nov 2024"]
 	pub type PtrOfDenseOpticalFlow = core::Ptr<crate::video::DenseOpticalFlow>;
 	
 	ptr_extern! { crate::video::DenseOpticalFlow,
@@ -24047,7 +24593,7 @@ mod video_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDenseOpticalFlow, core::Ptr<core::Algorithm>, cv_PtrLcv_DenseOpticalFlowG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::video::DenseOpticalFlow>, core::Ptr<core::Algorithm>, cv_PtrLcv_DenseOpticalFlowG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::video::DenseOpticalFlow> {
 		#[inline]
@@ -24057,6 +24603,7 @@ mod video_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::video::FarnebackOpticalFlow>` instead, removal in Nov 2024"]
 	pub type PtrOfFarnebackOpticalFlow = core::Ptr<crate::video::FarnebackOpticalFlow>;
 	
 	ptr_extern! { crate::video::FarnebackOpticalFlow,
@@ -24084,7 +24631,7 @@ mod video_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFarnebackOpticalFlow, core::Ptr<core::Algorithm>, cv_PtrLcv_FarnebackOpticalFlowG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::video::FarnebackOpticalFlow>, core::Ptr<core::Algorithm>, cv_PtrLcv_FarnebackOpticalFlowG_to_PtrOfAlgorithm }
 	
 	impl crate::video::DenseOpticalFlowTraitConst for core::Ptr<crate::video::FarnebackOpticalFlow> {
 		#[inline] fn as_raw_DenseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
@@ -24094,7 +24641,7 @@ mod video_types {
 		#[inline] fn as_raw_mut_DenseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFarnebackOpticalFlow, core::Ptr<crate::video::DenseOpticalFlow>, cv_PtrLcv_FarnebackOpticalFlowG_to_PtrOfDenseOpticalFlow }
+	ptr_cast_base! { core::Ptr<crate::video::FarnebackOpticalFlow>, core::Ptr<crate::video::DenseOpticalFlow>, cv_PtrLcv_FarnebackOpticalFlowG_to_PtrOfDenseOpticalFlow }
 	
 	impl std::fmt::Debug for core::Ptr<crate::video::FarnebackOpticalFlow> {
 		#[inline]
@@ -24104,6 +24651,7 @@ mod video_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::video::SparseOpticalFlow>` instead, removal in Nov 2024"]
 	pub type PtrOfSparseOpticalFlow = core::Ptr<crate::video::SparseOpticalFlow>;
 	
 	ptr_extern! { crate::video::SparseOpticalFlow,
@@ -24131,7 +24679,7 @@ mod video_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSparseOpticalFlow, core::Ptr<core::Algorithm>, cv_PtrLcv_SparseOpticalFlowG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::video::SparseOpticalFlow>, core::Ptr<core::Algorithm>, cv_PtrLcv_SparseOpticalFlowG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::video::SparseOpticalFlow> {
 		#[inline]
@@ -24141,6 +24689,7 @@ mod video_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::video::SparsePyrLKOpticalFlow>` instead, removal in Nov 2024"]
 	pub type PtrOfSparsePyrLKOpticalFlow = core::Ptr<crate::video::SparsePyrLKOpticalFlow>;
 	
 	ptr_extern! { crate::video::SparsePyrLKOpticalFlow,
@@ -24168,7 +24717,7 @@ mod video_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSparsePyrLKOpticalFlow, core::Ptr<core::Algorithm>, cv_PtrLcv_SparsePyrLKOpticalFlowG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::video::SparsePyrLKOpticalFlow>, core::Ptr<core::Algorithm>, cv_PtrLcv_SparsePyrLKOpticalFlowG_to_PtrOfAlgorithm }
 	
 	impl crate::video::SparseOpticalFlowTraitConst for core::Ptr<crate::video::SparsePyrLKOpticalFlow> {
 		#[inline] fn as_raw_SparseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
@@ -24178,7 +24727,7 @@ mod video_types {
 		#[inline] fn as_raw_mut_SparseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSparsePyrLKOpticalFlow, core::Ptr<crate::video::SparseOpticalFlow>, cv_PtrLcv_SparsePyrLKOpticalFlowG_to_PtrOfSparseOpticalFlow }
+	ptr_cast_base! { core::Ptr<crate::video::SparsePyrLKOpticalFlow>, core::Ptr<crate::video::SparseOpticalFlow>, cv_PtrLcv_SparsePyrLKOpticalFlowG_to_PtrOfSparseOpticalFlow }
 	
 	impl std::fmt::Debug for core::Ptr<crate::video::SparsePyrLKOpticalFlow> {
 		#[inline]
@@ -24188,6 +24737,7 @@ mod video_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::video::Tracker>` instead, removal in Nov 2024"]
 	pub type PtrOfTracker = core::Ptr<crate::video::Tracker>;
 	
 	ptr_extern! { crate::video::Tracker,
@@ -24215,6 +24765,7 @@ mod video_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::video::TrackerDaSiamRPN>` instead, removal in Nov 2024"]
 	pub type PtrOfTrackerDaSiamRPN = core::Ptr<crate::video::TrackerDaSiamRPN>;
 	
 	ptr_extern! { crate::video::TrackerDaSiamRPN,
@@ -24242,7 +24793,7 @@ mod video_types {
 		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTrackerDaSiamRPN, core::Ptr<crate::video::Tracker>, cv_PtrLcv_TrackerDaSiamRPNG_to_PtrOfTracker }
+	ptr_cast_base! { core::Ptr<crate::video::TrackerDaSiamRPN>, core::Ptr<crate::video::Tracker>, cv_PtrLcv_TrackerDaSiamRPNG_to_PtrOfTracker }
 	
 	impl std::fmt::Debug for core::Ptr<crate::video::TrackerDaSiamRPN> {
 		#[inline]
@@ -24252,6 +24803,7 @@ mod video_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::video::TrackerGOTURN>` instead, removal in Nov 2024"]
 	pub type PtrOfTrackerGOTURN = core::Ptr<crate::video::TrackerGOTURN>;
 	
 	ptr_extern! { crate::video::TrackerGOTURN,
@@ -24279,7 +24831,7 @@ mod video_types {
 		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTrackerGOTURN, core::Ptr<crate::video::Tracker>, cv_PtrLcv_TrackerGOTURNG_to_PtrOfTracker }
+	ptr_cast_base! { core::Ptr<crate::video::TrackerGOTURN>, core::Ptr<crate::video::Tracker>, cv_PtrLcv_TrackerGOTURNG_to_PtrOfTracker }
 	
 	impl std::fmt::Debug for core::Ptr<crate::video::TrackerGOTURN> {
 		#[inline]
@@ -24289,6 +24841,7 @@ mod video_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::video::TrackerMIL>` instead, removal in Nov 2024"]
 	pub type PtrOfTrackerMIL = core::Ptr<crate::video::TrackerMIL>;
 	
 	ptr_extern! { crate::video::TrackerMIL,
@@ -24316,7 +24869,7 @@ mod video_types {
 		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTrackerMIL, core::Ptr<crate::video::Tracker>, cv_PtrLcv_TrackerMILG_to_PtrOfTracker }
+	ptr_cast_base! { core::Ptr<crate::video::TrackerMIL>, core::Ptr<crate::video::Tracker>, cv_PtrLcv_TrackerMILG_to_PtrOfTracker }
 	
 	impl std::fmt::Debug for core::Ptr<crate::video::TrackerMIL> {
 		#[inline]
@@ -24326,6 +24879,7 @@ mod video_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::video::TrackerNano>` instead, removal in Nov 2024"]
 	pub type PtrOfTrackerNano = core::Ptr<crate::video::TrackerNano>;
 	
 	ptr_extern! { crate::video::TrackerNano,
@@ -24353,7 +24907,7 @@ mod video_types {
 		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTrackerNano, core::Ptr<crate::video::Tracker>, cv_PtrLcv_TrackerNanoG_to_PtrOfTracker }
+	ptr_cast_base! { core::Ptr<crate::video::TrackerNano>, core::Ptr<crate::video::Tracker>, cv_PtrLcv_TrackerNanoG_to_PtrOfTracker }
 	
 	impl std::fmt::Debug for core::Ptr<crate::video::TrackerNano> {
 		#[inline]
@@ -24363,6 +24917,7 @@ mod video_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::video::TrackerVit>` instead, removal in Nov 2024"]
 	pub type PtrOfTrackerVit = core::Ptr<crate::video::TrackerVit>;
 	
 	ptr_extern! { crate::video::TrackerVit,
@@ -24390,7 +24945,7 @@ mod video_types {
 		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTrackerVit, core::Ptr<crate::video::Tracker>, cv_PtrLcv_TrackerVitG_to_PtrOfTracker }
+	ptr_cast_base! { core::Ptr<crate::video::TrackerVit>, core::Ptr<crate::video::Tracker>, cv_PtrLcv_TrackerVitG_to_PtrOfTracker }
 	
 	impl std::fmt::Debug for core::Ptr<crate::video::TrackerVit> {
 		#[inline]
@@ -24400,6 +24955,7 @@ mod video_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::video::VariationalRefinement>` instead, removal in Nov 2024"]
 	pub type PtrOfVariationalRefinement = core::Ptr<crate::video::VariationalRefinement>;
 	
 	ptr_extern! { crate::video::VariationalRefinement,
@@ -24427,7 +24983,7 @@ mod video_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfVariationalRefinement, core::Ptr<core::Algorithm>, cv_PtrLcv_VariationalRefinementG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::video::VariationalRefinement>, core::Ptr<core::Algorithm>, cv_PtrLcv_VariationalRefinementG_to_PtrOfAlgorithm }
 	
 	impl crate::video::DenseOpticalFlowTraitConst for core::Ptr<crate::video::VariationalRefinement> {
 		#[inline] fn as_raw_DenseOpticalFlow(&self) -> *const c_void { self.inner_as_raw() }
@@ -24437,7 +24993,7 @@ mod video_types {
 		#[inline] fn as_raw_mut_DenseOpticalFlow(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfVariationalRefinement, core::Ptr<crate::video::DenseOpticalFlow>, cv_PtrLcv_VariationalRefinementG_to_PtrOfDenseOpticalFlow }
+	ptr_cast_base! { core::Ptr<crate::video::VariationalRefinement>, core::Ptr<crate::video::DenseOpticalFlow>, cv_PtrLcv_VariationalRefinementG_to_PtrOfDenseOpticalFlow }
 	
 	impl std::fmt::Debug for core::Ptr<crate::video::VariationalRefinement> {
 		#[inline]
@@ -24455,6 +25011,7 @@ pub use video_types::*;
 mod videoio_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::videoio::VideoCapture>` instead, removal in Nov 2024"]
 	pub type VectorOfVideoCapture = core::Vector<crate::videoio::VideoCapture>;
 	
 	impl core::Vector<crate::videoio::VideoCapture> {
@@ -24476,7 +25033,7 @@ mod videoio_types {
 	
 	vector_boxed_ref! { crate::videoio::VideoCapture }
 	
-	vector_extern! { BoxedRef<'_, crate::videoio::VideoCapture>,
+	vector_extern! { BoxedRef<'t, crate::videoio::VideoCapture>,
 		std_vectorLcv_VideoCaptureG_new_const, std_vectorLcv_VideoCaptureG_delete,
 		std_vectorLcv_VideoCaptureG_len_const, std_vectorLcv_VideoCaptureG_isEmpty_const,
 		std_vectorLcv_VideoCaptureG_capacity_const, std_vectorLcv_VideoCaptureG_shrinkToFit,
@@ -24487,6 +25044,7 @@ mod videoio_types {
 	}
 	
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::videoio::VideoCaptureAPIs>` instead, removal in Nov 2024"]
 	pub type VectorOfVideoCaptureAPIs = core::Vector<crate::videoio::VideoCaptureAPIs>;
 	
 	impl core::Vector<crate::videoio::VideoCaptureAPIs> {
@@ -24518,6 +25076,7 @@ pub use videoio_types::*;
 mod videostab_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::ColorAverageInpainter>` instead, removal in Nov 2024"]
 	pub type PtrOfColorAverageInpainter = core::Ptr<crate::videostab::ColorAverageInpainter>;
 	
 	ptr_extern! { crate::videostab::ColorAverageInpainter,
@@ -24546,7 +25105,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_InpainterBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfColorAverageInpainter, core::Ptr<crate::videostab::InpainterBase>, cv_PtrLcv_videostab_ColorAverageInpainterG_to_PtrOfInpainterBase }
+	ptr_cast_base! { core::Ptr<crate::videostab::ColorAverageInpainter>, core::Ptr<crate::videostab::InpainterBase>, cv_PtrLcv_videostab_ColorAverageInpainterG_to_PtrOfInpainterBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::videostab::ColorAverageInpainter> {
 		#[inline]
@@ -24556,6 +25115,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::ColorInpainter>` instead, removal in Nov 2024"]
 	pub type PtrOfColorInpainter = core::Ptr<crate::videostab::ColorInpainter>;
 	
 	ptr_extern! { crate::videostab::ColorInpainter,
@@ -24584,7 +25144,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_InpainterBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfColorInpainter, core::Ptr<crate::videostab::InpainterBase>, cv_PtrLcv_videostab_ColorInpainterG_to_PtrOfInpainterBase }
+	ptr_cast_base! { core::Ptr<crate::videostab::ColorInpainter>, core::Ptr<crate::videostab::InpainterBase>, cv_PtrLcv_videostab_ColorInpainterG_to_PtrOfInpainterBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::videostab::ColorInpainter> {
 		#[inline]
@@ -24594,6 +25154,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::ConsistentMosaicInpainter>` instead, removal in Nov 2024"]
 	pub type PtrOfConsistentMosaicInpainter = core::Ptr<crate::videostab::ConsistentMosaicInpainter>;
 	
 	ptr_extern! { crate::videostab::ConsistentMosaicInpainter,
@@ -24622,7 +25183,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_InpainterBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfConsistentMosaicInpainter, core::Ptr<crate::videostab::InpainterBase>, cv_PtrLcv_videostab_ConsistentMosaicInpainterG_to_PtrOfInpainterBase }
+	ptr_cast_base! { core::Ptr<crate::videostab::ConsistentMosaicInpainter>, core::Ptr<crate::videostab::InpainterBase>, cv_PtrLcv_videostab_ConsistentMosaicInpainterG_to_PtrOfInpainterBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::videostab::ConsistentMosaicInpainter> {
 		#[inline]
@@ -24632,6 +25193,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::DeblurerBase>` instead, removal in Nov 2024"]
 	pub type PtrOfDeblurerBase = core::Ptr<crate::videostab::DeblurerBase>;
 	
 	ptr_extern! { crate::videostab::DeblurerBase,
@@ -24659,6 +25221,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::DensePyrLkOptFlowEstimatorGpu>` instead, removal in Nov 2024"]
 	pub type PtrOfDensePyrLkOptFlowEstimatorGpu = core::Ptr<crate::videostab::DensePyrLkOptFlowEstimatorGpu>;
 	
 	ptr_extern! { crate::videostab::DensePyrLkOptFlowEstimatorGpu,
@@ -24687,7 +25250,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_IDenseOptFlowEstimator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDensePyrLkOptFlowEstimatorGpu, core::Ptr<crate::videostab::IDenseOptFlowEstimator>, cv_PtrLcv_videostab_DensePyrLkOptFlowEstimatorGpuG_to_PtrOfIDenseOptFlowEstimator }
+	ptr_cast_base! { core::Ptr<crate::videostab::DensePyrLkOptFlowEstimatorGpu>, core::Ptr<crate::videostab::IDenseOptFlowEstimator>, cv_PtrLcv_videostab_DensePyrLkOptFlowEstimatorGpuG_to_PtrOfIDenseOptFlowEstimator }
 	
 	impl crate::videostab::PyrLkOptFlowEstimatorBaseTraitConst for core::Ptr<crate::videostab::DensePyrLkOptFlowEstimatorGpu> {
 		#[inline] fn as_raw_PyrLkOptFlowEstimatorBase(&self) -> *const c_void { self.inner_as_raw() }
@@ -24697,7 +25260,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_PyrLkOptFlowEstimatorBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDensePyrLkOptFlowEstimatorGpu, core::Ptr<crate::videostab::PyrLkOptFlowEstimatorBase>, cv_PtrLcv_videostab_DensePyrLkOptFlowEstimatorGpuG_to_PtrOfPyrLkOptFlowEstimatorBase }
+	ptr_cast_base! { core::Ptr<crate::videostab::DensePyrLkOptFlowEstimatorGpu>, core::Ptr<crate::videostab::PyrLkOptFlowEstimatorBase>, cv_PtrLcv_videostab_DensePyrLkOptFlowEstimatorGpuG_to_PtrOfPyrLkOptFlowEstimatorBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::videostab::DensePyrLkOptFlowEstimatorGpu> {
 		#[inline]
@@ -24707,6 +25270,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::FromFileMotionReader>` instead, removal in Nov 2024"]
 	pub type PtrOfFromFileMotionReader = core::Ptr<crate::videostab::FromFileMotionReader>;
 	
 	ptr_extern! { crate::videostab::FromFileMotionReader,
@@ -24735,7 +25299,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_ImageMotionEstimatorBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFromFileMotionReader, core::Ptr<crate::videostab::ImageMotionEstimatorBase>, cv_PtrLcv_videostab_FromFileMotionReaderG_to_PtrOfImageMotionEstimatorBase }
+	ptr_cast_base! { core::Ptr<crate::videostab::FromFileMotionReader>, core::Ptr<crate::videostab::ImageMotionEstimatorBase>, cv_PtrLcv_videostab_FromFileMotionReaderG_to_PtrOfImageMotionEstimatorBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::videostab::FromFileMotionReader> {
 		#[inline]
@@ -24745,6 +25309,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::GaussianMotionFilter>` instead, removal in Nov 2024"]
 	pub type PtrOfGaussianMotionFilter = core::Ptr<crate::videostab::GaussianMotionFilter>;
 	
 	ptr_extern! { crate::videostab::GaussianMotionFilter,
@@ -24773,7 +25338,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_IMotionStabilizer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfGaussianMotionFilter, core::Ptr<crate::videostab::IMotionStabilizer>, cv_PtrLcv_videostab_GaussianMotionFilterG_to_PtrOfIMotionStabilizer }
+	ptr_cast_base! { core::Ptr<crate::videostab::GaussianMotionFilter>, core::Ptr<crate::videostab::IMotionStabilizer>, cv_PtrLcv_videostab_GaussianMotionFilterG_to_PtrOfIMotionStabilizer }
 	
 	impl crate::videostab::MotionFilterBaseTraitConst for core::Ptr<crate::videostab::GaussianMotionFilter> {
 		#[inline] fn as_raw_MotionFilterBase(&self) -> *const c_void { self.inner_as_raw() }
@@ -24783,7 +25348,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_MotionFilterBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfGaussianMotionFilter, core::Ptr<crate::videostab::MotionFilterBase>, cv_PtrLcv_videostab_GaussianMotionFilterG_to_PtrOfMotionFilterBase }
+	ptr_cast_base! { core::Ptr<crate::videostab::GaussianMotionFilter>, core::Ptr<crate::videostab::MotionFilterBase>, cv_PtrLcv_videostab_GaussianMotionFilterG_to_PtrOfMotionFilterBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::videostab::GaussianMotionFilter> {
 		#[inline]
@@ -24793,6 +25358,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::IDenseOptFlowEstimator>` instead, removal in Nov 2024"]
 	pub type PtrOfIDenseOptFlowEstimator = core::Ptr<crate::videostab::IDenseOptFlowEstimator>;
 	
 	ptr_extern! { crate::videostab::IDenseOptFlowEstimator,
@@ -24820,6 +25386,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::IFrameSource>` instead, removal in Nov 2024"]
 	pub type PtrOfIFrameSource = core::Ptr<crate::videostab::IFrameSource>;
 	
 	ptr_extern! { crate::videostab::IFrameSource,
@@ -24847,6 +25414,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::ILog>` instead, removal in Nov 2024"]
 	pub type PtrOfILog = core::Ptr<crate::videostab::ILog>;
 	
 	ptr_extern! { crate::videostab::ILog,
@@ -24874,6 +25442,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::IMotionStabilizer>` instead, removal in Nov 2024"]
 	pub type PtrOfIMotionStabilizer = core::Ptr<crate::videostab::IMotionStabilizer>;
 	
 	ptr_extern! { crate::videostab::IMotionStabilizer,
@@ -24901,6 +25470,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::IOutlierRejector>` instead, removal in Nov 2024"]
 	pub type PtrOfIOutlierRejector = core::Ptr<crate::videostab::IOutlierRejector>;
 	
 	ptr_extern! { crate::videostab::IOutlierRejector,
@@ -24928,6 +25498,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::ISparseOptFlowEstimator>` instead, removal in Nov 2024"]
 	pub type PtrOfISparseOptFlowEstimator = core::Ptr<crate::videostab::ISparseOptFlowEstimator>;
 	
 	ptr_extern! { crate::videostab::ISparseOptFlowEstimator,
@@ -24955,6 +25526,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::ImageMotionEstimatorBase>` instead, removal in Nov 2024"]
 	pub type PtrOfImageMotionEstimatorBase = core::Ptr<crate::videostab::ImageMotionEstimatorBase>;
 	
 	ptr_extern! { crate::videostab::ImageMotionEstimatorBase,
@@ -24982,6 +25554,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::InpainterBase>` instead, removal in Nov 2024"]
 	pub type PtrOfInpainterBase = core::Ptr<crate::videostab::InpainterBase>;
 	
 	ptr_extern! { crate::videostab::InpainterBase,
@@ -25009,6 +25582,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::InpaintingPipeline>` instead, removal in Nov 2024"]
 	pub type PtrOfInpaintingPipeline = core::Ptr<crate::videostab::InpaintingPipeline>;
 	
 	ptr_extern! { crate::videostab::InpaintingPipeline,
@@ -25037,7 +25611,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_InpainterBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfInpaintingPipeline, core::Ptr<crate::videostab::InpainterBase>, cv_PtrLcv_videostab_InpaintingPipelineG_to_PtrOfInpainterBase }
+	ptr_cast_base! { core::Ptr<crate::videostab::InpaintingPipeline>, core::Ptr<crate::videostab::InpainterBase>, cv_PtrLcv_videostab_InpaintingPipelineG_to_PtrOfInpainterBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::videostab::InpaintingPipeline> {
 		#[inline]
@@ -25047,6 +25621,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::KeypointBasedMotionEstimator>` instead, removal in Nov 2024"]
 	pub type PtrOfKeypointBasedMotionEstimator = core::Ptr<crate::videostab::KeypointBasedMotionEstimator>;
 	
 	ptr_extern! { crate::videostab::KeypointBasedMotionEstimator,
@@ -25075,7 +25650,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_ImageMotionEstimatorBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfKeypointBasedMotionEstimator, core::Ptr<crate::videostab::ImageMotionEstimatorBase>, cv_PtrLcv_videostab_KeypointBasedMotionEstimatorG_to_PtrOfImageMotionEstimatorBase }
+	ptr_cast_base! { core::Ptr<crate::videostab::KeypointBasedMotionEstimator>, core::Ptr<crate::videostab::ImageMotionEstimatorBase>, cv_PtrLcv_videostab_KeypointBasedMotionEstimatorG_to_PtrOfImageMotionEstimatorBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::videostab::KeypointBasedMotionEstimator> {
 		#[inline]
@@ -25085,6 +25660,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::KeypointBasedMotionEstimatorGpu>` instead, removal in Nov 2024"]
 	pub type PtrOfKeypointBasedMotionEstimatorGpu = core::Ptr<crate::videostab::KeypointBasedMotionEstimatorGpu>;
 	
 	ptr_extern! { crate::videostab::KeypointBasedMotionEstimatorGpu,
@@ -25113,7 +25689,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_ImageMotionEstimatorBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfKeypointBasedMotionEstimatorGpu, core::Ptr<crate::videostab::ImageMotionEstimatorBase>, cv_PtrLcv_videostab_KeypointBasedMotionEstimatorGpuG_to_PtrOfImageMotionEstimatorBase }
+	ptr_cast_base! { core::Ptr<crate::videostab::KeypointBasedMotionEstimatorGpu>, core::Ptr<crate::videostab::ImageMotionEstimatorBase>, cv_PtrLcv_videostab_KeypointBasedMotionEstimatorGpuG_to_PtrOfImageMotionEstimatorBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::videostab::KeypointBasedMotionEstimatorGpu> {
 		#[inline]
@@ -25123,6 +25699,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::LogToStdout>` instead, removal in Nov 2024"]
 	pub type PtrOfLogToStdout = core::Ptr<crate::videostab::LogToStdout>;
 	
 	ptr_extern! { crate::videostab::LogToStdout,
@@ -25151,7 +25728,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_ILog(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfLogToStdout, core::Ptr<crate::videostab::ILog>, cv_PtrLcv_videostab_LogToStdoutG_to_PtrOfILog }
+	ptr_cast_base! { core::Ptr<crate::videostab::LogToStdout>, core::Ptr<crate::videostab::ILog>, cv_PtrLcv_videostab_LogToStdoutG_to_PtrOfILog }
 	
 	impl std::fmt::Debug for core::Ptr<crate::videostab::LogToStdout> {
 		#[inline]
@@ -25161,6 +25738,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::LpMotionStabilizer>` instead, removal in Nov 2024"]
 	pub type PtrOfLpMotionStabilizer = core::Ptr<crate::videostab::LpMotionStabilizer>;
 	
 	ptr_extern! { crate::videostab::LpMotionStabilizer,
@@ -25189,7 +25767,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_IMotionStabilizer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfLpMotionStabilizer, core::Ptr<crate::videostab::IMotionStabilizer>, cv_PtrLcv_videostab_LpMotionStabilizerG_to_PtrOfIMotionStabilizer }
+	ptr_cast_base! { core::Ptr<crate::videostab::LpMotionStabilizer>, core::Ptr<crate::videostab::IMotionStabilizer>, cv_PtrLcv_videostab_LpMotionStabilizerG_to_PtrOfIMotionStabilizer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::videostab::LpMotionStabilizer> {
 		#[inline]
@@ -25199,6 +25777,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::MaskFrameSource>` instead, removal in Nov 2024"]
 	pub type PtrOfMaskFrameSource = core::Ptr<crate::videostab::MaskFrameSource>;
 	
 	ptr_extern! { crate::videostab::MaskFrameSource,
@@ -25227,7 +25806,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_IFrameSource(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMaskFrameSource, core::Ptr<crate::videostab::IFrameSource>, cv_PtrLcv_videostab_MaskFrameSourceG_to_PtrOfIFrameSource }
+	ptr_cast_base! { core::Ptr<crate::videostab::MaskFrameSource>, core::Ptr<crate::videostab::IFrameSource>, cv_PtrLcv_videostab_MaskFrameSourceG_to_PtrOfIFrameSource }
 	
 	impl std::fmt::Debug for core::Ptr<crate::videostab::MaskFrameSource> {
 		#[inline]
@@ -25237,6 +25816,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressor>` instead, removal in Nov 2024"]
 	pub type PtrOfMoreAccurateMotionWobbleSuppressor = core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressor>;
 	
 	ptr_extern! { crate::videostab::MoreAccurateMotionWobbleSuppressor,
@@ -25265,7 +25845,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_MoreAccurateMotionWobbleSuppressorBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMoreAccurateMotionWobbleSuppressor, core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressorBase>, cv_PtrLcv_videostab_MoreAccurateMotionWobbleSuppressorG_to_PtrOfMoreAccurateMotionWobbleSuppressorBase }
+	ptr_cast_base! { core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressor>, core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressorBase>, cv_PtrLcv_videostab_MoreAccurateMotionWobbleSuppressorG_to_PtrOfMoreAccurateMotionWobbleSuppressorBase }
 	
 	impl crate::videostab::WobbleSuppressorBaseTraitConst for core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressor> {
 		#[inline] fn as_raw_WobbleSuppressorBase(&self) -> *const c_void { self.inner_as_raw() }
@@ -25275,7 +25855,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_WobbleSuppressorBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMoreAccurateMotionWobbleSuppressor, core::Ptr<crate::videostab::WobbleSuppressorBase>, cv_PtrLcv_videostab_MoreAccurateMotionWobbleSuppressorG_to_PtrOfWobbleSuppressorBase }
+	ptr_cast_base! { core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressor>, core::Ptr<crate::videostab::WobbleSuppressorBase>, cv_PtrLcv_videostab_MoreAccurateMotionWobbleSuppressorG_to_PtrOfWobbleSuppressorBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressor> {
 		#[inline]
@@ -25285,6 +25865,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressorBase>` instead, removal in Nov 2024"]
 	pub type PtrOfMoreAccurateMotionWobbleSuppressorBase = core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressorBase>;
 	
 	ptr_extern! { crate::videostab::MoreAccurateMotionWobbleSuppressorBase,
@@ -25312,7 +25893,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_WobbleSuppressorBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMoreAccurateMotionWobbleSuppressorBase, core::Ptr<crate::videostab::WobbleSuppressorBase>, cv_PtrLcv_videostab_MoreAccurateMotionWobbleSuppressorBaseG_to_PtrOfWobbleSuppressorBase }
+	ptr_cast_base! { core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressorBase>, core::Ptr<crate::videostab::WobbleSuppressorBase>, cv_PtrLcv_videostab_MoreAccurateMotionWobbleSuppressorBaseG_to_PtrOfWobbleSuppressorBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressorBase> {
 		#[inline]
@@ -25322,6 +25903,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressorGpu>` instead, removal in Nov 2024"]
 	pub type PtrOfMoreAccurateMotionWobbleSuppressorGpu = core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressorGpu>;
 	
 	ptr_extern! { crate::videostab::MoreAccurateMotionWobbleSuppressorGpu,
@@ -25350,7 +25932,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_MoreAccurateMotionWobbleSuppressorBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMoreAccurateMotionWobbleSuppressorGpu, core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressorBase>, cv_PtrLcv_videostab_MoreAccurateMotionWobbleSuppressorGpuG_to_PtrOfMoreAccurateMotionWobbleSuppressorBase }
+	ptr_cast_base! { core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressorGpu>, core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressorBase>, cv_PtrLcv_videostab_MoreAccurateMotionWobbleSuppressorGpuG_to_PtrOfMoreAccurateMotionWobbleSuppressorBase }
 	
 	impl crate::videostab::WobbleSuppressorBaseTraitConst for core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressorGpu> {
 		#[inline] fn as_raw_WobbleSuppressorBase(&self) -> *const c_void { self.inner_as_raw() }
@@ -25360,7 +25942,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_WobbleSuppressorBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMoreAccurateMotionWobbleSuppressorGpu, core::Ptr<crate::videostab::WobbleSuppressorBase>, cv_PtrLcv_videostab_MoreAccurateMotionWobbleSuppressorGpuG_to_PtrOfWobbleSuppressorBase }
+	ptr_cast_base! { core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressorGpu>, core::Ptr<crate::videostab::WobbleSuppressorBase>, cv_PtrLcv_videostab_MoreAccurateMotionWobbleSuppressorGpuG_to_PtrOfWobbleSuppressorBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressorGpu> {
 		#[inline]
@@ -25370,6 +25952,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::MotionEstimatorBase>` instead, removal in Nov 2024"]
 	pub type PtrOfMotionEstimatorBase = core::Ptr<crate::videostab::MotionEstimatorBase>;
 	
 	ptr_extern! { crate::videostab::MotionEstimatorBase,
@@ -25397,6 +25980,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::MotionEstimatorL1>` instead, removal in Nov 2024"]
 	pub type PtrOfMotionEstimatorL1 = core::Ptr<crate::videostab::MotionEstimatorL1>;
 	
 	ptr_extern! { crate::videostab::MotionEstimatorL1,
@@ -25425,7 +26009,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_MotionEstimatorBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMotionEstimatorL1, core::Ptr<crate::videostab::MotionEstimatorBase>, cv_PtrLcv_videostab_MotionEstimatorL1G_to_PtrOfMotionEstimatorBase }
+	ptr_cast_base! { core::Ptr<crate::videostab::MotionEstimatorL1>, core::Ptr<crate::videostab::MotionEstimatorBase>, cv_PtrLcv_videostab_MotionEstimatorL1G_to_PtrOfMotionEstimatorBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::videostab::MotionEstimatorL1> {
 		#[inline]
@@ -25435,6 +26019,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::MotionEstimatorRansacL2>` instead, removal in Nov 2024"]
 	pub type PtrOfMotionEstimatorRansacL2 = core::Ptr<crate::videostab::MotionEstimatorRansacL2>;
 	
 	ptr_extern! { crate::videostab::MotionEstimatorRansacL2,
@@ -25463,7 +26048,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_MotionEstimatorBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMotionEstimatorRansacL2, core::Ptr<crate::videostab::MotionEstimatorBase>, cv_PtrLcv_videostab_MotionEstimatorRansacL2G_to_PtrOfMotionEstimatorBase }
+	ptr_cast_base! { core::Ptr<crate::videostab::MotionEstimatorRansacL2>, core::Ptr<crate::videostab::MotionEstimatorBase>, cv_PtrLcv_videostab_MotionEstimatorRansacL2G_to_PtrOfMotionEstimatorBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::videostab::MotionEstimatorRansacL2> {
 		#[inline]
@@ -25473,6 +26058,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::MotionFilterBase>` instead, removal in Nov 2024"]
 	pub type PtrOfMotionFilterBase = core::Ptr<crate::videostab::MotionFilterBase>;
 	
 	ptr_extern! { crate::videostab::MotionFilterBase,
@@ -25500,7 +26086,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_IMotionStabilizer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMotionFilterBase, core::Ptr<crate::videostab::IMotionStabilizer>, cv_PtrLcv_videostab_MotionFilterBaseG_to_PtrOfIMotionStabilizer }
+	ptr_cast_base! { core::Ptr<crate::videostab::MotionFilterBase>, core::Ptr<crate::videostab::IMotionStabilizer>, cv_PtrLcv_videostab_MotionFilterBaseG_to_PtrOfIMotionStabilizer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::videostab::MotionFilterBase> {
 		#[inline]
@@ -25510,6 +26096,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::MotionInpainter>` instead, removal in Nov 2024"]
 	pub type PtrOfMotionInpainter = core::Ptr<crate::videostab::MotionInpainter>;
 	
 	ptr_extern! { crate::videostab::MotionInpainter,
@@ -25538,7 +26125,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_InpainterBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMotionInpainter, core::Ptr<crate::videostab::InpainterBase>, cv_PtrLcv_videostab_MotionInpainterG_to_PtrOfInpainterBase }
+	ptr_cast_base! { core::Ptr<crate::videostab::MotionInpainter>, core::Ptr<crate::videostab::InpainterBase>, cv_PtrLcv_videostab_MotionInpainterG_to_PtrOfInpainterBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::videostab::MotionInpainter> {
 		#[inline]
@@ -25548,6 +26135,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::MotionStabilizationPipeline>` instead, removal in Nov 2024"]
 	pub type PtrOfMotionStabilizationPipeline = core::Ptr<crate::videostab::MotionStabilizationPipeline>;
 	
 	ptr_extern! { crate::videostab::MotionStabilizationPipeline,
@@ -25576,7 +26164,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_IMotionStabilizer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMotionStabilizationPipeline, core::Ptr<crate::videostab::IMotionStabilizer>, cv_PtrLcv_videostab_MotionStabilizationPipelineG_to_PtrOfIMotionStabilizer }
+	ptr_cast_base! { core::Ptr<crate::videostab::MotionStabilizationPipeline>, core::Ptr<crate::videostab::IMotionStabilizer>, cv_PtrLcv_videostab_MotionStabilizationPipelineG_to_PtrOfIMotionStabilizer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::videostab::MotionStabilizationPipeline> {
 		#[inline]
@@ -25586,6 +26174,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::NullDeblurer>` instead, removal in Nov 2024"]
 	pub type PtrOfNullDeblurer = core::Ptr<crate::videostab::NullDeblurer>;
 	
 	ptr_extern! { crate::videostab::NullDeblurer,
@@ -25614,7 +26203,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_DeblurerBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfNullDeblurer, core::Ptr<crate::videostab::DeblurerBase>, cv_PtrLcv_videostab_NullDeblurerG_to_PtrOfDeblurerBase }
+	ptr_cast_base! { core::Ptr<crate::videostab::NullDeblurer>, core::Ptr<crate::videostab::DeblurerBase>, cv_PtrLcv_videostab_NullDeblurerG_to_PtrOfDeblurerBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::videostab::NullDeblurer> {
 		#[inline]
@@ -25624,6 +26213,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::NullFrameSource>` instead, removal in Nov 2024"]
 	pub type PtrOfNullFrameSource = core::Ptr<crate::videostab::NullFrameSource>;
 	
 	ptr_extern! { crate::videostab::NullFrameSource,
@@ -25652,7 +26242,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_IFrameSource(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfNullFrameSource, core::Ptr<crate::videostab::IFrameSource>, cv_PtrLcv_videostab_NullFrameSourceG_to_PtrOfIFrameSource }
+	ptr_cast_base! { core::Ptr<crate::videostab::NullFrameSource>, core::Ptr<crate::videostab::IFrameSource>, cv_PtrLcv_videostab_NullFrameSourceG_to_PtrOfIFrameSource }
 	
 	impl std::fmt::Debug for core::Ptr<crate::videostab::NullFrameSource> {
 		#[inline]
@@ -25662,6 +26252,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::NullInpainter>` instead, removal in Nov 2024"]
 	pub type PtrOfNullInpainter = core::Ptr<crate::videostab::NullInpainter>;
 	
 	ptr_extern! { crate::videostab::NullInpainter,
@@ -25690,7 +26281,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_InpainterBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfNullInpainter, core::Ptr<crate::videostab::InpainterBase>, cv_PtrLcv_videostab_NullInpainterG_to_PtrOfInpainterBase }
+	ptr_cast_base! { core::Ptr<crate::videostab::NullInpainter>, core::Ptr<crate::videostab::InpainterBase>, cv_PtrLcv_videostab_NullInpainterG_to_PtrOfInpainterBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::videostab::NullInpainter> {
 		#[inline]
@@ -25700,6 +26291,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::NullLog>` instead, removal in Nov 2024"]
 	pub type PtrOfNullLog = core::Ptr<crate::videostab::NullLog>;
 	
 	ptr_extern! { crate::videostab::NullLog,
@@ -25728,7 +26320,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_ILog(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfNullLog, core::Ptr<crate::videostab::ILog>, cv_PtrLcv_videostab_NullLogG_to_PtrOfILog }
+	ptr_cast_base! { core::Ptr<crate::videostab::NullLog>, core::Ptr<crate::videostab::ILog>, cv_PtrLcv_videostab_NullLogG_to_PtrOfILog }
 	
 	impl std::fmt::Debug for core::Ptr<crate::videostab::NullLog> {
 		#[inline]
@@ -25738,6 +26330,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::NullOutlierRejector>` instead, removal in Nov 2024"]
 	pub type PtrOfNullOutlierRejector = core::Ptr<crate::videostab::NullOutlierRejector>;
 	
 	ptr_extern! { crate::videostab::NullOutlierRejector,
@@ -25766,7 +26359,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_IOutlierRejector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfNullOutlierRejector, core::Ptr<crate::videostab::IOutlierRejector>, cv_PtrLcv_videostab_NullOutlierRejectorG_to_PtrOfIOutlierRejector }
+	ptr_cast_base! { core::Ptr<crate::videostab::NullOutlierRejector>, core::Ptr<crate::videostab::IOutlierRejector>, cv_PtrLcv_videostab_NullOutlierRejectorG_to_PtrOfIOutlierRejector }
 	
 	impl std::fmt::Debug for core::Ptr<crate::videostab::NullOutlierRejector> {
 		#[inline]
@@ -25776,6 +26369,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::NullWobbleSuppressor>` instead, removal in Nov 2024"]
 	pub type PtrOfNullWobbleSuppressor = core::Ptr<crate::videostab::NullWobbleSuppressor>;
 	
 	ptr_extern! { crate::videostab::NullWobbleSuppressor,
@@ -25804,7 +26398,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_WobbleSuppressorBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfNullWobbleSuppressor, core::Ptr<crate::videostab::WobbleSuppressorBase>, cv_PtrLcv_videostab_NullWobbleSuppressorG_to_PtrOfWobbleSuppressorBase }
+	ptr_cast_base! { core::Ptr<crate::videostab::NullWobbleSuppressor>, core::Ptr<crate::videostab::WobbleSuppressorBase>, cv_PtrLcv_videostab_NullWobbleSuppressorG_to_PtrOfWobbleSuppressorBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::videostab::NullWobbleSuppressor> {
 		#[inline]
@@ -25814,6 +26408,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::OnePassStabilizer>` instead, removal in Nov 2024"]
 	pub type PtrOfOnePassStabilizer = core::Ptr<crate::videostab::OnePassStabilizer>;
 	
 	ptr_extern! { crate::videostab::OnePassStabilizer,
@@ -25842,7 +26437,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_IFrameSource(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfOnePassStabilizer, core::Ptr<crate::videostab::IFrameSource>, cv_PtrLcv_videostab_OnePassStabilizerG_to_PtrOfIFrameSource }
+	ptr_cast_base! { core::Ptr<crate::videostab::OnePassStabilizer>, core::Ptr<crate::videostab::IFrameSource>, cv_PtrLcv_videostab_OnePassStabilizerG_to_PtrOfIFrameSource }
 	
 	impl crate::videostab::StabilizerBaseTraitConst for core::Ptr<crate::videostab::OnePassStabilizer> {
 		#[inline] fn as_raw_StabilizerBase(&self) -> *const c_void { self.inner_as_raw() }
@@ -25852,7 +26447,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_StabilizerBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfOnePassStabilizer, core::Ptr<crate::videostab::StabilizerBase>, cv_PtrLcv_videostab_OnePassStabilizerG_to_PtrOfStabilizerBase }
+	ptr_cast_base! { core::Ptr<crate::videostab::OnePassStabilizer>, core::Ptr<crate::videostab::StabilizerBase>, cv_PtrLcv_videostab_OnePassStabilizerG_to_PtrOfStabilizerBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::videostab::OnePassStabilizer> {
 		#[inline]
@@ -25862,6 +26457,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::PyrLkOptFlowEstimatorBase>` instead, removal in Nov 2024"]
 	pub type PtrOfPyrLkOptFlowEstimatorBase = core::Ptr<crate::videostab::PyrLkOptFlowEstimatorBase>;
 	
 	ptr_extern! { crate::videostab::PyrLkOptFlowEstimatorBase,
@@ -25890,6 +26486,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::SparsePyrLkOptFlowEstimator>` instead, removal in Nov 2024"]
 	pub type PtrOfSparsePyrLkOptFlowEstimator = core::Ptr<crate::videostab::SparsePyrLkOptFlowEstimator>;
 	
 	ptr_extern! { crate::videostab::SparsePyrLkOptFlowEstimator,
@@ -25918,7 +26515,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_ISparseOptFlowEstimator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSparsePyrLkOptFlowEstimator, core::Ptr<crate::videostab::ISparseOptFlowEstimator>, cv_PtrLcv_videostab_SparsePyrLkOptFlowEstimatorG_to_PtrOfISparseOptFlowEstimator }
+	ptr_cast_base! { core::Ptr<crate::videostab::SparsePyrLkOptFlowEstimator>, core::Ptr<crate::videostab::ISparseOptFlowEstimator>, cv_PtrLcv_videostab_SparsePyrLkOptFlowEstimatorG_to_PtrOfISparseOptFlowEstimator }
 	
 	impl crate::videostab::PyrLkOptFlowEstimatorBaseTraitConst for core::Ptr<crate::videostab::SparsePyrLkOptFlowEstimator> {
 		#[inline] fn as_raw_PyrLkOptFlowEstimatorBase(&self) -> *const c_void { self.inner_as_raw() }
@@ -25928,7 +26525,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_PyrLkOptFlowEstimatorBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSparsePyrLkOptFlowEstimator, core::Ptr<crate::videostab::PyrLkOptFlowEstimatorBase>, cv_PtrLcv_videostab_SparsePyrLkOptFlowEstimatorG_to_PtrOfPyrLkOptFlowEstimatorBase }
+	ptr_cast_base! { core::Ptr<crate::videostab::SparsePyrLkOptFlowEstimator>, core::Ptr<crate::videostab::PyrLkOptFlowEstimatorBase>, cv_PtrLcv_videostab_SparsePyrLkOptFlowEstimatorG_to_PtrOfPyrLkOptFlowEstimatorBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::videostab::SparsePyrLkOptFlowEstimator> {
 		#[inline]
@@ -25938,6 +26535,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::SparsePyrLkOptFlowEstimatorGpu>` instead, removal in Nov 2024"]
 	pub type PtrOfSparsePyrLkOptFlowEstimatorGpu = core::Ptr<crate::videostab::SparsePyrLkOptFlowEstimatorGpu>;
 	
 	ptr_extern! { crate::videostab::SparsePyrLkOptFlowEstimatorGpu,
@@ -25966,7 +26564,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_ISparseOptFlowEstimator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSparsePyrLkOptFlowEstimatorGpu, core::Ptr<crate::videostab::ISparseOptFlowEstimator>, cv_PtrLcv_videostab_SparsePyrLkOptFlowEstimatorGpuG_to_PtrOfISparseOptFlowEstimator }
+	ptr_cast_base! { core::Ptr<crate::videostab::SparsePyrLkOptFlowEstimatorGpu>, core::Ptr<crate::videostab::ISparseOptFlowEstimator>, cv_PtrLcv_videostab_SparsePyrLkOptFlowEstimatorGpuG_to_PtrOfISparseOptFlowEstimator }
 	
 	impl crate::videostab::PyrLkOptFlowEstimatorBaseTraitConst for core::Ptr<crate::videostab::SparsePyrLkOptFlowEstimatorGpu> {
 		#[inline] fn as_raw_PyrLkOptFlowEstimatorBase(&self) -> *const c_void { self.inner_as_raw() }
@@ -25976,7 +26574,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_PyrLkOptFlowEstimatorBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSparsePyrLkOptFlowEstimatorGpu, core::Ptr<crate::videostab::PyrLkOptFlowEstimatorBase>, cv_PtrLcv_videostab_SparsePyrLkOptFlowEstimatorGpuG_to_PtrOfPyrLkOptFlowEstimatorBase }
+	ptr_cast_base! { core::Ptr<crate::videostab::SparsePyrLkOptFlowEstimatorGpu>, core::Ptr<crate::videostab::PyrLkOptFlowEstimatorBase>, cv_PtrLcv_videostab_SparsePyrLkOptFlowEstimatorGpuG_to_PtrOfPyrLkOptFlowEstimatorBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::videostab::SparsePyrLkOptFlowEstimatorGpu> {
 		#[inline]
@@ -25986,6 +26584,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::StabilizerBase>` instead, removal in Nov 2024"]
 	pub type PtrOfStabilizerBase = core::Ptr<crate::videostab::StabilizerBase>;
 	
 	ptr_extern! { crate::videostab::StabilizerBase,
@@ -26013,6 +26612,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::ToFileMotionWriter>` instead, removal in Nov 2024"]
 	pub type PtrOfToFileMotionWriter = core::Ptr<crate::videostab::ToFileMotionWriter>;
 	
 	ptr_extern! { crate::videostab::ToFileMotionWriter,
@@ -26041,7 +26641,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_ImageMotionEstimatorBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfToFileMotionWriter, core::Ptr<crate::videostab::ImageMotionEstimatorBase>, cv_PtrLcv_videostab_ToFileMotionWriterG_to_PtrOfImageMotionEstimatorBase }
+	ptr_cast_base! { core::Ptr<crate::videostab::ToFileMotionWriter>, core::Ptr<crate::videostab::ImageMotionEstimatorBase>, cv_PtrLcv_videostab_ToFileMotionWriterG_to_PtrOfImageMotionEstimatorBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::videostab::ToFileMotionWriter> {
 		#[inline]
@@ -26051,6 +26651,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::TranslationBasedLocalOutlierRejector>` instead, removal in Nov 2024"]
 	pub type PtrOfTranslationBasedLocalOutlierRejector = core::Ptr<crate::videostab::TranslationBasedLocalOutlierRejector>;
 	
 	ptr_extern! { crate::videostab::TranslationBasedLocalOutlierRejector,
@@ -26079,7 +26680,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_IOutlierRejector(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTranslationBasedLocalOutlierRejector, core::Ptr<crate::videostab::IOutlierRejector>, cv_PtrLcv_videostab_TranslationBasedLocalOutlierRejectorG_to_PtrOfIOutlierRejector }
+	ptr_cast_base! { core::Ptr<crate::videostab::TranslationBasedLocalOutlierRejector>, core::Ptr<crate::videostab::IOutlierRejector>, cv_PtrLcv_videostab_TranslationBasedLocalOutlierRejectorG_to_PtrOfIOutlierRejector }
 	
 	impl std::fmt::Debug for core::Ptr<crate::videostab::TranslationBasedLocalOutlierRejector> {
 		#[inline]
@@ -26089,6 +26690,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::TwoPassStabilizer>` instead, removal in Nov 2024"]
 	pub type PtrOfTwoPassStabilizer = core::Ptr<crate::videostab::TwoPassStabilizer>;
 	
 	ptr_extern! { crate::videostab::TwoPassStabilizer,
@@ -26117,7 +26719,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_IFrameSource(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTwoPassStabilizer, core::Ptr<crate::videostab::IFrameSource>, cv_PtrLcv_videostab_TwoPassStabilizerG_to_PtrOfIFrameSource }
+	ptr_cast_base! { core::Ptr<crate::videostab::TwoPassStabilizer>, core::Ptr<crate::videostab::IFrameSource>, cv_PtrLcv_videostab_TwoPassStabilizerG_to_PtrOfIFrameSource }
 	
 	impl crate::videostab::StabilizerBaseTraitConst for core::Ptr<crate::videostab::TwoPassStabilizer> {
 		#[inline] fn as_raw_StabilizerBase(&self) -> *const c_void { self.inner_as_raw() }
@@ -26127,7 +26729,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_StabilizerBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTwoPassStabilizer, core::Ptr<crate::videostab::StabilizerBase>, cv_PtrLcv_videostab_TwoPassStabilizerG_to_PtrOfStabilizerBase }
+	ptr_cast_base! { core::Ptr<crate::videostab::TwoPassStabilizer>, core::Ptr<crate::videostab::StabilizerBase>, cv_PtrLcv_videostab_TwoPassStabilizerG_to_PtrOfStabilizerBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::videostab::TwoPassStabilizer> {
 		#[inline]
@@ -26137,6 +26739,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::VideoFileSource>` instead, removal in Nov 2024"]
 	pub type PtrOfVideoFileSource = core::Ptr<crate::videostab::VideoFileSource>;
 	
 	ptr_extern! { crate::videostab::VideoFileSource,
@@ -26165,7 +26768,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_IFrameSource(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfVideoFileSource, core::Ptr<crate::videostab::IFrameSource>, cv_PtrLcv_videostab_VideoFileSourceG_to_PtrOfIFrameSource }
+	ptr_cast_base! { core::Ptr<crate::videostab::VideoFileSource>, core::Ptr<crate::videostab::IFrameSource>, cv_PtrLcv_videostab_VideoFileSourceG_to_PtrOfIFrameSource }
 	
 	impl std::fmt::Debug for core::Ptr<crate::videostab::VideoFileSource> {
 		#[inline]
@@ -26175,6 +26778,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::WeightingDeblurer>` instead, removal in Nov 2024"]
 	pub type PtrOfWeightingDeblurer = core::Ptr<crate::videostab::WeightingDeblurer>;
 	
 	ptr_extern! { crate::videostab::WeightingDeblurer,
@@ -26203,7 +26807,7 @@ mod videostab_types {
 		#[inline] fn as_raw_mut_DeblurerBase(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfWeightingDeblurer, core::Ptr<crate::videostab::DeblurerBase>, cv_PtrLcv_videostab_WeightingDeblurerG_to_PtrOfDeblurerBase }
+	ptr_cast_base! { core::Ptr<crate::videostab::WeightingDeblurer>, core::Ptr<crate::videostab::DeblurerBase>, cv_PtrLcv_videostab_WeightingDeblurerG_to_PtrOfDeblurerBase }
 	
 	impl std::fmt::Debug for core::Ptr<crate::videostab::WeightingDeblurer> {
 		#[inline]
@@ -26213,6 +26817,7 @@ mod videostab_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::WobbleSuppressorBase>` instead, removal in Nov 2024"]
 	pub type PtrOfWobbleSuppressorBase = core::Ptr<crate::videostab::WobbleSuppressorBase>;
 	
 	ptr_extern! { crate::videostab::WobbleSuppressorBase,
@@ -26248,6 +26853,7 @@ pub use videostab_types::*;
 mod xfeatures2d_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::AffineFeature2D>` instead, removal in Nov 2024"]
 	pub type PtrOfAffineFeature2D = core::Ptr<crate::xfeatures2d::AffineFeature2D>;
 	
 	ptr_extern! { crate::xfeatures2d::AffineFeature2D,
@@ -26275,7 +26881,7 @@ mod xfeatures2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAffineFeature2D, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_AffineFeature2DG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::xfeatures2d::AffineFeature2D>, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_AffineFeature2DG_to_PtrOfAlgorithm }
 	
 	impl crate::features2d::Feature2DTraitConst for core::Ptr<crate::xfeatures2d::AffineFeature2D> {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
@@ -26285,7 +26891,7 @@ mod xfeatures2d_types {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAffineFeature2D, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_xfeatures2d_AffineFeature2DG_to_PtrOfFeature2D }
+	ptr_cast_base! { core::Ptr<crate::xfeatures2d::AffineFeature2D>, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_xfeatures2d_AffineFeature2DG_to_PtrOfFeature2D }
 	
 	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::AffineFeature2D> {
 		#[inline]
@@ -26295,6 +26901,7 @@ mod xfeatures2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::BEBLID>` instead, removal in Nov 2024"]
 	pub type PtrOfBEBLID = core::Ptr<crate::xfeatures2d::BEBLID>;
 	
 	ptr_extern! { crate::xfeatures2d::BEBLID,
@@ -26322,7 +26929,7 @@ mod xfeatures2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBEBLID, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_BEBLIDG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::xfeatures2d::BEBLID>, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_BEBLIDG_to_PtrOfAlgorithm }
 	
 	impl crate::features2d::Feature2DTraitConst for core::Ptr<crate::xfeatures2d::BEBLID> {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
@@ -26332,7 +26939,7 @@ mod xfeatures2d_types {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBEBLID, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_xfeatures2d_BEBLIDG_to_PtrOfFeature2D }
+	ptr_cast_base! { core::Ptr<crate::xfeatures2d::BEBLID>, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_xfeatures2d_BEBLIDG_to_PtrOfFeature2D }
 	
 	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::BEBLID> {
 		#[inline]
@@ -26342,6 +26949,7 @@ mod xfeatures2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::BoostDesc>` instead, removal in Nov 2024"]
 	pub type PtrOfBoostDesc = core::Ptr<crate::xfeatures2d::BoostDesc>;
 	
 	ptr_extern! { crate::xfeatures2d::BoostDesc,
@@ -26369,7 +26977,7 @@ mod xfeatures2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBoostDesc, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_BoostDescG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::xfeatures2d::BoostDesc>, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_BoostDescG_to_PtrOfAlgorithm }
 	
 	impl crate::features2d::Feature2DTraitConst for core::Ptr<crate::xfeatures2d::BoostDesc> {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
@@ -26379,7 +26987,7 @@ mod xfeatures2d_types {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBoostDesc, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_xfeatures2d_BoostDescG_to_PtrOfFeature2D }
+	ptr_cast_base! { core::Ptr<crate::xfeatures2d::BoostDesc>, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_xfeatures2d_BoostDescG_to_PtrOfFeature2D }
 	
 	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::BoostDesc> {
 		#[inline]
@@ -26389,6 +26997,7 @@ mod xfeatures2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::BriefDescriptorExtractor>` instead, removal in Nov 2024"]
 	pub type PtrOfBriefDescriptorExtractor = core::Ptr<crate::xfeatures2d::BriefDescriptorExtractor>;
 	
 	ptr_extern! { crate::xfeatures2d::BriefDescriptorExtractor,
@@ -26416,7 +27025,7 @@ mod xfeatures2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBriefDescriptorExtractor, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_BriefDescriptorExtractorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::xfeatures2d::BriefDescriptorExtractor>, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_BriefDescriptorExtractorG_to_PtrOfAlgorithm }
 	
 	impl crate::features2d::Feature2DTraitConst for core::Ptr<crate::xfeatures2d::BriefDescriptorExtractor> {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
@@ -26426,7 +27035,7 @@ mod xfeatures2d_types {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfBriefDescriptorExtractor, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_xfeatures2d_BriefDescriptorExtractorG_to_PtrOfFeature2D }
+	ptr_cast_base! { core::Ptr<crate::xfeatures2d::BriefDescriptorExtractor>, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_xfeatures2d_BriefDescriptorExtractorG_to_PtrOfFeature2D }
 	
 	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::BriefDescriptorExtractor> {
 		#[inline]
@@ -26436,6 +27045,7 @@ mod xfeatures2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::DAISY>` instead, removal in Nov 2024"]
 	pub type PtrOfDAISY = core::Ptr<crate::xfeatures2d::DAISY>;
 	
 	ptr_extern! { crate::xfeatures2d::DAISY,
@@ -26463,7 +27073,7 @@ mod xfeatures2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDAISY, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_DAISYG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::xfeatures2d::DAISY>, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_DAISYG_to_PtrOfAlgorithm }
 	
 	impl crate::features2d::Feature2DTraitConst for core::Ptr<crate::xfeatures2d::DAISY> {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
@@ -26473,7 +27083,7 @@ mod xfeatures2d_types {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDAISY, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_xfeatures2d_DAISYG_to_PtrOfFeature2D }
+	ptr_cast_base! { core::Ptr<crate::xfeatures2d::DAISY>, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_xfeatures2d_DAISYG_to_PtrOfFeature2D }
 	
 	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::DAISY> {
 		#[inline]
@@ -26483,6 +27093,7 @@ mod xfeatures2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::FREAK>` instead, removal in Nov 2024"]
 	pub type PtrOfFREAK = core::Ptr<crate::xfeatures2d::FREAK>;
 	
 	ptr_extern! { crate::xfeatures2d::FREAK,
@@ -26510,7 +27121,7 @@ mod xfeatures2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFREAK, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_FREAKG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::xfeatures2d::FREAK>, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_FREAKG_to_PtrOfAlgorithm }
 	
 	impl crate::features2d::Feature2DTraitConst for core::Ptr<crate::xfeatures2d::FREAK> {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
@@ -26520,7 +27131,7 @@ mod xfeatures2d_types {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFREAK, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_xfeatures2d_FREAKG_to_PtrOfFeature2D }
+	ptr_cast_base! { core::Ptr<crate::xfeatures2d::FREAK>, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_xfeatures2d_FREAKG_to_PtrOfFeature2D }
 	
 	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::FREAK> {
 		#[inline]
@@ -26530,6 +27141,7 @@ mod xfeatures2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::HarrisLaplaceFeatureDetector>` instead, removal in Nov 2024"]
 	pub type PtrOfHarrisLaplaceFeatureDetector = core::Ptr<crate::xfeatures2d::HarrisLaplaceFeatureDetector>;
 	
 	ptr_extern! { crate::xfeatures2d::HarrisLaplaceFeatureDetector,
@@ -26557,7 +27169,7 @@ mod xfeatures2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfHarrisLaplaceFeatureDetector, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_HarrisLaplaceFeatureDetectorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::xfeatures2d::HarrisLaplaceFeatureDetector>, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_HarrisLaplaceFeatureDetectorG_to_PtrOfAlgorithm }
 	
 	impl crate::features2d::Feature2DTraitConst for core::Ptr<crate::xfeatures2d::HarrisLaplaceFeatureDetector> {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
@@ -26567,7 +27179,7 @@ mod xfeatures2d_types {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfHarrisLaplaceFeatureDetector, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_xfeatures2d_HarrisLaplaceFeatureDetectorG_to_PtrOfFeature2D }
+	ptr_cast_base! { core::Ptr<crate::xfeatures2d::HarrisLaplaceFeatureDetector>, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_xfeatures2d_HarrisLaplaceFeatureDetectorG_to_PtrOfFeature2D }
 	
 	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::HarrisLaplaceFeatureDetector> {
 		#[inline]
@@ -26577,6 +27189,7 @@ mod xfeatures2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::LATCH>` instead, removal in Nov 2024"]
 	pub type PtrOfLATCH = core::Ptr<crate::xfeatures2d::LATCH>;
 	
 	ptr_extern! { crate::xfeatures2d::LATCH,
@@ -26604,7 +27217,7 @@ mod xfeatures2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfLATCH, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_LATCHG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::xfeatures2d::LATCH>, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_LATCHG_to_PtrOfAlgorithm }
 	
 	impl crate::features2d::Feature2DTraitConst for core::Ptr<crate::xfeatures2d::LATCH> {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
@@ -26614,7 +27227,7 @@ mod xfeatures2d_types {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfLATCH, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_xfeatures2d_LATCHG_to_PtrOfFeature2D }
+	ptr_cast_base! { core::Ptr<crate::xfeatures2d::LATCH>, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_xfeatures2d_LATCHG_to_PtrOfFeature2D }
 	
 	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::LATCH> {
 		#[inline]
@@ -26624,6 +27237,7 @@ mod xfeatures2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::LUCID>` instead, removal in Nov 2024"]
 	pub type PtrOfLUCID = core::Ptr<crate::xfeatures2d::LUCID>;
 	
 	ptr_extern! { crate::xfeatures2d::LUCID,
@@ -26651,7 +27265,7 @@ mod xfeatures2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfLUCID, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_LUCIDG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::xfeatures2d::LUCID>, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_LUCIDG_to_PtrOfAlgorithm }
 	
 	impl crate::features2d::Feature2DTraitConst for core::Ptr<crate::xfeatures2d::LUCID> {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
@@ -26661,7 +27275,7 @@ mod xfeatures2d_types {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfLUCID, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_xfeatures2d_LUCIDG_to_PtrOfFeature2D }
+	ptr_cast_base! { core::Ptr<crate::xfeatures2d::LUCID>, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_xfeatures2d_LUCIDG_to_PtrOfFeature2D }
 	
 	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::LUCID> {
 		#[inline]
@@ -26671,6 +27285,7 @@ mod xfeatures2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::MSDDetector>` instead, removal in Nov 2024"]
 	pub type PtrOfMSDDetector = core::Ptr<crate::xfeatures2d::MSDDetector>;
 	
 	ptr_extern! { crate::xfeatures2d::MSDDetector,
@@ -26698,7 +27313,7 @@ mod xfeatures2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMSDDetector, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_MSDDetectorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::xfeatures2d::MSDDetector>, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_MSDDetectorG_to_PtrOfAlgorithm }
 	
 	impl crate::features2d::Feature2DTraitConst for core::Ptr<crate::xfeatures2d::MSDDetector> {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
@@ -26708,7 +27323,7 @@ mod xfeatures2d_types {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfMSDDetector, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_xfeatures2d_MSDDetectorG_to_PtrOfFeature2D }
+	ptr_cast_base! { core::Ptr<crate::xfeatures2d::MSDDetector>, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_xfeatures2d_MSDDetectorG_to_PtrOfFeature2D }
 	
 	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::MSDDetector> {
 		#[inline]
@@ -26718,6 +27333,7 @@ mod xfeatures2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::PCTSignatures>` instead, removal in Nov 2024"]
 	pub type PtrOfPCTSignatures = core::Ptr<crate::xfeatures2d::PCTSignatures>;
 	
 	ptr_extern! { crate::xfeatures2d::PCTSignatures,
@@ -26745,7 +27361,7 @@ mod xfeatures2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfPCTSignatures, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_PCTSignaturesG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::xfeatures2d::PCTSignatures>, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_PCTSignaturesG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::PCTSignatures> {
 		#[inline]
@@ -26755,6 +27371,7 @@ mod xfeatures2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::PCTSignaturesSQFD>` instead, removal in Nov 2024"]
 	pub type PtrOfPCTSignaturesSQFD = core::Ptr<crate::xfeatures2d::PCTSignaturesSQFD>;
 	
 	ptr_extern! { crate::xfeatures2d::PCTSignaturesSQFD,
@@ -26782,7 +27399,7 @@ mod xfeatures2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfPCTSignaturesSQFD, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_PCTSignaturesSQFDG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::xfeatures2d::PCTSignaturesSQFD>, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_PCTSignaturesSQFDG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::PCTSignaturesSQFD> {
 		#[inline]
@@ -26792,6 +27409,7 @@ mod xfeatures2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::SURF>` instead, removal in Nov 2024"]
 	pub type PtrOfSURF = core::Ptr<crate::xfeatures2d::SURF>;
 	
 	ptr_extern! { crate::xfeatures2d::SURF,
@@ -26819,7 +27437,7 @@ mod xfeatures2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSURF, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_SURFG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::xfeatures2d::SURF>, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_SURFG_to_PtrOfAlgorithm }
 	
 	impl crate::features2d::Feature2DTraitConst for core::Ptr<crate::xfeatures2d::SURF> {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
@@ -26829,7 +27447,7 @@ mod xfeatures2d_types {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSURF, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_xfeatures2d_SURFG_to_PtrOfFeature2D }
+	ptr_cast_base! { core::Ptr<crate::xfeatures2d::SURF>, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_xfeatures2d_SURFG_to_PtrOfFeature2D }
 	
 	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::SURF> {
 		#[inline]
@@ -26839,6 +27457,7 @@ mod xfeatures2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::SURF_CUDA>` instead, removal in Nov 2024"]
 	pub type PtrOfSURF_CUDA = core::Ptr<crate::xfeatures2d::SURF_CUDA>;
 	
 	ptr_extern! { crate::xfeatures2d::SURF_CUDA,
@@ -26879,6 +27498,7 @@ mod xfeatures2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::StarDetector>` instead, removal in Nov 2024"]
 	pub type PtrOfStarDetector = core::Ptr<crate::xfeatures2d::StarDetector>;
 	
 	ptr_extern! { crate::xfeatures2d::StarDetector,
@@ -26906,7 +27526,7 @@ mod xfeatures2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfStarDetector, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_StarDetectorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::xfeatures2d::StarDetector>, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_StarDetectorG_to_PtrOfAlgorithm }
 	
 	impl crate::features2d::Feature2DTraitConst for core::Ptr<crate::xfeatures2d::StarDetector> {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
@@ -26916,7 +27536,7 @@ mod xfeatures2d_types {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfStarDetector, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_xfeatures2d_StarDetectorG_to_PtrOfFeature2D }
+	ptr_cast_base! { core::Ptr<crate::xfeatures2d::StarDetector>, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_xfeatures2d_StarDetectorG_to_PtrOfFeature2D }
 	
 	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::StarDetector> {
 		#[inline]
@@ -26926,6 +27546,7 @@ mod xfeatures2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::TBMR>` instead, removal in Nov 2024"]
 	pub type PtrOfTBMR = core::Ptr<crate::xfeatures2d::TBMR>;
 	
 	ptr_extern! { crate::xfeatures2d::TBMR,
@@ -26953,7 +27574,7 @@ mod xfeatures2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTBMR, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_TBMRG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::xfeatures2d::TBMR>, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_TBMRG_to_PtrOfAlgorithm }
 	
 	impl crate::features2d::Feature2DTraitConst for core::Ptr<crate::xfeatures2d::TBMR> {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
@@ -26963,7 +27584,7 @@ mod xfeatures2d_types {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTBMR, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_xfeatures2d_TBMRG_to_PtrOfFeature2D }
+	ptr_cast_base! { core::Ptr<crate::xfeatures2d::TBMR>, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_xfeatures2d_TBMRG_to_PtrOfFeature2D }
 	
 	impl crate::xfeatures2d::AffineFeature2DTraitConst for core::Ptr<crate::xfeatures2d::TBMR> {
 		#[inline] fn as_raw_AffineFeature2D(&self) -> *const c_void { self.inner_as_raw() }
@@ -26973,7 +27594,7 @@ mod xfeatures2d_types {
 		#[inline] fn as_raw_mut_AffineFeature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTBMR, core::Ptr<crate::xfeatures2d::AffineFeature2D>, cv_PtrLcv_xfeatures2d_TBMRG_to_PtrOfAffineFeature2D }
+	ptr_cast_base! { core::Ptr<crate::xfeatures2d::TBMR>, core::Ptr<crate::xfeatures2d::AffineFeature2D>, cv_PtrLcv_xfeatures2d_TBMRG_to_PtrOfAffineFeature2D }
 	
 	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::TBMR> {
 		#[inline]
@@ -26983,6 +27604,7 @@ mod xfeatures2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::TEBLID>` instead, removal in Nov 2024"]
 	pub type PtrOfTEBLID = core::Ptr<crate::xfeatures2d::TEBLID>;
 	
 	ptr_extern! { crate::xfeatures2d::TEBLID,
@@ -27011,7 +27633,7 @@ mod xfeatures2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTEBLID, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_TEBLIDG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::xfeatures2d::TEBLID>, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_TEBLIDG_to_PtrOfAlgorithm }
 	
 	impl crate::features2d::Feature2DTraitConst for core::Ptr<crate::xfeatures2d::TEBLID> {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
@@ -27021,7 +27643,7 @@ mod xfeatures2d_types {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTEBLID, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_xfeatures2d_TEBLIDG_to_PtrOfFeature2D }
+	ptr_cast_base! { core::Ptr<crate::xfeatures2d::TEBLID>, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_xfeatures2d_TEBLIDG_to_PtrOfFeature2D }
 	
 	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::TEBLID> {
 		#[inline]
@@ -27031,6 +27653,7 @@ mod xfeatures2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::VGG>` instead, removal in Nov 2024"]
 	pub type PtrOfVGG = core::Ptr<crate::xfeatures2d::VGG>;
 	
 	ptr_extern! { crate::xfeatures2d::VGG,
@@ -27058,7 +27681,7 @@ mod xfeatures2d_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfVGG, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_VGGG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::xfeatures2d::VGG>, core::Ptr<core::Algorithm>, cv_PtrLcv_xfeatures2d_VGGG_to_PtrOfAlgorithm }
 	
 	impl crate::features2d::Feature2DTraitConst for core::Ptr<crate::xfeatures2d::VGG> {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.inner_as_raw() }
@@ -27068,7 +27691,7 @@ mod xfeatures2d_types {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfVGG, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_xfeatures2d_VGGG_to_PtrOfFeature2D }
+	ptr_cast_base! { core::Ptr<crate::xfeatures2d::VGG>, core::Ptr<crate::features2d::Feature2D>, cv_PtrLcv_xfeatures2d_VGGG_to_PtrOfFeature2D }
 	
 	impl std::fmt::Debug for core::Ptr<crate::xfeatures2d::VGG> {
 		#[inline]
@@ -27078,6 +27701,7 @@ mod xfeatures2d_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::xfeatures2d::Elliptic_KeyPoint>` instead, removal in Nov 2024"]
 	pub type VectorOfElliptic_KeyPoint = core::Vector<crate::xfeatures2d::Elliptic_KeyPoint>;
 	
 	impl core::Vector<crate::xfeatures2d::Elliptic_KeyPoint> {
@@ -27099,7 +27723,7 @@ mod xfeatures2d_types {
 	
 	vector_boxed_ref! { crate::xfeatures2d::Elliptic_KeyPoint }
 	
-	vector_extern! { BoxedRef<'_, crate::xfeatures2d::Elliptic_KeyPoint>,
+	vector_extern! { BoxedRef<'t, crate::xfeatures2d::Elliptic_KeyPoint>,
 		std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_new_const, std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_delete,
 		std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_len_const, std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_isEmpty_const,
 		std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_capacity_const, std_vectorLcv_xfeatures2d_Elliptic_KeyPointG_shrinkToFit,
@@ -27118,6 +27742,7 @@ pub use xfeatures2d_types::*;
 mod ximgproc_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::AdaptiveManifoldFilter>` instead, removal in Nov 2024"]
 	pub type PtrOfAdaptiveManifoldFilter = core::Ptr<crate::ximgproc::AdaptiveManifoldFilter>;
 	
 	ptr_extern! { crate::ximgproc::AdaptiveManifoldFilter,
@@ -27145,7 +27770,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfAdaptiveManifoldFilter, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_AdaptiveManifoldFilterG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::AdaptiveManifoldFilter>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_AdaptiveManifoldFilterG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ximgproc::AdaptiveManifoldFilter> {
 		#[inline]
@@ -27155,6 +27780,7 @@ mod ximgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::ContourFitting>` instead, removal in Nov 2024"]
 	pub type PtrOfContourFitting = core::Ptr<crate::ximgproc::ContourFitting>;
 	
 	ptr_extern! { crate::ximgproc::ContourFitting,
@@ -27183,7 +27809,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfContourFitting, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_ContourFittingG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::ContourFitting>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_ContourFittingG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ximgproc::ContourFitting> {
 		#[inline]
@@ -27193,6 +27819,7 @@ mod ximgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::DTFilter>` instead, removal in Nov 2024"]
 	pub type PtrOfDTFilter = core::Ptr<crate::ximgproc::DTFilter>;
 	
 	ptr_extern! { crate::ximgproc::DTFilter,
@@ -27220,7 +27847,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDTFilter, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_DTFilterG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::DTFilter>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_DTFilterG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ximgproc::DTFilter> {
 		#[inline]
@@ -27230,6 +27857,7 @@ mod ximgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::DisparityFilter>` instead, removal in Nov 2024"]
 	pub type PtrOfDisparityFilter = core::Ptr<crate::ximgproc::DisparityFilter>;
 	
 	ptr_extern! { crate::ximgproc::DisparityFilter,
@@ -27257,7 +27885,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDisparityFilter, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_DisparityFilterG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::DisparityFilter>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_DisparityFilterG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ximgproc::DisparityFilter> {
 		#[inline]
@@ -27267,6 +27895,7 @@ mod ximgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::DisparityWLSFilter>` instead, removal in Nov 2024"]
 	pub type PtrOfDisparityWLSFilter = core::Ptr<crate::ximgproc::DisparityWLSFilter>;
 	
 	ptr_extern! { crate::ximgproc::DisparityWLSFilter,
@@ -27294,7 +27923,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDisparityWLSFilter, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_DisparityWLSFilterG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::DisparityWLSFilter>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_DisparityWLSFilterG_to_PtrOfAlgorithm }
 	
 	impl crate::ximgproc::DisparityFilterTraitConst for core::Ptr<crate::ximgproc::DisparityWLSFilter> {
 		#[inline] fn as_raw_DisparityFilter(&self) -> *const c_void { self.inner_as_raw() }
@@ -27304,7 +27933,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_DisparityFilter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfDisparityWLSFilter, core::Ptr<crate::ximgproc::DisparityFilter>, cv_PtrLcv_ximgproc_DisparityWLSFilterG_to_PtrOfDisparityFilter }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::DisparityWLSFilter>, core::Ptr<crate::ximgproc::DisparityFilter>, cv_PtrLcv_ximgproc_DisparityWLSFilterG_to_PtrOfDisparityFilter }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ximgproc::DisparityWLSFilter> {
 		#[inline]
@@ -27314,6 +27943,7 @@ mod ximgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::EdgeAwareInterpolator>` instead, removal in Nov 2024"]
 	pub type PtrOfEdgeAwareInterpolator = core::Ptr<crate::ximgproc::EdgeAwareInterpolator>;
 	
 	ptr_extern! { crate::ximgproc::EdgeAwareInterpolator,
@@ -27341,7 +27971,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfEdgeAwareInterpolator, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_EdgeAwareInterpolatorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::EdgeAwareInterpolator>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_EdgeAwareInterpolatorG_to_PtrOfAlgorithm }
 	
 	impl crate::ximgproc::SparseMatchInterpolatorTraitConst for core::Ptr<crate::ximgproc::EdgeAwareInterpolator> {
 		#[inline] fn as_raw_SparseMatchInterpolator(&self) -> *const c_void { self.inner_as_raw() }
@@ -27351,7 +27981,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_SparseMatchInterpolator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfEdgeAwareInterpolator, core::Ptr<crate::ximgproc::SparseMatchInterpolator>, cv_PtrLcv_ximgproc_EdgeAwareInterpolatorG_to_PtrOfSparseMatchInterpolator }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::EdgeAwareInterpolator>, core::Ptr<crate::ximgproc::SparseMatchInterpolator>, cv_PtrLcv_ximgproc_EdgeAwareInterpolatorG_to_PtrOfSparseMatchInterpolator }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ximgproc::EdgeAwareInterpolator> {
 		#[inline]
@@ -27361,6 +27991,7 @@ mod ximgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::EdgeBoxes>` instead, removal in Nov 2024"]
 	pub type PtrOfEdgeBoxes = core::Ptr<crate::ximgproc::EdgeBoxes>;
 	
 	ptr_extern! { crate::ximgproc::EdgeBoxes,
@@ -27388,7 +28019,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfEdgeBoxes, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_EdgeBoxesG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::EdgeBoxes>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_EdgeBoxesG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ximgproc::EdgeBoxes> {
 		#[inline]
@@ -27398,6 +28029,7 @@ mod ximgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::EdgeDrawing>` instead, removal in Nov 2024"]
 	pub type PtrOfEdgeDrawing = core::Ptr<crate::ximgproc::EdgeDrawing>;
 	
 	ptr_extern! { crate::ximgproc::EdgeDrawing,
@@ -27425,7 +28057,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfEdgeDrawing, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_EdgeDrawingG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::EdgeDrawing>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_EdgeDrawingG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ximgproc::EdgeDrawing> {
 		#[inline]
@@ -27436,6 +28068,7 @@ mod ximgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::FastBilateralSolverFilter>` instead, removal in Nov 2024"]
 	pub type PtrOfFastBilateralSolverFilter = core::Ptr<crate::ximgproc::FastBilateralSolverFilter>;
 	
 	ptr_extern! { crate::ximgproc::FastBilateralSolverFilter,
@@ -27463,7 +28096,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFastBilateralSolverFilter, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_FastBilateralSolverFilterG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::FastBilateralSolverFilter>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_FastBilateralSolverFilterG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ximgproc::FastBilateralSolverFilter> {
 		#[inline]
@@ -27473,6 +28106,7 @@ mod ximgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::FastGlobalSmootherFilter>` instead, removal in Nov 2024"]
 	pub type PtrOfFastGlobalSmootherFilter = core::Ptr<crate::ximgproc::FastGlobalSmootherFilter>;
 	
 	ptr_extern! { crate::ximgproc::FastGlobalSmootherFilter,
@@ -27500,7 +28134,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFastGlobalSmootherFilter, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_FastGlobalSmootherFilterG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::FastGlobalSmootherFilter>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_FastGlobalSmootherFilterG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ximgproc::FastGlobalSmootherFilter> {
 		#[inline]
@@ -27510,6 +28144,7 @@ mod ximgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::FastLineDetector>` instead, removal in Nov 2024"]
 	pub type PtrOfFastLineDetector = core::Ptr<crate::ximgproc::FastLineDetector>;
 	
 	ptr_extern! { crate::ximgproc::FastLineDetector,
@@ -27537,7 +28172,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfFastLineDetector, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_FastLineDetectorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::FastLineDetector>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_FastLineDetectorG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ximgproc::FastLineDetector> {
 		#[inline]
@@ -27547,6 +28182,7 @@ mod ximgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::GraphSegmentation>` instead, removal in Nov 2024"]
 	pub type PtrOfGraphSegmentation = core::Ptr<crate::ximgproc::GraphSegmentation>;
 	
 	ptr_extern! { crate::ximgproc::GraphSegmentation,
@@ -27574,7 +28210,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfGraphSegmentation, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_segmentation_GraphSegmentationG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::GraphSegmentation>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_segmentation_GraphSegmentationG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ximgproc::GraphSegmentation> {
 		#[inline]
@@ -27584,6 +28220,7 @@ mod ximgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::GuidedFilter>` instead, removal in Nov 2024"]
 	pub type PtrOfGuidedFilter = core::Ptr<crate::ximgproc::GuidedFilter>;
 	
 	ptr_extern! { crate::ximgproc::GuidedFilter,
@@ -27611,7 +28248,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfGuidedFilter, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_GuidedFilterG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::GuidedFilter>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_GuidedFilterG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ximgproc::GuidedFilter> {
 		#[inline]
@@ -27621,6 +28258,7 @@ mod ximgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::RFFeatureGetter>` instead, removal in Nov 2024"]
 	pub type PtrOfRFFeatureGetter = core::Ptr<crate::ximgproc::RFFeatureGetter>;
 	
 	ptr_extern! { crate::ximgproc::RFFeatureGetter,
@@ -27648,7 +28286,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfRFFeatureGetter, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_RFFeatureGetterG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::RFFeatureGetter>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_RFFeatureGetterG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ximgproc::RFFeatureGetter> {
 		#[inline]
@@ -27658,6 +28296,7 @@ mod ximgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::RICInterpolator>` instead, removal in Nov 2024"]
 	pub type PtrOfRICInterpolator = core::Ptr<crate::ximgproc::RICInterpolator>;
 	
 	ptr_extern! { crate::ximgproc::RICInterpolator,
@@ -27685,7 +28324,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfRICInterpolator, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_RICInterpolatorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::RICInterpolator>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_RICInterpolatorG_to_PtrOfAlgorithm }
 	
 	impl crate::ximgproc::SparseMatchInterpolatorTraitConst for core::Ptr<crate::ximgproc::RICInterpolator> {
 		#[inline] fn as_raw_SparseMatchInterpolator(&self) -> *const c_void { self.inner_as_raw() }
@@ -27695,7 +28334,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_SparseMatchInterpolator(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfRICInterpolator, core::Ptr<crate::ximgproc::SparseMatchInterpolator>, cv_PtrLcv_ximgproc_RICInterpolatorG_to_PtrOfSparseMatchInterpolator }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::RICInterpolator>, core::Ptr<crate::ximgproc::SparseMatchInterpolator>, cv_PtrLcv_ximgproc_RICInterpolatorG_to_PtrOfSparseMatchInterpolator }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ximgproc::RICInterpolator> {
 		#[inline]
@@ -27705,6 +28344,7 @@ mod ximgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::RidgeDetectionFilter>` instead, removal in Nov 2024"]
 	pub type PtrOfRidgeDetectionFilter = core::Ptr<crate::ximgproc::RidgeDetectionFilter>;
 	
 	ptr_extern! { crate::ximgproc::RidgeDetectionFilter,
@@ -27732,7 +28372,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfRidgeDetectionFilter, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_RidgeDetectionFilterG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::RidgeDetectionFilter>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_RidgeDetectionFilterG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ximgproc::RidgeDetectionFilter> {
 		#[inline]
@@ -27742,6 +28382,7 @@ mod ximgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::ScanSegment>` instead, removal in Nov 2024"]
 	pub type PtrOfScanSegment = core::Ptr<crate::ximgproc::ScanSegment>;
 	
 	ptr_extern! { crate::ximgproc::ScanSegment,
@@ -27769,7 +28410,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfScanSegment, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_ScanSegmentG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::ScanSegment>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_ScanSegmentG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ximgproc::ScanSegment> {
 		#[inline]
@@ -27779,6 +28420,7 @@ mod ximgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::SelectiveSearchSegmentation>` instead, removal in Nov 2024"]
 	pub type PtrOfSelectiveSearchSegmentation = core::Ptr<crate::ximgproc::SelectiveSearchSegmentation>;
 	
 	ptr_extern! { crate::ximgproc::SelectiveSearchSegmentation,
@@ -27806,7 +28448,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSelectiveSearchSegmentation, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::SelectiveSearchSegmentation>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ximgproc::SelectiveSearchSegmentation> {
 		#[inline]
@@ -27816,6 +28458,7 @@ mod ximgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy>` instead, removal in Nov 2024"]
 	pub type PtrOfSelectiveSearchSegmentationStrategy = core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy>;
 	
 	ptr_extern! { crate::ximgproc::SelectiveSearchSegmentationStrategy,
@@ -27843,7 +28486,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSelectiveSearchSegmentationStrategy, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy> {
 		#[inline]
@@ -27853,6 +28496,7 @@ mod ximgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyColor>` instead, removal in Nov 2024"]
 	pub type PtrOfSelectiveSearchSegmentationStrategyColor = core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyColor>;
 	
 	ptr_extern! { crate::ximgproc::SelectiveSearchSegmentationStrategyColor,
@@ -27880,7 +28524,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSelectiveSearchSegmentationStrategyColor, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyColorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyColor>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyColorG_to_PtrOfAlgorithm }
 	
 	impl crate::ximgproc::SelectiveSearchSegmentationStrategyTraitConst for core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyColor> {
 		#[inline] fn as_raw_SelectiveSearchSegmentationStrategy(&self) -> *const c_void { self.inner_as_raw() }
@@ -27890,7 +28534,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_SelectiveSearchSegmentationStrategy(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSelectiveSearchSegmentationStrategyColor, core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy>, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyColorG_to_PtrOfSelectiveSearchSegmentationStrategy }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyColor>, core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy>, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyColorG_to_PtrOfSelectiveSearchSegmentationStrategy }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyColor> {
 		#[inline]
@@ -27900,6 +28544,7 @@ mod ximgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyFill>` instead, removal in Nov 2024"]
 	pub type PtrOfSelectiveSearchSegmentationStrategyFill = core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyFill>;
 	
 	ptr_extern! { crate::ximgproc::SelectiveSearchSegmentationStrategyFill,
@@ -27927,7 +28572,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSelectiveSearchSegmentationStrategyFill, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyFillG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyFill>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyFillG_to_PtrOfAlgorithm }
 	
 	impl crate::ximgproc::SelectiveSearchSegmentationStrategyTraitConst for core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyFill> {
 		#[inline] fn as_raw_SelectiveSearchSegmentationStrategy(&self) -> *const c_void { self.inner_as_raw() }
@@ -27937,7 +28582,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_SelectiveSearchSegmentationStrategy(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSelectiveSearchSegmentationStrategyFill, core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy>, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyFillG_to_PtrOfSelectiveSearchSegmentationStrategy }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyFill>, core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy>, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyFillG_to_PtrOfSelectiveSearchSegmentationStrategy }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyFill> {
 		#[inline]
@@ -27947,6 +28592,7 @@ mod ximgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>` instead, removal in Nov 2024"]
 	pub type PtrOfSelectiveSearchSegmentationStrategyMultiple = core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>;
 	
 	ptr_extern! { crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple,
@@ -27974,7 +28620,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSelectiveSearchSegmentationStrategyMultiple, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyMultipleG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyMultipleG_to_PtrOfAlgorithm }
 	
 	impl crate::ximgproc::SelectiveSearchSegmentationStrategyTraitConst for core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple> {
 		#[inline] fn as_raw_SelectiveSearchSegmentationStrategy(&self) -> *const c_void { self.inner_as_raw() }
@@ -27984,7 +28630,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_SelectiveSearchSegmentationStrategy(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSelectiveSearchSegmentationStrategyMultiple, core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy>, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyMultipleG_to_PtrOfSelectiveSearchSegmentationStrategy }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>, core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy>, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyMultipleG_to_PtrOfSelectiveSearchSegmentationStrategy }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple> {
 		#[inline]
@@ -27994,6 +28640,7 @@ mod ximgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategySize>` instead, removal in Nov 2024"]
 	pub type PtrOfSelectiveSearchSegmentationStrategySize = core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategySize>;
 	
 	ptr_extern! { crate::ximgproc::SelectiveSearchSegmentationStrategySize,
@@ -28021,7 +28668,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSelectiveSearchSegmentationStrategySize, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategySizeG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategySize>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategySizeG_to_PtrOfAlgorithm }
 	
 	impl crate::ximgproc::SelectiveSearchSegmentationStrategyTraitConst for core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategySize> {
 		#[inline] fn as_raw_SelectiveSearchSegmentationStrategy(&self) -> *const c_void { self.inner_as_raw() }
@@ -28031,7 +28678,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_SelectiveSearchSegmentationStrategy(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSelectiveSearchSegmentationStrategySize, core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy>, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategySizeG_to_PtrOfSelectiveSearchSegmentationStrategy }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategySize>, core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy>, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategySizeG_to_PtrOfSelectiveSearchSegmentationStrategy }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategySize> {
 		#[inline]
@@ -28041,6 +28688,7 @@ mod ximgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyTexture>` instead, removal in Nov 2024"]
 	pub type PtrOfSelectiveSearchSegmentationStrategyTexture = core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyTexture>;
 	
 	ptr_extern! { crate::ximgproc::SelectiveSearchSegmentationStrategyTexture,
@@ -28068,7 +28716,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSelectiveSearchSegmentationStrategyTexture, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyTextureG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyTexture>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyTextureG_to_PtrOfAlgorithm }
 	
 	impl crate::ximgproc::SelectiveSearchSegmentationStrategyTraitConst for core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyTexture> {
 		#[inline] fn as_raw_SelectiveSearchSegmentationStrategy(&self) -> *const c_void { self.inner_as_raw() }
@@ -28078,7 +28726,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_SelectiveSearchSegmentationStrategy(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSelectiveSearchSegmentationStrategyTexture, core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy>, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyTextureG_to_PtrOfSelectiveSearchSegmentationStrategy }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyTexture>, core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy>, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyTextureG_to_PtrOfSelectiveSearchSegmentationStrategy }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyTexture> {
 		#[inline]
@@ -28088,6 +28736,7 @@ mod ximgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::SparseMatchInterpolator>` instead, removal in Nov 2024"]
 	pub type PtrOfSparseMatchInterpolator = core::Ptr<crate::ximgproc::SparseMatchInterpolator>;
 	
 	ptr_extern! { crate::ximgproc::SparseMatchInterpolator,
@@ -28115,7 +28764,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSparseMatchInterpolator, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_SparseMatchInterpolatorG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::SparseMatchInterpolator>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_SparseMatchInterpolatorG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ximgproc::SparseMatchInterpolator> {
 		#[inline]
@@ -28125,6 +28774,7 @@ mod ximgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::StructuredEdgeDetection>` instead, removal in Nov 2024"]
 	pub type PtrOfStructuredEdgeDetection = core::Ptr<crate::ximgproc::StructuredEdgeDetection>;
 	
 	ptr_extern! { crate::ximgproc::StructuredEdgeDetection,
@@ -28152,7 +28802,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfStructuredEdgeDetection, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_StructuredEdgeDetectionG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::StructuredEdgeDetection>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_StructuredEdgeDetectionG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ximgproc::StructuredEdgeDetection> {
 		#[inline]
@@ -28162,6 +28812,7 @@ mod ximgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::SuperpixelLSC>` instead, removal in Nov 2024"]
 	pub type PtrOfSuperpixelLSC = core::Ptr<crate::ximgproc::SuperpixelLSC>;
 	
 	ptr_extern! { crate::ximgproc::SuperpixelLSC,
@@ -28189,7 +28840,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSuperpixelLSC, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_SuperpixelLSCG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::SuperpixelLSC>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_SuperpixelLSCG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ximgproc::SuperpixelLSC> {
 		#[inline]
@@ -28199,6 +28850,7 @@ mod ximgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::SuperpixelSEEDS>` instead, removal in Nov 2024"]
 	pub type PtrOfSuperpixelSEEDS = core::Ptr<crate::ximgproc::SuperpixelSEEDS>;
 	
 	ptr_extern! { crate::ximgproc::SuperpixelSEEDS,
@@ -28226,7 +28878,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSuperpixelSEEDS, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_SuperpixelSEEDSG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::SuperpixelSEEDS>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_SuperpixelSEEDSG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ximgproc::SuperpixelSEEDS> {
 		#[inline]
@@ -28236,6 +28888,7 @@ mod ximgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::SuperpixelSLIC>` instead, removal in Nov 2024"]
 	pub type PtrOfSuperpixelSLIC = core::Ptr<crate::ximgproc::SuperpixelSLIC>;
 	
 	ptr_extern! { crate::ximgproc::SuperpixelSLIC,
@@ -28263,7 +28916,7 @@ mod ximgproc_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSuperpixelSLIC, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_SuperpixelSLICG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::ximgproc::SuperpixelSLIC>, core::Ptr<core::Algorithm>, cv_PtrLcv_ximgproc_SuperpixelSLICG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::ximgproc::SuperpixelSLIC> {
 		#[inline]
@@ -28273,6 +28926,7 @@ mod ximgproc_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Vector<crate::ximgproc::Box>` instead, removal in Nov 2024"]
 	pub type VectorOfBox = core::Vector<crate::ximgproc::Box>;
 	
 	impl core::Vector<crate::ximgproc::Box> {
@@ -28304,6 +28958,7 @@ pub use ximgproc_types::*;
 mod xobjdetect_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xobjdetect::WBDetector>` instead, removal in Nov 2024"]
 	pub type PtrOfWBDetector = core::Ptr<crate::xobjdetect::WBDetector>;
 	
 	ptr_extern! { crate::xobjdetect::WBDetector,
@@ -28339,6 +28994,7 @@ pub use xobjdetect_types::*;
 mod xphoto_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xphoto::GrayworldWB>` instead, removal in Nov 2024"]
 	pub type PtrOfGrayworldWB = core::Ptr<crate::xphoto::GrayworldWB>;
 	
 	ptr_extern! { crate::xphoto::GrayworldWB,
@@ -28366,7 +29022,7 @@ mod xphoto_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfGrayworldWB, core::Ptr<core::Algorithm>, cv_PtrLcv_xphoto_GrayworldWBG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::xphoto::GrayworldWB>, core::Ptr<core::Algorithm>, cv_PtrLcv_xphoto_GrayworldWBG_to_PtrOfAlgorithm }
 	
 	impl crate::xphoto::WhiteBalancerTraitConst for core::Ptr<crate::xphoto::GrayworldWB> {
 		#[inline] fn as_raw_WhiteBalancer(&self) -> *const c_void { self.inner_as_raw() }
@@ -28376,7 +29032,7 @@ mod xphoto_types {
 		#[inline] fn as_raw_mut_WhiteBalancer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfGrayworldWB, core::Ptr<crate::xphoto::WhiteBalancer>, cv_PtrLcv_xphoto_GrayworldWBG_to_PtrOfWhiteBalancer }
+	ptr_cast_base! { core::Ptr<crate::xphoto::GrayworldWB>, core::Ptr<crate::xphoto::WhiteBalancer>, cv_PtrLcv_xphoto_GrayworldWBG_to_PtrOfWhiteBalancer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::xphoto::GrayworldWB> {
 		#[inline]
@@ -28386,6 +29042,7 @@ mod xphoto_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xphoto::LearningBasedWB>` instead, removal in Nov 2024"]
 	pub type PtrOfLearningBasedWB = core::Ptr<crate::xphoto::LearningBasedWB>;
 	
 	ptr_extern! { crate::xphoto::LearningBasedWB,
@@ -28413,7 +29070,7 @@ mod xphoto_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfLearningBasedWB, core::Ptr<core::Algorithm>, cv_PtrLcv_xphoto_LearningBasedWBG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::xphoto::LearningBasedWB>, core::Ptr<core::Algorithm>, cv_PtrLcv_xphoto_LearningBasedWBG_to_PtrOfAlgorithm }
 	
 	impl crate::xphoto::WhiteBalancerTraitConst for core::Ptr<crate::xphoto::LearningBasedWB> {
 		#[inline] fn as_raw_WhiteBalancer(&self) -> *const c_void { self.inner_as_raw() }
@@ -28423,7 +29080,7 @@ mod xphoto_types {
 		#[inline] fn as_raw_mut_WhiteBalancer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfLearningBasedWB, core::Ptr<crate::xphoto::WhiteBalancer>, cv_PtrLcv_xphoto_LearningBasedWBG_to_PtrOfWhiteBalancer }
+	ptr_cast_base! { core::Ptr<crate::xphoto::LearningBasedWB>, core::Ptr<crate::xphoto::WhiteBalancer>, cv_PtrLcv_xphoto_LearningBasedWBG_to_PtrOfWhiteBalancer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::xphoto::LearningBasedWB> {
 		#[inline]
@@ -28433,6 +29090,7 @@ mod xphoto_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xphoto::SimpleWB>` instead, removal in Nov 2024"]
 	pub type PtrOfSimpleWB = core::Ptr<crate::xphoto::SimpleWB>;
 	
 	ptr_extern! { crate::xphoto::SimpleWB,
@@ -28460,7 +29118,7 @@ mod xphoto_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSimpleWB, core::Ptr<core::Algorithm>, cv_PtrLcv_xphoto_SimpleWBG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::xphoto::SimpleWB>, core::Ptr<core::Algorithm>, cv_PtrLcv_xphoto_SimpleWBG_to_PtrOfAlgorithm }
 	
 	impl crate::xphoto::WhiteBalancerTraitConst for core::Ptr<crate::xphoto::SimpleWB> {
 		#[inline] fn as_raw_WhiteBalancer(&self) -> *const c_void { self.inner_as_raw() }
@@ -28470,7 +29128,7 @@ mod xphoto_types {
 		#[inline] fn as_raw_mut_WhiteBalancer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfSimpleWB, core::Ptr<crate::xphoto::WhiteBalancer>, cv_PtrLcv_xphoto_SimpleWBG_to_PtrOfWhiteBalancer }
+	ptr_cast_base! { core::Ptr<crate::xphoto::SimpleWB>, core::Ptr<crate::xphoto::WhiteBalancer>, cv_PtrLcv_xphoto_SimpleWBG_to_PtrOfWhiteBalancer }
 	
 	impl std::fmt::Debug for core::Ptr<crate::xphoto::SimpleWB> {
 		#[inline]
@@ -28480,6 +29138,7 @@ mod xphoto_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xphoto::TonemapDurand>` instead, removal in Nov 2024"]
 	pub type PtrOfTonemapDurand = core::Ptr<crate::xphoto::TonemapDurand>;
 	
 	ptr_extern! { crate::xphoto::TonemapDurand,
@@ -28507,7 +29166,7 @@ mod xphoto_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTonemapDurand, core::Ptr<core::Algorithm>, cv_PtrLcv_xphoto_TonemapDurandG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::xphoto::TonemapDurand>, core::Ptr<core::Algorithm>, cv_PtrLcv_xphoto_TonemapDurandG_to_PtrOfAlgorithm }
 	
 	impl crate::photo::TonemapTraitConst for core::Ptr<crate::xphoto::TonemapDurand> {
 		#[inline] fn as_raw_Tonemap(&self) -> *const c_void { self.inner_as_raw() }
@@ -28517,7 +29176,7 @@ mod xphoto_types {
 		#[inline] fn as_raw_mut_Tonemap(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfTonemapDurand, core::Ptr<crate::photo::Tonemap>, cv_PtrLcv_xphoto_TonemapDurandG_to_PtrOfTonemap }
+	ptr_cast_base! { core::Ptr<crate::xphoto::TonemapDurand>, core::Ptr<crate::photo::Tonemap>, cv_PtrLcv_xphoto_TonemapDurandG_to_PtrOfTonemap }
 	
 	impl std::fmt::Debug for core::Ptr<crate::xphoto::TonemapDurand> {
 		#[inline]
@@ -28527,6 +29186,7 @@ mod xphoto_types {
 		}
 	}
 	
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xphoto::WhiteBalancer>` instead, removal in Nov 2024"]
 	pub type PtrOfWhiteBalancer = core::Ptr<crate::xphoto::WhiteBalancer>;
 	
 	ptr_extern! { crate::xphoto::WhiteBalancer,
@@ -28554,7 +29214,7 @@ mod xphoto_types {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
 	}
 	
-	ptr_cast_base! { PtrOfWhiteBalancer, core::Ptr<core::Algorithm>, cv_PtrLcv_xphoto_WhiteBalancerG_to_PtrOfAlgorithm }
+	ptr_cast_base! { core::Ptr<crate::xphoto::WhiteBalancer>, core::Ptr<core::Algorithm>, cv_PtrLcv_xphoto_WhiteBalancerG_to_PtrOfAlgorithm }
 	
 	impl std::fmt::Debug for core::Ptr<crate::xphoto::WhiteBalancer> {
 		#[inline]

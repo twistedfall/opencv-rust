@@ -360,7 +360,7 @@ pub mod surface_matching {
 	
 	pub const ICP_ICP_SAMPLING_TYPE_GELFAND: i32 = 1;
 	pub const ICP_ICP_SAMPLING_TYPE_UNIFORM: i32 = 0;
-	pub type key_type = u32;
+	pub type KeyType = u32;
 	pub type Pose3DPtr = core::Ptr<crate::surface_matching::Pose3D>;
 	pub type PoseCluster3DPtr = core::Ptr<crate::surface_matching::PoseCluster3D>;
 	/// Constant methods for [crate::surface_matching::ICP]
@@ -907,12 +907,12 @@ pub mod surface_matching {
 		}
 		
 		#[inline]
-		fn clone(&mut self) -> Result<core::Ptr<crate::surface_matching::Pose3D>> {
+		fn clone(&mut self) -> Result<crate::surface_matching::Pose3DPtr> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ppf_match_3d_Pose3D_clone(self.as_raw_mut_Pose3D(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::surface_matching::Pose3D>::opencv_from_extern(ret) };
+			let ret = unsafe { crate::surface_matching::Pose3DPtr::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		

@@ -2525,12 +2525,12 @@ pub mod core {
 	
 	opencv_type_enum! { core::_OutputArray_DepthMask }
 	
-	pub type va_display = *mut c_void;
-	pub type va_surface_id = u32;
+	pub type VADisplay = *mut c_void;
+	pub type VASurfaceID = u32;
 	pub type Affine3d = core::Affine3<f64>;
 	pub type Affine3f = core::Affine3<f32>;
-	pub type Hamming_result_type = i32;
-	pub type Hamming_value_type = u8;
+	pub type Hamming_ResultType = i32;
+	pub type Hamming_ValueType = u8;
 	pub type HammingLUT = core::Hamming;
 	pub type InputArray<'a> = &'a core::_InputArray;
 	pub type InputArrayOfArrays<'a> = core::InputArray<'a>;
@@ -11919,7 +11919,7 @@ pub mod core {
 	/// * size: - size of image represented by VASurfaceID object.
 	/// * dst: - destination OutputArray.
 	#[inline]
-	pub unsafe fn convert_from_va_surface(display: core::va_display, surface: core::va_surface_id, size: core::Size, dst: &mut impl ToOutputArray) -> Result<()> {
+	pub unsafe fn convert_from_va_surface(display: core::VADisplay, surface: core::VASurfaceID, size: core::Size, dst: &mut impl ToOutputArray) -> Result<()> {
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		{ sys::cv_va_intel_convertFromVASurface_VADisplay_VASurfaceID_Size_const__OutputArrayR(display, surface, &size, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
@@ -11935,7 +11935,7 @@ pub mod core {
 	/// * surface: - destination VASurfaceID object.
 	/// * size: - size of image represented by VASurfaceID object.
 	#[inline]
-	pub unsafe fn convert_to_va_surface(display: core::va_display, src: &impl ToInputArray, surface: core::va_surface_id, size: core::Size) -> Result<()> {
+	pub unsafe fn convert_to_va_surface(display: core::VADisplay, src: &impl ToInputArray, surface: core::VASurfaceID, size: core::Size) -> Result<()> {
 		input_array_arg!(src);
 		return_send!(via ocvrs_return);
 		{ sys::cv_va_intel_convertToVASurface_VADisplay_const__InputArrayR_VASurfaceID_Size(display, src.as_raw__InputArray(), surface, &size, ocvrs_return.as_mut_ptr()) };
@@ -11955,7 +11955,7 @@ pub mod core {
 	/// This alternative version of [initialize_context_from_va] function uses the following default values for its arguments:
 	/// * try_interop: true
 	#[inline]
-	pub unsafe fn initialize_context_from_va_def(display: core::va_display) -> Result<core::Context> {
+	pub unsafe fn initialize_context_from_va_def(display: core::VADisplay) -> Result<core::Context> {
 		return_send!(via ocvrs_return);
 		{ sys::cv_va_intel_ocl_initializeContextFromVA_VADisplay(display, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
@@ -11974,7 +11974,7 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * try_interop: true
 	#[inline]
-	pub unsafe fn initialize_context_from_va(display: core::va_display, try_interop: bool) -> Result<core::Context> {
+	pub unsafe fn initialize_context_from_va(display: core::VADisplay, try_interop: bool) -> Result<core::Context> {
 		return_send!(via ocvrs_return);
 		{ sys::cv_va_intel_ocl_initializeContextFromVA_VADisplay_bool(display, try_interop, ocvrs_return.as_mut_ptr()) };
 		return_receive!(ocvrs_return => ret);
@@ -15956,7 +15956,7 @@ pub mod core {
 	
 		/// this will count the bits in a ^ b
 		#[inline]
-		fn apply(&self, a: &[u8], b: &[u8]) -> Result<core::Hamming_result_type> {
+		fn apply(&self, a: &[u8], b: &[u8]) -> Result<core::Hamming_ResultType> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Hamming_operator___const_const_unsigned_charX_const_unsigned_charX_int(self.as_raw_Hamming(), a.as_ptr(), b.as_ptr(), a.len().min(b.len()).try_into()?, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -32512,18 +32512,18 @@ pub mod core {
 		
 		/// shape of this array
 		#[inline]
-		fn size(&self) -> core::Vector<i32> {
+		fn size(&self) -> core::GpuMatND_SizeArray {
 			let ret = unsafe { sys::cv_cuda_GpuMatND_propSize_const(self.as_raw_GpuMatND()) };
-			let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
+			let ret = unsafe { core::GpuMatND_SizeArray::opencv_from_extern(ret) };
 			ret
 		}
 		
 		/// ! step values
 		/// Their semantics is identical to the semantics of step for Mat.
 		#[inline]
-		fn step(&self) -> core::Vector<size_t> {
+		fn step(&self) -> core::GpuMatND_StepArray {
 			let ret = unsafe { sys::cv_cuda_GpuMatND_propStep_const(self.as_raw_GpuMatND()) };
-			let ret = unsafe { core::Vector::<size_t>::opencv_from_extern(ret) };
+			let ret = unsafe { core::GpuMatND_StepArray::opencv_from_extern(ret) };
 			ret
 		}
 		
