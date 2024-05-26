@@ -172,7 +172,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 	}
 
-	/// Like canonical(), but also removes indirection by pointer and reference
+	/// Removes indirection by pointer and reference, this will also remove typedef if it references a pointer or reference
 	pub fn source(&self) -> Self {
 		match self.kind().as_ref() {
 			TypeRefKind::Pointer(inner) | TypeRefKind::Reference(inner) | TypeRefKind::RValueReference(inner) => inner.source(),
@@ -195,8 +195,17 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 			TypeRefKind::Pointer(inner) | TypeRefKind::Reference(inner) | TypeRefKind::RValueReference(inner) => {
 				inner.source_smart()
 			}
-			TypeRefKind::Typedef(tdef) => tdef.underlying_type_ref().source_smart(),
 			TypeRefKind::SmartPtr(ptr) => ptr.pointee().source_smart(),
+			TypeRefKind::Typedef(tdef) => {
+				let underlying_type = tdef.underlying_type_ref();
+				match underlying_type.kind().as_ref() {
+					TypeRefKind::Pointer(inner) | TypeRefKind::Reference(inner) | TypeRefKind::RValueReference(inner) => {
+						inner.source_smart()
+					}
+					TypeRefKind::SmartPtr(ptr) => ptr.pointee().source_smart(),
+					_ => self.clone(),
+				}
+			}
 			_ => self.clone(),
 		}
 	}
@@ -205,10 +214,19 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	pub fn base(&self) -> Self {
 		match self.kind().as_ref() {
 			TypeRefKind::Pointer(inner) | TypeRefKind::Reference(inner) | TypeRefKind::RValueReference(inner) => inner.base(),
-			TypeRefKind::Typedef(tdef) => tdef.underlying_type_ref().base(),
+			TypeRefKind::SmartPtr(ptr) => ptr.pointee().base(),
 			TypeRefKind::Array(inner, ..) => inner.base(),
 			TypeRefKind::StdVector(vec) => vec.element_type().base(),
-			TypeRefKind::SmartPtr(ptr) => ptr.pointee().base(),
+			TypeRefKind::Typedef(tdef) => {
+				let underlying_type = tdef.underlying_type_ref();
+				match underlying_type.kind().as_ref() {
+					TypeRefKind::Pointer(inner) | TypeRefKind::Reference(inner) | TypeRefKind::RValueReference(inner) => inner.base(),
+					TypeRefKind::SmartPtr(ptr) => ptr.pointee().base(),
+					TypeRefKind::Array(inner, ..) => inner.base(),
+					TypeRefKind::StdVector(vec) => vec.element_type().base(),
+					_ => self.clone(),
+				}
+			}
 			_ => self.clone(),
 		}
 	}

@@ -1,7 +1,7 @@
 //! Contains all tests that cover marshalling types to and from C++
 
 use opencv::core;
-use opencv::core::{Scalar, Tuple};
+use opencv::core::{Scalar, SparseMat, Tuple};
 use opencv::prelude::*;
 use opencv::Result;
 
@@ -122,6 +122,16 @@ fn fixed_array_return() -> Result<()> {
 		assert_eq!([16, 2], *mat_step.buf());
 	}
 
+	Ok(())
+}
+
+/// Sometimes functions return a boxed class by pointer, so they need an additional dereference
+#[test]
+fn boxed_return_by_pointer() -> Result<()> {
+	let mut sm = SparseMat::from_mat(&Mat::new_rows_cols_with_default(5, 3, i32::opencv_type(), 1.into())?)?;
+	let hdr = sm.hdr();
+	assert_eq!(1, hdr.refcount());
+	assert_eq!(2, hdr.dims());
 	Ok(())
 }
 

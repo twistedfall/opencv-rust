@@ -769,15 +769,20 @@ pub fn cpp_return_map<'f>(return_type: &TypeRef, name: &'f str, is_constructor: 
 		};
 		(str_mk, false)
 	} else if return_kind.extern_pass_kind().is_by_void_ptr() && !is_constructor {
-		let out = return_type
-			.source()
-			.kind()
-			.as_class()
-			.filter(|cls| cls.is_abstract())
-			.map_or_else(
-				|| format!("new {typ}({name})", typ = return_type.cpp_name(CppNameStyle::Reference)).into(),
-				|_| name.into(),
-			);
+		let ret_source = return_type.source();
+		let out = ret_source.kind().as_class().filter(|cls| cls.is_abstract()).map_or_else(
+			|| {
+				// todo implement higher count if it's needed
+				let deref_count = return_type.kind().as_pointer().map_or(0, |_| 1);
+				format!(
+					"new {typ}({:*<deref_count$}{name})",
+					"",
+					typ = ret_source.cpp_name(CppNameStyle::Reference)
+				)
+				.into()
+			},
+			|_| name.into(),
+		);
 		(out, false)
 	} else {
 		(name.into(), return_kind.as_fixed_array().is_some())
