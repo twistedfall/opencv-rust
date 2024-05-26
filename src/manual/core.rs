@@ -1,6 +1,7 @@
 pub use affine3::*;
 pub use data_type::*;
 pub use directx::*;
+pub use inplace::*;
 pub use input_output_array::*;
 pub use mat::*;
 pub use mat_ops::*;
@@ -21,6 +22,7 @@ mod affine3;
 mod data_type;
 mod directx;
 mod gpumat;
+mod inplace;
 mod input_output_array;
 mod mat;
 mod mat_ops;

@@ -10,5 +10,5 @@ pub mod prelude {
 	pub use super::core::MatSizeTraitConstManual;
 	pub use super::core::VectorToVec;
 	#[cfg(ocvrs_has_module_core)]
-	pub use super::core::{MatConstIteratorTraitManual, MatTraitConstManual, MatTraitManual, MatxTrait};
+	pub use super::core::{MatConstIteratorTraitManual, MatTraitConstManual, MatTraitManual, MatxTrait, ModifyInplace};
 }
