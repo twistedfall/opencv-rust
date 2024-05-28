@@ -26,7 +26,7 @@ pub use constant::Const;
 pub use element::{is_opencv_path, opencv_module_from_path, DefaultElement, Element, EntityElement};
 #[allow(unused)]
 use entity::dbg_clang_entity;
-pub use entity::{EntityExt, WalkAction, WalkResult};
+pub use entity::EntityExt;
 pub use enumeration::Enum;
 use field::Field;
 pub use func::{Func, FuncId, FuncTypeHint};

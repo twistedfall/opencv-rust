@@ -1,5 +1,6 @@
 use std::cell::RefCell;
 use std::collections::HashSet;
+use std::ops::ControlFlow;
 use std::path::{Path, PathBuf};
 use std::{env, fmt};
 
@@ -7,7 +8,7 @@ use clang::{Entity, EntityKind};
 
 use opencv_binding_generator::{
 	opencv_module_from_path, settings, Class, EntityExt, EntityWalkerExt, EntityWalkerVisitor, Func, FuncId, Generator,
-	GeneratorEnv, WalkAction,
+	GeneratorEnv,
 };
 
 struct FunctionFinder<'tu, 'f> {
@@ -41,7 +42,7 @@ impl<'tu> EntityWalkerVisitor<'tu> for FunctionFinder<'tu, '_> {
 		opencv_module_from_path(path).map_or(false, |m| m == self.gen_env.module())
 	}
 
-	fn visit_entity(&mut self, entity: Entity<'tu>) -> WalkAction {
+	fn visit_entity(&mut self, entity: Entity<'tu>) -> ControlFlow<()> {
 		match entity.get_kind() {
 			EntityKind::ClassDecl
 			| EntityKind::ClassTemplate
@@ -59,19 +60,18 @@ impl<'tu> EntityWalkerVisitor<'tu> for FunctionFinder<'tu, '_> {
 						if func.is_generic() {
 							self.update_used_func(&func);
 						}
-						WalkAction::Continue
+						ControlFlow::Continue(())
 					});
 					entity.walk_classes_while(|child| self.visit_entity(child));
 				}
-				WalkAction::Continue
 			}
 			EntityKind::FunctionDecl => {
 				let f = Func::new(entity, &self.gen_env);
 				self.update_used_func(&f);
-				WalkAction::Continue
 			}
-			_ => WalkAction::Continue,
+			_ => {}
 		}
+		ControlFlow::Continue(())
 	}
 }
 

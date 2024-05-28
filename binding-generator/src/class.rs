@@ -1,6 +1,7 @@
 use std::borrow::Cow;
 use std::collections::HashSet;
 use std::hash::{Hash, Hasher};
+use std::ops::ControlFlow;
 use std::rc::Rc;
 use std::{fmt, iter};
 
@@ -11,7 +12,7 @@ pub use desc::ClassDesc;
 use crate::comment::strip_doxygen_comment_markers;
 use crate::debug::{DefinitionLocation, LocationName};
 use crate::element::ExcludeKind;
-use crate::entity::{ToEntity, WalkAction, WalkResult};
+use crate::entity::{ControlFlowExt, ToEntity};
 use crate::field::FieldDesc;
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, FuncRustExtern, ReturnKind};
 use crate::type_ref::{Constness, CppNameStyle, StrEnc, StrType, TypeRef, TypeRefDesc, TypeRefTypeHint};
@@ -66,9 +67,9 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 			&& !self
 				.for_each_field(|field| {
 					let type_ref = field.type_ref();
-					WalkAction::continue_until(!type_ref.kind().is_copy(type_ref.type_hint()))
+					ControlFlow::continue_until(!type_ref.kind().is_copy(type_ref.type_hint()))
 				})
-				.is_interrupted()
+				.is_break()
 	}
 
 	pub fn kind(&self) -> ClassKind {
@@ -154,8 +155,8 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	pub fn is_polymorphic(&self) -> bool {
 		match self {
 			Self::Clang { entity, .. } => entity
-				.walk_methods_while(|f| WalkAction::continue_until(f.is_virtual_method() || f.is_pure_virtual_method()))
-				.is_interrupted(),
+				.walk_methods_while(|f| ControlFlow::continue_until(f.is_virtual_method() || f.is_pure_virtual_method()))
+				.is_break(),
 			Self::Desc(_) => false,
 		}
 	}
@@ -185,9 +186,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 
 	/// Class has an explicit method named `clone()`
 	pub fn has_explicit_clone(&self) -> bool {
-		self
-			.for_each_method(|m| WalkAction::continue_until(m.is_clone()))
-			.is_interrupted()
+		self.for_each_method(|m| ControlFlow::continue_until(m.is_clone())).is_break()
 	}
 
 	/// Class is simple (i.e. constructor-copiable in C++), but can't be simple in Rust
@@ -200,12 +199,12 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 			&Self::Clang { entity, .. } => !entity
 				.walk_children_while(|f| {
 					if matches!(f.get_kind(), EntityKind::Constructor) {
-						WalkAction::Interrupt
+						ControlFlow::Break(())
 					} else {
-						WalkAction::Continue
+						ControlFlow::Continue(())
 					}
 				})
-				.is_interrupted(),
+				.is_break(),
 			Self::Desc(_) => false,
 		}
 	}
@@ -213,8 +212,8 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	pub fn has_virtual_destructor(&self) -> bool {
 		match self {
 			Class::Clang { entity, .. } => entity
-				.walk_children_while(|f| WalkAction::continue_until(f.get_kind() == EntityKind::Destructor && f.is_virtual_method()))
-				.is_interrupted(),
+				.walk_children_while(|f| ControlFlow::continue_until(f.get_kind() == EntityKind::Destructor && f.is_virtual_method()))
+				.is_break(),
 			Class::Desc(_) => false,
 		}
 	}
@@ -223,19 +222,19 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		match self {
 			Class::Clang { entity, .. } => entity
 				.walk_children_while(|f| {
-					WalkAction::continue_until(
+					ControlFlow::continue_until(
 						f.get_kind() == EntityKind::Destructor
 							&& f.get_accessibility().map_or(true, |acc| acc != Accessibility::Public),
 					)
 				})
-				.is_interrupted(),
+				.is_break(),
 			Class::Desc(_) => false,
 		}
 	}
 
 	pub fn has_bases(&self) -> bool {
 		match self {
-			&Self::Clang { entity, .. } => entity.walk_bases_while(|_| WalkAction::Interrupt).is_interrupted(),
+			&Self::Clang { entity, .. } => entity.walk_bases_while(|_| ControlFlow::Break(())).is_break(),
 			Self::Desc(desc) => !desc.bases.is_empty(),
 		}
 	}
@@ -247,7 +246,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 				let entity = entity.get_template().unwrap_or(entity);
 				entity.walk_bases_while(|child| {
 					out.push(Self::new(Self::definition_entity(child), gen_env));
-					WalkAction::Continue
+					ControlFlow::Continue(())
 				});
 				out.into()
 			}
@@ -318,14 +317,14 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	}
 
 	pub fn has_methods(&self) -> bool {
-		self.for_each_method(|_| WalkAction::Interrupt).is_interrupted()
+		self.for_each_method(|_| ControlFlow::Break(())).is_break()
 	}
 
 	#[inline]
-	pub fn for_each_method(&self, mut predicate: impl FnMut(Func<'tu, 'ge>) -> WalkAction) -> WalkResult {
+	pub fn for_each_method(&self, mut predicate: impl FnMut(Func<'tu, 'ge>) -> ControlFlow<()>) -> ControlFlow<()> {
 		match self {
 			&Self::Clang { entity, gen_env, .. } => entity.walk_methods_while(|f| predicate(Func::new(f, gen_env))),
-			Self::Desc(_) => WalkResult::Completed,
+			Self::Desc(_) => ControlFlow::Continue(()),
 		}
 	}
 
@@ -342,11 +341,11 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 					for spec in specs {
 						out.push(func.clone().specialize(spec));
 					}
-					return WalkAction::Continue;
+					return ControlFlow::Continue(());
 				}
 			}
 			out.push(func);
-			WalkAction::Continue
+			ControlFlow::Continue(())
 		});
 		let rust_module = match self {
 			Class::Clang { gen_env, .. } => gen_env.module(),
@@ -364,14 +363,14 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	}
 
 	pub fn has_fields(&self) -> bool {
-		self.for_each_field(|_| WalkAction::Interrupt).is_interrupted()
+		self.for_each_field(|_| ControlFlow::Break(())).is_break()
 	}
 
 	#[inline]
-	pub fn for_each_field(&self, mut predicate: impl FnMut(Field<'tu, 'ge>) -> WalkAction) -> WalkResult {
+	pub fn for_each_field(&self, mut predicate: impl FnMut(Field<'tu, 'ge>) -> ControlFlow<()>) -> ControlFlow<()> {
 		match self {
 			&Self::Clang { entity, gen_env, .. } => entity.walk_fields_while(|f| predicate(Field::new(f, gen_env))),
-			Self::Desc(_) => WalkResult::Completed,
+			Self::Desc(_) => ControlFlow::Continue(()),
 		}
 	}
 
@@ -379,16 +378,16 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		let mut out = Vec::with_capacity(32);
 		self.for_each_field(|f| {
 			out.push(f);
-			WalkAction::Continue
+			ControlFlow::Continue(())
 		});
 		out
 	}
 
 	#[inline]
-	pub fn for_each_const(&self, mut predicate: impl FnMut(Const<'tu>) -> WalkAction) -> WalkResult {
+	pub fn for_each_const(&self, mut predicate: impl FnMut(Const<'tu>) -> ControlFlow<()>) -> ControlFlow<()> {
 		match self {
 			&Self::Clang { entity, .. } => entity.walk_consts_while(|f| predicate(Const::new(f))),
-			Self::Desc(_) => WalkResult::Completed,
+			Self::Desc(_) => ControlFlow::Continue(()),
 		}
 	}
 
@@ -396,7 +395,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		let mut out = Vec::with_capacity(8);
 		self.for_each_const(|c| {
 			out.push(c);
-			WalkAction::Continue
+			ControlFlow::Continue(())
 		});
 		out
 	}

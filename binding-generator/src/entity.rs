@@ -1,5 +1,6 @@
 use std::borrow::Cow;
 use std::fmt;
+use std::ops::ControlFlow;
 
 use clang::{Entity, EntityKind, EntityVisitResult, StorageClass};
 
@@ -45,122 +46,107 @@ impl<'tu> ToEntity<'tu> for &Entity<'tu> {
 	}
 }
 
-#[derive(Copy, Clone)]
-pub enum WalkAction {
-	Continue,
-	Interrupt,
+pub trait ControlFlowExt {
+	fn continue_until(condition: bool) -> Self;
+	fn into_entity_visit_result(self) -> EntityVisitResult;
 }
 
-impl WalkAction {
-	pub fn continue_until(condition: bool) -> Self {
+impl ControlFlowExt for ControlFlow<()> {
+	fn continue_until(condition: bool) -> Self {
 		if condition {
-			WalkAction::Interrupt
+			ControlFlow::Break(())
 		} else {
-			WalkAction::Continue
+			ControlFlow::Continue(())
 		}
 	}
-}
 
-impl From<WalkAction> for EntityVisitResult {
-	fn from(action: WalkAction) -> Self {
-		match action {
-			WalkAction::Continue => Self::Continue,
-			WalkAction::Interrupt => Self::Break,
+	fn into_entity_visit_result(self) -> EntityVisitResult {
+		match self {
+			ControlFlow::Continue(_) => EntityVisitResult::Continue,
+			ControlFlow::Break(_) => EntityVisitResult::Break,
 		}
-	}
-}
-
-#[derive(Copy, Clone)]
-pub enum WalkResult {
-	Completed,
-	Interrupted,
-}
-
-impl WalkResult {
-	pub fn is_interrupted(self) -> bool {
-		matches!(self, WalkResult::Interrupted)
 	}
 }
 
 pub trait EntityExt<'tu> {
-	fn walk_children_while(&self, predicate: impl FnMut(Entity<'tu>) -> WalkAction) -> WalkResult;
-	fn walk_bases_while(&self, predicate: impl FnMut(Entity<'tu>) -> WalkAction) -> WalkResult;
-	fn walk_enums_while(&self, predicate: impl FnMut(Entity<'tu>) -> WalkAction) -> WalkResult;
-	fn walk_classes_while(&self, predicate: impl FnMut(Entity<'tu>) -> WalkAction) -> WalkResult;
-	fn walk_typedefs_while(&self, predicate: impl FnMut(Entity<'tu>) -> WalkAction) -> WalkResult;
-	fn walk_fields_while(&self, predicate: impl FnMut(Entity<'tu>) -> WalkAction) -> WalkResult;
-	fn walk_consts_while(&self, predicate: impl FnMut(Entity<'tu>) -> WalkAction) -> WalkResult;
-	fn walk_methods_while(&self, predicate: impl FnMut(Entity<'tu>) -> WalkAction) -> WalkResult;
+	fn walk_children_while(&self, predicate: impl FnMut(Entity<'tu>) -> ControlFlow<()>) -> ControlFlow<()>;
+	fn walk_bases_while(&self, predicate: impl FnMut(Entity<'tu>) -> ControlFlow<()>) -> ControlFlow<()>;
+	fn walk_enums_while(&self, predicate: impl FnMut(Entity<'tu>) -> ControlFlow<()>) -> ControlFlow<()>;
+	fn walk_classes_while(&self, predicate: impl FnMut(Entity<'tu>) -> ControlFlow<()>) -> ControlFlow<()>;
+	fn walk_typedefs_while(&self, predicate: impl FnMut(Entity<'tu>) -> ControlFlow<()>) -> ControlFlow<()>;
+	fn walk_fields_while(&self, predicate: impl FnMut(Entity<'tu>) -> ControlFlow<()>) -> ControlFlow<()>;
+	fn walk_consts_while(&self, predicate: impl FnMut(Entity<'tu>) -> ControlFlow<()>) -> ControlFlow<()>;
+	fn walk_methods_while(&self, predicate: impl FnMut(Entity<'tu>) -> ControlFlow<()>) -> ControlFlow<()>;
 }
 
 impl<'tu> EntityExt<'tu> for Entity<'tu> {
-	fn walk_children_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> WalkAction) -> WalkResult {
-		let res = self.visit_children(|child, _| predicate(child).into());
+	fn walk_children_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> ControlFlow<()>) -> ControlFlow<()> {
+		let res = self.visit_children(|child, _| predicate(child).into_entity_visit_result());
 		if res {
-			WalkResult::Interrupted
+			ControlFlow::Break(())
 		} else {
-			WalkResult::Completed
+			ControlFlow::Continue(())
 		}
 	}
 
-	fn walk_bases_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> WalkAction) -> WalkResult {
+	fn walk_bases_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> ControlFlow<()>) -> ControlFlow<()> {
 		self.walk_children_while(|child| match child.get_kind() {
 			EntityKind::BaseSpecifier => predicate(child),
-			_ => WalkAction::Continue,
+			_ => ControlFlow::Continue(()),
 		})
 	}
 
-	fn walk_enums_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> WalkAction) -> WalkResult {
+	fn walk_enums_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> ControlFlow<()>) -> ControlFlow<()> {
 		self.walk_children_while(|child| match child.get_kind() {
 			EntityKind::EnumDecl => predicate(child),
-			_ => WalkAction::Continue,
+			_ => ControlFlow::Continue(()),
 		})
 	}
 
-	fn walk_classes_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> WalkAction) -> WalkResult {
+	fn walk_classes_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> ControlFlow<()>) -> ControlFlow<()> {
 		self.walk_children_while(|child| match child.get_kind() {
 			EntityKind::ClassDecl | EntityKind::StructDecl => predicate(child),
-			_ => WalkAction::Continue,
+			_ => ControlFlow::Continue(()),
 		})
 	}
 
-	fn walk_typedefs_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> WalkAction) -> WalkResult {
+	fn walk_typedefs_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> ControlFlow<()>) -> ControlFlow<()> {
 		self.walk_children_while(|child| match child.get_kind() {
 			EntityKind::TypedefDecl | EntityKind::TypeAliasDecl => predicate(child),
-			_ => WalkAction::Continue,
+			_ => ControlFlow::Continue(()),
 		})
 	}
 
-	fn walk_fields_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> WalkAction) -> WalkResult {
+	fn walk_fields_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> ControlFlow<()>) -> ControlFlow<()> {
 		self.walk_children_while(|child| match child.get_kind() {
 			EntityKind::FieldDecl => predicate(child),
-			_ => WalkAction::Continue,
+			_ => ControlFlow::Continue(()),
 		})
 	}
 
-	fn walk_consts_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> WalkAction) -> WalkResult {
+	fn walk_consts_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> ControlFlow<()>) -> ControlFlow<()> {
 		self.walk_children_while(|child| match child.get_kind() {
 			EntityKind::VarDecl => {
 				if let Some(StorageClass::Static) = child.get_storage_class() {
 					if child.evaluate().is_some() {
 						predicate(child)
 					} else {
-						WalkAction::Continue
+						ControlFlow::Continue(())
 					}
 				} else {
 					panic!("Non-static constant: {child:#?}")
 				}
 			}
-			_ => WalkAction::Continue,
+			_ => ControlFlow::Continue(()),
 		})
 	}
 
-	fn walk_methods_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> WalkAction) -> WalkResult {
+	fn walk_methods_while(&self, mut predicate: impl FnMut(Entity<'tu>) -> ControlFlow<()>) -> ControlFlow<()> {
 		self.walk_children_while(|child| match child.get_kind() {
 			EntityKind::Constructor | EntityKind::Method | EntityKind::FunctionTemplate | EntityKind::ConversionFunction => {
 				predicate(child)
 			}
-			_ => WalkAction::Continue,
+			_ => ControlFlow::Continue(()),
 		})
 	}
 }

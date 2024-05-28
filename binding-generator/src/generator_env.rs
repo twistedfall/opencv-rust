@@ -4,6 +4,7 @@ use std::convert::TryFrom;
 use std::fmt;
 use std::fs::File;
 use std::io::{BufRead, BufReader, Read, Seek, SeekFrom};
+use std::ops::ControlFlow;
 use std::path::{Path, PathBuf};
 use std::rc::Rc;
 
@@ -13,7 +14,7 @@ use crate::class::ClassKind;
 use crate::type_ref::CppNameStyle;
 use crate::{
 	is_opencv_path, opencv_module_from_path, settings, Class, Element, EntityWalkerExt, EntityWalkerVisitor, MemoizeMap,
-	MemoizeMapExt, NamePool, WalkAction,
+	MemoizeMapExt, NamePool,
 };
 
 #[derive(Copy, Clone, Debug)]
@@ -135,7 +136,7 @@ impl<'tu> EntityWalkerVisitor<'tu> for GeneratorEnvPopulator<'tu, '_> {
 		is_opencv_path(path) || opencv_module_from_path(path).map_or(false, |m| m == self.gen_env.module())
 	}
 
-	fn visit_entity(&mut self, entity: Entity<'tu>) -> WalkAction {
+	fn visit_entity(&mut self, entity: Entity<'tu>) -> ControlFlow<()> {
 		match entity.get_kind() {
 			EntityKind::ClassDecl | EntityKind::StructDecl => {
 				entity.visit_children(|child, _| {
@@ -159,7 +160,7 @@ impl<'tu> EntityWalkerVisitor<'tu> for GeneratorEnvPopulator<'tu, '_> {
 			}
 			_ => {}
 		}
-		WalkAction::Continue
+		ControlFlow::Continue(())
 	}
 }
 

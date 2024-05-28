@@ -1,5 +1,6 @@
 use std::borrow::Cow;
 use std::fmt;
+use std::ops::ControlFlow;
 
 use clang::{Entity, EntityKind};
 
@@ -10,7 +11,6 @@ use crate::type_ref::{CppNameStyle, NameStyle, TypeRefTypeHint};
 use crate::writer::rust_native::type_ref::TypeRefExt;
 use crate::{
 	settings, Class, DefaultElement, Element, EntityElement, EntityExt, Enum, GeneratedType, GeneratorEnv, NameDebug, TypeRef,
-	WalkAction,
 };
 
 #[derive(Clone)]
@@ -47,7 +47,7 @@ impl<'tu, 'ge> Typedef<'tu, 'ge> {
 					_ => {}
 				}
 			}
-			WalkAction::Interrupt
+			ControlFlow::Break(())
 		});
 		out
 	}

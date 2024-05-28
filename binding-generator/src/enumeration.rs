@@ -1,5 +1,6 @@
 use std::borrow::Cow;
 use std::fmt;
+use std::ops::ControlFlow;
 use std::rc::Rc;
 
 use clang::{Entity, EntityKind, EntityVisitResult};
@@ -7,7 +8,6 @@ use clang::{Entity, EntityKind, EntityVisitResult};
 use crate::comment::strip_doxygen_comment_markers;
 use crate::debug::LocationName;
 use crate::element::ExcludeKind;
-use crate::entity::WalkAction;
 use crate::type_ref::CppNameStyle;
 use crate::{Const, DefaultElement, Element, EntityElement, EntityExt, NameDebug, StrExt};
 
@@ -41,7 +41,7 @@ impl<'tu> Enum<'tu> {
 			let mut child = None;
 			self.entity.walk_children_while(|c| {
 				child = Some(c);
-				WalkAction::Interrupt
+				ControlFlow::Break(())
 			});
 			Some(child.expect("Invalid anonymous typedefed enum"))
 		} else {

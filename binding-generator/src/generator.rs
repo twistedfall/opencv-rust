@@ -1,13 +1,13 @@
 use std::borrow::Cow;
 use std::fs::File;
 use std::io::BufReader;
+use std::ops::ControlFlow;
 use std::path::{Path, PathBuf};
 
 use clang::diagnostic::{Diagnostic, Severity};
 use clang::{Clang, Entity, EntityKind, Index};
 use dunce::canonicalize;
 
-use crate::entity::WalkAction;
 use crate::type_ref::{CppNameStyle, FishStyle, TypeRef, TypeRefKind};
 use crate::typedef::NewTypedefResult;
 use crate::writer::rust_native::element::RustElement;
@@ -83,7 +83,7 @@ impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCvWalker<'tu, '_
 		self.visitor.wants_file(path) || path.ends_with("ocvrs_common.hpp")
 	}
 
-	fn visit_entity(&mut self, entity: Entity<'tu>) -> WalkAction {
+	fn visit_entity(&mut self, entity: Entity<'tu>) -> ControlFlow<()> {
 		match entity.get_kind() {
 			EntityKind::MacroDefinition => Self::process_const(&mut self.visitor, entity),
 			EntityKind::MacroExpansion => {
@@ -144,7 +144,7 @@ impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCvWalker<'tu, '_
 				unreachable!("Unsupported entity: {:#?}", entity)
 			}
 		}
-		WalkAction::Continue
+		ControlFlow::Continue(())
 	}
 }
 
@@ -173,7 +173,7 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 				});
 				class_decl.walk_enums_while(|enm| {
 					Self::process_enum(visitor, enm);
-					WalkAction::Continue
+					ControlFlow::Continue(())
 				});
 				class_decl.walk_classes_while(|sub_cls| {
 					if !gen_env.get_export_config(sub_cls).is_some() {
@@ -184,11 +184,11 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 						};
 					}
 					Self::process_class(visitor, gen_env, sub_cls);
-					WalkAction::Continue
+					ControlFlow::Continue(())
 				});
 				class_decl.walk_typedefs_while(|tdef| {
 					Self::process_typedef(visitor, gen_env, tdef);
-					WalkAction::Continue
+					ControlFlow::Continue(())
 				});
 				let cls = Class::new(class_decl, gen_env);
 				if let Some(enm) = cls.as_enum() {

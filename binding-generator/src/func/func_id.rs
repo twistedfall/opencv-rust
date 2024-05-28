@@ -1,12 +1,13 @@
 use std::borrow::Cow;
 use std::fmt;
+use std::ops::ControlFlow;
 
 use clang::{Entity, EntityKind};
 
 use crate::element::UNNAMED;
 use crate::func::FuncDesc;
 use crate::type_ref::Constness;
-use crate::{CppNameStyle, Element, EntityExt, IteratorExt, WalkAction};
+use crate::{CppNameStyle, Element, EntityExt, IteratorExt};
 
 #[derive(Clone, Debug, Eq, Hash, PartialEq)]
 pub struct FuncId<'f> {
@@ -45,7 +46,7 @@ impl<'f> FuncId<'f> {
 				if child.get_kind() == EntityKind::ParmDecl {
 					args.push(child.get_name().map_or(UNNAMED.into(), Cow::Owned));
 				}
-				WalkAction::Continue
+				ControlFlow::Continue(())
 			});
 			args
 		} else {

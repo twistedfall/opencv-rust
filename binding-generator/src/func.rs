@@ -2,6 +2,7 @@ use std::borrow::Cow;
 use std::borrow::Cow::{Borrowed, Owned};
 use std::collections::HashMap;
 use std::fmt;
+use std::ops::ControlFlow;
 use std::rc::Rc;
 
 use clang::{Availability, Entity, EntityKind, ExceptionSpecification};
@@ -16,7 +17,7 @@ use slice_arg_finder::SliceArgFinder;
 use crate::comment::strip_doxygen_comment_markers;
 use crate::debug::{DefinitionLocation, LocationName};
 use crate::element::ExcludeKind;
-use crate::entity::{ToEntity, WalkAction};
+use crate::entity::ToEntity;
 use crate::field::FieldDesc;
 use crate::settings::{TypeRefFactory, ARG_OVERRIDE_SELF};
 use crate::type_ref::{Constness, CppNameStyle, TypeRefDesc, TypeRefTypeHint};
@@ -489,7 +490,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 					if child.get_kind() == EntityKind::ParmDecl {
 						out.push(child);
 					}
-					WalkAction::Continue
+					ControlFlow::Continue(())
 				});
 				out
 			}
