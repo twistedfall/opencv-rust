@@ -226,14 +226,14 @@ impl Library {
 			let mut cargo_metadata = Vec::with_capacity(64);
 			let include_paths: Vec<_> = include_paths.iter().map(PathBuf::from).collect();
 
-			let version = Self::version_from_include_paths(&include_paths);
+			let version = Self::version_from_include_paths(&include_paths).ok_or("could not get versions from header files")?;
 
 			cargo_metadata.extend(Self::process_link_paths(Some(link_paths), vec![], None));
 			cargo_metadata.extend(Self::process_link_libs(Some(link_libs), vec![], None));
 
 			Ok(Self {
 				include_paths,
-				version: version.unwrap_or_else(|| Version::new(0, 0, 0)),
+				version,
 				cargo_metadata,
 			})
 		} else {
