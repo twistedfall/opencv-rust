@@ -16,12 +16,12 @@ jobs:
           - macos-13
         opencv-version:
           - 3.4.20
-          - 4.9.0
+          - 4.10.0
         linkage:
           - dynamic
         include:
           - os-image: ubuntu-22.04
-            opencv-version: 4.9.0
+            opencv-version: 4.10.0
             linkage: static
     runs-on: ${{ matrix.os-image }}
     env:
@@ -47,14 +47,10 @@ jobs:
           key: build-${{ matrix.opencv-version }}-${{ matrix.linkage }}-${{ matrix.os-image }}
 
       - name: Install dependencies
-        env:
-          OS_FAMILY: ${{ runner.os }}
         run: ci/install.sh
         shell: bash
 
       - name: Test project
-        env:
-          OS_FAMILY: ${{ runner.os }}
         run: ci/script.sh
         shell: bash
 
@@ -67,7 +63,7 @@ jobs:
           - windows-2022
           - macos-14
         vcpkg-version:
-          - 2024.04.26
+          - 2024.07.12
     runs-on: ${{ matrix.os-image }}
     env:
       VCPKG_VERSION: ${{ matrix.vcpkg-version }}
@@ -83,14 +79,10 @@ jobs:
           key: vcpkg-${{ matrix.vcpkg-version }}-${{ matrix.os-image }}
 
       - name: Install dependencies
-        env:
-          OS_FAMILY: ${{ runner.os }}
         run: ci/install.sh
         shell: bash
 
       - name: Test project
-        env:
-          OS_FAMILY: ${{ runner.os }}
         run: ci/script.sh
         shell: bash
 
@@ -102,7 +94,7 @@ jobs:
           - windows-2022
         version:
           - opencv: 3.4.16
-          - opencv: 4.9.0
+          - opencv: 4.10.0
         include:
           - os-image: ubuntu-22.04
             version:
@@ -125,14 +117,10 @@ jobs:
       - uses: mozilla-actions/sccache-action@v0.0.5
 
       - name: Install dependencies
-        env:
-          OS_FAMILY: ${{ runner.os }}
         run: ci/install.sh
         shell: bash
 
       - name: Test project
-        env:
-          OS_FAMILY: ${{ runner.os }}
         run: ci/script.sh
         shell: bash
 
@@ -149,7 +137,7 @@ jobs:
   msrv:
     runs-on: ubuntu-20.04
     env:
-      OPENCV_VERSION: 4.9.0
+      OPENCV_VERSION: 4.10.0
       SCCACHE_GHA_ENABLED: "true"
       RUSTC_WRAPPER: "sccache"
       CMAKE_C_COMPILER_LAUNCHER: "sccache"
@@ -177,13 +165,9 @@ jobs:
           toolchain: ${{ steps.metadata.outputs.msrv }}
 
       - name: Install dependencies
-        env:
-          OS_FAMILY: ${{ runner.os }}
         run: ci/install.sh
         shell: bash
 
       - name: Check project
-        env:
-          OS_FAMILY: ${{ runner.os }}
         run: ci/msrv.sh
         shell: bash

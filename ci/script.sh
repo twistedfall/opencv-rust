@@ -2,7 +2,19 @@
 
 set -xeu
 
-if [[ "$OS_FAMILY" == "Windows" ]]; then
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+	os_family="Linux"
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+	os_family="macOS"
+elif [[ "$OSTYPE" == "cygwin" || "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
+	os_family="Windows"
+elif [[ "$OSTYPE" == "freebsd"* ]]; then
+	exit "FreeBSD is not supported"
+else
+	exit "Unknown OS: $OSTYPE"
+fi
+
+if [[ "$os_family" == "Windows" ]]; then
 	export PATH="/C/Program Files/LLVM/bin:$PATH"
 	export LIBCLANG_PATH="C:/Program Files/LLVM/bin"
 	if [[ "${VCPKG_VERSION:-}" != "" ]]; then # vcpkg build
@@ -18,12 +30,13 @@ if [[ "$OS_FAMILY" == "Windows" ]]; then
 	fi
 	echo "=== Installed chocolatey packages:"
 	choco list
-elif [[ "$OS_FAMILY" == "macOS" ]]; then
+elif [[ "$os_family" == "macOS" ]]; then
 	xcode_select="xcode-select" # IDEA code highlighting workaround
 	toolchain_path="$($xcode_select --print-path)/Toolchains/XcodeDefault.xctoolchain/"
 	export DYLD_FALLBACK_LIBRARY_PATH="$toolchain_path/usr/lib/"
 	if [[ "${VCPKG_VERSION:-}" != "" ]]; then # vcpkg build
 		export VCPKG_ROOT="$HOME/build/vcpkg"
+		export VCPKG_DISABLE_METRICS=1
 		echo "=== Installed vcpkg packages:"
 		"$VCPKG_ROOT/vcpkg" list
 	elif [[ "${BREW_OPENCV_VERSION:-}" != "" ]]; then # brew build
@@ -36,20 +49,22 @@ elif [[ "$OS_FAMILY" == "macOS" ]]; then
 	fi
 	echo "=== Installed brew packages:"
 	brew list --versions
-elif [[ "$OS_FAMILY" == "Linux" ]]; then
+elif [[ "$os_family" == "Linux" ]]; then
 	if [[ "${VCPKG_VERSION:-}" != "" ]]; then # vcpkg build
 		export VCPKG_ROOT="$HOME/build/vcpkg"
 		echo "=== Installed vcpkg packages:"
 		"$VCPKG_ROOT/vcpkg" list
+		# fixes linking issue that started happening since 2024-07-04
+		export OPENCV_LINK_LIBS="+freetype,bz2,brotlidec,brotlicommon"
 	else
 		if [[ "${OPENCV_LINKAGE:-dynamic}" == "static" ]]; then # static build
-			export OPENCV_LINK_LIBS=opencv_gapi,opencv_highgui,opencv_objdetect,opencv_dnn,opencv_videostab,opencv_calib3d,opencv_features2d,opencv_stitching,opencv_flann,opencv_videoio,opencv_rgbd,opencv_aruco,opencv_video,opencv_ml,opencv_imgcodecs,opencv_imgproc,opencv_core,ade,ittnotify,tbb,liblibwebp,liblibtiff,liblibjpeg-turbo,liblibpng,liblibopenjp2,ippiw,ippicv,liblibprotobuf,quirc,zlib
+			export OPENCV_LINK_LIBS=opencv_gapi,opencv_highgui,opencv_objdetect,opencv_dnn,opencv_videostab,opencv_calib3d,opencv_features2d,opencv_stitching,opencv_flann,opencv_videoio,opencv_rgbd,opencv_aruco,opencv_video,opencv_ml,opencv_imgcodecs,opencv_imgproc,opencv_core,ade,ittnotify,liblibwebp,liblibtiff,liblibjpeg-turbo,liblibpng,liblibopenjp2,ippiw,ippicv,liblibprotobuf,quirc,zlib
 		fi
 	fi
 fi
 
 # remove tests and examples that require the latest OpenCV version so that they don't fail due to missing modules
-if [[ "${OPENCV_VERSION:-}" != "4.9.0" ]]; then
+if [[ "${OPENCV_VERSION:-}" != "4.10.0" ]]; then
 	rm -vf tests/*_only_latest_opencv.rs
 	rm -vf examples/dnn_face_detect.rs examples/text_detection.rs
 fi

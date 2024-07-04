@@ -5,8 +5,6 @@ set -eu
 script_dir="$(dirname "$(readlink -f "$BASH_SOURCE")")"
 cd "$script_dir/.."
 
-export OS_FAMILY="linux"
-
 (
 	. "$script_dir/env-34.sh"
 	ci/script.sh

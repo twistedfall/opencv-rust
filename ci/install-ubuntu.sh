@@ -136,12 +136,12 @@ BUILD_FLAGS="
 sudo apt-get -y install build-essential cmake
 
 if [[ "${OPENCV_LINKAGE:-dynamic}" == "static" ]]; then # static build
+# bring back -D BUILD_TBB=ON when updated to Ubuntu-24.04 (https://github.com/opencv/opencv/issues/25187)
 	BUILD_FLAGS="$BUILD_FLAGS
 	-D BUILD_JPEG=ON
 	-D BUILD_OPENJPEG=ON
 	-D BUILD_PNG=ON
 	-D BUILD_SHARED_LIBS=OFF
-	-D BUILD_TBB=ON
 	-D BUILD_TIFF=ON
 	-D BUILD_WEBP=ON
 	-D BUILD_ZLIB=ON

@@ -9,6 +9,7 @@ rm -rf "$VCPKG_INSTALLATION_ROOT"
 choco install -y llvm --version "$CHOCO_LLVM_VERSION"
 
 export VCPKG_ROOT="$HOME/build/vcpkg"
+export VCPKG_DISABLE_METRICS=1
 if [[ -e "$VCPKG_ROOT" && ! -e "$VCPKG_ROOT/.git" ]]; then
 	rm -rf "$VCPKG_ROOT"
 fi

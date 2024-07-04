@@ -10,12 +10,13 @@ fi
 sudo apt-get update
 sudo apt-get install -y clang libharfbuzz0b git curl zip unzip tar bison gperf libx11-dev libxft-dev libxext-dev \
 	libgles2-mesa-dev autoconf libtool build-essential libxrandr-dev libxi-dev libxcursor-dev libxdamage-dev libxinerama-dev \
-	libdbus-1-dev libxtst-dev sudo
+	libdbus-1-dev libxtst-dev sudo python3-jinja2 cmake
 
 # workaround to make clang_sys crate detect installed libclang
 sudo ln -fs libclang.so.1 /usr/lib/llvm-14/lib/libclang.so
 
 export VCPKG_ROOT="$HOME/build/vcpkg"
+export VCPKG_DISABLE_METRICS=1
 if [[ -e "$VCPKG_ROOT" && ! -e "$VCPKG_ROOT/.git" ]]; then
 	rm -rf "$VCPKG_ROOT"
 fi

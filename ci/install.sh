@@ -4,7 +4,19 @@ set -xeu
 
 ci_dir="$(dirname "$0")"
 
-if [[ "$OS_FAMILY" == "Linux" ]]; then
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+	os_family="Linux"
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+	os_family="macOS"
+elif [[ "$OSTYPE" == "cygwin" || "$OSTYPE" == "msys" || "$OSTYPE" == "win32" ]]; then
+	os_family="Windows"
+elif [[ "$OSTYPE" == "freebsd"* ]]; then
+	exit "FreeBSD is not supported"
+else
+	exit "Unknown OS: $OSTYPE"
+fi
+
+if [[ "$os_family" == "Linux" ]]; then
 	# free up disk space in Github Actions image: https://github.com/actions/runner-images/issues/2840
 	sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/share/boost
 	if [[ "${VCPKG_VERSION:-}" != "" ]]; then # vcpkg build
@@ -12,7 +24,7 @@ if [[ "$OS_FAMILY" == "Linux" ]]; then
 	else
 		"$ci_dir/install-ubuntu.sh"
 	fi
-elif [[ "$OS_FAMILY" == "macOS" ]]; then
+elif [[ "$os_family" == "macOS" ]]; then
 	if [[ "${BREW_OPENCV_VERSION:-}" != "" ]]; then # brew build
 		"$ci_dir/install-macos-brew.sh"
 	elif [[ "${VCPKG_VERSION:-}" != "" ]]; then # vcpkg build
@@ -20,8 +32,8 @@ elif [[ "$OS_FAMILY" == "macOS" ]]; then
 	else
 		"$ci_dir/install-macos-framework.sh"
 	fi
-elif [[ "$OS_FAMILY" == "Windows" ]]; then
-	export CHOCO_LLVM_VERSION=18.1.6
+elif [[ "$os_family" == "Windows" ]]; then
+	export CHOCO_LLVM_VERSION=18.1.8
 	if [[ "${VCPKG_VERSION:-}" != "" ]]; then # vcpkg build
 		"$ci_dir/install-windows-vcpkg.sh"
 	else # chocolatey build
