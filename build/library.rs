@@ -226,7 +226,7 @@ impl Library {
 			let mut cargo_metadata = Vec::with_capacity(64);
 			let include_paths: Vec<_> = include_paths.iter().map(PathBuf::from).collect();
 
-			let version = Self::version_from_include_paths(&include_paths).ok_or("could not get versions from header files")?;
+			let version = Self::version_from_include_paths(&include_paths).ok_or("Could not OpenCV version from include_paths")?;
 
 			cargo_metadata.extend(Self::process_link_paths(Some(link_paths), vec![], None));
 			cargo_metadata.extend(Self::process_link_libs(Some(link_libs), vec![], None));
@@ -425,7 +425,7 @@ impl Library {
 			|| env::var_os("OPENCV_CMAKE_BIN").is_some();
 		let explicit_vcpkg = env::var_os("VCPKG_ROOT").is_some();
 		eprintln!(
-			"=== Detected probe priority based on environment vars: pkg_config: {explicit_pkg_config}, cmake: {explicit_cmake}, vcpkg: {explicit_vcpkg}"
+			"=== Detected probe priority boost based on environment vars: pkg_config: {explicit_pkg_config}, cmake: {explicit_cmake}, vcpkg: {explicit_vcpkg}"
 		);
 
 		let disabled_probes = env::var("OPENCV_DISABLE_PROBES");

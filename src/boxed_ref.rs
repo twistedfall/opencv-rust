@@ -11,7 +11,6 @@ use crate::traits::{Boxed, OpenCVFromExtern, OpenCVIntoExternContainer, OpenCVTy
 #[repr(transparent)]
 pub struct BoxedRef<'r, T: Boxed> {
 	pub(crate) reference: T,
-	// can make it &'r T, but then it will just take up unnecessary space
 	referenced_object: PhantomData<&'r T>,
 }
 

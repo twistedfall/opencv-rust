@@ -110,7 +110,6 @@ all_modules_34="aruco
 	ml
 	objdetect
 	optflow
-	ovis
 	phase_unwrapping
 	photo
 	plot

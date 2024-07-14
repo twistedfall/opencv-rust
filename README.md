@@ -4,7 +4,7 @@
 [![Documentation](https://docs.rs/opencv/badge.svg)](https://docs.rs/opencv)
 [![Package](https://img.shields.io/crates/v/opencv.svg)](https://crates.io/crates/opencv)
 
-Experimental Rust bindings for OpenCV 3 and 4.
+Rust bindings for the popular [OpenCV](https://opencv.org/) computer vision library.
 
 The API is usable, but unstable and not very battle-tested; use at your own risk.
 

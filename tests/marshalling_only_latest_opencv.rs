@@ -3,6 +3,7 @@
 /// Setting and getting fields through Ptr
 #[test]
 #[cfg(all(ocvrs_has_module_aruco, any(ocvrs_opencv_branch_34, ocvrs_opencv_branch_4)))]
+#[allow(deprecated)]
 fn field_access_on_ptr() -> opencv::Result<()> {
 	use opencv::aruco::EstimateParameters;
 	use opencv::prelude::*;
