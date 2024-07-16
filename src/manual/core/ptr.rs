@@ -79,3 +79,7 @@ where
 		unsafe { self.extern_delete() }
 	}
 }
+
+unsafe impl<T: Send> Send for Ptr<T> where Self: PtrExtern {}
+
+unsafe impl<T: Sync> Sync for Ptr<T> where Self: PtrExtern {}

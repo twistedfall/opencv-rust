@@ -1,5 +1,5 @@
 use std::ffi::c_void;
-use std::mem;
+use std::{mem, thread};
 
 use matches::assert_matches;
 
@@ -1214,6 +1214,28 @@ fn mat_reshape() -> Result<()> {
 	*mat2.at_2d_mut(1, 0)? = 10;
 
 	assert_eq!(&[1, 2, 3, 10, 5, 6], mat2.data_typed::<i32>()?);
+
+	Ok(())
+}
+
+#[test]
+fn mat_send_sync() -> Result<()> {
+	{
+		let m = Mat::new_rows_cols_with_default(3, 3, u8::opencv_type(), 123.into()).unwrap();
+		thread::spawn(move || assert_eq!(123, *m.at::<u8>(1).unwrap()))
+			.join()
+			.unwrap();
+	}
+
+	{
+		let mut m = Mat::new_rows_cols_with_default(3, 3, u8::opencv_type(), 123.into()).unwrap();
+		thread::scope(|s| {
+			s.spawn(|| {
+				*m.at_2d_mut::<u8>(1, 1).unwrap() = 10;
+			});
+		});
+		assert_eq!(10, *m.at_2d::<u8>(1, 1).unwrap());
+	}
 
 	Ok(())
 }

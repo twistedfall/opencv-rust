@@ -96,3 +96,7 @@ macro_rules! tuple_extern {
 		}
 	};
 }
+
+unsafe impl<T: Send> Send for Tuple<T> where Self: TupleExtern {}
+
+unsafe impl<T: Sync> Sync for Tuple<T> where Self: TupleExtern {}

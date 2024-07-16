@@ -764,6 +764,8 @@ impl<T: MatTrait + ?Sized> MatTraitManual for T {}
 input_output_array! { Mat, from_mat, from_mat_mut }
 input_output_array_vector! { Mat, from_mat_vec, from_mat_vec_mut }
 
+unsafe impl Sync for Mat {}
+
 impl fmt::Debug for Mat {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		let typ = self.typ();
