@@ -2,7 +2,7 @@ use std::convert::TryInto;
 use std::ffi::c_void;
 use std::marker::PhantomData;
 use std::ops::Deref;
-use std::{fmt, ptr, slice};
+use std::{fmt, mem, ptr, slice};
 
 pub use mat_::*;
 
@@ -97,23 +97,29 @@ fn match_is_continuous(mat: &(impl MatTraitConst + ?Sized)) -> Result<()> {
 	}
 }
 
-fn match_length(sizes: &[i32], len: usize) -> Result<()> {
+fn match_length(sizes: &[i32], slice_len: usize, size_mul: usize) -> Result<()> {
 	if sizes.is_empty() {
 		return Err(Error::new(core::StsUnmatchedSizes, "Dimensions must not be empty"));
 	}
-	let mut volume: u64 = 1;
+	let mut expected_len: u64 = 1;
 	for (i, size) in sizes.iter().enumerate() {
 		let size =
 			u64::try_from(*size).map_err(|_| Error::new(core::StsOutOfRange, format!("Dimension {i} must not be negative")))?;
-		volume = volume.saturating_mul(size);
+		expected_len = expected_len.saturating_mul(size);
 	}
-	let data_len = u64::try_from(len).map_err(|_| Error::new(core::StsOutOfRange, "Length must fit in u64"))?;
-	if volume != data_len {
+	if size_mul > 1 {
+		// cast is safe because of the `> 1` check above
+		expected_len = expected_len.saturating_mul(size_mul as u64);
+	}
+	let slice_len = u64::try_from(slice_len).map_err(|_| Error::new(core::StsOutOfRange, "Length must fit in u64"))?;
+	if expected_len != slice_len {
 		let msg = match sizes {
 			[rows, cols] => {
-				format!("The length of the slice: {data_len} must match the passed row: {rows} and column: {cols} counts exactly")
+				format!("The length of the slice: {slice_len} must be: {expected_len} to match the passed row: {rows} and column: {cols} counts")
 			}
-			_ => format!("The length of the slice: {data_len} must match the passed dimensions: {sizes:?} exactly"),
+			_ => {
+				format!("The length of the slice: {slice_len} must be: {expected_len} to match the passed dimensions: {sizes:?}")
+			}
 		};
 		return Err(Error::new(core::StsUnmatchedSizes, msg));
 	}
@@ -165,6 +171,42 @@ impl Mat {
 		Self::new_rows_cols_with_data(1, i32::try_from(s.len())?, s)
 	}
 
+	/// Create a new `Mat` from a single-dimensional byte slice
+	#[inline]
+	pub fn from_bytes<T: DataType>(s: &[u8]) -> Result<BoxedRef<Self>> {
+		let rem = s.len() % mem::size_of::<T>();
+		if rem != 0 {
+			return Err(Error::new(
+				core::StsBadArg,
+				format!(
+					"Unexpected number of bytes: {} the indicated type, expected multiple of {}",
+					s.len(),
+					T::opencv_channels()
+				),
+			));
+		}
+		let len = s.len() / mem::size_of::<T>();
+		Self::new_rows_cols_with_bytes::<T>(1, i32::try_from(len)?, s)
+	}
+
+	/// Create a new `Mat` from a mutable single-dimensional byte slice
+	#[inline]
+	pub fn from_bytes_mut<T: DataType>(s: &mut [u8]) -> Result<BoxedRefMut<Self>> {
+		let rem = s.len() % mem::size_of::<T>();
+		if rem != 0 {
+			return Err(Error::new(
+				core::StsBadArg,
+				format!(
+					"Unexpected number of bytes: {} the indicated type, expected multiple of {}",
+					s.len(),
+					T::opencv_channels()
+				),
+			));
+		}
+		let len = s.len() / mem::size_of::<T>();
+		Self::new_rows_cols_with_bytes_mut::<T>(1, i32::try_from(len)?, s)
+	}
+
 	/// Create a new `Mat` from a mutable single-dimensional slice
 	#[inline]
 	pub fn from_slice_mut<T: DataType>(s: &mut [T]) -> Result<BoxedRefMut<Self>> {
@@ -211,17 +253,36 @@ impl Mat {
 	/// Create a new `Mat` that references a single-dimensional slice with custom shape
 	#[inline]
 	pub fn new_rows_cols_with_data<T: DataType>(rows: i32, cols: i32, data: &[T]) -> Result<BoxedRef<Self>> {
-		match_length(&[rows, cols], data.len())?;
+		match_length(&[rows, cols], data.len(), 1)?;
 		let m = unsafe {
 			Self::new_rows_cols_with_data_unsafe_def(rows, cols, T::opencv_type(), data.as_ptr().cast::<c_void>().cast_mut())
 		}?;
 		Ok(<BoxedRef<Mat>>::from(m))
 	}
 
-	/// Create a new `Mat` that references a single-dimensional slice with custom shape
+	/// Create a new `Mat` that references a single-dimensional byte slice with custom shape
+	#[inline]
+	pub fn new_rows_cols_with_bytes<T: DataType>(rows: i32, cols: i32, data: &[u8]) -> Result<BoxedRef<Self>> {
+		match_length(&[rows, cols], data.len(), mem::size_of::<T>())?;
+		let m = unsafe {
+			Self::new_rows_cols_with_data_unsafe_def(rows, cols, T::opencv_type(), data.as_ptr().cast::<c_void>().cast_mut())
+		}?;
+		Ok(<BoxedRef<Mat>>::from(m))
+	}
+
+	/// Create a new mutable `Mat` that references a single-dimensional slice with custom shape
 	#[inline]
 	pub fn new_rows_cols_with_data_mut<T: DataType>(rows: i32, cols: i32, data: &mut [T]) -> Result<BoxedRefMut<Self>> {
-		match_length(&[rows, cols], data.len())?;
+		match_length(&[rows, cols], data.len(), 1)?;
+		let m =
+			unsafe { Self::new_rows_cols_with_data_unsafe_def(rows, cols, T::opencv_type(), data.as_mut_ptr().cast::<c_void>()) }?;
+		Ok(<BoxedRefMut<Mat>>::from(m))
+	}
+
+	/// Create a new mutable `Mat` that references a single-dimensional byte slice with custom shape
+	#[inline]
+	pub fn new_rows_cols_with_bytes_mut<T: DataType>(rows: i32, cols: i32, data: &mut [u8]) -> Result<BoxedRefMut<Self>> {
+		match_length(&[rows, cols], data.len(), mem::size_of::<T>())?;
 		let m =
 			unsafe { Self::new_rows_cols_with_data_unsafe_def(rows, cols, T::opencv_type(), data.as_mut_ptr().cast::<c_void>()) }?;
 		Ok(<BoxedRefMut<Mat>>::from(m))
@@ -230,15 +291,15 @@ impl Mat {
 	/// Create a new `Mat` that references a single-dimensional slice with custom shape
 	#[inline]
 	pub fn new_size_with_data<T: DataType>(size: Size, data: &[T]) -> Result<BoxedRef<Self>> {
-		match_length(&[size.width, size.height], data.len())?;
+		match_length(&[size.width, size.height], data.len(), 1)?;
 		let m = unsafe { Self::new_size_with_data_unsafe_def(size, T::opencv_type(), data.as_ptr().cast::<c_void>().cast_mut()) }?;
 		Ok(<BoxedRef<Mat>>::from(m))
 	}
 
-	/// Create a new `Mat` that references a single-dimensional slice with custom shape
+	/// Create a new mutable `Mat` that references a single-dimensional slice with custom shape
 	#[inline]
 	pub fn new_size_with_data_mut<T: DataType>(size: Size, data: &mut [T]) -> Result<BoxedRefMut<Self>> {
-		match_length(&[size.width, size.height], data.len())?;
+		match_length(&[size.width, size.height], data.len(), 1)?;
 		let m = unsafe { Self::new_size_with_data_unsafe_def(size, T::opencv_type(), data.as_mut_ptr().cast::<c_void>()) }?;
 		Ok(<BoxedRefMut<Mat>>::from(m))
 	}
@@ -246,7 +307,7 @@ impl Mat {
 	/// Create a new `Mat` that references a single-dimensional slice with custom shape
 	#[inline]
 	pub fn new_nd_with_data<'data, T: DataType>(sizes: &[i32], data: &'data [T]) -> Result<BoxedRef<'data, Self>> {
-		match_length(sizes, data.len())?;
+		match_length(sizes, data.len(), 1)?;
 		let m = unsafe { Self::new_nd_with_data_unsafe_def(sizes, T::opencv_type(), data.as_ptr().cast::<c_void>().cast_mut()) }?;
 		Ok(<BoxedRef<Mat>>::from(m))
 	}
@@ -254,7 +315,7 @@ impl Mat {
 	/// Create a new `Mat` that references a single-dimensional slice with custom shape
 	#[inline]
 	pub fn new_nd_with_data_mut<'data, T: DataType>(sizes: &[i32], data: &'data mut [T]) -> Result<BoxedRefMut<'data, Self>> {
-		match_length(sizes, data.len())?;
+		match_length(sizes, data.len(), 1)?;
 		let m = unsafe { Self::new_nd_with_data_unsafe_def(sizes, T::opencv_type(), data.as_mut_ptr().cast::<c_void>()) }?;
 		Ok(<BoxedRefMut<Mat>>::from(m))
 	}

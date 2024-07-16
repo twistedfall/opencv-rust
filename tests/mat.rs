@@ -3,7 +3,9 @@ use std::mem;
 
 use matches::assert_matches;
 
-use opencv::core::{MatConstIterator, MatIter, Point, Point2d, Rect, Scalar, Size, Vec2b, Vec2s, Vec3d, Vec3f, Vec4w, Vector};
+use opencv::core::{
+	MatConstIterator, MatIter, Point, Point2d, Point2f, Rect, Scalar, Size, Vec2b, Vec2s, Vec3d, Vec3f, Vec3s, Vec4w, Vector,
+};
 use opencv::prelude::*;
 use opencv::{core, imgproc, Error, Result};
 const PIXEL: &[u8] = include_bytes!("pixel.png");
@@ -1092,6 +1094,53 @@ fn mat_from_slice() -> Result<()> {
 		assert_eq!(2, mat.rows());
 		assert_eq!(2, mat.cols());
 		assert_eq!(Point2d::new(50.5, 60.6), *mat.at_2d(1, 0)?);
+	}
+
+	Ok(())
+}
+
+#[test]
+fn mat_from_bytes() -> Result<()> {
+	{
+		let data = vec![0; 3 * 3 * 3 * 2];
+		let mat = Mat::new_rows_cols_with_bytes::<Vec3s>(3, 3, &data)?;
+
+		assert_eq!(Size::new(3, 3), mat.size()?);
+		assert_eq!(54, mat.data_bytes()?.len());
+		assert_eq!(9, mat.data_typed::<Vec3s>()?.len());
+	}
+
+	{
+		let mut data = vec![0; 2 * 3 * 2 * 4];
+		let mut mat = Mat::new_rows_cols_with_bytes_mut::<Point>(3, 2, &mut data)?;
+
+		assert_eq!(Size::new(2, 3), mat.size()?);
+		assert_eq!(48, mat.data_bytes()?.len());
+		assert_eq!(6, mat.data_typed::<Point>()?.len());
+
+		mat.at_2d_mut::<Point>(1, 1)?.y = 15;
+		assert!(data[7 * 4..7 * 4 + 4].contains(&15));
+	}
+
+	{
+		let data = vec![0; 6 * 2 * 4];
+		let mat = Mat::from_bytes::<Point2f>(&data)?;
+
+		assert_eq!(Size::new(6, 1), mat.size()?);
+		assert_eq!(48, mat.data_bytes()?.len());
+		assert_eq!(6, mat.data_typed::<Point2f>()?.len());
+	}
+
+	{
+		let mut data = vec![0; 4 * 4 * 2];
+		let mut mat = Mat::from_bytes_mut::<Vec4w>(&mut data)?;
+
+		assert_eq!(Size::new(4, 1), mat.size()?);
+		assert_eq!(32, mat.data_bytes()?.len());
+		assert_eq!(4, mat.data_typed::<Vec4w>()?.len());
+
+		mat.at_mut::<Vec4w>(2)?[1] = 123;
+		assert!(data[18..20].contains(&123));
 	}
 
 	Ok(())
