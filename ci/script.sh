@@ -42,10 +42,17 @@ elif [[ "$os_family" == "macOS" ]]; then
 	elif [[ "${BREW_OPENCV_VERSION:-}" != "" ]]; then # brew build
 		true
 	else # framework build
+		opencv_build_path="$HOME/build/opencv/opencv-$OPENCV_VERSION-build"
+		export DYLD_FALLBACK_LIBRARY_PATH="$DYLD_FALLBACK_LIBRARY_PATH:$opencv_build_path/build/build-$(uname -m)-macosx/install/lib/"
 		clang_dir="$(clang --print-search-dirs | awk -F= '/^libraries: =/ { print $2 }')"
-		export OPENCV_LINK_PATHS="$HOME/build/opencv/opencv-$OPENCV_VERSION-build,$clang_dir/lib/darwin"
-		export OPENCV_LINK_LIBS="opencv2.framework,OpenCL.framework,Cocoa.framework,Accelerate.framework,AVFoundation.framework,CoreGraphics.framework,CoreMedia.framework,CoreVideo.framework,QuartzCore.framework,clang_rt.osx"
-		export OPENCV_INCLUDE_PATHS="$HOME/build/opencv/opencv-$OPENCV_VERSION-build"
+		if [[ "$OPENCV_VERSION" == "3.4.20" ]]; then
+			export OPENCV_LINK_PATHS="$opencv_build_path,$clang_dir/lib/darwin"
+			export OPENCV_LINK_LIBS="opencv2.framework,OpenCL.framework,Cocoa.framework,Accelerate.framework,AVFoundation.framework,CoreGraphics.framework,CoreMedia.framework,CoreVideo.framework,QuartzCore.framework,clang_rt.osx"
+		else
+			export OPENCV_LINK_PATHS="$opencv_build_path,$clang_dir/lib/darwin,$opencv_build_path/build/build-$(uname -m)-macosx/install/lib/"
+			export OPENCV_LINK_LIBS="opencv2.framework,OpenCL.framework,Cocoa.framework,Accelerate.framework,AVFoundation.framework,CoreGraphics.framework,CoreMedia.framework,CoreVideo.framework,QuartzCore.framework,clang_rt.osx,OrbbecSDK"
+		fi
+		export OPENCV_INCLUDE_PATHS="$opencv_build_path"
 	fi
 	echo "=== Installed brew packages:"
 	brew list --versions

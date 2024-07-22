@@ -13,9 +13,8 @@ jobs:
       matrix:
         os-image:
           - ubuntu-22.04
-          - macos-13
+          - macos-14
         opencv-version:
-          - 3.4.20
           - 4.10.0
         linkage:
           - dynamic
@@ -23,6 +22,12 @@ jobs:
           - os-image: ubuntu-22.04
             opencv-version: 4.10.0
             linkage: static
+          - os-image: ubuntu-22.04
+            opencv-version: 3.4.20
+            linkage: dynamic
+          - os-image: macos-13
+            opencv-version: 3.4.20
+            linkage: dynamic
     runs-on: ${{ matrix.os-image }}
     env:
       Atlas_ROOT_DIR: /usr/include/ # for cmake to find lapacke.h

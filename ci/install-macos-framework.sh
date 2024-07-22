@@ -2,6 +2,8 @@
 
 set -xeu
 
+macos_version="$(sw_vers -productVersion)"
+
 dist_dir="$HOME/dist/"
 base_dir="$HOME/build/opencv/"
 build_dir="$base_dir/opencv-$OPENCV_VERSION-build/"
@@ -23,7 +25,13 @@ if [ ! -d "$opencv_contrib_src" ]; then
 	curl -L "https://github.com/opencv/opencv_contrib/archive/$OPENCV_VERSION.tar.gz" | tar -xz -C "$dist_dir"
 fi
 
+if [[ "$OPENCV_VERSION" == "3.4.20" ]]; then # old OpenCV doesn't support choosing archs
+	arch_arg=
+else
+	arch_arg="--macos_archs $(uname -m)"
+fi
 python "$opencv_src/platforms/osx/build_framework.py" \
 	--contrib "$opencv_contrib_src" \
 	--enable_nonfree \
+	$arch_arg \
 	"$build_dir"
