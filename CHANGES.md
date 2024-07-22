@@ -1,3 +1,8 @@
+* 0.92.1
+  * Implement `Send` and `Sync` where applicable for `Mat`, `Ptr` and `Tuple`.
+  * Introduce new `Mat` constructors that take byte slices: `from_bytes`/`_mut` and `new_rows_cols_with_bytes`/`_mut`
+  * Add missing `Mat_::at_row`/`_mut` methods.
+
 * 0.92.0
   * Add `DoubleEndedIterator` impl for `Vector` and simplify trait bounds.
   * Type aliases for `Vector` (`VectorOf...`), `Ptr` and `Tuple` are now deprecated.
