@@ -1,5 +1,5 @@
 pub mod gapi {
-	//! \defgroup gapi G-API framework
+	//! \defgroup gapi_ref G-API framework
 	//!    # G-API Main Classes
 	//!    # G-API Data Types
 	//!       # G-API Metadata Descriptors
@@ -8,7 +8,7 @@ pub mod gapi {
 	//!    # G-API Serialization functionality
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::anyTraitConst, super::anyTrait, super::TextTraitConst, super::TextTrait, super::ImageTraitConst, super::ImageTrait, super::PolyTraitConst, super::PolyTrait, super::GCompileArgTraitConst, super::GCompileArgTrait, super::GMatTraitConst, super::GMatTrait, super::GMatPTraitConst, super::GMatPTrait, super::GMatDescTraitConst, super::GMatDescTrait, super::GScalarTraitConst, super::GScalarTrait, super::GScalarDescTraitConst, super::GScalarDescTrait, super::GArrayDescTraitConst, super::GArrayDescTrait, super::Detail_GArrayUTraitConst, super::Detail_GArrayUTrait, super::GOpaqueDescTraitConst, super::GOpaqueDescTrait, super::Detail_GOpaqueUTraitConst, super::Detail_GOpaqueUTrait, super::GFrameTraitConst, super::GFrameTrait, super::GFrameDescTraitConst, super::GFrameDescTrait, super::ScalarTraitConst, super::ScalarTrait, super::MediaFrameTraitConst, super::MediaFrameTrait, super::MediaFrame_ViewTraitConst, super::MediaFrame_ViewTrait, super::MediaFrame_IAdapterTraitConst, super::MediaFrame_IAdapterTrait, super::RMat_ViewTraitConst, super::RMat_ViewTrait, super::RMat_IAdapterTraitConst, super::RMat_IAdapterTrait, super::RMatTraitConst, super::RMatTrait, super::GArgTraitConst, super::GArgTrait, super::GRunArgTraitConst, super::GRunArgTrait, super::DataTraitConst, super::DataTrait, super::Detail_ExtractArgsCallbackTraitConst, super::Detail_ExtractArgsCallbackTrait, super::Detail_ExtractMetaCallbackTraitConst, super::Detail_ExtractMetaCallbackTrait, super::GCompiledTraitConst, super::GCompiledTrait, super::GStreamingCompiledTraitConst, super::GStreamingCompiledTrait, super::GComputationTraitConst, super::GComputationTrait, super::GCallTraitConst, super::GCallTrait, super::GTransformTraitConst, super::GTransformTrait, super::GTypeInfoTraitConst, super::GTypeInfoTrait, super::GKernelTraitConst, super::GKernelTrait, super::GKernelImplTraitConst, super::GKernelImplTrait, super::GBackendTraitConst, super::GBackendTrait, super::GFunctorTraitConst, super::GFunctorTrait, super::GKernelPackageTraitConst, super::GKernelPackageTrait, super::use_onlyTraitConst, super::use_onlyTrait };
+		pub use { super::anyTraitConst, super::anyTrait, super::TextTraitConst, super::TextTrait, super::ImageTraitConst, super::ImageTrait, super::PolyTraitConst, super::PolyTrait, super::GCompileArgTraitConst, super::GCompileArgTrait, super::use_threaded_executorTraitConst, super::use_threaded_executorTrait, super::GMatTraitConst, super::GMatTrait, super::GMatPTraitConst, super::GMatPTrait, super::GMatDescTraitConst, super::GMatDescTrait, super::GScalarTraitConst, super::GScalarTrait, super::GScalarDescTraitConst, super::GScalarDescTrait, super::GArrayDescTraitConst, super::GArrayDescTrait, super::Detail_GArrayUTraitConst, super::Detail_GArrayUTrait, super::GOpaqueDescTraitConst, super::GOpaqueDescTrait, super::Detail_GOpaqueUTraitConst, super::Detail_GOpaqueUTrait, super::GFrameTraitConst, super::GFrameTrait, super::GFrameDescTraitConst, super::GFrameDescTrait, super::ScalarTraitConst, super::ScalarTrait, super::MediaFrameTraitConst, super::MediaFrameTrait, super::MediaFrame_ViewTraitConst, super::MediaFrame_ViewTrait, super::MediaFrame_IAdapterTraitConst, super::MediaFrame_IAdapterTrait, super::RMat_ViewTraitConst, super::RMat_ViewTrait, super::RMat_IAdapterTraitConst, super::RMat_IAdapterTrait, super::RMatTraitConst, super::RMatTrait, super::GArgTraitConst, super::GArgTrait, super::GRunArgTraitConst, super::GRunArgTrait, super::DataTraitConst, super::DataTrait, super::Detail_ExtractArgsCallbackTraitConst, super::Detail_ExtractArgsCallbackTrait, super::Detail_ExtractMetaCallbackTraitConst, super::Detail_ExtractMetaCallbackTrait, super::GCompiledTraitConst, super::GCompiledTrait, super::GStreamingCompiledTraitConst, super::GStreamingCompiledTrait, super::GComputationTraitConst, super::GComputationTrait, super::GCallTraitConst, super::GCallTrait, super::GTransformTraitConst, super::GTransformTrait, super::GTypeInfoTraitConst, super::GTypeInfoTrait, super::GKernelTraitConst, super::GKernelTrait, super::GKernelImplTraitConst, super::GKernelImplTrait, super::GBackendTraitConst, super::GBackendTrait, super::GFunctorTraitConst, super::GFunctorTrait, super::GKernelPackageTraitConst, super::GKernelPackageTrait, super::use_onlyTraitConst, super::use_onlyTrait };
 	}
 	
 	pub const Detail_ArgKind_GARRAY: i32 = 6;
@@ -7279,11 +7279,11 @@ pub mod gapi {
 	/// executed. The below example expresses calculation of Sobel operator
 	/// for edge detection (![inline formula](https://latex.codecogs.com/png.latex?G%20%3D%20%5Csqrt%7BG%5Fx%5E2%20%2B%20G%5Fy%5E2%7D)):
 	/// 
-	/// [graph_def](https://github.com/opencv/opencv_contrib/blob/4.9.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+	/// [graph_def](https://github.com/opencv/opencv_contrib/blob/4.10.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
 	/// 
 	/// Full pipeline can be now captured with this object declaration:
 	/// 
-	/// [graph_cap_full](https://github.com/opencv/opencv_contrib/blob/4.9.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+	/// [graph_cap_full](https://github.com/opencv/opencv_contrib/blob/4.10.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
 	/// 
 	/// Input/output data objects on which a call graph should be
 	/// reconstructed are passed using special wrappers cv::GIn and
@@ -7296,7 +7296,7 @@ pub mod gapi {
 	/// expects that image gradients are already pre-calculated may be
 	/// defined like this:
 	/// 
-	/// [graph_cap_sub](https://github.com/opencv/opencv_contrib/blob/4.9.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+	/// [graph_cap_sub](https://github.com/opencv/opencv_contrib/blob/4.10.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
 	/// 
 	/// The resulting graph would expect two inputs and produce one
 	/// output. In this case, it doesn't matter if gx/gy data objects are
@@ -8219,6 +8219,25 @@ pub mod gapi {
 			Ok(ret)
 		}
 		
+		/// Constructs a value-initialized GMat
+		/// 
+		/// GMat may be associated with a buffer at graph construction time.
+		/// It is useful when some operation has a Mat input which doesn't
+		/// change during the program execution, and is set only once.
+		/// In this case, there's no need to declare such GMat as graph input.
+		/// 
+		/// ## Parameters
+		/// * m: a cv::Mat buffer to associate with this GMat object.
+		#[inline]
+		pub fn new(mut m: impl core::MatTrait) -> Result<crate::gapi::GMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GMat_GMat_Mat(m.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::GMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	impl Clone for GMat {
@@ -8859,12 +8878,11 @@ pub mod gapi {
 		
 		/// Constructs a value-initialized GScalar
 		/// 
-		/// In contrast with GMat (which can be either an explicit graph input
-		/// or a result of some operation), GScalars may have their values
-		/// be associated at graph construction time. It is useful when
-		/// some operation has a GScalar input which doesn't change during
-		/// the program execution, and is set only once. In this case,
-		/// there is no need to declare such GScalar as a graph input.
+		/// GScalars may have their values be associated at graph
+		/// construction time. It is useful when some operation has a
+		/// GScalar input which doesn't change during the program
+		/// execution, and is set only once. In this case, there is no need
+		/// to declare such GScalar as a graph input.
 		/// 
 		/// 
 		/// Note: The value of GScalar may be overwritten by assigning some
@@ -8885,12 +8903,11 @@ pub mod gapi {
 		
 		/// Constructs a value-initialized GScalar
 		/// 
-		/// In contrast with GMat (which can be either an explicit graph input
-		/// or a result of some operation), GScalars may have their values
-		/// be associated at graph construction time. It is useful when
-		/// some operation has a GScalar input which doesn't change during
-		/// the program execution, and is set only once. In this case,
-		/// there is no need to declare such GScalar as a graph input.
+		/// GScalars may have their values be associated at graph
+		/// construction time. It is useful when some operation has a
+		/// GScalar input which doesn't change during the program
+		/// execution, and is set only once. In this case, there is no need
+		/// to declare such GScalar as a graph input.
 		/// 
 		/// 
 		/// Note: The value of GScalar may be overwritten by assigning some
@@ -8917,12 +8934,11 @@ pub mod gapi {
 		
 		/// Constructs a value-initialized GScalar
 		/// 
-		/// In contrast with GMat (which can be either an explicit graph input
-		/// or a result of some operation), GScalars may have their values
-		/// be associated at graph construction time. It is useful when
-		/// some operation has a GScalar input which doesn't change during
-		/// the program execution, and is set only once. In this case,
-		/// there is no need to declare such GScalar as a graph input.
+		/// GScalars may have their values be associated at graph
+		/// construction time. It is useful when some operation has a
+		/// GScalar input which doesn't change during the program
+		/// execution, and is set only once. In this case, there is no need
+		/// to declare such GScalar as a graph input.
 		/// 
 		/// 
 		/// Note: The value of GScalar may be overwritten by assigning some
@@ -8943,7 +8959,7 @@ pub mod gapi {
 		/// This constructor overload is not marked `explicit` and can be
 		/// used in G-API expression code like this:
 		/// 
-		/// [gscalar_implicit](https://github.com/opencv/opencv_contrib/blob/4.9.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+		/// [gscalar_implicit](https://github.com/opencv/opencv_contrib/blob/4.10.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
 		/// 
 		/// Here operator+(GMat,GScalar) is used to wrap cv::gapi::addC()
 		/// and a value-initialized GScalar is created on the fly.
@@ -11643,6 +11659,91 @@ pub mod gapi {
 		/// Forwards to infallible Self::default()
 		fn default() -> Self {
 			Self::default()
+		}
+	}
+	
+	/// Constant methods for [crate::gapi::use_threaded_executor]
+	pub trait use_threaded_executorTraitConst {
+		fn as_raw_use_threaded_executor(&self) -> *const c_void;
+	
+		#[inline]
+		fn num_threads(&self) -> u32 {
+			let ret = unsafe { sys::cv_use_threaded_executor_propNum_threads_const(self.as_raw_use_threaded_executor()) };
+			ret
+		}
+		
+	}
+	
+	/// Mutable methods for [crate::gapi::use_threaded_executor]
+	pub trait use_threaded_executorTrait: crate::gapi::use_threaded_executorTraitConst {
+		fn as_raw_mut_use_threaded_executor(&mut self) -> *mut c_void;
+	
+		#[inline]
+		fn set_num_threads(&mut self, val: u32) {
+			let ret = unsafe { sys::cv_use_threaded_executor_propNum_threads_const_uint32_t(self.as_raw_mut_use_threaded_executor(), val) };
+			ret
+		}
+		
+	}
+	
+	/// Ask G-API to use threaded executor when cv::GComputation
+	/// is compiled via cv::GComputation::compile method.
+	/// 
+	/// Specifies a number of threads that should be used by executor.
+	pub struct use_threaded_executor {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { use_threaded_executor }
+	
+	impl Drop for use_threaded_executor {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_use_threaded_executor_delete(self.as_raw_mut_use_threaded_executor()) };
+		}
+	}
+	
+	unsafe impl Send for use_threaded_executor {}
+	
+	impl crate::gapi::use_threaded_executorTraitConst for use_threaded_executor {
+		#[inline] fn as_raw_use_threaded_executor(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::gapi::use_threaded_executorTrait for use_threaded_executor {
+		#[inline] fn as_raw_mut_use_threaded_executor(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	boxed_ref! { use_threaded_executor, crate::gapi::use_threaded_executorTraitConst, as_raw_use_threaded_executor, crate::gapi::use_threaded_executorTrait, as_raw_mut_use_threaded_executor }
+	
+	impl use_threaded_executor {
+		#[inline]
+		pub fn default() -> Result<crate::gapi::use_threaded_executor> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_use_threaded_executor_use_threaded_executor(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::use_threaded_executor::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		#[inline]
+		pub fn new(nthreads: u32) -> Result<crate::gapi::use_threaded_executor> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_use_threaded_executor_use_threaded_executor_const_uint32_t(nthreads, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::use_threaded_executor::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+	}
+	
+	impl std::fmt::Debug for use_threaded_executor {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("use_threaded_executor")
+				.field("num_threads", &crate::gapi::use_threaded_executorTraitConst::num_threads(self))
+				.finish()
 		}
 	}
 	

@@ -1091,6 +1091,21 @@ pub mod mcc {
 			Ok(ret)
 		}
 		
+		/// Computes and returns the coordinates of the central parts of the charts modules.
+		/// 
+		/// This method computes transformation matrix from the checkers's coordinates (`cv::mcc::CChecker::getBox()`)
+		/// and find by this the coordinates of the central parts of the charts modules.
+		/// It is used in `cv::mcc::CCheckerDraw::draw()` and in `ChartsRGB` calculation.
+		#[inline]
+		fn get_color_charts(&mut self) -> Result<core::Vector<core::Point2f>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CChecker_getColorCharts(self.as_raw_mut_MCC_CChecker(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Vector::<core::Point2f>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		#[inline]
 		fn get_charts_rgb(&mut self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -1451,7 +1466,6 @@ pub mod mcc {
 	
 		/// \brief Draws the checker to the given image.
 		/// \param img image in color space BGR
-		/// \return void
 		#[inline]
 		fn draw(&mut self, img: &mut impl ToInputOutputArray) -> Result<()> {
 			input_output_array_arg!(img);

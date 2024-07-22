@@ -13,7 +13,7 @@ pub mod phase_unwrapping {
 	//! and efficient. They follow a path that unwraps high quality pixels first,
 	//! avoiding error propagation from the start.
 	//! 
-	//! In this module, a quality-guided phase unwrapping is implemented following the approach described in [histogramUnwrapping](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_histogramUnwrapping) .
+	//! In this module, a quality-guided phase unwrapping is implemented following the approach described in [histogramUnwrapping](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_histogramUnwrapping) .
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
 		pub use { super::PhaseUnwrappingTraitConst, super::PhaseUnwrappingTrait, super::HistogramPhaseUnwrappingTraitConst, super::HistogramPhaseUnwrappingTrait };
@@ -45,7 +45,7 @@ pub mod phase_unwrapping {
 		
 	}
 	
-	/// Class implementing two-dimensional phase unwrapping based on [histogramUnwrapping](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_histogramUnwrapping)
+	/// Class implementing two-dimensional phase unwrapping based on [histogramUnwrapping](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_histogramUnwrapping)
 	/// This algorithm belongs to the quality-guided phase unwrapping methods.
 	/// First, it computes a reliability map from second differences between a pixel and its eight neighbours.
 	/// Reliability values lie between 0 and 16*pi*pi. Then, this reliability map is used to compute

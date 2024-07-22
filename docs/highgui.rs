@@ -15,7 +15,7 @@ pub mod highgui {
 	//!    # OpenGL support
 	//!    # Qt New Functions
 	//! 
-	//!    ![image](https://docs.opencv.org/4.9.0/qtgui.png)
+	//!    ![image](https://docs.opencv.org/4.10.0/qtgui.png)
 	//! 
 	//!    This figure explains new functionality implemented with Qt\* GUI. The new GUI provides a statusbar,
 	//!    a toolbar, and a control panel. The control panel can have trackbars and buttonbars attached to it.
@@ -30,51 +30,8 @@ pub mod highgui {
 	//!        created. Then, a new button is attached to it.
 	//! 
 	//!    See below the example used to generate the figure:
-	//!    ```C++
-	//!        int main(int argc, char *argv[])
-	//!        {
 	//! 
-	//!            int value = 50;
-	//!            int value2 = 0;
-	//! 
-	//! 
-	//!            namedWindow("main1",WINDOW_NORMAL);
-	//!            namedWindow("main2",WINDOW_AUTOSIZE | WINDOW_GUI_NORMAL);
-	//!            createTrackbar( "track1", "main1", &value, 255,  NULL);
-	//! 
-	//!            String nameb1 = "button1";
-	//!            String nameb2 = "button2";
-	//! 
-	//!            createButton(nameb1,callbackButton,&nameb1,QT_CHECKBOX,1);
-	//!            createButton(nameb2,callbackButton,NULL,QT_CHECKBOX,0);
-	//!            createTrackbar( "track2", NULL, &value2, 255, NULL);
-	//!            createButton("button5",callbackButton1,NULL,QT_RADIOBOX,0);
-	//!            createButton("button6",callbackButton2,NULL,QT_RADIOBOX,1);
-	//! 
-	//!            setMouseCallback( "main2",on_mouse,NULL );
-	//! 
-	//!            Mat img1 = imread("files/flower.jpg");
-	//!            VideoCapture video;
-	//!            video.open("files/hockey.avi");
-	//! 
-	//!            Mat img2,img3;
-	//! 
-	//!            while( waitKey(33) != 27 )
-	//!            {
-	//!                img1.convertTo(img2,-1,1,value);
-	//!                video >> img3;
-	//! 
-	//!                imshow("main1",img2);
-	//!                imshow("main2",img3);
-	//!            }
-	//! 
-	//!            destroyAllWindows();
-	//! 
-	//!            return 0;
-	//!        }
-	//!    ```
-	//! 
-	//! 
+	//!    @include highgui_qt.cpp
 	//! 
 	//!    # WinRT support
 	//! 
@@ -85,37 +42,35 @@ pub mod highgui {
 	//! 
 	//!    See below the example used to generate the figure:
 	//!    ```C++
-	//!        void sample_app::MainPage::ShowWindow()
+	//!    void sample_app::MainPage::ShowWindow()
+	//!    {
+	//!        static cv::String windowName("sample");
+	//!        cv::winrt_initContainer(this->cvContainer);
+	//!        cv::namedWindow(windowName); // not required
+	//! 
+	//!        cv::Mat image = cv::imread("Assets/sample.jpg");
+	//!        cv::Mat converted = cv::Mat(image.rows, image.cols, CV_8UC4);
+	//!        cv::cvtColor(image, converted, COLOR_BGR2BGRA);
+	//!        cv::imshow(windowName, converted); // this will create window if it hasn't been created before
+	//! 
+	//!        int state = 42;
+	//!        cv::TrackbarCallback callback = [](int pos, void* userdata)
 	//!        {
-	//!            static cv::String windowName("sample");
-	//!            cv::winrt_initContainer(this->cvContainer);
-	//!            cv::namedWindow(windowName); // not required
-	//! 
-	//!            cv::Mat image = cv::imread("Assets/sample.jpg");
-	//!            cv::Mat converted = cv::Mat(image.rows, image.cols, CV_8UC4);
-	//!            cv::cvtColor(image, converted, COLOR_BGR2BGRA);
-	//!            cv::imshow(windowName, converted); // this will create window if it hasn't been created before
-	//! 
-	//!            int state = 42;
-	//!            cv::TrackbarCallback callback = [](int pos, void* userdata)
-	//!            {
-	//!                if (pos == 0) {
-	//!                    cv::destroyWindow(windowName);
-	//!                }
-	//!            };
-	//!            cv::TrackbarCallback callbackTwin = [](int pos, void* userdata)
-	//!            {
-	//!                if (pos >= 70) {
-	//!                    cv::destroyAllWindows();
-	//!                }
-	//!            };
-	//!            cv::createTrackbar("Sample trackbar", windowName, &state, 100, callback);
-	//!            cv::createTrackbar("Twin brother", windowName, &state, 100, callbackTwin);
-	//!        }
+	//!            if (pos == 0) {
+	//!                cv::destroyWindow(windowName);
+	//!            }
+	//!        };
+	//!        cv::TrackbarCallback callbackTwin = [](int pos, void* userdata)
+	//!        {
+	//!            if (pos >= 70) {
+	//!                cv::destroyAllWindows();
+	//!            }
+	//!        };
+	//!        cv::createTrackbar("Sample trackbar", windowName, &state, 100, callback);
+	//!        cv::createTrackbar("Twin brother", windowName, &state, 100, callbackTwin);
+	//!    }
 	//!    ```
 	//! 
-	//! 
-	//!    # C API
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
 		pub use { super::QtFontTraitConst, super::QtFontTrait };
@@ -719,6 +674,20 @@ pub mod highgui {
 		Ok(ret)
 	}
 	
+	/// HighGUI backend used.
+	/// 
+	/// The function returns HighGUI backend name used: could be COCOA, GTK2/3, QT, WAYLAND or WIN32.
+	/// Returns empty string if there is no available UI backend.
+	#[inline]
+	pub fn current_ui_framework() -> Result<String> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_currentUIFramework(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
 	/// Destroys all of the HighGUI windows.
 	/// 
 	/// The function destroyAllWindows destroys all of the opened HighGUI windows.
@@ -988,6 +957,9 @@ pub mod highgui {
 	/// * winname: Name of the window.
 	/// ## See also
 	/// resizeWindow moveWindow
+	/// 
+	/// 
+	/// Note: [__Wayland Backend Only__] This function is not supported by the Wayland protocol limitation.
 	#[inline]
 	pub fn get_window_image_rect(winname: &str) -> Result<core::Rect> {
 		extern_container_arg!(winname);
@@ -1007,6 +979,9 @@ pub mod highgui {
 	/// * prop_id: Window property to retrieve. The following operation flags are available: (cv::WindowPropertyFlags)
 	/// ## See also
 	/// setWindowProperty
+	/// 
+	/// 
+	/// Note: [__Wayland Backend Only__] This function is not supported.
 	#[inline]
 	pub fn get_window_property(winname: &str, prop_id: i32) -> Result<f64> {
 		extern_container_arg!(winname);
@@ -1049,6 +1024,12 @@ pub mod highgui {
 	/// 
 	/// Note: [__Windows Backend Only__] Pressing Ctrl+C will copy the image to the clipboard. Pressing Ctrl+S will show a dialog to save the image.
 	/// 
+	/// Note: [__Wayland Backend Only__] Supoorting format is extended.
+	/// *   If the image is 8-bit signed, the pixels are biased by 128. That is, the
+	///    value range [-128,127] is mapped to [0,255].
+	/// *   If the image is 16-bit signed, the pixels are divided by 256 and biased by 128. That is, the
+	///    value range [-32768,32767] is mapped to [0,255].
+	/// 
 	/// ## Parameters
 	/// * winname: Name of the window.
 	/// * mat: Image to be shown.
@@ -1086,6 +1067,9 @@ pub mod highgui {
 	/// * winname: Name of the window.
 	/// * x: The new x-coordinate of the window.
 	/// * y: The new y-coordinate of the window.
+	/// 
+	/// 
+	/// Note: [__Wayland Backend Only__] This function is not supported by the Wayland protocol limitation.
 	#[inline]
 	pub fn move_window(winname: &str, x: i32, y: i32) -> Result<()> {
 		extern_container_arg!(winname);
@@ -1618,6 +1602,9 @@ pub mod highgui {
 	/// * winname: Name of the window.
 	/// * prop_id: Window property to edit. The supported operation flags are: (cv::WindowPropertyFlags)
 	/// * prop_value: New value of the window property. The supported flags are: (cv::WindowFlags)
+	/// 
+	/// 
+	/// Note: [__Wayland Backend Only__] This function is not supported.
 	#[inline]
 	pub fn set_window_property(winname: &str, prop_id: i32, prop_value: f64) -> Result<()> {
 		extern_container_arg!(winname);

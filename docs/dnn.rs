@@ -10,7 +10,7 @@ pub mod dnn {
 	//!   A network training is in principle not supported.
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
-		pub use { super::DictValueTraitConst, super::DictValueTrait, super::DictTraitConst, super::DictTrait, super::LayerParamsTraitConst, super::LayerParamsTrait, super::BackendNodeTraitConst, super::BackendNodeTrait, super::BackendWrapperTraitConst, super::BackendWrapperTrait, super::LayerTraitConst, super::LayerTrait, super::NetTraitConst, super::NetTrait, super::ModelTraitConst, super::ModelTrait, super::ClassificationModelTraitConst, super::ClassificationModelTrait, super::KeypointsModelTraitConst, super::KeypointsModelTrait, super::SegmentationModelTraitConst, super::SegmentationModelTrait, super::DetectionModelTraitConst, super::DetectionModelTrait, super::TextRecognitionModelTraitConst, super::TextRecognitionModelTrait, super::TextDetectionModelTraitConst, super::TextDetectionModelTrait, super::TextDetectionModel_EASTTraitConst, super::TextDetectionModel_EASTTrait, super::TextDetectionModel_DBTraitConst, super::TextDetectionModel_DBTrait, super::LayerFactoryTraitConst, super::LayerFactoryTrait, super::BlankLayerTraitConst, super::BlankLayerTrait, super::ConstLayerTraitConst, super::ConstLayerTrait, super::LSTMLayerTraitConst, super::LSTMLayerTrait, super::GRULayerTraitConst, super::GRULayerTrait, super::RNNLayerTraitConst, super::RNNLayerTrait, super::EinsumLayerTraitConst, super::EinsumLayerTrait, super::BaseConvolutionLayerTraitConst, super::BaseConvolutionLayerTrait, super::ConvolutionLayerTraitConst, super::ConvolutionLayerTrait, super::ConvolutionLayerInt8TraitConst, super::ConvolutionLayerInt8Trait, super::DeconvolutionLayerTraitConst, super::DeconvolutionLayerTrait, super::LRNLayerTraitConst, super::LRNLayerTrait, super::ArgLayerTraitConst, super::ArgLayerTrait, super::GatherLayerTraitConst, super::GatherLayerTrait, super::GatherElementsLayerTraitConst, super::GatherElementsLayerTrait, super::PoolingLayerTraitConst, super::PoolingLayerTrait, super::PoolingLayerInt8TraitConst, super::PoolingLayerInt8Trait, super::ReduceLayerTraitConst, super::ReduceLayerTrait, super::SoftmaxLayerTraitConst, super::SoftmaxLayerTrait, super::SoftmaxLayerInt8TraitConst, super::SoftmaxLayerInt8Trait, super::InnerProductLayerTraitConst, super::InnerProductLayerTrait, super::InnerProductLayerInt8TraitConst, super::InnerProductLayerInt8Trait, super::MVNLayerTraitConst, super::MVNLayerTrait, super::ReshapeLayerTraitConst, super::ReshapeLayerTrait, super::FlattenLayerTraitConst, super::FlattenLayerTrait, super::QuantizeLayerTraitConst, super::QuantizeLayerTrait, super::DequantizeLayerTraitConst, super::DequantizeLayerTrait, super::RequantizeLayerTraitConst, super::RequantizeLayerTrait, super::ConcatLayerTraitConst, super::ConcatLayerTrait, super::SplitLayerTraitConst, super::SplitLayerTrait, super::SliceLayerTraitConst, super::SliceLayerTrait, super::PermuteLayerTraitConst, super::PermuteLayerTrait, super::ShuffleChannelLayerTraitConst, super::ShuffleChannelLayerTrait, super::PaddingLayerTraitConst, super::PaddingLayerTrait, super::ActivationLayerTraitConst, super::ActivationLayerTrait, super::ReLULayerTraitConst, super::ReLULayerTrait, super::ReLU6LayerTraitConst, super::ReLU6LayerTrait, super::ChannelsPReLULayerTraitConst, super::ChannelsPReLULayerTrait, super::ELULayerTraitConst, super::ELULayerTrait, super::TanHLayerTraitConst, super::TanHLayerTrait, super::SwishLayerTraitConst, super::SwishLayerTrait, super::MishLayerTraitConst, super::MishLayerTrait, super::SigmoidLayerTraitConst, super::SigmoidLayerTrait, super::BNLLLayerTraitConst, super::BNLLLayerTrait, super::AbsLayerTraitConst, super::AbsLayerTrait, super::PowerLayerTraitConst, super::PowerLayerTrait, super::ExpLayerTraitConst, super::ExpLayerTrait, super::CeilLayerTraitConst, super::CeilLayerTrait, super::FloorLayerTraitConst, super::FloorLayerTrait, super::LogLayerTraitConst, super::LogLayerTrait, super::RoundLayerTraitConst, super::RoundLayerTrait, super::SqrtLayerTraitConst, super::SqrtLayerTrait, super::NotLayerTraitConst, super::NotLayerTrait, super::AcosLayerTraitConst, super::AcosLayerTrait, super::AcoshLayerTraitConst, super::AcoshLayerTrait, super::AsinLayerTraitConst, super::AsinLayerTrait, super::AsinhLayerTraitConst, super::AsinhLayerTrait, super::AtanLayerTraitConst, super::AtanLayerTrait, super::AtanhLayerTraitConst, super::AtanhLayerTrait, super::CosLayerTraitConst, super::CosLayerTrait, super::CoshLayerTraitConst, super::CoshLayerTrait, super::ErfLayerTraitConst, super::ErfLayerTrait, super::HardSwishLayerTraitConst, super::HardSwishLayerTrait, super::SinLayerTraitConst, super::SinLayerTrait, super::SinhLayerTraitConst, super::SinhLayerTrait, super::SoftplusLayerTraitConst, super::SoftplusLayerTrait, super::SoftsignLayerTraitConst, super::SoftsignLayerTrait, super::TanLayerTraitConst, super::TanLayerTrait, super::CeluLayerTraitConst, super::CeluLayerTrait, super::HardSigmoidLayerTraitConst, super::HardSigmoidLayerTrait, super::SeluLayerTraitConst, super::SeluLayerTrait, super::GeluLayerTraitConst, super::GeluLayerTrait, super::GeluApproximationLayerTraitConst, super::GeluApproximationLayerTrait, super::ThresholdedReluLayerTraitConst, super::ThresholdedReluLayerTrait, super::ActivationLayerInt8TraitConst, super::ActivationLayerInt8Trait, super::SignLayerTraitConst, super::SignLayerTrait, super::ShrinkLayerTraitConst, super::ShrinkLayerTrait, super::ReciprocalLayerTraitConst, super::ReciprocalLayerTrait, super::CropLayerTraitConst, super::CropLayerTrait, super::EltwiseLayerTraitConst, super::EltwiseLayerTrait, super::EltwiseLayerInt8TraitConst, super::EltwiseLayerInt8Trait, super::NaryEltwiseLayerTraitConst, super::NaryEltwiseLayerTrait, super::BatchNormLayerTraitConst, super::BatchNormLayerTrait, super::BatchNormLayerInt8TraitConst, super::BatchNormLayerInt8Trait, super::MaxUnpoolLayerTraitConst, super::MaxUnpoolLayerTrait, super::ScaleLayerTraitConst, super::ScaleLayerTrait, super::ScaleLayerInt8TraitConst, super::ScaleLayerInt8Trait, super::ShiftLayerTraitConst, super::ShiftLayerTrait, super::ShiftLayerInt8TraitConst, super::ShiftLayerInt8Trait, super::CompareLayerTraitConst, super::CompareLayerTrait, super::DataAugmentationLayerTraitConst, super::DataAugmentationLayerTrait, super::CorrelationLayerTraitConst, super::CorrelationLayerTrait, super::AccumLayerTraitConst, super::AccumLayerTrait, super::FlowWarpLayerTraitConst, super::FlowWarpLayerTrait, super::PriorBoxLayerTraitConst, super::PriorBoxLayerTrait, super::ReorgLayerTraitConst, super::ReorgLayerTrait, super::RegionLayerTraitConst, super::RegionLayerTrait, super::DetectionOutputLayerTraitConst, super::DetectionOutputLayerTrait, super::NormalizeBBoxLayerTraitConst, super::NormalizeBBoxLayerTrait, super::ResizeLayerTraitConst, super::ResizeLayerTrait, super::InterpLayerTraitConst, super::InterpLayerTrait, super::ProposalLayerTraitConst, super::ProposalLayerTrait, super::CropAndResizeLayerTraitConst, super::CropAndResizeLayerTrait, super::CumSumLayerTraitConst, super::CumSumLayerTrait, super::ScatterLayerTraitConst, super::ScatterLayerTrait, super::ScatterNDLayerTraitConst, super::ScatterNDLayerTrait, super::TileLayerTraitConst, super::TileLayerTrait, super::LayerNormLayerTraitConst, super::LayerNormLayerTrait, super::GemmLayerTraitConst, super::GemmLayerTrait, super::MatMulLayerTraitConst, super::MatMulLayerTrait, super::ExpandLayerTraitConst, super::ExpandLayerTrait, super::InstanceNormLayerTraitConst, super::InstanceNormLayerTrait, super::AttentionLayerTraitConst, super::AttentionLayerTrait, super::_RangeTraitConst, super::_RangeTrait };
+		pub use { super::DictValueTraitConst, super::DictValueTrait, super::DictTraitConst, super::DictTrait, super::LayerParamsTraitConst, super::LayerParamsTrait, super::BackendNodeTraitConst, super::BackendNodeTrait, super::BackendWrapperTraitConst, super::BackendWrapperTrait, super::LayerTraitConst, super::LayerTrait, super::NetTraitConst, super::NetTrait, super::ModelTraitConst, super::ModelTrait, super::ClassificationModelTraitConst, super::ClassificationModelTrait, super::KeypointsModelTraitConst, super::KeypointsModelTrait, super::SegmentationModelTraitConst, super::SegmentationModelTrait, super::DetectionModelTraitConst, super::DetectionModelTrait, super::TextRecognitionModelTraitConst, super::TextRecognitionModelTrait, super::TextDetectionModelTraitConst, super::TextDetectionModelTrait, super::TextDetectionModel_EASTTraitConst, super::TextDetectionModel_EASTTrait, super::TextDetectionModel_DBTraitConst, super::TextDetectionModel_DBTrait, super::LayerFactoryTraitConst, super::LayerFactoryTrait, super::BlankLayerTraitConst, super::BlankLayerTrait, super::ConstLayerTraitConst, super::ConstLayerTrait, super::LSTMLayerTraitConst, super::LSTMLayerTrait, super::GRULayerTraitConst, super::GRULayerTrait, super::RNNLayerTraitConst, super::RNNLayerTrait, super::EinsumLayerTraitConst, super::EinsumLayerTrait, super::BaseConvolutionLayerTraitConst, super::BaseConvolutionLayerTrait, super::ConvolutionLayerTraitConst, super::ConvolutionLayerTrait, super::ConvolutionLayerInt8TraitConst, super::ConvolutionLayerInt8Trait, super::DeconvolutionLayerTraitConst, super::DeconvolutionLayerTrait, super::LRNLayerTraitConst, super::LRNLayerTrait, super::ArgLayerTraitConst, super::ArgLayerTrait, super::GatherLayerTraitConst, super::GatherLayerTrait, super::GatherElementsLayerTraitConst, super::GatherElementsLayerTrait, super::PoolingLayerTraitConst, super::PoolingLayerTrait, super::PoolingLayerInt8TraitConst, super::PoolingLayerInt8Trait, super::ReduceLayerTraitConst, super::ReduceLayerTrait, super::SoftmaxLayerTraitConst, super::SoftmaxLayerTrait, super::SoftmaxLayerInt8TraitConst, super::SoftmaxLayerInt8Trait, super::InnerProductLayerTraitConst, super::InnerProductLayerTrait, super::InnerProductLayerInt8TraitConst, super::InnerProductLayerInt8Trait, super::MVNLayerTraitConst, super::MVNLayerTrait, super::ReshapeLayerTraitConst, super::ReshapeLayerTrait, super::FlattenLayerTraitConst, super::FlattenLayerTrait, super::QuantizeLayerTraitConst, super::QuantizeLayerTrait, super::DequantizeLayerTraitConst, super::DequantizeLayerTrait, super::RequantizeLayerTraitConst, super::RequantizeLayerTrait, super::ConcatLayerTraitConst, super::ConcatLayerTrait, super::SplitLayerTraitConst, super::SplitLayerTrait, super::SliceLayerTraitConst, super::SliceLayerTrait, super::PermuteLayerTraitConst, super::PermuteLayerTrait, super::ShuffleChannelLayerTraitConst, super::ShuffleChannelLayerTrait, super::PaddingLayerTraitConst, super::PaddingLayerTrait, super::ActivationLayerTraitConst, super::ActivationLayerTrait, super::ReLULayerTraitConst, super::ReLULayerTrait, super::ReLU6LayerTraitConst, super::ReLU6LayerTrait, super::ChannelsPReLULayerTraitConst, super::ChannelsPReLULayerTrait, super::ELULayerTraitConst, super::ELULayerTrait, super::TanHLayerTraitConst, super::TanHLayerTrait, super::SwishLayerTraitConst, super::SwishLayerTrait, super::MishLayerTraitConst, super::MishLayerTrait, super::SigmoidLayerTraitConst, super::SigmoidLayerTrait, super::BNLLLayerTraitConst, super::BNLLLayerTrait, super::AbsLayerTraitConst, super::AbsLayerTrait, super::PowerLayerTraitConst, super::PowerLayerTrait, super::ExpLayerTraitConst, super::ExpLayerTrait, super::CeilLayerTraitConst, super::CeilLayerTrait, super::FloorLayerTraitConst, super::FloorLayerTrait, super::LogLayerTraitConst, super::LogLayerTrait, super::RoundLayerTraitConst, super::RoundLayerTrait, super::SqrtLayerTraitConst, super::SqrtLayerTrait, super::NotLayerTraitConst, super::NotLayerTrait, super::AcosLayerTraitConst, super::AcosLayerTrait, super::AcoshLayerTraitConst, super::AcoshLayerTrait, super::AsinLayerTraitConst, super::AsinLayerTrait, super::AsinhLayerTraitConst, super::AsinhLayerTrait, super::AtanLayerTraitConst, super::AtanLayerTrait, super::AtanhLayerTraitConst, super::AtanhLayerTrait, super::CosLayerTraitConst, super::CosLayerTrait, super::CoshLayerTraitConst, super::CoshLayerTrait, super::ErfLayerTraitConst, super::ErfLayerTrait, super::HardSwishLayerTraitConst, super::HardSwishLayerTrait, super::SinLayerTraitConst, super::SinLayerTrait, super::SinhLayerTraitConst, super::SinhLayerTrait, super::SoftplusLayerTraitConst, super::SoftplusLayerTrait, super::SoftsignLayerTraitConst, super::SoftsignLayerTrait, super::TanLayerTraitConst, super::TanLayerTrait, super::CeluLayerTraitConst, super::CeluLayerTrait, super::HardSigmoidLayerTraitConst, super::HardSigmoidLayerTrait, super::SeluLayerTraitConst, super::SeluLayerTrait, super::GeluLayerTraitConst, super::GeluLayerTrait, super::GeluApproximationLayerTraitConst, super::GeluApproximationLayerTrait, super::ThresholdedReluLayerTraitConst, super::ThresholdedReluLayerTrait, super::ActivationLayerInt8TraitConst, super::ActivationLayerInt8Trait, super::SignLayerTraitConst, super::SignLayerTrait, super::ShrinkLayerTraitConst, super::ShrinkLayerTrait, super::ReciprocalLayerTraitConst, super::ReciprocalLayerTrait, super::CropLayerTraitConst, super::CropLayerTrait, super::EltwiseLayerTraitConst, super::EltwiseLayerTrait, super::EltwiseLayerInt8TraitConst, super::EltwiseLayerInt8Trait, super::NaryEltwiseLayerTraitConst, super::NaryEltwiseLayerTrait, super::BatchNormLayerTraitConst, super::BatchNormLayerTrait, super::BatchNormLayerInt8TraitConst, super::BatchNormLayerInt8Trait, super::MaxUnpoolLayerTraitConst, super::MaxUnpoolLayerTrait, super::ScaleLayerTraitConst, super::ScaleLayerTrait, super::ScaleLayerInt8TraitConst, super::ScaleLayerInt8Trait, super::ShiftLayerTraitConst, super::ShiftLayerTrait, super::ShiftLayerInt8TraitConst, super::ShiftLayerInt8Trait, super::CompareLayerTraitConst, super::CompareLayerTrait, super::DataAugmentationLayerTraitConst, super::DataAugmentationLayerTrait, super::CorrelationLayerTraitConst, super::CorrelationLayerTrait, super::AccumLayerTraitConst, super::AccumLayerTrait, super::FlowWarpLayerTraitConst, super::FlowWarpLayerTrait, super::PriorBoxLayerTraitConst, super::PriorBoxLayerTrait, super::ReorgLayerTraitConst, super::ReorgLayerTrait, super::RegionLayerTraitConst, super::RegionLayerTrait, super::DetectionOutputLayerTraitConst, super::DetectionOutputLayerTrait, super::NormalizeBBoxLayerTraitConst, super::NormalizeBBoxLayerTrait, super::ResizeLayerTraitConst, super::ResizeLayerTrait, super::InterpLayerTraitConst, super::InterpLayerTrait, super::ProposalLayerTraitConst, super::ProposalLayerTrait, super::CropAndResizeLayerTraitConst, super::CropAndResizeLayerTrait, super::CumSumLayerTraitConst, super::CumSumLayerTrait, super::ScatterLayerTraitConst, super::ScatterLayerTrait, super::ScatterNDLayerTraitConst, super::ScatterNDLayerTrait, super::TileLayerTraitConst, super::TileLayerTrait, super::LayerNormLayerTraitConst, super::LayerNormLayerTrait, super::GemmLayerTraitConst, super::GemmLayerTrait, super::MatMulLayerTraitConst, super::MatMulLayerTrait, super::ExpandLayerTraitConst, super::ExpandLayerTrait, super::InstanceNormLayerTraitConst, super::InstanceNormLayerTrait, super::AttentionLayerTraitConst, super::AttentionLayerTrait, super::GroupNormLayerTraitConst, super::GroupNormLayerTrait, super::_RangeTraitConst, super::_RangeTrait };
 	}
 	
 	pub const CV_DNN_BACKEND_INFERENCE_ENGINE_NGRAPH: &str = "NGRAPH";
@@ -62,7 +62,7 @@ pub mod dnn {
 	pub const DNN_TARGET_OPENCL: i32 = 1;
 	pub const DNN_TARGET_OPENCL_FP16: i32 = 2;
 	pub const DNN_TARGET_VULKAN: i32 = 4;
-	pub const OPENCV_DNN_API_VERSION: i32 = 20231225;
+	pub const OPENCV_DNN_API_VERSION: i32 = 20240521;
 	pub const SoftNMSMethod_SOFTNMS_GAUSSIAN: i32 = 2;
 	pub const SoftNMSMethod_SOFTNMS_LINEAR: i32 = 1;
 	/// Enum of computation backends supported by layers.
@@ -9474,6 +9474,106 @@ pub mod dnn {
 		}
 	}
 	
+	/// Constant methods for [crate::dnn::GroupNormLayer]
+	pub trait GroupNormLayerTraitConst: crate::dnn::LayerTraitConst {
+		fn as_raw_GroupNormLayer(&self) -> *const c_void;
+	
+	}
+	
+	/// Mutable methods for [crate::dnn::GroupNormLayer]
+	pub trait GroupNormLayerTrait: crate::dnn::GroupNormLayerTraitConst + crate::dnn::LayerTrait {
+		fn as_raw_mut_GroupNormLayer(&mut self) -> *mut c_void;
+	
+	}
+	
+	pub struct GroupNormLayer {
+		ptr: *mut c_void
+	}
+	
+	opencv_type_boxed! { GroupNormLayer }
+	
+	impl Drop for GroupNormLayer {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_dnn_GroupNormLayer_delete(self.as_raw_mut_GroupNormLayer()) };
+		}
+	}
+	
+	unsafe impl Send for GroupNormLayer {}
+	
+	impl core::AlgorithmTraitConst for GroupNormLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl core::AlgorithmTrait for GroupNormLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	boxed_ref! { GroupNormLayer, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+	
+	impl crate::dnn::LayerTraitConst for GroupNormLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::dnn::LayerTrait for GroupNormLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	boxed_ref! { GroupNormLayer, crate::dnn::LayerTraitConst, as_raw_Layer, crate::dnn::LayerTrait, as_raw_mut_Layer }
+	
+	impl crate::dnn::GroupNormLayerTraitConst for GroupNormLayer {
+		#[inline] fn as_raw_GroupNormLayer(&self) -> *const c_void { self.as_raw() }
+	}
+	
+	impl crate::dnn::GroupNormLayerTrait for GroupNormLayer {
+		#[inline] fn as_raw_mut_GroupNormLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+	
+	boxed_ref! { GroupNormLayer, crate::dnn::GroupNormLayerTraitConst, as_raw_GroupNormLayer, crate::dnn::GroupNormLayerTrait, as_raw_mut_GroupNormLayer }
+	
+	impl GroupNormLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_GroupNormLayer_defaultNew_const()) }
+		}
+		
+		#[inline]
+		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::GroupNormLayer>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_GroupNormLayer_create_const_LayerParamsR(params.as_raw_LayerParams(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::dnn::GroupNormLayer>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+	}
+	
+	boxed_cast_base! { GroupNormLayer, core::Algorithm, cv_dnn_GroupNormLayer_to_Algorithm }
+	
+	boxed_cast_base! { GroupNormLayer, crate::dnn::Layer, cv_dnn_GroupNormLayer_to_Layer }
+	
+	impl std::fmt::Debug for GroupNormLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GroupNormLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+	
+	impl Default for GroupNormLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
+		}
+	}
+	
 	/// Constant methods for [crate::dnn::HardSigmoidLayer]
 	pub trait HardSigmoidLayerTraitConst: crate::dnn::ActivationLayerTraitConst {
 		fn as_raw_HardSigmoidLayer(&self) -> *const c_void;
@@ -11099,7 +11199,7 @@ pub mod dnn {
 		/// * inputs: vector of already allocated input blobs
 		/// * outputs:[out] vector of already allocated output blobs
 		/// 
-		/// If this method is called after network has allocated all memory for input and output blobs
+		/// This method is called after network has allocated all memory for input and output blobs
 		/// and before inferencing.
 		#[inline]
 		fn finalize(&mut self, inputs: &impl ToInputArray, outputs: &mut impl ToOutputArray) -> Result<()> {
@@ -11185,7 +11285,7 @@ pub mod dnn {
 		/// * inputs: vector of already allocated input blobs
 		/// * outputs:[out] vector of already allocated output blobs
 		/// 
-		/// If this method is called after network has allocated all memory for input and output blobs
+		/// This method is called after network has allocated all memory for input and output blobs
 		/// and before inferencing.
 		/// 
 		/// ## Overloaded parameters
@@ -11208,7 +11308,7 @@ pub mod dnn {
 		/// * inputs: vector of already allocated input blobs
 		/// * outputs:[out] vector of already allocated output blobs
 		/// 
-		/// If this method is called after network has allocated all memory for input and output blobs
+		/// This method is called after network has allocated all memory for input and output blobs
 		/// and before inferencing.
 		/// 
 		/// ## Overloaded parameters
@@ -11460,7 +11560,7 @@ pub mod dnn {
 	
 	/// This interface class allows to build new Layers - are building blocks of networks.
 	/// 
-	/// Each class, derived from Layer, must implement allocate() methods to declare own outputs and forward() to compute outputs.
+	/// Each class, derived from Layer, must implement forward() method to compute outputs.
 	/// Also before using the new layer into networks you must register your layer by using one of [dnnLayerFactory] "LayerFactory" macros.
 	pub struct Layer {
 		ptr: *mut c_void
@@ -11621,6 +11721,8 @@ pub mod dnn {
 	boxed_cast_descendant! { Layer, crate::dnn::GeluLayer, cv_dnn_Layer_to_GeluLayer }
 	
 	boxed_cast_descendant! { Layer, crate::dnn::GemmLayer, cv_dnn_Layer_to_GemmLayer }
+	
+	boxed_cast_descendant! { Layer, crate::dnn::GroupNormLayer, cv_dnn_Layer_to_GroupNormLayer }
 	
 	boxed_cast_descendant! { Layer, crate::dnn::HardSigmoidLayer, cv_dnn_Layer_to_HardSigmoidLayer }
 	
@@ -12866,6 +12968,19 @@ pub mod dnn {
 			Ok(ret)
 		}
 		
+		/// Set output names for frame.
+		/// ## Parameters
+		/// * outNames: Names for output layers.
+		#[inline]
+		fn set_output_names(&mut self, out_names: &core::Vector<String>) -> Result<crate::dnn::Model> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_Model_setOutputNames_const_vectorLStringGR(self.as_raw_mut_Model(), out_names.as_raw_VectorOfString(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::dnn::Model::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 		/// Set preprocessing parameters for frame.
 		/// ## Parameters
 		/// * size: New input size.
@@ -13695,6 +13810,22 @@ pub mod dnn {
 			extern_container_arg!(path);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_dnn_Net_dumpToFile_const_StringR(self.as_raw_mut_Net(), path.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Dump net structure, hyperparameters, backend, target and fusion to pbtxt file
+		/// ## Parameters
+		/// * path: path to output file with .pbtxt extension
+		/// 
+		/// Use Netron (<https://netron.app>) to open the target file to visualize the model.
+		/// Call method after setInput(). To see correct backend, target and fusion run after forward().
+		#[inline]
+		fn dump_to_pbtxt(&mut self, path: &str) -> Result<()> {
+			extern_container_arg!(path);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_Net_dumpToPbtxt_const_StringR(self.as_raw_mut_Net(), path.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -20253,7 +20384,7 @@ pub mod dnn {
 	
 	/// This class represents high-level API for text detection DL networks compatible with DB model.
 	/// 
-	/// Related publications: [liao2020real](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_liao2020real)
+	/// Related publications: [liao2020real](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_liao2020real)
 	/// Paper: <https://arxiv.org/abs/1911.08947>
 	/// For more information about the hyper-parameters setting, please refer to <https://github.com/MhLiao/DB>
 	/// 

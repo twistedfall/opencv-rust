@@ -1,20 +1,20 @@
 pub mod features2d {
 	//! # 2D Features Framework
-	//!    # Feature Detection and Description
-	//!    # Descriptor Matchers
+	//!   # Feature Detection and Description
+	//!   # Descriptor Matchers
 	//! 
-	//! Matchers of keypoint descriptors in OpenCV have wrappers with a common interface that enables you to
-	//! easily switch between different algorithms solving the same problem. This section is devoted to
-	//! matching descriptors that are represented as vectors in a multidimensional space. All objects that
-	//! implement vector descriptor matchers inherit the DescriptorMatcher interface.
+	//!   Matchers of keypoint descriptors in OpenCV have wrappers with a common interface that enables
+	//!   you to easily switch between different algorithms solving the same problem. This section is
+	//!   devoted to matching descriptors that are represented as vectors in a multidimensional space.
+	//!   All objects that implement vector descriptor matchers inherit the DescriptorMatcher interface.
 	//! 
-	//!    # Drawing Function of Keypoints and Matches
-	//!    # Object Categorization
+	//!   # Drawing Function of Keypoints and Matches
+	//!   # Object Categorization
 	//! 
-	//! This section describes approaches based on local 2D features and used to categorize objects.
+	//!   This section describes approaches based on local 2D features and used to categorize objects.
 	//! 
-	//!    # Hardware Acceleration Layer
-	//!        # Interface
+	//!   # Hardware Acceleration Layer
+	//!       # Interface
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
 		pub use { super::KeyPointsFilterTraitConst, super::KeyPointsFilterTrait, super::Feature2DTraitConst, super::Feature2DTrait, super::AffineFeatureTraitConst, super::AffineFeatureTrait, super::SIFTTraitConst, super::SIFTTrait, super::BRISKTraitConst, super::BRISKTrait, super::ORBTraitConst, super::ORBTrait, super::MSERTraitConst, super::MSERTrait, super::FastFeatureDetectorTraitConst, super::FastFeatureDetectorTrait, super::AgastFeatureDetectorTraitConst, super::AgastFeatureDetectorTrait, super::GFTTDetectorTraitConst, super::GFTTDetectorTrait, super::SimpleBlobDetectorTraitConst, super::SimpleBlobDetectorTrait, super::KAZETraitConst, super::KAZETrait, super::AKAZETraitConst, super::AKAZETrait, super::DescriptorMatcherTraitConst, super::DescriptorMatcherTrait, super::BFMatcherTraitConst, super::BFMatcherTrait, super::FlannBasedMatcherTraitConst, super::FlannBasedMatcherTrait, super::BOWTrainerTraitConst, super::BOWTrainerTrait, super::BOWKMeansTrainerTraitConst, super::BOWKMeansTrainerTrait, super::BOWImgDescriptorExtractorTraitConst, super::BOWImgDescriptorExtractorTrait };
@@ -293,7 +293,7 @@ pub mod features2d {
 	/// For non-Intel platforms, there is a tree optimised variant of AGAST with same numerical results.
 	/// The 32-bit binary tree tables were generated automatically from original code using perl script.
 	/// The perl script and examples of tree generation are placed in features2d/doc folder.
-	/// Detects corners using the AGAST algorithm by [mair2010_agast](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_mair2010_agast) .
+	/// Detects corners using the AGAST algorithm by [mair2010_agast](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_mair2010_agast) .
 	/// 
 	/// ## Overloaded parameters
 	/// 
@@ -325,7 +325,7 @@ pub mod features2d {
 	/// For non-Intel platforms, there is a tree optimised variant of AGAST with same numerical results.
 	/// The 32-bit binary tree tables were generated automatically from original code using perl script.
 	/// The perl script and examples of tree generation are placed in features2d/doc folder.
-	/// Detects corners using the AGAST algorithm by [mair2010_agast](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_mair2010_agast) .
+	/// Detects corners using the AGAST algorithm by [mair2010_agast](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_mair2010_agast) .
 	#[inline]
 	pub fn agast_with_type(image: &impl ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>, threshold: i32, nonmax_suppression: bool, typ: crate::features2d::AgastFeatureDetector_DetectorType) -> Result<()> {
 		input_array_arg!(image);
@@ -364,7 +364,7 @@ pub mod features2d {
 	/// FastFeatureDetector::TYPE_9_16, FastFeatureDetector::TYPE_7_12,
 	/// FastFeatureDetector::TYPE_5_8
 	/// 
-	/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Rosten06) .
+	/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Rosten06) .
 	/// 
 	/// 
 	/// Note: In Python API, types are given as cv.FAST_FEATURE_DETECTOR_TYPE_5_8,
@@ -398,7 +398,7 @@ pub mod features2d {
 	/// FastFeatureDetector::TYPE_9_16, FastFeatureDetector::TYPE_7_12,
 	/// FastFeatureDetector::TYPE_5_8
 	/// 
-	/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Rosten06) .
+	/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Rosten06) .
 	/// 
 	/// 
 	/// Note: In Python API, types are given as cv.FAST_FEATURE_DETECTOR_TYPE_5_8,
@@ -664,10 +664,6 @@ pub mod features2d {
 		Ok(ret)
 	}
 	
-	/// *************************************************************************************\
-	///    Functions to evaluate the feature detectors and [generic] descriptor extractors      *
-	/// \***************************************************************************************
-	/// 
 	/// ## Note
 	/// This alternative version of [evaluate_feature_detector] function uses the following default values for its arguments:
 	/// * fdetector: Ptr<FeatureDetector>()
@@ -680,10 +676,6 @@ pub mod features2d {
 		Ok(ret)
 	}
 	
-	/// *************************************************************************************\
-	///    Functions to evaluate the feature detectors and [generic] descriptor extractors      *
-	/// \***************************************************************************************
-	/// 
 	/// ## C++ default parameters
 	/// * fdetector: Ptr<FeatureDetector>()
 	#[inline]
@@ -879,7 +871,7 @@ pub mod features2d {
 		
 	}
 	
-	/// Class implementing the AKAZE keypoint detector and descriptor extractor, described in [ANB13](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_ANB13).
+	/// Class implementing the AKAZE keypoint detector and descriptor extractor, described in [ANB13](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_ANB13).
 	/// 
 	/// @details AKAZE descriptors can only be used with KAZE or AKAZE keypoints. This class is thread-safe.
 	/// 
@@ -1068,7 +1060,7 @@ pub mod features2d {
 	}
 	
 	/// Class for implementing the wrapper which makes detectors and extractors to be affine invariant,
-	/// described as ASIFT in [YM11](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_YM11) .
+	/// described as ASIFT in [YM11](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_YM11) .
 	pub struct AffineFeature {
 		ptr: *mut c_void
 	}
@@ -2132,7 +2124,7 @@ pub mod features2d {
 		
 	}
 	
-	/// Class implementing the BRISK keypoint detector and descriptor extractor, described in [LCS11](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_LCS11) .
+	/// Class implementing the BRISK keypoint detector and descriptor extractor, described in [LCS11](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_LCS11) .
 	pub struct BRISK {
 		ptr: *mut c_void
 	}
@@ -4175,7 +4167,7 @@ pub mod features2d {
 		
 	}
 	
-	/// Class implementing the KAZE keypoint detector and descriptor extractor, described in [ABD12](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_ABD12) .
+	/// Class implementing the KAZE keypoint detector and descriptor extractor, described in [ABD12](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_ABD12) .
 	/// 
 	/// 
 	/// Note: AKAZE descriptor can only be used with KAZE or AKAZE keypoints .. [ABD12] KAZE Features. Pablo
@@ -4662,10 +4654,10 @@ pub mod features2d {
 	/// 
 	/// - there are two different implementation of %MSER: one for grey image, one for color image
 	/// 
-	/// - the grey image algorithm is taken from: [nister2008linear](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_nister2008linear) ;  the paper claims to be faster
+	/// - the grey image algorithm is taken from: [nister2008linear](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_nister2008linear) ;  the paper claims to be faster
 	/// than union-find method; it actually get 1.5~2m/s on my centrino L7200 1.2GHz laptop.
 	/// 
-	/// - the color image algorithm is taken from: [forssen2007maximally](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_forssen2007maximally) ; it should be much slower
+	/// - the color image algorithm is taken from: [forssen2007maximally](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_forssen2007maximally) ; it should be much slower
 	/// than grey image method ( 3~4 times )
 	/// 
 	/// - (Python) A complete example showing the use of the %MSER detector can be found at samples/python/mser.py
@@ -4982,7 +4974,7 @@ pub mod features2d {
 	
 	/// Class implementing the ORB (*oriented BRIEF*) keypoint detector and descriptor extractor
 	/// 
-	/// described in [RRKB11](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_RRKB11) . The algorithm uses FAST in pyramids to detect stable keypoints, selects
+	/// described in [RRKB11](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_RRKB11) . The algorithm uses FAST in pyramids to detect stable keypoints, selects
 	/// the strongest features using FAST or Harris response, finds their orientation using first-order
 	/// moments and computes the descriptors using BRIEF (where the coordinates of random point pairs (or
 	/// k-tuples) are rotated according to the measured orientation).
@@ -5265,7 +5257,7 @@ pub mod features2d {
 	}
 	
 	/// Class for extracting keypoints and computing descriptors using the Scale Invariant Feature Transform
-	/// (SIFT) algorithm by D. Lowe [Lowe04](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Lowe04) .
+	/// (SIFT) algorithm by D. Lowe [Lowe04](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Lowe04) .
 	pub struct SIFT {
 		ptr: *mut c_void
 	}

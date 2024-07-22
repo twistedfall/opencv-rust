@@ -6,30 +6,28 @@ pub mod photo {
 	//!    # Denoising
 	//!    # HDR imaging
 	//! 
-	//! This section describes high dynamic range imaging algorithms namely tonemapping, exposure alignment,
-	//! camera calibration with multiple exposures and exposure fusion.
+	//!    This section describes high dynamic range imaging algorithms namely tonemapping, exposure alignment,
+	//!    camera calibration with multiple exposures and exposure fusion.
 	//! 
 	//!    # Contrast Preserving Decolorization
 	//! 
-	//! Useful links:
+	//!    Useful links:
 	//! 
-	//! <http://www.cse.cuhk.edu.hk/leojia/projects/color2gray/index.html>
+	//!    <http://www.cse.cuhk.edu.hk/leojia/projects/color2gray/index.html>
 	//! 
 	//!    # Seamless Cloning
 	//! 
-	//! Useful links:
+	//!    Useful links:
 	//! 
-	//! <https://www.learnopencv.com/seamless-cloning-using-opencv-python-cpp>
+	//!    <https://www.learnopencv.com/seamless-cloning-using-opencv-python-cpp>
 	//! 
 	//!    # Non-Photorealistic Rendering
 	//! 
-	//! Useful links:
+	//!    Useful links:
 	//! 
-	//! <http://www.inf.ufrgs.br/~eslgastal/DomainTransform>
+	//!    <http://www.inf.ufrgs.br/~eslgastal/DomainTransform>
 	//! 
-	//! <https://www.learnopencv.com/non-photorealistic-rendering-using-opencv-python-c/>
-	//! 
-	//!    # C API
+	//!    <https://www.learnopencv.com/non-photorealistic-rendering-using-opencv-python-c/>
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
 		pub use { super::TonemapTraitConst, super::TonemapTrait, super::TonemapDragoTraitConst, super::TonemapDragoTrait, super::TonemapReinhardTraitConst, super::TonemapReinhardTrait, super::TonemapMantiukTraitConst, super::TonemapMantiukTrait, super::AlignExposuresTraitConst, super::AlignExposuresTrait, super::AlignMTBTraitConst, super::AlignMTBTrait, super::CalibrateCRFTraitConst, super::CalibrateCRFTrait, super::CalibrateDebevecTraitConst, super::CalibrateDebevecTrait, super::CalibrateRobertsonTraitConst, super::CalibrateRobertsonTrait, super::MergeExposuresTraitConst, super::MergeExposuresTrait, super::MergeDebevecTraitConst, super::MergeDebevecTrait, super::MergeMertensTraitConst, super::MergeMertensTrait, super::MergeRobertsonTraitConst, super::MergeRobertsonTrait };
@@ -37,7 +35,7 @@ pub mod photo {
 	
 	/// Use Navier-Stokes based method
 	pub const INPAINT_NS: i32 = 0;
-	/// Use the algorithm proposed by Alexandru Telea [Telea04](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Telea04)
+	/// Use the algorithm proposed by Alexandru Telea [Telea04](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Telea04)
 	pub const INPAINT_TELEA: i32 = 1;
 	pub const LDR_SIZE: i32 = 256;
 	/// The classic method, color-based selection and alpha masking might be time consuming and often leaves an undesirable
@@ -782,7 +780,7 @@ pub mod photo {
 	
 	/// Transforms a color image to a grayscale image. It is a basic tool in digital printing, stylized
 	/// black-and-white photograph rendering, and in many single channel image processing applications
-	/// [CL12](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_CL12) .
+	/// [CL12](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_CL12) .
 	/// 
 	/// ## Parameters
 	/// * src: Input 8-bit 3-channel image.
@@ -808,12 +806,12 @@ pub mod photo {
 	/// exactly what is implemented.
 	/// 
 	/// It should be noted, that this implementation was taken from the July 2013 blog entry
-	/// [MA13](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_MA13) , which also contained (slightly more general) ready-to-use source code on Python.
+	/// [MA13](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_MA13) , which also contained (slightly more general) ready-to-use source code on Python.
 	/// Subsequently, that code was rewritten on C++ with the usage of openCV by Vadim Pisarevsky at the end
 	/// of July 2013 and finally it was slightly adapted by later authors.
 	/// 
 	/// Although the thorough discussion and justification of the algorithm involved may be found in
-	/// [ChambolleEtAl](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_ChambolleEtAl), it might make sense to skim over it here, following [MA13](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_MA13) . To begin
+	/// [ChambolleEtAl](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_ChambolleEtAl), it might make sense to skim over it here, following [MA13](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_MA13) . To begin
 	/// with, we consider the 1-byte gray-level images as the functions from the rectangular domain of
 	/// pixels (it may be seen as set
 	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cleft%5C%7B%28x%2Cy%29%5Cin%5Cmathbb%7BN%7D%5Ctimes%5Cmathbb%7BN%7D%5Cmid%201%5Cleq%20x%5Cleq%20n%2C%5C%3B1%5Cleq%20y%5Cleq%20m%5Cright%5C%7D) for some
@@ -859,12 +857,12 @@ pub mod photo {
 	/// exactly what is implemented.
 	/// 
 	/// It should be noted, that this implementation was taken from the July 2013 blog entry
-	/// [MA13](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_MA13) , which also contained (slightly more general) ready-to-use source code on Python.
+	/// [MA13](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_MA13) , which also contained (slightly more general) ready-to-use source code on Python.
 	/// Subsequently, that code was rewritten on C++ with the usage of openCV by Vadim Pisarevsky at the end
 	/// of July 2013 and finally it was slightly adapted by later authors.
 	/// 
 	/// Although the thorough discussion and justification of the algorithm involved may be found in
-	/// [ChambolleEtAl](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_ChambolleEtAl), it might make sense to skim over it here, following [MA13](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_MA13) . To begin
+	/// [ChambolleEtAl](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_ChambolleEtAl), it might make sense to skim over it here, following [MA13](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_MA13) . To begin
 	/// with, we consider the 1-byte gray-level images as the functions from the rectangular domain of
 	/// pixels (it may be seen as set
 	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cleft%5C%7B%28x%2Cy%29%5Cin%5Cmathbb%7BN%7D%5Ctimes%5Cmathbb%7BN%7D%5Cmid%201%5Cleq%20x%5Cleq%20n%2C%5C%3B1%5Cleq%20y%5Cleq%20m%5Cright%5C%7D) for some
@@ -949,7 +947,7 @@ pub mod photo {
 	}
 	
 	/// Filtering is the fundamental operation in image and video processing. Edge-preserving smoothing
-	/// filters are used in many different applications [EM11](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_EM11) .
+	/// filters are used in many different applications [EM11](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_EM11) .
 	/// 
 	/// ## Parameters
 	/// * src: Input 8-bit 3-channel image.
@@ -975,7 +973,7 @@ pub mod photo {
 	}
 	
 	/// Filtering is the fundamental operation in image and video processing. Edge-preserving smoothing
-	/// filters are used in many different applications [EM11](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_EM11) .
+	/// filters are used in many different applications [EM11](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_EM11) .
 	/// 
 	/// ## Parameters
 	/// * src: Input 8-bit 3-channel image.
@@ -1153,7 +1151,7 @@ pub mod photo {
 	
 	/// Modification of fastNlMeansDenoising function for images sequence where consecutive images have been
 	/// captured in small period of time. For example video. This version of the function is for grayscale
-	/// images or for manual manipulation with colorspaces. See [Buades2005DenoisingIS](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Buades2005DenoisingIS) for more details
+	/// images or for manual manipulation with colorspaces. See [Buades2005DenoisingIS](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Buades2005DenoisingIS) for more details
 	/// (open access [here](https://static.aminer.org/pdf/PDF/000/317/196/spatio_temporal_wiener_filtering_of_image_sequences_using_a_parametric.pdf)).
 	/// 
 	/// ## Parameters
@@ -1193,7 +1191,7 @@ pub mod photo {
 	
 	/// Modification of fastNlMeansDenoising function for images sequence where consecutive images have been
 	/// captured in small period of time. For example video. This version of the function is for grayscale
-	/// images or for manual manipulation with colorspaces. See [Buades2005DenoisingIS](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Buades2005DenoisingIS) for more details
+	/// images or for manual manipulation with colorspaces. See [Buades2005DenoisingIS](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Buades2005DenoisingIS) for more details
 	/// (open access [here](https://static.aminer.org/pdf/PDF/000/317/196/spatio_temporal_wiener_filtering_of_image_sequences_using_a_parametric.pdf)).
 	/// 
 	/// ## Parameters
@@ -1235,7 +1233,7 @@ pub mod photo {
 	
 	/// Modification of fastNlMeansDenoising function for images sequence where consecutive images have been
 	/// captured in small period of time. For example video. This version of the function is for grayscale
-	/// images or for manual manipulation with colorspaces. See [Buades2005DenoisingIS](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Buades2005DenoisingIS) for more details
+	/// images or for manual manipulation with colorspaces. See [Buades2005DenoisingIS](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Buades2005DenoisingIS) for more details
 	/// (open access [here](https://static.aminer.org/pdf/PDF/000/317/196/spatio_temporal_wiener_filtering_of_image_sequences_using_a_parametric.pdf)).
 	/// 
 	/// ## Parameters
@@ -1276,7 +1274,7 @@ pub mod photo {
 	
 	/// Modification of fastNlMeansDenoising function for images sequence where consecutive images have been
 	/// captured in small period of time. For example video. This version of the function is for grayscale
-	/// images or for manual manipulation with colorspaces. See [Buades2005DenoisingIS](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Buades2005DenoisingIS) for more details
+	/// images or for manual manipulation with colorspaces. See [Buades2005DenoisingIS](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Buades2005DenoisingIS) for more details
 	/// (open access [here](https://static.aminer.org/pdf/PDF/000/317/196/spatio_temporal_wiener_filtering_of_image_sequences_using_a_parametric.pdf)).
 	/// 
 	/// ## Parameters
@@ -1621,7 +1619,7 @@ pub mod photo {
 	/// deformations) or local changes concerned to a selection. Here we are interested in achieving local
 	/// changes, ones that are restricted to a region manually selected (ROI), in a seamless and effortless
 	/// manner. The extent of the changes ranges from slight distortions to complete replacement by novel
-	/// content [PM03](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_PM03) .
+	/// content [PM03](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_PM03) .
 	/// 
 	/// ## Parameters
 	/// * src: Input 8-bit 3-channel image.
@@ -1994,7 +1992,7 @@ pub mod photo {
 	/// 
 	/// In this implementation new image regions are filled with zeros.
 	/// 
-	/// For more information see [GW03](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_GW03) .
+	/// For more information see [GW03](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_GW03) .
 	pub struct AlignMTB {
 		ptr: *mut c_void
 	}
@@ -2208,7 +2206,7 @@ pub mod photo {
 	/// function as linear system. Objective function is constructed using pixel values on the same position
 	/// in all images, extra term is added to make the result smoother.
 	/// 
-	/// For more information see [DM97](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_DM97) .
+	/// For more information see [DM97](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_DM97) .
 	pub struct CalibrateDebevec {
 		ptr: *mut c_void
 	}
@@ -2330,7 +2328,7 @@ pub mod photo {
 	/// Inverse camera response function is extracted for each brightness value by minimizing an objective
 	/// function as linear system. This algorithm uses all image pixels.
 	/// 
-	/// For more information see [RB99](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_RB99) .
+	/// For more information see [RB99](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_RB99) .
 	pub struct CalibrateRobertson {
 		ptr: *mut c_void
 	}
@@ -2431,7 +2429,7 @@ pub mod photo {
 	/// The resulting HDR image is calculated as weighted average of the exposures considering exposure
 	/// values and camera response.
 	/// 
-	/// For more information see [DM97](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_DM97) .
+	/// For more information see [DM97](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_DM97) .
 	pub struct MergeDebevec {
 		ptr: *mut c_void
 	}
@@ -2684,7 +2682,7 @@ pub mod photo {
 	/// The resulting image doesn't require tonemapping and can be converted to 8-bit image by multiplying
 	/// by 255, but it's recommended to apply gamma correction and/or linear tonemapping.
 	/// 
-	/// For more information see [MK07](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_MK07) .
+	/// For more information see [MK07](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_MK07) .
 	pub struct MergeMertens {
 		ptr: *mut c_void
 	}
@@ -2785,7 +2783,7 @@ pub mod photo {
 	/// The resulting HDR image is calculated as weighted average of the exposures considering exposure
 	/// values and camera response.
 	/// 
-	/// For more information see [RB99](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_RB99) .
+	/// For more information see [RB99](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_RB99) .
 	pub struct MergeRobertson {
 		ptr: *mut c_void
 	}
@@ -3001,9 +2999,9 @@ pub mod photo {
 	/// Since it's a global operator the same function is applied to all the pixels, it is controlled by the
 	/// bias parameter.
 	/// 
-	/// Optional saturation enhancement is possible as described in [FL02](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_FL02) .
+	/// Optional saturation enhancement is possible as described in [FL02](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_FL02) .
 	/// 
-	/// For more information see [DM03](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_DM03) .
+	/// For more information see [DM03](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_DM03) .
 	pub struct TonemapDrago {
 		ptr: *mut c_void
 	}
@@ -3116,7 +3114,7 @@ pub mod photo {
 	/// transforms contrast values to HVS response and scales the response. After this the image is
 	/// reconstructed from new contrast values.
 	/// 
-	/// For more information see [MM06](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_MM06) .
+	/// For more information see [MM06](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_MM06) .
 	pub struct TonemapMantiuk {
 		ptr: *mut c_void
 	}
@@ -3248,7 +3246,7 @@ pub mod photo {
 	/// Mapping function is controlled by adaptation parameter, that is computed using light adaptation and
 	/// color adaptation.
 	/// 
-	/// For more information see [RD05](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_RD05) .
+	/// For more information see [RD05](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_RD05) .
 	pub struct TonemapReinhard {
 		ptr: *mut c_void
 	}

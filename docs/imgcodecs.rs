@@ -1,6 +1,5 @@
 pub mod imgcodecs {
 	//! # Image file reading and writing
-	//!   # C API
 	//!   # Flags used for image file reading and writing
 	//!   # iOS glue
 	//!   # MacOS(OSX) glue
@@ -77,9 +76,9 @@ pub mod imgcodecs {
 	pub const IMWRITE_HDR_COMPRESSION_RLE: i32 = 1;
 	/// For JPEG2000, use to specify the target compression rate (multiplied by 1000). The value can be from 0 to 1000. Default is 1000.
 	pub const IMWRITE_JPEG2000_COMPRESSION_X1000: i32 = 272;
-	/// Separate chroma quality level, 0 - 100, default is -1 - don't use.
+	/// Separate chroma quality level, 0 - 100, default is -1 - don't use. If JPEG_LIB_VERSION < 70, Not supported.
 	pub const IMWRITE_JPEG_CHROMA_QUALITY: i32 = 6;
-	/// Separate luma quality level, 0 - 100, default is -1 - don't use.
+	/// Separate luma quality level, 0 - 100, default is -1 - don't use. If JPEG_LIB_VERSION < 70, Not supported.
 	pub const IMWRITE_JPEG_LUMA_QUALITY: i32 = 5;
 	/// Enable JPEG features, 0 or 1, default is False.
 	pub const IMWRITE_JPEG_OPTIMIZE: i32 = 3;
@@ -127,10 +126,86 @@ pub mod imgcodecs {
 	pub const IMWRITE_PNG_STRATEGY_RLE: i32 = 3;
 	/// For PPM, PGM, or PBM, it can be a binary format flag, 0 or 1. Default value is 1.
 	pub const IMWRITE_PXM_BINARY: i32 = 32;
-	/// For TIFF, use to specify the image compression scheme. See libtiff for integer constants corresponding to compression formats. Note, for images whose depth is CV_32F, only libtiff's SGILOG compression scheme is used. For other supported depths, the compression scheme can be specified by this flag; LZW compression is the default.
+	/// For TIFF, use to specify the image compression scheme. See cv::ImwriteTiffCompressionFlags. Note, for images whose depth is CV_32F, only libtiff's SGILOG compression scheme is used. For other supported depths, the compression scheme can be specified by this flag; LZW compression is the default.
 	pub const IMWRITE_TIFF_COMPRESSION: i32 = 259;
+	/// Deflate compression, as recognized by Adobe
+	pub const IMWRITE_TIFF_COMPRESSION_ADOBE_DEFLATE: i32 = 8;
+	/// CCITT Group 3 fax encoding
+	pub const IMWRITE_TIFF_COMPRESSION_CCITTFAX3: i32 = 3;
+	/// CCITT Group 4 fax encoding
+	pub const IMWRITE_TIFF_COMPRESSION_CCITTFAX4: i32 = 4;
+	/// CCITT modified Huffman RLE
+	pub const IMWRITE_TIFF_COMPRESSION_CCITTRLE: i32 = 2;
+	/// [1] w/ word alignment
+	pub const IMWRITE_TIFF_COMPRESSION_CCITTRLEW: i32 = 32771;
+	/// CCITT T.4 (TIFF 6 name)
+	pub const IMWRITE_TIFF_COMPRESSION_CCITT_T4: i32 = 3;
+	/// CCITT T.6 (TIFF 6 name)
+	pub const IMWRITE_TIFF_COMPRESSION_CCITT_T6: i32 = 4;
+	/// Kodak DCS encoding
+	pub const IMWRITE_TIFF_COMPRESSION_DCS: i32 = 32947;
+	/// Deflate compression, legacy tag
+	pub const IMWRITE_TIFF_COMPRESSION_DEFLATE: i32 = 32946;
+	/// IT8 Binary line art
+	pub const IMWRITE_TIFF_COMPRESSION_IT8BL: i32 = 32898;
+	/// IT8 CT w/padding
+	pub const IMWRITE_TIFF_COMPRESSION_IT8CTPAD: i32 = 32895;
+	/// IT8 Linework RLE
+	pub const IMWRITE_TIFF_COMPRESSION_IT8LW: i32 = 32896;
+	/// IT8 Monochrome picture
+	pub const IMWRITE_TIFF_COMPRESSION_IT8MP: i32 = 32897;
+	/// ISO JBIG
+	pub const IMWRITE_TIFF_COMPRESSION_JBIG: i32 = 34661;
+	/// Leadtools JPEG2000
+	pub const IMWRITE_TIFF_COMPRESSION_JP2000: i32 = 34712;
+	/// %JPEG DCT compression
+	pub const IMWRITE_TIFF_COMPRESSION_JPEG: i32 = 7;
+	/// JPEGXL: WARNING not registered in Adobe-maintained registry
+	pub const IMWRITE_TIFF_COMPRESSION_JXL: i32 = 50002;
+	/// ESRI Lerc codec: <https://github.com/Esri/lerc>
+	pub const IMWRITE_TIFF_COMPRESSION_LERC: i32 = 34887;
+	/// LZMA2
+	pub const IMWRITE_TIFF_COMPRESSION_LZMA: i32 = 34925;
+	/// Lempel-Ziv  & Welch
+	pub const IMWRITE_TIFF_COMPRESSION_LZW: i32 = 5;
+	/// NeXT 2-bit RLE
+	pub const IMWRITE_TIFF_COMPRESSION_NEXT: i32 = 32766;
+	/// dump mode
+	pub const IMWRITE_TIFF_COMPRESSION_NONE: i32 = 1;
+	/// !6.0 JPEG
+	pub const IMWRITE_TIFF_COMPRESSION_OJPEG: i32 = 6;
+	/// Macintosh RLE
+	pub const IMWRITE_TIFF_COMPRESSION_PACKBITS: i32 = 32773;
+	/// Pixar companded 10bit LZW
+	pub const IMWRITE_TIFF_COMPRESSION_PIXARFILM: i32 = 32908;
+	/// Pixar companded 11bit ZIP
+	pub const IMWRITE_TIFF_COMPRESSION_PIXARLOG: i32 = 32909;
+	/// SGI Log Luminance RLE
+	pub const IMWRITE_TIFF_COMPRESSION_SGILOG: i32 = 34676;
+	/// SGI Log 24-bit packed
+	pub const IMWRITE_TIFF_COMPRESSION_SGILOG24: i32 = 34677;
+	/// !TIFF/FX T.43 colour by layered JBIG compression
+	pub const IMWRITE_TIFF_COMPRESSION_T43: i32 = 10;
+	/// !TIFF/FX T.85 JBIG compression
+	pub const IMWRITE_TIFF_COMPRESSION_T85: i32 = 9;
+	/// ThunderScan RLE
+	pub const IMWRITE_TIFF_COMPRESSION_THUNDERSCAN: i32 = 32809;
+	/// WEBP: WARNING not registered in Adobe-maintained registry
+	pub const IMWRITE_TIFF_COMPRESSION_WEBP: i32 = 50001;
+	/// ZSTD: WARNING not registered in Adobe-maintained registry
+	pub const IMWRITE_TIFF_COMPRESSION_ZSTD: i32 = 50000;
+	/// For TIFF, use to specify predictor. See cv::ImwriteTiffPredictorFlags.
+	pub const IMWRITE_TIFF_PREDICTOR: i32 = 317;
+	/// floating point predictor
+	pub const IMWRITE_TIFF_PREDICTOR_FLOATINGPOINT: i32 = 3;
+	/// horizontal differencing
+	pub const IMWRITE_TIFF_PREDICTOR_HORIZONTAL: i32 = 2;
+	/// no prediction scheme used
+	pub const IMWRITE_TIFF_PREDICTOR_NONE: i32 = 1;
 	/// For TIFF, use to specify which DPI resolution unit to set; see libtiff documentation for valid values
 	pub const IMWRITE_TIFF_RESUNIT: i32 = 256;
+	/// For TIFF, use to specify the number of rows per strip.
+	pub const IMWRITE_TIFF_ROWSPERSTRIP: i32 = 278;
 	/// For TIFF, use to specify the X direction DPI
 	pub const IMWRITE_TIFF_XDPI: i32 = 257;
 	/// For TIFF, use to specify the Y direction DPI
@@ -276,9 +351,9 @@ pub mod imgcodecs {
 		IMWRITE_JPEG_OPTIMIZE = 3,
 		/// JPEG restart interval, 0 - 65535, default is 0 - no restart.
 		IMWRITE_JPEG_RST_INTERVAL = 4,
-		/// Separate luma quality level, 0 - 100, default is -1 - don't use.
+		/// Separate luma quality level, 0 - 100, default is -1 - don't use. If JPEG_LIB_VERSION < 70, Not supported.
 		IMWRITE_JPEG_LUMA_QUALITY = 5,
-		/// Separate chroma quality level, 0 - 100, default is -1 - don't use.
+		/// Separate chroma quality level, 0 - 100, default is -1 - don't use. If JPEG_LIB_VERSION < 70, Not supported.
 		IMWRITE_JPEG_CHROMA_QUALITY = 6,
 		/// For JPEG, set sampling factor. See cv::ImwriteJPEGSamplingFactorParams.
 		IMWRITE_JPEG_SAMPLING_FACTOR = 7,
@@ -308,8 +383,12 @@ pub mod imgcodecs {
 		IMWRITE_TIFF_XDPI = 257,
 		/// For TIFF, use to specify the Y direction DPI
 		IMWRITE_TIFF_YDPI = 258,
-		/// For TIFF, use to specify the image compression scheme. See libtiff for integer constants corresponding to compression formats. Note, for images whose depth is CV_32F, only libtiff's SGILOG compression scheme is used. For other supported depths, the compression scheme can be specified by this flag; LZW compression is the default.
+		/// For TIFF, use to specify the image compression scheme. See cv::ImwriteTiffCompressionFlags. Note, for images whose depth is CV_32F, only libtiff's SGILOG compression scheme is used. For other supported depths, the compression scheme can be specified by this flag; LZW compression is the default.
 		IMWRITE_TIFF_COMPRESSION = 259,
+		/// For TIFF, use to specify the number of rows per strip.
+		IMWRITE_TIFF_ROWSPERSTRIP = 278,
+		/// For TIFF, use to specify predictor. See cv::ImwriteTiffPredictorFlags.
+		IMWRITE_TIFF_PREDICTOR = 317,
 		/// For JPEG2000, use to specify the target compression rate (multiplied by 1000). The value can be from 0 to 1000. Default is 1000.
 		IMWRITE_JPEG2000_COMPRESSION_X1000 = 272,
 		/// For AVIF, it can be a quality between 0 and 100 (the higher the better). Default is 95.
@@ -346,6 +425,8 @@ pub mod imgcodecs {
 				257 => Ok(Self::IMWRITE_TIFF_XDPI),
 				258 => Ok(Self::IMWRITE_TIFF_YDPI),
 				259 => Ok(Self::IMWRITE_TIFF_COMPRESSION),
+				278 => Ok(Self::IMWRITE_TIFF_ROWSPERSTRIP),
+				317 => Ok(Self::IMWRITE_TIFF_PREDICTOR),
 				272 => Ok(Self::IMWRITE_JPEG2000_COMPRESSION_X1000),
 				512 => Ok(Self::IMWRITE_AVIF_QUALITY),
 				513 => Ok(Self::IMWRITE_AVIF_DEPTH),
@@ -480,6 +561,152 @@ pub mod imgcodecs {
 	
 	opencv_type_enum! { crate::imgcodecs::ImwritePNGFlags }
 	
+	#[repr(C)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum ImwriteTiffCompressionFlags {
+		/// dump mode
+		IMWRITE_TIFF_COMPRESSION_NONE = 1,
+		/// CCITT modified Huffman RLE
+		IMWRITE_TIFF_COMPRESSION_CCITTRLE = 2,
+		/// CCITT Group 3 fax encoding
+		IMWRITE_TIFF_COMPRESSION_CCITTFAX3 = 3,
+		// CCITT T.4 (TIFF 6 name)
+		// Duplicate, use IMWRITE_TIFF_COMPRESSION_CCITTFAX3 instead
+		// IMWRITE_TIFF_COMPRESSION_CCITT_T4 = 3,
+		/// CCITT Group 4 fax encoding
+		IMWRITE_TIFF_COMPRESSION_CCITTFAX4 = 4,
+		// CCITT T.6 (TIFF 6 name)
+		// Duplicate, use IMWRITE_TIFF_COMPRESSION_CCITTFAX4 instead
+		// IMWRITE_TIFF_COMPRESSION_CCITT_T6 = 4,
+		/// Lempel-Ziv  & Welch
+		IMWRITE_TIFF_COMPRESSION_LZW = 5,
+		/// !6.0 JPEG
+		IMWRITE_TIFF_COMPRESSION_OJPEG = 6,
+		/// %JPEG DCT compression
+		IMWRITE_TIFF_COMPRESSION_JPEG = 7,
+		/// !TIFF/FX T.85 JBIG compression
+		IMWRITE_TIFF_COMPRESSION_T85 = 9,
+		/// !TIFF/FX T.43 colour by layered JBIG compression
+		IMWRITE_TIFF_COMPRESSION_T43 = 10,
+		/// NeXT 2-bit RLE
+		IMWRITE_TIFF_COMPRESSION_NEXT = 32766,
+		/// [1] w/ word alignment
+		IMWRITE_TIFF_COMPRESSION_CCITTRLEW = 32771,
+		/// Macintosh RLE
+		IMWRITE_TIFF_COMPRESSION_PACKBITS = 32773,
+		/// ThunderScan RLE
+		IMWRITE_TIFF_COMPRESSION_THUNDERSCAN = 32809,
+		/// IT8 CT w/padding
+		IMWRITE_TIFF_COMPRESSION_IT8CTPAD = 32895,
+		/// IT8 Linework RLE
+		IMWRITE_TIFF_COMPRESSION_IT8LW = 32896,
+		/// IT8 Monochrome picture
+		IMWRITE_TIFF_COMPRESSION_IT8MP = 32897,
+		/// IT8 Binary line art
+		IMWRITE_TIFF_COMPRESSION_IT8BL = 32898,
+		/// Pixar companded 10bit LZW
+		IMWRITE_TIFF_COMPRESSION_PIXARFILM = 32908,
+		/// Pixar companded 11bit ZIP
+		IMWRITE_TIFF_COMPRESSION_PIXARLOG = 32909,
+		/// Deflate compression, legacy tag
+		IMWRITE_TIFF_COMPRESSION_DEFLATE = 32946,
+		/// Deflate compression, as recognized by Adobe
+		IMWRITE_TIFF_COMPRESSION_ADOBE_DEFLATE = 8,
+		/// Kodak DCS encoding
+		IMWRITE_TIFF_COMPRESSION_DCS = 32947,
+		/// ISO JBIG
+		IMWRITE_TIFF_COMPRESSION_JBIG = 34661,
+		/// SGI Log Luminance RLE
+		IMWRITE_TIFF_COMPRESSION_SGILOG = 34676,
+		/// SGI Log 24-bit packed
+		IMWRITE_TIFF_COMPRESSION_SGILOG24 = 34677,
+		/// Leadtools JPEG2000
+		IMWRITE_TIFF_COMPRESSION_JP2000 = 34712,
+		/// ESRI Lerc codec: <https://github.com/Esri/lerc>
+		IMWRITE_TIFF_COMPRESSION_LERC = 34887,
+		/// LZMA2
+		IMWRITE_TIFF_COMPRESSION_LZMA = 34925,
+		/// ZSTD: WARNING not registered in Adobe-maintained registry
+		IMWRITE_TIFF_COMPRESSION_ZSTD = 50000,
+		/// WEBP: WARNING not registered in Adobe-maintained registry
+		IMWRITE_TIFF_COMPRESSION_WEBP = 50001,
+		/// JPEGXL: WARNING not registered in Adobe-maintained registry
+		IMWRITE_TIFF_COMPRESSION_JXL = 50002,
+	}
+	
+	impl TryFrom<i32> for ImwriteTiffCompressionFlags {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				1 => Ok(Self::IMWRITE_TIFF_COMPRESSION_NONE),
+				2 => Ok(Self::IMWRITE_TIFF_COMPRESSION_CCITTRLE),
+				3 => Ok(Self::IMWRITE_TIFF_COMPRESSION_CCITTFAX3),
+				// Duplicate of IMWRITE_TIFF_COMPRESSION_CCITTFAX3
+				// 3 => Ok(Self::IMWRITE_TIFF_COMPRESSION_CCITT_T4),
+				4 => Ok(Self::IMWRITE_TIFF_COMPRESSION_CCITTFAX4),
+				// Duplicate of IMWRITE_TIFF_COMPRESSION_CCITTFAX4
+				// 4 => Ok(Self::IMWRITE_TIFF_COMPRESSION_CCITT_T6),
+				5 => Ok(Self::IMWRITE_TIFF_COMPRESSION_LZW),
+				6 => Ok(Self::IMWRITE_TIFF_COMPRESSION_OJPEG),
+				7 => Ok(Self::IMWRITE_TIFF_COMPRESSION_JPEG),
+				9 => Ok(Self::IMWRITE_TIFF_COMPRESSION_T85),
+				10 => Ok(Self::IMWRITE_TIFF_COMPRESSION_T43),
+				32766 => Ok(Self::IMWRITE_TIFF_COMPRESSION_NEXT),
+				32771 => Ok(Self::IMWRITE_TIFF_COMPRESSION_CCITTRLEW),
+				32773 => Ok(Self::IMWRITE_TIFF_COMPRESSION_PACKBITS),
+				32809 => Ok(Self::IMWRITE_TIFF_COMPRESSION_THUNDERSCAN),
+				32895 => Ok(Self::IMWRITE_TIFF_COMPRESSION_IT8CTPAD),
+				32896 => Ok(Self::IMWRITE_TIFF_COMPRESSION_IT8LW),
+				32897 => Ok(Self::IMWRITE_TIFF_COMPRESSION_IT8MP),
+				32898 => Ok(Self::IMWRITE_TIFF_COMPRESSION_IT8BL),
+				32908 => Ok(Self::IMWRITE_TIFF_COMPRESSION_PIXARFILM),
+				32909 => Ok(Self::IMWRITE_TIFF_COMPRESSION_PIXARLOG),
+				32946 => Ok(Self::IMWRITE_TIFF_COMPRESSION_DEFLATE),
+				8 => Ok(Self::IMWRITE_TIFF_COMPRESSION_ADOBE_DEFLATE),
+				32947 => Ok(Self::IMWRITE_TIFF_COMPRESSION_DCS),
+				34661 => Ok(Self::IMWRITE_TIFF_COMPRESSION_JBIG),
+				34676 => Ok(Self::IMWRITE_TIFF_COMPRESSION_SGILOG),
+				34677 => Ok(Self::IMWRITE_TIFF_COMPRESSION_SGILOG24),
+				34712 => Ok(Self::IMWRITE_TIFF_COMPRESSION_JP2000),
+				34887 => Ok(Self::IMWRITE_TIFF_COMPRESSION_LERC),
+				34925 => Ok(Self::IMWRITE_TIFF_COMPRESSION_LZMA),
+				50000 => Ok(Self::IMWRITE_TIFF_COMPRESSION_ZSTD),
+				50001 => Ok(Self::IMWRITE_TIFF_COMPRESSION_WEBP),
+				50002 => Ok(Self::IMWRITE_TIFF_COMPRESSION_JXL),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgcodecs::ImwriteTiffCompressionFlags"))),
+			}
+		}
+	}
+	
+	opencv_type_enum! { crate::imgcodecs::ImwriteTiffCompressionFlags }
+	
+	#[repr(C)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum ImwriteTiffPredictorFlags {
+		/// no prediction scheme used
+		IMWRITE_TIFF_PREDICTOR_NONE = 1,
+		/// horizontal differencing
+		IMWRITE_TIFF_PREDICTOR_HORIZONTAL = 2,
+		/// floating point predictor
+		IMWRITE_TIFF_PREDICTOR_FLOATINGPOINT = 3,
+	}
+	
+	impl TryFrom<i32> for ImwriteTiffPredictorFlags {
+		type Error = crate::Error;
+	
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				1 => Ok(Self::IMWRITE_TIFF_PREDICTOR_NONE),
+				2 => Ok(Self::IMWRITE_TIFF_PREDICTOR_HORIZONTAL),
+				3 => Ok(Self::IMWRITE_TIFF_PREDICTOR_FLOATINGPOINT),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgcodecs::ImwriteTiffPredictorFlags"))),
+			}
+		}
+	}
+	
+	opencv_type_enum! { crate::imgcodecs::ImwriteTiffPredictorFlags }
+	
 	/// Returns true if the specified image can be decoded by OpenCV
 	/// 
 	/// ## Parameters
@@ -588,7 +815,8 @@ pub mod imgcodecs {
 	/// * buf: Input array or vector of bytes.
 	/// * flags: The same flags as in cv::imread, see cv::ImreadModes.
 	/// * dst: The optional output placeholder for the decoded matrix. It can save the image
-	/// reallocations when the function is called repeatedly for images of the same size.
+	/// reallocations when the function is called repeatedly for images of the same size. In case of decoder
+	/// failure the function returns empty cv::Mat object, but does not release user-provided dst buffer.
 	#[inline]
 	pub fn imdecode_to(buf: &impl ToInputArray, flags: i32, dst: &mut impl core::MatTrait) -> Result<core::Mat> {
 		input_array_arg!(buf);
@@ -769,6 +997,55 @@ pub mod imgcodecs {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+	
+	/// Loads an image from a file.
+	/// 
+	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts and the return value.
+	/// ## Parameters
+	/// * filename: Name of file to be loaded.
+	/// * dst: object in which the image will be loaded.
+	/// * flags: Flag that can take values of cv::ImreadModes
+	/// 
+	/// Note:
+	/// The image passing through the img parameter can be pre-allocated. The memory is reused if the shape and the type match with the load image.
+	/// 
+	/// ## Note
+	/// This alternative version of [imread_1] function uses the following default values for its arguments:
+	/// * flags: IMREAD_COLOR
+	#[inline]
+	pub fn imread_1_def(filename: &str, dst: &mut impl ToOutputArray) -> Result<()> {
+		extern_container_arg!(filename);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_imread_const_StringR_const__OutputArrayR(filename.opencv_as_extern(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Loads an image from a file.
+	/// 
+	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts and the return value.
+	/// ## Parameters
+	/// * filename: Name of file to be loaded.
+	/// * dst: object in which the image will be loaded.
+	/// * flags: Flag that can take values of cv::ImreadModes
+	/// 
+	/// Note:
+	/// The image passing through the img parameter can be pre-allocated. The memory is reused if the shape and the type match with the load image.
+	/// 
+	/// ## C++ default parameters
+	/// * flags: IMREAD_COLOR
+	#[inline]
+	pub fn imread_1(filename: &str, dst: &mut impl ToOutputArray, flags: i32) -> Result<()> {
+		extern_container_arg!(filename);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_imread_const_StringR_const__OutputArrayR_int(filename.opencv_as_extern(), dst.as_raw__OutputArray(), flags, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
 		Ok(ret)
 	}
 	
@@ -1036,7 +1313,7 @@ pub mod imgcodecs {
 		Ok(ret)
 	}
 	
-	/// @overload multi-image overload for bindings
+	/// multi-image overload for bindings
 	/// 
 	/// ## Note
 	/// This alternative version of [imwritemulti] function uses the following default values for its arguments:
@@ -1052,7 +1329,7 @@ pub mod imgcodecs {
 		Ok(ret)
 	}
 	
-	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts. multi-image overload for bindings
+	/// multi-image overload for bindings
 	/// 
 	/// ## C++ default parameters
 	/// * params: std::vector<int>()

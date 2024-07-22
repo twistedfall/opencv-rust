@@ -4,15 +4,15 @@ pub mod fuzzy {
 	//! Namespace for all functions is `ft`. The module brings implementation of the last image processing algorithms based on fuzzy mathematics. Method are named based on the pattern `FT`_degree_dimension`_`method.
 	//!    # Math with F0-transform support
 	//! 
-	//! Fuzzy transform (![inline formula](https://latex.codecogs.com/png.latex?F%5E0)-transform) of the 0th degree transforms whole image to a matrix of its components. These components are used in latter computation where each of them represents average color of certain subarea.
+	//!    Fuzzy transform (![inline formula](https://latex.codecogs.com/png.latex?F%5E0)-transform) of the 0th degree transforms whole image to a matrix of its components. These components are used in latter computation where each of them represents average color of certain subarea.
 	//! 
 	//!    # Math with F1-transform support
 	//! 
-	//! Fuzzy transform (![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transform) of the 1th degree transforms whole image to a matrix of its components. Each component is polynomial of the 1th degree carrying information about average color and average gradient of certain subarea.
+	//!    Fuzzy transform (![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transform) of the 1th degree transforms whole image to a matrix of its components. Each component is polynomial of the 1th degree carrying information about average color and average gradient of certain subarea.
 	//! 
 	//!    # Fuzzy image processing
 	//! 
-	//! Image proceesing based on fuzzy mathematics namely F-transform.
+	//!    Image proceesing based on fuzzy mathematics namely F-transform.
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
 		pub use {  };
@@ -350,7 +350,7 @@ pub mod fuzzy {
 	/// 
 	/// 
 	/// Note:
-	///    F-transform technique of first degreee is described in paper [Vlas:FT](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Vlas:FT).
+	///    F-transform technique of first degreee is described in paper [Vlas:FT](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Vlas:FT).
 	/// 
 	/// ## Note
 	/// This alternative version of [ft1_2d_process] function uses the following default values for its arguments:
@@ -378,7 +378,7 @@ pub mod fuzzy {
 	/// 
 	/// 
 	/// Note:
-	///    F-transform technique of first degreee is described in paper [Vlas:FT](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Vlas:FT).
+	///    F-transform technique of first degreee is described in paper [Vlas:FT](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Vlas:FT).
 	/// 
 	/// ## C++ default parameters
 	/// * mask: noArray()
@@ -470,7 +470,7 @@ pub mod fuzzy {
 	/// 
 	/// 
 	/// Note:
-	///    The algorithms are described in paper [Perf:rec](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Perf:rec).
+	///    The algorithms are described in paper [Perf:rec](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Perf:rec).
 	#[inline]
 	pub fn inpaint(image: &impl ToInputArray, mask: &impl ToInputArray, output: &mut impl ToOutputArray, radius: i32, function: i32, algorithm: i32) -> Result<()> {
 		input_array_arg!(image);

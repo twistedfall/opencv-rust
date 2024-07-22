@@ -2,60 +2,62 @@ pub mod objdetect {
 	//! # Object Detection
 	//!    # Cascade Classifier for Object Detection
 	//! 
-	//! The object detector described below has been initially proposed by Paul Viola [Viola01](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Viola01) and
-	//! improved by Rainer Lienhart [Lienhart02](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Lienhart02) .
+	//!    The object detector described below has been initially proposed by Paul Viola [Viola01](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Viola01) and
+	//!    improved by Rainer Lienhart [Lienhart02](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Lienhart02) .
 	//! 
-	//! First, a classifier (namely a *cascade of boosted classifiers working with haar-like features*) is
-	//! trained with a few hundred sample views of a particular object (i.e., a face or a car), called
-	//! positive examples, that are scaled to the same size (say, 20x20), and negative examples - arbitrary
-	//! images of the same size.
+	//!    First, a classifier (namely a *cascade of boosted classifiers working with haar-like features*) is
+	//!    trained with a few hundred sample views of a particular object (i.e., a face or a car), called
+	//!    positive examples, that are scaled to the same size (say, 20x20), and negative examples - arbitrary
+	//!    images of the same size.
 	//! 
-	//! After a classifier is trained, it can be applied to a region of interest (of the same size as used
-	//! during the training) in an input image. The classifier outputs a "1" if the region is likely to show
-	//! the object (i.e., face/car), and "0" otherwise. To search for the object in the whole image one can
-	//! move the search window across the image and check every location using the classifier. The
-	//! classifier is designed so that it can be easily "resized" in order to be able to find the objects of
-	//! interest at different sizes, which is more efficient than resizing the image itself. So, to find an
-	//! object of an unknown size in the image the scan procedure should be done several times at different
-	//! scales.
+	//!    After a classifier is trained, it can be applied to a region of interest (of the same size as used
+	//!    during the training) in an input image. The classifier outputs a "1" if the region is likely to show
+	//!    the object (i.e., face/car), and "0" otherwise. To search for the object in the whole image one can
+	//!    move the search window across the image and check every location using the classifier. The
+	//!    classifier is designed so that it can be easily "resized" in order to be able to find the objects of
+	//!    interest at different sizes, which is more efficient than resizing the image itself. So, to find an
+	//!    object of an unknown size in the image the scan procedure should be done several times at different
+	//!    scales.
 	//! 
-	//! The word "cascade" in the classifier name means that the resultant classifier consists of several
-	//! simpler classifiers (*stages*) that are applied subsequently to a region of interest until at some
-	//! stage the candidate is rejected or all the stages are passed. The word "boosted" means that the
-	//! classifiers at every stage of the cascade are complex themselves and they are built out of basic
-	//! classifiers using one of four different boosting techniques (weighted voting). Currently Discrete
-	//! Adaboost, Real Adaboost, Gentle Adaboost and Logitboost are supported. The basic classifiers are
-	//! decision-tree classifiers with at least 2 leaves. Haar-like features are the input to the basic
-	//! classifiers, and are calculated as described below. The current algorithm uses the following
-	//! Haar-like features:
+	//!    The word "cascade" in the classifier name means that the resultant classifier consists of several
+	//!    simpler classifiers (*stages*) that are applied subsequently to a region of interest until at some
+	//!    stage the candidate is rejected or all the stages are passed. The word "boosted" means that the
+	//!    classifiers at every stage of the cascade are complex themselves and they are built out of basic
+	//!    classifiers using one of four different boosting techniques (weighted voting). Currently Discrete
+	//!    Adaboost, Real Adaboost, Gentle Adaboost and Logitboost are supported. The basic classifiers are
+	//!    decision-tree classifiers with at least 2 leaves. Haar-like features are the input to the basic
+	//!    classifiers, and are calculated as described below. The current algorithm uses the following
+	//!    Haar-like features:
 	//! 
-	//! ![image](https://docs.opencv.org/4.9.0/haarfeatures.png)
+	//!    ![image](https://docs.opencv.org/4.10.0/haarfeatures.png)
 	//! 
-	//! The feature used in a particular classifier is specified by its shape (1a, 2b etc.), position within
-	//! the region of interest and the scale (this scale is not the same as the scale used at the detection
-	//! stage, though these two scales are multiplied). For example, in the case of the third line feature
-	//! (2c) the response is calculated as the difference between the sum of image pixels under the
-	//! rectangle covering the whole feature (including the two white stripes and the black stripe in the
-	//! middle) and the sum of the image pixels under the black stripe multiplied by 3 in order to
-	//! compensate for the differences in the size of areas. The sums of pixel values over a rectangular
-	//! regions are calculated rapidly using integral images (see below and the integral description).
+	//!    The feature used in a particular classifier is specified by its shape (1a, 2b etc.), position within
+	//!    the region of interest and the scale (this scale is not the same as the scale used at the detection
+	//!    stage, though these two scales are multiplied). For example, in the case of the third line feature
+	//!    (2c) the response is calculated as the difference between the sum of image pixels under the
+	//!    rectangle covering the whole feature (including the two white stripes and the black stripe in the
+	//!    middle) and the sum of the image pixels under the black stripe multiplied by 3 in order to
+	//!    compensate for the differences in the size of areas. The sums of pixel values over a rectangular
+	//!    regions are calculated rapidly using integral images (see below and the integral description).
 	//! 
-	//! Check [tutorial_cascade_classifier] "the corresponding tutorial" for more details.
+	//!    Check [tutorial_cascade_classifier] "the corresponding tutorial" for more details.
 	//! 
-	//! The following reference is for the detection part only. There is a separate application called
-	//! opencv_traincascade that can train a cascade of boosted classifiers from a set of samples.
+	//!    The following reference is for the detection part only. There is a separate application called
+	//!    opencv_traincascade that can train a cascade of boosted classifiers from a set of samples.
 	//! 
-	//! 
+	//!     
 	//! Note: In the new C++ interface it is also possible to use LBP (local binary pattern) features in
-	//! addition to Haar-like features. .. [Viola01] Paul Viola and Michael J. Jones. Rapid Object Detection
-	//! using a Boosted Cascade of Simple Features. IEEE CVPR, 2001. The paper is available online at
-	//! <https://github.com/SvHey/thesis/blob/master/Literature/ObjectDetection/violaJones_CVPR2001.pdf>
+	//!    addition to Haar-like features. .. [Viola01] Paul Viola and Michael J. Jones. Rapid Object Detection
+	//!    using a Boosted Cascade of Simple Features. IEEE CVPR, 2001. The paper is available online at
+	//!    <https://github.com/SvHey/thesis/blob/master/Literature/ObjectDetection/violaJones_CVPR2001.pdf>
 	//! 
 	//!    # HOG (Histogram of Oriented Gradients) descriptor and object detector
 	//!    # Barcode detection and decoding
 	//!    # QRCode detection and encoding
 	//!    # DNN-based face detection and recognition
-	//! Check [tutorial_dnn_face] "the corresponding tutorial" for more details.
+	//! 
+	//!    Check [tutorial_dnn_face] "the corresponding tutorial" for more details.
+	//! 
 	//!    # Common functions and classes
 	//!    # ArUco markers and boards detection for robust camera pose estimation
 	//!        ArUco Marker Detection
@@ -67,11 +69,11 @@ pub mod objdetect {
 	//!        ArUco markers can also be used for advanced chessboard corner finding. To do this, group the markers in the
 	//!        CharucoBoard and find the corners of the chessboard with the CharucoDetector::detectBoard().
 	//! 
-	//!        The implementation is based on the ArUco Library by R. Muñoz-Salinas and S. Garrido-Jurado [Aruco2014](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Aruco2014).
+	//!        The implementation is based on the ArUco Library by R. Muñoz-Salinas and S. Garrido-Jurado [Aruco2014](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Aruco2014).
 	//! 
-	//!        Markers can also be detected based on the AprilTag 2 [wang2016iros](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_wang2016iros) fiducial detection method.
+	//!        Markers can also be detected based on the AprilTag 2 [wang2016iros](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_wang2016iros) fiducial detection method.
 	//! ## See also
-	//! [Aruco2014](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Aruco2014)
+	//! [Aruco2014](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Aruco2014)
 	//!        This code has been originally developed by Sergio Garrido-Jurado as a project
 	//!        for Google Summer of Code 2015 (GSoC 15).
 	use crate::{mod_prelude::*, core, sys, types};
@@ -83,7 +85,7 @@ pub mod objdetect {
 	pub const CASCADE_DO_ROUGH_SEARCH: i32 = 8;
 	pub const CASCADE_FIND_BIGGEST_OBJECT: i32 = 4;
 	pub const CASCADE_SCALE_IMAGE: i32 = 2;
-	/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_wang2016iros)
+	/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_wang2016iros)
 	pub const CORNER_REFINE_APRILTAG: i32 = 3;
 	/// ArUco approach and refine the corners locations using the contour-points line fitting
 	pub const CORNER_REFINE_CONTOUR: i32 = 2;
@@ -168,7 +170,7 @@ pub mod objdetect {
 		CORNER_REFINE_SUBPIX = 1,
 		/// ArUco approach and refine the corners locations using the contour-points line fitting
 		CORNER_REFINE_CONTOUR = 2,
-		/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_wang2016iros)
+		/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_wang2016iros)
 		CORNER_REFINE_APRILTAG = 3,
 	}
 	
@@ -2285,7 +2287,7 @@ pub mod objdetect {
 		
 		/// Detects faces in the input image. Following is an example output.
 		/// 
-		/// * ![image](https://docs.opencv.org/4.9.0/lena-face-detection.jpg)
+		/// * ![image](https://docs.opencv.org/4.10.0/lena-face-detection.jpg)
 		/// 
 		/// ## Parameters
 		/// * image: an image to detect
@@ -2825,6 +2827,10 @@ pub mod objdetect {
 		/// * points: optional output vector of vertices of the found graphical code quadrangles. Will be empty if not found.
 		/// * straight_code: The optional vector of images containing binarized codes
 		/// 
+		/// - If there are QR codes encoded with a Structured Append mode on the image and all of them detected and decoded correctly,
+		/// method writes a full message to position corresponds to 0-th code in a sequence. The rest of QR codes from the same sequence
+		/// have empty string.
+		/// 
 		/// ## C++ default parameters
 		/// * points: noArray()
 		/// * straight_code: noArray()
@@ -2846,6 +2852,10 @@ pub mod objdetect {
 		/// * decoded_info: UTF8-encoded output vector of string or empty vector of string if the codes cannot be decoded.
 		/// * points: optional output vector of vertices of the found graphical code quadrangles. Will be empty if not found.
 		/// * straight_code: The optional vector of images containing binarized codes
+		/// 
+		/// - If there are QR codes encoded with a Structured Append mode on the image and all of them detected and decoded correctly,
+		/// method writes a full message to position corresponds to 0-th code in a sequence. The rest of QR codes from the same sequence
+		/// have empty string.
 		/// 
 		/// ## Note
 		/// This alternative version of [GraphicalCodeDetectorTraitConst::detect_and_decode_multi] function uses the following default values for its arguments:
@@ -3788,7 +3798,7 @@ pub mod objdetect {
 	
 	/// Implementation of HOG (Histogram of Oriented Gradients) descriptor and object detector.
 	/// 
-	/// the HOG descriptor algorithm introduced by Navneet Dalal and Bill Triggs [Dalal2005](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Dalal2005) .
+	/// the HOG descriptor algorithm introduced by Navneet Dalal and Bill Triggs [Dalal2005](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Dalal2005) .
 	/// 
 	/// useful links:
 	/// 
@@ -4223,6 +4233,17 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
+		/// Aruco detector parameters are used to search for the finder patterns.
+		#[inline]
+		fn get_aruco_parameters(&self) -> Result<crate::objdetect::DetectorParameters> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_QRCodeDetectorAruco_getArucoParameters_const(self.as_raw_QRCodeDetectorAruco(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::objdetect::DetectorParameters::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	/// Mutable methods for [crate::objdetect::QRCodeDetectorAruco]
@@ -4237,17 +4258,6 @@ pub mod objdetect {
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::objdetect::QRCodeDetectorAruco::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-		
-		/// Aruco detector parameters are used to search for the finder patterns.
-		#[inline]
-		fn get_aruco_parameters(&mut self) -> Result<crate::objdetect::DetectorParameters> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_QRCodeDetectorAruco_getArucoParameters(self.as_raw_mut_QRCodeDetectorAruco(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::objdetect::DetectorParameters::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 		
@@ -5482,6 +5492,10 @@ pub mod objdetect {
 		/// ## See also
 		/// findChessboardCorners
 		/// 
+		/// Note: After OpenCV 4.6.0, there was an incompatible change in the ChArUco pattern generation algorithm for even row counts.
+		/// Use cv::aruco::CharucoBoard::setLegacyPattern() to ensure compatibility with patterns created using OpenCV versions prior to 4.6.0.
+		/// For more information, see the issue: <https://github.com/opencv/opencv/issues/23152>
+		/// 
 		/// ## C++ default parameters
 		/// * marker_corners: noArray()
 		/// * marker_ids: noArray()
@@ -5521,6 +5535,10 @@ pub mod objdetect {
 		/// Only visible corners are returned. For each corner, its corresponding identifier is also returned in charucoIds.
 		/// ## See also
 		/// findChessboardCorners
+		/// 
+		/// Note: After OpenCV 4.6.0, there was an incompatible change in the ChArUco pattern generation algorithm for even row counts.
+		/// Use cv::aruco::CharucoBoard::setLegacyPattern() to ensure compatibility with patterns created using OpenCV versions prior to 4.6.0.
+		/// For more information, see the issue: <https://github.com/opencv/opencv/issues/23152>
 		/// 
 		/// ## Note
 		/// This alternative version of [CharucoDetectorTraitConst::detect_board] function uses the following default values for its arguments:
@@ -7062,7 +7080,7 @@ pub mod objdetect {
 		/// minRepDistance minimum distance between the corners of the rejected candidate and the reprojected marker
 		/// in order to consider it as a correspondence.
 		pub min_rep_distance: f32,
-		/// minRepDistance rate of allowed erroneous bits respect to the error correction capability of the used dictionary.
+		/// errorCorrectionRate rate of allowed erroneous bits respect to the error correction capability of the used dictionary.
 		/// 
 		/// -1 ignores the error correction step.
 		pub error_correction_rate: f32,
@@ -7214,12 +7232,104 @@ pub mod objdetect {
 			Ok(ret)
 		}
 		
+		/// Get detector downsampling threshold.
+		/// 
+		/// ## Returns
+		/// detector downsampling threshold
+		#[inline]
+		fn get_downsampling_threshold(&self) -> Result<f64> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_barcode_BarcodeDetector_getDownsamplingThreshold_const(self.as_raw_BarcodeDetector(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Returns detector box filter sizes.
+		/// 
+		/// ## Parameters
+		/// * sizes: output parameter for returning the sizes.
+		#[inline]
+		fn get_detector_scales(&self, sizes: &mut core::Vector<f32>) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_barcode_BarcodeDetector_getDetectorScales_const_vectorLfloatGR(self.as_raw_BarcodeDetector(), sizes.as_raw_mut_VectorOff32(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// Get detector gradient magnitude threshold.
+		/// 
+		/// ## Returns
+		/// detector gradient magnitude threshold.
+		#[inline]
+		fn get_gradient_threshold(&self) -> Result<f64> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_barcode_BarcodeDetector_getGradientThreshold_const(self.as_raw_BarcodeDetector(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	/// Mutable methods for [crate::objdetect::BarcodeDetector]
 	pub trait BarcodeDetectorTrait: crate::objdetect::BarcodeDetectorTraitConst + crate::objdetect::GraphicalCodeDetectorTrait {
 		fn as_raw_mut_BarcodeDetector(&mut self) -> *mut c_void;
 	
+		/// Set detector downsampling threshold.
+		/// 
+		/// By default, the detect method resizes the input image to this limit if the smallest image size is is greater than the threshold.
+		/// Increasing this value can improve detection accuracy and the number of results at the expense of performance.
+		/// Correlates with detector scales. Setting this to a large value will disable downsampling.
+		/// ## Parameters
+		/// * thresh: downsampling limit to apply (default 512)
+		/// ## See also
+		/// setDetectorScales
+		#[inline]
+		fn set_downsampling_threshold(&mut self, thresh: f64) -> Result<crate::objdetect::BarcodeDetector> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_barcode_BarcodeDetector_setDownsamplingThreshold_double(self.as_raw_mut_BarcodeDetector(), thresh, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::objdetect::BarcodeDetector::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Set detector box filter sizes.
+		/// 
+		/// Adjusts the value and the number of box filters used in the detect step.
+		/// The filter sizes directly correlate with the expected line widths for a barcode. Corresponds to expected barcode distance.
+		/// If the downsampling limit is increased, filter sizes need to be adjusted in an inversely proportional way.
+		/// ## Parameters
+		/// * sizes: box filter sizes, relative to minimum dimension of the image (default [0.01, 0.03, 0.06, 0.08])
+		#[inline]
+		fn set_detector_scales(&mut self, sizes: &core::Vector<f32>) -> Result<crate::objdetect::BarcodeDetector> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_barcode_BarcodeDetector_setDetectorScales_const_vectorLfloatGR(self.as_raw_mut_BarcodeDetector(), sizes.as_raw_VectorOff32(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::objdetect::BarcodeDetector::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
+		/// Set detector gradient magnitude threshold.
+		/// 
+		/// Sets the coherence threshold for detected bounding boxes.
+		/// Increasing this value will generate a closer fitted bounding box width and can reduce false-positives.
+		/// Values between 16 and 1024 generally work, while too high of a value will remove valid detections.
+		/// ## Parameters
+		/// * thresh: gradient magnitude threshold (default 64).
+		#[inline]
+		fn set_gradient_threshold(&mut self, thresh: f64) -> Result<crate::objdetect::BarcodeDetector> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_barcode_BarcodeDetector_setGradientThreshold_double(self.as_raw_mut_BarcodeDetector(), thresh, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::objdetect::BarcodeDetector::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+		
 	}
 	
 	pub struct BarcodeDetector {

@@ -4,138 +4,138 @@ pub mod imgproc {
 	//! This module includes image-processing functions.
 	//!    # Image Filtering
 	//! 
-	//! Functions and classes described in this section are used to perform various linear or non-linear
-	//! filtering operations on 2D images (represented as Mat's). It means that for each pixel location
-	//! ![inline formula](https://latex.codecogs.com/png.latex?%28x%2Cy%29) in the source image (normally, rectangular), its neighborhood is considered and used to
-	//! compute the response. In case of a linear filter, it is a weighted sum of pixel values. In case of
-	//! morphological operations, it is the minimum or maximum values, and so on. The computed response is
-	//! stored in the destination image at the same location ![inline formula](https://latex.codecogs.com/png.latex?%28x%2Cy%29). It means that the output image
-	//! will be of the same size as the input image. Normally, the functions support multi-channel arrays,
-	//! in which case every channel is processed independently. Therefore, the output image will also have
-	//! the same number of channels as the input one.
+	//!    Functions and classes described in this section are used to perform various linear or non-linear
+	//!    filtering operations on 2D images (represented as Mat's). It means that for each pixel location
+	//!    ![inline formula](https://latex.codecogs.com/png.latex?%28x%2Cy%29) in the source image (normally, rectangular), its neighborhood is considered and used to
+	//!    compute the response. In case of a linear filter, it is a weighted sum of pixel values. In case of
+	//!    morphological operations, it is the minimum or maximum values, and so on. The computed response is
+	//!    stored in the destination image at the same location ![inline formula](https://latex.codecogs.com/png.latex?%28x%2Cy%29). It means that the output image
+	//!    will be of the same size as the input image. Normally, the functions support multi-channel arrays,
+	//!    in which case every channel is processed independently. Therefore, the output image will also have
+	//!    the same number of channels as the input one.
 	//! 
-	//! Another common feature of the functions and classes described in this section is that, unlike
-	//! simple arithmetic functions, they need to extrapolate values of some non-existing pixels. For
-	//! example, if you want to smooth an image using a Gaussian ![inline formula](https://latex.codecogs.com/png.latex?3%20%5Ctimes%203) filter, then, when
-	//! processing the left-most pixels in each row, you need pixels to the left of them, that is, outside
-	//! of the image. You can let these pixels be the same as the left-most image pixels ("replicated
-	//! border" extrapolation method), or assume that all the non-existing pixels are zeros ("constant
-	//! border" extrapolation method), and so on. OpenCV enables you to specify the extrapolation method.
-	//! For details, see [border_types]
+	//!    Another common feature of the functions and classes described in this section is that, unlike
+	//!    simple arithmetic functions, they need to extrapolate values of some non-existing pixels. For
+	//!    example, if you want to smooth an image using a Gaussian ![inline formula](https://latex.codecogs.com/png.latex?3%20%5Ctimes%203) filter, then, when
+	//!    processing the left-most pixels in each row, you need pixels to the left of them, that is, outside
+	//!    of the image. You can let these pixels be the same as the left-most image pixels ("replicated
+	//!    border" extrapolation method), or assume that all the non-existing pixels are zeros ("constant
+	//!    border" extrapolation method), and so on. OpenCV enables you to specify the extrapolation method.
+	//!    For details, see [border_types]
 	//! 
-	//! @anchor filter_depths
-	//! ### Depth combinations
-	//! Input depth (src.depth()) | Output depth (ddepth)
-	//! --------------------------|----------------------
-	//! CV_8U                     | -1/CV_16S/CV_32F/CV_64F
-	//! CV_16U/CV_16S             | -1/CV_32F/CV_64F
-	//! CV_32F                    | -1/CV_32F
-	//! CV_64F                    | -1/CV_64F
+	//!    @anchor filter_depths
+	//!    ### Depth combinations
+	//!    Input depth (src.depth()) | Output depth (ddepth)
+	//!    --------------------------|----------------------
+	//!    CV_8U                     | -1/CV_16S/CV_32F/CV_64F
+	//!    CV_16U/CV_16S             | -1/CV_32F/CV_64F
+	//!    CV_32F                    | -1/CV_32F
+	//!    CV_64F                    | -1/CV_64F
 	//! 
-	//! 
+	//!     
 	//! Note: when ddepth=-1, the output image will have the same depth as the source.
 	//! 
-	//! 
+	//!     
 	//! Note: if you need double floating-point accuracy and using single floating-point input data
-	//! (CV_32F input and CV_64F output depth combination), you can use [Mat].convertTo to convert
-	//! the input data to the desired precision.
+	//!    (CV_32F input and CV_64F output depth combination), you can use [Mat].convertTo to convert
+	//!    the input data to the desired precision.
 	//! 
 	//!    # Geometric Image Transformations
 	//! 
-	//! The functions in this section perform various geometrical transformations of 2D images. They do not
-	//! change the image content but deform the pixel grid and map this deformed grid to the destination
-	//! image. In fact, to avoid sampling artifacts, the mapping is done in the reverse order, from
-	//! destination to the source. That is, for each pixel ![inline formula](https://latex.codecogs.com/png.latex?%28x%2C%20y%29) of the destination image, the
-	//! functions compute coordinates of the corresponding "donor" pixel in the source image and copy the
-	//! pixel value:
+	//!    The functions in this section perform various geometrical transformations of 2D images. They do not
+	//!    change the image content but deform the pixel grid and map this deformed grid to the destination
+	//!    image. In fact, to avoid sampling artifacts, the mapping is done in the reverse order, from
+	//!    destination to the source. That is, for each pixel ![inline formula](https://latex.codecogs.com/png.latex?%28x%2C%20y%29) of the destination image, the
+	//!    functions compute coordinates of the corresponding "donor" pixel in the source image and copy the
+	//!    pixel value:
 	//! 
-	//! ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%3D%20%5Ctexttt%7Bsrc%7D%20%28f%5Fx%28x%2Cy%29%2C%20f%5Fy%28x%2Cy%29%29)
+	//!    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%3D%20%5Ctexttt%7Bsrc%7D%20%28f%5Fx%28x%2Cy%29%2C%20f%5Fy%28x%2Cy%29%29)
 	//! 
-	//! In case when you specify the forward mapping ![inline formula](https://latex.codecogs.com/png.latex?%5Cleft%3Cg%5Fx%2C%20g%5Fy%5Cright%3E%3A%20%5Ctexttt%7Bsrc%7D%20%5Crightarrow%0A%5Ctexttt%7Bdst%7D), the OpenCV functions first compute the corresponding inverse mapping
-	//! ![inline formula](https://latex.codecogs.com/png.latex?%5Cleft%3Cf%5Fx%2C%20f%5Fy%5Cright%3E%3A%20%5Ctexttt%7Bdst%7D%20%5Crightarrow%20%5Ctexttt%7Bsrc%7D) and then use the above formula.
+	//!    In case when you specify the forward mapping ![inline formula](https://latex.codecogs.com/png.latex?%5Cleft%3Cg%5Fx%2C%20g%5Fy%5Cright%3E%3A%20%5Ctexttt%7Bsrc%7D%20%5Crightarrow%0A%20%20%20%20%5Ctexttt%7Bdst%7D), the OpenCV functions first compute the corresponding inverse mapping
+	//!    ![inline formula](https://latex.codecogs.com/png.latex?%5Cleft%3Cf%5Fx%2C%20f%5Fy%5Cright%3E%3A%20%5Ctexttt%7Bdst%7D%20%5Crightarrow%20%5Ctexttt%7Bsrc%7D) and then use the above formula.
 	//! 
-	//! The actual implementations of the geometrical transformations, from the most generic remap and to
-	//! the simplest and the fastest resize, need to solve two main problems with the above formula:
+	//!    The actual implementations of the geometrical transformations, from the most generic remap and to
+	//!    the simplest and the fastest resize, need to solve two main problems with the above formula:
 	//! 
-	//! - Extrapolation of non-existing pixels. Similarly to the filtering functions described in the
-	//! previous section, for some ![inline formula](https://latex.codecogs.com/png.latex?%28x%2Cy%29), either one of ![inline formula](https://latex.codecogs.com/png.latex?f%5Fx%28x%2Cy%29), or ![inline formula](https://latex.codecogs.com/png.latex?f%5Fy%28x%2Cy%29), or both
-	//! of them may fall outside of the image. In this case, an extrapolation method needs to be used.
-	//! OpenCV provides the same selection of extrapolation methods as in the filtering functions. In
-	//! addition, it provides the method #BORDER_TRANSPARENT. This means that the corresponding pixels in
-	//! the destination image will not be modified at all.
+	//!    - Extrapolation of non-existing pixels. Similarly to the filtering functions described in the
+	//!    previous section, for some ![inline formula](https://latex.codecogs.com/png.latex?%28x%2Cy%29), either one of ![inline formula](https://latex.codecogs.com/png.latex?f%5Fx%28x%2Cy%29), or ![inline formula](https://latex.codecogs.com/png.latex?f%5Fy%28x%2Cy%29), or both
+	//!    of them may fall outside of the image. In this case, an extrapolation method needs to be used.
+	//!    OpenCV provides the same selection of extrapolation methods as in the filtering functions. In
+	//!    addition, it provides the method #BORDER_TRANSPARENT. This means that the corresponding pixels in
+	//!    the destination image will not be modified at all.
 	//! 
-	//! - Interpolation of pixel values. Usually ![inline formula](https://latex.codecogs.com/png.latex?f%5Fx%28x%2Cy%29) and ![inline formula](https://latex.codecogs.com/png.latex?f%5Fy%28x%2Cy%29) are floating-point
-	//! numbers. This means that ![inline formula](https://latex.codecogs.com/png.latex?%5Cleft%3Cf%5Fx%2C%20f%5Fy%5Cright%3E) can be either an affine or perspective
-	//! transformation, or radial lens distortion correction, and so on. So, a pixel value at fractional
-	//! coordinates needs to be retrieved. In the simplest case, the coordinates can be just rounded to the
-	//! nearest integer coordinates and the corresponding pixel can be used. This is called a
-	//! nearest-neighbor interpolation. However, a better result can be achieved by using more
-	//! sophisticated [interpolation methods](http://en.wikipedia.org/wiki/Multivariate_interpolation) ,
-	//! where a polynomial function is fit into some neighborhood of the computed pixel ![inline formula](https://latex.codecogs.com/png.latex?%28f%5Fx%28x%2Cy%29%2C%0Af%5Fy%28x%2Cy%29%29), and then the value of the polynomial at ![inline formula](https://latex.codecogs.com/png.latex?%28f%5Fx%28x%2Cy%29%2C%20f%5Fy%28x%2Cy%29%29) is taken as the
-	//! interpolated pixel value. In OpenCV, you can choose between several interpolation methods. See
-	//! [resize] for details.
+	//!    - Interpolation of pixel values. Usually ![inline formula](https://latex.codecogs.com/png.latex?f%5Fx%28x%2Cy%29) and ![inline formula](https://latex.codecogs.com/png.latex?f%5Fy%28x%2Cy%29) are floating-point
+	//!    numbers. This means that ![inline formula](https://latex.codecogs.com/png.latex?%5Cleft%3Cf%5Fx%2C%20f%5Fy%5Cright%3E) can be either an affine or perspective
+	//!    transformation, or radial lens distortion correction, and so on. So, a pixel value at fractional
+	//!    coordinates needs to be retrieved. In the simplest case, the coordinates can be just rounded to the
+	//!    nearest integer coordinates and the corresponding pixel can be used. This is called a
+	//!    nearest-neighbor interpolation. However, a better result can be achieved by using more
+	//!    sophisticated [interpolation methods](http://en.wikipedia.org/wiki/Multivariate_interpolation) ,
+	//!    where a polynomial function is fit into some neighborhood of the computed pixel ![inline formula](https://latex.codecogs.com/png.latex?%28f%5Fx%28x%2Cy%29%2C%0A%20%20%20%20f%5Fy%28x%2Cy%29%29), and then the value of the polynomial at ![inline formula](https://latex.codecogs.com/png.latex?%28f%5Fx%28x%2Cy%29%2C%20f%5Fy%28x%2Cy%29%29) is taken as the
+	//!    interpolated pixel value. In OpenCV, you can choose between several interpolation methods. See
+	//!    [resize] for details.
 	//! 
-	//! 
+	//!     
 	//! Note: The geometrical transformations do not work with `CV_8S` or `CV_32S` images.
 	//! 
 	//!    # Miscellaneous Image Transformations
 	//!    # Drawing Functions
 	//! 
-	//! Drawing functions work with matrices/images of arbitrary depth. The boundaries of the shapes can be
-	//! rendered with antialiasing (implemented only for 8-bit images for now). All the functions include
-	//! the parameter color that uses an RGB value (that may be constructed with the Scalar constructor )
-	//! for color images and brightness for grayscale images. For color images, the channel ordering is
-	//! normally *Blue, Green, Red*. This is what imshow, imread, and imwrite expect. So, if you form a
-	//! color using the Scalar constructor, it should look like:
+	//!    Drawing functions work with matrices/images of arbitrary depth. The boundaries of the shapes can be
+	//!    rendered with antialiasing (implemented only for 8-bit images for now). All the functions include
+	//!    the parameter color that uses an RGB value (that may be constructed with the Scalar constructor )
+	//!    for color images and brightness for grayscale images. For color images, the channel ordering is
+	//!    normally *Blue, Green, Red*. This is what imshow, imread, and imwrite expect. So, if you form a
+	//!    color using the Scalar constructor, it should look like:
 	//! 
-	//! ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BScalar%7D%20%28blue%20%5C%5F%20component%2C%20green%20%5C%5F%20component%2C%20red%20%5C%5F%20component%5B%2C%20alpha%20%5C%5F%20component%5D%29)
+	//!    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BScalar%7D%20%28blue%20%5C%5F%20component%2C%20green%20%5C%5F%20component%2C%20red%20%5C%5F%20component%5B%2C%20alpha%20%5C%5F%20component%5D%29)
 	//! 
-	//! If you are using your own image rendering and I/O functions, you can use any channel ordering. The
-	//! drawing functions process each channel independently and do not depend on the channel order or even
-	//! on the used color space. The whole image can be converted from BGR to RGB or to a different color
-	//! space using cvtColor .
+	//!    If you are using your own image rendering and I/O functions, you can use any channel ordering. The
+	//!    drawing functions process each channel independently and do not depend on the channel order or even
+	//!    on the used color space. The whole image can be converted from BGR to RGB or to a different color
+	//!    space using cvtColor .
 	//! 
-	//! If a drawn figure is partially or completely outside the image, the drawing functions clip it. Also,
-	//! many drawing functions can handle pixel coordinates specified with sub-pixel accuracy. This means
-	//! that the coordinates can be passed as fixed-point numbers encoded as integers. The number of
-	//! fractional bits is specified by the shift parameter and the real point coordinates are calculated as
-	//! ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BPoint%7D%28x%2Cy%29%5Crightarrow%5Ctexttt%7BPoint2f%7D%28x%2A2%5E%7B%2Dshift%7D%2Cy%2A2%5E%7B%2Dshift%7D%29) . This feature is
-	//! especially effective when rendering antialiased shapes.
+	//!    If a drawn figure is partially or completely outside the image, the drawing functions clip it. Also,
+	//!    many drawing functions can handle pixel coordinates specified with sub-pixel accuracy. This means
+	//!    that the coordinates can be passed as fixed-point numbers encoded as integers. The number of
+	//!    fractional bits is specified by the shift parameter and the real point coordinates are calculated as
+	//!    ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BPoint%7D%28x%2Cy%29%5Crightarrow%5Ctexttt%7BPoint2f%7D%28x%2A2%5E%7B%2Dshift%7D%2Cy%2A2%5E%7B%2Dshift%7D%29) . This feature is
+	//!    especially effective when rendering antialiased shapes.
 	//! 
-	//! 
+	//!     
 	//! Note: The functions do not support alpha-transparency when the target image is 4-channel. In this
-	//! case, the color[3] is simply copied to the repainted pixels. Thus, if you want to paint
-	//! semi-transparent shapes, you can paint them in a separate buffer and then blend it with the main
-	//! image.
+	//!    case, the color[3] is simply copied to the repainted pixels. Thus, if you want to paint
+	//!    semi-transparent shapes, you can paint them in a separate buffer and then blend it with the main
+	//!    image.
 	//! 
 	//!    # Color Space Conversions
 	//!    # ColorMaps in OpenCV
 	//! 
-	//! The human perception isn't built for observing fine changes in grayscale images. Human eyes are more
-	//! sensitive to observing changes between colors, so you often need to recolor your grayscale images to
-	//! get a clue about them. OpenCV now comes with various colormaps to enhance the visualization in your
-	//! computer vision application.
+	//!    The human perception isn't built for observing fine changes in grayscale images. Human eyes are more
+	//!    sensitive to observing changes between colors, so you often need to recolor your grayscale images to
+	//!    get a clue about them. OpenCV now comes with various colormaps to enhance the visualization in your
+	//!    computer vision application.
 	//! 
-	//! In OpenCV you only need applyColorMap to apply a colormap on a given image. The following sample
-	//! code reads the path to an image from command line, applies a Jet colormap on it and shows the
-	//! result:
+	//!    In OpenCV you only need applyColorMap to apply a colormap on a given image. The following sample
+	//!    code reads the path to an image from command line, applies a Jet colormap on it and shows the
+	//!    result:
 	//! 
-	//! @include snippets/imgproc_applyColorMap.cpp
+	//!    @include snippets/imgproc_applyColorMap.cpp
 	//! ## See also
 	//! [colormap_types]
 	//! 
 	//!    # Planar Subdivision
 	//! 
-	//! The Subdiv2D class described in this section is used to perform various planar subdivision on
-	//! a set of 2D points (represented as vector of Point2f). OpenCV subdivides a plane into triangles
-	//! using the Delaunay's algorithm, which corresponds to the dual graph of the Voronoi diagram.
-	//! In the figure below, the Delaunay's triangulation is marked with black lines and the Voronoi
-	//! diagram with red lines.
+	//!    The Subdiv2D class described in this section is used to perform various planar subdivision on
+	//!    a set of 2D points (represented as vector of Point2f). OpenCV subdivides a plane into triangles
+	//!    using the Delaunay's algorithm, which corresponds to the dual graph of the Voronoi diagram.
+	//!    In the figure below, the Delaunay's triangulation is marked with black lines and the Voronoi
+	//!    diagram with red lines.
 	//! 
-	//! ![Delaunay triangulation (black) and Voronoi (red)](https://docs.opencv.org/4.9.0/delaunay_voronoi.png)
+	//!    ![Delaunay triangulation (black) and Voronoi (red)](https://docs.opencv.org/4.10.0/delaunay_voronoi.png)
 	//! 
-	//! The subdivisions can be used for the 3D piece-wise transformation of a plane, morphing, fast
-	//! location of points on the plane, building special graphs (such as NNG,RNG), and so forth.
+	//!    The subdivisions can be used for the 3D piece-wise transformation of a plane, morphing, fast
+	//!    location of points on the plane, building special graphs (such as NNG,RNG), and so forth.
 	//! 
 	//!    # Histograms
 	//!    # Structural Analysis and Shape Descriptors
@@ -143,7 +143,6 @@ pub mod imgproc {
 	//!    # Feature Detection
 	//!    # Object Detection
 	//!    # Image Segmentation
-	//!    # C API
 	//!    # Hardware Acceleration Layer
 	//!        # Functions
 	//!        # Interface
@@ -161,17 +160,17 @@ pub mod imgproc {
 	pub const ADAPTIVE_THRESH_MEAN_C: i32 = 0;
 	/// Same as CCL_GRANA. It is preferable to use the flag with the name of the algorithm (CCL_BBDT) rather than the one with the name of the first author (CCL_GRANA).
 	pub const CCL_BBDT: i32 = 4;
-	/// Spaghetti [Bolelli2019](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, Spaghetti4C [Bolelli2021](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Bolelli2021) algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both Spaghetti and Spaghetti4C.
+	/// Spaghetti [Bolelli2019](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, Spaghetti4C [Bolelli2021](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2021) algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both Spaghetti and Spaghetti4C.
 	pub const CCL_BOLELLI: i32 = 2;
-	/// Spaghetti [Bolelli2019](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, Spaghetti4C [Bolelli2021](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Bolelli2021) algorithm for 4-way connectivity.
+	/// Spaghetti [Bolelli2019](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, Spaghetti4C [Bolelli2021](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2021) algorithm for 4-way connectivity.
 	pub const CCL_DEFAULT: i32 = -1;
-	/// BBDT [Grana2010](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Grana2010) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both BBDT and SAUF.
+	/// BBDT [Grana2010](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Grana2010) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both BBDT and SAUF.
 	pub const CCL_GRANA: i32 = 1;
 	/// Same as CCL_WU. It is preferable to use the flag with the name of the algorithm (CCL_SAUF) rather than the one with the name of the first author (CCL_WU).
 	pub const CCL_SAUF: i32 = 3;
 	/// Same as CCL_BOLELLI. It is preferable to use the flag with the name of the algorithm (CCL_SPAGHETTI) rather than the one with the name of the first author (CCL_BOLELLI).
 	pub const CCL_SPAGHETTI: i32 = 5;
-	/// SAUF [Wu2009](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for SAUF.
+	/// SAUF [Wu2009](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for SAUF.
 	pub const CCL_WU: i32 = 0;
 	/// The total area (in pixels) of the connected component
 	pub const CC_STAT_AREA: i32 = 4;
@@ -194,53 +193,53 @@ pub mod imgproc {
 	/// compresses horizontal, vertical, and diagonal segments and leaves only their end points.
 	/// For example, an up-right rectangular contour is encoded with 4 points.
 	pub const CHAIN_APPROX_SIMPLE: i32 = 2;
-	/// applies one of the flavors of the Teh-Chin chain approximation algorithm [TehChin89](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_TehChin89)
+	/// applies one of the flavors of the Teh-Chin chain approximation algorithm [TehChin89](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_TehChin89)
 	pub const CHAIN_APPROX_TC89_KCOS: i32 = 4;
-	/// applies one of the flavors of the Teh-Chin chain approximation algorithm [TehChin89](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_TehChin89)
+	/// applies one of the flavors of the Teh-Chin chain approximation algorithm [TehChin89](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_TehChin89)
 	pub const CHAIN_APPROX_TC89_L1: i32 = 3;
-	/// ![autumn](https://docs.opencv.org/4.9.0/colorscale_autumn.jpg)
+	/// ![autumn](https://docs.opencv.org/4.10.0/colorscale_autumn.jpg)
 	pub const COLORMAP_AUTUMN: i32 = 0;
-	/// ![bone](https://docs.opencv.org/4.9.0/colorscale_bone.jpg)
+	/// ![bone](https://docs.opencv.org/4.10.0/colorscale_bone.jpg)
 	pub const COLORMAP_BONE: i32 = 1;
-	/// ![cividis](https://docs.opencv.org/4.9.0/colorscale_cividis.jpg)
+	/// ![cividis](https://docs.opencv.org/4.10.0/colorscale_cividis.jpg)
 	pub const COLORMAP_CIVIDIS: i32 = 17;
-	/// ![cool](https://docs.opencv.org/4.9.0/colorscale_cool.jpg)
+	/// ![cool](https://docs.opencv.org/4.10.0/colorscale_cool.jpg)
 	pub const COLORMAP_COOL: i32 = 8;
-	/// ![deepgreen](https://docs.opencv.org/4.9.0/colorscale_deepgreen.jpg)
+	/// ![deepgreen](https://docs.opencv.org/4.10.0/colorscale_deepgreen.jpg)
 	pub const COLORMAP_DEEPGREEN: i32 = 21;
-	/// ![hot](https://docs.opencv.org/4.9.0/colorscale_hot.jpg)
+	/// ![hot](https://docs.opencv.org/4.10.0/colorscale_hot.jpg)
 	pub const COLORMAP_HOT: i32 = 11;
-	/// ![HSV](https://docs.opencv.org/4.9.0/colorscale_hsv.jpg)
+	/// ![HSV](https://docs.opencv.org/4.10.0/colorscale_hsv.jpg)
 	pub const COLORMAP_HSV: i32 = 9;
-	/// ![inferno](https://docs.opencv.org/4.9.0/colorscale_inferno.jpg)
+	/// ![inferno](https://docs.opencv.org/4.10.0/colorscale_inferno.jpg)
 	pub const COLORMAP_INFERNO: i32 = 14;
-	/// ![jet](https://docs.opencv.org/4.9.0/colorscale_jet.jpg)
+	/// ![jet](https://docs.opencv.org/4.10.0/colorscale_jet.jpg)
 	pub const COLORMAP_JET: i32 = 2;
-	/// ![magma](https://docs.opencv.org/4.9.0/colorscale_magma.jpg)
+	/// ![magma](https://docs.opencv.org/4.10.0/colorscale_magma.jpg)
 	pub const COLORMAP_MAGMA: i32 = 13;
-	/// ![ocean](https://docs.opencv.org/4.9.0/colorscale_ocean.jpg)
+	/// ![ocean](https://docs.opencv.org/4.10.0/colorscale_ocean.jpg)
 	pub const COLORMAP_OCEAN: i32 = 5;
-	/// ![parula](https://docs.opencv.org/4.9.0/colorscale_parula.jpg)
+	/// ![parula](https://docs.opencv.org/4.10.0/colorscale_parula.jpg)
 	pub const COLORMAP_PARULA: i32 = 12;
-	/// ![pink](https://docs.opencv.org/4.9.0/colorscale_pink.jpg)
+	/// ![pink](https://docs.opencv.org/4.10.0/colorscale_pink.jpg)
 	pub const COLORMAP_PINK: i32 = 10;
-	/// ![plasma](https://docs.opencv.org/4.9.0/colorscale_plasma.jpg)
+	/// ![plasma](https://docs.opencv.org/4.10.0/colorscale_plasma.jpg)
 	pub const COLORMAP_PLASMA: i32 = 15;
-	/// ![rainbow](https://docs.opencv.org/4.9.0/colorscale_rainbow.jpg)
+	/// ![rainbow](https://docs.opencv.org/4.10.0/colorscale_rainbow.jpg)
 	pub const COLORMAP_RAINBOW: i32 = 4;
-	/// ![spring](https://docs.opencv.org/4.9.0/colorscale_spring.jpg)
+	/// ![spring](https://docs.opencv.org/4.10.0/colorscale_spring.jpg)
 	pub const COLORMAP_SPRING: i32 = 7;
-	/// ![summer](https://docs.opencv.org/4.9.0/colorscale_summer.jpg)
+	/// ![summer](https://docs.opencv.org/4.10.0/colorscale_summer.jpg)
 	pub const COLORMAP_SUMMER: i32 = 6;
-	/// ![turbo](https://docs.opencv.org/4.9.0/colorscale_turbo.jpg)
+	/// ![turbo](https://docs.opencv.org/4.10.0/colorscale_turbo.jpg)
 	pub const COLORMAP_TURBO: i32 = 20;
-	/// ![twilight](https://docs.opencv.org/4.9.0/colorscale_twilight.jpg)
+	/// ![twilight](https://docs.opencv.org/4.10.0/colorscale_twilight.jpg)
 	pub const COLORMAP_TWILIGHT: i32 = 18;
-	/// ![twilight shifted](https://docs.opencv.org/4.9.0/colorscale_twilight_shifted.jpg)
+	/// ![twilight shifted](https://docs.opencv.org/4.10.0/colorscale_twilight_shifted.jpg)
 	pub const COLORMAP_TWILIGHT_SHIFTED: i32 = 19;
-	/// ![viridis](https://docs.opencv.org/4.9.0/colorscale_viridis.jpg)
+	/// ![viridis](https://docs.opencv.org/4.10.0/colorscale_viridis.jpg)
 	pub const COLORMAP_VIRIDIS: i32 = 16;
-	/// ![winter](https://docs.opencv.org/4.9.0/colorscale_winter.jpg)
+	/// ![winter](https://docs.opencv.org/4.10.0/colorscale_winter.jpg)
 	pub const COLORMAP_WINTER: i32 = 3;
 	/// convert between RGB/BGR and BGR555 (16-bit images)
 	pub const COLOR_BGR2BGR555: i32 = 22;
@@ -271,25 +270,25 @@ pub mod imgproc {
 	pub const COLOR_BGR2YCrCb: i32 = 36;
 	/// convert between RGB/BGR and YUV
 	pub const COLOR_BGR2YUV: i32 = 82;
-	/// RGB to YUV 4:2:0 family
+	/// convert between BGR and 4:2:0-subsampled YUV I420, three planes in one array: Y, U and V, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_BGR2YUV_I420: i32 = 128;
-	/// RGB to YUV 4:2:0 family
+	/// synonym to I420
 	pub const COLOR_BGR2YUV_IYUV: i32 = 128;
-	/// RGB to YUV 4:2:2 family
+	/// synonym to UYVY
 	pub const COLOR_BGR2YUV_UYNV: i32 = 144;
-	/// RGB to YUV 4:2:2 family
+	/// convert between BGR and YUV UYVU, YUV is 4:2:2 and interleaved as U/Y1/V/Y2, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_BGR2YUV_UYVY: i32 = 144;
-	/// RGB to YUV 4:2:2 family
+	/// synonym to UYVY
 	pub const COLOR_BGR2YUV_Y422: i32 = 144;
-	/// RGB to YUV 4:2:2 family
+	/// synonym to YUY2
 	pub const COLOR_BGR2YUV_YUNV: i32 = 148;
-	/// RGB to YUV 4:2:2 family
+	/// convert between BGR and YUV YUY2, YUV is 4:2:2 and interleaved as Y1/U/Y2/V, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_BGR2YUV_YUY2: i32 = 148;
-	/// RGB to YUV 4:2:2 family
+	/// synonym to YUY2
 	pub const COLOR_BGR2YUV_YUYV: i32 = 148;
-	/// RGB to YUV 4:2:0 family
+	/// convert between BGR and 4:2:0-subsampled YUV YV12, three planes in one array: Y, V and U, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_BGR2YUV_YV12: i32 = 132;
-	/// RGB to YUV 4:2:2 family
+	/// convert between BGR and YUV YVYU, YUV is 4:2:2 and interleaved as Y1/V/Y2/U, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_BGR2YUV_YVYU: i32 = 150;
 	pub const COLOR_BGR5552BGR: i32 = 24;
 	pub const COLOR_BGR5552BGRA: i32 = 28;
@@ -308,25 +307,25 @@ pub mod imgproc {
 	pub const COLOR_BGRA2GRAY: i32 = 10;
 	pub const COLOR_BGRA2RGB: i32 = 3;
 	pub const COLOR_BGRA2RGBA: i32 = 5;
-	/// RGB to YUV 4:2:0 family
+	/// convert between BGRA and 4:2:0-subsampled YUV I420, three planes in one array: Y, U and V, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_BGRA2YUV_I420: i32 = 130;
-	/// RGB to YUV 4:2:0 family
+	/// synonym to I420
 	pub const COLOR_BGRA2YUV_IYUV: i32 = 130;
-	/// RGB to YUV 4:2:2 family
+	/// synonym to UYVY
 	pub const COLOR_BGRA2YUV_UYNV: i32 = 146;
-	/// RGB to YUV 4:2:2 family
+	/// convert between BGRA and YUV UYVU, YUV is 4:2:2 and interleaved as U/Y1/V/Y2, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_BGRA2YUV_UYVY: i32 = 146;
-	/// RGB to YUV 4:2:2 family
+	/// synonym to UYVY
 	pub const COLOR_BGRA2YUV_Y422: i32 = 146;
-	/// RGB to YUV 4:2:2 family
+	/// synonym to YUY2
 	pub const COLOR_BGRA2YUV_YUNV: i32 = 152;
-	/// RGB to YUV 4:2:2 family
+	/// convert between BGRA and YUV YUY2, YUV is 4:2:2 and interleaved as Y1/U/Y2/V, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_BGRA2YUV_YUY2: i32 = 152;
-	/// RGB to YUV 4:2:2 family
+	/// synonym to YUY2
 	pub const COLOR_BGRA2YUV_YUYV: i32 = 152;
-	/// RGB to YUV 4:2:0 family
+	/// convert between BGRA and 4:2:0-subsampled YUV YV12, three planes in one array: Y, V and U, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_BGRA2YUV_YV12: i32 = 134;
-	/// RGB to YUV 4:2:2 family
+	/// convert between BGRA and YUV YVYU, YUV is 4:2:2 and interleaved as Y1/V/Y2/U, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_BGRA2YUV_YVYU: i32 = 154;
 	/// equivalent to RGGB Bayer pattern
 	pub const COLOR_BayerBG2BGR: i32 = 46;
@@ -436,7 +435,6 @@ pub mod imgproc {
 	pub const COLOR_BayerRGGB2RGBA: i32 = 141;
 	pub const COLOR_BayerRGGB2RGB_EA: i32 = 137;
 	pub const COLOR_BayerRGGB2RGB_VNG: i32 = 64;
-	/// RGB to YUV 4:2:2 family
 	pub const COLOR_COLORCVT_MAX: i32 = 155;
 	pub const COLOR_GRAY2BGR: i32 = 8;
 	/// convert between grayscale and BGR555 (16-bit images)
@@ -485,25 +483,25 @@ pub mod imgproc {
 	pub const COLOR_RGB2XYZ: i32 = 33;
 	pub const COLOR_RGB2YCrCb: i32 = 37;
 	pub const COLOR_RGB2YUV: i32 = 83;
-	/// RGB to YUV 4:2:0 family
+	/// convert between RGB and 4:2:0-subsampled YUV I420, three planes in one array: Y, U and V, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_RGB2YUV_I420: i32 = 127;
-	/// RGB to YUV 4:2:0 family
+	/// synonym to I420
 	pub const COLOR_RGB2YUV_IYUV: i32 = 127;
-	/// RGB to YUV 4:2:2 family
+	/// synonym to UYVY
 	pub const COLOR_RGB2YUV_UYNV: i32 = 143;
-	/// RGB to YUV 4:2:2 family
+	/// convert between RGB and YUV UYVU, YUV is 4:2:2 and interleaved as U/Y1/V/Y2, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_RGB2YUV_UYVY: i32 = 143;
-	/// RGB to YUV 4:2:2 family
+	/// synonym to UYVY
 	pub const COLOR_RGB2YUV_Y422: i32 = 143;
-	/// RGB to YUV 4:2:2 family
+	/// synonym to YUY2
 	pub const COLOR_RGB2YUV_YUNV: i32 = 147;
-	/// RGB to YUV 4:2:2 family
+	/// convert between RGB and YUV YUY2, YUV is 4:2:2 and interleaved as Y1/U/Y2/V, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_RGB2YUV_YUY2: i32 = 147;
-	/// RGB to YUV 4:2:2 family
+	/// synonym to YUY2
 	pub const COLOR_RGB2YUV_YUYV: i32 = 147;
-	/// RGB to YUV 4:2:0 family
+	/// convert between RGB and 4:2:0-subsampled YUV YV12, three planes in one array: Y, V and U, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_RGB2YUV_YV12: i32 = 131;
-	/// RGB to YUV 4:2:2 family
+	/// convert between RGB and YUV YVYU, YUV is 4:2:2 and interleaved as Y1/V/Y2/U, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_RGB2YUV_YVYU: i32 = 149;
 	pub const COLOR_RGBA2BGR: i32 = 3;
 	pub const COLOR_RGBA2BGR555: i32 = 27;
@@ -511,25 +509,25 @@ pub mod imgproc {
 	pub const COLOR_RGBA2BGRA: i32 = 5;
 	pub const COLOR_RGBA2GRAY: i32 = 11;
 	pub const COLOR_RGBA2RGB: i32 = 1;
-	/// RGB to YUV 4:2:0 family
+	/// convert between RGBA and 4:2:0-subsampled YUV I420, three planes in one array: Y, U and V, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_RGBA2YUV_I420: i32 = 129;
-	/// RGB to YUV 4:2:0 family
+	/// synonym to I420
 	pub const COLOR_RGBA2YUV_IYUV: i32 = 129;
-	/// RGB to YUV 4:2:2 family
+	/// synonym to UYVY
 	pub const COLOR_RGBA2YUV_UYNV: i32 = 145;
-	/// RGB to YUV 4:2:2 family
+	/// convert between RGBA and YUV UYVU, YUV is 4:2:2 and interleaved as U/Y1/V/Y2, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_RGBA2YUV_UYVY: i32 = 145;
-	/// RGB to YUV 4:2:2 family
+	/// synonym to UYVY
 	pub const COLOR_RGBA2YUV_Y422: i32 = 145;
-	/// RGB to YUV 4:2:2 family
+	/// synonym to YUY2
 	pub const COLOR_RGBA2YUV_YUNV: i32 = 151;
-	/// RGB to YUV 4:2:2 family
+	/// convert between RGBA and YUV YUY2, YUV is 4:2:2 and interleaved as Y1/U/Y2/V, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_RGBA2YUV_YUY2: i32 = 151;
-	/// RGB to YUV 4:2:2 family
+	/// synonym to YUY2
 	pub const COLOR_RGBA2YUV_YUYV: i32 = 151;
-	/// RGB to YUV 4:2:0 family
+	/// convert between RGBA and 4:2:0-subsampled YUV YV12, three planes in one array: Y, V and U, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_RGBA2YUV_YV12: i32 = 133;
-	/// RGB to YUV 4:2:2 family
+	/// convert between RGBA and YUV YVYU, YUV is 4:2:2 and interleaved as Y1/V/Y2/U, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_RGBA2YUV_YVYU: i32 = 153;
 	/// alpha premultiplication
 	pub const COLOR_RGBA2mRGBA: i32 = 125;
@@ -538,148 +536,148 @@ pub mod imgproc {
 	pub const COLOR_YCrCb2BGR: i32 = 38;
 	pub const COLOR_YCrCb2RGB: i32 = 39;
 	pub const COLOR_YUV2BGR: i32 = 84;
-	/// YUV 4:2:0 family to RGB
+	/// synonym to IYUV
 	pub const COLOR_YUV2BGRA_I420: i32 = 105;
-	/// YUV 4:2:0 family to RGB
+	/// convert between 4:2:0-subsampled YUV YV12 and BGRA, three planes in one array: Y, U and V, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_YUV2BGRA_IYUV: i32 = 105;
-	/// YUV 4:2:0 family to RGB
+	/// convert between 4:2:0-subsampled YUV NV12 and BGRA, two planes (in one or separate arrays): Y and U/V interleaved, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_YUV2BGRA_NV12: i32 = 95;
-	/// YUV 4:2:0 family to RGB
+	/// convert between 4:2:0-subsampled YUV NV21 and BGRA, two planes (in one or separate arrays): Y and V/U interleaved, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_YUV2BGRA_NV21: i32 = 97;
-	/// YUV 4:2:2 family to RGB
+	/// synonym to UYVY
 	pub const COLOR_YUV2BGRA_UYNV: i32 = 112;
-	/// YUV 4:2:2 family to RGB
+	/// convert between YUV UYVY and BGRA, YUV is 4:2:2-subsampled and interleaved as U/Y1/V/Y2, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_YUV2BGRA_UYVY: i32 = 112;
-	/// YUV 4:2:2 family to RGB
+	/// synonym to UYVY
 	pub const COLOR_YUV2BGRA_Y422: i32 = 112;
-	/// YUV 4:2:2 family to RGB
+	/// synonym to YUY2
 	pub const COLOR_YUV2BGRA_YUNV: i32 = 120;
-	/// YUV 4:2:2 family to RGB
+	/// convert between YUV YUY2 and BGRA, YUV is 4:2:2-subsampled and interleaved as Y1/U/Y2/V, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_YUV2BGRA_YUY2: i32 = 120;
-	/// YUV 4:2:2 family to RGB
+	/// synonym to YUY2
 	pub const COLOR_YUV2BGRA_YUYV: i32 = 120;
-	/// YUV 4:2:0 family to RGB
+	/// convert between 4:2:0-subsampled YUV YV12 and BGRA, three planes in one array: Y, V and U, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_YUV2BGRA_YV12: i32 = 103;
-	/// YUV 4:2:2 family to RGB
+	/// convert between YUV YVYU and BGRA, YUV is 4:2:2-subsampled and interleaved as Y1/V/Y2/U, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_YUV2BGRA_YVYU: i32 = 122;
-	/// YUV 4:2:0 family to RGB
+	/// synonym to IYUV
 	pub const COLOR_YUV2BGR_I420: i32 = 101;
-	/// YUV 4:2:0 family to RGB
+	/// convert between 4:2:0-subsampled YUV IYUV and BGR, three planes in one array: Y, U and V, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_YUV2BGR_IYUV: i32 = 101;
-	/// YUV 4:2:0 family to RGB
+	/// convert between 4:2:0-subsampled YUV NV12 and BGR, two planes (in one or separate arrays): Y and U/V interleaved, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_YUV2BGR_NV12: i32 = 91;
-	/// YUV 4:2:0 family to RGB
+	/// convert between 4:2:0-subsampled YUV NV21 and BGR, two planes (in one or separate arrays): Y and V/U interleaved, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_YUV2BGR_NV21: i32 = 93;
-	/// YUV 4:2:2 family to RGB
+	/// synonym to UYVY
 	pub const COLOR_YUV2BGR_UYNV: i32 = 108;
-	/// YUV 4:2:2 family to RGB
+	/// convert between YUV UYVY and BGR, YUV is 4:2:2-subsampled and interleaved as U/Y1/V/Y2, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_YUV2BGR_UYVY: i32 = 108;
-	/// YUV 4:2:2 family to RGB
+	/// synonym to UYVY
 	pub const COLOR_YUV2BGR_Y422: i32 = 108;
-	/// YUV 4:2:2 family to RGB
+	/// synonym to YUY2
 	pub const COLOR_YUV2BGR_YUNV: i32 = 116;
-	/// YUV 4:2:2 family to RGB
+	/// convert between YUV YUY2 and BGR, YUV is 4:2:2-subsampled and interleaved as Y1/U/Y2/V, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_YUV2BGR_YUY2: i32 = 116;
-	/// YUV 4:2:2 family to RGB
+	/// synonym to YUY2
 	pub const COLOR_YUV2BGR_YUYV: i32 = 116;
-	/// YUV 4:2:0 family to RGB
+	/// convert between 4:2:0-subsampled YUV YV12 and BGR, three planes in one array: Y, V and U, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_YUV2BGR_YV12: i32 = 99;
-	/// YUV 4:2:2 family to RGB
+	/// convert between YUV YVYU and BGR, YUV is 4:2:2-subsampled and interleaved as Y1/V/Y2/U, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_YUV2BGR_YVYU: i32 = 118;
-	/// YUV 4:2:0 family to RGB
+	/// extract Y channel from YUV 4:2:0 image
 	pub const COLOR_YUV2GRAY_420: i32 = 106;
-	/// YUV 4:2:0 family to RGB
+	/// synonym to COLOR_YUV2GRAY_420
 	pub const COLOR_YUV2GRAY_I420: i32 = 106;
-	/// YUV 4:2:0 family to RGB
+	/// synonym to COLOR_YUV2GRAY_420
 	pub const COLOR_YUV2GRAY_IYUV: i32 = 106;
-	/// YUV 4:2:0 family to RGB
+	/// synonym to COLOR_YUV2GRAY_420
 	pub const COLOR_YUV2GRAY_NV12: i32 = 106;
-	/// YUV 4:2:0 family to RGB
+	/// synonym to COLOR_YUV2GRAY_420
 	pub const COLOR_YUV2GRAY_NV21: i32 = 106;
-	/// YUV 4:2:2 family to RGB
+	/// synonym to COLOR_YUV2GRAY_UYVY
 	pub const COLOR_YUV2GRAY_UYNV: i32 = 123;
-	/// YUV 4:2:2 family to RGB
+	/// extract Y channel from YUV 4:2:2 image
 	pub const COLOR_YUV2GRAY_UYVY: i32 = 123;
-	/// YUV 4:2:2 family to RGB
+	/// synonym to COLOR_YUV2GRAY_UYVY
 	pub const COLOR_YUV2GRAY_Y422: i32 = 123;
-	/// YUV 4:2:2 family to RGB
+	/// synonym to COLOR_YUV2GRAY_YUY2
 	pub const COLOR_YUV2GRAY_YUNV: i32 = 124;
-	/// YUV 4:2:2 family to RGB
+	/// extract Y channel from YUV 4:2:2 image
 	pub const COLOR_YUV2GRAY_YUY2: i32 = 124;
-	/// YUV 4:2:2 family to RGB
+	/// synonym to COLOR_YUV2GRAY_YUY2
 	pub const COLOR_YUV2GRAY_YUYV: i32 = 124;
-	/// YUV 4:2:0 family to RGB
+	/// synonym to COLOR_YUV2GRAY_420
 	pub const COLOR_YUV2GRAY_YV12: i32 = 106;
-	/// YUV 4:2:2 family to RGB
+	/// synonym to COLOR_YUV2GRAY_YUY2
 	pub const COLOR_YUV2GRAY_YVYU: i32 = 124;
 	pub const COLOR_YUV2RGB: i32 = 85;
-	/// YUV 4:2:0 family to RGB
+	/// synonym to IYUV
 	pub const COLOR_YUV2RGBA_I420: i32 = 104;
-	/// YUV 4:2:0 family to RGB
+	/// convert between 4:2:0-subsampled YUV YV12 and RGBA, three planes in one array: Y, U and V, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_YUV2RGBA_IYUV: i32 = 104;
-	/// YUV 4:2:0 family to RGB
+	/// convert between 4:2:0-subsampled YUV NV12 and RGBA, two planes (in one or separate arrays): Y and U/V interleaved, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_YUV2RGBA_NV12: i32 = 94;
-	/// YUV 4:2:0 family to RGB
+	/// convert between 4:2:0-subsampled YUV NV21 and RGBA, two planes (in one or separate arrays): Y and V/U interleaved, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_YUV2RGBA_NV21: i32 = 96;
-	/// YUV 4:2:2 family to RGB
+	/// synonym to UYVY
 	pub const COLOR_YUV2RGBA_UYNV: i32 = 111;
-	/// YUV 4:2:2 family to RGB
+	/// convert between YUV UYVY and RGBA, YUV is 4:2:2-subsampled and interleaved as U/Y1/V/Y2, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_YUV2RGBA_UYVY: i32 = 111;
-	/// YUV 4:2:2 family to RGB
+	/// synonym to UYVY
 	pub const COLOR_YUV2RGBA_Y422: i32 = 111;
-	/// YUV 4:2:2 family to RGB
+	/// synonym to YUY2
 	pub const COLOR_YUV2RGBA_YUNV: i32 = 119;
-	/// YUV 4:2:2 family to RGB
+	/// convert between YUV YUY2 and RGBA, YUV is 4:2:2-subsampled and interleaved as Y1/U/Y2/V, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_YUV2RGBA_YUY2: i32 = 119;
-	/// YUV 4:2:2 family to RGB
+	/// synonym to YUY2
 	pub const COLOR_YUV2RGBA_YUYV: i32 = 119;
-	/// YUV 4:2:0 family to RGB
+	/// convert between 4:2:0-subsampled YUV YV12 and RGBA, three planes in one array: Y, V and U, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_YUV2RGBA_YV12: i32 = 102;
-	/// YUV 4:2:2 family to RGB
+	/// convert between YUV YVYU and RGBA, YUV is 4:2:2-subsampled and interleaved as Y1/V/Y2/U, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_YUV2RGBA_YVYU: i32 = 121;
-	/// YUV 4:2:0 family to RGB
+	/// synonym to IYUV
 	pub const COLOR_YUV2RGB_I420: i32 = 100;
-	/// YUV 4:2:0 family to RGB
+	/// convert between 4:2:0-subsampled YUV IYUV and RGB, three planes in one array: Y, U and V, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_YUV2RGB_IYUV: i32 = 100;
-	/// YUV 4:2:0 family to RGB
+	/// convert between 4:2:0-subsampled YUV NV12 and RGB, two planes (in one or separate arrays): Y and U/V interleaved, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_YUV2RGB_NV12: i32 = 90;
-	/// YUV 4:2:0 family to RGB
+	/// convert between 4:2:0-subsampled YUV NV21 and RGB, two planes (in one or separate arrays): Y and V/U interleaved, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_YUV2RGB_NV21: i32 = 92;
-	/// YUV 4:2:2 family to RGB
+	/// synonym to UYVY
 	pub const COLOR_YUV2RGB_UYNV: i32 = 107;
-	/// YUV 4:2:2 family to RGB
+	/// convert between YUV UYVY and RGB, YUV is 4:2:2-subsampled and interleaved as U/Y1/V/Y2, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_YUV2RGB_UYVY: i32 = 107;
-	/// YUV 4:2:2 family to RGB
+	/// synonym to UYVY
 	pub const COLOR_YUV2RGB_Y422: i32 = 107;
-	/// YUV 4:2:2 family to RGB
+	/// synonym to YUY2
 	pub const COLOR_YUV2RGB_YUNV: i32 = 115;
-	/// YUV 4:2:2 family to RGB
+	/// convert between YUV YUY2 and RGB, YUV is 4:2:2-subsampled and interleaved as Y1/U/Y2/V, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_YUV2RGB_YUY2: i32 = 115;
-	/// YUV 4:2:2 family to RGB
+	/// synonym to YUY2
 	pub const COLOR_YUV2RGB_YUYV: i32 = 115;
-	/// YUV 4:2:0 family to RGB
+	/// convert between 4:2:0-subsampled YUV YV12 and RGB, three planes in one array: Y, V and U, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_YUV2RGB_YV12: i32 = 98;
-	/// YUV 4:2:2 family to RGB
+	/// convert between YUV YVYU and RGB, YUV is 4:2:2-subsampled and interleaved as Y1/V/Y2/U, see [color_convert_rgb_yuv_42x]
 	pub const COLOR_YUV2RGB_YVYU: i32 = 117;
-	/// YUV 4:2:0 family to RGB
+	/// synonym to YV12
 	pub const COLOR_YUV420p2BGR: i32 = 99;
-	/// YUV 4:2:0 family to RGB
+	/// synonym to YV12
 	pub const COLOR_YUV420p2BGRA: i32 = 103;
-	/// YUV 4:2:0 family to RGB
+	/// synonym to COLOR_YUV2GRAY_420
 	pub const COLOR_YUV420p2GRAY: i32 = 106;
-	/// YUV 4:2:0 family to RGB
+	/// synonym to YV12
 	pub const COLOR_YUV420p2RGB: i32 = 98;
-	/// YUV 4:2:0 family to RGB
+	/// synonym to YV12
 	pub const COLOR_YUV420p2RGBA: i32 = 102;
-	/// YUV 4:2:0 family to RGB
+	/// synonym to NV21
 	pub const COLOR_YUV420sp2BGR: i32 = 93;
-	/// YUV 4:2:0 family to RGB
+	/// synonym to NV21
 	pub const COLOR_YUV420sp2BGRA: i32 = 97;
-	/// YUV 4:2:0 family to RGB
+	/// synonym to COLOR_YUV2GRAY_420
 	pub const COLOR_YUV420sp2GRAY: i32 = 106;
-	/// YUV 4:2:0 family to RGB
+	/// synonym to NV21
 	pub const COLOR_YUV420sp2RGB: i32 = 92;
-	/// YUV 4:2:0 family to RGB
+	/// synonym to NV21
 	pub const COLOR_YUV420sp2RGBA: i32 = 96;
 	/// alpha premultiplication
 	pub const COLOR_mRGBA2RGBA: i32 = 126;
@@ -770,7 +768,7 @@ pub mod imgproc {
 	pub const HISTCMP_CHISQR: i32 = 1;
 	/// Alternative Chi-Square
 	/// ![block formula](https://latex.codecogs.com/png.latex?d%28H%5F1%2CH%5F2%29%20%3D%20%202%20%2A%20%5Csum%20%5FI%20%20%5Cfrac%7B%5Cleft%28H%5F1%28I%29%2DH%5F2%28I%29%5Cright%29%5E2%7D%7BH%5F1%28I%29%2BH%5F2%28I%29%7D)
-	/// This alternative formula is regularly used for texture comparison. See e.g. [Puzicha1997](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Puzicha1997)
+	/// This alternative formula is regularly used for texture comparison. See e.g. [Puzicha1997](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Puzicha1997)
 	pub const HISTCMP_CHISQR_ALT: i32 = 4;
 	/// Correlation
 	/// ![block formula](https://latex.codecogs.com/png.latex?d%28H%5F1%2CH%5F2%29%20%3D%20%20%5Cfrac%7B%5Csum%5FI%20%28H%5F1%28I%29%20%2D%20%5Cbar%7BH%5F1%7D%29%20%28H%5F2%28I%29%20%2D%20%5Cbar%7BH%5F2%7D%29%7D%7B%5Csqrt%7B%5Csum%5FI%28H%5F1%28I%29%20%2D%20%5Cbar%7BH%5F1%7D%29%5E2%20%5Csum%5FI%28H%5F2%28I%29%20%2D%20%5Cbar%7BH%5F2%7D%29%5E2%7D%7D)
@@ -786,7 +784,7 @@ pub mod imgproc {
 	/// Kullback-Leibler divergence
 	/// ![block formula](https://latex.codecogs.com/png.latex?d%28H%5F1%2CH%5F2%29%20%3D%20%5Csum%20%5FI%20H%5F1%28I%29%20%5Clog%20%5Cleft%28%5Cfrac%7BH%5F1%28I%29%7D%7BH%5F2%28I%29%7D%5Cright%29)
 	pub const HISTCMP_KL_DIV: i32 = 5;
-	/// basically *21HT*, described in [Yuen90](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Yuen90)
+	/// basically *21HT*, described in [Yuen90](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Yuen90)
 	pub const HOUGH_GRADIENT: i32 = 3;
 	/// variation of HOUGH_GRADIENT to get better accuracy
 	pub const HOUGH_GRADIENT_ALT: i32 = 4;
@@ -972,6 +970,12 @@ pub mod imgproc {
 	pub const WARP_POLAR_LINEAR: i32 = 0;
 	/// Remaps an image to/from semilog-polar space.
 	pub const WARP_POLAR_LOG: i32 = 256;
+	/// flag, inverse transformation
+	/// 
+	/// For example, [linear_polar] or [log_polar] transforms:
+	/// - flag is __not__ set: ![inline formula](https://latex.codecogs.com/png.latex?dst%28%20%5Crho%20%2C%20%5Cphi%20%29%20%3D%20src%28x%2Cy%29)
+	/// - flag is set: ![inline formula](https://latex.codecogs.com/png.latex?dst%28x%2Cy%29%20%3D%20src%28%20%5Crho%20%2C%20%5Cphi%20%29)
+	pub const WARP_RELATIVE_MAP: i32 = 32;
 	/// adaptive threshold algorithm
 	/// ## See also
 	/// adaptiveThreshold
@@ -1121,219 +1125,219 @@ pub mod imgproc {
 		COLOR_RGB2YUV = 83,
 		COLOR_YUV2BGR = 84,
 		COLOR_YUV2RGB = 85,
-		/// YUV 4:2:0 family to RGB
+		/// convert between 4:2:0-subsampled YUV NV12 and RGB, two planes (in one or separate arrays): Y and U/V interleaved, see [color_convert_rgb_yuv_42x]
 		COLOR_YUV2RGB_NV12 = 90,
-		/// YUV 4:2:0 family to RGB
+		/// convert between 4:2:0-subsampled YUV NV12 and BGR, two planes (in one or separate arrays): Y and U/V interleaved, see [color_convert_rgb_yuv_42x]
 		COLOR_YUV2BGR_NV12 = 91,
-		/// YUV 4:2:0 family to RGB
+		/// convert between 4:2:0-subsampled YUV NV21 and RGB, two planes (in one or separate arrays): Y and V/U interleaved, see [color_convert_rgb_yuv_42x]
 		COLOR_YUV2RGB_NV21 = 92,
-		/// YUV 4:2:0 family to RGB
+		/// convert between 4:2:0-subsampled YUV NV21 and BGR, two planes (in one or separate arrays): Y and V/U interleaved, see [color_convert_rgb_yuv_42x]
 		COLOR_YUV2BGR_NV21 = 93,
-		// YUV 4:2:0 family to RGB
+		// synonym to NV21
 		// Duplicate, use COLOR_YUV2RGB_NV21 instead
 		// COLOR_YUV420sp2RGB = 92,
-		// YUV 4:2:0 family to RGB
+		// synonym to NV21
 		// Duplicate, use COLOR_YUV2BGR_NV21 instead
 		// COLOR_YUV420sp2BGR = 93,
-		/// YUV 4:2:0 family to RGB
+		/// convert between 4:2:0-subsampled YUV NV12 and RGBA, two planes (in one or separate arrays): Y and U/V interleaved, see [color_convert_rgb_yuv_42x]
 		COLOR_YUV2RGBA_NV12 = 94,
-		/// YUV 4:2:0 family to RGB
+		/// convert between 4:2:0-subsampled YUV NV12 and BGRA, two planes (in one or separate arrays): Y and U/V interleaved, see [color_convert_rgb_yuv_42x]
 		COLOR_YUV2BGRA_NV12 = 95,
-		/// YUV 4:2:0 family to RGB
+		/// convert between 4:2:0-subsampled YUV NV21 and RGBA, two planes (in one or separate arrays): Y and V/U interleaved, see [color_convert_rgb_yuv_42x]
 		COLOR_YUV2RGBA_NV21 = 96,
-		/// YUV 4:2:0 family to RGB
+		/// convert between 4:2:0-subsampled YUV NV21 and BGRA, two planes (in one or separate arrays): Y and V/U interleaved, see [color_convert_rgb_yuv_42x]
 		COLOR_YUV2BGRA_NV21 = 97,
-		// YUV 4:2:0 family to RGB
+		// synonym to NV21
 		// Duplicate, use COLOR_YUV2RGBA_NV21 instead
 		// COLOR_YUV420sp2RGBA = 96,
-		// YUV 4:2:0 family to RGB
+		// synonym to NV21
 		// Duplicate, use COLOR_YUV2BGRA_NV21 instead
 		// COLOR_YUV420sp2BGRA = 97,
-		/// YUV 4:2:0 family to RGB
+		/// convert between 4:2:0-subsampled YUV YV12 and RGB, three planes in one array: Y, V and U, see [color_convert_rgb_yuv_42x]
 		COLOR_YUV2RGB_YV12 = 98,
-		/// YUV 4:2:0 family to RGB
+		/// convert between 4:2:0-subsampled YUV YV12 and BGR, three planes in one array: Y, V and U, see [color_convert_rgb_yuv_42x]
 		COLOR_YUV2BGR_YV12 = 99,
-		/// YUV 4:2:0 family to RGB
+		/// convert between 4:2:0-subsampled YUV IYUV and RGB, three planes in one array: Y, U and V, see [color_convert_rgb_yuv_42x]
 		COLOR_YUV2RGB_IYUV = 100,
-		/// YUV 4:2:0 family to RGB
+		/// convert between 4:2:0-subsampled YUV IYUV and BGR, three planes in one array: Y, U and V, see [color_convert_rgb_yuv_42x]
 		COLOR_YUV2BGR_IYUV = 101,
-		// YUV 4:2:0 family to RGB
+		// synonym to IYUV
 		// Duplicate, use COLOR_YUV2RGB_IYUV instead
 		// COLOR_YUV2RGB_I420 = 100,
-		// YUV 4:2:0 family to RGB
+		// synonym to IYUV
 		// Duplicate, use COLOR_YUV2BGR_IYUV instead
 		// COLOR_YUV2BGR_I420 = 101,
-		// YUV 4:2:0 family to RGB
+		// synonym to YV12
 		// Duplicate, use COLOR_YUV2RGB_YV12 instead
 		// COLOR_YUV420p2RGB = 98,
-		// YUV 4:2:0 family to RGB
+		// synonym to YV12
 		// Duplicate, use COLOR_YUV2BGR_YV12 instead
 		// COLOR_YUV420p2BGR = 99,
-		/// YUV 4:2:0 family to RGB
+		/// convert between 4:2:0-subsampled YUV YV12 and RGBA, three planes in one array: Y, V and U, see [color_convert_rgb_yuv_42x]
 		COLOR_YUV2RGBA_YV12 = 102,
-		/// YUV 4:2:0 family to RGB
+		/// convert between 4:2:0-subsampled YUV YV12 and BGRA, three planes in one array: Y, V and U, see [color_convert_rgb_yuv_42x]
 		COLOR_YUV2BGRA_YV12 = 103,
-		/// YUV 4:2:0 family to RGB
+		/// convert between 4:2:0-subsampled YUV YV12 and RGBA, three planes in one array: Y, U and V, see [color_convert_rgb_yuv_42x]
 		COLOR_YUV2RGBA_IYUV = 104,
-		/// YUV 4:2:0 family to RGB
+		/// convert between 4:2:0-subsampled YUV YV12 and BGRA, three planes in one array: Y, U and V, see [color_convert_rgb_yuv_42x]
 		COLOR_YUV2BGRA_IYUV = 105,
-		// YUV 4:2:0 family to RGB
+		// synonym to IYUV
 		// Duplicate, use COLOR_YUV2RGBA_IYUV instead
 		// COLOR_YUV2RGBA_I420 = 104,
-		// YUV 4:2:0 family to RGB
+		// synonym to IYUV
 		// Duplicate, use COLOR_YUV2BGRA_IYUV instead
 		// COLOR_YUV2BGRA_I420 = 105,
-		// YUV 4:2:0 family to RGB
+		// synonym to YV12
 		// Duplicate, use COLOR_YUV2RGBA_YV12 instead
 		// COLOR_YUV420p2RGBA = 102,
-		// YUV 4:2:0 family to RGB
+		// synonym to YV12
 		// Duplicate, use COLOR_YUV2BGRA_YV12 instead
 		// COLOR_YUV420p2BGRA = 103,
-		/// YUV 4:2:0 family to RGB
+		/// extract Y channel from YUV 4:2:0 image
 		COLOR_YUV2GRAY_420 = 106,
-		// YUV 4:2:0 family to RGB
+		// synonym to COLOR_YUV2GRAY_420
 		// Duplicate, use COLOR_YUV2GRAY_420 instead
 		// COLOR_YUV2GRAY_NV21 = 106,
-		// YUV 4:2:0 family to RGB
+		// synonym to COLOR_YUV2GRAY_420
 		// Duplicate, use COLOR_YUV2GRAY_NV21 instead
 		// COLOR_YUV2GRAY_NV12 = 106,
-		// YUV 4:2:0 family to RGB
+		// synonym to COLOR_YUV2GRAY_420
 		// Duplicate, use COLOR_YUV2GRAY_NV12 instead
 		// COLOR_YUV2GRAY_YV12 = 106,
-		// YUV 4:2:0 family to RGB
+		// synonym to COLOR_YUV2GRAY_420
 		// Duplicate, use COLOR_YUV2GRAY_YV12 instead
 		// COLOR_YUV2GRAY_IYUV = 106,
-		// YUV 4:2:0 family to RGB
+		// synonym to COLOR_YUV2GRAY_420
 		// Duplicate, use COLOR_YUV2GRAY_IYUV instead
 		// COLOR_YUV2GRAY_I420 = 106,
-		// YUV 4:2:0 family to RGB
+		// synonym to COLOR_YUV2GRAY_420
 		// Duplicate, use COLOR_YUV2GRAY_I420 instead
 		// COLOR_YUV420sp2GRAY = 106,
-		// YUV 4:2:0 family to RGB
+		// synonym to COLOR_YUV2GRAY_420
 		// Duplicate, use COLOR_YUV420sp2GRAY instead
 		// COLOR_YUV420p2GRAY = 106,
-		/// YUV 4:2:2 family to RGB
+		/// convert between YUV UYVY and RGB, YUV is 4:2:2-subsampled and interleaved as U/Y1/V/Y2, see [color_convert_rgb_yuv_42x]
 		COLOR_YUV2RGB_UYVY = 107,
-		/// YUV 4:2:2 family to RGB
+		/// convert between YUV UYVY and BGR, YUV is 4:2:2-subsampled and interleaved as U/Y1/V/Y2, see [color_convert_rgb_yuv_42x]
 		COLOR_YUV2BGR_UYVY = 108,
-		// YUV 4:2:2 family to RGB
+		// synonym to UYVY
 		// Duplicate, use COLOR_YUV2RGB_UYVY instead
 		// COLOR_YUV2RGB_Y422 = 107,
-		// YUV 4:2:2 family to RGB
+		// synonym to UYVY
 		// Duplicate, use COLOR_YUV2BGR_UYVY instead
 		// COLOR_YUV2BGR_Y422 = 108,
-		// YUV 4:2:2 family to RGB
+		// synonym to UYVY
 		// Duplicate, use COLOR_YUV2RGB_Y422 instead
 		// COLOR_YUV2RGB_UYNV = 107,
-		// YUV 4:2:2 family to RGB
+		// synonym to UYVY
 		// Duplicate, use COLOR_YUV2BGR_Y422 instead
 		// COLOR_YUV2BGR_UYNV = 108,
-		/// YUV 4:2:2 family to RGB
+		/// convert between YUV UYVY and RGBA, YUV is 4:2:2-subsampled and interleaved as U/Y1/V/Y2, see [color_convert_rgb_yuv_42x]
 		COLOR_YUV2RGBA_UYVY = 111,
-		/// YUV 4:2:2 family to RGB
+		/// convert between YUV UYVY and BGRA, YUV is 4:2:2-subsampled and interleaved as U/Y1/V/Y2, see [color_convert_rgb_yuv_42x]
 		COLOR_YUV2BGRA_UYVY = 112,
-		// YUV 4:2:2 family to RGB
+		// synonym to UYVY
 		// Duplicate, use COLOR_YUV2RGBA_UYVY instead
 		// COLOR_YUV2RGBA_Y422 = 111,
-		// YUV 4:2:2 family to RGB
+		// synonym to UYVY
 		// Duplicate, use COLOR_YUV2BGRA_UYVY instead
 		// COLOR_YUV2BGRA_Y422 = 112,
-		// YUV 4:2:2 family to RGB
+		// synonym to UYVY
 		// Duplicate, use COLOR_YUV2RGBA_Y422 instead
 		// COLOR_YUV2RGBA_UYNV = 111,
-		// YUV 4:2:2 family to RGB
+		// synonym to UYVY
 		// Duplicate, use COLOR_YUV2BGRA_Y422 instead
 		// COLOR_YUV2BGRA_UYNV = 112,
-		/// YUV 4:2:2 family to RGB
+		/// convert between YUV YUY2 and RGB, YUV is 4:2:2-subsampled and interleaved as Y1/U/Y2/V, see [color_convert_rgb_yuv_42x]
 		COLOR_YUV2RGB_YUY2 = 115,
-		/// YUV 4:2:2 family to RGB
+		/// convert between YUV YUY2 and BGR, YUV is 4:2:2-subsampled and interleaved as Y1/U/Y2/V, see [color_convert_rgb_yuv_42x]
 		COLOR_YUV2BGR_YUY2 = 116,
-		/// YUV 4:2:2 family to RGB
+		/// convert between YUV YVYU and RGB, YUV is 4:2:2-subsampled and interleaved as Y1/V/Y2/U, see [color_convert_rgb_yuv_42x]
 		COLOR_YUV2RGB_YVYU = 117,
-		/// YUV 4:2:2 family to RGB
+		/// convert between YUV YVYU and BGR, YUV is 4:2:2-subsampled and interleaved as Y1/V/Y2/U, see [color_convert_rgb_yuv_42x]
 		COLOR_YUV2BGR_YVYU = 118,
-		// YUV 4:2:2 family to RGB
+		// synonym to YUY2
 		// Duplicate, use COLOR_YUV2RGB_YUY2 instead
 		// COLOR_YUV2RGB_YUYV = 115,
-		// YUV 4:2:2 family to RGB
+		// synonym to YUY2
 		// Duplicate, use COLOR_YUV2BGR_YUY2 instead
 		// COLOR_YUV2BGR_YUYV = 116,
-		// YUV 4:2:2 family to RGB
+		// synonym to YUY2
 		// Duplicate, use COLOR_YUV2RGB_YUYV instead
 		// COLOR_YUV2RGB_YUNV = 115,
-		// YUV 4:2:2 family to RGB
+		// synonym to YUY2
 		// Duplicate, use COLOR_YUV2BGR_YUYV instead
 		// COLOR_YUV2BGR_YUNV = 116,
-		/// YUV 4:2:2 family to RGB
+		/// convert between YUV YUY2 and RGBA, YUV is 4:2:2-subsampled and interleaved as Y1/U/Y2/V, see [color_convert_rgb_yuv_42x]
 		COLOR_YUV2RGBA_YUY2 = 119,
-		/// YUV 4:2:2 family to RGB
+		/// convert between YUV YUY2 and BGRA, YUV is 4:2:2-subsampled and interleaved as Y1/U/Y2/V, see [color_convert_rgb_yuv_42x]
 		COLOR_YUV2BGRA_YUY2 = 120,
-		/// YUV 4:2:2 family to RGB
+		/// convert between YUV YVYU and RGBA, YUV is 4:2:2-subsampled and interleaved as Y1/V/Y2/U, see [color_convert_rgb_yuv_42x]
 		COLOR_YUV2RGBA_YVYU = 121,
-		/// YUV 4:2:2 family to RGB
+		/// convert between YUV YVYU and BGRA, YUV is 4:2:2-subsampled and interleaved as Y1/V/Y2/U, see [color_convert_rgb_yuv_42x]
 		COLOR_YUV2BGRA_YVYU = 122,
-		// YUV 4:2:2 family to RGB
+		// synonym to YUY2
 		// Duplicate, use COLOR_YUV2RGBA_YUY2 instead
 		// COLOR_YUV2RGBA_YUYV = 119,
-		// YUV 4:2:2 family to RGB
+		// synonym to YUY2
 		// Duplicate, use COLOR_YUV2BGRA_YUY2 instead
 		// COLOR_YUV2BGRA_YUYV = 120,
-		// YUV 4:2:2 family to RGB
+		// synonym to YUY2
 		// Duplicate, use COLOR_YUV2RGBA_YUYV instead
 		// COLOR_YUV2RGBA_YUNV = 119,
-		// YUV 4:2:2 family to RGB
+		// synonym to YUY2
 		// Duplicate, use COLOR_YUV2BGRA_YUYV instead
 		// COLOR_YUV2BGRA_YUNV = 120,
-		/// YUV 4:2:2 family to RGB
+		/// extract Y channel from YUV 4:2:2 image
 		COLOR_YUV2GRAY_UYVY = 123,
-		/// YUV 4:2:2 family to RGB
+		/// extract Y channel from YUV 4:2:2 image
 		COLOR_YUV2GRAY_YUY2 = 124,
-		// YUV 4:2:2 family to RGB
+		// synonym to COLOR_YUV2GRAY_UYVY
 		// Duplicate, use COLOR_YUV2GRAY_UYVY instead
 		// COLOR_YUV2GRAY_Y422 = 123,
-		// YUV 4:2:2 family to RGB
+		// synonym to COLOR_YUV2GRAY_UYVY
 		// Duplicate, use COLOR_YUV2GRAY_Y422 instead
 		// COLOR_YUV2GRAY_UYNV = 123,
-		// YUV 4:2:2 family to RGB
+		// synonym to COLOR_YUV2GRAY_YUY2
 		// Duplicate, use COLOR_YUV2GRAY_YUY2 instead
 		// COLOR_YUV2GRAY_YVYU = 124,
-		// YUV 4:2:2 family to RGB
+		// synonym to COLOR_YUV2GRAY_YUY2
 		// Duplicate, use COLOR_YUV2GRAY_YVYU instead
 		// COLOR_YUV2GRAY_YUYV = 124,
-		// YUV 4:2:2 family to RGB
+		// synonym to COLOR_YUV2GRAY_YUY2
 		// Duplicate, use COLOR_YUV2GRAY_YUYV instead
 		// COLOR_YUV2GRAY_YUNV = 124,
 		/// alpha premultiplication
 		COLOR_RGBA2mRGBA = 125,
 		/// alpha premultiplication
 		COLOR_mRGBA2RGBA = 126,
-		/// RGB to YUV 4:2:0 family
+		/// convert between RGB and 4:2:0-subsampled YUV I420, three planes in one array: Y, U and V, see [color_convert_rgb_yuv_42x]
 		COLOR_RGB2YUV_I420 = 127,
-		/// RGB to YUV 4:2:0 family
+		/// convert between BGR and 4:2:0-subsampled YUV I420, three planes in one array: Y, U and V, see [color_convert_rgb_yuv_42x]
 		COLOR_BGR2YUV_I420 = 128,
-		// RGB to YUV 4:2:0 family
+		// synonym to I420
 		// Duplicate, use COLOR_RGB2YUV_I420 instead
 		// COLOR_RGB2YUV_IYUV = 127,
-		// RGB to YUV 4:2:0 family
+		// synonym to I420
 		// Duplicate, use COLOR_BGR2YUV_I420 instead
 		// COLOR_BGR2YUV_IYUV = 128,
-		/// RGB to YUV 4:2:0 family
+		/// convert between RGBA and 4:2:0-subsampled YUV I420, three planes in one array: Y, U and V, see [color_convert_rgb_yuv_42x]
 		COLOR_RGBA2YUV_I420 = 129,
-		/// RGB to YUV 4:2:0 family
+		/// convert between BGRA and 4:2:0-subsampled YUV I420, three planes in one array: Y, U and V, see [color_convert_rgb_yuv_42x]
 		COLOR_BGRA2YUV_I420 = 130,
-		// RGB to YUV 4:2:0 family
+		// synonym to I420
 		// Duplicate, use COLOR_RGBA2YUV_I420 instead
 		// COLOR_RGBA2YUV_IYUV = 129,
-		// RGB to YUV 4:2:0 family
+		// synonym to I420
 		// Duplicate, use COLOR_BGRA2YUV_I420 instead
 		// COLOR_BGRA2YUV_IYUV = 130,
-		/// RGB to YUV 4:2:0 family
+		/// convert between RGB and 4:2:0-subsampled YUV YV12, three planes in one array: Y, V and U, see [color_convert_rgb_yuv_42x]
 		COLOR_RGB2YUV_YV12 = 131,
-		/// RGB to YUV 4:2:0 family
+		/// convert between BGR and 4:2:0-subsampled YUV YV12, three planes in one array: Y, V and U, see [color_convert_rgb_yuv_42x]
 		COLOR_BGR2YUV_YV12 = 132,
-		/// RGB to YUV 4:2:0 family
+		/// convert between RGBA and 4:2:0-subsampled YUV YV12, three planes in one array: Y, V and U, see [color_convert_rgb_yuv_42x]
 		COLOR_RGBA2YUV_YV12 = 133,
-		/// RGB to YUV 4:2:0 family
+		/// convert between BGRA and 4:2:0-subsampled YUV YV12, three planes in one array: Y, V and U, see [color_convert_rgb_yuv_42x]
 		COLOR_BGRA2YUV_YV12 = 134,
 		/// equivalent to RGGB Bayer pattern
 		COLOR_BayerBG2BGR = 46,
@@ -1495,79 +1499,78 @@ pub mod imgproc {
 		// equivalent to GBRG Bayer pattern
 		// Duplicate, use COLOR_BayerGBRG2RGBA instead
 		// COLOR_BayerGR2RGBA = 140,
-		/// RGB to YUV 4:2:2 family
+		/// convert between RGB and YUV UYVU, YUV is 4:2:2 and interleaved as U/Y1/V/Y2, see [color_convert_rgb_yuv_42x]
 		COLOR_RGB2YUV_UYVY = 143,
-		/// RGB to YUV 4:2:2 family
+		/// convert between BGR and YUV UYVU, YUV is 4:2:2 and interleaved as U/Y1/V/Y2, see [color_convert_rgb_yuv_42x]
 		COLOR_BGR2YUV_UYVY = 144,
-		// RGB to YUV 4:2:2 family
+		// synonym to UYVY
 		// Duplicate, use COLOR_RGB2YUV_UYVY instead
 		// COLOR_RGB2YUV_Y422 = 143,
-		// RGB to YUV 4:2:2 family
+		// synonym to UYVY
 		// Duplicate, use COLOR_BGR2YUV_UYVY instead
 		// COLOR_BGR2YUV_Y422 = 144,
-		// RGB to YUV 4:2:2 family
+		// synonym to UYVY
 		// Duplicate, use COLOR_RGB2YUV_Y422 instead
 		// COLOR_RGB2YUV_UYNV = 143,
-		// RGB to YUV 4:2:2 family
+		// synonym to UYVY
 		// Duplicate, use COLOR_BGR2YUV_Y422 instead
 		// COLOR_BGR2YUV_UYNV = 144,
-		/// RGB to YUV 4:2:2 family
+		/// convert between RGBA and YUV UYVU, YUV is 4:2:2 and interleaved as U/Y1/V/Y2, see [color_convert_rgb_yuv_42x]
 		COLOR_RGBA2YUV_UYVY = 145,
-		/// RGB to YUV 4:2:2 family
+		/// convert between BGRA and YUV UYVU, YUV is 4:2:2 and interleaved as U/Y1/V/Y2, see [color_convert_rgb_yuv_42x]
 		COLOR_BGRA2YUV_UYVY = 146,
-		// RGB to YUV 4:2:2 family
+		// synonym to UYVY
 		// Duplicate, use COLOR_RGBA2YUV_UYVY instead
 		// COLOR_RGBA2YUV_Y422 = 145,
-		// RGB to YUV 4:2:2 family
+		// synonym to UYVY
 		// Duplicate, use COLOR_BGRA2YUV_UYVY instead
 		// COLOR_BGRA2YUV_Y422 = 146,
-		// RGB to YUV 4:2:2 family
+		// synonym to UYVY
 		// Duplicate, use COLOR_RGBA2YUV_Y422 instead
 		// COLOR_RGBA2YUV_UYNV = 145,
-		// RGB to YUV 4:2:2 family
+		// synonym to UYVY
 		// Duplicate, use COLOR_BGRA2YUV_Y422 instead
 		// COLOR_BGRA2YUV_UYNV = 146,
-		/// RGB to YUV 4:2:2 family
+		/// convert between RGB and YUV YUY2, YUV is 4:2:2 and interleaved as Y1/U/Y2/V, see [color_convert_rgb_yuv_42x]
 		COLOR_RGB2YUV_YUY2 = 147,
-		/// RGB to YUV 4:2:2 family
+		/// convert between BGR and YUV YUY2, YUV is 4:2:2 and interleaved as Y1/U/Y2/V, see [color_convert_rgb_yuv_42x]
 		COLOR_BGR2YUV_YUY2 = 148,
-		/// RGB to YUV 4:2:2 family
+		/// convert between RGB and YUV YVYU, YUV is 4:2:2 and interleaved as Y1/V/Y2/U, see [color_convert_rgb_yuv_42x]
 		COLOR_RGB2YUV_YVYU = 149,
-		/// RGB to YUV 4:2:2 family
+		/// convert between BGR and YUV YVYU, YUV is 4:2:2 and interleaved as Y1/V/Y2/U, see [color_convert_rgb_yuv_42x]
 		COLOR_BGR2YUV_YVYU = 150,
-		// RGB to YUV 4:2:2 family
+		// synonym to YUY2
 		// Duplicate, use COLOR_RGB2YUV_YUY2 instead
 		// COLOR_RGB2YUV_YUYV = 147,
-		// RGB to YUV 4:2:2 family
+		// synonym to YUY2
 		// Duplicate, use COLOR_BGR2YUV_YUY2 instead
 		// COLOR_BGR2YUV_YUYV = 148,
-		// RGB to YUV 4:2:2 family
+		// synonym to YUY2
 		// Duplicate, use COLOR_RGB2YUV_YUYV instead
 		// COLOR_RGB2YUV_YUNV = 147,
-		// RGB to YUV 4:2:2 family
+		// synonym to YUY2
 		// Duplicate, use COLOR_BGR2YUV_YUYV instead
 		// COLOR_BGR2YUV_YUNV = 148,
-		/// RGB to YUV 4:2:2 family
+		/// convert between RGBA and YUV YUY2, YUV is 4:2:2 and interleaved as Y1/U/Y2/V, see [color_convert_rgb_yuv_42x]
 		COLOR_RGBA2YUV_YUY2 = 151,
-		/// RGB to YUV 4:2:2 family
+		/// convert between BGRA and YUV YUY2, YUV is 4:2:2 and interleaved as Y1/U/Y2/V, see [color_convert_rgb_yuv_42x]
 		COLOR_BGRA2YUV_YUY2 = 152,
-		/// RGB to YUV 4:2:2 family
+		/// convert between RGBA and YUV YVYU, YUV is 4:2:2 and interleaved as Y1/V/Y2/U, see [color_convert_rgb_yuv_42x]
 		COLOR_RGBA2YUV_YVYU = 153,
-		/// RGB to YUV 4:2:2 family
+		/// convert between BGRA and YUV YVYU, YUV is 4:2:2 and interleaved as Y1/V/Y2/U, see [color_convert_rgb_yuv_42x]
 		COLOR_BGRA2YUV_YVYU = 154,
-		// RGB to YUV 4:2:2 family
+		// synonym to YUY2
 		// Duplicate, use COLOR_RGBA2YUV_YUY2 instead
 		// COLOR_RGBA2YUV_YUYV = 151,
-		// RGB to YUV 4:2:2 family
+		// synonym to YUY2
 		// Duplicate, use COLOR_BGRA2YUV_YUY2 instead
 		// COLOR_BGRA2YUV_YUYV = 152,
-		// RGB to YUV 4:2:2 family
+		// synonym to YUY2
 		// Duplicate, use COLOR_RGBA2YUV_YUYV instead
 		// COLOR_RGBA2YUV_YUNV = 151,
-		// RGB to YUV 4:2:2 family
+		// synonym to YUY2
 		// Duplicate, use COLOR_BGRA2YUV_YUYV instead
 		// COLOR_BGRA2YUV_YUNV = 152,
-		/// RGB to YUV 4:2:2 family
 		COLOR_COLORCVT_MAX = 155,
 	}
 	
@@ -1977,49 +1980,49 @@ pub mod imgproc {
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ColormapTypes {
-		/// ![autumn](https://docs.opencv.org/4.9.0/colorscale_autumn.jpg)
+		/// ![autumn](https://docs.opencv.org/4.10.0/colorscale_autumn.jpg)
 		COLORMAP_AUTUMN = 0,
-		/// ![bone](https://docs.opencv.org/4.9.0/colorscale_bone.jpg)
+		/// ![bone](https://docs.opencv.org/4.10.0/colorscale_bone.jpg)
 		COLORMAP_BONE = 1,
-		/// ![jet](https://docs.opencv.org/4.9.0/colorscale_jet.jpg)
+		/// ![jet](https://docs.opencv.org/4.10.0/colorscale_jet.jpg)
 		COLORMAP_JET = 2,
-		/// ![winter](https://docs.opencv.org/4.9.0/colorscale_winter.jpg)
+		/// ![winter](https://docs.opencv.org/4.10.0/colorscale_winter.jpg)
 		COLORMAP_WINTER = 3,
-		/// ![rainbow](https://docs.opencv.org/4.9.0/colorscale_rainbow.jpg)
+		/// ![rainbow](https://docs.opencv.org/4.10.0/colorscale_rainbow.jpg)
 		COLORMAP_RAINBOW = 4,
-		/// ![ocean](https://docs.opencv.org/4.9.0/colorscale_ocean.jpg)
+		/// ![ocean](https://docs.opencv.org/4.10.0/colorscale_ocean.jpg)
 		COLORMAP_OCEAN = 5,
-		/// ![summer](https://docs.opencv.org/4.9.0/colorscale_summer.jpg)
+		/// ![summer](https://docs.opencv.org/4.10.0/colorscale_summer.jpg)
 		COLORMAP_SUMMER = 6,
-		/// ![spring](https://docs.opencv.org/4.9.0/colorscale_spring.jpg)
+		/// ![spring](https://docs.opencv.org/4.10.0/colorscale_spring.jpg)
 		COLORMAP_SPRING = 7,
-		/// ![cool](https://docs.opencv.org/4.9.0/colorscale_cool.jpg)
+		/// ![cool](https://docs.opencv.org/4.10.0/colorscale_cool.jpg)
 		COLORMAP_COOL = 8,
-		/// ![HSV](https://docs.opencv.org/4.9.0/colorscale_hsv.jpg)
+		/// ![HSV](https://docs.opencv.org/4.10.0/colorscale_hsv.jpg)
 		COLORMAP_HSV = 9,
-		/// ![pink](https://docs.opencv.org/4.9.0/colorscale_pink.jpg)
+		/// ![pink](https://docs.opencv.org/4.10.0/colorscale_pink.jpg)
 		COLORMAP_PINK = 10,
-		/// ![hot](https://docs.opencv.org/4.9.0/colorscale_hot.jpg)
+		/// ![hot](https://docs.opencv.org/4.10.0/colorscale_hot.jpg)
 		COLORMAP_HOT = 11,
-		/// ![parula](https://docs.opencv.org/4.9.0/colorscale_parula.jpg)
+		/// ![parula](https://docs.opencv.org/4.10.0/colorscale_parula.jpg)
 		COLORMAP_PARULA = 12,
-		/// ![magma](https://docs.opencv.org/4.9.0/colorscale_magma.jpg)
+		/// ![magma](https://docs.opencv.org/4.10.0/colorscale_magma.jpg)
 		COLORMAP_MAGMA = 13,
-		/// ![inferno](https://docs.opencv.org/4.9.0/colorscale_inferno.jpg)
+		/// ![inferno](https://docs.opencv.org/4.10.0/colorscale_inferno.jpg)
 		COLORMAP_INFERNO = 14,
-		/// ![plasma](https://docs.opencv.org/4.9.0/colorscale_plasma.jpg)
+		/// ![plasma](https://docs.opencv.org/4.10.0/colorscale_plasma.jpg)
 		COLORMAP_PLASMA = 15,
-		/// ![viridis](https://docs.opencv.org/4.9.0/colorscale_viridis.jpg)
+		/// ![viridis](https://docs.opencv.org/4.10.0/colorscale_viridis.jpg)
 		COLORMAP_VIRIDIS = 16,
-		/// ![cividis](https://docs.opencv.org/4.9.0/colorscale_cividis.jpg)
+		/// ![cividis](https://docs.opencv.org/4.10.0/colorscale_cividis.jpg)
 		COLORMAP_CIVIDIS = 17,
-		/// ![twilight](https://docs.opencv.org/4.9.0/colorscale_twilight.jpg)
+		/// ![twilight](https://docs.opencv.org/4.10.0/colorscale_twilight.jpg)
 		COLORMAP_TWILIGHT = 18,
-		/// ![twilight shifted](https://docs.opencv.org/4.9.0/colorscale_twilight_shifted.jpg)
+		/// ![twilight shifted](https://docs.opencv.org/4.10.0/colorscale_twilight_shifted.jpg)
 		COLORMAP_TWILIGHT_SHIFTED = 19,
-		/// ![turbo](https://docs.opencv.org/4.9.0/colorscale_turbo.jpg)
+		/// ![turbo](https://docs.opencv.org/4.10.0/colorscale_turbo.jpg)
 		COLORMAP_TURBO = 20,
-		/// ![deepgreen](https://docs.opencv.org/4.9.0/colorscale_deepgreen.jpg)
+		/// ![deepgreen](https://docs.opencv.org/4.10.0/colorscale_deepgreen.jpg)
 		COLORMAP_DEEPGREEN = 21,
 	}
 	
@@ -2061,13 +2064,13 @@ pub mod imgproc {
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ConnectedComponentsAlgorithmsTypes {
-		/// Spaghetti [Bolelli2019](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, Spaghetti4C [Bolelli2021](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Bolelli2021) algorithm for 4-way connectivity.
+		/// Spaghetti [Bolelli2019](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, Spaghetti4C [Bolelli2021](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2021) algorithm for 4-way connectivity.
 		CCL_DEFAULT = -1,
-		/// SAUF [Wu2009](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for SAUF.
+		/// SAUF [Wu2009](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for SAUF.
 		CCL_WU = 0,
-		/// BBDT [Grana2010](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Grana2010) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both BBDT and SAUF.
+		/// BBDT [Grana2010](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Grana2010) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both BBDT and SAUF.
 		CCL_GRANA = 1,
-		/// Spaghetti [Bolelli2019](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, Spaghetti4C [Bolelli2021](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Bolelli2021) algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both Spaghetti and Spaghetti4C.
+		/// Spaghetti [Bolelli2019](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, Spaghetti4C [Bolelli2021](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2021) algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both Spaghetti and Spaghetti4C.
 		CCL_BOLELLI = 2,
 		/// Same as CCL_WU. It is preferable to use the flag with the name of the algorithm (CCL_SAUF) rather than the one with the name of the first author (CCL_WU).
 		CCL_SAUF = 3,
@@ -2145,9 +2148,9 @@ pub mod imgproc {
 		/// compresses horizontal, vertical, and diagonal segments and leaves only their end points.
 		/// For example, an up-right rectangular contour is encoded with 4 points.
 		CHAIN_APPROX_SIMPLE = 2,
-		/// applies one of the flavors of the Teh-Chin chain approximation algorithm [TehChin89](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_TehChin89)
+		/// applies one of the flavors of the Teh-Chin chain approximation algorithm [TehChin89](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_TehChin89)
 		CHAIN_APPROX_TC89_L1 = 3,
-		/// applies one of the flavors of the Teh-Chin chain approximation algorithm [TehChin89](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_TehChin89)
+		/// applies one of the flavors of the Teh-Chin chain approximation algorithm [TehChin89](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_TehChin89)
 		CHAIN_APPROX_TC89_KCOS = 4,
 	}
 	
@@ -2424,7 +2427,7 @@ pub mod imgproc {
 		// HISTCMP_HELLINGER = 3,
 		/// Alternative Chi-Square
 		/// ![block formula](https://latex.codecogs.com/png.latex?d%28H%5F1%2CH%5F2%29%20%3D%20%202%20%2A%20%5Csum%20%5FI%20%20%5Cfrac%7B%5Cleft%28H%5F1%28I%29%2DH%5F2%28I%29%5Cright%29%5E2%7D%7BH%5F1%28I%29%2BH%5F2%28I%29%7D)
-		/// This alternative formula is regularly used for texture comparison. See e.g. [Puzicha1997](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Puzicha1997)
+		/// This alternative formula is regularly used for texture comparison. See e.g. [Puzicha1997](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Puzicha1997)
 		HISTCMP_CHISQR_ALT = 4,
 		/// Kullback-Leibler divergence
 		/// ![block formula](https://latex.codecogs.com/png.latex?d%28H%5F1%2CH%5F2%29%20%3D%20%5Csum%20%5FI%20H%5F1%28I%29%20%5Clog%20%5Cleft%28%5Cfrac%7BH%5F1%28I%29%7D%7BH%5F2%28I%29%7D%5Cright%29)
@@ -2468,7 +2471,7 @@ pub mod imgproc {
 		/// multi-scale variant of the classical Hough transform. The lines are encoded the same way as
 		/// HOUGH_STANDARD.
 		HOUGH_MULTI_SCALE = 2,
-		/// basically *21HT*, described in [Yuen90](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Yuen90)
+		/// basically *21HT*, described in [Yuen90](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Yuen90)
 		HOUGH_GRADIENT = 3,
 		/// variation of HOUGH_GRADIENT to get better accuracy
 		HOUGH_GRADIENT_ALT = 4,
@@ -2523,6 +2526,12 @@ pub mod imgproc {
 		/// - flag is __not__ set: ![inline formula](https://latex.codecogs.com/png.latex?dst%28%20%5Crho%20%2C%20%5Cphi%20%29%20%3D%20src%28x%2Cy%29)
 		/// - flag is set: ![inline formula](https://latex.codecogs.com/png.latex?dst%28x%2Cy%29%20%3D%20src%28%20%5Crho%20%2C%20%5Cphi%20%29)
 		WARP_INVERSE_MAP = 16,
+		/// flag, inverse transformation
+		/// 
+		/// For example, [linear_polar] or [log_polar] transforms:
+		/// - flag is __not__ set: ![inline formula](https://latex.codecogs.com/png.latex?dst%28%20%5Crho%20%2C%20%5Cphi%20%29%20%3D%20src%28x%2Cy%29)
+		/// - flag is set: ![inline formula](https://latex.codecogs.com/png.latex?dst%28x%2Cy%29%20%3D%20src%28%20%5Crho%20%2C%20%5Cphi%20%29)
+		WARP_RELATIVE_MAP = 32,
 	}
 	
 	impl TryFrom<i32> for InterpolationFlags {
@@ -2540,6 +2549,7 @@ pub mod imgproc {
 				7 => Ok(Self::INTER_MAX),
 				8 => Ok(Self::WARP_FILL_OUTLIERS),
 				16 => Ok(Self::WARP_INVERSE_MAP),
+				32 => Ok(Self::WARP_RELATIVE_MAP),
 				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::imgproc::InterpolationFlags"))),
 			}
 		}
@@ -2911,7 +2921,7 @@ pub mod imgproc {
 	opencv_type_enum! { crate::imgproc::TemplateMatchModes }
 	
 	/// type of the threshold operation
-	/// ![threshold types](https://docs.opencv.org/4.9.0/threshold.png)
+	/// ![threshold types](https://docs.opencv.org/4.10.0/threshold.png)
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ThresholdTypes {
@@ -3037,7 +3047,7 @@ pub mod imgproc {
 		Ok(ret)
 	}
 	
-	/// Finds edges in an image using the Canny algorithm [Canny86](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Canny86) .
+	/// Finds edges in an image using the Canny algorithm [Canny86](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Canny86) .
 	/// 
 	/// The function finds edges in the input image and marks them in the output map edges using the
 	/// Canny algorithm. The smallest value between threshold1 and threshold2 is used for edge linking. The
@@ -3070,7 +3080,7 @@ pub mod imgproc {
 		Ok(ret)
 	}
 	
-	/// Finds edges in an image using the Canny algorithm [Canny86](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Canny86) .
+	/// Finds edges in an image using the Canny algorithm [Canny86](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Canny86) .
 	/// 
 	/// The function finds edges in the input image and marks them in the output map edges using the
 	/// Canny algorithm. The smallest value between threshold1 and threshold2 is used for edge linking. The
@@ -3105,8 +3115,8 @@ pub mod imgproc {
 	/// Computes the "minimal work" distance between two weighted point configurations.
 	/// 
 	/// The function computes the earth mover distance and/or a lower boundary of the distance between the
-	/// two weighted point configurations. One of the applications described in [RubnerSept98](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_RubnerSept98),
-	/// [Rubner2000](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Rubner2000) is multi-dimensional histogram comparison for image retrieval. EMD is a transportation
+	/// two weighted point configurations. One of the applications described in [RubnerSept98](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_RubnerSept98),
+	/// [Rubner2000](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Rubner2000) is multi-dimensional histogram comparison for image retrieval. EMD is a transportation
 	/// problem that is solved using some modification of a simplex algorithm, thus the complexity is
 	/// exponential in the worst case, though, on average it is much faster. In the case of a real metric
 	/// the lower boundary can be calculated even faster (using linear-time algorithm) and it can be used
@@ -3156,8 +3166,8 @@ pub mod imgproc {
 	/// Computes the "minimal work" distance between two weighted point configurations.
 	/// 
 	/// The function computes the earth mover distance and/or a lower boundary of the distance between the
-	/// two weighted point configurations. One of the applications described in [RubnerSept98](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_RubnerSept98),
-	/// [Rubner2000](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Rubner2000) is multi-dimensional histogram comparison for image retrieval. EMD is a transportation
+	/// two weighted point configurations. One of the applications described in [RubnerSept98](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_RubnerSept98),
+	/// [Rubner2000](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Rubner2000) is multi-dimensional histogram comparison for image retrieval. EMD is a transportation
 	/// problem that is solved using some modification of a simplex algorithm, thus the complexity is
 	/// exponential in the worst case, though, on average it is much faster. In the case of a real metric
 	/// the lower boundary can be calculated even faster (using linear-time algorithm) and it can be used
@@ -3402,17 +3412,17 @@ pub mod imgproc {
 	/// Finds line segments in a binary image using the probabilistic Hough transform.
 	/// 
 	/// The function implements the probabilistic Hough transform algorithm for line detection, described
-	/// in [Matas00](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Matas00)
+	/// in [Matas00](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Matas00)
 	/// 
 	/// See the line detection example below:
 	/// @include snippets/imgproc_HoughLinesP.cpp
 	/// This is a sample picture the function parameters have been tuned for:
 	/// 
-	/// ![image](https://docs.opencv.org/4.9.0/building.jpg)
+	/// ![image](https://docs.opencv.org/4.10.0/building.jpg)
 	/// 
 	/// And this is the output of the above program in case of the probabilistic Hough transform:
 	/// 
-	/// ![image](https://docs.opencv.org/4.9.0/houghp.png)
+	/// ![image](https://docs.opencv.org/4.10.0/houghp.png)
 	/// 
 	/// ## Parameters
 	/// * image: 8-bit, single-channel binary source image. The image may be modified by the function.
@@ -3446,17 +3456,17 @@ pub mod imgproc {
 	/// Finds line segments in a binary image using the probabilistic Hough transform.
 	/// 
 	/// The function implements the probabilistic Hough transform algorithm for line detection, described
-	/// in [Matas00](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Matas00)
+	/// in [Matas00](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Matas00)
 	/// 
 	/// See the line detection example below:
 	/// @include snippets/imgproc_HoughLinesP.cpp
 	/// This is a sample picture the function parameters have been tuned for:
 	/// 
-	/// ![image](https://docs.opencv.org/4.9.0/building.jpg)
+	/// ![image](https://docs.opencv.org/4.10.0/building.jpg)
 	/// 
 	/// And this is the output of the above program in case of the probabilistic Hough transform:
 	/// 
-	/// ![image](https://docs.opencv.org/4.9.0/houghp.png)
+	/// ![image](https://docs.opencv.org/4.10.0/houghp.png)
 	/// 
 	/// ## Parameters
 	/// * image: 8-bit, single-channel binary source image. The image may be modified by the function.
@@ -3606,7 +3616,7 @@ pub mod imgproc {
 	
 	/// Calculates seven Hu invariants.
 	/// 
-	/// The function calculates seven Hu invariants (introduced in [Hu62](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Hu62); see also
+	/// The function calculates seven Hu invariants (introduced in [Hu62](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Hu62); see also
 	/// <http://en.wikipedia.org/wiki/Image_moment>) defined as:
 	/// 
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20hu%5B0%5D%3D%20%5Ceta%20%5F%7B20%7D%2B%20%5Ceta%20%5F%7B02%7D%20%5C%5C%20hu%5B1%5D%3D%28%20%5Ceta%20%5F%7B20%7D%2D%20%5Ceta%20%5F%7B02%7D%29%5E%7B2%7D%2B4%20%5Ceta%20%5F%7B11%7D%5E%7B2%7D%20%5C%5C%20hu%5B2%5D%3D%28%20%5Ceta%20%5F%7B30%7D%2D3%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2B%20%283%20%5Ceta%20%5F%7B21%7D%2D%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%20%5C%5C%20hu%5B3%5D%3D%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2B%20%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%20%5C%5C%20hu%5B4%5D%3D%28%20%5Ceta%20%5F%7B30%7D%2D3%20%5Ceta%20%5F%7B12%7D%29%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5B%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D3%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%2B%283%20%5Ceta%20%5F%7B21%7D%2D%20%5Ceta%20%5F%7B03%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5B3%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%20%5C%5C%20hu%5B5%5D%3D%28%20%5Ceta%20%5F%7B20%7D%2D%20%5Ceta%20%5F%7B02%7D%29%5B%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%20%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%2B4%20%5Ceta%20%5F%7B11%7D%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%20%5C%5C%20hu%5B6%5D%3D%283%20%5Ceta%20%5F%7B21%7D%2D%20%5Ceta%20%5F%7B03%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5B3%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%2D%28%20%5Ceta%20%5F%7B30%7D%2D3%20%5Ceta%20%5F%7B12%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5B3%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%20%5C%5C%20%5Cend%7Barray%7D)
@@ -3637,7 +3647,7 @@ pub mod imgproc {
 	
 	/// Calculates seven Hu invariants.
 	/// 
-	/// The function calculates seven Hu invariants (introduced in [Hu62](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Hu62); see also
+	/// The function calculates seven Hu invariants (introduced in [Hu62](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Hu62); see also
 	/// <http://en.wikipedia.org/wiki/Image_moment>) defined as:
 	/// 
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20hu%5B0%5D%3D%20%5Ceta%20%5F%7B20%7D%2B%20%5Ceta%20%5F%7B02%7D%20%5C%5C%20hu%5B1%5D%3D%28%20%5Ceta%20%5F%7B20%7D%2D%20%5Ceta%20%5F%7B02%7D%29%5E%7B2%7D%2B4%20%5Ceta%20%5F%7B11%7D%5E%7B2%7D%20%5C%5C%20hu%5B2%5D%3D%28%20%5Ceta%20%5F%7B30%7D%2D3%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2B%20%283%20%5Ceta%20%5F%7B21%7D%2D%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%20%5C%5C%20hu%5B3%5D%3D%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2B%20%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%20%5C%5C%20hu%5B4%5D%3D%28%20%5Ceta%20%5F%7B30%7D%2D3%20%5Ceta%20%5F%7B12%7D%29%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5B%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D3%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%2B%283%20%5Ceta%20%5F%7B21%7D%2D%20%5Ceta%20%5F%7B03%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5B3%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%20%5C%5C%20hu%5B5%5D%3D%28%20%5Ceta%20%5F%7B20%7D%2D%20%5Ceta%20%5F%7B02%7D%29%5B%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%20%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%2B4%20%5Ceta%20%5F%7B11%7D%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%20%5C%5C%20hu%5B6%5D%3D%283%20%5Ceta%20%5F%7B21%7D%2D%20%5Ceta%20%5F%7B03%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5B3%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%2D%28%20%5Ceta%20%5F%7B30%7D%2D3%20%5Ceta%20%5F%7B12%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5B3%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%20%5C%5C%20%5Cend%7Barray%7D)
@@ -4241,8 +4251,8 @@ pub mod imgproc {
 	/// Applies a user colormap on a given image.
 	/// 
 	/// ## Parameters
-	/// * src: The source image, grayscale or colored of type CV_8UC1 or CV_8UC3.
-	/// * dst: The result is the colormapped source image. Note: Mat::create is called on dst.
+	/// * src: The source image, grayscale or colored of type CV_8UC1 or CV_8UC3. If CV_8UC3, then the CV_8UC1 image is generated internally using cv::COLOR_BGR2GRAY.
+	/// * dst: The result is the colormapped source image of the same number of channels as userColor. Note: Mat::create is called on dst.
 	/// * userColor: The colormap to apply of type CV_8UC1 or CV_8UC3 and size 256
 	#[inline]
 	pub fn apply_color_map_user(src: &impl ToInputArray, dst: &mut impl ToOutputArray, user_color: &impl ToInputArray) -> Result<()> {
@@ -4259,7 +4269,7 @@ pub mod imgproc {
 	/// Applies a GNU Octave/MATLAB equivalent colormap on a given image.
 	/// 
 	/// ## Parameters
-	/// * src: The source image, grayscale or colored of type CV_8UC1 or CV_8UC3.
+	/// * src: The source image, grayscale or colored of type CV_8UC1 or CV_8UC3. If CV_8UC3, then the CV_8UC1 image is generated internally using cv::COLOR_BGR2GRAY.
 	/// * dst: The result is the colormapped source image. Note: Mat::create is called on dst.
 	/// * colormap: The colormap to apply, see #ColormapTypes
 	#[inline]
@@ -4755,7 +4765,7 @@ pub mod imgproc {
 	/// size and depth as images[0] .
 	/// * ranges: Array of arrays of the histogram bin boundaries in each dimension. See [calc_hist] .
 	/// * scale: Optional scale factor for the output back projection.
-	/// * uniform: Flag indicating whether the histogram is uniform or not (see above).
+	/// * uniform: Flag indicating whether the histogram is uniform or not (see #calcHist).
 	/// ## See also
 	/// calcHist, compareHist
 	/// 
@@ -5060,7 +5070,7 @@ pub mod imgproc {
 	/// represents the background label. ltype specifies the output label image type, an important
 	/// consideration based on the total number of labels or alternatively the total number of pixels in
 	/// the source image. ccltype specifies the connected components labeling algorithm to use, currently
-	/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
+	/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
 	/// are supported, see the [connected_components_algorithms_types] for details. Note that SAUF algorithm forces
 	/// a row major ordering of labels while Spaghetti and BBDT do not.
 	/// This function uses parallel version of the algorithms (statistics included) if at least one allowed
@@ -5112,7 +5122,7 @@ pub mod imgproc {
 	/// represents the background label. ltype specifies the output label image type, an important
 	/// consideration based on the total number of labels or alternatively the total number of pixels in
 	/// the source image. ccltype specifies the connected components labeling algorithm to use, currently
-	/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
+	/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
 	/// are supported, see the [connected_components_algorithms_types] for details. Note that SAUF algorithm forces
 	/// a row major ordering of labels while Spaghetti and BBDT do not.
 	/// This function uses parallel version of the algorithms (statistics included) if at least one allowed
@@ -5171,7 +5181,7 @@ pub mod imgproc {
 	/// represents the background label. ltype specifies the output label image type, an important
 	/// consideration based on the total number of labels or alternatively the total number of pixels in
 	/// the source image. ccltype specifies the connected components labeling algorithm to use, currently
-	/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
+	/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
 	/// are supported, see the [connected_components_algorithms_types] for details. Note that SAUF algorithm forces
 	/// a row major ordering of labels while Spaghetti and BBDT do not.
 	/// This function uses parallel version of the algorithms if at least one allowed
@@ -5212,7 +5222,7 @@ pub mod imgproc {
 	/// represents the background label. ltype specifies the output label image type, an important
 	/// consideration based on the total number of labels or alternatively the total number of pixels in
 	/// the source image. ccltype specifies the connected components labeling algorithm to use, currently
-	/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
+	/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
 	/// are supported, see the [connected_components_algorithms_types] for details. Note that SAUF algorithm forces
 	/// a row major ordering of labels while Spaghetti and BBDT do not.
 	/// This function uses parallel version of the algorithms if at least one allowed
@@ -5419,7 +5429,7 @@ pub mod imgproc {
 	
 	/// Finds the convex hull of a point set.
 	/// 
-	/// The function cv::convexHull finds the convex hull of a 2D point set using the Sklansky's algorithm [Sklansky82](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Sklansky82)
+	/// The function cv::convexHull finds the convex hull of a 2D point set using the Sklansky's algorithm [Sklansky82](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Sklansky82)
 	/// that has *O(N logN)* complexity in the current implementation.
 	/// 
 	/// ## Parameters
@@ -5463,7 +5473,7 @@ pub mod imgproc {
 	
 	/// Finds the convex hull of a point set.
 	/// 
-	/// The function cv::convexHull finds the convex hull of a 2D point set using the Sklansky's algorithm [Sklansky82](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Sklansky82)
+	/// The function cv::convexHull finds the convex hull of a 2D point set using the Sklansky's algorithm [Sklansky82](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Sklansky82)
 	/// that has *O(N logN)* complexity in the current implementation.
 	/// 
 	/// ## Parameters
@@ -5508,7 +5518,7 @@ pub mod imgproc {
 	/// 
 	/// The figure below displays convexity defects of a hand contour:
 	/// 
-	/// ![image](https://docs.opencv.org/4.9.0/defects.png)
+	/// ![image](https://docs.opencv.org/4.10.0/defects.png)
 	/// 
 	/// ## Parameters
 	/// * contour: Input contour.
@@ -5741,9 +5751,9 @@ pub mod imgproc {
 	/// Refines the corner locations.
 	/// 
 	/// The function iterates to find the sub-pixel accurate location of corners or radial saddle
-	/// points as described in [forstner1987fast](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_forstner1987fast), and as shown on the figure below.
+	/// points as described in [forstner1987fast](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_forstner1987fast), and as shown on the figure below.
 	/// 
-	/// ![image](https://docs.opencv.org/4.9.0/cornersubpix.png)
+	/// ![image](https://docs.opencv.org/4.10.0/cornersubpix.png)
 	/// 
 	/// Sub-pixel accurate corner locator is based on the observation that every vector from the center ![inline formula](https://latex.codecogs.com/png.latex?q)
 	/// to a point ![inline formula](https://latex.codecogs.com/png.latex?p) located within a neighborhood of ![inline formula](https://latex.codecogs.com/png.latex?q) is orthogonal to the image gradient at ![inline formula](https://latex.codecogs.com/png.latex?p)
@@ -6266,9 +6276,9 @@ pub mod imgproc {
 	/// image pixel to the nearest zero pixel. For zero image pixels, the distance will obviously be zero.
 	/// 
 	/// When maskSize == [DIST_MASK_PRECISE] and distanceType == [DIST_L2] , the function runs the
-	/// algorithm described in [Felzenszwalb04](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Felzenszwalb04) . This algorithm is parallelized with the TBB library.
+	/// algorithm described in [Felzenszwalb04](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Felzenszwalb04) . This algorithm is parallelized with the TBB library.
 	/// 
-	/// In other cases, the algorithm [Borgefors86](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Borgefors86) is used. This means that for a pixel the function
+	/// In other cases, the algorithm [Borgefors86](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Borgefors86) is used. This means that for a pixel the function
 	/// finds the shortest path to the nearest zero pixel consisting of basic shifts: horizontal, vertical,
 	/// diagonal, or knight's move (the latest is available for a ![inline formula](https://latex.codecogs.com/png.latex?5%5Ctimes%205) mask). The overall
 	/// distance is calculated as a sum of these basic distances. Since the distance function should be
@@ -6334,9 +6344,9 @@ pub mod imgproc {
 	/// image pixel to the nearest zero pixel. For zero image pixels, the distance will obviously be zero.
 	/// 
 	/// When maskSize == [DIST_MASK_PRECISE] and distanceType == [DIST_L2] , the function runs the
-	/// algorithm described in [Felzenszwalb04](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Felzenszwalb04) . This algorithm is parallelized with the TBB library.
+	/// algorithm described in [Felzenszwalb04](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Felzenszwalb04) . This algorithm is parallelized with the TBB library.
 	/// 
-	/// In other cases, the algorithm [Borgefors86](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Borgefors86) is used. This means that for a pixel the function
+	/// In other cases, the algorithm [Borgefors86](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Borgefors86) is used. This means that for a pixel the function
 	/// finds the shortest path to the nearest zero pixel consisting of basic shifts: horizontal, vertical,
 	/// diagonal, or knight's move (the latest is available for a ![inline formula](https://latex.codecogs.com/png.latex?5%5Ctimes%205) mask). The overall
 	/// distance is calculated as a sum of these basic distances. Since the distance function should be
@@ -6427,9 +6437,9 @@ pub mod imgproc {
 	/// image pixel to the nearest zero pixel. For zero image pixels, the distance will obviously be zero.
 	/// 
 	/// When maskSize == [DIST_MASK_PRECISE] and distanceType == [DIST_L2] , the function runs the
-	/// algorithm described in [Felzenszwalb04](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Felzenszwalb04) . This algorithm is parallelized with the TBB library.
+	/// algorithm described in [Felzenszwalb04](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Felzenszwalb04) . This algorithm is parallelized with the TBB library.
 	/// 
-	/// In other cases, the algorithm [Borgefors86](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Borgefors86) is used. This means that for a pixel the function
+	/// In other cases, the algorithm [Borgefors86](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Borgefors86) is used. This means that for a pixel the function
 	/// finds the shortest path to the nearest zero pixel consisting of basic shifts: horizontal, vertical,
 	/// diagonal, or knight's move (the latest is available for a ![inline formula](https://latex.codecogs.com/png.latex?5%5Ctimes%205) mask). The overall
 	/// distance is calculated as a sum of these basic distances. Since the distance function should be
@@ -6778,7 +6788,7 @@ pub mod imgproc {
 	/// `endAngle=360`. If `startAngle` is greater than `endAngle`, they are swapped. The figure below explains
 	/// the meaning of the parameters to draw the blue arc.
 	/// 
-	/// ![Parameters of Elliptic Arc](https://docs.opencv.org/4.9.0/ellipse.svg)
+	/// ![Parameters of Elliptic Arc](https://docs.opencv.org/4.10.0/ellipse.svg)
 	/// 
 	/// ## Parameters
 	/// * img: Image.
@@ -6819,7 +6829,7 @@ pub mod imgproc {
 	/// `endAngle=360`. If `startAngle` is greater than `endAngle`, they are swapped. The figure below explains
 	/// the meaning of the parameters to draw the blue arc.
 	/// 
-	/// ![Parameters of Elliptic Arc](https://docs.opencv.org/4.9.0/ellipse.svg)
+	/// ![Parameters of Elliptic Arc](https://docs.opencv.org/4.10.0/ellipse.svg)
 	/// 
 	/// ## Parameters
 	/// * img: Image.
@@ -6883,7 +6893,7 @@ pub mod imgproc {
 	/// `endAngle=360`. If `startAngle` is greater than `endAngle`, they are swapped. The figure below explains
 	/// the meaning of the parameters to draw the blue arc.
 	/// 
-	/// ![Parameters of Elliptic Arc](https://docs.opencv.org/4.9.0/ellipse.svg)
+	/// ![Parameters of Elliptic Arc](https://docs.opencv.org/4.10.0/ellipse.svg)
 	/// 
 	/// ## Parameters
 	/// * img: Image.
@@ -7243,9 +7253,50 @@ pub mod imgproc {
 		Ok(ret)
 	}
 	
+	/// Find contours using link runs algorithm
+	/// 
+	/// This function implements an algorithm different from cv::findContours:
+	/// - doesn't allocate temporary image internally, thus it has reduced memory consumption
+	/// - supports CV_8UC1 images only
+	/// - outputs 2-level hierarhy only (RETR_CCOMP mode)
+	/// - doesn't support approximation change other than CHAIN_APPROX_SIMPLE
+	/// In all other aspects this function is compatible with cv::findContours.
+	/// 
+	/// ## Overloaded parameters
+	#[inline]
+	pub fn find_contours_link_runs_1(image: &impl ToInputArray, contours: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(image);
+		output_array_arg!(contours);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_findContoursLinkRuns_const__InputArrayR_const__OutputArrayR(image.as_raw__InputArray(), contours.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
+	/// Find contours using link runs algorithm
+	/// 
+	/// This function implements an algorithm different from cv::findContours:
+	/// - doesn't allocate temporary image internally, thus it has reduced memory consumption
+	/// - supports CV_8UC1 images only
+	/// - outputs 2-level hierarhy only (RETR_CCOMP mode)
+	/// - doesn't support approximation change other than CHAIN_APPROX_SIMPLE
+	/// In all other aspects this function is compatible with cv::findContours.
+	#[inline]
+	pub fn find_contours_link_runs(image: &impl ToInputArray, contours: &mut impl ToOutputArray, hierarchy: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(image);
+		output_array_arg!(contours);
+		output_array_arg!(hierarchy);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_findContoursLinkRuns_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(image.as_raw__InputArray(), contours.as_raw__OutputArray(), hierarchy.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+	
 	/// Finds contours in a binary image.
 	/// 
-	/// The function retrieves contours from the binary image using the algorithm [Suzuki85](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Suzuki85) . The contours
+	/// The function retrieves contours from the binary image using the algorithm [Suzuki85](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Suzuki85) . The contours
 	/// are a useful tool for shape analysis and object detection and recognition. See squares.cpp in the
 	/// OpenCV sample directory.
 	/// 
@@ -7289,7 +7340,7 @@ pub mod imgproc {
 	
 	/// Finds contours in a binary image.
 	/// 
-	/// The function retrieves contours from the binary image using the algorithm [Suzuki85](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Suzuki85) . The contours
+	/// The function retrieves contours from the binary image using the algorithm [Suzuki85](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Suzuki85) . The contours
 	/// are a useful tool for shape analysis and object detection and recognition. See squares.cpp in the
 	/// OpenCV sample directory.
 	/// 
@@ -7348,7 +7399,7 @@ pub mod imgproc {
 	
 	/// Finds contours in a binary image.
 	/// 
-	/// The function retrieves contours from the binary image using the algorithm [Suzuki85](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Suzuki85) . The contours
+	/// The function retrieves contours from the binary image using the algorithm [Suzuki85](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Suzuki85) . The contours
 	/// are a useful tool for shape analysis and object detection and recognition. See squares.cpp in the
 	/// OpenCV sample directory.
 	/// 
@@ -7394,7 +7445,7 @@ pub mod imgproc {
 	/// 
 	/// The function calculates the ellipse that fits a set of 2D points.
 	/// It returns the rotated rectangle in which the ellipse is inscribed.
-	/// The Approximate Mean Square (AMS) proposed by [Taubin1991](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Taubin1991) is used.
+	/// The Approximate Mean Square (AMS) proposed by [Taubin1991](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Taubin1991) is used.
 	/// 
 	/// For an ellipse, this basis set is ![inline formula](https://latex.codecogs.com/png.latex?%20%5Cchi%3D%20%5Cleft%28x%5E2%2C%20x%20y%2C%20y%5E2%2C%20x%2C%20y%2C%201%5Cright%29%20),
 	/// which is a set of six free coefficients ![inline formula](https://latex.codecogs.com/png.latex?%20A%5ET%3D%5Cleft%5C%7BA%5F%7B%5Ctext%7Bxx%7D%7D%2CA%5F%7B%5Ctext%7Bxy%7D%7D%2CA%5F%7B%5Ctext%7Byy%7D%7D%2CA%5Fx%2CA%5Fy%2CA%5F0%5Cright%5C%7D%20).
@@ -7439,7 +7490,7 @@ pub mod imgproc {
 	/// 
 	/// The function calculates the ellipse that fits a set of 2D points.
 	/// It returns the rotated rectangle in which the ellipse is inscribed.
-	/// The Direct least square (Direct) method by [Fitzgibbon1999](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Fitzgibbon1999) is used.
+	/// The Direct least square (Direct) method by [Fitzgibbon1999](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Fitzgibbon1999) is used.
 	/// 
 	/// For an ellipse, this basis set is ![inline formula](https://latex.codecogs.com/png.latex?%20%5Cchi%3D%20%5Cleft%28x%5E2%2C%20x%20y%2C%20y%5E2%2C%20x%2C%20y%2C%201%5Cright%29%20),
 	/// which is a set of six free coefficients ![inline formula](https://latex.codecogs.com/png.latex?%20A%5ET%3D%5Cleft%5C%7BA%5F%7B%5Ctext%7Bxx%7D%7D%2CA%5F%7B%5Ctext%7Bxy%7D%7D%2CA%5F%7B%5Ctext%7Byy%7D%7D%2CA%5Fx%2CA%5Fy%2CA%5F0%5Cright%5C%7D%20).
@@ -7490,7 +7541,7 @@ pub mod imgproc {
 	/// Fits an ellipse around a set of 2D points.
 	/// 
 	/// The function calculates the ellipse that fits (in a least-squares sense) a set of 2D points best of
-	/// all. It returns the rotated rectangle in which the ellipse is inscribed. The first algorithm described by [Fitzgibbon95](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Fitzgibbon95)
+	/// all. It returns the rotated rectangle in which the ellipse is inscribed. The first algorithm described by [Fitzgibbon95](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Fitzgibbon95)
 	/// is used. Developer should keep in mind that it is possible that the returned
 	/// ellipse/rotatedRect data contains negative indices, due to the data points being close to the
 	/// border of the containing Mat element.
@@ -8448,7 +8499,7 @@ pub mod imgproc {
 	/// Determines strong corners on an image.
 	/// 
 	/// The function finds the most prominent corners in the image or in the specified image region, as
-	/// described in [Shi94](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Shi94)
+	/// described in [Shi94](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Shi94)
 	/// 
 	/// *   Function calculates the corner quality measure at every source image pixel using the
 	///    [corner_min_eigen_val] or [corner_harris] .
@@ -8599,7 +8650,7 @@ pub mod imgproc {
 	/// Determines strong corners on an image.
 	/// 
 	/// The function finds the most prominent corners in the image or in the specified image region, as
-	/// described in [Shi94](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Shi94)
+	/// described in [Shi94](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Shi94)
 	/// 
 	/// *   Function calculates the corner quality measure at every source image pixel using the
 	///    [corner_min_eigen_val] or [corner_harris] .
@@ -8814,7 +8865,7 @@ pub mod imgproc {
 	/// rectangle Rect(4,4,3,2) and of a tilted rectangle Rect(5,1,2,3) . The selected pixels in the
 	/// original image are shown, as well as the relative pixels in the integral images sum and tilted .
 	/// 
-	/// ![integral calculation example](https://docs.opencv.org/4.9.0/integral.png)
+	/// ![integral calculation example](https://docs.opencv.org/4.10.0/integral.png)
 	/// 
 	/// ## Parameters
 	/// * src: input image as ![inline formula](https://latex.codecogs.com/png.latex?W%20%5Ctimes%20H), 8-bit or floating-point (32f or 64f).
@@ -8866,7 +8917,7 @@ pub mod imgproc {
 	/// rectangle Rect(4,4,3,2) and of a tilted rectangle Rect(5,1,2,3) . The selected pixels in the
 	/// original image are shown, as well as the relative pixels in the integral images sum and tilted .
 	/// 
-	/// ![integral calculation example](https://docs.opencv.org/4.9.0/integral.png)
+	/// ![integral calculation example](https://docs.opencv.org/4.10.0/integral.png)
 	/// 
 	/// ## Parameters
 	/// * src: input image as ![inline formula](https://latex.codecogs.com/png.latex?W%20%5Ctimes%20H), 8-bit or floating-point (32f or 64f).
@@ -8917,7 +8968,7 @@ pub mod imgproc {
 	/// rectangle Rect(4,4,3,2) and of a tilted rectangle Rect(5,1,2,3) . The selected pixels in the
 	/// original image are shown, as well as the relative pixels in the integral images sum and tilted .
 	/// 
-	/// ![integral calculation example](https://docs.opencv.org/4.9.0/integral.png)
+	/// ![integral calculation example](https://docs.opencv.org/4.10.0/integral.png)
 	/// 
 	/// ## Parameters
 	/// * src: input image as ![inline formula](https://latex.codecogs.com/png.latex?W%20%5Ctimes%20H), 8-bit or floating-point (32f or 64f).
@@ -8969,7 +9020,7 @@ pub mod imgproc {
 	/// rectangle Rect(4,4,3,2) and of a tilted rectangle Rect(5,1,2,3) . The selected pixels in the
 	/// original image are shown, as well as the relative pixels in the integral images sum and tilted .
 	/// 
-	/// ![integral calculation example](https://docs.opencv.org/4.9.0/integral.png)
+	/// ![integral calculation example](https://docs.opencv.org/4.10.0/integral.png)
 	/// 
 	/// ## Parameters
 	/// * src: input image as ![inline formula](https://latex.codecogs.com/png.latex?W%20%5Ctimes%20H), 8-bit or floating-point (32f or 64f).
@@ -9419,10 +9470,10 @@ pub mod imgproc {
 	/// area. The output for a given 2D point set is shown in the image below. 2D points are depicted in
 	/// *red* and the enclosing triangle in *yellow*.
 	/// 
-	/// ![Sample output of the minimum enclosing triangle function](https://docs.opencv.org/4.9.0/minenclosingtriangle.png)
+	/// ![Sample output of the minimum enclosing triangle function](https://docs.opencv.org/4.10.0/minenclosingtriangle.png)
 	/// 
-	/// The implementation of the algorithm is based on O'Rourke's [ORourke86](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_ORourke86) and Klee and Laskowski's
-	/// [KleeLaskowski85](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_KleeLaskowski85) papers. O'Rourke provides a ![inline formula](https://latex.codecogs.com/png.latex?%5Ctheta%28n%29) algorithm for finding the minimal
+	/// The implementation of the algorithm is based on O'Rourke's [ORourke86](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_ORourke86) and Klee and Laskowski's
+	/// [KleeLaskowski85](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_KleeLaskowski85) papers. O'Rourke provides a ![inline formula](https://latex.codecogs.com/png.latex?%5Ctheta%28n%29) algorithm for finding the minimal
 	/// enclosing triangle of a 2D convex polygon with n vertices. Since the [min_enclosing_triangle] function
 	/// takes a 2D point set as input an additional preprocessing step of computing the convex hull of the
 	/// 2D point set is required. The complexity of the [convex_hull] function is ![inline formula](https://latex.codecogs.com/png.latex?O%28n%20log%28n%29%29) which is higher
@@ -9449,8 +9500,8 @@ pub mod imgproc {
 	/// results are returned in the structure cv::Moments.
 	/// 
 	/// ## Parameters
-	/// * array: Raster image (single-channel, 8-bit or floating-point 2D array) or an array (
-	/// ![inline formula](https://latex.codecogs.com/png.latex?1%20%5Ctimes%20N) or ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Ctimes%201) ) of 2D points (Point or Point2f ).
+	/// * array: Single chanel raster image (CV_8U, CV_16U, CV_16S, CV_32F, CV_64F) or an array (
+	/// ![inline formula](https://latex.codecogs.com/png.latex?1%20%5Ctimes%20N) or ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Ctimes%201) ) of 2D points (Point or Point2f).
 	/// * binaryImage: If it is true, all non-zero image pixels are treated as 1's. The parameter is
 	/// used for images only.
 	/// ## Returns
@@ -9481,8 +9532,8 @@ pub mod imgproc {
 	/// results are returned in the structure cv::Moments.
 	/// 
 	/// ## Parameters
-	/// * array: Raster image (single-channel, 8-bit or floating-point 2D array) or an array (
-	/// ![inline formula](https://latex.codecogs.com/png.latex?1%20%5Ctimes%20N) or ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Ctimes%201) ) of 2D points (Point or Point2f ).
+	/// * array: Single chanel raster image (CV_8U, CV_16U, CV_16S, CV_32F, CV_64F) or an array (
+	/// ![inline formula](https://latex.codecogs.com/png.latex?1%20%5Ctimes%20N) or ![inline formula](https://latex.codecogs.com/png.latex?N%20%5Ctimes%201) ) of 2D points (Point or Point2f).
 	/// * binaryImage: If it is true, all non-zero image pixels are treated as 1's. The parameter is
 	/// used for images only.
 	/// ## Returns
@@ -9718,7 +9769,7 @@ pub mod imgproc {
 	/// 
 	/// See below a sample output of the function where each image pixel is tested against the contour:
 	/// 
-	/// ![sample output](https://docs.opencv.org/4.9.0/pointpolygon.png)
+	/// ![sample output](https://docs.opencv.org/4.10.0/pointpolygon.png)
 	/// 
 	/// ## Parameters
 	/// * contour: Input contour.
@@ -10294,6 +10345,7 @@ pub mod imgproc {
 	/// The function remap transforms the source image using the specified map:
 	/// 
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Ctexttt%7Bsrc%7D%20%28map%5Fx%28x%2Cy%29%2Cmap%5Fy%28x%2Cy%29%29)
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Ctexttt%7Bsrc%7D%20%28x%2Bmap%5Fx%28x%2Cy%29%2Cy%2Bmap%5Fy%28x%2Cy%29%29) with WARP_RELATIVE_MAP
 	/// 
 	/// where values of pixels with non-integer coordinates are computed using one of available
 	/// interpolation methods. ![inline formula](https://latex.codecogs.com/png.latex?map%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?map%5Fy) can be encoded as separate floating-point maps
@@ -10314,7 +10366,9 @@ pub mod imgproc {
 	/// * map2: The second map of y values having the type CV_16UC1, CV_32FC1, or none (empty map
 	/// if map1 is (x,y) points), respectively.
 	/// * interpolation: Interpolation method (see #InterpolationFlags). The methods [INTER_AREA]
-	/// and [INTER_LINEAR_EXACT] are not supported by this function.
+	/// [INTER_LINEAR_EXACT] and [INTER_NEAREST_EXACT] are not supported by this function.
+	/// The extra flag WARP_RELATIVE_MAP that can be ORed to the interpolation method
+	/// (e.g. INTER_LINEAR | WARP_RELATIVE_MAP)
 	/// * borderMode: Pixel extrapolation method (see #BorderTypes). When
 	/// borderMode=#BORDER_TRANSPARENT, it means that the pixels in the destination image that
 	/// corresponds to the "outliers" in the source image are not modified by the function.
@@ -10345,6 +10399,7 @@ pub mod imgproc {
 	/// The function remap transforms the source image using the specified map:
 	/// 
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Ctexttt%7Bsrc%7D%20%28map%5Fx%28x%2Cy%29%2Cmap%5Fy%28x%2Cy%29%29)
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Ctexttt%7Bsrc%7D%20%28x%2Bmap%5Fx%28x%2Cy%29%2Cy%2Bmap%5Fy%28x%2Cy%29%29) with WARP_RELATIVE_MAP
 	/// 
 	/// where values of pixels with non-integer coordinates are computed using one of available
 	/// interpolation methods. ![inline formula](https://latex.codecogs.com/png.latex?map%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?map%5Fy) can be encoded as separate floating-point maps
@@ -10365,7 +10420,9 @@ pub mod imgproc {
 	/// * map2: The second map of y values having the type CV_16UC1, CV_32FC1, or none (empty map
 	/// if map1 is (x,y) points), respectively.
 	/// * interpolation: Interpolation method (see #InterpolationFlags). The methods [INTER_AREA]
-	/// and [INTER_LINEAR_EXACT] are not supported by this function.
+	/// [INTER_LINEAR_EXACT] and [INTER_NEAREST_EXACT] are not supported by this function.
+	/// The extra flag WARP_RELATIVE_MAP that can be ORed to the interpolation method
+	/// (e.g. INTER_LINEAR | WARP_RELATIVE_MAP)
 	/// * borderMode: Pixel extrapolation method (see #BorderTypes). When
 	/// borderMode=#BORDER_TRANSPARENT, it means that the pixels in the destination image that
 	/// corresponds to the "outliers" in the source image are not modified by the function.
@@ -10502,7 +10559,7 @@ pub mod imgproc {
 	/// Below are some examples of intersection configurations. The hatched pattern indicates the
 	/// intersecting region and the red vertices are returned by the function.
 	/// 
-	/// ![intersection examples](https://docs.opencv.org/4.9.0/intersection.png)
+	/// ![intersection examples](https://docs.opencv.org/4.10.0/intersection.png)
 	/// 
 	/// ## Parameters
 	/// * rect1: First rectangle
@@ -10962,7 +11019,7 @@ pub mod imgproc {
 	/// \brief Remaps an image to polar or semilog-polar coordinates space
 	/// 
 	/// @anchor polar_remaps_reference_image
-	/// ![Polar remaps reference](https://docs.opencv.org/4.9.0/polar_remap_doc.png)
+	/// ![Polar remaps reference](https://docs.opencv.org/4.10.0/polar_remap_doc.png)
 	/// 
 	/// Transform the source image using the following transformation:
 	/// ![block formula](https://latex.codecogs.com/png.latex?%0Adst%28%5Crho%20%2C%20%5Cphi%20%29%20%3D%20src%28x%2Cy%29%0A)
@@ -11037,7 +11094,7 @@ pub mod imgproc {
 	/// Performs a marker-based image segmentation using the watershed algorithm.
 	/// 
 	/// The function implements one of the variants of watershed, non-parametric marker-based segmentation
-	/// algorithm, described in [Meyer92](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Meyer92) .
+	/// algorithm, described in [Meyer92](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Meyer92) .
 	/// 
 	/// Before passing the image to the function, you have to roughly outline the desired regions in the
 	/// image markers with positive (\>0) indices. So, every region is represented as one or more connected
@@ -11570,7 +11627,7 @@ pub mod imgproc {
 	
 	/// finds arbitrary template in the grayscale image using Generalized Hough Transform
 	/// 
-	/// Detects position only without translation and rotation [Ballard1981](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Ballard1981) .
+	/// Detects position only without translation and rotation [Ballard1981](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Ballard1981) .
 	pub struct GeneralizedHoughBallard {
 		ptr: *mut c_void
 	}
@@ -11873,7 +11930,7 @@ pub mod imgproc {
 	
 	/// finds arbitrary template in the grayscale image using Generalized Hough Transform
 	/// 
-	/// Detects position, translation and rotation [Guil1999](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Guil1999) .
+	/// Detects position, translation and rotation [Guil1999](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Guil1999) .
 	pub struct GeneralizedHoughGuil {
 		ptr: *mut c_void
 	}
@@ -12390,7 +12447,7 @@ pub mod imgproc {
 		/// 
 		/// This is the output of the default parameters of the algorithm on the above shown image.
 		/// 
-		/// ![image](https://docs.opencv.org/4.9.0/building_lsd.png)
+		/// ![image](https://docs.opencv.org/4.10.0/building_lsd.png)
 		/// 
 		/// ## Parameters
 		/// * image: A grayscale (CV_8UC1) input image. If only a roi needs to be selected, use:
@@ -12429,7 +12486,7 @@ pub mod imgproc {
 		/// 
 		/// This is the output of the default parameters of the algorithm on the above shown image.
 		/// 
-		/// ![image](https://docs.opencv.org/4.9.0/building_lsd.png)
+		/// ![image](https://docs.opencv.org/4.10.0/building_lsd.png)
 		/// 
 		/// ## Parameters
 		/// * image: A grayscale (CV_8UC1) input image. If only a roi needs to be selected, use:
@@ -12528,7 +12585,7 @@ pub mod imgproc {
 	
 	/// Line segment detector class
 	/// 
-	/// following the algorithm described at [Rafael12](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Rafael12) .
+	/// following the algorithm described at [Rafael12](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Rafael12) .
 	/// 
 	/// 
 	/// Note: Implementation has been removed from OpenCV version 3.4.6 to 3.4.15 and version 4.1.0 to 4.5.3 due original code license conflict.
@@ -12686,7 +12743,7 @@ pub mod imgproc {
 		/// *   PREV_AROUND_LEFT previous around the left facet (reversed eOnext )
 		/// *   PREV_AROUND_RIGHT previous around the right facet (reversed eDnext )
 		/// 
-		/// ![sample output](https://docs.opencv.org/4.9.0/quadedge.png)
+		/// ![sample output](https://docs.opencv.org/4.10.0/quadedge.png)
 		/// 
 		/// ## Returns
 		/// edge ID related to the input edge.
@@ -13363,11 +13420,11 @@ pub mod imgproc {
 	/// which can be used for image segmentation.
 	/// 
 	/// Usage example:
-	/// [usage_example_intelligent_scissors](https://github.com/opencv/opencv/blob/4.9.0/samples/cpp/tutorial_code/snippets/imgproc_segmentation.cpp#L1)
+	/// [usage_example_intelligent_scissors](https://github.com/opencv/opencv/blob/4.10.0/samples/cpp/tutorial_code/snippets/imgproc_segmentation.cpp#L1)
 	/// 
 	/// Reference: <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.138.3811&rep=rep1&type=pdf">"Intelligent Scissors for Image Composition"</a>
 	/// algorithm designed by Eric N. Mortensen and William A. Barrett, Brigham Young University
-	/// [Mortensen95intelligentscissors](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Mortensen95intelligentscissors)
+	/// [Mortensen95intelligentscissors](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Mortensen95intelligentscissors)
 	pub struct IntelligentScissorsMB {
 		ptr: *mut c_void
 	}

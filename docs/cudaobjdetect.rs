@@ -732,7 +732,7 @@ pub mod cudaobjdetect {
 		
 	}
 	
-	/// The class implements Histogram of Oriented Gradients ([Dalal2005](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Dalal2005)) object detector.
+	/// The class implements Histogram of Oriented Gradients ([Dalal2005](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Dalal2005)) object detector.
 	/// 
 	/// 
 	/// Note:

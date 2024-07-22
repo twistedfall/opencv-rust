@@ -1,8 +1,6 @@
 pub mod core {
 	//! # Core functionality
 	//!    # Basic structures
-	//!    # C structures and operations
-	//!        # Connections with C++
 	//!    # Operations on arrays
 	//!    # Asynchronous API
 	//!    # XML/YAML Persistence
@@ -43,7 +41,7 @@ pub mod core {
 	pub const BORDER_CONSTANT: i32 = 0;
 	/// same as BORDER_REFLECT_101
 	pub const BORDER_DEFAULT: i32 = 4;
-	/// do not look outside of ROI
+	/// Interpolation restricted within the ROI boundaries.
 	pub const BORDER_ISOLATED: i32 = 16;
 	/// `fedcba|abcdefgh|hgfedcb`
 	pub const BORDER_REFLECT: i32 = 2;
@@ -53,7 +51,7 @@ pub mod core {
 	pub const BORDER_REFLECT_101: i32 = 4;
 	/// `aaaaaa|abcdefgh|hhhhhhh`
 	pub const BORDER_REPLICATE: i32 = 1;
-	/// `uvwxyz|abcdefgh|ijklmno`
+	/// `uvwxyz|abcdefgh|ijklmno` - Treats outliers as transparent.
 	pub const BORDER_TRANSPARENT: i32 = 5;
 	/// `cdefgh|abcdefgh|abcdefg`
 	pub const BORDER_WRAP: i32 = 3;
@@ -308,8 +306,6 @@ pub mod core {
 	pub const CV_CPU_VSX: i32 = 200;
 	pub const CV_CPU_VSX3: i32 = 201;
 	pub const CV_CXX11: i32 = 1;
-	pub const CV_CXX_MOVE_SEMANTICS: i32 = 1;
-	pub const CV_CXX_STD_ARRAY: i32 = 1;
 	pub const CV_DEPTH_MAX: i32 = (1<<CV_CN_SHIFT);
 	pub const CV_ENABLE_UNROLLED: i32 = 1;
 	pub const CV_FMA3: i32 = 0;
@@ -369,6 +365,7 @@ pub mod core {
 	pub const CV_MAT_CONT_FLAG_SHIFT: i32 = 14;
 	pub const CV_MAT_DEPTH_MASK: i32 = (CV_DEPTH_MAX-1);
 	pub const CV_MAT_TYPE_MASK: i32 = (CV_DEPTH_MAX*CV_CN_MAX-1);
+	pub const CV_MAX_DIM: i32 = 32;
 	pub const CV_MINOR_VERSION: i32 = CV_VERSION_MINOR;
 	pub const CV_MMX: i32 = 1;
 	pub const CV_MSA: i32 = 0;
@@ -387,9 +384,9 @@ pub mod core {
 	pub const CV_SUBMAT_FLAG: i32 = (1<<CV_SUBMAT_FLAG_SHIFT);
 	pub const CV_SUBMAT_FLAG_SHIFT: i32 = 15;
 	pub const CV_SUBMINOR_VERSION: i32 = CV_VERSION_REVISION;
-	pub const CV_VERSION: &str = "4.9.0";
+	pub const CV_VERSION: &str = "4.10.0";
 	pub const CV_VERSION_MAJOR: i32 = 4;
-	pub const CV_VERSION_MINOR: i32 = 9;
+	pub const CV_VERSION_MINOR: i32 = 10;
 	pub const CV_VERSION_REVISION: i32 = 0;
 	pub const CV_VERSION_STATUS: &str = "";
 	pub const CV_VSX: i32 = 0;
@@ -928,7 +925,7 @@ pub mod core {
 		BORDER_WRAP = 3,
 		/// `gfedcb|abcdefgh|gfedcba`
 		BORDER_REFLECT_101 = 4,
-		/// `uvwxyz|abcdefgh|ijklmno`
+		/// `uvwxyz|abcdefgh|ijklmno` - Treats outliers as transparent.
 		BORDER_TRANSPARENT = 5,
 		// same as BORDER_REFLECT_101
 		// Duplicate, use BORDER_REFLECT_101 instead
@@ -936,7 +933,7 @@ pub mod core {
 		// same as BORDER_REFLECT_101
 		// Duplicate, use BORDER_REFLECT101 instead
 		// BORDER_DEFAULT = 4,
-		/// do not look outside of ROI
+		/// Interpolation restricted within the ROI boundaries.
 		BORDER_ISOLATED = 16,
 	}
 	
@@ -2646,6 +2643,7 @@ pub mod core {
 	pub type GpuMatND_SizeArray = core::Vector<i32>;
 	pub type GpuMatND_StepArray = core::Vector<size_t>;
 	pub type Stream_StreamCallback = Option<Box<dyn FnMut(i32) -> () + Send + Sync + 'static>>;
+	pub type float16_t = core::hfloat;
 	pub type ProgramSource_hash_t = u64;
 	/// proxy for hal::Cholesky
 	#[inline]
@@ -3621,7 +3619,7 @@ pub mod core {
 	/// The function computes and returns the coordinate of a donor pixel corresponding to the specified
 	/// extrapolated pixel when using the specified extrapolation border mode. For example, if you use
 	/// cv::BORDER_WRAP mode in the horizontal direction, cv::BORDER_REFLECT_101 in the vertical direction and
-	/// want to compute value of the "virtual" pixel Point(-5, 100) in a floating-point image img , it
+	/// want to compute value of the "virtual" pixel Point(-5, 100) in a floating-point image img, it
 	/// looks like:
 	/// ```C++
 	///    float val = img.at<float>(borderInterpolate(100, img.rows, cv::BORDER_REFLECT_101),
@@ -3634,7 +3632,7 @@ pub mod core {
 	/// * p: 0-based coordinate of the extrapolated pixel along one of the axes, likely \<0 or \>= len
 	/// * len: Length of the array along the corresponding axis.
 	/// * borderType: Border type, one of the #BorderTypes, except for [BORDER_TRANSPARENT] and
-	/// [BORDER_ISOLATED] . When borderType==[BORDER_CONSTANT] , the function always returns -1, regardless
+	/// #BORDER_ISOLATED. When borderType==#BORDER_CONSTANT, the function always returns -1, regardless
 	/// of p and len.
 	/// ## See also
 	/// copyMakeBorder
@@ -3986,6 +3984,10 @@ pub mod core {
 	/// ## Parameters
 	/// * src: input array.
 	/// * dst: output array.
+	/// 
+	/// 
+	/// **Deprecated**: Use Mat::convertTo with CV_16F instead.
+	#[deprecated = "Use Mat::convertTo with CV_16F instead."]
 	#[inline]
 	pub fn convert_fp16(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
@@ -4226,10 +4228,21 @@ pub mod core {
 	/// 
 	/// The function returns the number of non-zero elements in src :
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Csum%20%5F%7BI%3A%20%5C%3B%20%5Ctexttt%7Bsrc%7D%20%28I%29%20%5Cne0%20%7D%201)
+	/// 
+	/// The function do not work with multi-channel arrays. If you need to count non-zero array
+	/// elements across all the channels, use Mat::reshape first to reinterpret the array as
+	/// single-channel. Or you may extract the particular channel using either extractImageCOI, or
+	/// mixChannels, or split.
+	/// 
+	/// 
+	/// Note:
+	/// - If only whether there are non-zero elements is important, [hasNonZero] is helpful.
+	/// - If the location of non-zero array elements is important, [findNonZero] is helpful.
 	/// ## Parameters
 	/// * src: single-channel array.
 	/// ## See also
 	/// mean, meanStdDev, norm, minMaxLoc, calcCovarMatrix
+	/// findNonZero, hasNonZero
 	#[inline]
 	pub fn count_non_zero(src: &impl ToInputArray) -> Result<i32> {
 		input_array_arg!(src);
@@ -4590,9 +4603,9 @@ pub mod core {
 	///    ![block formula](https://latex.codecogs.com/png.latex?X%20%3D%20%20%5Cleft%20%28C%5E%7B%28N%29%7D%20%5Cright%20%29%5ET%20%20%5Ccdot%20X%20%20%5Ccdot%20C%5E%7B%28N%29%7D)
 	/// 
 	/// The function chooses the mode of operation by looking at the flags and size of the input array:
-	/// *   If (flags & #DCT_INVERSE) == 0 , the function does a forward 1D or 2D transform. Otherwise, it
+	/// *   If (flags & #DCT_INVERSE) == 0, the function does a forward 1D or 2D transform. Otherwise, it
 	///    is an inverse 1D or 2D transform.
-	/// *   If (flags & #DCT_ROWS) != 0 , the function performs a 1D transform of each row.
+	/// *   If (flags & #DCT_ROWS) != 0, the function performs a 1D transform of each row.
 	/// *   If the array is a single column or a single row, the function performs a 1D transform.
 	/// *   If none of the above is true, the function performs a 2D transform.
 	/// 
@@ -4612,7 +4625,7 @@ pub mod core {
 	/// * dst: output array of the same size and type as src .
 	/// * flags: transformation flags as a combination of cv::DftFlags (DCT_*)
 	/// ## See also
-	/// dft , getOptimalDFTSize , idct
+	/// dft, getOptimalDFTSize, idct
 	/// 
 	/// ## Note
 	/// This alternative version of [dct] function uses the following default values for its arguments:
@@ -4647,9 +4660,9 @@ pub mod core {
 	///    ![block formula](https://latex.codecogs.com/png.latex?X%20%3D%20%20%5Cleft%20%28C%5E%7B%28N%29%7D%20%5Cright%20%29%5ET%20%20%5Ccdot%20X%20%20%5Ccdot%20C%5E%7B%28N%29%7D)
 	/// 
 	/// The function chooses the mode of operation by looking at the flags and size of the input array:
-	/// *   If (flags & #DCT_INVERSE) == 0 , the function does a forward 1D or 2D transform. Otherwise, it
+	/// *   If (flags & #DCT_INVERSE) == 0, the function does a forward 1D or 2D transform. Otherwise, it
 	///    is an inverse 1D or 2D transform.
-	/// *   If (flags & #DCT_ROWS) != 0 , the function performs a 1D transform of each row.
+	/// *   If (flags & #DCT_ROWS) != 0, the function performs a 1D transform of each row.
 	/// *   If the array is a single column or a single row, the function performs a 1D transform.
 	/// *   If none of the above is true, the function performs a 2D transform.
 	/// 
@@ -4669,7 +4682,7 @@ pub mod core {
 	/// * dst: output array of the same size and type as src .
 	/// * flags: transformation flags as a combination of cv::DftFlags (DCT_*)
 	/// ## See also
-	/// dft , getOptimalDFTSize , idct
+	/// dft, getOptimalDFTSize, idct
 	/// 
 	/// ## C++ default parameters
 	/// * flags: 0
@@ -4946,7 +4959,7 @@ pub mod core {
 	/// 
 	/// If [DFT_SCALE] is set, the scaling is done after the transformation.
 	/// 
-	/// Unlike dct , the function supports arrays of arbitrary size. But only those arrays are processed
+	/// Unlike dct, the function supports arrays of arbitrary size. But only those arrays are processed
 	/// efficiently, whose sizes can be factorized in a product of small prime numbers (2, 3, and 5 in the
 	/// current implementation). Such an efficient DFT size can be calculated using the getOptimalDFTSize
 	/// method.
@@ -5033,8 +5046,8 @@ pub mod core {
 	/// rows more efficiently and save some time; this technique is very useful for calculating array
 	/// cross-correlation or convolution using DFT.
 	/// ## See also
-	/// dct , getOptimalDFTSize , mulSpectrums, filter2D , matchTemplate , flip , cartToPolar ,
-	/// magnitude , phase
+	/// dct, getOptimalDFTSize, mulSpectrums, filter2D, matchTemplate, flip, cartToPolar,
+	/// magnitude, phase
 	/// 
 	/// ## Note
 	/// This alternative version of [dft] function uses the following default values for its arguments:
@@ -5097,7 +5110,7 @@ pub mod core {
 	/// 
 	/// If [DFT_SCALE] is set, the scaling is done after the transformation.
 	/// 
-	/// Unlike dct , the function supports arrays of arbitrary size. But only those arrays are processed
+	/// Unlike dct, the function supports arrays of arbitrary size. But only those arrays are processed
 	/// efficiently, whose sizes can be factorized in a product of small prime numbers (2, 3, and 5 in the
 	/// current implementation). Such an efficient DFT size can be calculated using the getOptimalDFTSize
 	/// method.
@@ -5184,8 +5197,8 @@ pub mod core {
 	/// rows more efficiently and save some time; this technique is very useful for calculating array
 	/// cross-correlation or convolution using DFT.
 	/// ## See also
-	/// dct , getOptimalDFTSize , mulSpectrums, filter2D , matchTemplate , flip , cartToPolar ,
-	/// magnitude , phase
+	/// dct, getOptimalDFTSize, mulSpectrums, filter2D, matchTemplate, flip, cartToPolar,
+	/// magnitude, phase
 	/// 
 	/// ## C++ default parameters
 	/// * flags: 0
@@ -5618,7 +5631,7 @@ pub mod core {
 	/// eigenvectors are stored as subsequent matrix rows, in the same order as the corresponding
 	/// eigenvalues.
 	/// ## See also
-	/// eigenNonSymmetric, completeSymm , PCA
+	/// eigenNonSymmetric, completeSymm, PCA
 	/// 
 	/// ## Note
 	/// This alternative version of [eigen] function uses the following default values for its arguments:
@@ -5655,7 +5668,7 @@ pub mod core {
 	/// eigenvectors are stored as subsequent matrix rows, in the same order as the corresponding
 	/// eigenvalues.
 	/// ## See also
-	/// eigenNonSymmetric, completeSymm , PCA
+	/// eigenNonSymmetric, completeSymm, PCA
 	/// 
 	/// ## C++ default parameters
 	/// * eigenvectors: noArray()
@@ -5729,7 +5742,7 @@ pub mod core {
 	/// * src: input array.
 	/// * dst: output array of the same size and type as src.
 	/// ## See also
-	/// log , cartToPolar , polarToCart , phase , pow , sqrt , magnitude
+	/// log, cartToPolar, polarToCart, phase, pow, sqrt, magnitude
 	#[inline]
 	pub fn exp(src: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
@@ -5800,9 +5813,21 @@ pub mod core {
 	///    Point pnt = locations[i];
 	/// ```
 	/// 
+	/// 
+	/// The function do not work with multi-channel arrays. If you need to find non-zero
+	/// elements across all the channels, use Mat::reshape first to reinterpret the array as
+	/// single-channel. Or you may extract the particular channel using either extractImageCOI, or
+	/// mixChannels, or split.
+	/// 
+	/// 
+	/// Note:
+	/// - If only count of non-zero array elements is important, [countNonZero] is helpful.
+	/// - If only whether there are non-zero elements is important, [hasNonZero] is helpful.
 	/// ## Parameters
 	/// * src: single-channel array
 	/// * idx: the output array, type of cv::Mat or std::vector<Point>, corresponding to non-zero indices in the input
+	/// ## See also
+	/// countNonZero, hasNonZero
 	#[inline]
 	pub fn find_non_zero(src: &impl ToInputArray, idx: &mut impl ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
@@ -5855,7 +5880,7 @@ pub mod core {
 	/// flipping around y-axis. Negative value (for example, -1) means flipping
 	/// around both axes.
 	/// ## See also
-	/// transpose , repeat , completeSymm
+	/// transpose, repeat, completeSymm
 	#[inline]
 	pub fn flip(src: &impl ToInputArray, dst: &mut impl ToOutputArray, flip_code: i32) -> Result<()> {
 		input_array_arg!(src);
@@ -5896,7 +5921,7 @@ pub mod core {
 	/// input matrices.
 	/// * flags: operation flags (cv::GemmFlags)
 	/// ## See also
-	/// mulTransposed , transform
+	/// mulTransposed, transform
 	/// 
 	/// ## Note
 	/// This alternative version of [gemm] function uses the following default values for its arguments:
@@ -5943,7 +5968,7 @@ pub mod core {
 	/// input matrices.
 	/// * flags: operation flags (cv::GemmFlags)
 	/// ## See also
-	/// mulTransposed , transform
+	/// mulTransposed, transform
 	/// 
 	/// ## C++ default parameters
 	/// * flags: 0
@@ -6101,7 +6126,7 @@ pub mod core {
 	/// ## Parameters
 	/// * vecsize: vector size.
 	/// ## See also
-	/// dft , dct , idft , idct , mulSpectrums
+	/// dft, dct, idft, idct, mulSpectrums
 	#[inline]
 	pub fn get_optimal_dft_size(vecsize: i32) -> Result<i32> {
 		return_send!(via ocvrs_return);
@@ -6236,10 +6261,21 @@ pub mod core {
 	/// Checks for the presence of at least one non-zero array element.
 	/// 
 	/// The function returns whether there are non-zero elements in src
+	/// 
+	/// The function do not work with multi-channel arrays. If you need to check non-zero array
+	/// elements across all the channels, use Mat::reshape first to reinterpret the array as
+	/// single-channel. Or you may extract the particular channel using either extractImageCOI, or
+	/// mixChannels, or split.
+	/// 
+	/// 
+	/// Note:
+	/// - If the location of non-zero array elements is important, [findNonZero] is helpful.
+	/// - If the count of non-zero array elements is important, [countNonZero] is helpful.
 	/// ## Parameters
 	/// * src: single-channel array.
 	/// ## See also
 	/// mean, meanStdDev, norm, minMaxLoc, calcCovarMatrix
+	/// findNonZero, countNonZero
 	#[inline]
 	pub fn has_non_zero(src: &impl ToInputArray) -> Result<bool> {
 		input_array_arg!(src);
@@ -7145,7 +7181,7 @@ pub mod core {
 	/// advanced way, use cv::mixChannels.
 	/// 
 	/// The following example shows how to merge 3 single channel matrices into a single 3-channel matrix.
-	/// [example](https://github.com/opencv/opencv/blob/4.9.0/samples/cpp/tutorial_code/snippets/core_merge.cpp#L1)
+	/// [example](https://github.com/opencv/opencv/blob/4.10.0/samples/cpp/tutorial_code/snippets/core_merge.cpp#L1)
 	/// 
 	/// ## Parameters
 	/// * mv: input array of matrices to be merged; all the matrices in mv must have the same
@@ -7177,11 +7213,8 @@ pub mod core {
 	/// 
 	/// The function cv::minMaxIdx finds the minimum and maximum element values and their positions. The
 	/// extremums are searched across the whole array or, if mask is not an empty array, in the specified
-	/// array region. The function does not work with multi-channel arrays. If you need to find minimum or
-	/// maximum elements across all the channels, use Mat::reshape first to reinterpret the array as
-	/// single-channel. Or you may extract the particular channel using either extractImageCOI , or
-	/// mixChannels , or split . In case of a sparse matrix, the minimum is found among non-zero elements
-	/// only.
+	/// array region. In case of a sparse matrix, the minimum is found among non-zero elements
+	/// only. Multi-channel input is supported without mask and extremums indexes (should be nullptr).
 	/// 
 	/// Note: When minIdx is not NULL, it must have at least 2 elements (as well as maxIdx), even if src is
 	/// a single-row or single-column matrix. In OpenCV (following MATLAB) each array has at least 2
@@ -7218,11 +7251,8 @@ pub mod core {
 	/// 
 	/// The function cv::minMaxIdx finds the minimum and maximum element values and their positions. The
 	/// extremums are searched across the whole array or, if mask is not an empty array, in the specified
-	/// array region. The function does not work with multi-channel arrays. If you need to find minimum or
-	/// maximum elements across all the channels, use Mat::reshape first to reinterpret the array as
-	/// single-channel. Or you may extract the particular channel using either extractImageCOI , or
-	/// mixChannels , or split . In case of a sparse matrix, the minimum is found among non-zero elements
-	/// only.
+	/// array region. In case of a sparse matrix, the minimum is found among non-zero elements
+	/// only. Multi-channel input is supported without mask and extremums indexes (should be nullptr).
 	/// 
 	/// Note: When minIdx is not NULL, it must have at least 2 elements (as well as maxIdx), even if src is
 	/// a single-row or single-column matrix. In OpenCV (following MATLAB) each array has at least 2
@@ -7286,8 +7316,8 @@ pub mod core {
 	/// 
 	/// The function do not work with multi-channel arrays. If you need to find minimum or maximum
 	/// elements across all the channels, use Mat::reshape first to reinterpret the array as
-	/// single-channel. Or you may extract the particular channel using either extractImageCOI , or
-	/// mixChannels , or split .
+	/// single-channel. Or you may extract the particular channel using either extractImageCOI, or
+	/// mixChannels, or split.
 	/// ## Parameters
 	/// * src: input single-channel array.
 	/// * minVal: pointer to the returned minimum value; NULL is used if not required.
@@ -7328,8 +7358,8 @@ pub mod core {
 	/// 
 	/// The function do not work with multi-channel arrays. If you need to find minimum or maximum
 	/// elements across all the channels, use Mat::reshape first to reinterpret the array as
-	/// single-channel. Or you may extract the particular channel using either extractImageCOI , or
-	/// mixChannels , or split .
+	/// single-channel. Or you may extract the particular channel using either extractImageCOI, or
+	/// mixChannels, or split.
 	/// ## Parameters
 	/// * src: input single-channel array.
 	/// * minVal: pointer to the returned minimum value; NULL is used if not required.
@@ -7364,8 +7394,8 @@ pub mod core {
 	/// 
 	/// The function do not work with multi-channel arrays. If you need to find minimum or maximum
 	/// elements across all the channels, use Mat::reshape first to reinterpret the array as
-	/// single-channel. Or you may extract the particular channel using either extractImageCOI , or
-	/// mixChannels , or split .
+	/// single-channel. Or you may extract the particular channel using either extractImageCOI, or
+	/// mixChannels, or split.
 	/// ## Parameters
 	/// * src: input single-channel array.
 	/// * minVal: pointer to the returned minimum value; NULL is used if not required.
@@ -7640,7 +7670,7 @@ pub mod core {
 	/// The function cv::mulSpectrums performs the per-element multiplication of the two CCS-packed or complex
 	/// matrices that are results of a real or complex Fourier transform.
 	/// 
-	/// The function, together with dft and idft , may be used to calculate convolution (pass conjB=false )
+	/// The function, together with dft and idft, may be used to calculate convolution (pass conjB=false )
 	/// or correlation (pass conjB=true ) of two arrays rapidly. When the arrays are complex, they are
 	/// simply multiplied (per element) with an optional conjugation of the second-array elements. When the
 	/// arrays are real, they are assumed to be CCS-packed (see dft for details).
@@ -7673,7 +7703,7 @@ pub mod core {
 	/// The function cv::mulSpectrums performs the per-element multiplication of the two CCS-packed or complex
 	/// matrices that are results of a real or complex Fourier transform.
 	/// 
-	/// The function, together with dft and idft , may be used to calculate convolution (pass conjB=false )
+	/// The function, together with dft and idft, may be used to calculate convolution (pass conjB=false )
 	/// or correlation (pass conjB=true ) of two arrays rapidly. When the arrays are complex, they are
 	/// simply multiplied (per element) with an optional conjugation of the second-array elements. When the
 	/// arrays are real, they are assumed to be CCS-packed (see dft for details).
@@ -7705,7 +7735,7 @@ pub mod core {
 	/// The function cv::mulTransposed calculates the product of src and its
 	/// transposition:
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Ctexttt%7Bscale%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2D%20%5Ctexttt%7Bdelta%7D%20%29%5ET%20%28%20%5Ctexttt%7Bsrc%7D%20%2D%20%5Ctexttt%7Bdelta%7D%20%29)
-	/// if aTa=true , and
+	/// if aTa=true, and
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Ctexttt%7Bscale%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2D%20%5Ctexttt%7Bdelta%7D%20%29%20%28%20%5Ctexttt%7Bsrc%7D%20%2D%20%5Ctexttt%7Bdelta%7D%20%29%5ET)
 	/// otherwise. The function is used to calculate the covariance matrix. With
 	/// zero delta, it can be used as a faster substitute for general matrix
@@ -7719,7 +7749,7 @@ pub mod core {
 	/// * delta: Optional delta matrix subtracted from src before the
 	/// multiplication. When the matrix is empty ( delta=noArray() ), it is
 	/// assumed to be zero, that is, nothing is subtracted. If it has the same
-	/// size as src , it is simply subtracted. Otherwise, it is "repeated" (see
+	/// size as src, it is simply subtracted. Otherwise, it is "repeated" (see
 	/// repeat ) to cover the full src and then subtracted. Type of the delta
 	/// matrix, when it is not empty, must be the same as the type of created
 	/// output matrix. See the dtype parameter description below.
@@ -7751,7 +7781,7 @@ pub mod core {
 	/// The function cv::mulTransposed calculates the product of src and its
 	/// transposition:
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Ctexttt%7Bscale%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2D%20%5Ctexttt%7Bdelta%7D%20%29%5ET%20%28%20%5Ctexttt%7Bsrc%7D%20%2D%20%5Ctexttt%7Bdelta%7D%20%29)
-	/// if aTa=true , and
+	/// if aTa=true, and
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Ctexttt%7Bscale%7D%20%28%20%5Ctexttt%7Bsrc%7D%20%2D%20%5Ctexttt%7Bdelta%7D%20%29%20%28%20%5Ctexttt%7Bsrc%7D%20%2D%20%5Ctexttt%7Bdelta%7D%20%29%5ET)
 	/// otherwise. The function is used to calculate the covariance matrix. With
 	/// zero delta, it can be used as a faster substitute for general matrix
@@ -7765,7 +7795,7 @@ pub mod core {
 	/// * delta: Optional delta matrix subtracted from src before the
 	/// multiplication. When the matrix is empty ( delta=noArray() ), it is
 	/// assumed to be zero, that is, nothing is subtracted. If it has the same
-	/// size as src , it is simply subtracted. Otherwise, it is "repeated" (see
+	/// size as src, it is simply subtracted. Otherwise, it is "repeated" (see
 	/// repeat ) to cover the full src and then subtracted. Type of the delta
 	/// matrix, when it is not empty, must be the same as the type of created
 	/// output matrix. See the dtype parameter description below.
@@ -7931,7 +7961,7 @@ pub mod core {
 	/// \f}
 	/// The following graphic shows all values for the three norm functions ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F1%7D%2C%20%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F2%7D) and ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F%5Cinfty%7D).
 	/// It is notable that the ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B1%7D%20) norm forms the upper and the ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B%5Cinfty%7D%20) norm forms the lower border for the example function ![inline formula](https://latex.codecogs.com/png.latex?%20r%28x%29%20).
-	/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/4.9.0/NormTypes_OneArray_1-2-INF.png)
+	/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/4.10.0/NormTypes_OneArray_1-2-INF.png)
 	/// 
 	/// When the mask parameter is specified and it is not empty, the norm is
 	/// 
@@ -8036,7 +8066,7 @@ pub mod core {
 	/// \f}
 	/// The following graphic shows all values for the three norm functions ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F1%7D%2C%20%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F2%7D) and ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F%5Cinfty%7D).
 	/// It is notable that the ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B1%7D%20) norm forms the upper and the ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B%5Cinfty%7D%20) norm forms the lower border for the example function ![inline formula](https://latex.codecogs.com/png.latex?%20r%28x%29%20).
-	/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/4.9.0/NormTypes_OneArray_1-2-INF.png)
+	/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/4.10.0/NormTypes_OneArray_1-2-INF.png)
 	/// 
 	/// When the mask parameter is specified and it is not empty, the norm is
 	/// 
@@ -9081,7 +9111,6 @@ pub mod core {
 		Ok(ret)
 	}
 	
-	/// @relates cv::FileNodeIterator
 	#[inline]
 	pub fn equals_filenodeiterator_filenodeiterator(it1: &impl core::FileNodeIteratorTraitConst, it2: &impl core::FileNodeIteratorTraitConst) -> Result<bool> {
 		return_send!(via ocvrs_return);
@@ -10021,7 +10050,6 @@ pub mod core {
 		Ok(ret)
 	}
 	
-	/// @relates cv::FileNode
 	#[inline]
 	pub fn read_i32(node: &impl core::FileNodeTraitConst, value: &mut i32, default_value: i32) -> Result<()> {
 		return_send!(via ocvrs_return);
@@ -10205,15 +10233,15 @@ pub mod core {
 	/// The function [reduce] reduces the matrix to a vector by treating the matrix rows/columns as a set of
 	/// 1D vectors and performing the specified operation on the vectors until a single row/column is
 	/// obtained. For example, the function can be used to compute horizontal and vertical projections of a
-	/// raster image. In case of [REDUCE_MAX] and [REDUCE_MIN] , the output image should have the same type as the source one.
-	/// In case of #REDUCE_SUM, [REDUCE_SUM2] and [REDUCE_AVG] , the output may have a larger element bit-depth to preserve accuracy.
+	/// raster image. In case of [REDUCE_MAX] and #REDUCE_MIN, the output image should have the same type as the source one.
+	/// In case of #REDUCE_SUM, [REDUCE_SUM2] and #REDUCE_AVG, the output may have a larger element bit-depth to preserve accuracy.
 	/// And multi-channel arrays are also supported in these two reduction modes.
 	/// 
 	/// The following code demonstrates its usage for a single channel matrix.
-	/// [example](https://github.com/opencv/opencv/blob/4.9.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
+	/// [example](https://github.com/opencv/opencv/blob/4.10.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
 	/// 
 	/// And the following code demonstrates its usage for a two-channel matrix.
-	/// [example2](https://github.com/opencv/opencv/blob/4.9.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
+	/// [example2](https://github.com/opencv/opencv/blob/4.10.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
 	/// 
 	/// ## Parameters
 	/// * src: input 2D matrix.
@@ -10245,15 +10273,15 @@ pub mod core {
 	/// The function [reduce] reduces the matrix to a vector by treating the matrix rows/columns as a set of
 	/// 1D vectors and performing the specified operation on the vectors until a single row/column is
 	/// obtained. For example, the function can be used to compute horizontal and vertical projections of a
-	/// raster image. In case of [REDUCE_MAX] and [REDUCE_MIN] , the output image should have the same type as the source one.
-	/// In case of #REDUCE_SUM, [REDUCE_SUM2] and [REDUCE_AVG] , the output may have a larger element bit-depth to preserve accuracy.
+	/// raster image. In case of [REDUCE_MAX] and #REDUCE_MIN, the output image should have the same type as the source one.
+	/// In case of #REDUCE_SUM, [REDUCE_SUM2] and #REDUCE_AVG, the output may have a larger element bit-depth to preserve accuracy.
 	/// And multi-channel arrays are also supported in these two reduction modes.
 	/// 
 	/// The following code demonstrates its usage for a single channel matrix.
-	/// [example](https://github.com/opencv/opencv/blob/4.9.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
+	/// [example](https://github.com/opencv/opencv/blob/4.10.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
 	/// 
 	/// And the following code demonstrates its usage for a two-channel matrix.
-	/// [example2](https://github.com/opencv/opencv/blob/4.9.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
+	/// [example2](https://github.com/opencv/opencv/blob/4.10.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
 	/// 
 	/// ## Parameters
 	/// * src: input 2D matrix.
@@ -10347,7 +10375,7 @@ pub mod core {
 	/// and the rows and cols are switched for ROTATE_90_CLOCKWISE and ROTATE_90_COUNTERCLOCKWISE.
 	/// * rotateCode: an enum to specify how to rotate the array; see the enum [rotate_flags]
 	/// ## See also
-	/// transpose , repeat , completeSymm, flip, RotateFlags
+	/// transpose, repeat, completeSymm, flip, RotateFlags
 	#[inline]
 	pub fn rotate(src: &impl ToInputArray, dst: &mut impl ToOutputArray, rotate_code: i32) -> Result<()> {
 		input_array_arg!(src);
@@ -10989,10 +11017,10 @@ pub mod core {
 	/// The function cv::split splits a multi-channel array into separate single-channel arrays:
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bmv%7D%20%5Bc%5D%28I%29%20%3D%20%20%5Ctexttt%7Bsrc%7D%20%28I%29%5Fc)
 	/// If you need to extract a single channel or do some other sophisticated channel permutation, use
-	/// mixChannels .
+	/// mixChannels.
 	/// 
 	/// The following example demonstrates how to split a 3-channel matrix into 3 single channel matrices.
-	/// [example](https://github.com/opencv/opencv/blob/4.9.0/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
+	/// [example](https://github.com/opencv/opencv/blob/4.10.0/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
 	/// 
 	/// ## Parameters
 	/// * src: input multi-channel array.
@@ -11014,10 +11042,10 @@ pub mod core {
 	/// The function cv::split splits a multi-channel array into separate single-channel arrays:
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bmv%7D%20%5Bc%5D%28I%29%20%3D%20%20%5Ctexttt%7Bsrc%7D%20%28I%29%5Fc)
 	/// If you need to extract a single channel or do some other sophisticated channel permutation, use
-	/// mixChannels .
+	/// mixChannels.
 	/// 
 	/// The following example demonstrates how to split a 3-channel matrix into 3 single channel matrices.
-	/// [example](https://github.com/opencv/opencv/blob/4.9.0/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
+	/// [example](https://github.com/opencv/opencv/blob/4.10.0/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
 	/// 
 	/// ## Parameters
 	/// * src: input multi-channel array.
@@ -11329,7 +11357,7 @@ pub mod core {
 	/// ## Parameters
 	/// * src: input array.
 	/// * order: a permutation of [0,1,..,N-1] where N is the number of axes of src.
-	/// The i’th axis of dst will correspond to the axis numbered order[i] of the input.
+	/// The i'th axis of dst will correspond to the axis numbered order[i] of the input.
 	/// * dst: output array of the same type as src.
 	#[inline]
 	pub fn transpose_nd(src: &impl ToInputArray, order: &core::Vector<i32>, dst: &mut impl ToOutputArray) -> Result<()> {
@@ -12202,7 +12230,7 @@ pub mod core {
 		Ok(ret)
 	}
 	
-	/// @relates cv::FileStorage
+	/// //////////////// XML & YAML I/O implementation //////////////////
 	#[inline]
 	pub fn write_i32(fs: &mut impl core::FileStorageTrait, name: &str, value: i32) -> Result<()> {
 		extern_container_arg!(name);
@@ -12339,7 +12367,7 @@ pub mod core {
 	/// etc.).
 	/// 
 	/// Here is example of SimpleBlobDetector use in your application via Algorithm interface:
-	/// [Algorithm](https://github.com/opencv/opencv/blob/4.9.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+	/// [Algorithm](https://github.com/opencv/opencv/blob/4.10.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 	pub struct Algorithm {
 		ptr: *mut c_void
 	}
@@ -13713,7 +13741,7 @@ pub mod core {
 	/// The keys parameter is a string containing several blocks, each one is enclosed in curly braces and
 	/// describes one argument. Each argument contains three parts separated by the `|` symbol:
 	/// 
-	/// -# argument names is a space-separated list of option synonyms (to mark argument as positional, prefix it with the `@` symbol)
+	/// -# argument names is a list of option synonyms separated by standard space characters ' ' (to mark argument as positional, prefix it with the `@` symbol)
 	/// -# default value will be used if the argument was not provided (can be empty)
 	/// -# help message (can be empty)
 	/// 
@@ -13737,6 +13765,8 @@ pub mod core {
 	/// Note that there are no default values for `help` and `timestamp` so we can check their presence using the `has()` method.
 	/// Arguments with default values are considered to be always present. Use the `get()` method in these cases to check their
 	/// actual value instead.
+	/// Note that whitespace characters other than standard spaces are considered part of the string.
+	/// Additionally, leading and trailing standard spaces around the help messages are ignored.
 	/// 
 	/// String keys like `get<String>("@image1")` return the empty string `""` by default - even with an empty default value.
 	/// Use the special `<none>` default value to enforce that the returned string must not be empty. (like in `get<String>("@image2")`)
@@ -17879,10 +17909,10 @@ pub mod core {
 		///        that an element may have multiple channels.
 		/// 
 		/// The following code demonstrates its usage for a 2-d matrix:
-		/// [example-2d](https://github.com/opencv/opencv/blob/4.9.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
+		/// [example-2d](https://github.com/opencv/opencv/blob/4.10.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
 		/// 
 		/// The following code demonstrates its usage for a 3-d matrix:
-		/// [example-3d](https://github.com/opencv/opencv/blob/4.9.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
+		/// [example-3d](https://github.com/opencv/opencv/blob/4.10.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
 		/// 
 		/// ## C++ default parameters
 		/// * depth: -1
@@ -17913,10 +17943,10 @@ pub mod core {
 		///        that an element may have multiple channels.
 		/// 
 		/// The following code demonstrates its usage for a 2-d matrix:
-		/// [example-2d](https://github.com/opencv/opencv/blob/4.9.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
+		/// [example-2d](https://github.com/opencv/opencv/blob/4.10.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
 		/// 
 		/// The following code demonstrates its usage for a 3-d matrix:
-		/// [example-3d](https://github.com/opencv/opencv/blob/4.9.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
+		/// [example-3d](https://github.com/opencv/opencv/blob/4.10.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
 		/// 
 		/// ## Note
 		/// This alternative version of [MatTraitConst::check_vector] function uses the following default values for its arguments:
@@ -23551,7 +23581,7 @@ pub mod core {
 		/// 
 		/// The methods transform the state using the MWC algorithm and return the
 		/// next random number. The first form is equivalent to RNG::next . The
-		/// second form returns the random number modulo N , which means that the
+		/// second form returns the random number modulo N, which means that the
 		/// result is in the range [0, N) .
 		#[inline]
 		fn apply(&mut self) -> Result<u32> {
@@ -23566,7 +23596,7 @@ pub mod core {
 		/// 
 		/// The methods transform the state using the MWC algorithm and return the
 		/// next random number. The first form is equivalent to RNG::next . The
-		/// second form returns the random number modulo N , which means that the
+		/// second form returns the random number modulo N, which means that the
 		/// result is in the range [0, N) .
 		/// 
 		/// ## Overloaded parameters
@@ -24246,8 +24276,8 @@ pub mod core {
 	/// [size2f] structure) and the rotation angle in degrees.
 	/// 
 	/// The sample below demonstrates how to use RotatedRect:
-	/// [RotatedRect_demo](https://github.com/opencv/opencv/blob/4.9.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
-	/// ![image](https://docs.opencv.org/4.9.0/rotatedrect.png)
+	/// [RotatedRect_demo](https://github.com/opencv/opencv/blob/4.10.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+	/// ![image](https://docs.opencv.org/4.10.0/rotatedrect.png)
 	/// ## See also
 	/// CamShift, fitEllipse, minAreaRect, CvBox2D
 	#[repr(C)]
@@ -24301,7 +24331,7 @@ pub mod core {
 		
 		/// returns the minimal (exact) floating point rectangle containing the rotated rectangle, not intended for use with images
 		#[inline]
-		pub fn bounding_rect2f(self) -> Result<core::Rect_<f32>> {
+		pub fn bounding_rect2f(self) -> Result<core::Rect2f> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_RotatedRect_boundingRect2f_const(&self, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -26376,10 +26406,10 @@ pub mod core {
 	/// 
 	/// The class computes passing time by counting the number of ticks per second. That is, the following code computes the
 	/// execution time in seconds:
-	/// [TickMeter_total](https://github.com/opencv/opencv/blob/4.9.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+	/// [TickMeter_total](https://github.com/opencv/opencv/blob/4.10.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 	/// 
 	/// It is also possible to compute the average time over multiple runs:
-	/// [TickMeter_average](https://github.com/opencv/opencv/blob/4.9.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+	/// [TickMeter_average](https://github.com/opencv/opencv/blob/4.10.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 	/// ## See also
 	/// getTickCount, getTickFrequency
 	pub struct TickMeter {
@@ -34071,62 +34101,35 @@ pub mod core {
 	
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq)]
-	pub struct float16_t {
+	pub struct hfloat {
 		pub w: u16,
 	}
 	
-	opencv_type_simple! { core::float16_t }
+	opencv_type_simple! { core::hfloat }
 	
-	impl float16_t {
+	impl hfloat {
 		#[inline]
 		pub fn to_f32(self) -> Result<f32> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_float16_t_operator_float_const(&self, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_hfloat_operator_float_const(&self, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
 		
 		#[inline]
-		pub fn bits(self) -> Result<u16> {
+		pub fn default() -> Result<core::hfloat> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_float16_t_bits_const(&self, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_hfloat_hfloat(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
 		
 		#[inline]
-		pub fn default() -> Result<core::float16_t> {
+		pub fn new(x: f32) -> Result<core::hfloat> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_float16_t_float16_t(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-		
-		#[inline]
-		pub fn new(x: f32) -> Result<core::float16_t> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_float16_t_float16_t_float(x, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-		
-		#[inline]
-		pub fn from_bits(b: u16) -> Result<core::float16_t> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_float16_t_fromBits_unsigned_short(b, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-		
-		#[inline]
-		pub fn zero() -> Result<core::float16_t> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_float16_t_zero(ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_hfloat_hfloat_float(x, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -35002,6 +35005,26 @@ pub mod core {
 		fn half_fp_config(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_ocl_Device_halfFPConfig_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// true if 'cl_khr_fp64' extension is available
+		#[inline]
+		fn has_fp64(&self) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Device_hasFP64_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
+		/// true if 'cl_khr_fp16' extension is available
+		#[inline]
+		fn has_fp16(&self) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Device_hasFP16_const(self.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)

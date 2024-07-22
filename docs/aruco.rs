@@ -13,18 +13,12 @@ pub mod aruco {
 	/// The coordinates of the four corners (CCW order) of the marker in its own coordinate system are:
 	/// (-markerLength/2, markerLength/2, 0), (markerLength/2, markerLength/2, 0),
 	/// (markerLength/2, -markerLength/2, 0), (-markerLength/2, -markerLength/2, 0).
-	/// 
-	/// These pattern points define this coordinate system:
-	/// ![Image with axes drawn](https://docs.opencv.org/4.9.0/singlemarkersaxes2.jpg)
 	pub const ARUCO_CCW_CENTER: i32 = 0;
 	/// The marker coordinate system is centered on the top-left corner of the marker.
 	/// 
 	/// The coordinates of the four corners (CW order) of the marker in its own coordinate system are:
 	/// (0, 0, 0), (markerLength, 0, 0),
 	/// (markerLength, markerLength, 0), (0, markerLength, 0).
-	/// 
-	/// These pattern points define this coordinate system:
-	/// ![Image with axes drawn](https://docs.opencv.org/4.9.0/singlemarkersaxes.jpg)
 	/// 
 	/// These pattern dots are convenient to use with a chessboard/ChArUco board.
 	pub const ARUCO_CW_TOP_LEFT_CORNER: i32 = 1;
@@ -33,8 +27,12 @@ pub mod aruco {
 	/// PatternPositionType defines center this system and axes direction.
 	/// Axis X (red color) - first coordinate, axis Y (green color) - second coordinate,
 	/// axis Z (blue color) - third coordinate.
+	/// 
+	/// 
+	/// **Deprecated**: Use Board::matchImagePoints and cv::solvePnP
 	/// ## See also
-	/// estimatePoseSingleMarkers(), check tutorial_aruco_detection in aruco contrib
+	/// estimatePoseSingleMarkers()
+	#[deprecated = "Use Board::matchImagePoints and cv::solvePnP"]
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum PatternPositionType {
@@ -43,18 +41,12 @@ pub mod aruco {
 		/// The coordinates of the four corners (CCW order) of the marker in its own coordinate system are:
 		/// (-markerLength/2, markerLength/2, 0), (markerLength/2, markerLength/2, 0),
 		/// (markerLength/2, -markerLength/2, 0), (-markerLength/2, -markerLength/2, 0).
-		/// 
-		/// These pattern points define this coordinate system:
-		/// ![Image with axes drawn](https://docs.opencv.org/4.9.0/singlemarkersaxes2.jpg)
 		ARUCO_CCW_CENTER = 0,
 		/// The marker coordinate system is centered on the top-left corner of the marker.
 		/// 
 		/// The coordinates of the four corners (CW order) of the marker in its own coordinate system are:
 		/// (0, 0, 0), (markerLength, 0, 0),
 		/// (markerLength, markerLength, 0), (0, markerLength, 0).
-		/// 
-		/// These pattern points define this coordinate system:
-		/// ![Image with axes drawn](https://docs.opencv.org/4.9.0/singlemarkersaxes.jpg)
 		/// 
 		/// These pattern dots are convenient to use with a chessboard/ChArUco board.
 		ARUCO_CW_TOP_LEFT_CORNER = 1,
@@ -77,12 +69,15 @@ pub mod aruco {
 	/// @overload
 	/// It's the same function as [calibrate_camera_aruco] but without calibration error estimation.
 	/// 
+	/// **Deprecated**: Use Board::matchImagePoints and cv::solvePnP
+	/// 
 	/// ## Note
 	/// This alternative version of [calibrate_camera_aruco] function uses the following default values for its arguments:
 	/// * rvecs: noArray()
 	/// * tvecs: noArray()
 	/// * flags: 0
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
+	#[deprecated = "Use Board::matchImagePoints and cv::solvePnP"]
 	#[inline]
 	pub fn calibrate_camera_aruco_def(corners: &impl ToInputArray, ids: &impl ToInputArray, counter: &impl ToInputArray, board: &core::Ptr<crate::objdetect::Board>, image_size: core::Size, camera_matrix: &mut impl ToInputOutputArray, dist_coeffs: &mut impl ToInputOutputArray) -> Result<f64> {
 		input_array_arg!(corners);
@@ -132,10 +127,14 @@ pub mod aruco {
 	/// detected markers from several views of the Board. The process is similar to the chessboard
 	/// calibration in calibrateCamera(). The function returns the final re-projection error.
 	/// 
+	/// 
+	/// **Deprecated**: Use Board::matchImagePoints and cv::solvePnP
+	/// 
 	/// ## Note
 	/// This alternative version of [calibrate_camera_aruco_extended] function uses the following default values for its arguments:
 	/// * flags: 0
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
+	#[deprecated = "Use Board::matchImagePoints and cv::solvePnP"]
 	#[inline]
 	pub fn calibrate_camera_aruco_extended_def(corners: &impl ToInputArray, ids: &impl ToInputArray, counter: &impl ToInputArray, board: &core::Ptr<crate::objdetect::Board>, image_size: core::Size, camera_matrix: &mut impl ToInputOutputArray, dist_coeffs: &mut impl ToInputOutputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray, std_deviations_intrinsics: &mut impl ToOutputArray, std_deviations_extrinsics: &mut impl ToOutputArray, per_view_errors: &mut impl ToOutputArray) -> Result<f64> {
 		input_array_arg!(corners);
@@ -190,9 +189,13 @@ pub mod aruco {
 	/// detected markers from several views of the Board. The process is similar to the chessboard
 	/// calibration in calibrateCamera(). The function returns the final re-projection error.
 	/// 
+	/// 
+	/// **Deprecated**: Use Board::matchImagePoints and cv::solvePnP
+	/// 
 	/// ## C++ default parameters
 	/// * flags: 0
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
+	#[deprecated = "Use Board::matchImagePoints and cv::solvePnP"]
 	#[inline]
 	pub fn calibrate_camera_aruco_extended(corners: &impl ToInputArray, ids: &impl ToInputArray, counter: &impl ToInputArray, board: &core::Ptr<crate::objdetect::Board>, image_size: core::Size, camera_matrix: &mut impl ToInputOutputArray, dist_coeffs: &mut impl ToInputOutputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray, std_deviations_intrinsics: &mut impl ToOutputArray, std_deviations_extrinsics: &mut impl ToOutputArray, per_view_errors: &mut impl ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
 		input_array_arg!(corners);
@@ -247,15 +250,21 @@ pub mod aruco {
 	/// detected markers from several views of the Board. The process is similar to the chessboard
 	/// calibration in calibrateCamera(). The function returns the final re-projection error.
 	/// 
+	/// 
+	/// **Deprecated**: Use Board::matchImagePoints and cv::solvePnP
+	/// 
 	/// ## Overloaded parameters
 	/// 
 	/// It's the same function as [calibrate_camera_aruco] but without calibration error estimation.
+	/// 
+	/// **Deprecated**: Use Board::matchImagePoints and cv::solvePnP
 	/// 
 	/// ## C++ default parameters
 	/// * rvecs: noArray()
 	/// * tvecs: noArray()
 	/// * flags: 0
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
+	#[deprecated = "Use Board::matchImagePoints and cv::solvePnP"]
 	#[inline]
 	pub fn calibrate_camera_aruco(corners: &impl ToInputArray, ids: &impl ToInputArray, counter: &impl ToInputArray, board: &core::Ptr<crate::objdetect::Board>, image_size: core::Size, camera_matrix: &mut impl ToInputOutputArray, dist_coeffs: &mut impl ToInputOutputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
 		input_array_arg!(corners);
@@ -274,12 +283,16 @@ pub mod aruco {
 	
 	/// It's the same function as [calibrate_camera_charuco] but without calibration error estimation.
 	/// 
+	/// 
+	/// **Deprecated**: Use CharucoBoard::matchImagePoints and cv::solvePnP
+	/// 
 	/// ## Note
 	/// This alternative version of [calibrate_camera_charuco] function uses the following default values for its arguments:
 	/// * rvecs: noArray()
 	/// * tvecs: noArray()
 	/// * flags: 0
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
+	#[deprecated = "Use CharucoBoard::matchImagePoints and cv::solvePnP"]
 	#[inline]
 	pub fn calibrate_camera_charuco_def(charuco_corners: &impl ToInputArray, charuco_ids: &impl ToInputArray, board: &core::Ptr<crate::objdetect::CharucoBoard>, image_size: core::Size, camera_matrix: &mut impl ToInputOutputArray, dist_coeffs: &mut impl ToInputOutputArray) -> Result<f64> {
 		input_array_arg!(charuco_corners);
@@ -326,10 +339,14 @@ pub mod aruco {
 	/// receives a list of detected corners and its identifiers from several views of the Board.
 	/// The function returns the final re-projection error.
 	/// 
+	/// 
+	/// **Deprecated**: Use CharucoBoard::matchImagePoints and cv::solvePnP
+	/// 
 	/// ## Note
 	/// This alternative version of [calibrate_camera_charuco_extended] function uses the following default values for its arguments:
 	/// * flags: 0
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
+	#[deprecated = "Use CharucoBoard::matchImagePoints and cv::solvePnP"]
 	#[inline]
 	pub fn calibrate_camera_charuco_extended_def(charuco_corners: &impl ToInputArray, charuco_ids: &impl ToInputArray, board: &core::Ptr<crate::objdetect::CharucoBoard>, image_size: core::Size, camera_matrix: &mut impl ToInputOutputArray, dist_coeffs: &mut impl ToInputOutputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray, std_deviations_intrinsics: &mut impl ToOutputArray, std_deviations_extrinsics: &mut impl ToOutputArray, per_view_errors: &mut impl ToOutputArray) -> Result<f64> {
 		input_array_arg!(charuco_corners);
@@ -381,9 +398,13 @@ pub mod aruco {
 	/// receives a list of detected corners and its identifiers from several views of the Board.
 	/// The function returns the final re-projection error.
 	/// 
+	/// 
+	/// **Deprecated**: Use CharucoBoard::matchImagePoints and cv::solvePnP
+	/// 
 	/// ## C++ default parameters
 	/// * flags: 0
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
+	#[deprecated = "Use CharucoBoard::matchImagePoints and cv::solvePnP"]
 	#[inline]
 	pub fn calibrate_camera_charuco_extended(charuco_corners: &impl ToInputArray, charuco_ids: &impl ToInputArray, board: &core::Ptr<crate::objdetect::CharucoBoard>, image_size: core::Size, camera_matrix: &mut impl ToInputOutputArray, dist_coeffs: &mut impl ToInputOutputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray, std_deviations_intrinsics: &mut impl ToOutputArray, std_deviations_extrinsics: &mut impl ToOutputArray, per_view_errors: &mut impl ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
 		input_array_arg!(charuco_corners);
@@ -404,11 +425,15 @@ pub mod aruco {
 	
 	/// It's the same function as [calibrate_camera_charuco] but without calibration error estimation.
 	/// 
+	/// 
+	/// **Deprecated**: Use CharucoBoard::matchImagePoints and cv::solvePnP
+	/// 
 	/// ## C++ default parameters
 	/// * rvecs: noArray()
 	/// * tvecs: noArray()
 	/// * flags: 0
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
+	#[deprecated = "Use CharucoBoard::matchImagePoints and cv::solvePnP"]
 	#[inline]
 	pub fn calibrate_camera_charuco(charuco_corners: &impl ToInputArray, charuco_ids: &impl ToInputArray, board: &core::Ptr<crate::objdetect::CharucoBoard>, image_size: core::Size, camera_matrix: &mut impl ToInputOutputArray, dist_coeffs: &mut impl ToInputOutputArray, rvecs: &mut impl ToOutputArray, tvecs: &mut impl ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
 		input_array_arg!(charuco_corners);
@@ -573,10 +598,14 @@ pub mod aruco {
 	/// 
 	/// This function return the image of a ChArUco marker, ready to be printed.
 	/// 
+	/// 
+	/// **Deprecated**: Use CharucoBoard::generateImage()
+	/// 
 	/// ## Note
 	/// This alternative version of [draw_charuco_diamond] function uses the following default values for its arguments:
 	/// * margin_size: 0
 	/// * border_bits: 1
+	#[deprecated = "Use CharucoBoard::generateImage()"]
 	#[inline]
 	pub fn draw_charuco_diamond_def(dictionary: &core::Ptr<crate::objdetect::Dictionary>, ids: core::Vec4i, square_length: i32, marker_length: i32, img: &mut impl ToOutputArray) -> Result<()> {
 		output_array_arg!(img);
@@ -601,9 +630,13 @@ pub mod aruco {
 	/// 
 	/// This function return the image of a ChArUco marker, ready to be printed.
 	/// 
+	/// 
+	/// **Deprecated**: Use CharucoBoard::generateImage()
+	/// 
 	/// ## C++ default parameters
 	/// * margin_size: 0
 	/// * border_bits: 1
+	#[deprecated = "Use CharucoBoard::generateImage()"]
 	#[inline]
 	pub fn draw_charuco_diamond(dictionary: &core::Ptr<crate::objdetect::Dictionary>, ids: core::Vec4i, square_length: i32, marker_length: i32, img: &mut impl ToOutputArray, margin_size: i32, border_bits: i32) -> Result<()> {
 		output_array_arg!(img);
@@ -629,12 +662,12 @@ pub mod aruco {
 	}
 	
 	/// 
-	/// **Deprecated**: Use cv::solvePnP
+	/// **Deprecated**: Use Board::matchImagePoints and cv::solvePnP
 	/// 
 	/// ## Note
 	/// This alternative version of [estimate_pose_board] function uses the following default values for its arguments:
 	/// * use_extrinsic_guess: false
-	#[deprecated = "Use cv::solvePnP"]
+	#[deprecated = "Use Board::matchImagePoints and cv::solvePnP"]
 	#[inline]
 	pub fn estimate_pose_board_def(corners: &impl ToInputArray, ids: &impl ToInputArray, board: &core::Ptr<crate::objdetect::Board>, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvec: &mut impl ToInputOutputArray, tvec: &mut impl ToInputOutputArray) -> Result<i32> {
 		input_array_arg!(corners);
@@ -651,11 +684,11 @@ pub mod aruco {
 	}
 	
 	/// 
-	/// **Deprecated**: Use cv::solvePnP
+	/// **Deprecated**: Use Board::matchImagePoints and cv::solvePnP
 	/// 
 	/// ## C++ default parameters
 	/// * use_extrinsic_guess: false
-	#[deprecated = "Use cv::solvePnP"]
+	#[deprecated = "Use Board::matchImagePoints and cv::solvePnP"]
 	#[inline]
 	pub fn estimate_pose_board(corners: &impl ToInputArray, ids: &impl ToInputArray, board: &core::Ptr<crate::objdetect::Board>, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvec: &mut impl ToInputOutputArray, tvec: &mut impl ToInputOutputArray, use_extrinsic_guess: bool) -> Result<i32> {
 		input_array_arg!(corners);
@@ -688,12 +721,15 @@ pub mod aruco {
 	/// This function estimates a Charuco board pose from some detected corners.
 	/// The function checks if the input corners are enough and valid to perform pose estimation.
 	/// If pose estimation is valid, returns true, else returns false.
+	/// 
+	/// **Deprecated**: Use CharucoBoard::matchImagePoints and cv::solvePnP
 	/// ## See also
 	/// use cv::drawFrameAxes to get world coordinate system axis for object points
 	/// 
 	/// ## Note
 	/// This alternative version of [estimate_pose_charuco_board] function uses the following default values for its arguments:
 	/// * use_extrinsic_guess: false
+	#[deprecated = "Use CharucoBoard::matchImagePoints and cv::solvePnP"]
 	#[inline]
 	pub fn estimate_pose_charuco_board_def(charuco_corners: &impl ToInputArray, charuco_ids: &impl ToInputArray, board: &core::Ptr<crate::objdetect::CharucoBoard>, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvec: &mut impl ToInputOutputArray, tvec: &mut impl ToInputOutputArray) -> Result<bool> {
 		input_array_arg!(charuco_corners);
@@ -726,11 +762,14 @@ pub mod aruco {
 	/// This function estimates a Charuco board pose from some detected corners.
 	/// The function checks if the input corners are enough and valid to perform pose estimation.
 	/// If pose estimation is valid, returns true, else returns false.
+	/// 
+	/// **Deprecated**: Use CharucoBoard::matchImagePoints and cv::solvePnP
 	/// ## See also
 	/// use cv::drawFrameAxes to get world coordinate system axis for object points
 	/// 
 	/// ## C++ default parameters
 	/// * use_extrinsic_guess: false
+	#[deprecated = "Use CharucoBoard::matchImagePoints and cv::solvePnP"]
 	#[inline]
 	pub fn estimate_pose_charuco_board(charuco_corners: &impl ToInputArray, charuco_ids: &impl ToInputArray, board: &core::Ptr<crate::objdetect::CharucoBoard>, camera_matrix: &impl ToInputArray, dist_coeffs: &impl ToInputArray, rvec: &mut impl ToInputOutputArray, tvec: &mut impl ToInputOutputArray, use_extrinsic_guess: bool) -> Result<bool> {
 		input_array_arg!(charuco_corners);
@@ -1029,8 +1068,12 @@ pub mod aruco {
 	/// rvec and tvec values as initial approximations of the rotation and translation vectors, respectively, and further
 	/// optimizes them (default false).
 	/// * solvePnPMethod: Method for solving a PnP problem: see [calib3d_solvePnP_flags] (default SOLVEPNP_ITERATIVE).
+	/// 
+	/// 
+	/// **Deprecated**: Use Board::matchImagePoints and cv::solvePnP
 	/// ## See also
-	/// PatternPositionType, solvePnP(), check tutorial_aruco_detection in aruco contrib
+	/// PatternPositionType, solvePnP()
+	#[deprecated = "Use Board::matchImagePoints and cv::solvePnP"]
 	pub struct EstimateParameters {
 		ptr: *mut c_void
 	}

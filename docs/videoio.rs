@@ -65,7 +65,7 @@ pub mod videoio {
 	pub const CAP_INTEL_MFX: i32 = 2300;
 	/// Microsoft Media Foundation (via videoInput). See platform specific notes above.
 	pub const CAP_MSMF: i32 = 1400;
-	/// For Orbbec 3D-Sensor device/module (Astra+, Femto, Astra2, Gemini2, Gemini2L, Gemini2XL, Femto Mega) attention: Astra2, Gemini2, and Gemini2L cameras currently only support Windows and Linux kernel versions no higher than 4.15, and higher versions of Linux kernel may have exceptions.
+	/// For Orbbec 3D-Sensor device/module (Astra+, Femto, Astra2, Gemini2, Gemini2L, Gemini2XL, Femto Mega) attention: Astra2 cameras currently only support Windows and Linux kernel versions no higher than 4.15, and higher versions of Linux kernel may have exceptions.
 	pub const CAP_OBSENSOR: i32 = 2600;
 	/// Data given from BGR stream generator
 	pub const CAP_OBSENSOR_BGR_IMAGE: i32 = 1;
@@ -866,7 +866,7 @@ pub mod videoio {
 		CAP_XINE = 2400,
 		/// uEye Camera API
 		CAP_UEYE = 2500,
-		/// For Orbbec 3D-Sensor device/module (Astra+, Femto, Astra2, Gemini2, Gemini2L, Gemini2XL, Femto Mega) attention: Astra2, Gemini2, and Gemini2L cameras currently only support Windows and Linux kernel versions no higher than 4.15, and higher versions of Linux kernel may have exceptions.
+		/// For Orbbec 3D-Sensor device/module (Astra+, Femto, Astra2, Gemini2, Gemini2L, Gemini2XL, Femto Mega) attention: Astra2 cameras currently only support Windows and Linux kernel versions no higher than 4.15, and higher versions of Linux kernel may have exceptions.
 		CAP_OBSENSOR = 2600,
 	}
 	
@@ -1450,6 +1450,16 @@ pub mod videoio {
 			Ok(ret)
 		}
 		
+		/// query if exception mode is active
+		#[inline]
+		fn get_exception_mode(&self) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_VideoCapture_getExceptionMode_const(self.as_raw_VideoCapture(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+		
 	}
 	
 	/// Mutable methods for [crate::videoio::VideoCapture]
@@ -1744,16 +1754,6 @@ pub mod videoio {
 		fn set_exception_mode(&mut self, enable: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_setExceptionMode_bool(self.as_raw_mut_VideoCapture(), enable, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-		
-		/// query if exception mode is active
-		#[inline]
-		fn get_exception_mode(&mut self) -> Result<bool> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_VideoCapture_getExceptionMode(self.as_raw_mut_VideoCapture(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)

@@ -3,26 +3,26 @@ pub mod videostab {
 	//! 
 	//! The video stabilization module contains a set of functions and classes that can be used to solve the
 	//! problem of video stabilization. There are a few methods implemented, most of them are described in
-	//! the papers [OF06](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_OF06) and [G11](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_G11) . However, there are some extensions and deviations from the original
+	//! the papers [OF06](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_OF06) and [G11](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_G11) . However, there are some extensions and deviations from the original
 	//! paper methods.
 	//! 
 	//! ### References
 	//! 
-	//!  1. "Full-Frame Video Stabilization with Motion Inpainting"
-	//!      Yasuyuki Matsushita, Eyal Ofek, Weina Ge, Xiaoou Tang, Senior Member, and Heung-Yeung Shum
-	//!  2. "Auto-Directed Video Stabilization with Robust L1 Optimal Camera Paths"
-	//!      Matthias Grundmann, Vivek Kwatra, Irfan Essa
-	//!          # Global Motion Estimation
+	//! 1. "Full-Frame Video Stabilization with Motion Inpainting"
+	//!    Yasuyuki Matsushita, Eyal Ofek, Weina Ge, Xiaoou Tang, Senior Member, and Heung-Yeung Shum
+	//! 2. "Auto-Directed Video Stabilization with Robust L1 Optimal Camera Paths"
+	//!    Matthias Grundmann, Vivek Kwatra, Irfan Essa
+	//!    # Global Motion Estimation
 	//! 
-	//! The video stabilization module contains a set of functions and classes for global motion estimation
-	//! between point clouds or between images. In the last case features are extracted and matched
-	//! internally. For the sake of convenience the motion estimation functions are wrapped into classes.
-	//! Both the functions and the classes are available.
+	//!    The video stabilization module contains a set of functions and classes for global motion estimation
+	//!    between point clouds or between images. In the last case features are extracted and matched
+	//!    internally. For the sake of convenience the motion estimation functions are wrapped into classes.
+	//!    Both the functions and the classes are available.
 	//! 
-	//!          # Fast Marching Method
+	//!    # Fast Marching Method
 	//! 
-	//! The Fast Marching Method [Telea04](https://docs.opencv.org/4.9.0/d0/de3/citelist.html#CITEREF_Telea04) is used in of the video stabilization routines to do motion and
-	//! color inpainting. The method is implemented is a flexible way and it's made public for other users.
+	//!    The Fast Marching Method [Telea04](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Telea04) is used in of the video stabilization routines to do motion and
+	//!    color inpainting. The method is implemented is a flexible way and it's made public for other users.
 	use crate::{mod_prelude::*, core, sys, types};
 	pub mod prelude {
 		pub use { super::ISparseOptFlowEstimatorTraitConst, super::ISparseOptFlowEstimatorTrait, super::IDenseOptFlowEstimatorTraitConst, super::IDenseOptFlowEstimatorTrait, super::PyrLkOptFlowEstimatorBaseTraitConst, super::PyrLkOptFlowEstimatorBaseTrait, super::SparsePyrLkOptFlowEstimatorTraitConst, super::SparsePyrLkOptFlowEstimatorTrait, super::SparsePyrLkOptFlowEstimatorGpuTraitConst, super::SparsePyrLkOptFlowEstimatorGpuTrait, super::DensePyrLkOptFlowEstimatorGpuTraitConst, super::DensePyrLkOptFlowEstimatorGpuTrait, super::RansacParamsTraitConst, super::RansacParamsTrait, super::IOutlierRejectorTraitConst, super::IOutlierRejectorTrait, super::NullOutlierRejectorTraitConst, super::NullOutlierRejectorTrait, super::TranslationBasedLocalOutlierRejectorTraitConst, super::TranslationBasedLocalOutlierRejectorTrait, super::MotionEstimatorBaseTraitConst, super::MotionEstimatorBaseTrait, super::MotionEstimatorRansacL2TraitConst, super::MotionEstimatorRansacL2Trait, super::MotionEstimatorL1TraitConst, super::MotionEstimatorL1Trait, super::ImageMotionEstimatorBaseTraitConst, super::ImageMotionEstimatorBaseTrait, super::FromFileMotionReaderTraitConst, super::FromFileMotionReaderTrait, super::ToFileMotionWriterTraitConst, super::ToFileMotionWriterTrait, super::KeypointBasedMotionEstimatorTraitConst, super::KeypointBasedMotionEstimatorTrait, super::KeypointBasedMotionEstimatorGpuTraitConst, super::KeypointBasedMotionEstimatorGpuTrait, super::IMotionStabilizerTraitConst, super::IMotionStabilizerTrait, super::MotionStabilizationPipelineTraitConst, super::MotionStabilizationPipelineTrait, super::MotionFilterBaseTraitConst, super::MotionFilterBaseTrait, super::GaussianMotionFilterTraitConst, super::GaussianMotionFilterTrait, super::LpMotionStabilizerTraitConst, super::LpMotionStabilizerTrait, super::IFrameSourceTraitConst, super::IFrameSourceTrait, super::NullFrameSourceTraitConst, super::NullFrameSourceTrait, super::VideoFileSourceTraitConst, super::VideoFileSourceTrait, super::MaskFrameSourceTraitConst, super::MaskFrameSourceTrait, super::ILogTraitConst, super::ILogTrait, super::NullLogTraitConst, super::NullLogTrait, super::LogToStdoutTraitConst, super::LogToStdoutTrait, super::FastMarchingMethodTraitConst, super::FastMarchingMethodTrait, super::InpainterBaseTraitConst, super::InpainterBaseTrait, super::NullInpainterTraitConst, super::NullInpainterTrait, super::InpaintingPipelineTraitConst, super::InpaintingPipelineTrait, super::ConsistentMosaicInpainterTraitConst, super::ConsistentMosaicInpainterTrait, super::MotionInpainterTraitConst, super::MotionInpainterTrait, super::ColorAverageInpainterTraitConst, super::ColorAverageInpainterTrait, super::ColorInpainterTraitConst, super::ColorInpainterTrait, super::DeblurerBaseTraitConst, super::DeblurerBaseTrait, super::NullDeblurerTraitConst, super::NullDeblurerTrait, super::WeightingDeblurerTraitConst, super::WeightingDeblurerTrait, super::WobbleSuppressorBaseTraitConst, super::WobbleSuppressorBaseTrait, super::NullWobbleSuppressorTraitConst, super::NullWobbleSuppressorTrait, super::MoreAccurateMotionWobbleSuppressorBaseTraitConst, super::MoreAccurateMotionWobbleSuppressorBaseTrait, super::MoreAccurateMotionWobbleSuppressorTraitConst, super::MoreAccurateMotionWobbleSuppressorTrait, super::MoreAccurateMotionWobbleSuppressorGpuTraitConst, super::MoreAccurateMotionWobbleSuppressorGpuTrait, super::StabilizerBaseTraitConst, super::StabilizerBaseTrait, super::OnePassStabilizerTraitConst, super::OnePassStabilizerTrait, super::TwoPassStabilizerTraitConst, super::TwoPassStabilizerTrait };
