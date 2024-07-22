@@ -95,6 +95,12 @@ impl<T: DataType> Mat_<T> {
 		self.at_2d(pt.y, pt.x)
 	}
 
+	/// See [Mat::at_row]
+	#[inline]
+	pub fn at_row(&self, row: i32) -> Result<&[T]> {
+		match_indices(self, &[row, 0]).and_then(|_| unsafe { self.at_row_unchecked(row) })
+	}
+
 	/// See [Mat::at_mut]
 	#[inline]
 	pub fn at_mut(&mut self, i0: i32) -> Result<&mut T> {
@@ -127,6 +133,13 @@ impl<T: DataType> Mat_<T> {
 	#[inline]
 	pub fn at_pt_mut(&mut self, pt: Point) -> Result<&mut T> {
 		self.at_2d_mut(pt.y, pt.x)
+	}
+
+	/// See [Mat::at_row_mut]
+	#[inline]
+	pub fn at_row_mut(&mut self, row: i32) -> Result<&mut [T]> {
+		match_indices(self, &[row, 0])?;
+		unsafe { self.at_row_unchecked_mut(row) }
 	}
 
 	/// See [Mat::data_typed]
