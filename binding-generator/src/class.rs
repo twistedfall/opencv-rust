@@ -255,6 +255,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	}
 
 	pub fn all_bases(&self) -> HashSet<Class<'tu, 'ge>> {
+		#![allow(clippy::mutable_key_type)]
 		#[allow(clippy::unnecessary_to_owned)]
 		self
 			.bases()
@@ -276,6 +277,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	}
 
 	pub fn descendants(&self) -> HashSet<Class<'tu, 'ge>> {
+		#![allow(clippy::mutable_key_type)]
 		match self {
 			&Self::Clang { gen_env, .. } => gen_env
 				.descendants_of(&self.cpp_name(CppNameStyle::Reference))
@@ -287,6 +289,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	}
 
 	pub fn all_descendants(&self) -> HashSet<Class<'tu, 'ge>> {
+		#![allow(clippy::mutable_key_type)]
 		self
 			.descendants()
 			.into_iter()
@@ -299,6 +302,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	}
 
 	pub fn all_family(&self) -> HashSet<Class<'tu, 'ge>> {
+		#![allow(clippy::mutable_key_type)]
 		fn collect<'tu, 'ge>(out: &mut HashSet<Class<'tu, 'ge>>, cls: Class<'tu, 'ge>) {
 			if out.insert(cls.clone()) {
 				#[allow(clippy::unnecessary_to_owned)]

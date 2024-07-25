@@ -9,6 +9,7 @@
 	unused_parens
 )]
 #[allow(
+	clippy::doc_lazy_continuation,
 	clippy::double_must_use,
 	clippy::excessive_precision,
 	clippy::let_and_return,

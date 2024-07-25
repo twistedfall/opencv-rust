@@ -27,8 +27,9 @@ mod library;
 
 type Result<T, E = Box<dyn std::error::Error>> = std::result::Result<T, E>;
 
-static MODULES: OnceCell<Vec<String>> = OnceCell::new();
+static MODULES: OnceCell<Vec<String>> = OnceCell::new(); // replace with `OnceLock` when MSRV is 1.70.0
 
+// replace `Lazy` with `LazyLock` when MSRV is 1.80.0
 static OUT_DIR: Lazy<PathBuf> = Lazy::new(|| PathBuf::from(env::var_os("OUT_DIR").expect("Can't read OUT_DIR env var")));
 static MANIFEST_DIR: Lazy<PathBuf> =
 	Lazy::new(|| PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").expect("Can't read CARGO_MANIFEST_DIR env var")));
@@ -288,6 +289,78 @@ fn build_wrapper(opencv: &Library) {
 	let mut cc = build_compiler(opencv);
 	eprintln!("=== Compiler information: {:#?}", cc.get_compiler());
 	let modules = MODULES.get().expect("MODULES not initialized");
+	static SUPPORTED_MODULES: [&str; 67] = [
+		"alphamat",
+		"aruco",
+		"aruco_detector",
+		"barcode",
+		"bgsegm",
+		"bioinspired",
+		"calib3d",
+		"ccalib",
+		"core",
+		"cudaarithm",
+		"cudabgsegm",
+		"cudacodec",
+		"cudafeatures2d",
+		"cudafilters",
+		"cudaimgproc",
+		"cudaobjdetect",
+		"cudaoptflow",
+		"cudastereo",
+		"cudawarping",
+		"cvv",
+		"dnn",
+		"dnn_superres",
+		"dpm",
+		"face",
+		"features2d",
+		"flann",
+		"freetype",
+		"fuzzy",
+		"gapi",
+		"hdf",
+		"hfs",
+		"highgui",
+		"img_hash",
+		"imgcodecs",
+		"imgproc",
+		"intensity_transform",
+		"line_descriptor",
+		"mcc",
+		"ml",
+		"objdetect",
+		"optflow",
+		"ovis",
+		"phase_unwrapping",
+		"photo",
+		"plot",
+		"quality",
+		"rapid",
+		"rgbd",
+		"saliency",
+		"sfm",
+		"shape",
+		"stereo",
+		"stitching",
+		"structured_light",
+		"superres",
+		"surface_matching",
+		"text",
+		"tracking",
+		"video",
+		"videoio",
+		"videostab",
+		"viz",
+		"wechat_qrcode",
+		"xfeatures2d",
+		"ximgproc",
+		"xobjdetect",
+		"xphoto",
+	];
+	for module in SUPPORTED_MODULES {
+		println!("cargo:rustc-check-cfg=cfg(ocvrs_has_module_{module})"); // replace with cargo:: syntax when MSRV is 1.77
+	}
 	for module in modules.iter() {
 		println!("cargo:rustc-cfg=ocvrs_has_module_{module}");
 		cc.file(OUT_DIR.join(format!("{module}.cpp")));
@@ -336,6 +409,9 @@ fn main() -> Result<()> {
 
 	let opencv = Library::probe()?;
 	eprintln!("=== OpenCV library configuration: {opencv:#?}");
+	println!("cargo:rustc-check-cfg=cfg(ocvrs_opencv_branch_4)"); // replace with cargo:: syntax when MSRV is 1.77
+	println!("cargo:rustc-check-cfg=cfg(ocvrs_opencv_branch_34)"); // replace with cargo:: syntax when MSRV is 1.77
+	println!("cargo:rustc-check-cfg=cfg(ocvrs_opencv_branch_32)"); // replace with cargo:: syntax when MSRV is 1.77
 	if OPENCV_BRANCH_4.matches(&opencv.version) {
 		println!("cargo:rustc-cfg=ocvrs_opencv_branch_4");
 	} else if OPENCV_BRANCH_34.matches(&opencv.version) {

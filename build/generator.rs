@@ -223,7 +223,7 @@ fn collect_generated_bindings(modules: &[String], target_module_dir: &Path, manu
 		write_module_include(&mut hub_rs, module)?;
 		let module_filename = format!("{module}.rs");
 		let module_src_file = OUT_DIR.join(&module_filename);
-		let mut module_rs = BufWriter::new(File::create(&target_module_dir.join(&module_filename))?);
+		let mut module_rs = BufWriter::new(File::create(target_module_dir.join(&module_filename))?);
 		// Need to wrap modules inside `mod { }` because they have top-level comments (//!) and those don't play well when
 		// module file is include!d (as opposed to connecting the module with `mod` from the parent module).
 		// The same doesn't apply to `sys` and `types` below because they don't contain top-level comments.
