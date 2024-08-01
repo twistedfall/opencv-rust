@@ -1,3 +1,7 @@
+* 0.92.2
+  * Fix new warnings with Rust 1.80
+  * Don't export `ocvrs_create_string` and `ocvrs_create_byte_string` from the rlib to allow combining multiple `opencv` create versions as dependencies.
+
 * 0.92.1
   * Implement `Send` and `Sync` where applicable for `Mat`, `Ptr` and `Tuple`.
   * Introduce new `Mat` constructors that take byte slices: `from_bytes`/`_mut` and `new_rows_cols_with_bytes`/`_mut`
