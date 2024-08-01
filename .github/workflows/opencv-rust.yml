@@ -6,23 +6,25 @@ on:
   pull_request:
     branches:
       - "*"
+permissions:
+  contents: read
 jobs:
   src:
     strategy:
       fail-fast: false
       matrix:
         os-image:
-          - ubuntu-22.04
+          - ubuntu-24.04
           - macos-14
         opencv-version:
           - 4.11.0
         linkage:
           - dynamic
         include:
-          - os-image: ubuntu-22.04
+          - os-image: ubuntu-24.04
             opencv-version: 4.11.0
             linkage: static
-          - os-image: ubuntu-22.04
+          - os-image: ubuntu-24.04
             opencv-version: 5.0.0-alpha
             linkage: dynamic
           - os-image: ubuntu-22.04
@@ -38,16 +40,10 @@ jobs:
       OPENCV_LINKAGE: ${{ matrix.linkage }}
       SCCACHE_GHA_ENABLED: "true"
       RUSTC_WRAPPER: "sccache"
-      CMAKE_C_COMPILER_LAUNCHER: "sccache"
-      CMAKE_CXX_COMPILER_LAUNCHER: "sccache"
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
       - uses: mozilla-actions/sccache-action@v0.0.7
-      - uses: actions/cache@v4
-        with:
-          path: ~/dist
-          key: dist-${{ matrix.opencv-version }}
 
       - uses: actions/cache@v4
         with:
@@ -67,11 +63,11 @@ jobs:
       fail-fast: false
       matrix:
         os-image:
-          - ubuntu-22.04
+          - ubuntu-24.04
           - windows-2022
           - macos-14
         vcpkg-version:
-          - 2024.12.16
+          - 2025.01.13 # https://github.com/microsoft/vcpkg/releases
     runs-on: ${{ matrix.os-image }}
     env:
       VCPKG_VERSION: ${{ matrix.vcpkg-version }}
@@ -102,8 +98,11 @@ jobs:
           - windows-2022
         version:
           - opencv: 3.4.16
-          - opencv: 4.10.0
+          - opencv: 4.11.0 # https://community.chocolatey.org/packages/OpenCV#versionhistory
         include:
+          - os-image: ubuntu-24.04
+            version:
+              opencv: 4.6.0
           - os-image: ubuntu-22.04
             version:
               opencv: 4.5.4
@@ -133,7 +132,7 @@ jobs:
         shell: bash
 
   docs-rs:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
@@ -143,26 +142,19 @@ jobs:
         shell: bash
 
   msrv:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     env:
       OPENCV_VERSION: 4.11.0
       SCCACHE_GHA_ENABLED: "true"
       RUSTC_WRAPPER: "sccache"
-      CMAKE_C_COMPILER_LAUNCHER: "sccache"
-      CMAKE_CXX_COMPILER_LAUNCHER: "sccache"
     steps:
       - uses: actions/checkout@v4
       - uses: mozilla-actions/sccache-action@v0.0.7
 
       - uses: actions/cache@v4
         with:
-          path: ~/dist
-          key: dist-${{ env.OPENCV_VERSION }}
-
-      - uses: actions/cache@v4
-        with:
           path: ~/build
-          key: build-${{ env.OPENCV_VERSION }}-ubuntu-20.04
+          key: build-${{ env.OPENCV_VERSION }}-dynamic-ubuntu-24.04
 
       - name: Get MSRV package metadata
         id: metadata

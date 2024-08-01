@@ -8,11 +8,6 @@ ubuntu_version="$(cat /etc/os-release | sed -nr 's:^VERSION_ID="(.+?)":\1: p')"
 
 sudo apt-get install -y clang libclang-dev
 case "$ubuntu_version" in
-"18.04")
-	# workaround to make clang_sys crate detect installed libclang
-	sudo ln -fs libclang.so.1 /usr/lib/llvm-6.0/lib/libclang.so
-	;;
-
 "20.04")
 	# workaround to make clang_sys crate detect installed libclang
 	sudo ln -fs libclang.so.1 /usr/lib/llvm-10/lib/libclang.so
@@ -26,6 +21,13 @@ case "$ubuntu_version" in
 	# workaround to make clang_sys crate detect installed libclang
 	sudo ln -fs libclang.so.1 /usr/lib/llvm-14/lib/libclang.so
 	if [[ "$OPENCV_VERSION" == "4.5.4" ]]; then
+		sudo apt-get -y install "libopencv-dev=${OPENCV_VERSION}*"
+		exit 0
+	fi
+	;;
+
+"24.04")
+	if [[ "$OPENCV_VERSION" == "4.6.0" ]]; then
 		sudo apt-get -y install "libopencv-dev=${OPENCV_VERSION}*"
 		exit 0
 	fi
@@ -136,7 +138,6 @@ BUILD_FLAGS="
 sudo apt-get -y install build-essential cmake
 
 if [[ "${OPENCV_LINKAGE:-dynamic}" == "static" ]]; then # static build
-# bring back -D BUILD_TBB=ON when updated to Ubuntu-24.04 (https://github.com/opencv/opencv/issues/25187)
 	BUILD_FLAGS="$BUILD_FLAGS
 	-D BUILD_JPEG=ON
 	-D BUILD_OPENJPEG=ON
@@ -160,7 +161,7 @@ if [[ "${OPENCV_LINKAGE:-dynamic}" == "static" ]]; then # static build
 "
 else # dynamic build
 	case "$ubuntu_version" in
-	"18.04" | "20.04")
+	"20.04")
 		sudo apt-get -y install \
 			libatlas-base-dev \
 			libavcodec-dev \
@@ -256,13 +257,45 @@ else # dynamic build
 			libwebp-dev \
 			qtbase5-dev
 		;;
+
+	"24.04")
+		# runtime deps
+		sudo apt-get -y install \
+			libatlas-base-dev \
+			libavcodec-dev \
+			libavformat-dev \
+			libceres-dev \
+			libdc1394-dev \
+			libeigen3-dev \
+			libfreetype6-dev \
+			libgdal-dev \
+			libgflags-dev \
+			libgoogle-glog-dev \
+			libgphoto2-dev \
+			libgstreamer-plugins-base1.0-dev \
+			libharfbuzz-dev \
+			libhdf5-dev \
+			libjpeg-dev \
+			liblapacke64-dev \
+			libleptonica-dev \
+			libopenexr-dev \
+			libpng-dev \
+			libswscale-dev \
+			libtbb-dev \
+			libtesseract-dev \
+			libtiff-dev \
+			libunwind-dev \
+			libvtk9-dev \
+			libwebp-dev \
+			qtbase5-dev
+		;;
 	esac
 fi
 
 dist_dir="$HOME/dist/"
-base_dir="$HOME/build/opencv/"
-build_dir="$base_dir/opencv-$OPENCV_VERSION-build/"
-mkdir -p "$dist_dir" "$base_dir" "$build_dir"
+build_dir="$HOME/build/opencv/opencv-$OPENCV_VERSION-build/"
+
+mkdir -p "$dist_dir" "$build_dir"
 
 opencv_src="$dist_dir/opencv-$OPENCV_VERSION"
 if [ ! -d "$opencv_src" ]; then

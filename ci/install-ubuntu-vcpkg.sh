@@ -8,12 +8,35 @@ if [[ "${VCPKG_VERSION:-}" == "" ]]; then
 fi
 
 sudo apt-get update
-sudo apt-get install -y clang libharfbuzz0b git curl zip unzip tar bison gperf libx11-dev libxft-dev libxext-dev \
-	libgles2-mesa-dev autoconf libtool build-essential libxrandr-dev libxi-dev libxcursor-dev libxdamage-dev libxinerama-dev \
-	libdbus-1-dev libxtst-dev sudo python3-jinja2 cmake
-
-# workaround to make clang_sys crate detect installed libclang
-sudo ln -fs libclang.so.1 /usr/lib/llvm-14/lib/libclang.so
+sudo apt-get install -y \
+	autoconf \
+	bison \
+	build-essential \
+	clang \
+	cmake \
+	curl \
+	git \
+	gperf \
+	libclang-dev \
+	libdbus-1-dev \
+	libgles2-mesa-dev \
+	libharfbuzz0b \
+	libltdl-dev \
+	libtool \
+	libx11-dev \
+	libxcursor-dev \
+	libxdamage-dev \
+	libxext-dev \
+	libxft-dev \
+	libxi-dev \
+	libxinerama-dev \
+	libxrandr-dev \
+	libxtst-dev \
+	python3-jinja2 \
+	sudo \
+	tar \
+	unzip \
+	zip
 
 export VCPKG_ROOT="$HOME/build/vcpkg"
 export VCPKG_DISABLE_METRICS=1
@@ -38,7 +61,7 @@ export VCPKG_DEFAULT_TRIPLET=x64-linux
 	which cmake
 	cmake --version
 	if ! ./vcpkg install --clean-after-build --recurse "opencv[contrib,nonfree,ade,opencl]"; then
-		for log in "$VCPKG_ROOT/buildtrees"/**/*out.log; do
+		for log in "$VCPKG_ROOT/buildtrees"/**/*-{out,err}.log; do
 			echo "=== $log"
 			cat "$log"
 		done
