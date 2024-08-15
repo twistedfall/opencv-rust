@@ -122,3 +122,16 @@ fn vector_boxed_ref() -> Result<()> {
 
 	Ok(())
 }
+
+#[test]
+fn boxed_ref_into() -> Result<()> {
+	let mut s = [1i32, 2, 3, 4];
+	let mut mut_m = Mat::from_slice_mut(&mut s)?;
+	*mut_m.at_mut::<i32>(1)? = 100;
+	let const_m = BoxedRef::<Mat>::from(mut_m);
+
+	assert_eq!(100, *const_m.at::<i32>(1)?);
+	assert_eq!(100, s[1]);
+
+	Ok(())
+}

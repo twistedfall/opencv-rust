@@ -6,8 +6,10 @@ use crate::traits::{Boxed, OpenCVFromExtern, OpenCVIntoExternContainer, OpenCVTy
 
 /// Wrapper for the type implementing [Boxed] trait that allows to retain the lifetime of the referenced object.
 ///
-/// This wrapper implements all traits that the underlying type does, but explicitly doesn't implement `Deref` and `DerefMut` to
-/// avoid being able to `mem::swap` the reference out of the wrapper.
+/// This wrapper implements all traits that the underlying type does, but explicitly doesn't implement [Deref](core::ops::Deref) and
+/// [DerefMut](core::ops::DerefMut) to avoid being able to [swap](core::mem::swap) the reference out of the wrapper. It relies on
+/// functions accepting generic arguments (e.g. `impl MatTrait` or `impl MatTraitConst`) which are implemented by both main struct
+/// and its `BoxedRef` (e.g. [Mat](crate::core::Mat) and `BoxedRef<Mat>`).
 #[repr(transparent)]
 pub struct BoxedRef<'r, T: Boxed> {
 	pub(crate) reference: T,
@@ -32,7 +34,7 @@ impl<T: Boxed + fmt::Debug> fmt::Debug for BoxedRef<'_, T> {
 }
 
 impl<T: Boxed + Clone> BoxedRef<'_, T> {
-	/// Clones the pointee of this BoxedRef
+	/// Clones the pointee of this [BoxedRef]
 	#[inline]
 	pub fn clone_pointee(&self) -> T {
 		self.reference.clone()
@@ -104,10 +106,17 @@ impl<T: Boxed + fmt::Debug> fmt::Debug for BoxedRefMut<'_, T> {
 }
 
 impl<T: Boxed + Clone> BoxedRefMut<'_, T> {
-	/// Clones the pointee of this BoxedRef
+	/// Clones the pointee of this [BoxedRefMut]
 	#[inline]
 	pub fn clone_pointee(&self) -> T {
 		self.reference.clone()
+	}
+}
+
+impl<'r, T: Boxed> From<BoxedRefMut<'r, T>> for BoxedRef<'r, T> {
+	/// Irreversibly convert this [BoxedRefMut] into a non-mutable [BoxedRef]
+	fn from(value: BoxedRefMut<'r, T>) -> Self {
+		BoxedRef::from(value.reference)
 	}
 }
 
