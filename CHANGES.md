@@ -1,3 +1,6 @@
+* [Backport from] 0.84.4
+  * Workaround for a build hang due to `cc` dependency
+
 * 0.92.2
   * Fix new warnings with Rust 1.80
   * Don't export `ocvrs_create_string` and `ocvrs_create_byte_string` from the rlib to allow combining multiple `opencv` create versions as dependencies.
@@ -18,11 +21,11 @@
   * Add a helper to accommodate calling OpenCV functions that can modify a `Mat` in place, use `modify_inplace()` method.
 
 * 0.91.3
-  * Add workaround for https://github.com/twistedfall/opencv-rust/issues/548.
+  * Add workaround for <https://github.com/twistedfall/opencv-rust/issues/548>.
 
 * 0.91.2
   * Generate functions for converting DirectX objects to OpenCL.
-  * Allow creation of `Vector<BoxedRef<T>>` and using it as `ToInputArray` (fixes https://github.com/twistedfall/opencv-rust/issues/555).
+  * Allow creation of `Vector<BoxedRef<T>>` and using it as `ToInputArray` (fixes <https://github.com/twistedfall/opencv-rust/issues/555>).
 
 * 0.91.1
   * Add `TryFrom<i32>` impls for enums to allow easy fallible conversions from `i32`.
@@ -67,20 +70,20 @@
     * `MatConstIterator::pos_to()` is now unsafe and takes a pointer instead of a reference.
 
 * 0.88.9
-  * Fix building on macOS with vcpkg (fixes https://github.com/twistedfall/opencv-rust/issues/549).
+  * Fix building on macOS with vcpkg (fixes <https://github.com/twistedfall/opencv-rust/issues/549>).
 
 * 0.88.8
-  * Fix the build hang with the latest version of `cc` (fixes https://github.com/twistedfall/opencv-rust/issues/480).
+  * Fix the build hang with the latest version of `cc` (fixes <https://github.com/twistedfall/opencv-rust/issues/480>).
   * Minimum supported Rust version is now 1.66.0.
 
 * 0.88.7
-  * Improve handling of input strings (fixes https://github.com/twistedfall/opencv-rust/issues/534).
+  * Improve handling of input strings (fixes <https://github.com/twistedfall/opencv-rust/issues/534>).
 
 * 0.88.6
   * Regenerate documentation with OpenCV 4.9.0.
 
 * 0.88.5
-  * Adjust to the upcoming changes in OpenCV (fixes https://github.com/twistedfall/opencv-rust/issues/518).
+  * Adjust to the upcoming changes in OpenCV (fixes <https://github.com/twistedfall/opencv-rust/issues/518>).
 
 * 0.88.4
   * More fixes for clang 17 (kudos to PaulWagener).
@@ -89,7 +92,7 @@
   * Add `Mat::iter_mut()` and improve `Mat` iteration performance.
 
 * 0.88.2
-  * Fix build with clang 17 (fixes https://github.com/twistedfall/opencv-rust/issues/519).
+  * Fix build with clang 17 (fixes <https://github.com/twistedfall/opencv-rust/issues/519>).
 
 * 0.88.1
   * Generate `Vector<Vector<Point2d>>` bindings for `ccalib` module.
@@ -114,11 +117,11 @@
   * Fix several automatically functions.
 
 * 0.85.3
-  * Fix https://github.com/twistedfall/opencv-rust/issues/506, https://github.com/twistedfall/opencv-rust/issues/505 and
-    https://github.com/twistedfall/opencv-rust/issues/479
+  * Fix <https://github.com/twistedfall/opencv-rust/issues/506>, <https://github.com/twistedfall/opencv-rust/issues/505> and
+    <https://github.com/twistedfall/opencv-rust/issues/479>
 
 * 0.85.2
-  * Fix binding generation using clang-6 (fixes https://github.com/twistedfall/opencv-rust/issues/496).
+  * Fix binding generation using clang-6 (fixes <https://github.com/twistedfall/opencv-rust/issues/496>).
   * Add more `From` implementations for `Scalar` to improve API usability.
 
 * 0.85.1
@@ -137,7 +140,7 @@
   * Improve parallel build performance (more noticeable on lower thread count).
   * Take `VCPKGRS_TRIPLET` environment var into account for crate rebuild.
   * Add a way to select MSVC CRT library with `OPENCV_MSVC_CRT` environment variable.
-  * Make sure to always generate bindings for `Ptr<float>` (fixes https://github.com/twistedfall/opencv-rust/issues/487).
+  * Make sure to always generate bindings for `Ptr<float>` (fixes <https://github.com/twistedfall/opencv-rust/issues/487>).
 
 * 0.84.4
   * Workaround for a build hang due to `cc` dependency
@@ -146,14 +149,14 @@
   * Update docs
 
 * 0.84.2
-  * Fix build targeting Android even more (definitely fixes https://github.com/twistedfall/opencv-rust/issues/477).
-  * Fix double-free crash and linker errors when using CUDA (fixes https://github.com/twistedfall/opencv-rust/issues/478 and
-    https://github.com/twistedfall/opencv-rust/issues/470).
+  * Fix build targeting Android even more (definitely fixes <https://github.com/twistedfall/opencv-rust/issues/477>).
+  * Fix double-free crash and linker errors when using CUDA (fixes <https://github.com/twistedfall/opencv-rust/issues/478> and
+    <https://github.com/twistedfall/opencv-rust/issues/470>).
   * Add `CommandLineParser::get()` function.
   * Improve examples.
 
 * 0.84.1
-  * Fix build targeting Android (fixes https://github.com/twistedfall/opencv-rust/issues/477).
+  * Fix build targeting Android (fixes <https://github.com/twistedfall/opencv-rust/issues/477>).
 
 * 0.84.0
   * Detect more cases where a Rust `char` can be used.
@@ -190,7 +193,7 @@
   * Fix building when crosscompiling with target-specific RUSTFLAGS.
 
 * 0.81.1
-  * Fix building on macOS (fixes https://github.com/twistedfall/opencv-rust/issues/460).
+  * Fix building on macOS (fixes <https://github.com/twistedfall/opencv-rust/issues/460>).
 
 * 0.81.0
   * Fix compilation when using clang-6.
@@ -224,7 +227,7 @@
   * Rename `typ()`, `channels()`, `depth()` to `opencv_type()`, `opencv_channels()`, `opencv_depth()`. The old functions are
     scheduled for removal mid-2023.
   * Generate `DrawLinesMatchesFlags` enum correctly.
-  * Make sure to generate `Vector<Point2d>` for `calib3d` module (fixes https://github.com/twistedfall/opencv-rust/issues/422).
+  * Make sure to generate `Vector<Point2d>` for `calib3d` module (fixes <https://github.com/twistedfall/opencv-rust/issues/422>).
 
 * 0.76.4
   * Fix autocomplete and documentation for rust-analyzer based IDEs.
@@ -253,10 +256,10 @@
 
 * 0.74.2
   * Adjust dependencies to ensure that `jobserver` is the appropriate version
-    (fixes https://github.com/twistedfall/opencv-rust/issues/400).
+    (fixes <https://github.com/twistedfall/opencv-rust/issues/400>).
 
 * 0.74.1
-  * Fix building when `-j1` cargo option is specified (fixes https://github.com/twistedfall/opencv-rust/issues/380).
+  * Fix building when `-j1` cargo option is specified (fixes <https://github.com/twistedfall/opencv-rust/issues/380>).
 
 * 0.74.0
   * Add support aruco_detector module present in the future opencv_contrib.
@@ -417,9 +420,11 @@
       (and `default-features = false` can probably go too).
     * Support for `OPENCV_CLANG_STDLIB_PATH` environment variable is removed. If you were using it, then you
       can add that directory as part of `OPENCV_INCLUDE_PATHS`. E.g.:
+
       ```
       OPENCV_INCLUDE_PATHS="<path_to_clang_stdlib_path>,+"
       ```
+
     * Support for `OPENCV_HEADER_DIR` is also removed. It was meant to be development-only environment variable,
       and it's no longer needed in the development process.
   * The crate is now smaller due to dropping of the bundled headers and bindings.
@@ -477,7 +482,7 @@
   * Minimal required rust version is now 1.45.0 due to usage of `str::strip_prefix`
 
 * 0.46.0
-  * Fix linking in some configurations (https://github.com/twistedfall/opencv-rust/issues/164)
+  * Fix linking in some configurations (<https://github.com/twistedfall/opencv-rust/issues/164>)
   * Fix argument name clashing in external functions
 
 * 0.45.1
@@ -576,7 +581,6 @@
   * C++ operators * (multiplication, dereferencing), / (division), + (addition) and - (subtraction) are now
     also exposed to Rust under function names `mul_*`/`try_deref`, `div_*`, `add_*` and `sub_*`.
 
-
 * 0.35.0
   * Add beta-level support for doing OpenCV library discovery using cmake, which is now a recommended method
     by the upstream.
@@ -589,11 +593,11 @@
   * Bump bindings to OpenCV version 4.3.0 and 3.4.10
   * Mark `Mat::new_*_with_data` functions unsafe because they allow passing arbitrary data pointer
   * Sort out internal generation of string return type wrappers, should help on some platforms in avoiding
-    `buildtime-bindgen`, see https://github.com/twistedfall/opencv-rust/issues/110
+    `buildtime-bindgen`, see <https://github.com/twistedfall/opencv-rust/issues/110>
   * Fix examples
 
 * 0.33.1
-  * Internal rework of `VectorOf…` generation logic, fix https://github.com/twistedfall/opencv-rust/issues/109
+  * Internal rework of `VectorOf…` generation logic, fix <https://github.com/twistedfall/opencv-rust/issues/109>
 
 * 0.33.0
   * Basic support for building against OpenCV.framework on macOS, for details see
