@@ -68,9 +68,9 @@ data_type!(rgb::RGB8, core::CV_8U, 3);
 #[cfg(feature = "rgb")]
 data_type!(rgb::RGBA8, core::CV_8U, 4);
 #[cfg(feature = "rgb")]
-data_type!(rgb::alt::GRAY8, core::CV_8U, 1);
+data_type!(rgb::alt::Gray<u8>, core::CV_8U, 1);
 #[cfg(feature = "rgb")]
-data_type!(rgb::alt::GRAYA8, core::CV_8U, 2);
+data_type!(rgb::alt::GrayAlpha<u8>, core::CV_8U, 2);
 #[cfg(feature = "rgb")]
 data_type!(rgb::alt::BGR8, core::CV_8U, 3);
 #[cfg(feature = "rgb")]
