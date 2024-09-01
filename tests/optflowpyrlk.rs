@@ -38,8 +38,8 @@ pub fn check_optical_flow_points() -> Result<()>{
 	//
     //  	 I assume This should FAIL as the python bindings return nonzero results
 	//       I mean like some items might be zero but not all ??
-    next_kps.to_vec().iter().for_each(|k| assert_ne!( k.x.partial_cmp(&0.0), Some(Ordering::Equal)));
-    next_kps.to_vec().iter().for_each(|k| assert_ne!( k.y.partial_cmp(&0.0), Some(Ordering::Equal)));
+	let total: f32 = next_kps.iter().map(|k| k.x + k.y).sum();
+	assert_ne!(total, 0.0);
 
 	Ok(())
 }
