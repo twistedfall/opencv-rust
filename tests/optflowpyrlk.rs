@@ -34,8 +34,12 @@ pub fn check_optical_flow_points() -> Result<()>{
     let detects = next_kps.len();
     println!("detects: {}", detects);
 
-    // This should fail 
-    next_kps.to_vec().iter().for_each(|k| assert!( k.x.partial_cmp(&0.0) == Some(Ordering::Equal) && k.y.partial_cmp(&0.0) == Some(Ordering::Equal) ));
+    // NOTE: See python results in  tests/notebook/calc_opt_flow_pyr_lk.ipynb
+	//
+    //  	 I assume This should FAIL as the python bindings return nonzero results
+	//       I mean like some items might be zero but not all ??
+    next_kps.to_vec().iter().for_each(|k| assert_ne!( k.x.partial_cmp(&0.0), Some(Ordering::Equal)));
+    next_kps.to_vec().iter().for_each(|k| assert_ne!( k.y.partial_cmp(&0.0), Some(Ordering::Equal)));
 
 	Ok(())
 }
