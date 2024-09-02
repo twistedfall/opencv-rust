@@ -1,3 +1,7 @@
+* 0.92.3
+  * Add an irreversible conversion from `BoxedRefMut` to `BoxedMut`.
+  * Fix handling of arrays of strings, fixes `CommandLineParser` (kudos to niemeyer).
+
 * 0.92.2
   * Fix new warnings with Rust 1.80
   * Don't export `ocvrs_create_string` and `ocvrs_create_byte_string` from the rlib to allow combining multiple `opencv` create versions as dependencies.
