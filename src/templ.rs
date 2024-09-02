@@ -81,10 +81,7 @@ macro_rules! string_array_arg {
 			.iter()
 			.map(|x| ::std::ffi::CString::new(*x).expect("invalid C string"))
 			.collect::<::std::vec::Vec<_>>();
-		let $name = $name
-			.iter()
-			.map(|x| x.as_ptr())
-			.collect::<::std::vec::Vec<_>>();
+		let $name = $name.iter().map(|x| x.as_ptr()).collect::<::std::vec::Vec<_>>();
 	};
 }
 
@@ -95,11 +92,8 @@ macro_rules! string_array_arg_mut {
 			.iter()
 			.map(|x| ::std::ffi::CString::new(*x).expect("invalid C string"))
 			.collect::<::std::vec::Vec<_>>();
-		// Casting to mut below trusts on undefined CString behavior.
-		let mut $name = $name
-			.iter()
-			.map(|x| x.as_ptr().cast_mut())
-			.collect::<::std::vec::Vec<_>>();
+		// fixme: Casting to mut below trusts on undefined CString behavior.
+		let mut $name = $name.iter().map(|x| x.as_ptr().cast_mut()).collect::<::std::vec::Vec<_>>();
 	};
 }
 

@@ -1,7 +1,7 @@
 //! Contains all tests that cover marshalling types to and from C++
 
 use opencv::core;
-use opencv::core::{Scalar, SparseMat, Tuple};
+use opencv::core::{CommandLineParser, Scalar, SparseMat, Tuple};
 use opencv::prelude::*;
 use opencv::Result;
 
@@ -273,3 +273,12 @@ fn tuple() -> Result<()> {
 // 	assert_eq!(mat.data_typed()?, mat_src.data_typed()?);
 // 	Ok(())
 // }
+
+#[test]
+fn string_array() -> Result<()> {
+	let args = ["test", "-a=b"];
+	let mut parser = CommandLineParser::new(i32::try_from(args.len())?, &args, "{a | | }")?;
+	assert!(parser.has("a")?);
+	assert_eq!("b", parser.get_str("a", true)?);
+	Ok(())
+}
