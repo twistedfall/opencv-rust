@@ -1,5 +1,6 @@
 use std::borrow::Cow;
 
+use super::{rust_arg_func_decl, rust_self_func_decl, RenderLaneTrait};
 use crate::field::Field;
 use crate::function::Function;
 use crate::type_ref::{Constness, ExternDir, FishStyle, TypeRef};
@@ -7,11 +8,9 @@ use crate::writer::rust_native::rust_disambiguate_names;
 use crate::writer::rust_native::type_ref::{Lifetime, TypeRefExt};
 use crate::{CppNameStyle, IteratorExt, NameStyle};
 
-use super::{rust_arg_func_decl, rust_self_func_decl, RenderLaneTrait};
-
 pub struct FunctionRenderLane<'tu, 'ge> {
-	pub non_canonical: TypeRef<'tu, 'ge>,
-	pub func: Function<'tu, 'ge>,
+	non_canonical: TypeRef<'tu, 'ge>,
+	func: Function<'tu, 'ge>,
 }
 
 impl<'tu, 'ge> FunctionRenderLane<'tu, 'ge> {

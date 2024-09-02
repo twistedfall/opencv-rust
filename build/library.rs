@@ -365,12 +365,12 @@ impl Library {
 		let mut cargo_metadata = opencv.cargo_metadata;
 
 		if link_paths.as_ref().map_or(false, |lp| !lp.is_extend()) {
-			cargo_metadata.retain(|p| !p.starts_with("cargo:rustc-link-search="));
+			cargo_metadata.retain(|p| !p.starts_with("cargo:rustc-link-search=") && !p.starts_with("cargo::rustc-link-search="));
 		}
 		cargo_metadata.extend(Self::process_link_paths(link_paths, vec![], None));
 
 		if link_libs.as_ref().map_or(false, |ll| !ll.is_extend()) {
-			cargo_metadata.retain(|p| !p.starts_with("cargo:rustc-link-lib="));
+			cargo_metadata.retain(|p| !p.starts_with("cargo:rustc-link-lib=") && !p.starts_with("cargo::rustc-link-lib="));
 		}
 		cargo_metadata.extend(Self::process_link_libs(link_libs, vec![], None));
 

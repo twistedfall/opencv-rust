@@ -4,6 +4,11 @@ use std::borrow::Cow::{Borrowed, Owned};
 pub use lifetime::{Lifetime, LifetimeIterator};
 pub use nullability::NullabilityExt;
 
+use super::element::RustElement;
+use super::renderer::{RustExternRenderer, RustRenderer, RustReturnRenderer};
+use super::smart_ptr::SmartPtrExt;
+use super::tuple::TupleExt;
+use super::vector::VectorExt;
 use crate::renderer::TypeRefRenderer;
 use crate::type_ref::{
 	Constness, Dir, ExternDir, FishStyle, InputOutputArrayKind, NameStyle, TypeRef, TypeRefKind, TypeRefTypeHint,
@@ -15,12 +20,6 @@ use crate::writer::rust_native::type_ref::render_lane::{
 	PrimitiveRenderLane, RenderLane, SimpleClassRenderLane, TraitClassRenderLane, VariableArrayRenderLane, VoidSliceRenderLane,
 };
 use crate::{CowMapBorrowedExt, StringExt};
-
-use super::element::RustElement;
-use super::renderer::{RustExternRenderer, RustRenderer, RustReturnRenderer};
-use super::smart_ptr::SmartPtrExt;
-use super::tuple::TupleExt;
-use super::vector::VectorExt;
 
 mod lifetime;
 mod nullability;
@@ -89,7 +88,7 @@ impl TypeRefExt for TypeRef<'_, '_> {
 					if inner.kind().extern_pass_kind().is_by_void_ptr() {
 						RenderLane::CppPassByVoidPtr(CppPassByVoidPtrRenderLane::from_non_canonical(self.clone()))
 					} else {
-						RenderLane::ByMove(ByMoveRenderLane::from_non_canonical_pointee(self.clone(), inner))
+						RenderLane::ByMove(ByMoveRenderLane::from_non_canonical(self.clone()))
 					}
 				}
 				kind => {
@@ -124,11 +123,7 @@ impl TypeRefExt for TypeRef<'_, '_> {
 						kind if kind.extern_pass_kind().is_by_void_ptr() => {
 							RenderLane::CppPassByVoidPtr(CppPassByVoidPtrRenderLane::from_non_canonical(self.clone()))
 						}
-						_ => RenderLane::Indirect(IndirectRenderLane::from_non_canonical_pointee_indirection(
-							self.clone(),
-							tref.into_owned(),
-							indirection,
-						)),
+						_ => RenderLane::Indirect(IndirectRenderLane::from_non_canonical_indirection(self.clone(), indirection)),
 					}
 				}
 			}

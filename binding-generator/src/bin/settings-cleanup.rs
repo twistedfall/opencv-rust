@@ -5,7 +5,6 @@ use std::path::{Path, PathBuf};
 use std::{env, fmt};
 
 use clang::{Entity, EntityKind};
-
 use opencv_binding_generator::{
 	opencv_module_from_path, settings, Class, EntityExt, EntityWalkerExt, EntityWalkerVisitor, Func, FuncId, Generator,
 	GeneratorEnv,

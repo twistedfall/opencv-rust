@@ -36,7 +36,7 @@ impl<'tu> Enum<'tu> {
 		self.entity.is_anonymous() || /* clang-6 quirk */ self.cpp_name(CppNameStyle::Declaration).starts_with("(anonymous enum")
 	}
 
-	pub fn as_typedefed(&self) -> Option<Entity> {
+	pub fn as_typedefed(&self) -> Option<Entity<'tu>> {
 		if matches!(self.entity.get_kind(), EntityKind::TypedefDecl | EntityKind::TypeAliasDecl) {
 			let mut child = None;
 			self.entity.walk_children_while(|c| {
@@ -49,7 +49,7 @@ impl<'tu> Enum<'tu> {
 		}
 	}
 
-	pub fn consts(&self) -> Vec<Const> {
+	pub fn consts(&self) -> Vec<Const<'tu>> {
 		let mut out = vec![];
 		self.as_typedefed().unwrap_or(self.entity).visit_children(|const_decl, _| {
 			if const_decl.get_kind() == EntityKind::EnumConstantDecl {

@@ -274,7 +274,7 @@ impl<'s> Iterator for LinesWithNl<'s> {
 			None
 		} else {
 			let slice = &self.string[self.idx..];
-			Some(if let Some(new_line_idx) = slice.find(|c| c == '\n') {
+			Some(if let Some(new_line_idx) = slice.find('\n') {
 				self.idx += new_line_idx + 1;
 				&slice[..=new_line_idx]
 			} else {

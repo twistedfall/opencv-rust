@@ -15,7 +15,7 @@ use crate::typedef::NewTypedefResult;
 use crate::writer::rust_native::element::RustElement;
 use crate::{
 	get_definition_text, line_reader, settings, AbstractRefWrapper, Class, ClassKindOverride, Const, Element, EntityExt,
-	EntityWalkerExt, EntityWalkerVisitor, Enum, Func, GeneratorEnv, LineReaderAction, SmartPtr, Tuple, Typedef, Vector,
+	EntityWalkerExt, EntityWalkerVisitor, Enum, Func, GeneratorEnv, SmartPtr, Tuple, Typedef, Vector,
 };
 
 #[derive(Debug)]
@@ -41,7 +41,7 @@ impl<'tu, 'ge> TryFrom<TypeRef<'tu, 'ge>> for GeneratedType<'tu, 'ge> {
 
 /// Visitor of the different supported OpenCV entities, used in conjunction with [Generator]
 #[allow(unused)]
-pub trait GeneratorVisitor {
+pub trait GeneratorVisitor<'tu>: Sized {
 	/// Check whether the visitor is interested in entities from the specified file
 	fn wants_file(&mut self, path: &Path) -> bool {
 		true
@@ -51,22 +51,25 @@ pub trait GeneratorVisitor {
 	fn visit_module_comment(&mut self, comment: String) {}
 
 	/// Top-level constant
-	fn visit_const(&mut self, cnst: Const) {}
+	fn visit_const(&mut self, cnst: Const<'tu>) {}
 
 	/// Top-level enum
-	fn visit_enum(&mut self, enm: Enum) {}
+	fn visit_enum(&mut self, enm: Enum<'tu>) {}
 
 	/// Top-level function
-	fn visit_func(&mut self, func: Func) {}
+	fn visit_func(&mut self, func: Func<'tu, '_>) {}
 
 	/// Top-level type alias
-	fn visit_typedef(&mut self, typedef: Typedef) {}
+	fn visit_typedef(&mut self, typedef: Typedef<'tu, '_>) {}
 
 	/// Top-level class or an internal class of another class
-	fn visit_class(&mut self, class: Class) {}
+	fn visit_class(&mut self, class: Class<'tu, '_>) {}
 
 	/// Dependent generated type like `std::vector<Mat>` or `std::tuple<1, 2, 3>`
-	fn visit_generated_type(&mut self, typ: GeneratedType) {}
+	fn visit_generated_type(&mut self, typ: GeneratedType<'tu, '_>) {}
+
+	/// Called at the end of the visitation
+	fn goodbye(self) {}
 }
 
 /// Bridge between [EntityWalkerVisitor] and [GeneratorVisitor]
@@ -74,13 +77,13 @@ pub trait GeneratorVisitor {
 /// It takes [Entity]s supplied by the entity walker, extracts their export data (whether the entity should appear in bindings at
 /// all or is internal) and calls the corresponding method in [GeneratorVisitor] based on their type. This is the 2nd pass of the
 /// binding generation.
-struct OpenCvWalker<'tu, 'r, V: GeneratorVisitor> {
+struct OpenCvWalker<'tu, 'r, V> {
 	opencv_module_header_dir: &'r Path,
 	visitor: V,
 	gen_env: GeneratorEnv<'tu>,
 }
 
-impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCvWalker<'tu, '_, V> {
+impl<'tu, V: GeneratorVisitor<'tu>> EntityWalkerVisitor<'tu> for OpenCvWalker<'tu, '_, V> {
 	fn wants_file(&mut self, path: &Path) -> bool {
 		self.visitor.wants_file(path) || path.ends_with("ocvrs_common.hpp")
 	}
@@ -148,9 +151,61 @@ impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCvWalker<'tu, '_
 		}
 		ControlFlow::Continue(())
 	}
+
+	fn goodbye(mut self) {
+		// Some module level comments like "bioinspired" are not attached to anything and libclang
+		// doesn't seem to offer a way to extract them, do it the hard way then.
+		// That's actually the case for all modules starting with OpenCV 4.8.0 so this is now a single
+		// method of extracting comments
+		let mut comment = String::with_capacity(2048);
+		let mut found_module_comment = false;
+		let module_path = self.opencv_module_header_dir.join(format!("{}.hpp", self.gen_env.module()));
+		if let Ok(module_file) = File::open(module_path) {
+			let f = BufReader::new(module_file);
+			let mut defgroup_found = false;
+			line_reader(f, |line| {
+				if !found_module_comment && line.trim_start().starts_with("/**") {
+					found_module_comment = true;
+					defgroup_found = false;
+				}
+				if found_module_comment {
+					if comment.contains("@defgroup") {
+						defgroup_found = true;
+					}
+					comment.push_str(line);
+					if line.trim_end().ends_with("*/") {
+						if defgroup_found {
+							return ControlFlow::Break(());
+						} else {
+							comment.clear();
+							found_module_comment = false;
+						}
+					}
+				}
+				ControlFlow::Continue(())
+			});
+		}
+		if found_module_comment {
+			self.visitor.visit_module_comment(comment);
+		}
+		for inject_func_fact in settings::FUNC_INJECT.get(self.gen_env.module()).into_iter().flatten() {
+			let inject_func: Func = inject_func_fact();
+			if !inject_func.kind().as_class_method().is_some() {
+				self.visitor.visit_func(inject_func);
+			}
+		}
+		if let Some(tweaks) = settings::GENERATOR_MODULE_TWEAKS.get(self.gen_env.module()) {
+			for generated in &tweaks.generate_types {
+				if let Ok(generated) = GeneratedType::try_from(generated()) {
+					self.visitor.visit_generated_type(generated);
+				}
+			}
+		}
+		self.visitor.goodbye();
+	}
 }
 
-impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
+impl<'tu, 'r, V: GeneratorVisitor<'tu>> OpenCvWalker<'tu, 'r, V> {
 	pub fn new(opencv_module_header_dir: &'r Path, visitor: V, gen_env: GeneratorEnv<'tu>) -> Self {
 		Self {
 			opencv_module_header_dir,
@@ -159,7 +214,7 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 		}
 	}
 
-	fn process_const(visitor: &mut V, const_decl: Entity) {
+	fn process_const(visitor: &mut V, const_decl: Entity<'tu>) {
 		let cnst = Const::new(const_decl);
 		if cnst.exclude_kind().is_included() {
 			visitor.visit_const(cnst);
@@ -202,7 +257,7 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 		}
 	}
 
-	fn process_enum(visitor: &mut V, enum_decl: Entity) {
+	fn process_enum(visitor: &mut V, enum_decl: Entity<'tu>) {
 		let enm = Enum::new(enum_decl);
 		if enm.exclude_kind().is_included() {
 			for cnst in enm.consts() {
@@ -288,57 +343,6 @@ impl<'tu, 'r, V: GeneratorVisitor> OpenCvWalker<'tu, 'r, V> {
 				}
 				NewTypedefResult::Class(_) | NewTypedefResult::Enum(_) => {
 					// don't generate those because libclang will also emit normal classes and enums too
-				}
-			}
-		}
-	}
-}
-
-impl<V: GeneratorVisitor> Drop for OpenCvWalker<'_, '_, V> {
-	fn drop(&mut self) {
-		// Some module level comments like "bioinspired" are not attached to anything and libclang
-		// doesn't seem to offer a way to extract them, do it the hard way then.
-		// That's actually the case for all modules starting with OpenCV 4.8.0 so this is now a single
-		// method of extracting comments
-		let mut comment = String::with_capacity(2048);
-		let module_path = self.opencv_module_header_dir.join(format!("{}.hpp", self.gen_env.module()));
-		let f = BufReader::new(File::open(module_path).expect("Can't open main module file"));
-		let mut found_module_comment = false;
-		let mut defgroup_found = false;
-		line_reader(f, |line| {
-			if !found_module_comment && line.trim_start().starts_with("/**") {
-				found_module_comment = true;
-				defgroup_found = false;
-			}
-			if found_module_comment {
-				if comment.contains("@defgroup") {
-					defgroup_found = true;
-				}
-				comment.push_str(line);
-				if line.trim_end().ends_with("*/") {
-					if defgroup_found {
-						return LineReaderAction::Break;
-					} else {
-						comment.clear();
-						found_module_comment = false;
-					}
-				}
-			}
-			LineReaderAction::Continue
-		});
-		if found_module_comment {
-			self.visitor.visit_module_comment(comment);
-		}
-		for inject_func_fact in settings::FUNC_INJECT.get(self.gen_env.module()).into_iter().flatten() {
-			let inject_func: Func = inject_func_fact();
-			if !inject_func.kind().as_class_method().is_some() {
-				self.visitor.visit_func(inject_func);
-			}
-		}
-		if let Some(tweaks) = settings::GENERATOR_MODULE_TWEAKS.get(self.gen_env.module()) {
-			for generated in &tweaks.generate_types {
-				if let Ok(generated) = GeneratedType::try_from(generated()) {
-					self.visitor.visit_generated_type(generated);
 				}
 			}
 		}
@@ -436,9 +440,9 @@ impl Generator {
 		// need to have c++14 here because VS headers contain features that require it
 		args.push("-std=c++14".into());
 		// allow us to use some custom clang args
-		if let Some(clang_arg_str) = env::var_os("OPENCV_CLANG_ARGS") {
-			let clang_arg = clang_arg_str.to_str().expect("Try to get OPENCV_CLANG_ARGS failed.");
-			Shlex::new(clang_arg).into_iter().for_each(|i| args.push(i.into()))
+		let clang_arg = env::var_os("OPENCV_CLANG_ARGS");
+		if let Some(clang_arg) = clang_arg.as_ref().and_then(|s| s.to_str()) {
+			args.extend(Shlex::new(clang_arg).map(Cow::Owned));
 		}
 		args
 	}
@@ -462,7 +466,7 @@ impl Generator {
 	}
 
 	/// Runs the full binding generation process using the supplied `visitor`
-	pub fn generate(&self, module: &str, visitor: impl GeneratorVisitor) {
+	pub fn generate(&self, module: &str, visitor: impl for<'tu> GeneratorVisitor<'tu>) {
 		self.pre_process(module, true, |root_entity| {
 			let gen_env = GeneratorEnv::new(root_entity, module);
 			let opencv_walker = OpenCvWalker::new(&self.opencv_module_header_dir, visitor, gen_env);

@@ -10,7 +10,9 @@ use crate::writer::rust_native::type_ref::Lifetime;
 #[derive(Clone, Debug, PartialEq)]
 pub enum TypeRefTypeHint {
 	None,
+	/// This argument should be wrapped in an `Option` on Rust side
 	Nullable,
+	/// Treat this pointer argument as `Option`al slice
 	NullableSlice,
 	/// Treat this pointer argument as slice
 	Slice,

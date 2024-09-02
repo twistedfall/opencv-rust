@@ -1,15 +1,14 @@
 use std::borrow::Cow;
 
+use super::{rust_arg_func_decl, Indirection, RenderLaneTrait};
 use crate::type_ref::{Constness, ExternDir, FishStyle, TypeRef};
 use crate::writer::rust_native::type_ref::{Lifetime, NullabilityExt, TypeRefExt};
 use crate::{CppNameStyle, NameStyle};
 
-use super::{rust_arg_func_decl, Indirection, RenderLaneTrait};
-
 pub struct SimpleClassRenderLane<'tu, 'ge> {
-	pub(crate) non_canonical: TypeRef<'tu, 'ge>,
-	pub(crate) indirection: Indirection,
-	pub(crate) constness: Constness,
+	non_canonical: TypeRef<'tu, 'ge>,
+	indirection: Indirection,
+	constness: Constness,
 }
 
 impl<'tu, 'ge> SimpleClassRenderLane<'tu, 'ge> {

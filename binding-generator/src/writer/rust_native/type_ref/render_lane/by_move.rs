@@ -1,19 +1,17 @@
 use std::borrow::Cow;
 
+use super::{rust_arg_func_decl, rust_self_func_decl, RenderLaneTrait};
 use crate::type_ref::{Constness, ExternDir, FishStyle, TypeRef};
 use crate::writer::rust_native::type_ref::{Lifetime, TypeRefExt};
 use crate::{CppNameStyle, NameStyle};
 
-use super::{rust_arg_func_decl, rust_self_func_decl, RenderLaneTrait};
-
 pub struct ByMoveRenderLane<'tu, 'ge> {
-	pub non_canonical: TypeRef<'tu, 'ge>,
-	pub pointee: TypeRef<'tu, 'ge>,
+	non_canonical: TypeRef<'tu, 'ge>,
 }
 
 impl<'tu, 'ge> ByMoveRenderLane<'tu, 'ge> {
-	pub fn from_non_canonical_pointee(non_canonical: TypeRef<'tu, 'ge>, pointee: TypeRef<'tu, 'ge>) -> Self {
-		Self { non_canonical, pointee }
+	pub fn from_non_canonical(non_canonical: TypeRef<'tu, 'ge>) -> Self {
+		Self { non_canonical }
 	}
 }
 

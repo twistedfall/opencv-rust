@@ -1,7 +1,7 @@
 use std::borrow::Cow;
-use Cow::{Borrowed, Owned};
 
 use clang::TypeKind;
+use Cow::{Borrowed, Owned};
 
 use crate::function::Function;
 use crate::smart_ptr::SmartPtr;

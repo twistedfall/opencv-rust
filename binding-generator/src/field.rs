@@ -43,14 +43,20 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 		Self::Desc(Rc::new(desc))
 	}
 
-	pub(crate) fn to_desc(&self) -> Rc<FieldDesc<'tu, 'ge>> {
+	pub(crate) fn to_desc(&self, new_typeref: Option<TypeRef<'tu, 'ge>>) -> Rc<FieldDesc<'tu, 'ge>> {
 		match self {
-			Self::Clang { type_ref_type_hint, .. } => Rc::new(FieldDesc {
+			Self::Clang { .. } => Rc::new(FieldDesc {
 				cpp_fullname: self.cpp_name(CppNameStyle::Reference).into(),
-				type_ref: self.type_ref().into_owned().with_type_hint(type_ref_type_hint.clone()), // todo: add an option to avoid inheriting type_ref
+				type_ref: new_typeref.unwrap_or_else(|| self.type_ref().into_owned()),
 				default_value: self.default_value().map(Rc::from),
 			}),
-			Self::Desc(desc) => Rc::clone(desc),
+			Self::Desc(desc) => {
+				let mut out = Rc::clone(desc);
+				if let Some(new_typeref) = new_typeref {
+					Rc::make_mut(&mut out).type_ref = new_typeref;
+				}
+				out
+			}
 		}
 	}
 
@@ -88,9 +94,7 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 				..
 			} => {
 				let type_ref_type_hint = type_ref_type_hint.clone().something_or_else(|| {
-					let default_value_string = self
-						.default_value()
-						.map_or(false, |def| def.contains(|c| c == '"' || c == '\''));
+					let default_value_string = self.default_value().map_or(false, |def| def.contains(['"', '\'']));
 					if default_value_string {
 						TypeRefTypeHint::CharAsRustChar
 					} else {
@@ -108,10 +112,16 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 		}
 	}
 
-	pub fn with_type_ref(&self, type_ref: TypeRef<'tu, 'ge>) -> Self {
-		let mut desc = self.to_desc();
-		Rc::make_mut(&mut desc).type_ref = type_ref;
-		Self::Desc(desc)
+	pub fn with_type_ref(mut self, type_ref: TypeRef<'tu, 'ge>) -> Self {
+		self.set_type_ref(type_ref);
+		self
+	}
+
+	pub fn set_type_ref(&mut self, type_ref: TypeRef<'tu, 'ge>) {
+		match self {
+			Self::Clang { .. } => *self = Self::Desc(self.to_desc(Some(type_ref))),
+			Self::Desc(desc) => Rc::make_mut(desc).type_ref = type_ref,
+		}
 	}
 
 	pub fn constness(&self) -> Constness {

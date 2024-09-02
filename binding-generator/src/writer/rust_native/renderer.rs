@@ -7,8 +7,7 @@ use crate::type_ref::{
 };
 use crate::writer::rust_native::element::RustElement;
 use crate::writer::rust_native::function::FunctionExt;
-use crate::writer::rust_native::type_ref::TypeRefExt;
-use crate::writer::rust_native::type_ref::{Lifetime, NullabilityExt};
+use crate::writer::rust_native::type_ref::{Lifetime, NullabilityExt, TypeRefExt};
 use crate::{settings, CowMapBorrowedExt, Element};
 
 fn render_rust_tpl<'a>(renderer: impl TypeRefRenderer<'a>, type_ref: &TypeRef, fish_style: FishStyle) -> String {

@@ -4,16 +4,15 @@ use std::iter;
 
 use once_cell::sync::Lazy;
 
+use super::element::{DefaultRustNativeElement, RustElement};
+use super::type_ref::TypeRefExt;
+use super::RustNativeGeneratedElement;
 use crate::class::ClassKind;
 use crate::debug::NameDebug;
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
 use crate::type_ref::{Constness, CppNameStyle, ExternDir, FishStyle, NameStyle, TypeRef};
 use crate::writer::rust_native::func::{cpp_return_map, FuncExt};
 use crate::{settings, Class, CompiledInterpolation, Element, Func, IteratorExt, NamePool, StrExt};
-
-use super::element::{DefaultRustNativeElement, RustElement};
-use super::type_ref::TypeRefExt;
-use super::RustNativeGeneratedElement;
 
 fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 	static BOXED_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/class/boxed.tpl.rs").compile_interpolation());
@@ -144,12 +143,16 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			(
 				"rust_extern_const",
 				type_ref
+					.clone()
 					.with_inherent_constness(Constness::Const)
 					.rust_extern(ExternDir::ToCpp),
 			),
 			(
 				"rust_extern_mut",
-				type_ref.with_inherent_constness(Constness::Mut).rust_extern(ExternDir::ToCpp),
+				type_ref
+					.clone()
+					.with_inherent_constness(Constness::Mut)
+					.rust_extern(ExternDir::ToCpp),
 			),
 			("trait_bases_const", trait_bases_const.into()),
 			("trait_bases_mut", trait_bases_mut.into()),
@@ -231,6 +234,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 				(
 					"base_rust_extern_const",
 					base_type_ref
+						.clone()
 						.with_inherent_constness(Constness::Const)
 						.rust_extern(ExternDir::ToCpp),
 				),
@@ -317,6 +321,7 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 		(
 			"rust_extern_const",
 			type_ref
+				.clone()
 				.with_inherent_constness(Constness::Const)
 				.rust_extern(ExternDir::ToCpp),
 		),

@@ -16,3 +16,7 @@ tab_spaces = 3
 use_field_init_shorthand = true
 use_small_heuristics = "Default"
 use_try_shorthand = true
+
+# nightly options
+imports_granularity = "Module"
+group_imports = "StdExternalCrate"

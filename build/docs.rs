@@ -8,11 +8,11 @@ pub fn handle_running_in_docsrs() -> GenerateFullBindings {
 	if env::var_os("DOCS_RS").is_some() {
 		let docs_dir = MANIFEST_DIR.join("docs");
 		// fake setup for docs.rs
-		println!(r#"cargo:rustc-cfg=ocvrs_opencv_branch_4"#);
+		println!("cargo:rustc-cfg=ocvrs_opencv_branch_4"); // replace with cargo:: syntax when MSRV is 1.77
 		transfer_bindings_from_docs(&docs_dir, &OUT_DIR);
 		for path in files_with_extension(&docs_dir, "rs").expect("Can't read hub dir") {
 			if let Some(module) = path.file_stem().and_then(OsStr::to_str) {
-				println!("cargo:rustc-cfg=ocvrs_has_module_{module}");
+				println!("cargo:rustc-cfg=ocvrs_has_module_{module}"); // replace with cargo:: syntax when MSRV is 1.77
 			}
 		}
 		GenerateFullBindings::Stop

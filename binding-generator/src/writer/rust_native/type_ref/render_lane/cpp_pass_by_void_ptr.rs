@@ -1,11 +1,10 @@
 use std::borrow::Cow;
 use std::borrow::Cow::{Borrowed, Owned};
 
+use super::{rust_arg_func_decl, rust_self_func_decl, RenderLaneTrait};
 use crate::type_ref::{Constness, ExternDir, FishStyle, TypeRef};
 use crate::writer::rust_native::type_ref::{Lifetime, NullabilityExt, TypeRefExt};
 use crate::{CowMapBorrowedExt, CppNameStyle, NameStyle};
-
-use super::{rust_arg_func_decl, rust_self_func_decl, RenderLaneTrait};
 
 pub struct CppPassByVoidPtrRenderLane<'tu, 'ge> {
 	non_canonical: TypeRef<'tu, 'ge>,
@@ -47,7 +46,10 @@ impl RenderLaneTrait for CppPassByVoidPtrRenderLane<'_, '_> {
 			Borrowed(&self.non_canonical)
 		} else {
 			Owned(TypeRef::new_pointer(
-				self.non_canonical.with_inherent_constness(self.non_canonical.constness()),
+				self
+					.non_canonical
+					.clone()
+					.with_inherent_constness(self.non_canonical.constness()),
 			))
 		};
 		typ.map_borrowed(|typ| typ.cpp_name_ext(CppNameStyle::Reference, name, true))
@@ -56,7 +58,7 @@ impl RenderLaneTrait for CppPassByVoidPtrRenderLane<'_, '_> {
 	fn cpp_arg_func_call(&self, name: &str) -> String {
 		let kind = self.non_canonical.kind();
 		let name = if kind.as_pointer().is_some() {
-			Cow::Borrowed(name)
+			Borrowed(name)
 		} else {
 			format!("*{name}").into()
 		};

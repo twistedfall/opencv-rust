@@ -176,8 +176,9 @@ fn main() -> Result<()> {
 }
 
 fn state_transform(drawing_state: DrawingState, mouse_event: highgui::MouseEventTypes) -> DrawingState {
-	use self::DrawingState::*;
 	use opencv::highgui::MouseEventTypes::*;
+
+	use self::DrawingState::*;
 
 	match (&drawing_state, mouse_event) {
 		(Init, EVENT_LBUTTONDOWN) => DrawingMarkerPoint,

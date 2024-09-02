@@ -17,10 +17,10 @@ extern crate core;
 use std::borrow::Cow;
 use std::fs::File;
 use std::io::{BufRead, Read, Seek, SeekFrom};
-
-use clang::Entity;
+use std::ops::ControlFlow;
 
 pub use abstract_ref_wrapper::AbstractRefWrapper;
+use clang::Entity;
 pub use class::Class;
 pub use constant::Const;
 pub use element::{is_opencv_path, opencv_module_from_path, DefaultElement, Element, EntityElement};
@@ -101,19 +101,14 @@ fn reserved_rename(val: Cow<str>) -> Cow<str> {
 	}
 }
 
-pub enum LineReaderAction {
-	Continue,
-	Break,
-}
-
 #[inline(always)]
-pub fn line_reader(mut b: impl BufRead, mut cb: impl FnMut(&str) -> LineReaderAction) {
+pub fn line_reader(mut b: impl BufRead, mut cb: impl FnMut(&str) -> ControlFlow<()>) {
 	let mut line = String::with_capacity(256);
 	while let Ok(bytes_read) = b.read_line(&mut line) {
 		if bytes_read == 0 {
 			break;
 		}
-		if matches!(cb(&line), LineReaderAction::Break) {
+		if cb(&line).is_break() {
 			break;
 		}
 		line.clear();

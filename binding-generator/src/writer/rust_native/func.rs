@@ -2,10 +2,14 @@ use std::borrow::Cow;
 use std::collections::HashMap;
 use std::fmt::Write;
 use std::rc::Rc;
-use Cow::{Borrowed, Owned};
 
 use once_cell::sync::Lazy;
+use Cow::{Borrowed, Owned};
 
+use super::comment::{render_ref, RenderComment};
+use super::element::{DefaultRustNativeElement, RustElement};
+use super::type_ref::{Lifetime, TypeRefExt};
+use super::{comment, rust_disambiguate_names, RustNativeGeneratedElement};
 use crate::field::Field;
 use crate::func::{FuncCppBody, FuncKind, FuncRustBody, FuncRustExtern, InheritConfig, OperatorKind, ReturnKind, Safety};
 use crate::name_pool::NamePool;
@@ -14,11 +18,6 @@ use crate::type_ref::{Constness, CppNameStyle, ExternDir, FishStyle, NameStyle, 
 use crate::{
 	reserved_rename, settings, CompiledInterpolation, CowMapBorrowedExt, Element, Func, IteratorExt, NameDebug, StrExt, StringExt,
 };
-
-use super::comment::{render_ref, RenderComment};
-use super::element::{DefaultRustNativeElement, RustElement};
-use super::type_ref::{Lifetime, TypeRefExt};
-use super::{comment, rust_disambiguate_names, RustNativeGeneratedElement};
 
 pub trait FuncExt<'tu, 'ge> {
 	fn companion_functions(&self) -> Vec<Func<'tu, 'ge>>;
@@ -235,6 +234,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		let mut callback_arg_name: Option<&str> = None;
 		for (name, arg) in &args {
 			let arg_type_ref = arg.type_ref();
+			let arg_as_slice_len = arg_type_ref.type_hint().as_slice_len();
 			let arg_kind = arg_type_ref.kind();
 			let render_lane = arg_type_ref.render_lane();
 			let render_lane = render_lane.to_dyn();
@@ -250,7 +250,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 				if arg_kind.is_function() {
 					callback_arg_name = Some(name);
 				}
-				if !arg_type_ref.type_hint().as_slice_len().is_some() {
+				if !arg_as_slice_len.is_some() {
 					let lt = boxed_ref_arg
 						.filter(|(_, boxed_arg_name, _)| *boxed_arg_name == name)
 						.map_or(Lifetime::Elided, |(_, _, lt)| lt);
@@ -261,7 +261,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 					&mut pre_call_args,
 				);
 			}
-			if let Some((slice_args, len_div)) = arg_type_ref.type_hint().as_slice_len() {
+			if let Some((slice_args, len_div)) = arg_as_slice_len {
 				let arg_is_size_t = arg_kind.is_size_t();
 				let mut slice_len_call = String::new();
 				for slice_arg in slice_args {
@@ -460,7 +460,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		} else {
 			return_type_ref.cpp_extern_return_fallible()
 		};
-		let return_type_ref_mut = return_type_ref.with_inherent_constness(Constness::Mut);
+		let return_type_ref_mut = return_type_ref.as_ref().clone().with_inherent_constness(Constness::Mut);
 		let ret_wrapper_full_mut = if return_kind.is_infallible() {
 			return_type_ref_mut.cpp_extern_return()
 		} else {
@@ -928,10 +928,10 @@ fn companion_func_boxref_mut<'tu, 'ge>(f: &Func<'tu, 'ge>) -> Option<Func<'tu, '
 						.as_pointer_reference_move()
 						.map_or(false, |ptr_or_ref| ptr_or_ref.kind().as_class().is_some());
 				if borrow_arg_is_const {
-					*borrow_arg = borrow_arg.with_type_ref(
+					*borrow_arg = borrow_arg.clone().with_type_ref(
 						borrow_arg
 							.type_ref()
-							.map_ptr_ref(|inner| inner.with_inherent_constness(Constness::Mut)),
+							.map_ptr_ref(|inner| inner.clone().with_inherent_constness(Constness::Mut)),
 					);
 				}
 			}
@@ -941,7 +941,7 @@ fn companion_func_boxref_mut<'tu, 'ge>(f: &Func<'tu, 'ge>) -> Option<Func<'tu, '
 				desc_mut.arguments = args.into();
 			}
 			desc_mut.rust_custom_leafname = Some(format!("{}_mut", f.rust_leafname(FishStyle::No)).into());
-			desc_mut.return_type_ref = desc_mut.return_type_ref.with_inherent_constness(Constness::Mut);
+			desc_mut.return_type_ref.set_inherent_constness(Constness::Mut);
 			Some(Func::Desc(desc))
 		} else {
 			None

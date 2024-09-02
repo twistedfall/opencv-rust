@@ -8,6 +8,7 @@ use opencv::core::{
 };
 use opencv::prelude::*;
 use opencv::{core, imgproc, Error, Result};
+
 const PIXEL: &[u8] = include_bytes!("pixel.png");
 
 #[test]

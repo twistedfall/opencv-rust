@@ -3,6 +3,10 @@ use std::collections::HashMap;
 
 use once_cell::sync::Lazy;
 
+use super::class::ClassExt;
+use super::element::{DefaultRustNativeElement, RustElement};
+use super::type_ref::TypeRefExt;
+use super::RustNativeGeneratedElement;
 use crate::class::ClassDesc;
 use crate::field::{Field, FieldDesc};
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
@@ -10,11 +14,6 @@ use crate::smart_ptr::SmartPtrDesc;
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle, TypeRef, TypeRefKind};
 use crate::writer::rust_native::class::rust_generate_debug_fields;
 use crate::{Class, CompiledInterpolation, CowMapBorrowedExt, Element, Func, IteratorExt, SmartPtr, StrExt, StringExt};
-
-use super::class::ClassExt;
-use super::element::{DefaultRustNativeElement, RustElement};
-use super::type_ref::TypeRefExt;
-use super::RustNativeGeneratedElement;
 
 impl RustElement for SmartPtr<'_, '_> {
 	fn rust_module(&self) -> Cow<str> {
@@ -83,10 +82,16 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		let type_ref = self.type_ref();
 		let smartptr_class = smartptr_class(&type_ref);
 
-		let extern_get_inner_ptr =
-			method_get_inner_ptr(smartptr_class.clone(), pointee_type.with_inherent_constness(Constness::Const)).identifier();
-		let extern_get_inner_ptr_mut =
-			method_get_inner_ptr(smartptr_class.clone(), pointee_type.with_inherent_constness(Constness::Mut)).identifier();
+		let extern_get_inner_ptr = method_get_inner_ptr(
+			smartptr_class.clone(),
+			pointee_type.as_ref().clone().with_inherent_constness(Constness::Const),
+		)
+		.identifier();
+		let extern_get_inner_ptr_mut = method_get_inner_ptr(
+			smartptr_class.clone(),
+			pointee_type.as_ref().clone().with_inherent_constness(Constness::Mut),
+		)
+		.identifier();
 
 		let mut impls = String::new();
 		if let Some(cls) = pointee_kind.as_class().filter(|cls| cls.kind().is_trait()) {
@@ -186,11 +191,11 @@ fn extern_functions<'tu, 'ge>(ptr: &SmartPtr<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
 	let mut out = Vec::with_capacity(6);
 	out.push(method_get_inner_ptr(
 		smartptr_class.clone(),
-		pointee_type.with_inherent_constness(Constness::Const),
+		pointee_type.as_ref().clone().with_inherent_constness(Constness::Const),
 	));
 	out.push(method_get_inner_ptr(
 		smartptr_class.clone(),
-		pointee_type.with_inherent_constness(Constness::Mut),
+		pointee_type.as_ref().clone().with_inherent_constness(Constness::Mut),
 	));
 	out.push(FuncDesc::method_delete(smartptr_class.clone()));
 	if let Some(cls) = pointee_kind.as_class().filter(|cls| cls.kind().is_trait()) {

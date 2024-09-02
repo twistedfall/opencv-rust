@@ -6,7 +6,7 @@ use clang::{Entity, EntityKind, EntityVisitResult};
 use crate::entity::ControlFlowExt;
 
 /// Visitor to be used in conjunction with [EntityWalker]
-pub trait EntityWalkerVisitor<'tu> {
+pub trait EntityWalkerVisitor<'tu>: Sized {
 	/// Check whether the visitor is interested in entities from the specified file
 	#[allow(unused)]
 	fn wants_file(&mut self, path: &Path) -> bool {
@@ -15,6 +15,9 @@ pub trait EntityWalkerVisitor<'tu> {
 
 	/// Pass a supported [Entity] to the visitor
 	fn visit_entity(&mut self, entity: Entity<'tu>) -> ControlFlow<()>;
+
+	/// Called at the end of the visitation
+	fn goodbye(self) {}
 }
 
 /// Trait to recursively visit every clang [Entity] supported by the OpenCV binding generator
@@ -63,6 +66,7 @@ impl<'tu> EntityWalkerExt<'tu> for Entity<'tu> {
 				EntityVisitResult::Continue
 			}
 		});
+		visitor.goodbye();
 	}
 }
 

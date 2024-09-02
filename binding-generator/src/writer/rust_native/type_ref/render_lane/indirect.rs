@@ -1,30 +1,23 @@
 use std::borrow::Cow;
 
+use super::{rust_arg_func_decl, rust_self_func_decl, Indirection, RenderLaneTrait};
 use crate::type_ref::{Constness, ExternDir, FishStyle, TypeRef};
 use crate::writer::rust_native::type_ref::{Lifetime, NullabilityExt, TypeRefExt};
 use crate::{CppNameStyle, NameStyle};
 
-use super::{rust_arg_func_decl, rust_self_func_decl, Indirection, RenderLaneTrait};
-
 pub struct IndirectRenderLane<'tu, 'ge> {
-	pub non_canonical: TypeRef<'tu, 'ge>,
-	pub pointee: TypeRef<'tu, 'ge>,
-	pub indirection: Indirection,
+	non_canonical: TypeRef<'tu, 'ge>,
+	indirection: Indirection,
 }
 
 impl<'tu, 'ge> IndirectRenderLane<'tu, 'ge> {
-	pub fn from_non_canonical_pointee_indirection(
-		non_canonical: TypeRef<'tu, 'ge>,
-		pointee: TypeRef<'tu, 'ge>,
-		indirection: Indirection,
-	) -> Self {
+	pub fn from_non_canonical_indirection(non_canonical: TypeRef<'tu, 'ge>, indirection: Indirection) -> Self {
 		assert!(
 			matches!(indirection, Indirection::Pointer | Indirection::Reference),
 			"Can't build IndirectRenderLane from Indirection::None"
 		);
 		Self {
 			non_canonical,
-			pointee,
 			indirection,
 		}
 	}

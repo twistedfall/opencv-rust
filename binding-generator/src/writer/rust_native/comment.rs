@@ -286,9 +286,8 @@ pub fn render_ref<'r>(referenced: &'r Func, force_cpp_name: Option<&'r str>) -> 
 
 #[cfg(test)]
 mod test {
-	use crate::comment::strip_doxygen_comment_markers;
-
 	use super::RenderComment;
+	use crate::comment::strip_doxygen_comment_markers;
 
 	#[test]
 	fn test_render_doc_comment() {
@@ -487,6 +486,15 @@ test"
 				attributes: vec!["#[deprecated = \"test\"]".to_string()],
 			};
 			assert_eq!(res, RenderComment::new(&strip_doxygen_comment_markers(comment), "master"));
+		}
+
+		{
+			let comment = "";
+			let res = RenderComment {
+				comment: "".to_string(),
+				attributes: vec![],
+			};
+			assert_eq!(res, RenderComment::new(comment, "master"))
 		}
 	}
 

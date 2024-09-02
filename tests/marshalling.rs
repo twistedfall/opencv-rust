@@ -1,9 +1,8 @@
 //! Contains all tests that cover marshalling types to and from C++
 
-use opencv::core;
 use opencv::core::{CommandLineParser, Scalar, SparseMat, Tuple};
 use opencv::prelude::*;
-use opencv::Result;
+use opencv::{core, Result};
 
 /// Passing simple struct as argument
 #[test]
@@ -147,10 +146,9 @@ fn string_return() -> Result<()> {
 #[test]
 fn string_out_argument() -> Result<()> {
 	#![cfg(ocvrs_opencv_branch_4)]
+	use matches::assert_matches;
 	use opencv::core::{FileNode, FileStorage, FileStorage_Mode};
 	use opencv::Error;
-
-	use matches::assert_matches;
 
 	{
 		let mut st = FileStorage::new_def(
@@ -188,10 +186,8 @@ fn string_out_argument() -> Result<()> {
 #[test]
 fn simple_struct_return_infallible() -> Result<()> {
 	#![cfg(ocvrs_has_module_imgproc)]
-	use opencv::{
-		core::{Point2f, Rect, Size2f, Vector},
-		imgproc,
-	};
+	use opencv::core::{Point2f, Rect, Size2f, Vector};
+	use opencv::imgproc;
 	/*
 	There previously was an issue that return of the small simple structs like Point2f (2 floats, 64 bits in total) was handled
 	differently by Rust (v1.57.0) and default compilers in Ubuntu 20.04 (Gcc 9.3.0 & Clang 10.0.0). That mismatch led to

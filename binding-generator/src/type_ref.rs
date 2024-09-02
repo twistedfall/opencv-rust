@@ -1,24 +1,24 @@
 use std::borrow::Cow;
 use std::fmt;
 use std::rc::Rc;
-use Cow::{Borrowed, Owned};
 
 use clang::{Entity, Type};
-
 pub use desc::{ClangTypeExt, TypeRefDesc};
 pub use kind::{InputOutputArrayKind, TypeRefKind};
 pub use types::{
 	dbg_clang_type, Constness, CppNameStyle, Dir, ExternDir, FishStyle, NameStyle, Nullability, StrEnc, StrType, TemplateArg,
 	TypeRefTypeHint,
 };
+use Cow::{Borrowed, Owned};
 
 use crate::class::{ClassDesc, TemplateKind};
 use crate::element::ExcludeKind;
 use crate::renderer::{CppExternReturnRenderer, CppRenderer, TypeRefRenderer};
 use crate::vector::VectorDesc;
 use crate::writer::rust_native::type_ref::TypeRefExt;
-use crate::{settings, AbstractRefWrapper, ClassKindOverride, ExportConfig};
-use crate::{Class, Element, GeneratedType, GeneratorEnv, SmartPtr, Vector};
+use crate::{
+	settings, AbstractRefWrapper, Class, ClassKindOverride, Element, ExportConfig, GeneratedType, GeneratorEnv, SmartPtr, Vector,
+};
 
 mod desc;
 mod kind;
@@ -132,10 +132,9 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 	}
 
-	pub fn with_type_hint(self, type_hint: TypeRefTypeHint) -> Self {
-		let mut out = self;
-		out.set_type_hint(type_hint);
-		out
+	pub fn with_type_hint(mut self, type_hint: TypeRefTypeHint) -> Self {
+		self.set_type_hint(type_hint);
+		self
 	}
 
 	pub fn set_type_hint(&mut self, type_hint: TypeRefTypeHint) {
@@ -338,10 +337,9 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		}
 	}
 
-	pub fn with_inherent_constness(&self, constness: Constness) -> Self {
-		let mut out = self.clone();
-		out.set_inherent_constness(constness);
-		out
+	pub fn with_inherent_constness(mut self, constness: Constness) -> Self {
+		self.set_inherent_constness(constness);
+		self
 	}
 
 	pub fn is_data_type(&self) -> bool {
@@ -379,7 +377,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 								// * we can't use get_canonical_type() because it resolves into compiler dependent inner type like
 								//   std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>
 								// * we can't generate both vector<cv::String> and vector<std::string> because for OpenCV 4
-								//   cv::String is an typedef to std::string and it would lead to duplicate definition error
+								//   cv::String is a typedef to std::string, and it would lead to duplicate definition error
 								// That's why we try to resolve both types and check if they are the same, if they are we only generate
 								// vector<std::string> if not - both.
 								out.push(GeneratedType::Vector(VectorDesc::vector_of_cv_string()));

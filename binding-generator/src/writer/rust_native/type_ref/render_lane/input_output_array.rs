@@ -1,11 +1,10 @@
 use std::borrow::Cow;
 use std::borrow::Cow::{Borrowed, Owned};
 
+use super::{rust_arg_func_decl, rust_self_func_decl, void_ptr_rust_arg_func_call, RenderLaneTrait};
 use crate::type_ref::{Constness, ExternDir, TypeRef};
 use crate::writer::rust_native::type_ref::{Lifetime, TypeRefExt};
 use crate::{CowMapBorrowedExt, CppNameStyle};
-
-use super::{rust_arg_func_decl, rust_self_func_decl, void_ptr_rust_arg_func_call, RenderLaneTrait};
 
 pub struct InputArrayRenderLane<'tu, 'ge> {
 	canonical: TypeRef<'tu, 'ge>,
@@ -43,7 +42,7 @@ impl RenderLaneTrait for InputArrayRenderLane<'_, '_> {
 			Borrowed(&self.canonical)
 		} else {
 			Owned(TypeRef::new_pointer(
-				self.canonical.with_inherent_constness(self.canonical.constness()),
+				self.canonical.clone().with_inherent_constness(self.canonical.constness()),
 			))
 		};
 		typ.map_borrowed(|typ| typ.cpp_name_ext(CppNameStyle::Reference, name, true))
@@ -91,7 +90,7 @@ impl RenderLaneTrait for OutputArrayRenderLane<'_, '_> {
 			Borrowed(&self.canonical)
 		} else {
 			Owned(TypeRef::new_pointer(
-				self.canonical.with_inherent_constness(self.canonical.constness()),
+				self.canonical.clone().with_inherent_constness(self.canonical.constness()),
 			))
 		};
 		typ.map_borrowed(|typ| typ.cpp_name_ext(CppNameStyle::Reference, name, true))
@@ -139,7 +138,7 @@ impl RenderLaneTrait for InputOutputArrayRenderLane<'_, '_> {
 			Borrowed(&self.canonical)
 		} else {
 			Owned(TypeRef::new_pointer(
-				self.canonical.with_inherent_constness(self.canonical.constness()),
+				self.canonical.clone().with_inherent_constness(self.canonical.constness()),
 			))
 		};
 		typ.map_borrowed(|typ| typ.cpp_name_ext(CppNameStyle::Reference, name, true))

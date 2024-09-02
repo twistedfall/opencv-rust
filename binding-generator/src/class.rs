@@ -6,7 +6,6 @@ use std::rc::Rc;
 use std::{fmt, iter};
 
 use clang::{Accessibility, Entity, EntityKind};
-
 pub use desc::ClassDesc;
 
 use crate::comment::strip_doxygen_comment_markers;
@@ -448,7 +447,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 									def_loc: fld.file_line_name().location,
 									rust_generic_decls: Rc::new([]),
 									arguments: Rc::new([]),
-									return_type_ref: fld_type_ref.with_inherent_constness(Constness::Const),
+									return_type_ref: fld_type_ref.as_ref().clone().with_inherent_constness(Constness::Const),
 									cpp_body: FuncCppBody::ManualCall("{{name}}".into()),
 									rust_body: FuncRustBody::Auto,
 									rust_extern_definition: FuncRustExtern::Auto,
@@ -470,7 +469,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 									def_loc: fld.file_line_name().location,
 									rust_generic_decls: Rc::new([]),
 									arguments: Rc::new([]),
-									return_type_ref: fld_type_ref.with_inherent_constness(Constness::Mut),
+									return_type_ref: fld_type_ref.as_ref().clone().with_inherent_constness(Constness::Mut),
 									cpp_body: FuncCppBody::ManualCall("{{name}}".into()),
 									rust_body: FuncRustBody::Auto,
 									rust_extern_definition: FuncRustExtern::Auto,
@@ -521,7 +520,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 								rust_generic_decls: Rc::new([]),
 								arguments: Rc::new([Field::new_desc(FieldDesc {
 									cpp_fullname: "val".into(),
-									type_ref: fld_type_ref.with_inherent_constness(Constness::Const),
+									type_ref: fld_type_ref.as_ref().clone().with_inherent_constness(Constness::Const),
 									default_value: fld.default_value().map(|v| v.into()),
 								})]),
 								return_kind: ReturnKind::InfallibleNaked,

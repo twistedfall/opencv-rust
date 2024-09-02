@@ -6,13 +6,12 @@ use std::io::{BufRead, BufReader};
 use std::path::{Path, PathBuf};
 use std::time::Instant;
 
-use once_cell::sync::{Lazy, OnceCell};
-use semver::{Version, VersionReq};
-
 use binding_generator::handle_running_binding_generator;
 use docs::handle_running_in_docsrs;
 use generator::BindingGenerator;
 use library::Library;
+use once_cell::sync::{Lazy, OnceCell};
+use semver::{Version, VersionReq};
 
 #[path = "build/binding-generator.rs"]
 mod binding_generator;
@@ -238,7 +237,7 @@ fn build_compiler(opencv: &Library) -> cc::Build {
 	opencv.include_paths.iter().for_each(|p| {
 		out.include(p);
 		if *TARGET_VENDOR_APPLE {
-			out.flag_if_supported(&format!("-F{}", p.to_str().expect("Can't convert path to str")));
+			out.flag_if_supported(format!("-F{}", p.to_str().expect("Can't convert path to str")));
 		}
 	});
 
@@ -270,7 +269,7 @@ fn build_compiler(opencv: &Library) -> cc::Build {
 
 fn setup_rerun() -> Result<()> {
 	for &v in AFFECTING_ENV_VARS.iter() {
-		println!("cargo:rerun-if-env-changed={v}");
+		println!("cargo:rerun-if-env-changed={v}"); // replace with cargo:: syntax when MSRV is 1.77
 	}
 
 	let include_exts = &[OsStr::new("cpp"), OsStr::new("hpp")];
@@ -278,10 +277,10 @@ fn setup_rerun() -> Result<()> {
 		files_with_predicate(&SRC_CPP_DIR, |p| p.extension().map_or(false, |e| include_exts.contains(&e)))?;
 	for path in files_with_include_exts {
 		if let Some(path) = path.to_str() {
-			println!("cargo:rerun-if-changed={path}");
+			println!("cargo:rerun-if-changed={path}"); // replace with cargo:: syntax when MSRV is 1.77
 		}
 	}
-	println!("cargo:rerun-if-changed=Cargo.toml");
+	println!("cargo:rerun-if-changed=Cargo.toml"); // replace with cargo:: syntax when MSRV is 1.77
 	Ok(())
 }
 
@@ -362,7 +361,7 @@ fn build_wrapper(opencv: &Library) {
 		println!("cargo:rustc-check-cfg=cfg(ocvrs_has_module_{module})"); // replace with cargo:: syntax when MSRV is 1.77
 	}
 	for module in modules.iter() {
-		println!("cargo:rustc-cfg=ocvrs_has_module_{module}");
+		println!("cargo:rustc-cfg=ocvrs_has_module_{module}"); // replace with cargo:: syntax when MSRV is 1.77
 		cc.file(OUT_DIR.join(format!("{module}.cpp")));
 		let manual_cpp = SRC_CPP_DIR.join(format!("manual-{module}.cpp"));
 		if manual_cpp.exists() {
@@ -413,11 +412,11 @@ fn main() -> Result<()> {
 	println!("cargo:rustc-check-cfg=cfg(ocvrs_opencv_branch_34)"); // replace with cargo:: syntax when MSRV is 1.77
 	println!("cargo:rustc-check-cfg=cfg(ocvrs_opencv_branch_32)"); // replace with cargo:: syntax when MSRV is 1.77
 	if OPENCV_BRANCH_4.matches(&opencv.version) {
-		println!("cargo:rustc-cfg=ocvrs_opencv_branch_4");
+		println!("cargo:rustc-cfg=ocvrs_opencv_branch_4"); // replace with cargo:: syntax when MSRV is 1.77
 	} else if OPENCV_BRANCH_34.matches(&opencv.version) {
-		println!("cargo:rustc-cfg=ocvrs_opencv_branch_34");
+		println!("cargo:rustc-cfg=ocvrs_opencv_branch_34"); // replace with cargo:: syntax when MSRV is 1.77
 	} else if OPENCV_BRANCH_32.matches(&opencv.version) {
-		println!("cargo:rustc-cfg=ocvrs_opencv_branch_32");
+		println!("cargo:rustc-cfg=ocvrs_opencv_branch_32"); // replace with cargo:: syntax when MSRV is 1.77
 	} else {
 		panic!(
 			"Unsupported OpenCV version: {}, must be from 3.2, 3.4 or 4.x branch",

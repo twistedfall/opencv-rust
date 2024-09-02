@@ -42,7 +42,7 @@ pub fn render_constant_rust(tokens: &[Token]) -> Option<Value> {
 			}
 			TokenKind::Literal => {
 				let spelling = t.get_spelling();
-				if spelling.contains(|c| c == '"' || c == '\'') {
+				if spelling.contains(['"', '\'']) {
 					out.kind = ValueKind::String;
 				} else if spelling.contains('.') {
 					out.kind = ValueKind::Float;

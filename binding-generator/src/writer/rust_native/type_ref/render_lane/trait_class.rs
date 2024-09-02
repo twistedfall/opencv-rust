@@ -1,12 +1,11 @@
 use std::borrow::Cow;
 use std::borrow::Cow::{Borrowed, Owned};
 
+use super::{rust_arg_func_decl, rust_self_func_decl, void_ptr_rust_arg_func_call, Indirection, RenderLaneTrait};
 use crate::type_ref::{Constness, ExternDir, FishStyle, TypeRef, TypeRefTypeHint};
 use crate::writer::rust_native::class::ClassExt;
 use crate::writer::rust_native::type_ref::{Lifetime, TypeRefExt};
 use crate::{Class, CowMapBorrowedExt, CppNameStyle, NameStyle};
-
-use super::{rust_arg_func_decl, rust_self_func_decl, void_ptr_rust_arg_func_call, Indirection, RenderLaneTrait};
 
 pub struct TraitClassRenderLane<'tu, 'ge> {
 	non_canonical: TypeRef<'tu, 'ge>,
@@ -74,7 +73,10 @@ impl RenderLaneTrait for TraitClassRenderLane<'_, '_> {
 	fn cpp_arg_func_decl(&self, name: &str) -> Cow<str> {
 		let typ = match self.indirection {
 			Indirection::None => Owned(TypeRef::new_pointer(
-				self.non_canonical.with_inherent_constness(self.non_canonical.constness()),
+				self
+					.non_canonical
+					.clone()
+					.with_inherent_constness(self.non_canonical.constness()),
 			)),
 			Indirection::Pointer | Indirection::Reference => Borrowed(&self.non_canonical),
 		};
