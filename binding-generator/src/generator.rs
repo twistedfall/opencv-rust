@@ -77,7 +77,7 @@ pub trait GeneratorVisitor<'tu>: Sized {
 /// It takes [Entity]s supplied by the entity walker, extracts their export data (whether the entity should appear in bindings at
 /// all or is internal) and calls the corresponding method in [GeneratorVisitor] based on their type. This is the 2nd pass of the
 /// binding generation.
-struct OpenCvWalker<'tu, 'r, V> {
+pub struct OpenCvWalker<'tu, 'r, V> {
 	module: &'r str,
 	opencv_module_header_dir: &'r Path,
 	visitor: V,

@@ -251,7 +251,7 @@ impl<'tu, 'ge> TypeRefKind<'tu, 'ge> {
 				.map(|(_, str_type)| (Dir::from_out_dir(inner.inherent_constness().is_mut()), str_type)),
 			TypeRefKind::Array(inner, ..) => {
 				if inner.kind().is_char() {
-					Some((Dir::In, StrType::CharPtr(StrEnc::Text)))
+					Some((Dir::from_out_dir(inner.constness().is_mut()), StrType::CharPtr(StrEnc::Text)))
 				} else {
 					None
 				}
@@ -527,7 +527,7 @@ mod tests {
 
 		{
 			let char_array = TypeRef::new_array(TypeRefDesc::char(), None);
-			assert_eq!(Some((Dir::In, StrType::CharPtr(StrEnc::Text))), as_string(char_array));
+			assert_eq!(Some((Dir::Out, StrType::CharPtr(StrEnc::Text))), as_string(char_array));
 		}
 	}
 }

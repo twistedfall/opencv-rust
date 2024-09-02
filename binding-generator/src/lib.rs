@@ -30,7 +30,7 @@ pub use entity::EntityExt;
 pub use enumeration::Enum;
 use field::Field;
 pub use func::{Func, FuncId, FuncTypeHint};
-pub use generator::{GeneratedType, Generator, GeneratorVisitor};
+pub use generator::{GeneratedType, Generator, GeneratorVisitor, OpenCvWalker};
 pub use generator_env::{ClassKindOverride, ExportConfig, GeneratorEnv};
 pub use iterator_ext::IteratorExt;
 use memoize::{MemoizeMap, MemoizeMapExt};

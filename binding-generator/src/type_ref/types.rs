@@ -44,6 +44,17 @@ impl TypeRefTypeHint {
 		}
 	}
 
+	/// Filters current TypeRef type hint to make it suitable for inner type e.g. for the pointee
+	///
+	/// Useful for example to strip the nullability from the inner type of a pointer
+	pub fn recurse(self) -> Self {
+		match self {
+			Self::Nullable => Self::None,
+			Self::NullableSlice => Self::Slice,
+			recursable => recursable,
+		}
+	}
+
 	pub fn nullability(&self) -> Nullability {
 		match self {
 			TypeRefTypeHint::Nullable | TypeRefTypeHint::NullableSlice => Nullability::Nullable,

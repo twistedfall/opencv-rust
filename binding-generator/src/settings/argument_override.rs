@@ -149,6 +149,20 @@ pub static ARGUMENT_OVERRIDE: Lazy<HashMap<FuncId, HashMap<&str, TypeRefTypeHint
 			FuncId::new_mut("cv::MatSize::MatSize", ["_p"]),
 			HashMap::from([("_p", TypeRefTypeHint::PrimitivePtrAsRaw)]),
 		),
+		(
+			FuncId::new_mut(
+				"cv::findCirclesGrid",
+				["image", "patternSize", "centers", "flags", "blobDetector", "parameters"],
+			),
+			HashMap::from([("blobDetector", TypeRefTypeHint::Nullable)]),
+		),
+		(
+			FuncId::new_mut(
+				"cv::findCirclesGrid",
+				["image", "patternSize", "centers", "flags", "blobDetector"],
+			),
+			HashMap::from([("blobDetector", TypeRefTypeHint::Nullable)]),
+		),
 	])
 });
 

@@ -93,8 +93,14 @@ impl TypeRefExt for TypeRef<'_, '_> {
 				}
 				kind => {
 					let (indirection, tref_kind, tref) = match kind {
-						TypeRefKind::Pointer(pointee) => (Indirection::Pointer, pointee.kind().into_owned(), Owned(pointee)),
-						TypeRefKind::Reference(pointee) => (Indirection::Reference, pointee.kind().into_owned(), Owned(pointee)),
+						TypeRefKind::Pointer(pointee) => {
+							let pointee = pointee.with_type_hint(self.type_hint().clone());
+							(Indirection::Pointer, pointee.kind().into_owned(), Owned(pointee))
+						}
+						TypeRefKind::Reference(pointee) => {
+							let pointee = pointee.with_type_hint(self.type_hint().clone());
+							(Indirection::Reference, pointee.kind().into_owned(), Owned(pointee))
+						}
 						kind => (Indirection::None, kind, Borrowed(self)),
 					};
 					match tref_kind.canonical().into_owned() {
