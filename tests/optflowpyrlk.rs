@@ -46,13 +46,13 @@ pub fn check_optical_flow_points() -> Result<()>{
 
 fn track_pyr_lk(prev_img: &Mat, cur_img: &Mat, ref_pts: &Vector<Point2f>) -> Vector::<Point2f>{
 
-    let mut cur_key_points = Vector::<Point2f>::new();
+   let mut cur_key_points = Vector::<Point2f>::new();
 	let min_eig = 1e-4;
 	let flags = 0; // OPTFLOW_LK_GET_MIN_EIGENVALS vs OPTFLOW_USE_INITIAL_FLOW
 	let size = Size::new(21,21);
 	let crit = TermCriteria::default().unwrap(); // TermCriteria::new(typ, 30 , 0.01).unwrap();
 	let max_levels=3;
-	let mut err = Vector::<f64>::new();
+	let mut err = Vector::<f32>::new();
 	let mut status = Vector::<u8>::new();
 
 	let _ =cv::video::calc_optical_flow_pyr_lk(
