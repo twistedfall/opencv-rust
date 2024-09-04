@@ -33,7 +33,7 @@ const KEYS: &str = concat!(
 pub fn main() -> Result<()> {
 	let args = env::args().collect::<Vec<_>>();
 	let args = args.iter().map(|arg| arg.as_str()).collect::<Vec<_>>();
-	let mut parser = CommandLineParser::new(i32::try_from(args.len()).expect("Too many arguments"), &args, KEYS)?;
+	let mut parser = CommandLineParser::new(&args, KEYS)?;
 	parser.about(
 		"Use this script to run TensorFlow implementation (https://github.com/argman/EAST) of \
 		EAST: An Efficient and Accurate Scene Text Detector (https://arxiv.org/abs/1704.03155v2)",

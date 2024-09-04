@@ -32,9 +32,9 @@ enum DrawingState {
 
 fn main() -> Result<()> {
 	let args: Vec<String> = env::args().collect();
-	let (argc, argv) = (args.len() as i32, args.iter().map(|s| s.as_str()).collect::<Vec<&str>>());
+	let argv = args.iter().map(|s| s.as_str()).collect::<Vec<&str>>();
 
-	let mut parser = CommandLineParser::new(argc, &argv, "{@input | lena.jpg | input image}")?;
+	let mut parser = CommandLineParser::new(&argv, "{@input | lena.jpg | input image}")?;
 	parser.about("This program demonstrates using mouse events\n")?;
 	parser.print_message()?;
 	println!(

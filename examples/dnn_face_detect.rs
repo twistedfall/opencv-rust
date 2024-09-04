@@ -111,7 +111,6 @@ fn main() -> Result<()> {
 	let args = env::args().collect::<Vec<_>>();
 	let args = args.iter().map(|arg| arg.as_str()).collect::<Vec<_>>();
 	let parser = CommandLineParser::new(
-		i32::try_from(args.len()).expect("Too many arguments"),
 		&args,
 		concat!(
 			"{help  h           |            | Print this message}",

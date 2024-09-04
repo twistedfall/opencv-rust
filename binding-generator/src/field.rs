@@ -190,38 +190,44 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 	}
 
 	pub fn slice_arg_eligibility(&self) -> SliceArgEligibility {
-		self
-			.type_ref()
-			.kind()
+		let type_ref = self.type_ref();
+		let kind = type_ref.kind();
+		kind
 			.as_pointer()
 			.filter(|inner| inner.kind().is_copy(inner.type_hint()))
-			.map_or(SliceArgEligibility::NotEligible, |_| {
-				let name = self.cpp_name(CppNameStyle::Declaration);
-				let name = name.as_ref();
-				if ARGUMENT_NAMES_NOT_SLICE.contains(name) {
-					SliceArgEligibility::NotEligible
-				} else if ARGUMENT_NAMES_MULTIPLE_SLICE.contains(name) {
-					SliceArgEligibility::EligibleWithMultiple
-				} else {
-					SliceArgEligibility::Eligible
-				}
-			})
-	}
-
-	pub fn can_be_slice_arg_len(&self) -> bool {
-		let type_ref = self.type_ref();
-		type_ref.kind().as_primitive().map_or(false, |(_, cpp)| {
-			if cpp == "int" || cpp == "size_t" {
-				let name = self.cpp_name(CppNameStyle::Declaration);
-				name.ends_with('s') && name.contains('n') && name != "thickness" // fixme: have to exclude thickness
-							|| name.contains("dims")
-							|| name == "size"
-							|| name.ends_with("Size")
-							|| name == "len"
-			} else {
-				false
-			}
-		})
+			.or_else(|| kind.as_variable_array())
+			.map_or_else(
+				|| {
+					// check if still can be a slice arg length
+					let can_be_slice_arg_len = kind.as_primitive().map_or(false, |(_, cpp)| {
+						if cpp == "int" || cpp == "size_t" {
+							let name = self.cpp_name(CppNameStyle::Declaration);
+							name.ends_with('s') && name.contains('n') && name != "thickness" // fixme: have to exclude thickness
+								|| ["size", "len", "argc"].contains(&name.as_ref())
+								|| name.contains("dims")
+								|| name.ends_with("Size")
+						} else {
+							false
+						}
+					});
+					if can_be_slice_arg_len {
+						SliceArgEligibility::SliceArgLength
+					} else {
+						SliceArgEligibility::None
+					}
+				},
+				|_| {
+					let name = self.cpp_name(CppNameStyle::Declaration);
+					let name = name.as_ref();
+					if ARGUMENT_NAMES_NOT_SLICE.contains(name) {
+						SliceArgEligibility::None
+					} else if ARGUMENT_NAMES_MULTIPLE_SLICE.contains(name) {
+						SliceArgEligibility::SliceArgMultiple
+					} else {
+						SliceArgEligibility::SliceArgSingle
+					}
+				},
+			)
 	}
 }
 
@@ -307,7 +313,8 @@ impl<'tu, 'ge> FieldDesc<'tu, 'ge> {
 }
 
 pub enum SliceArgEligibility {
-	NotEligible,
-	Eligible,
-	EligibleWithMultiple,
+	None,
+	SliceArgLength,
+	SliceArgSingle,
+	SliceArgMultiple,
 }

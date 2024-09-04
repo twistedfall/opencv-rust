@@ -199,7 +199,7 @@ impl CppNameStyle {
 	}
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum StrType {
 	StdString(StrEnc),
 	CvString(StrEnc),
@@ -221,14 +221,14 @@ impl StrType {
 	}
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum StrEnc {
 	Text,
 	/// string with binary data, e.g. can contain 0 byte
 	Binary,
 }
 
-#[derive(Clone, Copy, Debug)]
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Dir {
 	In,
 	Out,

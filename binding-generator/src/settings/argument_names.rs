@@ -12,4 +12,5 @@ pub static ARGUMENT_NAMES_USERDATA: Lazy<HashSet<&str>> =
 pub static ARGUMENT_NAMES_NOT_SLICE: Lazy<HashSet<&str>> = Lazy::new(|| HashSet::from(["rmsd"]));
 
 /// List of C++ argument names that can hint on multiple connected slice arguments in a function
-pub static ARGUMENT_NAMES_MULTIPLE_SLICE: Lazy<HashSet<&str>> = Lazy::new(|| HashSet::from(["a", "b", "src", "dst", "lut"]));
+pub static ARGUMENT_NAMES_MULTIPLE_SLICE: Lazy<HashSet<&str>> =
+	Lazy::new(|| HashSet::from(["a", "b", "src", "dst", "lut", "globalsize", "localsize"]));

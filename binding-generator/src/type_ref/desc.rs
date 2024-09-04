@@ -82,6 +82,14 @@ impl<'tu, 'ge> TypeRefDesc<'tu, 'ge> {
 		Self::try_primitive("char").expect("Static primitive type")
 	}
 
+	pub fn char_ptr() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_pointer(Self::char())
+	}
+
+	pub fn char_const_ptr() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_pointer(Self::char().with_inherent_constness(Constness::Const))
+	}
+
 	pub fn uchar() -> TypeRef<'tu, 'ge> {
 		Self::try_primitive("unsigned char").expect("Static primitive type")
 	}
@@ -375,10 +383,7 @@ impl<'tu> ClangTypeExt<'tu> for Type<'tu> {
 					let pointee_kind = pointee_typeref.kind();
 					if pointee_kind.is_function() {
 						pointee_kind.into_owned()
-					} else if matches!(
-						pointee_typeref.type_hint(),
-						TypeRefTypeHint::Slice | TypeRefTypeHint::NullableSlice
-					) {
+					} else if matches!(pointee_typeref.type_hint(), TypeRefTypeHint::Slice) {
 						TypeRefKind::Array(pointee_typeref, None)
 					} else {
 						TypeRefKind::Pointer(pointee_typeref)

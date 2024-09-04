@@ -486,3 +486,48 @@ pub enum InputOutputArrayKind {
 	Output,
 	InputOutput,
 }
+
+#[cfg(test)]
+mod tests {
+	use crate::type_ref::{Dir, StrEnc, StrType, TypeRef, TypeRefDesc, TypeRefTypeHint};
+
+	fn as_string(type_ref: TypeRef) -> Option<(Dir, StrType)> {
+		type_ref.kind().as_string(type_ref.type_hint())
+	}
+
+	#[test]
+	fn test_as_string_char_ptr() {
+		{
+			let char = TypeRefDesc::char();
+			assert_eq!(None, as_string(char));
+		}
+
+		{
+			let char_ptr = TypeRefDesc::char_ptr();
+			assert_eq!(Some((Dir::Out, StrType::CharPtr(StrEnc::Text))), as_string(char_ptr));
+		}
+
+		{
+			let char_ptr_const = TypeRefDesc::char_const_ptr();
+			assert_eq!(Some((Dir::In, StrType::CharPtr(StrEnc::Text))), as_string(char_ptr_const));
+		}
+
+		{
+			let char_ptr_const_slice = TypeRefDesc::char_const_ptr().with_type_hint(TypeRefTypeHint::StringAsBytes(None));
+			assert_eq!(
+				Some((Dir::In, StrType::CharPtr(StrEnc::Binary))),
+				as_string(char_ptr_const_slice)
+			);
+		}
+
+		{
+			let single_char_ptr = TypeRefDesc::char_ptr().with_type_hint(TypeRefTypeHint::CharPtrSingleChar);
+			assert_eq!(None, as_string(single_char_ptr));
+		}
+
+		{
+			let char_array = TypeRef::new_array(TypeRefDesc::char(), None);
+			assert_eq!(Some((Dir::In, StrType::CharPtr(StrEnc::Text))), as_string(char_array));
+		}
+	}
+}

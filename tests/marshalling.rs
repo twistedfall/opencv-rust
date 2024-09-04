@@ -273,7 +273,7 @@ fn tuple() -> Result<()> {
 #[test]
 fn string_array() -> Result<()> {
 	let args = ["test", "-a=b"];
-	let mut parser = CommandLineParser::new(i32::try_from(args.len())?, &args, "{a | | }")?;
+	let parser = CommandLineParser::new(&args, "{a | | }")?;
 	assert!(parser.has("a")?);
 	assert_eq!("b", parser.get_str("a", true)?);
 	Ok(())
