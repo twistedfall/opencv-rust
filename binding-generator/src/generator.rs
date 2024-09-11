@@ -1,4 +1,5 @@
 use std::borrow::Cow;
+use std::env;
 use std::fs::File;
 use std::io::BufReader;
 use std::ops::ControlFlow;
@@ -433,6 +434,11 @@ impl Generator {
 		args.push("-includeocvrs_common.hpp".into());
 		// need to have c++14 here because VS headers contain features that require it
 		args.push("-std=c++14".into());
+		// allow us to use some custom clang args
+		let clang_args = env::var_os("OPENCV_CLANG_ARGS").unwrap_or_default();
+		clang_args.to_string_lossy().split_whitespace().map(String::from).for_each(|i| {
+			args.push(i.into());
+		});
 		args
 	}
 
