@@ -128,6 +128,9 @@ The following variables affect the building the of the `opencv` crate, but belon
   `*.dll`s next to your binary. Be sure to specify paths in UNIX style (/C/Program Files/Dir) because colon
   in `PATH` might be interpreted as the entry separator. Summary [here](https://stackoverflow.com/a/6546427).
 
+* `OPENCV_CLANG_ARGS`
+  Allow custom arguments for generating and parsing code with clang, see the [documentation for clang arguments](https://docs.rs/clang/latest/clang/struct.Parser.html#method.arguments).
+
 * clang crate environment variables
   See crate's [README](https://github.com/KyleMayes/clang-sys/blob/master/README.md#environment-variables)
 
