@@ -8,6 +8,7 @@ use std::path::{Path, PathBuf};
 use clang::diagnostic::{Diagnostic, Severity};
 use clang::{Clang, Entity, EntityKind, Index};
 use dunce::canonicalize;
+use shlex::Shlex;
 
 use crate::type_ref::{CppNameStyle, FishStyle, TypeRef, TypeRefKind};
 use crate::typedef::NewTypedefResult;
@@ -435,10 +436,10 @@ impl Generator {
 		// need to have c++14 here because VS headers contain features that require it
 		args.push("-std=c++14".into());
 		// allow us to use some custom clang args
-		let clang_args = env::var_os("OPENCV_CLANG_ARGS").unwrap_or_default();
-		clang_args.to_string_lossy().split_whitespace().map(String::from).for_each(|i| {
-			args.push(i.into());
-		});
+		if let Some(clang_arg_str) = env::var_os("OPENCV_CLANG_ARGS") {
+			let clang_arg = clang_arg_str.to_str().expect("Try to get OPENCV_CLANG_ARGS failed.");
+			Shlex::new(clang_arg).into_iter().for_each(|i| args.push(i.into()))
+		}
 		args
 	}
 
