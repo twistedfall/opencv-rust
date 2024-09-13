@@ -2,8 +2,6 @@
 
 use std::collections::{BTreeSet, HashMap, HashSet};
 
-use once_cell::sync::Lazy;
-
 pub use argument_names::{ARGUMENT_NAMES_MULTIPLE_SLICE, ARGUMENT_NAMES_NOT_SLICE, ARGUMENT_NAMES_USERDATA};
 pub use argument_override::{ARGUMENT_OVERRIDE, ARG_OVERRIDE_SELF, RETURN_OVERRIDE};
 pub use element_exclude_kind::ELEMENT_EXCLUDE_KIND;
@@ -11,16 +9,17 @@ pub use element_export_tweak::ELEMENT_EXPORT_TWEAK;
 pub use force_infallible::FORCE_INFALLIBLE;
 pub use func_cfg_attr::FUNC_CFG_ATTR;
 pub use func_exclude::FUNC_EXCLUDE;
-pub use func_inject::{FuncFactory, FUNC_INJECT};
+pub use func_inject::{func_inject_factory, FuncFactory};
 pub use func_rename::FUNC_RENAME;
 pub use func_replace::{FuncInheritFactory, FUNC_REPLACE};
 pub use func_specialize::{TypeRefFactory, FUNC_SPECIALIZE};
 pub use func_unsafe::FUNC_UNSAFE;
-pub use generator_module_tweaks::{ModuleTweak, GENERATOR_MODULE_TWEAKS};
+pub use generator_module_tweaks::{generator_module_tweaks_factory, ModuleTweak};
 pub use implemented::{
 	IMPLEMENTED_CONST_GENERICS, IMPLEMENTED_FUNCTION_LIKE_MACROS, IMPLEMENTED_GENERICS, IMPLEMENTED_MANUAL_DEBUG,
 	IMPLEMENTED_SYSTEM_CLASSES,
 };
+use once_cell::sync::Lazy;
 
 mod argument_names;
 mod argument_override;
@@ -36,6 +35,29 @@ mod func_specialize;
 mod func_unsafe;
 mod generator_module_tweaks;
 mod implemented;
+
+/// Injectable global and module level overrides, todo: migrate the global statics to this over time
+#[derive(Debug)]
+pub struct Settings {
+	pub func_inject: Vec<FuncFactory>,
+	pub generator_module_tweaks: ModuleTweak,
+}
+
+impl Settings {
+	pub fn empty() -> Self {
+		Self {
+			func_inject: vec![],
+			generator_module_tweaks: ModuleTweak::empty(),
+		}
+	}
+
+	pub fn for_module(module: &str) -> Self {
+		Self {
+			func_inject: func_inject_factory(module),
+			generator_module_tweaks: generator_module_tweaks_factory(module),
+		}
+	}
+}
 
 // fixme, generalize, make it use constant::ValueKind
 pub static CONST_TYPE_USIZE: Lazy<HashSet<&str>> = Lazy::new(|| HashSet::from(["Mat_AUTO_STEP"]));

@@ -11,6 +11,7 @@ use opencv_binding_generator::{
 };
 
 struct FunctionFinder<'tu, 'f> {
+	pub module: &'tu str,
 	pub gen_env: GeneratorEnv<'tu>,
 	pub func_rename_unused: RefCell<&'f mut HashSet<&'static str>>,
 	pub func_exclude_unused: RefCell<&'f mut HashSet<&'static str>>,
@@ -38,7 +39,7 @@ impl<'tu, 'f> FunctionFinder<'tu, 'f> {
 
 impl<'tu> EntityWalkerVisitor<'tu> for FunctionFinder<'tu, '_> {
 	fn wants_file(&mut self, path: &Path) -> bool {
-		opencv_module_from_path(path).map_or(false, |m| m == self.gen_env.module())
+		opencv_module_from_path(path).map_or(false, |m| m == self.module)
 	}
 
 	fn visit_entity(&mut self, entity: Entity<'tu>) -> ControlFlow<()> {
@@ -110,8 +111,9 @@ fn main() {
 		for module in modules {
 			println!("  {module}");
 			gen.pre_process(&module, false, |root_entity| {
-				let gen_env = GeneratorEnv::new(root_entity, &module);
+				let gen_env = GeneratorEnv::global(&module, root_entity);
 				root_entity.walk_opencv_entities(FunctionFinder {
+					module: &module,
 					gen_env,
 					func_rename_unused: RefCell::new(&mut func_rename_unused),
 					func_exclude_unused: RefCell::new(&mut func_exclude_unused),

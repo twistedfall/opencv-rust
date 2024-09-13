@@ -350,18 +350,19 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 			out.push(func);
 			ControlFlow::Continue(())
 		});
-		let rust_module = match self {
-			Class::Clang { gen_env, .. } => gen_env.module(),
-			Class::Desc(desc) => desc.rust_module.as_ref(),
-		};
-		for inject_func_fact in settings::FUNC_INJECT.get(rust_module).into_iter().flatten() {
-			let inject_func: Func = inject_func_fact();
-			if let Some(cls) = inject_func.kind().as_class_method() {
-				if cls == self {
-					out.push(inject_func);
+		match self {
+			Class::Clang { gen_env, .. } => {
+				for inject_func_fact in &gen_env.settings.func_inject {
+					let inject_func: Func = inject_func_fact();
+					if let Some(cls) = inject_func.kind().as_class_method() {
+						if cls == self {
+							out.push(inject_func);
+						}
+					}
 				}
 			}
-		}
+			Class::Desc(_) => {}
+		};
 		out
 	}
 

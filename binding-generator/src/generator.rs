@@ -78,6 +78,7 @@ pub trait GeneratorVisitor<'tu>: Sized {
 /// all or is internal) and calls the corresponding method in [GeneratorVisitor] based on their type. This is the 2nd pass of the
 /// binding generation.
 struct OpenCvWalker<'tu, 'r, V> {
+	module: &'r str,
 	opencv_module_header_dir: &'r Path,
 	visitor: V,
 	gen_env: GeneratorEnv<'tu>,
@@ -159,7 +160,7 @@ impl<'tu, V: GeneratorVisitor<'tu>> EntityWalkerVisitor<'tu> for OpenCvWalker<'t
 		// method of extracting comments
 		let mut comment = String::with_capacity(2048);
 		let mut found_module_comment = false;
-		let module_path = self.opencv_module_header_dir.join(format!("{}.hpp", self.gen_env.module()));
+		let module_path = self.opencv_module_header_dir.join(format!("{}.hpp", self.module));
 		if let Ok(module_file) = File::open(module_path) {
 			let f = BufReader::new(module_file);
 			let mut defgroup_found = false;
@@ -188,17 +189,15 @@ impl<'tu, V: GeneratorVisitor<'tu>> EntityWalkerVisitor<'tu> for OpenCvWalker<'t
 		if found_module_comment {
 			self.visitor.visit_module_comment(comment);
 		}
-		for inject_func_fact in settings::FUNC_INJECT.get(self.gen_env.module()).into_iter().flatten() {
+		for inject_func_fact in &self.gen_env.settings.func_inject {
 			let inject_func: Func = inject_func_fact();
 			if !inject_func.kind().as_class_method().is_some() {
 				self.visitor.visit_func(inject_func);
 			}
 		}
-		if let Some(tweaks) = settings::GENERATOR_MODULE_TWEAKS.get(self.gen_env.module()) {
-			for generated in &tweaks.generate_types {
-				if let Ok(generated) = GeneratedType::try_from(generated()) {
-					self.visitor.visit_generated_type(generated);
-				}
+		for generated in &self.gen_env.settings.generator_module_tweaks.generate_types {
+			if let Ok(generated) = GeneratedType::try_from(generated()) {
+				self.visitor.visit_generated_type(generated);
 			}
 		}
 		self.visitor.goodbye();
@@ -206,8 +205,9 @@ impl<'tu, V: GeneratorVisitor<'tu>> EntityWalkerVisitor<'tu> for OpenCvWalker<'t
 }
 
 impl<'tu, 'r, V: GeneratorVisitor<'tu>> OpenCvWalker<'tu, 'r, V> {
-	pub fn new(opencv_module_header_dir: &'r Path, visitor: V, gen_env: GeneratorEnv<'tu>) -> Self {
+	pub fn new(module: &'r str, opencv_module_header_dir: &'r Path, visitor: V, gen_env: GeneratorEnv<'tu>) -> Self {
 		Self {
+			module,
 			opencv_module_header_dir,
 			visitor,
 			gen_env,
@@ -468,8 +468,8 @@ impl Generator {
 	/// Runs the full binding generation process using the supplied `visitor`
 	pub fn generate(&self, module: &str, visitor: impl for<'tu> GeneratorVisitor<'tu>) {
 		self.pre_process(module, true, |root_entity| {
-			let gen_env = GeneratorEnv::new(root_entity, module);
-			let opencv_walker = OpenCvWalker::new(&self.opencv_module_header_dir, visitor, gen_env);
+			let gen_env = GeneratorEnv::global(module, root_entity);
+			let opencv_walker = OpenCvWalker::new(module, &self.opencv_module_header_dir, visitor, gen_env);
 			root_entity.walk_opencv_entities(opencv_walker);
 		});
 	}

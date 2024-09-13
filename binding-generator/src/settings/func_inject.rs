@@ -1,7 +1,3 @@
-use std::collections::HashMap;
-
-use once_cell::sync::Lazy;
-
 use crate::class::ClassDesc;
 use crate::field::{Field, FieldDesc};
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
@@ -12,11 +8,9 @@ use crate::Func;
 
 pub type FuncFactory = fn() -> Func<'static, 'static>;
 
-/// (module name, FuncFactory)
-pub static FUNC_INJECT: Lazy<HashMap<&str, Vec<FuncFactory>>> = Lazy::new(|| {
-	HashMap::from([(
-		"core",
-		vec![
+pub fn func_inject_factory(module: &str) -> Vec<FuncFactory> {
+	match module {
+		"core" => vec![
 			(|| {
 				Func::new_desc(FuncDesc::new(
 					FuncKind::InstanceMethod(ClassDesc::cv_matconstiterator()),
@@ -82,5 +76,6 @@ pub static FUNC_INJECT: Lazy<HashMap<&str, Vec<FuncFactory>>> = Lazy::new(|| {
 				))
 			},
 		],
-	)])
-});
+		_ => vec![],
+	}
+}

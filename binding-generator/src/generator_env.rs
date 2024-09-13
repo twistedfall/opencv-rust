@@ -11,6 +11,7 @@ use std::rc::Rc;
 use clang::{Entity, EntityKind, EntityVisitResult};
 
 use crate::class::ClassKind;
+use crate::settings::Settings;
 use crate::type_ref::CppNameStyle;
 use crate::{
 	is_opencv_path, opencv_module_from_path, settings, Class, Element, EntityWalkerExt, EntityWalkerVisitor, MemoizeMap,
@@ -104,6 +105,7 @@ struct ExportIdx {
 ///
 /// This is 1st pass of the analysis. It performs the collection of the necessary auxiliary data like which descendants a class has.
 struct GeneratorEnvPopulator<'tu, 'ge> {
+	module: &'tu str,
 	gen_env: &'ge mut GeneratorEnv<'tu>,
 }
 
@@ -133,7 +135,7 @@ impl<'tu> GeneratorEnvPopulator<'tu, '_> {
 
 impl<'tu> EntityWalkerVisitor<'tu> for GeneratorEnvPopulator<'tu, '_> {
 	fn wants_file(&mut self, path: &Path) -> bool {
-		is_opencv_path(path) || opencv_module_from_path(path).map_or(false, |m| m == self.gen_env.module())
+		is_opencv_path(path) || opencv_module_from_path(path).map_or(false, |m| m == self.module)
 	}
 
 	fn visit_entity(&mut self, entity: Entity<'tu>) -> ControlFlow<()> {
@@ -169,8 +171,6 @@ impl<'tu> EntityWalkerVisitor<'tu> for GeneratorEnvPopulator<'tu, '_> {
 /// This is partially pre-populated in an additional pass before the generation to provide some necessary data that's not available
 /// at the generation moment. E.g. list of descendants of a particular class.
 pub struct GeneratorEnv<'tu> {
-	/// The name of the module that's currently being generated
-	module: &'tu str,
 	export_map: HashMap<ExportIdx, ExportConfig>,
 	rename_map: HashMap<ExportIdx, RenameConfig>,
 	pub func_names: NamePool,
@@ -179,26 +179,38 @@ pub struct GeneratorEnv<'tu> {
 	/// Cache of the calculated [ClassKind]s
 	class_kind_cache: MemoizeMap<String, Option<ClassKind>>,
 	descendants: HashMap<String, HashSet<Entity<'tu>>>,
+	pub settings: Settings,
 }
 
 impl<'tu> GeneratorEnv<'tu> {
-	pub fn new(root_entity: Entity<'tu>, module: &'tu str) -> Self {
+	pub fn empty() -> Self {
+		Self {
+			export_map: HashMap::new(),
+			rename_map: HashMap::new(),
+			func_names: NamePool::with_capacity(0),
+			func_comments: HashMap::new(),
+			class_kind_cache: MemoizeMap::new(HashMap::new()),
+			descendants: HashMap::new(),
+			settings: Settings::empty(),
+		}
+	}
+
+	/// [GeneratorEnv] with the global settings for the regular working mode
+	pub fn global(module: &'tu str, root_entity: Entity<'tu>) -> Self {
 		let mut out = Self {
-			module,
 			export_map: HashMap::with_capacity(1024),
 			rename_map: HashMap::with_capacity(64),
 			func_names: NamePool::with_capacity(512),
 			func_comments: HashMap::with_capacity(2048),
 			class_kind_cache: MemoizeMap::new(HashMap::with_capacity(32)),
 			descendants: HashMap::with_capacity(16),
+			settings: Settings::for_module(module),
 		};
-		root_entity.walk_opencv_entities(GeneratorEnvPopulator { gen_env: &mut out });
+		root_entity.walk_opencv_entities(GeneratorEnvPopulator {
+			module,
+			gen_env: &mut out,
+		});
 		out
-	}
-
-	/// The name of the module that's currently being generated
-	pub fn module(&self) -> &str {
-		self.module
 	}
 
 	fn key(entity: Entity) -> ExportIdx {
@@ -353,11 +365,15 @@ impl fmt::Debug for GeneratorEnv<'_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		f.debug_struct("GeneratorEnv")
 			.field("export_map", &format!("{} elements", self.export_map.len()))
+			.field("rename_map", &format!("{} elements", self.rename_map.len()))
+			.field("func_names", &format!("{} elements", self.func_names.len()))
 			.field("func_comments", &format!("{} elements", self.func_comments.len()))
 			.field(
 				"class_kind_cache",
 				&format!("{} elements", self.class_kind_cache.borrow().len()),
 			)
+			.field("descendants", &format!("{} elements", self.descendants.len()))
+			.field("settings", &self.settings)
 			.finish()
 	}
 }

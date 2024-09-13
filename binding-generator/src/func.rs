@@ -6,12 +6,11 @@ use std::ops::ControlFlow;
 use std::rc::Rc;
 
 use clang::{Availability, Entity, EntityKind, ExceptionSpecification};
-use once_cell::sync::Lazy;
-use regex::bytes::Regex;
-
 pub use desc::{FuncCppBody, FuncDesc, FuncRustBody, FuncRustExtern};
 pub use func_id::FuncId;
 pub use kind::{FuncKind, OperatorKind, ReturnKind};
+use once_cell::sync::Lazy;
+use regex::bytes::Regex;
 use slice_arg_finder::SliceArgFinder;
 
 use crate::comment::strip_doxygen_comment_markers;
@@ -391,13 +390,17 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 	}
 
 	pub fn safety(&self) -> Safety {
-		Safety::from_unsafe(
-			settings::FUNC_UNSAFE.contains(&self.func_id())
-				|| self.arguments().iter().any(|a| {
-					let type_ref = a.type_ref();
-					type_ref.kind().is_rust_by_ptr(type_ref.type_hint()) && !a.is_user_data()
-				}),
-		)
+		// todo move FUNC_UNSAFE to gen_env.settings, but can't do that now because setAllocator is a Desc function and it needs to be unsafe
+		let out = match self {
+			Func::Clang { .. } => Safety::from_is_unsafe(settings::FUNC_UNSAFE.contains(&self.func_id())),
+			Func::Desc(_) => Safety::from_is_unsafe(settings::FUNC_UNSAFE.contains(&self.func_id())),
+		};
+		out.or_is_unsafe(|| {
+			self.arguments().iter().any(|a| {
+				let type_ref = a.type_ref();
+				type_ref.kind().is_rust_by_ptr(type_ref.type_hint()) && !a.is_user_data()
+			})
+		})
 	}
 
 	pub fn is_default_constructor(&self) -> bool {
@@ -757,7 +760,7 @@ pub enum Safety {
 }
 
 impl Safety {
-	pub fn from_unsafe(is_unsafe: bool) -> Safety {
+	pub fn from_is_unsafe(is_unsafe: bool) -> Safety {
 		if is_unsafe {
 			Self::Unsafe
 		} else {
@@ -769,6 +772,14 @@ impl Safety {
 		match self {
 			Self::Safe => true,
 			Self::Unsafe => false,
+		}
+	}
+
+	/// Returns `Safe` only if both `self` and `other_is_unsafe` are `Safe`, otherwise returns `Unsafe`
+	pub fn or_is_unsafe(self, other_is_unsafe: impl FnOnce() -> bool) -> Safety {
+		match self {
+			Safety::Safe => Self::from_is_unsafe(other_is_unsafe()),
+			Safety::Unsafe => Self::Unsafe,
 		}
 	}
 
