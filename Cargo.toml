@@ -32,7 +32,7 @@ rgb = { version = "0.8.20", features = ["argb"], optional = true }
 windows = { version = "0.58", features = ["Win32_Graphics_Direct3D9", "Win32_Graphics_Direct3D10", "Win32_Graphics_Direct3D11"] }
 
 [build-dependencies]
-opencv-binding-generator = { version = "0.90.2", path = "binding-generator" }
+opencv-binding-generator = { version = "0.91.0", path = "binding-generator" }
 cc = { version = "1.0.83", features = ["parallel"] }
 dunce = "1"
 jobserver = "0.1"
@@ -45,7 +45,7 @@ vcpkg = "0.2.9"
 
 [dev-dependencies]
 matches = "0.1"
-opencv-binding-generator = { version = "0.90.2", path = "binding-generator" }
+opencv-binding-generator = { version = "0.91.0", path = "binding-generator" }
 cc = { version = ">=1.0.83", features = ["parallel"] }
 dunce = "1"
 jobserver = "0.1"
