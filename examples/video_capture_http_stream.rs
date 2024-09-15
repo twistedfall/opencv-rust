@@ -1,17 +1,21 @@
-/// Example code to stream mjpeg over a tcp socket
+/// Example code to stream mjpeg over http
 use std::io::Write;
 use std::net::{SocketAddr, TcpListener};
 
+// VideoCaptureTrait doesn't get used when binding to opencv 3.4
+#[allow(unused_imports)]
+use opencv::videoio::VideoCaptureTrait;
+
 use opencv::core::{Mat, Vector};
 use opencv::imgcodecs::{imencode, IMWRITE_JPEG_QUALITY};
-use opencv::videoio::{VideoCapture, VideoCaptureTrait};
+use opencv::videoio::{VideoCapture, VideoCaptureTraitConst, CAP_ANY};
 use opencv::Result;
 
 const BASE_RESPONSE: &[u8] = b"HTTP/1.1 200 OK\r\nContent-Type: multipart/x-mixed-replace; boundary=frame\r\n\r\n";
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-	// Select camera
-	let mut cam = VideoCapture::new_def(0)?;
+	let mut cam = VideoCapture::new(0, CAP_ANY)?;
+	assert!(cam.is_opened()?, "Unable to open default camera!");
 
 	// Bind listener to a port
 	let address: SocketAddr = "127.0.0.1:8080".parse()?;
