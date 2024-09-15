@@ -1631,10 +1631,10 @@ pub mod highgui {
 	}
 	
 	#[inline]
-	pub fn start_loop(pt2_func: Option<unsafe extern "C" fn(i32, *mut *mut c_char) -> i32>, argc: i32, argv: &mut [&str]) -> Result<i32> {
+	pub fn start_loop(pt2_func: Option<unsafe extern "C" fn(i32, *mut *mut c_char) -> i32>, argv: &mut [&str]) -> Result<i32> {
 		string_array_arg_mut!(argv);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_startLoop_int__X__int__charXX__int_charXX(pt2_func, argc, argv.as_mut_ptr(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_startLoop_int__X__int__charXX__int_charXX(pt2_func, argv.len().try_into()?, argv.as_mut_ptr(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)

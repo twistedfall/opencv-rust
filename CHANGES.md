@@ -1,3 +1,9 @@
+* 0.93.0
+  * Improve automatic slice detection, e.g. `CommandParser::new()` now calculates `argc` automatically.
+  * `find_circles_grid` now can take `None` the `blob_detector` argument.
+  * Rework the handling of static library linkage.
+  * Allow passing custom clang args via `OPENCV_CLANG_ARGS` environment variable.
+
 * 0.92.3
   * Add an irreversible conversion from `BoxedRefMut` to `BoxedMut`.
   * Fix handling of arrays of strings, fixes `CommandLineParser` (kudos to niemeyer).

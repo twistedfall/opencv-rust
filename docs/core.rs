@@ -13820,11 +13820,11 @@ pub mod core {
 		/// * argv: array of command line arguments (from main())
 		/// * keys: string describing acceptable command line parameters (see class description for syntax)
 		#[inline]
-		pub fn new(argc: i32, argv: &[&str], keys: &str) -> Result<core::CommandLineParser> {
+		pub fn new(argv: &[&str], keys: &str) -> Result<core::CommandLineParser> {
 			string_array_arg!(argv);
 			extern_container_arg!(keys);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_CommandLineParser_CommandLineParser_int_const_charXX_const_StringR(argc, argv.as_ptr(), keys.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_CommandLineParser_CommandLineParser_int_const_charXX_const_StringR(argv.len().try_into()?, argv.as_ptr(), keys.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::CommandLineParser::opencv_from_extern(ret) };
@@ -36015,9 +36015,9 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * q: Queue()
 		#[inline]
-		fn run(&mut self, dims: i32, globalsize: &mut [size_t], localsize: &mut [size_t], sync: bool, q: &impl core::QueueTraitConst) -> Result<bool> {
+		fn run(&mut self, globalsize: &mut [size_t], localsize: &mut [size_t], sync: bool, q: &impl core::QueueTraitConst) -> Result<bool> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_Kernel_run_int_size_tX_size_tX_bool_const_QueueR(self.as_raw_mut_Kernel(), dims, globalsize.as_mut_ptr(), localsize.as_mut_ptr(), sync, q.as_raw_Queue(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ocl_Kernel_run_int_size_tX_size_tX_bool_const_QueueR(self.as_raw_mut_Kernel(), globalsize.len().min(localsize.len()).try_into()?, globalsize.as_mut_ptr(), localsize.as_mut_ptr(), sync, q.as_raw_Queue(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -36042,9 +36042,9 @@ pub mod core {
 		/// This alternative version of [KernelTrait::run] function uses the following default values for its arguments:
 		/// * q: Queue()
 		#[inline]
-		fn run_def(&mut self, dims: i32, globalsize: &mut [size_t], localsize: &mut [size_t], sync: bool) -> Result<bool> {
+		fn run_def(&mut self, globalsize: &mut [size_t], localsize: &mut [size_t], sync: bool) -> Result<bool> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_Kernel_run_int_size_tX_size_tX_bool(self.as_raw_mut_Kernel(), dims, globalsize.as_mut_ptr(), localsize.as_mut_ptr(), sync, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ocl_Kernel_run_int_size_tX_size_tX_bool(self.as_raw_mut_Kernel(), globalsize.len().min(localsize.len()).try_into()?, globalsize.as_mut_ptr(), localsize.as_mut_ptr(), sync, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -36062,9 +36062,9 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * q: Queue()
 		#[inline]
-		fn run_(&mut self, dims: i32, globalsize: &mut [size_t], localsize: &mut [size_t], sync: bool, q: &impl core::QueueTraitConst) -> Result<bool> {
+		fn run_(&mut self, globalsize: &mut [size_t], localsize: &mut [size_t], sync: bool, q: &impl core::QueueTraitConst) -> Result<bool> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_Kernel_run__int_size_tX_size_tX_bool_const_QueueR(self.as_raw_mut_Kernel(), dims, globalsize.as_mut_ptr(), localsize.as_mut_ptr(), sync, q.as_raw_Queue(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ocl_Kernel_run__int_size_tX_size_tX_bool_const_QueueR(self.as_raw_mut_Kernel(), globalsize.len().min(localsize.len()).try_into()?, globalsize.as_mut_ptr(), localsize.as_mut_ptr(), sync, q.as_raw_Queue(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -36083,9 +36083,9 @@ pub mod core {
 		/// This alternative version of [KernelTrait::run_] function uses the following default values for its arguments:
 		/// * q: Queue()
 		#[inline]
-		fn run__def(&mut self, dims: i32, globalsize: &mut [size_t], localsize: &mut [size_t], sync: bool) -> Result<bool> {
+		fn run__def(&mut self, globalsize: &mut [size_t], localsize: &mut [size_t], sync: bool) -> Result<bool> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_Kernel_run__int_size_tX_size_tX_bool(self.as_raw_mut_Kernel(), dims, globalsize.as_mut_ptr(), localsize.as_mut_ptr(), sync, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ocl_Kernel_run__int_size_tX_size_tX_bool(self.as_raw_mut_Kernel(), globalsize.len().min(localsize.len()).try_into()?, globalsize.as_mut_ptr(), localsize.as_mut_ptr(), sync, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -36123,9 +36123,9 @@ pub mod core {
 		/// ## C++ default parameters
 		/// * q: Queue()
 		#[inline]
-		fn run_profiling(&mut self, dims: i32, globalsize: &mut [size_t], localsize: &mut [size_t], q: &impl core::QueueTraitConst) -> Result<i64> {
+		fn run_profiling(&mut self, globalsize: &mut [size_t], localsize: &mut [size_t], q: &impl core::QueueTraitConst) -> Result<i64> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_Kernel_runProfiling_int_size_tX_size_tX_const_QueueR(self.as_raw_mut_Kernel(), dims, globalsize.as_mut_ptr(), localsize.as_mut_ptr(), q.as_raw_Queue(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ocl_Kernel_runProfiling_int_size_tX_size_tX_const_QueueR(self.as_raw_mut_Kernel(), globalsize.len().min(localsize.len()).try_into()?, globalsize.as_mut_ptr(), localsize.as_mut_ptr(), q.as_raw_Queue(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -36141,9 +36141,9 @@ pub mod core {
 		/// This alternative version of [KernelTrait::run_profiling] function uses the following default values for its arguments:
 		/// * q: Queue()
 		#[inline]
-		fn run_profiling_def(&mut self, dims: i32, globalsize: &mut [size_t], localsize: &mut [size_t]) -> Result<i64> {
+		fn run_profiling_def(&mut self, globalsize: &mut [size_t], localsize: &mut [size_t]) -> Result<i64> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_Kernel_runProfiling_int_size_tX_size_tX(self.as_raw_mut_Kernel(), dims, globalsize.as_mut_ptr(), localsize.as_mut_ptr(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ocl_Kernel_runProfiling_int_size_tX_size_tX(self.as_raw_mut_Kernel(), globalsize.len().min(localsize.len()).try_into()?, globalsize.as_mut_ptr(), localsize.as_mut_ptr(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)

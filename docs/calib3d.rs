@@ -3508,11 +3508,11 @@ pub mod calib3d {
 	/// * flags: CALIB_CB_SYMMETRIC_GRID
 	/// * blob_detector: SimpleBlobDetector::create()
 	#[inline]
-	pub fn find_circles_grid_1(image: &impl ToInputArray, pattern_size: core::Size, centers: &mut impl ToOutputArray, flags: i32, blob_detector: &core::Ptr<crate::features2d::Feature2D>) -> Result<bool> {
+	pub fn find_circles_grid_1(image: &impl ToInputArray, pattern_size: core::Size, centers: &mut impl ToOutputArray, flags: i32, blob_detector: Option<&core::Ptr<crate::features2d::Feature2D>>) -> Result<bool> {
 		input_array_arg!(image);
 		output_array_arg!(centers);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_findCirclesGrid_const__InputArrayR_Size_const__OutputArrayR_int_const_PtrLFeature2DGR(image.as_raw__InputArray(), &pattern_size, centers.as_raw__OutputArray(), flags, blob_detector.as_raw_PtrOfFeature2D(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_findCirclesGrid_const__InputArrayR_Size_const__OutputArrayR_int_const_PtrLFeature2DGR(image.as_raw__InputArray(), &pattern_size, centers.as_raw__OutputArray(), flags, blob_detector.map_or(::core::ptr::null(), |blob_detector| blob_detector.as_raw_PtrOfFeature2D()), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -3554,11 +3554,11 @@ pub mod calib3d {
 	/// Note: The function requires white space (like a square-thick border, the wider the better) around
 	/// the board to make the detection more robust in various environments.
 	#[inline]
-	pub fn find_circles_grid(image: &impl ToInputArray, pattern_size: core::Size, centers: &mut impl ToOutputArray, flags: i32, blob_detector: &core::Ptr<crate::features2d::Feature2D>, parameters: crate::calib3d::CirclesGridFinderParameters) -> Result<bool> {
+	pub fn find_circles_grid(image: &impl ToInputArray, pattern_size: core::Size, centers: &mut impl ToOutputArray, flags: i32, blob_detector: Option<&core::Ptr<crate::features2d::Feature2D>>, parameters: crate::calib3d::CirclesGridFinderParameters) -> Result<bool> {
 		input_array_arg!(image);
 		output_array_arg!(centers);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_findCirclesGrid_const__InputArrayR_Size_const__OutputArrayR_int_const_PtrLFeature2DGR_const_CirclesGridFinderParametersR(image.as_raw__InputArray(), &pattern_size, centers.as_raw__OutputArray(), flags, blob_detector.as_raw_PtrOfFeature2D(), &parameters, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_findCirclesGrid_const__InputArrayR_Size_const__OutputArrayR_int_const_PtrLFeature2DGR_const_CirclesGridFinderParametersR(image.as_raw__InputArray(), &pattern_size, centers.as_raw__OutputArray(), flags, blob_detector.map_or(::core::ptr::null(), |blob_detector| blob_detector.as_raw_PtrOfFeature2D()), &parameters, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
