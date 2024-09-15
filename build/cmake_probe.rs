@@ -8,13 +8,99 @@ use std::process::{Command, Output};
 use semver::Version;
 use shlex::Shlex;
 
-use super::Result;
+use super::library::Linkage;
+use super::{Result, TARGET_ENV_MSVC};
+
+#[derive(Debug, PartialEq, Eq)]
+pub struct LinkLib(pub Linkage, pub String);
+
+impl LinkLib {
+	#[inline]
+	pub fn emit_cargo_rustc_link(&self) -> String {
+		format!(
+			"cargo:rustc-link-lib={}{}",
+			self.0.as_cargo_rustc_link_spec_no_static(),
+			self.1
+		) // replace with cargo:: syntax when MSRV is 1.77
+	}
+
+	/// Returns Some(new_file_name) if some parts of the filename were removed, None otherwise
+	pub fn cleanup_lib_filename(filename: &OsStr) -> Option<&OsStr> {
+		let mut new_filename = filename;
+		// used to check for the file extension (with dots stripped) and for the part of the filename
+		const LIB_EXTS: [&str; 6] = [".so.", ".a.", ".dll.", ".lib.", ".dylib.", ".tbd."];
+		let filename_path = Path::new(new_filename);
+		// strip lib extension from the filename
+		if let (Some(stem), Some(extension)) = (filename_path.file_stem(), filename_path.extension().and_then(OsStr::to_str)) {
+			if LIB_EXTS.iter().any(|e| e.trim_matches('.').eq_ignore_ascii_case(extension)) {
+				new_filename = stem;
+			}
+		}
+		if let Some(mut file) = new_filename.to_str() {
+			let orig_len = file.len();
+
+			// strip "lib" prefix from the filename unless targeting MSVC
+			if !*TARGET_ENV_MSVC {
+				file = file.strip_prefix("lib").unwrap_or(file);
+			}
+
+			// strip lib extension + suffix (e.g. .so.4.6.0) from the filename
+			LIB_EXTS.iter().for_each(|&inner_ext| {
+				if let Some(inner_ext_idx) = file.find(inner_ext) {
+					file = &file[..inner_ext_idx];
+				}
+			});
+			if orig_len != file.len() {
+				new_filename = OsStr::new(file);
+			}
+		}
+		if new_filename.len() != filename.len() {
+			Some(new_filename)
+		} else {
+			None
+		}
+	}
+}
+
+impl From<&str> for LinkLib {
+	fn from(value: &str) -> Self {
+		let (linkage, value) = Linkage::from_prefixed_str(value);
+		let path = Path::new(value);
+		let value = path
+			.file_name()
+			.and_then(Self::cleanup_lib_filename)
+			.and_then(OsStr::to_str)
+			.unwrap_or(value);
+		Self(linkage, value.to_string())
+	}
+}
+
+#[derive(Debug, PartialEq, Eq)]
+pub struct LinkSearch(pub Linkage, pub PathBuf);
+
+impl LinkSearch {
+	#[inline]
+	pub fn emit_cargo_rustc_link_search(&self) -> String {
+		format!(
+			"cargo:rustc-link-search={}{}",
+			self.0.as_cargo_rustc_link_search_spec(),
+			self.1.to_str().expect("Can't convert link search path to UTF-8 string")
+		) // replace with cargo:: syntax when MSRV is 1.77
+	}
+}
+
+impl From<&str> for LinkSearch {
+	fn from(value: &str) -> Self {
+		let (linkage, value) = Linkage::from_prefixed_str(value);
+		Self(linkage, value.into())
+	}
+}
 
 pub struct ProbeResult {
 	pub version: Option<Version>,
 	pub include_paths: Vec<PathBuf>,
-	pub link_paths: Vec<PathBuf>,
-	pub link_libs: Vec<String>,
+	pub link_paths: Vec<LinkSearch>,
+	pub link_libs: Vec<LinkLib>,
 }
 
 pub struct CmakeProbe<'r> {
@@ -117,12 +203,16 @@ impl<'r> CmakeProbe<'r> {
 
 	pub(crate) fn extract_from_cmdline(
 		cmdline: &str,
+		skip_cmd: bool,
 		include_paths: &mut Vec<PathBuf>,
-		link_paths: &mut Vec<PathBuf>,
-		link_libs: &mut Vec<String>,
+		link_paths: &mut Vec<LinkSearch>,
+		link_libs: &mut Vec<LinkLib>,
 	) {
 		eprintln!("=== Extracting build arguments from: {cmdline}");
 		let mut args = Shlex::new(cmdline.trim());
+		if skip_cmd {
+			args.next();
+		}
 		while let Some(arg) = args.next() {
 			let arg = arg.trim();
 			if let Some(path) = arg.strip_prefix("-I") {
@@ -131,14 +221,14 @@ impl<'r> CmakeProbe<'r> {
 					include_paths.push(path);
 				}
 			} else if let Some(path) = arg.strip_prefix("-L").or_else(|| arg.strip_prefix("-Wl,-rpath,")) {
-				let path = PathBuf::from(path.trim_start());
+				let path = LinkSearch(Linkage::Default, PathBuf::from(path.trim_start()));
 				if !link_paths.contains(&path) {
 					link_paths.push(path);
 				}
 			} else if let Some(lib) = arg.strip_prefix("-l") {
 				// unresolved cmake dependency specification like Qt5::Core
-				if !lib.contains("::") {
-					link_libs.push(lib.trim_start().to_string());
+				if !lib.contains("::") && lib != "gflags_shared" {
+					link_libs.push(LinkLib(Linkage::Default, lib.trim_start().to_string()));
 				}
 			} else if let Some(framework) = arg.strip_prefix("-framework") {
 				let framework = framework.trim_start();
@@ -147,27 +237,27 @@ impl<'r> CmakeProbe<'r> {
 				} else {
 					framework.to_string()
 				};
-				let framework_path = Path::new(&framework);
-				let has_extension = framework_path
-					.extension()
-					.and_then(OsStr::to_str)
-					.map_or(false, |ext| ext.eq_ignore_ascii_case("framework"));
-				if has_extension {
-					link_libs.push(framework);
-				} else {
-					link_libs.push(format!("{}.framework", framework));
+				link_libs.push(LinkLib(Linkage::Framework, framework));
+			} else if let Some(output_file) = arg.strip_prefix("-o") {
+				if output_file.trim().is_empty() {
+					args.next().expect("No output file after -o");
 				}
 			} else if !arg.starts_with('-') {
 				let path = Path::new(arg);
-				if let Some(file) = path.file_name().and_then(super::cleanup_lib_filename) {
+				if let Some(cleaned_lib_filename) = path.file_name().and_then(LinkLib::cleanup_lib_filename) {
+					let linkage = Linkage::from_path(path);
 					if let Some(parent) = path.parent().map(|p| p.to_owned()) {
-						if !link_paths.contains(&parent) {
-							link_paths.push(parent);
+						let search_path = LinkSearch(linkage, parent);
+						if !link_paths.contains(&search_path) {
+							link_paths.push(search_path);
 						}
 					} else {
 						panic!("{}", arg.to_string());
 					}
-					link_libs.push(file.to_str().expect("Non-UTF8 filename").to_string());
+					link_libs.push(LinkLib(
+						linkage,
+						cleaned_lib_filename.to_str().expect("Non-UTF8 filename").to_string(),
+					));
 				}
 			} else {
 				eprintln!("=== Unexpected cmake compiler argument found: {arg}");
@@ -175,17 +265,17 @@ impl<'r> CmakeProbe<'r> {
 		}
 	}
 
-	fn extract_from_makefile(&self, link_paths: &mut Vec<PathBuf>, link_libs: &mut Vec<String>) -> Result<()> {
+	fn extract_from_makefile(&self, link_paths: &mut Vec<LinkSearch>, link_libs: &mut Vec<LinkLib>) -> Result<()> {
 		let link_cmdline = fs::read_to_string(self.build_dir.join("CMakeFiles/ocvrs_probe.dir/link.txt"))?;
-		Self::extract_from_cmdline(&link_cmdline, &mut vec![], link_paths, link_libs);
+		Self::extract_from_cmdline(&link_cmdline, true, &mut vec![], link_paths, link_libs);
 		Ok(())
 	}
 
 	fn extract_from_ninja(
 		&self,
 		include_paths: &mut Vec<PathBuf>,
-		link_paths: &mut Vec<PathBuf>,
-		link_libs: &mut Vec<String>,
+		link_paths: &mut Vec<LinkSearch>,
+		link_libs: &mut Vec<LinkLib>,
 	) -> Result<()> {
 		let mut link_cmdline = BufReader::new(File::open(self.build_dir.join("build.ninja"))?);
 		let mut line = String::with_capacity(2048);
@@ -208,9 +298,9 @@ impl<'r> CmakeProbe<'r> {
 				State::Reading => {
 					let trimmed_line = line.trim_start();
 					if let Some(paths) = trimmed_line.strip_prefix("LINK_PATH = ") {
-						Self::extract_from_cmdline(paths, include_paths, link_paths, link_libs);
+						Self::extract_from_cmdline(paths, false, include_paths, link_paths, link_libs);
 					} else if let Some(libs) = trimmed_line.strip_prefix("LINK_LIBRARIES = ") {
-						Self::extract_from_cmdline(libs, include_paths, link_paths, link_libs);
+						Self::extract_from_cmdline(libs, false, include_paths, link_paths, link_libs);
 					}
 				}
 			}
@@ -292,7 +382,7 @@ impl<'r> CmakeProbe<'r> {
 			if output.status.success() {
 				let stdout = String::from_utf8(output.stdout)?;
 				eprintln!("=== cmake include arguments: {stdout:#?}");
-				Self::extract_from_cmdline(&stdout, &mut include_paths, &mut link_paths, &mut link_libs);
+				Self::extract_from_cmdline(&stdout, false, &mut include_paths, &mut link_paths, &mut link_libs);
 				Ok(())
 			} else {
 				Err(
@@ -314,7 +404,7 @@ impl<'r> CmakeProbe<'r> {
 			if output.status.success() {
 				let stdout = String::from_utf8(output.stdout)?;
 				eprintln!("=== cmake link arguments: {stdout:#?}");
-				Self::extract_from_cmdline(&stdout, &mut include_paths, &mut link_paths, &mut link_libs);
+				Self::extract_from_cmdline(&stdout, false, &mut include_paths, &mut link_paths, &mut link_libs);
 				Ok(())
 			} else {
 				Err(

@@ -45,10 +45,9 @@ The following variables must be set when building without `pkg_config`, `cmake` 
 on any platform, the specified values will override those automatically discovered.
 
 * `OPENCV_LINK_LIBS`
-  Comma separated list of library names to link to. `.lib`, `.so` or `.dylib` extension is optional. If you
-  specify the ".framework" extension then build script will link a macOS framework instead of plain shared
-  library.
-  E.g. "opencv_world411".
+  Comma separated list of library names to link to. `.lib`, `.so` or `.dylib` extension is optional. For every
+  library you can specify optional "dylib=", "static=" or "framework=" prefix to indicate the specific type.
+  E.g. "opencv_world411", "framework=OpenCL".
 
   If this list starts with '+' (plus sign) then the specified items will be appended to whatever the system
   probe returned. E.g. a value of "+dc1394" will do a system discovery of the OpenCV library and its linked
@@ -76,9 +75,9 @@ The following variables are rarely used, but you might need them under some circ
   extension in the package directory. Cmake will look for that file with `.cmake` extension. And vcpkg will use
   that name to try to find package in `packages` directory under `VCPKG_ROOT`. You can also use separate
   environment variables to set different package names for different package systems:
-    * `OPENCV_PKGCONFIG_NAME`
-    * `OPENCV_CMAKE_NAME`
-    * `OPENCV_VCPKG_NAME`
+	* `OPENCV_PKGCONFIG_NAME`
+	* `OPENCV_CMAKE_NAME`
+	* `OPENCV_VCPKG_NAME`
 
 * `OPENCV_CMAKE_BIN`
   Path to cmake binary (used in OpenCV discovery process using cmake). If not set then just "cmake" will be
@@ -87,13 +86,13 @@ The following variables are rarely used, but you might need them under some circ
 * `OPENCV_DISABLE_PROBES`
   Comma separated list of OpenCV package auto-discovery systems to exclude from running. Might be useful if
   one of the higher priority systems is producing incorrect results. Can contain the following values:
-    * environment - reads data only from the `OPENCV_LINK_LIBS`, `OPENCV_LINK_PATHS` and `OPENCV_INCLUDE_PATHS`
-      environment variables
-    * pkg_config
-    * cmake
-    * vcpkg_cmake - like vcpkg, but only uses vcpkg for path discovery, the actual OpenCV probe is done using
-      cmake (cmake related environment variables are applicable with this probe)
-    * vcpkg
+	* environment - reads data only from the `OPENCV_LINK_LIBS`, `OPENCV_LINK_PATHS` and `OPENCV_INCLUDE_PATHS`
+	  environment variables
+	* pkg_config
+	* cmake
+	* vcpkg_cmake - like vcpkg, but only uses vcpkg for path discovery, the actual OpenCV probe is done using
+	  cmake (cmake related environment variables are applicable with this probe)
+	* vcpkg
 
 * `OPENCV_MSVC_CRT`
   Allows selecting the CRT library when building with MSVC for Windows. Allowed values are `"static"` for `/MT`
@@ -129,7 +128,8 @@ The following variables affect the building the of the `opencv` crate, but belon
   in `PATH` might be interpreted as the entry separator. Summary [here](https://stackoverflow.com/a/6546427).
 
 * `OPENCV_CLANG_ARGS`
-  Allow custom arguments for generating and parsing code with clang, see the [documentation for clang arguments](https://docs.rs/clang/latest/clang/struct.Parser.html#method.arguments).
+  Allow custom arguments for generating and parsing code with clang, see
+  the [documentation for clang arguments](https://docs.rs/clang/latest/clang/struct.Parser.html#method.arguments).
 
 * clang crate environment variables
   See crate's [README](https://github.com/KyleMayes/clang-sys/blob/master/README.md#environment-variables)

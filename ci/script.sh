@@ -47,10 +47,10 @@ elif [[ "$os_family" == "macOS" ]]; then
 		clang_dir="$(clang --print-search-dirs | awk -F= '/^libraries: =/ { print $2 }')"
 		if [[ "$OPENCV_VERSION" == "3.4.20" ]]; then
 			export OPENCV_LINK_PATHS="$opencv_build_path,$clang_dir/lib/darwin"
-			export OPENCV_LINK_LIBS="opencv2.framework,OpenCL.framework,Cocoa.framework,Accelerate.framework,AVFoundation.framework,CoreGraphics.framework,CoreMedia.framework,CoreVideo.framework,QuartzCore.framework,clang_rt.osx"
+			export OPENCV_LINK_LIBS="framework=opencv2,framework=OpenCL,framework=Cocoa,framework=Accelerate,framework=AVFoundation,framework=CoreGraphics,framework=CoreMedia,framework=CoreVideo,framework=QuartzCore,clang_rt.osx"
 		else
 			export OPENCV_LINK_PATHS="$opencv_build_path,$clang_dir/lib/darwin,$opencv_build_path/build/build-$(uname -m)-macosx/install/lib/"
-			export OPENCV_LINK_LIBS="opencv2.framework,OpenCL.framework,Cocoa.framework,Accelerate.framework,AVFoundation.framework,CoreGraphics.framework,CoreMedia.framework,CoreVideo.framework,QuartzCore.framework,clang_rt.osx,OrbbecSDK"
+			export OPENCV_LINK_LIBS="framework=opencv2,framework=OpenCL,framework=Cocoa,framework=Accelerate,framework=AVFoundation,framework=CoreGraphics,framework=CoreMedia,framework=CoreVideo,framework=QuartzCore,clang_rt.osx,OrbbecSDK"
 		fi
 		export OPENCV_INCLUDE_PATHS="$opencv_build_path"
 	fi

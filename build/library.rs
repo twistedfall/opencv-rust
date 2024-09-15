@@ -7,8 +7,8 @@ use std::{env, fmt, iter};
 use dunce::canonicalize;
 use semver::Version;
 
-use super::cmake_probe::CmakeProbe;
-use super::{cleanup_lib_filename, get_version_from_headers, Result, MANIFEST_DIR, OUT_DIR, TARGET_VENDOR_APPLE};
+use super::cmake_probe::{CmakeProbe, LinkLib, LinkSearch};
+use super::{get_version_from_headers, Result, MANIFEST_DIR, OUT_DIR, TARGET_VENDOR_APPLE};
 
 struct PackageName;
 
@@ -86,6 +86,65 @@ impl fmt::Display for EnvList<'_> {
 	}
 }
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Linkage {
+	Default,
+	Dynamic,
+	Static,
+	Framework,
+}
+
+impl Linkage {
+	pub fn as_cargo_rustc_link_spec(self) -> &'static str {
+		match self {
+			Self::Default => "",
+			Self::Dynamic => "dylib=",
+			Self::Static => "static=",
+			Self::Framework => "framework=",
+		}
+	}
+
+	pub fn as_cargo_rustc_link_spec_no_static(self) -> &'static str {
+		// fixme: specifying static linkage breaks things in CI
+		match self {
+			Self::Default | Self::Dynamic | Self::Static => "",
+			Self::Framework => "framework=",
+		}
+	}
+
+	pub fn as_cargo_rustc_link_search_spec(self) -> &'static str {
+		match self {
+			Self::Default => "",
+			Self::Dynamic | Self::Static => "native=",
+			Self::Framework => "framework=",
+		}
+	}
+
+	pub fn from_path(path: &Path) -> Self {
+		let ext = path.extension();
+		if Self::is_static_archive(ext) {
+			Self::Static
+		} else {
+			Self::Default
+		}
+	}
+
+	pub fn from_prefixed_str(s: &str) -> (Self, &str) {
+		// for backwards compatibility to allow specifying as "OpenCL.framework" in addition to "framework=OpenCL"
+		if let Some(name) = s.strip_suffix(".framework") {
+			return (Self::Framework, name);
+		}
+		[Self::Dynamic, Self::Static, Self::Framework]
+			.iter()
+			.find_map(|l| s.strip_prefix(l.as_cargo_rustc_link_spec()).map(|s| (*l, s)))
+			.unwrap_or((Self::Default, s))
+	}
+
+	fn is_static_archive(ext: Option<&OsStr>) -> bool {
+		ext.map_or(false, |ext| ext.eq_ignore_ascii_case("a"))
+	}
+}
+
 #[derive(Debug)]
 pub struct Library {
 	pub include_paths: Vec<PathBuf>,
@@ -94,58 +153,8 @@ pub struct Library {
 }
 
 impl Library {
-	fn process_library_list(libs: impl IntoIterator<Item = impl AsRef<Path>>) -> impl Iterator<Item = String> {
-		libs.into_iter().filter_map(|x| {
-			let path = x.as_ref();
-			let is_framework = path
-				.extension()
-				.and_then(OsStr::to_str)
-				.map_or(false, |e| e.eq_ignore_ascii_case("framework"));
-			if let Some(filename) = path.file_name() {
-				let filename = cleanup_lib_filename(filename).unwrap_or(filename);
-				filename.to_str().map(|f| {
-					if is_framework {
-						format!("framework={f}")
-					} else {
-						f.to_owned()
-					}
-				})
-			} else {
-				None
-			}
-		})
-	}
-
 	fn version_from_include_paths(include_paths: impl IntoIterator<Item = impl AsRef<Path>>) -> Option<Version> {
 		include_paths.into_iter().find_map(|x| get_version_from_headers(x.as_ref()))
-	}
-
-	#[inline]
-	fn emit_link_search(path: &Path, typ: Option<&str>) -> String {
-		format!(
-			"cargo:rustc-link-search={}{}",
-			typ.map_or_else(|| "".to_string(), |t| format!("{t}=")),
-			path.to_str().expect("Can't convert link search path to UTF-8 string")
-		)
-	}
-
-	#[inline]
-	fn emit_link_lib(lib: &str, typ: Option<&str>) -> String {
-		format!(
-			"cargo:rustc-link-lib={}{}",
-			typ.map_or_else(
-				|| "".to_string(),
-				|t| {
-					let prefix = format!("{t}=");
-					if lib.starts_with(&prefix) {
-						"".to_string()
-					} else {
-						prefix
-					}
-				}
-			),
-			lib
-		)
 	}
 
 	fn process_env_var_list<'a, T: From<&'a str>>(env_list: Option<EnvList<'a>>, sys_list: Vec<T>) -> Vec<T> {
@@ -162,25 +171,21 @@ impl Library {
 		}
 	}
 
-	fn process_link_paths<'a>(
-		link_paths: Option<EnvList>,
-		sys_link_paths: Vec<PathBuf>,
-		typ: Option<&'a str>,
-	) -> impl Iterator<Item = String> + 'a {
+	fn process_link_paths<'a>(link_paths: Option<EnvList>, sys_link_paths: Vec<LinkSearch>) -> impl Iterator<Item = String> + 'a {
 		Self::process_env_var_list(link_paths, sys_link_paths)
 			.into_iter()
 			.flat_map(move |path| {
-				iter::once(Self::emit_link_search(&path, typ))
-					.chain(TARGET_VENDOR_APPLE.then(|| Self::emit_link_search(&path, Some("framework"))))
+				iter::once(path.emit_cargo_rustc_link_search()).chain(
+					(*TARGET_VENDOR_APPLE && path.0 != Linkage::Framework)
+						.then(|| LinkSearch(Linkage::Framework, path.1).emit_cargo_rustc_link_search()),
+				)
 			})
 	}
 
-	fn process_link_libs<'a>(
-		link_libs: Option<EnvList>,
-		sys_link_libs: Vec<String>,
-		typ: Option<&'a str>,
-	) -> impl Iterator<Item = String> + 'a {
-		Self::process_library_list(Self::process_env_var_list(link_libs, sys_link_libs)).map(move |l| Self::emit_link_lib(&l, typ))
+	fn process_link_libs<'a>(link_libs: Option<EnvList>, sys_link_libs: Vec<LinkLib>) -> impl Iterator<Item = String> + 'a {
+		Self::process_env_var_list(link_libs, sys_link_libs)
+			.into_iter()
+			.map(|l| l.emit_cargo_rustc_link())
 	}
 
 	fn find_vcpkg_tool(vcpkg_root: &Path, tool_name: &str) -> Option<PathBuf> {
@@ -228,8 +233,8 @@ impl Library {
 
 			let version = Self::version_from_include_paths(&include_paths).ok_or("Could not OpenCV version from include_paths")?;
 
-			cargo_metadata.extend(Self::process_link_paths(Some(link_paths), vec![], None));
-			cargo_metadata.extend(Self::process_link_libs(Some(link_libs), vec![], None));
+			cargo_metadata.extend(Self::process_link_paths(Some(link_paths), vec![]));
+			cargo_metadata.extend(Self::process_link_libs(Some(link_libs), vec![]));
 
 			Ok(Self {
 				include_paths,
@@ -266,14 +271,38 @@ impl Library {
 		let opencv = opencv.ok_or_else(|| errors.join(", "))?;
 		let mut cargo_metadata = Vec::with_capacity(64);
 
-		cargo_metadata.extend(Self::process_link_paths(link_paths, opencv.link_paths, None));
+		cargo_metadata.extend(Self::process_link_paths(
+			link_paths,
+			opencv
+				.link_paths
+				.into_iter()
+				.map(|p| LinkSearch(Linkage::Default, p))
+				.collect(),
+		));
 		if link_paths.map_or(true, |link_paths| link_paths.is_extend()) {
-			cargo_metadata.extend(Self::process_link_paths(None, opencv.framework_paths, Some("framework")));
+			cargo_metadata.extend(Self::process_link_paths(
+				None,
+				opencv
+					.framework_paths
+					.into_iter()
+					.map(|p| LinkSearch(Linkage::Framework, p))
+					.collect(),
+			));
 		}
 
-		cargo_metadata.extend(Self::process_link_libs(link_libs, opencv.libs, None));
+		cargo_metadata.extend(Self::process_link_libs(
+			link_libs,
+			opencv.libs.into_iter().map(|l| LinkLib(Linkage::Default, l)).collect(),
+		));
 		if link_libs.map_or(false, |link_libs| link_libs.is_extend()) {
-			cargo_metadata.extend(Self::process_link_libs(None, opencv.frameworks, Some("framework")));
+			cargo_metadata.extend(Self::process_link_libs(
+				None,
+				opencv
+					.frameworks
+					.into_iter()
+					.map(|f| LinkLib(Linkage::Framework, f))
+					.collect(),
+			));
 		}
 
 		let include_paths = Self::process_env_var_list(include_paths, opencv.include_paths);
@@ -326,8 +355,8 @@ impl Library {
 		}
 
 		let mut cargo_metadata = Vec::with_capacity(probe_result.link_paths.len() + probe_result.link_libs.len());
-		cargo_metadata.extend(Self::process_link_paths(link_paths, probe_result.link_paths, None));
-		cargo_metadata.extend(Self::process_link_libs(link_libs, probe_result.link_libs, None));
+		cargo_metadata.extend(Self::process_link_paths(link_paths, probe_result.link_paths));
+		cargo_metadata.extend(Self::process_link_libs(link_libs, probe_result.link_libs));
 
 		Ok(Self {
 			include_paths: Self::process_env_var_list(include_paths, probe_result.include_paths),
@@ -367,12 +396,12 @@ impl Library {
 		if link_paths.as_ref().map_or(false, |lp| !lp.is_extend()) {
 			cargo_metadata.retain(|p| !p.starts_with("cargo:rustc-link-search=") && !p.starts_with("cargo::rustc-link-search="));
 		}
-		cargo_metadata.extend(Self::process_link_paths(link_paths, vec![], None));
+		cargo_metadata.extend(Self::process_link_paths(link_paths, vec![]));
 
 		if link_libs.as_ref().map_or(false, |ll| !ll.is_extend()) {
 			cargo_metadata.retain(|p| !p.starts_with("cargo:rustc-link-lib=") && !p.starts_with("cargo::rustc-link-lib="));
 		}
-		cargo_metadata.extend(Self::process_link_libs(link_libs, vec![], None));
+		cargo_metadata.extend(Self::process_link_libs(link_libs, vec![]));
 
 		Ok(Self {
 			include_paths,
