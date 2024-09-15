@@ -9,7 +9,6 @@ use opencv::videoio::VideoCaptureTrait;
 use opencv::core::{Mat, Vector};
 use opencv::imgcodecs::{imencode, IMWRITE_JPEG_QUALITY};
 use opencv::videoio::{VideoCapture, VideoCaptureTraitConst, CAP_ANY};
-use opencv::Result;
 
 const BASE_RESPONSE: &[u8] = b"HTTP/1.1 200 OK\r\nContent-Type: multipart/x-mixed-replace; boundary=frame\r\n\r\n";
 
