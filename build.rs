@@ -200,7 +200,10 @@ fn build_compiler(opencv: &Library) -> cc::Build {
 	opencv.include_paths.iter().for_each(|p| {
 		out.include(p);
 		if *TARGET_VENDOR_APPLE {
-			out.flag_if_supported(format!("-F{}", p.to_str().expect("Can't convert path to str")));
+			// Weirdly causes issues on macOS: https://github.com/twistedfall/opencv-rust/issues/620
+			// MSRV: replace with `reason` when MSRV is 1.81.0
+			#[allow(clippy::needless_borrows_for_generic_args)]
+			out.flag_if_supported(&format!("-F{}", p.to_str().expect("Can't convert path to str")));
 		}
 	});
 
