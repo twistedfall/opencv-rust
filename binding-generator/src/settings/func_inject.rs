@@ -39,6 +39,23 @@ pub fn func_inject_factory(module: &str) -> Vec<FuncFactory> {
 				))
 			},
 			|| {
+				Func::new_desc(
+					FuncDesc::new(
+						InstanceMethod(ClassDesc::cv_mat()),
+						Const,
+						Fallible,
+						"getDataDump",
+						"core",
+						[],
+						TypeRefDesc::std_string(),
+					)
+					.cpp_body(FuncCppBody::ManualCall(
+						"std::string();\nstd::ostringstream oss;\noss << *instance;\nret = oss.str()".into(),
+					))
+					.doc_comment("Return the dump of the Mat's data"),
+				)
+			},
+			|| {
 				Func::new_desc(FuncDesc::new(
 					InstanceMethod(ClassDesc::cv_umat()),
 					Const,

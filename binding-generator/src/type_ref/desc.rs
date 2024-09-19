@@ -211,6 +211,11 @@ impl<'tu, 'ge> TypeRefDesc<'tu, 'ge> {
 		TypeRef::new_class(ClassDesc::cv_string())
 	}
 
+	/// `std::string`
+	pub fn std_string() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_class(ClassDesc::std_string())
+	}
+
 	/// `std::vector<std::vector<double>>`
 	pub fn vector_of_vector_of_double() -> TypeRef<'tu, 'ge> {
 		TypeRef::new_vector(Vector::new_desc(VectorDesc::new(TypeRef::new_vector(Vector::new_desc(

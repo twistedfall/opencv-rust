@@ -788,7 +788,22 @@ impl fmt::Debug for Mat {
 			.field("total", &self.total())
 			.field("is_continuous", &self.is_continuous())
 			.field("is_submatrix", &self.is_submatrix())
+			.field("data", &MatDataDumper(self))
 			.finish()
+	}
+}
+
+struct MatDataDumper<'r>(&'r Mat);
+
+impl fmt::Debug for MatDataDumper<'_> {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+		const MAX_DUMP_SIZE: usize = 1000;
+
+		if self.0.total() <= MAX_DUMP_SIZE {
+			f.write_str(&self.0.get_data_dump().map_err(|_| fmt::Error)?)
+		} else {
+			f.write_fmt(format_args!("<element count is higher than threshold: {MAX_DUMP_SIZE}>"))
+		}
 	}
 }
 

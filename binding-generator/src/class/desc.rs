@@ -1,8 +1,7 @@
 use std::rc::Rc;
 
-use crate::element::ExcludeKind;
-
 use super::{Class, ClassKind, TemplateKind};
+use crate::element::ExcludeKind;
 
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
 pub struct ClassDesc<'tu, 'ge> {
@@ -112,6 +111,11 @@ impl<'tu, 'ge> ClassDesc<'tu, 'ge> {
 	/// `cv::String`
 	pub fn cv_string() -> Class<'tu, 'ge> {
 		Class::new_desc(Self::system("cv::String", "core"))
+	}
+
+	/// `std::String`
+	pub fn std_string() -> Class<'tu, 'ge> {
+		Class::new_desc(Self::system("std::string", "core"))
 	}
 
 	/// `cv::MatConstIterator`
