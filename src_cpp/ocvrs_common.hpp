@@ -11,6 +11,8 @@
 	// strip dnn experimental ns when generating headers
 	#define CV_DNN_DONT_ADD_EXPERIMENTAL_NS
 	#define CV_DNN_DONT_ADD_INLINE_NS
+	// the FFI export suffix only matters during actual linking
+	#define OCVRS_FFI_EXPORT_SUFFIX
 #endif
 
 #include <memory>
@@ -29,9 +31,17 @@ catch (cv::Exception& e) { \
 	OCVRS_HANDLE(cv::Error::StsError, "Unspecified error, neither from OpenCV nor from std", return_name); \
 }
 
-// defined in src/templ.rs
-extern "C" void* ocvrs_create_string(const char*);
-extern "C" void* ocvrs_create_byte_string(const char*, size_t);
+// double-expansion macro trick to expand the OCVRS_FFI_EXPORT_SUFFIX macro
+#define CONCATENATE(prefix, suffix) prefix##suffix
+#define SUFFIXED_NAME(name, suffix) CONCATENATE(name, suffix)
+
+// defined in build/generator/collector.rs Collector::inject_ffi_exports, see `inject_ffi_exports()` function for explanation
+extern "C" void* SUFFIXED_NAME(ocvrs_create_string, OCVRS_FFI_EXPORT_SUFFIX)(const char*);
+extern "C" void* SUFFIXED_NAME(ocvrs_create_byte_string, OCVRS_FFI_EXPORT_SUFFIX)(const char*, size_t);
+
+// "aliases" for the above functions provided by Rust, to be used in the generated code
+inline void* ocvrs_create_string(const char* s) { return SUFFIXED_NAME(ocvrs_create_string, OCVRS_FFI_EXPORT_SUFFIX)(s); }
+inline void* ocvrs_create_byte_string(const char* s, size_t len) { return SUFFIXED_NAME(ocvrs_create_byte_string, OCVRS_FFI_EXPORT_SUFFIX)(s, len); }
 
 template<typename T> struct Result {
 	int error_code;

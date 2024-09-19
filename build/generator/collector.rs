@@ -9,15 +9,23 @@ use super::super::{files_with_extension, Result};
 
 pub struct Collector<'r> {
 	modules: &'r [String],
+	ffi_export_suffix: &'r str,
 	target_module_dir: &'r Path,
 	manual_dir: &'r Path,
 	out_dir: &'r Path,
 }
 
 impl<'r> Collector<'r> {
-	pub fn new(modules: &'r [String], target_module_dir: &'r Path, manual_dir: &'r Path, out_dir: &'r Path) -> Self {
+	pub fn new(
+		modules: &'r [String],
+		ffi_export_suffix: &'r str,
+		target_module_dir: &'r Path,
+		manual_dir: &'r Path,
+		out_dir: &'r Path,
+	) -> Self {
 		Self {
 			modules,
+			ffi_export_suffix,
 			target_module_dir,
 			manual_dir,
 			out_dir,
@@ -80,6 +88,7 @@ impl<'r> Collector<'r> {
 			writeln!(hub_rs, "\tpub use super::{module}::prelude::*;")?;
 		}
 		writeln!(hub_rs, "}}")?;
+		self.inject_ffi_exports(&mut hub_rs)?;
 		eprintln!("=== Total binding collection time: {:?}", start.elapsed());
 		Ok(())
 	}
@@ -169,6 +178,30 @@ impl<'r> Collector<'r> {
 		write_has_module(sys_rs, module)?;
 		writeln!(sys_rs, "pub use {module}_sys::*;")?;
 		writeln!(sys_rs)?;
+		Ok(())
+	}
+
+	/// The #no_mangle function in the bindings cause duplicate export names when 2 different version of the crate are used
+	/// (https://github.com/twistedfall/opencv-rust/issues/597). This function injects the version of the exported functions with
+	/// a crate version suffix to avoid this conflict. On the C++ side it works with the help of the `OCVRS_FFI_EXPORT_SUFFIX`
+	/// macro which is passed in `build_compiler()`.
+	fn inject_ffi_exports(&self, hub_rs: &mut impl Write) -> Result<()> {
+		writeln!(hub_rs, "\nmod ffi_exports {{")?;
+		writeln!(hub_rs, "\tuse crate::mod_prelude_sys::*;")?;
+		write!(hub_rs, "\t")?;
+		writeln!(
+			hub_rs,
+			r#"#[no_mangle] unsafe extern "C" fn ocvrs_create_string{}(s: *const c_char) -> *mut String {{ crate::templ::ocvrs_create_string(s) }}"#,
+			self.ffi_export_suffix
+		)?;
+		write!(hub_rs, "\t")?;
+		writeln!(
+			hub_rs,
+			r#"#[no_mangle] unsafe extern "C" fn ocvrs_create_byte_string{}(v: *const u8, len: size_t) -> *mut Vec<u8> {{ crate::templ::ocvrs_create_byte_string(v, len) }}"#,
+			self.ffi_export_suffix
+		)?;
+		writeln!(hub_rs, "}}")?;
+
 		Ok(())
 	}
 

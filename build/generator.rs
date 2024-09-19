@@ -22,7 +22,7 @@ impl BindingGenerator {
 		Self { build_script_path }
 	}
 
-	pub fn generate_wrapper(&self, opencv_header_dir: &Path, opencv: &Library) -> Result<()> {
+	pub fn generate_wrapper(&self, opencv_header_dir: &Path, opencv: &Library, ffi_export_suffix: &str) -> Result<()> {
 		let target_docs_dir = env::var_os("OCVRS_DOCS_GENERATE_DIR").map(PathBuf::from);
 		let target_module_dir = OUT_DIR.join("opencv");
 		let manual_dir = SRC_DIR.join("manual");
@@ -48,8 +48,7 @@ impl BindingGenerator {
 
 		self.run(modules, opencv_header_dir, opencv)?;
 
-		let collector = Collector::new(modules, &target_module_dir, &manual_dir, &OUT_DIR);
-		collector.collect_bindings()?;
+		Collector::new(modules, &ffi_export_suffix, &target_module_dir, &manual_dir, &OUT_DIR).collect_bindings()?;
 
 		if let Some(target_docs_dir) = target_docs_dir {
 			if !target_docs_dir.exists() {

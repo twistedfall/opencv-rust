@@ -177,7 +177,7 @@ fn make_modules(opencv_dir: &Path) -> Result<()> {
 	Ok(())
 }
 
-fn build_compiler(opencv: &Library) -> cc::Build {
+fn build_compiler(opencv: &Library, ffi_export_suffix: &str) -> cc::Build {
 	let mut out = cc::Build::new();
 	out.cpp(true)
 		.std("c++14") // clang says error: 'auto' return without trailing return type; deduced return types are a C++14 extension
@@ -230,6 +230,7 @@ fn build_compiler(opencv: &Library) -> cc::Build {
 	} else {
 		out.flag_if_supported("-Wa,-mbig-obj");
 	}
+	out.define("OCVRS_FFI_EXPORT_SUFFIX", ffi_export_suffix);
 	out
 }
 
@@ -250,8 +251,7 @@ fn setup_rerun() -> Result<()> {
 	Ok(())
 }
 
-fn build_wrapper(opencv: &Library) {
-	let mut cc = build_compiler(opencv);
+fn build_wrapper(mut cc: cc::Build) {
 	eprintln!("=== Compiler information: {:#?}", cc.get_compiler());
 	let modules = MODULES.get().expect("MODULES not initialized");
 	static SUPPORTED_MODULES: [&str; 67] = [
@@ -350,7 +350,8 @@ fn main() -> Result<()> {
 		return Ok(());
 	}
 
-	eprintln!("=== Crate version: {:?}", env::var_os("CARGO_PKG_VERSION"));
+	let pkg_version = env::var("CARGO_PKG_VERSION").unwrap_or_else(|_| "unknown_crate_version".to_string());
+	eprintln!("=== Crate version: {pkg_version}");
 	eprintln!("=== Environment configuration:");
 	for v in AFFECTING_ENV_VARS.into_iter().chain(DEBUG_ENV_VARS) {
 		eprintln!("===   {v} = {:?}", env::var_os(v));
@@ -424,9 +425,11 @@ fn main() -> Result<()> {
 
 	setup_rerun()?;
 
+	let ffi_export_suffix = format!("_{}", pkg_version.replace(".", "_"));
 	let binding_generator = BindingGenerator::new(build_script_path);
-	binding_generator.generate_wrapper(opencv_header_dir, &opencv)?;
-	build_wrapper(&opencv);
+	binding_generator.generate_wrapper(opencv_header_dir, &opencv, &ffi_export_suffix)?;
+	let cc = build_compiler(&opencv, &ffi_export_suffix);
+	build_wrapper(cc);
 	// -l linker args should be emitted after -l static
 	opencv.emit_cargo_metadata();
 	Ok(())
