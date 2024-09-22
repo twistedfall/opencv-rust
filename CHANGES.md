@@ -1,3 +1,7 @@
+* 0.93.1
+  * Fix 0.93.0 regression: https://github.com/twistedfall/opencv-rust/issues/620.
+  * Allow combining several versions of the crate as dependencies, fixes https://github.com/twistedfall/opencv-rust/issues/597.
+
 * 0.93.0
   * Improve automatic slice detection, e.g. `CommandParser::new()` now calculates `argc` automatically.
   * `find_circles_grid` now can take `None` the `blob_detector` argument.

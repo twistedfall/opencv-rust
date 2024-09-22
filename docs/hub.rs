@@ -267,3 +267,9 @@ pub mod hub_prelude {
 	#[cfg(ocvrs_has_module_xphoto)]
 	pub use super::xphoto::prelude::*;
 }
+
+mod ffi_exports {
+	use crate::mod_prelude_sys::*;
+	#[no_mangle] unsafe extern "C" fn ocvrs_create_string_0_93_0(s: *const c_char) -> *mut String { crate::templ::ocvrs_create_string(s) }
+	#[no_mangle] unsafe extern "C" fn ocvrs_create_byte_string_0_93_0(v: *const u8, len: size_t) -> *mut Vec<u8> { crate::templ::ocvrs_create_byte_string(v, len) }
+}
