@@ -3,16 +3,15 @@ use std::collections::HashMap;
 
 use once_cell::sync::Lazy;
 
-use crate::class::ClassDesc;
-use crate::field::{Field, FieldDesc};
-use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
-use crate::settings::ARG_OVERRIDE_SELF;
-use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle, TypeRefDesc, TypeRefTypeHint};
-use crate::{settings, Class, CompiledInterpolation, Func, IteratorExt, StrExt, StringExt, TypeRef, Vector};
-
 use super::element::RustElement;
 use super::type_ref::{Lifetime, TypeRefExt};
 use super::RustNativeGeneratedElement;
+use crate::class::ClassDesc;
+use crate::field::{Field, FieldDesc};
+use crate::func::{FuncCppBody, FuncDesc, FuncKind, ReturnKind};
+use crate::settings::ARG_OVERRIDE_SELF;
+use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle, TypeRefDesc, TypeRefTypeHint};
+use crate::{settings, Class, CompiledInterpolation, Func, IteratorExt, StrExt, StringExt, TypeRef, Vector};
 
 impl RustElement for Vector<'_, '_> {
 	fn rust_module(&self) -> Cow<str> {
@@ -291,95 +290,103 @@ fn method_new<'tu, 'ge>(vector_class: Class<'tu, 'ge>, vec_type_ref: TypeRef<'tu
 		ReturnKind::InfallibleNaked,
 		"cv::new",
 		"core",
-		vec![],
-		FuncCppBody::Auto,
-		FuncRustBody::Auto,
+		[],
 		vec_type_ref,
 	))
 }
 
 fn method_len<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
-	Func::new_desc(FuncDesc::new(
-		FuncKind::InstanceMethod(vector_class),
-		Constness::Const,
-		ReturnKind::InfallibleNaked,
-		"cv::len",
-		"core",
-		vec![],
-		FuncCppBody::ManualCall("instance->size()".into()),
-		FuncRustBody::Auto,
-		TypeRefDesc::size_t(),
-	))
+	Func::new_desc(
+		FuncDesc::new(
+			FuncKind::InstanceMethod(vector_class),
+			Constness::Const,
+			ReturnKind::InfallibleNaked,
+			"cv::len",
+			"core",
+			[],
+			TypeRefDesc::size_t(),
+		)
+		.cpp_body(FuncCppBody::ManualCall("instance->size()".into())),
+	)
 }
 
 fn method_is_empty<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
-	Func::new_desc(FuncDesc::new(
-		FuncKind::InstanceMethod(vector_class),
-		Constness::Const,
-		ReturnKind::InfallibleNaked,
-		"cv::isEmpty",
-		"core",
-		vec![],
-		FuncCppBody::ManualCall("instance->empty()".into()),
-		FuncRustBody::Auto,
-		TypeRefDesc::bool(),
-	))
+	Func::new_desc(
+		FuncDesc::new(
+			FuncKind::InstanceMethod(vector_class),
+			Constness::Const,
+			ReturnKind::InfallibleNaked,
+			"cv::isEmpty",
+			"core",
+			[],
+			TypeRefDesc::bool(),
+		)
+		.cpp_body(FuncCppBody::ManualCall("instance->empty()".into())),
+	)
 }
 
 fn method_capacity<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
-	Func::new_desc(FuncDesc::new(
-		FuncKind::InstanceMethod(vector_class),
-		Constness::Const,
-		ReturnKind::InfallibleNaked,
-		"cv::capacity",
-		"core",
-		vec![],
-		FuncCppBody::ManualCall("instance->capacity()".into()),
-		FuncRustBody::Auto,
-		TypeRefDesc::size_t(),
-	))
+	Func::new_desc(
+		FuncDesc::new(
+			FuncKind::InstanceMethod(vector_class),
+			Constness::Const,
+			ReturnKind::InfallibleNaked,
+			"cv::capacity",
+			"core",
+			[],
+			TypeRefDesc::size_t(),
+		)
+		.cpp_body(FuncCppBody::ManualCall("instance->capacity()".into())),
+	)
 }
 
 fn method_shrink_to_fit<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
-	Func::new_desc(FuncDesc::new(
-		FuncKind::InstanceMethod(vector_class),
-		Constness::Mut,
-		ReturnKind::InfallibleNaked,
-		"cv::shrinkToFit",
-		"core",
-		vec![],
-		FuncCppBody::ManualCall("instance->shrink_to_fit()".into()),
-		FuncRustBody::Auto,
-		TypeRefDesc::void(),
-	))
+	Func::new_desc(
+		FuncDesc::new(
+			FuncKind::InstanceMethod(vector_class),
+			Constness::Mut,
+			ReturnKind::InfallibleNaked,
+			"cv::shrinkToFit",
+			"core",
+			[],
+			TypeRefDesc::void(),
+		)
+		.cpp_body(FuncCppBody::ManualCall("instance->shrink_to_fit()".into())),
+	)
 }
 
 fn method_reserve<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
-	Func::new_desc(FuncDesc::new(
-		FuncKind::InstanceMethod(vector_class),
-		Constness::Mut,
-		ReturnKind::InfallibleNaked,
-		"cv::reserve",
-		"core",
-		vec![Field::new_desc(FieldDesc::new("additional", TypeRefDesc::size_t()))],
-		FuncCppBody::ManualCall("instance->reserve(instance->size() + {{args}})".into()),
-		FuncRustBody::Auto,
-		TypeRefDesc::void(),
-	))
+	Func::new_desc(
+		FuncDesc::new(
+			FuncKind::InstanceMethod(vector_class),
+			Constness::Mut,
+			ReturnKind::InfallibleNaked,
+			"cv::reserve",
+			"core",
+			[Field::new_desc(FieldDesc::new("additional", TypeRefDesc::size_t()))],
+			TypeRefDesc::void(),
+		)
+		.cpp_body(FuncCppBody::ManualCall(
+			"instance->reserve(instance->size() + {{args}})".into(),
+		)),
+	)
 }
 
 fn method_remove<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
-	Func::new_desc(FuncDesc::new(
-		FuncKind::InstanceMethod(vector_class),
-		Constness::Mut,
-		ReturnKind::InfallibleNaked,
-		"cv::remove",
-		"core",
-		vec![Field::new_desc(FieldDesc::new("index", TypeRefDesc::size_t()))],
-		FuncCppBody::ManualCall("instance->erase(instance->begin() + {{args}})".into()),
-		FuncRustBody::Auto,
-		TypeRefDesc::void(),
-	))
+	Func::new_desc(
+		FuncDesc::new(
+			FuncKind::InstanceMethod(vector_class),
+			Constness::Mut,
+			ReturnKind::InfallibleNaked,
+			"cv::remove",
+			"core",
+			[Field::new_desc(FieldDesc::new("index", TypeRefDesc::size_t()))],
+			TypeRefDesc::void(),
+		)
+		.cpp_body(FuncCppBody::ManualCall(
+			"instance->erase(instance->begin() + {{args}})".into(),
+		)),
+	)
 }
 
 fn method_swap<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_is_bool: bool) -> Func<'tu, 'ge> {
@@ -389,20 +396,23 @@ fn method_swap<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_is_bool: bool) -
 	} else {
 		"std::swap"
 	};
-	Func::new_desc(FuncDesc::new(
-		FuncKind::InstanceMethod(vector_class),
-		Constness::Mut,
-		ReturnKind::InfallibleNaked,
-		"cv::swap",
-		"core",
-		vec![
-			Field::new_desc(FieldDesc::new("index1", TypeRefDesc::size_t())),
-			Field::new_desc(FieldDesc::new("index2", TypeRefDesc::size_t())),
-		],
-		FuncCppBody::ManualCall(format!("{swap_func}((*instance)[index1], (*instance)[index2])").into()),
-		FuncRustBody::Auto,
-		TypeRefDesc::void(),
-	))
+	Func::new_desc(
+		FuncDesc::new(
+			FuncKind::InstanceMethod(vector_class),
+			Constness::Mut,
+			ReturnKind::InfallibleNaked,
+			"cv::swap",
+			"core",
+			[
+				Field::new_desc(FieldDesc::new("index1", TypeRefDesc::size_t())),
+				Field::new_desc(FieldDesc::new("index2", TypeRefDesc::size_t())),
+			],
+			TypeRefDesc::void(),
+		)
+		.cpp_body(FuncCppBody::ManualCall(
+			format!("{swap_func}((*instance)[index1], (*instance)[index2])").into(),
+		)),
+	)
 }
 
 fn method_clear<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
@@ -412,99 +422,104 @@ fn method_clear<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
 		ReturnKind::InfallibleNaked,
 		"cv::clear",
 		"core",
-		vec![],
-		FuncCppBody::Auto,
-		FuncRustBody::Auto,
+		[],
 		TypeRefDesc::void(),
 	))
 }
 
 fn method_push<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
-	Func::new_desc(FuncDesc::new(
-		FuncKind::InstanceMethod(vector_class),
-		Constness::Mut,
-		ReturnKind::InfallibleNaked,
-		"cv::push",
-		"core",
-		vec![Field::new_desc(FieldDesc::new(
-			"val",
-			element_type.with_inherent_constness(Constness::Const),
-		))],
-		FuncCppBody::ManualCall("instance->push_back({{args}})".into()),
-		FuncRustBody::Auto,
-		TypeRefDesc::void(),
-	))
+	Func::new_desc(
+		FuncDesc::new(
+			FuncKind::InstanceMethod(vector_class),
+			Constness::Mut,
+			ReturnKind::InfallibleNaked,
+			"cv::push",
+			"core",
+			[Field::new_desc(FieldDesc::new(
+				"val",
+				element_type.with_inherent_constness(Constness::Const),
+			))],
+			TypeRefDesc::void(),
+		)
+		.cpp_body(FuncCppBody::ManualCall("instance->push_back({{args}})".into())),
+	)
 }
 
 fn method_insert<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
-	Func::new_desc(FuncDesc::new(
-		FuncKind::InstanceMethod(vector_class),
-		Constness::Mut,
-		ReturnKind::InfallibleNaked,
-		"cv::insert",
-		"core",
-		vec![
-			Field::new_desc(FieldDesc::new("index", TypeRefDesc::size_t())),
-			Field::new_desc(FieldDesc::new("val", element_type.with_inherent_constness(Constness::Const))),
-		],
-		FuncCppBody::ManualCall("instance->insert(instance->begin() + {{args}})".into()),
-		FuncRustBody::Auto,
-		TypeRefDesc::void(),
-	))
+	Func::new_desc(
+		FuncDesc::new(
+			FuncKind::InstanceMethod(vector_class),
+			Constness::Mut,
+			ReturnKind::InfallibleNaked,
+			"cv::insert",
+			"core",
+			[
+				Field::new_desc(FieldDesc::new("index", TypeRefDesc::size_t())),
+				Field::new_desc(FieldDesc::new("val", element_type.with_inherent_constness(Constness::Const))),
+			],
+			TypeRefDesc::void(),
+		)
+		.cpp_body(FuncCppBody::ManualCall(
+			"instance->insert(instance->begin() + {{args}})".into(),
+		)),
+	)
 }
 
 fn method_get<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
-	Func::new_desc(FuncDesc::new(
-		FuncKind::InstanceMethod(vector_class),
-		Constness::Const,
-		ReturnKind::InfallibleViaArg,
-		"cv::get",
-		"core",
-		vec![Field::new_desc(FieldDesc::new("index", TypeRefDesc::size_t()))],
-		FuncCppBody::ManualCall("(*instance)[{{args}}]".into()),
-		FuncRustBody::Auto,
-		element_type,
-	))
+	Func::new_desc(
+		FuncDesc::new(
+			FuncKind::InstanceMethod(vector_class),
+			Constness::Const,
+			ReturnKind::InfallibleViaArg,
+			"cv::get",
+			"core",
+			[Field::new_desc(FieldDesc::new("index", TypeRefDesc::size_t()))],
+			element_type,
+		)
+		.cpp_body(FuncCppBody::ManualCall("(*instance)[{{args}}]".into())),
+	)
 }
 
 fn method_set<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
-	Func::new_desc(FuncDesc::new(
-		FuncKind::InstanceMethod(vector_class),
-		Constness::Mut,
-		ReturnKind::InfallibleNaked,
-		"cv::set",
-		"core",
-		vec![
-			Field::new_desc(FieldDesc::new("index", TypeRefDesc::size_t())),
-			Field::new_desc(FieldDesc::new(
-				"val",
-				element_type.clone().with_inherent_constness(Constness::Const),
-			)),
-		],
-		FuncCppBody::ManualCall(
+	Func::new_desc(
+		FuncDesc::new(
+			FuncKind::InstanceMethod(vector_class),
+			Constness::Mut,
+			ReturnKind::InfallibleNaked,
+			"cv::set",
+			"core",
+			[
+				Field::new_desc(FieldDesc::new("index", TypeRefDesc::size_t())),
+				Field::new_desc(FieldDesc::new(
+					"val",
+					element_type.clone().with_inherent_constness(Constness::Const),
+				)),
+			],
+			TypeRefDesc::void(),
+		)
+		.cpp_body(FuncCppBody::ManualCall(
 			format!(
 				"(*instance)[index] = {}",
 				element_type.render_lane().to_dyn().cpp_arg_func_call("val")
 			)
 			.into(),
-		),
-		FuncRustBody::Auto,
-		TypeRefDesc::void(),
-	))
+		)),
+	)
 }
 
 fn method_clone<'tu, 'ge>(vector_class: Class<'tu, 'ge>, vec_type_ref: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
-	Func::new_desc(FuncDesc::new(
-		FuncKind::InstanceMethod(vector_class),
-		Constness::Const,
-		ReturnKind::InfallibleNaked,
-		"cv::clone",
-		"core",
-		vec![],
-		FuncCppBody::ManualCall("{{ret_type}}(*instance)".into()),
-		FuncRustBody::Auto,
-		vec_type_ref,
-	))
+	Func::new_desc(
+		FuncDesc::new(
+			FuncKind::InstanceMethod(vector_class),
+			Constness::Const,
+			ReturnKind::InfallibleNaked,
+			"cv::clone",
+			"core",
+			[],
+			vec_type_ref,
+		)
+		.cpp_body(FuncCppBody::ManualCall("{{ret_type}}(*instance)".into())),
+	)
 }
 
 fn method_data<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
@@ -514,105 +529,110 @@ fn method_data<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<'t
 		ReturnKind::InfallibleNaked,
 		"cv::data",
 		"core",
-		vec![],
-		FuncCppBody::Auto,
-		FuncRustBody::Auto,
+		[],
 		TypeRef::new_pointer(element_type.with_inherent_constness(Constness::Const))
 			.with_type_hint(TypeRefTypeHint::CharPtrSingleChar),
 	))
 }
 
 fn method_data_mut<'tu, 'ge>(vector_class: Class<'tu, 'ge>, element_type: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
-	Func::new_desc(FuncDesc::new(
-		FuncKind::InstanceMethod(vector_class),
-		Constness::Mut,
-		ReturnKind::InfallibleNaked,
-		"cv::dataMut",
-		"core",
-		vec![],
-		FuncCppBody::ManualCall("instance->data()".into()),
-		FuncRustBody::Auto,
-		TypeRef::new_pointer(element_type.with_inherent_constness(Constness::Mut))
-			.with_type_hint(TypeRefTypeHint::CharPtrSingleChar),
-	))
+	Func::new_desc(
+		FuncDesc::new(
+			FuncKind::InstanceMethod(vector_class),
+			Constness::Mut,
+			ReturnKind::InfallibleNaked,
+			"cv::dataMut",
+			"core",
+			[],
+			TypeRef::new_pointer(element_type.with_inherent_constness(Constness::Mut))
+				.with_type_hint(TypeRefTypeHint::CharPtrSingleChar),
+		)
+		.cpp_body(FuncCppBody::ManualCall("instance->data()".into())),
+	)
 }
 
 fn method_from_slice<'tu, 'ge>(vec_type_ref: TypeRef<'tu, 'ge>, element_type: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
-	Func::new_desc(FuncDesc::new(
-		FuncKind::Function,
-		Constness::Const,
-		ReturnKind::InfallibleNaked,
-		"cv::fromSlice",
-		"core",
-		vec![
-			Field::new_desc(FieldDesc::new(
-				"data",
-				TypeRef::new_pointer(element_type.with_inherent_constness(Constness::Const)),
-			)),
-			Field::new_desc(FieldDesc::new("len", TypeRefDesc::size_t())),
-		],
-		FuncCppBody::ManualCallReturn("return new {{ret_type}}(data, data + len);".into()),
-		FuncRustBody::Auto,
-		vec_type_ref,
-	))
+	Func::new_desc(
+		FuncDesc::new(
+			FuncKind::Function,
+			Constness::Const,
+			ReturnKind::InfallibleNaked,
+			"cv::fromSlice",
+			"core",
+			[
+				Field::new_desc(FieldDesc::new(
+					"data",
+					TypeRef::new_pointer(element_type.with_inherent_constness(Constness::Const)),
+				)),
+				Field::new_desc(FieldDesc::new("len", TypeRefDesc::size_t())),
+			],
+			vec_type_ref,
+		)
+		.cpp_body(FuncCppBody::ManualCallReturn(
+			"return new {{ret_type}}(data, data + len);".into(),
+		)),
+	)
 }
 
 fn method_input_array<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
-	Func::new_desc(FuncDesc::new(
-		FuncKind::InstanceMethod(vector_class),
-		Constness::Const,
-		ReturnKind::Fallible,
-		"cv::inputArray",
-		"core",
-		vec![],
-		FuncCppBody::ManualCall("cv::_InputArray(*instance)".into()),
-		FuncRustBody::Auto,
-		TypeRefDesc::cv_input_array()
-			.with_inherent_constness(Constness::Const)
-			.with_type_hint(TypeRefTypeHint::BoxedAsRef(
-				Constness::Mut,
-				ARG_OVERRIDE_SELF,
-				Lifetime::Elided,
-			)),
-	))
+	Func::new_desc(
+		FuncDesc::new(
+			FuncKind::InstanceMethod(vector_class),
+			Constness::Const,
+			ReturnKind::Fallible,
+			"cv::inputArray",
+			"core",
+			[],
+			TypeRefDesc::cv_input_array()
+				.with_inherent_constness(Constness::Const)
+				.with_type_hint(TypeRefTypeHint::BoxedAsRef(
+					Constness::Mut,
+					ARG_OVERRIDE_SELF,
+					Lifetime::Elided,
+				)),
+		)
+		.cpp_body(FuncCppBody::ManualCall("cv::_InputArray(*instance)".into())),
+	)
 }
 
 fn method_output_array<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
-	Func::new_desc(FuncDesc::new(
-		FuncKind::InstanceMethod(vector_class),
-		Constness::Mut,
-		ReturnKind::Fallible,
-		"cv::outputArray",
-		"core",
-		vec![],
-		FuncCppBody::ManualCall("cv::_OutputArray(*instance)".into()),
-		FuncRustBody::Auto,
-		TypeRefDesc::cv_output_array()
-			.with_inherent_constness(Constness::Mut)
-			.with_type_hint(TypeRefTypeHint::BoxedAsRef(
-				Constness::Mut,
-				ARG_OVERRIDE_SELF,
-				Lifetime::Elided,
-			)),
-	))
+	Func::new_desc(
+		FuncDesc::new(
+			FuncKind::InstanceMethod(vector_class),
+			Constness::Mut,
+			ReturnKind::Fallible,
+			"cv::outputArray",
+			"core",
+			[],
+			TypeRefDesc::cv_output_array()
+				.with_inherent_constness(Constness::Mut)
+				.with_type_hint(TypeRefTypeHint::BoxedAsRef(
+					Constness::Mut,
+					ARG_OVERRIDE_SELF,
+					Lifetime::Elided,
+				)),
+		)
+		.cpp_body(FuncCppBody::ManualCall("cv::_OutputArray(*instance)".into())),
+	)
 }
 
 fn method_input_output_array<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
-	Func::new_desc(FuncDesc::new(
-		FuncKind::InstanceMethod(vector_class),
-		Constness::Mut,
-		ReturnKind::Fallible,
-		"cv::inputOutputArray",
-		"core",
-		vec![],
-		FuncCppBody::ManualCall("cv::_InputOutputArray(*instance)".into()),
-		FuncRustBody::Auto,
-		TypeRefDesc::cv_input_output_array()
-			.with_inherent_constness(Constness::Mut)
-			.with_type_hint(TypeRefTypeHint::BoxedAsRef(
-				Constness::Mut,
-				ARG_OVERRIDE_SELF,
-				Lifetime::Elided,
-			)),
-	))
+	Func::new_desc(
+		FuncDesc::new(
+			FuncKind::InstanceMethod(vector_class),
+			Constness::Mut,
+			ReturnKind::Fallible,
+			"cv::inputOutputArray",
+			"core",
+			[],
+			TypeRefDesc::cv_input_output_array()
+				.with_inherent_constness(Constness::Mut)
+				.with_type_hint(TypeRefTypeHint::BoxedAsRef(
+					Constness::Mut,
+					ARG_OVERRIDE_SELF,
+					Lifetime::Elided,
+				)),
+		)
+		.cpp_body(FuncCppBody::ManualCall("cv::_InputOutputArray(*instance)".into())),
+	)
 }

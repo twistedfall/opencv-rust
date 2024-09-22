@@ -13,12 +13,12 @@ use crate::debug::{DefinitionLocation, LocationName};
 use crate::element::ExcludeKind;
 use crate::entity::{ControlFlowExt, ToEntity};
 use crate::field::FieldDesc;
-use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, FuncRustExtern, ReturnKind};
+use crate::func::{FuncCppBody, FuncDesc, FuncKind, ReturnKind};
 use crate::type_ref::{Constness, CppNameStyle, StrEnc, StrType, TypeRef, TypeRefDesc, TypeRefTypeHint};
 use crate::writer::rust_native::element::RustElement;
 use crate::{
-	settings, ClassKindOverride, Const, DefaultElement, Element, EntityExt, Enum, Field, Func, FuncTypeHint, GeneratedType,
-	GeneratorEnv, NameDebug, StrExt,
+	settings, ClassKindOverride, Const, DefaultElement, Element, EntityExt, Enum, Field, Func, GeneratedType, GeneratorEnv,
+	NameDebug, StrExt,
 };
 
 mod desc;
@@ -419,6 +419,8 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 				out.extend(fields.flat_map(|fld| {
 					iter::from_fn({
 						let doc_comment = Rc::from(fld.doc_comment());
+						let def_loc = fld.file_line_name().location;
+						let rust_module = fld.rust_module();
 						let mut fld_type_ref = fld.type_ref();
 						let fld_type_kind = fld_type_ref.kind();
 						if fld_type_kind
@@ -432,72 +434,64 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 						}
 						let fld_type_kind = fld_type_ref.kind();
 						let fld_type_ref_return_as_naked = fld_type_kind.return_as_naked(fld_type_ref.type_hint());
+						let return_kind = ReturnKind::infallible(fld_type_ref_return_as_naked);
 						let fld_const = fld.constness();
 						let passed_by_ref = fld_type_kind.can_return_as_direct_reference();
 						let (mut read_const_yield, mut read_mut_yield) = if passed_by_ref && fld_const.is_mut() {
 							let read_const_func = if constness_filter.map_or(true, |c| c.is_const()) {
-								Some(Func::new_desc(FuncDesc {
-									type_hint: FuncTypeHint::None,
-									kind: FuncKind::FieldAccessor(self.clone(), fld.clone()),
-									cpp_name: fld.cpp_name(CppNameStyle::Reference).into(),
-									rust_custom_leafname: None,
-									rust_module: fld.rust_module().into(),
-									constness: Constness::Const,
-									return_kind: ReturnKind::infallible(fld_type_ref_return_as_naked),
-									doc_comment: Rc::clone(&doc_comment),
-									def_loc: fld.file_line_name().location,
-									rust_generic_decls: Rc::new([]),
-									arguments: Rc::new([]),
-									return_type_ref: fld_type_ref.as_ref().clone().with_inherent_constness(Constness::Const),
-									cpp_body: FuncCppBody::ManualCall("{{name}}".into()),
-									rust_body: FuncRustBody::Auto,
-									rust_extern_definition: FuncRustExtern::Auto,
-								}))
+								Some(Func::new_desc(
+									FuncDesc::new(
+										FuncKind::FieldAccessor(self.clone(), fld.clone()),
+										Constness::Const,
+										return_kind,
+										fld.cpp_name(CppNameStyle::Reference),
+										rust_module.clone(),
+										[],
+										fld_type_ref.as_ref().clone().with_inherent_constness(Constness::Const),
+									)
+									.def_loc(def_loc.clone())
+									.doc_comment(Rc::clone(&doc_comment))
+									.cpp_body(FuncCppBody::ManualCall("{{name}}".into())),
+								))
 							} else {
 								None
 							};
 							let read_mut_func = if constness_filter.map_or(true, |c| c.is_mut()) {
 								let cpp_name = fld.cpp_name(CppNameStyle::Declaration);
-								Some(Func::new_desc(FuncDesc {
-									type_hint: FuncTypeHint::None,
-									kind: FuncKind::FieldAccessor(self.clone(), fld.clone()),
-									cpp_name: format!("{cpp_name}Mut").into(),
-									rust_custom_leafname: None,
-									rust_module: fld.rust_module().into(),
-									constness: Constness::Mut,
-									return_kind: ReturnKind::infallible(fld_type_ref_return_as_naked),
-									doc_comment: Rc::clone(&doc_comment),
-									def_loc: fld.file_line_name().location,
-									rust_generic_decls: Rc::new([]),
-									arguments: Rc::new([]),
-									return_type_ref: fld_type_ref.as_ref().clone().with_inherent_constness(Constness::Mut),
-									cpp_body: FuncCppBody::ManualCall("{{name}}".into()),
-									rust_body: FuncRustBody::Auto,
-									rust_extern_definition: FuncRustExtern::Auto,
-								}))
+								Some(Func::new_desc(
+									FuncDesc::new(
+										FuncKind::FieldAccessor(self.clone(), fld.clone()),
+										Constness::Mut,
+										return_kind,
+										format!("{cpp_name}Mut"),
+										rust_module.clone(),
+										[],
+										fld_type_ref.as_ref().clone().with_inherent_constness(Constness::Mut),
+									)
+									.def_loc(def_loc.clone())
+									.doc_comment(Rc::clone(&doc_comment))
+									.cpp_body(FuncCppBody::ManualCall("{{name}}".into())),
+								))
 							} else {
 								None
 							};
 							(read_const_func, read_mut_func)
 						} else {
 							let read_const_func = if constness_filter.map_or(true, |c| c == fld_const) {
-								Some(Func::new_desc(FuncDesc {
-									type_hint: FuncTypeHint::None,
-									kind: FuncKind::FieldAccessor(self.clone(), fld.clone()),
-									cpp_name: fld.cpp_name(CppNameStyle::Reference).into(),
-									rust_custom_leafname: None,
-									rust_module: fld.rust_module().into(),
-									constness: fld_const,
-									return_kind: ReturnKind::infallible(fld_type_ref_return_as_naked),
-									doc_comment: Rc::clone(&doc_comment),
-									def_loc: fld.file_line_name().location,
-									rust_generic_decls: Rc::new([]),
-									arguments: Rc::new([]),
-									return_type_ref: fld_type_ref.as_ref().clone(),
-									cpp_body: FuncCppBody::ManualCall("{{name}}".into()),
-									rust_body: FuncRustBody::Auto,
-									rust_extern_definition: FuncRustExtern::Auto,
-								}))
+								Some(Func::new_desc(
+									FuncDesc::new(
+										FuncKind::FieldAccessor(self.clone(), fld.clone()),
+										fld_const,
+										return_kind,
+										fld.cpp_name(CppNameStyle::Reference),
+										rust_module.clone(),
+										[],
+										fld_type_ref.as_ref().clone(),
+									)
+									.def_loc(def_loc.clone())
+									.doc_comment(Rc::clone(&doc_comment))
+									.cpp_body(FuncCppBody::ManualCall("{{name}}".into())),
+								))
 							} else {
 								None
 							};
@@ -509,28 +503,24 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 						{
 							let cpp_name = fld.cpp_name(CppNameStyle::Declaration);
 							let (first_letter, rest) = cpp_name.split_at(1);
-							let write_func = Func::new_desc(FuncDesc {
-								type_hint: FuncTypeHint::None,
-								kind: FuncKind::FieldAccessor(self.clone(), fld.clone()),
-								cpp_name: format!("set{}{rest}", first_letter.to_uppercase()).into(),
-								rust_custom_leafname: None,
-								rust_module: fld.rust_module().into(),
-								constness: Constness::Mut,
-								doc_comment,
-								def_loc: fld.file_line_name().location,
-								rust_generic_decls: Rc::new([]),
-								arguments: Rc::new([Field::new_desc(FieldDesc {
-									cpp_fullname: "val".into(),
-									type_ref: fld_type_ref.as_ref().clone().with_inherent_constness(Constness::Const),
-									default_value: fld.default_value().map(|v| v.into()),
-								})]),
-								return_kind: ReturnKind::InfallibleNaked,
-								return_type_ref: TypeRefDesc::void(),
-								cpp_body: FuncCppBody::ManualCall("{{name}} = {{args}}".into()),
-								rust_body: FuncRustBody::Auto,
-								rust_extern_definition: FuncRustExtern::Auto,
-							});
-							Some(write_func)
+							Some(Func::new_desc(
+								FuncDesc::new(
+									FuncKind::FieldAccessor(self.clone(), fld.clone()),
+									Constness::Mut,
+									ReturnKind::InfallibleNaked,
+									format!("set{}{rest}", first_letter.to_uppercase()),
+									rust_module.clone(),
+									[Field::new_desc(FieldDesc {
+										cpp_fullname: "val".into(),
+										type_ref: fld_type_ref.as_ref().clone().with_inherent_constness(Constness::Const),
+										default_value: fld.default_value().map(|v| v.into()),
+									})],
+									TypeRefDesc::void(),
+								)
+								.doc_comment(doc_comment)
+								.def_loc(def_loc)
+								.cpp_body(FuncCppBody::ManualCall("{{name}} = {{args}}".into())),
+							))
 						} else {
 							None
 						};

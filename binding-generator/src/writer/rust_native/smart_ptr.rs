@@ -9,7 +9,7 @@ use super::type_ref::TypeRefExt;
 use super::RustNativeGeneratedElement;
 use crate::class::ClassDesc;
 use crate::field::{Field, FieldDesc};
-use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
+use crate::func::{FuncCppBody, FuncDesc, FuncKind, ReturnKind};
 use crate::smart_ptr::SmartPtrDesc;
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle, TypeRef, TypeRefKind};
 use crate::writer::rust_native::class::rust_generate_debug_fields;
@@ -281,17 +281,20 @@ fn method_new<'tu, 'ge>(
 	} else {
 		Cow::Borrowed("val")
 	};
-	Func::new_desc(FuncDesc::new(
-		FuncKind::Constructor(smartptr_class),
-		Constness::Const,
-		ReturnKind::InfallibleNaked,
-		"new",
-		"<unused>",
-		vec![Field::new_desc(FieldDesc::new("val", pointee_type))],
-		FuncCppBody::ManualCallReturn(format!("return new {{{{ret_type}}}}({val});").into()),
-		FuncRustBody::Auto,
-		smartptr_type_ref,
-	))
+	Func::new_desc(
+		FuncDesc::new(
+			FuncKind::Constructor(smartptr_class),
+			Constness::Const,
+			ReturnKind::InfallibleNaked,
+			"new",
+			"<unused>",
+			[Field::new_desc(FieldDesc::new("val", pointee_type))],
+			smartptr_type_ref,
+		)
+		.cpp_body(FuncCppBody::ManualCallReturn(
+			format!("return new {{{{ret_type}}}}({val});").into(),
+		)),
+	)
 }
 
 fn method_cast_to_base<'tu, 'ge>(
@@ -299,23 +302,25 @@ fn method_cast_to_base<'tu, 'ge>(
 	base_type_ref: TypeRef<'tu, 'ge>,
 	base_rust_local: &str,
 ) -> Func<'tu, 'ge> {
-	Func::new_desc(FuncDesc::new(
-		FuncKind::InstanceMethod(smartptr_class),
-		Constness::Mut,
-		ReturnKind::InfallibleNaked,
-		format!("to_PtrOf{base_rust_local}"),
-		"<unused>",
-		vec![],
-		FuncCppBody::ManualCallReturn(
-			format!(
-				"return new {{{{ret_type}}}}(instance->dynamicCast<{base_type}>());",
-				base_type = base_type_ref.cpp_name(CppNameStyle::Reference)
-			)
-			.into(),
-		),
-		FuncRustBody::Auto,
-		TypeRef::new_smartptr(SmartPtr::new_desc(SmartPtrDesc::new(base_type_ref))),
-	))
+	let cpp_body = FuncCppBody::ManualCallReturn(
+		format!(
+			"return new {{{{ret_type}}}}(instance->dynamicCast<{base_type}>());",
+			base_type = base_type_ref.cpp_name(CppNameStyle::Reference)
+		)
+		.into(),
+	);
+	Func::new_desc(
+		FuncDesc::new(
+			FuncKind::InstanceMethod(smartptr_class),
+			Constness::Mut,
+			ReturnKind::InfallibleNaked,
+			format!("to_PtrOf{base_rust_local}"),
+			"<unused>",
+			[],
+			TypeRef::new_smartptr(SmartPtr::new_desc(SmartPtrDesc::new(base_type_ref))),
+		)
+		.cpp_body(cpp_body),
+	)
 }
 
 fn method_get_inner_ptr<'tu, 'ge>(smartptr_class: Class<'tu, 'ge>, pointee_type: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
@@ -327,15 +332,16 @@ fn method_get_inner_ptr<'tu, 'ge>(smartptr_class: Class<'tu, 'ge>, pointee_type:
 	} else {
 		TypeRef::new_pointer(pointee_type)
 	};
-	Func::new_desc(FuncDesc::new(
-		FuncKind::InstanceMethod(smartptr_class),
-		constness,
-		ReturnKind::InfallibleNaked,
-		format!("getInnerPtr{}", constness.rust_name_qual()),
-		"<unused>",
-		vec![],
-		FuncCppBody::ManualCallReturn("return instance->get();".into()),
-		FuncRustBody::Auto,
-		return_type_ref,
-	))
+	Func::new_desc(
+		FuncDesc::new(
+			FuncKind::InstanceMethod(smartptr_class),
+			constness,
+			ReturnKind::InfallibleNaked,
+			format!("getInnerPtr{}", constness.rust_name_qual()),
+			"<unused>",
+			[],
+			return_type_ref,
+		)
+		.cpp_body(FuncCppBody::ManualCallReturn("return instance->get();".into())),
+	)
 }

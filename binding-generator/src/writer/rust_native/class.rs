@@ -9,7 +9,7 @@ use super::type_ref::TypeRefExt;
 use super::RustNativeGeneratedElement;
 use crate::class::ClassKind;
 use crate::debug::NameDebug;
-use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
+use crate::func::{FuncCppBody, FuncDesc, FuncKind, ReturnKind};
 use crate::type_ref::{Constness, CppNameStyle, ExternDir, FishStyle, NameStyle, TypeRef};
 use crate::writer::rust_native::func::{cpp_return_map, FuncExt};
 use crate::{settings, Class, CompiledInterpolation, Element, Func, IteratorExt, NamePool, StrExt};
@@ -523,55 +523,61 @@ fn method_default_new<'tu, 'ge>(class: Class<'tu, 'ge>, type_ref: TypeRef<'tu, '
 		ReturnKind::InfallibleNaked,
 		"defaultNew",
 		"<unused>",
-		vec![],
-		FuncCppBody::Auto,
-		FuncRustBody::Auto,
+		[],
 		type_ref,
 	))
 }
 
 fn method_implicit_clone<'tu, 'ge>(class: Class<'tu, 'ge>, type_ref: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
-	Func::new_desc(FuncDesc::new(
-		FuncKind::InstanceMethod(class),
-		Constness::Const,
-		ReturnKind::InfallibleNaked,
-		"implicitClone",
-		"<unused>",
-		vec![],
-		FuncCppBody::ManualCallReturn(format!("return {};", cpp_return_map(&type_ref, "*instance", false).0).into()),
-		FuncRustBody::Auto,
-		type_ref,
-	))
+	let cpp_body = FuncCppBody::ManualCallReturn(format!("return {};", cpp_return_map(&type_ref, "*instance", false).0).into());
+	Func::new_desc(
+		FuncDesc::new(
+			FuncKind::InstanceMethod(class),
+			Constness::Const,
+			ReturnKind::InfallibleNaked,
+			"implicitClone",
+			"<unused>",
+			[],
+			type_ref,
+		)
+		.cpp_body(cpp_body),
+	)
 }
 
 fn method_cast_to_base<'tu, 'ge>(class: Class<'tu, 'ge>, base_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
 	let base_rust_local = base_class.rust_name(NameStyle::decl());
-	Func::new_desc(FuncDesc::new(
-		FuncKind::InstanceMethod(class),
-		Constness::Mut,
-		ReturnKind::InfallibleNaked,
-		format!("to_{base_rust_local}"),
-		"<unused>",
-		vec![],
-		FuncCppBody::ManualCallReturn("return dynamic_cast<{{ret_type}}*>(instance);".into()),
-		FuncRustBody::Auto,
-		TypeRef::new_class(base_class),
-	))
+	Func::new_desc(
+		FuncDesc::new(
+			FuncKind::InstanceMethod(class),
+			Constness::Mut,
+			ReturnKind::InfallibleNaked,
+			format!("to_{base_rust_local}"),
+			"<unused>",
+			[],
+			TypeRef::new_class(base_class),
+		)
+		.cpp_body(FuncCppBody::ManualCallReturn(
+			"return dynamic_cast<{{ret_type}}*>(instance);".into(),
+		)),
+	)
 }
 
 fn method_cast_to_descendant<'tu, 'ge>(class: Class<'tu, 'ge>, descendant_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
 	let descendant_rust_local = descendant_class.rust_name(NameStyle::decl());
-	Func::new_desc(FuncDesc::new(
-		FuncKind::InstanceMethod(class),
-		Constness::Mut,
-		ReturnKind::InfallibleNaked,
-		format!("to_{descendant_rust_local}"),
-		"<unused>",
-		vec![],
-		FuncCppBody::ManualCallReturn("return dynamic_cast<{{ret_type}}*>(instance);".into()),
-		FuncRustBody::Auto,
-		TypeRef::new_class(descendant_class),
-	))
+	Func::new_desc(
+		FuncDesc::new(
+			FuncKind::InstanceMethod(class),
+			Constness::Mut,
+			ReturnKind::InfallibleNaked,
+			format!("to_{descendant_rust_local}"),
+			"<unused>",
+			[],
+			TypeRef::new_class(descendant_class),
+		)
+		.cpp_body(FuncCppBody::ManualCallReturn(
+			"return dynamic_cast<{{ret_type}}*>(instance);".into(),
+		)),
+	)
 }
 
 pub trait ClassExt {

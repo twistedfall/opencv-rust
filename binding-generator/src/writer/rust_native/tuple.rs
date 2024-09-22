@@ -3,16 +3,14 @@ use std::collections::HashMap;
 
 use once_cell::sync::Lazy;
 
-use crate::class::ClassDesc;
-use crate::field::{Field, FieldDesc};
-use crate::func::{FuncCppBody, FuncDesc, FuncKind, FuncRustBody, ReturnKind};
-use crate::type_ref::{Constness, FishStyle};
-use crate::{Class, CompiledInterpolation, CppNameStyle, EntityElement, Func, IteratorExt, NameStyle, StrExt, Tuple, TypeRef};
-
-use super::disambiguate_single_name;
 use super::element::{DefaultRustNativeElement, RustElement};
 use super::type_ref::TypeRefExt;
-use super::RustNativeGeneratedElement;
+use super::{disambiguate_single_name, RustNativeGeneratedElement};
+use crate::class::ClassDesc;
+use crate::field::{Field, FieldDesc};
+use crate::func::{FuncCppBody, FuncDesc, FuncKind, ReturnKind};
+use crate::type_ref::{Constness, FishStyle};
+use crate::{Class, CompiledInterpolation, CppNameStyle, EntityElement, Func, IteratorExt, NameStyle, StrExt, Tuple, TypeRef};
 
 impl RustElement for Tuple<'_, '_> {
 	fn rust_module(&self) -> Cow<str> {
@@ -176,22 +174,21 @@ fn method_new<'tu, 'ge>(tuple_typeref: TypeRef<'tu, 'ge>, elements: &[TypeRef<'t
 		"new",
 		"<unused>",
 		arguments,
-		FuncCppBody::Auto,
-		FuncRustBody::Auto,
 		tuple_typeref,
 	))
 }
 
 fn method_get<'tu, 'ge>(tuple_class: Class<'tu, 'ge>, element_type: TypeRef<'tu, 'ge>, num: usize) -> Func<'tu, 'ge> {
-	Func::new_desc(FuncDesc::new(
-		FuncKind::InstanceMethod(tuple_class),
-		Constness::Const,
-		ReturnKind::InfallibleViaArg,
-		format!("get_{num}"),
-		"<unused>",
-		vec![],
-		FuncCppBody::ManualCall(format!("std::get<{num}>(*instance)").into()),
-		FuncRustBody::Auto,
-		element_type.clone(),
-	))
+	Func::new_desc(
+		FuncDesc::new(
+			FuncKind::InstanceMethod(tuple_class),
+			Constness::Const,
+			ReturnKind::InfallibleViaArg,
+			format!("get_{num}"),
+			"<unused>",
+			[],
+			element_type.clone(),
+		)
+		.cpp_body(FuncCppBody::ManualCall(format!("std::get<{num}>(*instance)").into())),
+	)
 }
