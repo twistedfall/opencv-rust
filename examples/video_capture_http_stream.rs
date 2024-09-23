@@ -1,13 +1,11 @@
-/// Example code to stream mjpeg over http
+//! Example code to stream mjpeg over http
+
 use std::io::Write;
 use std::net::{SocketAddr, TcpListener};
 
-// VideoCaptureTrait doesn't get used when binding to opencv 3.4
-#[allow(unused_imports)]
-use opencv::videoio::VideoCaptureTrait;
-
 use opencv::core::{Mat, Vector};
 use opencv::imgcodecs::{imencode, IMWRITE_JPEG_QUALITY};
+use opencv::prelude::*;
 use opencv::videoio::{VideoCapture, VideoCaptureTraitConst, CAP_ANY};
 
 const BASE_RESPONSE: &[u8] = b"HTTP/1.1 200 OK\r\nContent-Type: multipart/x-mixed-replace; boundary=frame\r\n\r\n";
@@ -19,11 +17,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 	// Bind listener to a port
 	let address: SocketAddr = "127.0.0.1:8080".parse()?;
 	let listener = TcpListener::bind(address)?;
-	println!("Listening for connections at {}", address.to_string());
+	println!("Listening for connections at {address}");
 
 	// Accept the first incoming connection
 	let (mut stream, addr) = listener.accept()?;
-	println!("Client connected: {}", addr);
+	println!("Client connected: {addr}");
 
 	// Write intial response
 	stream.write_all(BASE_RESPONSE)?;

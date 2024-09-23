@@ -14,6 +14,7 @@ pub use string::{InStringRenderLane, OutStringRenderLane};
 pub use trait_class::TraitClassRenderLane;
 pub use void_slice::VoidSliceRenderLane;
 
+use crate::func::Safety;
 use crate::type_ref::{Constness, TypeRef};
 use crate::writer::rust_native::type_ref::{Lifetime, TypeRefExt};
 
@@ -33,7 +34,7 @@ mod void_slice;
 pub trait RenderLaneTrait {
 	fn rust_self_func_decl(&self, lifetime: Lifetime) -> Cow<'static, str>;
 	fn rust_arg_func_decl(&self, name: &str, lifetime: Lifetime) -> String;
-	fn rust_arg_pre_call(&self, _name: &str, _is_function_infallible: bool) -> String {
+	fn rust_arg_pre_call(&self, _name: &str, _function_props: &FunctionProps) -> String {
 		"".to_string()
 	}
 	fn rust_arg_func_call(&self, name: &str) -> String;
@@ -146,6 +147,11 @@ fn rust_self_func_decl(method_constness: Constness, lifetime: Lifetime) -> Cow<'
 		}
 		.into()
 	}
+}
+
+pub struct FunctionProps {
+	pub is_infallible: bool,
+	pub safety: Safety,
 }
 
 fn rust_arg_func_decl(name: &str, argument_constness: Constness, typ: &str) -> String {

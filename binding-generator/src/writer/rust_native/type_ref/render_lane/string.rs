@@ -1,9 +1,8 @@
 use std::borrow::Cow;
 
+use super::{rust_arg_func_decl, rust_self_func_decl, FunctionProps, RenderLaneTrait};
 use crate::type_ref::{Constness, ExternDir, StrEnc, StrType, TypeRef, TypeRefTypeHint};
 use crate::writer::rust_native::type_ref::{Lifetime, TypeRefExt};
-
-use super::{rust_arg_func_decl, rust_self_func_decl, RenderLaneTrait};
 
 pub struct InStringRenderLane<'tu, 'ge> {
 	str_type: StrType,
@@ -30,8 +29,8 @@ impl RenderLaneTrait for InStringRenderLane<'_, '_> {
 		rust_arg_func_decl(name, Constness::Const, typ)
 	}
 
-	fn rust_arg_pre_call(&self, name: &str, is_function_infallible: bool) -> String {
-		if is_function_infallible {
+	fn rust_arg_pre_call(&self, name: &str, function_props: &FunctionProps) -> String {
+		if function_props.is_infallible {
 			format!("extern_container_arg!(nofail {name})")
 		} else {
 			format!("extern_container_arg!({name})")
@@ -84,7 +83,7 @@ impl RenderLaneTrait for OutStringRenderLane<'_, '_> {
 		rust_arg_func_decl(name, Constness::Const, typ)
 	}
 
-	fn rust_arg_pre_call(&self, name: &str, _is_function_infallible: bool) -> String {
+	fn rust_arg_pre_call(&self, name: &str, _function_props: &FunctionProps) -> String {
 		format!("string_arg_output_send!(via {name}_via)")
 	}
 

@@ -20,7 +20,6 @@ fn main() -> Result<(), Box<dyn Error>> {
 	let objp = Vector::from_iter((0..objp_len).map(|i| Point3f::new((i % 7) as f32, (i / 7) as f32, 0.)));
 
 	let images = fs::read_dir(".")?
-		.into_iter()
 		.flatten()
 		.filter(|entry| entry.path().extension().map_or(false, |ext| ext == "jpg"));
 

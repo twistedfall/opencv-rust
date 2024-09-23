@@ -12,10 +12,6 @@ pub struct IndirectRenderLane<'tu, 'ge> {
 
 impl<'tu, 'ge> IndirectRenderLane<'tu, 'ge> {
 	pub fn from_non_canonical_indirection(non_canonical: TypeRef<'tu, 'ge>, indirection: Indirection) -> Self {
-		assert!(
-			matches!(indirection, Indirection::Pointer | Indirection::Reference),
-			"Can't build IndirectRenderLane from Indirection::None"
-		);
 		Self {
 			non_canonical,
 			indirection,

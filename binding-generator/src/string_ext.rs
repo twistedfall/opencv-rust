@@ -1,4 +1,4 @@
-use std::borrow::{Borrow, Cow};
+use std::borrow::Cow;
 use std::collections::HashMap;
 use std::iter;
 
@@ -534,33 +534,6 @@ impl StrExt for str {
 		match style {
 			CppNameStyle::Declaration => self.localname(),
 			CppNameStyle::Reference => self,
-		}
-	}
-}
-
-pub trait CowMapBorrowedExt<'b, IN, OUT>
-where
-	IN: 'b + ToOwned + ?Sized,
-	OUT: 'b + ToOwned + ?Sized,
-{
-	fn map_borrowed<F>(self, f: F) -> Cow<'b, OUT>
-	where
-		F: for<'f> FnOnce(&'f IN) -> Cow<'f, OUT>;
-}
-
-impl<'b, IN, OUT> CowMapBorrowedExt<'b, IN, OUT> for Cow<'b, IN>
-where
-	IN: 'b + ToOwned + ?Sized,
-	OUT: 'b + ToOwned + ?Sized,
-{
-	#[inline(always)]
-	fn map_borrowed<F>(self, f: F) -> Cow<'b, OUT>
-	where
-		F: for<'f> FnOnce(&'f IN) -> Cow<'f, OUT>,
-	{
-		match self {
-			Cow::Borrowed(v) => f(v),
-			Cow::Owned(v) => Cow::Owned(f(v.borrow()).into_owned()),
 		}
 	}
 }

@@ -48,7 +48,7 @@ impl BindingGenerator {
 
 		self.run(modules, opencv_header_dir, opencv)?;
 
-		Collector::new(modules, &ffi_export_suffix, &target_module_dir, &manual_dir, &OUT_DIR).collect_bindings()?;
+		Collector::new(modules, ffi_export_suffix, &target_module_dir, &manual_dir, &OUT_DIR).collect_bindings()?;
 
 		if let Some(target_docs_dir) = target_docs_dir {
 			if !target_docs_dir.exists() {

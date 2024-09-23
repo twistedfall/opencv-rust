@@ -171,7 +171,7 @@ impl<'a> TypeRefRenderer<'a> for CppExternReturnRenderer {
 		let type_ref = if kind.as_string(type_ref.type_hint()).is_some() {
 			Cow::Owned(TypeRef::new_pointer(TypeRefDesc::void()))
 		} else if kind.extern_pass_kind().is_by_void_ptr() && !kind.as_abstract_class_ptr().is_some() {
-			Cow::Owned(TypeRef::new_pointer(type_ref.source()))
+			Cow::Owned(TypeRef::new_pointer(type_ref.source().into_owned()))
 		} else {
 			Cow::Borrowed(type_ref)
 		};

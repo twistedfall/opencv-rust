@@ -12,8 +12,6 @@
 
 #![allow(clippy::nonminimal_bool)] // pattern `!type_ref.as_vector().is_some()` used for more clarity
 
-extern crate core;
-
 use std::borrow::Cow;
 use std::fs::File;
 use std::io::{BufRead, Read, Seek, SeekFrom};
@@ -33,10 +31,11 @@ pub use func::{Func, FuncId, FuncTypeHint};
 pub use generator::{GeneratedType, Generator, GeneratorVisitor, OpenCvWalker};
 pub use generator_env::{ClassKindOverride, ExportConfig, GeneratorEnv};
 pub use iterator_ext::IteratorExt;
+pub use map_borrowed::CowMapBorrowedExt;
 use memoize::{MemoizeMap, MemoizeMapExt};
 use name_pool::NamePool;
 use smart_ptr::SmartPtr;
-pub use string_ext::{CompiledInterpolation, CowMapBorrowedExt, StrExt, StringExt};
+pub use string_ext::{CompiledInterpolation, StrExt, StringExt};
 use tuple::Tuple;
 #[allow(unused)]
 use type_ref::dbg_clang_type;
@@ -62,6 +61,7 @@ mod function;
 mod generator;
 mod generator_env;
 mod iterator_ext;
+mod map_borrowed;
 mod memoize;
 mod name_pool;
 mod renderer;

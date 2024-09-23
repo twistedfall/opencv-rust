@@ -57,7 +57,7 @@ fn callback() -> Result<()> {
 	use opencv::{core, highgui, Error};
 
 	// only run under X11 on linux
-	if cfg!(target_os = "linux") && option_env!("DISPLAY").is_some() {
+	if cfg!(target_os = "linux") && (option_env!("DISPLAY").is_some() || option_env!("WAYLAND_DISPLAY").is_some()) {
 		{
 			if let Err(Error {
 				code: core::StsError, ..
@@ -186,6 +186,7 @@ fn string_out_argument() -> Result<()> {
 #[test]
 fn simple_struct_return_infallible() -> Result<()> {
 	#![cfg(ocvrs_has_module_imgproc)]
+
 	use opencv::core::{Point2f, Rect, Size2f, Vector};
 	use opencv::imgproc;
 	/*

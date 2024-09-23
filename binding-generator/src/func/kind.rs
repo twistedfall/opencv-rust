@@ -129,6 +129,7 @@ pub enum FuncKind<'tu, 'ge> {
 }
 
 impl<'tu, 'ge> FuncKind<'tu, 'ge> {
+	#[inline]
 	pub fn as_instance_method(&self) -> Option<&Class<'tu, 'ge>> {
 		match self {
 			Self::InstanceMethod(out)
@@ -140,6 +141,7 @@ impl<'tu, 'ge> FuncKind<'tu, 'ge> {
 		}
 	}
 
+	#[inline]
 	pub fn as_constructor(&self) -> Option<&Class<'tu, 'ge>> {
 		if let Self::Constructor(out) = self {
 			Some(out)
@@ -148,6 +150,7 @@ impl<'tu, 'ge> FuncKind<'tu, 'ge> {
 		}
 	}
 
+	#[inline]
 	pub fn as_static_method(&self) -> Option<&Class<'tu, 'ge>> {
 		if let Self::StaticMethod(out) = self {
 			Some(out)
@@ -156,6 +159,7 @@ impl<'tu, 'ge> FuncKind<'tu, 'ge> {
 		}
 	}
 
+	#[inline]
 	pub fn as_conversion_method(&self) -> Option<&Class<'tu, 'ge>> {
 		if let Self::ConversionMethod(out) = self {
 			Some(out)
@@ -164,6 +168,7 @@ impl<'tu, 'ge> FuncKind<'tu, 'ge> {
 		}
 	}
 
+	#[inline]
 	/// Any function with a connection to a class: instance method, static method or a constructor
 	pub fn as_class_method(&self) -> Option<&Class<'tu, 'ge>> {
 		self
@@ -172,6 +177,7 @@ impl<'tu, 'ge> FuncKind<'tu, 'ge> {
 			.or_else(|| self.as_static_method())
 	}
 
+	#[inline]
 	pub fn as_operator(&self) -> Option<(Option<&Class<'tu, 'ge>>, OperatorKind)> {
 		match self {
 			Self::FunctionOperator(kind) => Some((None, *kind)),
@@ -180,6 +186,7 @@ impl<'tu, 'ge> FuncKind<'tu, 'ge> {
 		}
 	}
 
+	#[inline]
 	pub fn as_field_accessor(&self) -> Option<(&Class<'tu, 'ge>, &Field<'tu, 'ge>)> {
 		if let FuncKind::FieldAccessor(cls, fld) = self {
 			Some((cls, fld))

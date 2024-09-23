@@ -113,14 +113,14 @@ macro_rules! return_receive {
 }
 
 /// The return type of this function goes into `receive_string::<String>()`
-#[inline]
+#[inline(always)]
 pub unsafe fn ocvrs_create_string(s: *const c_char) -> *mut String {
 	let s = CStr::from_ptr(s).to_string_lossy().into_owned();
 	Box::into_raw(Box::new(s))
 }
 
 /// The return type of this function goes into `receive_string::<Vec<u8>>()`
-#[inline]
+#[inline(always)]
 pub unsafe fn ocvrs_create_byte_string(v: *const u8, len: size_t) -> *mut Vec<u8> {
 	let byte_slice = if v.is_null() {
 		&[]

@@ -1,6 +1,6 @@
 use std::borrow::Cow;
 
-use super::{rust_arg_func_decl, rust_self_func_decl, RenderLaneTrait};
+use super::{rust_arg_func_decl, rust_self_func_decl, FunctionProps, RenderLaneTrait};
 use crate::type_ref::{Constness, ExternDir, FishStyle, TypeRef};
 use crate::writer::rust_native::renderer::RustRenderer;
 use crate::writer::rust_native::type_ref::{Lifetime, NullabilityExt, TypeRefExt};
@@ -32,10 +32,12 @@ impl RenderLaneTrait for FixedArrayRenderLane<'_, '_> {
 		rust_arg_func_decl(name, Constness::Const, &typ)
 	}
 
-	fn rust_arg_pre_call(&self, name: &str, _is_function_infallible: bool) -> String {
+	fn rust_arg_pre_call(&self, name: &str, _function_props: &FunctionProps) -> String {
 		if self.element.kind().as_string(self.element.type_hint()).is_some() {
-			let const_qual = self.canonical.constness().rust_function_name_qual();
-			format!("string_array_arg{const_qual}!({name})")
+			format!(
+				"string_array_arg{const_qual}!({name})",
+				const_qual = self.canonical.constness().rust_function_name_qual()
+			)
 		} else {
 			"".to_string()
 		}
@@ -83,10 +85,12 @@ impl RenderLaneTrait for VariableArrayRenderLane<'_, '_> {
 		rust_arg_func_decl(name, Constness::Const, &typ)
 	}
 
-	fn rust_arg_pre_call(&self, name: &str, _is_function_infallible: bool) -> String {
+	fn rust_arg_pre_call(&self, name: &str, _function_props: &FunctionProps) -> String {
 		if self.element.kind().as_string(self.element.type_hint()).is_some() {
-			let const_qual = self.canonical.constness().rust_function_name_qual();
-			format!("string_array_arg{const_qual}!({name})")
+			format!(
+				"string_array_arg{const_qual}!({name})",
+				const_qual = self.canonical.constness().rust_function_name_qual()
+			)
 		} else {
 			"".to_string()
 		}

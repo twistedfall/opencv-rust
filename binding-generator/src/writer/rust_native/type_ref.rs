@@ -55,14 +55,16 @@ impl TypeRefExt for TypeRef<'_, '_> {
 		if let Some((dir, str_type)) = kind.as_string(self.type_hint()) {
 			match dir {
 				Dir::In => RenderLane::InString(InStringRenderLane::from_str_type_non_canonical(str_type, self.clone())),
-				Dir::Out => RenderLane::OutString(OutStringRenderLane::from_str_type_canonical(str_type, canonical)),
+				Dir::Out => RenderLane::OutString(OutStringRenderLane::from_str_type_canonical(str_type, canonical.into_owned())),
 			}
 		} else if let Some(input_output_array_kind) = kind.input_output_array_kind() {
 			match input_output_array_kind {
-				InputOutputArrayKind::Input => RenderLane::InputArray(InputArrayRenderLane::from_canonical(canonical)),
-				InputOutputArrayKind::Output => RenderLane::OutputArray(OutputArrayRenderLane::from_canonical(canonical)),
+				InputOutputArrayKind::Input => RenderLane::InputArray(InputArrayRenderLane::from_canonical(canonical.into_owned())),
+				InputOutputArrayKind::Output => {
+					RenderLane::OutputArray(OutputArrayRenderLane::from_canonical(canonical.into_owned()))
+				}
 				InputOutputArrayKind::InputOutput => {
-					RenderLane::InputOutputArray(InputOutputArrayRenderLane::from_canonical(canonical))
+					RenderLane::InputOutputArray(InputOutputArrayRenderLane::from_canonical(canonical.into_owned()))
 				}
 			}
 		} else {
@@ -76,14 +78,16 @@ impl TypeRefExt for TypeRef<'_, '_> {
 				}
 				TypeRefKind::Array(elem, None) => {
 					if matches!(self.type_hint(), TypeRefTypeHint::Slice) && elem.kind().is_void() {
-						RenderLane::VoidSlice(VoidSliceRenderLane::from_canonical(canonical))
+						RenderLane::VoidSlice(VoidSliceRenderLane::from_canonical(canonical.into_owned()))
 					} else {
-						RenderLane::VariableArray(VariableArrayRenderLane::from_canonical_element(canonical, elem))
+						RenderLane::VariableArray(VariableArrayRenderLane::from_canonical_element(canonical.into_owned(), elem))
 					}
 				}
-				TypeRefKind::Array(elem, Some(len)) => {
-					RenderLane::FixedArray(FixedArrayRenderLane::from_canonical_element_len(canonical, elem, len))
-				}
+				TypeRefKind::Array(elem, Some(len)) => RenderLane::FixedArray(FixedArrayRenderLane::from_canonical_element_len(
+					canonical.into_owned(),
+					elem,
+					len,
+				)),
 				TypeRefKind::RValueReference(inner) => {
 					if inner.kind().extern_pass_kind().is_by_void_ptr() {
 						RenderLane::CppPassByVoidPtr(CppPassByVoidPtrRenderLane::from_non_canonical(self.clone()))

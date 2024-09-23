@@ -1,7 +1,7 @@
 use std::borrow::Cow;
 use std::borrow::Cow::{Borrowed, Owned};
 
-use super::{rust_arg_func_decl, rust_self_func_decl, void_ptr_rust_arg_func_call, RenderLaneTrait};
+use super::{rust_arg_func_decl, rust_self_func_decl, void_ptr_rust_arg_func_call, FunctionProps, RenderLaneTrait};
 use crate::type_ref::{Constness, ExternDir, TypeRef};
 use crate::writer::rust_native::type_ref::{Lifetime, TypeRefExt};
 use crate::{CowMapBorrowedExt, CppNameStyle};
@@ -25,7 +25,7 @@ impl RenderLaneTrait for InputArrayRenderLane<'_, '_> {
 		rust_arg_func_decl(name, Constness::Const, "&impl ToInputArray")
 	}
 
-	fn rust_arg_pre_call(&self, name: &str, _is_function_infallible: bool) -> String {
+	fn rust_arg_pre_call(&self, name: &str, _function_props: &FunctionProps) -> String {
 		format!("input_array_arg!({name})")
 	}
 
@@ -72,7 +72,7 @@ impl RenderLaneTrait for OutputArrayRenderLane<'_, '_> {
 		rust_arg_func_decl(name, Constness::Const, "&mut impl ToOutputArray")
 	}
 
-	fn rust_arg_pre_call(&self, name: &str, _is_function_infallible: bool) -> String {
+	fn rust_arg_pre_call(&self, name: &str, _function_props: &FunctionProps) -> String {
 		format!("output_array_arg!({name})")
 	}
 
@@ -120,7 +120,7 @@ impl RenderLaneTrait for InputOutputArrayRenderLane<'_, '_> {
 		rust_arg_func_decl(name, Constness::Const, "&mut impl ToInputOutputArray")
 	}
 
-	fn rust_arg_pre_call(&self, name: &str, _is_function_infallible: bool) -> String {
+	fn rust_arg_pre_call(&self, name: &str, _function_props: &FunctionProps) -> String {
 		format!("input_output_array_arg!({name})")
 	}
 

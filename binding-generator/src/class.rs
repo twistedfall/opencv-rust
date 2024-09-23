@@ -334,7 +334,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	pub fn methods(&self) -> Vec<Func<'tu, 'ge>> {
 		let mut out = Vec::with_capacity(32);
 		self.for_each_method(|func| {
-			let func = if let Some(func_fact) = settings::FUNC_REPLACE.get(&func.func_id()) {
+			let func: Func = if let Some(func_fact) = settings::FUNC_REPLACE.get(&func.func_id()) {
 				func_fact(&func)
 			} else {
 				func

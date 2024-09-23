@@ -1,6 +1,6 @@
 use std::borrow::Cow;
 
-use super::{rust_arg_func_decl, rust_self_func_decl, RenderLaneTrait};
+use super::{rust_arg_func_decl, rust_self_func_decl, FunctionProps, RenderLaneTrait};
 use crate::field::Field;
 use crate::function::Function;
 use crate::type_ref::{Constness, ExternDir, FishStyle, TypeRef};
@@ -34,7 +34,7 @@ impl RenderLaneTrait for FunctionRenderLane<'_, '_> {
 		)
 	}
 
-	fn rust_arg_pre_call(&self, name: &str, _is_function_infallible: bool) -> String {
+	fn rust_arg_pre_call(&self, name: &str, _function_props: &FunctionProps) -> String {
 		let args = rust_disambiguate_names(self.func.arguments()).collect::<Vec<_>>();
 		if let Some((userdata_name, _)) = args.iter().find(|(_, arg)| arg.is_user_data()) {
 			let tramp_args = args

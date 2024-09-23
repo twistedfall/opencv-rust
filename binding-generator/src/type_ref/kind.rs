@@ -488,7 +488,7 @@ pub enum InputOutputArrayKind {
 }
 
 #[cfg(test)]
-mod tests {
+mod test {
 	use crate::type_ref::{Dir, StrEnc, StrType, TypeRef, TypeRefDesc, TypeRefTypeHint};
 
 	fn as_string(type_ref: TypeRef) -> Option<(Dir, StrType)> {

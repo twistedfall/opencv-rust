@@ -164,27 +164,29 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 	}
 
 	/// TypeRef with all the typedef's traversed
-	pub fn canonical(&self) -> Self {
+	pub fn canonical(&self) -> Cow<Self> {
 		match self.kind().as_ref() {
-			TypeRefKind::Typedef(tdef) => tdef.underlying_type_ref().canonical(),
-			_ => self.clone(),
+			TypeRefKind::Typedef(tdef) => Owned(tdef.underlying_type_ref().canonical().into_owned()),
+			_ => Borrowed(self),
 		}
 	}
 
 	/// Removes indirection by pointer and reference, this will also remove typedef if it references a pointer or reference
-	pub fn source(&self) -> Self {
+	pub fn source(&self) -> Cow<Self> {
 		match self.kind().as_ref() {
-			TypeRefKind::Pointer(inner) | TypeRefKind::Reference(inner) | TypeRefKind::RValueReference(inner) => inner.source(),
+			TypeRefKind::Pointer(inner) | TypeRefKind::Reference(inner) | TypeRefKind::RValueReference(inner) => {
+				Owned(inner.source().into_owned())
+			}
 			TypeRefKind::Typedef(tdef) => {
 				let underlying_type = tdef.underlying_type_ref();
 				match underlying_type.kind().as_ref() {
 					TypeRefKind::Pointer(inner) | TypeRefKind::Reference(inner) | TypeRefKind::RValueReference(inner) => {
-						inner.source()
+						Owned(inner.source().into_owned())
 					}
-					_ => self.clone(),
+					_ => Borrowed(self),
 				}
 			}
-			_ => self.clone(),
+			_ => Borrowed(self),
 		}
 	}
 

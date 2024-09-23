@@ -15,6 +15,7 @@ use crate::func::{FuncCppBody, FuncKind, FuncRustBody, FuncRustExtern, InheritCo
 use crate::name_pool::NamePool;
 use crate::settings::ARG_OVERRIDE_SELF;
 use crate::type_ref::{Constness, CppNameStyle, ExternDir, FishStyle, NameStyle, StrEnc, StrType, TypeRef, TypeRefTypeHint};
+use crate::writer::rust_native::type_ref::render_lane::FunctionProps;
 use crate::{
 	reserved_rename, settings, CompiledInterpolation, CowMapBorrowedExt, Element, Func, IteratorExt, NameDebug, StrExt, StringExt,
 };
@@ -65,7 +66,7 @@ impl RustElement for Func<'_, '_> {
 		let cpp_name = match self {
 			&Self::Clang { entity, gen_env, .. } => {
 				if let Some(name) = gen_env.get_rename_config(entity).map(|c| &c.rename) {
-					name.as_ref().into()
+					Borrowed(name.as_ref())
 				} else {
 					self.cpp_name(CppNameStyle::Declaration)
 				}
@@ -73,20 +74,18 @@ impl RustElement for Func<'_, '_> {
 			Self::Desc(_) => self.cpp_name(CppNameStyle::Declaration),
 		};
 		let rust_name = if self.is_clone() {
-			"try_clone".into()
+			Borrowed("try_clone")
 		} else {
 			let kind = self.kind();
 			if let Some(cls) = kind.as_constructor() {
 				let args = self.arguments();
-				'ctor_name: {
+				let ctor_name = 'ctor_name: {
 					if args.is_empty() {
 						break 'ctor_name "default";
 					} else if args.len() == 1 {
 						let arg_typeref = args[0].type_ref();
 						let source = arg_typeref.source_smart();
-						let source_kind = source.kind();
-						let class_arg = source_kind.as_class();
-						if let Some(class_arg) = class_arg {
+						if let Some(class_arg) = source.kind().as_class() {
 							if cls == class_arg.as_ref() {
 								break 'ctor_name if arg_typeref.constness().is_const() {
 									"copy"
@@ -99,16 +98,16 @@ impl RustElement for Func<'_, '_> {
 						}
 					}
 					"new"
-				}
-				.into()
+				};
+				Borrowed(ctor_name)
 			} else if kind.as_conversion_method().is_some() {
-				let mut name = self.return_type_ref().rust_name(NameStyle::decl()).into_owned();
-				name.cleanup_name();
-				name.insert_str(0, "to_");
-				name.into()
+				let mut conv_name = self.return_type_ref().rust_name(NameStyle::decl()).into_owned();
+				conv_name.cleanup_name();
+				conv_name.insert_str(0, "to_");
+				Owned(conv_name)
 			} else if let Some((cls, kind)) = kind.as_operator() {
 				if cpp_name.starts_with("operator") {
-					let name = match kind {
+					let op_name = match kind {
 						OperatorKind::Unsupported => cpp_name.as_ref(),
 						OperatorKind::Index => {
 							if self.constness().is_const() {
@@ -157,13 +156,13 @@ impl RustElement for Func<'_, '_> {
 							false
 						};
 						if args.is_empty() || is_single_arg_same_as_class {
-							name.into()
+							Borrowed(op_name)
 						} else {
 							let args = args.iter().map(|arg| arg.type_ref().rust_simple_name()).join("_");
-							format!("{name}_{args}").into()
+							Owned(format!("{op_name}_{args}"))
 						}
 					} else {
-						name.into()
+						Borrowed(op_name)
 					}
 				} else {
 					cpp_name
@@ -232,6 +231,10 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 			call_args.push(render_lane.rust_arg_func_call("self"));
 		}
 		let mut callback_arg_name: Option<&str> = None;
+		let function_props = FunctionProps {
+			is_infallible: return_kind.is_infallible(),
+			safety,
+		};
 		for (name, arg) in &args {
 			let arg_type_ref = arg.type_ref();
 			let arg_as_slice_len = arg_type_ref.type_hint().as_slice_len();
@@ -256,10 +259,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 						.map_or(Lifetime::Elided, |(_, _, lt)| lt);
 					decl_args.push(render_lane.rust_arg_func_decl(name, lt).into());
 				}
-				pre_post_arg_handle(
-					render_lane.rust_arg_pre_call(name, return_kind.is_infallible()),
-					&mut pre_call_args,
-				);
+				pre_post_arg_handle(render_lane.rust_arg_pre_call(name, &function_props), &mut pre_call_args);
 			}
 			if let Some((slice_args, len_div)) = arg_as_slice_len {
 				let arg_is_size_t = arg_kind.is_size_t();
@@ -564,12 +564,10 @@ fn rust_return(
 
 			let mut ret_convert = Vec::with_capacity(3);
 			if !return_kind.is_naked() {
-				let spec = if safety.is_safe() {
-					"return_receive!(unsafe ocvrs_return => ret);"
-				} else {
-					"return_receive!(ocvrs_return => ret);"
-				};
-				ret_convert.push(Borrowed(spec));
+				ret_convert.push(Owned(format!(
+					"return_receive!({safety}ocvrs_return => ret);",
+					safety = safety.rust_block_safety_qual()
+				)));
 			}
 			if !return_kind.is_infallible() {
 				ret_convert.push("let ret = ret.into_result()?;".into())

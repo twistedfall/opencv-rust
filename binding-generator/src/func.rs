@@ -321,16 +321,21 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 	}
 
 	pub fn is_generic(&self) -> bool {
-		match self.kind().as_ref() {
-			FuncKind::GenericFunction | FuncKind::GenericInstanceMethod(..) => true,
-			FuncKind::Function
-			| FuncKind::Constructor(..)
-			| FuncKind::InstanceMethod(..)
-			| FuncKind::StaticMethod(..)
-			| FuncKind::FieldAccessor(..)
-			| FuncKind::ConversionMethod(..)
-			| FuncKind::FunctionOperator(..)
-			| FuncKind::InstanceOperator(..) => false,
+		match self {
+			Func::Clang { entity, .. } => {
+				matches!(entity.get_kind(), EntityKind::FunctionTemplate)
+			}
+			Func::Desc(desc) => match desc.kind {
+				FuncKind::GenericFunction | FuncKind::GenericInstanceMethod(..) => true,
+				FuncKind::Function
+				| FuncKind::Constructor(..)
+				| FuncKind::InstanceMethod(..)
+				| FuncKind::StaticMethod(..)
+				| FuncKind::FieldAccessor(..)
+				| FuncKind::ConversionMethod(..)
+				| FuncKind::FunctionOperator(..)
+				| FuncKind::InstanceOperator(..) => false,
+			},
 		}
 	}
 
@@ -461,7 +466,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 								.iter()
 								.find(|arg| arg.cpp_name(CppNameStyle::Declaration) == *borrow_arg_name)
 								.map(|arg| arg.type_ref().constness())
-								.unwrap_or_else(|| panic!("BoxedAsRef refers to the non-existent argument name: {}", borrow_arg_name))
+								.unwrap_or_else(|| panic!("BoxedAsRef refers to the non-existent argument name: {borrow_arg_name}"))
 						};
 						out.set_inherent_constness(borrow_arg_constness);
 					}
@@ -536,9 +541,9 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 					};
 					slice_len_arg.set_type_ref_type_hint(TypeRefTypeHint::LenForSlice(slice_arg_names.into(), divisor));
 				}
-				out.into()
+				Owned(out)
 			}
-			Self::Desc(desc) => desc.arguments.as_ref().into(),
+			Self::Desc(desc) => Borrowed(desc.arguments.as_ref()),
 		}
 	}
 
@@ -572,6 +577,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		};
 		// add return type to function id for cases when we specialize on the return type, in theory we should be able to apply
 		// this to all of the functions, but it's too much work to rename all those entries in FUNC_RENAME
+		// fixme: introduce FuncMatcher and use this logic for every function and not only specialized ones
 		if self.is_specialized() {
 			out.push('_');
 			out.push_str(&self.return_type_ref().cpp_name(CppNameStyle::Reference));

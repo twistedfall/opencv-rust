@@ -379,7 +379,7 @@ impl<'tu> ClangTypeExt<'tu> for Type<'tu> {
 			match kind {
 				TypeKind::Pointer => {
 					let pointee = self.get_pointee_type().expect("No pointee type for pointer");
-					let pointee_typeref = TypeRef::new_ext(pointee, type_hint.recurse(), parent_entity, gen_env);
+					let pointee_typeref = TypeRef::new_ext(pointee, type_hint.recurse_inner(), parent_entity, gen_env);
 					let pointee_kind = pointee_typeref.kind();
 					if pointee_kind.is_function() {
 						pointee_kind.into_owned()
@@ -392,7 +392,7 @@ impl<'tu> ClangTypeExt<'tu> for Type<'tu> {
 
 				TypeKind::LValueReference => TypeRefKind::Reference(TypeRef::new_ext(
 					self.get_pointee_type().expect("No pointee type for reference"),
-					type_hint.recurse(),
+					type_hint.recurse_inner(),
 					parent_entity,
 					gen_env,
 				)),

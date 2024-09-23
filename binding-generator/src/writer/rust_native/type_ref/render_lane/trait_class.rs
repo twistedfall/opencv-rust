@@ -61,6 +61,7 @@ impl RenderLaneTrait for TraitClassRenderLane<'_, '_> {
 			&self
 				.non_canonical
 				.source()
+				.into_owned()
 				.with_inherent_constness(self.non_canonical.constness()),
 			name,
 		)
