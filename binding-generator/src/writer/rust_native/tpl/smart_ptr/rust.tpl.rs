@@ -2,7 +2,7 @@
 pub type {{rust_localalias}} = {{rust_full}};
 
 ptr_extern! { {{inner_rust_full}},
-	{{extern_delete}}, {{extern_get_inner_ptr}}, {{extern_get_inner_ptr_mut}}
+	{{extern_new_null}}, {{extern_delete}}, {{extern_get_inner_ptr}}, {{extern_get_inner_ptr_mut}}
 }
 
 {{ctor}}

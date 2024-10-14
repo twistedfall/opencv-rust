@@ -35,6 +35,13 @@ where
 		unsafe { Self::from_raw(Self::extern_new(val.opencv_into_extern())) }
 	}
 
+	/// Create a new `Ptr` which points to `NULL`
+	///
+	/// Not generally useful, mostly for internal use.
+	pub unsafe fn new_null() -> Self {
+		unsafe { Self::from_raw(Self::extern_new_null()) }
+	}
+
 	/// Get raw pointer to the inner object
 	pub fn inner_as_raw(&self) -> *const c_void {
 		unsafe { self.extern_inner_as_ptr() }

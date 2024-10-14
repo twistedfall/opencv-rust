@@ -279,3 +279,29 @@ fn string_array() -> Result<()> {
 	assert_eq!("b", parser.get_str("a", true)?);
 	Ok(())
 }
+
+#[test]
+fn smart_ptr_optional() -> Result<()> {
+	#![cfg(ocvrs_has_module_calib3d)]
+
+	use opencv::calib3d;
+	use opencv::core::{Point2f, Size, Vector};
+
+	let mut centers = Vector::<Point2f>::new();
+	for i in 0..4 {
+		for j in 0..4 {
+			centers.push((i as f32 * 100.0, j as f32 * 100.0).into());
+		}
+	}
+
+	let mut out_centers = Vector::<Point2f>::new();
+	let r = calib3d::find_circles_grid_1(
+		&centers,
+		Size::new(4, 4),
+		&mut out_centers,
+		calib3d::CALIB_CB_SYMMETRIC_GRID,
+		None,
+	);
+	assert!(matches!(r, Ok(true)));
+	Ok(())
+}

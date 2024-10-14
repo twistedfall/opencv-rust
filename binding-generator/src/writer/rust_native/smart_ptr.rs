@@ -147,7 +147,7 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		let rust_as_raw_mut = type_ref.rust_as_raw_name(Constness::Mut);
 
 		let ctor = if gen_ctor(&pointee_kind) {
-			let extern_new = method_new(smartptr_class.clone(), type_ref, pointee_type.as_ref().clone()).identifier();
+			let extern_new = method_new(smartptr_class.clone(), type_ref.clone(), pointee_type.as_ref().clone()).identifier();
 			CTOR_TPL.interpolate(&HashMap::from([
 				("inner_rust_full", inner_rust_full.as_ref()),
 				("extern_new", &extern_new),
@@ -156,6 +156,7 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 			"".to_string()
 		};
 
+		let extern_new_null = method_new_null(smartptr_class.clone(), type_ref).identifier();
 		let extern_delete = FuncDesc::method_delete(smartptr_class).identifier();
 		TPL.interpolate(&HashMap::from([
 			("rust_localalias", rust_localalias.as_ref()),
@@ -163,6 +164,7 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 			("rust_as_raw_mut", &rust_as_raw_mut),
 			("rust_full", &rust_full),
 			("inner_rust_full", &inner_rust_full),
+			("extern_new_null", &extern_new_null),
 			("extern_delete", &extern_delete),
 			("extern_get_inner_ptr", &extern_get_inner_ptr),
 			("extern_get_inner_ptr_mut", &extern_get_inner_ptr_mut),
@@ -197,6 +199,7 @@ fn extern_functions<'tu, 'ge>(ptr: &SmartPtr<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
 		smartptr_class.clone(),
 		pointee_type.as_ref().clone().with_inherent_constness(Constness::Mut),
 	));
+	out.push(method_new_null(smartptr_class.clone(), type_ref.clone()));
 	out.push(FuncDesc::method_delete(smartptr_class.clone()));
 	if let Some(cls) = pointee_kind.as_class().filter(|cls| cls.kind().is_trait()) {
 		for base in all_bases(&cls) {
@@ -294,6 +297,21 @@ fn method_new<'tu, 'ge>(
 		.cpp_body(FuncCppBody::ManualCallReturn(
 			format!("return new {{{{ret_type}}}}({val});").into(),
 		)),
+	)
+}
+
+fn method_new_null<'tu, 'ge>(smartptr_class: Class<'tu, 'ge>, smartptr_type_ref: TypeRef<'tu, 'ge>) -> Func<'tu, 'ge> {
+	Func::new_desc(
+		FuncDesc::new(
+			FuncKind::Constructor(smartptr_class),
+			Constness::Const,
+			ReturnKind::InfallibleNaked,
+			"new_null",
+			"<unused>",
+			[],
+			smartptr_type_ref,
+		)
+		.cpp_body(FuncCppBody::ManualCallReturn("return new {{ret_type}}();".into())),
 	)
 }
 

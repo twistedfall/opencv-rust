@@ -97,6 +97,31 @@ macro_rules! string_array_arg_mut {
 	};
 }
 
+macro_rules! smart_ptr_option_arg {
+	(unsafe ref $name: ident) => {
+		let null = if $name.is_none() {
+			Some(unsafe { $crate::core::Ptr::new_null() })
+		} else {
+			None
+		};
+		let $name = $name.or(null.as_ref()).expect("Nullability should have been checked");
+	};
+	(unsafe $name: ident) => {
+		let $name = $name.unwrap_or_else(|| unsafe { $crate::core::Ptr::new_null() });
+	};
+	(ref $name: ident) => {
+		let null = if $name.is_none() {
+			Some($crate::core::Ptr::new_null())
+		} else {
+			None
+		};
+		let $name = $name.or(null.as_ref()).expect("Nullability should have been checked");
+	};
+	($name: ident) => {
+		let $name = $name.unwrap_or_else(|| $crate::core::Ptr::new_null());
+	};
+}
+
 macro_rules! return_send {
 	(via $name: ident) => {
 		let mut $name = ::std::mem::MaybeUninit::uninit();

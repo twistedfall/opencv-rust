@@ -1,18 +1,22 @@
 use std::borrow::Cow;
 use std::borrow::Cow::{Borrowed, Owned};
 
-use super::{rust_arg_func_decl, rust_self_func_decl, RenderLaneTrait};
+use super::{rust_arg_func_decl, rust_self_func_decl, FunctionProps, Indirection, RenderLaneTrait};
 use crate::type_ref::{Constness, ExternDir, FishStyle, TypeRef};
-use crate::writer::rust_native::type_ref::{Lifetime, NullabilityExt, TypeRefExt};
+use crate::writer::rust_native::type_ref::{Lifetime, TypeRefExt};
 use crate::{CowMapBorrowedExt, CppNameStyle, NameStyle};
 
 pub struct CppPassByVoidPtrRenderLane<'tu, 'ge> {
 	non_canonical: TypeRef<'tu, 'ge>,
+	indirection: Indirection,
 }
 
 impl<'tu, 'ge> CppPassByVoidPtrRenderLane<'tu, 'ge> {
-	pub fn from_non_canonical(non_canonical: TypeRef<'tu, 'ge>) -> Self {
-		Self { non_canonical }
+	pub fn from_non_canonical_indirection(non_canonical: TypeRef<'tu, 'ge>, indirection: Indirection) -> Self {
+		Self {
+			non_canonical,
+			indirection,
+		}
 	}
 }
 
@@ -31,6 +35,22 @@ impl RenderLaneTrait for CppPassByVoidPtrRenderLane<'_, '_> {
 				.non_canonical
 				.rust_name_ext(NameStyle::Reference(FishStyle::No), lifetime),
 		)
+	}
+
+	fn rust_arg_pre_call(&self, name: &str, function_props: &FunctionProps) -> String {
+		let is_nullable = self.non_canonical.type_hint().nullability().is_nullable();
+		if is_nullable && self.non_canonical.source().kind().as_smart_ptr().is_some() {
+			let ref_spec = match self.indirection {
+				Indirection::Pointer | Indirection::Reference => "ref ",
+				Indirection::None => "",
+			};
+			format!(
+				"smart_ptr_option_arg!({safety}{ref_spec}{name})",
+				safety = function_props.safety.rust_block_safety_qual()
+			)
+		} else {
+			"".to_string()
+		}
 	}
 
 	fn rust_arg_func_call(&self, name: &str) -> String {
@@ -71,12 +91,8 @@ impl RenderLaneTrait for CppPassByVoidPtrRenderLane<'_, '_> {
 }
 
 fn rust_arg_func_call(type_ref: &TypeRef, name: &str) -> String {
-	let src_typ = type_ref.source();
-	let constness = type_ref.constness();
-	let by_ptr = format!("{name}.{as_raw}()", as_raw = src_typ.rust_as_raw_name(constness));
-	type_ref
-		.type_hint()
-		.nullability()
-		.rust_wrap_nullable_func_call(name, by_ptr.into(), constness)
-		.into_owned()
+	format!(
+		"{name}.{as_raw}()",
+		as_raw = type_ref.source().rust_as_raw_name(type_ref.constness())
+	)
 }

@@ -6,6 +6,8 @@ use crate::{extern_receive, extern_send};
 #[doc(hidden)]
 pub trait PtrExtern {
 	#[doc(hidden)]
+	unsafe fn extern_new_null() -> *mut c_void;
+	#[doc(hidden)]
 	unsafe fn extern_delete(&mut self);
 	#[doc(hidden)]
 	unsafe fn extern_inner_as_ptr(&self) -> *const c_void;
@@ -24,8 +26,13 @@ pub trait PtrExternCtor<T: OpenCVTypeExternContainerMove> {
 #[doc(hidden)]
 #[macro_export]
 macro_rules! ptr_extern {
-	($type: ty, $extern_delete: ident, $extern_inner_as_ptr: ident, $extern_inner_as_ptr_mut: ident $(,)?) => {
+	($type: ty, $extern_new_null: ident, $extern_delete: ident, $extern_inner_as_ptr: ident, $extern_inner_as_ptr_mut: ident $(,)?) => {
 		impl $crate::core::PtrExtern for $crate::core::Ptr<$type> {
+			#[inline]
+			unsafe fn extern_new_null() -> *mut ::std::ffi::c_void {
+				$crate::sys::$extern_new_null()
+			}
+
 			#[inline]
 			unsafe fn extern_delete(&mut self) {
 				$crate::sys::$extern_delete(self.as_raw_mut())

@@ -73,9 +73,9 @@ impl TypeRefExt for TypeRef<'_, '_> {
 					RenderLane::Primitive(PrimitiveRenderLane::from_cpp_non_canonical(cpp, self.clone()))
 				}
 				TypeRefKind::Function(f) => RenderLane::Function(FunctionRenderLane::from_non_canonical_func(self.clone(), f)),
-				TypeRefKind::StdVector(_) | TypeRefKind::SmartPtr(_) | TypeRefKind::StdTuple(_) => {
-					RenderLane::CppPassByVoidPtr(CppPassByVoidPtrRenderLane::from_non_canonical(self.clone()))
-				}
+				TypeRefKind::StdVector(_) | TypeRefKind::SmartPtr(_) | TypeRefKind::StdTuple(_) => RenderLane::CppPassByVoidPtr(
+					CppPassByVoidPtrRenderLane::from_non_canonical_indirection(self.clone(), Indirection::None),
+				),
 				TypeRefKind::Array(elem, None) => {
 					if matches!(self.type_hint(), TypeRefTypeHint::Slice) && elem.kind().is_void() {
 						RenderLane::VoidSlice(VoidSliceRenderLane::from_canonical(canonical.into_owned()))
@@ -90,7 +90,10 @@ impl TypeRefExt for TypeRef<'_, '_> {
 				)),
 				TypeRefKind::RValueReference(inner) => {
 					if inner.kind().extern_pass_kind().is_by_void_ptr() {
-						RenderLane::CppPassByVoidPtr(CppPassByVoidPtrRenderLane::from_non_canonical(self.clone()))
+						RenderLane::CppPassByVoidPtr(CppPassByVoidPtrRenderLane::from_non_canonical_indirection(
+							self.clone(),
+							Indirection::None,
+						))
 					} else {
 						RenderLane::ByMove(ByMoveRenderLane::from_non_canonical(self.clone()))
 					}
@@ -130,9 +133,9 @@ impl TypeRefExt for TypeRef<'_, '_> {
 							enm,
 							indirection,
 						)),
-						kind if kind.extern_pass_kind().is_by_void_ptr() => {
-							RenderLane::CppPassByVoidPtr(CppPassByVoidPtrRenderLane::from_non_canonical(self.clone()))
-						}
+						kind if kind.extern_pass_kind().is_by_void_ptr() => RenderLane::CppPassByVoidPtr(
+							CppPassByVoidPtrRenderLane::from_non_canonical_indirection(self.clone(), indirection),
+						),
 						_ => RenderLane::Indirect(IndirectRenderLane::from_non_canonical_indirection(self.clone(), indirection)),
 					}
 				}
