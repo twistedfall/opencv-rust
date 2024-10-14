@@ -337,12 +337,14 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 			} else {
 				func
 			};
-			if func.is_generic() {
-				if let Some(specs) = settings::FUNC_SPECIALIZE.get(&func.func_id()) {
-					for spec in specs {
-						out.push(func.clone().specialize(spec));
+			if let Self::Clang { gen_env, .. } = self {
+				if func.is_generic() {
+					if let Some(specs) = gen_env.settings.func_specialize.get(&func.func_id()) {
+						for spec in specs {
+							out.push(func.clone().specialize(spec));
+						}
+						return ControlFlow::Continue(());
 					}
-					return ControlFlow::Continue(());
 				}
 			}
 			out.push(func);

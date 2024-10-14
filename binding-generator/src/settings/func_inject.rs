@@ -8,9 +8,11 @@ use crate::type_ref::{TypeRef, TypeRefDesc, TypeRefTypeHint};
 use crate::writer::rust_native::type_ref::Lifetime;
 use crate::Func;
 
+pub type FuncInject = Vec<FuncFactory>;
+
 pub type FuncFactory = fn() -> Func<'static, 'static>;
 
-pub fn func_inject_factory(module: &str) -> Vec<FuncFactory> {
+pub fn func_inject_factory(module: &str) -> FuncInject {
 	match module {
 		"core" => vec![
 			(|| {

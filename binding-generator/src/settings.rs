@@ -9,10 +9,10 @@ pub use element_export_tweak::ELEMENT_EXPORT_TWEAK;
 pub use force_infallible::FORCE_INFALLIBLE;
 pub use func_cfg_attr::FUNC_CFG_ATTR;
 pub use func_exclude::FUNC_EXCLUDE;
-pub use func_inject::{func_inject_factory, FuncFactory};
+pub use func_inject::{func_inject_factory, FuncFactory, FuncInject};
 pub use func_rename::FUNC_RENAME;
 pub use func_replace::{FuncInheritFactory, FUNC_REPLACE};
-pub use func_specialize::{TypeRefFactory, FUNC_SPECIALIZE};
+pub use func_specialize::{func_specialize_factory, FuncSpec, FuncSpecialize};
 pub use func_unsafe::FUNC_UNSAFE;
 pub use generator_module_tweaks::{generator_module_tweaks_factory, ModuleTweak};
 pub use implemented::{
@@ -20,6 +20,8 @@ pub use implemented::{
 	IMPLEMENTED_SYSTEM_CLASSES,
 };
 use once_cell::sync::Lazy;
+
+use crate::type_ref::TypeRef;
 
 mod argument_names;
 mod argument_override;
@@ -36,10 +38,13 @@ mod func_unsafe;
 mod generator_module_tweaks;
 mod implemented;
 
+pub type TypeRefFactory = fn() -> TypeRef<'static, 'static>;
+
 /// Injectable global and module level overrides, todo: migrate the global statics to this over time
 #[derive(Debug)]
 pub struct Settings {
-	pub func_inject: Vec<FuncFactory>,
+	pub func_inject: FuncInject,
+	pub func_specialize: FuncSpecialize,
 	pub generator_module_tweaks: ModuleTweak<'static>,
 }
 
@@ -47,6 +52,7 @@ impl Settings {
 	pub fn empty() -> Self {
 		Self {
 			func_inject: vec![],
+			func_specialize: HashMap::new(),
 			generator_module_tweaks: ModuleTweak::empty(),
 		}
 	}
@@ -54,6 +60,7 @@ impl Settings {
 	pub fn for_module(module: &str) -> Self {
 		Self {
 			func_inject: func_inject_factory(module),
+			func_specialize: func_specialize_factory(module),
 			generator_module_tweaks: generator_module_tweaks_factory(module),
 		}
 	}

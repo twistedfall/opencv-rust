@@ -15,7 +15,7 @@ use crate::settings::Settings;
 use crate::type_ref::CppNameStyle;
 use crate::{
 	is_opencv_path, opencv_module_from_path, settings, Class, Element, EntityWalkerExt, EntityWalkerVisitor, MemoizeMap,
-	MemoizeMapExt, NamePool,
+	MemoizeMapExt,
 };
 
 #[derive(Copy, Clone, Debug)]
@@ -173,7 +173,6 @@ impl<'tu> EntityWalkerVisitor<'tu> for GeneratorEnvPopulator<'tu, '_> {
 pub struct GeneratorEnv<'tu> {
 	export_map: HashMap<ExportIdx, ExportConfig>,
 	rename_map: HashMap<ExportIdx, RenameConfig>,
-	pub func_names: NamePool,
 	/// Collection of function comments to be able to replace `@overload` and `@copybrief` comment markers
 	func_comments: HashMap<String, Vec<(u32, String)>>,
 	/// Cache of the calculated [ClassKind]s
@@ -187,7 +186,6 @@ impl<'tu> GeneratorEnv<'tu> {
 		Self {
 			export_map: HashMap::new(),
 			rename_map: HashMap::new(),
-			func_names: NamePool::with_capacity(0),
 			func_comments: HashMap::new(),
 			class_kind_cache: MemoizeMap::new(HashMap::new()),
 			descendants: HashMap::new(),
@@ -200,7 +198,6 @@ impl<'tu> GeneratorEnv<'tu> {
 		let mut out = Self {
 			export_map: HashMap::with_capacity(1024),
 			rename_map: HashMap::with_capacity(64),
-			func_names: NamePool::with_capacity(512),
 			func_comments: HashMap::with_capacity(2048),
 			class_kind_cache: MemoizeMap::new(HashMap::with_capacity(32)),
 			descendants: HashMap::with_capacity(16),
@@ -366,7 +363,6 @@ impl fmt::Debug for GeneratorEnv<'_> {
 		f.debug_struct("GeneratorEnv")
 			.field("export_map", &format!("{} elements", self.export_map.len()))
 			.field("rename_map", &format!("{} elements", self.rename_map.len()))
-			.field("func_names", &format!("{} elements", self.func_names.len()))
 			.field("func_comments", &format!("{} elements", self.func_comments.len()))
 			.field(
 				"class_kind_cache",

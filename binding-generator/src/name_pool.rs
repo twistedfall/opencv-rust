@@ -14,10 +14,6 @@ impl NamePool {
 		}
 	}
 
-	pub fn len(&self) -> usize {
-		self.names.len()
-	}
-
 	pub fn make_unique_name(&mut self, name: &mut Cow<str>) -> MakeUniqueNameResult {
 		let mut out = MakeUniqueNameResult::Unchanged;
 		while self.names.contains(name.as_ref()) {

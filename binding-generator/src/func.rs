@@ -1,6 +1,5 @@
 use std::borrow::Cow;
 use std::borrow::Cow::{Borrowed, Owned};
-use std::collections::HashMap;
 use std::fmt;
 use std::ops::ControlFlow;
 use std::rc::Rc;
@@ -18,8 +17,8 @@ use crate::debug::{DefinitionLocation, LocationName};
 use crate::element::ExcludeKind;
 use crate::entity::ToEntity;
 use crate::field::FieldDesc;
-use crate::settings::{TypeRefFactory, ARG_OVERRIDE_SELF};
-use crate::type_ref::{Constness, CppNameStyle, TypeRefDesc, TypeRefTypeHint};
+use crate::settings::{FuncSpec, ARG_OVERRIDE_SELF};
+use crate::type_ref::{Constness, CppNameStyle, FishStyle, TypeRefDesc, TypeRefTypeHint};
 use crate::writer::rust_native::element::RustElement;
 use crate::writer::rust_native::type_ref::TypeRefExt;
 use crate::{
@@ -87,10 +86,11 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		}
 	}
 
-	pub fn specialize(self, spec: &HashMap<&str, TypeRefFactory>) -> Self {
+	pub fn specialize(self, spec: &FuncSpec) -> Self {
 		let specialized = |type_ref: &TypeRef| -> Option<TypeRef<'static, 'static>> {
 			if type_ref.kind().is_generic() {
 				spec
+					.1
 					.get(type_ref.source().cpp_name(CppNameStyle::Declaration).as_ref())
 					.map(|spec_type| type_ref.map(|_| spec_type().with_inherent_constness(type_ref.constness())))
 			} else {
@@ -121,16 +121,21 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			FuncKind::GenericInstanceMethod(cls) => FuncKind::InstanceMethod(cls),
 			kind => kind,
 		};
-		let spec_values = spec.values();
+		let spec_values = spec.1.values();
 		let mut generic = String::with_capacity(spec_values.len() * 16);
 		for spec in spec_values {
-			let spec = spec();
-			generic.extend_sep(", ", &spec.cpp_name(CppNameStyle::Reference));
+			generic.extend_sep(", ", &spec().cpp_name(CppNameStyle::Reference));
 		}
 		let mut desc = self.to_desc(InheritConfig::empty().kind().arguments().return_type_ref());
+		let rust_custom_leafname = Some(if spec.0.contains('+') {
+			spec.0.replacen('+', &self.rust_leafname(FishStyle::No), 1).into()
+		} else {
+			spec.0.into()
+		});
 		let desc_mut = Rc::make_mut(&mut desc);
 		desc_mut.kind = kind;
 		desc_mut.type_hint = FuncTypeHint::Specialized;
+		desc_mut.rust_custom_leafname = rust_custom_leafname;
 		desc_mut.arguments = arguments;
 		desc_mut.return_type_ref = specialized(&return_type_ref).unwrap_or_else(|| return_type_ref.into_owned());
 		desc_mut.cpp_body = FuncCppBody::ManualCall(format!("{{{{name}}}}<{generic}>({{{{args}}}})").into());

@@ -10,6 +10,7 @@ use clang::{Clang, Entity, EntityKind, Index};
 use dunce::canonicalize;
 use shlex::Shlex;
 
+use crate::name_pool::NamePool;
 use crate::type_ref::{CppNameStyle, FishStyle, TypeRef, TypeRefKind};
 use crate::typedef::NewTypedefResult;
 use crate::writer::rust_native::element::RustElement;
@@ -81,6 +82,7 @@ pub struct OpenCvWalker<'tu, 'r, V> {
 	module: &'r str,
 	opencv_module_header_dir: &'r Path,
 	visitor: V,
+	func_names: NamePool,
 	gen_env: GeneratorEnv<'tu>,
 }
 
@@ -135,10 +137,8 @@ impl<'tu, V: GeneratorVisitor<'tu>> EntityWalkerVisitor<'tu> for OpenCvWalker<'t
 			| EntityKind::ClassTemplatePartialSpecialization
 			| EntityKind::StructDecl => Self::process_class(&mut self.visitor, &mut self.gen_env, entity),
 			EntityKind::EnumDecl => Self::process_enum(&mut self.visitor, entity),
-			EntityKind::FunctionDecl => Self::process_func(&mut self.visitor, &mut self.gen_env, entity),
-			EntityKind::TypedefDecl | EntityKind::TypeAliasDecl => {
-				Self::process_typedef(&mut self.visitor, &mut self.gen_env, entity)
-			}
+			EntityKind::FunctionDecl => Self::process_func(&mut self.visitor, &mut self.func_names, &self.gen_env, entity),
+			EntityKind::TypedefDecl | EntityKind::TypeAliasDecl => Self::process_typedef(&mut self.visitor, &self.gen_env, entity),
 			EntityKind::VarDecl => {
 				if !entity.is_mutable() {
 					Self::process_const(&mut self.visitor, entity);
@@ -210,6 +210,7 @@ impl<'tu, 'r, V: GeneratorVisitor<'tu>> OpenCvWalker<'tu, 'r, V> {
 			module,
 			opencv_module_header_dir,
 			visitor,
+			func_names: NamePool::with_capacity(512),
 			gen_env,
 		}
 	}
@@ -271,51 +272,42 @@ impl<'tu, 'r, V: GeneratorVisitor<'tu>> OpenCvWalker<'tu, 'r, V> {
 		}
 	}
 
-	fn process_func(visitor: &mut V, gen_env: &mut GeneratorEnv<'tu>, func_decl: Entity<'tu>) {
+	fn process_func(visitor: &mut V, func_names: &mut NamePool, gen_env: &GeneratorEnv<'tu>, func_decl: Entity<'tu>) {
 		if let Some(e) = gen_env.get_export_config(func_decl) {
 			let func = Func::new(func_decl, gen_env);
-			let func = if let Some(func_fact) = settings::FUNC_REPLACE.get(&func.func_id()) {
+			let func_id = func.func_id();
+			let func: Func = if let Some(func_fact) = settings::FUNC_REPLACE.get(&func_id) {
 				func_fact(&func)
 			} else {
-				func
+				Func::new(func_decl, gen_env)
 			};
 			if func.exclude_kind().is_included() {
-				let func_id = func.func_id().make_static();
-				let mut processor = |spec| {
-					let func = if e.only_generated_types {
-						Func::new(func_decl, gen_env)
-					} else {
-						let mut name = Func::new(func_decl, gen_env).rust_leafname(FishStyle::No).into_owned().into();
-						let mut rust_custom_leafname = None;
-						if gen_env.func_names.make_unique_name(&mut name).is_changed() {
-							rust_custom_leafname = Some(name.into());
-						}
-						Func::new_ext(func_decl, rust_custom_leafname, gen_env)
-					};
-					let func = if let Some(spec) = spec {
-						func.specialize(spec)
-					} else {
-						func
-					};
+				let mut processor = |mut func: Func<'tu, '_>| {
 					func.generated_types().into_iter().for_each(|dep| {
 						visitor.visit_generated_type(dep);
 					});
 					if !e.only_generated_types {
+						let mut name = func.rust_leafname(FishStyle::No).into_owned().into();
+						let mut rust_custom_leafname = None;
+						if func_names.make_unique_name(&mut name).is_changed() {
+							rust_custom_leafname = Some(name.into());
+						}
+						func.set_rust_custom_leafname(rust_custom_leafname);
 						visitor.visit_func(func);
 					}
 				};
-				if let Some(specs) = settings::FUNC_SPECIALIZE.get(&func_id) {
+				if let Some(specs) = gen_env.settings.func_specialize.get(&func_id) {
 					for spec in specs {
-						processor(Some(spec));
+						processor(func.clone().specialize(spec));
 					}
 				} else {
-					processor(None);
+					processor(func);
 				}
 			}
 		}
 	}
 
-	fn process_typedef(visitor: &mut V, gen_env: &mut GeneratorEnv<'tu>, typedef_decl: Entity<'tu>) {
+	fn process_typedef(visitor: &mut V, gen_env: &GeneratorEnv<'tu>, typedef_decl: Entity<'tu>) {
 		let typedef = Typedef::try_new(typedef_decl, gen_env);
 		if typedef.exclude_kind().is_included() {
 			match typedef {

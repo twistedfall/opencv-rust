@@ -1,4 +1,4 @@
-use crate::settings::TypeRefFactory;
+use super::TypeRefFactory;
 use crate::type_ref::TypeRefDesc;
 
 #[derive(Debug)]
