@@ -634,6 +634,7 @@ fn objdetect_factory() -> HashMap<&'static str, &'static str> {
 		("cv_HOGDescriptor_detectMultiScale_const_const__InputArrayR_vectorLRectGR_vectorLdoubleGR_double_Size_Size_double_double_bool", "+_weights"),
 		("cv_HOGDescriptor_detect_const_const_MatR_vectorLPointGR_vectorLdoubleGR_double_Size_Size_const_vectorLPointGR", "+_weights"), // 3.2 3.4
 		("cv_HOGDescriptor_detect_const_const__InputArrayR_vectorLPointGR_vectorLdoubleGR_double_Size_Size_const_vectorLPointGR", "+_weights"), // 4.x
+		("cv_HOGDescriptor_setSVMDetector_const__InputArrayR", "+_input_array"),
 		("cv_aruco_getPredefinedDictionary_int", "+_i32"),
 		("cv_groupRectangles_vectorLRectGR_int_double_vectorLintGX_vectorLdoubleGX", "+_levelweights"),
 		("cv_groupRectangles_vectorLRectGR_vectorLintGR_int_double", "+_weights"),

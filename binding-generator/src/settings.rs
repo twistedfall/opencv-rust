@@ -20,6 +20,7 @@ pub use implemented::{
 	IMPLEMENTED_SYSTEM_CLASSES,
 };
 use once_cell::sync::Lazy;
+pub use property_rename::{property_rename_factory, PropertyRename};
 
 use crate::type_ref::TypeRef;
 
@@ -37,6 +38,7 @@ mod func_specialize;
 mod func_unsafe;
 mod generator_module_tweaks;
 mod implemented;
+mod property_rename;
 
 pub type TypeRefFactory = fn() -> TypeRef<'static, 'static>;
 
@@ -46,7 +48,8 @@ pub struct Settings {
 	pub func_inject: FuncInject,
 	pub func_rename: FuncRename,
 	pub func_specialize: FuncSpecialize,
-	pub generator_module_tweaks: ModuleTweak<'static>,
+	pub generator_module_tweaks: ModuleTweak,
+	pub property_rename: PropertyRename,
 }
 
 impl Settings {
@@ -56,6 +59,7 @@ impl Settings {
 			func_rename: HashMap::new(),
 			func_specialize: HashMap::new(),
 			generator_module_tweaks: ModuleTweak::empty(),
+			property_rename: HashMap::new(),
 		}
 	}
 
@@ -65,6 +69,7 @@ impl Settings {
 			func_rename: func_rename_factory(module),
 			func_specialize: func_specialize_factory(module),
 			generator_module_tweaks: generator_module_tweaks_factory(module),
+			property_rename: property_rename_factory(module),
 		}
 	}
 }

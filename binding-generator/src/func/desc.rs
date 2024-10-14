@@ -35,7 +35,7 @@ impl<'tu, 'ge> FuncDesc<'tu, 'ge> {
 		return_kind: ReturnKind,
 		cpp_name: impl Into<Rc<str>>,
 		rust_module: impl Into<Rc<str>>,
-		arguments: impl IntoRc<[Field<'tu, 'ge>]>,
+		arguments: impl Into<Rc<[Field<'tu, 'ge>]>>,
 		return_type_ref: TypeRef<'tu, 'ge>,
 	) -> Self {
 		Self {
@@ -49,7 +49,7 @@ impl<'tu, 'ge> FuncDesc<'tu, 'ge> {
 			doc_comment: "".into(),
 			def_loc: DefinitionLocation::Generated,
 			rust_generic_decls: Rc::new([]),
-			arguments: arguments.into_rc(),
+			arguments: arguments.into(),
 			return_type_ref,
 			cpp_body: FuncCppBody::Auto,
 			rust_body: FuncRustBody::Auto,
@@ -64,8 +64,26 @@ impl<'tu, 'ge> FuncDesc<'tu, 'ge> {
 	}
 
 	#[inline]
+	pub fn maybe_rust_custom_leafname(mut self, rust_custom_leafname: Option<impl Into<Rc<str>>>) -> Self {
+		self.rust_custom_leafname = rust_custom_leafname.map(|name| name.into());
+		self
+	}
+
+	#[inline]
 	pub fn doc_comment(mut self, doc_comment: impl Into<Rc<str>>) -> Self {
 		self.doc_comment = doc_comment.into();
+		self
+	}
+
+	#[inline]
+	pub fn def_loc(mut self, def_loc: DefinitionLocation) -> Self {
+		self.def_loc = def_loc;
+		self
+	}
+
+	#[inline]
+	pub fn rust_generic_decls(mut self, rust_generic_decls: impl Into<Rc<[(String, String)]>>) -> Self {
+		self.rust_generic_decls = rust_generic_decls.into();
 		self
 	}
 
@@ -82,20 +100,8 @@ impl<'tu, 'ge> FuncDesc<'tu, 'ge> {
 	}
 
 	#[inline]
-	pub fn def_loc(mut self, def_loc: DefinitionLocation) -> Self {
-		self.def_loc = def_loc;
-		self
-	}
-
-	#[inline]
 	pub fn rust_extern_definition(mut self, rust_extern_definition: FuncRustExtern) -> Self {
 		self.rust_extern_definition = rust_extern_definition;
-		self
-	}
-
-	#[inline]
-	pub fn rust_generic_decls(mut self, rust_generic_decls: impl IntoRc<[(String, String)]>) -> Self {
-		self.rust_generic_decls = rust_generic_decls.into_rc();
 		self
 	}
 
@@ -143,31 +149,4 @@ pub enum FuncRustBody {
 	ManualCall(Cow<'static, str>),
 	/// Specify manual call, use the automatic return handling
 	ManualCallReturn(Cow<'static, str>),
-}
-
-/// MSRV: remove this trait when MSRV allows and change `IntoRc<..>` in the `FuncDesc::new` to `Into<Rc<..>>`.
-/// Older rust versions don't allow passing `[]` in that case resulting in:
-/// ```text
-/// the trait `From<[_; 0]>` is not implemented for `Rc<[Field<'_, '_>]>
-/// ```
-pub trait IntoRc<Output: ?Sized> {
-	fn into_rc(self) -> Rc<Output>;
-}
-
-impl<const N: usize> IntoRc<[(String, String)]> for [(String, String); N] {
-	fn into_rc(self) -> Rc<[(String, String)]> {
-		self.to_vec().into()
-	}
-}
-
-impl<'tu, 'ge, const N: usize> IntoRc<[Field<'tu, 'ge>]> for [Field<'tu, 'ge>; N] {
-	fn into_rc(self) -> Rc<[Field<'tu, 'ge>]> {
-		self.to_vec().into()
-	}
-}
-
-impl<'tu, 'ge> IntoRc<[Field<'tu, 'ge>]> for Vec<Field<'tu, 'ge>> {
-	fn into_rc(self) -> Rc<[Field<'tu, 'ge>]> {
-		self.into()
-	}
 }

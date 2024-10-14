@@ -414,129 +414,128 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		'ge: 'f,
 	{
 		match self {
-			&Self::Clang { .. } => {
-				let mut out = Vec::with_capacity(fields.size_hint().1.map_or(8, |x| x * 2));
-				out.extend(fields.flat_map(|fld| {
-					iter::from_fn({
-						let doc_comment = Rc::from(fld.doc_comment());
-						let def_loc = fld.file_line_name().location;
-						let rust_module = fld.rust_module();
-						let mut fld_type_ref = fld.type_ref();
-						let fld_type_kind = fld_type_ref.kind();
-						if fld_type_kind
-							.as_pointer()
-							.map_or(false, |inner| inner.kind().as_primitive().is_some())
-							&& !fld_type_kind.is_char_ptr_string(fld_type_ref.type_hint())
-						{
-							fld_type_ref.to_mut().set_type_hint(TypeRefTypeHint::PrimitivePtrAsRaw);
-						} else if fld_type_kind.as_class().map_or(false, |cls| cls.kind().is_trait()) {
-							fld_type_ref.to_mut().set_type_hint(TypeRefTypeHint::TraitClassConcrete);
-						}
-						let fld_type_kind = fld_type_ref.kind();
-						let fld_type_ref_return_as_naked = fld_type_kind.return_as_naked(fld_type_ref.type_hint());
-						let return_kind = ReturnKind::infallible(fld_type_ref_return_as_naked);
-						let fld_const = fld.constness();
-						let passed_by_ref = fld_type_kind.can_return_as_direct_reference();
-						let (mut read_const_yield, mut read_mut_yield) = if passed_by_ref && fld_const.is_mut() {
-							let read_const_func = if constness_filter.map_or(true, |c| c.is_const()) {
-								Some(Func::new_desc(
-									FuncDesc::new(
-										FuncKind::FieldAccessor(self.clone(), fld.clone()),
-										Constness::Const,
-										return_kind,
-										fld.cpp_name(CppNameStyle::Reference),
-										rust_module.clone(),
-										[],
-										fld_type_ref.as_ref().clone().with_inherent_constness(Constness::Const),
-									)
-									.def_loc(def_loc.clone())
-									.doc_comment(Rc::clone(&doc_comment))
-									.cpp_body(FuncCppBody::ManualCall("{{name}}".into())),
-								))
-							} else {
-								None
-							};
-							let read_mut_func = if constness_filter.map_or(true, |c| c.is_mut()) {
-								let cpp_name = fld.cpp_name(CppNameStyle::Declaration);
-								Some(Func::new_desc(
-									FuncDesc::new(
-										FuncKind::FieldAccessor(self.clone(), fld.clone()),
-										Constness::Mut,
-										return_kind,
-										format!("{cpp_name}Mut"),
-										rust_module.clone(),
-										[],
-										fld_type_ref.as_ref().clone().with_inherent_constness(Constness::Mut),
-									)
-									.def_loc(def_loc.clone())
-									.doc_comment(Rc::clone(&doc_comment))
-									.cpp_body(FuncCppBody::ManualCall("{{name}}".into())),
-								))
-							} else {
-								None
-							};
-							(read_const_func, read_mut_func)
-						} else {
-							let read_const_func = if constness_filter.map_or(true, |c| c == fld_const) {
-								Some(Func::new_desc(
-									FuncDesc::new(
-										FuncKind::FieldAccessor(self.clone(), fld.clone()),
-										fld_const,
-										return_kind,
-										fld.cpp_name(CppNameStyle::Reference),
-										rust_module.clone(),
-										[],
-										fld_type_ref.as_ref().clone(),
-									)
-									.def_loc(def_loc.clone())
-									.doc_comment(Rc::clone(&doc_comment))
-									.cpp_body(FuncCppBody::ManualCall("{{name}}".into())),
-								))
-							} else {
-								None
-							};
-							(read_const_func, None)
-						};
-						let mut write_yield = if constness_filter.map_or(true, |c| c.is_mut())
-							&& !fld_type_ref.constness().is_const()
-							&& !fld_type_kind.as_fixed_array().is_some()
-						{
-							let cpp_name = fld.cpp_name(CppNameStyle::Declaration);
-							let (first_letter, rest) = cpp_name.capitalize_first_ascii_letter().expect("Empty fld_declname");
+			&Self::Clang { gen_env, .. } => {
+				let accessor_generator = |fld: &Field<'tu, 'ge>| {
+					let doc_comment = Rc::from(fld.doc_comment());
+					let def_loc = fld.file_line_name().location;
+					let rust_module = Rc::from(fld.rust_module());
+					let mut fld_type_ref = fld.type_ref();
+					let fld_type_kind = fld_type_ref.kind();
+					if fld_type_kind
+						.as_pointer()
+						.map_or(false, |inner| inner.kind().as_primitive().is_some())
+						&& !fld_type_kind.is_char_ptr_string(fld_type_ref.type_hint())
+					{
+						fld_type_ref.to_mut().set_type_hint(TypeRefTypeHint::PrimitivePtrAsRaw);
+					} else if fld_type_kind.as_class().map_or(false, |cls| cls.kind().is_trait()) {
+						fld_type_ref.to_mut().set_type_hint(TypeRefTypeHint::TraitClassConcrete);
+					}
+					let fld_type_kind = fld_type_ref.kind();
+					let return_kind = ReturnKind::infallible(fld_type_kind.return_as_naked(fld_type_ref.type_hint()));
+					let fld_const = fld.constness();
+					let passed_by_ref = fld_type_kind.can_return_as_direct_reference();
+					let fld_refname = fld.cpp_name(CppNameStyle::Reference);
+					let rust_custom_leafname = gen_env.settings.property_rename.get(fld_refname.as_ref()).copied();
+					let fld_declname = fld.cpp_name(CppNameStyle::Declaration);
+					let (mut read_const_yield, mut read_mut_yield) = if fld_const.is_mut() && passed_by_ref {
+						let read_const_func = if constness_filter.map_or(true, |c| c.is_const()) {
 							Some(Func::new_desc(
 								FuncDesc::new(
 									FuncKind::FieldAccessor(self.clone(), fld.clone()),
-									Constness::Mut,
-									ReturnKind::InfallibleNaked,
-									format!("set{first_letter}{rest}"),
-									rust_module.clone(),
-									[Field::new_desc(FieldDesc {
-										cpp_fullname: "val".into(),
-										type_ref: fld_type_ref.as_ref().clone().with_inherent_constness(Constness::Const),
-										default_value: fld.default_value().map(|v| v.into()),
-									})],
-									TypeRefDesc::void(),
+									Constness::Const,
+									return_kind,
+									fld_declname.clone(),
+									Rc::clone(&rust_module),
+									[],
+									fld_type_ref.as_ref().clone().with_inherent_constness(Constness::Const),
 								)
-								.doc_comment(doc_comment)
-								.def_loc(def_loc)
-								.cpp_body(FuncCppBody::ManualCall("{{name}} = {{args}}".into())),
+								.def_loc(def_loc.clone())
+								.doc_comment(Rc::clone(&doc_comment))
+								.cpp_body(FuncCppBody::ManualCall("{{name}}".into()))
+								.maybe_rust_custom_leafname(rust_custom_leafname),
 							))
 						} else {
 							None
 						};
-						move || {
-							read_const_yield
-								.take()
-								.or_else(|| read_mut_yield.take())
-								.or_else(|| write_yield.take())
-						}
+						let read_mut_func = if constness_filter.map_or(true, |c| c.is_mut()) {
+							Some(Func::new_desc(
+								FuncDesc::new(
+									FuncKind::FieldAccessor(self.clone(), fld.clone()),
+									Constness::Mut,
+									return_kind,
+									format!("{fld_declname}Mut"),
+									Rc::clone(&rust_module),
+									[],
+									fld_type_ref.as_ref().clone().with_inherent_constness(Constness::Mut),
+								)
+								.def_loc(def_loc.clone())
+								.doc_comment(Rc::clone(&doc_comment))
+								.cpp_body(FuncCppBody::ManualCall("{{name}}".into()))
+								.maybe_rust_custom_leafname(rust_custom_leafname.map(|name| format!("{name}_mut"))),
+							))
+						} else {
+							None
+						};
+						(read_const_func, read_mut_func)
+					} else {
+						let single_read_func = if constness_filter.map_or(true, |c| c == fld_const) {
+							Some(Func::new_desc(
+								FuncDesc::new(
+									FuncKind::FieldAccessor(self.clone(), fld.clone()),
+									fld_const,
+									return_kind,
+									fld_declname.clone(),
+									Rc::clone(&rust_module),
+									[],
+									fld_type_ref.as_ref().clone(),
+								)
+								.def_loc(def_loc.clone())
+								.doc_comment(Rc::clone(&doc_comment))
+								.cpp_body(FuncCppBody::ManualCall("{{name}}".into()))
+								.maybe_rust_custom_leafname(rust_custom_leafname),
+							))
+						} else {
+							None
+						};
+						(single_read_func, None)
+					};
+					let mut write_yield = if constness_filter.map_or(true, |c| c.is_mut())
+						&& !fld_type_ref.constness().is_const()
+						&& !fld_type_kind.as_fixed_array().is_some()
+					{
+						let (first_letter, rest) = fld_declname.capitalize_first_ascii_letter().expect("Empty fld_declname");
+						Some(Func::new_desc(
+							FuncDesc::new(
+								FuncKind::FieldAccessor(self.clone(), fld.clone()),
+								Constness::Mut,
+								ReturnKind::InfallibleNaked,
+								format!("set{first_letter}{rest}"),
+								Rc::clone(&rust_module),
+								[Field::new_desc(FieldDesc {
+									cpp_fullname: "val".into(),
+									type_ref: fld_type_ref.as_ref().clone().with_inherent_constness(Constness::Const),
+									default_value: fld.default_value().map(|v| v.into()),
+								})],
+								TypeRefDesc::void(),
+							)
+							.doc_comment(doc_comment)
+							.def_loc(def_loc)
+							.cpp_body(FuncCppBody::ManualCall("{{name}} = {{args}}".into()))
+							.maybe_rust_custom_leafname(rust_custom_leafname.map(|name| format!("set_{name}"))),
+						))
+					} else {
+						None
+					};
+					iter::from_fn(move || {
+						read_const_yield
+							.take()
+							.or_else(|| read_mut_yield.take())
+							.or_else(|| write_yield.take())
 					})
-				}));
-				out
+				};
+				fields.flat_map(accessor_generator).collect()
 			}
-			Self::Desc(_) => {
-				vec![]
-			}
+			Self::Desc(_) => vec![],
 		}
 	}
 
