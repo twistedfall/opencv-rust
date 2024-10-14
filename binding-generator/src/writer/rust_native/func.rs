@@ -16,9 +16,7 @@ use crate::name_pool::NamePool;
 use crate::settings::ARG_OVERRIDE_SELF;
 use crate::type_ref::{Constness, CppNameStyle, ExternDir, FishStyle, NameStyle, StrEnc, StrType, TypeRef, TypeRefTypeHint};
 use crate::writer::rust_native::type_ref::render_lane::FunctionProps;
-use crate::{
-	reserved_rename, settings, CompiledInterpolation, CowMapBorrowedExt, Element, Func, IteratorExt, NameDebug, StrExt, StringExt,
-};
+use crate::{reserved_rename, settings, CompiledInterpolation, Element, Func, IteratorExt, NameDebug, StrExt, StringExt};
 
 pub trait FuncExt<'tu, 'ge> {
 	fn companion_functions(&self) -> Vec<Func<'tu, 'ge>>;
@@ -171,15 +169,17 @@ impl RustElement for Func<'_, '_> {
 				cpp_name
 			}
 		};
-		if let Some(&name) = settings::FUNC_RENAME.get(self.identifier().as_str()) {
-			if name.contains('+') {
-				reserved_rename(Owned::<str>(name.replace('+', rust_name.as_ref())).map_borrowed(|s| s.cpp_name_to_rust_fn_case()))
-			} else {
-				name.into()
+		let rust_name = reserved_rename(rust_name.cpp_name_to_rust_fn_case());
+		if let Self::Clang { gen_env, .. } = self {
+			if let Some(&name) = gen_env.settings.func_rename.get(self.identifier().as_str()) {
+				return if name.contains('+') {
+					Owned(name.replacen('+', rust_name.as_ref(), 1))
+				} else {
+					name.into()
+				};
 			}
-		} else {
-			reserved_rename(Owned::<str>(rust_name.into_owned()).map_borrowed(|s| s.cpp_name_to_rust_fn_case()))
 		}
+		Owned(rust_name.into_owned())
 	}
 
 	fn rendered_doc_comment(&self, comment_marker: &str, opencv_version: &str) -> String {

@@ -10,7 +10,7 @@ pub use force_infallible::FORCE_INFALLIBLE;
 pub use func_cfg_attr::FUNC_CFG_ATTR;
 pub use func_exclude::FUNC_EXCLUDE;
 pub use func_inject::{func_inject_factory, FuncFactory, FuncInject};
-pub use func_rename::FUNC_RENAME;
+pub use func_rename::{func_rename_factory, FuncRename};
 pub use func_replace::{FuncInheritFactory, FUNC_REPLACE};
 pub use func_specialize::{func_specialize_factory, FuncSpec, FuncSpecialize};
 pub use func_unsafe::FUNC_UNSAFE;
@@ -44,6 +44,7 @@ pub type TypeRefFactory = fn() -> TypeRef<'static, 'static>;
 #[derive(Debug)]
 pub struct Settings {
 	pub func_inject: FuncInject,
+	pub func_rename: FuncRename,
 	pub func_specialize: FuncSpecialize,
 	pub generator_module_tweaks: ModuleTweak<'static>,
 }
@@ -52,6 +53,7 @@ impl Settings {
 	pub fn empty() -> Self {
 		Self {
 			func_inject: vec![],
+			func_rename: HashMap::new(),
 			func_specialize: HashMap::new(),
 			generator_module_tweaks: ModuleTweak::empty(),
 		}
@@ -60,6 +62,7 @@ impl Settings {
 	pub fn for_module(module: &str) -> Self {
 		Self {
 			func_inject: func_inject_factory(module),
+			func_rename: func_rename_factory(module),
 			func_specialize: func_specialize_factory(module),
 			generator_module_tweaks: generator_module_tweaks_factory(module),
 		}

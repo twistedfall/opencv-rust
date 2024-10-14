@@ -13,7 +13,6 @@ use opencv_binding_generator::{
 struct FunctionFinder<'tu, 'f> {
 	pub module: &'tu str,
 	pub gen_env: GeneratorEnv<'tu>,
-	pub func_rename_unused: RefCell<&'f mut HashSet<&'static str>>,
 	pub func_exclude_unused: RefCell<&'f mut HashSet<&'static str>>,
 	pub func_cfg_attr_unused: RefCell<&'f mut HashSet<&'static str>>,
 	pub func_unsafe_unused: RefCell<&'f mut HashSet<FuncId<'static>>>,
@@ -26,7 +25,6 @@ impl<'tu, 'f> FunctionFinder<'tu, 'f> {
 		let identifier = f.identifier();
 		let func_id = f.func_id().make_static();
 
-		self.func_rename_unused.borrow_mut().remove(identifier.as_str());
 		self.func_exclude_unused.borrow_mut().remove(identifier.as_str());
 		self.func_cfg_attr_unused.borrow_mut().remove(identifier.as_str());
 		self.func_unsafe_unused.borrow_mut().remove(&func_id);
@@ -86,7 +84,6 @@ fn main() {
 	let mut args = env::args_os().skip(1);
 	let src_cpp_dir = PathBuf::from(args.next().expect("2nd argument must be dir with custom cpp"));
 	let opencv_header_dirs = args.map(PathBuf::from);
-	let mut func_rename_unused = settings::FUNC_RENAME.keys().copied().collect::<HashSet<_>>();
 	let mut func_exclude_unused = settings::FUNC_EXCLUDE.clone();
 	let mut func_cfg_attr_unused = settings::FUNC_CFG_ATTR.keys().copied().collect::<HashSet<_>>();
 	let mut func_unsafe_unused = settings::FUNC_UNSAFE.clone();
@@ -112,7 +109,6 @@ fn main() {
 				root_entity.walk_opencv_entities(FunctionFinder {
 					module: &module,
 					gen_env,
-					func_rename_unused: RefCell::new(&mut func_rename_unused),
 					func_exclude_unused: RefCell::new(&mut func_exclude_unused),
 					func_cfg_attr_unused: RefCell::new(&mut func_cfg_attr_unused),
 					func_unsafe_unused: RefCell::new(&mut func_unsafe_unused),
@@ -122,8 +118,6 @@ fn main() {
 			});
 		}
 	}
-	println!("Unused entries in settings::FUNC_RENAME ({}):", func_rename_unused.len());
-	show(func_rename_unused);
 	println!("Unused entries in settings::FUNC_EXCLUDE ({}):", func_exclude_unused.len());
 	show(func_exclude_unused);
 	println!("Unused entries in settings::FUNC_CFG_ATTR ({}):", func_cfg_attr_unused.len());
