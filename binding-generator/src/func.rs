@@ -254,6 +254,11 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		}
 	}
 
+	pub fn inheriting(mut self, ancestor: &Func<'tu, 'ge>, inherit_config: InheritConfig) -> Self {
+		self.inherit(ancestor, inherit_config);
+		self
+	}
+
 	/// Returns true if function was specialized
 	///
 	/// It's used to add the return type to function identifier because otherwise it will generate identical function names when

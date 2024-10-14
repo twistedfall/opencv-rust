@@ -11,7 +11,6 @@ use crate::{Func, FuncId};
 pub type FuncInheritFactory = for<'tu, 'ge> fn(&Func<'tu, 'ge>) -> Func<'tu, 'ge>;
 
 pub static FUNC_REPLACE: Lazy<HashMap<FuncId, FuncInheritFactory>> = Lazy::new(|| {
-	const MAT_FORWARD: Cow<str> = Cow::Borrowed("core::mat_forward::{{name}}(self, {{forward_args}})");
 	const MAT_FORWARD_INHERIT_CONFIG: InheritConfig = InheritConfig {
 		kind: false,
 		name: false,
@@ -21,56 +20,91 @@ pub static FUNC_REPLACE: Lazy<HashMap<FuncId, FuncInheritFactory>> = Lazy::new(|
 		definition_location: true,
 	};
 
-	let forward_const = (|f| {
-		let mut out = Func::new_desc(
-			FuncDesc::new(
-				FuncKind::InstanceMethod(ClassDesc::cv_mat()),
-				Constness::Const,
-				ReturnKind::Fallible,
-				"at",
-				"core",
-				[],
-				TypeRef::new_pointer(TypeRef::new_generic("T").with_inherent_constness(Constness::Const)),
-			)
-			.cpp_body(FuncCppBody::Absent)
-			.rust_body(FuncRustBody::ManualCallReturn(MAT_FORWARD))
-			.rust_extern_definition(FuncRustExtern::Absent)
-			.rust_generic_decls([("T".to_string(), "core::DataType".to_string())]),
-		);
-		out.inherit(f, MAT_FORWARD_INHERIT_CONFIG);
-		out
-	}) as FuncInheritFactory;
-
-	let forward_mut = (|f| {
-		let mut out = Func::new_desc(
-			FuncDesc::new(
-				FuncKind::InstanceMethod(ClassDesc::cv_mat()),
-				Constness::Mut,
-				ReturnKind::Fallible,
-				"at",
-				"core",
-				[],
-				TypeRef::new_pointer(TypeRef::new_generic("T")),
-			)
-			.cpp_body(FuncCppBody::Absent)
-			.rust_body(FuncRustBody::ManualCallReturn(MAT_FORWARD))
-			.rust_extern_definition(FuncRustExtern::Absent)
-			.rust_generic_decls([("T".to_string(), "core::DataType".to_string())]),
-		);
-		out.inherit(f, MAT_FORWARD_INHERIT_CONFIG);
-		out
-	}) as FuncInheritFactory;
+	fn make_at_forward(constness: Constness) -> FuncDesc<'static, 'static> {
+		FuncDesc::new(
+			FuncKind::InstanceMethod(ClassDesc::cv_mat()),
+			constness,
+			ReturnKind::Fallible,
+			"at",
+			"core",
+			[],
+			TypeRef::new_pointer(TypeRef::new_generic("T").with_inherent_constness(constness)),
+		)
+		.cpp_body(FuncCppBody::Absent)
+		.rust_body(FuncRustBody::ManualCallReturn(Cow::Borrowed(
+			"core::mat_forward::{{name}}(self, {{forward_args}})",
+		)))
+		.rust_extern_definition(FuncRustExtern::Absent)
+		.rust_generic_decls([("T".to_string(), "core::DataType".to_string())])
+	}
 
 	HashMap::from([
-		(FuncId::new_mut("cv::Mat::at", ["i0"]), forward_mut),
-		(FuncId::new_const("cv::Mat::at", ["i0"]), forward_const),
-		(FuncId::new_mut("cv::Mat::at", ["row", "col"]), forward_mut),
-		(FuncId::new_const("cv::Mat::at", ["row", "col"]), forward_const),
-		(FuncId::new_mut("cv::Mat::at", ["i0", "i1", "i2"]), forward_mut),
-		(FuncId::new_const("cv::Mat::at", ["i0", "i1", "i2"]), forward_const),
-		(FuncId::new_mut("cv::Mat::at", ["pt"]), forward_mut),
-		(FuncId::new_const("cv::Mat::at", ["pt"]), forward_const),
-		(FuncId::new_mut("cv::Mat::at", ["idx"]), forward_mut),
-		(FuncId::new_const("cv::Mat::at", ["idx"]), forward_const),
+		(
+			FuncId::new_mut("cv::Mat::at", ["i0"]),
+			(|f| {
+				Func::new_desc(make_at_forward(Constness::Mut).rust_custom_leafname("at_mut"))
+					.inheriting(f, MAT_FORWARD_INHERIT_CONFIG)
+			}) as FuncInheritFactory,
+		),
+		(
+			FuncId::new_const("cv::Mat::at", ["i0"]),
+			(|f| Func::new_desc(make_at_forward(Constness::Const)).inheriting(f, MAT_FORWARD_INHERIT_CONFIG)) as FuncInheritFactory,
+		),
+		(
+			FuncId::new_mut("cv::Mat::at", ["row", "col"]),
+			(|f| {
+				Func::new_desc(make_at_forward(Constness::Mut).rust_custom_leafname("at_2d_mut"))
+					.inheriting(f, MAT_FORWARD_INHERIT_CONFIG)
+			}) as FuncInheritFactory,
+		),
+		(
+			FuncId::new_const("cv::Mat::at", ["row", "col"]),
+			(|f| {
+				Func::new_desc(make_at_forward(Constness::Const).rust_custom_leafname("at_2d"))
+					.inheriting(f, MAT_FORWARD_INHERIT_CONFIG)
+			}) as FuncInheritFactory,
+		),
+		(
+			FuncId::new_mut("cv::Mat::at", ["i0", "i1", "i2"]),
+			(|f| {
+				Func::new_desc(make_at_forward(Constness::Mut).rust_custom_leafname("at_3d_mut"))
+					.inheriting(f, MAT_FORWARD_INHERIT_CONFIG)
+			}) as FuncInheritFactory,
+		),
+		(
+			FuncId::new_const("cv::Mat::at", ["i0", "i1", "i2"]),
+			(|f| {
+				Func::new_desc(make_at_forward(Constness::Const).rust_custom_leafname("at_3d"))
+					.inheriting(f, MAT_FORWARD_INHERIT_CONFIG)
+			}) as FuncInheritFactory,
+		),
+		(
+			FuncId::new_mut("cv::Mat::at", ["pt"]),
+			(|f| {
+				Func::new_desc(make_at_forward(Constness::Mut).rust_custom_leafname("at_pt_mut"))
+					.inheriting(f, MAT_FORWARD_INHERIT_CONFIG)
+			}) as FuncInheritFactory,
+		),
+		(
+			FuncId::new_const("cv::Mat::at", ["pt"]),
+			(|f| {
+				Func::new_desc(make_at_forward(Constness::Const).rust_custom_leafname("at_pt"))
+					.inheriting(f, MAT_FORWARD_INHERIT_CONFIG)
+			}) as FuncInheritFactory,
+		),
+		(
+			FuncId::new_mut("cv::Mat::at", ["idx"]),
+			(|f| {
+				Func::new_desc(make_at_forward(Constness::Mut).rust_custom_leafname("at_nd_mut"))
+					.inheriting(f, MAT_FORWARD_INHERIT_CONFIG)
+			}) as FuncInheritFactory,
+		),
+		(
+			FuncId::new_const("cv::Mat::at", ["idx"]),
+			(|f| {
+				Func::new_desc(make_at_forward(Constness::Const).rust_custom_leafname("at_nd"))
+					.inheriting(f, MAT_FORWARD_INHERIT_CONFIG)
+			}) as FuncInheritFactory,
+		),
 	])
 });

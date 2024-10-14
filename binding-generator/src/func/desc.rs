@@ -58,6 +58,12 @@ impl<'tu, 'ge> FuncDesc<'tu, 'ge> {
 	}
 
 	#[inline]
+	pub fn rust_custom_leafname(mut self, rust_custom_leafname: impl Into<Rc<str>>) -> Self {
+		self.rust_custom_leafname = Some(rust_custom_leafname.into());
+		self
+	}
+
+	#[inline]
 	pub fn doc_comment(mut self, doc_comment: impl Into<Rc<str>>) -> Self {
 		self.doc_comment = doc_comment.into();
 		self

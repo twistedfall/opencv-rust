@@ -69,27 +69,30 @@ pub fn func_inject_factory(module: &str) -> FuncInject {
 				))
 			},
 			|| {
-				Func::new_desc(FuncDesc::new(
-					Constructor(ClassDesc::cv_input_array()),
-					Mut,
-					Fallible,
-					"_InputArray",
-					"core",
-					[
-						Field::new_desc(FieldDesc::new(
-							"vec",
-							TypeRef::new_array(TypeRefDesc::uchar().with_inherent_constness(Const), None),
-						)),
-						Field::new_desc(FieldDesc::new(
-							"n",
-							// todo, MSRV: remove `as_slice()` when MSRV allows
-							TypeRefDesc::int().with_type_hint(TypeRefTypeHint::LenForSlice(["vec".to_string()].as_slice().into(), 1)),
-						)),
-					],
-					TypeRefDesc::cv_input_array()
-						.with_inherent_constness(Const)
-						.with_type_hint(TypeRefTypeHint::BoxedAsRef(Const, "vec", Lifetime::Elided)),
-				))
+				Func::new_desc(
+					FuncDesc::new(
+						Constructor(ClassDesc::cv_input_array()),
+						Mut,
+						Fallible,
+						"_InputArray",
+						"core",
+						[
+							Field::new_desc(FieldDesc::new(
+								"vec",
+								TypeRef::new_array(TypeRefDesc::uchar().with_inherent_constness(Const), None),
+							)),
+							Field::new_desc(FieldDesc::new(
+								"n",
+								// todo, MSRV: remove `as_slice()` when MSRV allows
+								TypeRefDesc::int().with_type_hint(TypeRefTypeHint::LenForSlice(["vec".to_string()].as_slice().into(), 1)),
+							)),
+						],
+						TypeRefDesc::cv_input_array()
+							.with_inherent_constness(Const)
+							.with_type_hint(TypeRefTypeHint::BoxedAsRef(Const, "vec", Lifetime::Elided)),
+					)
+					.rust_custom_leafname("from_byte_slice"),
+				)
 			},
 		],
 		_ => vec![],
