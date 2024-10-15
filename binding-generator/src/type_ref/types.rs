@@ -34,6 +34,8 @@ pub enum TypeRefTypeHint {
 	/// Make sure to pass TraitClass as a concrete type, not as a trait object, it's used for property setters as we don't want
 	/// to be able to use `BoxedRef` there.
 	TraitClassConcrete,
+	/// References in Rust will get an indicated lifetime instead of the implied one
+	ExplicitLifetime(Lifetime),
 }
 
 impl TypeRefTypeHint {
@@ -51,28 +53,39 @@ impl TypeRefTypeHint {
 		match self {
 			Self::Nullable => Self::None,
 			Self::NullableSlice => Self::Slice,
-			recursable => recursable,
+			Self::None
+			| Self::Slice
+			| Self::LenForSlice(_, _)
+			| Self::StringAsBytes(_)
+			| Self::CharAsRustChar
+			| Self::CharPtrSingleChar
+			| Self::PrimitivePtrAsRaw
+			| Self::AddArrayLength(_)
+			| Self::BoxedAsRef(_, _, _)
+			| Self::TraitClassConcrete
+			| Self::ExplicitLifetime(_) => self.clone(),
 		}
 	}
 
 	pub fn nullability(&self) -> Nullability {
 		match self {
-			TypeRefTypeHint::Nullable | TypeRefTypeHint::NullableSlice => Nullability::Nullable,
-			TypeRefTypeHint::None
-			| TypeRefTypeHint::Slice
-			| TypeRefTypeHint::LenForSlice(_, _)
-			| TypeRefTypeHint::StringAsBytes(_)
-			| TypeRefTypeHint::CharAsRustChar
-			| TypeRefTypeHint::CharPtrSingleChar
-			| TypeRefTypeHint::PrimitivePtrAsRaw
-			| TypeRefTypeHint::AddArrayLength(_)
-			| TypeRefTypeHint::BoxedAsRef(_, _, _)
-			| TypeRefTypeHint::TraitClassConcrete => Nullability::NotNullable,
+			Self::Nullable | Self::NullableSlice => Nullability::Nullable,
+			Self::None
+			| Self::Slice
+			| Self::LenForSlice(_, _)
+			| Self::StringAsBytes(_)
+			| Self::CharAsRustChar
+			| Self::CharPtrSingleChar
+			| Self::PrimitivePtrAsRaw
+			| Self::AddArrayLength(_)
+			| Self::BoxedAsRef(_, _, _)
+			| Self::TraitClassConcrete
+			| Self::ExplicitLifetime(_) => Nullability::NotNullable,
 		}
 	}
 
 	pub fn as_slice_len(&self) -> Option<(&[String], usize)> {
-		if let TypeRefTypeHint::LenForSlice(ptr_arg, len_div) = self {
+		if let Self::LenForSlice(ptr_arg, len_div) = self {
 			Some((ptr_arg, *len_div))
 		} else {
 			None
@@ -80,8 +93,16 @@ impl TypeRefTypeHint {
 	}
 
 	pub fn as_boxed_as_ref(&self) -> Option<(Constness, &'static str, Lifetime)> {
-		if let TypeRefTypeHint::BoxedAsRef(constness, cpp_name, lifetime) = self {
+		if let Self::BoxedAsRef(constness, cpp_name, lifetime) = self {
 			Some((*constness, cpp_name, *lifetime))
+		} else {
+			None
+		}
+	}
+
+	pub fn as_explicit_lifetime(&self) -> Option<Lifetime> {
+		if let Self::ExplicitLifetime(lifetime) = self {
+			Some(*lifetime)
 		} else {
 			None
 		}

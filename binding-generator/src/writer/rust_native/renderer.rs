@@ -281,6 +281,6 @@ impl TypeRefRenderer<'_> for RustReturnRenderer {
 	}
 
 	fn recurse(&self) -> Self::Recursed {
-		RustRenderer::new(NameStyle::Reference(self.turbo_fish_style), Lifetime::Elided)
+		RustRenderer::new(NameStyle::Reference(self.turbo_fish_style), self.lifetime)
 	}
 }

@@ -218,7 +218,8 @@ impl TypeRefExt for TypeRef<'_, '_> {
 	}
 
 	fn rust_name(&self, name_style: NameStyle) -> Cow<str> {
-		self.rust_name_ext(name_style, Lifetime::Elided)
+		let lt = self.type_hint().as_explicit_lifetime().unwrap_or(Lifetime::Elided);
+		self.rust_name_ext(name_style, lt)
 	}
 
 	fn rust_name_ext(&self, name_style: NameStyle, lifetime: Lifetime) -> Cow<str> {

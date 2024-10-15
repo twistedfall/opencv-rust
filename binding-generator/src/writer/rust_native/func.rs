@@ -237,7 +237,8 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		};
 		for (name, arg) in &args {
 			let arg_type_ref = arg.type_ref();
-			let arg_as_slice_len = arg_type_ref.type_hint().as_slice_len();
+			let arg_type_hint = arg_type_ref.type_hint();
+			let arg_as_slice_len = arg_type_hint.as_slice_len();
 			let arg_kind = arg_type_ref.kind();
 			let render_lane = arg_type_ref.render_lane();
 			let render_lane = render_lane.to_dyn();
@@ -257,7 +258,9 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 				if !arg_as_slice_len.is_some() {
 					let lt = boxed_ref_arg
 						.filter(|(_, boxed_arg_name, _)| *boxed_arg_name == name)
-						.map_or(Lifetime::Elided, |(_, _, lt)| lt);
+						.map(|(_, _, lt)| lt)
+						.or_else(|| arg_type_hint.as_explicit_lifetime())
+						.unwrap_or(Lifetime::Elided);
 					decl_args.push(render_lane.rust_arg_func_decl(name, lt).into());
 				}
 				pre_post_arg_handle(render_lane.rust_arg_pre_call(name, &function_props), &mut pre_call_args);
