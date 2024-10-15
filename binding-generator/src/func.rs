@@ -384,11 +384,11 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 
 	pub fn return_kind(&self) -> ReturnKind {
 		match self {
-			Self::Clang { entity, .. } => {
+			Self::Clang { entity, gen_env, .. } => {
 				let is_infallible = matches!(
 					entity.get_exception_specification(),
 					Some(ExceptionSpecification::BasicNoexcept) | Some(ExceptionSpecification::Unevaluated)
-				) || settings::FORCE_INFALLIBLE.contains(&self.func_id());
+				) || gen_env.settings.force_infallible.get(&mut self.matcher()).is_some();
 				if is_infallible {
 					let return_type_ref = self.return_type_ref();
 					if return_type_ref.kind().return_as_naked(return_type_ref.type_hint()) {

@@ -1,55 +1,62 @@
-use std::collections::HashSet;
+use std::collections::HashMap;
 
-use once_cell::sync::Lazy;
+use crate::func::FuncMatcher;
 
-use crate::FuncId;
+pub type ForceInfallible = FuncMatcher<'static, ()>;
 
-pub static FORCE_INFALLIBLE: Lazy<HashSet<FuncId>> = Lazy::new(|| {
-	HashSet::from([
+pub fn force_infallible_factory(module: &str) -> ForceInfallible {
+	match module {
+		"core" => core_factory(),
+		_ => ForceInfallible::empty(),
+	}
+}
+
+fn core_factory() -> ForceInfallible {
+	FuncMatcher::create(HashMap::from([
 		// just returns static/constant data
-		FuncId::new_mut("cv::noArray", []),
-		FuncId::new_mut("cv::getVersionMajor", []),
-		FuncId::new_mut("cv::getVersionMinor", []),
-		FuncId::new_mut("cv::getVersionRevision", []),
+		("cv::noArray", vec![(pred!(mut, []), ())]),
+		("cv::getVersionMajor", vec![(pred!(mut, []), ())]),
+		("cv::getVersionMinor", vec![(pred!(mut, []), ())]),
+		("cv::getVersionRevision", vec![(pred!(mut, []), ())]),
 		// not doing anything that can cause an exception
-		FuncId::new_const("cv::Mat::empty", []),
-		FuncId::new_const("cv::Mat::total", []),
-		FuncId::new_const("cv::Mat::isContinuous", []),
-		FuncId::new_const("cv::Mat::isSubmatrix", []),
-		FuncId::new_const("cv::Mat::elemSize1", []),
-		FuncId::new_const("cv::Mat::type", []),
-		FuncId::new_const("cv::Mat::depth", []),
-		FuncId::new_const("cv::Mat::channels", []),
-		FuncId::new_const("cv::UMat::empty", []),
-		FuncId::new_const("cv::UMat::total", []),
-		FuncId::new_const("cv::UMat::isContinuous", []),
-		FuncId::new_const("cv::UMat::isSubmatrix", []),
-		FuncId::new_const("cv::UMat::elemSize1", []),
-		FuncId::new_const("cv::UMat::type", []),
-		FuncId::new_const("cv::UMat::depth", []),
-		FuncId::new_const("cv::UMat::channels", []),
-		FuncId::new_const("cv::SparseMat::elemSize", []),
-		FuncId::new_const("cv::SparseMat::elemSize1", []),
-		FuncId::new_const("cv::SparseMat::type", []),
-		FuncId::new_const("cv::SparseMat::depth", []),
-		FuncId::new_const("cv::SparseMat::channels", []),
+		("cv::Mat::empty", vec![(pred!(const, []), ())]),
+		("cv::Mat::total", vec![(pred!(const, []), ())]),
+		("cv::Mat::isContinuous", vec![(pred!(const, []), ())]),
+		("cv::Mat::isSubmatrix", vec![(pred!(const, []), ())]),
+		("cv::Mat::elemSize1", vec![(pred!(const, []), ())]),
+		("cv::Mat::type", vec![(pred!(const, []), ())]),
+		("cv::Mat::depth", vec![(pred!(const, []), ())]),
+		("cv::Mat::channels", vec![(pred!(const, []), ())]),
+		("cv::UMat::empty", vec![(pred!(const, []), ())]),
+		("cv::UMat::total", vec![(pred!(const, []), ())]),
+		("cv::UMat::isContinuous", vec![(pred!(const, []), ())]),
+		("cv::UMat::isSubmatrix", vec![(pred!(const, []), ())]),
+		("cv::UMat::elemSize1", vec![(pred!(const, []), ())]),
+		("cv::UMat::type", vec![(pred!(const, []), ())]),
+		("cv::UMat::depth", vec![(pred!(const, []), ())]),
+		("cv::UMat::channels", vec![(pred!(const, []), ())]),
+		("cv::SparseMat::elemSize", vec![(pred!(const, []), ())]),
+		("cv::SparseMat::elemSize1", vec![(pred!(const, []), ())]),
+		("cv::SparseMat::type", vec![(pred!(const, []), ())]),
+		("cv::SparseMat::depth", vec![(pred!(const, []), ())]),
+		("cv::SparseMat::channels", vec![(pred!(const, []), ())]),
 		// marked CV_NOEXCEPT since OpenCV 4.5.2, propagate those changes to earlier versions
-		FuncId::new_mut("cv::Mat::Mat", []),
-		FuncId::new_mut("cv::MatSize::MatSize", ["_p"]),
-		FuncId::new_const("cv::MatSize::dims", []),
-		FuncId::new_const("cv::MatSize::operator const int*", []),
-		FuncId::new_mut("cv::MatStep::MatStep", []),
-		FuncId::new_mut("cv::MatStep::operator[]", ["i"]),
-		FuncId::new_mut("cv::UMat::UMat", ["usageFlags"]),
-		FuncId::new_mut("cv::ocl::Context::Context", []),
-		FuncId::new_mut("cv::ocl::Device::Device", []),
-		FuncId::new_mut("cv::ocl::Image2D::Image2D", []),
-		FuncId::new_mut("cv::ocl::Kernel::Kernel", []),
-		FuncId::new_mut("cv::ocl::KernelArg::KernelArg", []),
-		FuncId::new_mut("cv::ocl::Platform::Platform", []),
-		FuncId::new_mut("cv::ocl::PlatformInfo::PlatformInfo", []),
-		FuncId::new_mut("cv::ocl::Program::Program", []),
-		FuncId::new_mut("cv::ocl::ProgramSource::ProgramSource", []),
-		FuncId::new_mut("cv::ocl::Queue::Queue", []),
-	])
-});
+		("cv::Mat::Mat", vec![(pred!(mut, []), ())]),
+		("cv::MatSize::MatSize", vec![(pred!(mut, ["_p"]), ())]),
+		("cv::MatSize::dims", vec![(pred!(const, []), ())]),
+		("cv::MatSize::operator const int*", vec![(pred!(const, []), ())]),
+		("cv::MatStep::MatStep", vec![(pred!(mut, []), ())]),
+		("cv::MatStep::operator[]", vec![(pred!(mut, ["i"]), ())]),
+		("cv::UMat::UMat", vec![(pred!(mut, ["usageFlags"]), ())]),
+		("cv::ocl::Context::Context", vec![(pred!(mut, []), ())]),
+		("cv::ocl::Device::Device", vec![(pred!(mut, []), ())]),
+		("cv::ocl::Image2D::Image2D", vec![(pred!(mut, []), ())]),
+		("cv::ocl::Kernel::Kernel", vec![(pred!(mut, []), ())]),
+		("cv::ocl::KernelArg::KernelArg", vec![(pred!(mut, []), ())]),
+		("cv::ocl::Platform::Platform", vec![(pred!(mut, []), ())]),
+		("cv::ocl::PlatformInfo::PlatformInfo", vec![(pred!(mut, []), ())]),
+		("cv::ocl::Program::Program", vec![(pred!(mut, []), ())]),
+		("cv::ocl::ProgramSource::ProgramSource", vec![(pred!(mut, []), ())]),
+		("cv::ocl::Queue::Queue", vec![(pred!(mut, []), ())]),
+	]))
+}

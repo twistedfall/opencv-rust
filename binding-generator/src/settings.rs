@@ -45,7 +45,7 @@ pub use argument_names::{ARGUMENT_NAMES_MULTIPLE_SLICE, ARGUMENT_NAMES_NOT_SLICE
 pub use argument_override::{arg_override_factory, return_override_factory, ArgOverride, ReturnOverride, ARG_OVERRIDE_SELF};
 pub use element_exclude_kind::ELEMENT_EXCLUDE_KIND;
 pub use element_export_tweak::ELEMENT_EXPORT_TWEAK;
-pub use force_infallible::FORCE_INFALLIBLE;
+pub use force_infallible::{force_infallible_factory, ForceInfallible};
 pub use func_cfg_attr::FUNC_CFG_ATTR;
 pub use func_exclude::FUNC_EXCLUDE;
 pub use func_inject::{func_inject_factory, FuncFactory, FuncInject};
@@ -87,6 +87,7 @@ pub type TypeRefFactory = fn() -> TypeRef<'static, 'static>;
 pub struct Settings {
 	pub arg_override: ArgOverride,
 	pub return_override: ReturnOverride,
+	pub force_infallible: ForceInfallible,
 	pub func_inject: FuncInject,
 	pub func_rename: FuncRename,
 	pub func_specialize: FuncSpecialize,
@@ -99,6 +100,7 @@ impl Settings {
 		Self {
 			arg_override: ArgOverride::empty(),
 			return_override: ReturnOverride::empty(),
+			force_infallible: ForceInfallible::empty(),
 			func_inject: FuncInject::default(),
 			func_rename: FuncRename::default(),
 			func_specialize: FuncMatcher::empty(),
@@ -111,6 +113,7 @@ impl Settings {
 		Self {
 			arg_override: arg_override_factory(module),
 			return_override: return_override_factory(module),
+			force_infallible: force_infallible_factory(module),
 			func_inject: func_inject_factory(module),
 			func_rename: func_rename_factory(module),
 			func_specialize: func_specialize_factory(module),
