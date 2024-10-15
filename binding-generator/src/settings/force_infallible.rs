@@ -37,7 +37,7 @@ pub static FORCE_INFALLIBLE: Lazy<HashSet<FuncId>> = Lazy::new(|| {
 		FuncId::new_mut("cv::Mat::Mat", []),
 		FuncId::new_mut("cv::MatSize::MatSize", ["_p"]),
 		FuncId::new_const("cv::MatSize::dims", []),
-		FuncId::new_const("cv::MatSize::operator const int *", []),
+		FuncId::new_const("cv::MatSize::operator const int*", []),
 		FuncId::new_mut("cv::MatStep::MatStep", []),
 		FuncId::new_mut("cv::MatStep::operator[]", ["i"]),
 		FuncId::new_mut("cv::UMat::UMat", ["usageFlags"]),

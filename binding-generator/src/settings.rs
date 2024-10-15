@@ -1,5 +1,44 @@
 // todo add doccomments
 
+macro_rules! pred {
+	($args: expr $(,)?) => {
+		[$crate::func::Pred::ArgNames(&$args)].as_slice()
+	};
+	($args: expr, $types: expr $(,)?) => {
+		[$crate::func::Pred::ArgNames(&$args), $crate::func::Pred::ArgTypes(&$types)].as_slice()
+	};
+	(const, $args: expr $(,)?) => {
+		[
+			$crate::func::Pred::Constness($crate::type_ref::Constness::Const),
+			$crate::func::Pred::ArgNames(&$args),
+		]
+		.as_slice()
+	};
+	(const, $args: expr, $types: expr $(,)?) => {
+		[
+			$crate::func::Pred::Constness($crate::type_ref::Constness::Const),
+			$crate::func::Pred::ArgNames(&$args),
+			$crate::func::Pred::ArgTypes(&$types),
+		]
+		.as_slice()
+	};
+	(mut, $args: expr $(,)?) => {
+		[
+			$crate::func::Pred::Constness($crate::type_ref::Constness::Mut),
+			$crate::func::Pred::ArgNames(&$args),
+		]
+		.as_slice()
+	};
+	(mut, $args: expr, $types: expr $(,)?) => {
+		[
+			$crate::func::Pred::Constness($crate::type_ref::Constness::Mut),
+			$crate::func::Pred::ArgNames(&$args),
+			$crate::func::Pred::ArgTypes(&$types),
+		]
+		.as_slice()
+	};
+}
+
 use std::collections::{BTreeSet, HashMap, HashSet};
 
 pub use argument_names::{ARGUMENT_NAMES_MULTIPLE_SLICE, ARGUMENT_NAMES_NOT_SLICE, ARGUMENT_NAMES_USERDATA};
@@ -22,6 +61,7 @@ pub use implemented::{
 use once_cell::sync::Lazy;
 pub use property_rename::{property_rename_factory, PropertyRename};
 
+use crate::func::FuncMatcher;
 use crate::type_ref::TypeRef;
 
 mod argument_names;
@@ -57,7 +97,7 @@ impl Settings {
 		Self {
 			func_inject: vec![],
 			func_rename: HashMap::new(),
-			func_specialize: HashMap::new(),
+			func_specialize: FuncMatcher::empty(),
 			generator_module_tweaks: ModuleTweak::empty(),
 			property_rename: HashMap::new(),
 		}

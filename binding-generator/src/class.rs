@@ -339,7 +339,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 			};
 			if let Self::Clang { gen_env, .. } = self {
 				if func.is_generic() {
-					if let Some(specs) = gen_env.settings.func_specialize.get(&func.func_id()) {
+					if let Some(specs) = gen_env.settings.func_specialize.get(&mut func.matcher()) {
 						for spec in specs {
 							out.push(func.clone().specialize(spec));
 						}

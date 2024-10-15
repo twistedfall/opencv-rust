@@ -6,7 +6,7 @@ use std::rc::Rc;
 
 use clang::{Availability, Entity, EntityKind, ExceptionSpecification};
 pub use desc::{FuncCppBody, FuncDesc, FuncRustBody, FuncRustExtern};
-pub use func_id::FuncId;
+pub use func_matcher::{FuncId, FuncMatchProperties, FuncMatcher, Pred};
 pub use kind::{FuncKind, OperatorKind, ReturnKind};
 use once_cell::sync::Lazy;
 use regex::bytes::Regex;
@@ -27,7 +27,7 @@ use crate::{
 };
 
 mod desc;
-mod func_id;
+mod func_matcher;
 mod kind;
 mod slice_arg_finder;
 
@@ -611,6 +611,10 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		}
 	}
 
+	pub fn matcher(&self) -> FuncMatchProperties {
+		FuncMatchProperties::new(self, self.cpp_name(CppNameStyle::Reference))
+	}
+
 	pub fn rust_body(&self) -> &FuncRustBody {
 		match self {
 			Self::Clang { .. } => &FuncRustBody::Auto,
@@ -708,13 +712,23 @@ impl Element for Func<'_, '_> {
 	}
 
 	fn cpp_name(&self, style: CppNameStyle) -> Cow<str> {
-		let decl_name = if self.kind().as_conversion_method().is_some() {
-			format!("operator {}", self.return_type_ref().cpp_name(CppNameStyle::Reference)).into()
-		} else {
-			match self {
-				&Self::Clang { entity, .. } => DefaultElement::cpp_name(self, entity, CppNameStyle::Declaration),
-				Self::Desc(desc) => desc.cpp_name.cpp_name_from_fullname(CppNameStyle::Declaration).into(),
+		let decl_name = match self {
+			&Self::Clang { entity, gen_env, .. } => {
+				if matches!(entity.get_kind(), EntityKind::ConversionFunction) {
+					// this is to avoid calling `return_type_ref()` just to get the name of the type otherwise it causes infinite recursion
+					// together with the call `cpp_name(Reference)` from `matcher()`
+					let ret_type = TypeRef::new(entity.get_result_type().expect("Can't get result type"), gen_env);
+					let ret_type = ret_type
+						.kind()
+						.as_reference()
+						.map(|tref| tref.into_owned())
+						.unwrap_or(ret_type);
+					format!("operator {}", ret_type.cpp_name(CppNameStyle::Reference)).into()
+				} else {
+					DefaultElement::cpp_name(self, entity, CppNameStyle::Declaration)
+				}
 			}
+			Self::Desc(desc) => desc.cpp_name.cpp_name_from_fullname(CppNameStyle::Declaration).into(),
 		};
 		match style {
 			CppNameStyle::Declaration => decl_name,
@@ -742,7 +756,11 @@ impl<'me> NameDebug<'me> for &'me Func<'_, '_> {
 				.iter()
 				.map(|a| format!("{:?}", a.type_ref().render_lane()))
 				.join(", ");
-			format!("// {name}({render_lanes}) {func_id} {location}", func_id = self.func_id())
+			format!(
+				"// {name}({render_lanes}) {location}\n\
+				// {func_match}",
+				func_match = self.matcher().dump()
+			)
 		} else {
 			"".to_string()
 		}

@@ -296,7 +296,7 @@ impl<'tu, 'r, V: GeneratorVisitor<'tu>> OpenCvWalker<'tu, 'r, V> {
 						visitor.visit_func(func);
 					}
 				};
-				if let Some(specs) = gen_env.settings.func_specialize.get(&func_id) {
+				if let Some(specs) = gen_env.settings.func_specialize.get(&mut func.matcher()) {
 					for spec in specs {
 						processor(func.clone().specialize(spec));
 					}
