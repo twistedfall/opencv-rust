@@ -42,7 +42,7 @@ macro_rules! pred {
 use std::collections::{BTreeSet, HashMap, HashSet};
 
 pub use argument_names::{ARGUMENT_NAMES_MULTIPLE_SLICE, ARGUMENT_NAMES_NOT_SLICE, ARGUMENT_NAMES_USERDATA};
-pub use argument_override::{ARGUMENT_OVERRIDE, ARG_OVERRIDE_SELF, RETURN_OVERRIDE};
+pub use argument_override::{arg_override_factory, return_override_factory, ArgOverride, ReturnOverride, ARG_OVERRIDE_SELF};
 pub use element_exclude_kind::ELEMENT_EXCLUDE_KIND;
 pub use element_export_tweak::ELEMENT_EXPORT_TWEAK;
 pub use force_infallible::FORCE_INFALLIBLE;
@@ -85,6 +85,8 @@ pub type TypeRefFactory = fn() -> TypeRef<'static, 'static>;
 /// Injectable global and module level overrides, todo: migrate the global statics to this over time
 #[derive(Debug)]
 pub struct Settings {
+	pub arg_override: ArgOverride,
+	pub return_override: ReturnOverride,
 	pub func_inject: FuncInject,
 	pub func_rename: FuncRename,
 	pub func_specialize: FuncSpecialize,
@@ -95,16 +97,20 @@ pub struct Settings {
 impl Settings {
 	pub fn empty() -> Self {
 		Self {
-			func_inject: vec![],
-			func_rename: HashMap::new(),
+			arg_override: ArgOverride::empty(),
+			return_override: ReturnOverride::empty(),
+			func_inject: FuncInject::default(),
+			func_rename: FuncRename::default(),
 			func_specialize: FuncMatcher::empty(),
 			generator_module_tweaks: ModuleTweak::empty(),
-			property_rename: HashMap::new(),
+			property_rename: PropertyRename::default(),
 		}
 	}
 
 	pub fn for_module(module: &str) -> Self {
 		Self {
+			arg_override: arg_override_factory(module),
+			return_override: return_override_factory(module),
 			func_inject: func_inject_factory(module),
 			func_rename: func_rename_factory(module),
 			func_specialize: func_specialize_factory(module),

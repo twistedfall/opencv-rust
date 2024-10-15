@@ -464,7 +464,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 						out.kind().as_reference().map(|cow| cow.into_owned()).unwrap_or(out)
 					}
 				};
-				if let Some(return_hint) = settings::RETURN_OVERRIDE.get(&self.func_id()) {
+				if let Some(return_hint) = gen_env.settings.return_override.get(&mut self.matcher()) {
 					out.set_type_hint(return_hint.clone());
 					// if we're returning a BoxedRef then assign its mutability to the mutability of the borrowed argument
 					if let Some((_, borrow_arg_name, _)) = return_hint.as_boxed_as_ref() {
@@ -519,7 +519,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 	pub fn arguments(&self) -> Cow<[Field<'tu, 'ge>]> {
 		match self {
 			&Self::Clang { entity, gen_env, .. } => {
-				let arg_overrides = settings::ARGUMENT_OVERRIDE.get(&self.func_id());
+				let arg_overrides = gen_env.settings.arg_override.get(&mut self.matcher());
 				let arguments = self.clang_arguments(entity);
 				let mut slice_arg_finder = SliceArgFinder::with_capacity(arguments.len());
 				let mut out = arguments

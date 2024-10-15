@@ -17,7 +17,6 @@ struct FunctionFinder<'tu, 'f> {
 	pub func_cfg_attr_unused: RefCell<&'f mut HashSet<&'static str>>,
 	pub func_unsafe_unused: RefCell<&'f mut HashSet<FuncId<'static>>>,
 	pub func_replace_unused: RefCell<&'f mut HashSet<FuncId<'static>>>,
-	pub argument_override_unused: RefCell<&'f mut HashSet<FuncId<'static>>>,
 }
 
 impl<'tu, 'f> FunctionFinder<'tu, 'f> {
@@ -29,7 +28,6 @@ impl<'tu, 'f> FunctionFinder<'tu, 'f> {
 		self.func_cfg_attr_unused.borrow_mut().remove(identifier.as_str());
 		self.func_unsafe_unused.borrow_mut().remove(&func_id);
 		self.func_replace_unused.borrow_mut().remove(&func_id);
-		self.argument_override_unused.borrow_mut().remove(&func_id);
 	}
 }
 
@@ -88,7 +86,6 @@ fn main() {
 	let mut func_cfg_attr_unused = settings::FUNC_CFG_ATTR.keys().copied().collect::<HashSet<_>>();
 	let mut func_unsafe_unused = settings::FUNC_UNSAFE.clone();
 	let mut func_replace_unused = settings::FUNC_REPLACE.keys().cloned().collect::<HashSet<_>>();
-	let mut argument_override_unused = settings::ARGUMENT_OVERRIDE.keys().cloned().collect::<HashSet<_>>();
 	for opencv_header_dir in opencv_header_dirs {
 		println!("Processing header dir: {}", opencv_header_dir.display());
 		let modules = opencv_header_dir
@@ -113,7 +110,6 @@ fn main() {
 					func_cfg_attr_unused: RefCell::new(&mut func_cfg_attr_unused),
 					func_unsafe_unused: RefCell::new(&mut func_unsafe_unused),
 					func_replace_unused: RefCell::new(&mut func_replace_unused),
-					argument_override_unused: RefCell::new(&mut argument_override_unused),
 				});
 			});
 		}
@@ -126,9 +122,4 @@ fn main() {
 	show(func_unsafe_unused);
 	println!("Unused entries in settings::FUNC_REPLACE ({}):", func_replace_unused.len());
 	show(func_replace_unused);
-	println!(
-		"Unused entries in settings::ARGUMENT_OVERRIDE ({}):",
-		argument_override_unused.len()
-	);
-	show(argument_override_unused);
 }
