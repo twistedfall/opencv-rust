@@ -25,7 +25,7 @@ pub trait StringExt {
 	) -> bool;
 	fn extend_join(&mut self, it: impl Iterator<Item = impl AsRef<str>>, sep: &str);
 	fn extend_sep(&mut self, sep: &str, s: &str);
-	fn push_indented_str(&mut self, indent: Indent, val: &str);
+	fn push_indented_lines(&mut self, indent: Indent, val: &str);
 	fn bump_counter(&mut self);
 	fn cleanup_name(&mut self);
 }
@@ -211,13 +211,16 @@ impl StringExt for String {
 		self.push_str(s);
 	}
 
-	fn push_indented_str(&mut self, indent: Indent, val: &str) {
+	fn push_indented_lines(&mut self, indent: Indent, val: &str) {
 		let mut lines = val.lines_with_nl();
 		if let Some(line) = lines.next() {
 			self.push_str(line);
 		}
 		for line in lines {
-			self.extend(iter::repeat(indent.symbol).take(indent.len));
+			// there is more than just a newline in the buffer
+			if line.len() > 1 {
+				self.extend(iter::repeat(indent.symbol).take(indent.len));
+			}
 			self.push_str(line);
 		}
 	}
@@ -346,7 +349,7 @@ impl CompiledInterpolation<'_> {
 				}
 				Compiled::IntpLiteral(s) => out += s,
 				Compiled::Var(name) => {
-					out.push_indented_str(line_indent, params.get(name).map_or(INVALID_PARAM_NAME, |x| x.as_ref()))
+					out.push_indented_lines(line_indent, params.get(name).map_or(INVALID_PARAM_NAME, |x| x.as_ref()))
 				}
 				Compiled::IntpLineEnd(s) => {
 					out += s;

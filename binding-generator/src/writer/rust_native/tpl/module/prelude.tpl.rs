@@ -1,4 +1,3 @@
 pub mod prelude {
-	pub use { {{traits}} };
+	{{pub_use_traits}}
 }
-

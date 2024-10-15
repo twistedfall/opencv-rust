@@ -372,6 +372,26 @@ test3 end
 			.interpolate(&HashMap::from([("name1", ""), ("name2", "test2"), ("name3", "test3")]));
 		assert_eq!("	test2 			test3", res);
 	}
+
+	// empty lines don't get indent
+	{
+		let tpl = "
+block {
+	{{var}}
+}";
+		let var = "\
+line1
+
+line2";
+		let expected = "\
+block {
+	line1
+
+	line2
+}";
+		let res = tpl.compile_interpolation().interpolate(&HashMap::from([("var", var)]));
+		assert_eq!(expected, res);
+	}
 }
 
 #[test]

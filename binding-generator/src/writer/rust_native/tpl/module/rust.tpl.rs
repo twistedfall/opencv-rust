@@ -1,5 +1,6 @@
 {{comment}}
-use crate::{mod_prelude::*, {{static_modules}}};
+use crate::mod_prelude::*;
+use crate::{{{static_modules}}};
 {{prelude}}
 
 {{code}}

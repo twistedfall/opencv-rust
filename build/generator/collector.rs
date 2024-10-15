@@ -240,7 +240,10 @@ fn is_type_externs_file(path: &Path, module: &str) -> bool {
 fn copy_indent(mut read: impl BufRead, write: &mut impl Write, indent: &str) -> Result<()> {
 	let mut line = Vec::with_capacity(100);
 	while read.read_until(b'\n', &mut line)? != 0 {
-		write.write_all(indent.as_bytes())?;
+		// there is more than just a newline in the buffer
+		if line.len() > 1 {
+			write.write_all(indent.as_bytes())?;
+		}
 		write.write_all(&line)?;
 		line.clear();
 	}

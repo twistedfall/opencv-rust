@@ -1,7 +1,7 @@
 {{doc_comment}}
 {{debug}}
 pub struct {{rust_local}} {
-	ptr: {{rust_extern_mut}}
+	ptr: {{rust_extern_mut}},
 }
 
 opencv_type_boxed! { {{rust_local}} }

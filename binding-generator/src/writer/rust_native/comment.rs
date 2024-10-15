@@ -234,7 +234,10 @@ fn add_comment_markers<'c>(comment: &'c str, marker: &str) -> Cow<'c, str> {
 				String::with_capacity(comment.len() + (marker.len() + 1) * 128),
 				|mut out_prefixed, line| {
 					out_prefixed.push_str(marker);
-					out_prefixed.push(' ');
+					// there is more than just a newline in the buffer
+					if line.len() > 1 {
+						out_prefixed.push(' ');
+					}
 					out_prefixed + line
 				},
 			)

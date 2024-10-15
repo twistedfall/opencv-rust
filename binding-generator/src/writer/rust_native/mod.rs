@@ -165,13 +165,12 @@ impl GeneratorVisitor<'_> for RustNativeBindingWriter<'_> {
 	fn visit_class(&mut self, class: Class) {
 		self.emit_debug_log(&class);
 		if class.kind().is_trait() {
-			self.prelude_traits.push(format!(
-				"super::{}",
-				class.rust_trait_name(NameStyle::decl(), Constness::Const)
-			));
 			self
 				.prelude_traits
-				.push(format!("super::{}", class.rust_trait_name(NameStyle::decl(), Constness::Mut)));
+				.push(class.rust_trait_name(NameStyle::decl(), Constness::Const).into_owned());
+			self
+				.prelude_traits
+				.push(class.rust_trait_name(NameStyle::decl(), Constness::Mut).into_owned());
 		}
 		let name = class.cpp_name(CppNameStyle::Reference).into_owned();
 		self.rust_classes.push((name.clone(), class.gen_rust(self.opencv_version)));
@@ -216,7 +215,7 @@ impl GeneratorVisitor<'_> for RustNativeBindingWriter<'_> {
 		write_generated_type(&self.types_dir, "cpp", prio, &safe_id, || typ.gen_cpp());
 	}
 
-	fn goodbye(self) {
+	fn goodbye(mut self) {
 		static RUST: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/module/rust.tpl.rs").compile_interpolation());
 
 		static RUST_PRELUDE: Lazy<CompiledInterpolation> =
@@ -230,7 +229,13 @@ impl GeneratorVisitor<'_> for RustNativeBindingWriter<'_> {
 		insert_lines(&mut rust, self.rust_typedefs.into_iter().collect());
 		insert_lines(&mut rust, self.rust_funcs);
 		insert_lines(&mut rust, self.rust_classes);
-		let prelude = RUST_PRELUDE.interpolate(&HashMap::from([("traits", self.prelude_traits.join(", "))]));
+		let pub_use_traits = if self.prelude_traits.is_empty() {
+			"".to_string()
+		} else {
+			self.prelude_traits.sort_unstable();
+			format!("pub use super::{{{}}};", self.prelude_traits.join(", "))
+		};
+		let prelude = RUST_PRELUDE.interpolate(&HashMap::from([("pub_use_traits", pub_use_traits)]));
 		let comment = RenderComment::new(&self.comment, self.opencv_version);
 		let comment = comment.render_with_comment_marker("//!");
 		File::create(&self.rust_path)
