@@ -9,6 +9,7 @@ pub const ARG_OVERRIDE_SELF: &str = "this";
 
 pub type ArgOverride = FuncMatcher<'static, HashMap<&'static str, TypeRefTypeHint>>;
 pub type ReturnOverride = FuncMatcher<'static, TypeRefTypeHint>;
+pub type PropertyOverride = HashMap<&'static str, TypeRefTypeHint>;
 
 pub fn arg_override_factory(module: &str) -> ArgOverride {
 	match module {
@@ -29,6 +30,13 @@ pub fn return_override_factory(module: &str) -> ReturnOverride {
 		"core" => core_return_override_factory(),
 		"objdetect" => objdetect_return_override_factory(),
 		_ => ReturnOverride::empty(),
+	}
+}
+
+pub fn property_override_factory(module: &str) -> PropertyOverride {
+	match module {
+		"core" => core_property_override_factory(),
+		_ => PropertyOverride::default(),
 	}
 }
 
@@ -693,4 +701,11 @@ fn objdetect_return_override_factory() -> ReturnOverride {
 			)],
 		),
 	]))
+}
+
+fn core_property_override_factory() -> PropertyOverride {
+	HashMap::from([(
+		"cv::cuda::GpuMat::allocator",
+		TypeRefTypeHint::ExplicitLifetime(Lifetime::statik()),
+	)])
 }

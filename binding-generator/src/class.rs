@@ -419,23 +419,27 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 					let def_loc = fld.file_line_name().location;
 					let rust_module = Rc::from(fld.rust_module());
 					let mut fld_type_ref = fld.type_ref();
-					let fld_type_kind = fld_type_ref.kind();
-					if fld_type_kind
-						.as_pointer()
-						.map_or(false, |inner| inner.kind().as_primitive().is_some())
-						&& !fld_type_kind.is_char_ptr_string(fld_type_ref.type_hint())
-					{
-						fld_type_ref.to_mut().set_type_hint(TypeRefTypeHint::PrimitivePtrAsRaw);
-					} else if fld_type_kind.as_class().map_or(false, |cls| cls.kind().is_trait()) {
-						fld_type_ref.to_mut().set_type_hint(TypeRefTypeHint::TraitClassConcrete);
+					let fld_refname = fld.cpp_name(CppNameStyle::Reference);
+					if let Some(type_hint) = gen_env.settings.property_override.get(fld_refname.as_ref()) {
+						fld_type_ref.to_mut().set_type_hint(type_hint.clone());
+					} else {
+						let fld_type_kind = fld_type_ref.kind();
+						if fld_type_kind
+							.as_pointer()
+							.map_or(false, |inner| inner.kind().as_primitive().is_some())
+							&& !fld_type_kind.is_char_ptr_string(fld_type_ref.type_hint())
+						{
+							fld_type_ref.to_mut().set_type_hint(TypeRefTypeHint::PrimitivePtrAsRaw);
+						} else if fld_type_kind.as_class().map_or(false, |cls| cls.kind().is_trait()) {
+							fld_type_ref.to_mut().set_type_hint(TypeRefTypeHint::TraitClassConcrete);
+						}
 					}
 					let fld_type_kind = fld_type_ref.kind();
 					let return_kind = ReturnKind::infallible(fld_type_kind.return_as_naked(fld_type_ref.type_hint()));
 					let fld_const = fld.constness();
 					let passed_by_ref = fld_type_kind.can_return_as_direct_reference();
-					let fld_refname = fld.cpp_name(CppNameStyle::Reference);
 					let rust_custom_leafname = gen_env.settings.property_rename.get(fld_refname.as_ref()).copied();
-					let fld_declname = fld.cpp_name(CppNameStyle::Declaration);
+					let fld_declname = fld_refname.localname();
 					let (mut read_const_yield, mut read_mut_yield) = if fld_const.is_mut() && passed_by_ref {
 						let read_const_func = if constness_filter.map_or(true, |c| c.is_const()) {
 							Some(Func::new_desc(
@@ -443,7 +447,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 									FuncKind::FieldAccessor(self.clone(), fld.clone()),
 									Constness::Const,
 									return_kind,
-									fld_declname.clone(),
+									fld_declname,
 									Rc::clone(&rust_module),
 									[],
 									fld_type_ref.as_ref().clone().with_inherent_constness(Constness::Const),
@@ -483,7 +487,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 									FuncKind::FieldAccessor(self.clone(), fld.clone()),
 									fld_const,
 									return_kind,
-									fld_declname.clone(),
+									fld_declname,
 									Rc::clone(&rust_module),
 									[],
 									fld_type_ref.as_ref().clone(),

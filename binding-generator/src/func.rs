@@ -6,7 +6,7 @@ use std::rc::Rc;
 
 use clang::{Availability, Entity, EntityKind, ExceptionSpecification};
 pub use desc::{FuncCppBody, FuncDesc, FuncRustBody, FuncRustExtern};
-pub use func_matcher::{FuncId, FuncMatchProperties, FuncMatcher, Pred};
+pub use func_matcher::{FuncMatchProperties, FuncMatcher, Pred};
 pub use kind::{FuncKind, OperatorKind, ReturnKind};
 use once_cell::sync::Lazy;
 use regex::bytes::Regex;
@@ -405,10 +405,9 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 	}
 
 	pub fn safety(&self) -> Safety {
-		// todo move FUNC_UNSAFE to gen_env.settings, but can't do that now because setAllocator is a Desc function and it needs to be unsafe
 		let out = match self {
-			Func::Clang { .. } => Safety::from_is_unsafe(settings::FUNC_UNSAFE.contains(&self.func_id())),
-			Func::Desc(_) => Safety::from_is_unsafe(settings::FUNC_UNSAFE.contains(&self.func_id())),
+			Func::Clang { gen_env, .. } => Safety::from_is_unsafe(gen_env.settings.func_unsafe.get(&mut self.matcher()).is_some()),
+			Func::Desc(_) => Safety::Safe,
 		};
 		out.or_is_unsafe(|| {
 			self.arguments().iter().any(|a| {
@@ -604,13 +603,6 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		out
 	}
 
-	pub fn func_id(&self) -> FuncId {
-		match self {
-			&Self::Clang { entity, .. } => FuncId::from_entity(entity),
-			Self::Desc(desc) => FuncId::from_desc(desc),
-		}
-	}
-
 	pub fn matcher(&self) -> FuncMatchProperties {
 		FuncMatchProperties::new(self, self.cpp_name(CppNameStyle::Reference))
 	}
@@ -771,7 +763,6 @@ impl fmt::Debug for Func<'_, '_> {
 		});
 		self
 			.update_debug_struct(&mut debug_struct)
-			.field("func_id", &self.func_id())
 			.field("constness", &self.constness())
 			.field("is_specialized", &self.is_specialized())
 			.field("return_kind", &self.return_kind())

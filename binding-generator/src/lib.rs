@@ -28,7 +28,7 @@ use entity::dbg_clang_entity;
 pub use entity::EntityExt;
 pub use enumeration::Enum;
 use field::Field;
-pub use func::{Func, FuncId, FuncTypeHint, Pred, UsageTracker};
+pub use func::{Func, FuncTypeHint, Pred, UsageTracker};
 pub use generator::{GeneratedType, Generator, GeneratorVisitor, OpenCvWalker};
 pub use generator_env::{ClassKindOverride, ExportConfig, GeneratorEnv};
 pub use iterator_ext::IteratorExt;

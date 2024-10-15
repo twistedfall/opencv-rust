@@ -1,51 +1,86 @@
-use std::collections::HashSet;
+use std::collections::HashMap;
 
-use once_cell::sync::Lazy;
+use crate::func::FuncMatcher;
 
-use crate::FuncId;
+pub type FuncUnsafe = FuncMatcher<'static, ()>;
 
 /// set of functions that should have unsafe in their declaration, element is Func.identifier()
-pub static FUNC_UNSAFE: Lazy<HashSet<FuncId>> = Lazy::new(|| {
-	HashSet::from([
-		// allocates uninitialized memory
-		FuncId::new_mut("cv::Mat::Mat", ["size", "type"]),
-		FuncId::new_mut("cv::Mat::Mat", ["sizes", "type"]),
-		FuncId::new_mut("cv::Mat::Mat", ["ndims", "sizes", "type"]),
-		FuncId::new_mut("cv::Mat::Mat", ["rows", "cols", "type"]),
-		FuncId::new_mut("cv::Mat::create", ["size", "type"]),
-		FuncId::new_mut("cv::Mat::create", ["sizes", "type"]),
-		FuncId::new_mut("cv::Mat::create", ["ndims", "sizes", "type"]),
-		FuncId::new_mut("cv::Mat::create", ["rows", "cols", "type"]),
-		FuncId::new_mut("cv::UMat::UMat", ["size", "type", "usageFlags"]),
-		FuncId::new_mut("cv::UMat::UMat", ["ndims", "sizes", "type", "usageFlags"]),
-		FuncId::new_mut("cv::UMat::UMat", ["rows", "cols", "type", "usageFlags"]),
-		FuncId::new_mut("cv::UMat::create", ["size", "type", "usageFlags"]),
-		FuncId::new_mut("cv::UMat::create", ["size", "type", "usageFlags"]),
-		FuncId::new_mut("cv::UMat::create", ["ndims", "sizes", "type", "usageFlags"]),
-		FuncId::new_mut("cv::UMat::create", ["sizes", "type", "usageFlags"]),
-		FuncId::new_mut("cv::UMat::create", ["rows", "cols", "type", "usageFlags"]),
-		FuncId::new_const("cv::_OutputArray::createSameSize", ["arr", "mtype"]),
-		// manual manipulation of reference counter
-		FuncId::new_mut("cv::Mat::addref", []),
-		FuncId::new_mut("cv::Mat::release", []),
-		FuncId::new_mut("cv::SparseMat::addref", []),
-		FuncId::new_mut("cv::SparseMat::release", []),
-		FuncId::new_mut("cv::UMat::addref", []),
-		FuncId::new_mut("cv::UMat::release", []),
-		// pointer to internal data
-		FuncId::new_const("cv::dnn::Dict::ptr", ["key"]),
-		FuncId::new_mut("cv::dnn::Dict::ptr", ["key"]),
-		// takes reference and stores it for the lifetime of an object (fixme: add lifetime management)
-		FuncId::new_mut("cv::cuda::GpuMat::GpuMat", ["allocator"]),
-		FuncId::new_mut("cv::cuda::GpuMat::GpuMat", ["size", "type", "allocator"]),
-		FuncId::new_mut("cv::cuda::GpuMat::GpuMat", ["size", "type", "s", "allocator"]),
-		FuncId::new_mut("cv::cuda::GpuMat::GpuMat", ["arr", "allocator"]),
-		FuncId::new_mut("cv::cuda::GpuMat::GpuMat", ["rows", "cols", "type", "allocator"]),
-		FuncId::new_mut("cv::cuda::GpuMat::GpuMat", ["rows", "cols", "type", "s", "allocator"]),
-		FuncId::new_mut("cv::cuda::GpuMat::setAllocator", ["val"]),
-		FuncId::new_mut("cv::cuda::GpuMat::setDefaultAllocator", ["allocator"]), // fixme, should take 'static
-	])
-});
+pub fn func_unsafe_factory(module: &str) -> FuncUnsafe {
+	match module {
+		"core" => core_factory(),
+		"dnn" => dnn_factory(),
+		_ => FuncUnsafe::empty(),
+	}
+}
 
-// fixme, covers mat from gpumat which it shouldn't
-// FuncId::new_mut("cv::Mat::Mat", ["m"]),
+fn core_factory() -> FuncUnsafe {
+	FuncMatcher::create(HashMap::from([
+		// allocates uninitialized memory
+		(
+			"cv::Mat::Mat",
+			vec![
+				(pred!(mut, ["size", "type"]), ()),
+				(pred!(mut, ["sizes", "type"]), ()),
+				(pred!(mut, ["ndims", "sizes", "type"]), ()),
+				(pred!(mut, ["rows", "cols", "type"]), ()),
+			],
+		),
+		(
+			"cv::Mat::create",
+			vec![
+				(pred!(mut, ["size", "type"]), ()),
+				(pred!(mut, ["sizes", "type"]), ()),
+				(pred!(mut, ["ndims", "sizes", "type"]), ()),
+				(pred!(mut, ["rows", "cols", "type"]), ()),
+			],
+		),
+		(
+			"cv::UMat::UMat",
+			vec![
+				(pred!(mut, ["size", "type", "usageFlags"]), ()),
+				(pred!(mut, ["ndims", "sizes", "type", "usageFlags"]), ()),
+				(pred!(mut, ["rows", "cols", "type", "usageFlags"]), ()),
+			],
+		),
+		(
+			"cv::UMat::create",
+			vec![
+				(pred!(mut, ["size", "type", "usageFlags"]), ()),
+				(pred!(mut, ["size", "type", "usageFlags"]), ()),
+				(pred!(mut, ["ndims", "sizes", "type", "usageFlags"]), ()),
+				(pred!(mut, ["sizes", "type", "usageFlags"]), ()),
+				(pred!(mut, ["rows", "cols", "type", "usageFlags"]), ()),
+			],
+		),
+		("cv::_OutputArray::createSameSize", vec![(pred!(const, ["arr", "mtype"]), ())]),
+		// manual manipulation of reference counter
+		("cv::Mat::addref", vec![(pred!(mut, []), ())]),
+		("cv::Mat::release", vec![(pred!(mut, []), ())]),
+		("cv::SparseMat::addref", vec![(pred!(mut, []), ())]),
+		("cv::SparseMat::release", vec![(pred!(mut, []), ())]),
+		("cv::UMat::addref", vec![(pred!(mut, []), ())]),
+		("cv::UMat::release", vec![(pred!(mut, []), ())]),
+		// takes reference and stores it for the lifetime of an object (fixme: add lifetime management)
+		(
+			"cv::cuda::GpuMat::GpuMat",
+			vec![
+				(pred!(mut, ["allocator"]), ()),
+				(pred!(mut, ["size", "type", "allocator"]), ()),
+				(pred!(mut, ["size", "type", "s", "allocator"]), ()),
+				(pred!(mut, ["arr", "allocator"]), ()),
+				(pred!(mut, ["rows", "cols", "type", "allocator"]), ()),
+				(pred!(mut, ["rows", "cols", "type", "s", "allocator"]), ()),
+			],
+		),
+	]))
+}
+
+fn dnn_factory() -> FuncUnsafe {
+	FuncMatcher::create(HashMap::from([
+		// pointer to internal data
+		(
+			"cv::dnn::Dict::ptr",
+			vec![(pred!(const, ["key"]), ()), (pred!(mut, ["key"]), ())],
+		),
+	]))
+}

@@ -42,7 +42,10 @@ macro_rules! pred {
 use std::collections::{BTreeSet, HashMap, HashSet};
 
 pub use argument_names::{ARGUMENT_NAMES_MULTIPLE_SLICE, ARGUMENT_NAMES_NOT_SLICE, ARGUMENT_NAMES_USERDATA};
-pub use argument_override::{arg_override_factory, return_override_factory, ArgOverride, ReturnOverride, ARG_OVERRIDE_SELF};
+pub use argument_override::{
+	arg_override_factory, property_override_factory, return_override_factory, ArgOverride, PropertyOverride, ReturnOverride,
+	ARG_OVERRIDE_SELF,
+};
 pub use element_exclude_kind::ELEMENT_EXCLUDE_KIND;
 pub use element_export_tweak::ELEMENT_EXPORT_TWEAK;
 pub use force_infallible::{force_infallible_factory, ForceInfallible};
@@ -52,7 +55,7 @@ pub use func_inject::{func_inject_factory, FuncFactory, FuncInject};
 pub use func_rename::{func_rename_factory, FuncRename};
 pub use func_replace::{func_replace_factory, FuncInheritFactory, FuncReplace};
 pub use func_specialize::{func_specialize_factory, FuncSpec, FuncSpecialize};
-pub use func_unsafe::FUNC_UNSAFE;
+pub use func_unsafe::{func_unsafe_factory, FuncUnsafe};
 pub use generator_module_tweaks::{generator_module_tweaks_factory, ModuleTweak};
 pub use implemented::{
 	IMPLEMENTED_CONST_GENERICS, IMPLEMENTED_FUNCTION_LIKE_MACROS, IMPLEMENTED_GENERICS, IMPLEMENTED_MANUAL_DEBUG,
@@ -92,7 +95,9 @@ pub struct Settings {
 	pub func_rename: FuncRename,
 	pub func_replace: FuncReplace,
 	pub func_specialize: FuncSpecialize,
+	pub func_unsafe: FuncUnsafe,
 	pub generator_module_tweaks: ModuleTweak,
+	pub property_override: PropertyOverride,
 	pub property_rename: PropertyRename,
 }
 
@@ -106,7 +111,9 @@ impl Settings {
 			func_rename: FuncRename::default(),
 			func_replace: FuncReplace::empty(),
 			func_specialize: FuncMatcher::empty(),
+			func_unsafe: FuncUnsafe::empty(),
 			generator_module_tweaks: ModuleTweak::empty(),
+			property_override: PropertyOverride::default(),
 			property_rename: PropertyRename::default(),
 		}
 	}
@@ -120,7 +127,9 @@ impl Settings {
 			func_rename: func_rename_factory(module),
 			func_replace: func_replace_factory(module),
 			func_specialize: func_specialize_factory(module),
+			func_unsafe: func_unsafe_factory(module),
 			generator_module_tweaks: generator_module_tweaks_factory(module),
+			property_override: property_override_factory(module),
 			property_rename: property_rename_factory(module),
 		}
 	}
