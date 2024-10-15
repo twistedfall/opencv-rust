@@ -330,28 +330,27 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	}
 
 	pub fn methods(&self) -> Vec<Func<'tu, 'ge>> {
-		let mut out = Vec::with_capacity(32);
-		self.for_each_method(|func| {
-			let func: Func = if let Some(func_fact) = settings::FUNC_REPLACE.get(&func.func_id()) {
-				func_fact(&func)
-			} else {
-				func
-			};
-			if let Self::Clang { gen_env, .. } = self {
-				if func.is_generic() {
-					if let Some(specs) = gen_env.settings.func_specialize.get(&mut func.matcher()) {
-						for spec in specs {
-							out.push(func.clone().specialize(spec));
-						}
-						return ControlFlow::Continue(());
-					}
-				}
-			}
-			out.push(func);
-			ControlFlow::Continue(())
-		});
 		match self {
-			Class::Clang { gen_env, .. } => {
+			Class::Clang { entity, gen_env, .. } => {
+				let mut out = Vec::with_capacity(32);
+				entity.walk_methods_while(|func_entity| {
+					let func = Func::new(func_entity, gen_env);
+					let func: Func = if let Some(func_fact) = gen_env.settings.func_replace.get(&mut func.matcher()) {
+						func_fact(&func)
+					} else {
+						func
+					};
+					if func.is_generic() {
+						if let Some(specs) = gen_env.settings.func_specialize.get(&mut func.matcher()) {
+							for spec in specs {
+								out.push(func.clone().specialize(spec));
+							}
+							return ControlFlow::Continue(());
+						}
+					}
+					out.push(func);
+					ControlFlow::Continue(())
+				});
 				for inject_func_fact in &gen_env.settings.func_inject {
 					let inject_func: Func = inject_func_fact();
 					if let Some(cls) = inject_func.kind().as_class_method() {
@@ -360,10 +359,10 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 						}
 					}
 				}
+				out
 			}
-			Class::Desc(_) => {}
-		};
-		out
+			Class::Desc(_) => vec![],
+		}
 	}
 
 	pub fn has_fields(&self) -> bool {

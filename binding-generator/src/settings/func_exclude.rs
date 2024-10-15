@@ -8,18 +8,16 @@ pub static FUNC_EXCLUDE: Lazy<HashSet<&str>> = Lazy::new(|| {
 		// ### core ###
 		"cv_AsyncArray__getImpl_const",
 		"cv_Mat_Mat_const_MatR_const_RangeX",    // duplicate of cv_Mat_Mat_Mat_VectorOfRange, but with pointers
-		"cv_Mat_at_const_VecLint__cnGR", // fixme: due to FuncId only taking into account arg name we generate extra Mat::at with VecN args
-		"cv_Mat_at_const_const_VecLint__cnGR", // fixme: due to FuncId only taking into account arg name we generate extra Mat::at with VecN args
-		"cv_Mat_copySize_const_MatR",          // internal function
-		"cv_Mat_operator___const_const_RangeX", // duplicate of cv_Mat_operator___const_const_vectorLRangeGR, but with pointers
-		"cv_Mat_propStep_const_MatStep",       // MatStep type prevents assignment
-		"cv_Mat_push_back__const_voidX",       // internal method
-		"cv_Mat_operatorST_const_MatR",        // unsafe with the safe version that moves
+		"cv_Mat_copySize_const_MatR",            // internal function
+		"cv_Mat_operator___const_const_RangeX",  // duplicate of cv_Mat_operator___const_const_vectorLRangeGR, but with pointers
+		"cv_Mat_propStep_const_MatStep",         // MatStep type prevents assignment
+		"cv_Mat_push_back__const_voidX",         // internal method
+		"cv_Mat_operatorST_const_MatR",          // unsafe with the safe version that moves
 		"cv_UMat_UMat_const_UMatR_const_RangeX", // duplicate of cv_UMat_UMat_UMat_VectorOfRange, but with pointers
-		"cv_UMat_copySize_const_UMatR",        // internal function
+		"cv_UMat_copySize_const_UMatR",          // internal function
 		"cv_UMat_operator___const_const_RangeX", // duplicate of cv_UMat_operator___const_const_vectorLRangeGR, but with pointers
-		"cv_UMat_propStep_const_MatStep",      // MatStep type prevents assignment
-		"cv_RNG_MT19937_operator__",           // the same as calling to_u32() or next()
+		"cv_UMat_propStep_const_MatStep",        // MatStep type prevents assignment
+		"cv_RNG_MT19937_operator__",             // the same as calling to_u32() or next()
 		"cv_addImpl_int_const_charX",
 		"cv_calcCovarMatrix_const_MatX_int_MatR_MatR_int_int", // duplicate of cv_calcCovarMatrix_const__InputArrayR_const__OutputArrayR_const__InputOutputArrayR_int_int, but with pointers
 		"cv_cv_abs_short",
@@ -52,18 +50,18 @@ pub static FUNC_EXCLUDE: Lazy<HashSet<&str>> = Lazy::new(|| {
 		"cv_RMat_access_const_Access",          // use of deleted function ‘cv::RMat::View::View(const cv::RMat::View&)’
 		// ### hdf ###
 		"cv_hdf_HDF5_dscreate_const_const_int_const_int_const_int_const_StringR_const_int_const_intX", // has corresponding Vector version
-		"cv_hdf_HDF5_dsinsert_const_const__InputArrayR_const_StringR_const_intX",                      // has corresponding Vector version
-		"cv_hdf_HDF5_dsinsert_const_const__InputArrayR_const_StringR_const_intX_const_intX",           // has corresponding Vector version
-		"cv_hdf_HDF5_dsread_const_const__OutputArrayR_const_StringR_const_intX",                       // has corresponding Vector version
-		"cv_hdf_HDF5_dsread_const_const__OutputArrayR_const_StringR_const_intX_const_intX",            // has corresponding Vector version
-		"cv_hdf_HDF5_dswrite_const_const__InputArrayR_const_StringR_const_intX",                       // has corresponding Vector version
-		"cv_hdf_HDF5_dswrite_const_const__InputArrayR_const_StringR_const_intX_const_intX",            // has corresponding Vector version
+		"cv_hdf_HDF5_dsinsert_const_const__InputArrayR_const_StringR_const_intX", // has corresponding Vector version
+		"cv_hdf_HDF5_dsinsert_const_const__InputArrayR_const_StringR_const_intX_const_intX", // has corresponding Vector version
+		"cv_hdf_HDF5_dsread_const_const__OutputArrayR_const_StringR_const_intX",  // has corresponding Vector version
+		"cv_hdf_HDF5_dsread_const_const__OutputArrayR_const_StringR_const_intX_const_intX", // has corresponding Vector version
+		"cv_hdf_HDF5_dswrite_const_const__InputArrayR_const_StringR_const_intX",  // has corresponding Vector version
+		"cv_hdf_HDF5_dswrite_const_const__InputArrayR_const_StringR_const_intX_const_intX", // has corresponding Vector version
 		// ### imgproc ###
 		"cv_calcBackProject_const_MatX_int_const_intX_const_SparseMatR_const__OutputArrayR_const_floatXX_double_bool", // slice pointers
 		"cv_calcBackProject_const_MatX_int_const_intX_const__InputArrayR_const__OutputArrayR_const_floatXX_double_bool", // slice pointers
-		"cv_calcHist_const_MatX_int_const_intX_const__InputArrayR_SparseMatR_int_const_intX_const_floatXX_bool_bool",  // slice pointers
+		"cv_calcHist_const_MatX_int_const_intX_const__InputArrayR_SparseMatR_int_const_intX_const_floatXX_bool_bool", // slice pointers
 		"cv_calcHist_const_MatX_int_const_intX_const__InputArrayR_const__OutputArrayR_int_const_intX_const_floatXX_bool_bool", // slice pointers
-		"cv_fillConvexPoly_MatR_const_PointX_int_const_ScalarR_int_int",                                                       // 3.2 3.4
+		"cv_fillConvexPoly_MatR_const_PointX_int_const_ScalarR_int_int", // 3.2 3.4
 		"cv_fillConvexPoly_const__InputOutputArrayR_const_PointX_int_const_ScalarR_int_int",
 		"cv_fillPoly_MatR_const_PointXX_const_intX_int_const_ScalarR_int_int_Point", // 3.2
 		"cv_fillPoly_const__InputOutputArrayR_const_PointXX_const_intX_int_const_ScalarR_int_int_Point",

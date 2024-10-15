@@ -274,13 +274,10 @@ impl<'tu, 'r, V: GeneratorVisitor<'tu>> OpenCvWalker<'tu, 'r, V> {
 
 	fn process_func(visitor: &mut V, func_names: &mut NamePool, gen_env: &GeneratorEnv<'tu>, func_decl: Entity<'tu>) {
 		if let Some(e) = gen_env.get_export_config(func_decl) {
-			let func = Func::new(func_decl, gen_env);
-			let func_id = func.func_id();
-			let func: Func = if let Some(func_fact) = settings::FUNC_REPLACE.get(&func_id) {
-				func_fact(&func)
-			} else {
-				Func::new(func_decl, gen_env)
-			};
+			let mut func = Func::new(func_decl, gen_env);
+			if let Some(func_fact) = gen_env.settings.func_replace.get(&mut func.matcher()) {
+				func = func_fact(&func)
+			}
 			if func.exclude_kind().is_included() {
 				let mut processor = |mut func: Func<'tu, '_>| {
 					func.generated_types().into_iter().for_each(|dep| {

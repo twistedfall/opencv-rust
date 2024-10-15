@@ -411,9 +411,19 @@ pub(crate) mod mat_forward {
 	}
 
 	#[inline]
+	pub fn at_def<T: DataType>(mat: &(impl MatTraitConst + ?Sized)) -> Result<&T> {
+		at(mat, 0)
+	}
+
+	#[inline]
 	pub fn at_mut<T: DataType>(mat: &mut (impl MatTrait + ?Sized), i0: i32) -> Result<&mut T> {
 		match_format::<T>(mat.typ()).and_then(|_| match_total(mat, i0))?;
 		unsafe { mat.at_unchecked_mut(i0) }
+	}
+
+	#[inline]
+	pub fn at_mut_def<T: DataType>(mat: &mut (impl MatTrait + ?Sized)) -> Result<&mut T> {
+		at_mut(mat, 0)
 	}
 
 	#[inline]

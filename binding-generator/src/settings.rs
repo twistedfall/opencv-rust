@@ -50,7 +50,7 @@ pub use func_cfg_attr::FUNC_CFG_ATTR;
 pub use func_exclude::FUNC_EXCLUDE;
 pub use func_inject::{func_inject_factory, FuncFactory, FuncInject};
 pub use func_rename::{func_rename_factory, FuncRename};
-pub use func_replace::{FuncInheritFactory, FUNC_REPLACE};
+pub use func_replace::{func_replace_factory, FuncInheritFactory, FuncReplace};
 pub use func_specialize::{func_specialize_factory, FuncSpec, FuncSpecialize};
 pub use func_unsafe::FUNC_UNSAFE;
 pub use generator_module_tweaks::{generator_module_tweaks_factory, ModuleTweak};
@@ -90,6 +90,7 @@ pub struct Settings {
 	pub force_infallible: ForceInfallible,
 	pub func_inject: FuncInject,
 	pub func_rename: FuncRename,
+	pub func_replace: FuncReplace,
 	pub func_specialize: FuncSpecialize,
 	pub generator_module_tweaks: ModuleTweak,
 	pub property_rename: PropertyRename,
@@ -103,6 +104,7 @@ impl Settings {
 			force_infallible: ForceInfallible::empty(),
 			func_inject: FuncInject::default(),
 			func_rename: FuncRename::default(),
+			func_replace: FuncReplace::empty(),
 			func_specialize: FuncMatcher::empty(),
 			generator_module_tweaks: ModuleTweak::empty(),
 			property_rename: PropertyRename::default(),
@@ -116,6 +118,7 @@ impl Settings {
 			force_infallible: force_infallible_factory(module),
 			func_inject: func_inject_factory(module),
 			func_rename: func_rename_factory(module),
+			func_replace: func_replace_factory(module),
 			func_specialize: func_specialize_factory(module),
 			generator_module_tweaks: generator_module_tweaks_factory(module),
 			property_rename: property_rename_factory(module),

@@ -648,14 +648,10 @@ impl<'tu> ToEntity<'tu> for &Func<'tu, '_> {
 
 impl Element for Func<'_, '_> {
 	fn exclude_kind(&self) -> ExcludeKind {
-		let func_id = self.func_id();
-		if settings::FUNC_REPLACE.contains_key(&func_id) {
-			return ExcludeKind::Included.with_is_excluded(|| settings::FUNC_EXCLUDE.contains(self.identifier().as_str()));
-		}
-		let kind = self.kind();
 		DefaultElement::exclude_kind(self)
 			.with_reference_exclude_kind(|| self.return_type_ref().exclude_kind())
 			.with_is_excluded(|| {
+				let kind = self.kind();
 				let identifier = self.identifier();
 				let is_unavailable = match self {
 					Func::Clang { entity, .. } => entity.get_availability() == Availability::Unavailable,

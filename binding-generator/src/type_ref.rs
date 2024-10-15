@@ -265,7 +265,10 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 
 	pub fn exclude_kind(&self) -> ExcludeKind {
 		match self.kind().as_ref() {
-			TypeRefKind::Generic(_) | TypeRefKind::Ignored => ExcludeKind::Ignored,
+			TypeRefKind::Generic(_) => match self {
+				TypeRef::Clang { .. } => ExcludeKind::Ignored,
+				TypeRef::Desc(_) => ExcludeKind::Included, // assume manual generic functions are added for a reason
+			},
 			TypeRefKind::StdVector(vec) => vec.exclude_kind(),
 			TypeRefKind::StdTuple(tuple) => tuple.exclude_kind(),
 			TypeRefKind::Array(inner, ..) => ExcludeKind::Included.with_is_ignored(|| !inner.kind().is_copy(inner.type_hint())),
@@ -275,6 +278,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 			TypeRefKind::SmartPtr(ptr) => ptr.exclude_kind(),
 			TypeRefKind::Class(cls) => cls.exclude_kind(),
 			TypeRefKind::Typedef(tdef) => tdef.exclude_kind(),
+			TypeRefKind::Ignored => ExcludeKind::Ignored,
 			_ => settings::ELEMENT_EXCLUDE_KIND
 				.get(self.cpp_name(CppNameStyle::Reference).as_ref())
 				.copied()
