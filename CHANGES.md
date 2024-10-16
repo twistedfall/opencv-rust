@@ -1,3 +1,8 @@
+* 0.93.3
+  * Fix issue with using Option<Ptr>, now behaves as expected and doesn't segfault.
+  * Introduce `Mat::get_data_dump()` to get the dump of the Mat data, it's also included in the `Debug` output.
+  * Improve formatting of the generated bindings.
+
 * 0.93.2
   * Fix binding generation using clang-19.
 

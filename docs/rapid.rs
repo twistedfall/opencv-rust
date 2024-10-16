@@ -1,12 +1,13 @@
 pub mod rapid {
 	//! # silhouette based 3D object tracking
-	//! 
+	//!
 	//! implements "RAPID-a video rate object tracker" [harris1990rapid](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_harris1990rapid) with the dynamic control point extraction of [drummond2002real](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_drummond2002real)
-	use crate::{mod_prelude::*, core, sys, types};
+	use crate::mod_prelude::*;
+	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use { super::Rapid_TrackerTraitConst, super::Rapid_TrackerTrait, super::Rapid_RapidTraitConst, super::Rapid_RapidTrait, super::Rapid_OLSTrackerTraitConst, super::Rapid_OLSTrackerTrait, super::Rapid_GOSTrackerTraitConst, super::Rapid_GOSTrackerTrait };
+		pub use super::{Rapid_GOSTrackerTrait, Rapid_GOSTrackerTraitConst, Rapid_OLSTrackerTrait, Rapid_OLSTrackerTraitConst, Rapid_RapidTrait, Rapid_RapidTraitConst, Rapid_TrackerTrait, Rapid_TrackerTraitConst};
 	}
-	
+
 	/// Collect corresponding 2d and 3d points based on correspondencies and mask
 	/// ## Parameters
 	/// * cols: correspondence-position per line in line-bundle-space
@@ -14,7 +15,7 @@ pub mod rapid {
 	/// * pts2d: 2d points
 	/// * pts3d: 3d points
 	/// * mask: mask containing non-zero values for the elements to be retained
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [convert_correspondencies] function uses the following default values for its arguments:
 	/// * pts3d: noArray()
@@ -30,7 +31,7 @@ pub mod rapid {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Collect corresponding 2d and 3d points based on correspondencies and mask
 	/// ## Parameters
 	/// * cols: correspondence-position per line in line-bundle-space
@@ -38,7 +39,7 @@ pub mod rapid {
 	/// * pts2d: 2d points
 	/// * pts3d: 3d points
 	/// * mask: mask containing non-zero values for the elements to be retained
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * pts3d: noArray()
 	/// * mask: noArray()
@@ -55,13 +56,13 @@ pub mod rapid {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Debug draw markers of matched correspondences onto a lineBundle
 	/// ## Parameters
 	/// * bundle: the lineBundle
 	/// * cols: column coordinates in the line bundle
 	/// * colors: colors for the markers. Defaults to white.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [draw_correspondencies] function uses the following default values for its arguments:
 	/// * colors: noArray()
@@ -75,13 +76,13 @@ pub mod rapid {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Debug draw markers of matched correspondences onto a lineBundle
 	/// ## Parameters
 	/// * bundle: the lineBundle
 	/// * cols: column coordinates in the line bundle
 	/// * colors: colors for the markers. Defaults to white.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * colors: noArray()
 	#[inline]
@@ -95,7 +96,7 @@ pub mod rapid {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Debug draw search lines onto an image
 	/// ## Parameters
 	/// * img: the output image
@@ -111,7 +112,7 @@ pub mod rapid {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Draw a wireframe of a triangle mesh
 	/// ## Parameters
 	/// * img: the output image
@@ -120,7 +121,7 @@ pub mod rapid {
 	/// * color: line color
 	/// * type: line type. See [LineTypes].
 	/// * cullBackface: enable back-face culling based on CCW order
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [draw_wireframe] function uses the following default values for its arguments:
 	/// * typ: LINE_8
@@ -136,7 +137,7 @@ pub mod rapid {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Draw a wireframe of a triangle mesh
 	/// ## Parameters
 	/// * img: the output image
@@ -145,7 +146,7 @@ pub mod rapid {
 	/// * color: line color
 	/// * type: line type. See [LineTypes].
 	/// * cullBackface: enable back-face culling based on CCW order
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * typ: LINE_8
 	/// * cull_backface: false
@@ -160,9 +161,9 @@ pub mod rapid {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Extract control points from the projected silhouette of a mesh
-	/// 
+	///
 	/// see [drummond2002real](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_drummond2002real) Sec 2.1, Step b
 	/// ## Parameters
 	/// * num: number of control points
@@ -190,7 +191,7 @@ pub mod rapid {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Extract the line bundle from an image
 	/// ## Parameters
 	/// * len: the search radius. The bundle will have `2*len + 1` columns.
@@ -211,14 +212,14 @@ pub mod rapid {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Find corresponding image locations by searching for a maximal sobel edge along the search line (a single
 	/// row in the bundle)
 	/// ## Parameters
 	/// * bundle: the line bundle
 	/// * cols: correspondence-position per line in line-bundle-space
 	/// * response: the sobel response for the selected point
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [find_correspondencies] function uses the following default values for its arguments:
 	/// * response: noArray()
@@ -232,14 +233,14 @@ pub mod rapid {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Find corresponding image locations by searching for a maximal sobel edge along the search line (a single
 	/// row in the bundle)
 	/// ## Parameters
 	/// * bundle: the line bundle
 	/// * cols: correspondence-position per line in line-bundle-space
 	/// * response: the sobel response for the selected point
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * response: noArray()
 	#[inline]
@@ -253,15 +254,15 @@ pub mod rapid {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// High level function to execute a single rapid [harris1990rapid](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_harris1990rapid) iteration
-	/// 
+	///
 	/// 1. [extractControlPoints]
 	/// 2. [extractLineBundle]
 	/// 3. [findCorrespondencies]
 	/// 4. [convertCorrespondencies]
 	/// 5. [solvePnPRefineLM]
-	/// 
+	///
 	/// ## Parameters
 	/// * img: the video frame
 	/// * num: number of search lines
@@ -274,7 +275,7 @@ pub mod rapid {
 	/// * rmsd: the 2d reprojection difference
 	/// ## Returns
 	/// ratio of search lines that could be extracted and matched
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [rapid] function uses the following default values for its arguments:
 	/// * rmsd: 0
@@ -292,15 +293,15 @@ pub mod rapid {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// High level function to execute a single rapid [harris1990rapid](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_harris1990rapid) iteration
-	/// 
+	///
 	/// 1. [extractControlPoints]
 	/// 2. [extractLineBundle]
 	/// 3. [findCorrespondencies]
 	/// 4. [convertCorrespondencies]
 	/// 5. [solvePnPRefineLM]
-	/// 
+	///
 	/// ## Parameters
 	/// * img: the video frame
 	/// * num: number of search lines
@@ -313,7 +314,7 @@ pub mod rapid {
 	/// * rmsd: the 2d reprojection difference
 	/// ## Returns
 	/// ratio of search lines that could be extracted and matched
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * rmsd: 0
 	#[inline]
@@ -330,65 +331,65 @@ pub mod rapid {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Constant methods for [crate::rapid::Rapid_GOSTracker]
 	pub trait Rapid_GOSTrackerTraitConst: crate::rapid::Rapid_TrackerTraitConst {
 		fn as_raw_Rapid_GOSTracker(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::rapid::Rapid_GOSTracker]
 	pub trait Rapid_GOSTrackerTrait: crate::rapid::Rapid_GOSTrackerTraitConst + crate::rapid::Rapid_TrackerTrait {
 		fn as_raw_mut_Rapid_GOSTracker(&mut self) -> *mut c_void;
-	
+
 	}
-	
+
 	/// implements "Global optimal searching for textureless 3D object tracking" [wang2015global](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_wang2015global)
 	pub struct Rapid_GOSTracker {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { Rapid_GOSTracker }
-	
+
 	impl Drop for Rapid_GOSTracker {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_rapid_GOSTracker_delete(self.as_raw_mut_Rapid_GOSTracker()) };
 		}
 	}
-	
+
 	unsafe impl Send for Rapid_GOSTracker {}
-	
+
 	impl core::AlgorithmTraitConst for Rapid_GOSTracker {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for Rapid_GOSTracker {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { Rapid_GOSTracker, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::rapid::Rapid_TrackerTraitConst for Rapid_GOSTracker {
 		#[inline] fn as_raw_Rapid_Tracker(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::rapid::Rapid_TrackerTrait for Rapid_GOSTracker {
 		#[inline] fn as_raw_mut_Rapid_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { Rapid_GOSTracker, crate::rapid::Rapid_TrackerTraitConst, as_raw_Rapid_Tracker, crate::rapid::Rapid_TrackerTrait, as_raw_mut_Rapid_Tracker }
-	
+
 	impl crate::rapid::Rapid_GOSTrackerTraitConst for Rapid_GOSTracker {
 		#[inline] fn as_raw_Rapid_GOSTracker(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::rapid::Rapid_GOSTrackerTrait for Rapid_GOSTracker {
 		#[inline] fn as_raw_mut_Rapid_GOSTracker(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { Rapid_GOSTracker, crate::rapid::Rapid_GOSTrackerTraitConst, as_raw_Rapid_GOSTracker, crate::rapid::Rapid_GOSTrackerTrait, as_raw_mut_Rapid_GOSTracker }
-	
+
 	impl Rapid_GOSTracker {
 		/// ## C++ default parameters
 		/// * hist_bins: 4
@@ -404,7 +405,7 @@ pub mod rapid {
 			let ret = unsafe { core::Ptr::<crate::rapid::Rapid_OLSTracker>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// ## Note
 		/// This alternative version of [Rapid_GOSTracker::create] function uses the following default values for its arguments:
 		/// * hist_bins: 4
@@ -420,13 +421,13 @@ pub mod rapid {
 			let ret = unsafe { core::Ptr::<crate::rapid::Rapid_OLSTracker>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	boxed_cast_base! { Rapid_GOSTracker, core::Algorithm, cv_rapid_GOSTracker_to_Algorithm }
-	
+
 	boxed_cast_base! { Rapid_GOSTracker, crate::rapid::Rapid_Tracker, cv_rapid_GOSTracker_to_Rapid_Tracker }
-	
+
 	impl std::fmt::Debug for Rapid_GOSTracker {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -434,66 +435,66 @@ pub mod rapid {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::rapid::Rapid_OLSTracker]
 	pub trait Rapid_OLSTrackerTraitConst: crate::rapid::Rapid_TrackerTraitConst {
 		fn as_raw_Rapid_OLSTracker(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::rapid::Rapid_OLSTracker]
 	pub trait Rapid_OLSTrackerTrait: crate::rapid::Rapid_OLSTrackerTraitConst + crate::rapid::Rapid_TrackerTrait {
 		fn as_raw_mut_Rapid_OLSTracker(&mut self) -> *mut c_void;
-	
+
 	}
-	
+
 	/// implements "Optimal local searching for fast and robust textureless 3D object tracking in highly
 	/// cluttered backgrounds" [seo2013optimal](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_seo2013optimal)
 	pub struct Rapid_OLSTracker {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { Rapid_OLSTracker }
-	
+
 	impl Drop for Rapid_OLSTracker {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_rapid_OLSTracker_delete(self.as_raw_mut_Rapid_OLSTracker()) };
 		}
 	}
-	
+
 	unsafe impl Send for Rapid_OLSTracker {}
-	
+
 	impl core::AlgorithmTraitConst for Rapid_OLSTracker {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for Rapid_OLSTracker {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { Rapid_OLSTracker, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::rapid::Rapid_TrackerTraitConst for Rapid_OLSTracker {
 		#[inline] fn as_raw_Rapid_Tracker(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::rapid::Rapid_TrackerTrait for Rapid_OLSTracker {
 		#[inline] fn as_raw_mut_Rapid_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { Rapid_OLSTracker, crate::rapid::Rapid_TrackerTraitConst, as_raw_Rapid_Tracker, crate::rapid::Rapid_TrackerTrait, as_raw_mut_Rapid_Tracker }
-	
+
 	impl crate::rapid::Rapid_OLSTrackerTraitConst for Rapid_OLSTracker {
 		#[inline] fn as_raw_Rapid_OLSTracker(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::rapid::Rapid_OLSTrackerTrait for Rapid_OLSTracker {
 		#[inline] fn as_raw_mut_Rapid_OLSTracker(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { Rapid_OLSTracker, crate::rapid::Rapid_OLSTrackerTraitConst, as_raw_Rapid_OLSTracker, crate::rapid::Rapid_OLSTrackerTrait, as_raw_mut_Rapid_OLSTracker }
-	
+
 	impl Rapid_OLSTracker {
 		/// ## C++ default parameters
 		/// * hist_bins: 8
@@ -509,7 +510,7 @@ pub mod rapid {
 			let ret = unsafe { core::Ptr::<crate::rapid::Rapid_OLSTracker>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// ## Note
 		/// This alternative version of [Rapid_OLSTracker::create] function uses the following default values for its arguments:
 		/// * hist_bins: 8
@@ -525,13 +526,13 @@ pub mod rapid {
 			let ret = unsafe { core::Ptr::<crate::rapid::Rapid_OLSTracker>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	boxed_cast_base! { Rapid_OLSTracker, core::Algorithm, cv_rapid_OLSTracker_to_Algorithm }
-	
+
 	boxed_cast_base! { Rapid_OLSTracker, crate::rapid::Rapid_Tracker, cv_rapid_OLSTracker_to_Rapid_Tracker }
-	
+
 	impl std::fmt::Debug for Rapid_OLSTracker {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -539,65 +540,65 @@ pub mod rapid {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::rapid::Rapid_Rapid]
 	pub trait Rapid_RapidTraitConst: crate::rapid::Rapid_TrackerTraitConst {
 		fn as_raw_Rapid_Rapid(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::rapid::Rapid_Rapid]
 	pub trait Rapid_RapidTrait: crate::rapid::Rapid_RapidTraitConst + crate::rapid::Rapid_TrackerTrait {
 		fn as_raw_mut_Rapid_Rapid(&mut self) -> *mut c_void;
-	
+
 	}
-	
+
 	/// wrapper around [rapid] function for uniform access
 	pub struct Rapid_Rapid {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { Rapid_Rapid }
-	
+
 	impl Drop for Rapid_Rapid {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_rapid_Rapid_delete(self.as_raw_mut_Rapid_Rapid()) };
 		}
 	}
-	
+
 	unsafe impl Send for Rapid_Rapid {}
-	
+
 	impl core::AlgorithmTraitConst for Rapid_Rapid {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for Rapid_Rapid {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { Rapid_Rapid, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::rapid::Rapid_TrackerTraitConst for Rapid_Rapid {
 		#[inline] fn as_raw_Rapid_Tracker(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::rapid::Rapid_TrackerTrait for Rapid_Rapid {
 		#[inline] fn as_raw_mut_Rapid_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { Rapid_Rapid, crate::rapid::Rapid_TrackerTraitConst, as_raw_Rapid_Tracker, crate::rapid::Rapid_TrackerTrait, as_raw_mut_Rapid_Tracker }
-	
+
 	impl crate::rapid::Rapid_RapidTraitConst for Rapid_Rapid {
 		#[inline] fn as_raw_Rapid_Rapid(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::rapid::Rapid_RapidTrait for Rapid_Rapid {
 		#[inline] fn as_raw_mut_Rapid_Rapid(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { Rapid_Rapid, crate::rapid::Rapid_RapidTraitConst, as_raw_Rapid_Rapid, crate::rapid::Rapid_RapidTrait, as_raw_mut_Rapid_Rapid }
-	
+
 	impl Rapid_Rapid {
 		#[inline]
 		pub fn create(pts3d: &impl ToInputArray, tris: &impl ToInputArray) -> Result<core::Ptr<crate::rapid::Rapid_Rapid>> {
@@ -610,13 +611,13 @@ pub mod rapid {
 			let ret = unsafe { core::Ptr::<crate::rapid::Rapid_Rapid>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	boxed_cast_base! { Rapid_Rapid, core::Algorithm, cv_rapid_Rapid_to_Algorithm }
-	
+
 	boxed_cast_base! { Rapid_Rapid, crate::rapid::Rapid_Tracker, cv_rapid_Rapid_to_Rapid_Tracker }
-	
+
 	impl std::fmt::Debug for Rapid_Rapid {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -624,17 +625,17 @@ pub mod rapid {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::rapid::Rapid_Tracker]
 	pub trait Rapid_TrackerTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_Rapid_Tracker(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::rapid::Rapid_Tracker]
 	pub trait Rapid_TrackerTrait: core::AlgorithmTrait + crate::rapid::Rapid_TrackerTraitConst {
 		fn as_raw_mut_Rapid_Tracker(&mut self) -> *mut c_void;
-	
+
 		/// ## C++ default parameters
 		/// * termcrit: TermCriteria(TermCriteria::MAX_ITER|TermCriteria::EPS,5,1.5)
 		#[inline]
@@ -649,7 +650,7 @@ pub mod rapid {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## Note
 		/// This alternative version of [Rapid_TrackerTrait::compute] function uses the following default values for its arguments:
 		/// * termcrit: TermCriteria(TermCriteria::MAX_ITER|TermCriteria::EPS,5,1.5)
@@ -665,7 +666,7 @@ pub mod rapid {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn clear_state(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -674,56 +675,56 @@ pub mod rapid {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Abstract base class for stateful silhouette trackers
 	pub struct Rapid_Tracker {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { Rapid_Tracker }
-	
+
 	impl Drop for Rapid_Tracker {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_rapid_Tracker_delete(self.as_raw_mut_Rapid_Tracker()) };
 		}
 	}
-	
+
 	unsafe impl Send for Rapid_Tracker {}
-	
+
 	impl core::AlgorithmTraitConst for Rapid_Tracker {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for Rapid_Tracker {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { Rapid_Tracker, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::rapid::Rapid_TrackerTraitConst for Rapid_Tracker {
 		#[inline] fn as_raw_Rapid_Tracker(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::rapid::Rapid_TrackerTrait for Rapid_Tracker {
 		#[inline] fn as_raw_mut_Rapid_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { Rapid_Tracker, crate::rapid::Rapid_TrackerTraitConst, as_raw_Rapid_Tracker, crate::rapid::Rapid_TrackerTrait, as_raw_mut_Rapid_Tracker }
-	
+
 	impl Rapid_Tracker {
 	}
-	
+
 	boxed_cast_descendant! { Rapid_Tracker, crate::rapid::Rapid_GOSTracker, cv_rapid_Tracker_to_Rapid_GOSTracker }
-	
+
 	boxed_cast_descendant! { Rapid_Tracker, crate::rapid::Rapid_OLSTracker, cv_rapid_Tracker_to_Rapid_OLSTracker }
-	
+
 	boxed_cast_descendant! { Rapid_Tracker, crate::rapid::Rapid_Rapid, cv_rapid_Tracker_to_Rapid_Rapid }
-	
+
 	boxed_cast_base! { Rapid_Tracker, core::Algorithm, cv_rapid_Tracker_to_Algorithm }
-	
+
 	impl std::fmt::Debug for Rapid_Tracker {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {

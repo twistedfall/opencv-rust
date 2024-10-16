@@ -1,23 +1,24 @@
 pub mod freetype {
 	//! # Drawing UTF-8 strings with freetype/harfbuzz
-	//! 
+	//!
 	//! This modules is to draw UTF-8 strings with freetype/harfbuzz.
-	//! 
+	//!
 	//! 1. Install freetype2 and harfbuzz in your system.
 	//! 2. Create FreeType2 instance with createFreeType2() function.
 	//! 3. Load font file with loadFontData() function.
 	//! 4. Draw text with putText() function.
-	//! 
+	//!
 	//! - If thickness parameter is negative, drawing glyph is filled.
 	//! - If thickness parameter is positive, drawing glyph is outlined with thickness.
 	//! - If line_type parameter is 16(or CV_AA), drawing glyph is smooth.
-	use crate::{mod_prelude::*, core, sys, types};
+	use crate::mod_prelude::*;
+	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use { super::FreeType2TraitConst, super::FreeType2Trait };
+		pub use super::{FreeType2Trait, FreeType2TraitConst};
 	}
-	
+
 	/// Create FreeType2 Instance
-	/// 
+	///
 	/// The function createFreeType2 create instance to draw UTF-8 strings.
 	#[inline]
 	pub fn create_free_type2() -> Result<core::Ptr<crate::freetype::FreeType2>> {
@@ -28,21 +29,21 @@ pub mod freetype {
 		let ret = unsafe { core::Ptr::<crate::freetype::FreeType2>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Constant methods for [crate::freetype::FreeType2]
 	pub trait FreeType2TraitConst: core::AlgorithmTraitConst {
 		fn as_raw_FreeType2(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::freetype::FreeType2]
 	pub trait FreeType2Trait: core::AlgorithmTrait + crate::freetype::FreeType2TraitConst {
 		fn as_raw_mut_FreeType2(&mut self) -> *mut c_void;
-	
+
 		/// Load font data.
-		/// 
+		///
 		/// The function loadFontData loads font data from file.
-		/// 
+		///
 		/// ## Parameters
 		/// * fontFileName: FontFile Name
 		/// * idx: face_index to select a font faces in a single file.
@@ -55,13 +56,13 @@ pub mod freetype {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Load font data.
-		/// 
+		///
 		/// The function loadFontData loads font data from memory.
 		/// The data is not copied, the user needs to make sure the data lives at least as long as FreeType2.
 		/// After the FreeType2 object is destroyed, the buffer can be safely deallocated.
-		/// 
+		///
 		/// ## Parameters
 		/// * pBuf: pointer to buffer containing font data
 		/// * bufSize: size of buffer
@@ -74,13 +75,13 @@ pub mod freetype {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Set Split Number from Bezier-curve to line
-		/// 
+		///
 		/// The function setSplitNumber set the number of split points from bezier-curve to line.
 		/// If you want to draw large glyph, large is better.
 		/// If you want to draw small glyph, small is better.
-		/// 
+		///
 		/// ## Parameters
 		/// * num: number of split points from bezier-curve to line
 		#[inline]
@@ -91,11 +92,11 @@ pub mod freetype {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Draws a text string.
-		/// 
+		///
 		/// The function putText renders the specified text string in the image. Symbols that cannot be rendered using the specified font are replaced by "Tofu" or non-drawn.
-		/// 
+		///
 		/// ## Parameters
 		/// * img: Image. (Only 8UC1/8UC3/8UC4 2D mat is supported.)
 		/// * text: Text string to be drawn.
@@ -115,9 +116,9 @@ pub mod freetype {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Calculates the width and height of a text string.
-		/// 
+		///
 		/// The function getTextSize calculates and returns the approximate size of a box that contains the specified text.
 		/// That is, the following code renders some text, the tight box surrounding it, and the baseline: :
 		/// ```C++
@@ -125,44 +126,44 @@ pub mod freetype {
 		///    int fontHeight = 60;
 		///    int thickness = -1;
 		///    int linestyle = LINE_8;
-		/// 
+		///
 		///    Mat img(600, 800, CV_8UC3, Scalar::all(0));
-		/// 
+		///
 		///    int baseline=0;
-		/// 
+		///
 		///    cv::Ptr<cv::freetype::FreeType2> ft2;
 		///    ft2 = cv::freetype::createFreeType2();
 		///    ft2->loadFontData( "./mplus-1p-regular.ttf", 0 );
-		/// 
+		///
 		///    Size textSize = ft2->getTextSize(text,
 		///                                      fontHeight,
 		///                                      thickness,
 		///                                      &baseline);
-		/// 
+		///
 		///    if(thickness > 0){
 		///        baseline += thickness;
 		///    }
-		/// 
+		///
 		///    // center the text
 		///    Point textOrg((img.cols - textSize.width) / 2,
 		///                   (img.rows + textSize.height) / 2);
-		/// 
+		///
 		///    // draw the box
 		///    rectangle(img, textOrg + Point(0, baseline),
 		///               textOrg + Point(textSize.width, -textSize.height),
 		///               Scalar(0,255,0),1,8);
-		/// 
+		///
 		///    // ... and the baseline first
 		///    line(img, textOrg + Point(0, thickness),
 		///          textOrg + Point(textSize.width, thickness),
 		///          Scalar(0, 0, 255),1,8);
-		/// 
+		///
 		///    // then put the text itself
 		///    ft2->putText(img, text, textOrg, fontHeight,
 		///                  Scalar::all(255), thickness, linestyle, true );
 		/// ```
-		/// 
-		/// 
+		///
+		///
 		/// ## Parameters
 		/// * text: Input text string.
 		/// * fontHeight: Drawing font size by pixel unit.
@@ -182,49 +183,49 @@ pub mod freetype {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	pub struct FreeType2 {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { FreeType2 }
-	
+
 	impl Drop for FreeType2 {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_freetype_FreeType2_delete(self.as_raw_mut_FreeType2()) };
 		}
 	}
-	
+
 	unsafe impl Send for FreeType2 {}
-	
+
 	impl core::AlgorithmTraitConst for FreeType2 {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for FreeType2 {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { FreeType2, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::freetype::FreeType2TraitConst for FreeType2 {
 		#[inline] fn as_raw_FreeType2(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::freetype::FreeType2Trait for FreeType2 {
 		#[inline] fn as_raw_mut_FreeType2(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { FreeType2, crate::freetype::FreeType2TraitConst, as_raw_FreeType2, crate::freetype::FreeType2Trait, as_raw_mut_FreeType2 }
-	
+
 	impl FreeType2 {
 	}
-	
+
 	boxed_cast_base! { FreeType2, core::Algorithm, cv_freetype_FreeType2_to_Algorithm }
-	
+
 	impl std::fmt::Debug for FreeType2 {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {

@@ -1,28 +1,29 @@
 pub mod dnn_superres {
 	//! # DNN used for super resolution
-	//! 
+	//!
 	//! This module contains functionality for upscaling an image via convolutional neural networks.
 	//! The following four models are implemented:
-	//! 
+	//!
 	//! - EDSR <https://arxiv.org/abs/1707.02921>
 	//! - ESPCN <https://arxiv.org/abs/1609.05158>
 	//! - FSRCNN <https://arxiv.org/abs/1608.00367>
 	//! - LapSRN <https://arxiv.org/abs/1710.01992>
-	use crate::{mod_prelude::*, core, sys, types};
+	use crate::mod_prelude::*;
+	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use { super::DnnSuperResImplTraitConst, super::DnnSuperResImplTrait };
+		pub use super::{DnnSuperResImplTrait, DnnSuperResImplTraitConst};
 	}
-	
+
 	/// Constant methods for [crate::dnn_superres::DnnSuperResImpl]
 	pub trait DnnSuperResImplTraitConst {
 		fn as_raw_DnnSuperResImpl(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::dnn_superres::DnnSuperResImpl]
 	pub trait DnnSuperResImplTrait: crate::dnn_superres::DnnSuperResImplTraitConst {
 		fn as_raw_mut_DnnSuperResImpl(&mut self) -> *mut c_void;
-	
+
 		/// Read the model from the given path
 		/// ## Parameters
 		/// * path: Path to the model file.
@@ -35,7 +36,7 @@ pub mod dnn_superres {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Read the model from the given path
 		/// ## Parameters
 		/// * weights: Path to the model weights file.
@@ -50,7 +51,7 @@ pub mod dnn_superres {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Set desired model
 		/// ## Parameters
 		/// * algo: String containing one of the desired models:
@@ -68,7 +69,7 @@ pub mod dnn_superres {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Set computation backend
 		#[inline]
 		fn set_preferable_backend(&mut self, backend_id: i32) -> Result<()> {
@@ -78,7 +79,7 @@ pub mod dnn_superres {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Set computation target
 		#[inline]
 		fn set_preferable_target(&mut self, target_id: i32) -> Result<()> {
@@ -88,7 +89,7 @@ pub mod dnn_superres {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Upsample via neural network
 		/// ## Parameters
 		/// * img: Image to upscale
@@ -103,7 +104,7 @@ pub mod dnn_superres {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Upsample via neural network of multiple outputs
 		/// ## Parameters
 		/// * img: Image to upscale
@@ -119,7 +120,7 @@ pub mod dnn_superres {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns the scale factor of the model:
 		/// ## Returns
 		/// Current scale factor.
@@ -131,7 +132,7 @@ pub mod dnn_superres {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns the scale factor of the model:
 		/// ## Returns
 		/// Current algorithm.
@@ -144,41 +145,41 @@ pub mod dnn_superres {
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// A class to upscale images via convolutional neural networks.
 	/// The following four models are implemented:
-	/// 
+	///
 	/// - edsr
 	/// - espcn
 	/// - fsrcnn
 	/// - lapsrn
 	pub struct DnnSuperResImpl {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { DnnSuperResImpl }
-	
+
 	impl Drop for DnnSuperResImpl {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_dnn_superres_DnnSuperResImpl_delete(self.as_raw_mut_DnnSuperResImpl()) };
 		}
 	}
-	
+
 	unsafe impl Send for DnnSuperResImpl {}
-	
+
 	impl crate::dnn_superres::DnnSuperResImplTraitConst for DnnSuperResImpl {
 		#[inline] fn as_raw_DnnSuperResImpl(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::dnn_superres::DnnSuperResImplTrait for DnnSuperResImpl {
 		#[inline] fn as_raw_mut_DnnSuperResImpl(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { DnnSuperResImpl, crate::dnn_superres::DnnSuperResImplTraitConst, as_raw_DnnSuperResImpl, crate::dnn_superres::DnnSuperResImplTrait, as_raw_mut_DnnSuperResImpl }
-	
+
 	impl DnnSuperResImpl {
 		/// Empty constructor for python
 		#[inline]
@@ -190,7 +191,7 @@ pub mod dnn_superres {
 			let ret = unsafe { core::Ptr::<crate::dnn_superres::DnnSuperResImpl>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		pub fn default() -> Result<crate::dnn_superres::DnnSuperResImpl> {
 			return_send!(via ocvrs_return);
@@ -200,7 +201,7 @@ pub mod dnn_superres {
 			let ret = unsafe { crate::dnn_superres::DnnSuperResImpl::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Constructor which immediately sets the desired model
 		/// ## Parameters
 		/// * algo: String containing one of the desired models:
@@ -219,9 +220,9 @@ pub mod dnn_superres {
 			let ret = unsafe { crate::dnn_superres::DnnSuperResImpl::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	impl std::fmt::Debug for DnnSuperResImpl {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {

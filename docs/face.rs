@@ -1,13 +1,14 @@
 pub mod face {
 	//! # Face Analysis
-	//! 
+	//!
 	//! - [face_changelog]
 	//! - [tutorial_face_main]
-	use crate::{mod_prelude::*, core, sys, types};
+	use crate::mod_prelude::*;
+	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use { super::PredictCollectorTraitConst, super::PredictCollectorTrait, super::StandardCollectorTraitConst, super::StandardCollectorTrait, super::FaceRecognizerTraitConst, super::FaceRecognizerTrait, super::BasicFaceRecognizerTraitConst, super::BasicFaceRecognizerTrait, super::EigenFaceRecognizerTraitConst, super::EigenFaceRecognizerTrait, super::FisherFaceRecognizerTraitConst, super::FisherFaceRecognizerTrait, super::LBPHFaceRecognizerTraitConst, super::LBPHFaceRecognizerTrait, super::FacemarkTraitConst, super::FacemarkTrait, super::CParamsTraitConst, super::CParamsTrait, super::FacemarkTrainTraitConst, super::FacemarkTrainTrait, super::FacemarkLBF_ParamsTraitConst, super::FacemarkLBF_ParamsTrait, super::FacemarkLBFTraitConst, super::FacemarkLBFTrait, super::FacemarkAAM_ParamsTraitConst, super::FacemarkAAM_ParamsTrait, super::FacemarkAAM_ConfigTraitConst, super::FacemarkAAM_ConfigTrait, super::FacemarkAAM_DataTraitConst, super::FacemarkAAM_DataTrait, super::FacemarkAAM_Model_TextureTraitConst, super::FacemarkAAM_Model_TextureTrait, super::FacemarkAAM_ModelTraitConst, super::FacemarkAAM_ModelTrait, super::FacemarkAAMTraitConst, super::FacemarkAAMTrait, super::FacemarkKazemi_ParamsTraitConst, super::FacemarkKazemi_ParamsTrait, super::FacemarkKazemiTraitConst, super::FacemarkKazemiTrait, super::MACETraitConst, super::MACETrait, super::BIFTraitConst, super::BIFTrait };
+		pub use super::{BIFTrait, BIFTraitConst, BasicFaceRecognizerTrait, BasicFaceRecognizerTraitConst, CParamsTrait, CParamsTraitConst, EigenFaceRecognizerTrait, EigenFaceRecognizerTraitConst, FaceRecognizerTrait, FaceRecognizerTraitConst, FacemarkAAMTrait, FacemarkAAMTraitConst, FacemarkAAM_ConfigTrait, FacemarkAAM_ConfigTraitConst, FacemarkAAM_DataTrait, FacemarkAAM_DataTraitConst, FacemarkAAM_ModelTrait, FacemarkAAM_ModelTraitConst, FacemarkAAM_Model_TextureTrait, FacemarkAAM_Model_TextureTraitConst, FacemarkAAM_ParamsTrait, FacemarkAAM_ParamsTraitConst, FacemarkKazemiTrait, FacemarkKazemiTraitConst, FacemarkKazemi_ParamsTrait, FacemarkKazemi_ParamsTraitConst, FacemarkLBFTrait, FacemarkLBFTraitConst, FacemarkLBF_ParamsTrait, FacemarkLBF_ParamsTraitConst, FacemarkTrainTrait, FacemarkTrainTraitConst, FacemarkTrait, FacemarkTraitConst, FisherFaceRecognizerTrait, FisherFaceRecognizerTraitConst, LBPHFaceRecognizerTrait, LBPHFaceRecognizerTraitConst, MACETrait, MACETraitConst, PredictCollectorTrait, PredictCollectorTraitConst, StandardCollectorTrait, StandardCollectorTraitConst};
 	}
-	
+
 	pub type FN_FaceDetector = Option<Box<dyn FnMut(*const c_void, *const c_void) -> bool + Send + Sync + 'static>>;
 	/// construct an AAM facemark detector
 	#[inline]
@@ -19,7 +20,7 @@ pub mod face {
 		let ret = unsafe { core::Ptr::<crate::face::Facemark>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// construct a Kazemi facemark detector
 	#[inline]
 	pub fn create_facemark_kazemi() -> Result<core::Ptr<crate::face::Facemark>> {
@@ -30,7 +31,7 @@ pub mod face {
 		let ret = unsafe { core::Ptr::<crate::face::Facemark>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// construct an LBF facemark detector
 	#[inline]
 	pub fn create_facemark_lbf() -> Result<core::Ptr<crate::face::Facemark>> {
@@ -41,14 +42,14 @@ pub mod face {
 		let ret = unsafe { core::Ptr::<crate::face::Facemark>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Utility to draw the detected facial landmark points
-	/// 
+	///
 	/// ## Parameters
 	/// * image: The input image to be processed.
 	/// * points: Contains the data of points which will be drawn.
 	/// * color: The color of points in BGR format represented by cv::Scalar.
-	/// 
+	///
 	/// <B>Example of usage</B>
 	/// ```C++
 	/// std::vector<Rect> faces;
@@ -59,8 +60,8 @@ pub mod face {
 	///    face::drawFacemarks(frame, landmarks[j], Scalar(0,0,255));
 	/// }
 	/// ```
-	/// 
-	/// 
+	///
+	///
 	/// ## Note
 	/// This alternative version of [draw_facemarks] function uses the following default values for its arguments:
 	/// * color: Scalar(255,0,0)
@@ -74,14 +75,14 @@ pub mod face {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Utility to draw the detected facial landmark points
-	/// 
+	///
 	/// ## Parameters
 	/// * image: The input image to be processed.
 	/// * points: Contains the data of points which will be drawn.
 	/// * color: The color of points in BGR format represented by cv::Scalar.
-	/// 
+	///
 	/// <B>Example of usage</B>
 	/// ```C++
 	/// std::vector<Rect> faces;
@@ -92,8 +93,8 @@ pub mod face {
 	///    face::drawFacemarks(frame, landmarks[j], Scalar(0,0,255));
 	/// }
 	/// ```
-	/// 
-	/// 
+	///
+	///
 	/// ## C++ default parameters
 	/// * color: Scalar(255,0,0)
 	#[inline]
@@ -106,7 +107,7 @@ pub mod face {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	#[inline]
 	pub fn get_faces_haar(image: &impl ToInputArray, faces: &mut impl ToOutputArray, face_cascade_name: &str) -> Result<bool> {
 		input_array_arg!(image);
@@ -118,18 +119,18 @@ pub mod face {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Default face detector
 	/// This function is mainly utilized by the implementation of a Facemark Algorithm.
 	/// End users are advised to use function Facemark::getFaces which can be manually defined
 	/// and circumvented to the algorithm by Facemark::setFaceDetector.
-	/// 
+	///
 	/// ## Parameters
 	/// * image: The input image to be processed.
 	/// * faces: Output of the function which represent region of interest of the detected faces.
 	/// Each face is stored in cv::Rect container.
 	/// * params: detector parameters
-	/// 
+	///
 	/// <B>Example of usage</B>
 	/// ```C++
 	/// std::vector<cv::Rect> faces;
@@ -140,7 +141,7 @@ pub mod face {
 	/// }
 	/// cv::imshow("detection", frame);
 	/// ```
-	/// 
+	///
 	#[inline]
 	pub fn get_faces(image: &impl ToInputArray, faces: &mut impl ToOutputArray, params: &mut impl crate::face::CParamsTrait) -> Result<bool> {
 		input_array_arg!(image);
@@ -151,14 +152,14 @@ pub mod face {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// A utility to load list of paths to training image and annotation file.
 	/// ## Parameters
 	/// * imageList: The specified file contains paths to the training images.
 	/// * annotationList: The specified file contains paths to the training annotations.
 	/// * images: The loaded paths of training images.
 	/// * annotations: The loaded paths of annotation files.
-	/// 
+	///
 	/// Example of usage:
 	/// ```C++
 	/// String imageFiles = "images_path.txt";
@@ -167,7 +168,7 @@ pub mod face {
 	/// std::vector<String> landmarks_train;
 	/// loadDatasetList(imageFiles,ptsFiles,images_train,landmarks_train);
 	/// ```
-	/// 
+	///
 	#[inline]
 	pub fn load_dataset_list(image_list: &str, annotation_list: &str, images: &mut core::Vector<String>, annotations: &mut core::Vector<String>) -> Result<bool> {
 		extern_container_arg!(image_list);
@@ -178,21 +179,21 @@ pub mod face {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// A utility to load facial landmark information from a given file.
-	/// 
+	///
 	/// ## Parameters
 	/// * filename: The filename of file contains the facial landmarks data.
 	/// * points: The loaded facial landmark points.
 	/// * offset: An offset value to adjust the loaded points.
-	/// 
+	///
 	/// <B>Example of usage</B>
 	/// ```C++
 	/// std::vector<Point2f> points;
 	/// face::loadFacePoints("filename.txt", points, 0.0f);
 	/// ```
-	/// 
-	/// 
+	///
+	///
 	/// The annotation file should follow the default format which is
 	/// ```C++
 	/// version: 1
@@ -203,10 +204,10 @@ pub mod face {
 	/// ...
 	/// }
 	/// ```
-	/// 
+	///
 	/// where n_points is the number of points considered
 	/// and each point is represented as its position in x and y.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [load_face_points] function uses the following default values for its arguments:
 	/// * offset: 0.0f
@@ -220,21 +221,21 @@ pub mod face {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// A utility to load facial landmark information from a given file.
-	/// 
+	///
 	/// ## Parameters
 	/// * filename: The filename of file contains the facial landmarks data.
 	/// * points: The loaded facial landmark points.
 	/// * offset: An offset value to adjust the loaded points.
-	/// 
+	///
 	/// <B>Example of usage</B>
 	/// ```C++
 	/// std::vector<Point2f> points;
 	/// face::loadFacePoints("filename.txt", points, 0.0f);
 	/// ```
-	/// 
-	/// 
+	///
+	///
 	/// The annotation file should follow the default format which is
 	/// ```C++
 	/// version: 1
@@ -245,10 +246,10 @@ pub mod face {
 	/// ...
 	/// }
 	/// ```
-	/// 
+	///
 	/// where n_points is the number of points considered
 	/// and each point is represented as its position in x and y.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * offset: 0.0f
 	#[inline]
@@ -261,9 +262,9 @@ pub mod face {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// A utility to load facial landmark information from the dataset.
-	/// 
+	///
 	/// ## Parameters
 	/// * imageList: A file contains the list of image filenames in the training dataset.
 	/// * groundTruth: A file contains the list of filenames
@@ -273,7 +274,7 @@ pub mod face {
 	/// Images are not loaded by default to save the memory.
 	/// * facePoints: The loaded landmark points for all training data.
 	/// * offset: An offset value to adjust the loaded points.
-	/// 
+	///
 	/// <B>Example of usage</B>
 	/// ```C++
 	/// cv::String imageFiles = "../data/images_train.txt";
@@ -282,8 +283,8 @@ pub mod face {
 	/// std::vector<std::vector<Point2f> > facePoints;
 	/// loadTrainingData(imageFiles, ptsFiles, images, facePoints, 0.0f);
 	/// ```
-	/// 
-	/// 
+	///
+	///
 	/// example of content in the images_train.txt
 	/// ```C++
 	/// /home/user/ibug/image_003_1.jpg
@@ -291,8 +292,8 @@ pub mod face {
 	/// /home/user/ibug/image_005_1.jpg
 	/// /home/user/ibug/image_006.jpg
 	/// ```
-	/// 
-	/// 
+	///
+	///
 	/// example of content in the points_train.txt
 	/// ```C++
 	/// /home/user/ibug/image_003_1.pts
@@ -300,8 +301,8 @@ pub mod face {
 	/// /home/user/ibug/image_005_1.pts
 	/// /home/user/ibug/image_006.pts
 	/// ```
-	/// 
-	/// 
+	///
+	///
 	/// ## Note
 	/// This alternative version of [load_training_data_1] function uses the following default values for its arguments:
 	/// * offset: 0.0f
@@ -316,9 +317,9 @@ pub mod face {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// A utility to load facial landmark information from the dataset.
-	/// 
+	///
 	/// ## Parameters
 	/// * imageList: A file contains the list of image filenames in the training dataset.
 	/// * groundTruth: A file contains the list of filenames
@@ -328,7 +329,7 @@ pub mod face {
 	/// Images are not loaded by default to save the memory.
 	/// * facePoints: The loaded landmark points for all training data.
 	/// * offset: An offset value to adjust the loaded points.
-	/// 
+	///
 	/// <B>Example of usage</B>
 	/// ```C++
 	/// cv::String imageFiles = "../data/images_train.txt";
@@ -337,8 +338,8 @@ pub mod face {
 	/// std::vector<std::vector<Point2f> > facePoints;
 	/// loadTrainingData(imageFiles, ptsFiles, images, facePoints, 0.0f);
 	/// ```
-	/// 
-	/// 
+	///
+	///
 	/// example of content in the images_train.txt
 	/// ```C++
 	/// /home/user/ibug/image_003_1.jpg
@@ -346,8 +347,8 @@ pub mod face {
 	/// /home/user/ibug/image_005_1.jpg
 	/// /home/user/ibug/image_006.jpg
 	/// ```
-	/// 
-	/// 
+	///
+	///
 	/// example of content in the points_train.txt
 	/// ```C++
 	/// /home/user/ibug/image_003_1.pts
@@ -355,8 +356,8 @@ pub mod face {
 	/// /home/user/ibug/image_005_1.pts
 	/// /home/user/ibug/image_006.pts
 	/// ```
-	/// 
-	/// 
+	///
+	///
 	/// ## C++ default parameters
 	/// * offset: 0.0f
 	#[inline]
@@ -370,9 +371,9 @@ pub mod face {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// A utility to load facial landmark dataset from a single file.
-	/// 
+	///
 	/// ## Parameters
 	/// * filename: The filename of a file that contains the dataset information.
 	/// Each line contains the filename of an image followed by
@@ -382,13 +383,13 @@ pub mod face {
 	/// /home/user/ibug/image_003_1.jpg 336.820955 240.864510 334.238298 260.922709 335.266918 ...
 	/// /home/user/ibug/image_005_1.jpg 376.158428 230.845712 376.736984 254.924635 383.265403 ...
 	/// ```
-	/// 
+	///
 	/// * images: A vector where each element represent the filename of image in the dataset.
 	/// Images are not loaded by default to save the memory.
 	/// * facePoints: The loaded landmark points for all training data.
 	/// * delim: Delimiter between each element, the default value is a whitespace.
 	/// * offset: An offset value to adjust the loaded points.
-	/// 
+	///
 	/// <B>Example of usage</B>
 	/// ```C++
 	/// cv::String imageFiles = "../data/images_train.txt";
@@ -397,8 +398,8 @@ pub mod face {
 	/// std::vector<std::vector<Point2f> > facePoints;
 	/// loadTrainingData(imageFiles, ptsFiles, images, facePoints, 0.0f);
 	/// ```
-	/// 
-	/// 
+	///
+	///
 	/// ## Note
 	/// This alternative version of [load_training_data] function uses the following default values for its arguments:
 	/// * delim: ' '
@@ -413,9 +414,9 @@ pub mod face {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// A utility to load facial landmark dataset from a single file.
-	/// 
+	///
 	/// ## Parameters
 	/// * filename: The filename of a file that contains the dataset information.
 	/// Each line contains the filename of an image followed by
@@ -425,13 +426,13 @@ pub mod face {
 	/// /home/user/ibug/image_003_1.jpg 336.820955 240.864510 334.238298 260.922709 335.266918 ...
 	/// /home/user/ibug/image_005_1.jpg 376.158428 230.845712 376.736984 254.924635 383.265403 ...
 	/// ```
-	/// 
+	///
 	/// * images: A vector where each element represent the filename of image in the dataset.
 	/// Images are not loaded by default to save the memory.
 	/// * facePoints: The loaded landmark points for all training data.
 	/// * delim: Delimiter between each element, the default value is a whitespace.
 	/// * offset: An offset value to adjust the loaded points.
-	/// 
+	///
 	/// <B>Example of usage</B>
 	/// ```C++
 	/// cv::String imageFiles = "../data/images_train.txt";
@@ -440,8 +441,8 @@ pub mod face {
 	/// std::vector<std::vector<Point2f> > facePoints;
 	/// loadTrainingData(imageFiles, ptsFiles, images, facePoints, 0.0f);
 	/// ```
-	/// 
-	/// 
+	///
+	///
 	/// ## C++ default parameters
 	/// * delim: ' '
 	/// * offset: 0.0f
@@ -455,7 +456,7 @@ pub mod face {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// This function extracts the data for training from .txt files which contains the corresponding image name and landmarks.
 	/// The first file in each file should give the path of the image whose
 	/// landmarks are being described in the file. Then in the subsequent
@@ -463,10 +464,10 @@ pub mod face {
 	/// i.e each line should be of the form x,y
 	/// where x represents the x coordinate of the landmark and y represents
 	/// the y coordinate of the landmark.
-	/// 
+	///
 	/// For reference you can see the files as provided in the
 	/// <a href="http://www.ifp.illinois.edu/~vuongle2/helen/">HELEN dataset</a>
-	/// 
+	///
 	/// ## Parameters
 	/// * filename: A vector of type cv::String containing name of the .txt files.
 	/// * trainlandmarks: A vector of type cv::Point2f that would store shape or landmarks of all images.
@@ -481,11 +482,11 @@ pub mod face {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Constant methods for [crate::face::BIF]
 	pub trait BIFTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_BIF(&self) -> *const c_void;
-	
+
 		/// ## Returns
 		/// The number of filter bands used for computing BIF.
 		#[inline]
@@ -496,7 +497,7 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## Returns
 		/// The number of image rotations.
 		#[inline]
@@ -507,7 +508,7 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Computes features sby input image.
 		/// ## Parameters
 		/// * image: Input image (CV_32FC1).
@@ -522,60 +523,60 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::face::BIF]
 	pub trait BIFTrait: core::AlgorithmTrait + crate::face::BIFTraitConst {
 		fn as_raw_mut_BIF(&mut self) -> *mut c_void;
-	
+
 	}
-	
+
 	/// Implementation of bio-inspired features (BIF) from the paper:
 	/// Guo, Guodong, et al. "Human age estimation using bio-inspired features."
 	/// Computer Vision and Pattern Recognition, 2009. CVPR 2009.
 	pub struct BIF {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { BIF }
-	
+
 	impl Drop for BIF {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_face_BIF_delete(self.as_raw_mut_BIF()) };
 		}
 	}
-	
+
 	unsafe impl Send for BIF {}
-	
+
 	impl core::AlgorithmTraitConst for BIF {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for BIF {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { BIF, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::face::BIFTraitConst for BIF {
 		#[inline] fn as_raw_BIF(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::BIFTrait for BIF {
 		#[inline] fn as_raw_mut_BIF(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { BIF, crate::face::BIFTraitConst, as_raw_BIF, crate::face::BIFTrait, as_raw_mut_BIF }
-	
+
 	impl BIF {
 		/// ## Parameters
 		/// * num_bands: The number of filter bands (<=8) used for computing BIF.
 		/// * num_rotations: The number of image rotations for computing BIF.
 		/// ## Returns
 		/// Object for computing BIF.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * num_bands: 8
 		/// * num_rotations: 12
@@ -588,13 +589,13 @@ pub mod face {
 			let ret = unsafe { core::Ptr::<crate::face::BIF>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// ## Parameters
 		/// * num_bands: The number of filter bands (<=8) used for computing BIF.
 		/// * num_rotations: The number of image rotations for computing BIF.
 		/// ## Returns
 		/// Object for computing BIF.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [BIF::create] function uses the following default values for its arguments:
 		/// * num_bands: 8
@@ -608,11 +609,11 @@ pub mod face {
 			let ret = unsafe { core::Ptr::<crate::face::BIF>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	boxed_cast_base! { BIF, core::Algorithm, cv_face_BIF_to_Algorithm }
-	
+
 	impl std::fmt::Debug for BIF {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -620,11 +621,11 @@ pub mod face {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::face::BasicFaceRecognizer]
 	pub trait BasicFaceRecognizerTraitConst: crate::face::FaceRecognizerTraitConst {
 		fn as_raw_BasicFaceRecognizer(&self) -> *const c_void;
-	
+
 		/// ## See also
 		/// setNumComponents
 		#[inline]
@@ -635,7 +636,7 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## See also
 		/// setThreshold
 		#[inline]
@@ -646,7 +647,7 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_projections(&self) -> Result<core::Vector<core::Mat>> {
 			return_send!(via ocvrs_return);
@@ -656,7 +657,7 @@ pub mod face {
 			let ret = unsafe { core::Vector::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_labels(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -666,7 +667,7 @@ pub mod face {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_eigen_values(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -676,7 +677,7 @@ pub mod face {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_eigen_vectors(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -686,7 +687,7 @@ pub mod face {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_mean(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -696,7 +697,7 @@ pub mod face {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn write(&self, fs: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -705,7 +706,7 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn empty(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
@@ -714,13 +715,13 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::face::BasicFaceRecognizer]
 	pub trait BasicFaceRecognizerTrait: crate::face::BasicFaceRecognizerTraitConst + crate::face::FaceRecognizerTrait {
 		fn as_raw_mut_BasicFaceRecognizer(&mut self) -> *mut c_void;
-	
+
 		/// ## See also
 		/// setNumComponents getNumComponents
 		#[inline]
@@ -731,7 +732,7 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## See also
 		/// setThreshold getThreshold
 		#[inline]
@@ -742,7 +743,7 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn read(&mut self, fn_: &impl core::FileNodeTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -751,65 +752,65 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	pub struct BasicFaceRecognizer {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { BasicFaceRecognizer }
-	
+
 	impl Drop for BasicFaceRecognizer {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_face_BasicFaceRecognizer_delete(self.as_raw_mut_BasicFaceRecognizer()) };
 		}
 	}
-	
+
 	unsafe impl Send for BasicFaceRecognizer {}
-	
+
 	impl core::AlgorithmTraitConst for BasicFaceRecognizer {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for BasicFaceRecognizer {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { BasicFaceRecognizer, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::face::FaceRecognizerTraitConst for BasicFaceRecognizer {
 		#[inline] fn as_raw_FaceRecognizer(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::FaceRecognizerTrait for BasicFaceRecognizer {
 		#[inline] fn as_raw_mut_FaceRecognizer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { BasicFaceRecognizer, crate::face::FaceRecognizerTraitConst, as_raw_FaceRecognizer, crate::face::FaceRecognizerTrait, as_raw_mut_FaceRecognizer }
-	
+
 	impl crate::face::BasicFaceRecognizerTraitConst for BasicFaceRecognizer {
 		#[inline] fn as_raw_BasicFaceRecognizer(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::BasicFaceRecognizerTrait for BasicFaceRecognizer {
 		#[inline] fn as_raw_mut_BasicFaceRecognizer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { BasicFaceRecognizer, crate::face::BasicFaceRecognizerTraitConst, as_raw_BasicFaceRecognizer, crate::face::BasicFaceRecognizerTrait, as_raw_mut_BasicFaceRecognizer }
-	
+
 	impl BasicFaceRecognizer {
 	}
-	
+
 	boxed_cast_descendant! { BasicFaceRecognizer, crate::face::EigenFaceRecognizer, cv_face_BasicFaceRecognizer_to_EigenFaceRecognizer }
-	
+
 	boxed_cast_descendant! { BasicFaceRecognizer, crate::face::FisherFaceRecognizer, cv_face_BasicFaceRecognizer_to_FisherFaceRecognizer }
-	
+
 	boxed_cast_base! { BasicFaceRecognizer, core::Algorithm, cv_face_BasicFaceRecognizer_to_Algorithm }
-	
+
 	boxed_cast_base! { BasicFaceRecognizer, crate::face::FaceRecognizer, cv_face_BasicFaceRecognizer_to_FaceRecognizer }
-	
+
 	impl std::fmt::Debug for BasicFaceRecognizer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -817,11 +818,11 @@ pub mod face {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::face::CParams]
 	pub trait CParamsTraitConst {
 		fn as_raw_CParams(&self) -> *const c_void;
-	
+
 		/// the face detector
 		#[inline]
 		fn cascade(&self) -> String {
@@ -829,21 +830,21 @@ pub mod face {
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
-		
+
 		/// Parameter specifying how much the image size is reduced at each image scale.
 		#[inline]
 		fn scale_factor(&self) -> f64 {
 			let ret = unsafe { sys::cv_face_CParams_propScaleFactor_const(self.as_raw_CParams()) };
 			ret
 		}
-		
+
 		/// Parameter specifying how many neighbors each candidate rectangle should have to retain it.
 		#[inline]
 		fn min_neighbors(&self) -> i32 {
 			let ret = unsafe { sys::cv_face_CParams_propMinNeighbors_const(self.as_raw_CParams()) };
 			ret
 		}
-		
+
 		/// Minimum possible object size.
 		#[inline]
 		fn min_size(&self) -> core::Size {
@@ -852,7 +853,7 @@ pub mod face {
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
-		
+
 		/// Maximum possible object size.
 		#[inline]
 		fn max_size(&self) -> core::Size {
@@ -861,20 +862,20 @@ pub mod face {
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
-		
+
 		#[inline]
 		fn face_cascade(&self) -> crate::objdetect::CascadeClassifier {
 			let ret = unsafe { sys::cv_face_CParams_propFace_cascade_const(self.as_raw_CParams()) };
 			let ret = unsafe { crate::objdetect::CascadeClassifier::opencv_from_extern(ret) };
 			ret
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::face::CParams]
 	pub trait CParamsTrait: crate::face::CParamsTraitConst {
 		fn as_raw_mut_CParams(&mut self) -> *mut c_void;
-	
+
 		/// the face detector
 		#[inline]
 		fn set_cascade(&mut self, val: &str) {
@@ -882,68 +883,68 @@ pub mod face {
 			let ret = unsafe { sys::cv_face_CParams_propCascade_const_String(self.as_raw_mut_CParams(), val.opencv_as_extern()) };
 			ret
 		}
-		
+
 		/// Parameter specifying how much the image size is reduced at each image scale.
 		#[inline]
 		fn set_scale_factor(&mut self, val: f64) {
 			let ret = unsafe { sys::cv_face_CParams_propScaleFactor_const_double(self.as_raw_mut_CParams(), val) };
 			ret
 		}
-		
+
 		/// Parameter specifying how many neighbors each candidate rectangle should have to retain it.
 		#[inline]
 		fn set_min_neighbors(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_face_CParams_propMinNeighbors_const_int(self.as_raw_mut_CParams(), val) };
 			ret
 		}
-		
+
 		/// Minimum possible object size.
 		#[inline]
 		fn set_min_size(&mut self, val: core::Size) {
 			let ret = unsafe { sys::cv_face_CParams_propMinSize_const_Size(self.as_raw_mut_CParams(), &val) };
 			ret
 		}
-		
+
 		/// Maximum possible object size.
 		#[inline]
 		fn set_max_size(&mut self, val: core::Size) {
 			let ret = unsafe { sys::cv_face_CParams_propMaxSize_const_Size(self.as_raw_mut_CParams(), &val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_face_cascade(&mut self, val: crate::objdetect::CascadeClassifier) {
 			let ret = unsafe { sys::cv_face_CParams_propFace_cascade_const_CascadeClassifier(self.as_raw_mut_CParams(), val.as_raw_CascadeClassifier()) };
 			ret
 		}
-		
+
 	}
-	
+
 	pub struct CParams {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { CParams }
-	
+
 	impl Drop for CParams {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_face_CParams_delete(self.as_raw_mut_CParams()) };
 		}
 	}
-	
+
 	unsafe impl Send for CParams {}
-	
+
 	impl crate::face::CParamsTraitConst for CParams {
 		#[inline] fn as_raw_CParams(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::CParamsTrait for CParams {
 		#[inline] fn as_raw_mut_CParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CParams, crate::face::CParamsTraitConst, as_raw_CParams, crate::face::CParamsTrait, as_raw_mut_CParams }
-	
+
 	impl CParams {
 		/// ## C++ default parameters
 		/// * sf: 1.1
@@ -960,7 +961,7 @@ pub mod face {
 			let ret = unsafe { crate::face::CParams::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// ## Note
 		/// This alternative version of [new] function uses the following default values for its arguments:
 		/// * sf: 1.1
@@ -977,9 +978,9 @@ pub mod face {
 			let ret = unsafe { crate::face::CParams::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	impl std::fmt::Debug for CParams {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -993,74 +994,74 @@ pub mod face {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::face::EigenFaceRecognizer]
 	pub trait EigenFaceRecognizerTraitConst: crate::face::BasicFaceRecognizerTraitConst {
 		fn as_raw_EigenFaceRecognizer(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::face::EigenFaceRecognizer]
 	pub trait EigenFaceRecognizerTrait: crate::face::BasicFaceRecognizerTrait + crate::face::EigenFaceRecognizerTraitConst {
 		fn as_raw_mut_EigenFaceRecognizer(&mut self) -> *mut c_void;
-	
+
 	}
-	
+
 	pub struct EigenFaceRecognizer {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { EigenFaceRecognizer }
-	
+
 	impl Drop for EigenFaceRecognizer {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_face_EigenFaceRecognizer_delete(self.as_raw_mut_EigenFaceRecognizer()) };
 		}
 	}
-	
+
 	unsafe impl Send for EigenFaceRecognizer {}
-	
+
 	impl core::AlgorithmTraitConst for EigenFaceRecognizer {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for EigenFaceRecognizer {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { EigenFaceRecognizer, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::face::BasicFaceRecognizerTraitConst for EigenFaceRecognizer {
 		#[inline] fn as_raw_BasicFaceRecognizer(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::BasicFaceRecognizerTrait for EigenFaceRecognizer {
 		#[inline] fn as_raw_mut_BasicFaceRecognizer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { EigenFaceRecognizer, crate::face::BasicFaceRecognizerTraitConst, as_raw_BasicFaceRecognizer, crate::face::BasicFaceRecognizerTrait, as_raw_mut_BasicFaceRecognizer }
-	
+
 	impl crate::face::FaceRecognizerTraitConst for EigenFaceRecognizer {
 		#[inline] fn as_raw_FaceRecognizer(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::FaceRecognizerTrait for EigenFaceRecognizer {
 		#[inline] fn as_raw_mut_FaceRecognizer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { EigenFaceRecognizer, crate::face::FaceRecognizerTraitConst, as_raw_FaceRecognizer, crate::face::FaceRecognizerTrait, as_raw_mut_FaceRecognizer }
-	
+
 	impl crate::face::EigenFaceRecognizerTraitConst for EigenFaceRecognizer {
 		#[inline] fn as_raw_EigenFaceRecognizer(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::EigenFaceRecognizerTrait for EigenFaceRecognizer {
 		#[inline] fn as_raw_mut_EigenFaceRecognizer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { EigenFaceRecognizer, crate::face::EigenFaceRecognizerTraitConst, as_raw_EigenFaceRecognizer, crate::face::EigenFaceRecognizerTrait, as_raw_mut_EigenFaceRecognizer }
-	
+
 	impl EigenFaceRecognizer {
 		/// ## Parameters
 		/// * num_components: The number of components (read: Eigenfaces) kept for this Principal
@@ -1068,9 +1069,9 @@ pub mod face {
 		/// kept for good reconstruction capabilities. It is based on your input data, so experiment with the
 		/// number. Keeping 80 components should almost always be sufficient.
 		/// * threshold: The threshold applied in the prediction.
-		/// 
+		///
 		/// ### Notes:
-		/// 
+		///
 		/// *   Training and prediction must be done on grayscale images, use cvtColor to convert between the
 		///    color spaces.
 		/// *   **THE EIGENFACES METHOD MAKES THE ASSUMPTION, THAT THE TRAINING AND TEST IMAGES ARE OF EQUAL
@@ -1078,9 +1079,9 @@ pub mod face {
 		///    input data has the correct shape, else a meaningful exception is thrown. Use resize to resize
 		///    the images.
 		/// *   This model does not support updating.
-		/// 
+		///
 		/// ### Model internal data:
-		/// 
+		///
 		/// *   num_components see EigenFaceRecognizer::create.
 		/// *   threshold see EigenFaceRecognizer::create.
 		/// *   eigenvalues The eigenvalues for this Principal Component Analysis (ordered descending).
@@ -1090,7 +1091,7 @@ pub mod face {
 		/// *   projections The projections of the training data.
 		/// *   labels The threshold applied in the prediction. If the distance to the nearest neighbor is
 		///    larger than the threshold, this method returns -1.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * num_components: 0
 		/// * threshold: DBL_MAX
@@ -1103,16 +1104,16 @@ pub mod face {
 			let ret = unsafe { core::Ptr::<crate::face::EigenFaceRecognizer>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// ## Parameters
 		/// * num_components: The number of components (read: Eigenfaces) kept for this Principal
 		/// Component Analysis. As a hint: There's no rule how many components (read: Eigenfaces) should be
 		/// kept for good reconstruction capabilities. It is based on your input data, so experiment with the
 		/// number. Keeping 80 components should almost always be sufficient.
 		/// * threshold: The threshold applied in the prediction.
-		/// 
+		///
 		/// ### Notes:
-		/// 
+		///
 		/// *   Training and prediction must be done on grayscale images, use cvtColor to convert between the
 		///    color spaces.
 		/// *   **THE EIGENFACES METHOD MAKES THE ASSUMPTION, THAT THE TRAINING AND TEST IMAGES ARE OF EQUAL
@@ -1120,9 +1121,9 @@ pub mod face {
 		///    input data has the correct shape, else a meaningful exception is thrown. Use resize to resize
 		///    the images.
 		/// *   This model does not support updating.
-		/// 
+		///
 		/// ### Model internal data:
-		/// 
+		///
 		/// *   num_components see EigenFaceRecognizer::create.
 		/// *   threshold see EigenFaceRecognizer::create.
 		/// *   eigenvalues The eigenvalues for this Principal Component Analysis (ordered descending).
@@ -1132,7 +1133,7 @@ pub mod face {
 		/// *   projections The projections of the training data.
 		/// *   labels The threshold applied in the prediction. If the distance to the nearest neighbor is
 		///    larger than the threshold, this method returns -1.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [EigenFaceRecognizer::create] function uses the following default values for its arguments:
 		/// * num_components: 0
@@ -1146,15 +1147,15 @@ pub mod face {
 			let ret = unsafe { core::Ptr::<crate::face::EigenFaceRecognizer>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	boxed_cast_base! { EigenFaceRecognizer, core::Algorithm, cv_face_EigenFaceRecognizer_to_Algorithm }
-	
+
 	boxed_cast_base! { EigenFaceRecognizer, crate::face::BasicFaceRecognizer, cv_face_EigenFaceRecognizer_to_BasicFaceRecognizer }
-	
+
 	boxed_cast_base! { EigenFaceRecognizer, crate::face::FaceRecognizer, cv_face_EigenFaceRecognizer_to_FaceRecognizer }
-	
+
 	impl std::fmt::Debug for EigenFaceRecognizer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -1162,23 +1163,23 @@ pub mod face {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::face::FaceRecognizer]
 	pub trait FaceRecognizerTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_FaceRecognizer(&self) -> *const c_void;
-	
+
 		/// Predicts a label and associated confidence (e.g. distance) for a given input image.
-		/// 
+		///
 		/// ## Parameters
 		/// * src: Sample image to get a prediction from.
 		/// * label: The predicted label for the given image.
 		/// * confidence: Associated confidence (e.g. distance) for the predicted label.
-		/// 
+		///
 		/// The suffix const means that prediction does not affect the internal model state, so the method can
 		/// be safely called from within different threads.
-		/// 
+		///
 		/// The following example shows how to get a prediction from a trained model:
-		/// 
+		///
 		/// ```C++
 		/// using namespace cv;
 		/// // Do your initialization here (create the cv::FaceRecognizer model) ...
@@ -1188,10 +1189,10 @@ pub mod face {
 		/// // And get a prediction from the cv::FaceRecognizer:
 		/// int predicted = model->predict(img);
 		/// ```
-		/// 
-		/// 
+		///
+		///
 		/// Or to get a prediction and the associated confidence (e.g. distance):
-		/// 
+		///
 		/// ```C++
 		/// using namespace cv;
 		/// // Do your initialization here (create the cv::FaceRecognizer model) ...
@@ -1203,8 +1204,8 @@ pub mod face {
 		/// // Get the prediction and associated confidence from the model
 		/// model->predict(img, predicted_label, predicted_confidence);
 		/// ```
-		/// 
-		/// 
+		///
+		///
 		/// ## Overloaded parameters
 		#[inline]
 		fn predict_label(&self, src: &impl ToInputArray) -> Result<i32> {
@@ -1215,19 +1216,19 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Predicts a label and associated confidence (e.g. distance) for a given input image.
-		/// 
+		///
 		/// ## Parameters
 		/// * src: Sample image to get a prediction from.
 		/// * label: The predicted label for the given image.
 		/// * confidence: Associated confidence (e.g. distance) for the predicted label.
-		/// 
+		///
 		/// The suffix const means that prediction does not affect the internal model state, so the method can
 		/// be safely called from within different threads.
-		/// 
+		///
 		/// The following example shows how to get a prediction from a trained model:
-		/// 
+		///
 		/// ```C++
 		/// using namespace cv;
 		/// // Do your initialization here (create the cv::FaceRecognizer model) ...
@@ -1237,10 +1238,10 @@ pub mod face {
 		/// // And get a prediction from the cv::FaceRecognizer:
 		/// int predicted = model->predict(img);
 		/// ```
-		/// 
-		/// 
+		///
+		///
 		/// Or to get a prediction and the associated confidence (e.g. distance):
-		/// 
+		///
 		/// ```C++
 		/// using namespace cv;
 		/// // Do your initialization here (create the cv::FaceRecognizer model) ...
@@ -1252,7 +1253,7 @@ pub mod face {
 		/// // Get the prediction and associated confidence from the model
 		/// model->predict(img, predicted_label, predicted_confidence);
 		/// ```
-		/// 
+		///
 		#[inline]
 		fn predict(&self, src: &impl ToInputArray, label: &mut i32, confidence: &mut f64) -> Result<()> {
 			input_array_arg!(src);
@@ -1262,12 +1263,12 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// - if implemented - send all result of prediction to collector that can be used for somehow custom result handling
 		/// ## Parameters
 		/// * src: Sample image to get a prediction from.
 		/// * collector: User-defined collector object that accepts all results
-		/// 
+		///
 		/// To implement this method u just have to do same internal cycle as in predict(InputArray src, CV_OUT int &label, CV_OUT double &confidence) but
 		/// not try to get "best@ result, just resend it to caller side with given collector
 		#[inline]
@@ -1279,17 +1280,17 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Saves a FaceRecognizer and its model state.
-		/// 
+		///
 		/// Saves this model to a given filename, either as XML or YAML.
 		/// ## Parameters
 		/// * filename: The filename to store this FaceRecognizer to (either XML/YAML).
-		/// 
+		///
 		/// Every FaceRecognizer overwrites FaceRecognizer::save(FileStorage& fs) to save the internal model
 		/// state. FaceRecognizer::save(const String& filename) saves the state of a model to the given
 		/// filename.
-		/// 
+		///
 		/// The suffix const means that prediction does not affect the internal model state, so the method can
 		/// be safely called from within different threads.
 		#[inline]
@@ -1301,22 +1302,22 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Saves a FaceRecognizer and its model state.
-		/// 
+		///
 		/// Saves this model to a given filename, either as XML or YAML.
 		/// ## Parameters
 		/// * filename: The filename to store this FaceRecognizer to (either XML/YAML).
-		/// 
+		///
 		/// Every FaceRecognizer overwrites FaceRecognizer::save(FileStorage& fs) to save the internal model
 		/// state. FaceRecognizer::save(const String& filename) saves the state of a model to the given
 		/// filename.
-		/// 
+		///
 		/// The suffix const means that prediction does not affect the internal model state, so the method can
 		/// be safely called from within different threads.
-		/// 
+		///
 		/// ## Overloaded parameters
-		/// 
+		///
 		/// Saves this model to a given FileStorage.
 		/// * fs: The FileStorage to store this FaceRecognizer to.
 		#[inline]
@@ -1327,7 +1328,7 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
 		#[inline]
 		fn empty(&self) -> Result<bool> {
@@ -1337,9 +1338,9 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Gets string information by label.
-		/// 
+		///
 		/// If an unknown label id is provided or there is no label information associated with the specified
 		/// label id the method returns an empty string.
 		#[inline]
@@ -1351,9 +1352,9 @@ pub mod face {
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Gets vector of labels by string.
-		/// 
+		///
 		/// The function searches for the labels containing the specified sub-string in the associated string
 		/// info.
 		#[inline]
@@ -1366,7 +1367,7 @@ pub mod face {
 			let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// threshold parameter accessor - required for default BestMinDist collector
 		#[inline]
 		fn get_threshold(&self) -> Result<f64> {
@@ -1376,28 +1377,28 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::face::FaceRecognizer]
 	pub trait FaceRecognizerTrait: core::AlgorithmTrait + crate::face::FaceRecognizerTraitConst {
 		fn as_raw_mut_FaceRecognizer(&mut self) -> *mut c_void;
-	
+
 		/// Trains a FaceRecognizer with given data and associated labels.
-		/// 
+		///
 		/// ## Parameters
 		/// * src: The training images, that means the faces you want to learn. The data has to be
 		/// given as a vector\<Mat\>.
 		/// * labels: The labels corresponding to the images have to be given either as a vector\<int\>
 		/// or a Mat of type CV_32SC1.
-		/// 
+		///
 		/// The following source code snippet shows you how to learn a Fisherfaces model on a given set of
 		/// images. The images are read with imread and pushed into a std::vector\<Mat\>. The labels of each
 		/// image are stored within a std::vector\<int\> (you could also use a Mat of type CV_32SC1). Think of
 		/// the label as the subject (the person) this image belongs to, so same subjects (persons) should have
 		/// the same label. For the available FaceRecognizer you don't have to pay any attention to the order of
 		/// the labels, just make sure same persons have the same label:
-		/// 
+		///
 		/// ```C++
 		/// // holds images and labels
 		/// vector<Mat> images;
@@ -1413,28 +1414,28 @@ pub mod face {
 		/// images.push_back(imread("person1/1.jpg", IMREAD_GRAYSCALE)); labels.push_back(1);
 		/// images.push_back(imread("person1/2.jpg", IMREAD_GRAYSCALE)); labels.push_back(1);
 		/// ```
-		/// 
-		/// 
+		///
+		///
 		/// Now that you have read some images, we can create a new FaceRecognizer. In this example I'll create
 		/// a Fisherfaces model and decide to keep all of the possible Fisherfaces:
-		/// 
+		///
 		/// ```C++
 		/// // Create a new Fisherfaces model and retain all available Fisherfaces,
 		/// // this is the most common usage of this specific FaceRecognizer:
 		/// //
 		/// Ptr<FaceRecognizer> model =  FisherFaceRecognizer::create();
 		/// ```
-		/// 
-		/// 
+		///
+		///
 		/// And finally train it on the given dataset (the face images and labels):
-		/// 
+		///
 		/// ```C++
 		/// // This is the common interface to train all of the available cv::FaceRecognizer
 		/// // implementations:
 		/// //
 		/// model->train(images, labels);
 		/// ```
-		/// 
+		///
 		#[inline]
 		fn train(&mut self, src: &impl ToInputArray, labels: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(src);
@@ -1445,21 +1446,21 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Updates a FaceRecognizer with given data and associated labels.
-		/// 
+		///
 		/// ## Parameters
 		/// * src: The training images, that means the faces you want to learn. The data has to be given
 		/// as a vector\<Mat\>.
 		/// * labels: The labels corresponding to the images have to be given either as a vector\<int\> or
 		/// a Mat of type CV_32SC1.
-		/// 
+		///
 		/// This method updates a (probably trained) FaceRecognizer, but only if the algorithm supports it. The
 		/// Local Binary Patterns Histograms (LBPH) recognizer (see createLBPHFaceRecognizer) can be updated.
 		/// For the Eigenfaces and Fisherfaces method, this is algorithmically not possible and you have to
 		/// re-estimate the model with FaceRecognizer::train. In any case, a call to train empties the existing
 		/// model and learns a new model, while update does not delete any model data.
-		/// 
+		///
 		/// ```C++
 		/// // Create a new LBPH model (it can be updated) and use the default parameters,
 		/// // this is the most common usage of this specific FaceRecognizer:
@@ -1481,18 +1482,18 @@ pub mod face {
 		/// // This will preserve the old model data and extend the existing model
 		/// // with the new features extracted from newImages!
 		/// ```
-		/// 
-		/// 
+		///
+		///
 		/// Calling update on an Eigenfaces model (see EigenFaceRecognizer::create), which doesn't support
 		/// updating, will throw an error similar to:
-		/// 
+		///
 		/// ```C++
 		/// OpenCV Error: The function/feature is not implemented (This FaceRecognizer (FaceRecognizer.Eigenfaces) does not support updating, you have to use FaceRecognizer::train to update it.) in update, file /home/philipp/git/opencv/modules/contrib/src/facerec.cpp, line 305
 		/// terminate called after throwing an instance of "cv::Exception"
 		/// ```
-		/// 
-		/// 
-		/// 
+		///
+		///
+		///
 		/// Note: The FaceRecognizer does not store your training images, because this would be very
 		/// memory intense and it's not the responsibility of te FaceRecognizer to do so. The caller is
 		/// responsible for maintaining the dataset, he want to work with.
@@ -1506,9 +1507,9 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Loads a FaceRecognizer and its model state.
-		/// 
+		///
 		/// Loads a persisted model and state from a given XML or YAML file . Every FaceRecognizer has to
 		/// overwrite FaceRecognizer::load(FileStorage& fs) to enable loading the model state.
 		/// FaceRecognizer::load(FileStorage& fs) in turn gets called by
@@ -1522,14 +1523,14 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Loads a FaceRecognizer and its model state.
-		/// 
+		///
 		/// Loads a persisted model and state from a given XML or YAML file . Every FaceRecognizer has to
 		/// overwrite FaceRecognizer::load(FileStorage& fs) to enable loading the model state.
 		/// FaceRecognizer::load(FileStorage& fs) in turn gets called by
 		/// FaceRecognizer::load(const String& filename), to ease saving a model.
-		/// 
+		///
 		/// ## Overloaded parameters
 		#[inline]
 		fn read_1(&mut self, fn_: &impl core::FileNodeTraitConst) -> Result<()> {
@@ -1539,9 +1540,9 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Sets string info for the specified model's label.
-		/// 
+		///
 		/// The string info is replaced by the provided value if it was set before for the specified label.
 		#[inline]
 		fn set_label_info(&mut self, label: i32, str_info: &str) -> Result<()> {
@@ -1552,7 +1553,7 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Sets threshold of model
 		#[inline]
 		fn set_threshold(&mut self, val: f64) -> Result<()> {
@@ -1562,23 +1563,23 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Abstract base class for all face recognition models
-	/// 
+	///
 	/// All face recognition models in OpenCV are derived from the abstract base class FaceRecognizer, which
 	/// provides a unified access to all face recongition algorithms in OpenCV.
-	/// 
+	///
 	/// ### Description
-	/// 
+	///
 	/// I'll go a bit more into detail explaining FaceRecognizer, because it doesn't look like a powerful
 	/// interface at first sight. But: Every FaceRecognizer is an Algorithm, so you can easily get/set all
 	/// model internals (if allowed by the implementation). Algorithm is a relatively new OpenCV concept,
 	/// which is available since the 2.4 release. I suggest you take a look at its description.
-	/// 
+	///
 	/// Algorithm provides the following features for all derived classes:
-	/// 
+	///
 	/// *   So called "virtual constructor". That is, each Algorithm derivative is registered at program
 	///    start and you can get the list of registered algorithms and create instance of a particular
 	///    algorithm by its name (see Algorithm::create). If you plan to add your own algorithms, it is
@@ -1591,21 +1592,21 @@ pub mod face {
 	///    Algorithm::set and Algorithm::get for details.
 	/// *   Reading and writing parameters from/to XML or YAML files. Every Algorithm derivative can store
 	///    all its parameters and then read them back. There is no need to re-implement it each time.
-	/// 
+	///
 	/// Moreover every FaceRecognizer supports the:
-	/// 
+	///
 	/// *   **Training** of a FaceRecognizer with FaceRecognizer::train on a given set of images (your face
 	///    database!).
 	/// *   **Prediction** of a given sample image, that means a face. The image is given as a Mat.
 	/// *   **Loading/Saving** the model state from/to a given XML or YAML.
 	/// *   **Setting/Getting labels info**, that is stored as a string. String labels info is useful for
 	///    keeping names of the recognized people.
-	/// 
-	/// 
+	///
+	///
 	/// Note: When using the FaceRecognizer interface in combination with Python, please stick to Python 2.
 	/// Some underlying scripts like create_csv will not work in other versions, like Python 3. Setting the
 	/// Thresholds +++++++++++++++++++++++
-	/// 
+	///
 	/// Sometimes you run into the situation, when you want to apply a threshold on the prediction. A common
 	/// scenario in face recognition is to tell, whether a face belongs to the training dataset or if it is
 	/// unknown. You might wonder, why there's no public API in FaceRecognizer to set the threshold for the
@@ -1614,9 +1615,9 @@ pub mod face {
 	/// algorithm. The appropriate place to set the thresholds is in the constructor of the specific
 	/// FaceRecognizer and since every FaceRecognizer is a Algorithm (see above), you can get/set the
 	/// thresholds at runtime!
-	/// 
+	///
 	/// Here is an example of setting a threshold for the Eigenfaces method, when creating the model:
-	/// 
+	///
 	/// ```C++
 	/// // Let's say we want to keep 10 Eigenfaces and have a threshold value of 10.0
 	/// int num_components = 10;
@@ -1625,22 +1626,22 @@ pub mod face {
 	/// // create the concrete implementation with the appropriate parameters:
 	/// Ptr<FaceRecognizer> model = EigenFaceRecognizer::create(num_components, threshold);
 	/// ```
-	/// 
-	/// 
+	///
+	///
 	/// Sometimes it's impossible to train the model, just to experiment with threshold values. Thanks to
 	/// Algorithm it's possible to set internal model thresholds during runtime. Let's see how we would
 	/// set/get the prediction for the Eigenface model, we've created above:
-	/// 
+	///
 	/// ```C++
 	/// // The following line reads the threshold from the Eigenfaces model:
 	/// double current_threshold = model->getDouble("threshold");
 	/// // And this line sets the threshold to 0.0:
 	/// model->set("threshold", 0.0);
 	/// ```
-	/// 
-	/// 
+	///
+	///
 	/// If you've set the threshold to 0.0 as we did above, then:
-	/// 
+	///
 	/// ```C++
 	/// //
 	/// Mat img = imread("person1/3.jpg", IMREAD_GRAYSCALE);
@@ -1650,70 +1651,70 @@ pub mod face {
 	/// int predicted_label = model->predict(img);
 	/// // ...
 	/// ```
-	/// 
-	/// 
+	///
+	///
 	/// is going to yield -1 as predicted label, which states this face is unknown.
-	/// 
+	///
 	/// ### Getting the name of a FaceRecognizer
-	/// 
+	///
 	/// Since every FaceRecognizer is a Algorithm, you can use Algorithm::name to get the name of a
 	/// FaceRecognizer:
-	/// 
+	///
 	/// ```C++
 	/// // Create a FaceRecognizer:
 	/// Ptr<FaceRecognizer> model = EigenFaceRecognizer::create();
 	/// // And here's how to get its name:
 	/// String name = model->name();
 	/// ```
-	/// 
+	///
 	pub struct FaceRecognizer {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { FaceRecognizer }
-	
+
 	impl Drop for FaceRecognizer {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_face_FaceRecognizer_delete(self.as_raw_mut_FaceRecognizer()) };
 		}
 	}
-	
+
 	unsafe impl Send for FaceRecognizer {}
-	
+
 	impl core::AlgorithmTraitConst for FaceRecognizer {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for FaceRecognizer {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { FaceRecognizer, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::face::FaceRecognizerTraitConst for FaceRecognizer {
 		#[inline] fn as_raw_FaceRecognizer(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::FaceRecognizerTrait for FaceRecognizer {
 		#[inline] fn as_raw_mut_FaceRecognizer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { FaceRecognizer, crate::face::FaceRecognizerTraitConst, as_raw_FaceRecognizer, crate::face::FaceRecognizerTrait, as_raw_mut_FaceRecognizer }
-	
+
 	impl FaceRecognizer {
 	}
-	
+
 	boxed_cast_descendant! { FaceRecognizer, crate::face::BasicFaceRecognizer, cv_face_FaceRecognizer_to_BasicFaceRecognizer }
-	
+
 	boxed_cast_descendant! { FaceRecognizer, crate::face::EigenFaceRecognizer, cv_face_FaceRecognizer_to_EigenFaceRecognizer }
-	
+
 	boxed_cast_descendant! { FaceRecognizer, crate::face::FisherFaceRecognizer, cv_face_FaceRecognizer_to_FisherFaceRecognizer }
-	
+
 	boxed_cast_descendant! { FaceRecognizer, crate::face::LBPHFaceRecognizer, cv_face_FaceRecognizer_to_LBPHFaceRecognizer }
-	
+
 	boxed_cast_base! { FaceRecognizer, core::Algorithm, cv_face_FaceRecognizer_to_Algorithm }
-	
+
 	impl std::fmt::Debug for FaceRecognizer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -1721,26 +1722,26 @@ pub mod face {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::face::Facemark]
 	pub trait FacemarkTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_Facemark(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::face::Facemark]
 	pub trait FacemarkTrait: core::AlgorithmTrait + crate::face::FacemarkTraitConst {
 		fn as_raw_mut_Facemark(&mut self) -> *mut c_void;
-	
+
 		/// A function to load the trained model before the fitting process.
 		/// ## Parameters
 		/// * model: A string represent the filename of a trained model.
-		/// 
+		///
 		/// <B>Example of usage</B>
 		/// ```C++
 		/// facemark->loadModel("../data/lbf.model");
 		/// ```
-		/// 
+		///
 		#[inline]
 		fn load_model(&mut self, model: &str) -> Result<()> {
 			extern_container_arg!(model);
@@ -1750,14 +1751,14 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Detect facial landmarks from an image.
 		/// ## Parameters
 		/// * image: Input image.
 		/// * faces: Output of the function which represent region of interest of the detected faces.
 		/// Each face is stored in cv::Rect container.
 		/// * landmarks: The detected landmark points for each faces.
-		/// 
+		///
 		/// <B>Example of usage</B>
 		/// ```C++
 		/// Mat image = imread("image.jpg");
@@ -1765,7 +1766,7 @@ pub mod face {
 		/// std::vector<std::vector<Point2f> > landmarks;
 		/// facemark->fit(image, faces, landmarks);
 		/// ```
-		/// 
+		///
 		#[inline]
 		fn fit(&mut self, image: &impl ToInputArray, faces: &impl ToInputArray, landmarks: &mut impl ToOutputArray) -> Result<bool> {
 			input_array_arg!(image);
@@ -1777,75 +1778,75 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Abstract base class for all facemark models
-	/// 
+	///
 	/// To utilize this API in your program, please take a look at the [tutorial_table_of_content_facemark]
 	/// ### Description
-	/// 
+	///
 	/// Facemark is a base class which provides universal access to any specific facemark algorithm.
 	/// Therefore, the users should declare a desired algorithm before they can use it in their application.
-	/// 
+	///
 	/// Here is an example on how to declare a facemark algorithm:
 	/// ```C++
 	/// // Using Facemark in your code:
 	/// Ptr<Facemark> facemark = createFacemarkLBF();
 	/// ```
-	/// 
-	/// 
+	///
+	///
 	/// The typical pipeline for facemark detection is as follows:
 	/// - Load the trained model using Facemark::loadModel.
 	/// - Perform the fitting on an image via Facemark::fit.
 	pub struct Facemark {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { Facemark }
-	
+
 	impl Drop for Facemark {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_face_Facemark_delete(self.as_raw_mut_Facemark()) };
 		}
 	}
-	
+
 	unsafe impl Send for Facemark {}
-	
+
 	impl core::AlgorithmTraitConst for Facemark {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for Facemark {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { Facemark, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::face::FacemarkTraitConst for Facemark {
 		#[inline] fn as_raw_Facemark(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::FacemarkTrait for Facemark {
 		#[inline] fn as_raw_mut_Facemark(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { Facemark, crate::face::FacemarkTraitConst, as_raw_Facemark, crate::face::FacemarkTrait, as_raw_mut_Facemark }
-	
+
 	impl Facemark {
 	}
-	
+
 	boxed_cast_descendant! { Facemark, crate::face::FacemarkAAM, cv_face_Facemark_to_FacemarkAAM }
-	
+
 	boxed_cast_descendant! { Facemark, crate::face::FacemarkKazemi, cv_face_Facemark_to_FacemarkKazemi }
-	
+
 	boxed_cast_descendant! { Facemark, crate::face::FacemarkLBF, cv_face_Facemark_to_FacemarkLBF }
-	
+
 	boxed_cast_descendant! { Facemark, crate::face::FacemarkTrain, cv_face_Facemark_to_FacemarkTrain }
-	
+
 	boxed_cast_base! { Facemark, core::Algorithm, cv_face_Facemark_to_Algorithm }
-	
+
 	impl std::fmt::Debug for Facemark {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -1853,17 +1854,17 @@ pub mod face {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::face::FacemarkAAM]
 	pub trait FacemarkAAMTraitConst: crate::face::FacemarkTrainTraitConst {
 		fn as_raw_FacemarkAAM(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::face::FacemarkAAM]
 	pub trait FacemarkAAMTrait: crate::face::FacemarkAAMTraitConst + crate::face::FacemarkTrainTrait {
 		fn as_raw_mut_FacemarkAAM(&mut self) -> *mut c_void;
-	
+
 		/// overload with additional Config structures
 		#[inline]
 		fn fit_config(&mut self, image: &impl ToInputArray, roi: &impl ToInputArray, _landmarks: &mut impl ToOutputArray, runtime_params: &core::Vector<crate::face::FacemarkAAM_Config>) -> Result<bool> {
@@ -1876,67 +1877,67 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	pub struct FacemarkAAM {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { FacemarkAAM }
-	
+
 	impl Drop for FacemarkAAM {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_face_FacemarkAAM_delete(self.as_raw_mut_FacemarkAAM()) };
 		}
 	}
-	
+
 	unsafe impl Send for FacemarkAAM {}
-	
+
 	impl core::AlgorithmTraitConst for FacemarkAAM {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for FacemarkAAM {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { FacemarkAAM, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::face::FacemarkTraitConst for FacemarkAAM {
 		#[inline] fn as_raw_Facemark(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::FacemarkTrait for FacemarkAAM {
 		#[inline] fn as_raw_mut_Facemark(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { FacemarkAAM, crate::face::FacemarkTraitConst, as_raw_Facemark, crate::face::FacemarkTrait, as_raw_mut_Facemark }
-	
+
 	impl crate::face::FacemarkTrainTraitConst for FacemarkAAM {
 		#[inline] fn as_raw_FacemarkTrain(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::FacemarkTrainTrait for FacemarkAAM {
 		#[inline] fn as_raw_mut_FacemarkTrain(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { FacemarkAAM, crate::face::FacemarkTrainTraitConst, as_raw_FacemarkTrain, crate::face::FacemarkTrainTrait, as_raw_mut_FacemarkTrain }
-	
+
 	impl crate::face::FacemarkAAMTraitConst for FacemarkAAM {
 		#[inline] fn as_raw_FacemarkAAM(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::FacemarkAAMTrait for FacemarkAAM {
 		#[inline] fn as_raw_mut_FacemarkAAM(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { FacemarkAAM, crate::face::FacemarkAAMTraitConst, as_raw_FacemarkAAM, crate::face::FacemarkAAMTrait, as_raw_mut_FacemarkAAM }
-	
+
 	impl FacemarkAAM {
 		/// initializer
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * parameters: FacemarkAAM::Params()
 		#[inline]
@@ -1948,9 +1949,9 @@ pub mod face {
 			let ret = unsafe { core::Ptr::<crate::face::FacemarkAAM>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// initializer
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [FacemarkAAM::create] function uses the following default values for its arguments:
 		/// * parameters: FacemarkAAM::Params()
@@ -1963,15 +1964,15 @@ pub mod face {
 			let ret = unsafe { core::Ptr::<crate::face::FacemarkAAM>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	boxed_cast_base! { FacemarkAAM, core::Algorithm, cv_face_FacemarkAAM_to_Algorithm }
-	
+
 	boxed_cast_base! { FacemarkAAM, crate::face::Facemark, cv_face_FacemarkAAM_to_Facemark }
-	
+
 	boxed_cast_base! { FacemarkAAM, crate::face::FacemarkTrain, cv_face_FacemarkAAM_to_FacemarkTrain }
-	
+
 	impl std::fmt::Debug for FacemarkAAM {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -1979,18 +1980,18 @@ pub mod face {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::face::FacemarkAAM_Config]
 	pub trait FacemarkAAM_ConfigTraitConst {
 		fn as_raw_FacemarkAAM_Config(&self) -> *const c_void;
-	
+
 		#[inline]
 		fn r(&self) -> core::Mat {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Config_propR_const(self.as_raw_FacemarkAAM_Config()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
-		
+
 		#[inline]
 		fn t(&self) -> core::Point2f {
 			return_send!(via ocvrs_return);
@@ -1998,77 +1999,77 @@ pub mod face {
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
-		
+
 		#[inline]
 		fn scale(&self) -> f32 {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Config_propScale_const(self.as_raw_FacemarkAAM_Config()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn model_scale_idx(&self) -> i32 {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Config_propModel_scale_idx_const(self.as_raw_FacemarkAAM_Config()) };
 			ret
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::face::FacemarkAAM_Config]
 	pub trait FacemarkAAM_ConfigTrait: crate::face::FacemarkAAM_ConfigTraitConst {
 		fn as_raw_mut_FacemarkAAM_Config(&mut self) -> *mut c_void;
-	
+
 		#[inline]
 		fn set_r(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Config_propR_const_Mat(self.as_raw_mut_FacemarkAAM_Config(), val.as_raw_Mat()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_t(&mut self, val: core::Point2f) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Config_propT_const_Point2f(self.as_raw_mut_FacemarkAAM_Config(), &val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_scale(&mut self, val: f32) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Config_propScale_const_float(self.as_raw_mut_FacemarkAAM_Config(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_model_scale_idx(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Config_propModel_scale_idx_const_int(self.as_raw_mut_FacemarkAAM_Config(), val) };
 			ret
 		}
-		
+
 	}
-	
+
 	/// \brief Optional parameter for fitting process.
 	pub struct FacemarkAAM_Config {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { FacemarkAAM_Config }
-	
+
 	impl Drop for FacemarkAAM_Config {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_face_FacemarkAAM_Config_delete(self.as_raw_mut_FacemarkAAM_Config()) };
 		}
 	}
-	
+
 	unsafe impl Send for FacemarkAAM_Config {}
-	
+
 	impl crate::face::FacemarkAAM_ConfigTraitConst for FacemarkAAM_Config {
 		#[inline] fn as_raw_FacemarkAAM_Config(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::FacemarkAAM_ConfigTrait for FacemarkAAM_Config {
 		#[inline] fn as_raw_mut_FacemarkAAM_Config(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { FacemarkAAM_Config, crate::face::FacemarkAAM_ConfigTraitConst, as_raw_FacemarkAAM_Config, crate::face::FacemarkAAM_ConfigTrait, as_raw_mut_FacemarkAAM_Config }
-	
+
 	impl FacemarkAAM_Config {
 		/// ## C++ default parameters
 		/// * rot: Mat::eye(2,2,CV_32F)
@@ -2084,7 +2085,7 @@ pub mod face {
 			let ret = unsafe { crate::face::FacemarkAAM_Config::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// ## Note
 		/// This alternative version of [new] function uses the following default values for its arguments:
 		/// * rot: Mat::eye(2,2,CV_32F)
@@ -2100,9 +2101,9 @@ pub mod face {
 			let ret = unsafe { crate::face::FacemarkAAM_Config::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	impl std::fmt::Debug for FacemarkAAM_Config {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -2114,67 +2115,67 @@ pub mod face {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::face::FacemarkAAM_Data]
 	pub trait FacemarkAAM_DataTraitConst {
 		fn as_raw_FacemarkAAM_Data(&self) -> *const c_void;
-	
+
 		#[inline]
 		fn s0(&self) -> core::Vector<core::Point2f> {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Data_propS0_const(self.as_raw_FacemarkAAM_Data()) };
 			let ret = unsafe { core::Vector::<core::Point2f>::opencv_from_extern(ret) };
 			ret
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::face::FacemarkAAM_Data]
 	pub trait FacemarkAAM_DataTrait: crate::face::FacemarkAAM_DataTraitConst {
 		fn as_raw_mut_FacemarkAAM_Data(&mut self) -> *mut c_void;
-	
+
 		#[inline]
 		fn set_s0(&mut self, val: core::Vector<core::Point2f>) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Data_propS0_const_vectorLPoint2fG(self.as_raw_mut_FacemarkAAM_Data(), val.as_raw_VectorOfPoint2f()) };
 			ret
 		}
-		
+
 	}
-	
+
 	/// \brief Data container for the facemark::getData function
 	pub struct FacemarkAAM_Data {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { FacemarkAAM_Data }
-	
+
 	impl Drop for FacemarkAAM_Data {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_face_FacemarkAAM_Data_delete(self.as_raw_mut_FacemarkAAM_Data()) };
 		}
 	}
-	
+
 	unsafe impl Send for FacemarkAAM_Data {}
-	
+
 	impl crate::face::FacemarkAAM_DataTraitConst for FacemarkAAM_Data {
 		#[inline] fn as_raw_FacemarkAAM_Data(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::FacemarkAAM_DataTrait for FacemarkAAM_Data {
 		#[inline] fn as_raw_mut_FacemarkAAM_Data(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { FacemarkAAM_Data, crate::face::FacemarkAAM_DataTraitConst, as_raw_FacemarkAAM_Data, crate::face::FacemarkAAM_DataTrait, as_raw_mut_FacemarkAAM_Data }
-	
+
 	impl FacemarkAAM_Data {
 		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
 		fn default() -> Self {
 			unsafe { Self::from_raw(sys::cv_face_FacemarkAAM_Data_defaultNew_const()) }
 		}
-		
+
 	}
-	
+
 	impl std::fmt::Debug for FacemarkAAM_Data {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -2183,7 +2184,7 @@ pub mod face {
 				.finish()
 		}
 	}
-	
+
 	impl Default for FacemarkAAM_Data {
 		#[inline]
 		/// Forwards to infallible Self::default()
@@ -2191,132 +2192,132 @@ pub mod face {
 			Self::default()
 		}
 	}
-	
+
 	/// Constant methods for [crate::face::FacemarkAAM_Model]
 	pub trait FacemarkAAM_ModelTraitConst {
 		fn as_raw_FacemarkAAM_Model(&self) -> *const c_void;
-	
+
 		#[inline]
 		fn scales(&self) -> core::Vector<f32> {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_propScales_const(self.as_raw_FacemarkAAM_Model()) };
 			let ret = unsafe { core::Vector::<f32>::opencv_from_extern(ret) };
 			ret
 		}
-		
+
 		#[inline]
 		fn triangles(&self) -> core::Vector<core::Vec3i> {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_propTriangles_const(self.as_raw_FacemarkAAM_Model()) };
 			let ret = unsafe { core::Vector::<core::Vec3i>::opencv_from_extern(ret) };
 			ret
 		}
-		
+
 		#[inline]
 		fn textures(&self) -> core::Vector<crate::face::FacemarkAAM_Model_Texture> {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_propTextures_const(self.as_raw_FacemarkAAM_Model()) };
 			let ret = unsafe { core::Vector::<crate::face::FacemarkAAM_Model_Texture>::opencv_from_extern(ret) };
 			ret
 		}
-		
+
 		#[inline]
 		fn s0(&self) -> core::Vector<core::Point2f> {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_propS0_const(self.as_raw_FacemarkAAM_Model()) };
 			let ret = unsafe { core::Vector::<core::Point2f>::opencv_from_extern(ret) };
 			ret
 		}
-		
+
 		#[inline]
 		fn s(&self) -> core::Mat {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_propS_const(self.as_raw_FacemarkAAM_Model()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
-		
+
 		#[inline]
 		fn q(&self) -> core::Mat {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_propQ_const(self.as_raw_FacemarkAAM_Model()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::face::FacemarkAAM_Model]
 	pub trait FacemarkAAM_ModelTrait: crate::face::FacemarkAAM_ModelTraitConst {
 		fn as_raw_mut_FacemarkAAM_Model(&mut self) -> *mut c_void;
-	
+
 		#[inline]
 		fn set_scales(&mut self, val: core::Vector<f32>) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_propScales_const_vectorLfloatG(self.as_raw_mut_FacemarkAAM_Model(), val.as_raw_VectorOff32()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_triangles(&mut self, val: core::Vector<core::Vec3i>) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_propTriangles_const_vectorLVec3iG(self.as_raw_mut_FacemarkAAM_Model(), val.as_raw_VectorOfVec3i()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_textures(&mut self, val: core::Vector<crate::face::FacemarkAAM_Model_Texture>) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_propTextures_const_vectorLTextureG(self.as_raw_mut_FacemarkAAM_Model(), val.as_raw_VectorOfFacemarkAAM_Model_Texture()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_s0(&mut self, val: core::Vector<core::Point2f>) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_propS0_const_vectorLPoint2fG(self.as_raw_mut_FacemarkAAM_Model(), val.as_raw_VectorOfPoint2f()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_s(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_propS_const_Mat(self.as_raw_mut_FacemarkAAM_Model(), val.as_raw_Mat()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_q(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_propQ_const_Mat(self.as_raw_mut_FacemarkAAM_Model(), val.as_raw_Mat()) };
 			ret
 		}
-		
+
 	}
-	
+
 	/// \brief The model of AAM Algorithm
 	pub struct FacemarkAAM_Model {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { FacemarkAAM_Model }
-	
+
 	impl Drop for FacemarkAAM_Model {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_face_FacemarkAAM_Model_delete(self.as_raw_mut_FacemarkAAM_Model()) };
 		}
 	}
-	
+
 	unsafe impl Send for FacemarkAAM_Model {}
-	
+
 	impl crate::face::FacemarkAAM_ModelTraitConst for FacemarkAAM_Model {
 		#[inline] fn as_raw_FacemarkAAM_Model(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::FacemarkAAM_ModelTrait for FacemarkAAM_Model {
 		#[inline] fn as_raw_mut_FacemarkAAM_Model(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { FacemarkAAM_Model, crate::face::FacemarkAAM_ModelTraitConst, as_raw_FacemarkAAM_Model, crate::face::FacemarkAAM_ModelTrait, as_raw_mut_FacemarkAAM_Model }
-	
+
 	impl FacemarkAAM_Model {
 		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
 		fn default() -> Self {
 			unsafe { Self::from_raw(sys::cv_face_FacemarkAAM_Model_defaultNew_const()) }
 		}
-		
+
 	}
-	
+
 	impl std::fmt::Debug for FacemarkAAM_Model {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -2330,7 +2331,7 @@ pub mod face {
 				.finish()
 		}
 	}
-	
+
 	impl Default for FacemarkAAM_Model {
 		#[inline]
 		/// Forwards to infallible Self::default()
@@ -2338,18 +2339,18 @@ pub mod face {
 			Self::default()
 		}
 	}
-	
+
 	/// Constant methods for [crate::face::FacemarkAAM_Model_Texture]
 	pub trait FacemarkAAM_Model_TextureTraitConst {
 		fn as_raw_FacemarkAAM_Model_Texture(&self) -> *const c_void;
-	
+
 		/// unused delete
 		#[inline]
 		fn max_m(&self) -> i32 {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_Texture_propMax_m_const(self.as_raw_FacemarkAAM_Model_Texture()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn resolution(&self) -> core::Rect {
 			return_send!(via ocvrs_return);
@@ -2357,166 +2358,166 @@ pub mod face {
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
-		
+
 		#[inline]
 		fn a(&self) -> core::Mat {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_Texture_propA_const(self.as_raw_FacemarkAAM_Model_Texture()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
-		
+
 		#[inline]
 		fn a0(&self) -> core::Mat {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_Texture_propA0_const(self.as_raw_FacemarkAAM_Model_Texture()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
-		
+
 		#[inline]
 		fn aa(&self) -> core::Mat {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_Texture_propAA_const(self.as_raw_FacemarkAAM_Model_Texture()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
-		
+
 		#[inline]
 		fn aa0(&self) -> core::Mat {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_Texture_propAA0_const(self.as_raw_FacemarkAAM_Model_Texture()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
-		
+
 		#[inline]
 		fn texture_idx(&self) -> core::Vector<core::Vector<core::Point>> {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_Texture_propTextureIdx_const(self.as_raw_FacemarkAAM_Model_Texture()) };
 			let ret = unsafe { core::Vector::<core::Vector<core::Point>>::opencv_from_extern(ret) };
 			ret
 		}
-		
+
 		#[inline]
 		fn base_shape(&self) -> core::Vector<core::Point2f> {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_Texture_propBase_shape_const(self.as_raw_FacemarkAAM_Model_Texture()) };
 			let ret = unsafe { core::Vector::<core::Point2f>::opencv_from_extern(ret) };
 			ret
 		}
-		
+
 		#[inline]
 		fn ind1(&self) -> core::Vector<i32> {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_Texture_propInd1_const(self.as_raw_FacemarkAAM_Model_Texture()) };
 			let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
 			ret
 		}
-		
+
 		#[inline]
 		fn ind2(&self) -> core::Vector<i32> {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_Texture_propInd2_const(self.as_raw_FacemarkAAM_Model_Texture()) };
 			let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
 			ret
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::face::FacemarkAAM_Model_Texture]
 	pub trait FacemarkAAM_Model_TextureTrait: crate::face::FacemarkAAM_Model_TextureTraitConst {
 		fn as_raw_mut_FacemarkAAM_Model_Texture(&mut self) -> *mut c_void;
-	
+
 		/// unused delete
 		#[inline]
 		fn set_max_m(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_Texture_propMax_m_const_int(self.as_raw_mut_FacemarkAAM_Model_Texture(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_resolution(&mut self, val: core::Rect) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_Texture_propResolution_const_Rect(self.as_raw_mut_FacemarkAAM_Model_Texture(), &val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_a(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_Texture_propA_const_Mat(self.as_raw_mut_FacemarkAAM_Model_Texture(), val.as_raw_Mat()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_a0(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_Texture_propA0_const_Mat(self.as_raw_mut_FacemarkAAM_Model_Texture(), val.as_raw_Mat()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_aa(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_Texture_propAA_const_Mat(self.as_raw_mut_FacemarkAAM_Model_Texture(), val.as_raw_Mat()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_aa0(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_Texture_propAA0_const_Mat(self.as_raw_mut_FacemarkAAM_Model_Texture(), val.as_raw_Mat()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_texture_idx(&mut self, val: core::Vector<core::Vector<core::Point>>) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_Texture_propTextureIdx_const_vectorLvectorLPointGG(self.as_raw_mut_FacemarkAAM_Model_Texture(), val.as_raw_VectorOfVectorOfPoint()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_base_shape(&mut self, val: core::Vector<core::Point2f>) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_Texture_propBase_shape_const_vectorLPoint2fG(self.as_raw_mut_FacemarkAAM_Model_Texture(), val.as_raw_VectorOfPoint2f()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_ind1(&mut self, val: core::Vector<i32>) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_Texture_propInd1_const_vectorLintG(self.as_raw_mut_FacemarkAAM_Model_Texture(), val.as_raw_VectorOfi32()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_ind2(&mut self, val: core::Vector<i32>) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Model_Texture_propInd2_const_vectorLintG(self.as_raw_mut_FacemarkAAM_Model_Texture(), val.as_raw_VectorOfi32()) };
 			ret
 		}
-		
+
 	}
-	
+
 	pub struct FacemarkAAM_Model_Texture {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { FacemarkAAM_Model_Texture }
-	
+
 	impl Drop for FacemarkAAM_Model_Texture {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_face_FacemarkAAM_Model_Texture_delete(self.as_raw_mut_FacemarkAAM_Model_Texture()) };
 		}
 	}
-	
+
 	unsafe impl Send for FacemarkAAM_Model_Texture {}
-	
+
 	impl crate::face::FacemarkAAM_Model_TextureTraitConst for FacemarkAAM_Model_Texture {
 		#[inline] fn as_raw_FacemarkAAM_Model_Texture(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::FacemarkAAM_Model_TextureTrait for FacemarkAAM_Model_Texture {
 		#[inline] fn as_raw_mut_FacemarkAAM_Model_Texture(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { FacemarkAAM_Model_Texture, crate::face::FacemarkAAM_Model_TextureTraitConst, as_raw_FacemarkAAM_Model_Texture, crate::face::FacemarkAAM_Model_TextureTrait, as_raw_mut_FacemarkAAM_Model_Texture }
-	
+
 	impl FacemarkAAM_Model_Texture {
 		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
 		fn default() -> Self {
 			unsafe { Self::from_raw(sys::cv_face_FacemarkAAM_Model_Texture_defaultNew_const()) }
 		}
-		
+
 	}
-	
+
 	impl std::fmt::Debug for FacemarkAAM_Model_Texture {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -2534,7 +2535,7 @@ pub mod face {
 				.finish()
 		}
 	}
-	
+
 	impl Default for FacemarkAAM_Model_Texture {
 		#[inline]
 		/// Forwards to infallible Self::default()
@@ -2542,73 +2543,73 @@ pub mod face {
 			Self::default()
 		}
 	}
-	
+
 	/// Constant methods for [crate::face::FacemarkAAM_Params]
 	pub trait FacemarkAAM_ParamsTraitConst {
 		fn as_raw_FacemarkAAM_Params(&self) -> *const c_void;
-	
+
 		#[inline]
 		fn model_filename(&self) -> String {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Params_propModel_filename_const(self.as_raw_FacemarkAAM_Params()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
-		
+
 		#[inline]
 		fn m(&self) -> i32 {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Params_propM_const(self.as_raw_FacemarkAAM_Params()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn n(&self) -> i32 {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Params_propN_const(self.as_raw_FacemarkAAM_Params()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn n_iter(&self) -> i32 {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Params_propN_iter_const(self.as_raw_FacemarkAAM_Params()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn verbose(&self) -> bool {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Params_propVerbose_const(self.as_raw_FacemarkAAM_Params()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn save_model(&self) -> bool {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Params_propSave_model_const(self.as_raw_FacemarkAAM_Params()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn max_m(&self) -> i32 {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Params_propMax_m_const(self.as_raw_FacemarkAAM_Params()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn max_n(&self) -> i32 {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Params_propMax_n_const(self.as_raw_FacemarkAAM_Params()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn texture_max_m(&self) -> i32 {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Params_propTexture_max_m_const(self.as_raw_FacemarkAAM_Params()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn scales(&self) -> core::Vector<f32> {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Params_propScales_const(self.as_raw_FacemarkAAM_Params()) };
 			let ret = unsafe { core::Vector::<f32>::opencv_from_extern(ret) };
 			ret
 		}
-		
+
 		/// \brief Read parameters from file, currently unused
 		#[inline]
 		fn write(&self, unnamed: &mut impl core::FileStorageTrait) -> Result<()> {
@@ -2618,74 +2619,74 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::face::FacemarkAAM_Params]
 	pub trait FacemarkAAM_ParamsTrait: crate::face::FacemarkAAM_ParamsTraitConst {
 		fn as_raw_mut_FacemarkAAM_Params(&mut self) -> *mut c_void;
-	
+
 		#[inline]
 		fn set_model_filename(&mut self, val: &str) {
 			extern_container_arg!(nofail val);
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Params_propModel_filename_const_string(self.as_raw_mut_FacemarkAAM_Params(), val.opencv_as_extern()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_m(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Params_propM_const_int(self.as_raw_mut_FacemarkAAM_Params(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_n(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Params_propN_const_int(self.as_raw_mut_FacemarkAAM_Params(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_n_iter(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Params_propN_iter_const_int(self.as_raw_mut_FacemarkAAM_Params(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_verbose(&mut self, val: bool) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Params_propVerbose_const_bool(self.as_raw_mut_FacemarkAAM_Params(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_save_model(&mut self, val: bool) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Params_propSave_model_const_bool(self.as_raw_mut_FacemarkAAM_Params(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_max_m(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Params_propMax_m_const_int(self.as_raw_mut_FacemarkAAM_Params(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_max_n(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Params_propMax_n_const_int(self.as_raw_mut_FacemarkAAM_Params(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_texture_max_m(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Params_propTexture_max_m_const_int(self.as_raw_mut_FacemarkAAM_Params(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_scales(&mut self, val: core::Vector<f32>) {
 			let ret = unsafe { sys::cv_face_FacemarkAAM_Params_propScales_const_vectorLfloatG(self.as_raw_mut_FacemarkAAM_Params(), val.as_raw_VectorOff32()) };
 			ret
 		}
-		
+
 		/// \brief Read parameters from file, currently unused
 		#[inline]
 		fn read(&mut self, unnamed: &impl core::FileNodeTraitConst) -> Result<()> {
@@ -2695,34 +2696,34 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	pub struct FacemarkAAM_Params {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { FacemarkAAM_Params }
-	
+
 	impl Drop for FacemarkAAM_Params {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_face_FacemarkAAM_Params_delete(self.as_raw_mut_FacemarkAAM_Params()) };
 		}
 	}
-	
+
 	unsafe impl Send for FacemarkAAM_Params {}
-	
+
 	impl crate::face::FacemarkAAM_ParamsTraitConst for FacemarkAAM_Params {
 		#[inline] fn as_raw_FacemarkAAM_Params(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::FacemarkAAM_ParamsTrait for FacemarkAAM_Params {
 		#[inline] fn as_raw_mut_FacemarkAAM_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { FacemarkAAM_Params, crate::face::FacemarkAAM_ParamsTraitConst, as_raw_FacemarkAAM_Params, crate::face::FacemarkAAM_ParamsTrait, as_raw_mut_FacemarkAAM_Params }
-	
+
 	impl FacemarkAAM_Params {
 		/// \brief Constructor
 		#[inline]
@@ -2734,9 +2735,9 @@ pub mod face {
 			let ret = unsafe { crate::face::FacemarkAAM_Params::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	impl std::fmt::Debug for FacemarkAAM_Params {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -2754,17 +2755,17 @@ pub mod face {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::face::FacemarkKazemi]
 	pub trait FacemarkKazemiTraitConst: crate::face::FacemarkTraitConst {
 		fn as_raw_FacemarkKazemi(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::face::FacemarkKazemi]
 	pub trait FacemarkKazemiTrait: crate::face::FacemarkKazemiTraitConst + crate::face::FacemarkTrait {
 		fn as_raw_mut_FacemarkKazemi(&mut self) -> *mut c_void;
-	
+
 		/// This function is used to train the model using gradient boosting to get a cascade of regressors
 		/// which can then be used to predict shape.
 		/// ## Parameters
@@ -2775,7 +2776,7 @@ pub mod face {
 		/// * modelFilename: A variable of type std::string which stores the name of the trained model file that has to be saved.
 		/// ## Returns
 		/// A boolean value. The function returns true if the model is trained properly or false if it is not trained.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * model_filename: "face_landmarks.dat"
 		#[inline]
@@ -2788,7 +2789,7 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// This function is used to train the model using gradient boosting to get a cascade of regressors
 		/// which can then be used to predict shape.
 		/// ## Parameters
@@ -2799,7 +2800,7 @@ pub mod face {
 		/// * modelFilename: A variable of type std::string which stores the name of the trained model file that has to be saved.
 		/// ## Returns
 		/// A boolean value. The function returns true if the model is trained properly or false if it is not trained.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [FacemarkKazemiTrait::training] function uses the following default values for its arguments:
 		/// * model_filename: "face_landmarks.dat"
@@ -2812,7 +2813,7 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// set the custom face detector
 		#[inline]
 		fn set_face_detector(&mut self, f: Option<Box<dyn FnMut(*const c_void, *const c_void) -> bool + Send + Sync + 'static>>) -> Result<bool> {
@@ -2824,7 +2825,7 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// get faces using the custom detector
 		#[inline]
 		fn get_faces(&mut self, image: &impl ToInputArray, faces: &mut impl ToOutputArray) -> Result<bool> {
@@ -2836,54 +2837,54 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	pub struct FacemarkKazemi {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { FacemarkKazemi }
-	
+
 	impl Drop for FacemarkKazemi {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_face_FacemarkKazemi_delete(self.as_raw_mut_FacemarkKazemi()) };
 		}
 	}
-	
+
 	unsafe impl Send for FacemarkKazemi {}
-	
+
 	impl core::AlgorithmTraitConst for FacemarkKazemi {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for FacemarkKazemi {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { FacemarkKazemi, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::face::FacemarkTraitConst for FacemarkKazemi {
 		#[inline] fn as_raw_Facemark(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::FacemarkTrait for FacemarkKazemi {
 		#[inline] fn as_raw_mut_Facemark(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { FacemarkKazemi, crate::face::FacemarkTraitConst, as_raw_Facemark, crate::face::FacemarkTrait, as_raw_mut_Facemark }
-	
+
 	impl crate::face::FacemarkKazemiTraitConst for FacemarkKazemi {
 		#[inline] fn as_raw_FacemarkKazemi(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::FacemarkKazemiTrait for FacemarkKazemi {
 		#[inline] fn as_raw_mut_FacemarkKazemi(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { FacemarkKazemi, crate::face::FacemarkKazemiTraitConst, as_raw_FacemarkKazemi, crate::face::FacemarkKazemiTrait, as_raw_mut_FacemarkKazemi }
-	
+
 	impl FacemarkKazemi {
 		/// ## C++ default parameters
 		/// * parameters: FacemarkKazemi::Params()
@@ -2896,7 +2897,7 @@ pub mod face {
 			let ret = unsafe { core::Ptr::<crate::face::FacemarkKazemi>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// ## Note
 		/// This alternative version of [FacemarkKazemi::create] function uses the following default values for its arguments:
 		/// * parameters: FacemarkKazemi::Params()
@@ -2909,13 +2910,13 @@ pub mod face {
 			let ret = unsafe { core::Ptr::<crate::face::FacemarkKazemi>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	boxed_cast_base! { FacemarkKazemi, core::Algorithm, cv_face_FacemarkKazemi_to_Algorithm }
-	
+
 	boxed_cast_base! { FacemarkKazemi, crate::face::Facemark, cv_face_FacemarkKazemi_to_Facemark }
-	
+
 	impl std::fmt::Debug for FacemarkKazemi {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -2923,67 +2924,67 @@ pub mod face {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::face::FacemarkKazemi_Params]
 	pub trait FacemarkKazemi_ParamsTraitConst {
 		fn as_raw_FacemarkKazemi_Params(&self) -> *const c_void;
-	
+
 		/// cascade_depth This stores the deapth of cascade used for training.
 		#[inline]
 		fn cascade_depth(&self) -> u32 {
 			let ret = unsafe { sys::cv_face_FacemarkKazemi_Params_propCascade_depth_const(self.as_raw_FacemarkKazemi_Params()) };
 			ret
 		}
-		
+
 		/// tree_depth This stores the max height of the regression tree built.
 		#[inline]
 		fn tree_depth(&self) -> u32 {
 			let ret = unsafe { sys::cv_face_FacemarkKazemi_Params_propTree_depth_const(self.as_raw_FacemarkKazemi_Params()) };
 			ret
 		}
-		
+
 		/// num_trees_per_cascade_level This stores number of trees fit per cascade level.
 		#[inline]
 		fn num_trees_per_cascade_level(&self) -> u32 {
 			let ret = unsafe { sys::cv_face_FacemarkKazemi_Params_propNum_trees_per_cascade_level_const(self.as_raw_FacemarkKazemi_Params()) };
 			ret
 		}
-		
+
 		/// learning_rate stores the learning rate in gradient boosting, also referred as shrinkage.
 		#[inline]
 		fn learning_rate(&self) -> f32 {
 			let ret = unsafe { sys::cv_face_FacemarkKazemi_Params_propLearning_rate_const(self.as_raw_FacemarkKazemi_Params()) };
 			ret
 		}
-		
+
 		/// oversampling_amount stores number of initialisations used to create training samples.
 		#[inline]
 		fn oversampling_amount(&self) -> u32 {
 			let ret = unsafe { sys::cv_face_FacemarkKazemi_Params_propOversampling_amount_const(self.as_raw_FacemarkKazemi_Params()) };
 			ret
 		}
-		
+
 		/// num_test_coordinates stores number of test coordinates.
 		#[inline]
 		fn num_test_coordinates(&self) -> u32 {
 			let ret = unsafe { sys::cv_face_FacemarkKazemi_Params_propNum_test_coordinates_const(self.as_raw_FacemarkKazemi_Params()) };
 			ret
 		}
-		
+
 		/// lambda stores a value to calculate probability of closeness of two coordinates.
 		#[inline]
 		fn lambda(&self) -> f32 {
 			let ret = unsafe { sys::cv_face_FacemarkKazemi_Params_propLambda_const(self.as_raw_FacemarkKazemi_Params()) };
 			ret
 		}
-		
+
 		/// num_test_splits stores number of random test splits generated.
 		#[inline]
 		fn num_test_splits(&self) -> u32 {
 			let ret = unsafe { sys::cv_face_FacemarkKazemi_Params_propNum_test_splits_const(self.as_raw_FacemarkKazemi_Params()) };
 			ret
 		}
-		
+
 		/// configfile stores the name of the file containing the values of training parameters
 		#[inline]
 		fn configfile(&self) -> String {
@@ -2991,69 +2992,69 @@ pub mod face {
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::face::FacemarkKazemi_Params]
 	pub trait FacemarkKazemi_ParamsTrait: crate::face::FacemarkKazemi_ParamsTraitConst {
 		fn as_raw_mut_FacemarkKazemi_Params(&mut self) -> *mut c_void;
-	
+
 		/// cascade_depth This stores the deapth of cascade used for training.
 		#[inline]
 		fn set_cascade_depth(&mut self, val: u32) {
 			let ret = unsafe { sys::cv_face_FacemarkKazemi_Params_propCascade_depth_const_unsigned_long(self.as_raw_mut_FacemarkKazemi_Params(), val) };
 			ret
 		}
-		
+
 		/// tree_depth This stores the max height of the regression tree built.
 		#[inline]
 		fn set_tree_depth(&mut self, val: u32) {
 			let ret = unsafe { sys::cv_face_FacemarkKazemi_Params_propTree_depth_const_unsigned_long(self.as_raw_mut_FacemarkKazemi_Params(), val) };
 			ret
 		}
-		
+
 		/// num_trees_per_cascade_level This stores number of trees fit per cascade level.
 		#[inline]
 		fn set_num_trees_per_cascade_level(&mut self, val: u32) {
 			let ret = unsafe { sys::cv_face_FacemarkKazemi_Params_propNum_trees_per_cascade_level_const_unsigned_long(self.as_raw_mut_FacemarkKazemi_Params(), val) };
 			ret
 		}
-		
+
 		/// learning_rate stores the learning rate in gradient boosting, also referred as shrinkage.
 		#[inline]
 		fn set_learning_rate(&mut self, val: f32) {
 			let ret = unsafe { sys::cv_face_FacemarkKazemi_Params_propLearning_rate_const_float(self.as_raw_mut_FacemarkKazemi_Params(), val) };
 			ret
 		}
-		
+
 		/// oversampling_amount stores number of initialisations used to create training samples.
 		#[inline]
 		fn set_oversampling_amount(&mut self, val: u32) {
 			let ret = unsafe { sys::cv_face_FacemarkKazemi_Params_propOversampling_amount_const_unsigned_long(self.as_raw_mut_FacemarkKazemi_Params(), val) };
 			ret
 		}
-		
+
 		/// num_test_coordinates stores number of test coordinates.
 		#[inline]
 		fn set_num_test_coordinates(&mut self, val: u32) {
 			let ret = unsafe { sys::cv_face_FacemarkKazemi_Params_propNum_test_coordinates_const_unsigned_long(self.as_raw_mut_FacemarkKazemi_Params(), val) };
 			ret
 		}
-		
+
 		/// lambda stores a value to calculate probability of closeness of two coordinates.
 		#[inline]
 		fn set_lambda(&mut self, val: f32) {
 			let ret = unsafe { sys::cv_face_FacemarkKazemi_Params_propLambda_const_float(self.as_raw_mut_FacemarkKazemi_Params(), val) };
 			ret
 		}
-		
+
 		/// num_test_splits stores number of random test splits generated.
 		#[inline]
 		fn set_num_test_splits(&mut self, val: u32) {
 			let ret = unsafe { sys::cv_face_FacemarkKazemi_Params_propNum_test_splits_const_unsigned_long(self.as_raw_mut_FacemarkKazemi_Params(), val) };
 			ret
 		}
-		
+
 		/// configfile stores the name of the file containing the values of training parameters
 		#[inline]
 		fn set_configfile(&mut self, val: &str) {
@@ -3061,34 +3062,34 @@ pub mod face {
 			let ret = unsafe { sys::cv_face_FacemarkKazemi_Params_propConfigfile_const_String(self.as_raw_mut_FacemarkKazemi_Params(), val.opencv_as_extern()) };
 			ret
 		}
-		
+
 	}
-	
+
 	pub struct FacemarkKazemi_Params {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { FacemarkKazemi_Params }
-	
+
 	impl Drop for FacemarkKazemi_Params {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_face_FacemarkKazemi_Params_delete(self.as_raw_mut_FacemarkKazemi_Params()) };
 		}
 	}
-	
+
 	unsafe impl Send for FacemarkKazemi_Params {}
-	
+
 	impl crate::face::FacemarkKazemi_ParamsTraitConst for FacemarkKazemi_Params {
 		#[inline] fn as_raw_FacemarkKazemi_Params(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::FacemarkKazemi_ParamsTrait for FacemarkKazemi_Params {
 		#[inline] fn as_raw_mut_FacemarkKazemi_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { FacemarkKazemi_Params, crate::face::FacemarkKazemi_ParamsTraitConst, as_raw_FacemarkKazemi_Params, crate::face::FacemarkKazemi_ParamsTrait, as_raw_mut_FacemarkKazemi_Params }
-	
+
 	impl FacemarkKazemi_Params {
 		/// \brief Constructor
 		#[inline]
@@ -3100,9 +3101,9 @@ pub mod face {
 			let ret = unsafe { crate::face::FacemarkKazemi_Params::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	impl std::fmt::Debug for FacemarkKazemi_Params {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -3119,74 +3120,74 @@ pub mod face {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::face::FacemarkLBF]
 	pub trait FacemarkLBFTraitConst: crate::face::FacemarkTrainTraitConst {
 		fn as_raw_FacemarkLBF(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::face::FacemarkLBF]
 	pub trait FacemarkLBFTrait: crate::face::FacemarkLBFTraitConst + crate::face::FacemarkTrainTrait {
 		fn as_raw_mut_FacemarkLBF(&mut self) -> *mut c_void;
-	
+
 	}
-	
+
 	pub struct FacemarkLBF {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { FacemarkLBF }
-	
+
 	impl Drop for FacemarkLBF {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_face_FacemarkLBF_delete(self.as_raw_mut_FacemarkLBF()) };
 		}
 	}
-	
+
 	unsafe impl Send for FacemarkLBF {}
-	
+
 	impl core::AlgorithmTraitConst for FacemarkLBF {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for FacemarkLBF {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { FacemarkLBF, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::face::FacemarkTraitConst for FacemarkLBF {
 		#[inline] fn as_raw_Facemark(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::FacemarkTrait for FacemarkLBF {
 		#[inline] fn as_raw_mut_Facemark(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { FacemarkLBF, crate::face::FacemarkTraitConst, as_raw_Facemark, crate::face::FacemarkTrait, as_raw_mut_Facemark }
-	
+
 	impl crate::face::FacemarkTrainTraitConst for FacemarkLBF {
 		#[inline] fn as_raw_FacemarkTrain(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::FacemarkTrainTrait for FacemarkLBF {
 		#[inline] fn as_raw_mut_FacemarkTrain(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { FacemarkLBF, crate::face::FacemarkTrainTraitConst, as_raw_FacemarkTrain, crate::face::FacemarkTrainTrait, as_raw_mut_FacemarkTrain }
-	
+
 	impl crate::face::FacemarkLBFTraitConst for FacemarkLBF {
 		#[inline] fn as_raw_FacemarkLBF(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::FacemarkLBFTrait for FacemarkLBF {
 		#[inline] fn as_raw_mut_FacemarkLBF(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { FacemarkLBF, crate::face::FacemarkLBFTraitConst, as_raw_FacemarkLBF, crate::face::FacemarkLBFTrait, as_raw_mut_FacemarkLBF }
-	
+
 	impl FacemarkLBF {
 		/// ## C++ default parameters
 		/// * parameters: FacemarkLBF::Params()
@@ -3199,7 +3200,7 @@ pub mod face {
 			let ret = unsafe { core::Ptr::<crate::face::FacemarkLBF>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// ## Note
 		/// This alternative version of [FacemarkLBF::create] function uses the following default values for its arguments:
 		/// * parameters: FacemarkLBF::Params()
@@ -3212,15 +3213,15 @@ pub mod face {
 			let ret = unsafe { core::Ptr::<crate::face::FacemarkLBF>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	boxed_cast_base! { FacemarkLBF, core::Algorithm, cv_face_FacemarkLBF_to_Algorithm }
-	
+
 	boxed_cast_base! { FacemarkLBF, crate::face::Facemark, cv_face_FacemarkLBF_to_Facemark }
-	
+
 	boxed_cast_base! { FacemarkLBF, crate::face::FacemarkTrain, cv_face_FacemarkLBF_to_FacemarkTrain }
-	
+
 	impl std::fmt::Debug for FacemarkLBF {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -3228,101 +3229,101 @@ pub mod face {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::face::FacemarkLBF_Params]
 	pub trait FacemarkLBF_ParamsTraitConst {
 		fn as_raw_FacemarkLBF_Params(&self) -> *const c_void;
-	
+
 		#[inline]
 		fn shape_offset(&self) -> f64 {
 			let ret = unsafe { sys::cv_face_FacemarkLBF_Params_propShape_offset_const(self.as_raw_FacemarkLBF_Params()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn cascade_face(&self) -> String {
 			let ret = unsafe { sys::cv_face_FacemarkLBF_Params_propCascade_face_const(self.as_raw_FacemarkLBF_Params()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
-		
+
 		#[inline]
 		fn verbose(&self) -> bool {
 			let ret = unsafe { sys::cv_face_FacemarkLBF_Params_propVerbose_const(self.as_raw_FacemarkLBF_Params()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn n_landmarks(&self) -> i32 {
 			let ret = unsafe { sys::cv_face_FacemarkLBF_Params_propN_landmarks_const(self.as_raw_FacemarkLBF_Params()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn init_shape_n(&self) -> i32 {
 			let ret = unsafe { sys::cv_face_FacemarkLBF_Params_propInitShape_n_const(self.as_raw_FacemarkLBF_Params()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn stages_n(&self) -> i32 {
 			let ret = unsafe { sys::cv_face_FacemarkLBF_Params_propStages_n_const(self.as_raw_FacemarkLBF_Params()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn tree_n(&self) -> i32 {
 			let ret = unsafe { sys::cv_face_FacemarkLBF_Params_propTree_n_const(self.as_raw_FacemarkLBF_Params()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn tree_depth(&self) -> i32 {
 			let ret = unsafe { sys::cv_face_FacemarkLBF_Params_propTree_depth_const(self.as_raw_FacemarkLBF_Params()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn bagging_overlap(&self) -> f64 {
 			let ret = unsafe { sys::cv_face_FacemarkLBF_Params_propBagging_overlap_const(self.as_raw_FacemarkLBF_Params()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn model_filename(&self) -> String {
 			let ret = unsafe { sys::cv_face_FacemarkLBF_Params_propModel_filename_const(self.as_raw_FacemarkLBF_Params()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
-		
+
 		/// flag to save the trained model or not
 		#[inline]
 		fn save_model(&self) -> bool {
 			let ret = unsafe { sys::cv_face_FacemarkLBF_Params_propSave_model_const(self.as_raw_FacemarkLBF_Params()) };
 			ret
 		}
-		
+
 		/// seed for shuffling the training data
 		#[inline]
 		fn seed(&self) -> u32 {
 			let ret = unsafe { sys::cv_face_FacemarkLBF_Params_propSeed_const(self.as_raw_FacemarkLBF_Params()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn feats_m(&self) -> core::Vector<i32> {
 			let ret = unsafe { sys::cv_face_FacemarkLBF_Params_propFeats_m_const(self.as_raw_FacemarkLBF_Params()) };
 			let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
 			ret
 		}
-		
+
 		#[inline]
 		fn radius_m(&self) -> core::Vector<f64> {
 			let ret = unsafe { sys::cv_face_FacemarkLBF_Params_propRadius_m_const(self.as_raw_FacemarkLBF_Params()) };
 			let ret = unsafe { core::Vector::<f64>::opencv_from_extern(ret) };
 			ret
 		}
-		
+
 		#[inline]
 		fn detect_roi(&self) -> core::Rect {
 			return_send!(via ocvrs_return);
@@ -3330,7 +3331,7 @@ pub mod face {
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
-		
+
 		#[inline]
 		fn write(&self, unnamed: &mut impl core::FileStorageTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -3339,107 +3340,107 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::face::FacemarkLBF_Params]
 	pub trait FacemarkLBF_ParamsTrait: crate::face::FacemarkLBF_ParamsTraitConst {
 		fn as_raw_mut_FacemarkLBF_Params(&mut self) -> *mut c_void;
-	
+
 		#[inline]
 		fn set_shape_offset(&mut self, val: f64) {
 			let ret = unsafe { sys::cv_face_FacemarkLBF_Params_propShape_offset_const_double(self.as_raw_mut_FacemarkLBF_Params(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_cascade_face(&mut self, val: &str) {
 			extern_container_arg!(nofail val);
 			let ret = unsafe { sys::cv_face_FacemarkLBF_Params_propCascade_face_const_String(self.as_raw_mut_FacemarkLBF_Params(), val.opencv_as_extern()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_verbose(&mut self, val: bool) {
 			let ret = unsafe { sys::cv_face_FacemarkLBF_Params_propVerbose_const_bool(self.as_raw_mut_FacemarkLBF_Params(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_n_landmarks(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_face_FacemarkLBF_Params_propN_landmarks_const_int(self.as_raw_mut_FacemarkLBF_Params(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_init_shape_n(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_face_FacemarkLBF_Params_propInitShape_n_const_int(self.as_raw_mut_FacemarkLBF_Params(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_stages_n(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_face_FacemarkLBF_Params_propStages_n_const_int(self.as_raw_mut_FacemarkLBF_Params(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_tree_n(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_face_FacemarkLBF_Params_propTree_n_const_int(self.as_raw_mut_FacemarkLBF_Params(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_tree_depth(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_face_FacemarkLBF_Params_propTree_depth_const_int(self.as_raw_mut_FacemarkLBF_Params(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_bagging_overlap(&mut self, val: f64) {
 			let ret = unsafe { sys::cv_face_FacemarkLBF_Params_propBagging_overlap_const_double(self.as_raw_mut_FacemarkLBF_Params(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_model_filename(&mut self, val: &str) {
 			extern_container_arg!(nofail val);
 			let ret = unsafe { sys::cv_face_FacemarkLBF_Params_propModel_filename_const_string(self.as_raw_mut_FacemarkLBF_Params(), val.opencv_as_extern()) };
 			ret
 		}
-		
+
 		/// flag to save the trained model or not
 		#[inline]
 		fn set_save_model(&mut self, val: bool) {
 			let ret = unsafe { sys::cv_face_FacemarkLBF_Params_propSave_model_const_bool(self.as_raw_mut_FacemarkLBF_Params(), val) };
 			ret
 		}
-		
+
 		/// seed for shuffling the training data
 		#[inline]
 		fn set_seed(&mut self, val: u32) {
 			let ret = unsafe { sys::cv_face_FacemarkLBF_Params_propSeed_const_unsigned_int(self.as_raw_mut_FacemarkLBF_Params(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_feats_m(&mut self, val: core::Vector<i32>) {
 			let ret = unsafe { sys::cv_face_FacemarkLBF_Params_propFeats_m_const_vectorLintG(self.as_raw_mut_FacemarkLBF_Params(), val.as_raw_VectorOfi32()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_radius_m(&mut self, val: core::Vector<f64>) {
 			let ret = unsafe { sys::cv_face_FacemarkLBF_Params_propRadius_m_const_vectorLdoubleG(self.as_raw_mut_FacemarkLBF_Params(), val.as_raw_VectorOff64()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_detect_roi(&mut self, val: core::Rect) {
 			let ret = unsafe { sys::cv_face_FacemarkLBF_Params_propDetectROI_const_Rect(self.as_raw_mut_FacemarkLBF_Params(), &val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn read(&mut self, unnamed: &impl core::FileNodeTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -3448,34 +3449,34 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	pub struct FacemarkLBF_Params {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { FacemarkLBF_Params }
-	
+
 	impl Drop for FacemarkLBF_Params {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_face_FacemarkLBF_Params_delete(self.as_raw_mut_FacemarkLBF_Params()) };
 		}
 	}
-	
+
 	unsafe impl Send for FacemarkLBF_Params {}
-	
+
 	impl crate::face::FacemarkLBF_ParamsTraitConst for FacemarkLBF_Params {
 		#[inline] fn as_raw_FacemarkLBF_Params(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::FacemarkLBF_ParamsTrait for FacemarkLBF_Params {
 		#[inline] fn as_raw_mut_FacemarkLBF_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { FacemarkLBF_Params, crate::face::FacemarkLBF_ParamsTraitConst, as_raw_FacemarkLBF_Params, crate::face::FacemarkLBF_ParamsTrait, as_raw_mut_FacemarkLBF_Params }
-	
+
 	impl FacemarkLBF_Params {
 		/// \brief Constructor
 		#[inline]
@@ -3487,9 +3488,9 @@ pub mod face {
 			let ret = unsafe { crate::face::FacemarkLBF_Params::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	impl std::fmt::Debug for FacemarkLBF_Params {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -3512,33 +3513,33 @@ pub mod face {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::face::FacemarkTrain]
 	pub trait FacemarkTrainTraitConst: crate::face::FacemarkTraitConst {
 		fn as_raw_FacemarkTrain(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::face::FacemarkTrain]
 	pub trait FacemarkTrainTrait: crate::face::FacemarkTrainTraitConst + crate::face::FacemarkTrait {
 		fn as_raw_mut_FacemarkTrain(&mut self) -> *mut c_void;
-	
+
 		/// Add one training sample to the trainer.
-		/// 
+		///
 		/// ## Parameters
 		/// * image: Input image.
 		/// * landmarks: The ground-truth of facial landmarks points corresponds to the image.
-		/// 
+		///
 		/// <B>Example of usage</B>
 		/// ```C++
 		/// String imageFiles = "../data/images_train.txt";
 		/// String ptsFiles = "../data/points_train.txt";
 		/// std::vector<String> images_train;
 		/// std::vector<String> landmarks_train;
-		/// 
+		///
 		/// // load the list of dataset: image paths and landmark file paths
 		/// loadDatasetList(imageFiles,ptsFiles,images_train,landmarks_train);
-		/// 
+		///
 		/// Mat image;
 		/// std::vector<Point2f> facial_points;
 		/// for(size_t i=0;i<images_train.size();i++){
@@ -3547,8 +3548,8 @@ pub mod face {
 		///    facemark->addTrainingSample(image, facial_points);
 		/// }
 		/// ```
-		/// 
-		/// 
+		///
+		///
 		/// The contents in the training files should follows the standard format.
 		/// Here are examples for the contents in these files.
 		/// example of content in the images_train.txt
@@ -3558,8 +3559,8 @@ pub mod face {
 		/// /home/user/ibug/image_005_1.jpg
 		/// /home/user/ibug/image_006.jpg
 		/// ```
-		/// 
-		/// 
+		///
+		///
 		/// example of content in the points_train.txt
 		/// ```C++
 		/// /home/user/ibug/image_003_1.pts
@@ -3567,7 +3568,7 @@ pub mod face {
 		/// /home/user/ibug/image_005_1.pts
 		/// /home/user/ibug/image_006.pts
 		/// ```
-		/// 
+		///
 		#[inline]
 		fn add_training_sample(&mut self, image: &impl ToInputArray, landmarks: &impl ToInputArray) -> Result<bool> {
 			input_array_arg!(image);
@@ -3578,26 +3579,26 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Trains a Facemark algorithm using the given dataset.
 		/// Before the training process, training samples should be added to the trainer
 		/// using face::addTrainingSample function.
-		/// 
+		///
 		/// ## Parameters
 		/// * parameters: Optional extra parameters (algorithm dependent).
-		/// 
+		///
 		/// <B>Example of usage</B>
 		/// ```C++
 		/// FacemarkLBF::Params params;
 		/// params.model_filename = "ibug68.model"; // filename to save the trained model
 		/// Ptr<Facemark> facemark = FacemarkLBF::create(params);
-		/// 
+		///
 		/// // add training samples (see Facemark::addTrainingSample)
-		/// 
+		///
 		/// facemark->training();
 		/// ```
-		/// 
-		/// 
+		///
+		///
 		/// ## C++ default parameters
 		/// * parameters: 0
 		#[inline]
@@ -3608,26 +3609,26 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Trains a Facemark algorithm using the given dataset.
 		/// Before the training process, training samples should be added to the trainer
 		/// using face::addTrainingSample function.
-		/// 
+		///
 		/// ## Parameters
 		/// * parameters: Optional extra parameters (algorithm dependent).
-		/// 
+		///
 		/// <B>Example of usage</B>
 		/// ```C++
 		/// FacemarkLBF::Params params;
 		/// params.model_filename = "ibug68.model"; // filename to save the trained model
 		/// Ptr<Facemark> facemark = FacemarkLBF::create(params);
-		/// 
+		///
 		/// // add training samples (see Facemark::addTrainingSample)
-		/// 
+		///
 		/// facemark->training();
 		/// ```
-		/// 
-		/// 
+		///
+		///
 		/// ## Note
 		/// This alternative version of [FacemarkTrainTrait::training] function uses the following default values for its arguments:
 		/// * parameters: 0
@@ -3639,19 +3640,19 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Set a user defined face detector for the Facemark algorithm.
 		/// ## Parameters
 		/// * detector: The user defined face detector function
 		/// * userData: Detector parameters
-		/// 
+		///
 		/// <B>Example of usage</B>
 		/// ```C++
 		/// MyDetectorParameters detectorParameters(...);
 		/// facemark->setFaceDetector(myDetector, &detectorParameters);
 		/// ```
-		/// 
-		/// 
+		///
+		///
 		/// Example of a user defined face detector
 		/// ```C++
 		/// bool myDetector( InputArray image, OutputArray faces, void* userData)
@@ -3660,10 +3661,10 @@ pub mod face {
 		///    // -------- do something --------
 		/// }
 		/// ```
-		/// 
-		/// 
+		///
+		///
 		/// TODO Lifetime of detector parameters is uncontrolled. Rework interface design to "Ptr<FaceDetector>".
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * user_data: 0
 		#[inline]
@@ -3676,14 +3677,14 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Detect faces from a given image using default or user defined face detector.
 		/// Some Algorithm might not provide a default face detector.
-		/// 
+		///
 		/// ## Parameters
 		/// * image: Input image.
 		/// * faces: Output of the function which represent region of interest of the detected faces. Each face is stored in cv::Rect container.
-		/// 
+		///
 		/// <B>Example of usage</B>
 		/// ```C++
 		/// std::vector<cv::Rect> faces;
@@ -3692,7 +3693,7 @@ pub mod face {
 		///    cv::rectangle(img, faces[j], cv::Scalar(255,0,255));
 		/// }
 		/// ```
-		/// 
+		///
 		#[inline]
 		fn get_faces(&mut self, image: &impl ToInputArray, faces: &mut impl ToOutputArray) -> Result<bool> {
 			input_array_arg!(image);
@@ -3703,25 +3704,25 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Get data from an algorithm
-		/// 
+		///
 		/// ## Parameters
 		/// * items: The obtained data, algorithm dependent.
-		/// 
+		///
 		/// <B>Example of usage</B>
 		/// ```C++
 		/// Ptr<FacemarkAAM> facemark = FacemarkAAM::create();
 		/// facemark->loadModel("AAM.yml");
-		/// 
+		///
 		/// FacemarkAAM::Data data;
 		/// facemark->getData(&data);
 		/// std::vector<Point2f> s0 = data.s0;
-		/// 
+		///
 		/// cout<<s0<<endl;
 		/// ```
-		/// 
-		/// 
+		///
+		///
 		/// ## C++ default parameters
 		/// * items: 0
 		#[inline]
@@ -3732,25 +3733,25 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Get data from an algorithm
-		/// 
+		///
 		/// ## Parameters
 		/// * items: The obtained data, algorithm dependent.
-		/// 
+		///
 		/// <B>Example of usage</B>
 		/// ```C++
 		/// Ptr<FacemarkAAM> facemark = FacemarkAAM::create();
 		/// facemark->loadModel("AAM.yml");
-		/// 
+		///
 		/// FacemarkAAM::Data data;
 		/// facemark->getData(&data);
 		/// std::vector<Point2f> s0 = data.s0;
-		/// 
+		///
 		/// cout<<s0<<endl;
 		/// ```
-		/// 
-		/// 
+		///
+		///
 		/// ## Note
 		/// This alternative version of [FacemarkTrainTrait::get_data] function uses the following default values for its arguments:
 		/// * items: 0
@@ -3762,25 +3763,25 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Abstract base class for trainable facemark models
-	/// 
+	///
 	/// To utilize this API in your program, please take a look at the [tutorial_table_of_content_facemark]
 	/// ### Description
-	/// 
+	///
 	/// The AAM and LBF facemark models in OpenCV are derived from the abstract base class FacemarkTrain, which
 	/// provides a unified access to those facemark algorithms in OpenCV.
-	/// 
+	///
 	/// Here is an example on how to declare facemark algorithm:
 	/// ```C++
 	/// // Using Facemark in your code:
 	/// Ptr<Facemark> facemark = FacemarkLBF::create();
 	/// ```
-	/// 
-	/// 
-	/// 
+	///
+	///
+	///
 	/// The typical pipeline for facemark detection is listed as follows:
 	/// - (Non-mandatory) Set a user defined face detection using FacemarkTrain::setFaceDetector.
 	///   The facemark algorithms are designed to fit the facial points into a face.
@@ -3793,61 +3794,61 @@ pub mod face {
 	/// - Load the trained model using Facemark::loadModel.
 	/// - Perform the fitting via the Facemark::fit.
 	pub struct FacemarkTrain {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { FacemarkTrain }
-	
+
 	impl Drop for FacemarkTrain {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_face_FacemarkTrain_delete(self.as_raw_mut_FacemarkTrain()) };
 		}
 	}
-	
+
 	unsafe impl Send for FacemarkTrain {}
-	
+
 	impl core::AlgorithmTraitConst for FacemarkTrain {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for FacemarkTrain {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { FacemarkTrain, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::face::FacemarkTraitConst for FacemarkTrain {
 		#[inline] fn as_raw_Facemark(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::FacemarkTrait for FacemarkTrain {
 		#[inline] fn as_raw_mut_Facemark(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { FacemarkTrain, crate::face::FacemarkTraitConst, as_raw_Facemark, crate::face::FacemarkTrait, as_raw_mut_Facemark }
-	
+
 	impl crate::face::FacemarkTrainTraitConst for FacemarkTrain {
 		#[inline] fn as_raw_FacemarkTrain(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::FacemarkTrainTrait for FacemarkTrain {
 		#[inline] fn as_raw_mut_FacemarkTrain(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { FacemarkTrain, crate::face::FacemarkTrainTraitConst, as_raw_FacemarkTrain, crate::face::FacemarkTrainTrait, as_raw_mut_FacemarkTrain }
-	
+
 	impl FacemarkTrain {
 	}
-	
+
 	boxed_cast_descendant! { FacemarkTrain, crate::face::FacemarkAAM, cv_face_FacemarkTrain_to_FacemarkAAM }
-	
+
 	boxed_cast_descendant! { FacemarkTrain, crate::face::FacemarkLBF, cv_face_FacemarkTrain_to_FacemarkLBF }
-	
+
 	boxed_cast_base! { FacemarkTrain, core::Algorithm, cv_face_FacemarkTrain_to_Algorithm }
-	
+
 	boxed_cast_base! { FacemarkTrain, crate::face::Facemark, cv_face_FacemarkTrain_to_Facemark }
-	
+
 	impl std::fmt::Debug for FacemarkTrain {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -3855,74 +3856,74 @@ pub mod face {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::face::FisherFaceRecognizer]
 	pub trait FisherFaceRecognizerTraitConst: crate::face::BasicFaceRecognizerTraitConst {
 		fn as_raw_FisherFaceRecognizer(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::face::FisherFaceRecognizer]
 	pub trait FisherFaceRecognizerTrait: crate::face::BasicFaceRecognizerTrait + crate::face::FisherFaceRecognizerTraitConst {
 		fn as_raw_mut_FisherFaceRecognizer(&mut self) -> *mut c_void;
-	
+
 	}
-	
+
 	pub struct FisherFaceRecognizer {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { FisherFaceRecognizer }
-	
+
 	impl Drop for FisherFaceRecognizer {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_face_FisherFaceRecognizer_delete(self.as_raw_mut_FisherFaceRecognizer()) };
 		}
 	}
-	
+
 	unsafe impl Send for FisherFaceRecognizer {}
-	
+
 	impl core::AlgorithmTraitConst for FisherFaceRecognizer {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for FisherFaceRecognizer {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { FisherFaceRecognizer, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::face::BasicFaceRecognizerTraitConst for FisherFaceRecognizer {
 		#[inline] fn as_raw_BasicFaceRecognizer(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::BasicFaceRecognizerTrait for FisherFaceRecognizer {
 		#[inline] fn as_raw_mut_BasicFaceRecognizer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { FisherFaceRecognizer, crate::face::BasicFaceRecognizerTraitConst, as_raw_BasicFaceRecognizer, crate::face::BasicFaceRecognizerTrait, as_raw_mut_BasicFaceRecognizer }
-	
+
 	impl crate::face::FaceRecognizerTraitConst for FisherFaceRecognizer {
 		#[inline] fn as_raw_FaceRecognizer(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::FaceRecognizerTrait for FisherFaceRecognizer {
 		#[inline] fn as_raw_mut_FaceRecognizer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { FisherFaceRecognizer, crate::face::FaceRecognizerTraitConst, as_raw_FaceRecognizer, crate::face::FaceRecognizerTrait, as_raw_mut_FaceRecognizer }
-	
+
 	impl crate::face::FisherFaceRecognizerTraitConst for FisherFaceRecognizer {
 		#[inline] fn as_raw_FisherFaceRecognizer(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::FisherFaceRecognizerTrait for FisherFaceRecognizer {
 		#[inline] fn as_raw_mut_FisherFaceRecognizer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { FisherFaceRecognizer, crate::face::FisherFaceRecognizerTraitConst, as_raw_FisherFaceRecognizer, crate::face::FisherFaceRecognizerTrait, as_raw_mut_FisherFaceRecognizer }
-	
+
 	impl FisherFaceRecognizer {
 		/// ## Parameters
 		/// * num_components: The number of components (read: Fisherfaces) kept for this Linear
@@ -3932,9 +3933,9 @@ pub mod face {
 		/// correct number (c-1) automatically.
 		/// * threshold: The threshold applied in the prediction. If the distance to the nearest neighbor
 		/// is larger than the threshold, this method returns -1.
-		/// 
+		///
 		/// ### Notes:
-		/// 
+		///
 		/// *   Training and prediction must be done on grayscale images, use cvtColor to convert between the
 		///    color spaces.
 		/// *   **THE FISHERFACES METHOD MAKES THE ASSUMPTION, THAT THE TRAINING AND TEST IMAGES ARE OF EQUAL
@@ -3942,9 +3943,9 @@ pub mod face {
 		///    input data has the correct shape, else a meaningful exception is thrown. Use resize to resize
 		///    the images.
 		/// *   This model does not support updating.
-		/// 
+		///
 		/// ### Model internal data:
-		/// 
+		///
 		/// *   num_components see FisherFaceRecognizer::create.
 		/// *   threshold see FisherFaceRecognizer::create.
 		/// *   eigenvalues The eigenvalues for this Linear Discriminant Analysis (ordered descending).
@@ -3953,7 +3954,7 @@ pub mod face {
 		/// *   mean The sample mean calculated from the training data.
 		/// *   projections The projections of the training data.
 		/// *   labels The labels corresponding to the projections.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * num_components: 0
 		/// * threshold: DBL_MAX
@@ -3966,7 +3967,7 @@ pub mod face {
 			let ret = unsafe { core::Ptr::<crate::face::FisherFaceRecognizer>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// ## Parameters
 		/// * num_components: The number of components (read: Fisherfaces) kept for this Linear
 		/// Discriminant Analysis with the Fisherfaces criterion. It's useful to keep all components, that
@@ -3975,9 +3976,9 @@ pub mod face {
 		/// correct number (c-1) automatically.
 		/// * threshold: The threshold applied in the prediction. If the distance to the nearest neighbor
 		/// is larger than the threshold, this method returns -1.
-		/// 
+		///
 		/// ### Notes:
-		/// 
+		///
 		/// *   Training and prediction must be done on grayscale images, use cvtColor to convert between the
 		///    color spaces.
 		/// *   **THE FISHERFACES METHOD MAKES THE ASSUMPTION, THAT THE TRAINING AND TEST IMAGES ARE OF EQUAL
@@ -3985,9 +3986,9 @@ pub mod face {
 		///    input data has the correct shape, else a meaningful exception is thrown. Use resize to resize
 		///    the images.
 		/// *   This model does not support updating.
-		/// 
+		///
 		/// ### Model internal data:
-		/// 
+		///
 		/// *   num_components see FisherFaceRecognizer::create.
 		/// *   threshold see FisherFaceRecognizer::create.
 		/// *   eigenvalues The eigenvalues for this Linear Discriminant Analysis (ordered descending).
@@ -3996,7 +3997,7 @@ pub mod face {
 		/// *   mean The sample mean calculated from the training data.
 		/// *   projections The projections of the training data.
 		/// *   labels The labels corresponding to the projections.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [FisherFaceRecognizer::create] function uses the following default values for its arguments:
 		/// * num_components: 0
@@ -4010,15 +4011,15 @@ pub mod face {
 			let ret = unsafe { core::Ptr::<crate::face::FisherFaceRecognizer>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	boxed_cast_base! { FisherFaceRecognizer, core::Algorithm, cv_face_FisherFaceRecognizer_to_Algorithm }
-	
+
 	boxed_cast_base! { FisherFaceRecognizer, crate::face::BasicFaceRecognizer, cv_face_FisherFaceRecognizer_to_BasicFaceRecognizer }
-	
+
 	boxed_cast_base! { FisherFaceRecognizer, crate::face::FaceRecognizer, cv_face_FisherFaceRecognizer_to_FaceRecognizer }
-	
+
 	impl std::fmt::Debug for FisherFaceRecognizer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -4026,11 +4027,11 @@ pub mod face {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::face::LBPHFaceRecognizer]
 	pub trait LBPHFaceRecognizerTraitConst: crate::face::FaceRecognizerTraitConst {
 		fn as_raw_LBPHFaceRecognizer(&self) -> *const c_void;
-	
+
 		/// ## See also
 		/// setGridX
 		#[inline]
@@ -4041,7 +4042,7 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## See also
 		/// setGridY
 		#[inline]
@@ -4052,7 +4053,7 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## See also
 		/// setRadius
 		#[inline]
@@ -4063,7 +4064,7 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## See also
 		/// setNeighbors
 		#[inline]
@@ -4074,7 +4075,7 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## See also
 		/// setThreshold
 		#[inline]
@@ -4085,7 +4086,7 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_histograms(&self) -> Result<core::Vector<core::Mat>> {
 			return_send!(via ocvrs_return);
@@ -4095,7 +4096,7 @@ pub mod face {
 			let ret = unsafe { core::Vector::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_labels(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -4105,13 +4106,13 @@ pub mod face {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::face::LBPHFaceRecognizer]
 	pub trait LBPHFaceRecognizerTrait: crate::face::FaceRecognizerTrait + crate::face::LBPHFaceRecognizerTraitConst {
 		fn as_raw_mut_LBPHFaceRecognizer(&mut self) -> *mut c_void;
-	
+
 		/// ## See also
 		/// setGridX getGridX
 		#[inline]
@@ -4122,7 +4123,7 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## See also
 		/// setGridY getGridY
 		#[inline]
@@ -4133,7 +4134,7 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## See also
 		/// setRadius getRadius
 		#[inline]
@@ -4144,7 +4145,7 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## See also
 		/// setNeighbors getNeighbors
 		#[inline]
@@ -4155,7 +4156,7 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## See also
 		/// setThreshold getThreshold
 		#[inline]
@@ -4166,54 +4167,54 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	pub struct LBPHFaceRecognizer {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { LBPHFaceRecognizer }
-	
+
 	impl Drop for LBPHFaceRecognizer {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_face_LBPHFaceRecognizer_delete(self.as_raw_mut_LBPHFaceRecognizer()) };
 		}
 	}
-	
+
 	unsafe impl Send for LBPHFaceRecognizer {}
-	
+
 	impl core::AlgorithmTraitConst for LBPHFaceRecognizer {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for LBPHFaceRecognizer {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { LBPHFaceRecognizer, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::face::FaceRecognizerTraitConst for LBPHFaceRecognizer {
 		#[inline] fn as_raw_FaceRecognizer(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::FaceRecognizerTrait for LBPHFaceRecognizer {
 		#[inline] fn as_raw_mut_FaceRecognizer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { LBPHFaceRecognizer, crate::face::FaceRecognizerTraitConst, as_raw_FaceRecognizer, crate::face::FaceRecognizerTrait, as_raw_mut_FaceRecognizer }
-	
+
 	impl crate::face::LBPHFaceRecognizerTraitConst for LBPHFaceRecognizer {
 		#[inline] fn as_raw_LBPHFaceRecognizer(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::LBPHFaceRecognizerTrait for LBPHFaceRecognizer {
 		#[inline] fn as_raw_mut_LBPHFaceRecognizer(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { LBPHFaceRecognizer, crate::face::LBPHFaceRecognizerTraitConst, as_raw_LBPHFaceRecognizer, crate::face::LBPHFaceRecognizerTrait, as_raw_mut_LBPHFaceRecognizer }
-	
+
 	impl LBPHFaceRecognizer {
 		/// ## Parameters
 		/// * radius: The radius used for building the Circular Local Binary Pattern. The greater the
@@ -4229,15 +4230,15 @@ pub mod face {
 		/// feature vector.
 		/// * threshold: The threshold applied in the prediction. If the distance to the nearest neighbor
 		/// is larger than the threshold, this method returns -1.
-		/// 
+		///
 		/// ### Notes:
-		/// 
+		///
 		/// *   The Circular Local Binary Patterns (used in training and prediction) expect the data given as
 		///    grayscale images, use cvtColor to convert between the color spaces.
 		/// *   This model supports updating.
-		/// 
+		///
 		/// ### Model internal data:
-		/// 
+		///
 		/// *   radius see LBPHFaceRecognizer::create.
 		/// *   neighbors see LBPHFaceRecognizer::create.
 		/// *   grid_x see LLBPHFaceRecognizer::create.
@@ -4246,7 +4247,7 @@ pub mod face {
 		/// *   histograms Local Binary Patterns Histograms calculated from the given training data (empty if
 		///    none was given).
 		/// *   labels Labels corresponding to the calculated Local Binary Patterns Histograms.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * radius: 1
 		/// * neighbors: 8
@@ -4262,7 +4263,7 @@ pub mod face {
 			let ret = unsafe { core::Ptr::<crate::face::LBPHFaceRecognizer>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// ## Parameters
 		/// * radius: The radius used for building the Circular Local Binary Pattern. The greater the
 		/// radius, the smoother the image but more spatial information you can get.
@@ -4277,15 +4278,15 @@ pub mod face {
 		/// feature vector.
 		/// * threshold: The threshold applied in the prediction. If the distance to the nearest neighbor
 		/// is larger than the threshold, this method returns -1.
-		/// 
+		///
 		/// ### Notes:
-		/// 
+		///
 		/// *   The Circular Local Binary Patterns (used in training and prediction) expect the data given as
 		///    grayscale images, use cvtColor to convert between the color spaces.
 		/// *   This model supports updating.
-		/// 
+		///
 		/// ### Model internal data:
-		/// 
+		///
 		/// *   radius see LBPHFaceRecognizer::create.
 		/// *   neighbors see LBPHFaceRecognizer::create.
 		/// *   grid_x see LLBPHFaceRecognizer::create.
@@ -4294,7 +4295,7 @@ pub mod face {
 		/// *   histograms Local Binary Patterns Histograms calculated from the given training data (empty if
 		///    none was given).
 		/// *   labels Labels corresponding to the calculated Local Binary Patterns Histograms.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [LBPHFaceRecognizer::create] function uses the following default values for its arguments:
 		/// * radius: 1
@@ -4311,13 +4312,13 @@ pub mod face {
 			let ret = unsafe { core::Ptr::<crate::face::LBPHFaceRecognizer>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	boxed_cast_base! { LBPHFaceRecognizer, core::Algorithm, cv_face_LBPHFaceRecognizer_to_Algorithm }
-	
+
 	boxed_cast_base! { LBPHFaceRecognizer, crate::face::FaceRecognizer, cv_face_LBPHFaceRecognizer_to_FaceRecognizer }
-	
+
 	impl std::fmt::Debug for LBPHFaceRecognizer {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -4325,11 +4326,11 @@ pub mod face {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::face::MACE]
 	pub trait MACETraitConst: core::AlgorithmTraitConst {
 		fn as_raw_MACE(&self) -> *const c_void;
-	
+
 		/// correlate query img and threshold to min class value
 		/// ## Parameters
 		/// * query: a Mat with query image
@@ -4342,13 +4343,13 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::face::MACE]
 	pub trait MACETrait: core::AlgorithmTrait + crate::face::MACETraitConst {
 		fn as_raw_mut_MACE(&mut self) -> *mut c_void;
-	
+
 		/// optionally encrypt images with random convolution
 		/// ## Parameters
 		/// * passphrase: a crc64 random seed will get generated from this
@@ -4361,7 +4362,7 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// train it on positive features
 		///    compute the mace filter: `h = D(-1) * X * (X(+) * D(-1) * X)(-1) * C`
 		///    also calculate a minimal threshold for this class, the smallest self-similarity from the train images
@@ -4376,40 +4377,40 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Minimum Average Correlation Energy Filter
 	///    useful for authentication with (cancellable) biometrical features.
 	///    (does not need many positives to train (10-50), and no negatives at all, also robust to noise/salting)
-	/// 
+	///
 	///    see also: [Savvides04](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Savvides04)
-	/// 
+	///
 	///    this implementation is largely based on: <https://code.google.com/archive/p/pam-face-authentication> (GSOC 2009)
-	/// 
+	///
 	///    use it like:
 	///    ```C++
-	/// 
+	///
 	///    Ptr<face::MACE> mace = face::MACE::create(64);
-	/// 
+	///
 	///    vector<Mat> pos_images = ...
 	///    mace->train(pos_images);
-	/// 
+	///
 	///    Mat query = ...
 	///    bool same = mace->same(query);
-	/// 
+	///
 	///    ```
-	/// 
-	/// 
+	///
+	///
 	///    you can also use two-factor authentication, with an additional passphrase:
-	/// 
+	///
 	///    ```C++
 	///    String owners_passphrase = "ilikehotdogs";
 	///    Ptr<face::MACE> mace = face::MACE::create(64);
 	///    mace->salt(owners_passphrase);
 	///    vector<Mat> pos_images = ...
 	///    mace->train(pos_images);
-	/// 
+	///
 	///    // now, users have to give a valid passphrase, along with the image:
 	///    Mat query = ...
 	///    cout << "enter passphrase: ";
@@ -4418,60 +4419,60 @@ pub mod face {
 	///    mace->salt(pass);
 	///    bool same = mace->same(query);
 	///    ```
-	/// 
-	/// 
+	///
+	///
 	///    save/load your model:
 	///    ```C++
 	///    Ptr<face::MACE> mace = face::MACE::create(64);
 	///    mace->train(pos_images);
 	///    mace->save("my_mace.xml");
-	/// 
+	///
 	///    // later:
 	///    Ptr<MACE> reloaded = MACE::load("my_mace.xml");
 	///    reloaded->same(some_image);
 	///    ```
-	/// 
+	///
 	pub struct MACE {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { MACE }
-	
+
 	impl Drop for MACE {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_face_MACE_delete(self.as_raw_mut_MACE()) };
 		}
 	}
-	
+
 	unsafe impl Send for MACE {}
-	
+
 	impl core::AlgorithmTraitConst for MACE {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for MACE {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { MACE, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::face::MACETraitConst for MACE {
 		#[inline] fn as_raw_MACE(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::MACETrait for MACE {
 		#[inline] fn as_raw_mut_MACE(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { MACE, crate::face::MACETraitConst, as_raw_MACE, crate::face::MACETrait, as_raw_mut_MACE }
-	
+
 	impl MACE {
 		/// constructor
 		/// ## Parameters
 		/// * filename: build a new MACE instance from a pre-serialized FileStorage
 		/// * objname: (optional) top-level node in the FileStorage
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * objname: String()
 		#[inline]
@@ -4485,12 +4486,12 @@ pub mod face {
 			let ret = unsafe { core::Ptr::<crate::face::MACE>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// constructor
 		/// ## Parameters
 		/// * filename: build a new MACE instance from a pre-serialized FileStorage
 		/// * objname: (optional) top-level node in the FileStorage
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [MACE::load] function uses the following default values for its arguments:
 		/// * objname: String()
@@ -4504,11 +4505,11 @@ pub mod face {
 			let ret = unsafe { core::Ptr::<crate::face::MACE>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// constructor
 		/// ## Parameters
 		/// * IMGSIZE: images will get resized to this (should be an even number)
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * imgsize: 64
 		#[inline]
@@ -4520,11 +4521,11 @@ pub mod face {
 			let ret = unsafe { core::Ptr::<crate::face::MACE>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// constructor
 		/// ## Parameters
 		/// * IMGSIZE: images will get resized to this (should be an even number)
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [MACE::create] function uses the following default values for its arguments:
 		/// * imgsize: 64
@@ -4537,11 +4538,11 @@ pub mod face {
 			let ret = unsafe { core::Ptr::<crate::face::MACE>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	boxed_cast_base! { MACE, core::Algorithm, cv_face_MACE_to_Algorithm }
-	
+
 	impl std::fmt::Debug for MACE {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -4549,17 +4550,17 @@ pub mod face {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::face::PredictCollector]
 	pub trait PredictCollectorTraitConst {
 		fn as_raw_PredictCollector(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::face::PredictCollector]
 	pub trait PredictCollectorTrait: crate::face::PredictCollectorTraitConst {
 		fn as_raw_mut_PredictCollector(&mut self) -> *mut c_void;
-	
+
 		/// Interface method called by face recognizer before results processing
 		/// ## Parameters
 		/// * size: total size of prediction evaluation that recognizer could perform
@@ -4571,7 +4572,7 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Interface method called by face recognizer for each result
 		/// ## Parameters
 		/// * label: current prediction label
@@ -4584,40 +4585,40 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Abstract base class for all strategies of prediction result handling
 	pub struct PredictCollector {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { PredictCollector }
-	
+
 	impl Drop for PredictCollector {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_face_PredictCollector_delete(self.as_raw_mut_PredictCollector()) };
 		}
 	}
-	
+
 	unsafe impl Send for PredictCollector {}
-	
+
 	impl crate::face::PredictCollectorTraitConst for PredictCollector {
 		#[inline] fn as_raw_PredictCollector(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::PredictCollectorTrait for PredictCollector {
 		#[inline] fn as_raw_mut_PredictCollector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { PredictCollector, crate::face::PredictCollectorTraitConst, as_raw_PredictCollector, crate::face::PredictCollectorTrait, as_raw_mut_PredictCollector }
-	
+
 	impl PredictCollector {
 	}
-	
+
 	boxed_cast_descendant! { PredictCollector, crate::face::StandardCollector, cv_face_PredictCollector_to_StandardCollector }
-	
+
 	impl std::fmt::Debug for PredictCollector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -4625,11 +4626,11 @@ pub mod face {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::face::StandardCollector]
 	pub trait StandardCollectorTraitConst: crate::face::PredictCollectorTraitConst {
 		fn as_raw_StandardCollector(&self) -> *const c_void;
-	
+
 		/// Returns label with minimal distance
 		#[inline]
 		fn get_min_label(&self) -> Result<i32> {
@@ -4639,7 +4640,7 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns minimal distance value
 		#[inline]
 		fn get_min_dist(&self) -> Result<f64> {
@@ -4649,12 +4650,12 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Return results as vector
 		/// ## Parameters
 		/// * sorted: If set, results will be sorted by distance
 		/// Each values is a pair of label and distance.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * sorted: false
 		#[inline]
@@ -4666,12 +4667,12 @@ pub mod face {
 			let ret = unsafe { core::Vector::<core::Tuple<(i32, f64)>>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Return results as vector
 		/// ## Parameters
 		/// * sorted: If set, results will be sorted by distance
 		/// Each values is a pair of label and distance.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [StandardCollectorTraitConst::get_results] function uses the following default values for its arguments:
 		/// * sorted: false
@@ -4684,13 +4685,13 @@ pub mod face {
 			let ret = unsafe { core::Vector::<core::Tuple<(i32, f64)>>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::face::StandardCollector]
 	pub trait StandardCollectorTrait: crate::face::PredictCollectorTrait + crate::face::StandardCollectorTraitConst {
 		fn as_raw_mut_StandardCollector(&mut self) -> *mut c_void;
-	
+
 		/// overloaded interface method
 		#[inline]
 		fn init(&mut self, size: size_t) -> Result<()> {
@@ -4700,7 +4701,7 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// overloaded interface method
 		#[inline]
 		fn collect(&mut self, label: i32, dist: f64) -> Result<bool> {
@@ -4710,52 +4711,52 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Default predict collector
-	/// 
+	///
 	/// Trace minimal distance with treshhold checking (that is default behavior for most predict logic)
 	pub struct StandardCollector {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { StandardCollector }
-	
+
 	impl Drop for StandardCollector {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_face_StandardCollector_delete(self.as_raw_mut_StandardCollector()) };
 		}
 	}
-	
+
 	unsafe impl Send for StandardCollector {}
-	
+
 	impl crate::face::PredictCollectorTraitConst for StandardCollector {
 		#[inline] fn as_raw_PredictCollector(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::PredictCollectorTrait for StandardCollector {
 		#[inline] fn as_raw_mut_PredictCollector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { StandardCollector, crate::face::PredictCollectorTraitConst, as_raw_PredictCollector, crate::face::PredictCollectorTrait, as_raw_mut_PredictCollector }
-	
+
 	impl crate::face::StandardCollectorTraitConst for StandardCollector {
 		#[inline] fn as_raw_StandardCollector(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::face::StandardCollectorTrait for StandardCollector {
 		#[inline] fn as_raw_mut_StandardCollector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { StandardCollector, crate::face::StandardCollectorTraitConst, as_raw_StandardCollector, crate::face::StandardCollectorTrait, as_raw_mut_StandardCollector }
-	
+
 	impl StandardCollector {
 		/// Constructor
 		/// ## Parameters
 		/// * threshold_: set threshold
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * threshold_: DBL_MAX
 		#[inline]
@@ -4767,11 +4768,11 @@ pub mod face {
 			let ret = unsafe { crate::face::StandardCollector::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Constructor
 		/// ## Parameters
 		/// * threshold_: set threshold
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [new] function uses the following default values for its arguments:
 		/// * threshold_: DBL_MAX
@@ -4784,11 +4785,11 @@ pub mod face {
 			let ret = unsafe { crate::face::StandardCollector::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Static constructor
 		/// ## Parameters
 		/// * threshold: set threshold
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * threshold: DBL_MAX
 		#[inline]
@@ -4800,11 +4801,11 @@ pub mod face {
 			let ret = unsafe { core::Ptr::<crate::face::StandardCollector>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Static constructor
 		/// ## Parameters
 		/// * threshold: set threshold
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [StandardCollector::create] function uses the following default values for its arguments:
 		/// * threshold: DBL_MAX
@@ -4817,11 +4818,11 @@ pub mod face {
 			let ret = unsafe { core::Ptr::<crate::face::StandardCollector>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	boxed_cast_base! { StandardCollector, crate::face::PredictCollector, cv_face_StandardCollector_to_PredictCollector }
-	
+
 	impl std::fmt::Debug for StandardCollector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -4829,16 +4830,16 @@ pub mod face {
 				.finish()
 		}
 	}
-	
+
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq)]
 	pub struct StandardCollector_PredictResult {
 		pub label: i32,
 		pub distance: f64,
 	}
-	
+
 	opencv_type_simple! { crate::face::StandardCollector_PredictResult }
-	
+
 	impl StandardCollector_PredictResult {
 		/// ## C++ default parameters
 		/// * label_: -1
@@ -4851,7 +4852,7 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## Note
 		/// This alternative version of [new] function uses the following default values for its arguments:
 		/// * label_: -1
@@ -4864,6 +4865,6 @@ pub mod face {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
 }

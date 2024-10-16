@@ -1,12 +1,12 @@
 pub mod mcc {
 	//! # Macbeth Chart module
 	//!    # Color Correction Model
-	//! 
-	//! 
-	//! 
+	//!
+	//!
+	//!
 	//! Introduction
 	//! ------------
-	//! 
+	//!
 	//! ColorCharts are a tool for calibrating the color profile of camera, which not
 	//! only depends on the intrinsic and extrinsic parameters of camera but also on the
 	//! lighting conditions. This is done by taking the image of a chart, such that the
@@ -15,11 +15,12 @@ pub mod mcc {
 	//! colors that are present in the image, based on this information we can apply any
 	//! suitable algorithm to find the actual color of all the objects present in the
 	//! image.
-	use crate::{mod_prelude::*, core, sys, types};
+	use crate::mod_prelude::*;
+	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use { super::MCC_CCheckerTraitConst, super::MCC_CCheckerTrait, super::MCC_CCheckerDrawTraitConst, super::MCC_CCheckerDrawTrait, super::MCC_DetectorParametersTraitConst, super::MCC_DetectorParametersTrait, super::MCC_CCheckerDetectorTraitConst, super::MCC_CCheckerDetectorTrait, super::ColorCorrectionModelTraitConst, super::ColorCorrectionModelTrait };
+		pub use super::{ColorCorrectionModelTrait, ColorCorrectionModelTraitConst, MCC_CCheckerDetectorTrait, MCC_CCheckerDetectorTraitConst, MCC_CCheckerDrawTrait, MCC_CCheckerDrawTraitConst, MCC_CCheckerTrait, MCC_CCheckerTraitConst, MCC_DetectorParametersTrait, MCC_DetectorParametersTraitConst};
 	}
-	
+
 	/// The CCM with the shape ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes3) performs linear transformation on color values.
 	pub const CCM_3x3: i32 = 0;
 	/// The CCM with the shape ![inline formula](https://latex.codecogs.com/png.latex?4%5Ctimes3) performs affine transformation.
@@ -126,7 +127,7 @@ pub mod mcc {
 	/// the least square method is an optimal solution under the linear RGB distance function
 	pub const INITIAL_METHOD_LEAST_SQUARE: i32 = 1;
 	/// The white balance method. The initial value is:
-	/// 
+	///
 	pub const INITIAL_METHOD_WHITE_BALANCE: i32 = 0;
 	/// logarithmic polynomial fitting channels respectively; Need assign a value to deg simultaneously
 	pub const LINEARIZATION_COLORLOGPOLYFIT: i32 = 3;
@@ -155,10 +156,10 @@ pub mod mcc {
 		/// The CCM with the shape ![inline formula](https://latex.codecogs.com/png.latex?4%5Ctimes3) performs affine transformation.
 		CCM_4x3 = 1,
 	}
-	
+
 	impl TryFrom<i32> for CCM_TYPE {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::CCM_3x3),
@@ -167,9 +168,9 @@ pub mod mcc {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::mcc::CCM_TYPE }
-	
+
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum COLOR_SPACE {
@@ -254,10 +255,10 @@ pub mod mcc {
 		/// non-RGB color space
 		COLOR_SPACE_Lab_E_10 = 39,
 	}
-	
+
 	impl TryFrom<i32> for COLOR_SPACE {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::COLOR_SPACE_sRGB),
@@ -304,9 +305,9 @@ pub mod mcc {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::mcc::COLOR_SPACE }
-	
+
 	/// Macbeth and Vinyl ColorChecker with 2deg D50
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -318,10 +319,10 @@ pub mod mcc {
 		/// DigitalSG ColorChecker with 140 squares
 		COLORCHECKER_DigitalSG = 2,
 	}
-	
+
 	impl TryFrom<i32> for CONST_COLOR {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::COLORCHECKER_Macbeth),
@@ -331,11 +332,11 @@ pub mod mcc {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::mcc::CONST_COLOR }
-	
+
 	/// Enum of possible functions to calculate the distance between colors.
-	/// 
+	///
 	/// See <https://en.wikipedia.org/wiki/Color_difference> for details
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -354,10 +355,10 @@ pub mod mcc {
 		/// Euclidean distance of rgbl color space
 		DISTANCE_RGBL = 7,
 	}
-	
+
 	impl TryFrom<i32> for DISTANCE_TYPE {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::DISTANCE_CIE76),
@@ -372,23 +373,23 @@ pub mod mcc {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::mcc::DISTANCE_TYPE }
-	
+
 	/// Enum of the possible types of initial method.
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum INITIAL_METHOD_TYPE {
 		/// The white balance method. The initial value is:
-		/// 
+		///
 		INITIAL_METHOD_WHITE_BALANCE = 0,
 		/// the least square method is an optimal solution under the linear RGB distance function
 		INITIAL_METHOD_LEAST_SQUARE = 1,
 	}
-	
+
 	impl TryFrom<i32> for INITIAL_METHOD_TYPE {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::INITIAL_METHOD_WHITE_BALANCE),
@@ -397,102 +398,102 @@ pub mod mcc {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::mcc::INITIAL_METHOD_TYPE }
-	
+
 	/// Linearization transformation type
-	/// 
+	///
 	/// The first step in color correction is to linearize the detected colors.
 	/// Because the input color space has not been calibrated, we usually use some empirical methods to linearize.
 	/// There are several common linearization methods.
 	/// The first is identical transformation, the second is gamma correction, and the third is polynomial fitting.
-	/// 
+	///
 	/// Linearization is generally an elementwise function. The mathematical symbols are as follows:
-	/// 
+	///
 	/// ![inline formula](https://latex.codecogs.com/png.latex?C): any channel of a color, could be ![inline formula](https://latex.codecogs.com/png.latex?R%2C%20G) or ![inline formula](https://latex.codecogs.com/png.latex?B).
-	/// 
+	///
 	/// ![inline formula](https://latex.codecogs.com/png.latex?R%2C%20G%2C%20%20B):  ![inline formula](https://latex.codecogs.com/png.latex?R%2C%20G%2C%20B) channels respectively.
-	/// 
+	///
 	/// ![inline formula](https://latex.codecogs.com/png.latex?G): grayscale;
-	/// 
+	///
 	/// ![inline formula](https://latex.codecogs.com/png.latex?s%2Csl): subscript, which represents the detected data and its linearized value, the former is the input and the latter is the output;
-	/// 
+	///
 	/// ![inline formula](https://latex.codecogs.com/png.latex?d%2Cdl): subscript, which represents the reference data and its linearized value
-	/// 
-	/// 
-	/// 
+	///
+	///
+	///
 	/// ### Identical Transformation
-	/// 
+	///
 	/// No change is made during the Identical transformation linearization, usually because the tristimulus values of the input RGB image is already proportional to the luminance.
 	/// For example, if the input measurement data is in RAW format, the measurement data is already linear, so no linearization is required.
-	/// 
+	///
 	/// The identity transformation formula is as follows:
-	/// 
+	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%0AC%5F%7Bsl%7D%3DC%5Fs%0A)
-	/// 
+	///
 	/// ### Gamma Correction
-	/// 
+	///
 	/// Gamma correction is a means of performing nonlinearity in RGB space, see the Color Space documentation for details.
 	/// In the linearization part, the value of ![inline formula](https://latex.codecogs.com/png.latex?%5Cgamma) is usually set to 2.2.
 	/// You can also customize the value.
-	/// 
+	///
 	/// The formula for gamma correction linearization is as follows:
 	/// ![block formula](https://latex.codecogs.com/png.latex?%0AC%5F%7Bsl%7D%3DC%5Fs%5E%7B%5Cgamma%7D%2C%5Cqquad%20C%5Fs%5Cge0%5C%5C%0AC%5F%7Bsl%7D%3D%2D%28%2DC%5Fs%29%5E%7B%5Cgamma%7D%2C%5Cqquad%20C%5Fs%3C0%5C%5C%5C%5C%0A)
-	/// 
+	///
 	/// ### Polynomial Fitting
-	/// 
+	///
 	/// Polynomial fitting uses polynomials to linearize.
 	/// Provided the polynomial is:
 	/// ![block formula](https://latex.codecogs.com/png.latex?%0Af%28x%29%3Da%5Fnx%5En%2Ba%5F%7Bn%2D1%7Dx%5E%7Bn%2D1%7D%2B%2E%2E%2E%20%2Ba%5F0%0A)
 	/// Then:
 	/// ![block formula](https://latex.codecogs.com/png.latex?%0AC%5F%7Bsl%7D%3Df%28C%5Fs%29%0A)
 	/// In practice, ![inline formula](https://latex.codecogs.com/png.latex?n%5Cle3) is used to prevent overfitting.
-	/// 
+	///
 	/// There are many variants of polynomial fitting, the difference lies in the way of generating ![inline formula](https://latex.codecogs.com/png.latex?f%28x%29).
 	/// It is usually necessary to use linearized reference colors and corresponding detected colors to calculate the polynomial parameters.
 	/// However, not all colors can participate in the calculation. The saturation detected colors needs to be removed. See the algorithm introduction document for details.
-	/// 
+	///
 	/// #### Fitting Channels Respectively
-	/// 
+	///
 	/// Use three polynomials, ![inline formula](https://latex.codecogs.com/png.latex?r%28x%29%2C%20g%28x%29%2C%20b%28x%29),  to linearize each channel of the RGB color space[1-3]:
 	/// ![block formula](https://latex.codecogs.com/png.latex?%0AR%5F%7Bsl%7D%3Dr%28R%5Fs%29%5C%5C%0AG%5F%7Bsl%7D%3Dg%28G%5Fs%29%5C%5C%0AB%5F%7Bsl%7D%3Db%28B%5Fs%29%5C%5C%0A)
 	/// The polynomial is generated by minimizing the residual sum of squares between the detected data and the linearized reference data.
 	/// Take the R-channel as an example:
-	/// 
+	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%0AR%3D%5Carg%20min%5F%7Bf%7D%28%5CSigma%28R%5F%7Bdl%7D%2Df%28R%5FS%29%5E2%29%0A)
-	/// 
+	///
 	/// It's equivalent to finding the least square regression for below equations:
 	/// ![block formula](https://latex.codecogs.com/png.latex?%0Af%28R%5F%7Bs1%7D%29%3DR%5F%7Bdl1%7D%5C%5C%0Af%28R%5F%7Bs2%7D%29%3DR%5F%7Bdl2%7D%5C%5C%0A%2E%2E%2E%0A)
-	/// 
+	///
 	/// With a polynomial, the above equations becomes:
 	/// ![block formula](https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Bbmatrix%7D%0AR%5F%7Bs1%7D%5E%7Bn%7D%20%26%20R%5F%7Bs1%7D%5E%7Bn%2D1%7D%20%26%20%2E%2E%2E%20%26%201%5C%5C%0AR%5F%7Bs2%7D%5E%7Bn%7D%20%26%20R%5F%7Bs2%7D%5E%7Bn%2D1%7D%20%26%20%2E%2E%2E%20%26%201%5C%5C%0A%2E%2E%2E%20%26%20%2E%2E%2E%20%26%20%2E%2E%2E%20%26%20%2E%2E%2E%0A%5Cend%7Bbmatrix%7D%0A%5Cbegin%7Bbmatrix%7D%0Aa%5F%7Bn%7D%5C%5C%0Aa%5F%7Bn%2D1%7D%5C%5C%0A%2E%2E%2E%20%5C%5C%0Aa%5F0%0A%5Cend%7Bbmatrix%7D%0A%3D%0A%5Cbegin%7Bbmatrix%7D%0AR%5F%7Bdl1%7D%5C%5C%0AR%5F%7Bdl2%7D%5C%5C%0A%2E%2E%2E%0A%5Cend%7Bbmatrix%7D%0A)
 	/// It can be expressed as a system of linear equations:
-	/// 
+	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%0AAX%3DB%0A)
-	/// 
+	///
 	/// When the number of reference colors is not less than the degree of the polynomial, the linear system has a least-squares solution:
-	/// 
+	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%0AX%3D%28A%5ETA%29%5E%7B%2D1%7DA%5ETB%0A)
-	/// 
+	///
 	/// Once we get the polynomial coefficients, we can get the polynomial r.
-	/// 
+	///
 	/// This method of finding polynomial coefficients can be implemented by numpy.polyfit in numpy, expressed here as:
-	/// 
+	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%0AR%3Dpolyfit%28R%5FS%2C%20R%5F%7Bdl%7D%29%0A)
-	/// 
+	///
 	/// Note that, in general, the polynomial that we want to obtain is guaranteed to monotonically increase in the interval [0,1] ,
 	/// but this means that nonlinear method is needed to generate the polynomials(see [4] for detail).
 	/// This would greatly increases the complexity of the program.
 	/// Considering that the monotonicity does not affect the correct operation of the color correction program, polyfit is still used to implement the program.
-	/// 
+	///
 	/// Parameters for other channels can also be derived in a similar way.
-	/// 
+	///
 	/// #### Grayscale Polynomial Fitting
-	/// 
+	///
 	/// In this method[2], single polynomial is used for all channels.
 	/// The polynomial is still a polyfit result from the detected colors to the linear reference colors.
 	/// However, only the gray of the reference colors can participate in the calculation.
-	/// 
+	///
 	/// Since the detected colors corresponding to the gray of reference colors is not necessarily gray, it needs to be grayed.
 	/// Grayscale refers to the Y channel of the XYZ color space.
 	/// The color space of the detected data is not determined and cannot be converted into the XYZ space.
@@ -501,25 +502,25 @@ pub mod mcc {
 	/// Then the polynomial parameters can be obtained by using the polyfit.
 	/// ![block formula](https://latex.codecogs.com/png.latex?%0Af%3Dpolyfit%28G%5F%7Bs%7D%2C%20G%5F%7Bdl%7D%29%0A)
 	/// After ![inline formula](https://latex.codecogs.com/png.latex?f) is obtained, linearization can be performed.
-	/// 
+	///
 	/// #### Logarithmic Polynomial Fitting
-	/// 
+	///
 	/// For gamma correction formula, we take the logarithm:
 	/// ![block formula](https://latex.codecogs.com/png.latex?%0Aln%28C%5F%7Bsl%7D%29%3D%7B%5Cgamma%7Dln%28C%5Fs%29%2C%5Cqquad%20C%5Fs%5Cge0%5C%0A)
 	/// It can be seen that there is a linear relationship between ![inline formula](https://latex.codecogs.com/png.latex?ln%28C%5Fs%29) and ![inline formula](https://latex.codecogs.com/png.latex?ln%28C%5F%7Bsl%7D%29). It can be considered that the formula is an approximation of a polynomial relationship, that is, there exists a polynomial ![inline formula](https://latex.codecogs.com/png.latex?f), which makes[2]:
 	/// ![block formula](https://latex.codecogs.com/png.latex?%0Aln%28C%5F%7Bsl%7D%29%3Df%28ln%28C%5Fs%29%29%2C%20%5Cqquad%20C%5Fs%3E0%5C%5C%0AC%5F%7Bsl%7D%3D0%2C%20%5Cqquad%20C%5Fs%3D0%0A)
-	/// 
+	///
 	/// Because ![inline formula](https://latex.codecogs.com/png.latex?exp%28ln%280%29%29%5Cto%5Cinfty%20), the channel whose component is 0 is directly mapped to 0 in the formula above.
-	/// 
+	///
 	/// For fitting channels respectively, we have:
 	/// ![block formula](https://latex.codecogs.com/png.latex?%0Ar%3Dpolyfit%28ln%28R%5Fs%29%2Cln%28R%5F%7Bdl%7D%29%29%5C%5C%0Ag%3Dpolyfit%28ln%28G%5Fs%29%2Cln%28G%5F%7Bdl%7D%29%29%5C%5C%0Ab%3Dpolyfit%28ln%28B%5Fs%29%2Cln%28B%5F%7Bdl%7D%29%29%5C%5C%0A)
 	/// Note that the parameter of ![inline formula](https://latex.codecogs.com/png.latex?ln%28%2A%29%20) cannot be 0.
 	/// Therefore, we need to delete the channels whose values are 0 from ![inline formula](https://latex.codecogs.com/png.latex?R%5Fs%20) and ![inline formula](https://latex.codecogs.com/png.latex?R%5F%7Bdl%7D%20), ![inline formula](https://latex.codecogs.com/png.latex?G%5Fs) and ![inline formula](https://latex.codecogs.com/png.latex?G%5F%7Bdl%7D), ![inline formula](https://latex.codecogs.com/png.latex?B%5Fs) and ![inline formula](https://latex.codecogs.com/png.latex?B%5F%7Bdl%7D).
-	/// 
+	///
 	/// Therefore:
-	/// 
+	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%0Aln%28R%5F%7Bsl%7D%29%3Dr%28ln%28R%5Fs%29%29%2C%20%5Cqquad%20R%5Fs%3E0%5C%5C%0AR%5F%7Bsl%7D%3D0%2C%20%5Cqquad%20R%5Fs%3D0%5C%5C%0Aln%28G%5F%7Bsl%7D%29%3Dg%28ln%28G%5Fs%29%29%2C%5Cqquad%20G%5Fs%3E0%5C%5C%0AG%5F%7Bsl%7D%3D0%2C%20%5Cqquad%20G%5Fs%3D0%5C%5C%0Aln%28B%5F%7Bsl%7D%29%3Db%28ln%28B%5Fs%29%29%2C%5Cqquad%20B%5Fs%3E0%5C%5C%0AB%5F%7Bsl%7D%3D0%2C%20%5Cqquad%20B%5Fs%3D0%5C%5C%0A)
-	/// 
+	///
 	/// For grayscale polynomials, there are also:
 	/// ![block formula](https://latex.codecogs.com/png.latex?%0Af%3Dpolyfit%28ln%28G%5F%7Bsl%7D%29%2Cln%28G%5F%7Bdl%7D%29%29%0A)
 	/// and:
@@ -540,10 +541,10 @@ pub mod mcc {
 		/// grayscale Logarithmic polynomial fitting;  Need assign a value to deg and dst_whites simultaneously
 		LINEARIZATION_GRAYLOGPOLYFIT = 5,
 	}
-	
+
 	impl TryFrom<i32> for LINEAR_TYPE {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::LINEARIZATION_IDENTITY),
@@ -556,11 +557,11 @@ pub mod mcc {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::mcc::LINEAR_TYPE }
-	
+
 	/// TYPECHART
-	/// 
+	///
 	/// \brief enum to hold the type of the checker
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -572,10 +573,10 @@ pub mod mcc {
 		/// DKK color chart with 12 squares and 6 rectangle
 		VINYL18 = 2,
 	}
-	
+
 	impl TryFrom<i32> for MCC_TYPECHART {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::MCC24),
@@ -585,13 +586,13 @@ pub mod mcc {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::mcc::MCC_TYPECHART }
-	
+
 	/// Constant methods for [crate::mcc::ColorCorrectionModel]
 	pub trait ColorCorrectionModelTraitConst {
 		fn as_raw_ColorCorrectionModel(&self) -> *const c_void;
-	
+
 		#[inline]
 		fn get_ccm(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -601,7 +602,7 @@ pub mod mcc {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_loss(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
@@ -610,7 +611,7 @@ pub mod mcc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_src_rgbl(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -620,7 +621,7 @@ pub mod mcc {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_dst_rgbl(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -630,7 +631,7 @@ pub mod mcc {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_mask(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -640,7 +641,7 @@ pub mod mcc {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_weights(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -650,15 +651,15 @@ pub mod mcc {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::mcc::ColorCorrectionModel]
 	pub trait ColorCorrectionModelTrait: crate::mcc::ColorCorrectionModelTraitConst {
 		fn as_raw_mut_ColorCorrectionModel(&mut self) -> *mut c_void;
-	
+
 		/// set ColorSpace
-		/// 
+		///
 		/// Note: It should be some RGB color space;
 		/// Supported list of color cards:
 		/// - [COLOR_SPACE_sRGB]
@@ -671,7 +672,7 @@ pub mod mcc {
 		/// - [COLOR_SPACE_REC_2020_RGB]
 		/// ## Parameters
 		/// * cs: the absolute color space that detected colors convert to;
-		/// 
+		///
 		///           default: [COLOR_SPACE_sRGB]
 		#[inline]
 		fn set_color_space(&mut self, cs: crate::mcc::COLOR_SPACE) -> Result<()> {
@@ -681,11 +682,11 @@ pub mod mcc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// set ccm_type
 		/// ## Parameters
 		/// * ccm_type: the shape of color correction matrix(CCM);
-		/// 
+		///
 		///                default: [CCM_3x3]
 		#[inline]
 		fn set_ccm_type(&mut self, ccm_type: crate::mcc::CCM_TYPE) -> Result<()> {
@@ -695,11 +696,11 @@ pub mod mcc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// set Distance
 		/// ## Parameters
 		/// * distance: the type of color distance;
-		/// 
+		///
 		///                default: [DISTANCE_CIE2000]
 		#[inline]
 		fn set_distance(&mut self, distance: crate::mcc::DISTANCE_TYPE) -> Result<()> {
@@ -709,11 +710,11 @@ pub mod mcc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// set Linear
 		/// ## Parameters
 		/// * linear_type: the method of linearization;
-		/// 
+		///
 		///                   default: [LINEARIZATION_GAMMA]
 		#[inline]
 		fn set_linear(&mut self, linear_type: crate::mcc::LINEAR_TYPE) -> Result<()> {
@@ -723,16 +724,16 @@ pub mod mcc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// set Gamma
-		/// 
-		/// 
+		///
+		///
 		/// Note: only valid when linear is set to "gamma";
-		/// 
-		/// 
+		///
+		///
 		/// ## Parameters
 		/// * gamma: the gamma value of gamma correction;
-		/// 
+		///
 		///              default: 2.2;
 		#[inline]
 		fn set_linear_gamma(&mut self, gamma: &f64) -> Result<()> {
@@ -742,7 +743,7 @@ pub mod mcc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// set degree
 		///     
 		/// Note: only valid when linear is set to
@@ -750,10 +751,10 @@ pub mod mcc {
 		///    - [LINEARIZATION_GRAYPOLYFIT]
 		///    - [LINEARIZATION_COLORLOGPOLYFIT]
 		///    - [LINEARIZATION_GRAYLOGPOLYFIT]
-		/// 
+		///
 		/// ## Parameters
 		/// * deg: the degree of linearization polynomial;
-		/// 
+		///
 		///        default: 3
 		#[inline]
 		fn set_linear_degree(&mut self, deg: &i32) -> Result<()> {
@@ -763,16 +764,16 @@ pub mod mcc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// set SaturatedThreshold.
 		///            The colors in the closed interval [lower, upper] are reserved to participate
 		///            in the calculation of the loss function and initialization parameters
 		/// ## Parameters
 		/// * lower: the lower threshold to determine saturation;
-		/// 
+		///
 		///        default: 0;
 		/// * upper: the upper threshold to determine saturation;
-		/// 
+		///
 		///              default: 0
 		#[inline]
 		fn set_saturated_threshold(&mut self, lower: &f64, upper: &f64) -> Result<()> {
@@ -782,11 +783,11 @@ pub mod mcc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// set WeightsList
 		/// ## Parameters
 		/// * weights_list: the list of weight of each color;
-		/// 
+		///
 		///                    default: empty array
 		#[inline]
 		fn set_weights_list(&mut self, weights_list: &impl core::MatTraitConst) -> Result<()> {
@@ -796,11 +797,11 @@ pub mod mcc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// set WeightCoeff
 		/// ## Parameters
 		/// * weights_coeff: the exponent number of L* component of the reference color in CIE Lab color space;
-		/// 
+		///
 		///                      default: 0
 		#[inline]
 		fn set_weight_coeff(&mut self, weights_coeff: &f64) -> Result<()> {
@@ -810,11 +811,11 @@ pub mod mcc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// set InitialMethod
 		/// ## Parameters
 		/// * initial_method_type: the method of calculating CCM initial value;
-		/// 
+		///
 		///        default: INITIAL_METHOD_LEAST_SQUARE
 		#[inline]
 		fn set_initial_method(&mut self, initial_method_type: crate::mcc::INITIAL_METHOD_TYPE) -> Result<()> {
@@ -824,13 +825,13 @@ pub mod mcc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// set MaxCount
 		/// ## Parameters
 		/// * max_count: used in MinProblemSolver-DownhillSolver;
-		/// 
+		///
 		///    Terminal criteria to the algorithm;
-		/// 
+		///
 		///                  default: 5000;
 		#[inline]
 		fn set_max_count(&mut self, max_count: &i32) -> Result<()> {
@@ -840,13 +841,13 @@ pub mod mcc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// set Epsilon
 		/// ## Parameters
 		/// * epsilon: used in MinProblemSolver-DownhillSolver;
-		/// 
+		///
 		///    Terminal criteria to the algorithm;
-		/// 
+		///
 		///               default: 1e-4;
 		#[inline]
 		fn set_epsilon(&mut self, epsilon: &f64) -> Result<()> {
@@ -856,7 +857,7 @@ pub mod mcc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// make color correction
 		#[inline]
 		fn run(&mut self) -> Result<()> {
@@ -866,14 +867,14 @@ pub mod mcc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Infer using fitting ccm.
 		/// ## Parameters
 		/// * img: the input image.
 		/// * islinear: default false.
 		/// ## Returns
 		/// the output array.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * islinear: false
 		#[inline]
@@ -885,14 +886,14 @@ pub mod mcc {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Infer using fitting ccm.
 		/// ## Parameters
 		/// * img: the input image.
 		/// * islinear: default false.
 		/// ## Returns
 		/// the output array.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [ColorCorrectionModelTrait::infer] function uses the following default values for its arguments:
 		/// * islinear: false
@@ -905,48 +906,48 @@ pub mod mcc {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Core class of ccm model
-	/// 
+	///
 	/// Produce a ColorCorrectionModel instance for inference
 	pub struct ColorCorrectionModel {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { ColorCorrectionModel }
-	
+
 	impl Drop for ColorCorrectionModel {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_ccm_ColorCorrectionModel_delete(self.as_raw_mut_ColorCorrectionModel()) };
 		}
 	}
-	
+
 	unsafe impl Send for ColorCorrectionModel {}
-	
+
 	impl crate::mcc::ColorCorrectionModelTraitConst for ColorCorrectionModel {
 		#[inline] fn as_raw_ColorCorrectionModel(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::mcc::ColorCorrectionModelTrait for ColorCorrectionModel {
 		#[inline] fn as_raw_mut_ColorCorrectionModel(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { ColorCorrectionModel, crate::mcc::ColorCorrectionModelTraitConst, as_raw_ColorCorrectionModel, crate::mcc::ColorCorrectionModelTrait, as_raw_mut_ColorCorrectionModel }
-	
+
 	impl ColorCorrectionModel {
 		/// Color Correction Model
-		/// 
+		///
 		/// Supported list of color cards:
 		/// - [COLORCHECKER_Macbeth], the Macbeth ColorChecker
 		/// - [COLORCHECKER_Vinyl], the DKK ColorChecker
 		/// - [COLORCHECKER_DigitalSG], the DigitalSG ColorChecker with 140 squares
-		/// 
+		///
 		/// ## Parameters
 		/// * src: detected colors of ColorChecker patches;
-		/// 
+		///
 		///            the color type is RGB not BGR, and the color values are in [0, 1];
 		/// * constcolor: the Built-in color card
 		#[inline]
@@ -958,17 +959,17 @@ pub mod mcc {
 			let ret = unsafe { crate::mcc::ColorCorrectionModel::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Color Correction Model
 		/// ## Parameters
 		/// * src: detected colors of ColorChecker patches;
-		/// 
+		///
 		///           the color type is RGB not BGR, and the color values are in [0, 1];
 		/// * colors: the reference color values, the color values are in [0, 1].
-		/// 
+		///
 		/// * ref_cs: the corresponding color space
 		///            If the color type is some RGB, the format is RGB not BGR;
-		/// 
+		///
 		#[inline]
 		pub fn new_1(src: &impl core::MatTraitConst, mut colors: impl core::MatTrait, ref_cs: crate::mcc::COLOR_SPACE) -> Result<crate::mcc::ColorCorrectionModel> {
 			return_send!(via ocvrs_return);
@@ -978,11 +979,11 @@ pub mod mcc {
 			let ret = unsafe { crate::mcc::ColorCorrectionModel::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Color Correction Model
 		/// ## Parameters
 		/// * src: detected colors of ColorChecker patches;
-		/// 
+		///
 		///            the color type is RGB not BGR, and the color values are in [0, 1];
 		/// * colors: the reference color values, the color values are in [0, 1].
 		/// * ref_cs: the corresponding color space
@@ -997,9 +998,9 @@ pub mod mcc {
 			let ret = unsafe { crate::mcc::ColorCorrectionModel::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	impl std::fmt::Debug for ColorCorrectionModel {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -1007,17 +1008,17 @@ pub mod mcc {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::mcc::MCC_CChecker]
 	pub trait MCC_CCheckerTraitConst {
 		fn as_raw_MCC_CChecker(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::mcc::MCC_CChecker]
 	pub trait MCC_CCheckerTrait: crate::mcc::MCC_CCheckerTraitConst {
 		fn as_raw_mut_MCC_CChecker(&mut self) -> *mut c_void;
-	
+
 		#[inline]
 		fn set_target(&mut self, _target: crate::mcc::MCC_TYPECHART) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1026,7 +1027,7 @@ pub mod mcc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_box(&mut self, mut _box: core::Vector<core::Point2f>) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1035,7 +1036,7 @@ pub mod mcc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_charts_rgb(&mut self, mut _charts_rgb: impl core::MatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1044,7 +1045,7 @@ pub mod mcc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_charts_y_cb_cr(&mut self, mut _charts_y_cb_cr: impl core::MatTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1053,7 +1054,7 @@ pub mod mcc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_cost(&mut self, _cost: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1062,7 +1063,7 @@ pub mod mcc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_center(&mut self, _center: core::Point2f) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1071,7 +1072,7 @@ pub mod mcc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_target(&mut self) -> Result<crate::mcc::MCC_TYPECHART> {
 			return_send!(via ocvrs_return);
@@ -1080,7 +1081,7 @@ pub mod mcc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_box(&mut self) -> Result<core::Vector<core::Point2f>> {
 			return_send!(via ocvrs_return);
@@ -1090,9 +1091,9 @@ pub mod mcc {
 			let ret = unsafe { core::Vector::<core::Point2f>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Computes and returns the coordinates of the central parts of the charts modules.
-		/// 
+		///
 		/// This method computes transformation matrix from the checkers's coordinates (`cv::mcc::CChecker::getBox()`)
 		/// and find by this the coordinates of the central parts of the charts modules.
 		/// It is used in `cv::mcc::CCheckerDraw::draw()` and in `ChartsRGB` calculation.
@@ -1105,7 +1106,7 @@ pub mod mcc {
 			let ret = unsafe { core::Vector::<core::Point2f>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_charts_rgb(&mut self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -1115,7 +1116,7 @@ pub mod mcc {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_charts_y_cb_cr(&mut self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -1125,7 +1126,7 @@ pub mod mcc {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_cost(&mut self) -> Result<f32> {
 			return_send!(via ocvrs_return);
@@ -1134,7 +1135,7 @@ pub mod mcc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_center(&mut self) -> Result<core::Point2f> {
 			return_send!(via ocvrs_return);
@@ -1143,41 +1144,41 @@ pub mod mcc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// CChecker
-	/// 
+	///
 	/// \brief checker object
-	/// 
+	///
 	///    This class contains the information about the detected checkers,i.e, their
 	///    type, the corners of the chart, the color profile, the cost, centers chart,
 	///    etc.
 	pub struct MCC_CChecker {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { MCC_CChecker }
-	
+
 	impl Drop for MCC_CChecker {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_mcc_CChecker_delete(self.as_raw_mut_MCC_CChecker()) };
 		}
 	}
-	
+
 	unsafe impl Send for MCC_CChecker {}
-	
+
 	impl crate::mcc::MCC_CCheckerTraitConst for MCC_CChecker {
 		#[inline] fn as_raw_MCC_CChecker(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::mcc::MCC_CCheckerTrait for MCC_CChecker {
 		#[inline] fn as_raw_mut_MCC_CChecker(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { MCC_CChecker, crate::mcc::MCC_CCheckerTraitConst, as_raw_MCC_CChecker, crate::mcc::MCC_CCheckerTrait, as_raw_mut_MCC_CChecker }
-	
+
 	impl MCC_CChecker {
 		/// \brief Create a new CChecker object.
 		/// \return A pointer to the implementation of the CChecker
@@ -1190,9 +1191,9 @@ pub mod mcc {
 			let ret = unsafe { core::Ptr::<crate::mcc::MCC_CChecker>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	impl std::fmt::Debug for MCC_CChecker {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -1200,23 +1201,23 @@ pub mod mcc {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::mcc::MCC_CCheckerDetector]
 	pub trait MCC_CCheckerDetectorTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_MCC_CCheckerDetector(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::mcc::MCC_CCheckerDetector]
 	pub trait MCC_CCheckerDetectorTrait: core::AlgorithmTrait + crate::mcc::MCC_CCheckerDetectorTraitConst {
 		fn as_raw_mut_MCC_CCheckerDetector(&mut self) -> *mut c_void;
-	
+
 		/// \brief Set the net which will be used to find the approximate
 		///        bounding boxes for the color charts.
-		/// 
+		///
 		/// It is not necessary to use this, but this usually results in
 		/// better detection rate.
-		/// 
+		///
 		/// \param net the neural network, if the network in empty, then
 		///            the function will return false.
 		/// \return true if it was able to set the detector's network,
@@ -1229,9 +1230,9 @@ pub mod mcc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// \brief Find the ColorCharts in the given image.
-		/// 
+		///
 		/// The found charts are not returned but instead stored in the
 		/// detector, these can be accessed later on using getBestColorChecker()
 		/// and getListColorChecker()
@@ -1248,7 +1249,7 @@ pub mod mcc {
 		/// \param params parameters of the detection system. More information
 		///               about them can be found in the struct DetectorParameters.
 		/// \return true if atleast one chart is detected otherwise false
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * nc: 1
 		/// * use_net: false
@@ -1262,9 +1263,9 @@ pub mod mcc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// \brief Find the ColorCharts in the given image.
-		/// 
+		///
 		/// The found charts are not returned but instead stored in the
 		/// detector, these can be accessed later on using getBestColorChecker()
 		/// and getListColorChecker()
@@ -1281,7 +1282,7 @@ pub mod mcc {
 		/// \param params parameters of the detection system. More information
 		///               about them can be found in the struct DetectorParameters.
 		/// \return true if atleast one chart is detected otherwise false
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [MCC_CCheckerDetectorTrait::process_with_roi] function uses the following default values for its arguments:
 		/// * nc: 1
@@ -1296,13 +1297,13 @@ pub mod mcc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// \brief Find the ColorCharts in the given image.
-		/// 
+		///
 		/// Differs from the above one only in the arguments.
-		/// 
+		///
 		/// This version searches for the chart in the full image.
-		/// 
+		///
 		/// The found charts are not returned but instead stored in the
 		/// detector, these can be accessed later on using getBestColorChecker()
 		/// and getListColorChecker()
@@ -1316,7 +1317,7 @@ pub mod mcc {
 		/// \param params parameters of the detection system. More information
 		///               about them can be found in the struct DetectorParameters.
 		/// \return true if atleast one chart is detected otherwise false
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * nc: 1
 		/// * use_net: false
@@ -1330,13 +1331,13 @@ pub mod mcc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// \brief Find the ColorCharts in the given image.
-		/// 
+		///
 		/// Differs from the above one only in the arguments.
-		/// 
+		///
 		/// This version searches for the chart in the full image.
-		/// 
+		///
 		/// The found charts are not returned but instead stored in the
 		/// detector, these can be accessed later on using getBestColorChecker()
 		/// and getListColorChecker()
@@ -1350,7 +1351,7 @@ pub mod mcc {
 		/// \param params parameters of the detection system. More information
 		///               about them can be found in the struct DetectorParameters.
 		/// \return true if atleast one chart is detected otherwise false
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [MCC_CCheckerDetectorTrait::process] function uses the following default values for its arguments:
 		/// * nc: 1
@@ -1365,7 +1366,7 @@ pub mod mcc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// \brief Get the best color checker. By the best it means the one
 		///        detected with the highest confidence.
 		/// \return checker A single colorchecker, if atleast one colorchecker
@@ -1379,7 +1380,7 @@ pub mod mcc {
 			let ret = unsafe { core::Ptr::<crate::mcc::MCC_CChecker>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// \brief Get the list of all detected colorcheckers
 		/// \return checkers vector of colorcheckers
 		#[inline]
@@ -1391,45 +1392,45 @@ pub mod mcc {
 			let ret = unsafe { core::Vector::<core::Ptr<crate::mcc::MCC_CChecker>>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// A class to find the positions of the ColorCharts in the image.
 	pub struct MCC_CCheckerDetector {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { MCC_CCheckerDetector }
-	
+
 	impl Drop for MCC_CCheckerDetector {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_mcc_CCheckerDetector_delete(self.as_raw_mut_MCC_CCheckerDetector()) };
 		}
 	}
-	
+
 	unsafe impl Send for MCC_CCheckerDetector {}
-	
+
 	impl core::AlgorithmTraitConst for MCC_CCheckerDetector {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for MCC_CCheckerDetector {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { MCC_CCheckerDetector, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::mcc::MCC_CCheckerDetectorTraitConst for MCC_CCheckerDetector {
 		#[inline] fn as_raw_MCC_CCheckerDetector(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::mcc::MCC_CCheckerDetectorTrait for MCC_CCheckerDetector {
 		#[inline] fn as_raw_mut_MCC_CCheckerDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { MCC_CCheckerDetector, crate::mcc::MCC_CCheckerDetectorTraitConst, as_raw_MCC_CCheckerDetector, crate::mcc::MCC_CCheckerDetectorTrait, as_raw_mut_MCC_CCheckerDetector }
-	
+
 	impl MCC_CCheckerDetector {
 		/// \brief Returns the implementation of the CCheckerDetector.
 		#[inline]
@@ -1441,11 +1442,11 @@ pub mod mcc {
 			let ret = unsafe { core::Ptr::<crate::mcc::MCC_CCheckerDetector>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	boxed_cast_base! { MCC_CCheckerDetector, core::Algorithm, cv_mcc_CCheckerDetector_to_Algorithm }
-	
+
 	impl std::fmt::Debug for MCC_CCheckerDetector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -1453,17 +1454,17 @@ pub mod mcc {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::mcc::MCC_CCheckerDraw]
 	pub trait MCC_CCheckerDrawTraitConst {
 		fn as_raw_MCC_CCheckerDraw(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::mcc::MCC_CCheckerDraw]
 	pub trait MCC_CCheckerDrawTrait: crate::mcc::MCC_CCheckerDrawTraitConst {
 		fn as_raw_mut_MCC_CCheckerDraw(&mut self) -> *mut c_void;
-	
+
 		/// \brief Draws the checker to the given image.
 		/// \param img image in color space BGR
 		#[inline]
@@ -1475,11 +1476,11 @@ pub mod mcc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// \brief checker draw
-	/// 
+	///
 	/// This class contains the functions for drawing a detected chart.  This class
 	/// expects a pointer to the checker which will be drawn by this object in the
 	/// constructor and then later on whenever the draw function is called the
@@ -1487,35 +1488,35 @@ pub mod mcc {
 	/// checkers which will be draw by a given object, as it is decided in the
 	/// constructor itself. If you want to draw some other object you can create a
 	/// new CCheckerDraw instance.
-	/// 
+	///
 	/// The reason for this type of design is that in some videos we can assume that
 	/// the checker is always in the same position, even if the image changes, so
 	/// the drawing will always take place at the same position.
 	pub struct MCC_CCheckerDraw {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { MCC_CCheckerDraw }
-	
+
 	impl Drop for MCC_CCheckerDraw {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_mcc_CCheckerDraw_delete(self.as_raw_mut_MCC_CCheckerDraw()) };
 		}
 	}
-	
+
 	unsafe impl Send for MCC_CCheckerDraw {}
-	
+
 	impl crate::mcc::MCC_CCheckerDrawTraitConst for MCC_CCheckerDraw {
 		#[inline] fn as_raw_MCC_CCheckerDraw(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::mcc::MCC_CCheckerDrawTrait for MCC_CCheckerDraw {
 		#[inline] fn as_raw_mut_MCC_CCheckerDraw(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { MCC_CCheckerDraw, crate::mcc::MCC_CCheckerDrawTraitConst, as_raw_MCC_CCheckerDraw, crate::mcc::MCC_CCheckerDrawTrait, as_raw_mut_MCC_CCheckerDraw }
-	
+
 	impl MCC_CCheckerDraw {
 		/// \brief Create a new CCheckerDraw object.
 		/// \param pChecker The checker which will be drawn by this object.
@@ -1524,7 +1525,7 @@ pub mod mcc {
 		/// \param thickness The thickness with which the sqaures will be
 		///                  drawn
 		/// \return A pointer to the implementation of the CCheckerDraw
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * color: CV_RGB(0,250,0)
 		/// * thickness: 2
@@ -1537,7 +1538,7 @@ pub mod mcc {
 			let ret = unsafe { core::Ptr::<crate::mcc::MCC_CCheckerDraw>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// \brief Create a new CCheckerDraw object.
 		/// \param pChecker The checker which will be drawn by this object.
 		/// \param color The color by with which the squares of the checker
@@ -1545,7 +1546,7 @@ pub mod mcc {
 		/// \param thickness The thickness with which the sqaures will be
 		///                  drawn
 		/// \return A pointer to the implementation of the CCheckerDraw
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [MCC_CCheckerDraw::create] function uses the following default values for its arguments:
 		/// * color: CV_RGB(0,250,0)
@@ -1559,9 +1560,9 @@ pub mod mcc {
 			let ret = unsafe { core::Ptr::<crate::mcc::MCC_CCheckerDraw>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	impl std::fmt::Debug for MCC_CCheckerDraw {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -1569,235 +1570,235 @@ pub mod mcc {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::mcc::MCC_DetectorParameters]
 	pub trait MCC_DetectorParametersTraitConst {
 		fn as_raw_MCC_DetectorParameters(&self) -> *const c_void;
-	
+
 		#[inline]
 		fn adaptive_thresh_win_size_min(&self) -> i32 {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propAdaptiveThreshWinSizeMin_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn adaptive_thresh_win_size_max(&self) -> i32 {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propAdaptiveThreshWinSizeMax_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn adaptive_thresh_win_size_step(&self) -> i32 {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propAdaptiveThreshWinSizeStep_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn adaptive_thresh_constant(&self) -> f64 {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propAdaptiveThreshConstant_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn min_contours_area_rate(&self) -> f64 {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinContoursAreaRate_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn min_contours_area(&self) -> f64 {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinContoursArea_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn confidence_threshold(&self) -> f64 {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propConfidenceThreshold_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn min_contour_solidity(&self) -> f64 {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinContourSolidity_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn find_candidates_approx_poly_dp_eps_multiplier(&self) -> f64 {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propFindCandidatesApproxPolyDPEpsMultiplier_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn border_width(&self) -> i32 {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propBorderWidth_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn b0factor(&self) -> f32 {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propB0factor_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn max_error(&self) -> f32 {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMaxError_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn min_contour_points_allowed(&self) -> i32 {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinContourPointsAllowed_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn min_contour_length_allowed(&self) -> i32 {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinContourLengthAllowed_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn min_inter_contour_distance(&self) -> i32 {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinInterContourDistance_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn min_inter_checker_distance(&self) -> i32 {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinInterCheckerDistance_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn min_image_size(&self) -> i32 {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinImageSize_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn min_group_size(&self) -> u32 {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinGroupSize_const(self.as_raw_MCC_DetectorParameters()) };
 			ret
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::mcc::MCC_DetectorParameters]
 	pub trait MCC_DetectorParametersTrait: crate::mcc::MCC_DetectorParametersTraitConst {
 		fn as_raw_mut_MCC_DetectorParameters(&mut self) -> *mut c_void;
-	
+
 		#[inline]
 		fn set_adaptive_thresh_win_size_min(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propAdaptiveThreshWinSizeMin_const_int(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_adaptive_thresh_win_size_max(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propAdaptiveThreshWinSizeMax_const_int(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_adaptive_thresh_win_size_step(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propAdaptiveThreshWinSizeStep_const_int(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_adaptive_thresh_constant(&mut self, val: f64) {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propAdaptiveThreshConstant_const_double(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_min_contours_area_rate(&mut self, val: f64) {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinContoursAreaRate_const_double(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_min_contours_area(&mut self, val: f64) {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinContoursArea_const_double(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_confidence_threshold(&mut self, val: f64) {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propConfidenceThreshold_const_double(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_min_contour_solidity(&mut self, val: f64) {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinContourSolidity_const_double(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_find_candidates_approx_poly_dp_eps_multiplier(&mut self, val: f64) {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propFindCandidatesApproxPolyDPEpsMultiplier_const_double(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_border_width(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propBorderWidth_const_int(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_b0factor(&mut self, val: f32) {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propB0factor_const_float(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_max_error(&mut self, val: f32) {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMaxError_const_float(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_min_contour_points_allowed(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinContourPointsAllowed_const_int(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_min_contour_length_allowed(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinContourLengthAllowed_const_int(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_min_inter_contour_distance(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinInterContourDistance_const_int(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_min_inter_checker_distance(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinInterCheckerDistance_const_int(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_min_image_size(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinImageSize_const_int(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_min_group_size(&mut self, val: u32) {
 			let ret = unsafe { sys::cv_mcc_DetectorParameters_propMinGroupSize_const_unsigned_int(self.as_raw_mut_MCC_DetectorParameters(), val) };
 			ret
 		}
-		
+
 	}
-	
+
 	/// Parameters for the detectMarker process:
 	/// - int adaptiveThreshWinSizeMin : minimum window size for adaptive
 	///                                  thresholding before finding contours
@@ -1846,30 +1847,30 @@ pub mod mcc {
 	/// - unsigned minGroupSize : minimum number of a squared of a chart that must be
 	///                           detected. default(4)
 	pub struct MCC_DetectorParameters {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { MCC_DetectorParameters }
-	
+
 	impl Drop for MCC_DetectorParameters {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_mcc_DetectorParameters_delete(self.as_raw_mut_MCC_DetectorParameters()) };
 		}
 	}
-	
+
 	unsafe impl Send for MCC_DetectorParameters {}
-	
+
 	impl crate::mcc::MCC_DetectorParametersTraitConst for MCC_DetectorParameters {
 		#[inline] fn as_raw_MCC_DetectorParameters(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::mcc::MCC_DetectorParametersTrait for MCC_DetectorParameters {
 		#[inline] fn as_raw_mut_MCC_DetectorParameters(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { MCC_DetectorParameters, crate::mcc::MCC_DetectorParametersTraitConst, as_raw_MCC_DetectorParameters, crate::mcc::MCC_DetectorParametersTrait, as_raw_mut_MCC_DetectorParameters }
-	
+
 	impl MCC_DetectorParameters {
 		#[inline]
 		pub fn default() -> Result<crate::mcc::MCC_DetectorParameters> {
@@ -1880,7 +1881,7 @@ pub mod mcc {
 			let ret = unsafe { crate::mcc::MCC_DetectorParameters::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		pub fn create() -> Result<core::Ptr<crate::mcc::MCC_DetectorParameters>> {
 			return_send!(via ocvrs_return);
@@ -1890,9 +1891,9 @@ pub mod mcc {
 			let ret = unsafe { core::Ptr::<crate::mcc::MCC_DetectorParameters>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	impl std::fmt::Debug for MCC_DetectorParameters {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {

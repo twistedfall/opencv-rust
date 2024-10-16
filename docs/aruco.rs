@@ -3,32 +3,33 @@ pub mod aruco {
 	//! ArUco Marker Detection, module functionality was moved to objdetect module
 	//! ## See also
 	//! ArucoDetector, CharucoDetector, Board, GridBoard, CharucoBoard
-	use crate::{mod_prelude::*, core, sys, types};
+	use crate::mod_prelude::*;
+	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use { super::EstimateParametersTraitConst, super::EstimateParametersTrait };
+		pub use super::{EstimateParametersTrait, EstimateParametersTraitConst};
 	}
-	
+
 	/// The marker coordinate system is centered on the middle of the marker.
-	/// 
+	///
 	/// The coordinates of the four corners (CCW order) of the marker in its own coordinate system are:
 	/// (-markerLength/2, markerLength/2, 0), (markerLength/2, markerLength/2, 0),
 	/// (markerLength/2, -markerLength/2, 0), (-markerLength/2, -markerLength/2, 0).
 	pub const ARUCO_CCW_CENTER: i32 = 0;
 	/// The marker coordinate system is centered on the top-left corner of the marker.
-	/// 
+	///
 	/// The coordinates of the four corners (CW order) of the marker in its own coordinate system are:
 	/// (0, 0, 0), (markerLength, 0, 0),
 	/// (markerLength, markerLength, 0), (0, markerLength, 0).
-	/// 
+	///
 	/// These pattern dots are convenient to use with a chessboard/ChArUco board.
 	pub const ARUCO_CW_TOP_LEFT_CORNER: i32 = 1;
 	/// rvec/tvec define the right handed coordinate system of the marker.
-	/// 
+	///
 	/// PatternPositionType defines center this system and axes direction.
 	/// Axis X (red color) - first coordinate, axis Y (green color) - second coordinate,
 	/// axis Z (blue color) - third coordinate.
-	/// 
-	/// 
+	///
+	///
 	/// **Deprecated**: Use Board::matchImagePoints and cv::solvePnP
 	/// ## See also
 	/// estimatePoseSingleMarkers()
@@ -37,24 +38,24 @@ pub mod aruco {
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum PatternPositionType {
 		/// The marker coordinate system is centered on the middle of the marker.
-		/// 
+		///
 		/// The coordinates of the four corners (CCW order) of the marker in its own coordinate system are:
 		/// (-markerLength/2, markerLength/2, 0), (markerLength/2, markerLength/2, 0),
 		/// (markerLength/2, -markerLength/2, 0), (-markerLength/2, -markerLength/2, 0).
 		ARUCO_CCW_CENTER = 0,
 		/// The marker coordinate system is centered on the top-left corner of the marker.
-		/// 
+		///
 		/// The coordinates of the four corners (CW order) of the marker in its own coordinate system are:
 		/// (0, 0, 0), (markerLength, 0, 0),
 		/// (markerLength, markerLength, 0), (0, markerLength, 0).
-		/// 
+		///
 		/// These pattern dots are convenient to use with a chessboard/ChArUco board.
 		ARUCO_CW_TOP_LEFT_CORNER = 1,
 	}
-	
+
 	impl TryFrom<i32> for PatternPositionType {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::ARUCO_CCW_CENTER),
@@ -63,14 +64,14 @@ pub mod aruco {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::aruco::PatternPositionType }
-	
+
 	/// @overload
 	/// It's the same function as [calibrate_camera_aruco] but without calibration error estimation.
-	/// 
+	///
 	/// **Deprecated**: Use Board::matchImagePoints and cv::solvePnP
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [calibrate_camera_aruco] function uses the following default values for its arguments:
 	/// * rvecs: noArray()
@@ -91,9 +92,9 @@ pub mod aruco {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Calibrate a camera using aruco markers
-	/// 
+	///
 	/// ## Parameters
 	/// * corners: vector of detected marker corners in all frames.
 	/// The corners should have the same format returned by detectMarkers (see #detectMarkers).
@@ -122,14 +123,14 @@ pub mod aruco {
 	/// * perViewErrors: Output vector of average re-projection errors estimated for each pattern view.
 	/// * flags: flags Different flags  for the calibration process (see [calibrate_camera] for details).
 	/// * criteria: Termination criteria for the iterative optimization algorithm.
-	/// 
+	///
 	/// This function calibrates a camera using an Aruco Board. The function receives a list of
 	/// detected markers from several views of the Board. The process is similar to the chessboard
 	/// calibration in calibrateCamera(). The function returns the final re-projection error.
-	/// 
-	/// 
+	///
+	///
 	/// **Deprecated**: Use Board::matchImagePoints and cv::solvePnP
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [calibrate_camera_aruco_extended] function uses the following default values for its arguments:
 	/// * flags: 0
@@ -153,9 +154,9 @@ pub mod aruco {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Calibrate a camera using aruco markers
-	/// 
+	///
 	/// ## Parameters
 	/// * corners: vector of detected marker corners in all frames.
 	/// The corners should have the same format returned by detectMarkers (see #detectMarkers).
@@ -184,14 +185,14 @@ pub mod aruco {
 	/// * perViewErrors: Output vector of average re-projection errors estimated for each pattern view.
 	/// * flags: flags Different flags  for the calibration process (see [calibrate_camera] for details).
 	/// * criteria: Termination criteria for the iterative optimization algorithm.
-	/// 
+	///
 	/// This function calibrates a camera using an Aruco Board. The function receives a list of
 	/// detected markers from several views of the Board. The process is similar to the chessboard
 	/// calibration in calibrateCamera(). The function returns the final re-projection error.
-	/// 
-	/// 
+	///
+	///
 	/// **Deprecated**: Use Board::matchImagePoints and cv::solvePnP
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * flags: 0
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
@@ -214,9 +215,9 @@ pub mod aruco {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Calibrate a camera using aruco markers
-	/// 
+	///
 	/// ## Parameters
 	/// * corners: vector of detected marker corners in all frames.
 	/// The corners should have the same format returned by detectMarkers (see #detectMarkers).
@@ -245,20 +246,20 @@ pub mod aruco {
 	/// * perViewErrors: Output vector of average re-projection errors estimated for each pattern view.
 	/// * flags: flags Different flags  for the calibration process (see [calibrate_camera] for details).
 	/// * criteria: Termination criteria for the iterative optimization algorithm.
-	/// 
+	///
 	/// This function calibrates a camera using an Aruco Board. The function receives a list of
 	/// detected markers from several views of the Board. The process is similar to the chessboard
 	/// calibration in calibrateCamera(). The function returns the final re-projection error.
-	/// 
-	/// 
+	///
+	///
 	/// **Deprecated**: Use Board::matchImagePoints and cv::solvePnP
-	/// 
+	///
 	/// ## Overloaded parameters
-	/// 
+	///
 	/// It's the same function as [calibrate_camera_aruco] but without calibration error estimation.
-	/// 
+	///
 	/// **Deprecated**: Use Board::matchImagePoints and cv::solvePnP
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * rvecs: noArray()
 	/// * tvecs: noArray()
@@ -280,12 +281,12 @@ pub mod aruco {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// It's the same function as [calibrate_camera_charuco] but without calibration error estimation.
-	/// 
-	/// 
+	///
+	///
 	/// **Deprecated**: Use CharucoBoard::matchImagePoints and cv::solvePnP
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [calibrate_camera_charuco] function uses the following default values for its arguments:
 	/// * rvecs: noArray()
@@ -305,9 +306,9 @@ pub mod aruco {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Calibrate a camera using Charuco corners
-	/// 
+	///
 	/// ## Parameters
 	/// * charucoCorners: vector of detected charuco corners per frame
 	/// * charucoIds: list of identifiers for each corner in charucoCorners per frame
@@ -334,14 +335,14 @@ pub mod aruco {
 	/// * perViewErrors: Output vector of average re-projection errors estimated for each pattern view.
 	/// * flags: flags Different flags  for the calibration process (see [calibrate_camera] for details).
 	/// * criteria: Termination criteria for the iterative optimization algorithm.
-	/// 
+	///
 	/// This function calibrates a camera using a set of corners of a  Charuco Board. The function
 	/// receives a list of detected corners and its identifiers from several views of the Board.
 	/// The function returns the final re-projection error.
-	/// 
-	/// 
+	///
+	///
 	/// **Deprecated**: Use CharucoBoard::matchImagePoints and cv::solvePnP
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [calibrate_camera_charuco_extended] function uses the following default values for its arguments:
 	/// * flags: 0
@@ -364,9 +365,9 @@ pub mod aruco {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Calibrate a camera using Charuco corners
-	/// 
+	///
 	/// ## Parameters
 	/// * charucoCorners: vector of detected charuco corners per frame
 	/// * charucoIds: list of identifiers for each corner in charucoCorners per frame
@@ -393,14 +394,14 @@ pub mod aruco {
 	/// * perViewErrors: Output vector of average re-projection errors estimated for each pattern view.
 	/// * flags: flags Different flags  for the calibration process (see [calibrate_camera] for details).
 	/// * criteria: Termination criteria for the iterative optimization algorithm.
-	/// 
+	///
 	/// This function calibrates a camera using a set of corners of a  Charuco Board. The function
 	/// receives a list of detected corners and its identifiers from several views of the Board.
 	/// The function returns the final re-projection error.
-	/// 
-	/// 
+	///
+	///
 	/// **Deprecated**: Use CharucoBoard::matchImagePoints and cv::solvePnP
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * flags: 0
 	/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
@@ -422,12 +423,12 @@ pub mod aruco {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// It's the same function as [calibrate_camera_charuco] but without calibration error estimation.
-	/// 
-	/// 
+	///
+	///
 	/// **Deprecated**: Use CharucoBoard::matchImagePoints and cv::solvePnP
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * rvecs: noArray()
 	/// * tvecs: noArray()
@@ -448,9 +449,9 @@ pub mod aruco {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Detect ChArUco Diamond markers
-	/// 
+	///
 	/// ## Parameters
 	/// * image: input image necessary for corner subpixel.
 	/// * markerCorners: list of detected marker corners from detectMarkers function.
@@ -466,15 +467,15 @@ pub mod aruco {
 	/// * cameraMatrix: Optional camera calibration matrix.
 	/// * distCoeffs: Optional camera distortion coefficients.
 	/// * dictionary: dictionary of markers indicating the type of markers.
-	/// 
+	///
 	/// This function detects Diamond markers from the previous detected ArUco markers. The diamonds
 	/// are returned in the diamondCorners and diamondIds parameters. If camera calibration parameters
 	/// are provided, the diamond search is based on reprojection. If not, diamond search is based on
 	/// homography. Homography is faster than reprojection, but less accurate.
-	/// 
-	/// 
+	///
+	///
 	/// **Deprecated**: Use CharucoDetector::detectDiamonds
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [detect_charuco_diamond] function uses the following default values for its arguments:
 	/// * camera_matrix: noArray()
@@ -494,9 +495,9 @@ pub mod aruco {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Detect ChArUco Diamond markers
-	/// 
+	///
 	/// ## Parameters
 	/// * image: input image necessary for corner subpixel.
 	/// * markerCorners: list of detected marker corners from detectMarkers function.
@@ -512,15 +513,15 @@ pub mod aruco {
 	/// * cameraMatrix: Optional camera calibration matrix.
 	/// * distCoeffs: Optional camera distortion coefficients.
 	/// * dictionary: dictionary of markers indicating the type of markers.
-	/// 
+	///
 	/// This function detects Diamond markers from the previous detected ArUco markers. The diamonds
 	/// are returned in the diamondCorners and diamondIds parameters. If camera calibration parameters
 	/// are provided, the diamond search is based on reprojection. If not, diamond search is based on
 	/// homography. Homography is faster than reprojection, but less accurate.
-	/// 
-	/// 
+	///
+	///
 	/// **Deprecated**: Use CharucoDetector::detectDiamonds
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * camera_matrix: noArray()
 	/// * dist_coeffs: noArray()
@@ -541,11 +542,11 @@ pub mod aruco {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// detect markers
-	/// 
+	///
 	/// **Deprecated**: Use class ArucoDetector::detectMarkers
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [detect_markers] function uses the following default values for its arguments:
 	/// * parameters: makePtr<DetectorParameters>()
@@ -562,11 +563,11 @@ pub mod aruco {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// detect markers
-	/// 
+	///
 	/// **Deprecated**: Use class ArucoDetector::detectMarkers
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * parameters: makePtr<DetectorParameters>()
 	/// * rejected_img_points: noArray()
@@ -583,9 +584,9 @@ pub mod aruco {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Draw a ChArUco Diamond marker
-	/// 
+	///
 	/// ## Parameters
 	/// * dictionary: dictionary of markers indicating the type of markers.
 	/// * ids: list of 4 ids for each ArUco marker in the ChArUco marker.
@@ -595,12 +596,12 @@ pub mod aruco {
 	/// 3*squareLength + 2*marginSize,.
 	/// * marginSize: minimum margins (in pixels) of the marker in the output image
 	/// * borderBits: width of the marker borders.
-	/// 
+	///
 	/// This function return the image of a ChArUco marker, ready to be printed.
-	/// 
-	/// 
+	///
+	///
 	/// **Deprecated**: Use CharucoBoard::generateImage()
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [draw_charuco_diamond] function uses the following default values for its arguments:
 	/// * margin_size: 0
@@ -615,9 +616,9 @@ pub mod aruco {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Draw a ChArUco Diamond marker
-	/// 
+	///
 	/// ## Parameters
 	/// * dictionary: dictionary of markers indicating the type of markers.
 	/// * ids: list of 4 ids for each ArUco marker in the ChArUco marker.
@@ -627,12 +628,12 @@ pub mod aruco {
 	/// 3*squareLength + 2*marginSize,.
 	/// * marginSize: minimum margins (in pixels) of the marker in the output image
 	/// * borderBits: width of the marker borders.
-	/// 
+	///
 	/// This function return the image of a ChArUco marker, ready to be printed.
-	/// 
-	/// 
+	///
+	///
 	/// **Deprecated**: Use CharucoBoard::generateImage()
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * margin_size: 0
 	/// * border_bits: 1
@@ -646,9 +647,9 @@ pub mod aruco {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// draw planar board
-	/// 
+	///
 	/// **Deprecated**: Use Board::generateImage
 	#[deprecated = "Use Board::generateImage"]
 	#[inline]
@@ -660,10 +661,10 @@ pub mod aruco {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
-	/// 
+
+	///
 	/// **Deprecated**: Use Board::matchImagePoints and cv::solvePnP
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [estimate_pose_board] function uses the following default values for its arguments:
 	/// * use_extrinsic_guess: false
@@ -682,10 +683,10 @@ pub mod aruco {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
-	/// 
+
+	///
 	/// **Deprecated**: Use Board::matchImagePoints and cv::solvePnP
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * use_extrinsic_guess: false
 	#[deprecated = "Use Board::matchImagePoints and cv::solvePnP"]
@@ -703,7 +704,7 @@ pub mod aruco {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Pose estimation for a ChArUco board given some of their corners
 	/// ## Parameters
 	/// * charucoCorners: vector of detected charuco corners
@@ -717,15 +718,15 @@ pub mod aruco {
 	/// (see cv::Rodrigues).
 	/// * tvec: Output vector (e.g. cv::Mat) corresponding to the translation vector of the board.
 	/// * useExtrinsicGuess: defines whether initial guess for \b rvec and \b tvec will be used or not.
-	/// 
+	///
 	/// This function estimates a Charuco board pose from some detected corners.
 	/// The function checks if the input corners are enough and valid to perform pose estimation.
 	/// If pose estimation is valid, returns true, else returns false.
-	/// 
+	///
 	/// **Deprecated**: Use CharucoBoard::matchImagePoints and cv::solvePnP
 	/// ## See also
 	/// use cv::drawFrameAxes to get world coordinate system axis for object points
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [estimate_pose_charuco_board] function uses the following default values for its arguments:
 	/// * use_extrinsic_guess: false
@@ -744,7 +745,7 @@ pub mod aruco {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Pose estimation for a ChArUco board given some of their corners
 	/// ## Parameters
 	/// * charucoCorners: vector of detected charuco corners
@@ -758,15 +759,15 @@ pub mod aruco {
 	/// (see cv::Rodrigues).
 	/// * tvec: Output vector (e.g. cv::Mat) corresponding to the translation vector of the board.
 	/// * useExtrinsicGuess: defines whether initial guess for \b rvec and \b tvec will be used or not.
-	/// 
+	///
 	/// This function estimates a Charuco board pose from some detected corners.
 	/// The function checks if the input corners are enough and valid to perform pose estimation.
 	/// If pose estimation is valid, returns true, else returns false.
-	/// 
+	///
 	/// **Deprecated**: Use CharucoBoard::matchImagePoints and cv::solvePnP
 	/// ## See also
 	/// use cv::drawFrameAxes to get world coordinate system axis for object points
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * use_extrinsic_guess: false
 	#[deprecated = "Use CharucoBoard::matchImagePoints and cv::solvePnP"]
@@ -784,10 +785,10 @@ pub mod aruco {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
-	/// 
+
+	///
 	/// **Deprecated**: Use cv::solvePnP
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [estimate_pose_single_markers] function uses the following default values for its arguments:
 	/// * obj_points: noArray()
@@ -806,10 +807,10 @@ pub mod aruco {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
-	/// 
+
+	///
 	/// **Deprecated**: Use cv::solvePnP
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * obj_points: noArray()
 	/// * estimate_parameters: makePtr<EstimateParameters>()
@@ -828,9 +829,9 @@ pub mod aruco {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// get board object and image points
-	/// 
+	///
 	/// **Deprecated**: Use Board::matchImagePoints
 	#[deprecated = "Use Board::matchImagePoints"]
 	#[inline]
@@ -845,7 +846,7 @@ pub mod aruco {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Interpolate position of ChArUco board corners
 	/// ## Parameters
 	/// * markerCorners: vector of already detected markers corners. For each marker, its four
@@ -862,17 +863,17 @@ pub mod aruco {
 	/// * distCoeffs: optional vector of distortion coefficients
 	/// ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%5B%2C%20k%5F3%5B%2C%20k%5F4%2C%20k%5F5%2C%20k%5F6%5D%2C%5Bs%5F1%2C%20s%5F2%2C%20s%5F3%2C%20s%5F4%5D%5D%29) of 4, 5, 8 or 12 elements
 	/// * minMarkers: number of adjacent markers that must be detected to return a charuco corner
-	/// 
+	///
 	/// This function receives the detected markers and returns the 2D position of the chessboard corners
 	/// from a ChArUco board using the detected Aruco markers. If camera parameters are provided,
 	/// the process is based in an approximated pose estimation, else it is based on local homography.
 	/// Only visible corners are returned. For each corner, its corresponding identifier is
 	/// also returned in charucoIds.
 	/// The function returns the number of interpolated corners.
-	/// 
-	/// 
+	///
+	///
 	/// **Deprecated**: Use CharucoDetector::detectBoard
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [interpolate_corners_charuco] function uses the following default values for its arguments:
 	/// * camera_matrix: noArray()
@@ -892,7 +893,7 @@ pub mod aruco {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Interpolate position of ChArUco board corners
 	/// ## Parameters
 	/// * markerCorners: vector of already detected markers corners. For each marker, its four
@@ -909,17 +910,17 @@ pub mod aruco {
 	/// * distCoeffs: optional vector of distortion coefficients
 	/// ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%5B%2C%20k%5F3%5B%2C%20k%5F4%2C%20k%5F5%2C%20k%5F6%5D%2C%5Bs%5F1%2C%20s%5F2%2C%20s%5F3%2C%20s%5F4%5D%5D%29) of 4, 5, 8 or 12 elements
 	/// * minMarkers: number of adjacent markers that must be detected to return a charuco corner
-	/// 
+	///
 	/// This function receives the detected markers and returns the 2D position of the chessboard corners
 	/// from a ChArUco board using the detected Aruco markers. If camera parameters are provided,
 	/// the process is based in an approximated pose estimation, else it is based on local homography.
 	/// Only visible corners are returned. For each corner, its corresponding identifier is
 	/// also returned in charucoIds.
 	/// The function returns the number of interpolated corners.
-	/// 
-	/// 
+	///
+	///
 	/// **Deprecated**: Use CharucoDetector::detectBoard
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * camera_matrix: noArray()
 	/// * dist_coeffs: noArray()
@@ -940,11 +941,11 @@ pub mod aruco {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// refine detected markers
-	/// 
+	///
 	/// **Deprecated**: Use class ArucoDetector::refineDetectedMarkers
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [refine_detected_markers] function uses the following default values for its arguments:
 	/// * camera_matrix: noArray()
@@ -967,11 +968,11 @@ pub mod aruco {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// refine detected markers
-	/// 
+	///
 	/// **Deprecated**: Use class ArucoDetector::refineDetectedMarkers
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * camera_matrix: noArray()
 	/// * dist_coeffs: noArray()
@@ -996,8 +997,8 @@ pub mod aruco {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
-	/// 
+
+	///
 	/// **Deprecated**: Use CharucoBoard::checkCharucoCornersCollinear
 	#[deprecated = "Use CharucoBoard::checkCharucoCornersCollinear"]
 	#[inline]
@@ -1009,11 +1010,11 @@ pub mod aruco {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Constant methods for [crate::aruco::EstimateParameters]
 	pub trait EstimateParametersTraitConst {
 		fn as_raw_EstimateParameters(&self) -> *const c_void;
-	
+
 		#[inline]
 		fn pattern(&self) -> crate::aruco::PatternPositionType {
 			return_send!(via ocvrs_return);
@@ -1021,84 +1022,84 @@ pub mod aruco {
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
-		
+
 		#[inline]
 		fn use_extrinsic_guess(&self) -> bool {
 			let ret = unsafe { sys::cv_aruco_EstimateParameters_propUseExtrinsicGuess_const(self.as_raw_EstimateParameters()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn solve_pnp_method(&self) -> i32 {
 			let ret = unsafe { sys::cv_aruco_EstimateParameters_propSolvePnPMethod_const(self.as_raw_EstimateParameters()) };
 			ret
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::aruco::EstimateParameters]
 	pub trait EstimateParametersTrait: crate::aruco::EstimateParametersTraitConst {
 		fn as_raw_mut_EstimateParameters(&mut self) -> *mut c_void;
-	
+
 		#[inline]
 		fn set_pattern(&mut self, val: crate::aruco::PatternPositionType) {
 			let ret = unsafe { sys::cv_aruco_EstimateParameters_propPattern_const_PatternPositionType(self.as_raw_mut_EstimateParameters(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_use_extrinsic_guess(&mut self, val: bool) {
 			let ret = unsafe { sys::cv_aruco_EstimateParameters_propUseExtrinsicGuess_const_bool(self.as_raw_mut_EstimateParameters(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_solve_pnp_method(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_aruco_EstimateParameters_propSolvePnPMethod_const_int(self.as_raw_mut_EstimateParameters(), val) };
 			ret
 		}
-		
+
 	}
-	
+
 	/// Pose estimation parameters
-	/// 
+	///
 	/// ## Parameters
 	/// * pattern: Defines center this system and axes direction (default PatternPositionType::ARUCO_CCW_CENTER).
 	/// * useExtrinsicGuess: Parameter used for SOLVEPNP_ITERATIVE. If true (1), the function uses the provided
 	/// rvec and tvec values as initial approximations of the rotation and translation vectors, respectively, and further
 	/// optimizes them (default false).
 	/// * solvePnPMethod: Method for solving a PnP problem: see [calib3d_solvePnP_flags] (default SOLVEPNP_ITERATIVE).
-	/// 
-	/// 
+	///
+	///
 	/// **Deprecated**: Use Board::matchImagePoints and cv::solvePnP
 	/// ## See also
 	/// PatternPositionType, solvePnP()
 	#[deprecated = "Use Board::matchImagePoints and cv::solvePnP"]
 	pub struct EstimateParameters {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { EstimateParameters }
-	
+
 	impl Drop for EstimateParameters {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_aruco_EstimateParameters_delete(self.as_raw_mut_EstimateParameters()) };
 		}
 	}
-	
+
 	unsafe impl Send for EstimateParameters {}
-	
+
 	impl crate::aruco::EstimateParametersTraitConst for EstimateParameters {
 		#[inline] fn as_raw_EstimateParameters(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::aruco::EstimateParametersTrait for EstimateParameters {
 		#[inline] fn as_raw_mut_EstimateParameters(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { EstimateParameters, crate::aruco::EstimateParametersTraitConst, as_raw_EstimateParameters, crate::aruco::EstimateParametersTrait, as_raw_mut_EstimateParameters }
-	
+
 	impl EstimateParameters {
 		#[inline]
 		pub fn default() -> Result<crate::aruco::EstimateParameters> {
@@ -1109,16 +1110,16 @@ pub mod aruco {
 			let ret = unsafe { crate::aruco::EstimateParameters::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	impl Clone for EstimateParameters {
 		#[inline]
 		fn clone(&self) -> Self {
 			unsafe { Self::from_raw(sys::cv_aruco_EstimateParameters_implicitClone_const(self.as_raw_EstimateParameters())) }
 		}
 	}
-	
+
 	impl std::fmt::Debug for EstimateParameters {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {

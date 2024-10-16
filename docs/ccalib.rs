@@ -1,10 +1,11 @@
 pub mod ccalib {
 	//! # Custom Calibration Pattern for 3D reconstruction
-	use crate::{mod_prelude::*, core, sys, types};
+	use crate::mod_prelude::*;
+	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use { super::CustomPatternTraitConst, super::CustomPatternTrait, super::RandomPatternCornerFinderTraitConst, super::RandomPatternCornerFinderTrait, super::RandomPatternGeneratorTraitConst, super::RandomPatternGeneratorTrait, super::MultiCameraCalibration_edgeTraitConst, super::MultiCameraCalibration_edgeTrait, super::MultiCameraCalibration_vertexTraitConst, super::MultiCameraCalibration_vertexTrait, super::MultiCameraCalibrationTraitConst, super::MultiCameraCalibrationTrait };
+		pub use super::{CustomPatternTrait, CustomPatternTraitConst, MultiCameraCalibrationTrait, MultiCameraCalibrationTraitConst, MultiCameraCalibration_edgeTrait, MultiCameraCalibration_edgeTraitConst, MultiCameraCalibration_vertexTrait, MultiCameraCalibration_vertexTraitConst, RandomPatternCornerFinderTrait, RandomPatternCornerFinderTraitConst, RandomPatternGeneratorTrait, RandomPatternGeneratorTraitConst};
 	}
-	
+
 	pub const CALIB_FIX_CENTER: i32 = 256;
 	pub const CALIB_FIX_GAMMA: i32 = 128;
 	pub const CALIB_FIX_K1: i32 = 4;
@@ -25,7 +26,7 @@ pub mod ccalib {
 	pub const XYZ: i32 = 2;
 	pub const XYZRGB: i32 = 1;
 	/// Perform omnidirectional camera calibration, the default depth of outputs is CV_64F.
-	/// 
+	///
 	/// ## Parameters
 	/// * objectPoints: Vector of vector of Vec3f object points in world (pattern) coordinate.
 	/// It also can be vector of Mat with size 1xN/Nx1 and type CV_32FC3. Data with depth of 64_F is also acceptable.
@@ -41,7 +42,7 @@ pub mod ccalib {
 	/// * criteria: Termination criteria for optimization
 	/// * idx: Indices of images that pass initialization, which are really used in calibration. So the size of rvecs is the
 	/// same as idx.total().
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [calibrate] function uses the following default values for its arguments:
 	/// * idx: noArray()
@@ -60,9 +61,9 @@ pub mod ccalib {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Perform omnidirectional camera calibration, the default depth of outputs is CV_64F.
-	/// 
+	///
 	/// ## Parameters
 	/// * objectPoints: Vector of vector of Vec3f object points in world (pattern) coordinate.
 	/// It also can be vector of Mat with size 1xN/Nx1 and type CV_32FC3. Data with depth of 64_F is also acceptable.
@@ -78,7 +79,7 @@ pub mod ccalib {
 	/// * criteria: Termination criteria for optimization
 	/// * idx: Indices of images that pass initialization, which are really used in calibration. So the size of rvecs is the
 	/// same as idx.total().
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * idx: noArray()
 	#[inline]
@@ -97,11 +98,11 @@ pub mod ccalib {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes undistortion and rectification maps for omnidirectional camera image transform by a rotation R.
 	/// It output two maps that are used for cv::remap(). If D is empty then zero distortion is used,
 	/// if R or P is empty then identity matrices are used.
-	/// 
+	///
 	/// ## Parameters
 	/// * K: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%20s%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%20%5F1%20%5Cend%7Bbmatrix%7D), with depth CV_32F or CV_64F
 	/// * D: Input vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%29), with depth CV_32F or CV_64F
@@ -130,9 +131,9 @@ pub mod ccalib {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// @overload
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [project_points_1] function uses the following default values for its arguments:
 	/// * jacobian: noArray()
@@ -148,9 +149,9 @@ pub mod ccalib {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Projects points for omnidirectional camera using CMei's model
-	/// 
+	///
 	/// ## Parameters
 	/// * objectPoints: Object points in world coordinate, vector of vector of Vec3f or Mat of
 	/// 1xN/Nx1 3-channel of type CV_32F and N is the number of points. 64F is also acceptable.
@@ -164,13 +165,13 @@ pub mod ccalib {
 	/// * jacobian: Optional output 2Nx16 of type CV_64F jacobian matrix, contains the derivatives of
 	/// image pixel points wrt parameters including ![inline formula](https://latex.codecogs.com/png.latex?om%2C%20T%2C%20f%5Fx%2C%20f%5Fy%2C%20s%2C%20c%5Fx%2C%20c%5Fy%2C%20xi%2C%20k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2).
 	/// This matrix will be used in calibration by optimization.
-	/// 
+	///
 	/// The function projects object 3D points of world coordinate to image pixels, parameter by intrinsic
 	/// and extrinsic parameters. Also, it optionally compute a by-product: the jacobian matrix containing
 	/// contains the derivatives of image pixel points wrt intrinsic and extrinsic parameters.
-	/// 
+	///
 	/// ## Overloaded parameters
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * jacobian: noArray()
 	#[inline]
@@ -186,9 +187,9 @@ pub mod ccalib {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Projects points for omnidirectional camera using CMei's model
-	/// 
+	///
 	/// ## Parameters
 	/// * objectPoints: Object points in world coordinate, vector of vector of Vec3f or Mat of
 	/// 1xN/Nx1 3-channel of type CV_32F and N is the number of points. 64F is also acceptable.
@@ -202,11 +203,11 @@ pub mod ccalib {
 	/// * jacobian: Optional output 2Nx16 of type CV_64F jacobian matrix, contains the derivatives of
 	/// image pixel points wrt parameters including ![inline formula](https://latex.codecogs.com/png.latex?om%2C%20T%2C%20f%5Fx%2C%20f%5Fy%2C%20s%2C%20c%5Fx%2C%20c%5Fy%2C%20xi%2C%20k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2).
 	/// This matrix will be used in calibration by optimization.
-	/// 
+	///
 	/// The function projects object 3D points of world coordinate to image pixels, parameter by intrinsic
 	/// and extrinsic parameters. Also, it optionally compute a by-product: the jacobian matrix containing
 	/// contains the derivatives of image pixel points wrt intrinsic and extrinsic parameters.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [project_points] function uses the following default values for its arguments:
 	/// * jacobian: noArray()
@@ -224,9 +225,9 @@ pub mod ccalib {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Projects points for omnidirectional camera using CMei's model
-	/// 
+	///
 	/// ## Parameters
 	/// * objectPoints: Object points in world coordinate, vector of vector of Vec3f or Mat of
 	/// 1xN/Nx1 3-channel of type CV_32F and N is the number of points. 64F is also acceptable.
@@ -240,11 +241,11 @@ pub mod ccalib {
 	/// * jacobian: Optional output 2Nx16 of type CV_64F jacobian matrix, contains the derivatives of
 	/// image pixel points wrt parameters including ![inline formula](https://latex.codecogs.com/png.latex?om%2C%20T%2C%20f%5Fx%2C%20f%5Fy%2C%20s%2C%20c%5Fx%2C%20c%5Fy%2C%20xi%2C%20k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2).
 	/// This matrix will be used in calibration by optimization.
-	/// 
+	///
 	/// The function projects object 3D points of world coordinate to image pixels, parameter by intrinsic
 	/// and extrinsic parameters. Also, it optionally compute a by-product: the jacobian matrix containing
 	/// contains the derivatives of image pixel points wrt intrinsic and extrinsic parameters.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * jacobian: noArray()
 	#[inline]
@@ -262,10 +263,10 @@ pub mod ccalib {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Stereo calibration for omnidirectional camera model. It computes the intrinsic parameters for two
 	/// cameras and the extrinsic parameters between two cameras. The default depth of outputs is CV_64F.
-	/// 
+	///
 	/// ## Parameters
 	/// * objectPoints: Object points in world (pattern) coordinate. Its type is vector<vector<Vec3f> >.
 	/// It also can be vector of Mat with size 1xN/Nx1 and type CV_32FC3. Data with depth of 64_F is also acceptable.
@@ -290,7 +291,7 @@ pub mod ccalib {
 	/// * idx: Indices of image pairs that pass initialization, which are really used in calibration. So the size of rvecs is the
 	/// same as idx.total().
 	/// @
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [stereo_calibrate] function uses the following default values for its arguments:
 	/// * idx: noArray()
@@ -315,10 +316,10 @@ pub mod ccalib {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Stereo calibration for omnidirectional camera model. It computes the intrinsic parameters for two
 	/// cameras and the extrinsic parameters between two cameras. The default depth of outputs is CV_64F.
-	/// 
+	///
 	/// ## Parameters
 	/// * objectPoints: Object points in world (pattern) coordinate. Its type is vector<vector<Vec3f> >.
 	/// It also can be vector of Mat with size 1xN/Nx1 and type CV_32FC3. Data with depth of 64_F is also acceptable.
@@ -343,7 +344,7 @@ pub mod ccalib {
 	/// * idx: Indices of image pairs that pass initialization, which are really used in calibration. So the size of rvecs is the
 	/// same as idx.total().
 	/// @
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * idx: noArray()
 	#[inline]
@@ -368,9 +369,9 @@ pub mod ccalib {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Stereo 3D reconstruction from a pair of images
-	/// 
+	///
 	/// ## Parameters
 	/// * image1: The first input image
 	/// * image2: The second input image
@@ -392,7 +393,7 @@ pub mod ccalib {
 	/// * Knew: New camera matrix of rectified image, see omnidir::undistortImage
 	/// * pointCloud: Point cloud of 3D reconstruction, with type CV_64FC3
 	/// * pointType: Point cloud type, it can be XYZRGB or XYZ
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [stereo_reconstruct] function uses the following default values for its arguments:
 	/// * new_size: Size()
@@ -420,9 +421,9 @@ pub mod ccalib {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Stereo 3D reconstruction from a pair of images
-	/// 
+	///
 	/// ## Parameters
 	/// * image1: The first input image
 	/// * image2: The second input image
@@ -444,7 +445,7 @@ pub mod ccalib {
 	/// * Knew: New camera matrix of rectified image, see omnidir::undistortImage
 	/// * pointCloud: Point cloud of 3D reconstruction, with type CV_64FC3
 	/// * pointType: Point cloud type, it can be XYZRGB or XYZ
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * new_size: Size()
 	/// * knew: cv::noArray()
@@ -473,9 +474,9 @@ pub mod ccalib {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Stereo rectification for omnidirectional camera model. It computes the rectification rotations for two cameras
-	/// 
+	///
 	/// ## Parameters
 	/// * R: Rotation between the first and second camera
 	/// * T: Translation between the first and second camera
@@ -493,9 +494,9 @@ pub mod ccalib {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Undistort omnidirectional images to perspective images
-	/// 
+	///
 	/// ## Parameters
 	/// * distorted: The input omnidirectional image.
 	/// * undistorted: The output undistorted image.
@@ -506,7 +507,7 @@ pub mod ccalib {
 	/// * Knew: Camera matrix of the distorted image. If it is not assigned, it is just K.
 	/// * new_size: The new image size. By default, it is the size of distorted.
 	/// * R: Rotation matrix between the input and output images. By default, it is identity matrix.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [undistort_image] function uses the following default values for its arguments:
 	/// * knew: cv::noArray()
@@ -525,9 +526,9 @@ pub mod ccalib {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Undistort omnidirectional images to perspective images
-	/// 
+	///
 	/// ## Parameters
 	/// * distorted: The input omnidirectional image.
 	/// * undistorted: The output undistorted image.
@@ -538,7 +539,7 @@ pub mod ccalib {
 	/// * Knew: Camera matrix of the distorted image. If it is not assigned, it is just K.
 	/// * new_size: The new image size. By default, it is the size of distorted.
 	/// * R: Rotation matrix between the input and output images. By default, it is identity matrix.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * knew: cv::noArray()
 	/// * new_size: Size()
@@ -558,9 +559,9 @@ pub mod ccalib {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Undistort 2D image points for omnidirectional camera using CMei's model
-	/// 
+	///
 	/// ## Parameters
 	/// * distorted: Array of distorted image points, vector of Vec2f
 	/// or 1xN/Nx1 2-channel Mat of type CV_32F, 64F depth is also acceptable
@@ -585,17 +586,17 @@ pub mod ccalib {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Constant methods for [crate::ccalib::CustomPattern]
 	pub trait CustomPatternTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_CustomPattern(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::ccalib::CustomPattern]
 	pub trait CustomPatternTrait: core::AlgorithmTrait + crate::ccalib::CustomPatternTraitConst {
 		fn as_raw_mut_CustomPattern(&mut self) -> *mut c_void;
-	
+
 		/// ## C++ default parameters
 		/// * output: noArray()
 		#[inline]
@@ -608,7 +609,7 @@ pub mod ccalib {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## Note
 		/// This alternative version of [CustomPatternTrait::create] function uses the following default values for its arguments:
 		/// * output: noArray()
@@ -621,7 +622,7 @@ pub mod ccalib {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## C++ default parameters
 		/// * ratio: 0.7
 		/// * proj_error: 8.0
@@ -643,7 +644,7 @@ pub mod ccalib {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## Note
 		/// This alternative version of [CustomPatternTrait::find_pattern] function uses the following default values for its arguments:
 		/// * ratio: 0.7
@@ -663,7 +664,7 @@ pub mod ccalib {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn is_initialized(&mut self) -> Result<bool> {
 			return_send!(via ocvrs_return);
@@ -672,7 +673,7 @@ pub mod ccalib {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_pattern_points(&mut self, original_points: &mut core::Vector<core::KeyPoint>) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -681,7 +682,7 @@ pub mod ccalib {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_pixel_size(&mut self) -> Result<f64> {
 			return_send!(via ocvrs_return);
@@ -690,7 +691,7 @@ pub mod ccalib {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_feature_detector(&mut self, mut feature_detector: core::Ptr<crate::features2d::Feature2D>) -> Result<bool> {
 			return_send!(via ocvrs_return);
@@ -699,7 +700,7 @@ pub mod ccalib {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_descriptor_extractor(&mut self, mut extractor: core::Ptr<crate::features2d::Feature2D>) -> Result<bool> {
 			return_send!(via ocvrs_return);
@@ -708,7 +709,7 @@ pub mod ccalib {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_descriptor_matcher(&mut self, mut matcher: core::Ptr<crate::features2d::DescriptorMatcher>) -> Result<bool> {
 			return_send!(via ocvrs_return);
@@ -717,7 +718,7 @@ pub mod ccalib {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_feature_detector(&mut self) -> Result<core::Ptr<crate::features2d::Feature2D>> {
 			return_send!(via ocvrs_return);
@@ -727,7 +728,7 @@ pub mod ccalib {
 			let ret = unsafe { core::Ptr::<crate::features2d::Feature2D>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_descriptor_extractor(&mut self) -> Result<core::Ptr<crate::features2d::Feature2D>> {
 			return_send!(via ocvrs_return);
@@ -737,7 +738,7 @@ pub mod ccalib {
 			let ret = unsafe { core::Ptr::<crate::features2d::Feature2D>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_descriptor_matcher(&mut self) -> Result<core::Ptr<crate::features2d::DescriptorMatcher>> {
 			return_send!(via ocvrs_return);
@@ -747,7 +748,7 @@ pub mod ccalib {
 			let ret = unsafe { core::Ptr::<crate::features2d::DescriptorMatcher>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// ## C++ default parameters
 		/// * flags: 0
 		/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
@@ -765,7 +766,7 @@ pub mod ccalib {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## Note
 		/// This alternative version of [CustomPatternTrait::calibrate] function uses the following default values for its arguments:
 		/// * flags: 0
@@ -784,7 +785,7 @@ pub mod ccalib {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## C++ default parameters
 		/// * use_extrinsic_guess: false
 		/// * flags: SOLVEPNP_ITERATIVE
@@ -802,7 +803,7 @@ pub mod ccalib {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## Note
 		/// This alternative version of [CustomPatternTrait::find_rt] function uses the following default values for its arguments:
 		/// * use_extrinsic_guess: false
@@ -821,7 +822,7 @@ pub mod ccalib {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## C++ default parameters
 		/// * use_extrinsic_guess: false
 		/// * flags: SOLVEPNP_ITERATIVE
@@ -838,7 +839,7 @@ pub mod ccalib {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## Note
 		/// This alternative version of [CustomPatternTrait::find_rt] function uses the following default values for its arguments:
 		/// * use_extrinsic_guess: false
@@ -856,7 +857,7 @@ pub mod ccalib {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## C++ default parameters
 		/// * use_extrinsic_guess: false
 		/// * iterations_count: 100
@@ -879,7 +880,7 @@ pub mod ccalib {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## Note
 		/// This alternative version of [CustomPatternTrait::find_rt_ransac] function uses the following default values for its arguments:
 		/// * use_extrinsic_guess: false
@@ -902,7 +903,7 @@ pub mod ccalib {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## C++ default parameters
 		/// * use_extrinsic_guess: false
 		/// * iterations_count: 100
@@ -924,7 +925,7 @@ pub mod ccalib {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## Note
 		/// This alternative version of [CustomPatternTrait::find_rt_ransac] function uses the following default values for its arguments:
 		/// * use_extrinsic_guess: false
@@ -946,7 +947,7 @@ pub mod ccalib {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## C++ default parameters
 		/// * axis_length: 3
 		/// * axis_width: 2
@@ -963,7 +964,7 @@ pub mod ccalib {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## Note
 		/// This alternative version of [CustomPatternTrait::draw_orientation] function uses the following default values for its arguments:
 		/// * axis_length: 3
@@ -981,44 +982,44 @@ pub mod ccalib {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	pub struct CustomPattern {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { CustomPattern }
-	
+
 	impl Drop for CustomPattern {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_ccalib_CustomPattern_delete(self.as_raw_mut_CustomPattern()) };
 		}
 	}
-	
+
 	unsafe impl Send for CustomPattern {}
-	
+
 	impl core::AlgorithmTraitConst for CustomPattern {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for CustomPattern {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CustomPattern, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::ccalib::CustomPatternTraitConst for CustomPattern {
 		#[inline] fn as_raw_CustomPattern(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ccalib::CustomPatternTrait for CustomPattern {
 		#[inline] fn as_raw_mut_CustomPattern(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CustomPattern, crate::ccalib::CustomPatternTraitConst, as_raw_CustomPattern, crate::ccalib::CustomPatternTrait, as_raw_mut_CustomPattern }
-	
+
 	impl CustomPattern {
 		#[inline]
 		pub fn default() -> Result<crate::ccalib::CustomPattern> {
@@ -1029,11 +1030,11 @@ pub mod ccalib {
 			let ret = unsafe { crate::ccalib::CustomPattern::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	boxed_cast_base! { CustomPattern, core::Algorithm, cv_ccalib_CustomPattern_to_Algorithm }
-	
+
 	impl std::fmt::Debug for CustomPattern {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -1041,17 +1042,17 @@ pub mod ccalib {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::ccalib::MultiCameraCalibration]
 	pub trait MultiCameraCalibrationTraitConst {
 		fn as_raw_MultiCameraCalibration(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::ccalib::MultiCameraCalibration]
 	pub trait MultiCameraCalibrationTrait: crate::ccalib::MultiCameraCalibrationTraitConst {
 		fn as_raw_mut_MultiCameraCalibration(&mut self) -> *mut c_void;
-	
+
 		#[inline]
 		fn load_images(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1060,7 +1061,7 @@ pub mod ccalib {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn initialize(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1069,7 +1070,7 @@ pub mod ccalib {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn optimize_extrinsics(&mut self) -> Result<f64> {
 			return_send!(via ocvrs_return);
@@ -1078,7 +1079,7 @@ pub mod ccalib {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn run(&mut self) -> Result<f64> {
 			return_send!(via ocvrs_return);
@@ -1087,7 +1088,7 @@ pub mod ccalib {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn write_parameters(&mut self, filename: &str) -> Result<()> {
 			extern_container_arg!(filename);
@@ -1097,9 +1098,9 @@ pub mod ccalib {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Class for multiple camera calibration that supports pinhole camera and omnidirection camera.
 	/// For omnidirectional camera model, please refer to omnidir.hpp in ccalib module.
 	/// It first calibrate each camera individually, then a bundle adjustment like optimization is applied to
@@ -1107,36 +1108,36 @@ pub mod ccalib {
 	/// see randomPattern.hpp in ccalib module for details.
 	/// Images that are used should be named by "cameraIdx-timestamp.*", several images with the same timestamp
 	/// means that they are the same pattern that are photographed. cameraIdx should start from 0.
-	/// 
+	///
 	/// For more details, please refer to paper
 	///    B. Li, L. Heng, K. Kevin  and M. Pollefeys, "A Multiple-Camera System
 	///    Calibration Toolbox Using A Feature Descriptor-Based Calibration
 	///    Pattern", in IROS 2013.
 	pub struct MultiCameraCalibration {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { MultiCameraCalibration }
-	
+
 	impl Drop for MultiCameraCalibration {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_multicalib_MultiCameraCalibration_delete(self.as_raw_mut_MultiCameraCalibration()) };
 		}
 	}
-	
+
 	unsafe impl Send for MultiCameraCalibration {}
-	
+
 	impl crate::ccalib::MultiCameraCalibrationTraitConst for MultiCameraCalibration {
 		#[inline] fn as_raw_MultiCameraCalibration(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ccalib::MultiCameraCalibrationTrait for MultiCameraCalibration {
 		#[inline] fn as_raw_mut_MultiCameraCalibration(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { MultiCameraCalibration, crate::ccalib::MultiCameraCalibrationTraitConst, as_raw_MultiCameraCalibration, crate::ccalib::MultiCameraCalibrationTrait, as_raw_mut_MultiCameraCalibration }
-	
+
 	impl MultiCameraCalibration {
 		/// ## C++ default parameters
 		/// * verbose: 0
@@ -1157,7 +1158,7 @@ pub mod ccalib {
 			let ret = unsafe { crate::ccalib::MultiCameraCalibration::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// ## Note
 		/// This alternative version of [new] function uses the following default values for its arguments:
 		/// * verbose: 0
@@ -1178,9 +1179,9 @@ pub mod ccalib {
 			let ret = unsafe { crate::ccalib::MultiCameraCalibration::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	impl std::fmt::Debug for MultiCameraCalibration {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -1188,93 +1189,93 @@ pub mod ccalib {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::ccalib::MultiCameraCalibration_edge]
 	pub trait MultiCameraCalibration_edgeTraitConst {
 		fn as_raw_MultiCameraCalibration_edge(&self) -> *const c_void;
-	
+
 		#[inline]
 		fn camera_vertex(&self) -> i32 {
 			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_propCameraVertex_const(self.as_raw_MultiCameraCalibration_edge()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn photo_vertex(&self) -> i32 {
 			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_propPhotoVertex_const(self.as_raw_MultiCameraCalibration_edge()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn photo_index(&self) -> i32 {
 			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_propPhotoIndex_const(self.as_raw_MultiCameraCalibration_edge()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn transform(&self) -> core::Mat {
 			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_propTransform_const(self.as_raw_MultiCameraCalibration_edge()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::ccalib::MultiCameraCalibration_edge]
 	pub trait MultiCameraCalibration_edgeTrait: crate::ccalib::MultiCameraCalibration_edgeTraitConst {
 		fn as_raw_mut_MultiCameraCalibration_edge(&mut self) -> *mut c_void;
-	
+
 		#[inline]
 		fn set_camera_vertex(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_propCameraVertex_const_int(self.as_raw_mut_MultiCameraCalibration_edge(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_photo_vertex(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_propPhotoVertex_const_int(self.as_raw_mut_MultiCameraCalibration_edge(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_photo_index(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_propPhotoIndex_const_int(self.as_raw_mut_MultiCameraCalibration_edge(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_transform(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_propTransform_const_Mat(self.as_raw_mut_MultiCameraCalibration_edge(), val.as_raw_Mat()) };
 			ret
 		}
-		
+
 	}
-	
+
 	pub struct MultiCameraCalibration_edge {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { MultiCameraCalibration_edge }
-	
+
 	impl Drop for MultiCameraCalibration_edge {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_delete(self.as_raw_mut_MultiCameraCalibration_edge()) };
 		}
 	}
-	
+
 	unsafe impl Send for MultiCameraCalibration_edge {}
-	
+
 	impl crate::ccalib::MultiCameraCalibration_edgeTraitConst for MultiCameraCalibration_edge {
 		#[inline] fn as_raw_MultiCameraCalibration_edge(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ccalib::MultiCameraCalibration_edgeTrait for MultiCameraCalibration_edge {
 		#[inline] fn as_raw_mut_MultiCameraCalibration_edge(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { MultiCameraCalibration_edge, crate::ccalib::MultiCameraCalibration_edgeTraitConst, as_raw_MultiCameraCalibration_edge, crate::ccalib::MultiCameraCalibration_edgeTrait, as_raw_mut_MultiCameraCalibration_edge }
-	
+
 	impl MultiCameraCalibration_edge {
 		#[inline]
 		pub fn new(cv: i32, pv: i32, pi: i32, mut trans: impl core::MatTrait) -> Result<crate::ccalib::MultiCameraCalibration_edge> {
@@ -1285,9 +1286,9 @@ pub mod ccalib {
 			let ret = unsafe { crate::ccalib::MultiCameraCalibration_edge::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	impl std::fmt::Debug for MultiCameraCalibration_edge {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -1299,69 +1300,69 @@ pub mod ccalib {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::ccalib::MultiCameraCalibration_vertex]
 	pub trait MultiCameraCalibration_vertexTraitConst {
 		fn as_raw_MultiCameraCalibration_vertex(&self) -> *const c_void;
-	
+
 		#[inline]
 		fn pose(&self) -> core::Mat {
 			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_propPose_const(self.as_raw_MultiCameraCalibration_vertex()) };
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			ret
 		}
-		
+
 		#[inline]
 		fn timestamp(&self) -> i32 {
 			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_propTimestamp_const(self.as_raw_MultiCameraCalibration_vertex()) };
 			ret
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::ccalib::MultiCameraCalibration_vertex]
 	pub trait MultiCameraCalibration_vertexTrait: crate::ccalib::MultiCameraCalibration_vertexTraitConst {
 		fn as_raw_mut_MultiCameraCalibration_vertex(&mut self) -> *mut c_void;
-	
+
 		#[inline]
 		fn set_pose(&mut self, val: core::Mat) {
 			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_propPose_const_Mat(self.as_raw_mut_MultiCameraCalibration_vertex(), val.as_raw_Mat()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_timestamp(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_propTimestamp_const_int(self.as_raw_mut_MultiCameraCalibration_vertex(), val) };
 			ret
 		}
-		
+
 	}
-	
+
 	pub struct MultiCameraCalibration_vertex {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { MultiCameraCalibration_vertex }
-	
+
 	impl Drop for MultiCameraCalibration_vertex {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_delete(self.as_raw_mut_MultiCameraCalibration_vertex()) };
 		}
 	}
-	
+
 	unsafe impl Send for MultiCameraCalibration_vertex {}
-	
+
 	impl crate::ccalib::MultiCameraCalibration_vertexTraitConst for MultiCameraCalibration_vertex {
 		#[inline] fn as_raw_MultiCameraCalibration_vertex(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ccalib::MultiCameraCalibration_vertexTrait for MultiCameraCalibration_vertex {
 		#[inline] fn as_raw_mut_MultiCameraCalibration_vertex(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { MultiCameraCalibration_vertex, crate::ccalib::MultiCameraCalibration_vertexTraitConst, as_raw_MultiCameraCalibration_vertex, crate::ccalib::MultiCameraCalibration_vertexTrait, as_raw_mut_MultiCameraCalibration_vertex }
-	
+
 	impl MultiCameraCalibration_vertex {
 		#[inline]
 		pub fn new(mut po: impl core::MatTrait, ts: i32) -> Result<crate::ccalib::MultiCameraCalibration_vertex> {
@@ -1372,7 +1373,7 @@ pub mod ccalib {
 			let ret = unsafe { crate::ccalib::MultiCameraCalibration_vertex::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		pub fn default() -> Result<crate::ccalib::MultiCameraCalibration_vertex> {
 			return_send!(via ocvrs_return);
@@ -1382,9 +1383,9 @@ pub mod ccalib {
 			let ret = unsafe { crate::ccalib::MultiCameraCalibration_vertex::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	impl std::fmt::Debug for MultiCameraCalibration_vertex {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -1394,17 +1395,17 @@ pub mod ccalib {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::ccalib::RandomPatternCornerFinder]
 	pub trait RandomPatternCornerFinderTraitConst {
 		fn as_raw_RandomPatternCornerFinder(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::ccalib::RandomPatternCornerFinder]
 	pub trait RandomPatternCornerFinderTrait: crate::ccalib::RandomPatternCornerFinderTraitConst {
 		fn as_raw_mut_RandomPatternCornerFinder(&mut self) -> *mut c_void;
-	
+
 		#[inline]
 		fn load_pattern(&mut self, pattern_image: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1413,7 +1414,7 @@ pub mod ccalib {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn load_pattern_1(&mut self, pattern_image: &impl core::MatTraitConst, pattern_key_points: &core::Vector<core::KeyPoint>, pattern_descriptors: &impl core::MatTraitConst) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1422,7 +1423,7 @@ pub mod ccalib {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn compute_object_image_points(&mut self, mut input_images: core::Vector<core::Mat>) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1431,7 +1432,7 @@ pub mod ccalib {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn compute_object_image_points_for_single(&mut self, mut input_image: impl core::MatTrait) -> Result<core::Vector<core::Mat>> {
 			return_send!(via ocvrs_return);
@@ -1441,7 +1442,7 @@ pub mod ccalib {
 			let ret = unsafe { core::Vector::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_object_points(&mut self) -> Result<core::Vector<core::Mat>> {
 			return_send!(via ocvrs_return);
@@ -1451,7 +1452,7 @@ pub mod ccalib {
 			let ret = unsafe { core::Vector::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_image_points(&mut self) -> Result<core::Vector<core::Mat>> {
 			return_send!(via ocvrs_return);
@@ -1461,43 +1462,43 @@ pub mod ccalib {
 			let ret = unsafe { core::Vector::<core::Mat>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Class for finding features points and corresponding 3D in world coordinate of
 	/// a "random" pattern, which can be to be used in calibration. It is useful when pattern is
 	/// partly occluded or only a part of pattern can be observed in multiple cameras calibration.
 	/// The pattern can be generated by RandomPatternGenerator class described in this file.
-	/// 
+	///
 	/// Please refer to paper
 	///    B. Li, L. Heng, K. Kevin  and M. Pollefeys, "A Multiple-Camera System
 	///    Calibration Toolbox Using A Feature Descriptor-Based Calibration
 	///    Pattern", in IROS 2013.
 	pub struct RandomPatternCornerFinder {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { RandomPatternCornerFinder }
-	
+
 	impl Drop for RandomPatternCornerFinder {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_randpattern_RandomPatternCornerFinder_delete(self.as_raw_mut_RandomPatternCornerFinder()) };
 		}
 	}
-	
+
 	unsafe impl Send for RandomPatternCornerFinder {}
-	
+
 	impl crate::ccalib::RandomPatternCornerFinderTraitConst for RandomPatternCornerFinder {
 		#[inline] fn as_raw_RandomPatternCornerFinder(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ccalib::RandomPatternCornerFinderTrait for RandomPatternCornerFinder {
 		#[inline] fn as_raw_mut_RandomPatternCornerFinder(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { RandomPatternCornerFinder, crate::ccalib::RandomPatternCornerFinderTraitConst, as_raw_RandomPatternCornerFinder, crate::ccalib::RandomPatternCornerFinderTrait, as_raw_mut_RandomPatternCornerFinder }
-	
+
 	impl RandomPatternCornerFinder {
 		/// ## C++ default parameters
 		/// * nmini_match: 20
@@ -1516,7 +1517,7 @@ pub mod ccalib {
 			let ret = unsafe { crate::ccalib::RandomPatternCornerFinder::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// ## Note
 		/// This alternative version of [new] function uses the following default values for its arguments:
 		/// * nmini_match: 20
@@ -1535,9 +1536,9 @@ pub mod ccalib {
 			let ret = unsafe { crate::ccalib::RandomPatternCornerFinder::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	impl std::fmt::Debug for RandomPatternCornerFinder {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -1545,17 +1546,17 @@ pub mod ccalib {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::ccalib::RandomPatternGenerator]
 	pub trait RandomPatternGeneratorTraitConst {
 		fn as_raw_RandomPatternGenerator(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::ccalib::RandomPatternGenerator]
 	pub trait RandomPatternGeneratorTrait: crate::ccalib::RandomPatternGeneratorTraitConst {
 		fn as_raw_mut_RandomPatternGenerator(&mut self) -> *mut c_void;
-	
+
 		#[inline]
 		fn generate_pattern(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1564,7 +1565,7 @@ pub mod ccalib {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_pattern(&mut self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -1574,34 +1575,34 @@ pub mod ccalib {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	pub struct RandomPatternGenerator {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { RandomPatternGenerator }
-	
+
 	impl Drop for RandomPatternGenerator {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_randpattern_RandomPatternGenerator_delete(self.as_raw_mut_RandomPatternGenerator()) };
 		}
 	}
-	
+
 	unsafe impl Send for RandomPatternGenerator {}
-	
+
 	impl crate::ccalib::RandomPatternGeneratorTraitConst for RandomPatternGenerator {
 		#[inline] fn as_raw_RandomPatternGenerator(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ccalib::RandomPatternGeneratorTrait for RandomPatternGenerator {
 		#[inline] fn as_raw_mut_RandomPatternGenerator(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { RandomPatternGenerator, crate::ccalib::RandomPatternGeneratorTraitConst, as_raw_RandomPatternGenerator, crate::ccalib::RandomPatternGeneratorTrait, as_raw_mut_RandomPatternGenerator }
-	
+
 	impl RandomPatternGenerator {
 		#[inline]
 		pub fn new(image_width: i32, image_height: i32) -> Result<crate::ccalib::RandomPatternGenerator> {
@@ -1612,9 +1613,9 @@ pub mod ccalib {
 			let ret = unsafe { crate::ccalib::RandomPatternGenerator::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	impl std::fmt::Debug for RandomPatternGenerator {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {

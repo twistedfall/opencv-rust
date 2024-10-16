@@ -4,17 +4,18 @@ pub mod cudaarithm {
 	//!       # Per-element Operations
 	//!       # Matrix Reductions
 	//!       # Arithm Operations on Matrices
-	use crate::{mod_prelude::*, core, sys, types};
+	use crate::mod_prelude::*;
+	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use { super::LookUpTableTraitConst, super::LookUpTableTrait, super::DFTTraitConst, super::DFTTrait, super::ConvolutionTraitConst, super::ConvolutionTrait };
+		pub use super::{ConvolutionTrait, ConvolutionTraitConst, DFTTrait, DFTTraitConst, LookUpTableTrait, LookUpTableTraitConst};
 	}
-	
+
 	/// Returns the sum of absolute values for matrix elements.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image of any depth except for CV_64F .
 	/// * mask: optional operation mask; it must have the same size as src1 and CV_8UC1 type.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [abs_sum] function uses the following default values for its arguments:
 	/// * mask: noArray()
@@ -27,13 +28,13 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Returns the sum of absolute values for matrix elements.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image of any depth except for CV_64F .
 	/// * mask: optional operation mask; it must have the same size as src1 and CV_8UC1 type.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
@@ -46,16 +47,16 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes an absolute value of each matrix element.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source matrix.
 	/// * dst: Destination matrix with the same size and type as src .
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// abs
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [abs] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -69,16 +70,16 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes an absolute value of each matrix element.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source matrix.
 	/// * dst: Destination matrix with the same size and type as src .
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// abs
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -91,9 +92,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes per-element absolute difference of two matrices (or of a matrix and scalar).
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: First source matrix or scalar.
 	/// * src2: Second source matrix or scalar.
@@ -101,7 +102,7 @@ pub mod cudaarithm {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// absdiff
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [absdiff] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -116,9 +117,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes per-element absolute difference of two matrices (or of a matrix and scalar).
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: First source matrix or scalar.
 	/// * src2: Second source matrix or scalar.
@@ -126,7 +127,7 @@ pub mod cudaarithm {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// absdiff
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -140,9 +141,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes the weighted sum of two arrays.
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: First source array.
 	/// * alpha: Weight for the first array elements.
@@ -153,16 +154,16 @@ pub mod cudaarithm {
 	/// * dtype: Optional depth of the destination array. When both input arrays have the same depth,
 	/// dtype can be set to -1, which will be equivalent to src1.depth().
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// The function addWeighted calculates the weighted sum of two arrays as follows:
-	/// 
+	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Bsaturate%7D%20%28%20%5Ctexttt%7Bsrc1%7D%20%28I%29%2A%20%5Ctexttt%7Balpha%7D%20%2B%20%20%5Ctexttt%7Bsrc2%7D%20%28I%29%2A%20%5Ctexttt%7Bbeta%7D%20%2B%20%20%5Ctexttt%7Bgamma%7D%20%29)
-	/// 
+	///
 	/// where I is a multi-dimensional index of array elements. In case of multi-channel arrays, each
 	/// channel is processed independently.
 	/// ## See also
 	/// addWeighted
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [add_weighted] function uses the following default values for its arguments:
 	/// * dtype: -1
@@ -178,9 +179,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes the weighted sum of two arrays.
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: First source array.
 	/// * alpha: Weight for the first array elements.
@@ -191,16 +192,16 @@ pub mod cudaarithm {
 	/// * dtype: Optional depth of the destination array. When both input arrays have the same depth,
 	/// dtype can be set to -1, which will be equivalent to src1.depth().
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// The function addWeighted calculates the weighted sum of two arrays as follows:
-	/// 
+	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Bsaturate%7D%20%28%20%5Ctexttt%7Bsrc1%7D%20%28I%29%2A%20%5Ctexttt%7Balpha%7D%20%2B%20%20%5Ctexttt%7Bsrc2%7D%20%28I%29%2A%20%5Ctexttt%7Bbeta%7D%20%2B%20%20%5Ctexttt%7Bgamma%7D%20%29)
-	/// 
+	///
 	/// where I is a multi-dimensional index of array elements. In case of multi-channel arrays, each
 	/// channel is processed independently.
 	/// ## See also
 	/// addWeighted
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * dtype: -1
 	/// * stream: Stream::Null()
@@ -215,9 +216,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes a matrix-matrix or matrix-scalar sum.
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: First source matrix or scalar.
 	/// * src2: Second source matrix or scalar. Matrix should have the same size and type as src1 .
@@ -229,7 +230,7 @@ pub mod cudaarithm {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// add
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [add] function uses the following default values for its arguments:
 	/// * mask: noArray()
@@ -246,9 +247,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes a matrix-matrix or matrix-scalar sum.
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: First source matrix or scalar.
 	/// * src2: Second source matrix or scalar. Matrix should have the same size and type as src1 .
@@ -260,7 +261,7 @@ pub mod cudaarithm {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// add
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	/// * dtype: -1
@@ -277,9 +278,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Performs a per-element bitwise conjunction of two matrices (or of matrix and scalar).
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: First source matrix or scalar.
 	/// * src2: Second source matrix or scalar.
@@ -287,7 +288,7 @@ pub mod cudaarithm {
 	/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
 	/// destination array to be changed. The mask can be used only with single channel images.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [bitwise_and] function uses the following default values for its arguments:
 	/// * mask: noArray()
@@ -303,9 +304,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Performs a per-element bitwise conjunction of two matrices (or of matrix and scalar).
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: First source matrix or scalar.
 	/// * src2: Second source matrix or scalar.
@@ -313,7 +314,7 @@ pub mod cudaarithm {
 	/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
 	/// destination array to be changed. The mask can be used only with single channel images.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
@@ -329,16 +330,16 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Performs a per-element bitwise inversion.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source matrix.
 	/// * dst: Destination matrix with the same size and type as src .
 	/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
 	/// destination array to be changed. The mask can be used only with single channel images.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [bitwise_not] function uses the following default values for its arguments:
 	/// * mask: noArray()
@@ -353,16 +354,16 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Performs a per-element bitwise inversion.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source matrix.
 	/// * dst: Destination matrix with the same size and type as src .
 	/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
 	/// destination array to be changed. The mask can be used only with single channel images.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
@@ -377,9 +378,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Performs a per-element bitwise disjunction of two matrices (or of matrix and scalar).
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: First source matrix or scalar.
 	/// * src2: Second source matrix or scalar.
@@ -387,7 +388,7 @@ pub mod cudaarithm {
 	/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
 	/// destination array to be changed. The mask can be used only with single channel images.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [bitwise_or] function uses the following default values for its arguments:
 	/// * mask: noArray()
@@ -403,9 +404,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Performs a per-element bitwise disjunction of two matrices (or of matrix and scalar).
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: First source matrix or scalar.
 	/// * src2: Second source matrix or scalar.
@@ -413,7 +414,7 @@ pub mod cudaarithm {
 	/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
 	/// destination array to be changed. The mask can be used only with single channel images.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
@@ -429,9 +430,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Performs a per-element bitwise exclusive or operation of two matrices (or of matrix and scalar).
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: First source matrix or scalar.
 	/// * src2: Second source matrix or scalar.
@@ -439,7 +440,7 @@ pub mod cudaarithm {
 	/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
 	/// destination array to be changed. The mask can be used only with single channel images.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [bitwise_xor] function uses the following default values for its arguments:
 	/// * mask: noArray()
@@ -455,9 +456,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Performs a per-element bitwise exclusive or operation of two matrices (or of matrix and scalar).
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: First source matrix or scalar.
 	/// * src2: Second source matrix or scalar.
@@ -465,7 +466,7 @@ pub mod cudaarithm {
 	/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
 	/// destination array to be changed. The mask can be used only with single channel images.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
@@ -481,9 +482,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// @overload
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [calc_abs_sum] function uses the following default values for its arguments:
 	/// * mask: noArray()
@@ -498,9 +499,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
@@ -515,9 +516,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// @overload
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [calc_norm_diff] function uses the following default values for its arguments:
 	/// * norm_type: NORM_L2
@@ -533,9 +534,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * norm_type: NORM_L2
 	/// * stream: Stream::Null()
@@ -550,9 +551,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// @overload
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [calc_norm] function uses the following default values for its arguments:
 	/// * mask: noArray()
@@ -567,9 +568,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
@@ -584,9 +585,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// @overload
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [calc_sqr_sum] function uses the following default values for its arguments:
 	/// * mask: noArray()
@@ -601,9 +602,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
@@ -618,9 +619,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// @overload
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [calc_sum] function uses the following default values for its arguments:
 	/// * mask: noArray()
@@ -635,9 +636,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
@@ -652,9 +653,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Converts Cartesian coordinates into polar.
-	/// 
+	///
 	/// ## Parameters
 	/// * x: Source matrix containing real components ( CV_32FC1 ).
 	/// * y: Source matrix containing imaginary components ( CV_32FC1 ).
@@ -664,7 +665,7 @@ pub mod cudaarithm {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// cartToPolar
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [cart_to_polar] function uses the following default values for its arguments:
 	/// * angle_in_degrees: false
@@ -681,9 +682,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Converts Cartesian coordinates into polar.
-	/// 
+	///
 	/// ## Parameters
 	/// * x: Source matrix containing real components ( CV_32FC1 ).
 	/// * y: Source matrix containing imaginary components ( CV_32FC1 ).
@@ -693,7 +694,7 @@ pub mod cudaarithm {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// cartToPolar
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * angle_in_degrees: false
 	/// * stream: Stream::Null()
@@ -709,9 +710,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Compares elements of two matrices (or of a matrix and scalar).
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: First source matrix or scalar.
 	/// * src2: Second source matrix or scalar.
@@ -726,7 +727,7 @@ pub mod cudaarithm {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// compare
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [compare] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -741,9 +742,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Compares elements of two matrices (or of a matrix and scalar).
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: First source matrix or scalar.
 	/// * src2: Second source matrix or scalar.
@@ -758,7 +759,7 @@ pub mod cudaarithm {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// compare
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -772,9 +773,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Forms a border around an image.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image. CV_8UC1 , CV_8UC4 , CV_32SC1 , and CV_32FC1 types are supported.
 	/// * dst: Destination image with the same type as src. The size is
@@ -788,7 +789,7 @@ pub mod cudaarithm {
 	/// BORDER_REPLICATE , BORDER_CONSTANT , BORDER_REFLECT and BORDER_WRAP are supported for now.
 	/// * value: Border value.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [copy_make_border] function uses the following default values for its arguments:
 	/// * value: Scalar()
@@ -803,9 +804,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Forms a border around an image.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image. CV_8UC1 , CV_8UC4 , CV_32SC1 , and CV_32FC1 types are supported.
 	/// * dst: Destination image with the same type as src. The size is
@@ -819,7 +820,7 @@ pub mod cudaarithm {
 	/// BORDER_REPLICATE , BORDER_CONSTANT , BORDER_REFLECT and BORDER_WRAP are supported for now.
 	/// * value: Border value.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * value: Scalar()
 	/// * stream: Stream::Null()
@@ -833,12 +834,12 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Counts non-zero matrix elements.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Single-channel source image.
-	/// 
+	///
 	/// The function does not work with CV_64F images on GPUs with the compute capability \< 1.3.
 	/// ## See also
 	/// countNonZero
@@ -851,9 +852,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// @overload
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [count_non_zero_1] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -867,18 +868,18 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Counts non-zero matrix elements.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Single-channel source image.
-	/// 
+	///
 	/// The function does not work with CV_64F images on GPUs with the compute capability \< 1.3.
 	/// ## See also
 	/// countNonZero
-	/// 
+	///
 	/// ## Overloaded parameters
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -891,14 +892,14 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Creates implementation for cuda::Convolution .
-	/// 
+	///
 	/// ## Parameters
 	/// * user_block_size: Block size. If you leave default value Size(0,0) then automatic
 	/// estimation of block size will be used (which is optimized for speed). By varying user_block_size
 	/// you can reduce memory requirements at the cost of speed.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_convolution] function uses the following default values for its arguments:
 	/// * user_block_size: Size()
@@ -911,14 +912,14 @@ pub mod cudaarithm {
 		let ret = unsafe { core::Ptr::<crate::cudaarithm::Convolution>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates implementation for cuda::Convolution .
-	/// 
+	///
 	/// ## Parameters
 	/// * user_block_size: Block size. If you leave default value Size(0,0) then automatic
 	/// estimation of block size will be used (which is optimized for speed). By varying user_block_size
 	/// you can reduce memory requirements at the cost of speed.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * user_block_size: Size()
 	#[inline]
@@ -930,9 +931,9 @@ pub mod cudaarithm {
 		let ret = unsafe { core::Ptr::<crate::cudaarithm::Convolution>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates implementation for cuda::DFT.
-	/// 
+	///
 	/// ## Parameters
 	/// * dft_size: The image size.
 	/// * flags: Optional flags:
@@ -953,9 +954,9 @@ pub mod cudaarithm {
 		let ret = unsafe { core::Ptr::<crate::cudaarithm::DFT>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates implementation for cuda::LookUpTable .
-	/// 
+	///
 	/// ## Parameters
 	/// * lut: Look-up table of 256 elements. It is a continuous CV_8U matrix.
 	#[inline]
@@ -968,9 +969,9 @@ pub mod cudaarithm {
 		let ret = unsafe { core::Ptr::<crate::cudaarithm::LookUpTable>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Performs a forward or inverse discrete Fourier transform (1D or 2D) of the floating point matrix.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source matrix (real or complex).
 	/// * dst: Destination matrix (real or complex).
@@ -985,13 +986,13 @@ pub mod cudaarithm {
 	/// *   **DFT_REAL_OUTPUT** specifies the output as real. The source matrix is the result of
 	/// real-complex transform, so the destination matrix must be real.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// Use to handle real matrices ( CV32FC1 ) and complex matrices in the interleaved format ( CV32FC2 ).
-	/// 
+	///
 	/// The source matrix should be continuous, otherwise reallocation and data copying is performed. The
 	/// function chooses an operation mode depending on the flags, size, and channel count of the source
 	/// matrix:
-	/// 
+	///
 	/// *   If the source matrix is complex and the output is not specified as real, the destination
 	/// matrix is complex and has the dft_size size and CV_32FC2 type. The destination matrix
 	/// contains a full result of the DFT (forward or inverse).
@@ -1004,7 +1005,7 @@ pub mod cudaarithm {
 	/// instead of the width.
 	/// ## See also
 	/// dft
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [dft] function uses the following default values for its arguments:
 	/// * flags: 0
@@ -1019,9 +1020,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Performs a forward or inverse discrete Fourier transform (1D or 2D) of the floating point matrix.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source matrix (real or complex).
 	/// * dst: Destination matrix (real or complex).
@@ -1036,13 +1037,13 @@ pub mod cudaarithm {
 	/// *   **DFT_REAL_OUTPUT** specifies the output as real. The source matrix is the result of
 	/// real-complex transform, so the destination matrix must be real.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// Use to handle real matrices ( CV32FC1 ) and complex matrices in the interleaved format ( CV32FC2 ).
-	/// 
+	///
 	/// The source matrix should be continuous, otherwise reallocation and data copying is performed. The
 	/// function chooses an operation mode depending on the flags, size, and channel count of the source
 	/// matrix:
-	/// 
+	///
 	/// *   If the source matrix is complex and the output is not specified as real, the destination
 	/// matrix is complex and has the dft_size size and CV_32FC2 type. The destination matrix
 	/// contains a full result of the DFT (forward or inverse).
@@ -1055,7 +1056,7 @@ pub mod cudaarithm {
 	/// instead of the width.
 	/// ## See also
 	/// dft
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * flags: 0
 	/// * stream: Stream::Null()
@@ -1069,9 +1070,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes a matrix-matrix or matrix-scalar division.
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: First source matrix or a scalar.
 	/// * src2: Second source matrix or scalar.
@@ -1080,11 +1081,11 @@ pub mod cudaarithm {
 	/// * scale: Optional scale factor.
 	/// * dtype: Optional depth of the output array.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// This function, in contrast to divide, uses a round-down rounding mode.
 	/// ## See also
 	/// divide
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [divide] function uses the following default values for its arguments:
 	/// * scale: 1
@@ -1101,9 +1102,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes a matrix-matrix or matrix-scalar division.
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: First source matrix or a scalar.
 	/// * src2: Second source matrix or scalar.
@@ -1112,11 +1113,11 @@ pub mod cudaarithm {
 	/// * scale: Optional scale factor.
 	/// * dtype: Optional depth of the output array.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// This function, in contrast to divide, uses a round-down rounding mode.
 	/// ## See also
 	/// divide
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * scale: 1
 	/// * dtype: -1
@@ -1132,16 +1133,16 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes an exponent of each matrix element.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source matrix.
 	/// * dst: Destination matrix with the same size and type as src .
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// exp
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [exp] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -1155,16 +1156,16 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes an exponent of each matrix element.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source matrix.
 	/// * dst: Destination matrix with the same size and type as src .
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// exp
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -1177,9 +1178,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// @overload
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [find_min_max_loc] function uses the following default values for its arguments:
 	/// * mask: noArray()
@@ -1195,9 +1196,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
@@ -1213,9 +1214,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// @overload
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [find_min_max] function uses the following default values for its arguments:
 	/// * mask: noArray()
@@ -1230,9 +1231,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
@@ -1247,9 +1248,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Flips a 2D matrix around vertical, horizontal, or both axes.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source matrix. Supports 1, 3 and 4 channels images with CV_8U, CV_16U, CV_32S or
 	/// CV_32F depth.
@@ -1261,7 +1262,7 @@ pub mod cudaarithm {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// flip
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [flip] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -1275,9 +1276,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Flips a 2D matrix around vertical, horizontal, or both axes.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source matrix. Supports 1, 3 and 4 channels images with CV_8U, CV_16U, CV_32S or
 	/// CV_32F depth.
@@ -1289,7 +1290,7 @@ pub mod cudaarithm {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// flip
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -1302,9 +1303,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Performs generalized matrix multiplication.
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: First multiplied input matrix that should have CV_32FC1 , CV_64FC1 , CV_32FC2 , or
 	/// CV_64FC2 type.
@@ -1319,17 +1320,17 @@ pub mod cudaarithm {
 	/// *   **GEMM_2_T** transpose src2
 	/// *   **GEMM_3_T** transpose src3
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// The function performs generalized matrix multiplication similar to the gemm functions in BLAS level
 	/// 3. For example, gemm(src1, src2, alpha, src3, beta, dst, GEMM_1_T + GEMM_3_T) corresponds to
-	/// 
+	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%20%5Ctexttt%7Balpha%7D%20%5Ccdot%20%5Ctexttt%7Bsrc1%7D%20%5ET%20%20%5Ccdot%20%5Ctexttt%7Bsrc2%7D%20%2B%20%20%5Ctexttt%7Bbeta%7D%20%5Ccdot%20%5Ctexttt%7Bsrc3%7D%20%5ET)
-	/// 
-	/// 
+	///
+	///
 	/// Note: Transposition operation doesn't support CV_64FC2 input type.
 	/// ## See also
 	/// gemm
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [gemm] function uses the following default values for its arguments:
 	/// * flags: 0
@@ -1346,9 +1347,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Performs generalized matrix multiplication.
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: First multiplied input matrix that should have CV_32FC1 , CV_64FC1 , CV_32FC2 , or
 	/// CV_64FC2 type.
@@ -1363,17 +1364,17 @@ pub mod cudaarithm {
 	/// *   **GEMM_2_T** transpose src2
 	/// *   **GEMM_3_T** transpose src3
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// The function performs generalized matrix multiplication similar to the gemm functions in BLAS level
 	/// 3. For example, gemm(src1, src2, alpha, src3, beta, dst, GEMM_1_T + GEMM_3_T) corresponds to
-	/// 
+	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%20%5Ctexttt%7Balpha%7D%20%5Ccdot%20%5Ctexttt%7Bsrc1%7D%20%5ET%20%20%5Ccdot%20%5Ctexttt%7Bsrc2%7D%20%2B%20%20%5Ctexttt%7Bbeta%7D%20%5Ccdot%20%5Ctexttt%7Bsrc3%7D%20%5ET)
-	/// 
-	/// 
+	///
+	///
 	/// Note: Transposition operation doesn't support CV_64FC2 input type.
 	/// ## See also
 	/// gemm
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * flags: 0
 	/// * stream: Stream::Null()
@@ -1389,22 +1390,22 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Checks if array elements lie between two scalars.
-	/// 
+	///
 	/// The function checks the range as follows:
 	/// *   For every element of a single-channel input array:
 	///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Blowerb%7D%5F0%20%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28I%29%5F0%20%5Cleq%20%20%5Ctexttt%7Bupperb%7D%5F0)
 	/// *   For two-channel arrays:
 	///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Blowerb%7D%5F0%20%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28I%29%5F0%20%5Cleq%20%20%5Ctexttt%7Bupperb%7D%5F0%20%20%5Cland%20%5Ctexttt%7Blowerb%7D%5F1%20%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28I%29%5F1%20%5Cleq%20%20%5Ctexttt%7Bupperb%7D%5F1)
 	/// *   and so forth.
-	/// 
+	///
 	/// That is, dst (I) is set to 255 (all 1 -bits) if src (I) is within the
 	/// specified 1D, 2D, 3D, ... box and 0 otherwise.
-	/// 
+	///
 	/// Note that unlike the CPU inRange, this does NOT accept an array for lowerb or
 	/// upperb, only a cv::Scalar.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: first input array.
 	/// * lowerb: inclusive lower boundary cv::Scalar.
@@ -1413,7 +1414,7 @@ pub mod cudaarithm {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// cv::inRange
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [in_range] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -1427,22 +1428,22 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Checks if array elements lie between two scalars.
-	/// 
+	///
 	/// The function checks the range as follows:
 	/// *   For every element of a single-channel input array:
 	///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Blowerb%7D%5F0%20%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28I%29%5F0%20%5Cleq%20%20%5Ctexttt%7Bupperb%7D%5F0)
 	/// *   For two-channel arrays:
 	///    ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Blowerb%7D%5F0%20%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28I%29%5F0%20%5Cleq%20%20%5Ctexttt%7Bupperb%7D%5F0%20%20%5Cland%20%5Ctexttt%7Blowerb%7D%5F1%20%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28I%29%5F1%20%5Cleq%20%20%5Ctexttt%7Bupperb%7D%5F1)
 	/// *   and so forth.
-	/// 
+	///
 	/// That is, dst (I) is set to 255 (all 1 -bits) if src (I) is within the
 	/// specified 1D, 2D, 3D, ... box and 0 otherwise.
-	/// 
+	///
 	/// Note that unlike the CPU inRange, this does NOT accept an array for lowerb or
 	/// upperb, only a cv::Scalar.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: first input array.
 	/// * lowerb: inclusive lower boundary cv::Scalar.
@@ -1451,7 +1452,7 @@ pub mod cudaarithm {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// cv::inRange
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -1464,16 +1465,16 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes an integral image.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image. Only CV_8UC1 images are supported for now.
 	/// * sum: Integral image containing 32-bit unsigned integer values packed into CV_32SC1 .
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// integral
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [integral] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -1487,16 +1488,16 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes an integral image.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image. Only CV_8UC1 images are supported for now.
 	/// * sum: Integral image containing 32-bit unsigned integer values packed into CV_32SC1 .
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// integral
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -1509,16 +1510,16 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes a natural logarithm of absolute value of each matrix element.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source matrix.
 	/// * dst: Destination matrix with the same size and type as src .
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// log
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [log] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -1532,16 +1533,16 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes a natural logarithm of absolute value of each matrix element.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source matrix.
 	/// * dst: Destination matrix with the same size and type as src .
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// log
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -1554,16 +1555,16 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Performs pixel by pixel right left of an image by a constant value.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source matrix. Supports 1, 3 and 4 channels images with CV_8U , CV_16U or CV_32S
 	/// depth.
 	/// * val: Constant values, one per channel.
 	/// * dst: Destination matrix with the same size and type as src .
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [lshift] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -1577,16 +1578,16 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Performs pixel by pixel right left of an image by a constant value.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source matrix. Supports 1, 3 and 4 channels images with CV_8U , CV_16U or CV_32S
 	/// depth.
 	/// * val: Constant values, one per channel.
 	/// * dst: Destination matrix with the same size and type as src .
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -1599,7 +1600,7 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// ## Note
 	/// This alternative version of [lshift_1] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -1613,7 +1614,7 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -1626,7 +1627,7 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// @overload
 	///  computes squared magnitude of each (x(i), y(i)) vector
 	///  supports only floating-point source
@@ -1635,7 +1636,7 @@ pub mod cudaarithm {
 	/// * y: Source matrix containing imaginary components ( CV_32FC1 ).
 	/// * magnitude: Destination matrix of float magnitude squares ( CV_32FC1 ).
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [magnitude_sqr_1] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -1650,23 +1651,23 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes squared magnitudes of complex matrix elements.
-	/// 
+	///
 	/// ## Parameters
 	/// * xy: Source complex matrix in the interleaved format ( CV_32FC2 ).
 	/// * magnitude: Destination matrix of float magnitude squares ( CV_32FC1 ).
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## Overloaded parameters
-	/// 
+	///
 	///  computes squared magnitude of each (x(i), y(i)) vector
 	///  supports only floating-point source
 	/// * x: Source matrix containing real components ( CV_32FC1 ).
 	/// * y: Source matrix containing imaginary components ( CV_32FC1 ).
 	/// * magnitude: Destination matrix of float magnitude squares ( CV_32FC1 ).
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -1680,14 +1681,14 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes squared magnitudes of complex matrix elements.
-	/// 
+	///
 	/// ## Parameters
 	/// * xy: Source complex matrix in the interleaved format ( CV_32FC2 ).
 	/// * magnitude: Destination matrix of float magnitude squares ( CV_32FC1 ).
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [magnitude_sqr] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -1701,14 +1702,14 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes squared magnitudes of complex matrix elements.
-	/// 
+	///
 	/// ## Parameters
 	/// * xy: Source complex matrix in the interleaved format ( CV_32FC2 ).
 	/// * magnitude: Destination matrix of float magnitude squares ( CV_32FC1 ).
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -1721,7 +1722,7 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// @overload
 	///  computes magnitude of each (x(i), y(i)) vector
 	///  supports only floating-point source
@@ -1730,7 +1731,7 @@ pub mod cudaarithm {
 	/// * y: Source matrix containing imaginary components ( CV_32FC1 ).
 	/// * magnitude: Destination matrix of float magnitudes ( CV_32FC1 ).
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [magnitude_1] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -1745,25 +1746,25 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes magnitudes of complex matrix elements.
-	/// 
+	///
 	/// ## Parameters
 	/// * xy: Source complex matrix in the interleaved format ( CV_32FC2 ).
 	/// * magnitude: Destination matrix of float magnitudes ( CV_32FC1 ).
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// magnitude
-	/// 
+	///
 	/// ## Overloaded parameters
-	/// 
+	///
 	///  computes magnitude of each (x(i), y(i)) vector
 	///  supports only floating-point source
 	/// * x: Source matrix containing real components ( CV_32FC1 ).
 	/// * y: Source matrix containing imaginary components ( CV_32FC1 ).
 	/// * magnitude: Destination matrix of float magnitudes ( CV_32FC1 ).
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -1777,16 +1778,16 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes magnitudes of complex matrix elements.
-	/// 
+	///
 	/// ## Parameters
 	/// * xy: Source complex matrix in the interleaved format ( CV_32FC2 ).
 	/// * magnitude: Destination matrix of float magnitudes ( CV_32FC1 ).
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// magnitude
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [magnitude] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -1800,16 +1801,16 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes magnitudes of complex matrix elements.
-	/// 
+	///
 	/// ## Parameters
 	/// * xy: Source complex matrix in the interleaved format ( CV_32FC2 ).
 	/// * magnitude: Destination matrix of float magnitudes ( CV_32FC1 ).
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// magnitude
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -1822,9 +1823,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes the per-element maximum of two matrices (or a matrix and a scalar).
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: First source matrix or scalar.
 	/// * src2: Second source matrix or scalar.
@@ -1832,7 +1833,7 @@ pub mod cudaarithm {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// max
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [max] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -1847,9 +1848,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes the per-element maximum of two matrices (or a matrix and a scalar).
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: First source matrix or scalar.
 	/// * src2: Second source matrix or scalar.
@@ -1857,7 +1858,7 @@ pub mod cudaarithm {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// max
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -1871,9 +1872,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes a mean value and a standard deviation of matrix elements.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source matrix. CV_8UC1 and CV_32FC1 matrices are supported for now.
 	/// * dst: Target GpuMat with size 1x2 and type CV_64FC1. The first value is mean, the second - stddev.
@@ -1881,9 +1882,9 @@ pub mod cudaarithm {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// meanStdDev
-	/// 
+	///
 	/// ## Overloaded parameters
-	/// 
+	///
 	/// * mtx: Source matrix. CV_8UC1 and CV_32FC1 matrices are supported for now.
 	/// * mean: Mean value.
 	/// * stddev: Standard deviation value.
@@ -1896,9 +1897,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes a mean value and a standard deviation of matrix elements.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source matrix. CV_8UC1 and CV_32FC1 matrices are supported for now.
 	/// * dst: Target GpuMat with size 1x2 and type CV_64FC1. The first value is mean, the second - stddev.
@@ -1906,9 +1907,9 @@ pub mod cudaarithm {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// meanStdDev
-	/// 
+	///
 	/// ## Overloaded parameters
-	/// 
+	///
 	/// * src: Source matrix. CV_8UC1 and CV_32FC1 matrices are supported for now.
 	/// * mean: Mean value.
 	/// * stddev: Standard deviation value.
@@ -1923,13 +1924,13 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// @overload
 	/// ## Parameters
 	/// * mtx: Source matrix. CV_8UC1 and CV_32FC1 matrices are supported for now.
 	/// * dst: Target GpuMat with size 1x2 and type CV_64FC1. The first value is mean, the second - stddev.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [mean_std_dev_1] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -1943,9 +1944,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes a mean value and a standard deviation of matrix elements.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source matrix. CV_8UC1 and CV_32FC1 matrices are supported for now.
 	/// * dst: Target GpuMat with size 1x2 and type CV_64FC1. The first value is mean, the second - stddev.
@@ -1953,13 +1954,13 @@ pub mod cudaarithm {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// meanStdDev
-	/// 
+	///
 	/// ## Overloaded parameters
-	/// 
+	///
 	/// * mtx: Source matrix. CV_8UC1 and CV_32FC1 matrices are supported for now.
 	/// * dst: Target GpuMat with size 1x2 and type CV_64FC1. The first value is mean, the second - stddev.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -1972,9 +1973,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes a mean value and a standard deviation of matrix elements.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source matrix. CV_8UC1 and CV_32FC1 matrices are supported for now.
 	/// * dst: Target GpuMat with size 1x2 and type CV_64FC1. The first value is mean, the second - stddev.
@@ -1982,7 +1983,7 @@ pub mod cudaarithm {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// meanStdDev
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [mean_std_dev] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -1997,9 +1998,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes a mean value and a standard deviation of matrix elements.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source matrix. CV_8UC1 and CV_32FC1 matrices are supported for now.
 	/// * dst: Target GpuMat with size 1x2 and type CV_64FC1. The first value is mean, the second - stddev.
@@ -2007,7 +2008,7 @@ pub mod cudaarithm {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// meanStdDev
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -2021,9 +2022,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Makes a multi-channel matrix out of several single-channel matrices.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Array/vector of source matrices.
 	/// * n: Number of source matrices.
@@ -2031,7 +2032,7 @@ pub mod cudaarithm {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// merge
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [merge] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -2044,9 +2045,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Makes a multi-channel matrix out of several single-channel matrices.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Array/vector of source matrices.
 	/// * n: Number of source matrices.
@@ -2054,7 +2055,7 @@ pub mod cudaarithm {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// merge
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -2066,9 +2067,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// @overload
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [merge_1] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -2081,9 +2082,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Makes a multi-channel matrix out of several single-channel matrices.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Array/vector of source matrices.
 	/// * n: Number of source matrices.
@@ -2091,9 +2092,9 @@ pub mod cudaarithm {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// merge
-	/// 
+	///
 	/// ## Overloaded parameters
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -2105,9 +2106,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Finds global minimum and maximum matrix elements and returns their values with locations.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Single-channel source image.
 	/// * minVal: Pointer to the returned minimum value. Use NULL if not required.
@@ -2115,11 +2116,11 @@ pub mod cudaarithm {
 	/// * minLoc: Pointer to the returned minimum location. Use NULL if not required.
 	/// * maxLoc: Pointer to the returned maximum location. Use NULL if not required.
 	/// * mask: Optional mask to select a sub-matrix.
-	/// 
+	///
 	/// The function does not work with CV_64F images on GPU with the compute capability \< 1.3.
 	/// ## See also
 	/// minMaxLoc
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [min_max_loc] function uses the following default values for its arguments:
 	/// * mask: noArray()
@@ -2132,9 +2133,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Finds global minimum and maximum matrix elements and returns their values with locations.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Single-channel source image.
 	/// * minVal: Pointer to the returned minimum value. Use NULL if not required.
@@ -2142,11 +2143,11 @@ pub mod cudaarithm {
 	/// * minLoc: Pointer to the returned minimum location. Use NULL if not required.
 	/// * maxLoc: Pointer to the returned maximum location. Use NULL if not required.
 	/// * mask: Optional mask to select a sub-matrix.
-	/// 
+	///
 	/// The function does not work with CV_64F images on GPU with the compute capability \< 1.3.
 	/// ## See also
 	/// minMaxLoc
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
@@ -2159,19 +2160,19 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Finds global minimum and maximum matrix elements and returns their values.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Single-channel source image.
 	/// * minVal: Pointer to the returned minimum value. Use NULL if not required.
 	/// * maxVal: Pointer to the returned maximum value. Use NULL if not required.
 	/// * mask: Optional mask to select a sub-matrix.
-	/// 
+	///
 	/// The function does not work with CV_64F images on GPUs with the compute capability \< 1.3.
 	/// ## See also
 	/// minMaxLoc
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [min_max] function uses the following default values for its arguments:
 	/// * mask: noArray()
@@ -2184,19 +2185,19 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Finds global minimum and maximum matrix elements and returns their values.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Single-channel source image.
 	/// * minVal: Pointer to the returned minimum value. Use NULL if not required.
 	/// * maxVal: Pointer to the returned maximum value. Use NULL if not required.
 	/// * mask: Optional mask to select a sub-matrix.
-	/// 
+	///
 	/// The function does not work with CV_64F images on GPUs with the compute capability \< 1.3.
 	/// ## See also
 	/// minMaxLoc
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
@@ -2209,9 +2210,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes the per-element minimum of two matrices (or a matrix and a scalar).
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: First source matrix or scalar.
 	/// * src2: Second source matrix or scalar.
@@ -2219,7 +2220,7 @@ pub mod cudaarithm {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// min
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [min] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -2234,9 +2235,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes the per-element minimum of two matrices (or a matrix and a scalar).
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: First source matrix or scalar.
 	/// * src2: Second source matrix or scalar.
@@ -2244,7 +2245,7 @@ pub mod cudaarithm {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// min
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -2258,9 +2259,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Performs a per-element multiplication of two Fourier spectrums and scales the result.
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: First spectrum.
 	/// * src2: Second spectrum with the same size and type as a .
@@ -2270,11 +2271,11 @@ pub mod cudaarithm {
 	/// * conjB: Optional flag to specify if the second spectrum needs to be conjugated before the
 	/// multiplication.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// Only full (not packed) CV_32FC2 complex spectrums in the interleaved format are supported for now.
 	/// ## See also
 	/// mulSpectrums
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [mul_and_scale_spectrums] function uses the following default values for its arguments:
 	/// * conj_b: false
@@ -2290,9 +2291,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Performs a per-element multiplication of two Fourier spectrums and scales the result.
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: First spectrum.
 	/// * src2: Second spectrum with the same size and type as a .
@@ -2302,11 +2303,11 @@ pub mod cudaarithm {
 	/// * conjB: Optional flag to specify if the second spectrum needs to be conjugated before the
 	/// multiplication.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// Only full (not packed) CV_32FC2 complex spectrums in the interleaved format are supported for now.
 	/// ## See also
 	/// mulSpectrums
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * conj_b: false
 	/// * stream: Stream::Null()
@@ -2321,9 +2322,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Performs a per-element multiplication of two Fourier spectrums.
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: First spectrum.
 	/// * src2: Second spectrum with the same size and type as a .
@@ -2332,11 +2333,11 @@ pub mod cudaarithm {
 	/// * conjB: Optional flag to specify if the second spectrum needs to be conjugated before the
 	/// multiplication.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// Only full (not packed) CV_32FC2 complex spectrums in the interleaved format are supported for now.
 	/// ## See also
 	/// mulSpectrums
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [mul_spectrums] function uses the following default values for its arguments:
 	/// * conj_b: false
@@ -2352,9 +2353,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Performs a per-element multiplication of two Fourier spectrums.
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: First spectrum.
 	/// * src2: Second spectrum with the same size and type as a .
@@ -2363,11 +2364,11 @@ pub mod cudaarithm {
 	/// * conjB: Optional flag to specify if the second spectrum needs to be conjugated before the
 	/// multiplication.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// Only full (not packed) CV_32FC2 complex spectrums in the interleaved format are supported for now.
 	/// ## See also
 	/// mulSpectrums
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * conj_b: false
 	/// * stream: Stream::Null()
@@ -2382,9 +2383,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes a matrix-matrix or matrix-scalar per-element product.
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: First source matrix or scalar.
 	/// * src2: Second source matrix or scalar.
@@ -2395,7 +2396,7 @@ pub mod cudaarithm {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// multiply
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [multiply] function uses the following default values for its arguments:
 	/// * scale: 1
@@ -2412,9 +2413,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes a matrix-matrix or matrix-scalar per-element product.
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: First source matrix or scalar.
 	/// * src2: Second source matrix or scalar.
@@ -2425,7 +2426,7 @@ pub mod cudaarithm {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// multiply
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * scale: 1
 	/// * dtype: -1
@@ -2441,16 +2442,16 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Returns the difference of two matrices.
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: Source matrix. Any matrices except 64F are supported.
 	/// * src2: Second source matrix (if any) with the same size and type as src1.
 	/// * normType: Norm type. NORM_L1 , NORM_L2 , and NORM_INF are supported for now.
 	/// ## See also
 	/// norm
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [norm_1] function uses the following default values for its arguments:
 	/// * norm_type: NORM_L2
@@ -2464,16 +2465,16 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Returns the difference of two matrices.
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: Source matrix. Any matrices except 64F are supported.
 	/// * src2: Second source matrix (if any) with the same size and type as src1.
 	/// * normType: Norm type. NORM_L1 , NORM_L2 , and NORM_INF are supported for now.
 	/// ## See also
 	/// norm
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * norm_type: NORM_L2
 	#[inline]
@@ -2486,16 +2487,16 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Returns the norm of a matrix (or difference of two matrices).
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: Source matrix. Any matrices except 64F are supported.
 	/// * normType: Norm type. NORM_L1 , NORM_L2 , and NORM_INF are supported for now.
 	/// * mask: optional operation mask; it must have the same size as src1 and CV_8UC1 type.
 	/// ## See also
 	/// norm
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [norm] function uses the following default values for its arguments:
 	/// * mask: noArray()
@@ -2508,16 +2509,16 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Returns the norm of a matrix (or difference of two matrices).
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: Source matrix. Any matrices except 64F are supported.
 	/// * normType: Norm type. NORM_L1 , NORM_L2 , and NORM_INF are supported for now.
 	/// * mask: optional operation mask; it must have the same size as src1 and CV_8UC1 type.
 	/// ## See also
 	/// norm
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
@@ -2530,9 +2531,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Normalizes the norm or value range of an array.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Input array.
 	/// * dst: Output array of the same size as src .
@@ -2547,7 +2548,7 @@ pub mod cudaarithm {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// normalize
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [normalize] function uses the following default values for its arguments:
 	/// * mask: noArray()
@@ -2562,9 +2563,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Normalizes the norm or value range of an array.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Input array.
 	/// * dst: Output array of the same size as src .
@@ -2579,7 +2580,7 @@ pub mod cudaarithm {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// normalize
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
@@ -2594,9 +2595,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes polar angles of complex matrix elements.
-	/// 
+	///
 	/// ## Parameters
 	/// * x: Source matrix containing real components ( CV_32FC1 ).
 	/// * y: Source matrix containing imaginary components ( CV_32FC1 ).
@@ -2605,7 +2606,7 @@ pub mod cudaarithm {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// phase
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [phase] function uses the following default values for its arguments:
 	/// * angle_in_degrees: false
@@ -2621,9 +2622,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes polar angles of complex matrix elements.
-	/// 
+	///
 	/// ## Parameters
 	/// * x: Source matrix containing real components ( CV_32FC1 ).
 	/// * y: Source matrix containing imaginary components ( CV_32FC1 ).
@@ -2632,7 +2633,7 @@ pub mod cudaarithm {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// phase
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * angle_in_degrees: false
 	/// * stream: Stream::Null()
@@ -2647,9 +2648,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Converts polar coordinates into Cartesian.
-	/// 
+	///
 	/// ## Parameters
 	/// * magnitude: Source matrix containing magnitudes ( CV_32FC1 or CV_64FC1 ).
 	/// * angle: Source matrix containing angles ( same type as magnitude ).
@@ -2657,7 +2658,7 @@ pub mod cudaarithm {
 	/// * y: Destination matrix of imaginary components ( same type as magnitude ).
 	/// * angleInDegrees: Flag that indicates angles in degrees.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [polar_to_cart] function uses the following default values for its arguments:
 	/// * angle_in_degrees: false
@@ -2674,9 +2675,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Converts polar coordinates into Cartesian.
-	/// 
+	///
 	/// ## Parameters
 	/// * magnitude: Source matrix containing magnitudes ( CV_32FC1 or CV_64FC1 ).
 	/// * angle: Source matrix containing angles ( same type as magnitude ).
@@ -2684,7 +2685,7 @@ pub mod cudaarithm {
 	/// * y: Destination matrix of imaginary components ( same type as magnitude ).
 	/// * angleInDegrees: Flag that indicates angles in degrees.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * angle_in_degrees: false
 	/// * stream: Stream::Null()
@@ -2700,21 +2701,21 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Raises every matrix element to a power.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source matrix.
 	/// * power: Exponent of power.
 	/// * dst: Destination matrix with the same size and type as src .
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// The function pow raises every element of the input matrix to power :
-	/// 
+	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%20%3D%20%20%5Cfork%7B%5Ctexttt%7Bsrc%7D%28I%29%5Epower%7D%7Bif%20%5Ctexttt%7Bpower%7D%20is%20integer%7D%7B%7C%5Ctexttt%7Bsrc%7D%28I%29%7C%5Epower%7D%7Botherwise%7D)
 	/// ## See also
 	/// pow
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [pow] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -2728,21 +2729,21 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Raises every matrix element to a power.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source matrix.
 	/// * power: Exponent of power.
 	/// * dst: Destination matrix with the same size and type as src .
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// The function pow raises every element of the input matrix to power :
-	/// 
+	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%20%3D%20%20%5Cfork%7B%5Ctexttt%7Bsrc%7D%28I%29%5Epower%7D%7Bif%20%5Ctexttt%7Bpower%7D%20is%20integer%7D%7B%7C%5Ctexttt%7Bsrc%7D%28I%29%7C%5Epower%7D%7Botherwise%7D)
 	/// ## See also
 	/// pow
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -2755,16 +2756,16 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes a standard deviation of integral images.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image. Only the CV_32SC1 type is supported.
 	/// * sqr: Squared source image. Only the CV_32FC1 type is supported.
 	/// * dst: Destination image with the same type and size as src.
 	/// * rect: Rectangular window.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [rect_std_dev] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -2779,16 +2780,16 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes a standard deviation of integral images.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image. Only the CV_32SC1 type is supported.
 	/// * sqr: Squared source image. Only the CV_32FC1 type is supported.
 	/// * dst: Destination image with the same type and size as src.
 	/// * rect: Rectangular window.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -2802,9 +2803,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Reduces a matrix to a vector.
-	/// 
+	///
 	/// ## Parameters
 	/// * mtx: Source 2D matrix.
 	/// * vec: Destination vector. Its size and type is defined by dim and dtype parameters.
@@ -2820,7 +2821,7 @@ pub mod cudaarithm {
 	/// * dtype: When it is negative, the destination vector will have the same type as the source
 	/// matrix. Otherwise, its type will be CV_MAKE_TYPE(CV_MAT_DEPTH(dtype), mtx.channels()) .
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// The function reduce reduces the matrix to a vector by treating the matrix rows/columns as a set of
 	/// 1D vectors and performing the specified operation on the vectors until a single row/column is
 	/// obtained. For example, the function can be used to compute horizontal and vertical projections of a
@@ -2829,7 +2830,7 @@ pub mod cudaarithm {
 	/// modes.
 	/// ## See also
 	/// reduce
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [reduce] function uses the following default values for its arguments:
 	/// * dtype: -1
@@ -2844,9 +2845,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Reduces a matrix to a vector.
-	/// 
+	///
 	/// ## Parameters
 	/// * mtx: Source 2D matrix.
 	/// * vec: Destination vector. Its size and type is defined by dim and dtype parameters.
@@ -2862,7 +2863,7 @@ pub mod cudaarithm {
 	/// * dtype: When it is negative, the destination vector will have the same type as the source
 	/// matrix. Otherwise, its type will be CV_MAKE_TYPE(CV_MAT_DEPTH(dtype), mtx.channels()) .
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// The function reduce reduces the matrix to a vector by treating the matrix rows/columns as a set of
 	/// 1D vectors and performing the specified operation on the vectors until a single row/column is
 	/// obtained. For example, the function can be used to compute horizontal and vertical projections of a
@@ -2871,7 +2872,7 @@ pub mod cudaarithm {
 	/// modes.
 	/// ## See also
 	/// reduce
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * dtype: -1
 	/// * stream: Stream::Null()
@@ -2885,15 +2886,15 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Performs pixel by pixel right shift of an image by a constant value.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source matrix. Supports 1, 3 and 4 channels images with integers elements.
 	/// * val: Constant values, one per channel.
 	/// * dst: Destination matrix with the same size and type as src .
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [rshift] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -2907,15 +2908,15 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Performs pixel by pixel right shift of an image by a constant value.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source matrix. Supports 1, 3 and 4 channels images with integers elements.
 	/// * val: Constant values, one per channel.
 	/// * dst: Destination matrix with the same size and type as src .
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -2928,7 +2929,7 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// ## Note
 	/// This alternative version of [rshift_1] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -2942,7 +2943,7 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -2955,16 +2956,16 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Copies each plane of a multi-channel matrix into an array.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source matrix.
 	/// * dst: Destination array/vector of single-channel matrices.
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// split
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [split] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -2977,16 +2978,16 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Copies each plane of a multi-channel matrix into an array.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source matrix.
 	/// * dst: Destination array/vector of single-channel matrices.
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// split
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -2998,9 +2999,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// @overload
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [split_1] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -3013,18 +3014,18 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Copies each plane of a multi-channel matrix into an array.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source matrix.
 	/// * dst: Destination array/vector of single-channel matrices.
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// split
-	/// 
+	///
 	/// ## Overloaded parameters
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -3036,15 +3037,15 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes a squared integral image.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image. Only CV_8UC1 images are supported for now.
 	/// * sqsum: Squared integral image containing 64-bit unsigned integer values packed into
 	/// CV_64FC1 .
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [sqr_integral] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -3058,15 +3059,15 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes a squared integral image.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image. Only CV_8UC1 images are supported for now.
 	/// * sqsum: Squared integral image containing 64-bit unsigned integer values packed into
 	/// CV_64FC1 .
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -3079,13 +3080,13 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Returns the squared sum of matrix elements.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image of any depth except for CV_64F .
 	/// * mask: optional operation mask; it must have the same size as src1 and CV_8UC1 type.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [sqr_sum] function uses the following default values for its arguments:
 	/// * mask: noArray()
@@ -3098,13 +3099,13 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Returns the squared sum of matrix elements.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image of any depth except for CV_64F .
 	/// * mask: optional operation mask; it must have the same size as src1 and CV_8UC1 type.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
@@ -3117,14 +3118,14 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes a square value of each matrix element.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source matrix.
 	/// * dst: Destination matrix with the same size and type as src .
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [sqr] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -3138,14 +3139,14 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes a square value of each matrix element.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source matrix.
 	/// * dst: Destination matrix with the same size and type as src .
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -3158,16 +3159,16 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes a square root of each matrix element.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source matrix.
 	/// * dst: Destination matrix with the same size and type as src .
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// sqrt
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [sqrt] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -3181,16 +3182,16 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes a square root of each matrix element.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source matrix.
 	/// * dst: Destination matrix with the same size and type as src .
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// sqrt
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -3203,9 +3204,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes a matrix-matrix or matrix-scalar difference.
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: First source matrix or scalar.
 	/// * src2: Second source matrix or scalar. Matrix should have the same size and type as src1 .
@@ -3217,7 +3218,7 @@ pub mod cudaarithm {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// subtract
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [subtract] function uses the following default values for its arguments:
 	/// * mask: noArray()
@@ -3234,9 +3235,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes a matrix-matrix or matrix-scalar difference.
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: First source matrix or scalar.
 	/// * src2: Second source matrix or scalar. Matrix should have the same size and type as src1 .
@@ -3248,7 +3249,7 @@ pub mod cudaarithm {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// subtract
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	/// * dtype: -1
@@ -3265,15 +3266,15 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Returns the sum of matrix elements.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image of any depth except for CV_64F .
 	/// * mask: optional operation mask; it must have the same size as src1 and CV_8UC1 type.
 	/// ## See also
 	/// sum
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [sum] function uses the following default values for its arguments:
 	/// * mask: noArray()
@@ -3286,15 +3287,15 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Returns the sum of matrix elements.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image of any depth except for CV_64F .
 	/// * mask: optional operation mask; it must have the same size as src1 and CV_8UC1 type.
 	/// ## See also
 	/// sum
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	#[inline]
@@ -3307,9 +3308,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Applies a fixed-level threshold to each array element.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source array (single-channel).
 	/// * dst: Destination array with the same size and type as src .
@@ -3320,7 +3321,7 @@ pub mod cudaarithm {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// threshold
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [threshold] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -3334,9 +3335,9 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Applies a fixed-level threshold to each array element.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source array (single-channel).
 	/// * dst: Destination array with the same size and type as src .
@@ -3347,7 +3348,7 @@ pub mod cudaarithm {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// threshold
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -3360,16 +3361,16 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Transposes a matrix.
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: Source matrix. 1-, 4-, 8-byte element sizes are supported for now.
 	/// * dst: Destination matrix.
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// transpose
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [transpose] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -3383,16 +3384,16 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Transposes a matrix.
-	/// 
+	///
 	/// ## Parameters
 	/// * src1: Source matrix. 1-, 4-, 8-byte element sizes are supported for now.
 	/// * dst: Destination matrix.
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// transpose
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -3405,19 +3406,19 @@ pub mod cudaarithm {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Constant methods for [crate::cudaarithm::Convolution]
 	pub trait ConvolutionTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_Convolution(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::cudaarithm::Convolution]
 	pub trait ConvolutionTrait: core::AlgorithmTrait + crate::cudaarithm::ConvolutionTraitConst {
 		fn as_raw_mut_Convolution(&mut self) -> *mut c_void;
-	
+
 		/// Computes a convolution (or cross-correlation) of two images.
-		/// 
+		///
 		/// ## Parameters
 		/// * image: Source image. Only CV_32FC1 images are supported for now.
 		/// * templ: Template image. The size is not greater than the image size. The type is the same as
@@ -3426,7 +3427,7 @@ pub mod cudaarithm {
 		/// H-h+1*.
 		/// * ccorr: Flags to evaluate cross-correlation instead of convolution.
 		/// * stream: Stream for the asynchronous version.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * ccorr: false
 		/// * stream: Stream::Null()
@@ -3441,9 +3442,9 @@ pub mod cudaarithm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Computes a convolution (or cross-correlation) of two images.
-		/// 
+		///
 		/// ## Parameters
 		/// * image: Source image. Only CV_32FC1 images are supported for now.
 		/// * templ: Template image. The size is not greater than the image size. The type is the same as
@@ -3452,7 +3453,7 @@ pub mod cudaarithm {
 		/// H-h+1*.
 		/// * ccorr: Flags to evaluate cross-correlation instead of convolution.
 		/// * stream: Stream for the asynchronous version.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [ConvolutionTrait::convolve] function uses the following default values for its arguments:
 		/// * ccorr: false
@@ -3468,50 +3469,50 @@ pub mod cudaarithm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Base class for convolution (or cross-correlation) operator. :
 	pub struct Convolution {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { Convolution }
-	
+
 	impl Drop for Convolution {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_cuda_Convolution_delete(self.as_raw_mut_Convolution()) };
 		}
 	}
-	
+
 	unsafe impl Send for Convolution {}
-	
+
 	impl core::AlgorithmTraitConst for Convolution {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for Convolution {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { Convolution, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::cudaarithm::ConvolutionTraitConst for Convolution {
 		#[inline] fn as_raw_Convolution(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::cudaarithm::ConvolutionTrait for Convolution {
 		#[inline] fn as_raw_mut_Convolution(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { Convolution, crate::cudaarithm::ConvolutionTraitConst, as_raw_Convolution, crate::cudaarithm::ConvolutionTrait, as_raw_mut_Convolution }
-	
+
 	impl Convolution {
 	}
-	
+
 	boxed_cast_base! { Convolution, core::Algorithm, cv_cuda_Convolution_to_Algorithm }
-	
+
 	impl std::fmt::Debug for Convolution {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -3519,24 +3520,24 @@ pub mod cudaarithm {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::cudaarithm::DFT]
 	pub trait DFTTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_DFT(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::cudaarithm::DFT]
 	pub trait DFTTrait: core::AlgorithmTrait + crate::cudaarithm::DFTTraitConst {
 		fn as_raw_mut_DFT(&mut self) -> *mut c_void;
-	
+
 		/// Computes an FFT of a given image.
-		/// 
+		///
 		/// ## Parameters
 		/// * image: Source image. Only CV_32FC1 images are supported for now.
 		/// * result: Result image.
 		/// * stream: Stream for the asynchronous version.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * stream: Stream::Null()
 		#[inline]
@@ -3549,14 +3550,14 @@ pub mod cudaarithm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Computes an FFT of a given image.
-		/// 
+		///
 		/// ## Parameters
 		/// * image: Source image. Only CV_32FC1 images are supported for now.
 		/// * result: Result image.
 		/// * stream: Stream for the asynchronous version.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [DFTTrait::compute] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
@@ -3570,50 +3571,50 @@ pub mod cudaarithm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Base class for DFT operator as a cv::Algorithm. :
 	pub struct DFT {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { DFT }
-	
+
 	impl Drop for DFT {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_cuda_DFT_delete(self.as_raw_mut_DFT()) };
 		}
 	}
-	
+
 	unsafe impl Send for DFT {}
-	
+
 	impl core::AlgorithmTraitConst for DFT {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for DFT {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { DFT, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::cudaarithm::DFTTraitConst for DFT {
 		#[inline] fn as_raw_DFT(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::cudaarithm::DFTTrait for DFT {
 		#[inline] fn as_raw_mut_DFT(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { DFT, crate::cudaarithm::DFTTraitConst, as_raw_DFT, crate::cudaarithm::DFTTrait, as_raw_mut_DFT }
-	
+
 	impl DFT {
 	}
-	
+
 	boxed_cast_base! { DFT, core::Algorithm, cv_cuda_DFT_to_Algorithm }
-	
+
 	impl std::fmt::Debug for DFT {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -3621,25 +3622,25 @@ pub mod cudaarithm {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::cudaarithm::LookUpTable]
 	pub trait LookUpTableTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_LookUpTable(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::cudaarithm::LookUpTable]
 	pub trait LookUpTableTrait: core::AlgorithmTrait + crate::cudaarithm::LookUpTableTraitConst {
 		fn as_raw_mut_LookUpTable(&mut self) -> *mut c_void;
-	
+
 		/// Transforms the source matrix into the destination matrix using the given look-up table:
 		/// dst(I) = lut(src(I)) .
-		/// 
+		///
 		/// ## Parameters
 		/// * src: Source matrix. CV_8UC1 and CV_8UC3 matrices are supported for now.
 		/// * dst: Destination matrix.
 		/// * stream: Stream for the asynchronous version.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * stream: Stream::Null()
 		#[inline]
@@ -3652,15 +3653,15 @@ pub mod cudaarithm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Transforms the source matrix into the destination matrix using the given look-up table:
 		/// dst(I) = lut(src(I)) .
-		/// 
+		///
 		/// ## Parameters
 		/// * src: Source matrix. CV_8UC1 and CV_8UC3 matrices are supported for now.
 		/// * dst: Destination matrix.
 		/// * stream: Stream for the asynchronous version.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [LookUpTableTrait::transform] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
@@ -3674,50 +3675,50 @@ pub mod cudaarithm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Base class for transform using lookup table.
 	pub struct LookUpTable {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { LookUpTable }
-	
+
 	impl Drop for LookUpTable {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_cuda_LookUpTable_delete(self.as_raw_mut_LookUpTable()) };
 		}
 	}
-	
+
 	unsafe impl Send for LookUpTable {}
-	
+
 	impl core::AlgorithmTraitConst for LookUpTable {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for LookUpTable {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { LookUpTable, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::cudaarithm::LookUpTableTraitConst for LookUpTable {
 		#[inline] fn as_raw_LookUpTable(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::cudaarithm::LookUpTableTrait for LookUpTable {
 		#[inline] fn as_raw_mut_LookUpTable(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { LookUpTable, crate::cudaarithm::LookUpTableTraitConst, as_raw_LookUpTable, crate::cudaarithm::LookUpTableTrait, as_raw_mut_LookUpTable }
-	
+
 	impl LookUpTable {
 	}
-	
+
 	boxed_cast_base! { LookUpTable, core::Algorithm, cv_cuda_LookUpTable_to_Algorithm }
-	
+
 	impl std::fmt::Debug for LookUpTable {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {

@@ -1,14 +1,15 @@
 pub mod cudafeatures2d {
 	//! # Feature Detection and Description
-	use crate::{mod_prelude::*, core, sys, types};
+	use crate::mod_prelude::*;
+	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use { super::CUDA_DescriptorMatcherTraitConst, super::CUDA_DescriptorMatcherTrait, super::CUDA_Feature2DAsyncTraitConst, super::CUDA_Feature2DAsyncTrait, super::CUDA_FastFeatureDetectorTraitConst, super::CUDA_FastFeatureDetectorTrait, super::CUDA_ORBTraitConst, super::CUDA_ORBTrait };
+		pub use super::{CUDA_DescriptorMatcherTrait, CUDA_DescriptorMatcherTraitConst, CUDA_FastFeatureDetectorTrait, CUDA_FastFeatureDetectorTraitConst, CUDA_Feature2DAsyncTrait, CUDA_Feature2DAsyncTraitConst, CUDA_ORBTrait, CUDA_ORBTraitConst};
 	}
-	
+
 	/// Constant methods for [crate::cudafeatures2d::CUDA_DescriptorMatcher]
 	pub trait CUDA_DescriptorMatcherTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_CUDA_DescriptorMatcher(&self) -> *const c_void;
-	
+
 		/// Returns true if the descriptor matcher supports masking permissible matches.
 		#[inline]
 		fn is_mask_supported(&self) -> Result<bool> {
@@ -18,7 +19,7 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns a constant link to the train descriptor collection.
 		#[inline]
 		fn get_train_descriptors(&self) -> Result<core::Vector<core::GpuMat>> {
@@ -29,7 +30,7 @@ pub mod cudafeatures2d {
 			let ret = unsafe { core::Vector::<core::GpuMat>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Returns true if there are no train descriptors in the collection.
 		#[inline]
 		fn empty(&self) -> Result<bool> {
@@ -39,17 +40,17 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::cudafeatures2d::CUDA_DescriptorMatcher]
 	pub trait CUDA_DescriptorMatcherTrait: core::AlgorithmTrait + crate::cudafeatures2d::CUDA_DescriptorMatcherTraitConst {
 		fn as_raw_mut_CUDA_DescriptorMatcher(&mut self) -> *mut c_void;
-	
+
 		/// Adds descriptors to train a descriptor collection.
-		/// 
+		///
 		/// If the collection is not empty, the new descriptors are added to existing train descriptors.
-		/// 
+		///
 		/// ## Parameters
 		/// * descriptors: Descriptors to add. Each descriptors[i] is a set of descriptors from the same
 		/// train image.
@@ -61,7 +62,7 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Clears the train descriptor collection.
 		#[inline]
 		fn clear(&mut self) -> Result<()> {
@@ -71,9 +72,9 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Trains a descriptor matcher.
-		/// 
+		///
 		/// Trains a descriptor matcher (for example, the flann index). In all methods to match, the method
 		/// train() is run every time before matching.
 		#[inline]
@@ -84,9 +85,9 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Finds the best match for each descriptor from a query set (blocking version).
-		/// 
+		///
 		/// ## Parameters
 		/// * queryDescriptors: Query set of descriptors.
 		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
@@ -95,13 +96,13 @@ pub mod cudafeatures2d {
 		/// descriptor. So, matches size may be smaller than the query descriptors count.
 		/// * mask: Mask specifying permissible matches between an input query and train matrices of
 		/// descriptors.
-		/// 
+		///
 		/// In the first variant of this method, the train descriptors are passed as an input argument. In the
 		/// second variant of the method, train descriptors collection that was set by DescriptorMatcher::add is
 		/// used. Optional mask (or masks) can be passed to specify which query and training descriptors can be
 		/// matched. Namely, queryDescriptors[i] can be matched with trainDescriptors[j] only if
 		/// mask.at\<uchar\>(i,j) is non-zero.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * mask: noArray()
 		#[inline]
@@ -115,9 +116,9 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Finds the best match for each descriptor from a query set (blocking version).
-		/// 
+		///
 		/// ## Parameters
 		/// * queryDescriptors: Query set of descriptors.
 		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
@@ -126,13 +127,13 @@ pub mod cudafeatures2d {
 		/// descriptor. So, matches size may be smaller than the query descriptors count.
 		/// * mask: Mask specifying permissible matches between an input query and train matrices of
 		/// descriptors.
-		/// 
+		///
 		/// In the first variant of this method, the train descriptors are passed as an input argument. In the
 		/// second variant of the method, train descriptors collection that was set by DescriptorMatcher::add is
 		/// used. Optional mask (or masks) can be passed to specify which query and training descriptors can be
 		/// matched. Namely, queryDescriptors[i] can be matched with trainDescriptors[j] only if
 		/// mask.at\<uchar\>(i,j) is non-zero.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [CUDA_DescriptorMatcherTrait::match_] function uses the following default values for its arguments:
 		/// * mask: noArray()
@@ -146,9 +147,9 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Finds the best match for each descriptor from a query set (blocking version).
-		/// 
+		///
 		/// ## Parameters
 		/// * queryDescriptors: Query set of descriptors.
 		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
@@ -157,15 +158,15 @@ pub mod cudafeatures2d {
 		/// descriptor. So, matches size may be smaller than the query descriptors count.
 		/// * mask: Mask specifying permissible matches between an input query and train matrices of
 		/// descriptors.
-		/// 
+		///
 		/// In the first variant of this method, the train descriptors are passed as an input argument. In the
 		/// second variant of the method, train descriptors collection that was set by DescriptorMatcher::add is
 		/// used. Optional mask (or masks) can be passed to specify which query and training descriptors can be
 		/// matched. Namely, queryDescriptors[i] can be matched with trainDescriptors[j] only if
 		/// mask.at\<uchar\>(i,j) is non-zero.
-		/// 
+		///
 		/// ## Overloaded parameters
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * masks: std::vector<GpuMat>()
 		#[inline]
@@ -177,9 +178,9 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// @overload
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [CUDA_DescriptorMatcherTrait::match_] function uses the following default values for its arguments:
 		/// * masks: std::vector<GpuMat>()
@@ -192,9 +193,9 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Finds the best match for each descriptor from a query set (asynchronous version).
-		/// 
+		///
 		/// ## Parameters
 		/// * queryDescriptors: Query set of descriptors.
 		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
@@ -204,13 +205,13 @@ pub mod cudafeatures2d {
 		/// * mask: Mask specifying permissible matches between an input query and train matrices of
 		/// descriptors.
 		/// * stream: CUDA stream.
-		/// 
+		///
 		/// In the first variant of this method, the train descriptors are passed as an input argument. In the
 		/// second variant of the method, train descriptors collection that was set by DescriptorMatcher::add is
 		/// used. Optional mask (or masks) can be passed to specify which query and training descriptors can be
 		/// matched. Namely, queryDescriptors[i] can be matched with trainDescriptors[j] only if
 		/// mask.at\<uchar\>(i,j) is non-zero.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * mask: noArray()
 		/// * stream: Stream::Null()
@@ -226,9 +227,9 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Finds the best match for each descriptor from a query set (asynchronous version).
-		/// 
+		///
 		/// ## Parameters
 		/// * queryDescriptors: Query set of descriptors.
 		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
@@ -238,13 +239,13 @@ pub mod cudafeatures2d {
 		/// * mask: Mask specifying permissible matches between an input query and train matrices of
 		/// descriptors.
 		/// * stream: CUDA stream.
-		/// 
+		///
 		/// In the first variant of this method, the train descriptors are passed as an input argument. In the
 		/// second variant of the method, train descriptors collection that was set by DescriptorMatcher::add is
 		/// used. Optional mask (or masks) can be passed to specify which query and training descriptors can be
 		/// matched. Namely, queryDescriptors[i] can be matched with trainDescriptors[j] only if
 		/// mask.at\<uchar\>(i,j) is non-zero.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [CUDA_DescriptorMatcherTrait::match_async] function uses the following default values for its arguments:
 		/// * mask: noArray()
@@ -260,9 +261,9 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Finds the best match for each descriptor from a query set (asynchronous version).
-		/// 
+		///
 		/// ## Parameters
 		/// * queryDescriptors: Query set of descriptors.
 		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
@@ -272,15 +273,15 @@ pub mod cudafeatures2d {
 		/// * mask: Mask specifying permissible matches between an input query and train matrices of
 		/// descriptors.
 		/// * stream: CUDA stream.
-		/// 
+		///
 		/// In the first variant of this method, the train descriptors are passed as an input argument. In the
 		/// second variant of the method, train descriptors collection that was set by DescriptorMatcher::add is
 		/// used. Optional mask (or masks) can be passed to specify which query and training descriptors can be
 		/// matched. Namely, queryDescriptors[i] can be matched with trainDescriptors[j] only if
 		/// mask.at\<uchar\>(i,j) is non-zero.
-		/// 
+		///
 		/// ## Overloaded parameters
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * masks: std::vector<GpuMat>()
 		/// * stream: Stream::Null()
@@ -294,9 +295,9 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// @overload
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [CUDA_DescriptorMatcherTrait::match_async] function uses the following default values for its arguments:
 		/// * masks: std::vector<GpuMat>()
@@ -311,12 +312,12 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Converts matches array from internal representation to standard matches vector.
-		/// 
+		///
 		/// The method is supposed to be used with DescriptorMatcher::matchAsync to get final result.
 		/// Call this method only after DescriptorMatcher::matchAsync is completed (ie. after synchronization).
-		/// 
+		///
 		/// ## Parameters
 		/// * gpu_matches: Matches, returned from DescriptorMatcher::matchAsync.
 		/// * matches: Vector of DMatch objects.
@@ -329,9 +330,9 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Finds the k best matches for each descriptor from a query set (blocking version).
-		/// 
+		///
 		/// ## Parameters
 		/// * queryDescriptors: Query set of descriptors.
 		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
@@ -344,11 +345,11 @@ pub mod cudafeatures2d {
 		/// * compactResult: Parameter used when the mask (or masks) is not empty. If compactResult is
 		/// false, the matches vector has the same size as queryDescriptors rows. If compactResult is true,
 		/// the matches vector does not contain matches for fully masked-out query descriptors.
-		/// 
+		///
 		/// These extended variants of DescriptorMatcher::match methods find several best matches for each query
 		/// descriptor. The matches are returned in the distance increasing order. See DescriptorMatcher::match
 		/// for the details about query and train descriptors.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * mask: noArray()
 		/// * compact_result: false
@@ -363,9 +364,9 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Finds the k best matches for each descriptor from a query set (blocking version).
-		/// 
+		///
 		/// ## Parameters
 		/// * queryDescriptors: Query set of descriptors.
 		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
@@ -378,11 +379,11 @@ pub mod cudafeatures2d {
 		/// * compactResult: Parameter used when the mask (or masks) is not empty. If compactResult is
 		/// false, the matches vector has the same size as queryDescriptors rows. If compactResult is true,
 		/// the matches vector does not contain matches for fully masked-out query descriptors.
-		/// 
+		///
 		/// These extended variants of DescriptorMatcher::match methods find several best matches for each query
 		/// descriptor. The matches are returned in the distance increasing order. See DescriptorMatcher::match
 		/// for the details about query and train descriptors.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [CUDA_DescriptorMatcherTrait::knn_match] function uses the following default values for its arguments:
 		/// * mask: noArray()
@@ -397,9 +398,9 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Finds the k best matches for each descriptor from a query set (blocking version).
-		/// 
+		///
 		/// ## Parameters
 		/// * queryDescriptors: Query set of descriptors.
 		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
@@ -412,13 +413,13 @@ pub mod cudafeatures2d {
 		/// * compactResult: Parameter used when the mask (or masks) is not empty. If compactResult is
 		/// false, the matches vector has the same size as queryDescriptors rows. If compactResult is true,
 		/// the matches vector does not contain matches for fully masked-out query descriptors.
-		/// 
+		///
 		/// These extended variants of DescriptorMatcher::match methods find several best matches for each query
 		/// descriptor. The matches are returned in the distance increasing order. See DescriptorMatcher::match
 		/// for the details about query and train descriptors.
-		/// 
+		///
 		/// ## Overloaded parameters
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * masks: std::vector<GpuMat>()
 		/// * compact_result: false
@@ -431,9 +432,9 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// @overload
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [CUDA_DescriptorMatcherTrait::knn_match] function uses the following default values for its arguments:
 		/// * masks: std::vector<GpuMat>()
@@ -447,9 +448,9 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Finds the k best matches for each descriptor from a query set (asynchronous version).
-		/// 
+		///
 		/// ## Parameters
 		/// * queryDescriptors: Query set of descriptors.
 		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
@@ -461,11 +462,11 @@ pub mod cudafeatures2d {
 		/// * mask: Mask specifying permissible matches between an input query and train matrices of
 		/// descriptors.
 		/// * stream: CUDA stream.
-		/// 
+		///
 		/// These extended variants of DescriptorMatcher::matchAsync methods find several best matches for each query
 		/// descriptor. The matches are returned in the distance increasing order. See DescriptorMatcher::matchAsync
 		/// for the details about query and train descriptors.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * mask: noArray()
 		/// * stream: Stream::Null()
@@ -481,9 +482,9 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Finds the k best matches for each descriptor from a query set (asynchronous version).
-		/// 
+		///
 		/// ## Parameters
 		/// * queryDescriptors: Query set of descriptors.
 		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
@@ -495,11 +496,11 @@ pub mod cudafeatures2d {
 		/// * mask: Mask specifying permissible matches between an input query and train matrices of
 		/// descriptors.
 		/// * stream: CUDA stream.
-		/// 
+		///
 		/// These extended variants of DescriptorMatcher::matchAsync methods find several best matches for each query
 		/// descriptor. The matches are returned in the distance increasing order. See DescriptorMatcher::matchAsync
 		/// for the details about query and train descriptors.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [CUDA_DescriptorMatcherTrait::knn_match_async] function uses the following default values for its arguments:
 		/// * mask: noArray()
@@ -515,9 +516,9 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Finds the k best matches for each descriptor from a query set (asynchronous version).
-		/// 
+		///
 		/// ## Parameters
 		/// * queryDescriptors: Query set of descriptors.
 		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
@@ -529,13 +530,13 @@ pub mod cudafeatures2d {
 		/// * mask: Mask specifying permissible matches between an input query and train matrices of
 		/// descriptors.
 		/// * stream: CUDA stream.
-		/// 
+		///
 		/// These extended variants of DescriptorMatcher::matchAsync methods find several best matches for each query
 		/// descriptor. The matches are returned in the distance increasing order. See DescriptorMatcher::matchAsync
 		/// for the details about query and train descriptors.
-		/// 
+		///
 		/// ## Overloaded parameters
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * masks: std::vector<GpuMat>()
 		/// * stream: Stream::Null()
@@ -549,9 +550,9 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// @overload
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [CUDA_DescriptorMatcherTrait::knn_match_async] function uses the following default values for its arguments:
 		/// * masks: std::vector<GpuMat>()
@@ -566,19 +567,19 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Converts matches array from internal representation to standard matches vector.
-		/// 
+		///
 		/// The method is supposed to be used with DescriptorMatcher::knnMatchAsync to get final result.
 		/// Call this method only after DescriptorMatcher::knnMatchAsync is completed (ie. after synchronization).
-		/// 
+		///
 		/// ## Parameters
 		/// * gpu_matches: Matches, returned from DescriptorMatcher::knnMatchAsync.
 		/// * matches: Vector of DMatch objects.
 		/// * compactResult: Parameter used when the mask (or masks) is not empty. If compactResult is
 		/// false, the matches vector has the same size as queryDescriptors rows. If compactResult is true,
 		/// the matches vector does not contain matches for fully masked-out query descriptors.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * compact_result: false
 		#[inline]
@@ -590,19 +591,19 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Converts matches array from internal representation to standard matches vector.
-		/// 
+		///
 		/// The method is supposed to be used with DescriptorMatcher::knnMatchAsync to get final result.
 		/// Call this method only after DescriptorMatcher::knnMatchAsync is completed (ie. after synchronization).
-		/// 
+		///
 		/// ## Parameters
 		/// * gpu_matches: Matches, returned from DescriptorMatcher::knnMatchAsync.
 		/// * matches: Vector of DMatch objects.
 		/// * compactResult: Parameter used when the mask (or masks) is not empty. If compactResult is
 		/// false, the matches vector has the same size as queryDescriptors rows. If compactResult is true,
 		/// the matches vector does not contain matches for fully masked-out query descriptors.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [CUDA_DescriptorMatcherTrait::knn_match_convert] function uses the following default values for its arguments:
 		/// * compact_result: false
@@ -615,9 +616,9 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// For each query descriptor, finds the training descriptors not farther than the specified distance (blocking version).
-		/// 
+		///
 		/// ## Parameters
 		/// * queryDescriptors: Query set of descriptors.
 		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
@@ -631,11 +632,11 @@ pub mod cudafeatures2d {
 		/// * compactResult: Parameter used when the mask (or masks) is not empty. If compactResult is
 		/// false, the matches vector has the same size as queryDescriptors rows. If compactResult is true,
 		/// the matches vector does not contain matches for fully masked-out query descriptors.
-		/// 
+		///
 		/// For each query descriptor, the methods find such training descriptors that the distance between the
 		/// query descriptor and the training descriptor is equal or smaller than maxDistance. Found matches are
 		/// returned in the distance increasing order.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * mask: noArray()
 		/// * compact_result: false
@@ -650,9 +651,9 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// For each query descriptor, finds the training descriptors not farther than the specified distance (blocking version).
-		/// 
+		///
 		/// ## Parameters
 		/// * queryDescriptors: Query set of descriptors.
 		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
@@ -666,11 +667,11 @@ pub mod cudafeatures2d {
 		/// * compactResult: Parameter used when the mask (or masks) is not empty. If compactResult is
 		/// false, the matches vector has the same size as queryDescriptors rows. If compactResult is true,
 		/// the matches vector does not contain matches for fully masked-out query descriptors.
-		/// 
+		///
 		/// For each query descriptor, the methods find such training descriptors that the distance between the
 		/// query descriptor and the training descriptor is equal or smaller than maxDistance. Found matches are
 		/// returned in the distance increasing order.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [CUDA_DescriptorMatcherTrait::radius_match] function uses the following default values for its arguments:
 		/// * mask: noArray()
@@ -685,9 +686,9 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// For each query descriptor, finds the training descriptors not farther than the specified distance (blocking version).
-		/// 
+		///
 		/// ## Parameters
 		/// * queryDescriptors: Query set of descriptors.
 		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
@@ -701,13 +702,13 @@ pub mod cudafeatures2d {
 		/// * compactResult: Parameter used when the mask (or masks) is not empty. If compactResult is
 		/// false, the matches vector has the same size as queryDescriptors rows. If compactResult is true,
 		/// the matches vector does not contain matches for fully masked-out query descriptors.
-		/// 
+		///
 		/// For each query descriptor, the methods find such training descriptors that the distance between the
 		/// query descriptor and the training descriptor is equal or smaller than maxDistance. Found matches are
 		/// returned in the distance increasing order.
-		/// 
+		///
 		/// ## Overloaded parameters
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * masks: std::vector<GpuMat>()
 		/// * compact_result: false
@@ -720,9 +721,9 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// @overload
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [CUDA_DescriptorMatcherTrait::radius_match] function uses the following default values for its arguments:
 		/// * masks: std::vector<GpuMat>()
@@ -736,9 +737,9 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// For each query descriptor, finds the training descriptors not farther than the specified distance (asynchronous version).
-		/// 
+		///
 		/// ## Parameters
 		/// * queryDescriptors: Query set of descriptors.
 		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
@@ -751,11 +752,11 @@ pub mod cudafeatures2d {
 		/// * mask: Mask specifying permissible matches between an input query and train matrices of
 		/// descriptors.
 		/// * stream: CUDA stream.
-		/// 
+		///
 		/// For each query descriptor, the methods find such training descriptors that the distance between the
 		/// query descriptor and the training descriptor is equal or smaller than maxDistance. Found matches are
 		/// returned in the distance increasing order.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * mask: noArray()
 		/// * stream: Stream::Null()
@@ -771,9 +772,9 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// For each query descriptor, finds the training descriptors not farther than the specified distance (asynchronous version).
-		/// 
+		///
 		/// ## Parameters
 		/// * queryDescriptors: Query set of descriptors.
 		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
@@ -786,11 +787,11 @@ pub mod cudafeatures2d {
 		/// * mask: Mask specifying permissible matches between an input query and train matrices of
 		/// descriptors.
 		/// * stream: CUDA stream.
-		/// 
+		///
 		/// For each query descriptor, the methods find such training descriptors that the distance between the
 		/// query descriptor and the training descriptor is equal or smaller than maxDistance. Found matches are
 		/// returned in the distance increasing order.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [CUDA_DescriptorMatcherTrait::radius_match_async] function uses the following default values for its arguments:
 		/// * mask: noArray()
@@ -806,9 +807,9 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// For each query descriptor, finds the training descriptors not farther than the specified distance (asynchronous version).
-		/// 
+		///
 		/// ## Parameters
 		/// * queryDescriptors: Query set of descriptors.
 		/// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
@@ -821,13 +822,13 @@ pub mod cudafeatures2d {
 		/// * mask: Mask specifying permissible matches between an input query and train matrices of
 		/// descriptors.
 		/// * stream: CUDA stream.
-		/// 
+		///
 		/// For each query descriptor, the methods find such training descriptors that the distance between the
 		/// query descriptor and the training descriptor is equal or smaller than maxDistance. Found matches are
 		/// returned in the distance increasing order.
-		/// 
+		///
 		/// ## Overloaded parameters
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * masks: std::vector<GpuMat>()
 		/// * stream: Stream::Null()
@@ -841,9 +842,9 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// @overload
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [CUDA_DescriptorMatcherTrait::radius_match_async] function uses the following default values for its arguments:
 		/// * masks: std::vector<GpuMat>()
@@ -858,19 +859,19 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Converts matches array from internal representation to standard matches vector.
-		/// 
+		///
 		/// The method is supposed to be used with DescriptorMatcher::radiusMatchAsync to get final result.
 		/// Call this method only after DescriptorMatcher::radiusMatchAsync is completed (ie. after synchronization).
-		/// 
+		///
 		/// ## Parameters
 		/// * gpu_matches: Matches, returned from DescriptorMatcher::radiusMatchAsync.
 		/// * matches: Vector of DMatch objects.
 		/// * compactResult: Parameter used when the mask (or masks) is not empty. If compactResult is
 		/// false, the matches vector has the same size as queryDescriptors rows. If compactResult is true,
 		/// the matches vector does not contain matches for fully masked-out query descriptors.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * compact_result: false
 		#[inline]
@@ -882,19 +883,19 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Converts matches array from internal representation to standard matches vector.
-		/// 
+		///
 		/// The method is supposed to be used with DescriptorMatcher::radiusMatchAsync to get final result.
 		/// Call this method only after DescriptorMatcher::radiusMatchAsync is completed (ie. after synchronization).
-		/// 
+		///
 		/// ## Parameters
 		/// * gpu_matches: Matches, returned from DescriptorMatcher::radiusMatchAsync.
 		/// * matches: Vector of DMatch objects.
 		/// * compactResult: Parameter used when the mask (or masks) is not empty. If compactResult is
 		/// false, the matches vector has the same size as queryDescriptors rows. If compactResult is true,
 		/// the matches vector does not contain matches for fully masked-out query descriptors.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [CUDA_DescriptorMatcherTrait::radius_match_convert] function uses the following default values for its arguments:
 		/// * compact_result: false
@@ -907,60 +908,60 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Abstract base class for matching keypoint descriptors.
-	/// 
+	///
 	/// It has two groups of match methods: for matching descriptors of an image with another image or with
 	/// an image set.
 	pub struct CUDA_DescriptorMatcher {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { CUDA_DescriptorMatcher }
-	
+
 	impl Drop for CUDA_DescriptorMatcher {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_cuda_DescriptorMatcher_delete(self.as_raw_mut_CUDA_DescriptorMatcher()) };
 		}
 	}
-	
+
 	unsafe impl Send for CUDA_DescriptorMatcher {}
-	
+
 	impl core::AlgorithmTraitConst for CUDA_DescriptorMatcher {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for CUDA_DescriptorMatcher {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_DescriptorMatcher, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::cudafeatures2d::CUDA_DescriptorMatcherTraitConst for CUDA_DescriptorMatcher {
 		#[inline] fn as_raw_CUDA_DescriptorMatcher(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::cudafeatures2d::CUDA_DescriptorMatcherTrait for CUDA_DescriptorMatcher {
 		#[inline] fn as_raw_mut_CUDA_DescriptorMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_DescriptorMatcher, crate::cudafeatures2d::CUDA_DescriptorMatcherTraitConst, as_raw_CUDA_DescriptorMatcher, crate::cudafeatures2d::CUDA_DescriptorMatcherTrait, as_raw_mut_CUDA_DescriptorMatcher }
-	
+
 	impl CUDA_DescriptorMatcher {
 		/// Brute-force descriptor matcher.
-		/// 
+		///
 		/// For each descriptor in the first set, this matcher finds the closest descriptor in the second set
 		/// by trying each one. This descriptor matcher supports masking permissible matches of descriptor
 		/// sets.
-		/// 
+		///
 		/// ## Parameters
 		/// * normType: One of NORM_L1, NORM_L2, NORM_HAMMING. L1 and L2 norms are
 		/// preferable choices for SIFT and SURF descriptors, NORM_HAMMING should be used with ORB, BRISK and
 		/// BRIEF).
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * norm_type: cv::NORM_L2
 		#[inline]
@@ -972,18 +973,18 @@ pub mod cudafeatures2d {
 			let ret = unsafe { core::Ptr::<crate::cudafeatures2d::CUDA_DescriptorMatcher>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Brute-force descriptor matcher.
-		/// 
+		///
 		/// For each descriptor in the first set, this matcher finds the closest descriptor in the second set
 		/// by trying each one. This descriptor matcher supports masking permissible matches of descriptor
 		/// sets.
-		/// 
+		///
 		/// ## Parameters
 		/// * normType: One of NORM_L1, NORM_L2, NORM_HAMMING. L1 and L2 norms are
 		/// preferable choices for SIFT and SURF descriptors, NORM_HAMMING should be used with ORB, BRISK and
 		/// BRIEF).
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [CUDA_DescriptorMatcher::create_bf_matcher] function uses the following default values for its arguments:
 		/// * norm_type: cv::NORM_L2
@@ -996,11 +997,11 @@ pub mod cudafeatures2d {
 			let ret = unsafe { core::Ptr::<crate::cudafeatures2d::CUDA_DescriptorMatcher>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	boxed_cast_base! { CUDA_DescriptorMatcher, core::Algorithm, cv_cuda_DescriptorMatcher_to_Algorithm }
-	
+
 	impl std::fmt::Debug for CUDA_DescriptorMatcher {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -1008,11 +1009,11 @@ pub mod cudafeatures2d {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::cudafeatures2d::CUDA_FastFeatureDetector]
 	pub trait CUDA_FastFeatureDetectorTraitConst: crate::cudafeatures2d::CUDA_Feature2DAsyncTraitConst {
 		fn as_raw_CUDA_FastFeatureDetector(&self) -> *const c_void;
-	
+
 		#[inline]
 		fn get_max_num_points(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -1021,13 +1022,13 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::cudafeatures2d::CUDA_FastFeatureDetector]
 	pub trait CUDA_FastFeatureDetectorTrait: crate::cudafeatures2d::CUDA_FastFeatureDetectorTraitConst + crate::cudafeatures2d::CUDA_Feature2DAsyncTrait {
 		fn as_raw_mut_CUDA_FastFeatureDetector(&mut self) -> *mut c_void;
-	
+
 		#[inline]
 		fn set_threshold(&mut self, threshold: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1036,7 +1037,7 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_max_num_points(&mut self, max_npoints: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1045,65 +1046,65 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Wrapping class for feature detection using the FAST method.
 	pub struct CUDA_FastFeatureDetector {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { CUDA_FastFeatureDetector }
-	
+
 	impl Drop for CUDA_FastFeatureDetector {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_cuda_FastFeatureDetector_delete(self.as_raw_mut_CUDA_FastFeatureDetector()) };
 		}
 	}
-	
+
 	unsafe impl Send for CUDA_FastFeatureDetector {}
-	
+
 	impl core::AlgorithmTraitConst for CUDA_FastFeatureDetector {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for CUDA_FastFeatureDetector {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_FastFeatureDetector, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::features2d::Feature2DTraitConst for CUDA_FastFeatureDetector {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::features2d::Feature2DTrait for CUDA_FastFeatureDetector {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_FastFeatureDetector, crate::features2d::Feature2DTraitConst, as_raw_Feature2D, crate::features2d::Feature2DTrait, as_raw_mut_Feature2D }
-	
+
 	impl crate::cudafeatures2d::CUDA_Feature2DAsyncTraitConst for CUDA_FastFeatureDetector {
 		#[inline] fn as_raw_CUDA_Feature2DAsync(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::cudafeatures2d::CUDA_Feature2DAsyncTrait for CUDA_FastFeatureDetector {
 		#[inline] fn as_raw_mut_CUDA_Feature2DAsync(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_FastFeatureDetector, crate::cudafeatures2d::CUDA_Feature2DAsyncTraitConst, as_raw_CUDA_Feature2DAsync, crate::cudafeatures2d::CUDA_Feature2DAsyncTrait, as_raw_mut_CUDA_Feature2DAsync }
-	
+
 	impl crate::cudafeatures2d::CUDA_FastFeatureDetectorTraitConst for CUDA_FastFeatureDetector {
 		#[inline] fn as_raw_CUDA_FastFeatureDetector(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::cudafeatures2d::CUDA_FastFeatureDetectorTrait for CUDA_FastFeatureDetector {
 		#[inline] fn as_raw_mut_CUDA_FastFeatureDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_FastFeatureDetector, crate::cudafeatures2d::CUDA_FastFeatureDetectorTraitConst, as_raw_CUDA_FastFeatureDetector, crate::cudafeatures2d::CUDA_FastFeatureDetectorTrait, as_raw_mut_CUDA_FastFeatureDetector }
-	
+
 	impl CUDA_FastFeatureDetector {
 		pub const LOCATION_ROW: i32 = 0;
 		pub const RESPONSE_ROW: i32 = 1;
@@ -1123,7 +1124,7 @@ pub mod cudafeatures2d {
 			let ret = unsafe { core::Ptr::<crate::cudafeatures2d::CUDA_FastFeatureDetector>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// ## Note
 		/// This alternative version of [CUDA_FastFeatureDetector::create] function uses the following default values for its arguments:
 		/// * threshold: 10
@@ -1139,15 +1140,15 @@ pub mod cudafeatures2d {
 			let ret = unsafe { core::Ptr::<crate::cudafeatures2d::CUDA_FastFeatureDetector>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	boxed_cast_base! { CUDA_FastFeatureDetector, core::Algorithm, cv_cuda_FastFeatureDetector_to_Algorithm }
-	
+
 	boxed_cast_base! { CUDA_FastFeatureDetector, crate::features2d::Feature2D, cv_cuda_FastFeatureDetector_to_Feature2D }
-	
+
 	boxed_cast_base! { CUDA_FastFeatureDetector, crate::cudafeatures2d::CUDA_Feature2DAsync, cv_cuda_FastFeatureDetector_to_CUDA_Feature2DAsync }
-	
+
 	impl std::fmt::Debug for CUDA_FastFeatureDetector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -1155,26 +1156,26 @@ pub mod cudafeatures2d {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::cudafeatures2d::CUDA_Feature2DAsync]
 	pub trait CUDA_Feature2DAsyncTraitConst: crate::features2d::Feature2DTraitConst {
 		fn as_raw_CUDA_Feature2DAsync(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::cudafeatures2d::CUDA_Feature2DAsync]
 	pub trait CUDA_Feature2DAsyncTrait: crate::cudafeatures2d::CUDA_Feature2DAsyncTraitConst + crate::features2d::Feature2DTrait {
 		fn as_raw_mut_CUDA_Feature2DAsync(&mut self) -> *mut c_void;
-	
+
 		/// Detects keypoints in an image.
-		/// 
+		///
 		/// ## Parameters
 		/// * image: Image.
 		/// * keypoints: The detected keypoints.
 		/// * mask: Mask specifying where to look for keypoints (optional). It must be a 8-bit integer
 		/// matrix with non-zero values in the region of interest.
 		/// * stream: CUDA stream.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * mask: noArray()
 		/// * stream: Stream::Null()
@@ -1189,16 +1190,16 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Detects keypoints in an image.
-		/// 
+		///
 		/// ## Parameters
 		/// * image: Image.
 		/// * keypoints: The detected keypoints.
 		/// * mask: Mask specifying where to look for keypoints (optional). It must be a 8-bit integer
 		/// matrix with non-zero values in the region of interest.
 		/// * stream: CUDA stream.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [CUDA_Feature2DAsyncTrait::detect_async] function uses the following default values for its arguments:
 		/// * mask: noArray()
@@ -1213,15 +1214,15 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Computes the descriptors for a set of keypoints detected in an image.
-		/// 
+		///
 		/// ## Parameters
 		/// * image: Image.
 		/// * keypoints: Input collection of keypoints.
 		/// * descriptors: Computed descriptors. Row j is the descriptor for j-th keypoint.
 		/// * stream: CUDA stream.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * stream: Stream::Null()
 		#[inline]
@@ -1235,15 +1236,15 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Computes the descriptors for a set of keypoints detected in an image.
-		/// 
+		///
 		/// ## Parameters
 		/// * image: Image.
 		/// * keypoints: Input collection of keypoints.
 		/// * descriptors: Computed descriptors. Row j is the descriptor for j-th keypoint.
 		/// * stream: CUDA stream.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [CUDA_Feature2DAsyncTrait::compute_async] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
@@ -1258,9 +1259,9 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Detects keypoints and computes the descriptors.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * use_provided_keypoints: false
 		/// * stream: Stream::Null()
@@ -1276,9 +1277,9 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Detects keypoints and computes the descriptors.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [CUDA_Feature2DAsyncTrait::detect_and_compute_async] function uses the following default values for its arguments:
 		/// * use_provided_keypoints: false
@@ -1295,7 +1296,7 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Converts keypoints array from internal representation to standard vector.
 		#[inline]
 		fn convert(&mut self, gpu_keypoints: &impl ToInputArray, keypoints: &mut core::Vector<core::KeyPoint>) -> Result<()> {
@@ -1306,66 +1307,66 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Abstract base class for CUDA asynchronous 2D image feature detectors and descriptor extractors.
 	pub struct CUDA_Feature2DAsync {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { CUDA_Feature2DAsync }
-	
+
 	impl Drop for CUDA_Feature2DAsync {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_cuda_Feature2DAsync_delete(self.as_raw_mut_CUDA_Feature2DAsync()) };
 		}
 	}
-	
+
 	unsafe impl Send for CUDA_Feature2DAsync {}
-	
+
 	impl core::AlgorithmTraitConst for CUDA_Feature2DAsync {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for CUDA_Feature2DAsync {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_Feature2DAsync, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::features2d::Feature2DTraitConst for CUDA_Feature2DAsync {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::features2d::Feature2DTrait for CUDA_Feature2DAsync {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_Feature2DAsync, crate::features2d::Feature2DTraitConst, as_raw_Feature2D, crate::features2d::Feature2DTrait, as_raw_mut_Feature2D }
-	
+
 	impl crate::cudafeatures2d::CUDA_Feature2DAsyncTraitConst for CUDA_Feature2DAsync {
 		#[inline] fn as_raw_CUDA_Feature2DAsync(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::cudafeatures2d::CUDA_Feature2DAsyncTrait for CUDA_Feature2DAsync {
 		#[inline] fn as_raw_mut_CUDA_Feature2DAsync(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_Feature2DAsync, crate::cudafeatures2d::CUDA_Feature2DAsyncTraitConst, as_raw_CUDA_Feature2DAsync, crate::cudafeatures2d::CUDA_Feature2DAsyncTrait, as_raw_mut_CUDA_Feature2DAsync }
-	
+
 	impl CUDA_Feature2DAsync {
 	}
-	
+
 	boxed_cast_descendant! { CUDA_Feature2DAsync, crate::cudafeatures2d::CUDA_FastFeatureDetector, cv_cuda_Feature2DAsync_to_CUDA_FastFeatureDetector }
-	
+
 	boxed_cast_descendant! { CUDA_Feature2DAsync, crate::cudafeatures2d::CUDA_ORB, cv_cuda_Feature2DAsync_to_CUDA_ORB }
-	
+
 	boxed_cast_base! { CUDA_Feature2DAsync, core::Algorithm, cv_cuda_Feature2DAsync_to_Algorithm }
-	
+
 	boxed_cast_base! { CUDA_Feature2DAsync, crate::features2d::Feature2D, cv_cuda_Feature2DAsync_to_Feature2D }
-	
+
 	impl std::fmt::Debug for CUDA_Feature2DAsync {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -1373,11 +1374,11 @@ pub mod cudafeatures2d {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::cudafeatures2d::CUDA_ORB]
 	pub trait CUDA_ORBTraitConst: crate::cudafeatures2d::CUDA_Feature2DAsyncTraitConst {
 		fn as_raw_CUDA_ORB(&self) -> *const c_void;
-	
+
 		#[inline]
 		fn get_max_features(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -1386,7 +1387,7 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_scale_factor(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
@@ -1395,7 +1396,7 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_n_levels(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -1404,7 +1405,7 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_edge_threshold(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -1413,7 +1414,7 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_first_level(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -1422,7 +1423,7 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_wta_k(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -1431,7 +1432,7 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_score_type(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -1440,7 +1441,7 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_patch_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -1449,7 +1450,7 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_fast_threshold(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -1458,7 +1459,7 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_blur_for_descriptor(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
@@ -1467,13 +1468,13 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::cudafeatures2d::CUDA_ORB]
 	pub trait CUDA_ORBTrait: crate::cudafeatures2d::CUDA_Feature2DAsyncTrait + crate::cudafeatures2d::CUDA_ORBTraitConst {
 		fn as_raw_mut_CUDA_ORB(&mut self) -> *mut c_void;
-	
+
 		#[inline]
 		fn set_max_features(&mut self, max_features: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1482,7 +1483,7 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_scale_factor(&mut self, scale_factor: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1491,7 +1492,7 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_n_levels(&mut self, nlevels: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1500,7 +1501,7 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_edge_threshold(&mut self, edge_threshold: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1509,7 +1510,7 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_first_level(&mut self, first_level: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1518,7 +1519,7 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_wta_k(&mut self, wta_k: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1527,7 +1528,7 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_score_type(&mut self, score_type: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1536,7 +1537,7 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_patch_size(&mut self, patch_size: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1545,7 +1546,7 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_fast_threshold(&mut self, fast_threshold: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1554,7 +1555,7 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// if true, image will be blurred before descriptors calculation
 		#[inline]
 		fn set_blur_for_descriptor(&mut self, blur_for_descriptor: bool) -> Result<()> {
@@ -1564,67 +1565,67 @@ pub mod cudafeatures2d {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Class implementing the ORB (*oriented BRIEF*) keypoint detector and descriptor extractor
 	/// ## See also
 	/// cv::ORB
 	pub struct CUDA_ORB {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { CUDA_ORB }
-	
+
 	impl Drop for CUDA_ORB {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_cuda_ORB_delete(self.as_raw_mut_CUDA_ORB()) };
 		}
 	}
-	
+
 	unsafe impl Send for CUDA_ORB {}
-	
+
 	impl core::AlgorithmTraitConst for CUDA_ORB {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for CUDA_ORB {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_ORB, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::features2d::Feature2DTraitConst for CUDA_ORB {
 		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::features2d::Feature2DTrait for CUDA_ORB {
 		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_ORB, crate::features2d::Feature2DTraitConst, as_raw_Feature2D, crate::features2d::Feature2DTrait, as_raw_mut_Feature2D }
-	
+
 	impl crate::cudafeatures2d::CUDA_Feature2DAsyncTraitConst for CUDA_ORB {
 		#[inline] fn as_raw_CUDA_Feature2DAsync(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::cudafeatures2d::CUDA_Feature2DAsyncTrait for CUDA_ORB {
 		#[inline] fn as_raw_mut_CUDA_Feature2DAsync(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_ORB, crate::cudafeatures2d::CUDA_Feature2DAsyncTraitConst, as_raw_CUDA_Feature2DAsync, crate::cudafeatures2d::CUDA_Feature2DAsyncTrait, as_raw_mut_CUDA_Feature2DAsync }
-	
+
 	impl crate::cudafeatures2d::CUDA_ORBTraitConst for CUDA_ORB {
 		#[inline] fn as_raw_CUDA_ORB(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::cudafeatures2d::CUDA_ORBTrait for CUDA_ORB {
 		#[inline] fn as_raw_mut_CUDA_ORB(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_ORB, crate::cudafeatures2d::CUDA_ORBTraitConst, as_raw_CUDA_ORB, crate::cudafeatures2d::CUDA_ORBTrait, as_raw_mut_CUDA_ORB }
-	
+
 	impl CUDA_ORB {
 		pub const X_ROW: i32 = 0;
 		pub const Y_ROW: i32 = 1;
@@ -1653,7 +1654,7 @@ pub mod cudafeatures2d {
 			let ret = unsafe { core::Ptr::<crate::cudafeatures2d::CUDA_ORB>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// ## Note
 		/// This alternative version of [CUDA_ORB::create] function uses the following default values for its arguments:
 		/// * nfeatures: 500
@@ -1675,15 +1676,15 @@ pub mod cudafeatures2d {
 			let ret = unsafe { core::Ptr::<crate::cudafeatures2d::CUDA_ORB>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	boxed_cast_base! { CUDA_ORB, core::Algorithm, cv_cuda_ORB_to_Algorithm }
-	
+
 	boxed_cast_base! { CUDA_ORB, crate::features2d::Feature2D, cv_cuda_ORB_to_Feature2D }
-	
+
 	boxed_cast_base! { CUDA_ORB, crate::cudafeatures2d::CUDA_Feature2DAsync, cv_cuda_ORB_to_CUDA_Feature2DAsync }
-	
+
 	impl std::fmt::Debug for CUDA_ORB {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {

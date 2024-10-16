@@ -1,10 +1,11 @@
 pub mod cudacodec {
 	//! # Video Encoding/Decoding
-	use crate::{mod_prelude::*, core, sys, types};
+	use crate::mod_prelude::*;
+	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use { super::CUDA_EncoderCallbackTraitConst, super::CUDA_EncoderCallbackTrait, super::CUDA_VideoWriterTraitConst, super::CUDA_VideoWriterTrait, super::CUDA_VideoReaderTraitConst, super::CUDA_VideoReaderTrait, super::CUDA_RawVideoSourceTraitConst, super::CUDA_RawVideoSourceTrait };
+		pub use super::{CUDA_EncoderCallbackTrait, CUDA_EncoderCallbackTraitConst, CUDA_RawVideoSourceTrait, CUDA_RawVideoSourceTraitConst, CUDA_VideoReaderTrait, CUDA_VideoReaderTraitConst, CUDA_VideoWriterTrait, CUDA_VideoWriterTraitConst};
 	}
-	
+
 	pub const CUDA_AV1: i32 = 11;
 	pub const CUDA_Adaptive: i32 = 2;
 	pub const CUDA_Bob: i32 = 1;
@@ -128,10 +129,10 @@ pub mod cudacodec {
 		YUV444 = 3,
 		NumFormats = 4,
 	}
-	
+
 	impl TryFrom<i32> for CUDA_ChromaFormat {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::Monochrome),
@@ -143,11 +144,11 @@ pub mod cudacodec {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::cudacodec::CUDA_ChromaFormat }
-	
+
 	/// Video codecs supported by cudacodec::VideoReader and cudacodec::VideoWriter.
-	/// 
+	///
 	/// Note:
 	///    *   Support will depend on your hardware, refer to the Nvidia Video Codec SDK Video Encode and Decode GPU Support Matrix for details.
 	#[repr(C)]
@@ -177,10 +178,10 @@ pub mod cudacodec {
 		/// UYVY (4:2:2)
 		Uncompressed_UYVY = 1431918169,
 	}
-	
+
 	impl TryFrom<i32> for CUDA_Codec {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::MPEG1),
@@ -205,9 +206,9 @@ pub mod cudacodec {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::cudacodec::CUDA_Codec }
-	
+
 	/// ColorFormat for the frame returned by VideoReader::nextFrame() and VideoReader::retrieve() or used to initialize a VideoWriter.
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -235,10 +236,10 @@ pub mod cudacodec {
 		NV_AYUV = 11,
 		PROP_NOT_SUPPORTED = 12,
 	}
-	
+
 	impl TryFrom<i32> for CUDA_ColorFormat {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::UNDEFINED),
@@ -257,9 +258,9 @@ pub mod cudacodec {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::cudacodec::CUDA_ColorFormat }
-	
+
 	/// Deinterlacing mode used by decoder.
 	/// ## Parameters
 	/// * Weave: Weave both fields (no deinterlacing). For progressive content and for content that doesn't need deinterlacing.
@@ -272,10 +273,10 @@ pub mod cudacodec {
 		Bob = 1,
 		Adaptive = 2,
 	}
-	
+
 	impl TryFrom<i32> for CUDA_DeinterlaceMode {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::Weave),
@@ -285,9 +286,9 @@ pub mod cudacodec {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::cudacodec::CUDA_DeinterlaceMode }
-	
+
 	/// Multi Pass Encoding.
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -299,10 +300,10 @@ pub mod cudacodec {
 		/// Two Pass encoding is enabled where first Pass is full resolution.
 		ENC_TWO_PASS_FULL_RESOLUTION = 2,
 	}
-	
+
 	impl TryFrom<i32> for CUDA_EncodeMultiPass {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::ENC_MULTI_PASS_DISABLED),
@@ -312,9 +313,9 @@ pub mod cudacodec {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::cudacodec::CUDA_EncodeMultiPass }
-	
+
 	/// Rate Control Modes.
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -326,10 +327,10 @@ pub mod cudacodec {
 		/// Constant bitrate mode.
 		ENC_PARAMS_RC_CBR = 2,
 	}
-	
+
 	impl TryFrom<i32> for CUDA_EncodeParamsRcMode {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::ENC_PARAMS_RC_CONSTQP),
@@ -339,9 +340,9 @@ pub mod cudacodec {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::cudacodec::CUDA_EncodeParamsRcMode }
-	
+
 	/// Nvidia Encoding Presets. Performance degrades and quality improves as we move from P1 to P7.
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -354,10 +355,10 @@ pub mod cudacodec {
 		ENC_PRESET_P6 = 6,
 		ENC_PRESET_P7 = 7,
 	}
-	
+
 	impl TryFrom<i32> for CUDA_EncodePreset {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				1 => Ok(Self::ENC_PRESET_P1),
@@ -371,9 +372,9 @@ pub mod cudacodec {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::cudacodec::CUDA_EncodePreset }
-	
+
 	/// Supported Encoder Profiles.
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -390,10 +391,10 @@ pub mod cudacodec {
 		ENC_HEVC_PROFILE_MAIN10 = 9,
 		ENC_HEVC_PROFILE_FREXT = 10,
 	}
-	
+
 	impl TryFrom<i32> for CUDA_EncodeProfile {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::ENC_CODEC_PROFILE_AUTOSELECT),
@@ -411,9 +412,9 @@ pub mod cudacodec {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::cudacodec::CUDA_EncodeProfile }
-	
+
 	/// Tuning information.
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -430,10 +431,10 @@ pub mod cudacodec {
 		ENC_TUNING_INFO_LOSSLESS = 4,
 		ENC_TUNING_INFO_COUNT = 5,
 	}
-	
+
 	impl TryFrom<i32> for CUDA_EncodeTuningInfo {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::ENC_TUNING_INFO_UNDEFINED),
@@ -446,9 +447,9 @@ pub mod cudacodec {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::cudacodec::CUDA_EncodeTuningInfo }
-	
+
 	/// cv::cudacodec::VideoReader generic properties identifier.
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -473,10 +474,10 @@ pub mod cudacodec {
 		PROP_ALLOW_FRAME_DROP = 8,
 		PROP_NOT_SUPPORTED = 9,
 	}
-	
+
 	impl TryFrom<i32> for CUDA_VideoReaderProps {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::PROP_DECODED_FRAME_IDX),
@@ -493,15 +494,15 @@ pub mod cudacodec {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::cudacodec::CUDA_VideoReaderProps }
-	
+
 	/// Utility function demonstrating how to map the luma histogram when FormatInfo::videoFullRangeFlag == false
 	/// ## Parameters
 	/// * hist: Luma histogram \a hist returned from VideoReader::nextFrame(GpuMat& frame, GpuMat& hist, Stream& stream).
 	/// * histFull: Host histogram equivelent to downloading \a hist after calling cuda::calcHist(InputArray frame, OutputArray hist, Stream& stream).
-	/// 
-	/// 
+	///
+	///
 	/// Note:
 	/// *   This function demonstrates how to map the luma histogram back so that it is equivalent to the result obtained from cuda::calcHist()
 	/// if the returned frame was colorFormat::GRAY.
@@ -513,12 +514,12 @@ pub mod cudacodec {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// @overload
 	/// ## Parameters
 	/// * source: RAW video source implemented by user.
 	/// * params: Initializaton parameters. See cv::cudacodec::VideoReaderInitParams.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_video_reader_1] function uses the following default values for its arguments:
 	/// * params: VideoReaderInitParams()
@@ -531,9 +532,9 @@ pub mod cudacodec {
 		let ret = unsafe { core::Ptr::<crate::cudacodec::CUDA_VideoReader>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates video reader.
-	/// 
+	///
 	/// ## Parameters
 	/// * filename: Name of the input video file.
 	/// * sourceParams: Pass through parameters for VideoCapure.  VideoCapture with the FFMpeg back end (CAP_FFMPEG) is used to parse the video input.
@@ -541,14 +542,14 @@ pub mod cudacodec {
 	///    See cv::VideoCaptureProperties
 	/// e.g. when streaming from an RTSP source CAP_PROP_OPEN_TIMEOUT_MSEC may need to be set.
 	/// * params: Initializaton parameters. See cv::cudacodec::VideoReaderInitParams.
-	/// 
+	///
 	/// FFMPEG is used to read videos. User can implement own demultiplexing with cudacodec::RawVideoSource
-	/// 
+	///
 	/// ## Overloaded parameters
-	/// 
+	///
 	/// * source: RAW video source implemented by user.
 	/// * params: Initializaton parameters. See cv::cudacodec::VideoReaderInitParams.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * params: VideoReaderInitParams()
 	#[inline]
@@ -560,9 +561,9 @@ pub mod cudacodec {
 		let ret = unsafe { core::Ptr::<crate::cudacodec::CUDA_VideoReader>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates video reader.
-	/// 
+	///
 	/// ## Parameters
 	/// * filename: Name of the input video file.
 	/// * sourceParams: Pass through parameters for VideoCapure.  VideoCapture with the FFMpeg back end (CAP_FFMPEG) is used to parse the video input.
@@ -570,9 +571,9 @@ pub mod cudacodec {
 	///    See cv::VideoCaptureProperties
 	/// e.g. when streaming from an RTSP source CAP_PROP_OPEN_TIMEOUT_MSEC may need to be set.
 	/// * params: Initializaton parameters. See cv::cudacodec::VideoReaderInitParams.
-	/// 
+	///
 	/// FFMPEG is used to read videos. User can implement own demultiplexing with cudacodec::RawVideoSource
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_video_reader] function uses the following default values for its arguments:
 	/// * source_params: {}
@@ -587,9 +588,9 @@ pub mod cudacodec {
 		let ret = unsafe { core::Ptr::<crate::cudacodec::CUDA_VideoReader>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates video reader.
-	/// 
+	///
 	/// ## Parameters
 	/// * filename: Name of the input video file.
 	/// * sourceParams: Pass through parameters for VideoCapure.  VideoCapture with the FFMpeg back end (CAP_FFMPEG) is used to parse the video input.
@@ -597,9 +598,9 @@ pub mod cudacodec {
 	///    See cv::VideoCaptureProperties
 	/// e.g. when streaming from an RTSP source CAP_PROP_OPEN_TIMEOUT_MSEC may need to be set.
 	/// * params: Initializaton parameters. See cv::cudacodec::VideoReaderInitParams.
-	/// 
+	///
 	/// FFMPEG is used to read videos. User can implement own demultiplexing with cudacodec::RawVideoSource
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * source_params: {}
 	/// * params: VideoReaderInitParams()
@@ -613,9 +614,9 @@ pub mod cudacodec {
 		let ret = unsafe { core::Ptr::<crate::cudacodec::CUDA_VideoReader>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates video writer.
-	/// 
+	///
 	/// ## Parameters
 	/// * fileName: Name of the output video file.
 	/// * frameSize: Size of the input video frames.
@@ -624,7 +625,7 @@ pub mod cudacodec {
 	/// * colorFormat: OpenCv color format of the frames to be encoded.
 	/// * encoderCallback: Callbacks for video encoder. See cudacodec::EncoderCallback. Required for working with the encoded video stream.
 	/// * stream: Stream for frame pre-processing.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_video_writer] function uses the following default values for its arguments:
 	/// * codec: Codec::H264
@@ -642,9 +643,9 @@ pub mod cudacodec {
 		let ret = unsafe { core::Ptr::<crate::cudacodec::CUDA_VideoWriter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates video writer.
-	/// 
+	///
 	/// ## Parameters
 	/// * fileName: Name of the output video file.
 	/// * frameSize: Size of the input video frames.
@@ -653,7 +654,7 @@ pub mod cudacodec {
 	/// * colorFormat: OpenCv color format of the frames to be encoded.
 	/// * encoderCallback: Callbacks for video encoder. See cudacodec::EncoderCallback. Required for working with the encoded video stream.
 	/// * stream: Stream for frame pre-processing.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * codec: Codec::H264
 	/// * fps: 25.0
@@ -670,9 +671,9 @@ pub mod cudacodec {
 		let ret = unsafe { core::Ptr::<crate::cudacodec::CUDA_VideoWriter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates video writer.
-	/// 
+	///
 	/// ## Parameters
 	/// * fileName: Name of the output video file.
 	/// * frameSize: Size of the input video frames.
@@ -682,7 +683,7 @@ pub mod cudacodec {
 	/// * params: Additional encoding parameters.
 	/// * encoderCallback: Callbacks for video encoder. See cudacodec::EncoderCallback. Required for working with the encoded video stream.
 	/// * stream: Stream for frame pre-processing.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_video_writer_1] function uses the following default values for its arguments:
 	/// * encoder_callback: 0
@@ -697,9 +698,9 @@ pub mod cudacodec {
 		let ret = unsafe { core::Ptr::<crate::cudacodec::CUDA_VideoWriter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates video writer.
-	/// 
+	///
 	/// ## Parameters
 	/// * fileName: Name of the output video file.
 	/// * frameSize: Size of the input video frames.
@@ -709,7 +710,7 @@ pub mod cudacodec {
 	/// * params: Additional encoding parameters.
 	/// * encoderCallback: Callbacks for video encoder. See cudacodec::EncoderCallback. Required for working with the encoded video stream.
 	/// * stream: Stream for frame pre-processing.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * encoder_callback: 0
 	/// * stream: cuda::Stream::Null()
@@ -723,7 +724,7 @@ pub mod cudacodec {
 		let ret = unsafe { core::Ptr::<crate::cudacodec::CUDA_VideoWriter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	#[inline]
 	pub fn equals_cuda_encoderparams_cuda_encoderparams(lhs: crate::cudacodec::CUDA_EncoderParams, rhs: crate::cudacodec::CUDA_EncoderParams) -> Result<bool> {
 		return_send!(via ocvrs_return);
@@ -732,7 +733,7 @@ pub mod cudacodec {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Quantization Parameter for each type of frame when using ENC_PARAMS_RC_MODE::ENC_PARAMS_RC_CONSTQP.
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq)]
@@ -744,24 +745,24 @@ pub mod cudacodec {
 		/// Specifies QP value for Intra Frame.
 		pub qp_intra: u32,
 	}
-	
+
 	opencv_type_simple! { crate::cudacodec::CUDA_EncodeQp }
-	
+
 	impl CUDA_EncodeQp {
 	}
-	
+
 	/// Constant methods for [crate::cudacodec::CUDA_EncoderCallback]
 	pub trait CUDA_EncoderCallbackTraitConst {
 		fn as_raw_CUDA_EncoderCallback(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::cudacodec::CUDA_EncoderCallback]
 	pub trait CUDA_EncoderCallbackTrait: crate::cudacodec::CUDA_EncoderCallbackTraitConst {
 		fn as_raw_mut_CUDA_EncoderCallback(&mut self) -> *mut c_void;
-	
+
 		/// Callback function to signal that the encoded bitstream for one or more frames is ready.
-		/// 
+		///
 		/// ## Parameters
 		/// * vPacket: The raw bitstream for one or more frames.
 		#[inline]
@@ -772,7 +773,7 @@ pub mod cudacodec {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Callback function to that the encoding has finished.
 		#[inline]
 		fn on_encoding_finished(&mut self) -> Result<()> {
@@ -782,40 +783,40 @@ pub mod cudacodec {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Interface for encoder callbacks.
-	/// 
+	///
 	/// User can implement own multiplexing by implementing this interface.
 	pub struct CUDA_EncoderCallback {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { CUDA_EncoderCallback }
-	
+
 	impl Drop for CUDA_EncoderCallback {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_cudacodec_EncoderCallback_delete(self.as_raw_mut_CUDA_EncoderCallback()) };
 		}
 	}
-	
+
 	unsafe impl Send for CUDA_EncoderCallback {}
-	
+
 	impl crate::cudacodec::CUDA_EncoderCallbackTraitConst for CUDA_EncoderCallback {
 		#[inline] fn as_raw_CUDA_EncoderCallback(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::cudacodec::CUDA_EncoderCallbackTrait for CUDA_EncoderCallback {
 		#[inline] fn as_raw_mut_CUDA_EncoderCallback(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_EncoderCallback, crate::cudacodec::CUDA_EncoderCallbackTraitConst, as_raw_CUDA_EncoderCallback, crate::cudacodec::CUDA_EncoderCallbackTrait, as_raw_mut_CUDA_EncoderCallback }
-	
+
 	impl CUDA_EncoderCallback {
 	}
-	
+
 	impl std::fmt::Debug for CUDA_EncoderCallback {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -823,7 +824,7 @@ pub mod cudacodec {
 				.finish()
 		}
 	}
-	
+
 	/// Different parameters for CUDA video encoder.
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq)]
@@ -846,9 +847,9 @@ pub mod cudacodec {
 		/// IDR interval, ensuring \ref idrPeriod >= \ref gopLength.
 		pub idr_period: i32,
 	}
-	
+
 	opencv_type_simple! { crate::cudacodec::CUDA_EncoderParams }
-	
+
 	impl CUDA_EncoderParams {
 		#[inline]
 		pub fn default() -> Result<crate::cudacodec::CUDA_EncoderParams> {
@@ -858,9 +859,9 @@ pub mod cudacodec {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Struct providing information about video file format. :
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq)]
@@ -901,9 +902,9 @@ pub mod cudacodec {
 		/// Max number of histogram bins if histogram output is requested and supported.
 		pub n_max_histogram_bins: i32,
 	}
-	
+
 	opencv_type_simple! { crate::cudacodec::CUDA_FormatInfo }
-	
+
 	impl CUDA_FormatInfo {
 		#[inline]
 		pub fn default() -> Result<crate::cudacodec::CUDA_FormatInfo> {
@@ -913,13 +914,13 @@ pub mod cudacodec {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Constant methods for [crate::cudacodec::CUDA_RawVideoSource]
 	pub trait CUDA_RawVideoSourceTraitConst {
 		fn as_raw_CUDA_RawVideoSource(&self) -> *const c_void;
-	
+
 		/// Returns true if the last packet contained a key frame.
 		#[inline]
 		fn last_packet_contains_key_frame(&self) -> Result<bool> {
@@ -929,7 +930,7 @@ pub mod cudacodec {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns information about video file format.
 		#[inline]
 		fn format(&self) -> Result<crate::cudacodec::CUDA_FormatInfo> {
@@ -939,9 +940,9 @@ pub mod cudacodec {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns any extra data associated with the video source.
-		/// 
+		///
 		/// ## Parameters
 		/// * extraData: 1D cv::Mat containing the extra data if it exists.
 		#[inline]
@@ -952,14 +953,14 @@ pub mod cudacodec {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Retrieves the specified property used by the VideoSource.
-		/// 
+		///
 		/// ## Parameters
 		/// * propertyId: Property identifier from cv::VideoCaptureProperties (eg. cv::CAP_PROP_POS_MSEC, cv::CAP_PROP_POS_FRAMES, ...)
 		/// or one from [videoio_flags_others].
 		/// * propertyVal: Value for the specified property.
-		/// 
+		///
 		/// ## Returns
 		/// `true` unless the property is unset set or not supported.
 		#[inline]
@@ -970,13 +971,13 @@ pub mod cudacodec {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Retrieve the index of the first frame that will returned after construction.
-		/// 
+		///
 		/// ## Returns
 		/// index of the index of the first frame that will returned after construction.
-		/// 
-		/// 
+		///
+		///
 		/// Note: To reduce the decoding overhead when initializing VideoReader to start its decoding from frame N, RawVideoSource should seek to the first valid key frame less than or equal to N and return that index here.
 		#[inline]
 		fn get_first_frame_idx(&self) -> Result<i32> {
@@ -986,15 +987,15 @@ pub mod cudacodec {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::cudacodec::CUDA_RawVideoSource]
 	pub trait CUDA_RawVideoSourceTrait: crate::cudacodec::CUDA_RawVideoSourceTraitConst {
 		fn as_raw_mut_CUDA_RawVideoSource(&mut self) -> *mut c_void;
-	
+
 		/// Returns next packet with RAW video frame.
-		/// 
+		///
 		/// ## Parameters
 		/// * data: Pointer to frame data.
 		/// * size: Size in bytes of current frame.
@@ -1006,7 +1007,7 @@ pub mod cudacodec {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Updates the coded width and height inside format.
 		#[inline]
 		fn update_format(&mut self, video_format: crate::cudacodec::CUDA_FormatInfo) -> Result<()> {
@@ -1016,40 +1017,40 @@ pub mod cudacodec {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Interface for video demultiplexing. :
-	/// 
+	///
 	/// User can implement own demultiplexing by implementing this interface.
 	pub struct CUDA_RawVideoSource {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { CUDA_RawVideoSource }
-	
+
 	impl Drop for CUDA_RawVideoSource {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_cudacodec_RawVideoSource_delete(self.as_raw_mut_CUDA_RawVideoSource()) };
 		}
 	}
-	
+
 	unsafe impl Send for CUDA_RawVideoSource {}
-	
+
 	impl crate::cudacodec::CUDA_RawVideoSourceTraitConst for CUDA_RawVideoSource {
 		#[inline] fn as_raw_CUDA_RawVideoSource(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::cudacodec::CUDA_RawVideoSourceTrait for CUDA_RawVideoSource {
 		#[inline] fn as_raw_mut_CUDA_RawVideoSource(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_RawVideoSource, crate::cudacodec::CUDA_RawVideoSourceTraitConst, as_raw_CUDA_RawVideoSource, crate::cudacodec::CUDA_RawVideoSourceTrait, as_raw_mut_CUDA_RawVideoSource }
-	
+
 	impl CUDA_RawVideoSource {
 	}
-	
+
 	impl std::fmt::Debug for CUDA_RawVideoSource {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -1057,11 +1058,11 @@ pub mod cudacodec {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::cudacodec::CUDA_VideoReader]
 	pub trait CUDA_VideoReaderTraitConst {
 		fn as_raw_CUDA_VideoReader(&self) -> *const c_void;
-	
+
 		/// Returns information about video file format.
 		#[inline]
 		fn format(&self) -> Result<crate::cudacodec::CUDA_FormatInfo> {
@@ -1071,9 +1072,9 @@ pub mod cudacodec {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns previously grabbed video data.
-		/// 
+		///
 		/// ## Parameters
 		/// * frame:[out] The returned data which depends on the provided idx.
 		/// * idx: Determines the returned data inside image. The returned data can be the:
@@ -1082,10 +1083,10 @@ pub mod cudacodec {
 		///  - Raw encoded data package.  To retrieve package i,  idx = get(PROP_RAW_PACKAGES_BASE_INDEX) + i with i < get(PROP_NUMBER_OF_RAW_PACKAGES_SINCE_LAST_GRAB)
 		/// ## Returns
 		/// `false` if no frames have been grabbed
-		/// 
+		///
 		/// The method returns data associated with the current video source since the last call to grab() or the creation of the VideoReader. If no data is present
 		/// the method returns false and the function returns an empty image.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * idx: static_cast<size_t>(VideoReaderProps::PROP_DECODED_FRAME_IDX)
 		#[inline]
@@ -1097,9 +1098,9 @@ pub mod cudacodec {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns previously grabbed video data.
-		/// 
+		///
 		/// ## Parameters
 		/// * frame:[out] The returned data which depends on the provided idx.
 		/// * idx: Determines the returned data inside image. The returned data can be the:
@@ -1108,10 +1109,10 @@ pub mod cudacodec {
 		///  - Raw encoded data package.  To retrieve package i,  idx = get(PROP_RAW_PACKAGES_BASE_INDEX) + i with i < get(PROP_NUMBER_OF_RAW_PACKAGES_SINCE_LAST_GRAB)
 		/// ## Returns
 		/// `false` if no frames have been grabbed
-		/// 
+		///
 		/// The method returns data associated with the current video source since the last call to grab() or the creation of the VideoReader. If no data is present
 		/// the method returns false and the function returns an empty image.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [CUDA_VideoReaderTraitConst::retrieve] function uses the following default values for its arguments:
 		/// * idx: static_cast<size_t>(VideoReaderProps::PROP_DECODED_FRAME_IDX)
@@ -1124,9 +1125,9 @@ pub mod cudacodec {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns previously grabbed encoded video data.
-		/// 
+		///
 		/// ## Parameters
 		/// * frame:[out] The encoded video data.
 		/// * idx: Determines the returned data inside image. The returned data can be the:
@@ -1134,7 +1135,7 @@ pub mod cudacodec {
 		///  - Raw encoded data package.  To retrieve package i,  idx = get(PROP_RAW_PACKAGES_BASE_INDEX) + i with i < get(PROP_NUMBER_OF_RAW_PACKAGES_SINCE_LAST_GRAB)
 		/// ## Returns
 		/// `false` if no frames have been grabbed
-		/// 
+		///
 		/// The method returns data associated with the current video source since the last call to grab() or the creation of the VideoReader. If no data is present
 		/// the method returns false and the function returns an empty image.
 		#[inline]
@@ -1145,14 +1146,14 @@ pub mod cudacodec {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns the next video frame.
-		/// 
+		///
 		/// ## Parameters
 		/// * frame:[out] The video frame.  If grab() has not been called then this will be empty().
 		/// ## Returns
 		/// `false` if no frames have been grabbed
-		/// 
+		///
 		/// The method returns data associated with the current video source since the last call to grab(). If no data is present
 		/// the method returns false and the function returns an empty image.
 		#[inline]
@@ -1163,9 +1164,9 @@ pub mod cudacodec {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns the specified VideoReader property
-		/// 
+		///
 		/// ## Parameters
 		/// * propertyId: Property identifier from cv::cudacodec::VideoReaderProps (eg. cv::cudacodec::VideoReaderProps::PROP_DECODED_FRAME_IDX,
 		/// cv::cudacodec::VideoReaderProps::PROP_EXTRA_DATA_INDEX, ...).
@@ -1182,7 +1183,7 @@ pub mod cudacodec {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## C++ default parameters
 		/// * property_val_in: 0
 		#[inline]
@@ -1193,7 +1194,7 @@ pub mod cudacodec {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## Note
 		/// This alternative version of [CUDA_VideoReaderTraitConst::get_video_reader_props] function uses the following default values for its arguments:
 		/// * property_val_in: 0
@@ -1205,14 +1206,14 @@ pub mod cudacodec {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Retrieves the specified property used by the VideoSource.
-		/// 
+		///
 		/// ## Parameters
 		/// * propertyId: Property identifier from cv::VideoCaptureProperties (eg. cv::CAP_PROP_POS_MSEC, cv::CAP_PROP_POS_FRAMES, ...)
 		/// or one from [videoio_flags_others].
 		/// * propertyVal: Value for the specified property.
-		/// 
+		///
 		/// ## Returns
 		/// `true` unless the property is unset set or not supported.
 		#[inline]
@@ -1223,24 +1224,24 @@ pub mod cudacodec {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::cudacodec::CUDA_VideoReader]
 	pub trait CUDA_VideoReaderTrait: crate::cudacodec::CUDA_VideoReaderTraitConst {
 		fn as_raw_mut_CUDA_VideoReader(&mut self) -> *mut c_void;
-	
+
 		/// Grabs, decodes and returns the next video frame.
-		/// 
+		///
 		/// ## Parameters
 		/// * frame:[out] The video frame.
 		/// * stream: Stream for the asynchronous version.
 		/// ## Returns
 		/// `false` if no frames have been grabbed.
-		/// 
+		///
 		/// If no frames have been grabbed (there are no more frames in video file), the methods return false.
 		/// The method throws an Exception if error occurs.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * stream: cuda::Stream::Null()
 		#[inline]
@@ -1251,18 +1252,18 @@ pub mod cudacodec {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Grabs, decodes and returns the next video frame.
-		/// 
+		///
 		/// ## Parameters
 		/// * frame:[out] The video frame.
 		/// * stream: Stream for the asynchronous version.
 		/// ## Returns
 		/// `false` if no frames have been grabbed.
-		/// 
+		///
 		/// If no frames have been grabbed (there are no more frames in video file), the methods return false.
 		/// The method throws an Exception if error occurs.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [CUDA_VideoReaderTrait::next_frame] function uses the following default values for its arguments:
 		/// * stream: cuda::Stream::Null()
@@ -1274,22 +1275,22 @@ pub mod cudacodec {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Grabs, decodes and returns the next video frame and frame luma histogram.
-		/// 
+		///
 		/// ## Parameters
 		/// * frame:[out] The video frame.
 		/// * histogram:[out] Histogram of the luma component of the encoded frame, see note.
 		/// * stream: Stream for the asynchronous version.
 		/// ## Returns
 		/// `false` if no frames have been grabbed.
-		/// 
+		///
 		/// If no frames have been grabbed (there are no more frames in video file), the methods return false.
 		/// The method throws an Exception if error occurs.
-		/// 
-		/// 
+		///
+		///
 		/// Note: Histogram data is collected by NVDEC during the decoding process resulting in zero performance penalty. NVDEC computes the histogram data for only the luma component of decoded output, not on post-processed frame(i.e. when scaling, cropping, etc. applied).  If the source is encoded using a limited range of luma values (FormatInfo::videoFullRangeFlag == false) then the histogram bin values will correspond to to this limited range of values and will need to be mapped to contain the same output as cuda::calcHist().  The MapHist() utility function can be used to perform this mapping on the host if required.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * stream: cuda::Stream::Null()
 		#[inline]
@@ -1300,22 +1301,22 @@ pub mod cudacodec {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Grabs, decodes and returns the next video frame and frame luma histogram.
-		/// 
+		///
 		/// ## Parameters
 		/// * frame:[out] The video frame.
 		/// * histogram:[out] Histogram of the luma component of the encoded frame, see note.
 		/// * stream: Stream for the asynchronous version.
 		/// ## Returns
 		/// `false` if no frames have been grabbed.
-		/// 
+		///
 		/// If no frames have been grabbed (there are no more frames in video file), the methods return false.
 		/// The method throws an Exception if error occurs.
-		/// 
-		/// 
+		///
+		///
 		/// Note: Histogram data is collected by NVDEC during the decoding process resulting in zero performance penalty. NVDEC computes the histogram data for only the luma component of decoded output, not on post-processed frame(i.e. when scaling, cropping, etc. applied).  If the source is encoded using a limited range of luma values (FormatInfo::videoFullRangeFlag == false) then the histogram bin values will correspond to to this limited range of values and will need to be mapped to contain the same output as cuda::calcHist().  The MapHist() utility function can be used to perform this mapping on the host if required.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [CUDA_VideoReaderTrait::next_frame_with_hist] function uses the following default values for its arguments:
 		/// * stream: cuda::Stream::Null()
@@ -1327,20 +1328,20 @@ pub mod cudacodec {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Grabs the next frame from the video source.
-		/// 
+		///
 		/// ## Parameters
 		/// * stream: Stream for the asynchronous version.
 		/// ## Returns
 		/// `true` (non-zero) in the case of success.
-		/// 
+		///
 		/// The method/function grabs the next frame from video file or camera and returns true (non-zero) in
 		/// the case of success.
-		/// 
+		///
 		/// The primary use of the function is for reading both the encoded and decoded video data when rawMode is enabled.  With rawMode enabled
 		/// retrieve() can be called following grab() to retrieve all the data associated with the current video source since the last call to grab() or the creation of the VideoReader.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * stream: cuda::Stream::Null()
 		#[inline]
@@ -1351,20 +1352,20 @@ pub mod cudacodec {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Grabs the next frame from the video source.
-		/// 
+		///
 		/// ## Parameters
 		/// * stream: Stream for the asynchronous version.
 		/// ## Returns
 		/// `true` (non-zero) in the case of success.
-		/// 
+		///
 		/// The method/function grabs the next frame from video file or camera and returns true (non-zero) in
 		/// the case of success.
-		/// 
+		///
 		/// The primary use of the function is for reading both the encoded and decoded video data when rawMode is enabled.  With rawMode enabled
 		/// retrieve() can be called following grab() to retrieve all the data associated with the current video source since the last call to grab() or the creation of the VideoReader.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [CUDA_VideoReaderTrait::grab] function uses the following default values for its arguments:
 		/// * stream: cuda::Stream::Null()
@@ -1376,9 +1377,9 @@ pub mod cudacodec {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Sets a property in the VideoReader.
-		/// 
+		///
 		/// ## Parameters
 		/// * propertyId: Property identifier from cv::cudacodec::VideoReaderProps (eg. cv::cudacodec::VideoReaderProps::PROP_DECODED_FRAME_IDX,
 		/// cv::cudacodec::VideoReaderProps::PROP_EXTRA_DATA_INDEX, ...).
@@ -1393,7 +1394,7 @@ pub mod cudacodec {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_video_reader_props(&mut self, property_id: crate::cudacodec::CUDA_VideoReaderProps, property_val: f64) -> Result<bool> {
 			return_send!(via ocvrs_return);
@@ -1402,9 +1403,9 @@ pub mod cudacodec {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Set the desired ColorFormat for the frame returned by nextFrame()/retrieve().
-		/// 
+		///
 		/// ## Parameters
 		/// * colorFormat: Value of the ColorFormat.
 		/// ## Returns
@@ -1417,47 +1418,47 @@ pub mod cudacodec {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Video reader interface, see createVideoReader().
-	/// 
+	///
 	/// Available if Nvidia's Video Codec SDK is installed.
-	/// 
+	///
 	/// Decoding support is dependent on the GPU, refer to the Nvidia Video Codec SDK Video Encode and Decode GPU Support Matrix for details.
-	/// 
-	/// 
+	///
+	///
 	/// Note:
 	///    *   An example on how to use the VideoReader interface can be found at
 	///        opencv_source_code/samples/gpu/video_reader.cpp
 	pub struct CUDA_VideoReader {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { CUDA_VideoReader }
-	
+
 	impl Drop for CUDA_VideoReader {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_cudacodec_VideoReader_delete(self.as_raw_mut_CUDA_VideoReader()) };
 		}
 	}
-	
+
 	unsafe impl Send for CUDA_VideoReader {}
-	
+
 	impl crate::cudacodec::CUDA_VideoReaderTraitConst for CUDA_VideoReader {
 		#[inline] fn as_raw_CUDA_VideoReader(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::cudacodec::CUDA_VideoReaderTrait for CUDA_VideoReader {
 		#[inline] fn as_raw_mut_CUDA_VideoReader(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_VideoReader, crate::cudacodec::CUDA_VideoReaderTraitConst, as_raw_CUDA_VideoReader, crate::cudacodec::CUDA_VideoReaderTrait, as_raw_mut_CUDA_VideoReader }
-	
+
 	impl CUDA_VideoReader {
 	}
-	
+
 	impl std::fmt::Debug for CUDA_VideoReader {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -1465,7 +1466,7 @@ pub mod cudacodec {
 				.finish()
 		}
 	}
-	
+
 	/// VideoReader initialization parameters
 	/// ## Parameters
 	/// * udpSource: Remove validation which can cause VideoReader() to throw exceptions when reading from a UDP source.
@@ -1496,9 +1497,9 @@ pub mod cudacodec {
 		pub enable_histogram: bool,
 		pub first_frame_idx: i32,
 	}
-	
+
 	opencv_type_simple! { crate::cudacodec::CUDA_VideoReaderInitParams }
-	
+
 	impl CUDA_VideoReaderInitParams {
 		#[inline]
 		pub fn default() -> Result<crate::cudacodec::CUDA_VideoReaderInitParams> {
@@ -1508,13 +1509,13 @@ pub mod cudacodec {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Constant methods for [crate::cudacodec::CUDA_VideoWriter]
 	pub trait CUDA_VideoWriterTraitConst {
 		fn as_raw_CUDA_VideoWriter(&self) -> *const c_void;
-	
+
 		/// Retrieve the encoding parameters.
 		#[inline]
 		fn get_encoder_params(&self) -> Result<crate::cudacodec::CUDA_EncoderParams> {
@@ -1524,18 +1525,18 @@ pub mod cudacodec {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::cudacodec::CUDA_VideoWriter]
 	pub trait CUDA_VideoWriterTrait: crate::cudacodec::CUDA_VideoWriterTraitConst {
 		fn as_raw_mut_CUDA_VideoWriter(&mut self) -> *mut c_void;
-	
+
 		/// Writes the next video frame.
-		/// 
+		///
 		/// ## Parameters
 		/// * frame: The framet to be written.
-		/// 
+		///
 		/// The method encodes the specified image to a video stream. The image must have the same size and the same
 		/// surface format as has been specified when opening the video writer.
 		#[inline]
@@ -1547,7 +1548,7 @@ pub mod cudacodec {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Waits until the encoding process has finished before calling EncoderCallback::onEncodingFinished().
 		#[inline]
 		fn release(&mut self) -> Result<()> {
@@ -1557,47 +1558,47 @@ pub mod cudacodec {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Video writer interface, see createVideoWriter().
-	/// 
+	///
 	/// Available if Nvidia's Video Codec SDK is installed.
-	/// 
+	///
 	/// Only Codec::H264 and Codec::HEVC are supported with encoding support dependent on the GPU, refer to the Nvidia Video Codec SDK Video Encode and Decode GPU Support Matrix for details.
-	/// 
-	/// 
+	///
+	///
 	/// Note:
 	///    *   An example on how to use the VideoWriter class can be found at
 	///        opencv_source_code/samples/gpu/video_writer.cpp
 	pub struct CUDA_VideoWriter {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { CUDA_VideoWriter }
-	
+
 	impl Drop for CUDA_VideoWriter {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_cudacodec_VideoWriter_delete(self.as_raw_mut_CUDA_VideoWriter()) };
 		}
 	}
-	
+
 	unsafe impl Send for CUDA_VideoWriter {}
-	
+
 	impl crate::cudacodec::CUDA_VideoWriterTraitConst for CUDA_VideoWriter {
 		#[inline] fn as_raw_CUDA_VideoWriter(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::cudacodec::CUDA_VideoWriterTrait for CUDA_VideoWriter {
 		#[inline] fn as_raw_mut_CUDA_VideoWriter(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_VideoWriter, crate::cudacodec::CUDA_VideoWriterTraitConst, as_raw_CUDA_VideoWriter, crate::cudacodec::CUDA_VideoWriterTrait, as_raw_mut_CUDA_VideoWriter }
-	
+
 	impl CUDA_VideoWriter {
 	}
-	
+
 	impl std::fmt::Debug for CUDA_VideoWriter {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {

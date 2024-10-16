@@ -1,20 +1,21 @@
 pub mod ml {
 	//! # Machine Learning
-	//! 
+	//!
 	//! The Machine Learning Library (MLL) is a set of classes and functions for statistical
 	//! classification, regression, and clustering of data.
-	//! 
+	//!
 	//! Most of the classification and regression algorithms are implemented as C++ classes. As the
 	//! algorithms have different sets of features (like an ability to handle missing measurements or
 	//! categorical input variables), there is a little common ground between the classes. This common
 	//! ground is defined by the class cv::ml::StatModel that all the other ML classes are derived from.
-	//! 
+	//!
 	//! See detailed overview here: [ml_intro].
-	use crate::{mod_prelude::*, core, sys, types};
+	use crate::mod_prelude::*;
+	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use { super::ParamGridTraitConst, super::ParamGridTrait, super::TrainDataTraitConst, super::TrainDataTrait, super::StatModelTraitConst, super::StatModelTrait, super::NormalBayesClassifierTraitConst, super::NormalBayesClassifierTrait, super::KNearestTraitConst, super::KNearestTrait, super::SVM_KernelTraitConst, super::SVM_KernelTrait, super::SVMTraitConst, super::SVMTrait, super::EMTraitConst, super::EMTrait, super::DTrees_NodeTraitConst, super::DTrees_NodeTrait, super::DTrees_SplitTraitConst, super::DTrees_SplitTrait, super::DTreesTraitConst, super::DTreesTrait, super::RTreesTraitConst, super::RTreesTrait, super::BoostTraitConst, super::BoostTrait, super::ANN_MLPTraitConst, super::ANN_MLPTrait, super::LogisticRegressionTraitConst, super::LogisticRegressionTrait, super::SVMSGDTraitConst, super::SVMSGDTrait };
+		pub use super::{ANN_MLPTrait, ANN_MLPTraitConst, BoostTrait, BoostTraitConst, DTreesTrait, DTreesTraitConst, DTrees_NodeTrait, DTrees_NodeTraitConst, DTrees_SplitTrait, DTrees_SplitTraitConst, EMTrait, EMTraitConst, KNearestTrait, KNearestTraitConst, LogisticRegressionTrait, LogisticRegressionTraitConst, NormalBayesClassifierTrait, NormalBayesClassifierTraitConst, ParamGridTrait, ParamGridTraitConst, RTreesTrait, RTreesTraitConst, SVMSGDTrait, SVMSGDTraitConst, SVMTrait, SVMTraitConst, SVM_KernelTrait, SVM_KernelTraitConst, StatModelTrait, StatModelTraitConst, TrainDataTrait, TrainDataTraitConst};
 	}
-	
+
 	/// The simulated annealing algorithm. See [Kirkpatrick83](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Kirkpatrick83) for details.
 	pub const ANN_MLP_ANNEAL: i32 = 2;
 	/// The back-propagation algorithm.
@@ -40,7 +41,7 @@ pub mod ml {
 	/// The RPROP algorithm. See [RPROP93](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_RPROP93) for details.
 	pub const ANN_MLP_RPROP: i32 = 1;
 	/// Symmetrical sigmoid: ![inline formula](https://latex.codecogs.com/png.latex?f%28x%29%3D%5Cbeta%2A%281%2De%5E%7B%2D%5Calpha%20x%7D%29%2F%281%2Be%5E%7B%2D%5Calpha%20x%7D%29)
-	/// 
+	///
 	/// Note:
 	/// If you are using the default sigmoid activation function with the default parameter values
 	/// fparam1=0 and fparam2=0 then the function used is y = 1.7159\*tanh(2/3 \* x), so the output
@@ -174,7 +175,7 @@ pub mod ml {
 		/// Identity function: ![inline formula](https://latex.codecogs.com/png.latex?f%28x%29%3Dx)
 		IDENTITY = 0,
 		/// Symmetrical sigmoid: ![inline formula](https://latex.codecogs.com/png.latex?f%28x%29%3D%5Cbeta%2A%281%2De%5E%7B%2D%5Calpha%20x%7D%29%2F%281%2Be%5E%7B%2D%5Calpha%20x%7D%29)
-		/// 
+		///
 		/// Note:
 		/// If you are using the default sigmoid activation function with the default parameter values
 		/// fparam1=0 and fparam2=0 then the function used is y = 1.7159\*tanh(2/3 \* x), so the output
@@ -187,10 +188,10 @@ pub mod ml {
 		/// Leaky ReLU function: for x>0 ![inline formula](https://latex.codecogs.com/png.latex?f%28x%29%3Dx%20) and x<=0 ![inline formula](https://latex.codecogs.com/png.latex?f%28x%29%3D%5Calpha%20x%20)
 		LEAKYRELU = 4,
 	}
-	
+
 	impl TryFrom<i32> for ANN_MLP_ActivationFunctions {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::IDENTITY),
@@ -202,9 +203,9 @@ pub mod ml {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::ml::ANN_MLP_ActivationFunctions }
-	
+
 	/// Train options
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -223,10 +224,10 @@ pub mod ml {
 		/// depending on the used activation function.
 		NO_OUTPUT_SCALE = 4,
 	}
-	
+
 	impl TryFrom<i32> for ANN_MLP_TrainFlags {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				1 => Ok(Self::UPDATE_WEIGHTS),
@@ -236,9 +237,9 @@ pub mod ml {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::ml::ANN_MLP_TrainFlags }
-	
+
 	/// Available training methods
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -250,10 +251,10 @@ pub mod ml {
 		/// The simulated annealing algorithm. See [Kirkpatrick83](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Kirkpatrick83) for details.
 		ANNEAL = 2,
 	}
-	
+
 	impl TryFrom<i32> for ANN_MLP_TrainingMethods {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::BACKPROP),
@@ -263,9 +264,9 @@ pub mod ml {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::ml::ANN_MLP_TrainingMethods }
-	
+
 	/// Boosting type.
 	/// Gentle AdaBoost and Real AdaBoost are often the preferable choices.
 	#[repr(C)]
@@ -282,10 +283,10 @@ pub mod ml {
 		/// reason is often good with regression data.
 		GENTLE = 3,
 	}
-	
+
 	impl TryFrom<i32> for Boost_Types {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::DISCRETE),
@@ -296,9 +297,9 @@ pub mod ml {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::ml::Boost_Types }
-	
+
 	/// Predict options
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -308,10 +309,10 @@ pub mod ml {
 		PREDICT_MAX_VOTE = 512,
 		PREDICT_MASK = 768,
 	}
-	
+
 	impl TryFrom<i32> for DTrees_Flags {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::PREDICT_AUTO),
@@ -322,9 +323,9 @@ pub mod ml {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::ml::DTrees_Flags }
-	
+
 	/// Type of covariation matrices
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -352,10 +353,10 @@ pub mod ml {
 		// Duplicate, use COV_MAT_DIAGONAL instead
 		// COV_MAT_DEFAULT = 1,
 	}
-	
+
 	impl TryFrom<i32> for EM_Types {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::COV_MAT_SPHERICAL),
@@ -367,9 +368,9 @@ pub mod ml {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::ml::EM_Types }
-	
+
 	/// %Error types
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -377,10 +378,10 @@ pub mod ml {
 		TEST_ERROR = 0,
 		TRAIN_ERROR = 1,
 	}
-	
+
 	impl TryFrom<i32> for ErrorTypes {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::TEST_ERROR),
@@ -389,9 +390,9 @@ pub mod ml {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::ml::ErrorTypes }
-	
+
 	/// Implementations of KNearest algorithm
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -399,10 +400,10 @@ pub mod ml {
 		BRUTE_FORCE = 1,
 		KDTREE = 2,
 	}
-	
+
 	impl TryFrom<i32> for KNearest_Types {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				1 => Ok(Self::BRUTE_FORCE),
@@ -411,9 +412,9 @@ pub mod ml {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::ml::KNearest_Types }
-	
+
 	/// Training methods
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -422,10 +423,10 @@ pub mod ml {
 		/// Set MiniBatchSize to a positive integer when using this method.
 		MINI_BATCH = 1,
 	}
-	
+
 	impl TryFrom<i32> for LogisticRegression_Methods {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::BATCH),
@@ -434,9 +435,9 @@ pub mod ml {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::ml::LogisticRegression_Methods }
-	
+
 	/// Regularization kinds
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -448,10 +449,10 @@ pub mod ml {
 		/// %L2 norm
 		REG_L2 = 1,
 	}
-	
+
 	impl TryFrom<i32> for LogisticRegression_RegKinds {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				-1 => Ok(Self::REG_DISABLE),
@@ -461,9 +462,9 @@ pub mod ml {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::ml::LogisticRegression_RegKinds }
-	
+
 	/// Margin type.
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -473,10 +474,10 @@ pub mod ml {
 		/// More accurate for the case of linearly separable sets.
 		HARD_MARGIN = 1,
 	}
-	
+
 	impl TryFrom<i32> for SVMSGD_MarginType {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::SOFT_MARGIN),
@@ -485,9 +486,9 @@ pub mod ml {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::ml::SVMSGD_MarginType }
-	
+
 	/// SVMSGD type.
 	/// ASGD is often the preferable choice.
 	#[repr(C)]
@@ -498,10 +499,10 @@ pub mod ml {
 		/// Average Stochastic Gradient Descent
 		ASGD = 1,
 	}
-	
+
 	impl TryFrom<i32> for SVMSGD_SvmsgdType {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::SGD),
@@ -510,11 +511,11 @@ pub mod ml {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::ml::SVMSGD_SvmsgdType }
-	
+
 	/// %SVM kernel type
-	/// 
+	///
 	/// A comparison of different kernels on the following 2D test case with four classes. Four
 	/// SVM::C_SVC SVMs have been trained (one against rest) with auto_train. Evaluation on three
 	/// different kernels (SVM::CHI2, SVM::INTER, SVM::RBF). The color depicts the class with max score.
@@ -542,10 +543,10 @@ pub mod ml {
 		/// Histogram intersection kernel. A fast kernel. ![inline formula](https://latex.codecogs.com/png.latex?K%28x%5Fi%2C%20x%5Fj%29%20%3D%20min%28x%5Fi%2Cx%5Fj%29).
 		INTER = 5,
 	}
-	
+
 	impl TryFrom<i32> for SVM_KernelTypes {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				-1 => Ok(Self::CUSTOM),
@@ -559,9 +560,9 @@ pub mod ml {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::ml::SVM_KernelTypes }
-	
+
 	/// %SVM params type
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -573,10 +574,10 @@ pub mod ml {
 		COEF = 4,
 		DEGREE = 5,
 	}
-	
+
 	impl TryFrom<i32> for SVM_ParamTypes {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::C),
@@ -589,9 +590,9 @@ pub mod ml {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::ml::SVM_ParamTypes }
-	
+
 	/// %SVM type
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -615,10 +616,10 @@ pub mod ml {
 		/// See [LibSVM](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_LibSVM) for details.
 		NU_SVR = 104,
 	}
-	
+
 	impl TryFrom<i32> for SVM_Types {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				100 => Ok(Self::C_SVC),
@@ -630,9 +631,9 @@ pub mod ml {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::ml::SVM_Types }
-	
+
 	/// Sample types
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -642,10 +643,10 @@ pub mod ml {
 		/// each training sample occupies a column of samples
 		COL_SAMPLE = 1,
 	}
-	
+
 	impl TryFrom<i32> for SampleTypes {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::ROW_SAMPLE),
@@ -654,9 +655,9 @@ pub mod ml {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::ml::SampleTypes }
-	
+
 	/// Predict options
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -668,10 +669,10 @@ pub mod ml {
 		COMPRESSED_INPUT = 2,
 		PREPROCESSED_INPUT = 4,
 	}
-	
+
 	impl TryFrom<i32> for StatModel_Flags {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				1 => Ok(Self::UPDATE_MODEL),
@@ -683,9 +684,9 @@ pub mod ml {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::ml::StatModel_Flags }
-	
+
 	/// Variable types
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -698,10 +699,10 @@ pub mod ml {
 		/// categorical variables
 		VAR_CATEGORICAL = 1,
 	}
-	
+
 	impl TryFrom<i32> for VariableTypes {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::VAR_NUMERICAL),
@@ -712,9 +713,9 @@ pub mod ml {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::ml::VariableTypes }
-	
+
 	pub type ANN_MLP_ANNEAL = crate::ml::ANN_MLP;
 	/// Creates test set
 	#[inline]
@@ -727,9 +728,9 @@ pub mod ml {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Generates _sample_ from multivariate normal distribution
-	/// 
+	///
 	/// ## Parameters
 	/// * mean: an average row vector
 	/// * cov: symmetric covariation matrix
@@ -746,11 +747,11 @@ pub mod ml {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Constant methods for [crate::ml::ANN_MLP]
 	pub trait ANN_MLPTraitConst: crate::ml::StatModelTraitConst {
 		fn as_raw_ANN_MLP(&self) -> *const c_void;
-	
+
 		/// Returns current training method
 		#[inline]
 		fn get_train_method(&self) -> Result<i32> {
@@ -760,7 +761,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Integer vector specifying the number of neurons in each layer including the input and output layers.
 		/// The very first element specifies the number of elements in the input layer.
 		/// The last element - number of elements in the output layer.
@@ -775,7 +776,7 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Termination criteria of the training algorithm.
 		///    You can specify the maximum number of iterations (maxCount) and/or how much the error could
 		///    change between the iterations to make the algorithm continue (epsilon). Default value is
@@ -790,7 +791,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// BPROP: Strength of the weight gradient term.
 		///    The recommended value is about 0.1. Default value is 0.1.
 		/// ## See also
@@ -803,7 +804,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// BPROP: Strength of the momentum term (the difference between weights on the 2 previous iterations).
 		///    This parameter provides some inertia to smooth the random fluctuations of the weights. It can
 		///    vary from 0 (the feature is disabled) to 1 and beyond. The value 0.1 or so is good enough.
@@ -818,7 +819,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// RPROP: Initial value ![inline formula](https://latex.codecogs.com/png.latex?%5CDelta%5F0) of update-values ![inline formula](https://latex.codecogs.com/png.latex?%5CDelta%5F%7Bij%7D).
 		///    Default value is 0.1.
 		/// ## See also
@@ -831,7 +832,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// RPROP: Increase factor ![inline formula](https://latex.codecogs.com/png.latex?%5Ceta%5E%2B).
 		///    It must be \>1. Default value is 1.2.
 		/// ## See also
@@ -844,7 +845,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// RPROP: Decrease factor ![inline formula](https://latex.codecogs.com/png.latex?%5Ceta%5E%2D).
 		///    It must be \<1. Default value is 0.5.
 		/// ## See also
@@ -857,7 +858,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// RPROP: Update-values lower limit ![inline formula](https://latex.codecogs.com/png.latex?%5CDelta%5F%7Bmin%7D).
 		///    It must be positive. Default value is FLT_EPSILON.
 		/// ## See also
@@ -870,7 +871,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// RPROP: Update-values upper limit ![inline formula](https://latex.codecogs.com/png.latex?%5CDelta%5F%7Bmax%7D).
 		///    It must be \>1. Default value is 50.
 		/// ## See also
@@ -883,7 +884,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ANNEAL: Update initial temperature.
 		///    It must be \>=0. Default value is 10.
 		/// ## See also
@@ -896,7 +897,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ANNEAL: Update final temperature.
 		///    It must be \>=0 and less than initialT. Default value is 0.1.
 		/// ## See also
@@ -909,7 +910,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ANNEAL: Update cooling ratio.
 		///    It must be \>0 and less than 1. Default value is 0.95.
 		/// ## See also
@@ -922,7 +923,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ANNEAL: Update iteration per step.
 		///    It must be \>0 . Default value is 10.
 		/// ## See also
@@ -935,7 +936,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_weights(&self, layer_idx: i32) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -945,19 +946,19 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::ml::ANN_MLP]
 	pub trait ANN_MLPTrait: crate::ml::ANN_MLPTraitConst + crate::ml::StatModelTrait {
 		fn as_raw_mut_ANN_MLP(&mut self) -> *mut c_void;
-	
+
 		/// Sets training method and common parameters.
 		/// ## Parameters
 		/// * method: Default value is ANN_MLP::RPROP. See ANN_MLP::TrainingMethods.
 		/// * param1: passed to setRpropDW0 for ANN_MLP::RPROP and to setBackpropWeightScale for ANN_MLP::BACKPROP and to initialT for ANN_MLP::ANNEAL.
 		/// * param2: passed to setRpropDWMin for ANN_MLP::RPROP and to setBackpropMomentumScale for ANN_MLP::BACKPROP and to finalT for ANN_MLP::ANNEAL.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * param1: 0
 		/// * param2: 0
@@ -969,13 +970,13 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Sets training method and common parameters.
 		/// ## Parameters
 		/// * method: Default value is ANN_MLP::RPROP. See ANN_MLP::TrainingMethods.
 		/// * param1: passed to setRpropDW0 for ANN_MLP::RPROP and to setBackpropWeightScale for ANN_MLP::BACKPROP and to initialT for ANN_MLP::ANNEAL.
 		/// * param2: passed to setRpropDWMin for ANN_MLP::RPROP and to setBackpropMomentumScale for ANN_MLP::BACKPROP and to finalT for ANN_MLP::ANNEAL.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [ANN_MLPTrait::set_train_method] function uses the following default values for its arguments:
 		/// * param1: 0
@@ -988,14 +989,14 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Initialize the activation function for each neuron.
 		/// Currently the default and the only fully supported activation function is ANN_MLP::SIGMOID_SYM.
 		/// ## Parameters
 		/// * type: The type of activation function. See ANN_MLP::ActivationFunctions.
 		/// * param1: The first parameter of the activation function, ![inline formula](https://latex.codecogs.com/png.latex?%5Calpha). Default value is 0.
 		/// * param2: The second parameter of the activation function, ![inline formula](https://latex.codecogs.com/png.latex?%5Cbeta). Default value is 0.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * param1: 0
 		/// * param2: 0
@@ -1007,14 +1008,14 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Initialize the activation function for each neuron.
 		/// Currently the default and the only fully supported activation function is ANN_MLP::SIGMOID_SYM.
 		/// ## Parameters
 		/// * type: The type of activation function. See ANN_MLP::ActivationFunctions.
 		/// * param1: The first parameter of the activation function, ![inline formula](https://latex.codecogs.com/png.latex?%5Calpha). Default value is 0.
 		/// * param2: The second parameter of the activation function, ![inline formula](https://latex.codecogs.com/png.latex?%5Cbeta). Default value is 0.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [ANN_MLPTrait::set_activation_function] function uses the following default values for its arguments:
 		/// * param1: 0
@@ -1027,7 +1028,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Integer vector specifying the number of neurons in each layer including the input and output layers.
 		/// The very first element specifies the number of elements in the input layer.
 		/// The last element - number of elements in the output layer. Default value is empty Mat.
@@ -1042,7 +1043,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Termination criteria of the training algorithm.
 		///    You can specify the maximum number of iterations (maxCount) and/or how much the error could
 		///    change between the iterations to make the algorithm continue (epsilon). Default value is
@@ -1057,7 +1058,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// BPROP: Strength of the weight gradient term.
 		///    The recommended value is about 0.1. Default value is 0.1.
 		/// ## See also
@@ -1070,7 +1071,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// BPROP: Strength of the momentum term (the difference between weights on the 2 previous iterations).
 		///    This parameter provides some inertia to smooth the random fluctuations of the weights. It can
 		///    vary from 0 (the feature is disabled) to 1 and beyond. The value 0.1 or so is good enough.
@@ -1085,7 +1086,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// RPROP: Initial value ![inline formula](https://latex.codecogs.com/png.latex?%5CDelta%5F0) of update-values ![inline formula](https://latex.codecogs.com/png.latex?%5CDelta%5F%7Bij%7D).
 		///    Default value is 0.1.
 		/// ## See also
@@ -1098,7 +1099,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// RPROP: Increase factor ![inline formula](https://latex.codecogs.com/png.latex?%5Ceta%5E%2B).
 		///    It must be \>1. Default value is 1.2.
 		/// ## See also
@@ -1111,7 +1112,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// RPROP: Decrease factor ![inline formula](https://latex.codecogs.com/png.latex?%5Ceta%5E%2D).
 		///    It must be \<1. Default value is 0.5.
 		/// ## See also
@@ -1124,7 +1125,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// RPROP: Update-values lower limit ![inline formula](https://latex.codecogs.com/png.latex?%5CDelta%5F%7Bmin%7D).
 		///    It must be positive. Default value is FLT_EPSILON.
 		/// ## See also
@@ -1137,7 +1138,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// RPROP: Update-values upper limit ![inline formula](https://latex.codecogs.com/png.latex?%5CDelta%5F%7Bmax%7D).
 		///    It must be \>1. Default value is 50.
 		/// ## See also
@@ -1150,7 +1151,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ANNEAL: Update initial temperature.
 		///    It must be \>=0. Default value is 10.
 		/// ## See also
@@ -1163,7 +1164,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ANNEAL: Update final temperature.
 		///    It must be \>=0 and less than initialT. Default value is 0.1.
 		/// ## See also
@@ -1176,7 +1177,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ANNEAL: Update cooling ratio.
 		///    It must be \>0 and less than 1. Default value is 0.95.
 		/// ## See also
@@ -1189,7 +1190,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ANNEAL: Update iteration per step.
 		///    It must be \>0 . Default value is 10.
 		/// ## See also
@@ -1202,7 +1203,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Set/initialize anneal RNG
 		#[inline]
 		fn set_anneal_energy_rng(&mut self, rng: &impl core::RNGTraitConst) -> Result<()> {
@@ -1212,68 +1213,68 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Artificial Neural Networks - Multi-Layer Perceptrons.
-	/// 
+	///
 	/// Unlike many other models in ML that are constructed and trained at once, in the MLP model these
 	/// steps are separated. First, a network with the specified topology is created using the non-default
 	/// constructor or the method ANN_MLP::create. All the weights are set to zeros. Then, the network is
 	/// trained using a set of input and output vectors. The training procedure can be repeated more than
 	/// once, that is, the weights can be adjusted based on the new training data.
-	/// 
+	///
 	/// Additional flags for StatModel::train are available: ANN_MLP::TrainFlags.
 	/// ## See also
 	/// [ml_intro_ann]
 	pub struct ANN_MLP {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { ANN_MLP }
-	
+
 	impl Drop for ANN_MLP {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_ml_ANN_MLP_delete(self.as_raw_mut_ANN_MLP()) };
 		}
 	}
-	
+
 	unsafe impl Send for ANN_MLP {}
-	
+
 	impl core::AlgorithmTraitConst for ANN_MLP {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for ANN_MLP {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { ANN_MLP, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::ml::StatModelTraitConst for ANN_MLP {
 		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ml::StatModelTrait for ANN_MLP {
 		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { ANN_MLP, crate::ml::StatModelTraitConst, as_raw_StatModel, crate::ml::StatModelTrait, as_raw_mut_StatModel }
-	
+
 	impl crate::ml::ANN_MLPTraitConst for ANN_MLP {
 		#[inline] fn as_raw_ANN_MLP(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ml::ANN_MLPTrait for ANN_MLP {
 		#[inline] fn as_raw_mut_ANN_MLP(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { ANN_MLP, crate::ml::ANN_MLPTraitConst, as_raw_ANN_MLP, crate::ml::ANN_MLPTrait, as_raw_mut_ANN_MLP }
-	
+
 	impl ANN_MLP {
 		/// Creates empty model
-		/// 
+		///
 		/// Use StatModel::train to train the model, Algorithm::load\<ANN_MLP\>(filename) to load the pre-trained model.
 		/// Note that the train method has optional flags: ANN_MLP::TrainFlags.
 		#[inline]
@@ -1285,12 +1286,12 @@ pub mod ml {
 			let ret = unsafe { core::Ptr::<crate::ml::ANN_MLP>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Loads and creates a serialized ANN from a file
-		/// 
+		///
 		/// Use ANN::save to serialize and store an ANN to disk.
 		/// Load the ANN from this file again, by calling this function with the path to the file.
-		/// 
+		///
 		/// ## Parameters
 		/// * filepath: path to serialized ANN
 		#[inline]
@@ -1303,13 +1304,13 @@ pub mod ml {
 			let ret = unsafe { core::Ptr::<crate::ml::ANN_MLP>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	boxed_cast_base! { ANN_MLP, core::Algorithm, cv_ml_ANN_MLP_to_Algorithm }
-	
+
 	boxed_cast_base! { ANN_MLP, crate::ml::StatModel, cv_ml_ANN_MLP_to_StatModel }
-	
+
 	impl std::fmt::Debug for ANN_MLP {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -1317,11 +1318,11 @@ pub mod ml {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::ml::Boost]
 	pub trait BoostTraitConst: crate::ml::DTreesTraitConst {
 		fn as_raw_Boost(&self) -> *const c_void;
-	
+
 		/// Type of the boosting algorithm.
 		///    See Boost::Types. Default value is Boost::REAL.
 		/// ## See also
@@ -1334,7 +1335,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// The number of weak classifiers.
 		///    Default value is 100.
 		/// ## See also
@@ -1347,7 +1348,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// A threshold between 0 and 1 used to save computational time.
 		///    Samples with summary weight ![inline formula](https://latex.codecogs.com/png.latex?%5Cleq%201%20%2D%20weight%5Ftrim%5Frate) do not participate in the *next*
 		///    iteration of training. Set this parameter to 0 to turn off this functionality. Default value is 0.95.
@@ -1361,13 +1362,13 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::ml::Boost]
 	pub trait BoostTrait: crate::ml::BoostTraitConst + crate::ml::DTreesTrait {
 		fn as_raw_mut_Boost(&mut self) -> *mut c_void;
-	
+
 		/// Type of the boosting algorithm.
 		///    See Boost::Types. Default value is Boost::REAL.
 		/// ## See also
@@ -1380,7 +1381,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// The number of weak classifiers.
 		///    Default value is 100.
 		/// ## See also
@@ -1393,7 +1394,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// A threshold between 0 and 1 used to save computational time.
 		///    Samples with summary weight ![inline formula](https://latex.codecogs.com/png.latex?%5Cleq%201%20%2D%20weight%5Ftrim%5Frate) do not participate in the *next*
 		///    iteration of training. Set this parameter to 0 to turn off this functionality. Default value is 0.95.
@@ -1407,67 +1408,67 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Boosted tree classifier derived from DTrees
 	/// ## See also
 	/// [ml_intro_boost]
 	pub struct Boost {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { Boost }
-	
+
 	impl Drop for Boost {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_ml_Boost_delete(self.as_raw_mut_Boost()) };
 		}
 	}
-	
+
 	unsafe impl Send for Boost {}
-	
+
 	impl core::AlgorithmTraitConst for Boost {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for Boost {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { Boost, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::ml::DTreesTraitConst for Boost {
 		#[inline] fn as_raw_DTrees(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ml::DTreesTrait for Boost {
 		#[inline] fn as_raw_mut_DTrees(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { Boost, crate::ml::DTreesTraitConst, as_raw_DTrees, crate::ml::DTreesTrait, as_raw_mut_DTrees }
-	
+
 	impl crate::ml::StatModelTraitConst for Boost {
 		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ml::StatModelTrait for Boost {
 		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { Boost, crate::ml::StatModelTraitConst, as_raw_StatModel, crate::ml::StatModelTrait, as_raw_mut_StatModel }
-	
+
 	impl crate::ml::BoostTraitConst for Boost {
 		#[inline] fn as_raw_Boost(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ml::BoostTrait for Boost {
 		#[inline] fn as_raw_mut_Boost(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { Boost, crate::ml::BoostTraitConst, as_raw_Boost, crate::ml::BoostTrait, as_raw_mut_Boost }
-	
+
 	impl Boost {
 		/// Creates the empty model.
 		/// Use StatModel::train to train the model, Algorithm::load\<Boost\>(filename) to load the pre-trained model.
@@ -1480,17 +1481,17 @@ pub mod ml {
 			let ret = unsafe { core::Ptr::<crate::ml::Boost>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Loads and creates a serialized Boost from a file
-		/// 
+		///
 		/// Use Boost::save to serialize and store an RTree to disk.
 		/// Load the Boost from this file again, by calling this function with the path to the file.
 		/// Optionally specify the node for the file containing the classifier
-		/// 
+		///
 		/// ## Parameters
 		/// * filepath: path to serialized Boost
 		/// * nodeName: name of node containing the classifier
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * node_name: String()
 		#[inline]
@@ -1504,17 +1505,17 @@ pub mod ml {
 			let ret = unsafe { core::Ptr::<crate::ml::Boost>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Loads and creates a serialized Boost from a file
-		/// 
+		///
 		/// Use Boost::save to serialize and store an RTree to disk.
 		/// Load the Boost from this file again, by calling this function with the path to the file.
 		/// Optionally specify the node for the file containing the classifier
-		/// 
+		///
 		/// ## Parameters
 		/// * filepath: path to serialized Boost
 		/// * nodeName: name of node containing the classifier
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [Boost::load] function uses the following default values for its arguments:
 		/// * node_name: String()
@@ -1528,15 +1529,15 @@ pub mod ml {
 			let ret = unsafe { core::Ptr::<crate::ml::Boost>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	boxed_cast_base! { Boost, core::Algorithm, cv_ml_Boost_to_Algorithm }
-	
+
 	boxed_cast_base! { Boost, crate::ml::DTrees, cv_ml_Boost_to_DTrees }
-	
+
 	boxed_cast_base! { Boost, crate::ml::StatModel, cv_ml_Boost_to_StatModel }
-	
+
 	impl std::fmt::Debug for Boost {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -1544,11 +1545,11 @@ pub mod ml {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::ml::DTrees]
 	pub trait DTreesTraitConst: crate::ml::StatModelTraitConst {
 		fn as_raw_DTrees(&self) -> *const c_void;
-	
+
 		/// Cluster possible values of a categorical variable into K\<=maxCategories clusters to
 		///    find a suboptimal split.
 		///    If a discrete variable, on which the training procedure tries to make a split, takes more than
@@ -1570,7 +1571,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// The maximum possible depth of the tree.
 		///    That is the training algorithms attempts to split a node while its depth is less than maxDepth.
 		///    The root node has zero depth. The actual depth may be smaller if the other termination criteria
@@ -1586,9 +1587,9 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// If the number of samples in a node is less than this parameter then the node will not be split.
-		/// 
+		///
 		///    Default value is 10.
 		/// ## See also
 		/// setMinSampleCount
@@ -1600,7 +1601,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// If CVFolds \> 1 then algorithms prunes the built decision tree using K-fold
 		///    cross-validation procedure where K is equal to CVFolds.
 		///    Default value is 10.
@@ -1614,7 +1615,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// If true then surrogate splits will be built.
 		///    These splits allow to work with missing data and compute variable importance correctly.
 		///    Default value is false.
@@ -1630,7 +1631,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// If true then a pruning will be harsher.
 		///    This will make a tree more compact and more resistant to the training data noise but a bit less
 		///    accurate. Default value is true.
@@ -1644,7 +1645,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// If true then pruned branches are physically removed from the tree.
 		///    Otherwise they are retained and it is possible to get results from the original unpruned (or
 		///    pruned less aggressively) tree. Default value is true.
@@ -1658,7 +1659,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Termination criteria for regression trees.
 		///    If all absolute differences between an estimated value in a node and values of train samples
 		///    in this node are less than this parameter then the node will not be split further. Default
@@ -1673,9 +1674,9 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// The array of a priori class probabilities, sorted by the class label value.
-		/// 
+		///
 		///    The parameter can be used to tune the decision tree preferences toward a certain class. For
 		///    example, if you want to detect some rare anomaly occurrence, the training base will likely
 		///    contain much more normal cases than anomalies, so a very good classification performance
@@ -1683,7 +1684,7 @@ pub mod ml {
 		///    specified, where the anomaly probability is artificially increased (up to 0.5 or even
 		///    greater), so the weight of the misclassified anomalies becomes much bigger, and the tree is
 		///    adjusted properly.
-		/// 
+		///
 		///    You can also think about this parameter as weights of prediction categories which determine
 		///    relative weights that you give to misclassification. That is, if the weight of the first
 		///    category is 1 and the weight of the second category is 10, then each mistake in predicting
@@ -1700,7 +1701,7 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Returns indices of root nodes
 		#[inline]
 		fn get_roots(&self) -> Result<core::Vector<i32>> {
@@ -1711,9 +1712,9 @@ pub mod ml {
 			let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Returns all the nodes
-		/// 
+		///
 		/// all the node indices are indices in the returned vector
 		#[inline]
 		fn get_nodes(&self) -> Result<core::Vector<crate::ml::DTrees_Node>> {
@@ -1724,9 +1725,9 @@ pub mod ml {
 			let ret = unsafe { core::Vector::<crate::ml::DTrees_Node>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Returns all the splits
-		/// 
+		///
 		/// all the split indices are indices in the returned vector
 		#[inline]
 		fn get_splits(&self) -> Result<core::Vector<crate::ml::DTrees_Split>> {
@@ -1737,9 +1738,9 @@ pub mod ml {
 			let ret = unsafe { core::Vector::<crate::ml::DTrees_Split>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Returns all the bitsets for categorical splits
-		/// 
+		///
 		/// Split::subsetOfs is an offset in the returned vector
 		#[inline]
 		fn get_subsets(&self) -> Result<core::Vector<i32>> {
@@ -1750,13 +1751,13 @@ pub mod ml {
 			let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::ml::DTrees]
 	pub trait DTreesTrait: crate::ml::DTreesTraitConst + crate::ml::StatModelTrait {
 		fn as_raw_mut_DTrees(&mut self) -> *mut c_void;
-	
+
 		/// Cluster possible values of a categorical variable into K\<=maxCategories clusters to
 		///    find a suboptimal split.
 		///    If a discrete variable, on which the training procedure tries to make a split, takes more than
@@ -1778,7 +1779,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// The maximum possible depth of the tree.
 		///    That is the training algorithms attempts to split a node while its depth is less than maxDepth.
 		///    The root node has zero depth. The actual depth may be smaller if the other termination criteria
@@ -1794,9 +1795,9 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// If the number of samples in a node is less than this parameter then the node will not be split.
-		/// 
+		///
 		///    Default value is 10.
 		/// ## See also
 		/// setMinSampleCount getMinSampleCount
@@ -1808,7 +1809,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// If CVFolds \> 1 then algorithms prunes the built decision tree using K-fold
 		///    cross-validation procedure where K is equal to CVFolds.
 		///    Default value is 10.
@@ -1822,7 +1823,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// If true then surrogate splits will be built.
 		///    These splits allow to work with missing data and compute variable importance correctly.
 		///    Default value is false.
@@ -1838,7 +1839,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// If true then a pruning will be harsher.
 		///    This will make a tree more compact and more resistant to the training data noise but a bit less
 		///    accurate. Default value is true.
@@ -1852,7 +1853,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// If true then pruned branches are physically removed from the tree.
 		///    Otherwise they are retained and it is possible to get results from the original unpruned (or
 		///    pruned less aggressively) tree. Default value is true.
@@ -1866,7 +1867,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Termination criteria for regression trees.
 		///    If all absolute differences between an estimated value in a node and values of train samples
 		///    in this node are less than this parameter then the node will not be split further. Default
@@ -1881,9 +1882,9 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// The array of a priori class probabilities, sorted by the class label value.
-		/// 
+		///
 		///    The parameter can be used to tune the decision tree preferences toward a certain class. For
 		///    example, if you want to detect some rare anomaly occurrence, the training base will likely
 		///    contain much more normal cases than anomalies, so a very good classification performance
@@ -1891,7 +1892,7 @@ pub mod ml {
 		///    specified, where the anomaly probability is artificially increased (up to 0.5 or even
 		///    greater), so the weight of the misclassified anomalies becomes much bigger, and the tree is
 		///    adjusted properly.
-		/// 
+		///
 		///    You can also think about this parameter as weights of prediction categories which determine
 		///    relative weights that you give to misclassification. That is, if the weight of the first
 		///    category is 1 and the weight of the second category is 10, then each mistake in predicting
@@ -1907,11 +1908,11 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// The class represents a single decision tree or a collection of decision trees.
-	/// 
+	///
 	/// The current public interface of the class allows user to train only a single decision tree, however
 	/// the class is capable of storing multiple decision trees and using them for prediction (by summing
 	/// responses or using a voting schemes), and the derived from DTrees classes (such as RTrees and Boost)
@@ -1919,53 +1920,53 @@ pub mod ml {
 	/// ## See also
 	/// [ml_intro_trees]
 	pub struct DTrees {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { DTrees }
-	
+
 	impl Drop for DTrees {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_ml_DTrees_delete(self.as_raw_mut_DTrees()) };
 		}
 	}
-	
+
 	unsafe impl Send for DTrees {}
-	
+
 	impl core::AlgorithmTraitConst for DTrees {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for DTrees {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { DTrees, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::ml::StatModelTraitConst for DTrees {
 		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ml::StatModelTrait for DTrees {
 		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { DTrees, crate::ml::StatModelTraitConst, as_raw_StatModel, crate::ml::StatModelTrait, as_raw_mut_StatModel }
-	
+
 	impl crate::ml::DTreesTraitConst for DTrees {
 		#[inline] fn as_raw_DTrees(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ml::DTreesTrait for DTrees {
 		#[inline] fn as_raw_mut_DTrees(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { DTrees, crate::ml::DTreesTraitConst, as_raw_DTrees, crate::ml::DTreesTrait, as_raw_mut_DTrees }
-	
+
 	impl DTrees {
 		/// Creates the empty model
-		/// 
+		///
 		/// The static method creates empty decision tree with the specified parameters. It should be then
 		/// trained using train method (see StatModel::train). Alternatively, you can load the model from
 		/// file using Algorithm::load\<DTrees\>(filename).
@@ -1978,17 +1979,17 @@ pub mod ml {
 			let ret = unsafe { core::Ptr::<crate::ml::DTrees>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Loads and creates a serialized DTrees from a file
-		/// 
+		///
 		/// Use DTree::save to serialize and store an DTree to disk.
 		/// Load the DTree from this file again, by calling this function with the path to the file.
 		/// Optionally specify the node for the file containing the classifier
-		/// 
+		///
 		/// ## Parameters
 		/// * filepath: path to serialized DTree
 		/// * nodeName: name of node containing the classifier
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * node_name: String()
 		#[inline]
@@ -2002,17 +2003,17 @@ pub mod ml {
 			let ret = unsafe { core::Ptr::<crate::ml::DTrees>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Loads and creates a serialized DTrees from a file
-		/// 
+		///
 		/// Use DTree::save to serialize and store an DTree to disk.
 		/// Load the DTree from this file again, by calling this function with the path to the file.
 		/// Optionally specify the node for the file containing the classifier
-		/// 
+		///
 		/// ## Parameters
 		/// * filepath: path to serialized DTree
 		/// * nodeName: name of node containing the classifier
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [DTrees::load] function uses the following default values for its arguments:
 		/// * node_name: String()
@@ -2026,17 +2027,17 @@ pub mod ml {
 			let ret = unsafe { core::Ptr::<crate::ml::DTrees>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	boxed_cast_descendant! { DTrees, crate::ml::Boost, cv_ml_DTrees_to_Boost }
-	
+
 	boxed_cast_descendant! { DTrees, crate::ml::RTrees, cv_ml_DTrees_to_RTrees }
-	
+
 	boxed_cast_base! { DTrees, core::Algorithm, cv_ml_DTrees_to_Algorithm }
-	
+
 	boxed_cast_base! { DTrees, crate::ml::StatModel, cv_ml_DTrees_to_StatModel }
-	
+
 	impl std::fmt::Debug for DTrees {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -2044,11 +2045,11 @@ pub mod ml {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::ml::DTrees_Node]
 	pub trait DTrees_NodeTraitConst {
 		fn as_raw_DTrees_Node(&self) -> *const c_void;
-	
+
 		/// Value at the node: a class label in case of classification or estimated
 		/// function value in case of regression.
 		#[inline]
@@ -2056,7 +2057,7 @@ pub mod ml {
 			let ret = unsafe { sys::cv_ml_DTrees_Node_propValue_const(self.as_raw_DTrees_Node()) };
 			ret
 		}
-		
+
 		/// Class index normalized to 0..class_count-1 range and assigned to the
 		/// node. It is used internally in classification trees and tree ensembles.
 		#[inline]
@@ -2064,28 +2065,28 @@ pub mod ml {
 			let ret = unsafe { sys::cv_ml_DTrees_Node_propClassIdx_const(self.as_raw_DTrees_Node()) };
 			ret
 		}
-		
+
 		/// Index of the parent node
 		#[inline]
 		fn parent(&self) -> i32 {
 			let ret = unsafe { sys::cv_ml_DTrees_Node_propParent_const(self.as_raw_DTrees_Node()) };
 			ret
 		}
-		
+
 		/// Index of the left child node
 		#[inline]
 		fn left(&self) -> i32 {
 			let ret = unsafe { sys::cv_ml_DTrees_Node_propLeft_const(self.as_raw_DTrees_Node()) };
 			ret
 		}
-		
+
 		/// Index of right child node
 		#[inline]
 		fn right(&self) -> i32 {
 			let ret = unsafe { sys::cv_ml_DTrees_Node_propRight_const(self.as_raw_DTrees_Node()) };
 			ret
 		}
-		
+
 		/// Default direction where to go (-1: left or +1: right). It helps in the
 		/// case of missing values.
 		#[inline]
@@ -2093,20 +2094,20 @@ pub mod ml {
 			let ret = unsafe { sys::cv_ml_DTrees_Node_propDefaultDir_const(self.as_raw_DTrees_Node()) };
 			ret
 		}
-		
+
 		/// Index of the first split
 		#[inline]
 		fn split(&self) -> i32 {
 			let ret = unsafe { sys::cv_ml_DTrees_Node_propSplit_const(self.as_raw_DTrees_Node()) };
 			ret
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::ml::DTrees_Node]
 	pub trait DTrees_NodeTrait: crate::ml::DTrees_NodeTraitConst {
 		fn as_raw_mut_DTrees_Node(&mut self) -> *mut c_void;
-	
+
 		/// Value at the node: a class label in case of classification or estimated
 		/// function value in case of regression.
 		#[inline]
@@ -2114,7 +2115,7 @@ pub mod ml {
 			let ret = unsafe { sys::cv_ml_DTrees_Node_propValue_const_double(self.as_raw_mut_DTrees_Node(), val) };
 			ret
 		}
-		
+
 		/// Class index normalized to 0..class_count-1 range and assigned to the
 		/// node. It is used internally in classification trees and tree ensembles.
 		#[inline]
@@ -2122,28 +2123,28 @@ pub mod ml {
 			let ret = unsafe { sys::cv_ml_DTrees_Node_propClassIdx_const_int(self.as_raw_mut_DTrees_Node(), val) };
 			ret
 		}
-		
+
 		/// Index of the parent node
 		#[inline]
 		fn set_parent(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_ml_DTrees_Node_propParent_const_int(self.as_raw_mut_DTrees_Node(), val) };
 			ret
 		}
-		
+
 		/// Index of the left child node
 		#[inline]
 		fn set_left(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_ml_DTrees_Node_propLeft_const_int(self.as_raw_mut_DTrees_Node(), val) };
 			ret
 		}
-		
+
 		/// Index of right child node
 		#[inline]
 		fn set_right(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_ml_DTrees_Node_propRight_const_int(self.as_raw_mut_DTrees_Node(), val) };
 			ret
 		}
-		
+
 		/// Default direction where to go (-1: left or +1: right). It helps in the
 		/// case of missing values.
 		#[inline]
@@ -2151,42 +2152,42 @@ pub mod ml {
 			let ret = unsafe { sys::cv_ml_DTrees_Node_propDefaultDir_const_int(self.as_raw_mut_DTrees_Node(), val) };
 			ret
 		}
-		
+
 		/// Index of the first split
 		#[inline]
 		fn set_split(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_ml_DTrees_Node_propSplit_const_int(self.as_raw_mut_DTrees_Node(), val) };
 			ret
 		}
-		
+
 	}
-	
+
 	/// The class represents a decision tree node.
 	pub struct DTrees_Node {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { DTrees_Node }
-	
+
 	impl Drop for DTrees_Node {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_ml_DTrees_Node_delete(self.as_raw_mut_DTrees_Node()) };
 		}
 	}
-	
+
 	unsafe impl Send for DTrees_Node {}
-	
+
 	impl crate::ml::DTrees_NodeTraitConst for DTrees_Node {
 		#[inline] fn as_raw_DTrees_Node(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ml::DTrees_NodeTrait for DTrees_Node {
 		#[inline] fn as_raw_mut_DTrees_Node(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { DTrees_Node, crate::ml::DTrees_NodeTraitConst, as_raw_DTrees_Node, crate::ml::DTrees_NodeTrait, as_raw_mut_DTrees_Node }
-	
+
 	impl DTrees_Node {
 		#[inline]
 		pub fn default() -> Result<crate::ml::DTrees_Node> {
@@ -2197,9 +2198,9 @@ pub mod ml {
 			let ret = unsafe { crate::ml::DTrees_Node::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	impl std::fmt::Debug for DTrees_Node {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -2214,18 +2215,18 @@ pub mod ml {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::ml::DTrees_Split]
 	pub trait DTrees_SplitTraitConst {
 		fn as_raw_DTrees_Split(&self) -> *const c_void;
-	
+
 		/// Index of variable on which the split is created.
 		#[inline]
 		fn var_idx(&self) -> i32 {
 			let ret = unsafe { sys::cv_ml_DTrees_Split_propVarIdx_const(self.as_raw_DTrees_Split()) };
 			ret
 		}
-		
+
 		/// If true, then the inverse split rule is used (i.e. left and right
 		/// branches are exchanged in the rule expressions below).
 		#[inline]
@@ -2233,21 +2234,21 @@ pub mod ml {
 			let ret = unsafe { sys::cv_ml_DTrees_Split_propInversed_const(self.as_raw_DTrees_Split()) };
 			ret
 		}
-		
+
 		/// The split quality, a positive number. It is used to choose the best split.
 		#[inline]
 		fn quality(&self) -> f32 {
 			let ret = unsafe { sys::cv_ml_DTrees_Split_propQuality_const(self.as_raw_DTrees_Split()) };
 			ret
 		}
-		
+
 		/// Index of the next split in the list of splits for the node
 		#[inline]
 		fn next(&self) -> i32 {
 			let ret = unsafe { sys::cv_ml_DTrees_Split_propNext_const(self.as_raw_DTrees_Split()) };
 			ret
 		}
-		
+
 		/// < The threshold value in case of split on an ordered variable.
 		/// The rule is:
 		/// ```C++
@@ -2255,13 +2256,13 @@ pub mod ml {
 		///   then next_node <- left
 		///   else next_node <- right
 		/// ```
-		/// 
+		///
 		#[inline]
 		fn c(&self) -> f32 {
 			let ret = unsafe { sys::cv_ml_DTrees_Split_propC_const(self.as_raw_DTrees_Split()) };
 			ret
 		}
-		
+
 		/// < Offset of the bitset used by the split on a categorical variable.
 		/// The rule is:
 		/// ```C++
@@ -2269,26 +2270,26 @@ pub mod ml {
 		///    then next_node <- left
 		///    else next_node <- right
 		/// ```
-		/// 
+		///
 		#[inline]
 		fn subset_ofs(&self) -> i32 {
 			let ret = unsafe { sys::cv_ml_DTrees_Split_propSubsetOfs_const(self.as_raw_DTrees_Split()) };
 			ret
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::ml::DTrees_Split]
 	pub trait DTrees_SplitTrait: crate::ml::DTrees_SplitTraitConst {
 		fn as_raw_mut_DTrees_Split(&mut self) -> *mut c_void;
-	
+
 		/// Index of variable on which the split is created.
 		#[inline]
 		fn set_var_idx(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_ml_DTrees_Split_propVarIdx_const_int(self.as_raw_mut_DTrees_Split(), val) };
 			ret
 		}
-		
+
 		/// If true, then the inverse split rule is used (i.e. left and right
 		/// branches are exchanged in the rule expressions below).
 		#[inline]
@@ -2296,21 +2297,21 @@ pub mod ml {
 			let ret = unsafe { sys::cv_ml_DTrees_Split_propInversed_const_bool(self.as_raw_mut_DTrees_Split(), val) };
 			ret
 		}
-		
+
 		/// The split quality, a positive number. It is used to choose the best split.
 		#[inline]
 		fn set_quality(&mut self, val: f32) {
 			let ret = unsafe { sys::cv_ml_DTrees_Split_propQuality_const_float(self.as_raw_mut_DTrees_Split(), val) };
 			ret
 		}
-		
+
 		/// Index of the next split in the list of splits for the node
 		#[inline]
 		fn set_next(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_ml_DTrees_Split_propNext_const_int(self.as_raw_mut_DTrees_Split(), val) };
 			ret
 		}
-		
+
 		/// < The threshold value in case of split on an ordered variable.
 		/// The rule is:
 		/// ```C++
@@ -2318,13 +2319,13 @@ pub mod ml {
 		///   then next_node <- left
 		///   else next_node <- right
 		/// ```
-		/// 
+		///
 		#[inline]
 		fn set_c(&mut self, val: f32) {
 			let ret = unsafe { sys::cv_ml_DTrees_Split_propC_const_float(self.as_raw_mut_DTrees_Split(), val) };
 			ret
 		}
-		
+
 		/// < Offset of the bitset used by the split on a categorical variable.
 		/// The rule is:
 		/// ```C++
@@ -2332,41 +2333,41 @@ pub mod ml {
 		///    then next_node <- left
 		///    else next_node <- right
 		/// ```
-		/// 
+		///
 		#[inline]
 		fn set_subset_ofs(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_ml_DTrees_Split_propSubsetOfs_const_int(self.as_raw_mut_DTrees_Split(), val) };
 			ret
 		}
-		
+
 	}
-	
+
 	/// The class represents split in a decision tree.
 	pub struct DTrees_Split {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { DTrees_Split }
-	
+
 	impl Drop for DTrees_Split {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_ml_DTrees_Split_delete(self.as_raw_mut_DTrees_Split()) };
 		}
 	}
-	
+
 	unsafe impl Send for DTrees_Split {}
-	
+
 	impl crate::ml::DTrees_SplitTraitConst for DTrees_Split {
 		#[inline] fn as_raw_DTrees_Split(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ml::DTrees_SplitTrait for DTrees_Split {
 		#[inline] fn as_raw_mut_DTrees_Split(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { DTrees_Split, crate::ml::DTrees_SplitTraitConst, as_raw_DTrees_Split, crate::ml::DTrees_SplitTrait, as_raw_mut_DTrees_Split }
-	
+
 	impl DTrees_Split {
 		#[inline]
 		pub fn default() -> Result<crate::ml::DTrees_Split> {
@@ -2377,9 +2378,9 @@ pub mod ml {
 			let ret = unsafe { crate::ml::DTrees_Split::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	impl std::fmt::Debug for DTrees_Split {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -2393,11 +2394,11 @@ pub mod ml {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::ml::EM]
 	pub trait EMTraitConst: crate::ml::StatModelTraitConst {
 		fn as_raw_EM(&self) -> *const c_void;
-	
+
 		/// The number of mixture components in the Gaussian mixture model.
 		///    Default value of the parameter is EM::DEFAULT_NCLUSTERS=5. Some of %EM implementation could
 		///    determine the optimal number of mixtures within a specified value range, but that is not the
@@ -2412,7 +2413,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Constraint on covariance matrices which defines type of matrices.
 		///    See EM::Types.
 		/// ## See also
@@ -2425,7 +2426,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// The termination criteria of the %EM algorithm.
 		///    The %EM algorithm can be terminated by the number of iterations termCrit.maxCount (number of
 		///    M-steps) or when relative change of likelihood logarithm is less than termCrit.epsilon. Default
@@ -2440,9 +2441,9 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns weights of the mixtures
-		/// 
+		///
 		/// Returns vector with the number of elements equal to the number of mixtures.
 		#[inline]
 		fn get_weights(&self) -> Result<core::Mat> {
@@ -2453,9 +2454,9 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Returns the cluster centers (means of the Gaussian mixture)
-		/// 
+		///
 		/// Returns matrix with the number of rows equal to the number of mixtures and number of columns
 		/// equal to the space dimensionality.
 		#[inline]
@@ -2467,9 +2468,9 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Returns covariation matrices
-		/// 
+		///
 		/// Returns vector of covariation matrices. Number of matrices is the number of gaussian mixtures,
 		/// each matrix is a square floating-point matrix NxN, where N is the space dimensionality.
 		#[inline]
@@ -2480,15 +2481,15 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns posterior probabilities for the provided samples
-		/// 
+		///
 		/// ## Parameters
 		/// * samples: The input samples, floating-point matrix
 		/// * results: The optional output ![inline formula](https://latex.codecogs.com/png.latex?%20nSamples%20%5Ctimes%20nClusters) matrix of results. It contains
 		/// posterior probabilities for each sample from the input
 		/// * flags: This parameter will be ignored
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * results: noArray()
 		/// * flags: 0
@@ -2502,15 +2503,15 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns posterior probabilities for the provided samples
-		/// 
+		///
 		/// ## Parameters
 		/// * samples: The input samples, floating-point matrix
 		/// * results: The optional output ![inline formula](https://latex.codecogs.com/png.latex?%20nSamples%20%5Ctimes%20nClusters) matrix of results. It contains
 		/// posterior probabilities for each sample from the input
 		/// * flags: This parameter will be ignored
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [EMTraitConst::predict] function uses the following default values for its arguments:
 		/// * results: noArray()
@@ -2524,16 +2525,16 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns a likelihood logarithm value and an index of the most probable mixture component
 		/// for the given sample.
-		/// 
+		///
 		/// ## Parameters
 		/// * sample: A sample for classification. It should be a one-channel matrix of
 		///    ![inline formula](https://latex.codecogs.com/png.latex?1%20%5Ctimes%20dims) or ![inline formula](https://latex.codecogs.com/png.latex?dims%20%5Ctimes%201) size.
 		/// * probs: Optional output matrix that contains posterior probabilities of each component
 		///    given the sample. It has ![inline formula](https://latex.codecogs.com/png.latex?1%20%5Ctimes%20nclusters) size and CV_64FC1 type.
-		/// 
+		///
 		/// The method returns a two-element double vector. Zero element is a likelihood logarithm value for
 		/// the sample. First element is an index of the most probable mixture component for the given
 		/// sample.
@@ -2547,13 +2548,13 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::ml::EM]
 	pub trait EMTrait: crate::ml::EMTraitConst + crate::ml::StatModelTrait {
 		fn as_raw_mut_EM(&mut self) -> *mut c_void;
-	
+
 		/// The number of mixture components in the Gaussian mixture model.
 		///    Default value of the parameter is EM::DEFAULT_NCLUSTERS=5. Some of %EM implementation could
 		///    determine the optimal number of mixtures within a specified value range, but that is not the
@@ -2568,7 +2569,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Constraint on covariance matrices which defines type of matrices.
 		///    See EM::Types.
 		/// ## See also
@@ -2581,7 +2582,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// The termination criteria of the %EM algorithm.
 		///    The %EM algorithm can be terminated by the number of iterations termCrit.maxCount (number of
 		///    M-steps) or when relative change of likelihood logarithm is less than termCrit.epsilon. Default
@@ -2596,12 +2597,12 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Estimate the Gaussian mixture parameters from a samples set.
-		/// 
+		///
 		/// This variation starts with Expectation step. Initial values of the model parameters will be
 		/// estimated by the k-means algorithm.
-		/// 
+		///
 		/// Unlike many of the ML models, %EM is an unsupervised learning algorithm and it does not take
 		/// responses (class labels or function values) as input. Instead, it computes the *Maximum
 		/// Likelihood Estimate* of the Gaussian mixture parameters from an input sample set, stores all the
@@ -2609,10 +2610,10 @@ pub mod ml {
 		/// covs[k], ![inline formula](https://latex.codecogs.com/png.latex?%5Cpi%5Fk) in weights , and optionally computes the output "class label" for each
 		/// sample: ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Blabels%7D%5Fi%3D%5Ctexttt%7Barg%20max%7D%5Fk%28p%5F%7Bi%2Ck%7D%29%2C%20i%3D1%2E%2EN) (indices of the most
 		/// probable mixture component for each sample).
-		/// 
+		///
 		/// The trained model can be used further for prediction, just like any other classifier. The
 		/// trained model is similar to the NormalBayesClassifier.
-		/// 
+		///
 		/// ## Parameters
 		/// * samples: Samples from which the Gaussian mixture model will be estimated. It should be a
 		///    one-channel matrix, each row of which is a sample. If the matrix does not have CV_64F type
@@ -2625,7 +2626,7 @@ pub mod ml {
 		/// * probs: The optional output matrix that contains posterior probabilities of each Gaussian
 		///    mixture component given the each sample. It has ![inline formula](https://latex.codecogs.com/png.latex?nsamples%20%5Ctimes%20nclusters) size and
 		///    CV_64FC1 type.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * log_likelihoods: noArray()
 		/// * labels: noArray()
@@ -2642,12 +2643,12 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Estimate the Gaussian mixture parameters from a samples set.
-		/// 
+		///
 		/// This variation starts with Expectation step. Initial values of the model parameters will be
 		/// estimated by the k-means algorithm.
-		/// 
+		///
 		/// Unlike many of the ML models, %EM is an unsupervised learning algorithm and it does not take
 		/// responses (class labels or function values) as input. Instead, it computes the *Maximum
 		/// Likelihood Estimate* of the Gaussian mixture parameters from an input sample set, stores all the
@@ -2655,10 +2656,10 @@ pub mod ml {
 		/// covs[k], ![inline formula](https://latex.codecogs.com/png.latex?%5Cpi%5Fk) in weights , and optionally computes the output "class label" for each
 		/// sample: ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Blabels%7D%5Fi%3D%5Ctexttt%7Barg%20max%7D%5Fk%28p%5F%7Bi%2Ck%7D%29%2C%20i%3D1%2E%2EN) (indices of the most
 		/// probable mixture component for each sample).
-		/// 
+		///
 		/// The trained model can be used further for prediction, just like any other classifier. The
 		/// trained model is similar to the NormalBayesClassifier.
-		/// 
+		///
 		/// ## Parameters
 		/// * samples: Samples from which the Gaussian mixture model will be estimated. It should be a
 		///    one-channel matrix, each row of which is a sample. If the matrix does not have CV_64F type
@@ -2671,7 +2672,7 @@ pub mod ml {
 		/// * probs: The optional output matrix that contains posterior probabilities of each Gaussian
 		///    mixture component given the each sample. It has ![inline formula](https://latex.codecogs.com/png.latex?nsamples%20%5Ctimes%20nclusters) size and
 		///    CV_64FC1 type.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [EMTrait::train_em] function uses the following default values for its arguments:
 		/// * log_likelihoods: noArray()
@@ -2686,13 +2687,13 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Estimate the Gaussian mixture parameters from a samples set.
-		/// 
+		///
 		/// This variation starts with Expectation step. You need to provide initial means ![inline formula](https://latex.codecogs.com/png.latex?a%5Fk) of
 		/// mixture components. Optionally you can pass initial weights ![inline formula](https://latex.codecogs.com/png.latex?%5Cpi%5Fk) and covariance matrices
 		/// ![inline formula](https://latex.codecogs.com/png.latex?S%5Fk) of mixture components.
-		/// 
+		///
 		/// ## Parameters
 		/// * samples: Samples from which the Gaussian mixture model will be estimated. It should be a
 		///    one-channel matrix, each row of which is a sample. If the matrix does not have CV_64F type
@@ -2714,7 +2715,7 @@ pub mod ml {
 		/// * probs: The optional output matrix that contains posterior probabilities of each Gaussian
 		///    mixture component given the each sample. It has ![inline formula](https://latex.codecogs.com/png.latex?nsamples%20%5Ctimes%20nclusters) size and
 		///    CV_64FC1 type.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * covs0: noArray()
 		/// * weights0: noArray()
@@ -2736,13 +2737,13 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Estimate the Gaussian mixture parameters from a samples set.
-		/// 
+		///
 		/// This variation starts with Expectation step. You need to provide initial means ![inline formula](https://latex.codecogs.com/png.latex?a%5Fk) of
 		/// mixture components. Optionally you can pass initial weights ![inline formula](https://latex.codecogs.com/png.latex?%5Cpi%5Fk) and covariance matrices
 		/// ![inline formula](https://latex.codecogs.com/png.latex?S%5Fk) of mixture components.
-		/// 
+		///
 		/// ## Parameters
 		/// * samples: Samples from which the Gaussian mixture model will be estimated. It should be a
 		///    one-channel matrix, each row of which is a sample. If the matrix does not have CV_64F type
@@ -2764,7 +2765,7 @@ pub mod ml {
 		/// * probs: The optional output matrix that contains posterior probabilities of each Gaussian
 		///    mixture component given the each sample. It has ![inline formula](https://latex.codecogs.com/png.latex?nsamples%20%5Ctimes%20nclusters) size and
 		///    CV_64FC1 type.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [EMTrait::train_e] function uses the following default values for its arguments:
 		/// * covs0: noArray()
@@ -2782,12 +2783,12 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Estimate the Gaussian mixture parameters from a samples set.
-		/// 
+		///
 		/// This variation starts with Maximization step. You need to provide initial probabilities
 		/// ![inline formula](https://latex.codecogs.com/png.latex?p%5F%7Bi%2Ck%7D) to use this option.
-		/// 
+		///
 		/// ## Parameters
 		/// * samples: Samples from which the Gaussian mixture model will be estimated. It should be a
 		///    one-channel matrix, each row of which is a sample. If the matrix does not have CV_64F type
@@ -2801,7 +2802,7 @@ pub mod ml {
 		/// * probs: The optional output matrix that contains posterior probabilities of each Gaussian
 		///    mixture component given the each sample. It has ![inline formula](https://latex.codecogs.com/png.latex?nsamples%20%5Ctimes%20nclusters) size and
 		///    CV_64FC1 type.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * log_likelihoods: noArray()
 		/// * labels: noArray()
@@ -2819,12 +2820,12 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Estimate the Gaussian mixture parameters from a samples set.
-		/// 
+		///
 		/// This variation starts with Maximization step. You need to provide initial probabilities
 		/// ![inline formula](https://latex.codecogs.com/png.latex?p%5F%7Bi%2Ck%7D) to use this option.
-		/// 
+		///
 		/// ## Parameters
 		/// * samples: Samples from which the Gaussian mixture model will be estimated. It should be a
 		///    one-channel matrix, each row of which is a sample. If the matrix does not have CV_64F type
@@ -2838,7 +2839,7 @@ pub mod ml {
 		/// * probs: The optional output matrix that contains posterior probabilities of each Gaussian
 		///    mixture component given the each sample. It has ![inline formula](https://latex.codecogs.com/png.latex?nsamples%20%5Ctimes%20nclusters) size and
 		///    CV_64FC1 type.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [EMTrait::train_m] function uses the following default values for its arguments:
 		/// * log_likelihoods: noArray()
@@ -2854,57 +2855,57 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// The class implements the Expectation Maximization algorithm.
 	/// ## See also
 	/// [ml_intro_em]
 	pub struct EM {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { EM }
-	
+
 	impl Drop for EM {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_ml_EM_delete(self.as_raw_mut_EM()) };
 		}
 	}
-	
+
 	unsafe impl Send for EM {}
-	
+
 	impl core::AlgorithmTraitConst for EM {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for EM {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { EM, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::ml::StatModelTraitConst for EM {
 		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ml::StatModelTrait for EM {
 		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { EM, crate::ml::StatModelTraitConst, as_raw_StatModel, crate::ml::StatModelTrait, as_raw_mut_StatModel }
-	
+
 	impl crate::ml::EMTraitConst for EM {
 		#[inline] fn as_raw_EM(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ml::EMTrait for EM {
 		#[inline] fn as_raw_mut_EM(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { EM, crate::ml::EMTraitConst, as_raw_EM, crate::ml::EMTrait, as_raw_mut_EM }
-	
+
 	impl EM {
 		/// Creates empty %EM model.
 		/// The model should be trained then using StatModel::train(traindata, flags) method. Alternatively, you
@@ -2918,17 +2919,17 @@ pub mod ml {
 			let ret = unsafe { core::Ptr::<crate::ml::EM>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Loads and creates a serialized EM from a file
-		/// 
+		///
 		/// Use EM::save to serialize and store an EM to disk.
 		/// Load the EM from this file again, by calling this function with the path to the file.
 		/// Optionally specify the node for the file containing the classifier
-		/// 
+		///
 		/// ## Parameters
 		/// * filepath: path to serialized EM
 		/// * nodeName: name of node containing the classifier
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * node_name: String()
 		#[inline]
@@ -2942,17 +2943,17 @@ pub mod ml {
 			let ret = unsafe { core::Ptr::<crate::ml::EM>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Loads and creates a serialized EM from a file
-		/// 
+		///
 		/// Use EM::save to serialize and store an EM to disk.
 		/// Load the EM from this file again, by calling this function with the path to the file.
 		/// Optionally specify the node for the file containing the classifier
-		/// 
+		///
 		/// ## Parameters
 		/// * filepath: path to serialized EM
 		/// * nodeName: name of node containing the classifier
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [EM::load] function uses the following default values for its arguments:
 		/// * node_name: String()
@@ -2966,13 +2967,13 @@ pub mod ml {
 			let ret = unsafe { core::Ptr::<crate::ml::EM>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	boxed_cast_base! { EM, core::Algorithm, cv_ml_EM_to_Algorithm }
-	
+
 	boxed_cast_base! { EM, crate::ml::StatModel, cv_ml_EM_to_StatModel }
-	
+
 	impl std::fmt::Debug for EM {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -2980,11 +2981,11 @@ pub mod ml {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::ml::KNearest]
 	pub trait KNearestTraitConst: crate::ml::StatModelTraitConst {
 		fn as_raw_KNearest(&self) -> *const c_void;
-	
+
 		/// Default number of neighbors to use in predict method.
 		/// ## See also
 		/// setDefaultK
@@ -2996,7 +2997,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Whether classification or regression model should be trained.
 		/// ## See also
 		/// setIsClassifier
@@ -3008,7 +3009,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Parameter for KDTree implementation.
 		/// ## See also
 		/// setEmax
@@ -3020,7 +3021,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// %Algorithm type, one of KNearest::Types.
 		/// ## See also
 		/// setAlgorithmType
@@ -3032,9 +3033,9 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Finds the neighbors and predicts responses for input vectors.
-		/// 
+		///
 		/// ## Parameters
 		/// * samples: Input samples stored by rows. It is a single-precision floating-point matrix of
 		///    `<number_of_samples> * k` size.
@@ -3045,21 +3046,21 @@ pub mod ml {
 		///    precision floating-point matrix of `<number_of_samples> * k` size.
 		/// * dist: Optional output distances from the input vectors to the corresponding neighbors. It
 		///    is a single-precision floating-point matrix of `<number_of_samples> * k` size.
-		/// 
+		///
 		/// For each input vector (a row of the matrix samples), the method finds the k nearest neighbors.
 		/// In case of regression, the predicted result is a mean value of the particular vector's neighbor
 		/// responses. In case of classification, the class is determined by voting.
-		/// 
+		///
 		/// For each input vector, the neighbors are sorted by their distances to the vector.
-		/// 
+		///
 		/// In case of C++ interface you can use output pointers to empty matrices and the function will
 		/// allocate memory itself.
-		/// 
+		///
 		/// If only a single input vector is passed, all output matrices are optional and the predicted
 		/// value is returned by the method.
-		/// 
+		///
 		/// The function is parallelized with the TBB library.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * neighbor_responses: noArray()
 		/// * dist: noArray()
@@ -3075,9 +3076,9 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Finds the neighbors and predicts responses for input vectors.
-		/// 
+		///
 		/// ## Parameters
 		/// * samples: Input samples stored by rows. It is a single-precision floating-point matrix of
 		///    `<number_of_samples> * k` size.
@@ -3088,21 +3089,21 @@ pub mod ml {
 		///    precision floating-point matrix of `<number_of_samples> * k` size.
 		/// * dist: Optional output distances from the input vectors to the corresponding neighbors. It
 		///    is a single-precision floating-point matrix of `<number_of_samples> * k` size.
-		/// 
+		///
 		/// For each input vector (a row of the matrix samples), the method finds the k nearest neighbors.
 		/// In case of regression, the predicted result is a mean value of the particular vector's neighbor
 		/// responses. In case of classification, the class is determined by voting.
-		/// 
+		///
 		/// For each input vector, the neighbors are sorted by their distances to the vector.
-		/// 
+		///
 		/// In case of C++ interface you can use output pointers to empty matrices and the function will
 		/// allocate memory itself.
-		/// 
+		///
 		/// If only a single input vector is passed, all output matrices are optional and the predicted
 		/// value is returned by the method.
-		/// 
+		///
 		/// The function is parallelized with the TBB library.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [KNearestTraitConst::find_nearest] function uses the following default values for its arguments:
 		/// * neighbor_responses: noArray()
@@ -3117,13 +3118,13 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::ml::KNearest]
 	pub trait KNearestTrait: crate::ml::KNearestTraitConst + crate::ml::StatModelTrait {
 		fn as_raw_mut_KNearest(&mut self) -> *mut c_void;
-	
+
 		/// Default number of neighbors to use in predict method.
 		/// ## See also
 		/// setDefaultK getDefaultK
@@ -3135,7 +3136,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Whether classification or regression model should be trained.
 		/// ## See also
 		/// setIsClassifier getIsClassifier
@@ -3147,7 +3148,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Parameter for KDTree implementation.
 		/// ## See also
 		/// setEmax getEmax
@@ -3159,7 +3160,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// %Algorithm type, one of KNearest::Types.
 		/// ## See also
 		/// setAlgorithmType getAlgorithmType
@@ -3171,60 +3172,60 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// The class implements K-Nearest Neighbors model
 	/// ## See also
 	/// [ml_intro_knn]
 	pub struct KNearest {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { KNearest }
-	
+
 	impl Drop for KNearest {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_ml_KNearest_delete(self.as_raw_mut_KNearest()) };
 		}
 	}
-	
+
 	unsafe impl Send for KNearest {}
-	
+
 	impl core::AlgorithmTraitConst for KNearest {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for KNearest {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { KNearest, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::ml::StatModelTraitConst for KNearest {
 		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ml::StatModelTrait for KNearest {
 		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { KNearest, crate::ml::StatModelTraitConst, as_raw_StatModel, crate::ml::StatModelTrait, as_raw_mut_StatModel }
-	
+
 	impl crate::ml::KNearestTraitConst for KNearest {
 		#[inline] fn as_raw_KNearest(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ml::KNearestTrait for KNearest {
 		#[inline] fn as_raw_mut_KNearest(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { KNearest, crate::ml::KNearestTraitConst, as_raw_KNearest, crate::ml::KNearestTrait, as_raw_mut_KNearest }
-	
+
 	impl KNearest {
 		/// Creates the empty model
-		/// 
+		///
 		/// The static method creates empty %KNearest classifier. It should be then trained using StatModel::train method.
 		#[inline]
 		pub fn create() -> Result<core::Ptr<crate::ml::KNearest>> {
@@ -3235,12 +3236,12 @@ pub mod ml {
 			let ret = unsafe { core::Ptr::<crate::ml::KNearest>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Loads and creates a serialized knearest from a file
-		/// 
+		///
 		/// Use KNearest::save to serialize and store an KNearest to disk.
 		/// Load the KNearest from this file again, by calling this function with the path to the file.
-		/// 
+		///
 		/// ## Parameters
 		/// * filepath: path to serialized KNearest
 		#[inline]
@@ -3253,13 +3254,13 @@ pub mod ml {
 			let ret = unsafe { core::Ptr::<crate::ml::KNearest>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	boxed_cast_base! { KNearest, core::Algorithm, cv_ml_KNearest_to_Algorithm }
-	
+
 	boxed_cast_base! { KNearest, crate::ml::StatModel, cv_ml_KNearest_to_StatModel }
-	
+
 	impl std::fmt::Debug for KNearest {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -3267,11 +3268,11 @@ pub mod ml {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::ml::LogisticRegression]
 	pub trait LogisticRegressionTraitConst: crate::ml::StatModelTraitConst {
 		fn as_raw_LogisticRegression(&self) -> *const c_void;
-	
+
 		/// Learning rate.
 		/// ## See also
 		/// setLearningRate
@@ -3283,7 +3284,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Number of iterations.
 		/// ## See also
 		/// setIterations
@@ -3295,7 +3296,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Kind of regularization to be applied. See LogisticRegression::RegKinds.
 		/// ## See also
 		/// setRegularization
@@ -3307,7 +3308,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Kind of training method used. See LogisticRegression::Methods.
 		/// ## See also
 		/// setTrainMethod
@@ -3319,7 +3320,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Specifies the number of training samples taken in each step of Mini-Batch Gradient
 		///    Descent. Will only be used if using LogisticRegression::MINI_BATCH training algorithm. It
 		///    has to take values less than the total number of training samples.
@@ -3333,7 +3334,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Termination criteria of the algorithm.
 		/// ## See also
 		/// setTermCriteria
@@ -3345,15 +3346,15 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Predicts responses for input samples and returns a float type.
-		/// 
+		///
 		/// ## Parameters
 		/// * samples: The input data for the prediction algorithm. Matrix [m x n], where each row
 		///    contains variables (features) of one object being classified. Should have data type CV_32F.
 		/// * results: Predicted labels as a column matrix of type CV_32S.
 		/// * flags: Not used.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * results: noArray()
 		/// * flags: 0
@@ -3367,15 +3368,15 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Predicts responses for input samples and returns a float type.
-		/// 
+		///
 		/// ## Parameters
 		/// * samples: The input data for the prediction algorithm. Matrix [m x n], where each row
 		///    contains variables (features) of one object being classified. Should have data type CV_32F.
 		/// * results: Predicted labels as a column matrix of type CV_32S.
 		/// * flags: Not used.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [LogisticRegressionTraitConst::predict] function uses the following default values for its arguments:
 		/// * results: noArray()
@@ -3389,9 +3390,9 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// This function returns the trained parameters arranged across rows.
-		/// 
+		///
 		/// For a two class classification problem, it returns a row matrix. It returns learnt parameters of
 		/// the Logistic Regression as a matrix of type CV_32F.
 		#[inline]
@@ -3403,13 +3404,13 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::ml::LogisticRegression]
 	pub trait LogisticRegressionTrait: crate::ml::LogisticRegressionTraitConst + crate::ml::StatModelTrait {
 		fn as_raw_mut_LogisticRegression(&mut self) -> *mut c_void;
-	
+
 		/// Learning rate.
 		/// ## See also
 		/// setLearningRate getLearningRate
@@ -3421,7 +3422,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Number of iterations.
 		/// ## See also
 		/// setIterations getIterations
@@ -3433,7 +3434,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Kind of regularization to be applied. See LogisticRegression::RegKinds.
 		/// ## See also
 		/// setRegularization getRegularization
@@ -3445,7 +3446,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Kind of training method used. See LogisticRegression::Methods.
 		/// ## See also
 		/// setTrainMethod getTrainMethod
@@ -3457,7 +3458,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Specifies the number of training samples taken in each step of Mini-Batch Gradient
 		///    Descent. Will only be used if using LogisticRegression::MINI_BATCH training algorithm. It
 		///    has to take values less than the total number of training samples.
@@ -3471,7 +3472,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Termination criteria of the algorithm.
 		/// ## See also
 		/// setTermCriteria getTermCriteria
@@ -3483,60 +3484,60 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Implements Logistic Regression classifier.
 	/// ## See also
 	/// [ml_intro_lr]
 	pub struct LogisticRegression {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { LogisticRegression }
-	
+
 	impl Drop for LogisticRegression {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_ml_LogisticRegression_delete(self.as_raw_mut_LogisticRegression()) };
 		}
 	}
-	
+
 	unsafe impl Send for LogisticRegression {}
-	
+
 	impl core::AlgorithmTraitConst for LogisticRegression {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for LogisticRegression {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { LogisticRegression, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::ml::StatModelTraitConst for LogisticRegression {
 		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ml::StatModelTrait for LogisticRegression {
 		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { LogisticRegression, crate::ml::StatModelTraitConst, as_raw_StatModel, crate::ml::StatModelTrait, as_raw_mut_StatModel }
-	
+
 	impl crate::ml::LogisticRegressionTraitConst for LogisticRegression {
 		#[inline] fn as_raw_LogisticRegression(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ml::LogisticRegressionTrait for LogisticRegression {
 		#[inline] fn as_raw_mut_LogisticRegression(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { LogisticRegression, crate::ml::LogisticRegressionTraitConst, as_raw_LogisticRegression, crate::ml::LogisticRegressionTrait, as_raw_mut_LogisticRegression }
-	
+
 	impl LogisticRegression {
 		/// Creates empty model.
-		/// 
+		///
 		/// Creates Logistic Regression model with parameters given.
 		#[inline]
 		pub fn create() -> Result<core::Ptr<crate::ml::LogisticRegression>> {
@@ -3547,17 +3548,17 @@ pub mod ml {
 			let ret = unsafe { core::Ptr::<crate::ml::LogisticRegression>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Loads and creates a serialized LogisticRegression from a file
-		/// 
+		///
 		/// Use LogisticRegression::save to serialize and store an LogisticRegression to disk.
 		/// Load the LogisticRegression from this file again, by calling this function with the path to the file.
 		/// Optionally specify the node for the file containing the classifier
-		/// 
+		///
 		/// ## Parameters
 		/// * filepath: path to serialized LogisticRegression
 		/// * nodeName: name of node containing the classifier
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * node_name: String()
 		#[inline]
@@ -3571,17 +3572,17 @@ pub mod ml {
 			let ret = unsafe { core::Ptr::<crate::ml::LogisticRegression>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Loads and creates a serialized LogisticRegression from a file
-		/// 
+		///
 		/// Use LogisticRegression::save to serialize and store an LogisticRegression to disk.
 		/// Load the LogisticRegression from this file again, by calling this function with the path to the file.
 		/// Optionally specify the node for the file containing the classifier
-		/// 
+		///
 		/// ## Parameters
 		/// * filepath: path to serialized LogisticRegression
 		/// * nodeName: name of node containing the classifier
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [LogisticRegression::load] function uses the following default values for its arguments:
 		/// * node_name: String()
@@ -3595,13 +3596,13 @@ pub mod ml {
 			let ret = unsafe { core::Ptr::<crate::ml::LogisticRegression>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	boxed_cast_base! { LogisticRegression, core::Algorithm, cv_ml_LogisticRegression_to_Algorithm }
-	
+
 	boxed_cast_base! { LogisticRegression, crate::ml::StatModel, cv_ml_LogisticRegression_to_StatModel }
-	
+
 	impl std::fmt::Debug for LogisticRegression {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -3609,19 +3610,19 @@ pub mod ml {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::ml::NormalBayesClassifier]
 	pub trait NormalBayesClassifierTraitConst: crate::ml::StatModelTraitConst {
 		fn as_raw_NormalBayesClassifier(&self) -> *const c_void;
-	
+
 		/// Predicts the response for sample(s).
-		/// 
+		///
 		/// The method estimates the most probable classes for input vectors. Input vectors (one or more)
 		/// are stored as rows of the matrix inputs. In case of multiple input vectors, there should be one
 		/// output vector outputs. The predicted class for a single input vector is returned by the method.
 		/// The vector outputProbs contains the output probabilities corresponding to each element of
 		/// result.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * flags: 0
 		#[inline]
@@ -3635,15 +3636,15 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Predicts the response for sample(s).
-		/// 
+		///
 		/// The method estimates the most probable classes for input vectors. Input vectors (one or more)
 		/// are stored as rows of the matrix inputs. In case of multiple input vectors, there should be one
 		/// output vector outputs. The predicted class for a single input vector is returned by the method.
 		/// The vector outputProbs contains the output probabilities corresponding to each element of
 		/// result.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [NormalBayesClassifierTraitConst::predict_prob] function uses the following default values for its arguments:
 		/// * flags: 0
@@ -3658,63 +3659,63 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::ml::NormalBayesClassifier]
 	pub trait NormalBayesClassifierTrait: crate::ml::NormalBayesClassifierTraitConst + crate::ml::StatModelTrait {
 		fn as_raw_mut_NormalBayesClassifier(&mut self) -> *mut c_void;
-	
+
 	}
-	
+
 	/// Bayes classifier for normally distributed data.
 	/// ## See also
 	/// [ml_intro_bayes]
 	pub struct NormalBayesClassifier {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { NormalBayesClassifier }
-	
+
 	impl Drop for NormalBayesClassifier {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_ml_NormalBayesClassifier_delete(self.as_raw_mut_NormalBayesClassifier()) };
 		}
 	}
-	
+
 	unsafe impl Send for NormalBayesClassifier {}
-	
+
 	impl core::AlgorithmTraitConst for NormalBayesClassifier {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for NormalBayesClassifier {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { NormalBayesClassifier, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::ml::StatModelTraitConst for NormalBayesClassifier {
 		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ml::StatModelTrait for NormalBayesClassifier {
 		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { NormalBayesClassifier, crate::ml::StatModelTraitConst, as_raw_StatModel, crate::ml::StatModelTrait, as_raw_mut_StatModel }
-	
+
 	impl crate::ml::NormalBayesClassifierTraitConst for NormalBayesClassifier {
 		#[inline] fn as_raw_NormalBayesClassifier(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ml::NormalBayesClassifierTrait for NormalBayesClassifier {
 		#[inline] fn as_raw_mut_NormalBayesClassifier(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { NormalBayesClassifier, crate::ml::NormalBayesClassifierTraitConst, as_raw_NormalBayesClassifier, crate::ml::NormalBayesClassifierTrait, as_raw_mut_NormalBayesClassifier }
-	
+
 	impl NormalBayesClassifier {
 		/// Creates empty model
 		/// Use StatModel::train to train the model after creation.
@@ -3727,17 +3728,17 @@ pub mod ml {
 			let ret = unsafe { core::Ptr::<crate::ml::NormalBayesClassifier>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Loads and creates a serialized NormalBayesClassifier from a file
-		/// 
+		///
 		/// Use NormalBayesClassifier::save to serialize and store an NormalBayesClassifier to disk.
 		/// Load the NormalBayesClassifier from this file again, by calling this function with the path to the file.
 		/// Optionally specify the node for the file containing the classifier
-		/// 
+		///
 		/// ## Parameters
 		/// * filepath: path to serialized NormalBayesClassifier
 		/// * nodeName: name of node containing the classifier
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * node_name: String()
 		#[inline]
@@ -3751,17 +3752,17 @@ pub mod ml {
 			let ret = unsafe { core::Ptr::<crate::ml::NormalBayesClassifier>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Loads and creates a serialized NormalBayesClassifier from a file
-		/// 
+		///
 		/// Use NormalBayesClassifier::save to serialize and store an NormalBayesClassifier to disk.
 		/// Load the NormalBayesClassifier from this file again, by calling this function with the path to the file.
 		/// Optionally specify the node for the file containing the classifier
-		/// 
+		///
 		/// ## Parameters
 		/// * filepath: path to serialized NormalBayesClassifier
 		/// * nodeName: name of node containing the classifier
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [NormalBayesClassifier::load] function uses the following default values for its arguments:
 		/// * node_name: String()
@@ -3775,13 +3776,13 @@ pub mod ml {
 			let ret = unsafe { core::Ptr::<crate::ml::NormalBayesClassifier>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	boxed_cast_base! { NormalBayesClassifier, core::Algorithm, cv_ml_NormalBayesClassifier_to_Algorithm }
-	
+
 	boxed_cast_base! { NormalBayesClassifier, crate::ml::StatModel, cv_ml_NormalBayesClassifier_to_StatModel }
-	
+
 	impl std::fmt::Debug for NormalBayesClassifier {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -3789,27 +3790,27 @@ pub mod ml {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::ml::ParamGrid]
 	pub trait ParamGridTraitConst {
 		fn as_raw_ParamGrid(&self) -> *const c_void;
-	
+
 		/// Minimum value of the statmodel parameter. Default value is 0.
 		#[inline]
 		fn min_val(&self) -> f64 {
 			let ret = unsafe { sys::cv_ml_ParamGrid_propMinVal_const(self.as_raw_ParamGrid()) };
 			ret
 		}
-		
+
 		/// Maximum value of the statmodel parameter. Default value is 0.
 		#[inline]
 		fn max_val(&self) -> f64 {
 			let ret = unsafe { sys::cv_ml_ParamGrid_propMaxVal_const(self.as_raw_ParamGrid()) };
 			ret
 		}
-		
+
 		/// Logarithmic step for iterating the statmodel parameter.
-		/// 
+		///
 		/// The grid determines the following iteration sequence of the statmodel parameter values:
 		/// ![block formula](https://latex.codecogs.com/png.latex?%28minVal%2C%20minVal%2Astep%2C%20minVal%2A%7Bstep%7D%5E2%2C%20%5Cdots%2C%20%20minVal%2A%7BlogStep%7D%5En%29%2C)
 		/// where ![inline formula](https://latex.codecogs.com/png.latex?n) is the maximal index satisfying
@@ -3820,29 +3821,29 @@ pub mod ml {
 			let ret = unsafe { sys::cv_ml_ParamGrid_propLogStep_const(self.as_raw_ParamGrid()) };
 			ret
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::ml::ParamGrid]
 	pub trait ParamGridTrait: crate::ml::ParamGridTraitConst {
 		fn as_raw_mut_ParamGrid(&mut self) -> *mut c_void;
-	
+
 		/// Minimum value of the statmodel parameter. Default value is 0.
 		#[inline]
 		fn set_min_val(&mut self, val: f64) {
 			let ret = unsafe { sys::cv_ml_ParamGrid_propMinVal_const_double(self.as_raw_mut_ParamGrid(), val) };
 			ret
 		}
-		
+
 		/// Maximum value of the statmodel parameter. Default value is 0.
 		#[inline]
 		fn set_max_val(&mut self, val: f64) {
 			let ret = unsafe { sys::cv_ml_ParamGrid_propMaxVal_const_double(self.as_raw_mut_ParamGrid(), val) };
 			ret
 		}
-		
+
 		/// Logarithmic step for iterating the statmodel parameter.
-		/// 
+		///
 		/// The grid determines the following iteration sequence of the statmodel parameter values:
 		/// ![block formula](https://latex.codecogs.com/png.latex?%28minVal%2C%20minVal%2Astep%2C%20minVal%2A%7Bstep%7D%5E2%2C%20%5Cdots%2C%20%20minVal%2A%7BlogStep%7D%5En%29%2C)
 		/// where ![inline formula](https://latex.codecogs.com/png.latex?n) is the maximal index satisfying
@@ -3853,38 +3854,38 @@ pub mod ml {
 			let ret = unsafe { sys::cv_ml_ParamGrid_propLogStep_const_double(self.as_raw_mut_ParamGrid(), val) };
 			ret
 		}
-		
+
 	}
-	
+
 	/// The structure represents the logarithmic grid range of statmodel parameters.
-	/// 
+	///
 	/// It is used for optimizing statmodel accuracy by varying model parameters, the accuracy estimate
 	/// being computed by cross-validation.
 	pub struct ParamGrid {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { ParamGrid }
-	
+
 	impl Drop for ParamGrid {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_ml_ParamGrid_delete(self.as_raw_mut_ParamGrid()) };
 		}
 	}
-	
+
 	unsafe impl Send for ParamGrid {}
-	
+
 	impl crate::ml::ParamGridTraitConst for ParamGrid {
 		#[inline] fn as_raw_ParamGrid(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ml::ParamGridTrait for ParamGrid {
 		#[inline] fn as_raw_mut_ParamGrid(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { ParamGrid, crate::ml::ParamGridTraitConst, as_raw_ParamGrid, crate::ml::ParamGridTrait, as_raw_mut_ParamGrid }
-	
+
 	impl ParamGrid {
 		/// Default constructor
 		#[inline]
@@ -3896,7 +3897,7 @@ pub mod ml {
 			let ret = unsafe { crate::ml::ParamGrid::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Constructor with parameters
 		#[inline]
 		pub fn for_range(_min_val: f64, _max_val: f64, _log_step: f64) -> Result<crate::ml::ParamGrid> {
@@ -3907,14 +3908,14 @@ pub mod ml {
 			let ret = unsafe { crate::ml::ParamGrid::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Creates a ParamGrid Ptr that can be given to the %SVM::trainAuto method
-		/// 
+		///
 		/// ## Parameters
 		/// * minVal: minimum value of the parameter grid
 		/// * maxVal: maximum value of the parameter grid
 		/// * logstep: Logarithmic step for iterating the statmodel parameter
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * min_val: 0.
 		/// * max_val: 0.
@@ -3928,14 +3929,14 @@ pub mod ml {
 			let ret = unsafe { core::Ptr::<crate::ml::ParamGrid>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Creates a ParamGrid Ptr that can be given to the %SVM::trainAuto method
-		/// 
+		///
 		/// ## Parameters
 		/// * minVal: minimum value of the parameter grid
 		/// * maxVal: maximum value of the parameter grid
 		/// * logstep: Logarithmic step for iterating the statmodel parameter
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [ParamGrid::create] function uses the following default values for its arguments:
 		/// * min_val: 0.
@@ -3950,9 +3951,9 @@ pub mod ml {
 			let ret = unsafe { core::Ptr::<crate::ml::ParamGrid>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	impl std::fmt::Debug for ParamGrid {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -3963,11 +3964,11 @@ pub mod ml {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::ml::RTrees]
 	pub trait RTreesTraitConst: crate::ml::DTreesTraitConst {
 		fn as_raw_RTrees(&self) -> *const c_void;
-	
+
 		/// If true then variable importance will be calculated and then it can be retrieved by RTrees::getVarImportance.
 		///    Default value is false.
 		/// ## See also
@@ -3980,7 +3981,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// The size of the randomly selected subset of features at each tree node and that are used
 		///    to find the best split(s).
 		///    If you set it to 0 then the size will be set to the square root of the total number of
@@ -3995,7 +3996,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// The termination criteria that specifies when the training algorithm stops.
 		///    Either when the specified number of trees is trained and added to the ensemble or when
 		///    sufficient accuracy (measured as OOB error) is achieved. Typically the more trees you have the
@@ -4013,7 +4014,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns the variable importance array.
 		/// The method returns the variable importance vector, computed at the training stage when
 		/// CalculateVarImportance is set to true. If this flag was set to false, the empty matrix is
@@ -4027,7 +4028,7 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Returns the result of each individual tree in the forest.
 		/// In case the model is a regression problem, the method will return each of the trees'
 		/// results for each of the sample cases. If the model is a classifier, it will return
@@ -4047,7 +4048,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_oob_error(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
@@ -4056,13 +4057,13 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::ml::RTrees]
 	pub trait RTreesTrait: crate::ml::DTreesTrait + crate::ml::RTreesTraitConst {
 		fn as_raw_mut_RTrees(&mut self) -> *mut c_void;
-	
+
 		/// If true then variable importance will be calculated and then it can be retrieved by RTrees::getVarImportance.
 		///    Default value is false.
 		/// ## See also
@@ -4075,7 +4076,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// The size of the randomly selected subset of features at each tree node and that are used
 		///    to find the best split(s).
 		///    If you set it to 0 then the size will be set to the square root of the total number of
@@ -4090,7 +4091,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// The termination criteria that specifies when the training algorithm stops.
 		///    Either when the specified number of trees is trained and added to the ensemble or when
 		///    sufficient accuracy (measured as OOB error) is achieved. Typically the more trees you have the
@@ -4108,67 +4109,67 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// The class implements the random forest predictor.
 	/// ## See also
 	/// [ml_intro_rtrees]
 	pub struct RTrees {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { RTrees }
-	
+
 	impl Drop for RTrees {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_ml_RTrees_delete(self.as_raw_mut_RTrees()) };
 		}
 	}
-	
+
 	unsafe impl Send for RTrees {}
-	
+
 	impl core::AlgorithmTraitConst for RTrees {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for RTrees {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { RTrees, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::ml::DTreesTraitConst for RTrees {
 		#[inline] fn as_raw_DTrees(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ml::DTreesTrait for RTrees {
 		#[inline] fn as_raw_mut_DTrees(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { RTrees, crate::ml::DTreesTraitConst, as_raw_DTrees, crate::ml::DTreesTrait, as_raw_mut_DTrees }
-	
+
 	impl crate::ml::StatModelTraitConst for RTrees {
 		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ml::StatModelTrait for RTrees {
 		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { RTrees, crate::ml::StatModelTraitConst, as_raw_StatModel, crate::ml::StatModelTrait, as_raw_mut_StatModel }
-	
+
 	impl crate::ml::RTreesTraitConst for RTrees {
 		#[inline] fn as_raw_RTrees(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ml::RTreesTrait for RTrees {
 		#[inline] fn as_raw_mut_RTrees(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { RTrees, crate::ml::RTreesTraitConst, as_raw_RTrees, crate::ml::RTreesTrait, as_raw_mut_RTrees }
-	
+
 	impl RTrees {
 		/// Creates the empty model.
 		/// Use StatModel::train to train the model, StatModel::train to create and train the model,
@@ -4182,17 +4183,17 @@ pub mod ml {
 			let ret = unsafe { core::Ptr::<crate::ml::RTrees>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Loads and creates a serialized RTree from a file
-		/// 
+		///
 		/// Use RTree::save to serialize and store an RTree to disk.
 		/// Load the RTree from this file again, by calling this function with the path to the file.
 		/// Optionally specify the node for the file containing the classifier
-		/// 
+		///
 		/// ## Parameters
 		/// * filepath: path to serialized RTree
 		/// * nodeName: name of node containing the classifier
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * node_name: String()
 		#[inline]
@@ -4206,17 +4207,17 @@ pub mod ml {
 			let ret = unsafe { core::Ptr::<crate::ml::RTrees>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Loads and creates a serialized RTree from a file
-		/// 
+		///
 		/// Use RTree::save to serialize and store an RTree to disk.
 		/// Load the RTree from this file again, by calling this function with the path to the file.
 		/// Optionally specify the node for the file containing the classifier
-		/// 
+		///
 		/// ## Parameters
 		/// * filepath: path to serialized RTree
 		/// * nodeName: name of node containing the classifier
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [RTrees::load] function uses the following default values for its arguments:
 		/// * node_name: String()
@@ -4230,15 +4231,15 @@ pub mod ml {
 			let ret = unsafe { core::Ptr::<crate::ml::RTrees>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	boxed_cast_base! { RTrees, core::Algorithm, cv_ml_RTrees_to_Algorithm }
-	
+
 	boxed_cast_base! { RTrees, crate::ml::DTrees, cv_ml_RTrees_to_DTrees }
-	
+
 	boxed_cast_base! { RTrees, crate::ml::StatModel, cv_ml_RTrees_to_StatModel }
-	
+
 	impl std::fmt::Debug for RTrees {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -4246,11 +4247,11 @@ pub mod ml {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::ml::SVM]
 	pub trait SVMTraitConst: crate::ml::StatModelTraitConst {
 		fn as_raw_SVM(&self) -> *const c_void;
-	
+
 		/// Type of a %SVM formulation.
 		///    See SVM::Types. Default value is SVM::C_SVC.
 		/// ## See also
@@ -4263,7 +4264,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Parameter ![inline formula](https://latex.codecogs.com/png.latex?%5Cgamma) of a kernel function.
 		///    For SVM::POLY, SVM::RBF, SVM::SIGMOID or SVM::CHI2. Default value is 1.
 		/// ## See also
@@ -4276,7 +4277,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Parameter _coef0_ of a kernel function.
 		///    For SVM::POLY or SVM::SIGMOID. Default value is 0.
 		/// ## See also
@@ -4289,7 +4290,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Parameter _degree_ of a kernel function.
 		///    For SVM::POLY. Default value is 0.
 		/// ## See also
@@ -4302,7 +4303,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Parameter _C_ of a %SVM optimization problem.
 		///    For SVM::C_SVC, SVM::EPS_SVR or SVM::NU_SVR. Default value is 0.
 		/// ## See also
@@ -4315,7 +4316,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Parameter ![inline formula](https://latex.codecogs.com/png.latex?%5Cnu) of a %SVM optimization problem.
 		///    For SVM::NU_SVC, SVM::ONE_CLASS or SVM::NU_SVR. Default value is 0.
 		/// ## See also
@@ -4328,7 +4329,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Parameter ![inline formula](https://latex.codecogs.com/png.latex?%5Cepsilon) of a %SVM optimization problem.
 		///    For SVM::EPS_SVR. Default value is 0.
 		/// ## See also
@@ -4341,7 +4342,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Optional weights in the SVM::C_SVC problem, assigned to particular classes.
 		///    They are multiplied by _C_ so the parameter _C_ of class _i_ becomes `classWeights(i) * C`. Thus
 		///    these weights affect the misclassification penalty for different classes. The larger weight,
@@ -4358,7 +4359,7 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Termination criteria of the iterative %SVM training procedure which solves a partial
 		///    case of constrained quadratic optimization problem.
 		///    You can specify tolerance and/or the maximum number of iterations. Default value is
@@ -4373,7 +4374,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Type of a %SVM kernel.
 		/// See SVM::KernelTypes. Default value is SVM::RBF.
 		#[inline]
@@ -4384,9 +4385,9 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Retrieves all the support vectors
-		/// 
+		///
 		/// The method returns all the support vectors as a floating-point matrix, where support vectors are
 		/// stored as matrix rows.
 		#[inline]
@@ -4398,9 +4399,9 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Retrieves all the uncompressed support vectors of a linear %SVM
-		/// 
+		///
 		/// The method returns all the uncompressed support vectors of a linear %SVM that the compressed
 		/// support vector, used for prediction, was derived from. They are returned in a floating-point
 		/// matrix, where the support vectors are stored as matrix rows.
@@ -4413,9 +4414,9 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Retrieves the decision function
-		/// 
+		///
 		/// ## Parameters
 		/// * i: the index of the decision function. If the problem solved is regression, 1-class or
 		///    2-class classification, then there will be just one decision function and the index should
@@ -4426,7 +4427,7 @@ pub mod ml {
 		/// * svidx: the optional output vector of indices of support vectors within the matrix of
 		///    support vectors (which can be retrieved by SVM::getSupportVectors). In the case of linear
 		///    %SVM each decision function consists of a single "compressed" support vector.
-		/// 
+		///
 		/// The method returns rho parameter of the decision function, a scalar subtracted from the weighted
 		/// sum of kernel responses.
 		#[inline]
@@ -4439,13 +4440,13 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::ml::SVM]
 	pub trait SVMTrait: crate::ml::SVMTraitConst + crate::ml::StatModelTrait {
 		fn as_raw_mut_SVM(&mut self) -> *mut c_void;
-	
+
 		/// Type of a %SVM formulation.
 		///    See SVM::Types. Default value is SVM::C_SVC.
 		/// ## See also
@@ -4458,7 +4459,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Parameter ![inline formula](https://latex.codecogs.com/png.latex?%5Cgamma) of a kernel function.
 		///    For SVM::POLY, SVM::RBF, SVM::SIGMOID or SVM::CHI2. Default value is 1.
 		/// ## See also
@@ -4471,7 +4472,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Parameter _coef0_ of a kernel function.
 		///    For SVM::POLY or SVM::SIGMOID. Default value is 0.
 		/// ## See also
@@ -4484,7 +4485,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Parameter _degree_ of a kernel function.
 		///    For SVM::POLY. Default value is 0.
 		/// ## See also
@@ -4497,7 +4498,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Parameter _C_ of a %SVM optimization problem.
 		///    For SVM::C_SVC, SVM::EPS_SVR or SVM::NU_SVR. Default value is 0.
 		/// ## See also
@@ -4510,7 +4511,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Parameter ![inline formula](https://latex.codecogs.com/png.latex?%5Cnu) of a %SVM optimization problem.
 		///    For SVM::NU_SVC, SVM::ONE_CLASS or SVM::NU_SVR. Default value is 0.
 		/// ## See also
@@ -4523,7 +4524,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Parameter ![inline formula](https://latex.codecogs.com/png.latex?%5Cepsilon) of a %SVM optimization problem.
 		///    For SVM::EPS_SVR. Default value is 0.
 		/// ## See also
@@ -4536,7 +4537,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Optional weights in the SVM::C_SVC problem, assigned to particular classes.
 		///    They are multiplied by _C_ so the parameter _C_ of class _i_ becomes `classWeights(i) * C`. Thus
 		///    these weights affect the misclassification penalty for different classes. The larger weight,
@@ -4552,7 +4553,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Termination criteria of the iterative %SVM training procedure which solves a partial
 		///    case of constrained quadratic optimization problem.
 		///    You can specify tolerance and/or the maximum number of iterations. Default value is
@@ -4567,7 +4568,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Initialize with one of predefined kernels.
 		/// See SVM::KernelTypes.
 		#[inline]
@@ -4578,7 +4579,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Initialize with custom kernel.
 		/// See SVM::Kernel class for implementation details
 		#[inline]
@@ -4589,9 +4590,9 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Trains an %SVM with optimal parameters.
-		/// 
+		///
 		/// ## Parameters
 		/// * data: the training data that can be constructed using TrainData::create or
 		///    TrainData::loadFromCSV.
@@ -4607,24 +4608,24 @@ pub mod ml {
 		/// * balanced: If true and the problem is 2-class classification then the method creates more
 		///    balanced cross-validation subsets that is proportions between classes in subsets are close
 		///    to such proportion in the whole train dataset.
-		/// 
+		///
 		/// The method trains the %SVM model automatically by choosing the optimal parameters C, gamma, p,
 		/// nu, coef0, degree. Parameters are considered optimal when the cross-validation
 		/// estimate of the test set error is minimal.
-		/// 
+		///
 		/// If there is no need to optimize a parameter, the corresponding grid step should be set to any
 		/// value less than or equal to 1. For example, to avoid optimization in gamma, set `gammaGrid.step
 		/// = 0`, `gammaGrid.minVal`, `gamma_grid.maxVal` as arbitrary numbers. In this case, the value
 		/// `Gamma` is taken for gamma.
-		/// 
+		///
 		/// And, finally, if the optimization in a parameter is required but the corresponding grid is
 		/// unknown, you may call the function SVM::getDefaultGrid. To generate a grid, for example, for
 		/// gamma, call `SVM::getDefaultGrid(SVM::GAMMA)`.
-		/// 
+		///
 		/// This function works for the classification (SVM::C_SVC or SVM::NU_SVC) as well as for the
 		/// regression (SVM::EPS_SVR or SVM::NU_SVR). If it is SVM::ONE_CLASS, no optimization is made and
 		/// the usual %SVM with parameters specified in params is executed.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * k_fold: 10
 		/// * cgrid: getDefaultGrid(C)
@@ -4642,9 +4643,9 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Trains an %SVM with optimal parameters.
-		/// 
+		///
 		/// ## Parameters
 		/// * data: the training data that can be constructed using TrainData::create or
 		///    TrainData::loadFromCSV.
@@ -4660,24 +4661,24 @@ pub mod ml {
 		/// * balanced: If true and the problem is 2-class classification then the method creates more
 		///    balanced cross-validation subsets that is proportions between classes in subsets are close
 		///    to such proportion in the whole train dataset.
-		/// 
+		///
 		/// The method trains the %SVM model automatically by choosing the optimal parameters C, gamma, p,
 		/// nu, coef0, degree. Parameters are considered optimal when the cross-validation
 		/// estimate of the test set error is minimal.
-		/// 
+		///
 		/// If there is no need to optimize a parameter, the corresponding grid step should be set to any
 		/// value less than or equal to 1. For example, to avoid optimization in gamma, set `gammaGrid.step
 		/// = 0`, `gammaGrid.minVal`, `gamma_grid.maxVal` as arbitrary numbers. In this case, the value
 		/// `Gamma` is taken for gamma.
-		/// 
+		///
 		/// And, finally, if the optimization in a parameter is required but the corresponding grid is
 		/// unknown, you may call the function SVM::getDefaultGrid. To generate a grid, for example, for
 		/// gamma, call `SVM::getDefaultGrid(SVM::GAMMA)`.
-		/// 
+		///
 		/// This function works for the classification (SVM::C_SVC or SVM::NU_SVC) as well as for the
 		/// regression (SVM::EPS_SVR or SVM::NU_SVR). If it is SVM::ONE_CLASS, no optimization is made and
 		/// the usual %SVM with parameters specified in params is executed.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [SVMTrait::train_auto] function uses the following default values for its arguments:
 		/// * k_fold: 10
@@ -4696,9 +4697,9 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Trains an %SVM with optimal parameters
-		/// 
+		///
 		/// ## Parameters
 		/// * samples: training samples
 		/// * layout: See ml::SampleTypes.
@@ -4714,18 +4715,18 @@ pub mod ml {
 		/// * balanced: If true and the problem is 2-class classification then the method creates more
 		///    balanced cross-validation subsets that is proportions between classes in subsets are close
 		///    to such proportion in the whole train dataset.
-		/// 
+		///
 		/// The method trains the %SVM model automatically by choosing the optimal parameters C, gamma, p,
 		/// nu, coef0, degree. Parameters are considered optimal when the cross-validation
 		/// estimate of the test set error is minimal.
-		/// 
+		///
 		/// This function only makes use of SVM::getDefaultGrid for parameter optimization and thus only
 		/// offers rudimentary parameter options.
-		/// 
+		///
 		/// This function works for the classification (SVM::C_SVC or SVM::NU_SVC) as well as for the
 		/// regression (SVM::EPS_SVR or SVM::NU_SVR). If it is SVM::ONE_CLASS, no optimization is made and
 		/// the usual %SVM with parameters specified in params is executed.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * k_fold: 10
 		/// * cgrid: SVM::getDefaultGridPtr(SVM::C)
@@ -4745,9 +4746,9 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Trains an %SVM with optimal parameters
-		/// 
+		///
 		/// ## Parameters
 		/// * samples: training samples
 		/// * layout: See ml::SampleTypes.
@@ -4763,18 +4764,18 @@ pub mod ml {
 		/// * balanced: If true and the problem is 2-class classification then the method creates more
 		///    balanced cross-validation subsets that is proportions between classes in subsets are close
 		///    to such proportion in the whole train dataset.
-		/// 
+		///
 		/// The method trains the %SVM model automatically by choosing the optimal parameters C, gamma, p,
 		/// nu, coef0, degree. Parameters are considered optimal when the cross-validation
 		/// estimate of the test set error is minimal.
-		/// 
+		///
 		/// This function only makes use of SVM::getDefaultGrid for parameter optimization and thus only
 		/// offers rudimentary parameter options.
-		/// 
+		///
 		/// This function works for the classification (SVM::C_SVC or SVM::NU_SVC) as well as for the
 		/// regression (SVM::EPS_SVR or SVM::NU_SVR). If it is SVM::ONE_CLASS, no optimization is made and
 		/// the usual %SVM with parameters specified in params is executed.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [SVMTrait::train_auto_with_data] function uses the following default values for its arguments:
 		/// * k_fold: 10
@@ -4795,64 +4796,64 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Support Vector Machines.
 	/// ## See also
 	/// [ml_intro_svm]
 	pub struct SVM {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { SVM }
-	
+
 	impl Drop for SVM {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_ml_SVM_delete(self.as_raw_mut_SVM()) };
 		}
 	}
-	
+
 	unsafe impl Send for SVM {}
-	
+
 	impl core::AlgorithmTraitConst for SVM {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for SVM {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { SVM, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::ml::StatModelTraitConst for SVM {
 		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ml::StatModelTrait for SVM {
 		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { SVM, crate::ml::StatModelTraitConst, as_raw_StatModel, crate::ml::StatModelTrait, as_raw_mut_StatModel }
-	
+
 	impl crate::ml::SVMTraitConst for SVM {
 		#[inline] fn as_raw_SVM(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ml::SVMTrait for SVM {
 		#[inline] fn as_raw_mut_SVM(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { SVM, crate::ml::SVMTraitConst, as_raw_SVM, crate::ml::SVMTrait, as_raw_mut_SVM }
-	
+
 	impl SVM {
 		/// Generates a grid for %SVM parameters.
-		/// 
+		///
 		/// ## Parameters
 		/// * param_id: %SVM parameters IDs that must be one of the SVM::ParamTypes. The grid is
 		/// generated for the parameter with this ID.
-		/// 
+		///
 		/// The function generates a grid for the specified parameter of the %SVM algorithm. The grid may be
 		/// passed to the function SVM::trainAuto.
 		#[inline]
@@ -4864,13 +4865,13 @@ pub mod ml {
 			let ret = unsafe { crate::ml::ParamGrid::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Generates a grid for %SVM parameters.
-		/// 
+		///
 		/// ## Parameters
 		/// * param_id: %SVM parameters IDs that must be one of the SVM::ParamTypes. The grid is
 		/// generated for the parameter with this ID.
-		/// 
+		///
 		/// The function generates a grid pointer for the specified parameter of the %SVM algorithm.
 		/// The grid may be passed to the function SVM::trainAuto.
 		#[inline]
@@ -4882,7 +4883,7 @@ pub mod ml {
 			let ret = unsafe { core::Ptr::<crate::ml::ParamGrid>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Creates empty model.
 		/// Use StatModel::train to train the model. Since %SVM has several parameters, you may want to
 		/// find the best parameters for your problem, it can be done with SVM::trainAuto.
@@ -4895,12 +4896,12 @@ pub mod ml {
 			let ret = unsafe { core::Ptr::<crate::ml::SVM>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Loads and creates a serialized svm from a file
-		/// 
+		///
 		/// Use SVM::save to serialize and store an SVM to disk.
 		/// Load the SVM from this file again, by calling this function with the path to the file.
-		/// 
+		///
 		/// ## Parameters
 		/// * filepath: path to serialized svm
 		#[inline]
@@ -4913,13 +4914,13 @@ pub mod ml {
 			let ret = unsafe { core::Ptr::<crate::ml::SVM>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	boxed_cast_base! { SVM, core::Algorithm, cv_ml_SVM_to_Algorithm }
-	
+
 	boxed_cast_base! { SVM, crate::ml::StatModel, cv_ml_SVM_to_StatModel }
-	
+
 	impl std::fmt::Debug for SVM {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -4927,11 +4928,11 @@ pub mod ml {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::ml::SVM_Kernel]
 	pub trait SVM_KernelTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_SVM_Kernel(&self) -> *const c_void;
-	
+
 		#[inline]
 		fn get_type(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -4940,13 +4941,13 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::ml::SVM_Kernel]
 	pub trait SVM_KernelTrait: core::AlgorithmTrait + crate::ml::SVM_KernelTraitConst {
 		fn as_raw_mut_SVM_Kernel(&mut self) -> *mut c_void;
-	
+
 		#[inline]
 		fn calc(&mut self, vcount: i32, n: i32, vecs: &f32, another: &f32, results: &mut f32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -4955,49 +4956,49 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	pub struct SVM_Kernel {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { SVM_Kernel }
-	
+
 	impl Drop for SVM_Kernel {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_ml_SVM_Kernel_delete(self.as_raw_mut_SVM_Kernel()) };
 		}
 	}
-	
+
 	unsafe impl Send for SVM_Kernel {}
-	
+
 	impl core::AlgorithmTraitConst for SVM_Kernel {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for SVM_Kernel {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { SVM_Kernel, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::ml::SVM_KernelTraitConst for SVM_Kernel {
 		#[inline] fn as_raw_SVM_Kernel(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ml::SVM_KernelTrait for SVM_Kernel {
 		#[inline] fn as_raw_mut_SVM_Kernel(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { SVM_Kernel, crate::ml::SVM_KernelTraitConst, as_raw_SVM_Kernel, crate::ml::SVM_KernelTrait, as_raw_mut_SVM_Kernel }
-	
+
 	impl SVM_Kernel {
 	}
-	
+
 	boxed_cast_base! { SVM_Kernel, core::Algorithm, cv_ml_SVM_Kernel_to_Algorithm }
-	
+
 	impl std::fmt::Debug for SVM_Kernel {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -5005,11 +5006,11 @@ pub mod ml {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::ml::SVMSGD]
 	pub trait SVMSGDTraitConst: crate::ml::StatModelTraitConst {
 		fn as_raw_SVMSGD(&self) -> *const c_void;
-	
+
 		/// %Algorithm type, one of SVMSGD::SvmsgdType.
 		/// ## See also
 		/// setSvmsgdType
@@ -5021,7 +5022,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// %Margin type, one of SVMSGD::MarginType.
 		/// ## See also
 		/// setMarginType
@@ -5033,7 +5034,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Parameter marginRegularization of a %SVMSGD optimization problem.
 		/// ## See also
 		/// setMarginRegularization
@@ -5045,7 +5046,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Parameter initialStepSize of a %SVMSGD optimization problem.
 		/// ## See also
 		/// setInitialStepSize
@@ -5057,7 +5058,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Parameter stepDecreasingPower of a %SVMSGD optimization problem.
 		/// ## See also
 		/// setStepDecreasingPower
@@ -5069,7 +5070,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Termination criteria of the training algorithm.
 		///    You can specify the maximum number of iterations (maxCount) and/or how much the error could
 		///    change between the iterations to make the algorithm continue (epsilon).
@@ -5083,13 +5084,13 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::ml::SVMSGD]
 	pub trait SVMSGDTrait: crate::ml::SVMSGDTraitConst + crate::ml::StatModelTrait {
 		fn as_raw_mut_SVMSGD(&mut self) -> *mut c_void;
-	
+
 		/// ## Returns
 		/// the weights of the trained model (decision function f(x) = weights * x + shift).
 		#[inline]
@@ -5101,7 +5102,7 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// ## Returns
 		/// the shift of the trained model (decision function f(x) = weights * x + shift).
 		#[inline]
@@ -5112,12 +5113,12 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Function sets optimal parameters values for chosen SVM SGD model.
 		/// ## Parameters
 		/// * svmsgdType: is the type of SVMSGD classifier.
 		/// * marginType: is the type of margin constraint.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * svmsgd_type: SVMSGD::ASGD
 		/// * margin_type: SVMSGD::SOFT_MARGIN
@@ -5129,12 +5130,12 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Function sets optimal parameters values for chosen SVM SGD model.
 		/// ## Parameters
 		/// * svmsgdType: is the type of SVMSGD classifier.
 		/// * marginType: is the type of margin constraint.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [SVMSGDTrait::set_optimal_parameters] function uses the following default values for its arguments:
 		/// * svmsgd_type: SVMSGD::ASGD
@@ -5147,7 +5148,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// %Algorithm type, one of SVMSGD::SvmsgdType.
 		/// ## See also
 		/// setSvmsgdType getSvmsgdType
@@ -5159,7 +5160,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// %Margin type, one of SVMSGD::MarginType.
 		/// ## See also
 		/// setMarginType getMarginType
@@ -5171,7 +5172,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Parameter marginRegularization of a %SVMSGD optimization problem.
 		/// ## See also
 		/// setMarginRegularization getMarginRegularization
@@ -5183,7 +5184,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Parameter initialStepSize of a %SVMSGD optimization problem.
 		/// ## See also
 		/// setInitialStepSize getInitialStepSize
@@ -5195,7 +5196,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Parameter stepDecreasingPower of a %SVMSGD optimization problem.
 		/// ## See also
 		/// setStepDecreasingPower getStepDecreasingPower
@@ -5207,7 +5208,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Termination criteria of the training algorithm.
 		///    You can specify the maximum number of iterations (maxCount) and/or how much the error could
 		///    change between the iterations to make the algorithm continue (epsilon).
@@ -5221,15 +5222,15 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// !
 	/// Stochastic Gradient Descent SVM classifier
-	/// 
+	///
 	/// SVMSGD provides a fast and easy-to-use implementation of the SVM classifier using the Stochastic Gradient Descent approach,
 	/// as presented in [bottou2010large](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_bottou2010large).
-	/// 
+	///
 	/// The classifier has following parameters:
 	/// - model type,
 	/// - margin type,
@@ -5237,9 +5238,9 @@ pub mod ml {
 	/// - initial step size (![inline formula](https://latex.codecogs.com/png.latex?%5Cgamma%5F0)),
 	/// - step decreasing power (![inline formula](https://latex.codecogs.com/png.latex?c)),
 	/// - and termination criteria.
-	/// 
+	///
 	/// The model type may have one of the following values: \ref SGD and \ref ASGD.
-	/// 
+	///
 	/// - \ref SGD is the classic version of SVMSGD classifier: every next step is calculated by the formula
 	///   ![block formula](https://latex.codecogs.com/png.latex?w%5F%7Bt%2B1%7D%20%3D%20w%5Ft%20%2D%20%5Cgamma%28t%29%20%5Cfrac%7BdQ%5Fi%7D%7Bdw%7D%20%7C%5F%7Bw%20%3D%20w%5Ft%7D)
 	///   where
@@ -5247,99 +5248,99 @@ pub mod ml {
 	///   - ![inline formula](https://latex.codecogs.com/png.latex?%5Cgamma%28t%29) is the step size of model parameters at the iteration ![inline formula](https://latex.codecogs.com/png.latex?t), it is decreased on each step by the formula
 	///    ![inline formula](https://latex.codecogs.com/png.latex?%5Cgamma%28t%29%20%3D%20%5Cgamma%5F0%20%20%281%20%2B%20%5Clambda%20%20%5Cgamma%5F0%20t%29%20%5E%20%7B%2Dc%7D)
 	///   - ![inline formula](https://latex.codecogs.com/png.latex?Q%5Fi) is the target functional from SVM task for sample with number ![inline formula](https://latex.codecogs.com/png.latex?i), this sample is chosen stochastically on each step of the algorithm.
-	/// 
+	///
 	/// - \ref ASGD is Average Stochastic Gradient Descent SVM Classifier. ASGD classifier averages weights vector on each step of algorithm by the formula
 	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cwidehat%7Bw%7D%5F%7Bt%2B1%7D%20%3D%20%5Cfrac%7Bt%7D%7B1%2Bt%7D%5Cwidehat%7Bw%7D%5F%7Bt%7D%20%2B%20%5Cfrac%7B1%7D%7B1%2Bt%7Dw%5F%7Bt%2B1%7D)
-	/// 
+	///
 	/// The recommended model type is ASGD (following [bottou2010large](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_bottou2010large)).
-	/// 
+	///
 	/// The margin type may have one of the following values: \ref SOFT_MARGIN or \ref HARD_MARGIN.
-	/// 
+	///
 	/// - You should use \ref HARD_MARGIN type, if you have linearly separable sets.
 	/// - You should use \ref SOFT_MARGIN type, if you have non-linearly separable sets or sets with outliers.
 	/// - In the general case (if you know nothing about linear separability of your sets), use SOFT_MARGIN.
-	/// 
+	///
 	/// The other parameters may be described as follows:
 	/// - Margin regularization parameter is responsible for weights decreasing at each step and for the strength of restrictions on outliers
 	///   (the less the parameter, the less probability that an outlier will be ignored).
 	///   Recommended value for SGD model is 0.0001, for ASGD model is 0.00001.
-	/// 
+	///
 	/// - Initial step size parameter is the initial value for the step size ![inline formula](https://latex.codecogs.com/png.latex?%5Cgamma%28t%29).
 	///   You will have to find the best initial step for your problem.
-	/// 
+	///
 	/// - Step decreasing power is the power parameter for ![inline formula](https://latex.codecogs.com/png.latex?%5Cgamma%28t%29) decreasing by the formula, mentioned above.
 	///   Recommended value for SGD model is 1, for ASGD model is 0.75.
-	/// 
+	///
 	/// - Termination criteria can be TermCriteria::COUNT, TermCriteria::EPS or TermCriteria::COUNT + TermCriteria::EPS.
 	///   You will have to find the best termination criteria for your problem.
-	/// 
+	///
 	/// Note that the parameters margin regularization, initial step size, and step decreasing power should be positive.
-	/// 
+	///
 	/// To use SVMSGD algorithm do as follows:
-	/// 
+	///
 	/// - first, create the SVMSGD object. The algorithm will set optimal parameters by default, but you can set your own parameters via functions setSvmsgdType(),
 	///   setMarginType(), setMarginRegularization(), setInitialStepSize(), and setStepDecreasingPower().
-	/// 
+	///
 	/// - then the SVM model can be trained using the train features and the correspondent labels by the method train().
-	/// 
+	///
 	/// - after that, the label of a new feature vector can be predicted using the method predict().
-	/// 
+	///
 	/// ```C++
 	/// // Create empty object
 	/// cv::Ptr<SVMSGD> svmsgd = SVMSGD::create();
-	/// 
+	///
 	/// // Train the Stochastic Gradient Descent SVM
 	/// svmsgd->train(trainData);
-	/// 
+	///
 	/// // Predict labels for the new samples
 	/// svmsgd->predict(samples, responses);
 	/// ```
-	/// 
+	///
 	pub struct SVMSGD {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { SVMSGD }
-	
+
 	impl Drop for SVMSGD {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_ml_SVMSGD_delete(self.as_raw_mut_SVMSGD()) };
 		}
 	}
-	
+
 	unsafe impl Send for SVMSGD {}
-	
+
 	impl core::AlgorithmTraitConst for SVMSGD {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for SVMSGD {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { SVMSGD, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::ml::StatModelTraitConst for SVMSGD {
 		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ml::StatModelTrait for SVMSGD {
 		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { SVMSGD, crate::ml::StatModelTraitConst, as_raw_StatModel, crate::ml::StatModelTrait, as_raw_mut_StatModel }
-	
+
 	impl crate::ml::SVMSGDTraitConst for SVMSGD {
 		#[inline] fn as_raw_SVMSGD(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ml::SVMSGDTrait for SVMSGD {
 		#[inline] fn as_raw_mut_SVMSGD(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { SVMSGD, crate::ml::SVMSGDTraitConst, as_raw_SVMSGD, crate::ml::SVMSGDTrait, as_raw_mut_SVMSGD }
-	
+
 	impl SVMSGD {
 		/// Creates empty model.
 		/// Use StatModel::train to train the model. Since %SVMSGD has several parameters, you may want to
@@ -5353,17 +5354,17 @@ pub mod ml {
 			let ret = unsafe { core::Ptr::<crate::ml::SVMSGD>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Loads and creates a serialized SVMSGD from a file
-		/// 
+		///
 		/// Use SVMSGD::save to serialize and store an SVMSGD to disk.
 		/// Load the SVMSGD from this file again, by calling this function with the path to the file.
 		/// Optionally specify the node for the file containing the classifier
-		/// 
+		///
 		/// ## Parameters
 		/// * filepath: path to serialized SVMSGD
 		/// * nodeName: name of node containing the classifier
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * node_name: String()
 		#[inline]
@@ -5377,17 +5378,17 @@ pub mod ml {
 			let ret = unsafe { core::Ptr::<crate::ml::SVMSGD>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Loads and creates a serialized SVMSGD from a file
-		/// 
+		///
 		/// Use SVMSGD::save to serialize and store an SVMSGD to disk.
 		/// Load the SVMSGD from this file again, by calling this function with the path to the file.
 		/// Optionally specify the node for the file containing the classifier
-		/// 
+		///
 		/// ## Parameters
 		/// * filepath: path to serialized SVMSGD
 		/// * nodeName: name of node containing the classifier
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [SVMSGD::load] function uses the following default values for its arguments:
 		/// * node_name: String()
@@ -5401,13 +5402,13 @@ pub mod ml {
 			let ret = unsafe { core::Ptr::<crate::ml::SVMSGD>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	boxed_cast_base! { SVMSGD, core::Algorithm, cv_ml_SVMSGD_to_Algorithm }
-	
+
 	boxed_cast_base! { SVMSGD, crate::ml::StatModel, cv_ml_SVMSGD_to_StatModel }
-	
+
 	impl std::fmt::Debug for SVMSGD {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -5415,11 +5416,11 @@ pub mod ml {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::ml::StatModel]
 	pub trait StatModelTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_StatModel(&self) -> *const c_void;
-	
+
 		/// Returns the number of variables in training samples
 		#[inline]
 		fn get_var_count(&self) -> Result<i32> {
@@ -5429,7 +5430,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn empty(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
@@ -5438,7 +5439,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns true if the model is trained
 		#[inline]
 		fn is_trained(&self) -> Result<bool> {
@@ -5448,7 +5449,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns true if the model is classifier
 		#[inline]
 		fn is_classifier(&self) -> Result<bool> {
@@ -5458,9 +5459,9 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Computes error on the training or test dataset
-		/// 
+		///
 		/// ## Parameters
 		/// * data: the training data
 		/// * test: if true, the error is computed over the test subset of the data, otherwise it's
@@ -5469,7 +5470,7 @@ pub mod ml {
 		///    the test subset at all with TrainData::setTrainTestSplitRatio and specify test=false, so
 		///    that the error is computed for the whole new set. Yes, this sounds a bit confusing.
 		/// * resp: the optional output responses.
-		/// 
+		///
 		/// The method uses StatModel::predict to compute the error. For regression models the error is
 		/// computed as RMS, for classifiers - as a percent of missclassified samples (0%-100%).
 		#[inline]
@@ -5481,14 +5482,14 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Predicts response(s) for the provided sample(s)
-		/// 
+		///
 		/// ## Parameters
 		/// * samples: The input samples, floating-point matrix
 		/// * results: The optional output matrix of results.
 		/// * flags: The optional flags, model-dependent. See cv::ml::StatModel::Flags.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * results: noArray()
 		/// * flags: 0
@@ -5502,14 +5503,14 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Predicts response(s) for the provided sample(s)
-		/// 
+		///
 		/// ## Parameters
 		/// * samples: The input samples, floating-point matrix
 		/// * results: The optional output matrix of results.
 		/// * flags: The optional flags, model-dependent. See cv::ml::StatModel::Flags.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [StatModelTraitConst::predict] function uses the following default values for its arguments:
 		/// * results: noArray()
@@ -5523,21 +5524,21 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::ml::StatModel]
 	pub trait StatModelTrait: core::AlgorithmTrait + crate::ml::StatModelTraitConst {
 		fn as_raw_mut_StatModel(&mut self) -> *mut c_void;
-	
+
 		/// Trains the statistical model
-		/// 
+		///
 		/// ## Parameters
 		/// * trainData: training data that can be loaded from file using TrainData::loadFromCSV or
 		///    created with TrainData::create.
 		/// * flags: optional flags, depending on the model. Some of the models can be updated with the
 		///    new training samples, not completely overwritten (such as NormalBayesClassifier or ANN_MLP).
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * flags: 0
 		#[inline]
@@ -5548,15 +5549,15 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Trains the statistical model
-		/// 
+		///
 		/// ## Parameters
 		/// * trainData: training data that can be loaded from file using TrainData::loadFromCSV or
 		///    created with TrainData::create.
 		/// * flags: optional flags, depending on the model. Some of the models can be updated with the
 		///    new training samples, not completely overwritten (such as NormalBayesClassifier or ANN_MLP).
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [StatModelTrait::train_with_data] function uses the following default values for its arguments:
 		/// * flags: 0
@@ -5568,9 +5569,9 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Trains the statistical model
-		/// 
+		///
 		/// ## Parameters
 		/// * samples: training samples
 		/// * layout: See ml::SampleTypes.
@@ -5585,70 +5586,70 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Base class for statistical models in OpenCV ML.
 	pub struct StatModel {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { StatModel }
-	
+
 	impl Drop for StatModel {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_ml_StatModel_delete(self.as_raw_mut_StatModel()) };
 		}
 	}
-	
+
 	unsafe impl Send for StatModel {}
-	
+
 	impl core::AlgorithmTraitConst for StatModel {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for StatModel {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { StatModel, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::ml::StatModelTraitConst for StatModel {
 		#[inline] fn as_raw_StatModel(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ml::StatModelTrait for StatModel {
 		#[inline] fn as_raw_mut_StatModel(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { StatModel, crate::ml::StatModelTraitConst, as_raw_StatModel, crate::ml::StatModelTrait, as_raw_mut_StatModel }
-	
+
 	impl StatModel {
 	}
-	
+
 	boxed_cast_descendant! { StatModel, crate::ml::ANN_MLP, cv_ml_StatModel_to_ANN_MLP }
-	
+
 	boxed_cast_descendant! { StatModel, crate::ml::Boost, cv_ml_StatModel_to_Boost }
-	
+
 	boxed_cast_descendant! { StatModel, crate::ml::DTrees, cv_ml_StatModel_to_DTrees }
-	
+
 	boxed_cast_descendant! { StatModel, crate::ml::EM, cv_ml_StatModel_to_EM }
-	
+
 	boxed_cast_descendant! { StatModel, crate::ml::KNearest, cv_ml_StatModel_to_KNearest }
-	
+
 	boxed_cast_descendant! { StatModel, crate::ml::LogisticRegression, cv_ml_StatModel_to_LogisticRegression }
-	
+
 	boxed_cast_descendant! { StatModel, crate::ml::NormalBayesClassifier, cv_ml_StatModel_to_NormalBayesClassifier }
-	
+
 	boxed_cast_descendant! { StatModel, crate::ml::RTrees, cv_ml_StatModel_to_RTrees }
-	
+
 	boxed_cast_descendant! { StatModel, crate::ml::SVM, cv_ml_StatModel_to_SVM }
-	
+
 	boxed_cast_descendant! { StatModel, crate::ml::SVMSGD, cv_ml_StatModel_to_SVMSGD }
-	
+
 	boxed_cast_base! { StatModel, core::Algorithm, cv_ml_StatModel_to_Algorithm }
-	
+
 	impl std::fmt::Debug for StatModel {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -5656,11 +5657,11 @@ pub mod ml {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::ml::TrainData]
 	pub trait TrainDataTraitConst {
 		fn as_raw_TrainData(&self) -> *const c_void;
-	
+
 		#[inline]
 		fn get_layout(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -5669,7 +5670,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_n_train_samples(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -5678,7 +5679,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_n_test_samples(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -5687,7 +5688,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_n_samples(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -5696,7 +5697,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_n_vars(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -5705,7 +5706,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_n_all_vars(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -5714,7 +5715,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_sample(&self, var_idx: &impl ToInputArray, sidx: i32, buf: &mut f32) -> Result<()> {
 			input_array_arg!(var_idx);
@@ -5724,7 +5725,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_samples(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -5734,7 +5735,7 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_missing(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -5744,9 +5745,9 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Returns matrix of train samples
-		/// 
+		///
 		/// ## Parameters
 		/// * layout: The requested layout. If it's different from the initial one, the matrix is
 		///    transposed. See ml::SampleTypes.
@@ -5754,10 +5755,10 @@ pub mod ml {
 		///    sampleIdx)
 		/// * compressVars: if true, the function returns the shorter training samples, containing only
 		///    the active variables.
-		/// 
+		///
 		/// In current implementation the function tries to avoid physical data copying and returns the
 		/// matrix stored inside TrainData (unless the transposition or compression is needed).
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * layout: ROW_SAMPLE
 		/// * compress_samples: true
@@ -5771,9 +5772,9 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Returns matrix of train samples
-		/// 
+		///
 		/// ## Parameters
 		/// * layout: The requested layout. If it's different from the initial one, the matrix is
 		///    transposed. See ml::SampleTypes.
@@ -5781,10 +5782,10 @@ pub mod ml {
 		///    sampleIdx)
 		/// * compressVars: if true, the function returns the shorter training samples, containing only
 		///    the active variables.
-		/// 
+		///
 		/// In current implementation the function tries to avoid physical data copying and returns the
 		/// matrix stored inside TrainData (unless the transposition or compression is needed).
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [TrainDataTraitConst::get_train_samples] function uses the following default values for its arguments:
 		/// * layout: ROW_SAMPLE
@@ -5799,9 +5800,9 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Returns the vector of responses
-		/// 
+		///
 		/// The function returns ordered or the original categorical responses. Usually it's used in
 		/// regression algorithms.
 		#[inline]
@@ -5813,9 +5814,9 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Returns the vector of normalized categorical responses
-		/// 
+		///
 		/// The function returns vector of responses. Each response is integer from `0` to `<number of
 		/// classes>-1`. The actual label value can be retrieved then from the class label vector, see
 		/// TrainData::getClassLabels.
@@ -5828,7 +5829,7 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_test_responses(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -5838,7 +5839,7 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_test_norm_cat_responses(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -5848,7 +5849,7 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_responses(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -5858,7 +5859,7 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_norm_cat_responses(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -5868,7 +5869,7 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_sample_weights(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -5878,7 +5879,7 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_train_sample_weights(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -5888,7 +5889,7 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_test_sample_weights(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -5898,7 +5899,7 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_var_idx(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -5908,7 +5909,7 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_var_type(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -5918,7 +5919,7 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_var_symbol_flags(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -5928,7 +5929,7 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_response_type(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -5937,7 +5938,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_train_sample_idx(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -5947,7 +5948,7 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_test_sample_idx(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -5957,7 +5958,7 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_values(&self, vi: i32, sidx: &impl ToInputArray, values: &mut f32) -> Result<()> {
 			input_array_arg!(sidx);
@@ -5967,7 +5968,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_norm_cat_values(&self, vi: i32, sidx: &impl ToInputArray, values: &mut i32) -> Result<()> {
 			input_array_arg!(sidx);
@@ -5977,7 +5978,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_default_subst_values(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -5987,7 +5988,7 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_cat_count(&self, vi: i32) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -5996,9 +5997,9 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns the vector of class labels
-		/// 
+		///
 		/// The function returns vector of unique labels occurred in the responses.
 		#[inline]
 		fn get_class_labels(&self) -> Result<core::Mat> {
@@ -6009,7 +6010,7 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_cat_ofs(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -6019,7 +6020,7 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_cat_map(&self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -6029,7 +6030,7 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Returns matrix of test samples
 		#[inline]
 		fn get_test_samples(&self) -> Result<core::Mat> {
@@ -6040,7 +6041,7 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Returns vector of symbolic names captured in loadFromCSV()
 		#[inline]
 		fn get_names(&self, names: &mut core::Vector<String>) -> Result<()> {
@@ -6050,17 +6051,17 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::ml::TrainData]
 	pub trait TrainDataTrait: crate::ml::TrainDataTraitConst {
 		fn as_raw_mut_TrainData(&mut self) -> *mut c_void;
-	
+
 		/// Splits the training data into the training and test parts
 		/// ## See also
 		/// TrainData::setTrainTestSplitRatio
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * shuffle: true
 		#[inline]
@@ -6071,11 +6072,11 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Splits the training data into the training and test parts
 		/// ## See also
 		/// TrainData::setTrainTestSplitRatio
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [TrainDataTrait::set_train_test_split] function uses the following default values for its arguments:
 		/// * shuffle: true
@@ -6087,16 +6088,16 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Splits the training data into the training and test parts
-		/// 
+		///
 		/// The function selects a subset of specified relative size and then returns it as the training
 		/// set. If the function is not called, all the data is used for training. Please, note that for
 		/// each of TrainData::getTrain\* there is corresponding TrainData::getTest\*, so that the test
 		/// subset can be retrieved and processed as well.
 		/// ## See also
 		/// TrainData::setTrainTestSplit
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * shuffle: true
 		#[inline]
@@ -6107,16 +6108,16 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Splits the training data into the training and test parts
-		/// 
+		///
 		/// The function selects a subset of specified relative size and then returns it as the training
 		/// set. If the function is not called, all the data is used for training. Please, note that for
 		/// each of TrainData::getTrain\* there is corresponding TrainData::getTest\*, so that the test
 		/// subset can be retrieved and processed as well.
 		/// ## See also
 		/// TrainData::setTrainTestSplit
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [TrainDataTrait::set_train_test_split_ratio] function uses the following default values for its arguments:
 		/// * shuffle: true
@@ -6128,7 +6129,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn shuffle_train_test(&mut self) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -6137,11 +6138,11 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Class encapsulating training data.
-	/// 
+	///
 	/// Please note that the class only specifies the interface of training data, but not implementation.
 	/// All the statistical model classes in _ml_ module accepts Ptr\<TrainData\> as parameter. In other
 	/// words, you can create your own class derived from TrainData and pass smart pointer to the instance
@@ -6149,30 +6150,30 @@ pub mod ml {
 	/// ## See also
 	/// [ml_intro_data]
 	pub struct TrainData {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { TrainData }
-	
+
 	impl Drop for TrainData {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_ml_TrainData_delete(self.as_raw_mut_TrainData()) };
 		}
 	}
-	
+
 	unsafe impl Send for TrainData {}
-	
+
 	impl crate::ml::TrainDataTraitConst for TrainData {
 		#[inline] fn as_raw_TrainData(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ml::TrainDataTrait for TrainData {
 		#[inline] fn as_raw_mut_TrainData(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { TrainData, crate::ml::TrainDataTraitConst, as_raw_TrainData, crate::ml::TrainDataTrait, as_raw_mut_TrainData }
-	
+
 	impl TrainData {
 		#[inline]
 		pub fn missing_value() -> Result<f32> {
@@ -6182,7 +6183,7 @@ pub mod ml {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Extract from 1D vector elements specified by passed indexes.
 		/// ## Parameters
 		/// * vec: input vector (supported types: CV_32S, CV_32F, CV_64F)
@@ -6196,7 +6197,7 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Extract from matrix rows/cols specified by passed indexes.
 		/// ## Parameters
 		/// * matrix: input matrix (supported types: CV_32S, CV_32F, CV_64F)
@@ -6211,9 +6212,9 @@ pub mod ml {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Reads the dataset from a .csv file and returns the ready-to-use training data.
-		/// 
+		///
 		/// ## Parameters
 		/// * filename: The input file name
 		/// * headerLineCount: The number of lines in the beginning to skip; besides the header, the
@@ -6239,10 +6240,10 @@ pub mod ml {
 		/// * missch: The character used to specify missing measurements. It should not be a digit.
 		///    Although it's a non-numerical value, it surely does not affect the decision of whether the
 		///    variable ordered or categorical.
-		/// 
+		///
 		/// Note: If the dataset only contains input variables and no responses, use responseStartIdx = -2
 		///    and responseEndIdx = 0. The output variables vector will just contain zeros.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * response_start_idx: -1
 		/// * response_end_idx: -1
@@ -6260,9 +6261,9 @@ pub mod ml {
 			let ret = unsafe { core::Ptr::<crate::ml::TrainData>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Reads the dataset from a .csv file and returns the ready-to-use training data.
-		/// 
+		///
 		/// ## Parameters
 		/// * filename: The input file name
 		/// * headerLineCount: The number of lines in the beginning to skip; besides the header, the
@@ -6288,10 +6289,10 @@ pub mod ml {
 		/// * missch: The character used to specify missing measurements. It should not be a digit.
 		///    Although it's a non-numerical value, it surely does not affect the decision of whether the
 		///    variable ordered or categorical.
-		/// 
+		///
 		/// Note: If the dataset only contains input variables and no responses, use responseStartIdx = -2
 		///    and responseEndIdx = 0. The output variables vector will just contain zeros.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [TrainData::load_from_csv] function uses the following default values for its arguments:
 		/// * response_start_idx: -1
@@ -6309,9 +6310,9 @@ pub mod ml {
 			let ret = unsafe { core::Ptr::<crate::ml::TrainData>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Creates training data from in-memory arrays.
-		/// 
+		///
 		/// ## Parameters
 		/// * samples: matrix of samples. It should have CV_32F type.
 		/// * layout: see ml::SampleTypes.
@@ -6329,7 +6330,7 @@ pub mod ml {
 		/// * varType: optional vector of type CV_8U and size `<number_of_variables_in_samples> +
 		///    <number_of_variables_in_responses>`, containing types of each input and output variable. See
 		///    ml::VariableTypes.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * var_idx: noArray()
 		/// * sample_idx: noArray()
@@ -6350,9 +6351,9 @@ pub mod ml {
 			let ret = unsafe { core::Ptr::<crate::ml::TrainData>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Creates training data from in-memory arrays.
-		/// 
+		///
 		/// ## Parameters
 		/// * samples: matrix of samples. It should have CV_32F type.
 		/// * layout: see ml::SampleTypes.
@@ -6370,7 +6371,7 @@ pub mod ml {
 		/// * varType: optional vector of type CV_8U and size `<number_of_variables_in_samples> +
 		///    <number_of_variables_in_responses>`, containing types of each input and output variable. See
 		///    ml::VariableTypes.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [TrainData::create] function uses the following default values for its arguments:
 		/// * var_idx: noArray()
@@ -6388,9 +6389,9 @@ pub mod ml {
 			let ret = unsafe { core::Ptr::<crate::ml::TrainData>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	impl std::fmt::Debug for TrainData {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {

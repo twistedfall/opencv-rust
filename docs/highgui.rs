@@ -1,45 +1,45 @@
 pub mod highgui {
 	//! # High-level GUI
-	//! 
+	//!
 	//! While OpenCV was designed for use in full-scale applications and can be used within functionally
 	//! rich UI frameworks (such as Qt\*, WinForms\*, or Cocoa\*) or without any UI at all, sometimes there
 	//! it is required to try functionality quickly and visualize the results. This is what the HighGUI
 	//! module has been designed for.
-	//! 
+	//!
 	//! It provides easy interface to:
-	//! 
+	//!
 	//! *   Create and manipulate windows that can display images and "remember" their content (no need to
 	//!    handle repaint events from OS).
 	//! *   Add trackbars to the windows, handle simple mouse events as well as keyboard commands.
 	//!    # Flags related creating and manipulating HighGUI windows and mouse events
 	//!    # OpenGL support
 	//!    # Qt New Functions
-	//! 
+	//!
 	//!    ![image](https://docs.opencv.org/4.10.0/qtgui.png)
-	//! 
+	//!
 	//!    This figure explains new functionality implemented with Qt\* GUI. The new GUI provides a statusbar,
 	//!    a toolbar, and a control panel. The control panel can have trackbars and buttonbars attached to it.
 	//!    If you cannot see the control panel, press Ctrl+P or right-click any Qt window and select **Display
 	//!    properties window**.
-	//! 
+	//!
 	//!    *   To attach a trackbar, the window name parameter must be NULL.
-	//! 
+	//!
 	//!    *   To attach a buttonbar, a button must be created. If the last bar attached to the control panel
 	//!        is a buttonbar, the new button is added to the right of the last button. If the last bar
 	//!        attached to the control panel is a trackbar, or the control panel is empty, a new buttonbar is
 	//!        created. Then, a new button is attached to it.
-	//! 
+	//!
 	//!    See below the example used to generate the figure:
-	//! 
+	//!
 	//!    @include highgui_qt.cpp
-	//! 
+	//!
 	//!    # WinRT support
-	//! 
+	//!
 	//!    This figure explains new functionality implemented with WinRT GUI. The new GUI provides an Image control,
 	//!    and a slider panel. Slider panel holds trackbars attached to it.
-	//! 
+	//!
 	//!    Sliders are attached below the image control. Every new slider is added below the previous one.
-	//! 
+	//!
 	//!    See below the example used to generate the figure:
 	//!    ```C++
 	//!    void sample_app::MainPage::ShowWindow()
@@ -47,12 +47,12 @@ pub mod highgui {
 	//!        static cv::String windowName("sample");
 	//!        cv::winrt_initContainer(this->cvContainer);
 	//!        cv::namedWindow(windowName); // not required
-	//! 
+	//!
 	//!        cv::Mat image = cv::imread("Assets/sample.jpg");
 	//!        cv::Mat converted = cv::Mat(image.rows, image.cols, CV_8UC4);
 	//!        cv::cvtColor(image, converted, COLOR_BGR2BGRA);
 	//!        cv::imshow(windowName, converted); // this will create window if it hasn't been created before
-	//! 
+	//!
 	//!        int state = 42;
 	//!        cv::TrackbarCallback callback = [](int pos, void* userdata)
 	//!        {
@@ -70,12 +70,13 @@ pub mod highgui {
 	//!        cv::createTrackbar("Twin brother", windowName, &state, 100, callbackTwin);
 	//!    }
 	//!    ```
-	//! 
-	use crate::{mod_prelude::*, core, sys, types};
+	//!
+	use crate::mod_prelude::*;
+	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use { super::QtFontTraitConst, super::QtFontTrait };
+		pub use super::{QtFontTrait, QtFontTraitConst};
 	}
-	
+
 	/// indicates that ALT Key is pressed.
 	pub const EVENT_FLAG_ALTKEY: i32 = 32;
 	/// indicates that CTRL Key is pressed.
@@ -183,10 +184,10 @@ pub mod highgui {
 		/// indicates that ALT Key is pressed.
 		EVENT_FLAG_ALTKEY = 32,
 	}
-	
+
 	impl TryFrom<i32> for MouseEventFlags {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				1 => Ok(Self::EVENT_FLAG_LBUTTON),
@@ -199,9 +200,9 @@ pub mod highgui {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::highgui::MouseEventFlags }
-	
+
 	/// Mouse Events see cv::MouseCallback
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -231,10 +232,10 @@ pub mod highgui {
 		/// positive and negative values mean right and left scrolling, respectively.
 		EVENT_MOUSEHWHEEL = 11,
 	}
-	
+
 	impl TryFrom<i32> for MouseEventTypes {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::EVENT_MOUSEMOVE),
@@ -253,9 +254,9 @@ pub mod highgui {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::highgui::MouseEventTypes }
-	
+
 	/// Qt "button" type
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -269,10 +270,10 @@ pub mod highgui {
 		/// Button should create a new buttonbar
 		QT_NEW_BUTTONBAR = 1024,
 	}
-	
+
 	impl TryFrom<i32> for QtButtonTypes {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::QT_PUSH_BUTTON),
@@ -283,9 +284,9 @@ pub mod highgui {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::highgui::QtButtonTypes }
-	
+
 	/// Qt font style
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -297,10 +298,10 @@ pub mod highgui {
 		/// Oblique font.
 		QT_STYLE_OBLIQUE = 2,
 	}
-	
+
 	impl TryFrom<i32> for QtFontStyles {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::QT_STYLE_NORMAL),
@@ -310,9 +311,9 @@ pub mod highgui {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::highgui::QtFontStyles }
-	
+
 	/// Qt font weight
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -328,10 +329,10 @@ pub mod highgui {
 		/// Weight of 87
 		QT_FONT_BLACK = 87,
 	}
-	
+
 	impl TryFrom<i32> for QtFontWeights {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				25 => Ok(Self::QT_FONT_LIGHT),
@@ -343,9 +344,9 @@ pub mod highgui {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::highgui::QtFontWeights }
-	
+
 	/// Flags for cv::namedWindow
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -370,10 +371,10 @@ pub mod highgui {
 		/// old fashious way
 		WINDOW_GUI_NORMAL = 16,
 	}
-	
+
 	impl TryFrom<i32> for WindowFlags {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::WINDOW_NORMAL),
@@ -391,9 +392,9 @@ pub mod highgui {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::highgui::WindowFlags }
-	
+
 	/// Flags for cv::setWindowProperty / cv::getWindowProperty
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -413,10 +414,10 @@ pub mod highgui {
 		/// enable or disable VSYNC (in OpenGL mode)
 		WND_PROP_VSYNC = 6,
 	}
-	
+
 	impl TryFrom<i32> for WindowPropertyFlags {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::WND_PROP_FULLSCREEN),
@@ -430,9 +431,9 @@ pub mod highgui {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::highgui::WindowPropertyFlags }
-	
+
 	/// Callback function for a button created by cv::createButton
 	/// ## Parameters
 	/// * state: current state of the button. It could be -1 for a push button, 0 or 1 for a check/radio box button.
@@ -456,10 +457,10 @@ pub mod highgui {
 	/// * userdata: The optional parameter.
 	pub type TrackbarCallback = Option<Box<dyn FnMut(i32) -> () + Send + Sync + 'static>>;
 	/// Draws a text on the image.
-	/// 
+	///
 	/// The function addText draws *text* on the image *img* using a specific font *font* (see example cv::fontQt
 	/// )
-	/// 
+	///
 	/// ## Parameters
 	/// * img: 8-bit 3-channel image where the text should be drawn.
 	/// * text: Text to write on an image.
@@ -474,9 +475,9 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Draws a text on the image.
-	/// 
+	///
 	/// ## Parameters
 	/// * img: 8-bit 3-channel image where the text should be drawn.
 	/// * text: Text to write on an image.
@@ -489,7 +490,7 @@ pub mod highgui {
 	/// * weight: Font weight. Available operation flags are : cv::QtFontWeights You can also specify a positive integer for better control.
 	/// * style: Font style. Available operation flags are : cv::QtFontStyles
 	/// * spacing: Spacing between characters. It can be negative or positive.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [add_text_with_font] function uses the following default values for its arguments:
 	/// * point_size: -1
@@ -507,9 +508,9 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Draws a text on the image.
-	/// 
+	///
 	/// ## Parameters
 	/// * img: 8-bit 3-channel image where the text should be drawn.
 	/// * text: Text to write on an image.
@@ -522,7 +523,7 @@ pub mod highgui {
 	/// * weight: Font weight. Available operation flags are : cv::QtFontWeights You can also specify a positive integer for better control.
 	/// * style: Font style. Available operation flags are : cv::QtFontStyles
 	/// * spacing: Spacing between characters. It can be negative or positive.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * point_size: -1
 	/// * color: Scalar::all(0)
@@ -539,14 +540,14 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Attaches a button to the control panel.
-	/// 
+	///
 	/// The function createButton attaches a button to the control panel. Each button is added to a
 	/// buttonbar to the right of the last button. A new buttonbar is created if nothing was attached to the
 	/// control panel before, or if the last element attached to the control panel was a trackbar or if the
 	/// QT_NEW_BUTTONBAR flag is added to the type.
-	/// 
+	///
 	/// See below various examples of the cv::createButton function call: :
 	/// ```C++
 	///    createButton("",callbackButton);//create a push button "button 0", that will call callbackButton.
@@ -556,8 +557,8 @@ pub mod highgui {
 	///    createButton("button6",callbackButton2,NULL,QT_PUSH_BUTTON,1);
 	///    createButton("button6",callbackButton2,NULL,QT_PUSH_BUTTON|QT_NEW_BUTTONBAR);// create a push button in a new row
 	/// ```
-	/// 
-	/// 
+	///
+	///
 	/// ## Parameters
 	/// * bar_name: Name of the button.
 	/// * on_change: Pointer to the function to be called every time the button changes its state.
@@ -567,13 +568,13 @@ pub mod highgui {
 	/// * type: Optional type of the button. Available types are: (cv::QtButtonTypes)
 	/// * initial_button_state: Default state of the button. Use for checkbox and radiobox. Its
 	/// value could be 0 or 1. (__Optional__)
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_button] function uses the following default values for its arguments:
 	/// * userdata: 0
 	/// * typ: QT_PUSH_BUTTON
 	/// * initial_button_state: false
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * userdata: 0
 	#[inline]
@@ -587,14 +588,14 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Attaches a button to the control panel.
-	/// 
+	///
 	/// The function createButton attaches a button to the control panel. Each button is added to a
 	/// buttonbar to the right of the last button. A new buttonbar is created if nothing was attached to the
 	/// control panel before, or if the last element attached to the control panel was a trackbar or if the
 	/// QT_NEW_BUTTONBAR flag is added to the type.
-	/// 
+	///
 	/// See below various examples of the cv::createButton function call: :
 	/// ```C++
 	///    createButton("",callbackButton);//create a push button "button 0", that will call callbackButton.
@@ -604,8 +605,8 @@ pub mod highgui {
 	///    createButton("button6",callbackButton2,NULL,QT_PUSH_BUTTON,1);
 	///    createButton("button6",callbackButton2,NULL,QT_PUSH_BUTTON|QT_NEW_BUTTONBAR);// create a push button in a new row
 	/// ```
-	/// 
-	/// 
+	///
+	///
 	/// ## Parameters
 	/// * bar_name: Name of the button.
 	/// * on_change: Pointer to the function to be called every time the button changes its state.
@@ -615,7 +616,7 @@ pub mod highgui {
 	/// * type: Optional type of the button. Available types are: (cv::QtButtonTypes)
 	/// * initial_button_state: Default state of the button. Use for checkbox and radiobox. Its
 	/// value could be 0 or 1. (__Optional__)
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * userdata: 0
 	/// * typ: QT_PUSH_BUTTON
@@ -631,20 +632,20 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Creates a trackbar and attaches it to the specified window.
-	/// 
+	///
 	/// The function createTrackbar creates a trackbar (a slider or range control) with the specified name
 	/// and range, assigns a variable value to be a position synchronized with the trackbar and specifies
 	/// the callback function onChange to be called on the trackbar position change. The created trackbar is
 	/// displayed in the specified window winname.
-	/// 
-	/// 
+	///
+	///
 	/// Note: [__Qt Backend Only__] winname can be empty if the trackbar should be attached to the
 	/// control panel.
-	/// 
+	///
 	/// Clicking the label of each trackbar enables editing the trackbar values manually.
-	/// 
+	///
 	/// ## Parameters
 	/// * trackbarname: Name of the created trackbar.
 	/// * winname: Name of the window that will be used as a parent of the created trackbar.
@@ -657,7 +658,7 @@ pub mod highgui {
 	/// the NULL pointer, no callbacks are called, but only value is updated.
 	/// * userdata: User data that is passed as is to the callback. It can be used to handle trackbar
 	/// events without using global variables.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * on_change: 0
 	/// * userdata: 0
@@ -673,9 +674,9 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// HighGUI backend used.
-	/// 
+	///
 	/// The function returns HighGUI backend name used: could be COCOA, GTK2/3, QT, WAYLAND or WIN32.
 	/// Returns empty string if there is no available UI backend.
 	#[inline]
@@ -687,9 +688,9 @@ pub mod highgui {
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Destroys all of the HighGUI windows.
-	/// 
+	///
 	/// The function destroyAllWindows destroys all of the opened HighGUI windows.
 	#[inline]
 	pub fn destroy_all_windows() -> Result<()> {
@@ -699,11 +700,11 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Destroys the specified window.
-	/// 
+	///
 	/// The function destroyWindow destroys the window with the given name.
-	/// 
+	///
 	/// ## Parameters
 	/// * winname: Name of the window to be destroyed.
 	#[inline]
@@ -715,20 +716,20 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Displays a text on a window image as an overlay for a specified duration.
-	/// 
+	///
 	/// The function displayOverlay displays useful information/tips on top of the window for a certain
 	/// amount of time *delayms*. The function does not modify the image, displayed in the window, that is,
 	/// after the specified delay the original content of the window is restored.
-	/// 
+	///
 	/// ## Parameters
 	/// * winname: Name of the window.
 	/// * text: Overlay text to write on a window image.
 	/// * delayms: The period (in milliseconds), during which the overlay text is displayed. If this
 	/// function is called before the previous overlay text timed out, the timer is restarted and the text
 	/// is updated. If this value is zero, the text never disappears.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [display_overlay] function uses the following default values for its arguments:
 	/// * delayms: 0
@@ -742,20 +743,20 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Displays a text on a window image as an overlay for a specified duration.
-	/// 
+	///
 	/// The function displayOverlay displays useful information/tips on top of the window for a certain
 	/// amount of time *delayms*. The function does not modify the image, displayed in the window, that is,
 	/// after the specified delay the original content of the window is restored.
-	/// 
+	///
 	/// ## Parameters
 	/// * winname: Name of the window.
 	/// * text: Overlay text to write on a window image.
 	/// * delayms: The period (in milliseconds), during which the overlay text is displayed. If this
 	/// function is called before the previous overlay text timed out, the timer is restarted and the text
 	/// is updated. If this value is zero, the text never disappears.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * delayms: 0
 	#[inline]
@@ -768,20 +769,20 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Displays a text on the window statusbar during the specified period of time.
-	/// 
+	///
 	/// The function displayStatusBar displays useful information/tips on top of the window for a certain
 	/// amount of time *delayms* . This information is displayed on the window statusbar (the window must be
 	/// created with the CV_GUI_EXPANDED flags).
-	/// 
+	///
 	/// ## Parameters
 	/// * winname: Name of the window.
 	/// * text: Text to write on the window statusbar.
 	/// * delayms: Duration (in milliseconds) to display the text. If this function is called before
 	/// the previous text timed out, the timer is restarted and the text is updated. If this value is
 	/// zero, the text never disappears.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [display_status_bar] function uses the following default values for its arguments:
 	/// * delayms: 0
@@ -795,20 +796,20 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Displays a text on the window statusbar during the specified period of time.
-	/// 
+	///
 	/// The function displayStatusBar displays useful information/tips on top of the window for a certain
 	/// amount of time *delayms* . This information is displayed on the window statusbar (the window must be
 	/// created with the CV_GUI_EXPANDED flags).
-	/// 
+	///
 	/// ## Parameters
 	/// * winname: Name of the window.
 	/// * text: Text to write on the window statusbar.
 	/// * delayms: Duration (in milliseconds) to display the text. If this function is called before
 	/// the previous text timed out, the timer is restarted and the text is updated. If this value is
 	/// zero, the text never disappears.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * delayms: 0
 	#[inline]
@@ -821,18 +822,18 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Creates the font to draw a text on an image.
-	/// 
+	///
 	/// The function fontQt creates a cv::QtFont object. This cv::QtFont is not compatible with putText .
-	/// 
+	///
 	/// A basic usage of this function is the following: :
 	/// ```C++
 	///    QtFont font = fontQt("Times");
 	///    addText( img1, "Hello World !", Point(50,50), font);
 	/// ```
-	/// 
-	/// 
+	///
+	///
 	/// ## Parameters
 	/// * nameFont: Name of the font. The name should match the name of a system font (such as
 	/// *Times*). If the font is not found, a default one is used.
@@ -843,7 +844,7 @@ pub mod highgui {
 	/// * weight: Font weight. Available operation flags are : cv::QtFontWeights You can also specify a positive integer for better control.
 	/// * style: Font style. Available operation flags are : cv::QtFontStyles
 	/// * spacing: Spacing between characters. It can be negative or positive.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [font_qt] function uses the following default values for its arguments:
 	/// * point_size: -1
@@ -861,18 +862,18 @@ pub mod highgui {
 		let ret = unsafe { crate::highgui::QtFont::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates the font to draw a text on an image.
-	/// 
+	///
 	/// The function fontQt creates a cv::QtFont object. This cv::QtFont is not compatible with putText .
-	/// 
+	///
 	/// A basic usage of this function is the following: :
 	/// ```C++
 	///    QtFont font = fontQt("Times");
 	///    addText( img1, "Hello World !", Point(50,50), font);
 	/// ```
-	/// 
-	/// 
+	///
+	///
 	/// ## Parameters
 	/// * nameFont: Name of the font. The name should match the name of a system font (such as
 	/// *Times*). If the font is not found, a default one is used.
@@ -883,7 +884,7 @@ pub mod highgui {
 	/// * weight: Font weight. Available operation flags are : cv::QtFontWeights You can also specify a positive integer for better control.
 	/// * style: Font style. Available operation flags are : cv::QtFontStyles
 	/// * spacing: Spacing between characters. It can be negative or positive.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * point_size: -1
 	/// * color: Scalar::all(0)
@@ -900,22 +901,22 @@ pub mod highgui {
 		let ret = unsafe { crate::highgui::QtFont::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Gets the mouse-wheel motion delta, when handling mouse-wheel events cv::EVENT_MOUSEWHEEL and
 	/// cv::EVENT_MOUSEHWHEEL.
-	/// 
+	///
 	/// For regular mice with a scroll-wheel, delta will be a multiple of 120. The value 120 corresponds to
 	/// a one notch rotation of the wheel or the threshold for action to be taken and one such action should
 	/// occur for each delta. Some high-precision mice with higher-resolution freely-rotating wheels may
 	/// generate smaller values.
-	/// 
+	///
 	/// For cv::EVENT_MOUSEWHEEL positive and negative values mean forward and backward scrolling,
 	/// respectively. For cv::EVENT_MOUSEHWHEEL, where available, positive and negative values mean right and
 	/// left scrolling, respectively.
-	/// 
-	/// 
+	///
+	///
 	/// Note: Mouse-wheel events are currently supported only on Windows and Cocoa.
-	/// 
+	///
 	/// ## Parameters
 	/// * flags: The mouse callback flags parameter.
 	#[inline]
@@ -926,15 +927,15 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Returns the trackbar position.
-	/// 
+	///
 	/// The function returns the current position of the specified trackbar.
-	/// 
-	/// 
+	///
+	///
 	/// Note: [__Qt Backend Only__] winname can be empty if the trackbar is attached to the control
 	/// panel.
-	/// 
+	///
 	/// ## Parameters
 	/// * trackbarname: Name of the trackbar.
 	/// * winname: Name of the window that is the parent of the trackbar.
@@ -948,17 +949,17 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Provides rectangle of image in the window.
-	/// 
+	///
 	/// The function getWindowImageRect returns the client screen coordinates, width and height of the image rendering area.
-	/// 
+	///
 	/// ## Parameters
 	/// * winname: Name of the window.
 	/// ## See also
 	/// resizeWindow moveWindow
-	/// 
-	/// 
+	///
+	///
 	/// Note: [__Wayland Backend Only__] This function is not supported by the Wayland protocol limitation.
 	#[inline]
 	pub fn get_window_image_rect(winname: &str) -> Result<core::Rect> {
@@ -969,18 +970,18 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Provides parameters of a window.
-	/// 
+	///
 	/// The function getWindowProperty returns properties of a window.
-	/// 
+	///
 	/// ## Parameters
 	/// * winname: Name of the window.
 	/// * prop_id: Window property to retrieve. The following operation flags are available: (cv::WindowPropertyFlags)
 	/// ## See also
 	/// setWindowProperty
-	/// 
-	/// 
+	///
+	///
 	/// Note: [__Wayland Backend Only__] This function is not supported.
 	#[inline]
 	pub fn get_window_property(winname: &str, prop_id: i32) -> Result<f64> {
@@ -991,13 +992,13 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Displays an image in the specified window.
-	/// 
+	///
 	/// The function imshow displays an image in the specified window. If the window was created with the
 	/// cv::WINDOW_AUTOSIZE flag, the image is shown with its original size, however it is still limited by the screen resolution.
 	/// Otherwise, the image is scaled to fit the window. The function may scale the image, depending on its depth:
-	/// 
+	///
 	/// *   If the image is 8-bit unsigned, it is displayed as is.
 	/// *   If the image is 16-bit unsigned, the pixels are divided by 256. That is, the
 	///    value range [0,255\*256] is mapped to [0,255].
@@ -1005,31 +1006,31 @@ pub mod highgui {
 	///    value range [0,1] is mapped to [0,255].
 	/// *   32-bit integer images are not processed anymore due to ambiguouty of required transform.
 	///    Convert to 8-bit unsigned matrix using a custom preprocessing specific to image's context.
-	/// 
+	///
 	/// If window was created with OpenGL support, cv::imshow also support ogl::Buffer , ogl::Texture2D and
 	/// cuda::GpuMat as input.
-	/// 
+	///
 	/// If the window was not created before this function, it is assumed creating a window with cv::WINDOW_AUTOSIZE.
-	/// 
+	///
 	/// If you need to show an image that is bigger than the screen resolution, you will need to call namedWindow("", WINDOW_NORMAL) before the imshow.
-	/// 
-	/// 
+	///
+	///
 	/// Note: This function should be followed by a call to cv::waitKey or cv::pollKey to perform GUI
 	/// housekeeping tasks that are necessary to actually show the given image and make the window respond
 	/// to mouse and keyboard events. Otherwise, it won't display the image and the window might lock up.
 	/// For example, **waitKey(0)** will display the window infinitely until any keypress (it is suitable
 	/// for image display). **waitKey(25)** will display a frame and wait approximately 25 ms for a key
 	/// press (suitable for displaying a video frame-by-frame). To remove the window, use cv::destroyWindow.
-	/// 
-	/// 
+	///
+	///
 	/// Note: [__Windows Backend Only__] Pressing Ctrl+C will copy the image to the clipboard. Pressing Ctrl+S will show a dialog to save the image.
-	/// 
+	///
 	/// Note: [__Wayland Backend Only__] Supoorting format is extended.
 	/// *   If the image is 8-bit signed, the pixels are biased by 128. That is, the
 	///    value range [-128,127] is mapped to [0,255].
 	/// *   If the image is 16-bit signed, the pixels are divided by 256 and biased by 128. That is, the
 	///    value range [-32768,32767] is mapped to [0,255].
-	/// 
+	///
 	/// ## Parameters
 	/// * winname: Name of the window.
 	/// * mat: Image to be shown.
@@ -1043,12 +1044,12 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Loads parameters of the specified window.
-	/// 
+	///
 	/// The function loadWindowParameters loads size, location, flags, trackbars value, zoom and panning
 	/// location of the window windowName.
-	/// 
+	///
 	/// ## Parameters
 	/// * windowName: Name of the window.
 	#[inline]
@@ -1060,15 +1061,15 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Moves the window to the specified position
-	/// 
+	///
 	/// ## Parameters
 	/// * winname: Name of the window.
 	/// * x: The new x-coordinate of the window.
 	/// * y: The new y-coordinate of the window.
-	/// 
-	/// 
+	///
+	///
 	/// Note: [__Wayland Backend Only__] This function is not supported by the Wayland protocol limitation.
 	#[inline]
 	pub fn move_window(winname: &str, x: i32, y: i32) -> Result<()> {
@@ -1079,19 +1080,19 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Creates a window.
-	/// 
+	///
 	/// The function namedWindow creates a window that can be used as a placeholder for images and
 	/// trackbars. Created windows are referred to by their names.
-	/// 
+	///
 	/// If a window with the same name already exists, the function does nothing.
-	/// 
+	///
 	/// You can call cv::destroyWindow or cv::destroyAllWindows to close the window and de-allocate any associated
 	/// memory usage. For a simple program, you do not really have to call these functions because all the
 	/// resources and windows of the application are closed automatically by the operating system upon exit.
-	/// 
-	/// 
+	///
+	///
 	/// Note: Qt backend supports additional flags:
 	///  *   **WINDOW_NORMAL or WINDOW_AUTOSIZE:** WINDOW_NORMAL enables you to resize the
 	///      window, whereas WINDOW_AUTOSIZE adjusts automatically the window size to fit the
@@ -1101,11 +1102,11 @@ pub mod highgui {
 	///  *   **WINDOW_GUI_NORMAL or WINDOW_GUI_EXPANDED:** WINDOW_GUI_NORMAL is the old way to draw the window
 	///      without statusbar and toolbar, whereas WINDOW_GUI_EXPANDED is a new enhanced GUI.
 	/// By default, flags == WINDOW_AUTOSIZE | WINDOW_KEEPRATIO | WINDOW_GUI_EXPANDED
-	/// 
+	///
 	/// ## Parameters
 	/// * winname: Name of the window in the window caption that may be used as a window identifier.
 	/// * flags: Flags of the window. The supported flags are: (cv::WindowFlags)
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [named_window] function uses the following default values for its arguments:
 	/// * flags: WINDOW_AUTOSIZE
@@ -1118,19 +1119,19 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Creates a window.
-	/// 
+	///
 	/// The function namedWindow creates a window that can be used as a placeholder for images and
 	/// trackbars. Created windows are referred to by their names.
-	/// 
+	///
 	/// If a window with the same name already exists, the function does nothing.
-	/// 
+	///
 	/// You can call cv::destroyWindow or cv::destroyAllWindows to close the window and de-allocate any associated
 	/// memory usage. For a simple program, you do not really have to call these functions because all the
 	/// resources and windows of the application are closed automatically by the operating system upon exit.
-	/// 
-	/// 
+	///
+	///
 	/// Note: Qt backend supports additional flags:
 	///  *   **WINDOW_NORMAL or WINDOW_AUTOSIZE:** WINDOW_NORMAL enables you to resize the
 	///      window, whereas WINDOW_AUTOSIZE adjusts automatically the window size to fit the
@@ -1140,11 +1141,11 @@ pub mod highgui {
 	///  *   **WINDOW_GUI_NORMAL or WINDOW_GUI_EXPANDED:** WINDOW_GUI_NORMAL is the old way to draw the window
 	///      without statusbar and toolbar, whereas WINDOW_GUI_EXPANDED is a new enhanced GUI.
 	/// By default, flags == WINDOW_AUTOSIZE | WINDOW_KEEPRATIO | WINDOW_GUI_EXPANDED
-	/// 
+	///
 	/// ## Parameters
 	/// * winname: Name of the window in the window caption that may be used as a window identifier.
 	/// * flags: Flags of the window. The supported flags are: (cv::WindowFlags)
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * flags: WINDOW_AUTOSIZE
 	#[inline]
@@ -1156,18 +1157,18 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Polls for a pressed key.
-	/// 
+	///
 	/// The function pollKey polls for a key event without waiting. It returns the code of the pressed key
 	/// or -1 if no key was pressed since the last invocation. To wait until a key was pressed, use #waitKey.
-	/// 
-	/// 
+	///
+	///
 	/// Note: The functions [wait_key] and [poll_key] are the only methods in HighGUI that can fetch and handle
 	/// GUI events, so one of them needs to be called periodically for normal event processing unless
 	/// HighGUI is used within an environment that takes care of event processing.
-	/// 
-	/// 
+	///
+	///
 	/// Note: The function only works if there is at least one HighGUI window created and the window is
 	/// active. If there are several HighGUI windows, any of them can be active.
 	#[inline]
@@ -1178,20 +1179,20 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Resizes the window to the specified size
-	/// 
-	/// 
+	///
+	///
 	/// Note: The specified window size is for the image area. Toolbars are not counted.
 	/// Only windows created without cv::WINDOW_AUTOSIZE flag can be resized.
-	/// 
+	///
 	/// ## Parameters
 	/// * winname: Window name.
 	/// * width: The new window width.
 	/// * height: The new window height.
-	/// 
+	///
 	/// ## Overloaded parameters
-	/// 
+	///
 	/// * winname: Window name.
 	/// * size: The new window size.
 	#[inline]
@@ -1203,13 +1204,13 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Resizes the window to the specified size
-	/// 
-	/// 
+	///
+	///
 	/// Note: The specified window size is for the image area. Toolbars are not counted.
 	/// Only windows created without cv::WINDOW_AUTOSIZE flag can be resized.
-	/// 
+	///
 	/// ## Parameters
 	/// * winname: Window name.
 	/// * width: The new window width.
@@ -1223,12 +1224,12 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Saves parameters of the specified window.
-	/// 
+	///
 	/// The function saveWindowParameters saves size, location, flags, trackbars value, zoom and panning
 	/// location of the window windowName.
-	/// 
+	///
 	/// ## Parameters
 	/// * windowName: Name of the window.
 	#[inline]
@@ -1240,12 +1241,12 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Allows users to select a ROI on the given image.
-	/// 
+	///
 	/// The function creates a window and allows users to select a ROI using the mouse.
 	/// Controls: use `space` or `enter` to finish selection, use key `c` to cancel selection (function will return the zero cv::Rect).
-	/// 
+	///
 	/// ## Parameters
 	/// * windowName: name of the window where selection process will be shown.
 	/// * img: image to select a ROI.
@@ -1255,11 +1256,11 @@ pub mod highgui {
 	/// * printNotice: if true a notice to select ROI or cancel selection will be printed in console.
 	/// ## Returns
 	/// selected ROI or empty rect if selection canceled.
-	/// 
-	/// 
+	///
+	///
 	/// Note: The function sets it's own mouse callback for specified window using cv::setMouseCallback(windowName, ...).
 	/// After finish of work an empty callback will be set for the used window.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [select_roi] function uses the following default values for its arguments:
 	/// * show_crosshair: true
@@ -1275,12 +1276,12 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Allows users to select a ROI on the given image.
-	/// 
+	///
 	/// The function creates a window and allows users to select a ROI using the mouse.
 	/// Controls: use `space` or `enter` to finish selection, use key `c` to cancel selection (function will return the zero cv::Rect).
-	/// 
+	///
 	/// ## Parameters
 	/// * windowName: name of the window where selection process will be shown.
 	/// * img: image to select a ROI.
@@ -1290,11 +1291,11 @@ pub mod highgui {
 	/// * printNotice: if true a notice to select ROI or cancel selection will be printed in console.
 	/// ## Returns
 	/// selected ROI or empty rect if selection canceled.
-	/// 
-	/// 
+	///
+	///
 	/// Note: The function sets it's own mouse callback for specified window using cv::setMouseCallback(windowName, ...).
 	/// After finish of work an empty callback will be set for the used window.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * show_crosshair: true
 	/// * from_center: false
@@ -1309,9 +1310,9 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// @overload
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [select_roi_1] function uses the following default values for its arguments:
 	/// * show_crosshair: true
@@ -1326,12 +1327,12 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Allows users to select a ROI on the given image.
-	/// 
+	///
 	/// The function creates a window and allows users to select a ROI using the mouse.
 	/// Controls: use `space` or `enter` to finish selection, use key `c` to cancel selection (function will return the zero cv::Rect).
-	/// 
+	///
 	/// ## Parameters
 	/// * windowName: name of the window where selection process will be shown.
 	/// * img: image to select a ROI.
@@ -1341,13 +1342,13 @@ pub mod highgui {
 	/// * printNotice: if true a notice to select ROI or cancel selection will be printed in console.
 	/// ## Returns
 	/// selected ROI or empty rect if selection canceled.
-	/// 
-	/// 
+	///
+	///
 	/// Note: The function sets it's own mouse callback for specified window using cv::setMouseCallback(windowName, ...).
 	/// After finish of work an empty callback will be set for the used window.
-	/// 
+	///
 	/// ## Overloaded parameters
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * show_crosshair: true
 	/// * from_center: false
@@ -1361,13 +1362,13 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Allows users to select multiple ROIs on the given image.
-	/// 
+	///
 	/// The function creates a window and allows users to select multiple ROIs using the mouse.
 	/// Controls: use `space` or `enter` to finish current selection and start a new one,
 	/// use `esc` to terminate multiple ROI selection process.
-	/// 
+	///
 	/// ## Parameters
 	/// * windowName: name of the window where selection process will be shown.
 	/// * img: image to select a ROI.
@@ -1376,11 +1377,11 @@ pub mod highgui {
 	/// * fromCenter: if true center of selection will match initial mouse position. In opposite case a corner of
 	/// selection rectangle will correspont to the initial mouse position.
 	/// * printNotice: if true a notice to select ROI or cancel selection will be printed in console.
-	/// 
-	/// 
+	///
+	///
 	/// Note: The function sets it's own mouse callback for specified window using cv::setMouseCallback(windowName, ...).
 	/// After finish of work an empty callback will be set for the used window.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [select_ro_is] function uses the following default values for its arguments:
 	/// * show_crosshair: true
@@ -1396,13 +1397,13 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Allows users to select multiple ROIs on the given image.
-	/// 
+	///
 	/// The function creates a window and allows users to select multiple ROIs using the mouse.
 	/// Controls: use `space` or `enter` to finish current selection and start a new one,
 	/// use `esc` to terminate multiple ROI selection process.
-	/// 
+	///
 	/// ## Parameters
 	/// * windowName: name of the window where selection process will be shown.
 	/// * img: image to select a ROI.
@@ -1411,11 +1412,11 @@ pub mod highgui {
 	/// * fromCenter: if true center of selection will match initial mouse position. In opposite case a corner of
 	/// selection rectangle will correspont to the initial mouse position.
 	/// * printNotice: if true a notice to select ROI or cancel selection will be printed in console.
-	/// 
-	/// 
+	///
+	///
 	/// Note: The function sets it's own mouse callback for specified window using cv::setMouseCallback(windowName, ...).
 	/// After finish of work an empty callback will be set for the used window.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * show_crosshair: true
 	/// * from_center: false
@@ -1430,17 +1431,17 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// @example samples/cpp/create_mask.cpp
 	/// This program demonstrates using mouse events and how to make and use a mask image (black and white) .
-	/// 
+	///
 	/// Sets mouse handler for the specified window
-	/// 
+	///
 	/// ## Parameters
 	/// * winname: Name of the window.
 	/// * onMouse: Callback function for mouse events. See OpenCV samples on how to specify and use the callback.
 	/// * userdata: The optional parameter passed to the callback.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * userdata: 0
 	#[inline]
@@ -1454,9 +1455,9 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Sets the specified window as current OpenGL context.
-	/// 
+	///
 	/// ## Parameters
 	/// * winname: Name of the window.
 	#[inline]
@@ -1468,22 +1469,22 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Sets a callback function to be called to draw on top of displayed image.
-	/// 
+	///
 	/// The function setOpenGlDrawCallback can be used to draw 3D data on the window. See the example of
 	/// callback function below:
 	/// ```C++
 	///    void on_opengl(void* param)
 	///    {
 	///        glLoadIdentity();
-	/// 
+	///
 	///        glTranslated(0.0, 0.0, -1.0);
-	/// 
+	///
 	///        glRotatef( 55, 1, 0, 0 );
 	///        glRotatef( 45, 0, 1, 0 );
 	///        glRotatef( 0, 0, 0, 1 );
-	/// 
+	///
 	///        static const int coords[6][4][3] = {
 	///            { { +1, -1, -1 }, { -1, -1, -1 }, { -1, +1, -1 }, { +1, +1, -1 } },
 	///            { { +1, +1, -1 }, { -1, +1, -1 }, { -1, +1, +1 }, { +1, +1, +1 } },
@@ -1492,7 +1493,7 @@ pub mod highgui {
 	///            { { +1, -1, +1 }, { -1, -1, +1 }, { -1, -1, -1 }, { +1, -1, -1 } },
 	///            { { -1, -1, +1 }, { +1, -1, +1 }, { +1, +1, +1 }, { -1, +1, +1 } }
 	///        };
-	/// 
+	///
 	///        for (int i = 0; i < 6; ++i) {
 	///                    glColor3ub( i*20, 100+i*10, i*42 );
 	///                    glBegin(GL_QUADS);
@@ -1503,14 +1504,14 @@ pub mod highgui {
 	///        }
 	///    }
 	/// ```
-	/// 
-	/// 
+	///
+	///
 	/// ## Parameters
 	/// * winname: Name of the window.
 	/// * onOpenGlDraw: Pointer to the function to be called every frame. This function should be
 	/// prototyped as void Foo(void\*) .
 	/// * userdata: Pointer passed to the callback function.(__Optional__)
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * userdata: 0
 	#[inline]
@@ -1524,15 +1525,15 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Sets the trackbar maximum position.
-	/// 
+	///
 	/// The function sets the maximum position of the specified trackbar in the specified window.
-	/// 
-	/// 
+	///
+	///
 	/// Note: [__Qt Backend Only__] winname can be empty if the trackbar is attached to the control
 	/// panel.
-	/// 
+	///
 	/// ## Parameters
 	/// * trackbarname: Name of the trackbar.
 	/// * winname: Name of the window that is the parent of trackbar.
@@ -1547,15 +1548,15 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Sets the trackbar minimum position.
-	/// 
+	///
 	/// The function sets the minimum position of the specified trackbar in the specified window.
-	/// 
-	/// 
+	///
+	///
 	/// Note: [__Qt Backend Only__] winname can be empty if the trackbar is attached to the control
 	/// panel.
-	/// 
+	///
 	/// ## Parameters
 	/// * trackbarname: Name of the trackbar.
 	/// * winname: Name of the window that is the parent of trackbar.
@@ -1570,15 +1571,15 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Sets the trackbar position.
-	/// 
+	///
 	/// The function sets the position of the specified trackbar in the specified window.
-	/// 
-	/// 
+	///
+	///
 	/// Note: [__Qt Backend Only__] winname can be empty if the trackbar is attached to the control
 	/// panel.
-	/// 
+	///
 	/// ## Parameters
 	/// * trackbarname: Name of the trackbar.
 	/// * winname: Name of the window that is the parent of trackbar.
@@ -1593,17 +1594,17 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Changes parameters of a window dynamically.
-	/// 
+	///
 	/// The function setWindowProperty enables changing properties of a window.
-	/// 
+	///
 	/// ## Parameters
 	/// * winname: Name of the window.
 	/// * prop_id: Window property to edit. The supported operation flags are: (cv::WindowPropertyFlags)
 	/// * prop_value: New value of the window property. The supported flags are: (cv::WindowFlags)
-	/// 
-	/// 
+	///
+	///
 	/// Note: [__Wayland Backend Only__] This function is not supported.
 	#[inline]
 	pub fn set_window_property(winname: &str, prop_id: i32, prop_value: f64) -> Result<()> {
@@ -1614,7 +1615,7 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Updates window title
 	/// ## Parameters
 	/// * winname: Name of the window.
@@ -1629,7 +1630,7 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	#[inline]
 	pub fn start_loop(pt2_func: Option<unsafe extern "C" fn(i32, *mut *mut c_char) -> i32>, argv: &mut [&str]) -> Result<i32> {
 		string_array_arg_mut!(argv);
@@ -1639,7 +1640,7 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	#[inline]
 	pub fn start_window_thread() -> Result<i32> {
 		return_send!(via ocvrs_return);
@@ -1648,7 +1649,7 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	#[inline]
 	pub fn stop_loop() -> Result<()> {
 		return_send!(via ocvrs_return);
@@ -1657,9 +1658,9 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Force window to redraw its context and call draw callback ( See cv::setOpenGlDrawCallback ).
-	/// 
+	///
 	/// ## Parameters
 	/// * winname: Name of the window.
 	#[inline]
@@ -1671,28 +1672,28 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Waits for a pressed key.
-	/// 
+	///
 	/// The function waitKey waits for a key event infinitely (when ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdelay%7D%5Cleq%200) ) or for delay
 	/// milliseconds, when it is positive. Since the OS has a minimum time between switching threads, the
 	/// function will not wait exactly delay ms, it will wait at least delay ms, depending on what else is
 	/// running on your computer at that time. It returns the code of the pressed key or -1 if no key was
 	/// pressed before the specified time had elapsed. To check for a key press but not wait for it, use
 	/// #pollKey.
-	/// 
-	/// 
+	///
+	///
 	/// Note: The functions [wait_key] and [poll_key] are the only methods in HighGUI that can fetch and handle
 	/// GUI events, so one of them needs to be called periodically for normal event processing unless
 	/// HighGUI is used within an environment that takes care of event processing.
-	/// 
-	/// 
+	///
+	///
 	/// Note: The function only works if there is at least one HighGUI window created and the window is
 	/// active. If there are several HighGUI windows, any of them can be active.
-	/// 
+	///
 	/// ## Parameters
 	/// * delay: Delay in milliseconds. 0 is the special value that means "forever".
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [wait_key] function uses the following default values for its arguments:
 	/// * delay: 0
@@ -1704,12 +1705,12 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Similar to #waitKey, but returns full key code.
-	/// 
-	/// 
+	///
+	///
 	/// Note: Key code is implementation specific and depends on used backend: QT/GTK/Win32/etc
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [wait_key_ex] function uses the following default values for its arguments:
 	/// * delay: 0
@@ -1721,12 +1722,12 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Similar to #waitKey, but returns full key code.
-	/// 
-	/// 
+	///
+	///
 	/// Note: Key code is implementation specific and depends on used backend: QT/GTK/Win32/etc
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * delay: 0
 	#[inline]
@@ -1737,28 +1738,28 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Waits for a pressed key.
-	/// 
+	///
 	/// The function waitKey waits for a key event infinitely (when ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdelay%7D%5Cleq%200) ) or for delay
 	/// milliseconds, when it is positive. Since the OS has a minimum time between switching threads, the
 	/// function will not wait exactly delay ms, it will wait at least delay ms, depending on what else is
 	/// running on your computer at that time. It returns the code of the pressed key or -1 if no key was
 	/// pressed before the specified time had elapsed. To check for a key press but not wait for it, use
 	/// #pollKey.
-	/// 
-	/// 
+	///
+	///
 	/// Note: The functions [wait_key] and [poll_key] are the only methods in HighGUI that can fetch and handle
 	/// GUI events, so one of them needs to be called periodically for normal event processing unless
 	/// HighGUI is used within an environment that takes care of event processing.
-	/// 
-	/// 
+	///
+	///
 	/// Note: The function only works if there is at least one HighGUI window created and the window is
 	/// active. If there are several HighGUI windows, any of them can be active.
-	/// 
+	///
 	/// ## Parameters
 	/// * delay: Delay in milliseconds. 0 is the special value that means "forever".
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * delay: 0
 	#[inline]
@@ -1769,11 +1770,11 @@ pub mod highgui {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Constant methods for [crate::highgui::QtFont]
 	pub trait QtFontTraitConst {
 		fn as_raw_QtFont(&self) -> *const c_void;
-	
+
 		/// Name of the font
 		#[inline]
 		fn name_font(&self) -> String {
@@ -1781,7 +1782,7 @@ pub mod highgui {
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			ret
 		}
-		
+
 		/// Color of the font. Scalar(blue_component, green_component, red_component[, alpha_component])
 		#[inline]
 		fn color(&self) -> core::Scalar {
@@ -1790,170 +1791,170 @@ pub mod highgui {
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
-		
+
 		/// See cv::QtFontStyles
 		#[inline]
 		fn font_face(&self) -> i32 {
 			let ret = unsafe { sys::cv_QtFont_propFont_face_const(self.as_raw_QtFont()) };
 			ret
 		}
-		
+
 		/// font data and metrics
 		#[inline]
 		fn ascii(&self) -> *const i32 {
 			let ret = unsafe { sys::cv_QtFont_propAscii_const(self.as_raw_QtFont()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn greek(&self) -> *const i32 {
 			let ret = unsafe { sys::cv_QtFont_propGreek_const(self.as_raw_QtFont()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn cyrillic(&self) -> *const i32 {
 			let ret = unsafe { sys::cv_QtFont_propCyrillic_const(self.as_raw_QtFont()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn hscale(&self) -> f32 {
 			let ret = unsafe { sys::cv_QtFont_propHscale_const(self.as_raw_QtFont()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn vscale(&self) -> f32 {
 			let ret = unsafe { sys::cv_QtFont_propVscale_const(self.as_raw_QtFont()) };
 			ret
 		}
-		
+
 		/// slope coefficient: 0 - normal, >0 - italic
 		#[inline]
 		fn shear(&self) -> f32 {
 			let ret = unsafe { sys::cv_QtFont_propShear_const(self.as_raw_QtFont()) };
 			ret
 		}
-		
+
 		/// See cv::QtFontWeights
 		#[inline]
 		fn thickness(&self) -> i32 {
 			let ret = unsafe { sys::cv_QtFont_propThickness_const(self.as_raw_QtFont()) };
 			ret
 		}
-		
+
 		/// horizontal interval between letters
 		#[inline]
 		fn dx(&self) -> f32 {
 			let ret = unsafe { sys::cv_QtFont_propDx_const(self.as_raw_QtFont()) };
 			ret
 		}
-		
+
 		/// PointSize
 		#[inline]
 		fn line_type(&self) -> i32 {
 			let ret = unsafe { sys::cv_QtFont_propLine_type_const(self.as_raw_QtFont()) };
 			ret
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::highgui::QtFont]
 	pub trait QtFontTrait: crate::highgui::QtFontTraitConst {
 		fn as_raw_mut_QtFont(&mut self) -> *mut c_void;
-	
+
 		/// Color of the font. Scalar(blue_component, green_component, red_component[, alpha_component])
 		#[inline]
 		fn set_color(&mut self, val: core::Scalar) {
 			let ret = unsafe { sys::cv_QtFont_propColor_const_Scalar(self.as_raw_mut_QtFont(), &val) };
 			ret
 		}
-		
+
 		/// See cv::QtFontStyles
 		#[inline]
 		fn set_font_face(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_QtFont_propFont_face_const_int(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_hscale(&mut self, val: f32) {
 			let ret = unsafe { sys::cv_QtFont_propHscale_const_float(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_vscale(&mut self, val: f32) {
 			let ret = unsafe { sys::cv_QtFont_propVscale_const_float(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
-		
+
 		/// slope coefficient: 0 - normal, >0 - italic
 		#[inline]
 		fn set_shear(&mut self, val: f32) {
 			let ret = unsafe { sys::cv_QtFont_propShear_const_float(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
-		
+
 		/// See cv::QtFontWeights
 		#[inline]
 		fn set_thickness(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_QtFont_propThickness_const_int(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
-		
+
 		/// horizontal interval between letters
 		#[inline]
 		fn set_dx(&mut self, val: f32) {
 			let ret = unsafe { sys::cv_QtFont_propDx_const_float(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
-		
+
 		/// PointSize
 		#[inline]
 		fn set_line_type(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_QtFont_propLine_type_const_int(self.as_raw_mut_QtFont(), val) };
 			ret
 		}
-		
+
 	}
-	
+
 	/// QtFont available only for Qt. See cv::fontQt
 	pub struct QtFont {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { QtFont }
-	
+
 	impl Drop for QtFont {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_QtFont_delete(self.as_raw_mut_QtFont()) };
 		}
 	}
-	
+
 	unsafe impl Send for QtFont {}
-	
+
 	impl crate::highgui::QtFontTraitConst for QtFont {
 		#[inline] fn as_raw_QtFont(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::highgui::QtFontTrait for QtFont {
 		#[inline] fn as_raw_mut_QtFont(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { QtFont, crate::highgui::QtFontTraitConst, as_raw_QtFont, crate::highgui::QtFontTrait, as_raw_mut_QtFont }
-	
+
 	impl QtFont {
 		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
 		fn default() -> Self {
 			unsafe { Self::from_raw(sys::cv_QtFont_defaultNew_const()) }
 		}
-		
+
 	}
-	
+
 	impl std::fmt::Debug for QtFont {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -1973,7 +1974,7 @@ pub mod highgui {
 				.finish()
 		}
 	}
-	
+
 	impl Default for QtFont {
 		#[inline]
 		/// Forwards to infallible Self::default()

@@ -1,19 +1,20 @@
 pub mod hdf {
 	//! # Hierarchical Data Format I/O routines
-	//! 
+	//!
 	//! This module provides storage routines for Hierarchical Data Format objects.
 	//!    # Hierarchical Data Format version 5
-	//! 
+	//!
 	//!    Hierarchical Data Format version 5
 	//!    --------------------------------------------------------
-	//! 
+	//!
 	//!    In order to use it, the hdf5 library has to be installed, which
 	//!    means cmake should find it using `find_package(HDF5)`.
-	use crate::{mod_prelude::*, core, sys, types};
+	use crate::mod_prelude::*;
+	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use { super::HDF5TraitConst, super::HDF5Trait };
+		pub use super::{HDF5Trait, HDF5TraitConst};
 	}
-	
+
 	/// Get the chunk sizes of a dataset. see also: dsgetsize()
 	pub const HDF5_H5_GETCHUNKDIMS: i32 = 102;
 	/// Get the dimension information of a dataset. see also: dsgetsize()
@@ -27,10 +28,10 @@ pub mod hdf {
 	/// Open or create hdf5 file
 	/// ## Parameters
 	/// * HDF5Filename: specify the HDF5 filename.
-	/// 
+	///
 	/// Returns a pointer to the hdf5 object class
-	/// 
-	/// 
+	///
+	///
 	/// Note: If the specified file does not exist, it will be created using default properties.
 	/// Otherwise, it is opened in read and write mode with default access properties.
 	/// Any operations except dscreate() functions on object
@@ -39,7 +40,7 @@ pub mod hdf {
 	/// non-overlapping regions of dataset. Single hdf5 file also can be opened by multiple instances,
 	/// reads and writes can be instantiated at the same time as long as non-overlapping regions are involved. Object
 	/// is released using close().
-	/// 
+	///
 	/// - Example below opens and then releases the file.
 	/// ```C++
 	///   // open / auto create hdf5 file
@@ -48,10 +49,10 @@ pub mod hdf {
 	///   // release
 	///   h5io->close();
 	/// ```
-	/// 
-	/// 
+	///
+	///
 	/// ![Visualization of 10x10 CV_64FC2 (Hilbert matrix) using HDFView tool](https://docs.opencv.org/4.10.0/hdfview_demo.gif)
-	/// 
+	///
 	/// - Text dump (3x3 Hilbert matrix) of hdf5 dataset using **h5dump** tool:
 	/// ```C++
 	/// $ h5dump test.h5
@@ -69,7 +70,7 @@ pub mod hdf {
 	/// }
 	/// }
 	/// ```
-	/// 
+	///
 	#[inline]
 	pub fn open(hdf5_filename: &str) -> Result<core::Ptr<crate::hdf::HDF5>> {
 		extern_container_arg!(hdf5_filename);
@@ -80,18 +81,18 @@ pub mod hdf {
 		let ret = unsafe { core::Ptr::<crate::hdf::HDF5>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Constant methods for [crate::hdf::HDF5]
 	pub trait HDF5TraitConst {
 		fn as_raw_HDF5(&self) -> *const c_void;
-	
+
 		/// Check if label exists or not.
 		/// ## Parameters
 		/// * label: specify the hdf5 dataset label.
-		/// 
+		///
 		/// Returns **true** if dataset exists, and **false** otherwise.
-		/// 
-		/// 
+		///
+		///
 		/// Note: Checks if dataset, group or other object type (hdf5 link) exists under the label name. It is thread safe.
 		#[inline]
 		fn hlexists(&self, label: &str) -> Result<bool> {
@@ -102,9 +103,9 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Check whether a given attribute exits or not in the root group.
-		/// 
+		///
 		/// ## Parameters
 		/// * atlabel: the attribute name to be checked.
 		/// ## Returns
@@ -120,7 +121,7 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Create and allocate storage for two dimensional single or multi channel dataset.
 		/// ## Parameters
 		/// * rows: declare amount of rows
@@ -134,10 +135,10 @@ pub mod hdf {
 		///                      on GNU gzip for compression.
 		/// * dims_chunks: each array member specifies the chunking size to be used for block I/O,
 		///        by default NULL means none at all.
-		/// 
-		/// 
+		///
+		///
 		/// Note: If the dataset already exists, an exception will be thrown (CV_Error() is called).
-		/// 
+		///
 		/// - Existence of the dataset can be checked using hlexists(), see in this example:
 		/// ```C++
 		///   // open / autocreate hdf5 file
@@ -150,14 +151,14 @@ pub mod hdf {
 		///   // release
 		///   h5io->close();
 		/// ```
-		/// 
-		/// 
-		/// 
+		///
+		///
+		///
 		/// Note: Activating compression requires internal chunking. Chunking can significantly improve access
 		/// speed both at read and write time, especially for windowed access logic that shifts offset inside dataset.
 		/// If no custom chunking is specified, the default one will be invoked by the size of the **whole** dataset
 		/// as a single big chunk of data.
-		/// 
+		///
 		/// - See example of level 9 compression using internal default chunking:
 		/// ```C++
 		///   // open / autocreate hdf5 file
@@ -170,16 +171,16 @@ pub mod hdf {
 		///   // release
 		///   h5io->close();
 		/// ```
-		/// 
-		/// 
-		/// 
+		///
+		///
+		///
 		/// Note: A value of H5_UNLIMITED for **rows** or **cols** or both means **unlimited** data on the specified dimension,
 		/// thus, it is possible to expand anytime such a dataset on row, col or on both directions. Presence of H5_UNLIMITED on any
 		/// dimension **requires** to define custom chunking. No default chunking will be defined in the unlimited scenario since
 		/// default size on that dimension will be zero, and will grow once dataset is written. Writing into a dataset that has
 		/// H5_UNLIMITED on some of its dimensions requires dsinsert() that allows growth on unlimited dimensions, instead of dswrite()
 		/// that allows to write only in predefined data space.
-		/// 
+		///
 		/// - Example below shows no compression but unlimited dimension on cols using 100x100 internal chunking:
 		/// ```C++
 		///   // open / autocreate hdf5 file
@@ -190,12 +191,12 @@ pub mod hdf {
 		///   // release
 		///   h5io->close();
 		/// ```
-		/// 
-		/// 
-		/// 
+		///
+		///
+		///
 		/// Note: It is **not** thread safe, it must be called only once at dataset creation, otherwise an exception will occur.
 		/// Multiple datasets inside a single hdf5 file are allowed.
-		/// 
+		///
 		/// ## Overloaded parameters
 		#[inline]
 		fn dscreate(&self, rows: i32, cols: i32, typ: i32, dslabel: &str) -> Result<()> {
@@ -206,7 +207,7 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Create and allocate storage for two dimensional single or multi channel dataset.
 		/// ## Parameters
 		/// * rows: declare amount of rows
@@ -220,10 +221,10 @@ pub mod hdf {
 		///                      on GNU gzip for compression.
 		/// * dims_chunks: each array member specifies the chunking size to be used for block I/O,
 		///        by default NULL means none at all.
-		/// 
-		/// 
+		///
+		///
 		/// Note: If the dataset already exists, an exception will be thrown (CV_Error() is called).
-		/// 
+		///
 		/// - Existence of the dataset can be checked using hlexists(), see in this example:
 		/// ```C++
 		///   // open / autocreate hdf5 file
@@ -236,14 +237,14 @@ pub mod hdf {
 		///   // release
 		///   h5io->close();
 		/// ```
-		/// 
-		/// 
-		/// 
+		///
+		///
+		///
 		/// Note: Activating compression requires internal chunking. Chunking can significantly improve access
 		/// speed both at read and write time, especially for windowed access logic that shifts offset inside dataset.
 		/// If no custom chunking is specified, the default one will be invoked by the size of the **whole** dataset
 		/// as a single big chunk of data.
-		/// 
+		///
 		/// - See example of level 9 compression using internal default chunking:
 		/// ```C++
 		///   // open / autocreate hdf5 file
@@ -256,16 +257,16 @@ pub mod hdf {
 		///   // release
 		///   h5io->close();
 		/// ```
-		/// 
-		/// 
-		/// 
+		///
+		///
+		///
 		/// Note: A value of H5_UNLIMITED for **rows** or **cols** or both means **unlimited** data on the specified dimension,
 		/// thus, it is possible to expand anytime such a dataset on row, col or on both directions. Presence of H5_UNLIMITED on any
 		/// dimension **requires** to define custom chunking. No default chunking will be defined in the unlimited scenario since
 		/// default size on that dimension will be zero, and will grow once dataset is written. Writing into a dataset that has
 		/// H5_UNLIMITED on some of its dimensions requires dsinsert() that allows growth on unlimited dimensions, instead of dswrite()
 		/// that allows to write only in predefined data space.
-		/// 
+		///
 		/// - Example below shows no compression but unlimited dimension on cols using 100x100 internal chunking:
 		/// ```C++
 		///   // open / autocreate hdf5 file
@@ -276,12 +277,12 @@ pub mod hdf {
 		///   // release
 		///   h5io->close();
 		/// ```
-		/// 
-		/// 
-		/// 
+		///
+		///
+		///
 		/// Note: It is **not** thread safe, it must be called only once at dataset creation, otherwise an exception will occur.
 		/// Multiple datasets inside a single hdf5 file are allowed.
-		/// 
+		///
 		/// ## Overloaded parameters
 		#[inline]
 		fn dscreate_compress(&self, rows: i32, cols: i32, typ: i32, dslabel: &str, compresslevel: i32) -> Result<()> {
@@ -292,7 +293,7 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Create and allocate storage for two dimensional single or multi channel dataset.
 		/// ## Parameters
 		/// * rows: declare amount of rows
@@ -306,10 +307,10 @@ pub mod hdf {
 		///                      on GNU gzip for compression.
 		/// * dims_chunks: each array member specifies the chunking size to be used for block I/O,
 		///        by default NULL means none at all.
-		/// 
-		/// 
+		///
+		///
 		/// Note: If the dataset already exists, an exception will be thrown (CV_Error() is called).
-		/// 
+		///
 		/// - Existence of the dataset can be checked using hlexists(), see in this example:
 		/// ```C++
 		///   // open / autocreate hdf5 file
@@ -322,14 +323,14 @@ pub mod hdf {
 		///   // release
 		///   h5io->close();
 		/// ```
-		/// 
-		/// 
-		/// 
+		///
+		///
+		///
 		/// Note: Activating compression requires internal chunking. Chunking can significantly improve access
 		/// speed both at read and write time, especially for windowed access logic that shifts offset inside dataset.
 		/// If no custom chunking is specified, the default one will be invoked by the size of the **whole** dataset
 		/// as a single big chunk of data.
-		/// 
+		///
 		/// - See example of level 9 compression using internal default chunking:
 		/// ```C++
 		///   // open / autocreate hdf5 file
@@ -342,16 +343,16 @@ pub mod hdf {
 		///   // release
 		///   h5io->close();
 		/// ```
-		/// 
-		/// 
-		/// 
+		///
+		///
+		///
 		/// Note: A value of H5_UNLIMITED for **rows** or **cols** or both means **unlimited** data on the specified dimension,
 		/// thus, it is possible to expand anytime such a dataset on row, col or on both directions. Presence of H5_UNLIMITED on any
 		/// dimension **requires** to define custom chunking. No default chunking will be defined in the unlimited scenario since
 		/// default size on that dimension will be zero, and will grow once dataset is written. Writing into a dataset that has
 		/// H5_UNLIMITED on some of its dimensions requires dsinsert() that allows growth on unlimited dimensions, instead of dswrite()
 		/// that allows to write only in predefined data space.
-		/// 
+		///
 		/// - Example below shows no compression but unlimited dimension on cols using 100x100 internal chunking:
 		/// ```C++
 		///   // open / autocreate hdf5 file
@@ -362,12 +363,12 @@ pub mod hdf {
 		///   // release
 		///   h5io->close();
 		/// ```
-		/// 
-		/// 
-		/// 
+		///
+		///
+		///
 		/// Note: It is **not** thread safe, it must be called only once at dataset creation, otherwise an exception will occur.
 		/// Multiple datasets inside a single hdf5 file are allowed.
-		/// 
+		///
 		/// ## Overloaded parameters
 		#[inline]
 		fn dscreate_compress_dims(&self, rows: i32, cols: i32, typ: i32, dslabel: &str, compresslevel: i32, dims_chunks: &core::Vector<i32>) -> Result<()> {
@@ -378,7 +379,7 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn dscreate_nd(&self, sizes: &[i32], typ: i32, dslabel: &str) -> Result<()> {
 			extern_container_arg!(dslabel);
@@ -388,7 +389,7 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn dscreate_nd_compress(&self, sizes: &[i32], typ: i32, dslabel: &str, compresslevel: i32) -> Result<()> {
 			extern_container_arg!(dslabel);
@@ -398,7 +399,7 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## C++ default parameters
 		/// * compresslevel: HDF5::H5_NONE
 		/// * dims_chunks: vector<int>()
@@ -411,7 +412,7 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## Note
 		/// This alternative version of [HDF5TraitConst::dscreate_nd_vec_compress_dims] function uses the following default values for its arguments:
 		/// * compresslevel: HDF5::H5_NONE
@@ -425,7 +426,7 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Create and allocate storage for n-dimensional dataset, single or multichannel type.
 		/// ## Parameters
 		/// * n_dims: declare number of dimensions
@@ -439,10 +440,10 @@ pub mod hdf {
 		///                      on GNU gzip for compression.
 		/// * dims_chunks: each array member specifies chunking sizes to be used for block I/O,
 		///        by default NULL means none at all.
-		/// 
+		///
 		/// Note: If the dataset already exists, an exception will be thrown. Existence of the dataset can be checked
 		/// using hlexists().
-		/// 
+		///
 		/// - See example below that creates a 6 dimensional storage space:
 		/// ```C++
 		///   // open / autocreate hdf5 file
@@ -457,14 +458,14 @@ pub mod hdf {
 		///   // release
 		///   h5io->close();
 		/// ```
-		/// 
-		/// 
-		/// 
+		///
+		///
+		///
 		/// Note: Activating compression requires internal chunking. Chunking can significantly improve access
 		/// speed both at read and write time, especially for windowed access logic that shifts offset inside dataset.
 		/// If no custom chunking is specified, the default one will be invoked by the size of **whole** dataset
 		/// as single big chunk of data.
-		/// 
+		///
 		/// - See example of level 0 compression (shallow) using chunking against the first
 		/// dimension, thus storage will consists of 100 chunks of data:
 		/// ```C++
@@ -481,16 +482,16 @@ pub mod hdf {
 		///   // release
 		///   h5io->close();
 		/// ```
-		/// 
-		/// 
-		/// 
+		///
+		///
+		///
 		/// Note: A value of H5_UNLIMITED inside the **sizes** array means **unlimited** data on that dimension, thus it is
 		/// possible to expand anytime such dataset on those unlimited directions. Presence of H5_UNLIMITED on any dimension
 		/// **requires** to define custom chunking. No default chunking will be defined in unlimited scenario since the default size
 		/// on that dimension will be zero, and will grow once dataset is written. Writing into dataset that has H5_UNLIMITED on
 		/// some of its dimension requires dsinsert() instead of dswrite() that allows growth on unlimited dimension instead of
 		/// dswrite() that allows to write only in predefined data space.
-		/// 
+		///
 		/// - Example below shows a 3 dimensional dataset using no compression with all unlimited sizes and one unit chunking:
 		/// ```C++
 		///   // open / autocreate hdf5 file
@@ -502,7 +503,7 @@ pub mod hdf {
 		///   // release
 		///   h5io->close();
 		/// ```
-		/// 
+		///
 		#[inline]
 		fn dscreate_nd_compress_dims(&self, sizes: &[i32], typ: i32, dslabel: &str, compresslevel: i32, dims_chunks: &i32) -> Result<()> {
 			extern_container_arg!(dslabel);
@@ -512,16 +513,16 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Fetch dataset sizes
 		/// ## Parameters
 		/// * dslabel: specify the hdf5 dataset label to be measured.
 		/// * dims_flag: will fetch dataset dimensions on H5_GETDIMS, dataset maximum dimensions on H5_GETMAXDIMS,
 		///                  and chunk sizes on H5_GETCHUNKDIMS.
-		/// 
+		///
 		/// Returns vector object containing sizes of dataset on each dimensions.
-		/// 
-		/// 
+		///
+		///
 		/// Note: Resulting vector size will match the amount of dataset dimensions. By default H5_GETDIMS will return
 		/// actual dataset dimensions. Using H5_GETMAXDIM flag will get maximum allowed dimension which normally match
 		/// actual dataset dimension but can hold H5_UNLIMITED value if dataset was prepared in **unlimited** mode on
@@ -529,7 +530,7 @@ pub mod hdf {
 		/// Trying to write with oversized source data into dataset target will thrown exception. The H5_GETCHUNKDIMS will
 		/// return the dimension of chunk if dataset was created with chunking options otherwise returned vector size
 		/// will be zero.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * dims_flag: HDF5::H5_GETDIMS
 		#[inline]
@@ -542,16 +543,16 @@ pub mod hdf {
 			let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Fetch dataset sizes
 		/// ## Parameters
 		/// * dslabel: specify the hdf5 dataset label to be measured.
 		/// * dims_flag: will fetch dataset dimensions on H5_GETDIMS, dataset maximum dimensions on H5_GETMAXDIMS,
 		///                  and chunk sizes on H5_GETCHUNKDIMS.
-		/// 
+		///
 		/// Returns vector object containing sizes of dataset on each dimensions.
-		/// 
-		/// 
+		///
+		///
 		/// Note: Resulting vector size will match the amount of dataset dimensions. By default H5_GETDIMS will return
 		/// actual dataset dimensions. Using H5_GETMAXDIM flag will get maximum allowed dimension which normally match
 		/// actual dataset dimension but can hold H5_UNLIMITED value if dataset was prepared in **unlimited** mode on
@@ -559,7 +560,7 @@ pub mod hdf {
 		/// Trying to write with oversized source data into dataset target will thrown exception. The H5_GETCHUNKDIMS will
 		/// return the dimension of chunk if dataset was created with chunking options otherwise returned vector size
 		/// will be zero.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [HDF5TraitConst::dsgetsize] function uses the following default values for its arguments:
 		/// * dims_flag: HDF5::H5_GETDIMS
@@ -573,15 +574,15 @@ pub mod hdf {
 			let ret = unsafe { core::Vector::<i32>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Fetch dataset type
 		/// ## Parameters
 		/// * dslabel: specify the hdf5 dataset label to be checked.
-		/// 
+		///
 		/// Returns the stored matrix type. This is an identifier compatible with the CvMat type system,
 		/// like e.g. CV_16SC5 (16-bit signed 5-channel array), and so on.
-		/// 
-		/// 
+		///
+		///
 		/// Note: Result can be parsed with CV_MAT_CN() to obtain amount of channels and CV_MAT_DEPTH() to obtain native cvdata type.
 		/// It is thread safe.
 		#[inline]
@@ -593,7 +594,7 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn dswrite(&self, array: &impl ToInputArray, dslabel: &str) -> Result<()> {
 			input_array_arg!(array);
@@ -604,7 +605,7 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## C++ default parameters
 		/// * dims_counts: vector<int>()
 		#[inline]
@@ -617,7 +618,7 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## Note
 		/// This alternative version of [HDF5TraitConst::dswrite_offset] function uses the following default values for its arguments:
 		/// * dims_counts: vector<int>()
@@ -631,7 +632,7 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn dsinsert(&self, array: &impl ToInputArray, dslabel: &str) -> Result<()> {
 			input_array_arg!(array);
@@ -642,7 +643,7 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## C++ default parameters
 		/// * dims_counts: vector<int>()
 		#[inline]
@@ -655,7 +656,7 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## Note
 		/// This alternative version of [HDF5TraitConst::dsinsert_offset] function uses the following default values for its arguments:
 		/// * dims_counts: vector<int>()
@@ -669,7 +670,7 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn dsread(&self, array: &mut impl ToOutputArray, dslabel: &str) -> Result<()> {
 			output_array_arg!(array);
@@ -680,7 +681,7 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## C++ default parameters
 		/// * dims_counts: vector<int>()
 		#[inline]
@@ -693,7 +694,7 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## Note
 		/// This alternative version of [HDF5TraitConst::dsread_offset] function uses the following default values for its arguments:
 		/// * dims_counts: vector<int>()
@@ -707,22 +708,22 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Fetch keypoint dataset size
 		/// ## Parameters
 		/// * kplabel: specify the hdf5 dataset label to be measured.
 		/// * dims_flag: will fetch dataset dimensions on H5_GETDIMS, and dataset maximum dimensions on H5_GETMAXDIMS.
-		/// 
+		///
 		/// Returns size of keypoints dataset.
-		/// 
-		/// 
+		///
+		///
 		/// Note: Resulting size will match the amount of keypoints. By default H5_GETDIMS will return actual dataset dimension.
 		/// Using H5_GETMAXDIM flag will get maximum allowed dimension which normally match actual dataset dimension but can hold
 		/// H5_UNLIMITED value if dataset was prepared in **unlimited** mode. It can be useful to check existing dataset dimension
 		/// before overwrite it as whole or subset. Trying to write with oversized source data into dataset target will thrown
 		/// exception. The H5_GETCHUNKDIMS will return the dimension of chunk if dataset was created with chunking options otherwise
 		/// returned vector size will be zero.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * dims_flag: HDF5::H5_GETDIMS
 		#[inline]
@@ -734,22 +735,22 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Fetch keypoint dataset size
 		/// ## Parameters
 		/// * kplabel: specify the hdf5 dataset label to be measured.
 		/// * dims_flag: will fetch dataset dimensions on H5_GETDIMS, and dataset maximum dimensions on H5_GETMAXDIMS.
-		/// 
+		///
 		/// Returns size of keypoints dataset.
-		/// 
-		/// 
+		///
+		///
 		/// Note: Resulting size will match the amount of keypoints. By default H5_GETDIMS will return actual dataset dimension.
 		/// Using H5_GETMAXDIM flag will get maximum allowed dimension which normally match actual dataset dimension but can hold
 		/// H5_UNLIMITED value if dataset was prepared in **unlimited** mode. It can be useful to check existing dataset dimension
 		/// before overwrite it as whole or subset. Trying to write with oversized source data into dataset target will thrown
 		/// exception. The H5_GETCHUNKDIMS will return the dimension of chunk if dataset was created with chunking options otherwise
 		/// returned vector size will be zero.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [HDF5TraitConst::kpgetsize] function uses the following default values for its arguments:
 		/// * dims_flag: HDF5::H5_GETDIMS
@@ -762,7 +763,7 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Create and allocate special storage for cv::KeyPoint dataset.
 		/// ## Parameters
 		/// * size: declare fixed number of KeyPoints
@@ -770,10 +771,10 @@ pub mod hdf {
 		/// * compresslevel: specify the compression level 0-9 to be used, H5_NONE is default and means no compression.
 		/// * chunks: each array member specifies chunking sizes to be used for block I/O,
 		///        H5_NONE is default and means no compression.
-		/// 
+		///
 		/// Note: If the dataset already exists an exception will be thrown. Existence of the dataset can be checked
 		/// using hlexists().
-		/// 
+		///
 		/// - See example below that creates space for 100 keypoints in the dataset:
 		/// ```C++
 		///   // open hdf5 file
@@ -783,15 +784,15 @@ pub mod hdf {
 		///   else
 		///    printf("DS already created, skipping\n" );
 		/// ```
-		/// 
-		/// 
-		/// 
+		///
+		///
+		///
 		/// Note: A value of H5_UNLIMITED for **size** means **unlimited** keypoints, thus is possible to expand anytime such
 		/// dataset by adding or inserting. Presence of H5_UNLIMITED **require** to define custom chunking. No default chunking
 		/// will be defined in unlimited scenario since default size on that dimension will be zero, and will grow once dataset
 		/// is written. Writing into dataset that have H5_UNLIMITED on some of its dimension requires kpinsert() that allow
 		/// growth on unlimited dimension instead of kpwrite() that allows to write only in predefined data space.
-		/// 
+		///
 		/// - See example below that creates unlimited space for keypoints chunking size of 100 but no compression:
 		/// ```C++
 		///   // open hdf5 file
@@ -801,8 +802,8 @@ pub mod hdf {
 		///   else
 		///    printf("DS already created, skipping\n" );
 		/// ```
-		/// 
-		/// 
+		///
+		///
 		/// ## C++ default parameters
 		/// * compresslevel: H5_NONE
 		/// * chunks: H5_NONE
@@ -815,7 +816,7 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Create and allocate special storage for cv::KeyPoint dataset.
 		/// ## Parameters
 		/// * size: declare fixed number of KeyPoints
@@ -823,10 +824,10 @@ pub mod hdf {
 		/// * compresslevel: specify the compression level 0-9 to be used, H5_NONE is default and means no compression.
 		/// * chunks: each array member specifies chunking sizes to be used for block I/O,
 		///        H5_NONE is default and means no compression.
-		/// 
+		///
 		/// Note: If the dataset already exists an exception will be thrown. Existence of the dataset can be checked
 		/// using hlexists().
-		/// 
+		///
 		/// - See example below that creates space for 100 keypoints in the dataset:
 		/// ```C++
 		///   // open hdf5 file
@@ -836,15 +837,15 @@ pub mod hdf {
 		///   else
 		///    printf("DS already created, skipping\n" );
 		/// ```
-		/// 
-		/// 
-		/// 
+		///
+		///
+		///
 		/// Note: A value of H5_UNLIMITED for **size** means **unlimited** keypoints, thus is possible to expand anytime such
 		/// dataset by adding or inserting. Presence of H5_UNLIMITED **require** to define custom chunking. No default chunking
 		/// will be defined in unlimited scenario since default size on that dimension will be zero, and will grow once dataset
 		/// is written. Writing into dataset that have H5_UNLIMITED on some of its dimension requires kpinsert() that allow
 		/// growth on unlimited dimension instead of kpwrite() that allows to write only in predefined data space.
-		/// 
+		///
 		/// - See example below that creates unlimited space for keypoints chunking size of 100 but no compression:
 		/// ```C++
 		///   // open hdf5 file
@@ -854,8 +855,8 @@ pub mod hdf {
 		///   else
 		///    printf("DS already created, skipping\n" );
 		/// ```
-		/// 
-		/// 
+		///
+		///
 		/// ## Note
 		/// This alternative version of [HDF5TraitConst::kpcreate] function uses the following default values for its arguments:
 		/// * compresslevel: H5_NONE
@@ -869,21 +870,21 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Write or overwrite list of KeyPoint into specified dataset of hdf5 file.
 		/// ## Parameters
 		/// * keypoints: specify keypoints data list to be written.
 		/// * kplabel: specify the target hdf5 dataset label.
 		/// * offset: specify the offset location on dataset from where keypoints will be (over)written into dataset.
 		/// * counts: specify the amount of keypoints that will be written into dataset.
-		/// 
+		///
 		/// Writes vector<KeyPoint> object into targeted dataset.
-		/// 
-		/// 
+		///
+		///
 		/// Note: If dataset is not created and does not exist it will be created **automatically**. It is thread safe but
 		/// it is recommended that writes to happen over separate non overlapping regions. Multiple datasets can be written
 		/// inside single hdf5 file.
-		/// 
+		///
 		/// - Example below writes a 100 keypoints into a dataset. No dataset precreation required. If routine is called multiple
 		/// times dataset will be just overwritten:
 		/// ```C++
@@ -898,8 +899,8 @@ pub mod hdf {
 		///   // release
 		///   h5io->close();
 		/// ```
-		/// 
-		/// 
+		///
+		///
 		/// - Example below uses smaller set of 50 keypoints and writes into compressed space of 100 keypoints optimised by 10 chunks.
 		/// Same keypoint set is written three times, first into first half (0->50) and at second half (50->75) then into remaining slots
 		/// (75->99) of data space using offset and count parameters to settle the window for write access.If routine is called multiple times
@@ -922,8 +923,8 @@ pub mod hdf {
 		///   // release
 		///   h5io->close();
 		/// ```
-		/// 
-		/// 
+		///
+		///
 		/// ## C++ default parameters
 		/// * offset: H5_NONE
 		/// * counts: H5_NONE
@@ -936,21 +937,21 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Write or overwrite list of KeyPoint into specified dataset of hdf5 file.
 		/// ## Parameters
 		/// * keypoints: specify keypoints data list to be written.
 		/// * kplabel: specify the target hdf5 dataset label.
 		/// * offset: specify the offset location on dataset from where keypoints will be (over)written into dataset.
 		/// * counts: specify the amount of keypoints that will be written into dataset.
-		/// 
+		///
 		/// Writes vector<KeyPoint> object into targeted dataset.
-		/// 
-		/// 
+		///
+		///
 		/// Note: If dataset is not created and does not exist it will be created **automatically**. It is thread safe but
 		/// it is recommended that writes to happen over separate non overlapping regions. Multiple datasets can be written
 		/// inside single hdf5 file.
-		/// 
+		///
 		/// - Example below writes a 100 keypoints into a dataset. No dataset precreation required. If routine is called multiple
 		/// times dataset will be just overwritten:
 		/// ```C++
@@ -965,8 +966,8 @@ pub mod hdf {
 		///   // release
 		///   h5io->close();
 		/// ```
-		/// 
-		/// 
+		///
+		///
 		/// - Example below uses smaller set of 50 keypoints and writes into compressed space of 100 keypoints optimised by 10 chunks.
 		/// Same keypoint set is written three times, first into first half (0->50) and at second half (50->75) then into remaining slots
 		/// (75->99) of data space using offset and count parameters to settle the window for write access.If routine is called multiple times
@@ -989,8 +990,8 @@ pub mod hdf {
 		///   // release
 		///   h5io->close();
 		/// ```
-		/// 
-		/// 
+		///
+		///
 		/// ## Note
 		/// This alternative version of [HDF5TraitConst::kpwrite] function uses the following default values for its arguments:
 		/// * offset: H5_NONE
@@ -1004,22 +1005,22 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Insert or overwrite list of KeyPoint into specified dataset and autoexpand dataset size if **unlimited** property allows.
 		/// ## Parameters
 		/// * keypoints: specify keypoints data list to be written.
 		/// * kplabel: specify the target hdf5 dataset label.
 		/// * offset: specify the offset location on dataset from where keypoints will be (over)written into dataset.
 		/// * counts: specify the amount of keypoints that will be written into dataset.
-		/// 
+		///
 		/// Writes vector<KeyPoint> object into targeted dataset and **autoexpand** dataset dimension if allowed.
-		/// 
-		/// 
+		///
+		///
 		/// Note: Unlike kpwrite(), datasets are **not** created **automatically**. If dsinsert() happen over outer region of dataset
 		/// and dataset has been created in **unlimited** mode then dataset is expanded, otherwise exception is thrown. To create datasets
 		/// with **unlimited** property see kpcreate() and the optional H5_UNLIMITED flag at creation time. It is not thread safe over same
 		/// dataset but multiple datasets can be merged inside single hdf5 file.
-		/// 
+		///
 		/// - Example below creates **unlimited** space for keypoints storage, and inserts a list of 10 keypoints ten times into that space.
 		/// Final dataset will have 100 keypoints. Chunks size is 10 just optimized against list of keypoints. If routine is called multiple
 		/// times dataset will be just overwritten:
@@ -1038,8 +1039,8 @@ pub mod hdf {
 		///   // release
 		///   h5io->close();
 		/// ```
-		/// 
-		/// 
+		///
+		///
 		/// ## C++ default parameters
 		/// * offset: H5_NONE
 		/// * counts: H5_NONE
@@ -1052,22 +1053,22 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Insert or overwrite list of KeyPoint into specified dataset and autoexpand dataset size if **unlimited** property allows.
 		/// ## Parameters
 		/// * keypoints: specify keypoints data list to be written.
 		/// * kplabel: specify the target hdf5 dataset label.
 		/// * offset: specify the offset location on dataset from where keypoints will be (over)written into dataset.
 		/// * counts: specify the amount of keypoints that will be written into dataset.
-		/// 
+		///
 		/// Writes vector<KeyPoint> object into targeted dataset and **autoexpand** dataset dimension if allowed.
-		/// 
-		/// 
+		///
+		///
 		/// Note: Unlike kpwrite(), datasets are **not** created **automatically**. If dsinsert() happen over outer region of dataset
 		/// and dataset has been created in **unlimited** mode then dataset is expanded, otherwise exception is thrown. To create datasets
 		/// with **unlimited** property see kpcreate() and the optional H5_UNLIMITED flag at creation time. It is not thread safe over same
 		/// dataset but multiple datasets can be merged inside single hdf5 file.
-		/// 
+		///
 		/// - Example below creates **unlimited** space for keypoints storage, and inserts a list of 10 keypoints ten times into that space.
 		/// Final dataset will have 100 keypoints. Chunks size is 10 just optimized against list of keypoints. If routine is called multiple
 		/// times dataset will be just overwritten:
@@ -1086,8 +1087,8 @@ pub mod hdf {
 		///   // release
 		///   h5io->close();
 		/// ```
-		/// 
-		/// 
+		///
+		///
 		/// ## Note
 		/// This alternative version of [HDF5TraitConst::kpinsert] function uses the following default values for its arguments:
 		/// * offset: H5_NONE
@@ -1101,20 +1102,20 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Read specific keypoint dataset from hdf5 file into vector<KeyPoint> object.
 		/// ## Parameters
 		/// * keypoints: vector<KeyPoint> container where data reads will be returned.
 		/// * kplabel: specify the source hdf5 dataset label.
 		/// * offset: specify the offset location over dataset from where read starts.
 		/// * counts: specify the amount of keypoints from dataset to read.
-		/// 
+		///
 		/// Reads out vector<KeyPoint> object reflecting the stored dataset.
-		/// 
-		/// 
+		///
+		///
 		/// Note: If hdf5 file does not exist an exception will be thrown. Use hlexists() to check dataset presence.
 		/// It is thread safe.
-		/// 
+		///
 		/// - Example below reads a dataset containing keypoints starting with second entry:
 		/// ```C++
 		///   // open hdf5 file
@@ -1126,8 +1127,8 @@ pub mod hdf {
 		///   // release
 		///   h5io->close();
 		/// ```
-		/// 
-		/// 
+		///
+		///
 		/// - Example below perform read of 3 keypoints from second entry.
 		/// ```C++
 		///   // open hdf5 file
@@ -1139,8 +1140,8 @@ pub mod hdf {
 		///   // release
 		///   h5io->close();
 		/// ```
-		/// 
-		/// 
+		///
+		///
 		/// ## C++ default parameters
 		/// * offset: H5_NONE
 		/// * counts: H5_NONE
@@ -1153,20 +1154,20 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Read specific keypoint dataset from hdf5 file into vector<KeyPoint> object.
 		/// ## Parameters
 		/// * keypoints: vector<KeyPoint> container where data reads will be returned.
 		/// * kplabel: specify the source hdf5 dataset label.
 		/// * offset: specify the offset location over dataset from where read starts.
 		/// * counts: specify the amount of keypoints from dataset to read.
-		/// 
+		///
 		/// Reads out vector<KeyPoint> object reflecting the stored dataset.
-		/// 
-		/// 
+		///
+		///
 		/// Note: If hdf5 file does not exist an exception will be thrown. Use hlexists() to check dataset presence.
 		/// It is thread safe.
-		/// 
+		///
 		/// - Example below reads a dataset containing keypoints starting with second entry:
 		/// ```C++
 		///   // open hdf5 file
@@ -1178,8 +1179,8 @@ pub mod hdf {
 		///   // release
 		///   h5io->close();
 		/// ```
-		/// 
-		/// 
+		///
+		///
 		/// - Example below perform read of 3 keypoints from second entry.
 		/// ```C++
 		///   // open hdf5 file
@@ -1191,8 +1192,8 @@ pub mod hdf {
 		///   // release
 		///   h5io->close();
 		/// ```
-		/// 
-		/// 
+		///
+		///
 		/// ## Note
 		/// This alternative version of [HDF5TraitConst::kpread] function uses the following default values for its arguments:
 		/// * offset: H5_NONE
@@ -1206,13 +1207,13 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::hdf::HDF5]
 	pub trait HDF5Trait: crate::hdf::HDF5TraitConst {
 		fn as_raw_mut_HDF5(&mut self) -> *mut c_void;
-	
+
 		/// Close and release hdf5 object.
 		#[inline]
 		fn close(&mut self) -> Result<()> {
@@ -1222,27 +1223,27 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Create a group.
 		/// ## Parameters
 		/// * grlabel: specify the hdf5 group label.
-		/// 
+		///
 		/// Create a hdf5 group with default properties. The group is closed automatically after creation.
-		/// 
-		/// 
+		///
+		///
 		/// Note: Groups are useful for better organising multiple datasets. It is possible to create subgroups within any group.
 		/// Existence of a particular group can be checked using hlexists(). In case of subgroups, a label would be e.g: 'Group1/SubGroup1'
 		/// where SubGroup1 is within the root group Group1. Before creating a subgroup, its parent group MUST be created.
-		/// 
+		///
 		/// - In this example, Group1 will have one subgroup called SubGroup1:
-		/// 
+		///
 		///  [create_group](https://github.com/opencv/opencv_contrib/blob/4.10.0/modules/hdf/samples/create_groups.cpp#L1)
-		/// 
+		///
 		///  The corresponding result visualized using the HDFView tool is
-		/// 
+		///
 		///  ![Visualization of groups using the HDFView tool](https://docs.opencv.org/4.10.0/create_groups.png)
-		/// 
-		/// 
+		///
+		///
 		/// Note: When a dataset is created with dscreate() or kpcreate(), it can be created within a group by specifying the
 		/// full path within the label. In our example, it would be: 'Group1/SubGroup1/MyDataSet'. It is not thread safe.
 		#[inline]
@@ -1254,13 +1255,13 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Delete an attribute from the root group.
-		/// 
+		///
 		/// ## Parameters
 		/// * atlabel: the attribute to be deleted.
-		/// 
-		/// 
+		///
+		///
 		/// Note: CV_Error() is called if the given attribute does not exist. Use atexists()
 		/// to check whether it exists or not beforehand.
 		/// ## See also
@@ -1274,18 +1275,18 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Write an attribute inside the root group.
-		/// 
+		///
 		/// ## Parameters
 		/// * value: attribute value.
 		/// * atlabel: attribute name.
-		/// 
+		///
 		/// The following example demonstrates how to write an attribute of type cv::String:
-		/// 
+		///
 		///  [snippets_write_str](https://github.com/opencv/opencv_contrib/blob/4.10.0/modules/hdf/samples/read_write_attributes.cpp#L1)
-		/// 
-		/// 
+		///
+		///
 		/// Note: CV_Error() is called if the given attribute already exists. Use atexists()
 		/// to check whether it exists or not beforehand. And use atdelete() to delete
 		/// it if it already exists.
@@ -1300,18 +1301,18 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Read an attribute from the root group.
-		/// 
+		///
 		/// ## Parameters
 		/// * value: address where the attribute is read into
 		/// * atlabel: attribute name
-		/// 
+		///
 		/// The following example demonstrates how to read an attribute of type cv::String:
-		/// 
+		///
 		///  [snippets_read_str](https://github.com/opencv/opencv_contrib/blob/4.10.0/modules/hdf/samples/read_write_attributes.cpp#L1)
-		/// 
-		/// 
+		///
+		///
 		/// Note: The attribute MUST exist, otherwise CV_Error() is called. Use atexists()
 		/// to check if it exists beforehand.
 		/// ## See also
@@ -1325,24 +1326,24 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Write an attribute inside the root group.
-		/// 
+		///
 		/// ## Parameters
 		/// * value: attribute value.
 		/// * atlabel: attribute name.
-		/// 
+		///
 		/// The following example demonstrates how to write an attribute of type cv::String:
-		/// 
+		///
 		///  [snippets_write_str](https://github.com/opencv/opencv_contrib/blob/4.10.0/modules/hdf/samples/read_write_attributes.cpp#L1)
-		/// 
-		/// 
+		///
+		///
 		/// Note: CV_Error() is called if the given attribute already exists. Use atexists()
 		/// to check whether it exists or not beforehand. And use atdelete() to delete
 		/// it if it already exists.
 		/// ## See also
 		/// atexists, atdelete, atread
-		/// 
+		///
 		/// ## Overloaded parameters
 		#[inline]
 		fn atwrite_f64(&mut self, value: f64, atlabel: &str) -> Result<()> {
@@ -1353,23 +1354,23 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Read an attribute from the root group.
-		/// 
+		///
 		/// ## Parameters
 		/// * value: address where the attribute is read into
 		/// * atlabel: attribute name
-		/// 
+		///
 		/// The following example demonstrates how to read an attribute of type cv::String:
-		/// 
+		///
 		///  [snippets_read_str](https://github.com/opencv/opencv_contrib/blob/4.10.0/modules/hdf/samples/read_write_attributes.cpp#L1)
-		/// 
-		/// 
+		///
+		///
 		/// Note: The attribute MUST exist, otherwise CV_Error() is called. Use atexists()
 		/// to check if it exists beforehand.
 		/// ## See also
 		/// atexists, atdelete, atwrite
-		/// 
+		///
 		/// ## Overloaded parameters
 		#[inline]
 		fn atread_f64(&mut self, value: &mut f64, atlabel: &str) -> Result<()> {
@@ -1380,24 +1381,24 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Write an attribute inside the root group.
-		/// 
+		///
 		/// ## Parameters
 		/// * value: attribute value.
 		/// * atlabel: attribute name.
-		/// 
+		///
 		/// The following example demonstrates how to write an attribute of type cv::String:
-		/// 
+		///
 		///  [snippets_write_str](https://github.com/opencv/opencv_contrib/blob/4.10.0/modules/hdf/samples/read_write_attributes.cpp#L1)
-		/// 
-		/// 
+		///
+		///
 		/// Note: CV_Error() is called if the given attribute already exists. Use atexists()
 		/// to check whether it exists or not beforehand. And use atdelete() to delete
 		/// it if it already exists.
 		/// ## See also
 		/// atexists, atdelete, atread
-		/// 
+		///
 		/// ## Overloaded parameters
 		#[inline]
 		fn atwrite_str(&mut self, value: &str, atlabel: &str) -> Result<()> {
@@ -1409,23 +1410,23 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Read an attribute from the root group.
-		/// 
+		///
 		/// ## Parameters
 		/// * value: address where the attribute is read into
 		/// * atlabel: attribute name
-		/// 
+		///
 		/// The following example demonstrates how to read an attribute of type cv::String:
-		/// 
+		///
 		///  [snippets_read_str](https://github.com/opencv/opencv_contrib/blob/4.10.0/modules/hdf/samples/read_write_attributes.cpp#L1)
-		/// 
-		/// 
+		///
+		///
 		/// Note: The attribute MUST exist, otherwise CV_Error() is called. Use atexists()
 		/// to check if it exists beforehand.
 		/// ## See also
 		/// atexists, atdelete, atwrite
-		/// 
+		///
 		/// ## Overloaded parameters
 		#[inline]
 		fn atread_str(&mut self, value: &mut String, atlabel: &str) -> Result<()> {
@@ -1438,14 +1439,14 @@ pub mod hdf {
 			string_arg_output_receive!(value_via => value);
 			Ok(ret)
 		}
-		
+
 		/// Write an attribute into the root group.
-		/// 
+		///
 		/// ## Parameters
 		/// * value: attribute value. Currently, only n-d continuous multi-channel arrays are supported.
 		/// * atlabel: attribute name.
-		/// 
-		/// 
+		///
+		///
 		/// Note: CV_Error() is called if the given attribute already exists. Use atexists()
 		/// to check whether it exists or not beforehand. And use atdelete() to delete
 		/// it if it already exists.
@@ -1461,14 +1462,14 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Read an attribute from the root group.
-		/// 
+		///
 		/// ## Parameters
 		/// * value: attribute value. Currently, only n-d continuous multi-channel arrays are supported.
 		/// * atlabel: attribute name.
-		/// 
-		/// 
+		///
+		///
 		/// Note: The attribute MUST exist, otherwise CV_Error() is called. Use atexists()
 		/// to check if it exists beforehand.
 		/// ## See also
@@ -1483,40 +1484,40 @@ pub mod hdf {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Hierarchical Data Format version 5 interface.
-	/// 
+	///
 	/// Notice that this module is compiled only when hdf5 is correctly installed.
 	pub struct HDF5 {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { HDF5 }
-	
+
 	impl Drop for HDF5 {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_hdf_HDF5_delete(self.as_raw_mut_HDF5()) };
 		}
 	}
-	
+
 	unsafe impl Send for HDF5 {}
-	
+
 	impl crate::hdf::HDF5TraitConst for HDF5 {
 		#[inline] fn as_raw_HDF5(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::hdf::HDF5Trait for HDF5 {
 		#[inline] fn as_raw_mut_HDF5(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { HDF5, crate::hdf::HDF5TraitConst, as_raw_HDF5, crate::hdf::HDF5Trait, as_raw_mut_HDF5 }
-	
+
 	impl HDF5 {
 	}
-	
+
 	impl std::fmt::Debug for HDF5 {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {

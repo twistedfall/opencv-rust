@@ -1,17 +1,17 @@
 pub mod ovis {
 	//! # OGRE 3D Visualiser
-	//! 
+	//!
 	//! ovis is a simplified rendering wrapper around [ogre3d](https://www.ogre3d.org/).
 	//! The [Ogre terminology](https://ogrecave.github.io/ogre/api/latest/_the-_core-_objects.html) is used in the API
 	//! and [Ogre Script](https://ogrecave.github.io/ogre/api/latest/_scripts.html) is assumed to be used for advanced customization.
-	//! 
+	//!
 	//! Besides the API you see here, there are several environment variables that control the behavior of ovis.
 	//! They are documented in [createWindow].
-	//! 
+	//!
 	//! ## Loading geometry
-	//! 
+	//!
 	//! You can create geometry [on the fly]([createTriangleMesh]) or by loading Ogre `.mesh` files.
-	//! 
+	//!
 	//! ### Blender
 	//! For converting/ creating geometry [Blender](https://www.blender.org/) is recommended.
 	//! - Blender 2.7x is better tested, but Blender 2.8x should work too
@@ -19,17 +19,18 @@ pub mod ovis {
 	//! - download the [Ogre MSVC SDK](https://www.ogre3d.org/download/sdk/sdk-ogre) which contains `OgreXMLConverter.exe` (in `bin/`) and set the path in the blender2ogre settings
 	//! - get [ogre-meshviewer](https://github.com/OGRECave/ogre-meshviewer) to enable the preview function in blender2ogre as well as for verifying the exported files
 	//! - in case the exported materials are not exactly how you want them, consult the [Ogre Manual](https://ogrecave.github.io/ogre/api/latest/_material-_scripts.html)
-	//! 
+	//!
 	//! ### Assimp
 	//! When using Ogre 1.12.9 or later, enabling the Assimp plugin allows to load arbitrary geometry.
 	//! Simply pass `bunny.obj` instead of `bunny.mesh` as `meshname` in [WindowScene::createEntity].
-	//! 
+	//!
 	//! You should still use ogre-meshviewer to verify that the geometry is converted correctly.
-	use crate::{mod_prelude::*, core, sys, types};
+	use crate::mod_prelude::*;
+	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use { super::WindowSceneTraitConst, super::WindowSceneTrait };
+		pub use super::{WindowSceneTrait, WindowSceneTraitConst};
 	}
-	
+
 	pub const ENTITY_AABB_WORLD: i32 = 2;
 	pub const ENTITY_ANIMBLEND_MODE: i32 = 3;
 	pub const ENTITY_CAST_SHADOWS: i32 = 4;
@@ -66,10 +67,10 @@ pub mod ovis {
 		ENTITY_ANIMBLEND_MODE = 3,
 		ENTITY_CAST_SHADOWS = 4,
 	}
-	
+
 	impl TryFrom<i32> for EntityProperty {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::ENTITY_MATERIAL),
@@ -81,9 +82,9 @@ pub mod ovis {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::ovis::EntityProperty }
-	
+
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum MaterialProperty {
@@ -99,10 +100,10 @@ pub mod ovis {
 		MATERIAL_TEXTURE2 = 7,
 		MATERIAL_TEXTURE3 = 8,
 	}
-	
+
 	impl TryFrom<i32> for MaterialProperty {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::MATERIAL_POINT_SIZE),
@@ -120,9 +121,9 @@ pub mod ovis {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::ovis::MaterialProperty }
-	
+
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum SceneSettings {
@@ -139,10 +140,10 @@ pub mod ovis {
 		/// Enable real-time shadows in the scene. All entities cast shadows by default. Control via [ENTITY_CAST_SHADOWS]
 		SCENE_SHADOWS = 32,
 	}
-	
+
 	impl TryFrom<i32> for SceneSettings {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				1 => Ok(Self::SCENE_SEPARATE),
@@ -155,11 +156,11 @@ pub mod ovis {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::ovis::SceneSettings }
-	
+
 	/// Add an additional resource location that is search for meshes, textures and materials
-	/// 
+	///
 	/// must be called before the first createWindow. If give path does not exist, retries inside
 	/// Ogre Media Directory.
 	/// ## Parameters
@@ -173,15 +174,15 @@ pub mod ovis {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// creates a grid
-	/// 
+	///
 	/// creates a material with the same name
 	/// ## Parameters
 	/// * name: name of the mesh
 	/// * size: extents of the grid
 	/// * segments: number of segments per side
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_grid_mesh] function uses the following default values for its arguments:
 	/// * segments: Size(1,1)
@@ -194,15 +195,15 @@ pub mod ovis {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// creates a grid
-	/// 
+	///
 	/// creates a material with the same name
 	/// ## Parameters
 	/// * name: name of the mesh
 	/// * size: extents of the grid
 	/// * segments: number of segments per side
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * segments: Size(1,1)
 	#[inline]
@@ -214,15 +215,15 @@ pub mod ovis {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// create a 2D plane, X right, Y down, Z up
-	/// 
+	///
 	/// creates a material with the same name
 	/// ## Parameters
 	/// * name: name of the mesh
 	/// * size: size in world units
 	/// * image: optional texture
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_plane_mesh] function uses the following default values for its arguments:
 	/// * image: noArray()
@@ -235,15 +236,15 @@ pub mod ovis {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// create a 2D plane, X right, Y down, Z up
-	/// 
+	///
 	/// creates a material with the same name
 	/// ## Parameters
 	/// * name: name of the mesh
 	/// * size: size in world units
 	/// * image: optional texture
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * image: noArray()
 	#[inline]
@@ -256,15 +257,15 @@ pub mod ovis {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// creates a point cloud mesh
-	/// 
+	///
 	/// creates a material with the same name
 	/// ## Parameters
 	/// * name: name of the mesh
 	/// * vertices: float vector of positions
 	/// * colors: uchar vector of colors
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_point_cloud_mesh] function uses the following default values for its arguments:
 	/// * colors: noArray()
@@ -278,15 +279,15 @@ pub mod ovis {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// creates a point cloud mesh
-	/// 
+	///
 	/// creates a material with the same name
 	/// ## Parameters
 	/// * name: name of the mesh
 	/// * vertices: float vector of positions
 	/// * colors: uchar vector of colors
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * colors: noArray()
 	#[inline]
@@ -300,16 +301,16 @@ pub mod ovis {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// creates a triangle mesh from vertex-vertex or face-vertex representation
-	/// 
+	///
 	/// creates a material with the same name
 	/// ## Parameters
 	/// * name: name of the mesh
 	/// * vertices: float vector of positions
 	/// * normals: float vector of normals
 	/// * indices: int vector of indices
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_triangle_mesh] function uses the following default values for its arguments:
 	/// * normals: noArray()
@@ -324,16 +325,16 @@ pub mod ovis {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// creates a triangle mesh from vertex-vertex or face-vertex representation
-	/// 
+	///
 	/// creates a material with the same name
 	/// ## Parameters
 	/// * name: name of the mesh
 	/// * vertices: float vector of positions
 	/// * normals: float vector of normals
 	/// * indices: int vector of indices
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * normals: noArray()
 	/// * indices: noArray()
@@ -349,18 +350,18 @@ pub mod ovis {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// create a new rendering window/ viewport
 	/// ## Parameters
 	/// * title: window title
 	/// * size: size of the window
 	/// * flags: a combination of [SceneSettings]
-	/// 
+	///
 	/// Furthermore, the behavior is controlled by the following environment variables
 	/// - OPENCV_OVIS_VERBOSE_LOG: print all of OGRE log output
 	/// - OPENCV_OVIS_RENDERSYSTEM: the name of the OGRE RenderSystem to use
 	/// - OPENCV_OVIS_NOVSYNC: disable VSYNC for all windows
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_window] function uses the following default values for its arguments:
 	/// * flags: SCENE_INTERACTIVE|SCENE_AA
@@ -374,18 +375,18 @@ pub mod ovis {
 		let ret = unsafe { core::Ptr::<crate::ovis::WindowScene>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// create a new rendering window/ viewport
 	/// ## Parameters
 	/// * title: window title
 	/// * size: size of the window
 	/// * flags: a combination of [SceneSettings]
-	/// 
+	///
 	/// Furthermore, the behavior is controlled by the following environment variables
 	/// - OPENCV_OVIS_VERBOSE_LOG: print all of OGRE log output
 	/// - OPENCV_OVIS_RENDERSYSTEM: the name of the OGRE RenderSystem to use
 	/// - OPENCV_OVIS_NOVSYNC: disable VSYNC for all windows
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * flags: SCENE_INTERACTIVE|SCENE_AA
 	#[inline]
@@ -398,7 +399,7 @@ pub mod ovis {
 		let ret = unsafe { core::Ptr::<crate::ovis::WindowScene>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// set the shader property of a material to the given value
 	/// ## Parameters
 	/// * name: material name
@@ -414,7 +415,7 @@ pub mod ovis {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// set the property of a material to the given value
 	/// ## Parameters
 	/// * name: material name
@@ -429,13 +430,13 @@ pub mod ovis {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// set the property of a material to the given value
 	/// ## Parameters
 	/// * name: material name
 	/// * prop: [MaterialProperty]
 	/// * value: the value
-	/// 
+	///
 	/// ## Overloaded parameters
 	#[inline]
 	pub fn set_material_property_1(name: &str, prop: i32, value: &str) -> Result<()> {
@@ -447,7 +448,7 @@ pub mod ovis {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// set the texture of a material to the given value
 	/// ## Parameters
 	/// * name: material name
@@ -463,8 +464,8 @@ pub mod ovis {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
-	/// 
+
+	///
 	/// **Deprecated**: use setMaterialProperty
 	#[deprecated = "use setMaterialProperty"]
 	#[inline]
@@ -477,15 +478,15 @@ pub mod ovis {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// update all windows and wait for keyboard event
-	/// 
+	///
 	/// ## Parameters
 	/// * delay: 0 is the special value that means "forever".
 	///        Any positive number returns after sync to blank (typically 16ms).
 	/// ## Returns
 	/// the code of the pressed key or -1 if no key was pressed
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [wait_key] function uses the following default values for its arguments:
 	/// * delay: 0
@@ -497,15 +498,15 @@ pub mod ovis {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// update all windows and wait for keyboard event
-	/// 
+	///
 	/// ## Parameters
 	/// * delay: 0 is the special value that means "forever".
 	///        Any positive number returns after sync to blank (typically 16ms).
 	/// ## Returns
 	/// the code of the pressed key or -1 if no key was pressed
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * delay: 0
 	#[inline]
@@ -516,17 +517,17 @@ pub mod ovis {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Constant methods for [crate::ovis::WindowScene]
 	pub trait WindowSceneTraitConst {
 		fn as_raw_WindowScene(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::ovis::WindowScene]
 	pub trait WindowSceneTrait: crate::ovis::WindowSceneTraitConst {
 		fn as_raw_mut_WindowScene(&mut self) -> *mut c_void;
-	
+
 		/// set window background to custom image/ color
 		/// ## Parameters
 		/// * image: 
@@ -539,11 +540,11 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// set window background to custom image/ color
 		/// ## Parameters
 		/// * image: 
-		/// 
+		///
 		/// ## Overloaded parameters
 		#[inline]
 		fn set_background_color(&mut self, color: core::Scalar) -> Result<()> {
@@ -553,9 +554,9 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// enable an ordered chain of full-screen post processing effects
-		/// 
+		///
 		/// this way you can add distortion or SSAO effects.
 		/// The effects themselves must be defined inside Ogre .compositor scripts.
 		/// ## Parameters
@@ -570,9 +571,9 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// place an entity of a mesh in the scene
-		/// 
+		///
 		/// the mesh needs to be created beforehand. Either programmatically
 		/// by e.g. [createPointCloudMesh] or by placing the respective file in a resource location.
 		/// ## Parameters
@@ -582,7 +583,7 @@ pub mod ovis {
 		/// * rot: [Rodrigues] vector or 3x3 rotation matrix
 		/// ## See also
 		/// addResourceLocation
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * tvec: noArray()
 		/// * rot: noArray()
@@ -598,9 +599,9 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// place an entity of a mesh in the scene
-		/// 
+		///
 		/// the mesh needs to be created beforehand. Either programmatically
 		/// by e.g. [createPointCloudMesh] or by placing the respective file in a resource location.
 		/// ## Parameters
@@ -610,7 +611,7 @@ pub mod ovis {
 		/// * rot: [Rodrigues] vector or 3x3 rotation matrix
 		/// ## See also
 		/// addResourceLocation
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [WindowSceneTrait::create_entity] function uses the following default values for its arguments:
 		/// * tvec: noArray()
@@ -625,7 +626,7 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// remove an entity from the scene
 		/// ## Parameters
 		/// * name: entity name
@@ -638,14 +639,14 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// set the property of an entity to the given value
 		/// ## Parameters
 		/// * name: entity name
 		/// * prop: [EntityProperty]
 		/// * value: the value
 		/// * subEntityIdx: index of the sub-entity (default: all)
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * sub_entity_idx: -1
 		#[inline]
@@ -658,14 +659,14 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// set the property of an entity to the given value
 		/// ## Parameters
 		/// * name: entity name
 		/// * prop: [EntityProperty]
 		/// * value: the value
 		/// * subEntityIdx: index of the sub-entity (default: all)
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [WindowSceneTrait::set_entity_property] function uses the following default values for its arguments:
 		/// * sub_entity_idx: -1
@@ -679,14 +680,14 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// set the property of an entity to the given value
 		/// ## Parameters
 		/// * name: entity name
 		/// * prop: [EntityProperty]
 		/// * value: the value
 		/// * subEntityIdx: index of the sub-entity (default: all)
-		/// 
+		///
 		/// ## Overloaded parameters
 		#[inline]
 		fn set_entity_property_1(&mut self, name: &str, prop: i32, value: core::Scalar) -> Result<()> {
@@ -697,7 +698,7 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// get the property of an entity
 		/// ## Parameters
 		/// * name: entity name
@@ -713,9 +714,9 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// convenience method to visualize a camera position
-		/// 
+		///
 		/// ## Parameters
 		/// * name: entity name
 		/// * K: intrinsic matrix
@@ -727,7 +728,7 @@ pub mod ovis {
 		/// ## Returns
 		/// the extents of the Frustum at far plane, where the top left corner denotes the principal
 		/// point offset
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * tvec: noArray()
 		/// * rot: noArray()
@@ -744,9 +745,9 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// convenience method to visualize a camera position
-		/// 
+		///
 		/// ## Parameters
 		/// * name: entity name
 		/// * K: intrinsic matrix
@@ -758,7 +759,7 @@ pub mod ovis {
 		/// ## Returns
 		/// the extents of the Frustum at far plane, where the top left corner denotes the principal
 		/// point offset
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [WindowSceneTrait::create_camera_entity] function uses the following default values for its arguments:
 		/// * tvec: noArray()
@@ -774,7 +775,7 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// creates a point light in the scene
 		/// ## Parameters
 		/// * name: entity name
@@ -782,7 +783,7 @@ pub mod ovis {
 		/// * rot: [Rodrigues] vector or 3x3 rotation matrix
 		/// * diffuseColor: 
 		/// * specularColor: 
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * tvec: noArray()
 		/// * rot: noArray()
@@ -799,7 +800,7 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// creates a point light in the scene
 		/// ## Parameters
 		/// * name: entity name
@@ -807,7 +808,7 @@ pub mod ovis {
 		/// * rot: [Rodrigues] vector or 3x3 rotation matrix
 		/// * diffuseColor: 
 		/// * specularColor: 
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [WindowSceneTrait::create_light_entity] function uses the following default values for its arguments:
 		/// * tvec: noArray()
@@ -823,13 +824,13 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// update entity pose by transformation in the parent coordinate space. (pre-rotation)
 		/// ## Parameters
 		/// * name: entity name
 		/// * tvec: translation
 		/// * rot: [Rodrigues] vector or 3x3 rotation matrix
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * tvec: noArray()
 		/// * rot: noArray()
@@ -844,13 +845,13 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// update entity pose by transformation in the parent coordinate space. (pre-rotation)
 		/// ## Parameters
 		/// * name: entity name
 		/// * tvec: translation
 		/// * rot: [Rodrigues] vector or 3x3 rotation matrix
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [WindowSceneTrait::update_entity_pose] function uses the following default values for its arguments:
 		/// * tvec: noArray()
@@ -864,14 +865,14 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// set entity pose in the world coordinate space.
 		/// ## Parameters
 		/// * name: enitity name
 		/// * tvec: translation
 		/// * rot: [Rodrigues] vector or 3x3 rotation matrix
 		/// * invert: use the inverse of the given pose
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * tvec: noArray()
 		/// * rot: noArray()
@@ -887,14 +888,14 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// set entity pose in the world coordinate space.
 		/// ## Parameters
 		/// * name: enitity name
 		/// * tvec: translation
 		/// * rot: [Rodrigues] vector or 3x3 rotation matrix
 		/// * invert: use the inverse of the given pose
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [WindowSceneTrait::set_entity_pose] function uses the following default values for its arguments:
 		/// * tvec: noArray()
@@ -909,14 +910,14 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Retrieves the current pose of an entity
 		/// ## Parameters
 		/// * name: entity name
 		/// * R: 3x3 rotation matrix
 		/// * tvec: translation vector
 		/// * invert: return the inverted pose
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * r: noArray()
 		/// * tvec: noArray()
@@ -932,14 +933,14 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Retrieves the current pose of an entity
 		/// ## Parameters
 		/// * name: entity name
 		/// * R: 3x3 rotation matrix
 		/// * tvec: translation vector
 		/// * invert: return the inverted pose
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [WindowSceneTrait::get_entity_pose] function uses the following default values for its arguments:
 		/// * r: noArray()
@@ -954,7 +955,7 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// get a list of available entity animations
 		/// ## Parameters
 		/// * name: entity name
@@ -968,7 +969,7 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// play entity animation
 		/// ## Parameters
 		/// * name: entity name
@@ -976,7 +977,7 @@ pub mod ovis {
 		/// * loop: enable or disable animation loop
 		/// ## See also
 		/// getEntityAnimations
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * loop_: true
 		#[inline]
@@ -989,7 +990,7 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// play entity animation
 		/// ## Parameters
 		/// * name: entity name
@@ -997,7 +998,7 @@ pub mod ovis {
 		/// * loop: enable or disable animation loop
 		/// ## See also
 		/// getEntityAnimations
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [WindowSceneTrait::play_entity_animation] function uses the following default values for its arguments:
 		/// * loop_: true
@@ -1011,7 +1012,7 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// stop entity animation
 		/// ## Parameters
 		/// * name: enitity name
@@ -1026,7 +1027,7 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// read back the image generated by the last call to [waitKey]
 		#[inline]
 		fn get_screenshot(&mut self, frame: &mut impl ToOutputArray) -> Result<()> {
@@ -1037,14 +1038,14 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// read back the texture of an active compositor
 		/// ## Parameters
 		/// * compname: name of the compositor
 		/// * texname: name of the texture inside the compositor
 		/// * mrtIndex: if texture is a MRT, specifies the attachment
 		/// * out: the texture contents
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * mrt_index: 0
 		#[inline]
@@ -1058,14 +1059,14 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// read back the texture of an active compositor
 		/// ## Parameters
 		/// * compname: name of the compositor
 		/// * texname: name of the texture inside the compositor
 		/// * mrtIndex: if texture is a MRT, specifies the attachment
 		/// * out: the texture contents
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [WindowSceneTrait::get_compositor_texture] function uses the following default values for its arguments:
 		/// * mrt_index: 0
@@ -1080,9 +1081,9 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// get the depth for the current frame.
-		/// 
+		///
 		/// return the per pixel distance to the camera in world units
 		#[inline]
 		fn get_depth(&mut self, depth: &mut impl ToOutputArray) -> Result<()> {
@@ -1093,14 +1094,14 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// convenience method to force the "up" axis to stay fixed
-		/// 
+		///
 		/// works with both programmatic changes and SCENE_INTERACTIVE
 		/// ## Parameters
 		/// * useFixed: whether to enforce the fixed yaw axis
 		/// * up: the axis to be fixed
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * up: noArray()
 		#[inline]
@@ -1112,14 +1113,14 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// convenience method to force the "up" axis to stay fixed
-		/// 
+		///
 		/// works with both programmatic changes and SCENE_INTERACTIVE
 		/// ## Parameters
 		/// * useFixed: whether to enforce the fixed yaw axis
 		/// * up: the axis to be fixed
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [WindowSceneTrait::fix_camera_yaw_axis] function uses the following default values for its arguments:
 		/// * up: noArray()
@@ -1131,13 +1132,13 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Sets the current camera pose
 		/// ## Parameters
 		/// * tvec: translation
 		/// * rot: [Rodrigues] vector or 3x3 rotation matrix
 		/// * invert: use the inverse of the given pose
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * tvec: noArray()
 		/// * rot: noArray()
@@ -1152,13 +1153,13 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Sets the current camera pose
 		/// ## Parameters
 		/// * tvec: translation
 		/// * rot: [Rodrigues] vector or 3x3 rotation matrix
 		/// * invert: use the inverse of the given pose
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [WindowSceneTrait::set_camera_pose] function uses the following default values for its arguments:
 		/// * tvec: noArray()
@@ -1172,12 +1173,12 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// convenience method to orient the camera to a specific entity
 		/// ## Parameters
 		/// * target: entity name
 		/// * offset: offset from entity centre
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * offset: noArray()
 		#[inline]
@@ -1190,12 +1191,12 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// convenience method to orient the camera to a specific entity
 		/// ## Parameters
 		/// * target: entity name
 		/// * offset: offset from entity centre
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [WindowSceneTrait::set_camera_look_at] function uses the following default values for its arguments:
 		/// * offset: noArray()
@@ -1208,14 +1209,14 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// convenience method to orient an entity to a specific entity.
 		/// If target is an empty string the entity looks at the given offset point
 		/// ## Parameters
 		/// * origin: entity to make look at
 		/// * target: name of target entity
 		/// * offset: offset from entity centre
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * offset: noArray()
 		#[inline]
@@ -1229,14 +1230,14 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// convenience method to orient an entity to a specific entity.
 		/// If target is an empty string the entity looks at the given offset point
 		/// ## Parameters
 		/// * origin: entity to make look at
 		/// * target: name of target entity
 		/// * offset: offset from entity centre
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [WindowSceneTrait::set_entity_look_at] function uses the following default values for its arguments:
 		/// * offset: noArray()
@@ -1250,13 +1251,13 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Retrieves the current camera pose
 		/// ## Parameters
 		/// * R: 3x3 rotation matrix
 		/// * tvec: translation vector
 		/// * invert: return the inverted pose
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * r: noArray()
 		/// * tvec: noArray()
@@ -1271,13 +1272,13 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Retrieves the current camera pose
 		/// ## Parameters
 		/// * R: 3x3 rotation matrix
 		/// * tvec: translation vector
 		/// * invert: return the inverted pose
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [WindowSceneTrait::get_camera_pose] function uses the following default values for its arguments:
 		/// * r: noArray()
@@ -1291,16 +1292,16 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// set intrinsics of the camera
-		/// 
+		///
 		/// ## Parameters
 		/// * K: intrinsic matrix or noArray(). If noArray() is specified, imsize
 		/// is ignored and zNear/ zFar can be set separately.
 		/// * imsize: image size
 		/// * zNear: near clip distance or -1 to keep the current
 		/// * zFar: far clip distance or -1 to keep the current
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * z_near: -1
 		/// * z_far: -1
@@ -1313,16 +1314,16 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// set intrinsics of the camera
-		/// 
+		///
 		/// ## Parameters
 		/// * K: intrinsic matrix or noArray(). If noArray() is specified, imsize
 		/// is ignored and zNear/ zFar can be set separately.
 		/// * imsize: image size
 		/// * zNear: near clip distance or -1 to keep the current
 		/// * zFar: far clip distance or -1 to keep the current
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [WindowSceneTrait::set_camera_intrinsics] function uses the following default values for its arguments:
 		/// * z_near: -1
@@ -1336,7 +1337,7 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// render this window, but do not swap buffers. Automatically called by [ovis::waitKey]
 		#[inline]
 		fn update(&mut self) -> Result<()> {
@@ -1346,38 +1347,38 @@ pub mod ovis {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// A 3D viewport and the associated scene
 	pub struct WindowScene {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { WindowScene }
-	
+
 	impl Drop for WindowScene {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_ovis_WindowScene_delete(self.as_raw_mut_WindowScene()) };
 		}
 	}
-	
+
 	unsafe impl Send for WindowScene {}
-	
+
 	impl crate::ovis::WindowSceneTraitConst for WindowScene {
 		#[inline] fn as_raw_WindowScene(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::ovis::WindowSceneTrait for WindowScene {
 		#[inline] fn as_raw_mut_WindowScene(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { WindowScene, crate::ovis::WindowSceneTraitConst, as_raw_WindowScene, crate::ovis::WindowSceneTrait, as_raw_mut_WindowScene }
-	
+
 	impl WindowScene {
 	}
-	
+
 	impl std::fmt::Debug for WindowScene {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {

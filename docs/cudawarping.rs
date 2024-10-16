@@ -1,10 +1,10 @@
 pub mod cudawarping {
 	//! # Image Warping
-	use crate::{mod_prelude::*, core, sys, types};
+	use crate::mod_prelude::*;
+	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use {  };
 	}
-	
+
 	/// ## Note
 	/// This alternative version of [build_warp_affine_maps_2] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -16,7 +16,7 @@ pub mod cudawarping {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -27,7 +27,7 @@ pub mod cudawarping {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// ## Note
 	/// This alternative version of [build_warp_affine_maps_1] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -39,7 +39,7 @@ pub mod cudawarping {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -50,9 +50,9 @@ pub mod cudawarping {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Builds transformation maps for affine transformation.
-	/// 
+	///
 	/// ## Parameters
 	/// * M: *2x3* Mat or UMat transformation matrix.
 	/// * inverse: Flag specifying that M is an inverse transformation ( dst=\>src ).
@@ -62,7 +62,7 @@ pub mod cudawarping {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// cuda::warpAffine , cuda::remap
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [build_warp_affine_maps] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -77,9 +77,9 @@ pub mod cudawarping {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Builds transformation maps for affine transformation.
-	/// 
+	///
 	/// ## Parameters
 	/// * M: *2x3* Mat or UMat transformation matrix.
 	/// * inverse: Flag specifying that M is an inverse transformation ( dst=\>src ).
@@ -89,7 +89,7 @@ pub mod cudawarping {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// cuda::warpAffine , cuda::remap
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -103,7 +103,7 @@ pub mod cudawarping {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// ## Note
 	/// This alternative version of [build_warp_perspective_maps_2] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -115,7 +115,7 @@ pub mod cudawarping {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -126,7 +126,7 @@ pub mod cudawarping {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// ## Note
 	/// This alternative version of [build_warp_perspective_maps_1] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -138,7 +138,7 @@ pub mod cudawarping {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -149,9 +149,9 @@ pub mod cudawarping {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Builds transformation maps for perspective transformation.
-	/// 
+	///
 	/// ## Parameters
 	/// * M: *3x3* Mat or UMat transformation matrix.
 	/// * inverse: Flag specifying that M is an inverse transformation ( dst=\>src ).
@@ -161,7 +161,7 @@ pub mod cudawarping {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// cuda::warpPerspective , cuda::remap
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [build_warp_perspective_maps] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -176,9 +176,9 @@ pub mod cudawarping {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Builds transformation maps for perspective transformation.
-	/// 
+	///
 	/// ## Parameters
 	/// * M: *3x3* Mat or UMat transformation matrix.
 	/// * inverse: Flag specifying that M is an inverse transformation ( dst=\>src ).
@@ -188,7 +188,7 @@ pub mod cudawarping {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// cuda::warpPerspective , cuda::remap
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -202,9 +202,9 @@ pub mod cudawarping {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Smoothes an image and downsamples it.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image.
 	/// * dst: Destination image. Will have Size((src.cols+1)/2, (src.rows+1)/2) size and the same
@@ -212,7 +212,7 @@ pub mod cudawarping {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// pyrDown
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [pyr_down] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -226,9 +226,9 @@ pub mod cudawarping {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Smoothes an image and downsamples it.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image.
 	/// * dst: Destination image. Will have Size((src.cols+1)/2, (src.rows+1)/2) size and the same
@@ -236,7 +236,7 @@ pub mod cudawarping {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// pyrDown
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -249,15 +249,15 @@ pub mod cudawarping {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Upsamples an image and then smoothes it.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image.
 	/// * dst: Destination image. Will have Size(src.cols\*2, src.rows\*2) size and the same type as
 	/// src .
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [pyr_up] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -271,15 +271,15 @@ pub mod cudawarping {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Upsamples an image and then smoothes it.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image.
 	/// * dst: Destination image. Will have Size(src.cols\*2, src.rows\*2) size and the same type as
 	/// src .
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -292,9 +292,9 @@ pub mod cudawarping {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Applies a generic geometrical transformation to an image.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image.
 	/// * dst: Destination image with the size the same as xmap and the type the same as src .
@@ -306,15 +306,15 @@ pub mod cudawarping {
 	/// BORDER_REPLICATE , BORDER_CONSTANT , BORDER_REFLECT and BORDER_WRAP are supported for now.
 	/// * borderValue: Value used in case of a constant border. By default, it is 0.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// The function transforms the source image using the specified map:
-	/// 
+	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Ctexttt%7Bsrc%7D%20%28xmap%28x%2Cy%29%2C%20ymap%28x%2Cy%29%29)
-	/// 
+	///
 	/// Values of pixels with non-integer coordinates are computed using the bilinear interpolation.
 	/// ## See also
 	/// remap
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [remap] function uses the following default values for its arguments:
 	/// * border_mode: BORDER_CONSTANT
@@ -332,9 +332,9 @@ pub mod cudawarping {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Applies a generic geometrical transformation to an image.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image.
 	/// * dst: Destination image with the size the same as xmap and the type the same as src .
@@ -346,15 +346,15 @@ pub mod cudawarping {
 	/// BORDER_REPLICATE , BORDER_CONSTANT , BORDER_REFLECT and BORDER_WRAP are supported for now.
 	/// * borderValue: Value used in case of a constant border. By default, it is 0.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// The function transforms the source image using the specified map:
-	/// 
+	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Ctexttt%7Bsrc%7D%20%28xmap%28x%2Cy%29%2C%20ymap%28x%2Cy%29%29)
-	/// 
+	///
 	/// Values of pixels with non-integer coordinates are computed using the bilinear interpolation.
 	/// ## See also
 	/// remap
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * border_mode: BORDER_CONSTANT
 	/// * border_value: Scalar()
@@ -371,9 +371,9 @@ pub mod cudawarping {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Resizes an image.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image.
 	/// * dst: Destination image with the same type as src . The size is dsize (when it is non-zero)
@@ -390,7 +390,7 @@ pub mod cudawarping {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// resize
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [resize] function uses the following default values for its arguments:
 	/// * fx: 0
@@ -407,9 +407,9 @@ pub mod cudawarping {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Resizes an image.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image.
 	/// * dst: Destination image with the same type as src . The size is dsize (when it is non-zero)
@@ -426,7 +426,7 @@ pub mod cudawarping {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// resize
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * fx: 0
 	/// * fy: 0
@@ -442,9 +442,9 @@ pub mod cudawarping {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Rotates an image around the origin (0,0) and then shifts it.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image. Supports 1, 3 or 4 channels images with CV_8U , CV_16U or CV_32F
 	/// depth.
@@ -458,7 +458,7 @@ pub mod cudawarping {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// cuda::warpAffine
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [rotate] function uses the following default values for its arguments:
 	/// * x_shift: 0
@@ -475,9 +475,9 @@ pub mod cudawarping {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Rotates an image around the origin (0,0) and then shifts it.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image. Supports 1, 3 or 4 channels images with CV_8U , CV_16U or CV_32F
 	/// depth.
@@ -491,7 +491,7 @@ pub mod cudawarping {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// cuda::warpAffine
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * x_shift: 0
 	/// * y_shift: 0
@@ -507,7 +507,7 @@ pub mod cudawarping {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// ## Note
 	/// This alternative version of [warp_affine_2] function uses the following default values for its arguments:
 	/// * flags: INTER_LINEAR
@@ -524,7 +524,7 @@ pub mod cudawarping {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// ## C++ default parameters
 	/// * flags: INTER_LINEAR
 	/// * border_mode: BORDER_CONSTANT
@@ -540,7 +540,7 @@ pub mod cudawarping {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// ## Note
 	/// This alternative version of [warp_affine_1] function uses the following default values for its arguments:
 	/// * flags: INTER_LINEAR
@@ -557,7 +557,7 @@ pub mod cudawarping {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// ## C++ default parameters
 	/// * flags: INTER_LINEAR
 	/// * border_mode: BORDER_CONSTANT
@@ -573,9 +573,9 @@ pub mod cudawarping {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Applies an affine transformation to an image.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image. CV_8U , CV_16U , CV_32S , or CV_32F depth and 1, 3, or 4 channels are
 	/// supported.
@@ -590,7 +590,7 @@ pub mod cudawarping {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// warpAffine
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [warp_affine] function uses the following default values for its arguments:
 	/// * flags: INTER_LINEAR
@@ -608,9 +608,9 @@ pub mod cudawarping {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Applies an affine transformation to an image.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image. CV_8U , CV_16U , CV_32S , or CV_32F depth and 1, 3, or 4 channels are
 	/// supported.
@@ -625,7 +625,7 @@ pub mod cudawarping {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// warpAffine
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * flags: INTER_LINEAR
 	/// * border_mode: BORDER_CONSTANT
@@ -642,7 +642,7 @@ pub mod cudawarping {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// ## Note
 	/// This alternative version of [warp_perspective_2] function uses the following default values for its arguments:
 	/// * flags: INTER_LINEAR
@@ -659,7 +659,7 @@ pub mod cudawarping {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// ## C++ default parameters
 	/// * flags: INTER_LINEAR
 	/// * border_mode: BORDER_CONSTANT
@@ -675,7 +675,7 @@ pub mod cudawarping {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// ## Note
 	/// This alternative version of [warp_perspective_1] function uses the following default values for its arguments:
 	/// * flags: INTER_LINEAR
@@ -692,7 +692,7 @@ pub mod cudawarping {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// ## C++ default parameters
 	/// * flags: INTER_LINEAR
 	/// * border_mode: BORDER_CONSTANT
@@ -708,9 +708,9 @@ pub mod cudawarping {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Applies a perspective transformation to an image.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image. CV_8U , CV_16U , CV_32S , or CV_32F depth and 1, 3, or 4 channels are
 	/// supported.
@@ -725,7 +725,7 @@ pub mod cudawarping {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// warpPerspective
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [warp_perspective] function uses the following default values for its arguments:
 	/// * flags: INTER_LINEAR
@@ -743,9 +743,9 @@ pub mod cudawarping {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Applies a perspective transformation to an image.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image. CV_8U , CV_16U , CV_32S , or CV_32F depth and 1, 3, or 4 channels are
 	/// supported.
@@ -760,7 +760,7 @@ pub mod cudawarping {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// warpPerspective
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * flags: INTER_LINEAR
 	/// * border_mode: BORDER_CONSTANT

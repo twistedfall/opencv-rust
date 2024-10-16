@@ -1,19 +1,20 @@
 pub mod cudabgsegm {
 	//! # Background Segmentation
-	use crate::{mod_prelude::*, core, sys, types};
+	use crate::mod_prelude::*;
+	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use { super::CUDA_BackgroundSubtractorMOGTraitConst, super::CUDA_BackgroundSubtractorMOGTrait, super::CUDA_BackgroundSubtractorMOG2TraitConst, super::CUDA_BackgroundSubtractorMOG2Trait };
+		pub use super::{CUDA_BackgroundSubtractorMOG2Trait, CUDA_BackgroundSubtractorMOG2TraitConst, CUDA_BackgroundSubtractorMOGTrait, CUDA_BackgroundSubtractorMOGTraitConst};
 	}
-	
+
 	/// Creates mixture-of-gaussian background subtractor
-	/// 
+	///
 	/// ## Parameters
 	/// * history: Length of the history.
 	/// * nmixtures: Number of Gaussian mixtures.
 	/// * backgroundRatio: Background ratio.
 	/// * noiseSigma: Noise strength (standard deviation of the brightness or each color channel). 0
 	/// means some automatic value.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_background_subtractor_mog] function uses the following default values for its arguments:
 	/// * history: 200
@@ -29,9 +30,9 @@ pub mod cudabgsegm {
 		let ret = unsafe { core::Ptr::<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates MOG2 Background Subtractor
-	/// 
+	///
 	/// ## Parameters
 	/// * history: Length of the history.
 	/// * varThreshold: Threshold on the squared Mahalanobis distance between the pixel and the model
@@ -39,7 +40,7 @@ pub mod cudabgsegm {
 	/// affect the background update.
 	/// * detectShadows: If true, the algorithm will detect shadows and mark them. It decreases the
 	/// speed a bit, so if you do not need this feature, set the parameter to false.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_background_subtractor_mog2] function uses the following default values for its arguments:
 	/// * history: 500
@@ -54,9 +55,9 @@ pub mod cudabgsegm {
 		let ret = unsafe { core::Ptr::<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates MOG2 Background Subtractor
-	/// 
+	///
 	/// ## Parameters
 	/// * history: Length of the history.
 	/// * varThreshold: Threshold on the squared Mahalanobis distance between the pixel and the model
@@ -64,7 +65,7 @@ pub mod cudabgsegm {
 	/// affect the background update.
 	/// * detectShadows: If true, the algorithm will detect shadows and mark them. It decreases the
 	/// speed a bit, so if you do not need this feature, set the parameter to false.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * history: 500
 	/// * var_threshold: 16
@@ -78,16 +79,16 @@ pub mod cudabgsegm {
 		let ret = unsafe { core::Ptr::<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates mixture-of-gaussian background subtractor
-	/// 
+	///
 	/// ## Parameters
 	/// * history: Length of the history.
 	/// * nmixtures: Number of Gaussian mixtures.
 	/// * backgroundRatio: Background ratio.
 	/// * noiseSigma: Noise strength (standard deviation of the brightness or each color channel). 0
 	/// means some automatic value.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * history: 200
 	/// * nmixtures: 5
@@ -102,11 +103,11 @@ pub mod cudabgsegm {
 		let ret = unsafe { core::Ptr::<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Constant methods for [crate::cudabgsegm::CUDA_BackgroundSubtractorMOG]
 	pub trait CUDA_BackgroundSubtractorMOGTraitConst: crate::video::BackgroundSubtractorTraitConst {
 		fn as_raw_CUDA_BackgroundSubtractorMOG(&self) -> *const c_void;
-	
+
 		#[inline]
 		fn get_background_image(&self, background_image: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 			output_array_arg!(background_image);
@@ -116,7 +117,7 @@ pub mod cudabgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_history(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -125,7 +126,7 @@ pub mod cudabgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_n_mixtures(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -134,7 +135,7 @@ pub mod cudabgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_background_ratio(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
@@ -143,7 +144,7 @@ pub mod cudabgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_noise_sigma(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
@@ -152,13 +153,13 @@ pub mod cudabgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::cudabgsegm::CUDA_BackgroundSubtractorMOG]
 	pub trait CUDA_BackgroundSubtractorMOGTrait: crate::cudabgsegm::CUDA_BackgroundSubtractorMOGTraitConst + crate::video::BackgroundSubtractorTrait {
 		fn as_raw_mut_CUDA_BackgroundSubtractorMOG(&mut self) -> *mut c_void;
-	
+
 		#[inline]
 		fn apply(&mut self, image: &impl ToInputArray, fgmask: &mut impl ToOutputArray, learning_rate: f64, stream: &mut impl core::StreamTrait) -> Result<()> {
 			input_array_arg!(image);
@@ -169,7 +170,7 @@ pub mod cudabgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_background_image_1(&mut self, background_image: &mut impl core::GpuMatTrait, stream: &mut impl core::StreamTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -178,7 +179,7 @@ pub mod cudabgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_history(&mut self, nframes: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -187,7 +188,7 @@ pub mod cudabgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_n_mixtures(&mut self, nmix: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -196,7 +197,7 @@ pub mod cudabgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_background_ratio(&mut self, background_ratio: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -205,7 +206,7 @@ pub mod cudabgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_noise_sigma(&mut self, noise_sigma: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -214,73 +215,73 @@ pub mod cudabgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Gaussian Mixture-based Background/Foreground Segmentation Algorithm.
-	/// 
+	///
 	/// The class discriminates between foreground and background pixels by building and maintaining a model
 	/// of the background. Any pixel which does not fit this model is then deemed to be foreground. The
 	/// class implements algorithm described in [MOG2001](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_MOG2001) .
 	/// ## See also
 	/// BackgroundSubtractorMOG
-	/// 
-	/// 
+	///
+	///
 	/// Note:
 	///    *   An example on gaussian mixture based background/foreground segmantation can be found at
 	///        opencv_source_code/samples/gpu/bgfg_segm.cpp
 	pub struct CUDA_BackgroundSubtractorMOG {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { CUDA_BackgroundSubtractorMOG }
-	
+
 	impl Drop for CUDA_BackgroundSubtractorMOG {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_cuda_BackgroundSubtractorMOG_delete(self.as_raw_mut_CUDA_BackgroundSubtractorMOG()) };
 		}
 	}
-	
+
 	unsafe impl Send for CUDA_BackgroundSubtractorMOG {}
-	
+
 	impl core::AlgorithmTraitConst for CUDA_BackgroundSubtractorMOG {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for CUDA_BackgroundSubtractorMOG {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_BackgroundSubtractorMOG, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::video::BackgroundSubtractorTraitConst for CUDA_BackgroundSubtractorMOG {
 		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::video::BackgroundSubtractorTrait for CUDA_BackgroundSubtractorMOG {
 		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_BackgroundSubtractorMOG, crate::video::BackgroundSubtractorTraitConst, as_raw_BackgroundSubtractor, crate::video::BackgroundSubtractorTrait, as_raw_mut_BackgroundSubtractor }
-	
+
 	impl crate::cudabgsegm::CUDA_BackgroundSubtractorMOGTraitConst for CUDA_BackgroundSubtractorMOG {
 		#[inline] fn as_raw_CUDA_BackgroundSubtractorMOG(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::cudabgsegm::CUDA_BackgroundSubtractorMOGTrait for CUDA_BackgroundSubtractorMOG {
 		#[inline] fn as_raw_mut_CUDA_BackgroundSubtractorMOG(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_BackgroundSubtractorMOG, crate::cudabgsegm::CUDA_BackgroundSubtractorMOGTraitConst, as_raw_CUDA_BackgroundSubtractorMOG, crate::cudabgsegm::CUDA_BackgroundSubtractorMOGTrait, as_raw_mut_CUDA_BackgroundSubtractorMOG }
-	
+
 	impl CUDA_BackgroundSubtractorMOG {
 	}
-	
+
 	boxed_cast_base! { CUDA_BackgroundSubtractorMOG, core::Algorithm, cv_cuda_BackgroundSubtractorMOG_to_Algorithm }
-	
+
 	boxed_cast_base! { CUDA_BackgroundSubtractorMOG, crate::video::BackgroundSubtractor, cv_cuda_BackgroundSubtractorMOG_to_BackgroundSubtractor }
-	
+
 	impl std::fmt::Debug for CUDA_BackgroundSubtractorMOG {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -288,11 +289,11 @@ pub mod cudabgsegm {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2]
 	pub trait CUDA_BackgroundSubtractorMOG2TraitConst: crate::video::BackgroundSubtractorMOG2TraitConst {
 		fn as_raw_CUDA_BackgroundSubtractorMOG2(&self) -> *const c_void;
-	
+
 		#[inline]
 		fn get_background_image(&self, background_image: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
 			output_array_arg!(background_image);
@@ -302,13 +303,13 @@ pub mod cudabgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2]
 	pub trait CUDA_BackgroundSubtractorMOG2Trait: crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2TraitConst + crate::video::BackgroundSubtractorMOG2Trait {
 		fn as_raw_mut_CUDA_BackgroundSubtractorMOG2(&mut self) -> *mut c_void;
-	
+
 		#[inline]
 		fn apply(&mut self, image: &impl ToInputArray, fgmask: &mut impl ToOutputArray, learning_rate: f64, stream: &mut impl core::StreamTrait) -> Result<()> {
 			input_array_arg!(image);
@@ -319,7 +320,7 @@ pub mod cudabgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_background_image_1(&mut self, background_image: &mut impl core::GpuMatTrait, stream: &mut impl core::StreamTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -328,80 +329,80 @@ pub mod cudabgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Gaussian Mixture-based Background/Foreground Segmentation Algorithm.
-	/// 
+	///
 	/// The class discriminates between foreground and background pixels by building and maintaining a model
 	/// of the background. Any pixel which does not fit this model is then deemed to be foreground. The
 	/// class implements algorithm described in [Zivkovic2004](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Zivkovic2004) .
 	/// ## See also
 	/// BackgroundSubtractorMOG2
 	pub struct CUDA_BackgroundSubtractorMOG2 {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { CUDA_BackgroundSubtractorMOG2 }
-	
+
 	impl Drop for CUDA_BackgroundSubtractorMOG2 {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_cuda_BackgroundSubtractorMOG2_delete(self.as_raw_mut_CUDA_BackgroundSubtractorMOG2()) };
 		}
 	}
-	
+
 	unsafe impl Send for CUDA_BackgroundSubtractorMOG2 {}
-	
+
 	impl core::AlgorithmTraitConst for CUDA_BackgroundSubtractorMOG2 {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for CUDA_BackgroundSubtractorMOG2 {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_BackgroundSubtractorMOG2, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::video::BackgroundSubtractorTraitConst for CUDA_BackgroundSubtractorMOG2 {
 		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::video::BackgroundSubtractorTrait for CUDA_BackgroundSubtractorMOG2 {
 		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_BackgroundSubtractorMOG2, crate::video::BackgroundSubtractorTraitConst, as_raw_BackgroundSubtractor, crate::video::BackgroundSubtractorTrait, as_raw_mut_BackgroundSubtractor }
-	
+
 	impl crate::video::BackgroundSubtractorMOG2TraitConst for CUDA_BackgroundSubtractorMOG2 {
 		#[inline] fn as_raw_BackgroundSubtractorMOG2(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::video::BackgroundSubtractorMOG2Trait for CUDA_BackgroundSubtractorMOG2 {
 		#[inline] fn as_raw_mut_BackgroundSubtractorMOG2(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_BackgroundSubtractorMOG2, crate::video::BackgroundSubtractorMOG2TraitConst, as_raw_BackgroundSubtractorMOG2, crate::video::BackgroundSubtractorMOG2Trait, as_raw_mut_BackgroundSubtractorMOG2 }
-	
+
 	impl crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2TraitConst for CUDA_BackgroundSubtractorMOG2 {
 		#[inline] fn as_raw_CUDA_BackgroundSubtractorMOG2(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2Trait for CUDA_BackgroundSubtractorMOG2 {
 		#[inline] fn as_raw_mut_CUDA_BackgroundSubtractorMOG2(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_BackgroundSubtractorMOG2, crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2TraitConst, as_raw_CUDA_BackgroundSubtractorMOG2, crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2Trait, as_raw_mut_CUDA_BackgroundSubtractorMOG2 }
-	
+
 	impl CUDA_BackgroundSubtractorMOG2 {
 	}
-	
+
 	boxed_cast_base! { CUDA_BackgroundSubtractorMOG2, core::Algorithm, cv_cuda_BackgroundSubtractorMOG2_to_Algorithm }
-	
+
 	boxed_cast_base! { CUDA_BackgroundSubtractorMOG2, crate::video::BackgroundSubtractor, cv_cuda_BackgroundSubtractorMOG2_to_BackgroundSubtractor }
-	
+
 	boxed_cast_base! { CUDA_BackgroundSubtractorMOG2, crate::video::BackgroundSubtractorMOG2, cv_cuda_BackgroundSubtractorMOG2_to_BackgroundSubtractorMOG2 }
-	
+
 	impl std::fmt::Debug for CUDA_BackgroundSubtractorMOG2 {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {

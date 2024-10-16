@@ -3,11 +3,12 @@ pub mod imgcodecs {
 	//!   # Flags used for image file reading and writing
 	//!   # iOS glue
 	//!   # MacOS(OSX) glue
-	use crate::{mod_prelude::*, core, sys, types};
+	use crate::mod_prelude::*;
+	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use { super::ImageCollection_iteratorTraitConst, super::ImageCollection_iteratorTrait, super::ImageCollectionTraitConst, super::ImageCollectionTrait };
+		pub use super::{ImageCollectionTrait, ImageCollectionTraitConst, ImageCollection_iteratorTrait, ImageCollection_iteratorTraitConst};
 	}
-	
+
 	/// If set, the image is read in any possible color format.
 	pub const IMREAD_ANYCOLOR: i32 = 4;
 	/// If set, return 16-bit/32-bit image when the input has the corresponding depth, otherwise convert it to 8-bit.
@@ -243,10 +244,10 @@ pub mod imgcodecs {
 		/// If set, do not rotate the image according to EXIF's orientation flag.
 		IMREAD_IGNORE_ORIENTATION = 128,
 	}
-	
+
 	impl TryFrom<i32> for ImreadModes {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				-1 => Ok(Self::IMREAD_UNCHANGED),
@@ -266,9 +267,9 @@ pub mod imgcodecs {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::imgcodecs::ImreadModes }
-	
+
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ImwriteEXRCompressionFlags {
@@ -293,10 +294,10 @@ pub mod imgcodecs {
 		/// lossy DCT based compression, in blocks of 256 scanlines. More efficient space wise and faster to decode full frames than DWAA_COMPRESSION. Supported since OpenEXR 2.2.0.
 		IMWRITE_EXR_COMPRESSION_DWAB = 9,
 	}
-	
+
 	impl TryFrom<i32> for ImwriteEXRCompressionFlags {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::IMWRITE_EXR_COMPRESSION_NO),
@@ -313,9 +314,9 @@ pub mod imgcodecs {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::imgcodecs::ImwriteEXRCompressionFlags }
-	
+
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ImwriteEXRTypeFlags {
@@ -324,10 +325,10 @@ pub mod imgcodecs {
 		/// store as FP32 (default)
 		IMWRITE_EXR_TYPE_FLOAT = 2,
 	}
-	
+
 	impl TryFrom<i32> for ImwriteEXRTypeFlags {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				1 => Ok(Self::IMWRITE_EXR_TYPE_HALF),
@@ -336,9 +337,9 @@ pub mod imgcodecs {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::imgcodecs::ImwriteEXRTypeFlags }
-	
+
 	/// Imwrite flags
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -398,10 +399,10 @@ pub mod imgcodecs {
 		/// For AVIF, it is between 0 (slowest) and (fastest). Default is 9.
 		IMWRITE_AVIF_SPEED = 514,
 	}
-	
+
 	impl TryFrom<i32> for ImwriteFlags {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				1 => Ok(Self::IMWRITE_JPEG_QUALITY),
@@ -435,9 +436,9 @@ pub mod imgcodecs {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::imgcodecs::ImwriteFlags }
-	
+
 	/// Imwrite HDR specific values for IMWRITE_HDR_COMPRESSION parameter key
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -445,10 +446,10 @@ pub mod imgcodecs {
 		IMWRITE_HDR_COMPRESSION_NONE = 0,
 		IMWRITE_HDR_COMPRESSION_RLE = 1,
 	}
-	
+
 	impl TryFrom<i32> for ImwriteHDRCompressionFlags {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::IMWRITE_HDR_COMPRESSION_NONE),
@@ -457,9 +458,9 @@ pub mod imgcodecs {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::imgcodecs::ImwriteHDRCompressionFlags }
-	
+
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ImwriteJPEGSamplingFactorParams {
@@ -474,10 +475,10 @@ pub mod imgcodecs {
 		/// 1x1,1x1,1x1(No subsampling)
 		IMWRITE_JPEG_SAMPLING_FACTOR_444 = 1118481,
 	}
-	
+
 	impl TryFrom<i32> for ImwriteJPEGSamplingFactorParams {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				4264209 => Ok(Self::IMWRITE_JPEG_SAMPLING_FACTOR_411),
@@ -489,9 +490,9 @@ pub mod imgcodecs {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::imgcodecs::ImwriteJPEGSamplingFactorParams }
-	
+
 	/// Imwrite PAM specific tupletype flags used to define the 'TUPLETYPE' field of a PAM file.
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -503,10 +504,10 @@ pub mod imgcodecs {
 		IMWRITE_PAM_FORMAT_RGB = 4,
 		IMWRITE_PAM_FORMAT_RGB_ALPHA = 5,
 	}
-	
+
 	impl TryFrom<i32> for ImwritePAMFlags {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::IMWRITE_PAM_FORMAT_NULL),
@@ -519,12 +520,12 @@ pub mod imgcodecs {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::imgcodecs::ImwritePAMFlags }
-	
+
 	/// Imwrite PNG specific flags used to tune the compression algorithm.
 	/// These flags will be modify the way of PNG image compression and will be passed to the underlying zlib processing stage.
-	/// 
+	///
 	/// *   The effect of IMWRITE_PNG_STRATEGY_FILTERED is to force more Huffman coding and less string matching; it is somewhat intermediate between IMWRITE_PNG_STRATEGY_DEFAULT and IMWRITE_PNG_STRATEGY_HUFFMAN_ONLY.
 	/// *   IMWRITE_PNG_STRATEGY_RLE is designed to be almost as fast as IMWRITE_PNG_STRATEGY_HUFFMAN_ONLY, but give better compression for PNG image data.
 	/// *   The strategy parameter only affects the compression ratio but not the correctness of the compressed output even if it is not set appropriately.
@@ -543,10 +544,10 @@ pub mod imgcodecs {
 		/// Using this value prevents the use of dynamic Huffman codes, allowing for a simpler decoder for special applications.
 		IMWRITE_PNG_STRATEGY_FIXED = 4,
 	}
-	
+
 	impl TryFrom<i32> for ImwritePNGFlags {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::IMWRITE_PNG_STRATEGY_DEFAULT),
@@ -558,9 +559,9 @@ pub mod imgcodecs {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::imgcodecs::ImwritePNGFlags }
-	
+
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ImwriteTiffCompressionFlags {
@@ -633,10 +634,10 @@ pub mod imgcodecs {
 		/// JPEGXL: WARNING not registered in Adobe-maintained registry
 		IMWRITE_TIFF_COMPRESSION_JXL = 50002,
 	}
-	
+
 	impl TryFrom<i32> for ImwriteTiffCompressionFlags {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				1 => Ok(Self::IMWRITE_TIFF_COMPRESSION_NONE),
@@ -678,9 +679,9 @@ pub mod imgcodecs {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::imgcodecs::ImwriteTiffCompressionFlags }
-	
+
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ImwriteTiffPredictorFlags {
@@ -691,10 +692,10 @@ pub mod imgcodecs {
 		/// floating point predictor
 		IMWRITE_TIFF_PREDICTOR_FLOATINGPOINT = 3,
 	}
-	
+
 	impl TryFrom<i32> for ImwriteTiffPredictorFlags {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				1 => Ok(Self::IMWRITE_TIFF_PREDICTOR_NONE),
@@ -704,11 +705,11 @@ pub mod imgcodecs {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::imgcodecs::ImwriteTiffPredictorFlags }
-	
+
 	/// Returns true if the specified image can be decoded by OpenCV
-	/// 
+	///
 	/// ## Parameters
 	/// * filename: File name of the image
 	#[inline]
@@ -720,9 +721,9 @@ pub mod imgcodecs {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Returns true if an image with the specified filename can be encoded by OpenCV
-	/// 
+	///
 	/// ## Parameters
 	/// * filename: File name of the image
 	#[inline]
@@ -734,14 +735,14 @@ pub mod imgcodecs {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Returns the number of images inside the give file
-	/// 
+	///
 	/// The function imcount will return the number of pages in a multi-page image, or 1 for single-page images
 	/// ## Parameters
 	/// * filename: Name of file to be loaded.
 	/// * flags: Flag that can take values of cv::ImreadModes, default with cv::IMREAD_ANYCOLOR.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [imcount] function uses the following default values for its arguments:
 	/// * flags: IMREAD_ANYCOLOR
@@ -754,14 +755,14 @@ pub mod imgcodecs {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Returns the number of images inside the give file
-	/// 
+	///
 	/// The function imcount will return the number of pages in a multi-page image, or 1 for single-page images
 	/// ## Parameters
 	/// * filename: Name of file to be loaded.
 	/// * flags: Flag that can take values of cv::ImreadModes, default with cv::IMREAD_ANYCOLOR.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * flags: IMREAD_ANYCOLOR
 	#[inline]
@@ -773,15 +774,15 @@ pub mod imgcodecs {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Reads an image from a buffer in memory.
-	/// 
+	///
 	/// The function imdecode reads an image from the specified buffer in the memory. If the buffer is too short or
 	/// contains invalid data, the function returns an empty matrix ( Mat::data==NULL ).
-	/// 
+	///
 	/// See cv::imread for the list of supported formats and flags description.
-	/// 
-	/// 
+	///
+	///
 	/// Note: In the case of color images, the decoded images will have the channels stored in **B G R** order.
 	/// ## Parameters
 	/// * buf: Input array or vector of bytes.
@@ -796,22 +797,22 @@ pub mod imgcodecs {
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Reads an image from a buffer in memory.
-	/// 
+	///
 	/// The function imdecode reads an image from the specified buffer in the memory. If the buffer is too short or
 	/// contains invalid data, the function returns an empty matrix ( Mat::data==NULL ).
-	/// 
+	///
 	/// See cv::imread for the list of supported formats and flags description.
-	/// 
-	/// 
+	///
+	///
 	/// Note: In the case of color images, the decoded images will have the channels stored in **B G R** order.
 	/// ## Parameters
 	/// * buf: Input array or vector of bytes.
 	/// * flags: The same flags as in cv::imread, see cv::ImreadModes.
-	/// 
+	///
 	/// ## Overloaded parameters
-	/// 
+	///
 	/// * buf: Input array or vector of bytes.
 	/// * flags: The same flags as in cv::imread, see cv::ImreadModes.
 	/// * dst: The optional output placeholder for the decoded matrix. It can save the image
@@ -827,22 +828,22 @@ pub mod imgcodecs {
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Reads a multi-page image from a buffer in memory.
-	/// 
+	///
 	/// The function imdecodemulti reads a multi-page image from the specified buffer in the memory. If the buffer is too short or
 	/// contains invalid data, the function returns false.
-	/// 
+	///
 	/// See cv::imreadmulti for the list of supported formats and flags description.
-	/// 
-	/// 
+	///
+	///
 	/// Note: In the case of color images, the decoded images will have the channels stored in **B G R** order.
 	/// ## Parameters
 	/// * buf: Input array or vector of bytes.
 	/// * flags: The same flags as in cv::imread, see cv::ImreadModes.
 	/// * mats: A vector of Mat objects holding each page, if more than one.
 	/// * range: A continuous selection of pages.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [imdecodemulti] function uses the following default values for its arguments:
 	/// * range: Range::all()
@@ -855,22 +856,22 @@ pub mod imgcodecs {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Reads a multi-page image from a buffer in memory.
-	/// 
+	///
 	/// The function imdecodemulti reads a multi-page image from the specified buffer in the memory. If the buffer is too short or
 	/// contains invalid data, the function returns false.
-	/// 
+	///
 	/// See cv::imreadmulti for the list of supported formats and flags description.
-	/// 
-	/// 
+	///
+	///
 	/// Note: In the case of color images, the decoded images will have the channels stored in **B G R** order.
 	/// ## Parameters
 	/// * buf: Input array or vector of bytes.
 	/// * flags: The same flags as in cv::imread, see cv::ImreadModes.
 	/// * mats: A vector of Mat objects holding each page, if more than one.
 	/// * range: A continuous selection of pages.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * range: Range::all()
 	#[inline]
@@ -882,18 +883,18 @@ pub mod imgcodecs {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Encodes an image into a memory buffer.
-	/// 
+	///
 	/// The function imencode compresses the image and stores it in the memory buffer that is resized to fit the
 	/// result. See cv::imwrite for the list of supported formats and flags description.
-	/// 
+	///
 	/// ## Parameters
 	/// * ext: File extension that defines the output format. Must include a leading period.
 	/// * img: Image to be written.
 	/// * buf: Output buffer resized to fit the compressed image.
 	/// * params: Format-specific parameters. See cv::imwrite and cv::ImwriteFlags.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [imencode] function uses the following default values for its arguments:
 	/// * params: std::vector<int>()
@@ -907,18 +908,18 @@ pub mod imgcodecs {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Encodes an image into a memory buffer.
-	/// 
+	///
 	/// The function imencode compresses the image and stores it in the memory buffer that is resized to fit the
 	/// result. See cv::imwrite for the list of supported formats and flags description.
-	/// 
+	///
 	/// ## Parameters
 	/// * ext: File extension that defines the output format. Must include a leading period.
 	/// * img: Image to be written.
 	/// * buf: Output buffer resized to fit the compressed image.
 	/// * params: Format-specific parameters. See cv::imwrite and cv::ImwriteFlags.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * params: std::vector<int>()
 	#[inline]
@@ -931,17 +932,17 @@ pub mod imgcodecs {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Loads an image from a file.
-	/// 
+	///
 	/// @anchor imread
-	/// 
+	///
 	/// The function imread loads an image from the specified file and returns it. If the image cannot be
 	/// read (because of missing file, improper permissions, unsupported or invalid format), the function
 	/// returns an empty matrix ( Mat::data==NULL ).
-	/// 
+	///
 	/// Currently, the following file formats are supported:
-	/// 
+	///
 	/// *   Windows bitmaps - \*.bmp, \*.dib (always supported)
 	/// *   JPEG files - \*.jpeg, \*.jpg, \*.jpe (see the *Note* section)
 	/// *   JPEG 2000 files - \*.jp2 (see the *Note* section)
@@ -955,8 +956,8 @@ pub mod imgcodecs {
 	/// *   OpenEXR Image files - \*.exr (see the *Note* section)
 	/// *   Radiance HDR - \*.hdr, \*.pic (always supported)
 	/// *   Raster and Vector geospatial data supported by GDAL (see the *Note* section)
-	/// 
-	/// 
+	///
+	///
 	/// Note:
 	/// *   The function determines the type of an image by the content, not by the file extension.
 	/// *   In the case of color images, the decoded images will have the channels stored in **B G R** order.
@@ -981,11 +982,11 @@ pub mod imgcodecs {
 	/// *   Use the IMREAD_UNCHANGED flag to keep the floating point values from PFM image.
 	/// *   By default number of pixels must be less than 2^30. Limit can be set using system
 	///    variable OPENCV_IO_MAX_IMAGE_PIXELS
-	/// 
+	///
 	/// ## Parameters
 	/// * filename: Name of file to be loaded.
 	/// * flags: Flag that can take values of cv::ImreadModes
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [imread] function uses the following default values for its arguments:
 	/// * flags: IMREAD_COLOR
@@ -999,18 +1000,18 @@ pub mod imgcodecs {
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Loads an image from a file.
-	/// 
+	///
 	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts and the return value.
 	/// ## Parameters
 	/// * filename: Name of file to be loaded.
 	/// * dst: object in which the image will be loaded.
 	/// * flags: Flag that can take values of cv::ImreadModes
-	/// 
+	///
 	/// Note:
 	/// The image passing through the img parameter can be pre-allocated. The memory is reused if the shape and the type match with the load image.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [imread_1] function uses the following default values for its arguments:
 	/// * flags: IMREAD_COLOR
@@ -1024,18 +1025,18 @@ pub mod imgcodecs {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Loads an image from a file.
-	/// 
+	///
 	/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts and the return value.
 	/// ## Parameters
 	/// * filename: Name of file to be loaded.
 	/// * dst: object in which the image will be loaded.
 	/// * flags: Flag that can take values of cv::ImreadModes
-	/// 
+	///
 	/// Note:
 	/// The image passing through the img parameter can be pre-allocated. The memory is reused if the shape and the type match with the load image.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * flags: IMREAD_COLOR
 	#[inline]
@@ -1048,17 +1049,17 @@ pub mod imgcodecs {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Loads an image from a file.
-	/// 
+	///
 	/// @anchor imread
-	/// 
+	///
 	/// The function imread loads an image from the specified file and returns it. If the image cannot be
 	/// read (because of missing file, improper permissions, unsupported or invalid format), the function
 	/// returns an empty matrix ( Mat::data==NULL ).
-	/// 
+	///
 	/// Currently, the following file formats are supported:
-	/// 
+	///
 	/// *   Windows bitmaps - \*.bmp, \*.dib (always supported)
 	/// *   JPEG files - \*.jpeg, \*.jpg, \*.jpe (see the *Note* section)
 	/// *   JPEG 2000 files - \*.jp2 (see the *Note* section)
@@ -1072,8 +1073,8 @@ pub mod imgcodecs {
 	/// *   OpenEXR Image files - \*.exr (see the *Note* section)
 	/// *   Radiance HDR - \*.hdr, \*.pic (always supported)
 	/// *   Raster and Vector geospatial data supported by GDAL (see the *Note* section)
-	/// 
-	/// 
+	///
+	///
 	/// Note:
 	/// *   The function determines the type of an image by the content, not by the file extension.
 	/// *   In the case of color images, the decoded images will have the channels stored in **B G R** order.
@@ -1098,11 +1099,11 @@ pub mod imgcodecs {
 	/// *   Use the IMREAD_UNCHANGED flag to keep the floating point values from PFM image.
 	/// *   By default number of pixels must be less than 2^30. Limit can be set using system
 	///    variable OPENCV_IO_MAX_IMAGE_PIXELS
-	/// 
+	///
 	/// ## Parameters
 	/// * filename: Name of file to be loaded.
 	/// * flags: Flag that can take values of cv::ImreadModes
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * flags: IMREAD_COLOR
 	#[inline]
@@ -1115,9 +1116,9 @@ pub mod imgcodecs {
 		let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Loads a multi-page image from a file.
-	/// 
+	///
 	/// The function imreadmulti loads a multi-page image from the specified file into a vector of Mat objects.
 	/// ## Parameters
 	/// * filename: Name of file to be loaded.
@@ -1125,7 +1126,7 @@ pub mod imgcodecs {
 	/// * flags: Flag that can take values of cv::ImreadModes, default with cv::IMREAD_ANYCOLOR.
 	/// ## See also
 	/// cv::imread
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [imreadmulti] function uses the following default values for its arguments:
 	/// * flags: IMREAD_ANYCOLOR
@@ -1138,9 +1139,9 @@ pub mod imgcodecs {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Loads a multi-page image from a file.
-	/// 
+	///
 	/// The function imreadmulti loads a multi-page image from the specified file into a vector of Mat objects.
 	/// ## Parameters
 	/// * filename: Name of file to be loaded.
@@ -1148,7 +1149,7 @@ pub mod imgcodecs {
 	/// * flags: Flag that can take values of cv::ImreadModes, default with cv::IMREAD_ANYCOLOR.
 	/// ## See also
 	/// cv::imread
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * flags: IMREAD_ANYCOLOR
 	#[inline]
@@ -1160,9 +1161,9 @@ pub mod imgcodecs {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Loads a of images of a multi-page image from a file.
-	/// 
+	///
 	/// The function imreadmulti loads a specified range from a multi-page image from the specified file into a vector of Mat objects.
 	/// ## Parameters
 	/// * filename: Name of file to be loaded.
@@ -1172,7 +1173,7 @@ pub mod imgcodecs {
 	/// * flags: Flag that can take values of cv::ImreadModes, default with cv::IMREAD_ANYCOLOR.
 	/// ## See also
 	/// cv::imread
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [imreadmulti_range] function uses the following default values for its arguments:
 	/// * flags: IMREAD_ANYCOLOR
@@ -1185,9 +1186,9 @@ pub mod imgcodecs {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Loads a of images of a multi-page image from a file.
-	/// 
+	///
 	/// The function imreadmulti loads a specified range from a multi-page image from the specified file into a vector of Mat objects.
 	/// ## Parameters
 	/// * filename: Name of file to be loaded.
@@ -1197,7 +1198,7 @@ pub mod imgcodecs {
 	/// * flags: Flag that can take values of cv::ImreadModes, default with cv::IMREAD_ANYCOLOR.
 	/// ## See also
 	/// cv::imread
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * flags: IMREAD_ANYCOLOR
 	#[inline]
@@ -1209,14 +1210,14 @@ pub mod imgcodecs {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Saves an image to a specified file.
-	/// 
+	///
 	/// The function imwrite saves the image to the specified file. The image format is chosen based on the
 	/// filename extension (see cv::imread for the list of extensions). In general, only 8-bit unsigned (CV_8U)
 	/// single-channel or 3-channel (with 'BGR' channel order) images
 	/// can be saved using this function, with these exceptions:
-	/// 
+	///
 	/// - With OpenEXR encoder, only 32-bit float (CV_32F) images can be saved.
 	///   - 8-bit unsigned (CV_8U) images are not supported.
 	/// - With Radiance HDR encoder, non 64-bit float (CV_64F) images can be saved.
@@ -1233,13 +1234,13 @@ pub mod imgcodecs {
 	///   - Multiple images (vector of Mat) can be saved in TIFF format (see the code sample below).
 	///   - 32-bit float 3-channel (CV_32FC3) TIFF images will be saved
 	///    using the LogLuv high dynamic range encoding (4 bytes per pixel)
-	/// 
+	///
 	/// If the image format is not supported, the image will be converted to 8-bit unsigned (CV_8U) and saved that way.
-	/// 
+	///
 	/// If the format, depth or channel order is different, use
 	/// Mat::convertTo and cv::cvtColor to convert it before saving. Or, use the universal FileStorage I/O
 	/// functions to save the image to XML or YAML format.
-	/// 
+	///
 	/// The sample below shows how to create a BGRA image, how to set custom compression parameters and save it to a PNG file.
 	/// It also demonstrates how to save multiple images in a TIFF file:
 	/// @include snippets/imgcodecs_imwrite.cpp
@@ -1247,7 +1248,7 @@ pub mod imgcodecs {
 	/// * filename: Name of the file.
 	/// * img: (Mat or vector of Mat) Image or Images to be saved.
 	/// * params: Format-specific parameters encoded as pairs (paramId_1, paramValue_1, paramId_2, paramValue_2, ... .) see cv::ImwriteFlags
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [imwrite] function uses the following default values for its arguments:
 	/// * params: std::vector<int>()
@@ -1261,14 +1262,14 @@ pub mod imgcodecs {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Saves an image to a specified file.
-	/// 
+	///
 	/// The function imwrite saves the image to the specified file. The image format is chosen based on the
 	/// filename extension (see cv::imread for the list of extensions). In general, only 8-bit unsigned (CV_8U)
 	/// single-channel or 3-channel (with 'BGR' channel order) images
 	/// can be saved using this function, with these exceptions:
-	/// 
+	///
 	/// - With OpenEXR encoder, only 32-bit float (CV_32F) images can be saved.
 	///   - 8-bit unsigned (CV_8U) images are not supported.
 	/// - With Radiance HDR encoder, non 64-bit float (CV_64F) images can be saved.
@@ -1285,13 +1286,13 @@ pub mod imgcodecs {
 	///   - Multiple images (vector of Mat) can be saved in TIFF format (see the code sample below).
 	///   - 32-bit float 3-channel (CV_32FC3) TIFF images will be saved
 	///    using the LogLuv high dynamic range encoding (4 bytes per pixel)
-	/// 
+	///
 	/// If the image format is not supported, the image will be converted to 8-bit unsigned (CV_8U) and saved that way.
-	/// 
+	///
 	/// If the format, depth or channel order is different, use
 	/// Mat::convertTo and cv::cvtColor to convert it before saving. Or, use the universal FileStorage I/O
 	/// functions to save the image to XML or YAML format.
-	/// 
+	///
 	/// The sample below shows how to create a BGRA image, how to set custom compression parameters and save it to a PNG file.
 	/// It also demonstrates how to save multiple images in a TIFF file:
 	/// @include snippets/imgcodecs_imwrite.cpp
@@ -1299,7 +1300,7 @@ pub mod imgcodecs {
 	/// * filename: Name of the file.
 	/// * img: (Mat or vector of Mat) Image or Images to be saved.
 	/// * params: Format-specific parameters encoded as pairs (paramId_1, paramValue_1, paramId_2, paramValue_2, ... .) see cv::ImwriteFlags
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * params: std::vector<int>()
 	#[inline]
@@ -1312,9 +1313,9 @@ pub mod imgcodecs {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// multi-image overload for bindings
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [imwritemulti] function uses the following default values for its arguments:
 	/// * params: std::vector<int>()
@@ -1328,9 +1329,9 @@ pub mod imgcodecs {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// multi-image overload for bindings
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * params: std::vector<int>()
 	#[inline]
@@ -1343,11 +1344,11 @@ pub mod imgcodecs {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Constant methods for [crate::imgcodecs::ImageCollection]
 	pub trait ImageCollectionTraitConst {
 		fn as_raw_ImageCollection(&self) -> *const c_void;
-	
+
 		#[inline]
 		fn size(&self) -> Result<size_t> {
 			return_send!(via ocvrs_return);
@@ -1356,13 +1357,13 @@ pub mod imgcodecs {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::imgcodecs::ImageCollection]
 	pub trait ImageCollectionTrait: crate::imgcodecs::ImageCollectionTraitConst {
 		fn as_raw_mut_ImageCollection(&mut self) -> *mut c_void;
-	
+
 		#[inline]
 		fn init(&mut self, img: &str, flags: i32) -> Result<()> {
 			extern_container_arg!(img);
@@ -1372,7 +1373,7 @@ pub mod imgcodecs {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn at(&mut self, index: i32) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -1382,7 +1383,7 @@ pub mod imgcodecs {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_mut(&mut self, index: i32) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -1392,7 +1393,7 @@ pub mod imgcodecs {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn release_cache(&mut self, index: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1401,7 +1402,7 @@ pub mod imgcodecs {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn begin(&mut self) -> Result<crate::imgcodecs::ImageCollection_iterator> {
 			return_send!(via ocvrs_return);
@@ -1411,7 +1412,7 @@ pub mod imgcodecs {
 			let ret = unsafe { crate::imgcodecs::ImageCollection_iterator::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn end(&mut self) -> Result<crate::imgcodecs::ImageCollection_iterator> {
 			return_send!(via ocvrs_return);
@@ -1421,14 +1422,14 @@ pub mod imgcodecs {
 			let ret = unsafe { crate::imgcodecs::ImageCollection_iterator::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// To read Multi Page images on demand
-	/// 
+	///
 	/// The ImageCollection class provides iterator API to read multi page images on demand. Create iterator
 	/// to the collection of the images and iterate over the collection. Decode the necessary page with operator*.
-	/// 
+	///
 	/// The performance of page decoding is O(1) if collection is increment sequentially. If the user wants to access random page,
 	/// then the time Complexity is O(n) because the collection has to be reinitialized every time in order to go to the correct page.
 	/// However, the intermediate pages are not decoded during the process, so typically it's quite fast.
@@ -1437,30 +1438,30 @@ pub mod imgcodecs {
 	/// If you need memory, you can use .releaseCache() method to release cached index.
 	/// The space complexity is O(n) if all pages are decoded into memory. The user is able to decode and release images on demand.
 	pub struct ImageCollection {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { ImageCollection }
-	
+
 	impl Drop for ImageCollection {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_ImageCollection_delete(self.as_raw_mut_ImageCollection()) };
 		}
 	}
-	
+
 	unsafe impl Send for ImageCollection {}
-	
+
 	impl crate::imgcodecs::ImageCollectionTraitConst for ImageCollection {
 		#[inline] fn as_raw_ImageCollection(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::imgcodecs::ImageCollectionTrait for ImageCollection {
 		#[inline] fn as_raw_mut_ImageCollection(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { ImageCollection, crate::imgcodecs::ImageCollectionTraitConst, as_raw_ImageCollection, crate::imgcodecs::ImageCollectionTrait, as_raw_mut_ImageCollection }
-	
+
 	impl ImageCollection {
 		#[inline]
 		pub fn default() -> Result<crate::imgcodecs::ImageCollection> {
@@ -1471,7 +1472,7 @@ pub mod imgcodecs {
 			let ret = unsafe { crate::imgcodecs::ImageCollection::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		pub fn new(filename: &str, flags: i32) -> Result<crate::imgcodecs::ImageCollection> {
 			extern_container_arg!(filename);
@@ -1482,9 +1483,9 @@ pub mod imgcodecs {
 			let ret = unsafe { crate::imgcodecs::ImageCollection::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	impl std::fmt::Debug for ImageCollection {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -1492,17 +1493,17 @@ pub mod imgcodecs {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::imgcodecs::ImageCollection_iterator]
 	pub trait ImageCollection_iteratorTraitConst {
 		fn as_raw_ImageCollection_iterator(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::imgcodecs::ImageCollection_iterator]
 	pub trait ImageCollection_iteratorTrait: crate::imgcodecs::ImageCollection_iteratorTraitConst {
 		fn as_raw_mut_ImageCollection_iterator(&mut self) -> *mut c_void;
-	
+
 		#[inline]
 		fn try_deref_mut(&mut self) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
@@ -1512,7 +1513,7 @@ pub mod imgcodecs {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn incr(&mut self) -> Result<crate::imgcodecs::ImageCollection_iterator> {
 			return_send!(via ocvrs_return);
@@ -1522,34 +1523,34 @@ pub mod imgcodecs {
 			let ret = unsafe { crate::imgcodecs::ImageCollection_iterator::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	pub struct ImageCollection_iterator {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { ImageCollection_iterator }
-	
+
 	impl Drop for ImageCollection_iterator {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_ImageCollection_iterator_delete(self.as_raw_mut_ImageCollection_iterator()) };
 		}
 	}
-	
+
 	unsafe impl Send for ImageCollection_iterator {}
-	
+
 	impl crate::imgcodecs::ImageCollection_iteratorTraitConst for ImageCollection_iterator {
 		#[inline] fn as_raw_ImageCollection_iterator(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::imgcodecs::ImageCollection_iteratorTrait for ImageCollection_iterator {
 		#[inline] fn as_raw_mut_ImageCollection_iterator(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { ImageCollection_iterator, crate::imgcodecs::ImageCollection_iteratorTraitConst, as_raw_ImageCollection_iterator, crate::imgcodecs::ImageCollection_iteratorTrait, as_raw_mut_ImageCollection_iterator }
-	
+
 	impl ImageCollection_iterator {
 		#[inline]
 		pub fn new(col: &mut impl crate::imgcodecs::ImageCollectionTrait) -> Result<crate::imgcodecs::ImageCollection_iterator> {
@@ -1560,7 +1561,7 @@ pub mod imgcodecs {
 			let ret = unsafe { crate::imgcodecs::ImageCollection_iterator::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		pub fn new_1(col: &mut impl crate::imgcodecs::ImageCollectionTrait, end: i32) -> Result<crate::imgcodecs::ImageCollection_iterator> {
 			return_send!(via ocvrs_return);
@@ -1570,9 +1571,9 @@ pub mod imgcodecs {
 			let ret = unsafe { crate::imgcodecs::ImageCollection_iterator::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	impl std::fmt::Debug for ImageCollection_iterator {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {

@@ -1,8 +1,8 @@
 pub mod videoio {
 	//! # Video I/O
-	//! 
+	//!
 	//! Read and write video or images sequence with OpenCV
-	//! 
+	//!
 	//! ### See also:
 	//! - [videoio_overview]
 	//! - Tutorials: [tutorial_table_of_content_app]
@@ -13,11 +13,12 @@ pub mod videoio {
 	//!   # iOS glue for video I/O
 	//!   # WinRT glue for video I/O
 	//!   # Query I/O API backends registry
-	use crate::{mod_prelude::*, core, sys, types};
+	use crate::mod_prelude::*;
+	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use { super::VideoCaptureTraitConst, super::VideoCaptureTrait, super::VideoWriterTraitConst, super::VideoWriterTrait };
+		pub use super::{VideoCaptureTrait, VideoCaptureTraitConst, VideoWriterTrait, VideoWriterTraitConst};
 	}
-	
+
 	/// MediaNDK (API Level 21+) and NDK Camera (API level 24+) for Android
 	pub const CAP_ANDROID: i32 = 1000;
 	/// Auto detect == 0
@@ -716,9 +717,9 @@ pub mod videoio {
 	/// (**open-only**) Set to non-zero to enable encapsulation of an encoded raw video stream. Each raw encoded video frame should be passed to VideoWriter::write() as single row or column of a \ref CV_8UC1 Mat. \note If the key frame interval is not 1 then it must be manually specified by the user. This can either be performed during initialization passing \ref VIDEOWRITER_PROP_KEY_INTERVAL as one of the extra encoder params  to \ref VideoWriter::VideoWriter(const String &, int, double, const Size &, const std::vector< int > &params) or afterwards by setting the \ref VIDEOWRITER_PROP_KEY_FLAG with \ref VideoWriter::set() before writing each frame. FFMpeg backend only.
 	pub const VIDEOWRITER_PROP_RAW_VIDEO: i32 = 9;
 	/// Prefer to use H/W acceleration. If no one supported, then fallback to software processing.
-	/// 
+	///
 	/// Note: H/W acceleration may require special configuration of used environment.
-	/// 
+	///
 	/// Note: Results in encoding scenario may differ between software and hardware accelerated encoders.
 	pub const VIDEO_ACCELERATION_ANY: i32 = 1;
 	/// DirectX 11
@@ -731,10 +732,10 @@ pub mod videoio {
 	/// VAAPI
 	pub const VIDEO_ACCELERATION_VAAPI: i32 = 3;
 	/// Video Acceleration type
-	/// 
+	///
 	/// Used as value in [CAP_PROP_HW_ACCELERATION] and [VIDEOWRITER_PROP_HW_ACCELERATION]
-	/// 
-	/// 
+	///
+	///
 	/// Note: In case of FFmpeg backend, it translated to enum AVHWDeviceType (<https://github.com/FFmpeg/FFmpeg/blob/master/libavutil/hwcontext.h>)
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -743,9 +744,9 @@ pub mod videoio {
 		/// Reading of this value means that special H/W accelerated handling is not added or not detected by OpenCV.
 		VIDEO_ACCELERATION_NONE = 0,
 		/// Prefer to use H/W acceleration. If no one supported, then fallback to software processing.
-		/// 
+		///
 		/// Note: H/W acceleration may require special configuration of used environment.
-		/// 
+		///
 		/// Note: Results in encoding scenario may differ between software and hardware accelerated encoders.
 		VIDEO_ACCELERATION_ANY = 1,
 		/// DirectX 11
@@ -755,10 +756,10 @@ pub mod videoio {
 		/// libmfx (Intel MediaSDK/oneVPL)
 		VIDEO_ACCELERATION_MFX = 4,
 	}
-	
+
 	impl TryFrom<i32> for VideoAccelerationType {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::VIDEO_ACCELERATION_NONE),
@@ -770,15 +771,15 @@ pub mod videoio {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::videoio::VideoAccelerationType }
-	
+
 	/// cv::VideoCapture API backends identifier.
-	/// 
+	///
 	/// Select preferred API for a capture object.
 	/// To be used in the VideoCapture::VideoCapture() constructor or VideoCapture::open()
-	/// 
-	/// 
+	///
+	///
 	/// Note:
 	/// *   Backends are available only if they have been built with your OpenCV binaries.
 	/// See [videoio_overview] for more information.
@@ -869,10 +870,10 @@ pub mod videoio {
 		/// For Orbbec 3D-Sensor device/module (Astra+, Femto, Astra2, Gemini2, Gemini2L, Gemini2XL, Femto Mega) attention: Astra2 cameras currently only support Windows and Linux kernel versions no higher than 4.15, and higher versions of Linux kernel may have exceptions.
 		CAP_OBSENSOR = 2600,
 	}
-	
+
 	impl TryFrom<i32> for VideoCaptureAPIs {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::CAP_ANY),
@@ -922,11 +923,11 @@ pub mod videoio {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::videoio::VideoCaptureAPIs }
-	
+
 	/// OBSENSOR (for Orbbec 3D-Sensor device/module )
-	/// 
+	///
 	/// //! OBSENSOR data given from image generator
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -938,10 +939,10 @@ pub mod videoio {
 		/// Data given from IR stream generator(CV_16UC1)
 		CAP_OBSENSOR_IR_IMAGE = 2,
 	}
-	
+
 	impl TryFrom<i32> for VideoCaptureOBSensorDataType {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::CAP_OBSENSOR_DEPTH_MAP),
@@ -951,9 +952,9 @@ pub mod videoio {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::videoio::VideoCaptureOBSensorDataType }
-	
+
 	/// OBSENSOR stream generator
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -963,10 +964,10 @@ pub mod videoio {
 		CAP_OBSENSOR_IR_GENERATOR = 134217728,
 		CAP_OBSENSOR_GENERATORS_MASK = 939524096,
 	}
-	
+
 	impl TryFrom<i32> for VideoCaptureOBSensorGenerators {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				536870912 => Ok(Self::CAP_OBSENSOR_DEPTH_GENERATOR),
@@ -977,9 +978,9 @@ pub mod videoio {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::videoio::VideoCaptureOBSensorGenerators }
-	
+
 	/// OBSENSOR properties
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -989,10 +990,10 @@ pub mod videoio {
 		CAP_PROP_OBSENSOR_INTRINSIC_CX = 26003,
 		CAP_PROP_OBSENSOR_INTRINSIC_CY = 26004,
 	}
-	
+
 	impl TryFrom<i32> for VideoCaptureOBSensorProperties {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				26001 => Ok(Self::CAP_PROP_OBSENSOR_INTRINSIC_FX),
@@ -1003,11 +1004,11 @@ pub mod videoio {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::videoio::VideoCaptureOBSensorProperties }
-	
+
 	/// cv::VideoCapture generic properties identifier.
-	/// 
+	///
 	/// Reading / writing properties involves many layers. Some unexpected result might happens along this chain.
 	/// Effective behaviour depends from device hardware, driver and API Backend.
 	/// ## See also
@@ -1141,10 +1142,10 @@ pub mod videoio {
 		CAP_PROP_N_THREADS = 70,
 		CV__CAP_PROP_LATEST = 71,
 	}
-	
+
 	impl TryFrom<i32> for VideoCaptureProperties {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::CAP_PROP_POS_MSEC),
@@ -1222,9 +1223,9 @@ pub mod videoio {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::videoio::VideoCaptureProperties }
-	
+
 	/// cv::VideoWriter generic properties identifier.
 	/// ## See also
 	/// VideoWriter::get(), VideoWriter::set()
@@ -1256,10 +1257,10 @@ pub mod videoio {
 		VIDEOWRITER_PROP_KEY_FLAG = 11,
 		CV__VIDEOWRITER_PROP_LATEST = 12,
 	}
-	
+
 	impl TryFrom<i32> for VideoWriterProperties {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				1 => Ok(Self::VIDEOWRITER_PROP_QUALITY),
@@ -1278,9 +1279,9 @@ pub mod videoio {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::videoio::VideoWriterProperties }
-	
+
 	/// Returns backend API name or "UnknownVideoAPI(xxx)"
 	/// ## Parameters
 	/// * api: backend ID (#VideoCaptureAPIs)
@@ -1293,7 +1294,7 @@ pub mod videoio {
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Returns list of all available backends
 	#[inline]
 	pub fn get_backends() -> Result<core::Vector<crate::videoio::VideoCaptureAPIs>> {
@@ -1304,7 +1305,7 @@ pub mod videoio {
 		let ret = unsafe { core::Vector::<crate::videoio::VideoCaptureAPIs>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Returns description and ABI/API version of videoio plugin's camera interface
 	#[inline]
 	pub fn get_camera_backend_plugin_version(api: crate::videoio::VideoCaptureAPIs, version_abi: &mut i32, version_api: &mut i32) -> Result<String> {
@@ -1315,7 +1316,7 @@ pub mod videoio {
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Returns list of available backends which works via `cv::VideoCapture(int index)`
 	#[inline]
 	pub fn get_camera_backends() -> Result<core::Vector<crate::videoio::VideoCaptureAPIs>> {
@@ -1326,7 +1327,7 @@ pub mod videoio {
 		let ret = unsafe { core::Vector::<crate::videoio::VideoCaptureAPIs>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Returns description and ABI/API version of videoio plugin's stream capture interface
 	#[inline]
 	pub fn get_stream_backend_plugin_version(api: crate::videoio::VideoCaptureAPIs, version_abi: &mut i32, version_api: &mut i32) -> Result<String> {
@@ -1337,7 +1338,7 @@ pub mod videoio {
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Returns list of available backends which works via `cv::VideoCapture(filename)`
 	#[inline]
 	pub fn get_stream_backends() -> Result<core::Vector<crate::videoio::VideoCaptureAPIs>> {
@@ -1348,7 +1349,7 @@ pub mod videoio {
 		let ret = unsafe { core::Vector::<crate::videoio::VideoCaptureAPIs>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Returns description and ABI/API version of videoio plugin's writer interface
 	#[inline]
 	pub fn get_writer_backend_plugin_version(api: crate::videoio::VideoCaptureAPIs, version_abi: &mut i32, version_api: &mut i32) -> Result<String> {
@@ -1359,7 +1360,7 @@ pub mod videoio {
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Returns list of available backends which works via `cv::VideoWriter()`
 	#[inline]
 	pub fn get_writer_backends() -> Result<core::Vector<crate::videoio::VideoCaptureAPIs>> {
@@ -1370,7 +1371,7 @@ pub mod videoio {
 		let ret = unsafe { core::Vector::<crate::videoio::VideoCaptureAPIs>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Returns true if backend is available
 	#[inline]
 	pub fn has_backend(api: crate::videoio::VideoCaptureAPIs) -> Result<bool> {
@@ -1380,7 +1381,7 @@ pub mod videoio {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Returns true if backend is built in (false if backend is used as plugin)
 	#[inline]
 	pub fn is_backend_built_in(api: crate::videoio::VideoCaptureAPIs) -> Result<bool> {
@@ -1390,13 +1391,13 @@ pub mod videoio {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Constant methods for [crate::videoio::VideoCapture]
 	pub trait VideoCaptureTraitConst {
 		fn as_raw_VideoCapture(&self) -> *const c_void;
-	
+
 		/// Returns true if video capturing has been initialized already.
-		/// 
+		///
 		/// If the previous call to VideoCapture constructor or VideoCapture::open() succeeded, the method returns
 		/// true.
 		#[inline]
@@ -1407,23 +1408,23 @@ pub mod videoio {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns the specified VideoCapture property
-		/// 
+		///
 		/// ## Parameters
 		/// * propId: Property identifier from cv::VideoCaptureProperties (eg. cv::CAP_PROP_POS_MSEC, cv::CAP_PROP_POS_FRAMES, ...)
 		/// or one from [videoio_flags_others]
 		/// ## Returns
 		/// Value for the specified property. Value 0 is returned when querying a property that is
 		/// not supported by the backend used by the VideoCapture instance.
-		/// 
-		/// 
+		///
+		///
 		/// Note: Reading / writing properties involves many layers. Some unexpected result might happens
 		/// along this chain.
 		/// ```C++
 		/// VideoCapture -> API Backend -> Operating System -> Device Driver -> Device Hardware
 		/// ```
-		/// 
+		///
 		/// The returned value might be different from what really used by the device or it could be encoded
 		/// using device dependent rules (eg. steps or percentage). Effective behaviour depends from device
 		/// driver and API Backend
@@ -1435,10 +1436,10 @@ pub mod videoio {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns used backend API name
-		/// 
-		/// 
+		///
+		///
 		/// Note: Stream should be opened.
 		#[inline]
 		fn get_backend_name(&self) -> Result<String> {
@@ -1449,7 +1450,7 @@ pub mod videoio {
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// query if exception mode is active
 		#[inline]
 		fn get_exception_mode(&self) -> Result<bool> {
@@ -1459,23 +1460,23 @@ pub mod videoio {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::videoio::VideoCapture]
 	pub trait VideoCaptureTrait: crate::videoio::VideoCaptureTraitConst {
 		fn as_raw_mut_VideoCapture(&mut self) -> *mut c_void;
-	
+
 		/// Opens a video file or a capturing device or an IP video stream for video capturing.
-		/// 
+		///
 		/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
-		/// 
+		///
 		/// Parameters are same as the constructor VideoCapture(const String& filename, int apiPreference = CAP_ANY)
 		/// ## Returns
 		/// `true` if the file has been successfully opened
-		/// 
+		///
 		/// The method first calls VideoCapture::release to close the already opened file or camera.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * api_preference: CAP_ANY
 		#[inline]
@@ -1487,17 +1488,17 @@ pub mod videoio {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Opens a video file or a capturing device or an IP video stream for video capturing.
-		/// 
+		///
 		/// @overload
-		/// 
+		///
 		/// Parameters are same as the constructor VideoCapture(const String& filename, int apiPreference = CAP_ANY)
 		/// ## Returns
 		/// `true` if the file has been successfully opened
-		/// 
+		///
 		/// The method first calls VideoCapture::release to close the already opened file or camera.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [VideoCaptureTrait::open_file] function uses the following default values for its arguments:
 		/// * api_preference: CAP_ANY
@@ -1510,17 +1511,17 @@ pub mod videoio {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Opens a video file or a capturing device or an IP video stream for video capturing with API Preference and parameters
-		/// 
+		///
 		/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
-		/// 
+		///
 		/// The `params` parameter allows to specify extra parameters encoded as pairs `(paramId_1, paramValue_1, paramId_2, paramValue_2, ...)`.
 		/// See cv::VideoCaptureProperties
-		/// 
+		///
 		/// ## Returns
 		/// `true` if the file has been successfully opened
-		/// 
+		///
 		/// The method first calls VideoCapture::release to close the already opened file or camera.
 		#[inline]
 		fn open_file_with_params(&mut self, filename: &str, api_preference: i32, params: &core::Vector<i32>) -> Result<bool> {
@@ -1531,17 +1532,17 @@ pub mod videoio {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Opens a camera for video capturing
-		/// 
+		///
 		/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
-		/// 
+		///
 		/// Parameters are same as the constructor VideoCapture(int index, int apiPreference = CAP_ANY)
 		/// ## Returns
 		/// `true` if the camera has been successfully opened.
-		/// 
+		///
 		/// The method first calls VideoCapture::release to close the already opened file or camera.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * api_preference: CAP_ANY
 		#[inline]
@@ -1552,17 +1553,17 @@ pub mod videoio {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Opens a camera for video capturing
-		/// 
+		///
 		/// @overload
-		/// 
+		///
 		/// Parameters are same as the constructor VideoCapture(int index, int apiPreference = CAP_ANY)
 		/// ## Returns
 		/// `true` if the camera has been successfully opened.
-		/// 
+		///
 		/// The method first calls VideoCapture::release to close the already opened file or camera.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [VideoCaptureTrait::open] function uses the following default values for its arguments:
 		/// * api_preference: CAP_ANY
@@ -1574,17 +1575,17 @@ pub mod videoio {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Opens a camera for video capturing with API Preference and parameters
-		/// 
+		///
 		/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
-		/// 
+		///
 		/// The `params` parameter allows to specify extra parameters encoded as pairs `(paramId_1, paramValue_1, paramId_2, paramValue_2, ...)`.
 		/// See cv::VideoCaptureProperties
-		/// 
+		///
 		/// ## Returns
 		/// `true` if the camera has been successfully opened.
-		/// 
+		///
 		/// The method first calls VideoCapture::release to close the already opened file or camera.
 		#[inline]
 		fn open_with_params(&mut self, index: i32, api_preference: i32, params: &core::Vector<i32>) -> Result<bool> {
@@ -1594,12 +1595,12 @@ pub mod videoio {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Closes video file or capturing device.
-		/// 
+		///
 		/// The method is automatically called by subsequent VideoCapture::open and by VideoCapture
 		/// destructor.
-		/// 
+		///
 		/// The C function also deallocates memory and clears \*capture pointer.
 		#[inline]
 		fn release(&mut self) -> Result<()> {
@@ -1609,25 +1610,25 @@ pub mod videoio {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Grabs the next frame from video file or capturing device.
-		/// 
+		///
 		/// ## Returns
 		/// `true` (non-zero) in the case of success.
-		/// 
+		///
 		/// The method/function grabs the next frame from video file or camera and returns true (non-zero) in
 		/// the case of success.
-		/// 
+		///
 		/// The primary use of the function is in multi-camera environments, especially when the cameras do not
 		/// have hardware synchronization. That is, you call VideoCapture::grab() for each camera and after that
 		/// call the slower method VideoCapture::retrieve() to decode and get frame from each camera. This way
 		/// the overhead on demosaicing or motion jpeg decompression etc. is eliminated and the retrieved frames
 		/// from different cameras will be closer in time.
-		/// 
+		///
 		/// Also, when a connected camera is multi-head (for example, a stereo camera or a Kinect device), the
 		/// correct way of retrieving data from it is to call VideoCapture::grab() first and then call
 		/// VideoCapture::retrieve() one or more times with different values of the channel parameter.
-		/// 
+		///
 		/// [tutorial_kinect_openni]
 		#[inline]
 		fn grab(&mut self) -> Result<bool> {
@@ -1637,26 +1638,26 @@ pub mod videoio {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Decodes and returns the grabbed video frame.
-		/// 
+		///
 		/// ## Parameters
 		/// * image:[out] the video frame is returned here. If no frames has been grabbed the image will be empty.
 		/// * flag: it could be a frame index or a driver specific flag
 		/// ## Returns
 		/// `false` if no frames has been grabbed
-		/// 
+		///
 		/// The method decodes and returns the just grabbed frame. If no frames has been grabbed
 		/// (camera has been disconnected, or there are no more frames in video file), the method returns false
 		/// and the function returns an empty image (with %cv::Mat, test it with Mat::empty()).
 		/// ## See also
 		/// read()
-		/// 
-		/// 
+		///
+		///
 		/// Note: In [videoio_c] "C API", functions cvRetrieveFrame() and cv.RetrieveFrame() return image stored inside the video
 		/// capturing structure. It is not allowed to modify or release the image! You can copy the frame using
 		/// cvCloneImage and then do whatever you want with the copy.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * flag: 0
 		#[inline]
@@ -1668,26 +1669,26 @@ pub mod videoio {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Decodes and returns the grabbed video frame.
-		/// 
+		///
 		/// ## Parameters
 		/// * image:[out] the video frame is returned here. If no frames has been grabbed the image will be empty.
 		/// * flag: it could be a frame index or a driver specific flag
 		/// ## Returns
 		/// `false` if no frames has been grabbed
-		/// 
+		///
 		/// The method decodes and returns the just grabbed frame. If no frames has been grabbed
 		/// (camera has been disconnected, or there are no more frames in video file), the method returns false
 		/// and the function returns an empty image (with %cv::Mat, test it with Mat::empty()).
 		/// ## See also
 		/// read()
-		/// 
-		/// 
+		///
+		///
 		/// Note: In [videoio_c] "C API", functions cvRetrieveFrame() and cv.RetrieveFrame() return image stored inside the video
 		/// capturing structure. It is not allowed to modify or release the image! You can copy the frame using
 		/// cvCloneImage and then do whatever you want with the copy.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [VideoCaptureTrait::retrieve] function uses the following default values for its arguments:
 		/// * flag: 0
@@ -1700,20 +1701,20 @@ pub mod videoio {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Grabs, decodes and returns the next video frame.
-		/// 
+		///
 		/// ## Parameters
 		/// * image:[out] the video frame is returned here. If no frames has been grabbed the image will be empty.
 		/// ## Returns
 		/// `false` if no frames has been grabbed
-		/// 
+		///
 		/// The method/function combines VideoCapture::grab() and VideoCapture::retrieve() in one call. This is the
 		/// most convenient method for reading video files or capturing data from decode and returns the just
 		/// grabbed frame. If no frames has been grabbed (camera has been disconnected, or there are no more
 		/// frames in video file), the method returns false and the function returns empty image (with %cv::Mat, test it with Mat::empty()).
-		/// 
-		/// 
+		///
+		///
 		/// Note: In [videoio_c] "C API", functions cvRetrieveFrame() and cv.RetrieveFrame() return image stored inside the video
 		/// capturing structure. It is not allowed to modify or release the image! You can copy the frame using
 		/// cvCloneImage and then do whatever you want with the copy.
@@ -1726,16 +1727,16 @@ pub mod videoio {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Sets a property in the VideoCapture.
-		/// 
+		///
 		/// ## Parameters
 		/// * propId: Property identifier from cv::VideoCaptureProperties (eg. cv::CAP_PROP_POS_MSEC, cv::CAP_PROP_POS_FRAMES, ...)
 		/// or one from [videoio_flags_others]
 		/// * value: Value of the property.
 		/// ## Returns
 		/// `true` if the property is supported by backend used by the VideoCapture instance.
-		/// 
+		///
 		/// Note: Even if it returns `true` this doesn't ensure that the property
 		/// value has been accepted by the capture device. See note in VideoCapture::get()
 		#[inline]
@@ -1746,9 +1747,9 @@ pub mod videoio {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Switches exceptions mode
-		/// 
+		///
 		/// methods raise exceptions if not successful instead of returning an error code
 		#[inline]
 		fn set_exception_mode(&mut self, enable: bool) -> Result<()> {
@@ -1758,19 +1759,19 @@ pub mod videoio {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Class for video capturing from video files, image sequences or cameras.
-	/// 
+	///
 	/// The class provides C++ API for capturing video from cameras or for reading video files and image sequences.
-	/// 
+	///
 	/// Here is how the class can be used:
 	/// @include samples/cpp/videocapture_basic.cpp
-	/// 
-	/// 
+	///
+	///
 	/// Note: In [videoio_c] "C API" the black-box structure `CvCapture` is used instead of %VideoCapture.
-	/// 
+	///
 	/// Note:
 	/// *   (C++) A basic sample on using the %VideoCapture interface can be found at
 	///    `OPENCV_SOURCE_CODE/samples/cpp/videocapture_starter.cpp`
@@ -1781,33 +1782,33 @@ pub mod videoio {
 	/// *   (Python) %VideoCapture sample showcasing some features of the Video4Linux2 backend
 	///    `OPENCV_SOURCE_CODE/samples/python/video_v4l2.py`
 	pub struct VideoCapture {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { VideoCapture }
-	
+
 	impl Drop for VideoCapture {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_VideoCapture_delete(self.as_raw_mut_VideoCapture()) };
 		}
 	}
-	
+
 	unsafe impl Send for VideoCapture {}
-	
+
 	impl crate::videoio::VideoCaptureTraitConst for VideoCapture {
 		#[inline] fn as_raw_VideoCapture(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::videoio::VideoCaptureTrait for VideoCapture {
 		#[inline] fn as_raw_mut_VideoCapture(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { VideoCapture, crate::videoio::VideoCaptureTraitConst, as_raw_VideoCapture, crate::videoio::VideoCaptureTrait, as_raw_mut_VideoCapture }
-	
+
 	impl VideoCapture {
 		/// Default constructor
-		/// 
+		///
 		/// Note: In [videoio_c] "C API", when you finished working with video, release CvCapture structure with
 		/// cvReleaseCapture(), or use Ptr\<CvCapture\> that calls cvReleaseCapture() automatically in the
 		/// destructor.
@@ -1820,17 +1821,17 @@ pub mod videoio {
 			let ret = unsafe { crate::videoio::VideoCapture::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Default constructor
-		/// 
+		///
 		/// Note: In [videoio_c] "C API", when you finished working with video, release CvCapture structure with
 		/// cvReleaseCapture(), or use Ptr\<CvCapture\> that calls cvReleaseCapture() automatically in the
 		/// destructor.
-		/// 
+		///
 		/// ## Overloaded parameters
-		/// 
+		///
 		/// Opens a video file or a capturing device or an IP video stream for video capturing with API Preference
-		/// 
+		///
 		/// ## Parameters
 		/// * filename: it can be:
 		/// - name of video file (eg. `video.avi`)
@@ -1843,7 +1844,7 @@ pub mod videoio {
 		/// implementation if multiple are available: e.g. cv::CAP_FFMPEG or cv::CAP_IMAGES or cv::CAP_DSHOW.
 		/// ## See also
 		/// cv::VideoCaptureAPIs
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * api_preference: CAP_ANY
 		#[inline]
@@ -1856,10 +1857,10 @@ pub mod videoio {
 			let ret = unsafe { crate::videoio::VideoCapture::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// @overload
 		/// Opens a video file or a capturing device or an IP video stream for video capturing with API Preference
-		/// 
+		///
 		/// ## Parameters
 		/// * filename: it can be:
 		/// - name of video file (eg. `video.avi`)
@@ -1872,7 +1873,7 @@ pub mod videoio {
 		/// implementation if multiple are available: e.g. cv::CAP_FFMPEG or cv::CAP_IMAGES or cv::CAP_DSHOW.
 		/// ## See also
 		/// cv::VideoCaptureAPIs
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [from_file] function uses the following default values for its arguments:
 		/// * api_preference: CAP_ANY
@@ -1886,17 +1887,17 @@ pub mod videoio {
 			let ret = unsafe { crate::videoio::VideoCapture::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Default constructor
-		/// 
+		///
 		/// Note: In [videoio_c] "C API", when you finished working with video, release CvCapture structure with
 		/// cvReleaseCapture(), or use Ptr\<CvCapture\> that calls cvReleaseCapture() automatically in the
 		/// destructor.
-		/// 
+		///
 		/// ## Overloaded parameters
-		/// 
+		///
 		/// Opens a video file or a capturing device or an IP video stream for video capturing with API Preference and parameters
-		/// 
+		///
 		/// The `params` parameter allows to specify extra parameters encoded as pairs `(paramId_1, paramValue_1, paramId_2, paramValue_2, ...)`.
 		/// See cv::VideoCaptureProperties
 		#[inline]
@@ -1909,17 +1910,17 @@ pub mod videoio {
 			let ret = unsafe { crate::videoio::VideoCapture::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Default constructor
-		/// 
+		///
 		/// Note: In [videoio_c] "C API", when you finished working with video, release CvCapture structure with
 		/// cvReleaseCapture(), or use Ptr\<CvCapture\> that calls cvReleaseCapture() automatically in the
 		/// destructor.
-		/// 
+		///
 		/// ## Overloaded parameters
-		/// 
+		///
 		/// Opens a camera for video capturing
-		/// 
+		///
 		/// ## Parameters
 		/// * index: id of the video capturing device to open. To open default camera using default backend just pass 0.
 		/// (to backward compatibility usage of camera_id + domain_offset (CAP_*) is valid when apiPreference is CAP_ANY)
@@ -1927,7 +1928,7 @@ pub mod videoio {
 		/// implementation if multiple are available: e.g. cv::CAP_DSHOW or cv::CAP_MSMF or cv::CAP_V4L.
 		/// ## See also
 		/// cv::VideoCaptureAPIs
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * api_preference: CAP_ANY
 		#[inline]
@@ -1939,10 +1940,10 @@ pub mod videoio {
 			let ret = unsafe { crate::videoio::VideoCapture::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// @overload
 		/// Opens a camera for video capturing
-		/// 
+		///
 		/// ## Parameters
 		/// * index: id of the video capturing device to open. To open default camera using default backend just pass 0.
 		/// (to backward compatibility usage of camera_id + domain_offset (CAP_*) is valid when apiPreference is CAP_ANY)
@@ -1950,7 +1951,7 @@ pub mod videoio {
 		/// implementation if multiple are available: e.g. cv::CAP_DSHOW or cv::CAP_MSMF or cv::CAP_V4L.
 		/// ## See also
 		/// cv::VideoCaptureAPIs
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [new] function uses the following default values for its arguments:
 		/// * api_preference: CAP_ANY
@@ -1963,17 +1964,17 @@ pub mod videoio {
 			let ret = unsafe { crate::videoio::VideoCapture::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Default constructor
-		/// 
+		///
 		/// Note: In [videoio_c] "C API", when you finished working with video, release CvCapture structure with
 		/// cvReleaseCapture(), or use Ptr\<CvCapture\> that calls cvReleaseCapture() automatically in the
 		/// destructor.
-		/// 
+		///
 		/// ## Overloaded parameters
-		/// 
+		///
 		/// Opens a camera for video capturing with API Preference and parameters
-		/// 
+		///
 		/// The `params` parameter allows to specify extra parameters encoded as pairs `(paramId_1, paramValue_1, paramId_2, paramValue_2, ...)`.
 		/// See cv::VideoCaptureProperties
 		#[inline]
@@ -1985,23 +1986,23 @@ pub mod videoio {
 			let ret = unsafe { crate::videoio::VideoCapture::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Wait for ready frames from VideoCapture.
-		/// 
+		///
 		/// ## Parameters
 		/// * streams: input video streams
 		/// * readyIndex: stream indexes with grabbed frames (ready to use .retrieve() to fetch actual frame)
 		/// * timeoutNs: number of nanoseconds (0 - infinite)
 		/// ## Returns
 		/// `true` if streamReady is not empty
-		/// 
+		///
 		/// @throws Exception %Exception on stream errors (check .isOpened() to filter out malformed streams) or VideoCapture type is not supported
-		/// 
+		///
 		/// The primary use of the function is in multi-camera environments.
 		/// The method fills the ready state vector, grabs video frame, if camera is ready.
-		/// 
+		///
 		/// After this call use VideoCapture::retrieve() to decode and fetch frame data.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * timeout_ns: 0
 		#[inline]
@@ -2012,23 +2013,23 @@ pub mod videoio {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Wait for ready frames from VideoCapture.
-		/// 
+		///
 		/// ## Parameters
 		/// * streams: input video streams
 		/// * readyIndex: stream indexes with grabbed frames (ready to use .retrieve() to fetch actual frame)
 		/// * timeoutNs: number of nanoseconds (0 - infinite)
 		/// ## Returns
 		/// `true` if streamReady is not empty
-		/// 
+		///
 		/// @throws Exception %Exception on stream errors (check .isOpened() to filter out malformed streams) or VideoCapture type is not supported
-		/// 
+		///
 		/// The primary use of the function is in multi-camera environments.
 		/// The method fills the ready state vector, grabs video frame, if camera is ready.
-		/// 
+		///
 		/// After this call use VideoCapture::retrieve() to decode and fetch frame data.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [VideoCapture::wait_any] function uses the following default values for its arguments:
 		/// * timeout_ns: 0
@@ -2040,9 +2041,9 @@ pub mod videoio {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	impl std::fmt::Debug for VideoCapture {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -2050,11 +2051,11 @@ pub mod videoio {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::videoio::VideoWriter]
 	pub trait VideoWriterTraitConst {
 		fn as_raw_VideoWriter(&self) -> *const c_void;
-	
+
 		/// Returns true if video writer has been successfully initialized.
 		#[inline]
 		fn is_opened(&self) -> Result<bool> {
@@ -2064,13 +2065,13 @@ pub mod videoio {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns the specified VideoWriter property
-		/// 
+		///
 		/// ## Parameters
 		/// * propId: Property identifier from cv::VideoWriterProperties (eg. cv::VIDEOWRITER_PROP_QUALITY)
 		/// or one of [videoio_flags_others]
-		/// 
+		///
 		/// ## Returns
 		/// Value for the specified property. Value 0 is returned when querying a property that is
 		/// not supported by the backend used by the VideoWriter instance.
@@ -2082,10 +2083,10 @@ pub mod videoio {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns used backend API name
-		/// 
-		/// 
+		///
+		///
 		/// Note: Stream should be opened.
 		#[inline]
 		fn get_backend_name(&self) -> Result<String> {
@@ -2096,22 +2097,22 @@ pub mod videoio {
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::videoio::VideoWriter]
 	pub trait VideoWriterTrait: crate::videoio::VideoWriterTraitConst {
 		fn as_raw_mut_VideoWriter(&mut self) -> *mut c_void;
-	
+
 		/// Initializes or reinitializes video writer.
-		/// 
+		///
 		/// The method opens video writer. Parameters are the same as in the constructor
 		/// VideoWriter::VideoWriter.
 		/// ## Returns
 		/// `true` if video writer has been successfully initialized
-		/// 
+		///
 		/// The method first calls VideoWriter::release to close the already opened file.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * is_color: true
 		#[inline]
@@ -2123,16 +2124,16 @@ pub mod videoio {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Initializes or reinitializes video writer.
-		/// 
+		///
 		/// The method opens video writer. Parameters are the same as in the constructor
 		/// VideoWriter::VideoWriter.
 		/// ## Returns
 		/// `true` if video writer has been successfully initialized
-		/// 
+		///
 		/// The method first calls VideoWriter::release to close the already opened file.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [VideoWriterTrait::open] function uses the following default values for its arguments:
 		/// * is_color: true
@@ -2145,18 +2146,18 @@ pub mod videoio {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Initializes or reinitializes video writer.
-		/// 
+		///
 		/// The method opens video writer. Parameters are the same as in the constructor
 		/// VideoWriter::VideoWriter.
 		/// ## Returns
 		/// `true` if video writer has been successfully initialized
-		/// 
+		///
 		/// The method first calls VideoWriter::release to close the already opened file.
-		/// 
+		///
 		/// ## Overloaded parameters
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * is_color: true
 		#[inline]
@@ -2168,9 +2169,9 @@ pub mod videoio {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// @overload
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [VideoWriterTrait::open_with_backend] function uses the following default values for its arguments:
 		/// * is_color: true
@@ -2183,16 +2184,16 @@ pub mod videoio {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Initializes or reinitializes video writer.
-		/// 
+		///
 		/// The method opens video writer. Parameters are the same as in the constructor
 		/// VideoWriter::VideoWriter.
 		/// ## Returns
 		/// `true` if video writer has been successfully initialized
-		/// 
+		///
 		/// The method first calls VideoWriter::release to close the already opened file.
-		/// 
+		///
 		/// ## Overloaded parameters
 		#[inline]
 		fn open_1(&mut self, filename: &str, fourcc: i32, fps: f64, frame_size: core::Size, params: &core::Vector<i32>) -> Result<bool> {
@@ -2203,16 +2204,16 @@ pub mod videoio {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Initializes or reinitializes video writer.
-		/// 
+		///
 		/// The method opens video writer. Parameters are the same as in the constructor
 		/// VideoWriter::VideoWriter.
 		/// ## Returns
 		/// `true` if video writer has been successfully initialized
-		/// 
+		///
 		/// The method first calls VideoWriter::release to close the already opened file.
-		/// 
+		///
 		/// ## Overloaded parameters
 		#[inline]
 		fn open_2(&mut self, filename: &str, api_preference: i32, fourcc: i32, fps: f64, frame_size: core::Size, params: &core::Vector<i32>) -> Result<bool> {
@@ -2223,9 +2224,9 @@ pub mod videoio {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Closes the video writer.
-		/// 
+		///
 		/// The method is automatically called by subsequent VideoWriter::open and by the VideoWriter
 		/// destructor.
 		#[inline]
@@ -2236,12 +2237,12 @@ pub mod videoio {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Writes the next video frame
-		/// 
+		///
 		/// ## Parameters
 		/// * image: The written frame. In general, color images are expected in BGR format.
-		/// 
+		///
 		/// The function/method writes the specified image to video file. It must have the same size as has
 		/// been specified when opening the video writer.
 		#[inline]
@@ -2253,13 +2254,13 @@ pub mod videoio {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Sets a property in the VideoWriter.
-		/// 
+		///
 		/// ## Parameters
 		/// * propId: Property identifier from cv::VideoWriterProperties (eg. cv::VIDEOWRITER_PROP_QUALITY)
 		/// or one of [videoio_flags_others]
-		/// 
+		///
 		/// * value: Value of the property.
 		/// ## Returns
 		/// `true` if the property is supported by the backend used by the VideoWriter instance.
@@ -2271,40 +2272,40 @@ pub mod videoio {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Video writer class.
-	/// 
+	///
 	/// The class provides C++ API for writing video files or image sequences.
 	pub struct VideoWriter {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { VideoWriter }
-	
+
 	impl Drop for VideoWriter {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_VideoWriter_delete(self.as_raw_mut_VideoWriter()) };
 		}
 	}
-	
+
 	unsafe impl Send for VideoWriter {}
-	
+
 	impl crate::videoio::VideoWriterTraitConst for VideoWriter {
 		#[inline] fn as_raw_VideoWriter(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::videoio::VideoWriterTrait for VideoWriter {
 		#[inline] fn as_raw_mut_VideoWriter(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { VideoWriter, crate::videoio::VideoWriterTraitConst, as_raw_VideoWriter, crate::videoio::VideoWriterTrait, as_raw_mut_VideoWriter }
-	
+
 	impl VideoWriter {
 		/// Default constructors
-		/// 
+		///
 		/// The constructors/functions initialize video writers.
 		/// *   On Linux FFMPEG is used to write videos;
 		/// *   On Windows FFMPEG or MSWF or DSHOW is used;
@@ -2318,16 +2319,16 @@ pub mod videoio {
 			let ret = unsafe { crate::videoio::VideoWriter::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Default constructors
-		/// 
+		///
 		/// The constructors/functions initialize video writers.
 		/// *   On Linux FFMPEG is used to write videos;
 		/// *   On Windows FFMPEG or MSWF or DSHOW is used;
 		/// *   On MacOSX AVFoundation is used.
-		/// 
+		///
 		/// ## Overloaded parameters
-		/// 
+		///
 		/// ## Parameters
 		/// * filename: Name of the output video file.
 		/// * fourcc: 4-character code of codec used to compress the frames. For example,
@@ -2342,7 +2343,7 @@ pub mod videoio {
 		/// * frameSize: Size of the video frames.
 		/// * isColor: If it is not zero, the encoder will expect and encode color frames, otherwise it
 		/// will work with grayscale frames.
-		/// 
+		///
 		/// @b Tips:
 		/// - With some backends `fourcc=-1` pops up the codec selection dialog from the system.
 		/// - To save image sequence use a proper filename (eg. `img_%02d.jpg`) and `fourcc=0`
@@ -2353,7 +2354,7 @@ pub mod videoio {
 		/// - If FFMPEG is used, we allow frames of odd width or height, but in this case we truncate
 		///   the rightmost column/the bottom row. Probably, this should be handled more elegantly,
 		///   but some internal functions inside FFMPEG swscale require even width/height.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * is_color: true
 		#[inline]
@@ -2366,7 +2367,7 @@ pub mod videoio {
 			let ret = unsafe { crate::videoio::VideoWriter::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// @overload
 		/// ## Parameters
 		/// * filename: Name of the output video file.
@@ -2382,7 +2383,7 @@ pub mod videoio {
 		/// * frameSize: Size of the video frames.
 		/// * isColor: If it is not zero, the encoder will expect and encode color frames, otherwise it
 		/// will work with grayscale frames.
-		/// 
+		///
 		/// @b Tips:
 		/// - With some backends `fourcc=-1` pops up the codec selection dialog from the system.
 		/// - To save image sequence use a proper filename (eg. `img_%02d.jpg`) and `fourcc=0`
@@ -2393,7 +2394,7 @@ pub mod videoio {
 		/// - If FFMPEG is used, we allow frames of odd width or height, but in this case we truncate
 		///   the rightmost column/the bottom row. Probably, this should be handled more elegantly,
 		///   but some internal functions inside FFMPEG swscale require even width/height.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [new] function uses the following default values for its arguments:
 		/// * is_color: true
@@ -2407,19 +2408,19 @@ pub mod videoio {
 			let ret = unsafe { crate::videoio::VideoWriter::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Default constructors
-		/// 
+		///
 		/// The constructors/functions initialize video writers.
 		/// *   On Linux FFMPEG is used to write videos;
 		/// *   On Windows FFMPEG or MSWF or DSHOW is used;
 		/// *   On MacOSX AVFoundation is used.
-		/// 
+		///
 		/// ## Overloaded parameters
-		/// 
+		///
 		/// The `apiPreference` parameter allows to specify API backends to use. Can be used to enforce a specific reader implementation
 		/// if multiple are available: e.g. cv::CAP_FFMPEG or cv::CAP_GSTREAMER.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * is_color: true
 		#[inline]
@@ -2432,11 +2433,11 @@ pub mod videoio {
 			let ret = unsafe { crate::videoio::VideoWriter::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// @overload
 		/// The `apiPreference` parameter allows to specify API backends to use. Can be used to enforce a specific reader implementation
 		/// if multiple are available: e.g. cv::CAP_FFMPEG or cv::CAP_GSTREAMER.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [new_with_backend] function uses the following default values for its arguments:
 		/// * is_color: true
@@ -2450,16 +2451,16 @@ pub mod videoio {
 			let ret = unsafe { crate::videoio::VideoWriter::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Default constructors
-		/// 
+		///
 		/// The constructors/functions initialize video writers.
 		/// *   On Linux FFMPEG is used to write videos;
 		/// *   On Windows FFMPEG or MSWF or DSHOW is used;
 		/// *   On MacOSX AVFoundation is used.
-		/// 
+		///
 		/// ## Overloaded parameters
-		/// 
+		///
 		/// The `params` parameter allows to specify extra encoder parameters encoded as pairs (paramId_1, paramValue_1, paramId_2, paramValue_2, ... .)
 		/// see cv::VideoWriterProperties
 		#[inline]
@@ -2472,14 +2473,14 @@ pub mod videoio {
 			let ret = unsafe { crate::videoio::VideoWriter::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Default constructors
-		/// 
+		///
 		/// The constructors/functions initialize video writers.
 		/// *   On Linux FFMPEG is used to write videos;
 		/// *   On Windows FFMPEG or MSWF or DSHOW is used;
 		/// *   On MacOSX AVFoundation is used.
-		/// 
+		///
 		/// ## Overloaded parameters
 		#[inline]
 		pub fn new_2(filename: &str, api_preference: i32, fourcc: i32, fps: f64, frame_size: core::Size, params: &core::Vector<i32>) -> Result<crate::videoio::VideoWriter> {
@@ -2491,12 +2492,12 @@ pub mod videoio {
 			let ret = unsafe { crate::videoio::VideoWriter::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Concatenates 4 chars to a fourcc code
-		/// 
+		///
 		/// ## Returns
 		/// a fourcc code
-		/// 
+		///
 		/// This static method constructs the fourcc code of the codec to be used in the constructor
 		/// VideoWriter::VideoWriter or VideoWriter::open.
 		#[inline]
@@ -2507,9 +2508,9 @@ pub mod videoio {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	impl std::fmt::Debug for VideoWriter {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {

@@ -1,20 +1,21 @@
 pub mod plot {
 	//! # Plot function for Mat data
-	use crate::{mod_prelude::*, core, sys, types};
+	use crate::mod_prelude::*;
+	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use { super::Plot2dTraitConst, super::Plot2dTrait };
+		pub use super::{Plot2dTrait, Plot2dTraitConst};
 	}
-	
+
 	/// Constant methods for [crate::plot::Plot2d]
 	pub trait Plot2dTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_Plot2d(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::plot::Plot2d]
 	pub trait Plot2dTrait: core::AlgorithmTrait + crate::plot::Plot2dTraitConst {
 		fn as_raw_mut_Plot2d(&mut self) -> *mut c_void;
-	
+
 		#[inline]
 		fn set_min_x(&mut self, _plot_min_x: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -23,7 +24,7 @@ pub mod plot {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_min_y(&mut self, _plot_min_y: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -32,7 +33,7 @@ pub mod plot {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_max_x(&mut self, _plot_max_x: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -41,7 +42,7 @@ pub mod plot {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_max_y(&mut self, _plot_max_y: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -50,7 +51,7 @@ pub mod plot {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_plot_line_width(&mut self, _plot_line_width: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -59,9 +60,9 @@ pub mod plot {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Switches data visualization mode
-		/// 
+		///
 		/// ## Parameters
 		/// * _needPlotLine: if true then neighbour plot points will be connected by lines.
 		/// In other case data will be plotted as a set of standalone points.
@@ -73,7 +74,7 @@ pub mod plot {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_plot_line_color(&mut self, _plot_line_color: core::Scalar) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -82,7 +83,7 @@ pub mod plot {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_plot_background_color(&mut self, _plot_background_color: core::Scalar) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -91,7 +92,7 @@ pub mod plot {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_plot_axis_color(&mut self, _plot_axis_color: core::Scalar) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -100,7 +101,7 @@ pub mod plot {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_plot_grid_color(&mut self, _plot_grid_color: core::Scalar) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -109,7 +110,7 @@ pub mod plot {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_plot_text_color(&mut self, _plot_text_color: core::Scalar) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -118,7 +119,7 @@ pub mod plot {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_plot_size(&mut self, _plot_size_width: i32, _plot_size_height: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -127,7 +128,7 @@ pub mod plot {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_show_grid(&mut self, need_show_grid: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -136,7 +137,7 @@ pub mod plot {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_show_text(&mut self, need_show_text: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -145,7 +146,7 @@ pub mod plot {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_grid_lines_number(&mut self, grid_lines_number: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -154,7 +155,7 @@ pub mod plot {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_invert_orientation(&mut self, _invert_orientation: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -163,9 +164,9 @@ pub mod plot {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Sets the index of a point which coordinates will be printed on the top left corner of the plot (if ShowText flag is true).
-		/// 
+		///
 		/// ## Parameters
 		/// * pointIdx: index of the required point in data array.
 		#[inline]
@@ -176,7 +177,7 @@ pub mod plot {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn render(&mut self, _plot_result: &mut impl ToOutputArray) -> Result<()> {
 			output_array_arg!(_plot_result);
@@ -186,47 +187,47 @@ pub mod plot {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	pub struct Plot2d {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { Plot2d }
-	
+
 	impl Drop for Plot2d {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_plot_Plot2d_delete(self.as_raw_mut_Plot2d()) };
 		}
 	}
-	
+
 	unsafe impl Send for Plot2d {}
-	
+
 	impl core::AlgorithmTraitConst for Plot2d {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for Plot2d {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { Plot2d, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::plot::Plot2dTraitConst for Plot2d {
 		#[inline] fn as_raw_Plot2d(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::plot::Plot2dTrait for Plot2d {
 		#[inline] fn as_raw_mut_Plot2d(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { Plot2d, crate::plot::Plot2dTraitConst, as_raw_Plot2d, crate::plot::Plot2dTrait, as_raw_mut_Plot2d }
-	
+
 	impl Plot2d {
 		/// Creates Plot2d object
-		/// 
+		///
 		/// ## Parameters
 		/// * data: ![inline formula](https://latex.codecogs.com/png.latex?1xN) or ![inline formula](https://latex.codecogs.com/png.latex?Nx1) matrix containing ![inline formula](https://latex.codecogs.com/png.latex?Y) values of points to plot. ![inline formula](https://latex.codecogs.com/png.latex?X) values
 		/// will be equal to indexes of correspondind elements in data matrix.
@@ -240,9 +241,9 @@ pub mod plot {
 			let ret = unsafe { core::Ptr::<crate::plot::Plot2d>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Creates Plot2d object
-		/// 
+		///
 		/// ## Parameters
 		/// * dataX: ![inline formula](https://latex.codecogs.com/png.latex?1xN) or ![inline formula](https://latex.codecogs.com/png.latex?Nx1) matrix ![inline formula](https://latex.codecogs.com/png.latex?X) values of points to plot.
 		/// * dataY: ![inline formula](https://latex.codecogs.com/png.latex?1xN) or ![inline formula](https://latex.codecogs.com/png.latex?Nx1) matrix containing ![inline formula](https://latex.codecogs.com/png.latex?Y) values of points to plot.
@@ -257,11 +258,11 @@ pub mod plot {
 			let ret = unsafe { core::Ptr::<crate::plot::Plot2d>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	boxed_cast_base! { Plot2d, core::Algorithm, cv_plot_Plot2d_to_Algorithm }
-	
+
 	impl std::fmt::Debug for Plot2d {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {

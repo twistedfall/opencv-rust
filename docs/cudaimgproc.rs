@@ -5,11 +5,12 @@ pub mod cudaimgproc {
 	//!    # Structural Analysis and Shape Descriptors
 	//!    # Hough Transform
 	//!    # Feature Detection
-	use crate::{mod_prelude::*, core, sys, types};
+	use crate::mod_prelude::*;
+	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use { super::CUDA_CLAHETraitConst, super::CUDA_CLAHETrait, super::CUDA_CannyEdgeDetectorTraitConst, super::CUDA_CannyEdgeDetectorTrait, super::CUDA_HoughLinesDetectorTraitConst, super::CUDA_HoughLinesDetectorTrait, super::CUDA_HoughSegmentDetectorTraitConst, super::CUDA_HoughSegmentDetectorTrait, super::CUDA_HoughCirclesDetectorTraitConst, super::CUDA_HoughCirclesDetectorTrait, super::CUDA_CornernessCriteriaTraitConst, super::CUDA_CornernessCriteriaTrait, super::CUDA_CornersDetectorTraitConst, super::CUDA_CornersDetectorTrait, super::CUDA_TemplateMatchingTraitConst, super::CUDA_TemplateMatchingTrait };
+		pub use super::{CUDA_CLAHETrait, CUDA_CLAHETraitConst, CUDA_CannyEdgeDetectorTrait, CUDA_CannyEdgeDetectorTraitConst, CUDA_CornernessCriteriaTrait, CUDA_CornernessCriteriaTraitConst, CUDA_CornersDetectorTrait, CUDA_CornersDetectorTraitConst, CUDA_HoughCirclesDetectorTrait, CUDA_HoughCirclesDetectorTraitConst, CUDA_HoughLinesDetectorTrait, CUDA_HoughLinesDetectorTraitConst, CUDA_HoughSegmentDetectorTrait, CUDA_HoughSegmentDetectorTraitConst, CUDA_TemplateMatchingTrait, CUDA_TemplateMatchingTraitConst};
 	}
-	
+
 	pub const CUDA_ALPHA_ATOP: i32 = 3;
 	pub const CUDA_ALPHA_ATOP_PREMUL: i32 = 9;
 	pub const CUDA_ALPHA_IN: i32 = 1;
@@ -71,10 +72,10 @@ pub mod cudaimgproc {
 		ALPHA_PLUS_PREMUL = 11,
 		ALPHA_PREMUL = 12,
 	}
-	
+
 	impl TryFrom<i32> for CUDA_AlphaCompTypes {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::ALPHA_OVER),
@@ -94,9 +95,9 @@ pub mod cudaimgproc {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::cudaimgproc::CUDA_AlphaCompTypes }
-	
+
 	/// Connected Components Algorithm
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -106,10 +107,10 @@ pub mod cudaimgproc {
 		/// BKE [Allegretti2019](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Allegretti2019) algorithm for 8-way connectivity.
 		CCL_BKE = 0,
 	}
-	
+
 	impl TryFrom<i32> for CUDA_ConnectedComponentsAlgorithmsTypes {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				-1 => Ok(Self::CCL_DEFAULT),
@@ -118,9 +119,9 @@ pub mod cudaimgproc {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::cudaimgproc::CUDA_ConnectedComponentsAlgorithmsTypes }
-	
+
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum CUDA_DemosaicTypes {
@@ -153,10 +154,10 @@ pub mod cudaimgproc {
 		/// Bayer Demosaicing (Malvar, He, and Cutler)
 		COLOR_BayerGR2GRAY_MHT = 263,
 	}
-	
+
 	impl TryFrom<i32> for CUDA_DemosaicTypes {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				256 => Ok(Self::COLOR_BayerBG2BGR_MHT),
@@ -179,9 +180,9 @@ pub mod cudaimgproc {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::cudaimgproc::CUDA_DemosaicTypes }
-	
+
 	/// Order of image moments.
 	/// ## Parameters
 	/// * FIRST_ORDER_MOMENTS: First order moments
@@ -194,10 +195,10 @@ pub mod cudaimgproc {
 		SECOND_ORDER_MOMENTS = 2,
 		THIRD_ORDER_MOMENTS = 3,
 	}
-	
+
 	impl TryFrom<i32> for CUDA_MomentsOrder {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				1 => Ok(Self::FIRST_ORDER_MOMENTS),
@@ -207,11 +208,11 @@ pub mod cudaimgproc {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::cudaimgproc::CUDA_MomentsOrder }
-	
+
 	/// Composites two images using alpha opacity values contained in each image.
-	/// 
+	///
 	/// ## Parameters
 	/// * img1: First image. Supports CV_8UC4 , CV_16UC4 , CV_32SC4 and CV_32FC4 types.
 	/// * img2: Second image. Must have the same size and the same type as img1 .
@@ -231,12 +232,12 @@ pub mod cudaimgproc {
 	/// *   **ALPHA_PLUS_PREMUL**
 	/// *   **ALPHA_PREMUL**
 	/// * stream: Stream for the asynchronous version.
-	/// 
-	/// 
+	///
+	///
 	/// Note:
 	///    *   An example demonstrating the use of alphaComp can be found at
 	///        opencv_source_code/samples/gpu/alpha_comp.cpp
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [alpha_comp] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -251,9 +252,9 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Composites two images using alpha opacity values contained in each image.
-	/// 
+	///
 	/// ## Parameters
 	/// * img1: First image. Supports CV_8UC4 , CV_16UC4 , CV_32SC4 and CV_32FC4 types.
 	/// * img2: Second image. Must have the same size and the same type as img1 .
@@ -273,12 +274,12 @@ pub mod cudaimgproc {
 	/// *   **ALPHA_PLUS_PREMUL**
 	/// *   **ALPHA_PREMUL**
 	/// * stream: Stream for the asynchronous version.
-	/// 
-	/// 
+	///
+	///
 	/// Note:
 	///    *   An example demonstrating the use of alphaComp can be found at
 	///        opencv_source_code/samples/gpu/alpha_comp.cpp
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -292,9 +293,9 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Performs bilateral filtering of passed image
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image. Supports only (channels != 2 && depth() != CV_8S && depth() != CV_32S
 	/// && depth() != CV_64F).
@@ -307,7 +308,7 @@ pub mod cudaimgproc {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// bilateralFilter
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [bilateral_filter] function uses the following default values for its arguments:
 	/// * border_mode: BORDER_DEFAULT
@@ -322,9 +323,9 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Performs bilateral filtering of passed image
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image. Supports only (channels != 2 && depth() != CV_8S && depth() != CV_32S
 	/// && depth() != CV_64F).
@@ -337,7 +338,7 @@ pub mod cudaimgproc {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// bilateralFilter
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * border_mode: BORDER_DEFAULT
 	/// * stream: Stream::Null()
@@ -351,9 +352,9 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Performs linear blending of two images.
-	/// 
+	///
 	/// ## Parameters
 	/// * img1: First image. Supports only CV_8U and CV_32F depth.
 	/// * img2: Second image. Must have the same size and the same type as img1 .
@@ -363,7 +364,7 @@ pub mod cudaimgproc {
 	/// type.
 	/// * result: Destination image.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [blend_linear] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -380,9 +381,9 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Performs linear blending of two images.
-	/// 
+	///
 	/// ## Parameters
 	/// * img1: First image. Supports only CV_8U and CV_32F depth.
 	/// * img2: Second image. Must have the same size and the same type as img1 .
@@ -392,7 +393,7 @@ pub mod cudaimgproc {
 	/// type.
 	/// * result: Destination image.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -408,15 +409,15 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Calculates histogram for one channel 8-bit image confined in given mask.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image with CV_8UC1 type.
 	/// * hist: Destination histogram with one row, 256 columns, and the CV_32SC1 type.
 	/// * mask: A mask image same size as src and of type CV_8UC1.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [calc_hist_1] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -431,15 +432,15 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Calculates histogram for one channel 8-bit image confined in given mask.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image with CV_8UC1 type.
 	/// * hist: Destination histogram with one row, 256 columns, and the CV_32SC1 type.
 	/// * mask: A mask image same size as src and of type CV_8UC1.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -453,14 +454,14 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Calculates histogram for one channel 8-bit image.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image with CV_8UC1 type.
 	/// * hist: Destination histogram with one row, 256 columns, and the CV_32SC1 type.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [calc_hist] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -474,14 +475,14 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Calculates histogram for one channel 8-bit image.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image with CV_8UC1 type.
 	/// * hist: Destination histogram with one row, 256 columns, and the CV_32SC1 type.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -494,15 +495,15 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// @overload
-	/// 
+	///
 	/// ## Parameters
 	/// * image: The 8-bit single-channel image to be labeled.
 	/// * labels: Destination labeled image.
 	/// * connectivity: Connectivity to use for the labeling procedure. 8 for 8-way connectivity is supported.
 	/// * ltype: Output image label type. Currently CV_32S is supported.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [connected_components] function uses the following default values for its arguments:
 	/// * connectivity: 8
@@ -517,9 +518,9 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes the Connected Components Labeled image of a binary image.
-	/// 
+	///
 	/// The function takes as input a binary image and performs Connected Components Labeling. The output
 	/// is an image where each Connected Component is assigned a unique label (integer value).
 	/// ltype specifies the output label image type, an important consideration based on the total
@@ -527,27 +528,27 @@ pub mod cudaimgproc {
 	/// ccltype specifies the connected components labeling algorithm to use, currently
 	/// BKE [Allegretti2019](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Allegretti2019) is supported, see the [connected_components_algorithms_types]
 	/// for details. Note that labels in the output are not required to be sequential.
-	/// 
+	///
 	/// ## Parameters
 	/// * image: The 8-bit single-channel image to be labeled.
 	/// * labels: Destination labeled image.
 	/// * connectivity: Connectivity to use for the labeling procedure. 8 for 8-way connectivity is supported.
 	/// * ltype: Output image label type. Currently CV_32S is supported.
 	/// * ccltype: Connected components algorithm type (see the #ConnectedComponentsAlgorithmsTypes).
-	/// 
-	/// 
+	///
+	///
 	/// Note: A sample program demonstrating Connected Components Labeling in CUDA can be found at
-	/// 
+	///
 	/// opencv_contrib_source_code/modules/cudaimgproc/samples/connected_components.cpp
-	/// 
+	///
 	/// ## Overloaded parameters
-	/// 
-	/// 
+	///
+	///
 	/// * image: The 8-bit single-channel image to be labeled.
 	/// * labels: Destination labeled image.
 	/// * connectivity: Connectivity to use for the labeling procedure. 8 for 8-way connectivity is supported.
 	/// * ltype: Output image label type. Currently CV_32S is supported.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * connectivity: 8
 	/// * ltype: CV_32S
@@ -561,9 +562,9 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes the Connected Components Labeled image of a binary image.
-	/// 
+	///
 	/// The function takes as input a binary image and performs Connected Components Labeling. The output
 	/// is an image where each Connected Component is assigned a unique label (integer value).
 	/// ltype specifies the output label image type, an important consideration based on the total
@@ -571,17 +572,17 @@ pub mod cudaimgproc {
 	/// ccltype specifies the connected components labeling algorithm to use, currently
 	/// BKE [Allegretti2019](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Allegretti2019) is supported, see the [connected_components_algorithms_types]
 	/// for details. Note that labels in the output are not required to be sequential.
-	/// 
+	///
 	/// ## Parameters
 	/// * image: The 8-bit single-channel image to be labeled.
 	/// * labels: Destination labeled image.
 	/// * connectivity: Connectivity to use for the labeling procedure. 8 for 8-way connectivity is supported.
 	/// * ltype: Output image label type. Currently CV_32S is supported.
 	/// * ccltype: Connected components algorithm type (see the #ConnectedComponentsAlgorithmsTypes).
-	/// 
-	/// 
+	///
+	///
 	/// Note: A sample program demonstrating Connected Components Labeling in CUDA can be found at
-	/// 
+	///
 	/// opencv_contrib_source_code/modules/cudaimgproc/samples/connected_components.cpp
 	#[inline]
 	pub fn connected_components_with_algorithm(image: &impl ToInputArray, labels: &mut impl ToOutputArray, connectivity: i32, ltype: i32, ccltype: crate::cudaimgproc::CUDA_ConnectedComponentsAlgorithmsTypes) -> Result<()> {
@@ -593,13 +594,13 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Converts the spatial image moments returned from cuda::spatialMoments to cv::Moments.
 	/// ## Parameters
 	/// * spatialMoments: Spatial moments returned from cuda::spatialMoments.
 	/// * order: Order used when calculating image moments with cuda::spatialMoments.
 	/// * momentsType: Precision used when calculating image moments with cuda::spatialMoments.
-	/// 
+	///
 	/// ## Returns
 	/// cv::Moments.
 	/// ## See also
@@ -612,14 +613,14 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Creates implementation for cuda::CLAHE .
-	/// 
+	///
 	/// ## Parameters
 	/// * clipLimit: Threshold for contrast limiting.
 	/// * tileGridSize: Size of grid for histogram equalization. Input image will be divided into
 	/// equally sized rectangular tiles. tileGridSize defines the number of tiles in row and column.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_clahe] function uses the following default values for its arguments:
 	/// * clip_limit: 40.0
@@ -633,14 +634,14 @@ pub mod cudaimgproc {
 		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_CLAHE>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates implementation for cuda::CLAHE .
-	/// 
+	///
 	/// ## Parameters
 	/// * clipLimit: Threshold for contrast limiting.
 	/// * tileGridSize: Size of grid for histogram equalization. Input image will be divided into
 	/// equally sized rectangular tiles. tileGridSize defines the number of tiles in row and column.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * clip_limit: 40.0
 	/// * tile_grid_size: Size(8,8)
@@ -653,9 +654,9 @@ pub mod cudaimgproc {
 		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_CLAHE>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates implementation for cuda::CannyEdgeDetector .
-	/// 
+	///
 	/// ## Parameters
 	/// * low_thresh: First threshold for the hysteresis procedure.
 	/// * high_thresh: Second threshold for the hysteresis procedure.
@@ -664,7 +665,7 @@ pub mod cudaimgproc {
 	/// ![inline formula](https://latex.codecogs.com/png.latex?%3D%5Csqrt%7B%28dI%2Fdx%29%5E2%20%2B%20%28dI%2Fdy%29%5E2%7D) should be used to compute the image gradient magnitude (
 	/// L2gradient=true ), or a faster default ![inline formula](https://latex.codecogs.com/png.latex?L%5F1) norm ![inline formula](https://latex.codecogs.com/png.latex?%3D%7CdI%2Fdx%7C%2B%7CdI%2Fdy%7C) is enough ( L2gradient=false
 	/// ).
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_canny_edge_detector] function uses the following default values for its arguments:
 	/// * apperture_size: 3
@@ -678,9 +679,9 @@ pub mod cudaimgproc {
 		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_CannyEdgeDetector>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates implementation for cuda::CannyEdgeDetector .
-	/// 
+	///
 	/// ## Parameters
 	/// * low_thresh: First threshold for the hysteresis procedure.
 	/// * high_thresh: Second threshold for the hysteresis procedure.
@@ -689,7 +690,7 @@ pub mod cudaimgproc {
 	/// ![inline formula](https://latex.codecogs.com/png.latex?%3D%5Csqrt%7B%28dI%2Fdx%29%5E2%20%2B%20%28dI%2Fdy%29%5E2%7D) should be used to compute the image gradient magnitude (
 	/// L2gradient=true ), or a faster default ![inline formula](https://latex.codecogs.com/png.latex?L%5F1) norm ![inline formula](https://latex.codecogs.com/png.latex?%3D%7CdI%2Fdx%7C%2B%7CdI%2Fdy%7C) is enough ( L2gradient=false
 	/// ).
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * apperture_size: 3
 	/// * l2gradient: false
@@ -702,7 +703,7 @@ pub mod cudaimgproc {
 		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_CannyEdgeDetector>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates implementation for generalized hough transform from [Ballard1981](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Ballard1981) .
 	#[inline]
 	pub fn create_generalized_hough_ballard() -> Result<core::Ptr<crate::imgproc::GeneralizedHoughBallard>> {
@@ -713,7 +714,7 @@ pub mod cudaimgproc {
 		let ret = unsafe { core::Ptr::<crate::imgproc::GeneralizedHoughBallard>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates implementation for generalized hough transform from [Guil1999](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Guil1999) .
 	#[inline]
 	pub fn create_generalized_hough_guil() -> Result<core::Ptr<crate::imgproc::GeneralizedHoughGuil>> {
@@ -724,9 +725,9 @@ pub mod cudaimgproc {
 		let ret = unsafe { core::Ptr::<crate::imgproc::GeneralizedHoughGuil>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates implementation for cuda::CornersDetector .
-	/// 
+	///
 	/// ## Parameters
 	/// * srcType: Input source type. Only CV_8UC1 and CV_32FC1 are supported for now.
 	/// * maxCorners: Maximum number of corners to return. If there are more corners than are found,
@@ -743,7 +744,7 @@ pub mod cudaimgproc {
 	/// * useHarrisDetector: Parameter indicating whether to use a Harris detector (see cornerHarris)
 	/// or cornerMinEigenVal.
 	/// * harrisK: Free parameter of the Harris detector.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_good_features_to_track_detector] function uses the following default values for its arguments:
 	/// * max_corners: 1000
@@ -761,9 +762,9 @@ pub mod cudaimgproc {
 		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_CornersDetector>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates implementation for cuda::CornersDetector .
-	/// 
+	///
 	/// ## Parameters
 	/// * srcType: Input source type. Only CV_8UC1 and CV_32FC1 are supported for now.
 	/// * maxCorners: Maximum number of corners to return. If there are more corners than are found,
@@ -780,7 +781,7 @@ pub mod cudaimgproc {
 	/// * useHarrisDetector: Parameter indicating whether to use a Harris detector (see cornerHarris)
 	/// or cornerMinEigenVal.
 	/// * harrisK: Free parameter of the Harris detector.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * max_corners: 1000
 	/// * quality_level: 0.01
@@ -797,9 +798,9 @@ pub mod cudaimgproc {
 		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_CornersDetector>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates implementation for Harris cornerness criteria.
-	/// 
+	///
 	/// ## Parameters
 	/// * srcType: Input source type. Only CV_8UC1 and CV_32FC1 are supported for now.
 	/// * blockSize: Neighborhood size.
@@ -809,7 +810,7 @@ pub mod cudaimgproc {
 	/// supported for now.
 	/// ## See also
 	/// cornerHarris
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_harris_corner] function uses the following default values for its arguments:
 	/// * border_type: BORDER_REFLECT101
@@ -822,9 +823,9 @@ pub mod cudaimgproc {
 		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_CornernessCriteria>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates implementation for Harris cornerness criteria.
-	/// 
+	///
 	/// ## Parameters
 	/// * srcType: Input source type. Only CV_8UC1 and CV_32FC1 are supported for now.
 	/// * blockSize: Neighborhood size.
@@ -834,7 +835,7 @@ pub mod cudaimgproc {
 	/// supported for now.
 	/// ## See also
 	/// cornerHarris
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * border_type: BORDER_REFLECT101
 	#[inline]
@@ -846,9 +847,9 @@ pub mod cudaimgproc {
 		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_CornernessCriteria>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates implementation for cuda::HoughCirclesDetector .
-	/// 
+	///
 	/// ## Parameters
 	/// * dp: Inverse ratio of the accumulator resolution to the image resolution. For example, if
 	/// dp=1 , the accumulator has the same resolution as the input image. If dp=2 , the accumulator has
@@ -863,7 +864,7 @@ pub mod cudaimgproc {
 	/// * minRadius: Minimum circle radius.
 	/// * maxRadius: Maximum circle radius.
 	/// * maxCircles: Maximum number of output circles.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_hough_circles_detector] function uses the following default values for its arguments:
 	/// * max_circles: 4096
@@ -876,9 +877,9 @@ pub mod cudaimgproc {
 		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_HoughCirclesDetector>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates implementation for cuda::HoughCirclesDetector .
-	/// 
+	///
 	/// ## Parameters
 	/// * dp: Inverse ratio of the accumulator resolution to the image resolution. For example, if
 	/// dp=1 , the accumulator has the same resolution as the input image. If dp=2 , the accumulator has
@@ -893,7 +894,7 @@ pub mod cudaimgproc {
 	/// * minRadius: Minimum circle radius.
 	/// * maxRadius: Maximum circle radius.
 	/// * maxCircles: Maximum number of output circles.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * max_circles: 4096
 	#[inline]
@@ -905,9 +906,9 @@ pub mod cudaimgproc {
 		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_HoughCirclesDetector>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates implementation for cuda::HoughLinesDetector .
-	/// 
+	///
 	/// ## Parameters
 	/// * rho: Distance resolution of the accumulator in pixels.
 	/// * theta: Angle resolution of the accumulator in radians.
@@ -915,7 +916,7 @@ pub mod cudaimgproc {
 	/// votes ( ![inline formula](https://latex.codecogs.com/png.latex?%3E%5Ctexttt%7Bthreshold%7D) ).
 	/// * doSort: Performs lines sort by votes.
 	/// * maxLines: Maximum number of output lines.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_hough_lines_detector] function uses the following default values for its arguments:
 	/// * do_sort: false
@@ -929,9 +930,9 @@ pub mod cudaimgproc {
 		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_HoughLinesDetector>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates implementation for cuda::HoughLinesDetector .
-	/// 
+	///
 	/// ## Parameters
 	/// * rho: Distance resolution of the accumulator in pixels.
 	/// * theta: Angle resolution of the accumulator in radians.
@@ -939,7 +940,7 @@ pub mod cudaimgproc {
 	/// votes ( ![inline formula](https://latex.codecogs.com/png.latex?%3E%5Ctexttt%7Bthreshold%7D) ).
 	/// * doSort: Performs lines sort by votes.
 	/// * maxLines: Maximum number of output lines.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * do_sort: false
 	/// * max_lines: 4096
@@ -952,9 +953,9 @@ pub mod cudaimgproc {
 		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_HoughLinesDetector>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates implementation for cuda::HoughSegmentDetector .
-	/// 
+	///
 	/// ## Parameters
 	/// * rho: Distance resolution of the accumulator in pixels.
 	/// * theta: Angle resolution of the accumulator in radians.
@@ -963,7 +964,7 @@ pub mod cudaimgproc {
 	/// * maxLines: Maximum number of output lines.
 	/// * threshold: %Accumulator threshold parameter. Only those lines are returned that get enough
 	/// votes ( ![inline formula](https://latex.codecogs.com/png.latex?%3E%5Ctexttt%7Bthreshold%7D) ).
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_hough_segment_detector] function uses the following default values for its arguments:
 	/// * max_lines: 4096
@@ -977,9 +978,9 @@ pub mod cudaimgproc {
 		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_HoughSegmentDetector>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates implementation for cuda::HoughSegmentDetector .
-	/// 
+	///
 	/// ## Parameters
 	/// * rho: Distance resolution of the accumulator in pixels.
 	/// * theta: Angle resolution of the accumulator in radians.
@@ -988,7 +989,7 @@ pub mod cudaimgproc {
 	/// * maxLines: Maximum number of output lines.
 	/// * threshold: %Accumulator threshold parameter. Only those lines are returned that get enough
 	/// votes ( ![inline formula](https://latex.codecogs.com/png.latex?%3E%5Ctexttt%7Bthreshold%7D) ).
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * max_lines: 4096
 	/// * threshold: -1
@@ -1001,10 +1002,10 @@ pub mod cudaimgproc {
 		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_HoughSegmentDetector>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates implementation for the minimum eigen value of a 2x2 derivative covariation matrix (the
 	/// cornerness criteria).
-	/// 
+	///
 	/// ## Parameters
 	/// * srcType: Input source type. Only CV_8UC1 and CV_32FC1 are supported for now.
 	/// * blockSize: Neighborhood size.
@@ -1013,7 +1014,7 @@ pub mod cudaimgproc {
 	/// supported for now.
 	/// ## See also
 	/// cornerMinEigenVal
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_min_eigen_val_corner] function uses the following default values for its arguments:
 	/// * border_type: BORDER_REFLECT101
@@ -1026,10 +1027,10 @@ pub mod cudaimgproc {
 		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_CornernessCriteria>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates implementation for the minimum eigen value of a 2x2 derivative covariation matrix (the
 	/// cornerness criteria).
-	/// 
+	///
 	/// ## Parameters
 	/// * srcType: Input source type. Only CV_8UC1 and CV_32FC1 are supported for now.
 	/// * blockSize: Neighborhood size.
@@ -1038,7 +1039,7 @@ pub mod cudaimgproc {
 	/// supported for now.
 	/// ## See also
 	/// cornerMinEigenVal
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * border_type: BORDER_REFLECT101
 	#[inline]
@@ -1050,9 +1051,9 @@ pub mod cudaimgproc {
 		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_CornernessCriteria>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates implementation for cuda::TemplateMatching .
-	/// 
+	///
 	/// ## Parameters
 	/// * srcType: Input source type. CV_32F and CV_8U depth images (1..4 channels) are supported
 	/// for now.
@@ -1061,23 +1062,23 @@ pub mod cudaimgproc {
 	/// leave its default value Size(0,0) then automatic estimation of block size will be used (which is
 	/// optimized for speed). By varying user_block_size you can reduce memory requirements at the cost
 	/// of speed.
-	/// 
+	///
 	/// The following methods are supported for the CV_8U depth images for now:
-	/// 
+	///
 	/// *   CV_TM_SQDIFF
 	/// *   CV_TM_SQDIFF_NORMED
 	/// *   CV_TM_CCORR
 	/// *   CV_TM_CCORR_NORMED
 	/// *   CV_TM_CCOEFF
 	/// *   CV_TM_CCOEFF_NORMED
-	/// 
+	///
 	/// The following methods are supported for the CV_32F images for now:
-	/// 
+	///
 	/// *   CV_TM_SQDIFF
 	/// *   CV_TM_CCORR
 	/// ## See also
 	/// matchTemplate
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_template_matching] function uses the following default values for its arguments:
 	/// * user_block_size: Size()
@@ -1090,9 +1091,9 @@ pub mod cudaimgproc {
 		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_TemplateMatching>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates implementation for cuda::TemplateMatching .
-	/// 
+	///
 	/// ## Parameters
 	/// * srcType: Input source type. CV_32F and CV_8U depth images (1..4 channels) are supported
 	/// for now.
@@ -1101,23 +1102,23 @@ pub mod cudaimgproc {
 	/// leave its default value Size(0,0) then automatic estimation of block size will be used (which is
 	/// optimized for speed). By varying user_block_size you can reduce memory requirements at the cost
 	/// of speed.
-	/// 
+	///
 	/// The following methods are supported for the CV_8U depth images for now:
-	/// 
+	///
 	/// *   CV_TM_SQDIFF
 	/// *   CV_TM_SQDIFF_NORMED
 	/// *   CV_TM_CCORR
 	/// *   CV_TM_CCORR_NORMED
 	/// *   CV_TM_CCOEFF
 	/// *   CV_TM_CCOEFF_NORMED
-	/// 
+	///
 	/// The following methods are supported for the CV_32F images for now:
-	/// 
+	///
 	/// *   CV_TM_SQDIFF
 	/// *   CV_TM_CCORR
 	/// ## See also
 	/// matchTemplate
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * user_block_size: Size()
 	#[inline]
@@ -1129,9 +1130,9 @@ pub mod cudaimgproc {
 		let ret = unsafe { core::Ptr::<crate::cudaimgproc::CUDA_TemplateMatching>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Converts an image from one color space to another.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image with CV_8U , CV_16U , or CV_32F depth and 1, 3, or 4 channels.
 	/// * dst: Destination image.
@@ -1139,12 +1140,12 @@ pub mod cudaimgproc {
 	/// * dcn: Number of channels in the destination image. If the parameter is 0, the number of the
 	/// channels is derived automatically from src and the code .
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// 3-channel color spaces (like HSV, XYZ, and so on) can be stored in a 4-channel image for better
 	/// performance.
 	/// ## See also
 	/// cvtColor
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [cvt_color] function uses the following default values for its arguments:
 	/// * dcn: 0
@@ -1159,9 +1160,9 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Converts an image from one color space to another.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image with CV_8U , CV_16U , or CV_32F depth and 1, 3, or 4 channels.
 	/// * dst: Destination image.
@@ -1169,12 +1170,12 @@ pub mod cudaimgproc {
 	/// * dcn: Number of channels in the destination image. If the parameter is 0, the number of the
 	/// channels is derived automatically from src and the code .
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// 3-channel color spaces (like HSV, XYZ, and so on) can be stored in a 4-channel image for better
 	/// performance.
 	/// ## See also
 	/// cvtColor
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * dcn: 0
 	/// * stream: Stream::Null()
@@ -1188,9 +1189,9 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Converts an image from Bayer pattern to RGB or grayscale.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image (8-bit or 16-bit single channel).
 	/// * dst: Destination image.
@@ -1198,23 +1199,23 @@ pub mod cudaimgproc {
 	/// * dcn: Number of channels in the destination image. If the parameter is 0, the number of the
 	/// channels is derived automatically from src and the code .
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// The function can do the following transformations:
-	/// 
+	///
 	/// *   Demosaicing using bilinear interpolation
-	/// 
+	///
 	///    > -   COLOR_BayerBG2GRAY , COLOR_BayerGB2GRAY , COLOR_BayerRG2GRAY , COLOR_BayerGR2GRAY
 	///    > -   COLOR_BayerBG2BGR , COLOR_BayerGB2BGR , COLOR_BayerRG2BGR , COLOR_BayerGR2BGR
-	/// 
+	///
 	/// *   Demosaicing using Malvar-He-Cutler algorithm ([MHT2011](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_MHT2011))
-	/// 
+	///
 	///    > -   COLOR_BayerBG2GRAY_MHT , COLOR_BayerGB2GRAY_MHT , COLOR_BayerRG2GRAY_MHT ,
 	///    >     COLOR_BayerGR2GRAY_MHT
 	///    > -   COLOR_BayerBG2BGR_MHT , COLOR_BayerGB2BGR_MHT , COLOR_BayerRG2BGR_MHT ,
 	///    >     COLOR_BayerGR2BGR_MHT
 	/// ## See also
 	/// cvtColor
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [demosaicing] function uses the following default values for its arguments:
 	/// * dcn: -1
@@ -1229,9 +1230,9 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Converts an image from Bayer pattern to RGB or grayscale.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image (8-bit or 16-bit single channel).
 	/// * dst: Destination image.
@@ -1239,23 +1240,23 @@ pub mod cudaimgproc {
 	/// * dcn: Number of channels in the destination image. If the parameter is 0, the number of the
 	/// channels is derived automatically from src and the code .
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// The function can do the following transformations:
-	/// 
+	///
 	/// *   Demosaicing using bilinear interpolation
-	/// 
+	///
 	///    > -   COLOR_BayerBG2GRAY , COLOR_BayerGB2GRAY , COLOR_BayerRG2GRAY , COLOR_BayerGR2GRAY
 	///    > -   COLOR_BayerBG2BGR , COLOR_BayerGB2BGR , COLOR_BayerRG2BGR , COLOR_BayerGR2BGR
-	/// 
+	///
 	/// *   Demosaicing using Malvar-He-Cutler algorithm ([MHT2011](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_MHT2011))
-	/// 
+	///
 	///    > -   COLOR_BayerBG2GRAY_MHT , COLOR_BayerGB2GRAY_MHT , COLOR_BayerRG2GRAY_MHT ,
 	///    >     COLOR_BayerGR2GRAY_MHT
 	///    > -   COLOR_BayerBG2BGR_MHT , COLOR_BayerGB2BGR_MHT , COLOR_BayerRG2BGR_MHT ,
 	///    >     COLOR_BayerGR2BGR_MHT
 	/// ## See also
 	/// cvtColor
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * dcn: -1
 	/// * stream: Stream::Null()
@@ -1269,16 +1270,16 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Equalizes the histogram of a grayscale image.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image with CV_8UC1 type.
 	/// * dst: Destination image.
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// equalizeHist
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [equalize_hist] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -1292,16 +1293,16 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Equalizes the histogram of a grayscale image.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image with CV_8UC1 type.
 	/// * dst: Destination image.
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// equalizeHist
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -1314,16 +1315,16 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes levels with even distribution.
-	/// 
+	///
 	/// ## Parameters
 	/// * levels: Destination array. levels has 1 row, nLevels columns, and the CV_32SC1 type.
 	/// * nLevels: Number of computed levels. nLevels must be at least 2.
 	/// * lowerLevel: Lower boundary value of the lowest level.
 	/// * upperLevel: Upper boundary value of the greatest level.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [even_levels] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -1336,16 +1337,16 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Computes levels with even distribution.
-	/// 
+	///
 	/// ## Parameters
 	/// * levels: Destination array. levels has 1 row, nLevels columns, and the CV_32SC1 type.
 	/// * nLevels: Number of computed levels. nLevels must be at least 2.
 	/// * lowerLevel: Lower boundary value of the lowest level.
 	/// * upperLevel: Upper boundary value of the greatest level.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -1357,15 +1358,15 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Routines for correcting image color gamma.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image (3- or 4-channel 8 bit).
 	/// * dst: Destination image.
 	/// * forward: true for forward gamma correction or false for inverse gamma correction.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [gamma_correction] function uses the following default values for its arguments:
 	/// * forward: true
@@ -1380,15 +1381,15 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Routines for correcting image color gamma.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image (3- or 4-channel 8 bit).
 	/// * dst: Destination image.
 	/// * forward: true for forward gamma correction or false for inverse gamma correction.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * forward: true
 	/// * stream: Stream::Null()
@@ -1402,9 +1403,9 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Calculates a histogram with evenly distributed bins.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image. CV_8U, CV_16U, or CV_16S depth and 1 or 4 channels are supported. For
 	/// a four-channel image, all channels are processed separately.
@@ -1413,7 +1414,7 @@ pub mod cudaimgproc {
 	/// * lowerLevel: Lower boundary of lowest-level bin.
 	/// * upperLevel: Upper boundary of highest-level bin.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [hist_even] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -1427,9 +1428,9 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Calculates a histogram with evenly distributed bins.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image. CV_8U, CV_16U, or CV_16S depth and 1 or 4 channels are supported. For
 	/// a four-channel image, all channels are processed separately.
@@ -1438,7 +1439,7 @@ pub mod cudaimgproc {
 	/// * lowerLevel: Lower boundary of lowest-level bin.
 	/// * upperLevel: Upper boundary of highest-level bin.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -1451,16 +1452,16 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Calculates a histogram with bins determined by the levels array.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image. CV_8U , CV_16U , or CV_16S depth and 1 or 4 channels are supported.
 	/// For a four-channel image, all channels are processed separately.
 	/// * hist: Destination histogram with one row, (levels.cols-1) columns, and the CV_32SC1 type.
 	/// * levels: Number of levels in the histogram.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [hist_range] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -1475,16 +1476,16 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Calculates a histogram with bins determined by the levels array.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image. CV_8U , CV_16U , or CV_16S depth and 1 or 4 channels are supported.
 	/// For a four-channel image, all channels are processed separately.
 	/// * hist: Destination histogram with one row, (levels.cols-1) columns, and the CV_32SC1 type.
 	/// * levels: Number of levels in the histogram.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -1498,9 +1499,9 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Performs mean-shift filtering for each point of the source image.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image. Only CV_8UC4 images are supported for now.
 	/// * dst: Destination image containing the color of mapped points. It has the same size and type
@@ -1509,10 +1510,10 @@ pub mod cudaimgproc {
 	/// * sr: Color window radius.
 	/// * criteria: Termination criteria. See TermCriteria.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// It maps each point of the source image into another point. As a result, you have a new color and new
 	/// position of each point.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [mean_shift_filtering] function uses the following default values for its arguments:
 	/// * criteria: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,5,1)
@@ -1527,9 +1528,9 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Performs mean-shift filtering for each point of the source image.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image. Only CV_8UC4 images are supported for now.
 	/// * dst: Destination image containing the color of mapped points. It has the same size and type
@@ -1538,10 +1539,10 @@ pub mod cudaimgproc {
 	/// * sr: Color window radius.
 	/// * criteria: Termination criteria. See TermCriteria.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// It maps each point of the source image into another point. As a result, you have a new color and new
 	/// position of each point.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * criteria: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,5,1)
 	/// * stream: Stream::Null()
@@ -1555,10 +1556,10 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Performs a mean-shift procedure and stores information about processed points (their colors and
 	/// positions) in two images.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image. Only CV_8UC4 images are supported for now.
 	/// * dstr: Destination image containing the color of mapped points. The size and type is the same
@@ -1571,7 +1572,7 @@ pub mod cudaimgproc {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// cuda::meanShiftFiltering
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [mean_shift_proc] function uses the following default values for its arguments:
 	/// * criteria: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,5,1)
@@ -1587,10 +1588,10 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Performs a mean-shift procedure and stores information about processed points (their colors and
 	/// positions) in two images.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image. Only CV_8UC4 images are supported for now.
 	/// * dstr: Destination image containing the color of mapped points. The size and type is the same
@@ -1603,7 +1604,7 @@ pub mod cudaimgproc {
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// cuda::meanShiftFiltering
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * criteria: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,5,1)
 	/// * stream: Stream::Null()
@@ -1618,9 +1619,9 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Performs a mean-shift segmentation of the source image and eliminates small segments.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image. Only CV_8UC4 images are supported for now.
 	/// * dst: Segmented image with the same size and type as src (host or gpu memory).
@@ -1629,7 +1630,7 @@ pub mod cudaimgproc {
 	/// * minsize: Minimum segment size. Smaller segments are merged.
 	/// * criteria: Termination criteria. See TermCriteria.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [mean_shift_segmentation] function uses the following default values for its arguments:
 	/// * criteria: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,5,1)
@@ -1644,9 +1645,9 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Performs a mean-shift segmentation of the source image and eliminates small segments.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Source image. Only CV_8UC4 images are supported for now.
 	/// * dst: Segmented image with the same size and type as src (host or gpu memory).
@@ -1655,7 +1656,7 @@ pub mod cudaimgproc {
 	/// * minsize: Minimum segment size. Smaller segments are merged.
 	/// * criteria: Termination criteria. See TermCriteria.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * criteria: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,5,1)
 	/// * stream: Stream::Null()
@@ -1669,19 +1670,19 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Calculates all of the moments up to the 3rd order of a rasterized shape.
-	/// 
+	///
 	/// The function computes moments, up to the 3rd order, of a rasterized shape. The
 	/// results are returned in the structure cv::Moments.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Raster image (single-channel 2D array).
 	/// * binaryImage: If it is true, all non-zero image pixels are treated as 1's.
 	/// * order: Order of largest moments to calculate with lower order moments requiring less computation.
 	/// * momentsType: Precision to use when calculating moments. Available types are \ref CV_32F and \ref CV_64F with the performance of \ref CV_32F an order of magnitude greater than \ref CV_64F. If the image is small the accuracy from \ref CV_32F can be equal or very close to \ref CV_64F.
-	/// 
-	/// 
+	///
+	///
 	/// Note: For maximum performance use the asynchronous version cuda::spatialMoments() as this version interally allocates and deallocates both GpuMat and HostMem to respectively perform the calculation on the device and download the result to the host.
 	/// The costly HostMem allocation cannot be avoided however the GpuMat device allocation can be by using BufferPool, e.g.
 	/// ```
@@ -1693,7 +1694,7 @@ pub mod cudaimgproc {
 	/// cv::Moments.
 	/// ## See also
 	/// cuda::spatialMoments, cuda::convertSpatialMoments, cuda::numMoments, cuda::MomentsOrder
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [moments] function uses the following default values for its arguments:
 	/// * binary_image: false
@@ -1708,19 +1709,19 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Calculates all of the moments up to the 3rd order of a rasterized shape.
-	/// 
+	///
 	/// The function computes moments, up to the 3rd order, of a rasterized shape. The
 	/// results are returned in the structure cv::Moments.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Raster image (single-channel 2D array).
 	/// * binaryImage: If it is true, all non-zero image pixels are treated as 1's.
 	/// * order: Order of largest moments to calculate with lower order moments requiring less computation.
 	/// * momentsType: Precision to use when calculating moments. Available types are \ref CV_32F and \ref CV_64F with the performance of \ref CV_32F an order of magnitude greater than \ref CV_64F. If the image is small the accuracy from \ref CV_32F can be equal or very close to \ref CV_64F.
-	/// 
-	/// 
+	///
+	///
 	/// Note: For maximum performance use the asynchronous version cuda::spatialMoments() as this version interally allocates and deallocates both GpuMat and HostMem to respectively perform the calculation on the device and download the result to the host.
 	/// The costly HostMem allocation cannot be avoided however the GpuMat device allocation can be by using BufferPool, e.g.
 	/// ```
@@ -1732,7 +1733,7 @@ pub mod cudaimgproc {
 	/// cv::Moments.
 	/// ## See also
 	/// cuda::spatialMoments, cuda::convertSpatialMoments, cuda::numMoments, cuda::MomentsOrder
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * binary_image: false
 	/// * order: MomentsOrder::THIRD_ORDER_MOMENTS
@@ -1746,7 +1747,7 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Returns the number of image moments less than or equal to the largest image moments \a order.
 	/// ## Parameters
 	/// * order: Order of largest moments to calculate with lower order moments requiring less computation.
@@ -1762,12 +1763,12 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Calculates all of the spatial moments up to the 3rd order of a rasterized shape.
-	/// 
+	///
 	/// Asynchronous version of cuda::moments() which only calculates the spatial (not centralized or normalized) moments, up to the 3rd order, of a rasterized shape.
 	/// Each moment is returned as a column entry in the 1D \a moments array.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Raster image (single-channel 2D array).
 	/// * moments:[out] 1D array with each column entry containing a spatial image moment.
@@ -1775,8 +1776,8 @@ pub mod cudaimgproc {
 	/// * order: Order of largest moments to calculate with lower order moments requiring less computation.
 	/// * momentsType: Precision to use when calculating moments. Available types are \ref CV_32F and \ref CV_64F with the performance of \ref CV_32F an order of magnitude greater than \ref CV_64F. If the image is small the accuracy from \ref CV_32F can be equal or very close to \ref CV_64F.
 	/// * stream: Stream for the asynchronous version.
-	/// 
-	/// 
+	///
+	///
 	/// Note: For maximum performance pre-allocate a 1D GpuMat for \a moments of the correct type and size large enough to store the all the image moments of up to the desired \a order. e.g. With \a order === MomentsOrder::SECOND_ORDER_MOMENTS and \a momentsType == \ref CV_32F \a moments can be allocated as
 	/// ```
 	/// GpuMat momentsDevice(1,numMoments(MomentsOrder::SECOND_ORDER_MOMENTS),CV_32F)
@@ -1789,11 +1790,11 @@ pub mod cudaimgproc {
 	/// Mat spatialMoments = spatialMomentsHostMem.createMatHeader();
 	/// cv::Moments cvMoments = convertSpatialMoments<float>(spatialMoments, order);
 	/// ```
-	/// 
+	///
 	/// see the \a CUDA_TEST_P(Moments, Async) test inside opencv_contrib_source_code/modules/cudaimgproc/test/test_moments.cpp for an example.
 	/// ## See also
 	/// cuda::moments, cuda::convertSpatialMoments, cuda::numMoments, cuda::MomentsOrder
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [spatial_moments] function uses the following default values for its arguments:
 	/// * binary_image: false
@@ -1810,12 +1811,12 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Calculates all of the spatial moments up to the 3rd order of a rasterized shape.
-	/// 
+	///
 	/// Asynchronous version of cuda::moments() which only calculates the spatial (not centralized or normalized) moments, up to the 3rd order, of a rasterized shape.
 	/// Each moment is returned as a column entry in the 1D \a moments array.
-	/// 
+	///
 	/// ## Parameters
 	/// * src: Raster image (single-channel 2D array).
 	/// * moments:[out] 1D array with each column entry containing a spatial image moment.
@@ -1823,8 +1824,8 @@ pub mod cudaimgproc {
 	/// * order: Order of largest moments to calculate with lower order moments requiring less computation.
 	/// * momentsType: Precision to use when calculating moments. Available types are \ref CV_32F and \ref CV_64F with the performance of \ref CV_32F an order of magnitude greater than \ref CV_64F. If the image is small the accuracy from \ref CV_32F can be equal or very close to \ref CV_64F.
 	/// * stream: Stream for the asynchronous version.
-	/// 
-	/// 
+	///
+	///
 	/// Note: For maximum performance pre-allocate a 1D GpuMat for \a moments of the correct type and size large enough to store the all the image moments of up to the desired \a order. e.g. With \a order === MomentsOrder::SECOND_ORDER_MOMENTS and \a momentsType == \ref CV_32F \a moments can be allocated as
 	/// ```
 	/// GpuMat momentsDevice(1,numMoments(MomentsOrder::SECOND_ORDER_MOMENTS),CV_32F)
@@ -1837,11 +1838,11 @@ pub mod cudaimgproc {
 	/// Mat spatialMoments = spatialMomentsHostMem.createMatHeader();
 	/// cv::Moments cvMoments = convertSpatialMoments<float>(spatialMoments, order);
 	/// ```
-	/// 
+	///
 	/// see the \a CUDA_TEST_P(Moments, Async) test inside opencv_contrib_source_code/modules/cudaimgproc/test/test_moments.cpp for an example.
 	/// ## See also
 	/// cuda::moments, cuda::convertSpatialMoments, cuda::numMoments, cuda::MomentsOrder
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * binary_image: false
 	/// * order: MomentsOrder::THIRD_ORDER_MOMENTS
@@ -1857,18 +1858,18 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Exchanges the color channels of an image in-place.
-	/// 
+	///
 	/// ## Parameters
 	/// * image: Source image. Supports only CV_8UC4 type.
 	/// * dstOrder: Integer array describing how channel values are permutated. The n-th entry of the
 	/// array contains the number of the channel that is stored in the n-th channel of the output image.
 	/// E.g. Given an RGBA image, aDstOrder = [3,2,1,0] converts this to ABGR channel order.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// The methods support arbitrary permutations of the original channels, including replication.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [swap_channels] function uses the following default values for its arguments:
 	/// * stream: Stream::Null()
@@ -1881,18 +1882,18 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Exchanges the color channels of an image in-place.
-	/// 
+	///
 	/// ## Parameters
 	/// * image: Source image. Supports only CV_8UC4 type.
 	/// * dstOrder: Integer array describing how channel values are permutated. The n-th entry of the
 	/// array contains the number of the channel that is stored in the n-th channel of the output image.
 	/// E.g. Given an RGBA image, aDstOrder = [3,2,1,0] converts this to ABGR channel order.
 	/// * stream: Stream for the asynchronous version.
-	/// 
+	///
 	/// The methods support arbitrary permutations of the original channels, including replication.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
 	#[inline]
@@ -1904,19 +1905,19 @@ pub mod cudaimgproc {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Constant methods for [crate::cudaimgproc::CUDA_CLAHE]
 	pub trait CUDA_CLAHETraitConst: crate::imgproc::CLAHETraitConst {
 		fn as_raw_CUDA_CLAHE(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::cudaimgproc::CUDA_CLAHE]
 	pub trait CUDA_CLAHETrait: crate::cudaimgproc::CUDA_CLAHETraitConst + crate::imgproc::CLAHETrait {
 		fn as_raw_mut_CUDA_CLAHE(&mut self) -> *mut c_void;
-	
+
 		/// Equalizes the histogram of a grayscale image using Contrast Limited Adaptive Histogram Equalization.
-		/// 
+		///
 		/// ## Parameters
 		/// * src: Source image with CV_8UC1 type.
 		/// * dst: Destination image.
@@ -1931,62 +1932,62 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Base class for Contrast Limited Adaptive Histogram Equalization. :
 	pub struct CUDA_CLAHE {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { CUDA_CLAHE }
-	
+
 	impl Drop for CUDA_CLAHE {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_cuda_CLAHE_delete(self.as_raw_mut_CUDA_CLAHE()) };
 		}
 	}
-	
+
 	unsafe impl Send for CUDA_CLAHE {}
-	
+
 	impl core::AlgorithmTraitConst for CUDA_CLAHE {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for CUDA_CLAHE {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_CLAHE, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::imgproc::CLAHETraitConst for CUDA_CLAHE {
 		#[inline] fn as_raw_CLAHE(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::imgproc::CLAHETrait for CUDA_CLAHE {
 		#[inline] fn as_raw_mut_CLAHE(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_CLAHE, crate::imgproc::CLAHETraitConst, as_raw_CLAHE, crate::imgproc::CLAHETrait, as_raw_mut_CLAHE }
-	
+
 	impl crate::cudaimgproc::CUDA_CLAHETraitConst for CUDA_CLAHE {
 		#[inline] fn as_raw_CUDA_CLAHE(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::cudaimgproc::CUDA_CLAHETrait for CUDA_CLAHE {
 		#[inline] fn as_raw_mut_CUDA_CLAHE(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_CLAHE, crate::cudaimgproc::CUDA_CLAHETraitConst, as_raw_CUDA_CLAHE, crate::cudaimgproc::CUDA_CLAHETrait, as_raw_mut_CUDA_CLAHE }
-	
+
 	impl CUDA_CLAHE {
 	}
-	
+
 	boxed_cast_base! { CUDA_CLAHE, core::Algorithm, cv_cuda_CLAHE_to_Algorithm }
-	
+
 	boxed_cast_base! { CUDA_CLAHE, crate::imgproc::CLAHE, cv_cuda_CLAHE_to_CLAHE }
-	
+
 	impl std::fmt::Debug for CUDA_CLAHE {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -1994,11 +1995,11 @@ pub mod cudaimgproc {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::cudaimgproc::CUDA_CannyEdgeDetector]
 	pub trait CUDA_CannyEdgeDetectorTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_CUDA_CannyEdgeDetector(&self) -> *const c_void;
-	
+
 		#[inline]
 		fn get_low_threshold(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
@@ -2007,7 +2008,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_high_threshold(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
@@ -2016,7 +2017,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_apperture_size(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -2025,7 +2026,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_l2_gradient(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
@@ -2034,20 +2035,20 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::cudaimgproc::CUDA_CannyEdgeDetector]
 	pub trait CUDA_CannyEdgeDetectorTrait: core::AlgorithmTrait + crate::cudaimgproc::CUDA_CannyEdgeDetectorTraitConst {
 		fn as_raw_mut_CUDA_CannyEdgeDetector(&mut self) -> *mut c_void;
-	
+
 		/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
-		/// 
+		///
 		/// ## Parameters
 		/// * image: Single-channel 8-bit input image.
 		/// * edges: Output edge map. It has the same size and type as image.
 		/// * stream: Stream for the asynchronous version.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * stream: Stream::Null()
 		#[inline]
@@ -2060,14 +2061,14 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
-		/// 
+		///
 		/// ## Parameters
 		/// * image: Single-channel 8-bit input image.
 		/// * edges: Output edge map. It has the same size and type as image.
 		/// * stream: Stream for the asynchronous version.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [CUDA_CannyEdgeDetectorTrait::detect] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
@@ -2081,21 +2082,21 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Finds edges in an image using the [Canny86](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Canny86) algorithm.
-		/// 
+		///
 		/// ## Parameters
 		/// * image: Single-channel 8-bit input image.
 		/// * edges: Output edge map. It has the same size and type as image.
 		/// * stream: Stream for the asynchronous version.
-		/// 
+		///
 		/// ## Overloaded parameters
-		/// 
+		///
 		/// * dx: First derivative of image in the vertical direction. Support only CV_32S type.
 		/// * dy: First derivative of image in the horizontal direction. Support only CV_32S type.
 		/// * edges: Output edge map. It has the same size and type as image.
 		/// * stream: Stream for the asynchronous version.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * stream: Stream::Null()
 		#[inline]
@@ -2109,14 +2110,14 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// @overload
 		/// ## Parameters
 		/// * dx: First derivative of image in the vertical direction. Support only CV_32S type.
 		/// * dy: First derivative of image in the horizontal direction. Support only CV_32S type.
 		/// * edges: Output edge map. It has the same size and type as image.
 		/// * stream: Stream for the asynchronous version.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [CUDA_CannyEdgeDetectorTrait::detect] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
@@ -2131,7 +2132,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_low_threshold(&mut self, low_thresh: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -2140,7 +2141,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_high_threshold(&mut self, high_thresh: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -2149,7 +2150,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_apperture_size(&mut self, apperture_size: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -2158,7 +2159,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_l2_gradient(&mut self, l2gradient: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -2167,50 +2168,50 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Base class for Canny Edge Detector. :
 	pub struct CUDA_CannyEdgeDetector {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { CUDA_CannyEdgeDetector }
-	
+
 	impl Drop for CUDA_CannyEdgeDetector {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_cuda_CannyEdgeDetector_delete(self.as_raw_mut_CUDA_CannyEdgeDetector()) };
 		}
 	}
-	
+
 	unsafe impl Send for CUDA_CannyEdgeDetector {}
-	
+
 	impl core::AlgorithmTraitConst for CUDA_CannyEdgeDetector {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for CUDA_CannyEdgeDetector {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_CannyEdgeDetector, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::cudaimgproc::CUDA_CannyEdgeDetectorTraitConst for CUDA_CannyEdgeDetector {
 		#[inline] fn as_raw_CUDA_CannyEdgeDetector(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::cudaimgproc::CUDA_CannyEdgeDetectorTrait for CUDA_CannyEdgeDetector {
 		#[inline] fn as_raw_mut_CUDA_CannyEdgeDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_CannyEdgeDetector, crate::cudaimgproc::CUDA_CannyEdgeDetectorTraitConst, as_raw_CUDA_CannyEdgeDetector, crate::cudaimgproc::CUDA_CannyEdgeDetectorTrait, as_raw_mut_CUDA_CannyEdgeDetector }
-	
+
 	impl CUDA_CannyEdgeDetector {
 	}
-	
+
 	boxed_cast_base! { CUDA_CannyEdgeDetector, core::Algorithm, cv_cuda_CannyEdgeDetector_to_Algorithm }
-	
+
 	impl std::fmt::Debug for CUDA_CannyEdgeDetector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -2218,25 +2219,25 @@ pub mod cudaimgproc {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::cudaimgproc::CUDA_CornernessCriteria]
 	pub trait CUDA_CornernessCriteriaTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_CUDA_CornernessCriteria(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::cudaimgproc::CUDA_CornernessCriteria]
 	pub trait CUDA_CornernessCriteriaTrait: core::AlgorithmTrait + crate::cudaimgproc::CUDA_CornernessCriteriaTraitConst {
 		fn as_raw_mut_CUDA_CornernessCriteria(&mut self) -> *mut c_void;
-	
+
 		/// Computes the cornerness criteria at each image pixel.
-		/// 
+		///
 		/// ## Parameters
 		/// * src: Source image.
 		/// * dst: Destination image containing cornerness values. It will have the same size as src and
 		/// CV_32FC1 type.
 		/// * stream: Stream for the asynchronous version.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * stream: Stream::Null()
 		#[inline]
@@ -2249,15 +2250,15 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Computes the cornerness criteria at each image pixel.
-		/// 
+		///
 		/// ## Parameters
 		/// * src: Source image.
 		/// * dst: Destination image containing cornerness values. It will have the same size as src and
 		/// CV_32FC1 type.
 		/// * stream: Stream for the asynchronous version.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [CUDA_CornernessCriteriaTrait::compute] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
@@ -2271,50 +2272,50 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Base class for Cornerness Criteria computation. :
 	pub struct CUDA_CornernessCriteria {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { CUDA_CornernessCriteria }
-	
+
 	impl Drop for CUDA_CornernessCriteria {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_cuda_CornernessCriteria_delete(self.as_raw_mut_CUDA_CornernessCriteria()) };
 		}
 	}
-	
+
 	unsafe impl Send for CUDA_CornernessCriteria {}
-	
+
 	impl core::AlgorithmTraitConst for CUDA_CornernessCriteria {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for CUDA_CornernessCriteria {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_CornernessCriteria, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::cudaimgproc::CUDA_CornernessCriteriaTraitConst for CUDA_CornernessCriteria {
 		#[inline] fn as_raw_CUDA_CornernessCriteria(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::cudaimgproc::CUDA_CornernessCriteriaTrait for CUDA_CornernessCriteria {
 		#[inline] fn as_raw_mut_CUDA_CornernessCriteria(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_CornernessCriteria, crate::cudaimgproc::CUDA_CornernessCriteriaTraitConst, as_raw_CUDA_CornernessCriteria, crate::cudaimgproc::CUDA_CornernessCriteriaTrait, as_raw_mut_CUDA_CornernessCriteria }
-	
+
 	impl CUDA_CornernessCriteria {
 	}
-	
+
 	boxed_cast_base! { CUDA_CornernessCriteria, core::Algorithm, cv_cuda_CornernessCriteria_to_Algorithm }
-	
+
 	impl std::fmt::Debug for CUDA_CornernessCriteria {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -2322,19 +2323,19 @@ pub mod cudaimgproc {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::cudaimgproc::CUDA_CornersDetector]
 	pub trait CUDA_CornersDetectorTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_CUDA_CornersDetector(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::cudaimgproc::CUDA_CornersDetector]
 	pub trait CUDA_CornersDetectorTrait: core::AlgorithmTrait + crate::cudaimgproc::CUDA_CornersDetectorTraitConst {
 		fn as_raw_mut_CUDA_CornersDetector(&mut self) -> *mut c_void;
-	
+
 		/// Determines strong corners on an image.
-		/// 
+		///
 		/// ## Parameters
 		/// * image: Input 8-bit or floating-point 32-bit, single-channel image.
 		/// * corners: Output vector of detected corners (1-row matrix with CV_32FC2 type with corners
@@ -2342,7 +2343,7 @@ pub mod cudaimgproc {
 		/// * mask: Optional region of interest. If the image is not empty (it needs to have the type
 		/// CV_8UC1 and the same size as image ), it specifies the region in which the corners are detected.
 		/// * stream: Stream for the asynchronous version.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * mask: noArray()
 		/// * stream: Stream::Null()
@@ -2357,9 +2358,9 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Determines strong corners on an image.
-		/// 
+		///
 		/// ## Parameters
 		/// * image: Input 8-bit or floating-point 32-bit, single-channel image.
 		/// * corners: Output vector of detected corners (1-row matrix with CV_32FC2 type with corners
@@ -2367,7 +2368,7 @@ pub mod cudaimgproc {
 		/// * mask: Optional region of interest. If the image is not empty (it needs to have the type
 		/// CV_8UC1 and the same size as image ), it specifies the region in which the corners are detected.
 		/// * stream: Stream for the asynchronous version.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [CUDA_CornersDetectorTrait::detect] function uses the following default values for its arguments:
 		/// * mask: noArray()
@@ -2382,7 +2383,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_max_corners(&mut self, max_corners: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -2391,7 +2392,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_min_distance(&mut self, min_distance: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -2400,50 +2401,50 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Base class for Corners Detector. :
 	pub struct CUDA_CornersDetector {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { CUDA_CornersDetector }
-	
+
 	impl Drop for CUDA_CornersDetector {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_cuda_CornersDetector_delete(self.as_raw_mut_CUDA_CornersDetector()) };
 		}
 	}
-	
+
 	unsafe impl Send for CUDA_CornersDetector {}
-	
+
 	impl core::AlgorithmTraitConst for CUDA_CornersDetector {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for CUDA_CornersDetector {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_CornersDetector, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::cudaimgproc::CUDA_CornersDetectorTraitConst for CUDA_CornersDetector {
 		#[inline] fn as_raw_CUDA_CornersDetector(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::cudaimgproc::CUDA_CornersDetectorTrait for CUDA_CornersDetector {
 		#[inline] fn as_raw_mut_CUDA_CornersDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_CornersDetector, crate::cudaimgproc::CUDA_CornersDetectorTraitConst, as_raw_CUDA_CornersDetector, crate::cudaimgproc::CUDA_CornersDetectorTrait, as_raw_mut_CUDA_CornersDetector }
-	
+
 	impl CUDA_CornersDetector {
 	}
-	
+
 	boxed_cast_base! { CUDA_CornersDetector, core::Algorithm, cv_cuda_CornersDetector_to_Algorithm }
-	
+
 	impl std::fmt::Debug for CUDA_CornersDetector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -2451,11 +2452,11 @@ pub mod cudaimgproc {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::cudaimgproc::CUDA_HoughCirclesDetector]
 	pub trait CUDA_HoughCirclesDetectorTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_CUDA_HoughCirclesDetector(&self) -> *const c_void;
-	
+
 		#[inline]
 		fn get_dp(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
@@ -2464,7 +2465,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_min_dist(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
@@ -2473,7 +2474,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_canny_threshold(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -2482,7 +2483,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_votes_threshold(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -2491,7 +2492,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_min_radius(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -2500,7 +2501,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_max_radius(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -2509,7 +2510,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_max_circles(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -2518,15 +2519,15 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::cudaimgproc::CUDA_HoughCirclesDetector]
 	pub trait CUDA_HoughCirclesDetectorTrait: core::AlgorithmTrait + crate::cudaimgproc::CUDA_HoughCirclesDetectorTraitConst {
 		fn as_raw_mut_CUDA_HoughCirclesDetector(&mut self) -> *mut c_void;
-	
+
 		/// Finds circles in a grayscale image using the Hough transform.
-		/// 
+		///
 		/// ## Parameters
 		/// * src: 8-bit, single-channel grayscale input image.
 		/// * circles: Output vector of found circles. Each vector is encoded as a 3-element
@@ -2534,7 +2535,7 @@ pub mod cudaimgproc {
 		/// * stream: Stream for the asynchronous version.
 		/// ## See also
 		/// HoughCircles
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * stream: Stream::Null()
 		#[inline]
@@ -2547,9 +2548,9 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Finds circles in a grayscale image using the Hough transform.
-		/// 
+		///
 		/// ## Parameters
 		/// * src: 8-bit, single-channel grayscale input image.
 		/// * circles: Output vector of found circles. Each vector is encoded as a 3-element
@@ -2557,7 +2558,7 @@ pub mod cudaimgproc {
 		/// * stream: Stream for the asynchronous version.
 		/// ## See also
 		/// HoughCircles
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [CUDA_HoughCirclesDetectorTrait::detect] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
@@ -2571,7 +2572,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_dp(&mut self, dp: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -2580,7 +2581,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_min_dist(&mut self, min_dist: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -2589,7 +2590,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_canny_threshold(&mut self, canny_threshold: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -2598,7 +2599,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_votes_threshold(&mut self, votes_threshold: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -2607,7 +2608,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_min_radius(&mut self, min_radius: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -2616,7 +2617,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_max_radius(&mut self, max_radius: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -2625,7 +2626,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_max_circles(&mut self, max_circles: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -2634,50 +2635,50 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Base class for circles detector algorithm. :
 	pub struct CUDA_HoughCirclesDetector {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { CUDA_HoughCirclesDetector }
-	
+
 	impl Drop for CUDA_HoughCirclesDetector {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_cuda_HoughCirclesDetector_delete(self.as_raw_mut_CUDA_HoughCirclesDetector()) };
 		}
 	}
-	
+
 	unsafe impl Send for CUDA_HoughCirclesDetector {}
-	
+
 	impl core::AlgorithmTraitConst for CUDA_HoughCirclesDetector {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for CUDA_HoughCirclesDetector {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_HoughCirclesDetector, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::cudaimgproc::CUDA_HoughCirclesDetectorTraitConst for CUDA_HoughCirclesDetector {
 		#[inline] fn as_raw_CUDA_HoughCirclesDetector(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::cudaimgproc::CUDA_HoughCirclesDetectorTrait for CUDA_HoughCirclesDetector {
 		#[inline] fn as_raw_mut_CUDA_HoughCirclesDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_HoughCirclesDetector, crate::cudaimgproc::CUDA_HoughCirclesDetectorTraitConst, as_raw_CUDA_HoughCirclesDetector, crate::cudaimgproc::CUDA_HoughCirclesDetectorTrait, as_raw_mut_CUDA_HoughCirclesDetector }
-	
+
 	impl CUDA_HoughCirclesDetector {
 	}
-	
+
 	boxed_cast_base! { CUDA_HoughCirclesDetector, core::Algorithm, cv_cuda_HoughCirclesDetector_to_Algorithm }
-	
+
 	impl std::fmt::Debug for CUDA_HoughCirclesDetector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -2685,11 +2686,11 @@ pub mod cudaimgproc {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::cudaimgproc::CUDA_HoughLinesDetector]
 	pub trait CUDA_HoughLinesDetectorTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_CUDA_HoughLinesDetector(&self) -> *const c_void;
-	
+
 		#[inline]
 		fn get_rho(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
@@ -2698,7 +2699,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_theta(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
@@ -2707,7 +2708,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_threshold(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -2716,7 +2717,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_do_sort(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
@@ -2725,7 +2726,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_max_lines(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -2734,15 +2735,15 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::cudaimgproc::CUDA_HoughLinesDetector]
 	pub trait CUDA_HoughLinesDetectorTrait: core::AlgorithmTrait + crate::cudaimgproc::CUDA_HoughLinesDetectorTraitConst {
 		fn as_raw_mut_CUDA_HoughLinesDetector(&mut self) -> *mut c_void;
-	
+
 		/// Finds lines in a binary image using the classical Hough transform.
-		/// 
+		///
 		/// ## Parameters
 		/// * src: 8-bit, single-channel binary source image.
 		/// * lines: Output vector of lines. Each line is represented by a two-element vector
@@ -2752,7 +2753,7 @@ pub mod cudaimgproc {
 		/// * stream: Stream for the asynchronous version.
 		/// ## See also
 		/// HoughLines
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * stream: Stream::Null()
 		#[inline]
@@ -2765,9 +2766,9 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Finds lines in a binary image using the classical Hough transform.
-		/// 
+		///
 		/// ## Parameters
 		/// * src: 8-bit, single-channel binary source image.
 		/// * lines: Output vector of lines. Each line is represented by a two-element vector
@@ -2777,7 +2778,7 @@ pub mod cudaimgproc {
 		/// * stream: Stream for the asynchronous version.
 		/// ## See also
 		/// HoughLines
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [CUDA_HoughLinesDetectorTrait::detect] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
@@ -2791,15 +2792,15 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Downloads results from cuda::HoughLinesDetector::detect to host memory.
-		/// 
+		///
 		/// ## Parameters
 		/// * d_lines: Result of cuda::HoughLinesDetector::detect .
 		/// * h_lines: Output host array.
 		/// * h_votes: Optional output array for line's votes.
 		/// * stream: Stream for the asynchronous version.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * h_votes: noArray()
 		/// * stream: Stream::Null()
@@ -2814,15 +2815,15 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Downloads results from cuda::HoughLinesDetector::detect to host memory.
-		/// 
+		///
 		/// ## Parameters
 		/// * d_lines: Result of cuda::HoughLinesDetector::detect .
 		/// * h_lines: Output host array.
 		/// * h_votes: Optional output array for line's votes.
 		/// * stream: Stream for the asynchronous version.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [CUDA_HoughLinesDetectorTrait::download_results] function uses the following default values for its arguments:
 		/// * h_votes: noArray()
@@ -2837,7 +2838,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_rho(&mut self, rho: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -2846,7 +2847,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_theta(&mut self, theta: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -2855,7 +2856,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_threshold(&mut self, threshold: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -2864,7 +2865,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_do_sort(&mut self, do_sort: bool) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -2873,7 +2874,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_max_lines(&mut self, max_lines: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -2882,50 +2883,50 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Base class for lines detector algorithm. :
 	pub struct CUDA_HoughLinesDetector {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { CUDA_HoughLinesDetector }
-	
+
 	impl Drop for CUDA_HoughLinesDetector {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_cuda_HoughLinesDetector_delete(self.as_raw_mut_CUDA_HoughLinesDetector()) };
 		}
 	}
-	
+
 	unsafe impl Send for CUDA_HoughLinesDetector {}
-	
+
 	impl core::AlgorithmTraitConst for CUDA_HoughLinesDetector {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for CUDA_HoughLinesDetector {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_HoughLinesDetector, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::cudaimgproc::CUDA_HoughLinesDetectorTraitConst for CUDA_HoughLinesDetector {
 		#[inline] fn as_raw_CUDA_HoughLinesDetector(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::cudaimgproc::CUDA_HoughLinesDetectorTrait for CUDA_HoughLinesDetector {
 		#[inline] fn as_raw_mut_CUDA_HoughLinesDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_HoughLinesDetector, crate::cudaimgproc::CUDA_HoughLinesDetectorTraitConst, as_raw_CUDA_HoughLinesDetector, crate::cudaimgproc::CUDA_HoughLinesDetectorTrait, as_raw_mut_CUDA_HoughLinesDetector }
-	
+
 	impl CUDA_HoughLinesDetector {
 	}
-	
+
 	boxed_cast_base! { CUDA_HoughLinesDetector, core::Algorithm, cv_cuda_HoughLinesDetector_to_Algorithm }
-	
+
 	impl std::fmt::Debug for CUDA_HoughLinesDetector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -2933,11 +2934,11 @@ pub mod cudaimgproc {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::cudaimgproc::CUDA_HoughSegmentDetector]
 	pub trait CUDA_HoughSegmentDetectorTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_CUDA_HoughSegmentDetector(&self) -> *const c_void;
-	
+
 		#[inline]
 		fn get_rho(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
@@ -2946,7 +2947,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_theta(&self) -> Result<f32> {
 			return_send!(via ocvrs_return);
@@ -2955,7 +2956,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_min_line_length(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -2964,7 +2965,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_max_line_gap(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -2973,7 +2974,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_max_lines(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -2982,7 +2983,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_threshold(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -2991,15 +2992,15 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::cudaimgproc::CUDA_HoughSegmentDetector]
 	pub trait CUDA_HoughSegmentDetectorTrait: core::AlgorithmTrait + crate::cudaimgproc::CUDA_HoughSegmentDetectorTraitConst {
 		fn as_raw_mut_CUDA_HoughSegmentDetector(&mut self) -> *mut c_void;
-	
+
 		/// Finds line segments in a binary image using the probabilistic Hough transform.
-		/// 
+		///
 		/// ## Parameters
 		/// * src: 8-bit, single-channel binary source image.
 		/// * lines: Output vector of lines. Each line is represented by a 4-element vector
@@ -3008,7 +3009,7 @@ pub mod cudaimgproc {
 		/// * stream: Stream for the asynchronous version.
 		/// ## See also
 		/// HoughLinesP
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * stream: Stream::Null()
 		#[inline]
@@ -3021,9 +3022,9 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Finds line segments in a binary image using the probabilistic Hough transform.
-		/// 
+		///
 		/// ## Parameters
 		/// * src: 8-bit, single-channel binary source image.
 		/// * lines: Output vector of lines. Each line is represented by a 4-element vector
@@ -3032,7 +3033,7 @@ pub mod cudaimgproc {
 		/// * stream: Stream for the asynchronous version.
 		/// ## See also
 		/// HoughLinesP
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [CUDA_HoughSegmentDetectorTrait::detect] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
@@ -3046,7 +3047,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_rho(&mut self, rho: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -3055,7 +3056,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_theta(&mut self, theta: f32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -3064,7 +3065,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_min_line_length(&mut self, min_line_length: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -3073,7 +3074,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_max_line_gap(&mut self, max_line_gap: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -3082,7 +3083,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_max_lines(&mut self, max_lines: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -3091,7 +3092,7 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_threshold(&mut self, threshold: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -3100,50 +3101,50 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Base class for line segments detector algorithm. :
 	pub struct CUDA_HoughSegmentDetector {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { CUDA_HoughSegmentDetector }
-	
+
 	impl Drop for CUDA_HoughSegmentDetector {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_cuda_HoughSegmentDetector_delete(self.as_raw_mut_CUDA_HoughSegmentDetector()) };
 		}
 	}
-	
+
 	unsafe impl Send for CUDA_HoughSegmentDetector {}
-	
+
 	impl core::AlgorithmTraitConst for CUDA_HoughSegmentDetector {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for CUDA_HoughSegmentDetector {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_HoughSegmentDetector, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::cudaimgproc::CUDA_HoughSegmentDetectorTraitConst for CUDA_HoughSegmentDetector {
 		#[inline] fn as_raw_CUDA_HoughSegmentDetector(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::cudaimgproc::CUDA_HoughSegmentDetectorTrait for CUDA_HoughSegmentDetector {
 		#[inline] fn as_raw_mut_CUDA_HoughSegmentDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_HoughSegmentDetector, crate::cudaimgproc::CUDA_HoughSegmentDetectorTraitConst, as_raw_CUDA_HoughSegmentDetector, crate::cudaimgproc::CUDA_HoughSegmentDetectorTrait, as_raw_mut_CUDA_HoughSegmentDetector }
-	
+
 	impl CUDA_HoughSegmentDetector {
 	}
-	
+
 	boxed_cast_base! { CUDA_HoughSegmentDetector, core::Algorithm, cv_cuda_HoughSegmentDetector_to_Algorithm }
-	
+
 	impl std::fmt::Debug for CUDA_HoughSegmentDetector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -3151,26 +3152,26 @@ pub mod cudaimgproc {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::cudaimgproc::CUDA_TemplateMatching]
 	pub trait CUDA_TemplateMatchingTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_CUDA_TemplateMatching(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::cudaimgproc::CUDA_TemplateMatching]
 	pub trait CUDA_TemplateMatchingTrait: core::AlgorithmTrait + crate::cudaimgproc::CUDA_TemplateMatchingTraitConst {
 		fn as_raw_mut_CUDA_TemplateMatching(&mut self) -> *mut c_void;
-	
+
 		/// Computes a proximity map for a raster template and an image where the template is searched for.
-		/// 
+		///
 		/// ## Parameters
 		/// * image: Source image.
 		/// * templ: Template image with the size and type the same as image .
 		/// * result: Map containing comparison results ( CV_32FC1 ). If image is *W x H* and templ is *w
 		/// x h*, then result must be *W-w+1 x H-h+1*.
 		/// * stream: Stream for the asynchronous version.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * stream: Stream::Null()
 		#[inline]
@@ -3184,16 +3185,16 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Computes a proximity map for a raster template and an image where the template is searched for.
-		/// 
+		///
 		/// ## Parameters
 		/// * image: Source image.
 		/// * templ: Template image with the size and type the same as image .
 		/// * result: Map containing comparison results ( CV_32FC1 ). If image is *W x H* and templ is *w
 		/// x h*, then result must be *W-w+1 x H-h+1*.
 		/// * stream: Stream for the asynchronous version.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [CUDA_TemplateMatchingTrait::match_] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
@@ -3208,50 +3209,50 @@ pub mod cudaimgproc {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Base class for Template Matching. :
 	pub struct CUDA_TemplateMatching {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { CUDA_TemplateMatching }
-	
+
 	impl Drop for CUDA_TemplateMatching {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_cuda_TemplateMatching_delete(self.as_raw_mut_CUDA_TemplateMatching()) };
 		}
 	}
-	
+
 	unsafe impl Send for CUDA_TemplateMatching {}
-	
+
 	impl core::AlgorithmTraitConst for CUDA_TemplateMatching {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for CUDA_TemplateMatching {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_TemplateMatching, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::cudaimgproc::CUDA_TemplateMatchingTraitConst for CUDA_TemplateMatching {
 		#[inline] fn as_raw_CUDA_TemplateMatching(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::cudaimgproc::CUDA_TemplateMatchingTrait for CUDA_TemplateMatching {
 		#[inline] fn as_raw_mut_CUDA_TemplateMatching(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { CUDA_TemplateMatching, crate::cudaimgproc::CUDA_TemplateMatchingTraitConst, as_raw_CUDA_TemplateMatching, crate::cudaimgproc::CUDA_TemplateMatchingTrait, as_raw_mut_CUDA_TemplateMatching }
-	
+
 	impl CUDA_TemplateMatching {
 	}
-	
+
 	boxed_cast_base! { CUDA_TemplateMatching, core::Algorithm, cv_cuda_TemplateMatching_to_Algorithm }
-	
+
 	impl std::fmt::Debug for CUDA_TemplateMatching {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {

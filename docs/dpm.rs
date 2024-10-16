@@ -1,9 +1,9 @@
 pub mod dpm {
 	//! # Deformable Part-based Models
-	//! 
+	//!
 	//! Discriminatively Trained Part Based Models for Object Detection
 	//! ---------------------------------------------------------------
-	//! 
+	//!
 	//! The object detector described below has been initially proposed by P.F. Felzenszwalb in
 	//! [Felzenszwalb2010a](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Felzenszwalb2010a) . It is based on a Dalal-Triggs detector that uses a single filter on histogram
 	//! of oriented gradients (HOG) features to represent an object category. This detector uses a sliding
@@ -19,7 +19,7 @@ pub mod dpm {
 	//! class of models by a mixture of star models. The score of a mixture model at a particular position
 	//! and scale is the maximum over components, of the score of that component model at the given
 	//! location.
-	//! 
+	//!
 	//! The detector was dramatically speeded-up with cascade algorithm proposed by P.F. Felzenszwalb in
 	//! [Felzenszwalb2010b](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Felzenszwalb2010b) . The algorithm prunes partial hypotheses using thresholds on their scores.The
 	//! basic idea of the algorithm is to use a hierarchy of models defined by an ordering of the original
@@ -28,17 +28,18 @@ pub mod dpm {
 	//! Using this hierarchy, low scoring hypotheses can be pruned after looking at the best configuration
 	//! of a subset of the parts. Hypotheses that score high under a weak model are evaluated further using
 	//! a richer model.
-	//! 
+	//!
 	//! In OpenCV there is an C++ implementation of DPM cascade detector.
-	use crate::{mod_prelude::*, core, sys, types};
+	use crate::mod_prelude::*;
+	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use { super::DPMDetector_ObjectDetectionTraitConst, super::DPMDetector_ObjectDetectionTrait, super::DPMDetectorTraitConst, super::DPMDetectorTrait };
+		pub use super::{DPMDetectorTrait, DPMDetectorTraitConst, DPMDetector_ObjectDetectionTrait, DPMDetector_ObjectDetectionTraitConst};
 	}
-	
+
 	/// Constant methods for [crate::dpm::DPMDetector]
 	pub trait DPMDetectorTraitConst {
 		fn as_raw_DPMDetector(&self) -> *const c_void;
-	
+
 		#[inline]
 		fn is_empty(&self) -> Result<bool> {
 			return_send!(via ocvrs_return);
@@ -47,7 +48,7 @@ pub mod dpm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Return the class (model) names that were passed in constructor or method load or extracted from
 		/// models filenames in those methods.
 		#[inline]
@@ -59,7 +60,7 @@ pub mod dpm {
 			let ret = unsafe { core::Vector::<String>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Return a count of loaded models (classes).
 		#[inline]
 		fn get_class_count(&self) -> Result<size_t> {
@@ -69,13 +70,13 @@ pub mod dpm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::dpm::DPMDetector]
 	pub trait DPMDetectorTrait: crate::dpm::DPMDetectorTraitConst {
 		fn as_raw_mut_DPMDetector(&mut self) -> *mut c_void;
-	
+
 		/// Find rectangular regions in the given image that are likely to contain objects of loaded classes
 		/// (models) and corresponding confidence levels.
 		/// ## Parameters
@@ -89,35 +90,35 @@ pub mod dpm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// This is a C++ abstract class, it provides external user API to work with DPM.
 	pub struct DPMDetector {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { DPMDetector }
-	
+
 	impl Drop for DPMDetector {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_dpm_DPMDetector_delete(self.as_raw_mut_DPMDetector()) };
 		}
 	}
-	
+
 	unsafe impl Send for DPMDetector {}
-	
+
 	impl crate::dpm::DPMDetectorTraitConst for DPMDetector {
 		#[inline] fn as_raw_DPMDetector(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::dpm::DPMDetectorTrait for DPMDetector {
 		#[inline] fn as_raw_mut_DPMDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { DPMDetector, crate::dpm::DPMDetectorTraitConst, as_raw_DPMDetector, crate::dpm::DPMDetectorTrait, as_raw_mut_DPMDetector }
-	
+
 	impl DPMDetector {
 		/// Load the trained models from given .xml files and return cv::Ptr\<DPMDetector\>.
 		/// ## Parameters
@@ -126,7 +127,7 @@ pub mod dpm {
 		/// * classNames: A set of trained models names. If it's empty then the name of each model will be
 		/// constructed from the name of file containing the model. E.g. the model stored in
 		/// "/home/user/cat.xml" will get the name "cat".
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * class_names: std::vector<std::string>()
 		#[inline]
@@ -138,7 +139,7 @@ pub mod dpm {
 			let ret = unsafe { core::Ptr::<crate::dpm::DPMDetector>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Load the trained models from given .xml files and return cv::Ptr\<DPMDetector\>.
 		/// ## Parameters
 		/// * filenames: A set of filenames storing the trained detectors (models). Each file contains one
@@ -146,7 +147,7 @@ pub mod dpm {
 		/// * classNames: A set of trained models names. If it's empty then the name of each model will be
 		/// constructed from the name of file containing the model. E.g. the model stored in
 		/// "/home/user/cat.xml" will get the name "cat".
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [DPMDetector::create] function uses the following default values for its arguments:
 		/// * class_names: std::vector<std::string>()
@@ -159,9 +160,9 @@ pub mod dpm {
 			let ret = unsafe { core::Ptr::<crate::dpm::DPMDetector>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	impl std::fmt::Debug for DPMDetector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -169,11 +170,11 @@ pub mod dpm {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::dpm::DPMDetector_ObjectDetection]
 	pub trait DPMDetector_ObjectDetectionTraitConst {
 		fn as_raw_DPMDetector_ObjectDetection(&self) -> *const c_void;
-	
+
 		#[inline]
 		fn rect(&self) -> core::Rect {
 			return_send!(via ocvrs_return);
@@ -181,70 +182,70 @@ pub mod dpm {
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
-		
+
 		#[inline]
 		fn score(&self) -> f32 {
 			let ret = unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_propScore_const(self.as_raw_DPMDetector_ObjectDetection()) };
 			ret
 		}
-		
+
 		#[inline]
 		fn class_id(&self) -> i32 {
 			let ret = unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_propClassID_const(self.as_raw_DPMDetector_ObjectDetection()) };
 			ret
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::dpm::DPMDetector_ObjectDetection]
 	pub trait DPMDetector_ObjectDetectionTrait: crate::dpm::DPMDetector_ObjectDetectionTraitConst {
 		fn as_raw_mut_DPMDetector_ObjectDetection(&mut self) -> *mut c_void;
-	
+
 		#[inline]
 		fn set_rect(&mut self, val: core::Rect) {
 			let ret = unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_propRect_const_Rect(self.as_raw_mut_DPMDetector_ObjectDetection(), &val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_score(&mut self, val: f32) {
 			let ret = unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_propScore_const_float(self.as_raw_mut_DPMDetector_ObjectDetection(), val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_class_id(&mut self, val: i32) {
 			let ret = unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_propClassID_const_int(self.as_raw_mut_DPMDetector_ObjectDetection(), val) };
 			ret
 		}
-		
+
 	}
-	
+
 	pub struct DPMDetector_ObjectDetection {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { DPMDetector_ObjectDetection }
-	
+
 	impl Drop for DPMDetector_ObjectDetection {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_delete(self.as_raw_mut_DPMDetector_ObjectDetection()) };
 		}
 	}
-	
+
 	unsafe impl Send for DPMDetector_ObjectDetection {}
-	
+
 	impl crate::dpm::DPMDetector_ObjectDetectionTraitConst for DPMDetector_ObjectDetection {
 		#[inline] fn as_raw_DPMDetector_ObjectDetection(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::dpm::DPMDetector_ObjectDetectionTrait for DPMDetector_ObjectDetection {
 		#[inline] fn as_raw_mut_DPMDetector_ObjectDetection(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { DPMDetector_ObjectDetection, crate::dpm::DPMDetector_ObjectDetectionTraitConst, as_raw_DPMDetector_ObjectDetection, crate::dpm::DPMDetector_ObjectDetectionTrait, as_raw_mut_DPMDetector_ObjectDetection }
-	
+
 	impl DPMDetector_ObjectDetection {
 		#[inline]
 		pub fn default() -> Result<crate::dpm::DPMDetector_ObjectDetection> {
@@ -255,7 +256,7 @@ pub mod dpm {
 			let ret = unsafe { crate::dpm::DPMDetector_ObjectDetection::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// ## C++ default parameters
 		/// * class_id: -1
 		#[inline]
@@ -267,7 +268,7 @@ pub mod dpm {
 			let ret = unsafe { crate::dpm::DPMDetector_ObjectDetection::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// ## Note
 		/// This alternative version of [new] function uses the following default values for its arguments:
 		/// * class_id: -1
@@ -280,9 +281,9 @@ pub mod dpm {
 			let ret = unsafe { crate::dpm::DPMDetector_ObjectDetection::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	impl std::fmt::Debug for DPMDetector_ObjectDetection {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {

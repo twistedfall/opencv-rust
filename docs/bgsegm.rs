@@ -1,10 +1,11 @@
 pub mod bgsegm {
 	//! # Improved Background-Foreground Segmentation Methods
-	use crate::{mod_prelude::*, core, sys, types};
+	use crate::mod_prelude::*;
+	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use { super::BackgroundSubtractorMOGTraitConst, super::BackgroundSubtractorMOGTrait, super::BackgroundSubtractorGMGTraitConst, super::BackgroundSubtractorGMGTrait, super::BackgroundSubtractorCNTTraitConst, super::BackgroundSubtractorCNTTrait, super::BackgroundSubtractorGSOCTraitConst, super::BackgroundSubtractorGSOCTrait, super::BackgroundSubtractorLSBPTraitConst, super::BackgroundSubtractorLSBPTrait, super::BackgroundSubtractorLSBPDescTraitConst, super::BackgroundSubtractorLSBPDescTrait, super::SyntheticSequenceGeneratorTraitConst, super::SyntheticSequenceGeneratorTrait };
+		pub use super::{BackgroundSubtractorCNTTrait, BackgroundSubtractorCNTTraitConst, BackgroundSubtractorGMGTrait, BackgroundSubtractorGMGTraitConst, BackgroundSubtractorGSOCTrait, BackgroundSubtractorGSOCTraitConst, BackgroundSubtractorLSBPDescTrait, BackgroundSubtractorLSBPDescTraitConst, BackgroundSubtractorLSBPTrait, BackgroundSubtractorLSBPTraitConst, BackgroundSubtractorMOGTrait, BackgroundSubtractorMOGTraitConst, SyntheticSequenceGeneratorTrait, SyntheticSequenceGeneratorTraitConst};
 	}
-	
+
 	pub const LSBP_CAMERA_MOTION_COMPENSATION_LK: i32 = 1;
 	pub const LSBP_CAMERA_MOTION_COMPENSATION_NONE: i32 = 0;
 	#[repr(C)]
@@ -13,10 +14,10 @@ pub mod bgsegm {
 		LSBP_CAMERA_MOTION_COMPENSATION_NONE = 0,
 		LSBP_CAMERA_MOTION_COMPENSATION_LK = 1,
 	}
-	
+
 	impl TryFrom<i32> for LSBPCameraMotionCompensation {
 		type Error = crate::Error;
-	
+
 		fn try_from(value: i32) -> Result<Self, Self::Error> {
 			match value {
 				0 => Ok(Self::LSBP_CAMERA_MOTION_COMPENSATION_NONE),
@@ -25,17 +26,17 @@ pub mod bgsegm {
 			}
 		}
 	}
-	
+
 	opencv_type_enum! { crate::bgsegm::LSBPCameraMotionCompensation }
-	
+
 	/// Creates a CNT Background Subtractor
-	/// 
+	///
 	/// ## Parameters
 	/// * minPixelStability: number of frames with same pixel color to consider stable
 	/// * useHistory: determines if we're giving a pixel credit for being stable for a long time
 	/// * maxPixelStability: maximum allowed credit for a pixel in history
 	/// * isParallel: determines if we're parallelizing the algorithm
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_background_subtractor_cnt] function uses the following default values for its arguments:
 	/// * min_pixel_stability: 15
@@ -51,15 +52,15 @@ pub mod bgsegm {
 		let ret = unsafe { core::Ptr::<crate::bgsegm::BackgroundSubtractorCNT>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates a CNT Background Subtractor
-	/// 
+	///
 	/// ## Parameters
 	/// * minPixelStability: number of frames with same pixel color to consider stable
 	/// * useHistory: determines if we're giving a pixel credit for being stable for a long time
 	/// * maxPixelStability: maximum allowed credit for a pixel in history
 	/// * isParallel: determines if we're parallelizing the algorithm
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * min_pixel_stability: 15
 	/// * use_history: true
@@ -74,13 +75,13 @@ pub mod bgsegm {
 		let ret = unsafe { core::Ptr::<crate::bgsegm::BackgroundSubtractorCNT>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates a GMG Background Subtractor
-	/// 
+	///
 	/// ## Parameters
 	/// * initializationFrames: number of frames used to initialize the background models.
 	/// * decisionThreshold: Threshold value, above which it is marked foreground, else background.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_background_subtractor_gmg] function uses the following default values for its arguments:
 	/// * initialization_frames: 120
@@ -94,13 +95,13 @@ pub mod bgsegm {
 		let ret = unsafe { core::Ptr::<crate::bgsegm::BackgroundSubtractorGMG>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates a GMG Background Subtractor
-	/// 
+	///
 	/// ## Parameters
 	/// * initializationFrames: number of frames used to initialize the background models.
 	/// * decisionThreshold: Threshold value, above which it is marked foreground, else background.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * initialization_frames: 120
 	/// * decision_threshold: 0.8
@@ -113,11 +114,11 @@ pub mod bgsegm {
 		let ret = unsafe { core::Ptr::<crate::bgsegm::BackgroundSubtractorGMG>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates an instance of BackgroundSubtractorGSOC algorithm.
-	/// 
+	///
 	/// Implementation of the different yet better algorithm which is called GSOC, as it was implemented during GSOC and was not originated from any paper.
-	/// 
+	///
 	/// ## Parameters
 	/// * mc: Whether to use camera motion compensation.
 	/// * nSamples: Number of samples to maintain at each point of the frame.
@@ -130,7 +131,7 @@ pub mod bgsegm {
 	/// * blinkingSupressionMultiplier: Blinking supression multiplier.
 	/// * noiseRemovalThresholdFacBG: Strength of the noise removal for background points.
 	/// * noiseRemovalThresholdFacFG: Strength of the noise removal for foreground points.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_background_subtractor_gsoc] function uses the following default values for its arguments:
 	/// * mc: LSBP_CAMERA_MOTION_COMPENSATION_NONE
@@ -153,11 +154,11 @@ pub mod bgsegm {
 		let ret = unsafe { core::Ptr::<crate::bgsegm::BackgroundSubtractorGSOC>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates an instance of BackgroundSubtractorGSOC algorithm.
-	/// 
+	///
 	/// Implementation of the different yet better algorithm which is called GSOC, as it was implemented during GSOC and was not originated from any paper.
-	/// 
+	///
 	/// ## Parameters
 	/// * mc: Whether to use camera motion compensation.
 	/// * nSamples: Number of samples to maintain at each point of the frame.
@@ -170,7 +171,7 @@ pub mod bgsegm {
 	/// * blinkingSupressionMultiplier: Blinking supression multiplier.
 	/// * noiseRemovalThresholdFacBG: Strength of the noise removal for background points.
 	/// * noiseRemovalThresholdFacFG: Strength of the noise removal for foreground points.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * mc: LSBP_CAMERA_MOTION_COMPENSATION_NONE
 	/// * n_samples: 20
@@ -192,11 +193,11 @@ pub mod bgsegm {
 		let ret = unsafe { core::Ptr::<crate::bgsegm::BackgroundSubtractorGSOC>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates an instance of BackgroundSubtractorLSBP algorithm.
-	/// 
+	///
 	/// Background Subtraction using Local SVD Binary Pattern. More details about the algorithm can be found at [LGuo2016](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_LGuo2016)
-	/// 
+	///
 	/// ## Parameters
 	/// * mc: Whether to use camera motion compensation.
 	/// * nSamples: Number of samples to maintain at each point of the frame.
@@ -211,7 +212,7 @@ pub mod bgsegm {
 	/// * noiseRemovalThresholdFacFG: Strength of the noise removal for foreground points.
 	/// * LSBPthreshold: Threshold for LSBP binary string.
 	/// * minCount: Minimal number of matches for sample to be considered as foreground.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_background_subtractor_lsbp] function uses the following default values for its arguments:
 	/// * mc: LSBP_CAMERA_MOTION_COMPENSATION_NONE
@@ -236,11 +237,11 @@ pub mod bgsegm {
 		let ret = unsafe { core::Ptr::<crate::bgsegm::BackgroundSubtractorLSBP>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates an instance of BackgroundSubtractorLSBP algorithm.
-	/// 
+	///
 	/// Background Subtraction using Local SVD Binary Pattern. More details about the algorithm can be found at [LGuo2016](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_LGuo2016)
-	/// 
+	///
 	/// ## Parameters
 	/// * mc: Whether to use camera motion compensation.
 	/// * nSamples: Number of samples to maintain at each point of the frame.
@@ -255,7 +256,7 @@ pub mod bgsegm {
 	/// * noiseRemovalThresholdFacFG: Strength of the noise removal for foreground points.
 	/// * LSBPthreshold: Threshold for LSBP binary string.
 	/// * minCount: Minimal number of matches for sample to be considered as foreground.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * mc: LSBP_CAMERA_MOTION_COMPENSATION_NONE
 	/// * n_samples: 20
@@ -279,16 +280,16 @@ pub mod bgsegm {
 		let ret = unsafe { core::Ptr::<crate::bgsegm::BackgroundSubtractorLSBP>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates mixture-of-gaussian background subtractor
-	/// 
+	///
 	/// ## Parameters
 	/// * history: Length of the history.
 	/// * nmixtures: Number of Gaussian mixtures.
 	/// * backgroundRatio: Background ratio.
 	/// * noiseSigma: Noise strength (standard deviation of the brightness or each color channel). 0
 	/// means some automatic value.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_background_subtractor_mog] function uses the following default values for its arguments:
 	/// * history: 200
@@ -304,16 +305,16 @@ pub mod bgsegm {
 		let ret = unsafe { core::Ptr::<crate::bgsegm::BackgroundSubtractorMOG>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates mixture-of-gaussian background subtractor
-	/// 
+	///
 	/// ## Parameters
 	/// * history: Length of the history.
 	/// * nmixtures: Number of Gaussian mixtures.
 	/// * backgroundRatio: Background ratio.
 	/// * noiseSigma: Noise strength (standard deviation of the brightness or each color channel). 0
 	/// means some automatic value.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * history: 200
 	/// * nmixtures: 5
@@ -328,9 +329,9 @@ pub mod bgsegm {
 		let ret = unsafe { core::Ptr::<crate::bgsegm::BackgroundSubtractorMOG>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates an instance of SyntheticSequenceGenerator.
-	/// 
+	///
 	/// ## Parameters
 	/// * background: Background image for object.
 	/// * object: Object image which will move slowly over the background.
@@ -338,7 +339,7 @@ pub mod bgsegm {
 	/// * wavelength: Length of waves in distortion applied to background.
 	/// * wavespeed: How fast waves will move.
 	/// * objspeed: How fast object will fly over background.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_synthetic_sequence_generator] function uses the following default values for its arguments:
 	/// * amplitude: 2.0
@@ -356,9 +357,9 @@ pub mod bgsegm {
 		let ret = unsafe { core::Ptr::<crate::bgsegm::SyntheticSequenceGenerator>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates an instance of SyntheticSequenceGenerator.
-	/// 
+	///
 	/// ## Parameters
 	/// * background: Background image for object.
 	/// * object: Object image which will move slowly over the background.
@@ -366,7 +367,7 @@ pub mod bgsegm {
 	/// * wavelength: Length of waves in distortion applied to background.
 	/// * wavespeed: How fast waves will move.
 	/// * objspeed: How fast object will fly over background.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * amplitude: 2.0
 	/// * wavelength: 20.0
@@ -383,11 +384,11 @@ pub mod bgsegm {
 		let ret = unsafe { core::Ptr::<crate::bgsegm::SyntheticSequenceGenerator>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Constant methods for [crate::bgsegm::BackgroundSubtractorCNT]
 	pub trait BackgroundSubtractorCNTTraitConst: crate::video::BackgroundSubtractorTraitConst {
 		fn as_raw_BackgroundSubtractorCNT(&self) -> *const c_void;
-	
+
 		#[inline]
 		fn get_background_image(&self, background_image: &mut impl ToOutputArray) -> Result<()> {
 			output_array_arg!(background_image);
@@ -397,7 +398,7 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns number of frames with same pixel color to consider stable.
 		#[inline]
 		fn get_min_pixel_stability(&self) -> Result<i32> {
@@ -407,7 +408,7 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns maximum allowed credit for a pixel in history.
 		#[inline]
 		fn get_max_pixel_stability(&self) -> Result<i32> {
@@ -417,7 +418,7 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns if we're giving a pixel credit for being stable for a long time.
 		#[inline]
 		fn get_use_history(&self) -> Result<bool> {
@@ -427,7 +428,7 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns if we're parallelizing the algorithm.
 		#[inline]
 		fn get_is_parallel(&self) -> Result<bool> {
@@ -437,13 +438,13 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::bgsegm::BackgroundSubtractorCNT]
 	pub trait BackgroundSubtractorCNTTrait: crate::bgsegm::BackgroundSubtractorCNTTraitConst + crate::video::BackgroundSubtractorTrait {
 		fn as_raw_mut_BackgroundSubtractorCNT(&mut self) -> *mut c_void;
-	
+
 		/// ## C++ default parameters
 		/// * learning_rate: -1
 		#[inline]
@@ -456,7 +457,7 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## Note
 		/// This alternative version of [BackgroundSubtractorCNTTrait::apply] function uses the following default values for its arguments:
 		/// * learning_rate: -1
@@ -470,7 +471,7 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Sets the number of frames with same pixel color to consider stable.
 		#[inline]
 		fn set_min_pixel_stability(&mut self, value: i32) -> Result<()> {
@@ -480,7 +481,7 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Sets the maximum allowed credit for a pixel in history.
 		#[inline]
 		fn set_max_pixel_stability(&mut self, value: i32) -> Result<()> {
@@ -490,7 +491,7 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Sets if we're giving a pixel credit for being stable for a long time.
 		#[inline]
 		fn set_use_history(&mut self, value: bool) -> Result<()> {
@@ -500,7 +501,7 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Sets if we're parallelizing the algorithm.
 		#[inline]
 		fn set_is_parallel(&mut self, value: bool) -> Result<()> {
@@ -510,67 +511,67 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Background subtraction based on counting.
-	/// 
+	///
 	/// About as fast as MOG2 on a high end system.
 	/// More than twice faster than MOG2 on cheap hardware (benchmarked on Raspberry Pi3).
-	/// 
+	///
 	/// %Algorithm by Sagi Zeevi ( <https://github.com/sagi-z/BackgroundSubtractorCNT> )
 	pub struct BackgroundSubtractorCNT {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { BackgroundSubtractorCNT }
-	
+
 	impl Drop for BackgroundSubtractorCNT {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorCNT_delete(self.as_raw_mut_BackgroundSubtractorCNT()) };
 		}
 	}
-	
+
 	unsafe impl Send for BackgroundSubtractorCNT {}
-	
+
 	impl core::AlgorithmTraitConst for BackgroundSubtractorCNT {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for BackgroundSubtractorCNT {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { BackgroundSubtractorCNT, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::video::BackgroundSubtractorTraitConst for BackgroundSubtractorCNT {
 		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::video::BackgroundSubtractorTrait for BackgroundSubtractorCNT {
 		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { BackgroundSubtractorCNT, crate::video::BackgroundSubtractorTraitConst, as_raw_BackgroundSubtractor, crate::video::BackgroundSubtractorTrait, as_raw_mut_BackgroundSubtractor }
-	
+
 	impl crate::bgsegm::BackgroundSubtractorCNTTraitConst for BackgroundSubtractorCNT {
 		#[inline] fn as_raw_BackgroundSubtractorCNT(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::bgsegm::BackgroundSubtractorCNTTrait for BackgroundSubtractorCNT {
 		#[inline] fn as_raw_mut_BackgroundSubtractorCNT(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { BackgroundSubtractorCNT, crate::bgsegm::BackgroundSubtractorCNTTraitConst, as_raw_BackgroundSubtractorCNT, crate::bgsegm::BackgroundSubtractorCNTTrait, as_raw_mut_BackgroundSubtractorCNT }
-	
+
 	impl BackgroundSubtractorCNT {
 	}
-	
+
 	boxed_cast_base! { BackgroundSubtractorCNT, core::Algorithm, cv_bgsegm_BackgroundSubtractorCNT_to_Algorithm }
-	
+
 	boxed_cast_base! { BackgroundSubtractorCNT, crate::video::BackgroundSubtractor, cv_bgsegm_BackgroundSubtractorCNT_to_BackgroundSubtractor }
-	
+
 	impl std::fmt::Debug for BackgroundSubtractorCNT {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -578,11 +579,11 @@ pub mod bgsegm {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::bgsegm::BackgroundSubtractorGMG]
 	pub trait BackgroundSubtractorGMGTraitConst: crate::video::BackgroundSubtractorTraitConst {
 		fn as_raw_BackgroundSubtractorGMG(&self) -> *const c_void;
-	
+
 		/// Returns total number of distinct colors to maintain in histogram.
 		#[inline]
 		fn get_max_features(&self) -> Result<i32> {
@@ -592,9 +593,9 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns the learning rate of the algorithm.
-		/// 
+		///
 		/// It lies between 0.0 and 1.0. It determines how quickly features are "forgotten" from
 		/// histograms.
 		#[inline]
@@ -605,7 +606,7 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns the number of frames used to initialize background model.
 		#[inline]
 		fn get_num_frames(&self) -> Result<i32> {
@@ -615,9 +616,9 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns the parameter used for quantization of color-space.
-		/// 
+		///
 		/// It is the number of discrete levels in each channel to be used in histograms.
 		#[inline]
 		fn get_quantization_levels(&self) -> Result<i32> {
@@ -627,7 +628,7 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns the prior probability that each individual pixel is a background pixel.
 		#[inline]
 		fn get_background_prior(&self) -> Result<f64> {
@@ -637,7 +638,7 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns the kernel radius used for morphological operations
 		#[inline]
 		fn get_smoothing_radius(&self) -> Result<i32> {
@@ -647,9 +648,9 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns the value of decision threshold.
-		/// 
+		///
 		/// Decision value is the value above which pixel is determined to be FG.
 		#[inline]
 		fn get_decision_threshold(&self) -> Result<f64> {
@@ -659,7 +660,7 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns the status of background model update
 		#[inline]
 		fn get_update_background_model(&self) -> Result<bool> {
@@ -669,7 +670,7 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns the minimum value taken on by pixels in image sequence. Usually 0.
 		#[inline]
 		fn get_min_val(&self) -> Result<f64> {
@@ -679,7 +680,7 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Returns the maximum value taken on by pixels in image sequence. e.g. 1.0 or 255.
 		#[inline]
 		fn get_max_val(&self) -> Result<f64> {
@@ -689,13 +690,13 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::bgsegm::BackgroundSubtractorGMG]
 	pub trait BackgroundSubtractorGMGTrait: crate::bgsegm::BackgroundSubtractorGMGTraitConst + crate::video::BackgroundSubtractorTrait {
 		fn as_raw_mut_BackgroundSubtractorGMG(&mut self) -> *mut c_void;
-	
+
 		/// Sets total number of distinct colors to maintain in histogram.
 		#[inline]
 		fn set_max_features(&mut self, max_features: i32) -> Result<()> {
@@ -705,7 +706,7 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Sets the learning rate of the algorithm.
 		#[inline]
 		fn set_default_learning_rate(&mut self, lr: f64) -> Result<()> {
@@ -715,7 +716,7 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Sets the number of frames used to initialize background model.
 		#[inline]
 		fn set_num_frames(&mut self, nframes: i32) -> Result<()> {
@@ -725,7 +726,7 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Sets the parameter used for quantization of color-space
 		#[inline]
 		fn set_quantization_levels(&mut self, nlevels: i32) -> Result<()> {
@@ -735,7 +736,7 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Sets the prior probability that each individual pixel is a background pixel.
 		#[inline]
 		fn set_background_prior(&mut self, bgprior: f64) -> Result<()> {
@@ -745,7 +746,7 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Sets the kernel radius used for morphological operations
 		#[inline]
 		fn set_smoothing_radius(&mut self, radius: i32) -> Result<()> {
@@ -755,7 +756,7 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Sets the value of decision threshold.
 		#[inline]
 		fn set_decision_threshold(&mut self, thresh: f64) -> Result<()> {
@@ -765,7 +766,7 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Sets the status of background model update
 		#[inline]
 		fn set_update_background_model(&mut self, update: bool) -> Result<()> {
@@ -775,7 +776,7 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Sets the minimum value taken on by pixels in image sequence.
 		#[inline]
 		fn set_min_val(&mut self, val: f64) -> Result<()> {
@@ -785,7 +786,7 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Sets the maximum value taken on by pixels in image sequence.
 		#[inline]
 		fn set_max_val(&mut self, val: f64) -> Result<()> {
@@ -795,68 +796,68 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Background Subtractor module based on the algorithm given in [Gold2012](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Gold2012) .
-	/// 
+	///
 	/// Takes a series of images and returns a sequence of mask (8UC1)
 	/// images of the same size, where 255 indicates Foreground and 0 represents Background.
 	/// This class implements an algorithm described in "Visual Tracking of Human Visitors under
 	/// Variable-Lighting Conditions for a Responsive Audio Art Installation," A. Godbehere,
 	/// A. Matsukawa, K. Goldberg, American Control Conference, Montreal, June 2012.
 	pub struct BackgroundSubtractorGMG {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { BackgroundSubtractorGMG }
-	
+
 	impl Drop for BackgroundSubtractorGMG {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_delete(self.as_raw_mut_BackgroundSubtractorGMG()) };
 		}
 	}
-	
+
 	unsafe impl Send for BackgroundSubtractorGMG {}
-	
+
 	impl core::AlgorithmTraitConst for BackgroundSubtractorGMG {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for BackgroundSubtractorGMG {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { BackgroundSubtractorGMG, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::video::BackgroundSubtractorTraitConst for BackgroundSubtractorGMG {
 		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::video::BackgroundSubtractorTrait for BackgroundSubtractorGMG {
 		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { BackgroundSubtractorGMG, crate::video::BackgroundSubtractorTraitConst, as_raw_BackgroundSubtractor, crate::video::BackgroundSubtractorTrait, as_raw_mut_BackgroundSubtractor }
-	
+
 	impl crate::bgsegm::BackgroundSubtractorGMGTraitConst for BackgroundSubtractorGMG {
 		#[inline] fn as_raw_BackgroundSubtractorGMG(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::bgsegm::BackgroundSubtractorGMGTrait for BackgroundSubtractorGMG {
 		#[inline] fn as_raw_mut_BackgroundSubtractorGMG(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { BackgroundSubtractorGMG, crate::bgsegm::BackgroundSubtractorGMGTraitConst, as_raw_BackgroundSubtractorGMG, crate::bgsegm::BackgroundSubtractorGMGTrait, as_raw_mut_BackgroundSubtractorGMG }
-	
+
 	impl BackgroundSubtractorGMG {
 	}
-	
+
 	boxed_cast_base! { BackgroundSubtractorGMG, core::Algorithm, cv_bgsegm_BackgroundSubtractorGMG_to_Algorithm }
-	
+
 	boxed_cast_base! { BackgroundSubtractorGMG, crate::video::BackgroundSubtractor, cv_bgsegm_BackgroundSubtractorGMG_to_BackgroundSubtractor }
-	
+
 	impl std::fmt::Debug for BackgroundSubtractorGMG {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -864,11 +865,11 @@ pub mod bgsegm {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::bgsegm::BackgroundSubtractorGSOC]
 	pub trait BackgroundSubtractorGSOCTraitConst: crate::video::BackgroundSubtractorTraitConst {
 		fn as_raw_BackgroundSubtractorGSOC(&self) -> *const c_void;
-	
+
 		#[inline]
 		fn get_background_image(&self, background_image: &mut impl ToOutputArray) -> Result<()> {
 			output_array_arg!(background_image);
@@ -878,13 +879,13 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::bgsegm::BackgroundSubtractorGSOC]
 	pub trait BackgroundSubtractorGSOCTrait: crate::bgsegm::BackgroundSubtractorGSOCTraitConst + crate::video::BackgroundSubtractorTrait {
 		fn as_raw_mut_BackgroundSubtractorGSOC(&mut self) -> *mut c_void;
-	
+
 		/// ## C++ default parameters
 		/// * learning_rate: -1
 		#[inline]
@@ -897,7 +898,7 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## Note
 		/// This alternative version of [BackgroundSubtractorGSOCTrait::apply] function uses the following default values for its arguments:
 		/// * learning_rate: -1
@@ -911,64 +912,64 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Implementation of the different yet better algorithm which is called GSOC, as it was implemented during GSOC and was not originated from any paper.
-	/// 
+	///
 	/// This algorithm demonstrates better performance on CDNET 2014 dataset compared to other algorithms in OpenCV.
 	pub struct BackgroundSubtractorGSOC {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { BackgroundSubtractorGSOC }
-	
+
 	impl Drop for BackgroundSubtractorGSOC {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorGSOC_delete(self.as_raw_mut_BackgroundSubtractorGSOC()) };
 		}
 	}
-	
+
 	unsafe impl Send for BackgroundSubtractorGSOC {}
-	
+
 	impl core::AlgorithmTraitConst for BackgroundSubtractorGSOC {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for BackgroundSubtractorGSOC {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { BackgroundSubtractorGSOC, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::video::BackgroundSubtractorTraitConst for BackgroundSubtractorGSOC {
 		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::video::BackgroundSubtractorTrait for BackgroundSubtractorGSOC {
 		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { BackgroundSubtractorGSOC, crate::video::BackgroundSubtractorTraitConst, as_raw_BackgroundSubtractor, crate::video::BackgroundSubtractorTrait, as_raw_mut_BackgroundSubtractor }
-	
+
 	impl crate::bgsegm::BackgroundSubtractorGSOCTraitConst for BackgroundSubtractorGSOC {
 		#[inline] fn as_raw_BackgroundSubtractorGSOC(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::bgsegm::BackgroundSubtractorGSOCTrait for BackgroundSubtractorGSOC {
 		#[inline] fn as_raw_mut_BackgroundSubtractorGSOC(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { BackgroundSubtractorGSOC, crate::bgsegm::BackgroundSubtractorGSOCTraitConst, as_raw_BackgroundSubtractorGSOC, crate::bgsegm::BackgroundSubtractorGSOCTrait, as_raw_mut_BackgroundSubtractorGSOC }
-	
+
 	impl BackgroundSubtractorGSOC {
 	}
-	
+
 	boxed_cast_base! { BackgroundSubtractorGSOC, core::Algorithm, cv_bgsegm_BackgroundSubtractorGSOC_to_Algorithm }
-	
+
 	boxed_cast_base! { BackgroundSubtractorGSOC, crate::video::BackgroundSubtractor, cv_bgsegm_BackgroundSubtractorGSOC_to_BackgroundSubtractor }
-	
+
 	impl std::fmt::Debug for BackgroundSubtractorGSOC {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -976,11 +977,11 @@ pub mod bgsegm {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::bgsegm::BackgroundSubtractorLSBP]
 	pub trait BackgroundSubtractorLSBPTraitConst: crate::video::BackgroundSubtractorTraitConst {
 		fn as_raw_BackgroundSubtractorLSBP(&self) -> *const c_void;
-	
+
 		#[inline]
 		fn get_background_image(&self, background_image: &mut impl ToOutputArray) -> Result<()> {
 			output_array_arg!(background_image);
@@ -990,13 +991,13 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::bgsegm::BackgroundSubtractorLSBP]
 	pub trait BackgroundSubtractorLSBPTrait: crate::bgsegm::BackgroundSubtractorLSBPTraitConst + crate::video::BackgroundSubtractorTrait {
 		fn as_raw_mut_BackgroundSubtractorLSBP(&mut self) -> *mut c_void;
-	
+
 		/// ## C++ default parameters
 		/// * learning_rate: -1
 		#[inline]
@@ -1009,7 +1010,7 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## Note
 		/// This alternative version of [BackgroundSubtractorLSBPTrait::apply] function uses the following default values for its arguments:
 		/// * learning_rate: -1
@@ -1023,62 +1024,62 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Background Subtraction using Local SVD Binary Pattern. More details about the algorithm can be found at [LGuo2016](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_LGuo2016)
 	pub struct BackgroundSubtractorLSBP {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { BackgroundSubtractorLSBP }
-	
+
 	impl Drop for BackgroundSubtractorLSBP {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBP_delete(self.as_raw_mut_BackgroundSubtractorLSBP()) };
 		}
 	}
-	
+
 	unsafe impl Send for BackgroundSubtractorLSBP {}
-	
+
 	impl core::AlgorithmTraitConst for BackgroundSubtractorLSBP {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for BackgroundSubtractorLSBP {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { BackgroundSubtractorLSBP, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::video::BackgroundSubtractorTraitConst for BackgroundSubtractorLSBP {
 		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::video::BackgroundSubtractorTrait for BackgroundSubtractorLSBP {
 		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { BackgroundSubtractorLSBP, crate::video::BackgroundSubtractorTraitConst, as_raw_BackgroundSubtractor, crate::video::BackgroundSubtractorTrait, as_raw_mut_BackgroundSubtractor }
-	
+
 	impl crate::bgsegm::BackgroundSubtractorLSBPTraitConst for BackgroundSubtractorLSBP {
 		#[inline] fn as_raw_BackgroundSubtractorLSBP(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::bgsegm::BackgroundSubtractorLSBPTrait for BackgroundSubtractorLSBP {
 		#[inline] fn as_raw_mut_BackgroundSubtractorLSBP(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { BackgroundSubtractorLSBP, crate::bgsegm::BackgroundSubtractorLSBPTraitConst, as_raw_BackgroundSubtractorLSBP, crate::bgsegm::BackgroundSubtractorLSBPTrait, as_raw_mut_BackgroundSubtractorLSBP }
-	
+
 	impl BackgroundSubtractorLSBP {
 	}
-	
+
 	boxed_cast_base! { BackgroundSubtractorLSBP, core::Algorithm, cv_bgsegm_BackgroundSubtractorLSBP_to_Algorithm }
-	
+
 	boxed_cast_base! { BackgroundSubtractorLSBP, crate::video::BackgroundSubtractor, cv_bgsegm_BackgroundSubtractorLSBP_to_BackgroundSubtractor }
-	
+
 	impl std::fmt::Debug for BackgroundSubtractorLSBP {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -1086,52 +1087,52 @@ pub mod bgsegm {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::bgsegm::BackgroundSubtractorLSBPDesc]
 	pub trait BackgroundSubtractorLSBPDescTraitConst {
 		fn as_raw_BackgroundSubtractorLSBPDesc(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::bgsegm::BackgroundSubtractorLSBPDesc]
 	pub trait BackgroundSubtractorLSBPDescTrait: crate::bgsegm::BackgroundSubtractorLSBPDescTraitConst {
 		fn as_raw_mut_BackgroundSubtractorLSBPDesc(&mut self) -> *mut c_void;
-	
+
 	}
-	
+
 	/// This is for calculation of the LSBP descriptors.
 	pub struct BackgroundSubtractorLSBPDesc {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { BackgroundSubtractorLSBPDesc }
-	
+
 	impl Drop for BackgroundSubtractorLSBPDesc {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBPDesc_delete(self.as_raw_mut_BackgroundSubtractorLSBPDesc()) };
 		}
 	}
-	
+
 	unsafe impl Send for BackgroundSubtractorLSBPDesc {}
-	
+
 	impl crate::bgsegm::BackgroundSubtractorLSBPDescTraitConst for BackgroundSubtractorLSBPDesc {
 		#[inline] fn as_raw_BackgroundSubtractorLSBPDesc(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::bgsegm::BackgroundSubtractorLSBPDescTrait for BackgroundSubtractorLSBPDesc {
 		#[inline] fn as_raw_mut_BackgroundSubtractorLSBPDesc(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { BackgroundSubtractorLSBPDesc, crate::bgsegm::BackgroundSubtractorLSBPDescTraitConst, as_raw_BackgroundSubtractorLSBPDesc, crate::bgsegm::BackgroundSubtractorLSBPDescTrait, as_raw_mut_BackgroundSubtractorLSBPDesc }
-	
+
 	impl BackgroundSubtractorLSBPDesc {
 		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
 		fn default() -> Self {
 			unsafe { Self::from_raw(sys::cv_bgsegm_BackgroundSubtractorLSBPDesc_defaultNew_const()) }
 		}
-		
+
 		#[inline]
 		pub fn calc_local_svd_values(local_svd_values: &mut impl ToOutputArray, frame: &impl core::MatTraitConst) -> Result<()> {
 			output_array_arg!(local_svd_values);
@@ -1141,7 +1142,7 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		pub fn compute_from_local_svd_values(desc: &mut impl ToOutputArray, local_svd_values: &impl core::MatTraitConst, lsbp_sample_points: &core::Point2i) -> Result<()> {
 			output_array_arg!(desc);
@@ -1151,7 +1152,7 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		pub fn compute(desc: &mut impl ToOutputArray, frame: &impl core::MatTraitConst, lsbp_sample_points: &core::Point2i) -> Result<()> {
 			output_array_arg!(desc);
@@ -1161,9 +1162,9 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	impl std::fmt::Debug for BackgroundSubtractorLSBPDesc {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -1171,7 +1172,7 @@ pub mod bgsegm {
 				.finish()
 		}
 	}
-	
+
 	impl Default for BackgroundSubtractorLSBPDesc {
 		#[inline]
 		/// Forwards to infallible Self::default()
@@ -1179,11 +1180,11 @@ pub mod bgsegm {
 			Self::default()
 		}
 	}
-	
+
 	/// Constant methods for [crate::bgsegm::BackgroundSubtractorMOG]
 	pub trait BackgroundSubtractorMOGTraitConst: crate::video::BackgroundSubtractorTraitConst {
 		fn as_raw_BackgroundSubtractorMOG(&self) -> *const c_void;
-	
+
 		#[inline]
 		fn get_history(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -1192,7 +1193,7 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_n_mixtures(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -1201,7 +1202,7 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_background_ratio(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
@@ -1210,7 +1211,7 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn get_noise_sigma(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
@@ -1219,13 +1220,13 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::bgsegm::BackgroundSubtractorMOG]
 	pub trait BackgroundSubtractorMOGTrait: crate::bgsegm::BackgroundSubtractorMOGTraitConst + crate::video::BackgroundSubtractorTrait {
 		fn as_raw_mut_BackgroundSubtractorMOG(&mut self) -> *mut c_void;
-	
+
 		#[inline]
 		fn set_history(&mut self, nframes: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1234,7 +1235,7 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_n_mixtures(&mut self, nmix: i32) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1243,7 +1244,7 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_background_ratio(&mut self, background_ratio: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1252,7 +1253,7 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		#[inline]
 		fn set_noise_sigma(&mut self, noise_sigma: f64) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -1261,64 +1262,64 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Gaussian Mixture-based Background/Foreground Segmentation Algorithm.
-	/// 
+	///
 	/// The class implements the algorithm described in [KB2001](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_KB2001) .
 	pub struct BackgroundSubtractorMOG {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { BackgroundSubtractorMOG }
-	
+
 	impl Drop for BackgroundSubtractorMOG {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_bgsegm_BackgroundSubtractorMOG_delete(self.as_raw_mut_BackgroundSubtractorMOG()) };
 		}
 	}
-	
+
 	unsafe impl Send for BackgroundSubtractorMOG {}
-	
+
 	impl core::AlgorithmTraitConst for BackgroundSubtractorMOG {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for BackgroundSubtractorMOG {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { BackgroundSubtractorMOG, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::video::BackgroundSubtractorTraitConst for BackgroundSubtractorMOG {
 		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::video::BackgroundSubtractorTrait for BackgroundSubtractorMOG {
 		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { BackgroundSubtractorMOG, crate::video::BackgroundSubtractorTraitConst, as_raw_BackgroundSubtractor, crate::video::BackgroundSubtractorTrait, as_raw_mut_BackgroundSubtractor }
-	
+
 	impl crate::bgsegm::BackgroundSubtractorMOGTraitConst for BackgroundSubtractorMOG {
 		#[inline] fn as_raw_BackgroundSubtractorMOG(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::bgsegm::BackgroundSubtractorMOGTrait for BackgroundSubtractorMOG {
 		#[inline] fn as_raw_mut_BackgroundSubtractorMOG(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { BackgroundSubtractorMOG, crate::bgsegm::BackgroundSubtractorMOGTraitConst, as_raw_BackgroundSubtractorMOG, crate::bgsegm::BackgroundSubtractorMOGTrait, as_raw_mut_BackgroundSubtractorMOG }
-	
+
 	impl BackgroundSubtractorMOG {
 	}
-	
+
 	boxed_cast_base! { BackgroundSubtractorMOG, core::Algorithm, cv_bgsegm_BackgroundSubtractorMOG_to_Algorithm }
-	
+
 	boxed_cast_base! { BackgroundSubtractorMOG, crate::video::BackgroundSubtractor, cv_bgsegm_BackgroundSubtractorMOG_to_BackgroundSubtractor }
-	
+
 	impl std::fmt::Debug for BackgroundSubtractorMOG {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -1326,19 +1327,19 @@ pub mod bgsegm {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::bgsegm::SyntheticSequenceGenerator]
 	pub trait SyntheticSequenceGeneratorTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_SyntheticSequenceGenerator(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::bgsegm::SyntheticSequenceGenerator]
 	pub trait SyntheticSequenceGeneratorTrait: core::AlgorithmTrait + crate::bgsegm::SyntheticSequenceGeneratorTraitConst {
 		fn as_raw_mut_SyntheticSequenceGenerator(&mut self) -> *mut c_void;
-	
+
 		/// Obtain the next frame in the sequence.
-		/// 
+		///
 		/// ## Parameters
 		/// * frame: Output frame.
 		/// * gtMask: Output ground-truth (reference) segmentation mask object/background.
@@ -1352,51 +1353,51 @@ pub mod bgsegm {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Synthetic frame sequence generator for testing background subtraction algorithms.
-	/// 
+	///
 	/// It will generate the moving object on top of the background.
 	/// It will apply some distortion to the background to make the test more complex.
 	pub struct SyntheticSequenceGenerator {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { SyntheticSequenceGenerator }
-	
+
 	impl Drop for SyntheticSequenceGenerator {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_bgsegm_SyntheticSequenceGenerator_delete(self.as_raw_mut_SyntheticSequenceGenerator()) };
 		}
 	}
-	
+
 	unsafe impl Send for SyntheticSequenceGenerator {}
-	
+
 	impl core::AlgorithmTraitConst for SyntheticSequenceGenerator {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for SyntheticSequenceGenerator {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { SyntheticSequenceGenerator, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::bgsegm::SyntheticSequenceGeneratorTraitConst for SyntheticSequenceGenerator {
 		#[inline] fn as_raw_SyntheticSequenceGenerator(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::bgsegm::SyntheticSequenceGeneratorTrait for SyntheticSequenceGenerator {
 		#[inline] fn as_raw_mut_SyntheticSequenceGenerator(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { SyntheticSequenceGenerator, crate::bgsegm::SyntheticSequenceGeneratorTraitConst, as_raw_SyntheticSequenceGenerator, crate::bgsegm::SyntheticSequenceGeneratorTrait, as_raw_mut_SyntheticSequenceGenerator }
-	
+
 	impl SyntheticSequenceGenerator {
 		/// Creates an instance of SyntheticSequenceGenerator.
-		/// 
+		///
 		/// ## Parameters
 		/// * background: Background image for object.
 		/// * object: Object image which will move slowly over the background.
@@ -1415,11 +1416,11 @@ pub mod bgsegm {
 			let ret = unsafe { crate::bgsegm::SyntheticSequenceGenerator::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	boxed_cast_base! { SyntheticSequenceGenerator, core::Algorithm, cv_bgsegm_SyntheticSequenceGenerator_to_Algorithm }
-	
+
 	impl std::fmt::Debug for SyntheticSequenceGenerator {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {

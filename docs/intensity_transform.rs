@@ -1,37 +1,37 @@
 pub mod intensity_transform {
 	//! # The module brings implementations of intensity transformation algorithms to adjust image contrast.
-	//! 
+	//!
 	//! Namespace for all functions is `cv::intensity_transform`.
-	//! 
+	//!
 	//! ### Supported Algorithms
 	//! - Autoscaling
 	//! - Log Transformations
 	//! - Power-Law (Gamma) Transformations
 	//! - Contrast Stretching
 	//! - BIMEF, A Bio-Inspired Multi-Exposure Fusion Framework for Low-light Image Enhancement [ying2017bio](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_ying2017bio) [ying2017new](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_ying2017new)
-	//! 
+	//!
 	//! References from following book and websites:
 	//! - Digital Image Processing 4th Edition Chapter 3 [Rafael C. Gonzalez, Richard E. Woods] [Gonzalez2018](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Gonzalez2018)
 	//! - <http://www.cs.uregina.ca/Links/class-info/425/Lab3/> [lcs435lab](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_lcs435lab)
 	//! - <https://theailearner.com/2019/01/30/contrast-stretching/> [theailearner](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_theailearner)
-	use crate::{mod_prelude::*, core, sys, types};
+	use crate::mod_prelude::*;
+	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use {  };
 	}
-	
+
 	/// Given an input color image, enhance low-light images using the BIMEF method ([ying2017bio](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_ying2017bio) [ying2017new](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_ying2017new)).
-	/// 
+	///
 	/// ## Parameters
 	/// * input: input color image.
 	/// * output: resulting image.
 	/// * mu: enhancement ratio.
 	/// * a: a-parameter in the Camera Response Function (CRF).
 	/// * b: b-parameter in the Camera Response Function (CRF).
-	/// 
+	///
 	/// @warning This is a C++ implementation of the [original MATLAB algorithm](https://github.com/baidut/BIMEF).
 	/// Compared to the original code, this implementation is a little bit slower and does not provide the same results.
 	/// In particular, quality of the image enhancement is degraded for the bright areas in certain conditions.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [bimef] function uses the following default values for its arguments:
 	/// * mu: 0.5f
@@ -47,20 +47,20 @@ pub mod intensity_transform {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Given an input color image, enhance low-light images using the BIMEF method ([ying2017bio](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_ying2017bio) [ying2017new](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_ying2017new)).
-	/// 
+	///
 	/// ## Parameters
 	/// * input: input color image.
 	/// * output: resulting image.
 	/// * mu: enhancement ratio.
 	/// * a: a-parameter in the Camera Response Function (CRF).
 	/// * b: b-parameter in the Camera Response Function (CRF).
-	/// 
+	///
 	/// @warning This is a C++ implementation of the [original MATLAB algorithm](https://github.com/baidut/BIMEF).
 	/// Compared to the original code, this implementation is a little bit slower and does not provide the same results.
 	/// In particular, quality of the image enhancement is degraded for the bright areas in certain conditions.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * mu: 0.5f
 	/// * a: -0.3293f
@@ -75,11 +75,11 @@ pub mod intensity_transform {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Given an input color image, enhance low-light images using the BIMEF method ([ying2017bio](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_ying2017bio) [ying2017new](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_ying2017new)).
-	/// 
+	///
 	/// This is an overloaded function with the exposure ratio given as parameter.
-	/// 
+	///
 	/// ## Parameters
 	/// * input: input color image.
 	/// * output: resulting image.
@@ -87,7 +87,7 @@ pub mod intensity_transform {
 	/// * mu: enhancement ratio.
 	/// * a: a-parameter in the Camera Response Function (CRF).
 	/// * b: b-parameter in the Camera Response Function (CRF).
-	/// 
+	///
 	/// @warning This is a C++ implementation of the [original MATLAB algorithm](https://github.com/baidut/BIMEF).
 	/// Compared to the original code, this implementation is a little bit slower and does not provide the same results.
 	/// In particular, quality of the image enhancement is degraded for the bright areas in certain conditions.
@@ -101,10 +101,10 @@ pub mod intensity_transform {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Given an input bgr or grayscale image, apply autoscaling on domain [0, 255] to increase
 	/// the contrast of the input image and return the resulting image.
-	/// 
+	///
 	/// ## Parameters
 	/// * input: input bgr or grayscale image.
 	/// * output: resulting image of autoscaling.
@@ -116,10 +116,10 @@ pub mod intensity_transform {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Given an input bgr or grayscale image, apply linear contrast stretching on domain [0, 255]
 	/// and return the resulting image.
-	/// 
+	///
 	/// ## Parameters
 	/// * input: input bgr or grayscale image.
 	/// * output: resulting image of contrast stretching.
@@ -135,10 +135,10 @@ pub mod intensity_transform {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Given an input bgr or grayscale image and constant gamma, apply power-law transformation,
 	/// a.k.a. gamma correction to the image on domain [0, 255] and return the resulting image.
-	/// 
+	///
 	/// ## Parameters
 	/// * input: input bgr or grayscale image.
 	/// * output: resulting image of gamma corrections.
@@ -151,10 +151,10 @@ pub mod intensity_transform {
 		let ret = ret.into_result()?;
 		Ok(ret)
 	}
-	
+
 	/// Given an input bgr or grayscale image and constant c, apply log transformation to the image
 	/// on domain [0, 255] and return the resulting image.
-	/// 
+	///
 	/// ## Parameters
 	/// * input: input bgr or grayscale image.
 	/// * output: resulting image of log transformations.

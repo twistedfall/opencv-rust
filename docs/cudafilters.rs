@@ -1,20 +1,21 @@
 pub mod cudafilters {
 	//! # Image Filtering
-	//! 
+	//!
 	//! Functions and classes described in this section are used to perform various linear or non-linear
 	//! filtering operations on 2D images.
-	//! 
-	//! 
+	//!
+	//!
 	//! Note:
 	//!    *   An example containing all basic morphology operators like erode and dilate can be found at
 	//!        opencv_source_code/samples/gpu/morphology.cpp
-	use crate::{mod_prelude::*, core, sys, types};
+	use crate::mod_prelude::*;
+	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use { super::FilterTraitConst, super::FilterTrait };
+		pub use super::{FilterTrait, FilterTraitConst};
 	}
-	
+
 	/// Creates a normalized 2D box filter.
-	/// 
+	///
 	/// ## Parameters
 	/// * srcType: Input image type. Only CV_8UC1, CV_8UC4 and CV_32FC1 are supported for now.
 	/// * dstType: Output image type. Only the same type as src is supported for now.
@@ -25,7 +26,7 @@ pub mod cudafilters {
 	/// * borderVal: Default border value.
 	/// ## See also
 	/// boxFilter
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_box_filter] function uses the following default values for its arguments:
 	/// * anchor: Point(-1,-1)
@@ -40,9 +41,9 @@ pub mod cudafilters {
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates a normalized 2D box filter.
-	/// 
+	///
 	/// ## Parameters
 	/// * srcType: Input image type. Only CV_8UC1, CV_8UC4 and CV_32FC1 are supported for now.
 	/// * dstType: Output image type. Only the same type as src is supported for now.
@@ -53,7 +54,7 @@ pub mod cudafilters {
 	/// * borderVal: Default border value.
 	/// ## See also
 	/// boxFilter
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * anchor: Point(-1,-1)
 	/// * border_mode: BORDER_DEFAULT
@@ -67,16 +68,16 @@ pub mod cudafilters {
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates the maximum filter.
-	/// 
+	///
 	/// ## Parameters
 	/// * srcType: Input/output image type. Only CV_8UC1 and CV_8UC4 are supported.
 	/// * ksize: Kernel size.
 	/// * anchor: Anchor point. The default value (-1) means that the anchor is at the kernel center.
 	/// * borderMode: Pixel extrapolation method. For details, see borderInterpolate .
 	/// * borderVal: Default border value.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_box_max_filter] function uses the following default values for its arguments:
 	/// * anchor: Point(-1,-1)
@@ -91,16 +92,16 @@ pub mod cudafilters {
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates the maximum filter.
-	/// 
+	///
 	/// ## Parameters
 	/// * srcType: Input/output image type. Only CV_8UC1 and CV_8UC4 are supported.
 	/// * ksize: Kernel size.
 	/// * anchor: Anchor point. The default value (-1) means that the anchor is at the kernel center.
 	/// * borderMode: Pixel extrapolation method. For details, see borderInterpolate .
 	/// * borderVal: Default border value.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * anchor: Point(-1,-1)
 	/// * border_mode: BORDER_DEFAULT
@@ -114,16 +115,16 @@ pub mod cudafilters {
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates the minimum filter.
-	/// 
+	///
 	/// ## Parameters
 	/// * srcType: Input/output image type. Only CV_8UC1 and CV_8UC4 are supported.
 	/// * ksize: Kernel size.
 	/// * anchor: Anchor point. The default value (-1) means that the anchor is at the kernel center.
 	/// * borderMode: Pixel extrapolation method. For details, see borderInterpolate .
 	/// * borderVal: Default border value.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_box_min_filter] function uses the following default values for its arguments:
 	/// * anchor: Point(-1,-1)
@@ -138,16 +139,16 @@ pub mod cudafilters {
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates the minimum filter.
-	/// 
+	///
 	/// ## Parameters
 	/// * srcType: Input/output image type. Only CV_8UC1 and CV_8UC4 are supported.
 	/// * ksize: Kernel size.
 	/// * anchor: Anchor point. The default value (-1) means that the anchor is at the kernel center.
 	/// * borderMode: Pixel extrapolation method. For details, see borderInterpolate .
 	/// * borderVal: Default border value.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * anchor: Point(-1,-1)
 	/// * border_mode: BORDER_DEFAULT
@@ -161,9 +162,9 @@ pub mod cudafilters {
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates a vertical 1D box filter.
-	/// 
+	///
 	/// ## Parameters
 	/// * srcType: Input image type. Only CV_8UC1 type is supported for now.
 	/// * dstType: Output image type. Only CV_32FC1 type is supported for now.
@@ -171,7 +172,7 @@ pub mod cudafilters {
 	/// * anchor: Anchor point. The default value (-1) means that the anchor is at the kernel center.
 	/// * borderMode: Pixel extrapolation method. For details, see borderInterpolate .
 	/// * borderVal: Default border value.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_column_sum_filter] function uses the following default values for its arguments:
 	/// * anchor: -1
@@ -186,9 +187,9 @@ pub mod cudafilters {
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates a vertical 1D box filter.
-	/// 
+	///
 	/// ## Parameters
 	/// * srcType: Input image type. Only CV_8UC1 type is supported for now.
 	/// * dstType: Output image type. Only CV_32FC1 type is supported for now.
@@ -196,7 +197,7 @@ pub mod cudafilters {
 	/// * anchor: Anchor point. The default value (-1) means that the anchor is at the kernel center.
 	/// * borderMode: Pixel extrapolation method. For details, see borderInterpolate .
 	/// * borderVal: Default border value.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * anchor: -1
 	/// * border_mode: BORDER_DEFAULT
@@ -210,9 +211,9 @@ pub mod cudafilters {
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates a generalized Deriv operator.
-	/// 
+	///
 	/// ## Parameters
 	/// * srcType: Source image type.
 	/// * dstType: Destination array type.
@@ -226,7 +227,7 @@ pub mod cudafilters {
 	/// * rowBorderMode: Pixel extrapolation method in the vertical direction. For details, see
 	/// borderInterpolate.
 	/// * columnBorderMode: Pixel extrapolation method in the horizontal direction.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_deriv_filter] function uses the following default values for its arguments:
 	/// * normalize: false
@@ -242,9 +243,9 @@ pub mod cudafilters {
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates a generalized Deriv operator.
-	/// 
+	///
 	/// ## Parameters
 	/// * srcType: Source image type.
 	/// * dstType: Destination array type.
@@ -258,7 +259,7 @@ pub mod cudafilters {
 	/// * rowBorderMode: Pixel extrapolation method in the vertical direction. For details, see
 	/// borderInterpolate.
 	/// * columnBorderMode: Pixel extrapolation method in the horizontal direction.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * normalize: false
 	/// * scale: 1
@@ -273,9 +274,9 @@ pub mod cudafilters {
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates a Gaussian filter.
-	/// 
+	///
 	/// ## Parameters
 	/// * srcType: Source image type.
 	/// * dstType: Destination array type.
@@ -288,7 +289,7 @@ pub mod cudafilters {
 	/// * columnBorderMode: Pixel extrapolation method in the horizontal direction.
 	/// ## See also
 	/// GaussianBlur
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_gaussian_filter] function uses the following default values for its arguments:
 	/// * sigma2: 0
@@ -303,9 +304,9 @@ pub mod cudafilters {
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates a Gaussian filter.
-	/// 
+	///
 	/// ## Parameters
 	/// * srcType: Source image type.
 	/// * dstType: Destination array type.
@@ -318,7 +319,7 @@ pub mod cudafilters {
 	/// * columnBorderMode: Pixel extrapolation method in the horizontal direction.
 	/// ## See also
 	/// GaussianBlur
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * sigma2: 0
 	/// * row_border_mode: BORDER_DEFAULT
@@ -332,9 +333,9 @@ pub mod cudafilters {
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates a Laplacian operator.
-	/// 
+	///
 	/// ## Parameters
 	/// * srcType: Input image type. Supports CV_8U , CV_16U and CV_32F one and four channel image.
 	/// * dstType: Output image type. Only the same type as src is supported for now.
@@ -346,7 +347,7 @@ pub mod cudafilters {
 	/// * borderVal: Default border value.
 	/// ## See also
 	/// Laplacian
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_laplacian_filter] function uses the following default values for its arguments:
 	/// * ksize: 1
@@ -362,9 +363,9 @@ pub mod cudafilters {
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates a Laplacian operator.
-	/// 
+	///
 	/// ## Parameters
 	/// * srcType: Input image type. Supports CV_8U , CV_16U and CV_32F one and four channel image.
 	/// * dstType: Output image type. Only the same type as src is supported for now.
@@ -376,7 +377,7 @@ pub mod cudafilters {
 	/// * borderVal: Default border value.
 	/// ## See also
 	/// Laplacian
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * ksize: 1
 	/// * scale: 1
@@ -391,9 +392,9 @@ pub mod cudafilters {
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates a non-separable linear 2D filter.
-	/// 
+	///
 	/// ## Parameters
 	/// * srcType: Input image type. Supports CV_8U , CV_16U and CV_32F one and four channel image.
 	/// * dstType: Output image type. Only the same type as src is supported for now.
@@ -404,7 +405,7 @@ pub mod cudafilters {
 	/// * borderVal: Default border value.
 	/// ## See also
 	/// filter2D
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_linear_filter] function uses the following default values for its arguments:
 	/// * anchor: Point(-1,-1)
@@ -420,9 +421,9 @@ pub mod cudafilters {
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates a non-separable linear 2D filter.
-	/// 
+	///
 	/// ## Parameters
 	/// * srcType: Input image type. Supports CV_8U , CV_16U and CV_32F one and four channel image.
 	/// * dstType: Output image type. Only the same type as src is supported for now.
@@ -433,7 +434,7 @@ pub mod cudafilters {
 	/// * borderVal: Default border value.
 	/// ## See also
 	/// filter2D
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * anchor: Point(-1,-1)
 	/// * border_mode: BORDER_DEFAULT
@@ -448,20 +449,20 @@ pub mod cudafilters {
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Performs median filtering for each point of the source image.
-	/// 
+	///
 	/// ## Parameters
 	/// * srcType: type of of source image. Only CV_8UC1 images are supported for now.
 	/// * windowSize: Size of the kernerl used for the filtering. Uses a (windowSize x windowSize) filter.
 	/// * partition: Specifies the parallel granularity of the workload. This parameter should be used GPU experts when optimizing performance.
-	/// 
+	///
 	/// Outputs an image that has been filtered using a median-filtering formulation.
-	/// 
+	///
 	/// Details on this algorithm can be found in:
 	/// Green, O., 2017. "Efficient scalable median filtering using histogram-based operations",
 	///                   IEEE Transactions on Image Processing, 27(5), pp.2217-2228.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_median_filter] function uses the following default values for its arguments:
 	/// * partition: 128
@@ -474,20 +475,20 @@ pub mod cudafilters {
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Performs median filtering for each point of the source image.
-	/// 
+	///
 	/// ## Parameters
 	/// * srcType: type of of source image. Only CV_8UC1 images are supported for now.
 	/// * windowSize: Size of the kernerl used for the filtering. Uses a (windowSize x windowSize) filter.
 	/// * partition: Specifies the parallel granularity of the workload. This parameter should be used GPU experts when optimizing performance.
-	/// 
+	///
 	/// Outputs an image that has been filtered using a median-filtering formulation.
-	/// 
+	///
 	/// Details on this algorithm can be found in:
 	/// Green, O., 2017. "Efficient scalable median filtering using histogram-based operations",
 	///                   IEEE Transactions on Image Processing, 27(5), pp.2217-2228.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * partition: 128
 	#[inline]
@@ -499,9 +500,9 @@ pub mod cudafilters {
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates a 2D morphological filter.
-	/// 
+	///
 	/// ## Parameters
 	/// * op: Type of morphological operation. The following types are possible:
 	/// *   **MORPH_ERODE** erode
@@ -518,7 +519,7 @@ pub mod cudafilters {
 	/// * iterations: Number of times erosion and dilation to be applied.
 	/// ## See also
 	/// morphologyEx
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_morphology_filter] function uses the following default values for its arguments:
 	/// * anchor: Point(-1,-1)
@@ -533,9 +534,9 @@ pub mod cudafilters {
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates a 2D morphological filter.
-	/// 
+	///
 	/// ## Parameters
 	/// * op: Type of morphological operation. The following types are possible:
 	/// *   **MORPH_ERODE** erode
@@ -552,7 +553,7 @@ pub mod cudafilters {
 	/// * iterations: Number of times erosion and dilation to be applied.
 	/// ## See also
 	/// morphologyEx
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * anchor: Point(-1,-1)
 	/// * iterations: 1
@@ -566,9 +567,9 @@ pub mod cudafilters {
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates a horizontal 1D box filter.
-	/// 
+	///
 	/// ## Parameters
 	/// * srcType: Input image type. Only CV_8UC1 type is supported for now.
 	/// * dstType: Output image type. Only CV_32FC1 type is supported for now.
@@ -576,7 +577,7 @@ pub mod cudafilters {
 	/// * anchor: Anchor point. The default value (-1) means that the anchor is at the kernel center.
 	/// * borderMode: Pixel extrapolation method. For details, see borderInterpolate .
 	/// * borderVal: Default border value.
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_row_sum_filter] function uses the following default values for its arguments:
 	/// * anchor: -1
@@ -591,9 +592,9 @@ pub mod cudafilters {
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates a horizontal 1D box filter.
-	/// 
+	///
 	/// ## Parameters
 	/// * srcType: Input image type. Only CV_8UC1 type is supported for now.
 	/// * dstType: Output image type. Only CV_32FC1 type is supported for now.
@@ -601,7 +602,7 @@ pub mod cudafilters {
 	/// * anchor: Anchor point. The default value (-1) means that the anchor is at the kernel center.
 	/// * borderMode: Pixel extrapolation method. For details, see borderInterpolate .
 	/// * borderVal: Default border value.
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * anchor: -1
 	/// * border_mode: BORDER_DEFAULT
@@ -615,9 +616,9 @@ pub mod cudafilters {
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates a vertical or horizontal Scharr operator.
-	/// 
+	///
 	/// ## Parameters
 	/// * srcType: Source image type.
 	/// * dstType: Destination array type.
@@ -630,7 +631,7 @@ pub mod cudafilters {
 	/// * columnBorderMode: Pixel extrapolation method in the horizontal direction.
 	/// ## See also
 	/// Scharr
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_scharr_filter] function uses the following default values for its arguments:
 	/// * scale: 1
@@ -645,9 +646,9 @@ pub mod cudafilters {
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates a vertical or horizontal Scharr operator.
-	/// 
+	///
 	/// ## Parameters
 	/// * srcType: Source image type.
 	/// * dstType: Destination array type.
@@ -660,7 +661,7 @@ pub mod cudafilters {
 	/// * columnBorderMode: Pixel extrapolation method in the horizontal direction.
 	/// ## See also
 	/// Scharr
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * scale: 1
 	/// * row_border_mode: BORDER_DEFAULT
@@ -674,9 +675,9 @@ pub mod cudafilters {
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates a separable linear filter.
-	/// 
+	///
 	/// ## Parameters
 	/// * srcType: Source array type.
 	/// * dstType: Destination array type.
@@ -689,7 +690,7 @@ pub mod cudafilters {
 	/// * columnBorderMode: Pixel extrapolation method in the horizontal direction.
 	/// ## See also
 	/// sepFilter2D
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_separable_linear_filter] function uses the following default values for its arguments:
 	/// * anchor: Point(-1,-1)
@@ -706,9 +707,9 @@ pub mod cudafilters {
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates a separable linear filter.
-	/// 
+	///
 	/// ## Parameters
 	/// * srcType: Source array type.
 	/// * dstType: Destination array type.
@@ -721,7 +722,7 @@ pub mod cudafilters {
 	/// * columnBorderMode: Pixel extrapolation method in the horizontal direction.
 	/// ## See also
 	/// sepFilter2D
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * anchor: Point(-1,-1)
 	/// * row_border_mode: BORDER_DEFAULT
@@ -737,9 +738,9 @@ pub mod cudafilters {
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates a Sobel operator.
-	/// 
+	///
 	/// ## Parameters
 	/// * srcType: Source image type.
 	/// * dstType: Destination array type.
@@ -753,7 +754,7 @@ pub mod cudafilters {
 	/// * columnBorderMode: Pixel extrapolation method in the horizontal direction.
 	/// ## See also
 	/// Sobel
-	/// 
+	///
 	/// ## Note
 	/// This alternative version of [create_sobel_filter] function uses the following default values for its arguments:
 	/// * ksize: 3
@@ -769,9 +770,9 @@ pub mod cudafilters {
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Creates a Sobel operator.
-	/// 
+	///
 	/// ## Parameters
 	/// * srcType: Source image type.
 	/// * dstType: Destination array type.
@@ -785,7 +786,7 @@ pub mod cudafilters {
 	/// * columnBorderMode: Pixel extrapolation method in the horizontal direction.
 	/// ## See also
 	/// Sobel
-	/// 
+	///
 	/// ## C++ default parameters
 	/// * ksize: 3
 	/// * scale: 1
@@ -800,24 +801,24 @@ pub mod cudafilters {
 		let ret = unsafe { core::Ptr::<crate::cudafilters::Filter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
-	
+
 	/// Constant methods for [crate::cudafilters::Filter]
 	pub trait FilterTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_Filter(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::cudafilters::Filter]
 	pub trait FilterTrait: core::AlgorithmTrait + crate::cudafilters::FilterTraitConst {
 		fn as_raw_mut_Filter(&mut self) -> *mut c_void;
-	
+
 		/// Applies the specified filter to the image.
-		/// 
+		///
 		/// ## Parameters
 		/// * src: Input image.
 		/// * dst: Output image.
 		/// * stream: Stream for the asynchronous version.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * stream: Stream::Null()
 		#[inline]
@@ -830,14 +831,14 @@ pub mod cudafilters {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Applies the specified filter to the image.
-		/// 
+		///
 		/// ## Parameters
 		/// * src: Input image.
 		/// * dst: Output image.
 		/// * stream: Stream for the asynchronous version.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [FilterTrait::apply] function uses the following default values for its arguments:
 		/// * stream: Stream::Null()
@@ -851,50 +852,50 @@ pub mod cudafilters {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Common interface for all CUDA filters :
 	pub struct Filter {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { Filter }
-	
+
 	impl Drop for Filter {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_cuda_Filter_delete(self.as_raw_mut_Filter()) };
 		}
 	}
-	
+
 	unsafe impl Send for Filter {}
-	
+
 	impl core::AlgorithmTraitConst for Filter {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for Filter {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { Filter, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::cudafilters::FilterTraitConst for Filter {
 		#[inline] fn as_raw_Filter(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::cudafilters::FilterTrait for Filter {
 		#[inline] fn as_raw_mut_Filter(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { Filter, crate::cudafilters::FilterTraitConst, as_raw_Filter, crate::cudafilters::FilterTrait, as_raw_mut_Filter }
-	
+
 	impl Filter {
 	}
-	
+
 	boxed_cast_base! { Filter, core::Algorithm, cv_cuda_Filter_to_Algorithm }
-	
+
 	impl std::fmt::Debug for Filter {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {

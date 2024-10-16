@@ -1,14 +1,15 @@
 pub mod xobjdetect {
 	//! # Extended object detection
-	use crate::{mod_prelude::*, core, sys, types};
+	use crate::mod_prelude::*;
+	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use { super::WBDetectorTraitConst, super::WBDetectorTrait };
+		pub use super::{WBDetectorTrait, WBDetectorTraitConst};
 	}
-	
+
 	/// Constant methods for [crate::xobjdetect::WBDetector]
 	pub trait WBDetectorTraitConst {
 		fn as_raw_WBDetector(&self) -> *const c_void;
-	
+
 		/// Write detector to FileStorage.
 		/// ## Parameters
 		/// * fs: FileStorage for output
@@ -20,13 +21,13 @@ pub mod xobjdetect {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::xobjdetect::WBDetector]
 	pub trait WBDetectorTrait: crate::xobjdetect::WBDetectorTraitConst {
 		fn as_raw_mut_WBDetector(&mut self) -> *mut c_void;
-	
+
 		/// Read detector from FileNode.
 		/// ## Parameters
 		/// * node: FileNode for input
@@ -38,7 +39,7 @@ pub mod xobjdetect {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Train WaldBoost detector
 		/// ## Parameters
 		/// * pos_samples: Path to directory with cropped positive samples
@@ -53,7 +54,7 @@ pub mod xobjdetect {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Detect objects on image using WaldBoost detector
 		/// ## Parameters
 		/// * img: Input image for detection
@@ -67,35 +68,35 @@ pub mod xobjdetect {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// WaldBoost detector
 	pub struct WBDetector {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { WBDetector }
-	
+
 	impl Drop for WBDetector {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_xobjdetect_WBDetector_delete(self.as_raw_mut_WBDetector()) };
 		}
 	}
-	
+
 	unsafe impl Send for WBDetector {}
-	
+
 	impl crate::xobjdetect::WBDetectorTraitConst for WBDetector {
 		#[inline] fn as_raw_WBDetector(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::xobjdetect::WBDetectorTrait for WBDetector {
 		#[inline] fn as_raw_mut_WBDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { WBDetector, crate::xobjdetect::WBDetectorTraitConst, as_raw_WBDetector, crate::xobjdetect::WBDetectorTrait, as_raw_mut_WBDetector }
-	
+
 	impl WBDetector {
 		/// Create instance of WBDetector
 		#[inline]
@@ -107,9 +108,9 @@ pub mod xobjdetect {
 			let ret = unsafe { core::Ptr::<crate::xobjdetect::WBDetector>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	impl std::fmt::Debug for WBDetector {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {

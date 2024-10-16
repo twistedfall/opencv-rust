@@ -1,15 +1,16 @@
 pub mod bioinspired {
 	//! # Biologically inspired vision models and derivated tools
-	//! 
+	//!
 	//! The module provides biological visual systems models (human visual system and others). It also
 	//! provides derivated objects that take advantage of those bio-inspired models.
-	//! 
+	//!
 	//! [bioinspired_retina]
-	use crate::{mod_prelude::*, core, sys, types};
+	use crate::mod_prelude::*;
+	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use { super::RetinaParametersTraitConst, super::RetinaParametersTrait, super::RetinaTraitConst, super::RetinaTrait, super::RetinaFastToneMappingTraitConst, super::RetinaFastToneMappingTrait, super::TransientAreasSegmentationModuleTraitConst, super::TransientAreasSegmentationModuleTrait };
+		pub use super::{RetinaFastToneMappingTrait, RetinaFastToneMappingTraitConst, RetinaParametersTrait, RetinaParametersTraitConst, RetinaTrait, RetinaTraitConst, TransientAreasSegmentationModuleTrait, TransientAreasSegmentationModuleTraitConst};
 	}
-	
+
 	/// standard bayer sampling
 	pub const RETINA_COLOR_BAYER: i32 = 2;
 	/// color sampling is RGBRGBRGB..., line 2 BRGBRGBRG..., line 3, GBRGBRGBR...
@@ -19,7 +20,7 @@ pub mod bioinspired {
 	/// Constant methods for [crate::bioinspired::Retina]
 	pub trait RetinaTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_Retina(&self) -> *const c_void;
-	
+
 		/// Write xml/yml formated parameters information
 		/// ## Parameters
 		/// * fs: the filename of the xml file that will be open and writen with formatted parameters
@@ -33,12 +34,12 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Write xml/yml formated parameters information
 		/// ## Parameters
 		/// * fs: the filename of the xml file that will be open and writen with formatted parameters
 		/// information
-		/// 
+		///
 		/// ## Overloaded parameters
 		#[inline]
 		fn write_to_storage(&self, fs: &mut impl core::FileStorageTrait) -> Result<()> {
@@ -48,11 +49,11 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Accessor of the motion channel of the retina (models peripheral vision).
 		/// ## See also
 		/// getMagno
-		/// 
+		///
 		/// ## Overloaded parameters
 		#[inline]
 		fn get_magno_raw(&self) -> Result<core::Mat> {
@@ -63,11 +64,11 @@ pub mod bioinspired {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Accessor of the details channel of the retina (models foveal vision).
 		/// ## See also
 		/// getParvo
-		/// 
+		///
 		/// ## Overloaded parameters
 		#[inline]
 		fn get_parvo_raw(&self) -> Result<core::Mat> {
@@ -78,13 +79,13 @@ pub mod bioinspired {
 			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::bioinspired::Retina]
 	pub trait RetinaTrait: core::AlgorithmTrait + crate::bioinspired::RetinaTraitConst {
 		fn as_raw_mut_Retina(&mut self) -> *mut c_void;
-	
+
 		/// Retreive retina input buffer size
 		/// ## Returns
 		/// the retina input buffer size
@@ -96,7 +97,7 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Retreive retina output buffer size that can be different from the input if a spatial log
 		/// transformation is applied
 		/// ## Returns
@@ -109,18 +110,18 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Try to open an XML retina parameters file to adjust current retina instance setup
-		/// 
+		///
 		/// - if the xml file does not exist, then default setup is applied
 		/// - warning, Exceptions are thrown if read XML file is not valid
 		/// ## Parameters
 		/// * retinaParameterFile: the parameters filename
 		/// * applyDefaultSetupOnFailure: set to true if an error must be thrown on error
-		/// 
+		///
 		/// You can retrieve the current parameters structure using the method Retina::getParameters and update
 		/// it before running method Retina::setup.
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * retina_parameter_file: ""
 		/// * apply_default_setup_on_failure: true
@@ -133,18 +134,18 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Try to open an XML retina parameters file to adjust current retina instance setup
-		/// 
+		///
 		/// - if the xml file does not exist, then default setup is applied
 		/// - warning, Exceptions are thrown if read XML file is not valid
 		/// ## Parameters
 		/// * retinaParameterFile: the parameters filename
 		/// * applyDefaultSetupOnFailure: set to true if an error must be thrown on error
-		/// 
+		///
 		/// You can retrieve the current parameters structure using the method Retina::getParameters and update
 		/// it before running method Retina::setup.
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [RetinaTrait::setup_from_file] function uses the following default values for its arguments:
 		/// * retina_parameter_file: ""
@@ -157,23 +158,23 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Try to open an XML retina parameters file to adjust current retina instance setup
-		/// 
+		///
 		/// - if the xml file does not exist, then default setup is applied
 		/// - warning, Exceptions are thrown if read XML file is not valid
 		/// ## Parameters
 		/// * retinaParameterFile: the parameters filename
 		/// * applyDefaultSetupOnFailure: set to true if an error must be thrown on error
-		/// 
+		///
 		/// You can retrieve the current parameters structure using the method Retina::getParameters and update
 		/// it before running method Retina::setup.
-		/// 
+		///
 		/// ## Overloaded parameters
-		/// 
+		///
 		/// * fs: the open Filestorage which contains retina parameters
 		/// * applyDefaultSetupOnFailure: set to true if an error must be thrown on error
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * apply_default_setup_on_failure: true
 		#[inline]
@@ -184,12 +185,12 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// @overload
 		/// ## Parameters
 		/// * fs: the open Filestorage which contains retina parameters
 		/// * applyDefaultSetupOnFailure: set to true if an error must be thrown on error
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [RetinaTrait::setup_from_storage] function uses the following default values for its arguments:
 		/// * apply_default_setup_on_failure: true
@@ -201,20 +202,20 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Try to open an XML retina parameters file to adjust current retina instance setup
-		/// 
+		///
 		/// - if the xml file does not exist, then default setup is applied
 		/// - warning, Exceptions are thrown if read XML file is not valid
 		/// ## Parameters
 		/// * retinaParameterFile: the parameters filename
 		/// * applyDefaultSetupOnFailure: set to true if an error must be thrown on error
-		/// 
+		///
 		/// You can retrieve the current parameters structure using the method Retina::getParameters and update
 		/// it before running method Retina::setup.
-		/// 
+		///
 		/// ## Overloaded parameters
-		/// 
+		///
 		/// * newParameters: a parameters structures updated with the new target configuration.
 		#[inline]
 		fn setup(&mut self, mut new_parameters: impl crate::bioinspired::RetinaParametersTrait) -> Result<()> {
@@ -224,7 +225,7 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// ## Returns
 		/// the current parameters setup
 		#[inline]
@@ -236,7 +237,7 @@ pub mod bioinspired {
 			let ret = unsafe { crate::bioinspired::RetinaParameters::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Outputs a string showing the used parameters setup
 		/// ## Returns
 		/// a string which contains formated parameters information
@@ -249,9 +250,9 @@ pub mod bioinspired {
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Setup the OPL and IPL parvo channels (see biologocal model)
-		/// 
+		///
 		/// OPL is referred as Outer Plexiform Layer of the retina, it allows the spatio-temporal filtering
 		/// which withens the spectrum and reduces spatio-temporal noise while attenuating global luminance
 		/// (low frequency energy) IPL parvo is the OPL next processing stage, it refers to a part of the
@@ -284,7 +285,7 @@ pub mod bioinspired {
 		/// * ganglionCellsSensitivity: the compression strengh of the ganglion cells local adaptation
 		/// output, set a value between 0.6 and 1 for best results, a high value increases more the low
 		/// value sensitivity... and the output saturates faster, recommended value: 0.7
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * color_mode: true
 		/// * normalise_output: true
@@ -303,9 +304,9 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Setup the OPL and IPL parvo channels (see biologocal model)
-		/// 
+		///
 		/// OPL is referred as Outer Plexiform Layer of the retina, it allows the spatio-temporal filtering
 		/// which withens the spectrum and reduces spatio-temporal noise while attenuating global luminance
 		/// (low frequency energy) IPL parvo is the OPL next processing stage, it refers to a part of the
@@ -338,7 +339,7 @@ pub mod bioinspired {
 		/// * ganglionCellsSensitivity: the compression strengh of the ganglion cells local adaptation
 		/// output, set a value between 0.6 and 1 for best results, a high value increases more the low
 		/// value sensitivity... and the output saturates faster, recommended value: 0.7
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [RetinaTrait::setup_op_land_ipl_parvo_channel] function uses the following default values for its arguments:
 		/// * color_mode: true
@@ -358,13 +359,13 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Set parameters values for the Inner Plexiform Layer (IPL) magnocellular channel
-		/// 
+		///
 		/// this channel processes signals output from OPL processing stage in peripheral vision, it allows
 		/// motion information enhancement. It is decorrelated from the details channel. See reference
 		/// papers for more details.
-		/// 
+		///
 		/// ## Parameters
 		/// * normaliseOutput: specifies if (true) output is rescaled between 0 and 255 of not (false)
 		/// * parasolCells_beta: the low pass filter gain used for local contrast adaptation at the
@@ -384,7 +385,7 @@ pub mod bioinspired {
 		/// involved in the computation of the local "motion mean" for the local adaptation computation
 		/// * localAdaptintegration_k: specifies the spatial constant of the low pas filter involved
 		/// in the computation of the local "motion mean" for the local adaptation computation
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * normalise_output: true
 		/// * parasol_cells_beta: 0.f
@@ -402,13 +403,13 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Set parameters values for the Inner Plexiform Layer (IPL) magnocellular channel
-		/// 
+		///
 		/// this channel processes signals output from OPL processing stage in peripheral vision, it allows
 		/// motion information enhancement. It is decorrelated from the details channel. See reference
 		/// papers for more details.
-		/// 
+		///
 		/// ## Parameters
 		/// * normaliseOutput: specifies if (true) output is rescaled between 0 and 255 of not (false)
 		/// * parasolCells_beta: the low pass filter gain used for local contrast adaptation at the
@@ -428,7 +429,7 @@ pub mod bioinspired {
 		/// involved in the computation of the local "motion mean" for the local adaptation computation
 		/// * localAdaptintegration_k: specifies the spatial constant of the low pas filter involved
 		/// in the computation of the local "motion mean" for the local adaptation computation
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [RetinaTrait::setup_ipl_magno_channel] function uses the following default values for its arguments:
 		/// * normalise_output: true
@@ -447,9 +448,9 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Method which allows retina to be applied on an input image,
-		/// 
+		///
 		/// after run, encapsulated retina module is ready to deliver its outputs using dedicated
 		/// acccessors, see getParvo and getMagno methods
 		/// ## Parameters
@@ -464,19 +465,19 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Method which processes an image in the aim to correct its luminance correct
 		/// backlight problems, enhance details in shadows.
-		/// 
+		///
 		/// This method is designed to perform High Dynamic Range image tone mapping (compress \>8bit/pixel
 		/// images to 8bit/pixel). This is a simplified version of the Retina Parvocellular model
 		/// (simplified version of the run/getParvo methods call) since it does not include the
 		/// spatio-temporal filter modelling the Outer Plexiform Layer of the retina that performs spectral
 		/// whitening and many other stuff. However, it works great for tone mapping and in a faster way.
-		/// 
+		///
 		/// Check the demos and experiments section to see examples and the way to perform tone mapping
 		/// using the original retina model and the method.
-		/// 
+		///
 		/// ## Parameters
 		/// * inputImage: the input image to process (should be coded in float format : CV_32F,
 		/// CV_32FC1, CV_32F_C3, CV_32F_C4, the 4th channel won't be considered).
@@ -491,12 +492,12 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Accessor of the details channel of the retina (models foveal vision).
-		/// 
+		///
 		/// Warning, getParvoRAW methods return buffers that are not rescaled within range [0;255] while
 		/// the non RAW method allows a normalized matrix to be retrieved.
-		/// 
+		///
 		/// ## Parameters
 		/// * retinaOutput_parvo: the output buffer (reallocated if necessary), format can be :
 		/// *   a Mat, this output is rescaled for standard 8bits image processing use in OpenCV
@@ -514,7 +515,7 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Accessor of the details channel of the retina (models foveal vision).
 		/// ## See also
 		/// getParvo
@@ -527,9 +528,9 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Accessor of the motion channel of the retina (models peripheral vision).
-		/// 
+		///
 		/// Warning, getMagnoRAW methods return buffers that are not rescaled within range [0;255] while
 		/// the non RAW method allows a normalized matrix to be retrieved.
 		/// ## Parameters
@@ -548,7 +549,7 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Accessor of the motion channel of the retina (models peripheral vision).
 		/// ## See also
 		/// getMagno
@@ -561,14 +562,14 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Activate color saturation as the final step of the color demultiplexing process -\> this
 		/// saturation is a sigmoide function applied to each channel of the demultiplexed image.
 		/// ## Parameters
 		/// * saturateColors: boolean that activates color saturation (if true) or desactivate (if false)
 		/// * colorSaturationValue: the saturation factor : a simple factor applied on the chrominance
 		/// buffers
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * saturate_colors: true
 		/// * color_saturation_value: 4.0f
@@ -580,14 +581,14 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Activate color saturation as the final step of the color demultiplexing process -\> this
 		/// saturation is a sigmoide function applied to each channel of the demultiplexed image.
 		/// ## Parameters
 		/// * saturateColors: boolean that activates color saturation (if true) or desactivate (if false)
 		/// * colorSaturationValue: the saturation factor : a simple factor applied on the chrominance
 		/// buffers
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [RetinaTrait::set_color_saturation] function uses the following default values for its arguments:
 		/// * saturate_colors: true
@@ -600,9 +601,9 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Clears all retina buffers
-		/// 
+		///
 		/// (equivalent to opening the eyes after a long period of eye close ;o) whatchout the temporal
 		/// transition occuring just after this method call.
 		#[inline]
@@ -613,7 +614,7 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Activate/desactivate the Magnocellular pathway processing (motion information extraction), by
 		/// default, it is activated
 		/// ## Parameters
@@ -627,7 +628,7 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// Activate/desactivate the Parvocellular pathway processing (contours information extraction), by
 		/// default, it is activated
 		/// ## Parameters
@@ -642,69 +643,69 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// class which allows the Gipsa/Listic Labs model to be used with OpenCV.
-	/// 
+	///
 	/// This retina model allows spatio-temporal image processing (applied on still images, video sequences).
 	/// As a summary, these are the retina model properties:
 	/// - It applies a spectral whithening (mid-frequency details enhancement)
 	/// - high frequency spatio-temporal noise reduction
 	/// - low frequency luminance to be reduced (luminance range compression)
 	/// - local logarithmic luminance compression allows details to be enhanced in low light conditions
-	/// 
+	///
 	/// USE : this model can be used basically for spatio-temporal video effects but also for :
 	///      _using the getParvo method output matrix : texture analysiswith enhanced signal to noise ratio and enhanced details robust against input images luminance ranges
 	///      _using the getMagno method output matrix : motion analysis also with the previously cited properties
-	/// 
+	///
 	/// for more information, reer to the following papers :
 	/// Benoit A., Caplier A., Durette B., Herault, J., "USING HUMAN VISUAL SYSTEM MODELING FOR BIO-INSPIRED LOW LEVEL IMAGE PROCESSING", Elsevier, Computer Vision and Image Understanding 114 (2010), pp. 758-773, DOI: <http://dx.doi.org/10.1016/j.cviu.2010.01.011>
 	/// Vision: Images, Signals and Neural Networks: Models of Neural Processing in Visual Perception (Progress in Neural Processing),By: Jeanny Herault, ISBN: 9814273686. WAPI (Tower ID): 113266891.
-	/// 
+	///
 	/// The retina filter includes the research contributions of phd/research collegues from which code has been redrawn by the author :
 	/// take a look at the retinacolor.hpp module to discover Brice Chaix de Lavarene color mosaicing/demosaicing and the reference paper:
 	/// B. Chaix de Lavarene, D. Alleysson, B. Durette, J. Herault (2007). "Efficient demosaicing through recursive filtering", IEEE International Conference on Image Processing ICIP 2007
 	/// take a look at imagelogpolprojection.hpp to discover retina spatial log sampling which originates from Barthelemy Durette phd with Jeanny Herault. A Retina / V1 cortex projection is also proposed and originates from Jeanny's discussions.
 	/// more informations in the above cited Jeanny Heraults's book.
 	pub struct Retina {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { Retina }
-	
+
 	impl Drop for Retina {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_bioinspired_Retina_delete(self.as_raw_mut_Retina()) };
 		}
 	}
-	
+
 	unsafe impl Send for Retina {}
-	
+
 	impl core::AlgorithmTraitConst for Retina {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for Retina {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { Retina, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::bioinspired::RetinaTraitConst for Retina {
 		#[inline] fn as_raw_Retina(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::bioinspired::RetinaTrait for Retina {
 		#[inline] fn as_raw_mut_Retina(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { Retina, crate::bioinspired::RetinaTraitConst, as_raw_Retina, crate::bioinspired::RetinaTrait, as_raw_mut_Retina }
-	
+
 	impl Retina {
 		/// Constructors from standardized interfaces : retreive a smart pointer to a Retina instance
-		/// 
+		///
 		/// ## Parameters
 		/// * inputSize: the input frame size
 		/// * colorMode: the chosen processing mode : with or without color processing
@@ -719,7 +720,7 @@ pub mod bioinspired {
 		/// underscaled, then a reduction of the output is allowed without precision leak
 		/// * samplingStrength: only usefull if param useRetinaLogSampling=true, specifies the strength of
 		/// the log scale that is applied
-		/// 
+		///
 		/// ## Overloaded parameters
 		#[inline]
 		pub fn create(input_size: core::Size) -> Result<core::Ptr<crate::bioinspired::Retina>> {
@@ -730,9 +731,9 @@ pub mod bioinspired {
 			let ret = unsafe { core::Ptr::<crate::bioinspired::Retina>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Constructors from standardized interfaces : retreive a smart pointer to a Retina instance
-		/// 
+		///
 		/// ## Parameters
 		/// * inputSize: the input frame size
 		/// * colorMode: the chosen processing mode : with or without color processing
@@ -747,7 +748,7 @@ pub mod bioinspired {
 		/// underscaled, then a reduction of the output is allowed without precision leak
 		/// * samplingStrength: only usefull if param useRetinaLogSampling=true, specifies the strength of
 		/// the log scale that is applied
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * color_sampling_method: RETINA_COLOR_BAYER
 		/// * use_retina_log_sampling: false
@@ -762,9 +763,9 @@ pub mod bioinspired {
 			let ret = unsafe { core::Ptr::<crate::bioinspired::Retina>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// Constructors from standardized interfaces : retreive a smart pointer to a Retina instance
-		/// 
+		///
 		/// ## Parameters
 		/// * inputSize: the input frame size
 		/// * colorMode: the chosen processing mode : with or without color processing
@@ -779,7 +780,7 @@ pub mod bioinspired {
 		/// underscaled, then a reduction of the output is allowed without precision leak
 		/// * samplingStrength: only usefull if param useRetinaLogSampling=true, specifies the strength of
 		/// the log scale that is applied
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [Retina::create_ext] function uses the following default values for its arguments:
 		/// * color_sampling_method: RETINA_COLOR_BAYER
@@ -795,11 +796,11 @@ pub mod bioinspired {
 			let ret = unsafe { core::Ptr::<crate::bioinspired::Retina>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	boxed_cast_base! { Retina, core::Algorithm, cv_bioinspired_Retina_to_Algorithm }
-	
+
 	impl std::fmt::Debug for Retina {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -807,19 +808,19 @@ pub mod bioinspired {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::bioinspired::RetinaFastToneMapping]
 	pub trait RetinaFastToneMappingTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_RetinaFastToneMapping(&self) -> *const c_void;
-	
+
 	}
-	
+
 	/// Mutable methods for [crate::bioinspired::RetinaFastToneMapping]
 	pub trait RetinaFastToneMappingTrait: core::AlgorithmTrait + crate::bioinspired::RetinaFastToneMappingTraitConst {
 		fn as_raw_mut_RetinaFastToneMapping(&mut self) -> *mut c_void;
-	
+
 		/// applies a luminance correction (initially High Dynamic Range (HDR) tone mapping)
-		/// 
+		///
 		/// using only the 2 local adaptation stages of the retina parvocellular channel : photoreceptors
 		/// level and ganlion cells level. Spatio temporal filtering is applied but limited to temporal
 		/// smoothing and eventually high frequencies attenuation. This is a lighter method than the one
@@ -830,7 +831,7 @@ pub mod bioinspired {
 		/// work, please cite: -> Meylan L., Alleysson D., and Susstrunk S., A Model of Retinal Local
 		/// Adaptation for the Tone Mapping of Color Filter Array Images, Journal of Optical Society of
 		/// America, A, Vol. 24, N 9, September, 1st, 2007, pp. 2807-2816
-		/// 
+		///
 		/// ## Parameters
 		/// * inputImage: the input image to process RGB or gray levels
 		/// * outputToneMappedImage: the output tone mapped image
@@ -844,15 +845,15 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// updates tone mapping behaviors by adjusing the local luminance computation area
-		/// 
+		///
 		/// ## Parameters
 		/// * photoreceptorsNeighborhoodRadius: the first stage local adaptation area
 		/// * ganglioncellsNeighborhoodRadius: the second stage local adaptation area
 		/// * meanLuminanceModulatorK: the factor applied to modulate the meanLuminance information
 		/// (default is 1, see reference paper)
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * photoreceptors_neighborhood_radius: 3.f
 		/// * ganglioncells_neighborhood_radius: 1.f
@@ -865,15 +866,15 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// updates tone mapping behaviors by adjusing the local luminance computation area
-		/// 
+		///
 		/// ## Parameters
 		/// * photoreceptorsNeighborhoodRadius: the first stage local adaptation area
 		/// * ganglioncellsNeighborhoodRadius: the second stage local adaptation area
 		/// * meanLuminanceModulatorK: the factor applied to modulate the meanLuminance information
 		/// (default is 1, see reference paper)
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [RetinaFastToneMappingTrait::setup] function uses the following default values for its arguments:
 		/// * photoreceptors_neighborhood_radius: 3.f
@@ -887,11 +888,11 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// a wrapper class which allows the tone mapping algorithm of Meylan&al(2007) to be used with OpenCV.
-	/// 
+	///
 	/// This algorithm is already implemented in thre Retina class (retina::applyFastToneMapping) but used it does not require all the retina model to be allocated. This allows a light memory use for low memory devices (smartphones, etc.
 	/// As a summary, these are the model properties:
 	/// - 2 stages of local luminance adaptation with a different local neighborhood for each.
@@ -899,46 +900,46 @@ pub mod bioinspired {
 	/// - second stage models th ganglion cells local information adaptation
 	/// - compared to the initial publication, this class uses spatio-temporal low pass filters instead of spatial only filters.
 	///   this can help noise robustness and temporal stability for video sequence use cases.
-	/// 
+	///
 	/// for more information, read to the following papers :
 	/// Meylan L., Alleysson D., and Susstrunk S., A Model of Retinal Local Adaptation for the Tone Mapping of Color Filter Array Images, Journal of Optical Society of America, A, Vol. 24, N 9, September, 1st, 2007, pp. 2807-2816Benoit A., Caplier A., Durette B., Herault, J., "USING HUMAN VISUAL SYSTEM MODELING FOR BIO-INSPIRED LOW LEVEL IMAGE PROCESSING", Elsevier, Computer Vision and Image Understanding 114 (2010), pp. 758-773, DOI: <http://dx.doi.org/10.1016/j.cviu.2010.01.011>
 	/// regarding spatio-temporal filter and the bigger retina model :
 	/// Vision: Images, Signals and Neural Networks: Models of Neural Processing in Visual Perception (Progress in Neural Processing),By: Jeanny Herault, ISBN: 9814273686. WAPI (Tower ID): 113266891.
 	pub struct RetinaFastToneMapping {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { RetinaFastToneMapping }
-	
+
 	impl Drop for RetinaFastToneMapping {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_bioinspired_RetinaFastToneMapping_delete(self.as_raw_mut_RetinaFastToneMapping()) };
 		}
 	}
-	
+
 	unsafe impl Send for RetinaFastToneMapping {}
-	
+
 	impl core::AlgorithmTraitConst for RetinaFastToneMapping {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for RetinaFastToneMapping {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { RetinaFastToneMapping, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::bioinspired::RetinaFastToneMappingTraitConst for RetinaFastToneMapping {
 		#[inline] fn as_raw_RetinaFastToneMapping(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::bioinspired::RetinaFastToneMappingTrait for RetinaFastToneMapping {
 		#[inline] fn as_raw_mut_RetinaFastToneMapping(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { RetinaFastToneMapping, crate::bioinspired::RetinaFastToneMappingTraitConst, as_raw_RetinaFastToneMapping, crate::bioinspired::RetinaFastToneMappingTrait, as_raw_mut_RetinaFastToneMapping }
-	
+
 	impl RetinaFastToneMapping {
 		#[inline]
 		pub fn create(input_size: core::Size) -> Result<core::Ptr<crate::bioinspired::RetinaFastToneMapping>> {
@@ -949,11 +950,11 @@ pub mod bioinspired {
 			let ret = unsafe { core::Ptr::<crate::bioinspired::RetinaFastToneMapping>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	boxed_cast_base! { RetinaFastToneMapping, core::Algorithm, cv_bioinspired_RetinaFastToneMapping_to_Algorithm }
-	
+
 	impl std::fmt::Debug for RetinaFastToneMapping {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -961,11 +962,11 @@ pub mod bioinspired {
 				.finish()
 		}
 	}
-	
+
 	/// Constant methods for [crate::bioinspired::RetinaParameters]
 	pub trait RetinaParametersTraitConst {
 		fn as_raw_RetinaParameters(&self) -> *const c_void;
-	
+
 		#[inline]
 		fn op_land_ipl_parvo(&self) -> crate::bioinspired::RetinaParameters_OPLandIplParvoParameters {
 			return_send!(via ocvrs_return);
@@ -973,7 +974,7 @@ pub mod bioinspired {
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
-		
+
 		#[inline]
 		fn ipl_magno(&self) -> crate::bioinspired::RetinaParameters_IplMagnoParameters {
 			return_send!(via ocvrs_return);
@@ -981,80 +982,80 @@ pub mod bioinspired {
 			return_receive!(unsafe ocvrs_return => ret);
 			ret
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::bioinspired::RetinaParameters]
 	pub trait RetinaParametersTrait: crate::bioinspired::RetinaParametersTraitConst {
 		fn as_raw_mut_RetinaParameters(&mut self) -> *mut c_void;
-	
+
 		#[inline]
 		fn set_op_land_ipl_parvo(&mut self, val: crate::bioinspired::RetinaParameters_OPLandIplParvoParameters) {
 			let ret = unsafe { sys::cv_bioinspired_RetinaParameters_propOPLandIplParvo_const_OPLandIplParvoParameters(self.as_raw_mut_RetinaParameters(), &val) };
 			ret
 		}
-		
+
 		#[inline]
 		fn set_ipl_magno(&mut self, val: crate::bioinspired::RetinaParameters_IplMagnoParameters) {
 			let ret = unsafe { sys::cv_bioinspired_RetinaParameters_propIplMagno_const_IplMagnoParameters(self.as_raw_mut_RetinaParameters(), &val) };
 			ret
 		}
-		
+
 	}
-	
+
 	/// retina model parameters structure
-	/// 
+	///
 	/// For better clarity, check explenations on the comments of methods : setupOPLandIPLParvoChannel and setupIPLMagnoChannel
-	/// 
+	///
 	/// Here is the default configuration file of the retina module. It gives results such as the first
 	/// retina output shown on the top of this page.
-	/// 
+	///
 	/// @include default_retina_config.xml
-	/// 
+	///
 	/// Here is the 'realistic" setup used to obtain the second retina output shown on the top of this page.
-	/// 
+	///
 	/// @include realistic_retina_config.xml
 	pub struct RetinaParameters {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { RetinaParameters }
-	
+
 	impl Drop for RetinaParameters {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_bioinspired_RetinaParameters_delete(self.as_raw_mut_RetinaParameters()) };
 		}
 	}
-	
+
 	unsafe impl Send for RetinaParameters {}
-	
+
 	impl crate::bioinspired::RetinaParametersTraitConst for RetinaParameters {
 		#[inline] fn as_raw_RetinaParameters(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::bioinspired::RetinaParametersTrait for RetinaParameters {
 		#[inline] fn as_raw_mut_RetinaParameters(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { RetinaParameters, crate::bioinspired::RetinaParametersTraitConst, as_raw_RetinaParameters, crate::bioinspired::RetinaParametersTrait, as_raw_mut_RetinaParameters }
-	
+
 	impl RetinaParameters {
 		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
 		fn default() -> Self {
 			unsafe { Self::from_raw(sys::cv_bioinspired_RetinaParameters_defaultNew_const()) }
 		}
-		
+
 	}
-	
+
 	impl Clone for RetinaParameters {
 		#[inline]
 		fn clone(&self) -> Self {
 			unsafe { Self::from_raw(sys::cv_bioinspired_RetinaParameters_implicitClone_const(self.as_raw_RetinaParameters())) }
 		}
 	}
-	
+
 	impl std::fmt::Debug for RetinaParameters {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -1064,7 +1065,7 @@ pub mod bioinspired {
 				.finish()
 		}
 	}
-	
+
 	impl Default for RetinaParameters {
 		#[inline]
 		/// Forwards to infallible Self::default()
@@ -1072,7 +1073,7 @@ pub mod bioinspired {
 			Self::default()
 		}
 	}
-	
+
 	/// Inner Plexiform Layer Magnocellular channel (IplMagno)
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq)]
@@ -1086,9 +1087,9 @@ pub mod bioinspired {
 		pub local_adaptintegration_tau: f32,
 		pub local_adaptintegration_k: f32,
 	}
-	
+
 	opencv_type_simple! { crate::bioinspired::RetinaParameters_IplMagnoParameters }
-	
+
 	impl RetinaParameters_IplMagnoParameters {
 		#[inline]
 		pub fn default() -> Result<crate::bioinspired::RetinaParameters_IplMagnoParameters> {
@@ -1098,9 +1099,9 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Outer Plexiform Layer (OPL) and Inner Plexiform Layer Parvocellular (IplParvo) parameters
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq)]
@@ -1115,9 +1116,9 @@ pub mod bioinspired {
 		pub hcells_spatial_constant: f32,
 		pub ganglion_cells_sensitivity: f32,
 	}
-	
+
 	opencv_type_simple! { crate::bioinspired::RetinaParameters_OPLandIplParvoParameters }
-	
+
 	impl RetinaParameters_OPLandIplParvoParameters {
 		#[inline]
 		pub fn default() -> Result<crate::bioinspired::RetinaParameters_OPLandIplParvoParameters> {
@@ -1127,9 +1128,9 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// parameter structure that stores the transient events detector setup parameters
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq)]
@@ -1147,9 +1148,9 @@ pub mod bioinspired {
 		pub context_energy_temporal_constant: f32,
 		pub context_energy_spatial_constant: f32,
 	}
-	
+
 	opencv_type_simple! { crate::bioinspired::SegmentationParameters }
-	
+
 	impl SegmentationParameters {
 		#[inline]
 		pub fn default() -> Result<crate::bioinspired::SegmentationParameters> {
@@ -1159,13 +1160,13 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Constant methods for [crate::bioinspired::TransientAreasSegmentationModule]
 	pub trait TransientAreasSegmentationModuleTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_TransientAreasSegmentationModule(&self) -> *const c_void;
-	
+
 		/// write xml/yml formated parameters information
 		/// ## Parameters
 		/// * fs: : the filename of the xml file that will be open and writen with formatted parameters information
@@ -1178,7 +1179,7 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// write xml/yml formated parameters information
 		/// ## Parameters
 		/// * fs: : a cv::Filestorage object ready to be filled
@@ -1190,13 +1191,13 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// Mutable methods for [crate::bioinspired::TransientAreasSegmentationModule]
 	pub trait TransientAreasSegmentationModuleTrait: core::AlgorithmTrait + crate::bioinspired::TransientAreasSegmentationModuleTraitConst {
 		fn as_raw_mut_TransientAreasSegmentationModule(&mut self) -> *mut c_void;
-	
+
 		/// return the sze of the manage input and output images
 		#[inline]
 		fn get_size(&mut self) -> Result<core::Size> {
@@ -1206,15 +1207,15 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// try to open an XML segmentation parameters file to adjust current segmentation instance setup
-		/// 
+		///
 		/// - if the xml file does not exist, then default setup is applied
 		/// - warning, Exceptions are thrown if read XML file is not valid
 		/// ## Parameters
 		/// * segmentationParameterFile: : the parameters filename
 		/// * applyDefaultSetupOnFailure: : set to true if an error must be thrown on error
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * segmentation_parameter_file: ""
 		/// * apply_default_setup_on_failure: true
@@ -1227,15 +1228,15 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// try to open an XML segmentation parameters file to adjust current segmentation instance setup
-		/// 
+		///
 		/// - if the xml file does not exist, then default setup is applied
 		/// - warning, Exceptions are thrown if read XML file is not valid
 		/// ## Parameters
 		/// * segmentationParameterFile: : the parameters filename
 		/// * applyDefaultSetupOnFailure: : set to true if an error must be thrown on error
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [TransientAreasSegmentationModuleTrait::setup_from_file] function uses the following default values for its arguments:
 		/// * segmentation_parameter_file: ""
@@ -1248,15 +1249,15 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// try to open an XML segmentation parameters file to adjust current segmentation instance setup
-		/// 
+		///
 		/// - if the xml file does not exist, then default setup is applied
 		/// - warning, Exceptions are thrown if read XML file is not valid
 		/// ## Parameters
 		/// * fs: : the open Filestorage which contains segmentation parameters
 		/// * applyDefaultSetupOnFailure: : set to true if an error must be thrown on error
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * apply_default_setup_on_failure: true
 		#[inline]
@@ -1267,15 +1268,15 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// try to open an XML segmentation parameters file to adjust current segmentation instance setup
-		/// 
+		///
 		/// - if the xml file does not exist, then default setup is applied
 		/// - warning, Exceptions are thrown if read XML file is not valid
 		/// ## Parameters
 		/// * fs: : the open Filestorage which contains segmentation parameters
 		/// * applyDefaultSetupOnFailure: : set to true if an error must be thrown on error
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [TransientAreasSegmentationModuleTrait::setup_from_storage] function uses the following default values for its arguments:
 		/// * apply_default_setup_on_failure: true
@@ -1287,9 +1288,9 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// try to open an XML segmentation parameters file to adjust current segmentation instance setup
-		/// 
+		///
 		/// - if the xml file does not exist, then default setup is applied
 		/// - warning, Exceptions are thrown if read XML file is not valid
 		/// ## Parameters
@@ -1302,7 +1303,7 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// return the current parameters setup
 		#[inline]
 		fn get_parameters(&mut self) -> Result<crate::bioinspired::SegmentationParameters> {
@@ -1312,7 +1313,7 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// parameters setup display method
 		/// ## Returns
 		/// a string which contains formatted parameters information
@@ -1325,12 +1326,12 @@ pub mod bioinspired {
 			let ret = unsafe { String::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 		/// main processing method, get result using methods getSegmentationPicture()
 		/// ## Parameters
 		/// * inputToSegment: : the image to process, it must match the instance buffer size !
 		/// * channelIndex: : the channel to process in case of multichannel images
-		/// 
+		///
 		/// ## C++ default parameters
 		/// * channel_index: 0
 		#[inline]
@@ -1342,12 +1343,12 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// main processing method, get result using methods getSegmentationPicture()
 		/// ## Parameters
 		/// * inputToSegment: : the image to process, it must match the instance buffer size !
 		/// * channelIndex: : the channel to process in case of multichannel images
-		/// 
+		///
 		/// ## Note
 		/// This alternative version of [TransientAreasSegmentationModuleTrait::run] function uses the following default values for its arguments:
 		/// * channel_index: 0
@@ -1360,7 +1361,7 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// access function
 		/// return the last segmentation result: a boolean picture which is resampled between 0 and 255 for a display purpose
 		#[inline]
@@ -1372,7 +1373,7 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 		/// cleans all the buffers of the instance
 		#[inline]
 		fn clear_all_buffers(&mut self) -> Result<()> {
@@ -1382,14 +1383,14 @@ pub mod bioinspired {
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	/// class which provides a transient/moving areas segmentation module
-	/// 
+	///
 	/// perform a locally adapted segmentation by using the retina magno input data Based on Alexandre
 	/// BENOIT thesis: "Le système visuel humain au secours de la vision par ordinateur"
-	/// 
+	///
 	/// 3 spatio temporal filters are used:
 	/// - a first one which filters the noise and local variations of the input motion energy
 	/// - a second (more powerfull low pass spatial filter) which gives the neighborhood motion energy the
@@ -1398,40 +1399,40 @@ pub mod bioinspired {
 	/// - a stronger third low pass filter helps decision by providing a smooth information about the
 	/// "motion context" in a wider area
 	pub struct TransientAreasSegmentationModule {
-		ptr: *mut c_void
+		ptr: *mut c_void,
 	}
-	
+
 	opencv_type_boxed! { TransientAreasSegmentationModule }
-	
+
 	impl Drop for TransientAreasSegmentationModule {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_delete(self.as_raw_mut_TransientAreasSegmentationModule()) };
 		}
 	}
-	
+
 	unsafe impl Send for TransientAreasSegmentationModule {}
-	
+
 	impl core::AlgorithmTraitConst for TransientAreasSegmentationModule {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl core::AlgorithmTrait for TransientAreasSegmentationModule {
 		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { TransientAreasSegmentationModule, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-	
+
 	impl crate::bioinspired::TransientAreasSegmentationModuleTraitConst for TransientAreasSegmentationModule {
 		#[inline] fn as_raw_TransientAreasSegmentationModule(&self) -> *const c_void { self.as_raw() }
 	}
-	
+
 	impl crate::bioinspired::TransientAreasSegmentationModuleTrait for TransientAreasSegmentationModule {
 		#[inline] fn as_raw_mut_TransientAreasSegmentationModule(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
-	
+
 	boxed_ref! { TransientAreasSegmentationModule, crate::bioinspired::TransientAreasSegmentationModuleTraitConst, as_raw_TransientAreasSegmentationModule, crate::bioinspired::TransientAreasSegmentationModuleTrait, as_raw_mut_TransientAreasSegmentationModule }
-	
+
 	impl TransientAreasSegmentationModule {
 		/// allocator
 		/// ## Parameters
@@ -1445,11 +1446,11 @@ pub mod bioinspired {
 			let ret = unsafe { core::Ptr::<crate::bioinspired::TransientAreasSegmentationModule>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
-		
+
 	}
-	
+
 	boxed_cast_base! { TransientAreasSegmentationModule, core::Algorithm, cv_bioinspired_TransientAreasSegmentationModule_to_Algorithm }
-	
+
 	impl std::fmt::Debug for TransientAreasSegmentationModule {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
