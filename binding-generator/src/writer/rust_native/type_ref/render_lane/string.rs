@@ -108,14 +108,22 @@ impl RenderLaneTrait for OutStringRenderLane<'_, '_> {
 			StrType::StdString(_) => format!("std::string {name}_out"),
 			StrType::CvString(_) => format!("cv::String {name}_out"),
 			StrType::CharPtr(str_enc) => {
-				let len = if matches!(str_enc, StrEnc::Binary) {
-					if let TypeRefTypeHint::StringAsBytes(Some(len_arg_name)) = self.canonical.type_hint() {
-						len_arg_name.as_ref()
-					} else {
-						"1024"
-					}
-				} else {
-					"1024"
+				let len = match self.canonical.type_hint() {
+					TypeRefTypeHint::StringAsBytes(Some(len_arg_name)) if matches!(str_enc, StrEnc::Binary) => len_arg_name.as_ref(),
+					TypeRefTypeHint::StringWithLen(len_arg_name) => len_arg_name.as_ref(),
+					TypeRefTypeHint::None
+					| TypeRefTypeHint::Nullable
+					| TypeRefTypeHint::NullableSlice
+					| TypeRefTypeHint::Slice
+					| TypeRefTypeHint::LenForSlice(_, _)
+					| TypeRefTypeHint::StringAsBytes(_)
+					| TypeRefTypeHint::CharAsRustChar
+					| TypeRefTypeHint::CharPtrSingleChar
+					| TypeRefTypeHint::PrimitivePtrAsRaw
+					| TypeRefTypeHint::AddArrayLength(_)
+					| TypeRefTypeHint::BoxedAsRef(_, _, _)
+					| TypeRefTypeHint::TraitClassConcrete
+					| TypeRefTypeHint::ExplicitLifetime(_) => "1024",
 				};
 				format!("std::unique_ptr<char[]> {name}_out = std::make_unique<char[]>({len})")
 			}

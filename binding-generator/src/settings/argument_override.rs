@@ -169,6 +169,13 @@ fn core_arg_override_factory() -> ArgOverride {
 				HashMap::from([("allocator", TypeRefTypeHint::ExplicitLifetime(Lifetime::statik()))]),
 			)],
 		),
+		(
+			"cv::ocl::convertTypeStr",
+			vec![(
+				pred!(mut, ["sdepth", "ddepth", "cn", "buf", "buf_size"]),
+				HashMap::from([("buf", TypeRefTypeHint::StringWithLen("buf_size".into()))]),
+			)],
+		),
 	]))
 }
 
