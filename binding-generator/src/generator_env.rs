@@ -247,7 +247,7 @@ impl<'tu> GeneratorEnv<'tu> {
 					|| entity.get_location().expect("Can't get entity location"),
 					|range| range.get_start(),
 				)
-				.get_spelling_location();
+				.get_expansion_location();
 			(loc, 0)
 		};
 		ExportIdx {
