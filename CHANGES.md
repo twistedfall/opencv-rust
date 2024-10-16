@@ -1,3 +1,6 @@
+* 0.93.2
+  * Fix binding generation using clang-19.
+
 * 0.93.1
   * Fix 0.93.0 regression: https://github.com/twistedfall/opencv-rust/issues/620.
   * Allow combining several versions of the crate as dependencies, fixes https://github.com/twistedfall/opencv-rust/issues/597.
