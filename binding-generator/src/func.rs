@@ -22,8 +22,8 @@ use crate::type_ref::{Constness, CppNameStyle, FishStyle, TypeRefDesc, TypeRefTy
 use crate::writer::rust_native::element::RustElement;
 use crate::writer::rust_native::type_ref::TypeRefExt;
 use crate::{
-	debug, settings, Class, CowMapBorrowedExt, DefaultElement, Element, EntityExt, Field, GeneratedType, GeneratorEnv,
-	IteratorExt, NameDebug, NameStyle, StrExt, StringExt, TypeRef,
+	debug, Class, CowMapBorrowedExt, DefaultElement, Element, EntityExt, Field, GeneratedType, GeneratorEnv, IteratorExt,
+	NameDebug, NameStyle, StrExt, StringExt, TypeRef,
 };
 
 mod desc;
@@ -126,7 +126,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		for spec in spec_values {
 			generic.extend_sep(", ", &spec().cpp_name(CppNameStyle::Reference));
 		}
-		let mut desc = self.to_desc(InheritConfig::empty().kind().arguments().return_type_ref());
+		let mut desc = self.to_desc_with_skip_config(InheritConfig::empty().kind().arguments().return_type_ref());
 		let rust_custom_leafname = Some(if spec.0.contains('+') {
 			spec.0.replacen('+', &self.rust_leafname(FishStyle::No), 1).into()
 		} else {
@@ -142,7 +142,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		Self::Desc(desc)
 	}
 
-	pub(crate) fn to_desc(&self, skip_config: InheritConfig) -> Rc<FuncDesc<'tu, 'ge>> {
+	pub(crate) fn to_desc_with_skip_config(&self, skip_config: InheritConfig) -> Rc<FuncDesc<'tu, 'ge>> {
 		match self {
 			Func::Clang { .. } => {
 				let kind = if skip_config.kind {
@@ -245,7 +245,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 		match self {
 			Func::Clang { .. } => {
 				if inherit_config.any_enabled() {
-					let mut desc = self.to_desc(inherit_config);
+					let mut desc = self.to_desc_with_skip_config(inherit_config);
 					transfer(Rc::make_mut(&mut desc), ancestor, inherit_config);
 					*self = Func::Desc(desc);
 				}
@@ -645,12 +645,14 @@ impl Element for Func<'_, '_> {
 			.with_is_excluded(|| {
 				let kind = self.kind();
 				let identifier = self.identifier();
-				let is_unavailable = match self {
-					Func::Clang { entity, .. } => entity.get_availability() == Availability::Unavailable,
+				let is_excluded = match self {
+					Func::Clang { entity, gen_env, .. } => {
+						entity.get_availability() == Availability::Unavailable
+							|| gen_env.settings.func_exclude.contains(identifier.as_str())
+					}
 					Func::Desc(_) => false,
 				};
-				is_unavailable
-					|| settings::FUNC_EXCLUDE.contains(identifier.as_str())
+				is_excluded
 					|| self.is_generic()
 					|| self.arguments().iter().any(|a| a.type_ref().exclude_kind().is_ignored())
 					|| kind.as_operator().map_or(false, |(_, kind)| match kind {

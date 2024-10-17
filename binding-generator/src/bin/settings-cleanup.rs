@@ -14,7 +14,6 @@ use opencv_binding_generator::{
 struct FunctionFinder<'tu, 'f> {
 	pub module: &'tu str,
 	pub gen_env: GeneratorEnv<'tu>,
-	pub func_exclude_unused: RefCell<&'f mut HashSet<&'static str>>,
 	pub func_cfg_attr_unused: RefCell<&'f mut HashSet<&'static str>>,
 }
 
@@ -24,13 +23,13 @@ impl<'tu, 'f> FunctionFinder<'tu, 'f> {
 		self.gen_env.settings.arg_override.get(&mut matcher);
 		self.gen_env.settings.return_override.get(&mut matcher);
 		self.gen_env.settings.force_infallible.get(&mut matcher);
+		self.gen_env.settings.func_companion_tweak.get(&mut matcher);
 		self.gen_env.settings.func_replace.get(&mut matcher);
 		self.gen_env.settings.func_specialize.get(&mut matcher);
 		self.gen_env.settings.func_unsafe.get(&mut matcher);
 
 		let identifier = f.identifier();
 
-		self.func_exclude_unused.borrow_mut().remove(identifier.as_str());
 		self.func_cfg_attr_unused.borrow_mut().remove(identifier.as_str());
 	}
 }
@@ -86,7 +85,6 @@ fn main() {
 	let mut args = env::args_os().skip(1);
 	let src_cpp_dir = PathBuf::from(args.next().expect("2nd argument must be dir with custom cpp"));
 	let opencv_header_dirs = args.map(PathBuf::from);
-	let mut func_exclude_unused = settings::FUNC_EXCLUDE.clone();
 	let mut func_cfg_attr_unused = settings::FUNC_CFG_ATTR.keys().copied().collect::<HashSet<_>>();
 	// module -> usage_section -> (name, preds)
 	let global_usage_tracking = Rc::new(RefCell::new(HashMap::<
@@ -117,7 +115,6 @@ fn main() {
 					let mut function_finder = FunctionFinder {
 						module: &module,
 						gen_env,
-						func_exclude_unused: RefCell::new(&mut func_exclude_unused),
 						func_cfg_attr_unused: RefCell::new(&mut func_cfg_attr_unused),
 					};
 					root_entity.walk_opencv_entities(&mut function_finder);
@@ -163,8 +160,6 @@ fn main() {
 			}
 		}
 	}
-	println!("Unused entries in settings::FUNC_EXCLUDE ({}):", func_exclude_unused.len());
-	show(func_exclude_unused);
 	println!("Unused entries in settings::FUNC_CFG_ATTR ({}):", func_cfg_attr_unused.len());
 	show(func_cfg_attr_unused);
 }

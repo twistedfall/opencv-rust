@@ -184,7 +184,9 @@ impl RustElement for Func<'_, '_> {
 
 	fn rendered_doc_comment(&self, comment_marker: &str, opencv_version: &str) -> String {
 		let mut comment = RenderComment::new(&self.doc_comment_overloaded(), opencv_version);
-		let default_args_comment = comment::render_cpp_default_args(self.arguments().as_ref());
+		let args = self.arguments();
+		let (_, default_args) = split_default_args(&args);
+		let default_args_comment = comment::render_cpp_default_args(default_args);
 		if !default_args_comment.is_empty() {
 			if !comment.comment.is_empty() {
 				comment.comment.push_str("\n\n");
@@ -832,32 +834,52 @@ fn rust_generic_decl<'f>(f: &'f Func, return_type_ref: &TypeRef) -> Cow<'f, str>
 	}
 }
 
+fn viable_default_arg(arg: &Field) -> bool {
+	arg.default_value().is_some() && !arg.is_user_data() && {
+		let type_ref = arg.type_ref();
+		// don't remove the arguments that are used to pass the slice or its length
+		!matches!(
+			type_ref.type_hint(),
+			TypeRefTypeHint::Slice | TypeRefTypeHint::LenForSlice(..)
+		)
+	}
+}
+
+/// Split `arg` into 2 sub-slices, (args_without_default_value, args_with_default_value)
+///
+/// Arguments with special meanings like userdata and slice length are not included in the args_with_default_value slice.
+fn split_default_args<'a, 'tu, 'ge>(args: &'a [Field<'tu, 'ge>]) -> (&'a [Field<'tu, 'ge>], &'a [Field<'tu, 'ge>]) {
+	// default args are in the end
+	let last_non_default_arg_idx = args.iter().rposition(|arg| !viable_default_arg(arg));
+	if let Some(last_non_default_arg_idx) = last_non_default_arg_idx {
+		args.split_at(last_non_default_arg_idx + 1)
+	} else {
+		(&[], args)
+	}
+}
+
 /// Companion function with all optional arguments as defaults
 fn companion_func_default_args<'tu, 'ge>(f: &Func<'tu, 'ge>) -> Option<Func<'tu, 'ge>> {
-	fn viable_default_arg(arg: &Field) -> bool {
-		arg.default_value().is_some() && !arg.is_user_data() && {
-			let type_ref = arg.type_ref();
-			!type_ref.kind().is_function()
-				// don't remove the arguments that are used to pass the slice or its length
-				&& !matches!(type_ref.type_hint(), TypeRefTypeHint::Slice | TypeRefTypeHint::LenForSlice(..))
-		}
-	}
-
 	if f.kind().as_field_accessor().is_some() {
 		return None;
 	}
 
-	let args = f.arguments();
-	// default args are in the end
-	let last_non_default_arg_idx = args.iter().rposition(|arg| !viable_default_arg(arg));
-	let (args_without_def, args_with_def) = if let Some(last_non_default_arg_idx) = last_non_default_arg_idx {
-		if last_non_default_arg_idx + 1 == args.len() {
-			return None;
+	match f {
+		Func::Clang { gen_env, .. } => {
+			if gen_env
+				.settings
+				.func_companion_tweak
+				.get(&mut f.matcher())
+				.map_or(false, |t| t.skip_default())
+			{
+				return None;
+			}
 		}
-		(&args[..=last_non_default_arg_idx], &args[last_non_default_arg_idx..])
-	} else {
-		([].as_slice(), args.as_ref())
-	};
+		Func::Desc(_) => {}
+	}
+
+	let args = f.arguments();
+	let (args_without_def, args_with_def) = split_default_args(&args);
 	if args_with_def.is_empty() {
 		return None;
 	}
@@ -874,22 +896,12 @@ fn companion_func_default_args<'tu, 'ge>(f: &Func<'tu, 'ge>) -> Option<Func<'tu,
 			refr = render_ref(f, Some(&original_rust_leafname))
 		)
 	.expect("Impossible");
-	let out = match f.clone() {
-		Func::Clang { .. } => {
-			let mut desc = f.to_desc(InheritConfig::empty().doc_comment().arguments());
-			let desc_mut = Rc::make_mut(&mut desc);
-			desc_mut.rust_custom_leafname = Some(rust_leafname.into());
-			desc_mut.arguments = args_without_def.into();
-			desc_mut.doc_comment = doc_comment.into();
-			Func::Desc(desc)
-		}
-		Func::Desc(mut desc) => {
-			let desc_ref = Rc::make_mut(&mut desc);
-			desc_ref.arguments = args_without_def.into();
-			desc_ref.rust_custom_leafname = Some(rust_leafname.into());
-			Func::Desc(desc)
-		}
-	};
+	let mut desc = f.to_desc_with_skip_config(InheritConfig::empty().doc_comment().arguments());
+	let desc_mut = Rc::make_mut(&mut desc);
+	desc_mut.rust_custom_leafname = Some(rust_leafname.into());
+	desc_mut.arguments = args_without_def.into();
+	desc_mut.doc_comment = doc_comment.into();
+	let out = Func::Desc(desc);
 	if out.exclude_kind().is_included() {
 		Some(out)
 	} else {
@@ -901,7 +913,7 @@ fn companion_func_default_args<'tu, 'ge>(f: &Func<'tu, 'ge>) -> Option<Func<'tu,
 fn companion_func_boxref_mut<'tu, 'ge>(f: &Func<'tu, 'ge>) -> Option<Func<'tu, 'ge>> {
 	let ret_type_ref = f.return_type_ref();
 	if let Some((Constness::Mut, borrow_arg_name, _)) = ret_type_ref.type_hint().as_boxed_as_ref() {
-		let mut desc = f.to_desc(InheritConfig::empty());
+		let mut desc = f.to_desc_with_skip_config(InheritConfig::empty());
 		let desc_mut = Rc::make_mut(&mut desc);
 		let mut cloned_args = None;
 		// Rc::make_mut doesn't work on slices

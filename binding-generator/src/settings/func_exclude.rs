@@ -1,21 +1,36 @@
 use std::collections::HashSet;
 
-use once_cell::sync::Lazy;
+pub type FuncExclude = HashSet<&'static str>;
 
-/// map of functions to exclude, value is Func.identifier()
-pub static FUNC_EXCLUDE: Lazy<HashSet<&str>> = Lazy::new(|| {
+pub fn func_exclude_factory(module: &str) -> FuncExclude {
+	match module {
+		"core" => core_factory(),
+		"cudaimgproc" => cudaimgproc_factory(),
+		"dnn" => dnn_factory(),
+		"gapi" => gapi_factory(),
+		"hdf" => hdf_factory(),
+		"imgproc" => imgproc_factory(),
+		"objdetect" => objdetect_factory(),
+		"optflow" => optflow_factory(),
+		"stitching" => stitching_factory(),
+		"surface_matching" => surface_matching_factory(),
+		"tracking" => tracking_factory(),
+		_ => FuncExclude::default(),
+	}
+}
+
+fn core_factory() -> FuncExclude {
 	HashSet::from([
-		// ### core ###
 		"cv_AsyncArray__getImpl_const",
-		"cv_Mat_Mat_const_MatR_const_RangeX",    // duplicate of cv_Mat_Mat_Mat_VectorOfRange, but with pointers
-		"cv_Mat_copySize_const_MatR",            // internal function
-		"cv_Mat_operator___const_const_RangeX",  // duplicate of cv_Mat_operator___const_const_vectorLRangeGR, but with pointers
-		"cv_Mat_push_back__const_voidX",         // internal method
-		"cv_Mat_operatorST_const_MatR",          // unsafe with the safe version that moves
+		"cv_Mat_Mat_const_MatR_const_RangeX", // duplicate of cv_Mat_Mat_Mat_VectorOfRange, but with pointers
+		"cv_Mat_copySize_const_MatR",         // internal function
+		"cv_Mat_operator___const_const_RangeX", // duplicate of cv_Mat_operator___const_const_vectorLRangeGR, but with pointers
+		"cv_Mat_push_back__const_voidX",      // internal method
+		"cv_Mat_operatorST_const_MatR",       // unsafe with the safe version that moves
 		"cv_UMat_UMat_const_UMatR_const_RangeX", // duplicate of cv_UMat_UMat_UMat_VectorOfRange, but with pointers
-		"cv_UMat_copySize_const_UMatR",          // internal function
+		"cv_UMat_copySize_const_UMatR",       // internal function
 		"cv_UMat_operator___const_const_RangeX", // duplicate of cv_UMat_operator___const_const_vectorLRangeGR, but with pointers
-		"cv_RNG_MT19937_operator__",             // the same as calling to_u32() or next()
+		"cv_RNG_MT19937_operator__",          // the same as calling to_u32() or next()
 		"cv_addImpl_int_const_charX",
 		"cv_calcCovarMatrix_const_MatX_int_MatR_MatR_int_int", // duplicate of cv_calcCovarMatrix_const__InputArrayR_const__OutputArrayR_const__InputOutputArrayR_int_int, but with pointers
 		"cv_cv_abs_short",
@@ -33,20 +48,45 @@ pub static FUNC_EXCLUDE: Lazy<HashSet<&str>> = Lazy::new(|| {
 		"cv_useCollection",
 		"cv_vconcat_const_MatX_size_t_const__OutputArrayR", // duplicate of cv_vconcat_VectorOfMat_Mat, but with pointers
 		"cv_Mat_Mat_MatRR",                                 // Mat::copy that takes arg by value
-		// ### cudaimgproc ###
+		// those function are marked as CV_EXPORTS, but they are missing from the shared libraries
+		"cv_MatConstIterator_MatConstIterator_const_MatX_const_intX",
+		"cv_SparseMatConstIterator_operatorSS",
+		"cv_SparseMatIterator_SparseMatIterator_SparseMatX_const_intX",
+		"cv__OutputArray__OutputArray_const_vectorLGpuMatGR",
+		"cv_cuda_convertFp16_const__InputArrayR_const__OutputArrayR_StreamR",
+		"cv_getImpl_vectorLintGR_vectorLStringGR",
+	])
+}
+
+fn cudaimgproc_factory() -> FuncExclude {
+	HashSet::from([
 		"cv_cuda_histEven_const__InputArrayR_GpuMatXX_intXX_intXX_intXX_StreamR", // slice of boxed objects
 		"cv_cuda_histRange_const__InputArrayR_GpuMatXX_const_GpuMatXX_StreamR",   // slice of boxed objects
-		// ### dnn ###
+	])
+}
+
+fn dnn_factory() -> FuncExclude {
+	HashSet::from([
 		"cv_dnn_DictValue_DictValue_const_StringR", // effectively duplicate of cv_dnn_DictValue_DictValue_const_charX
 		"cv_dnn_Layer_finalize_const_vectorLMatXGR_vectorLMatGR", // dup of cv_dnn_Layer_finalize_const__InputArrayR_const__OutputArrayR
 		"cv_dnn_Model_operator_cv_dnn_Net_const",   // fixme, should generate fine, it's a dup of get_network_() anyway
-		// ### gapi ###
+		// those function are marked as CV_EXPORTS, but they are missing from the shared libraries
+		"cv_dnn_BackendNode_BackendNode_int",
+	])
+}
+
+fn gapi_factory() -> FuncExclude {
+	HashSet::from([
 		"cv_MediaFrame_IAdapter_access_Access", // use of deleted function ‘cv::MediaFrame::View::View(const cv::MediaFrame::View&)’
 		"cv_MediaFrame_access_const_Access",    // use of deleted function ‘cv::MediaFrame::View::View(const cv::MediaFrame::View&)’
 		"cv_RMat_Adapter_access_Access",        // use of deleted function ‘cv::RMat::View::View(const cv::RMat::View&)’
 		"cv_RMat_IAdapter_access_Access",       // use of deleted function ‘cv::RMat::View::View(const cv::RMat::View&)’
 		"cv_RMat_access_const_Access",          // use of deleted function ‘cv::RMat::View::View(const cv::RMat::View&)’
-		// ### hdf ###
+	])
+}
+
+fn hdf_factory() -> FuncExclude {
+	HashSet::from([
 		"cv_hdf_HDF5_dscreate_const_const_int_const_int_const_int_const_StringR_const_int_const_intX", // has corresponding Vector version
 		"cv_hdf_HDF5_dsinsert_const_const__InputArrayR_const_StringR_const_intX", // has corresponding Vector version
 		"cv_hdf_HDF5_dsinsert_const_const__InputArrayR_const_StringR_const_intX_const_intX", // has corresponding Vector version
@@ -54,7 +94,11 @@ pub static FUNC_EXCLUDE: Lazy<HashSet<&str>> = Lazy::new(|| {
 		"cv_hdf_HDF5_dsread_const_const__OutputArrayR_const_StringR_const_intX_const_intX", // has corresponding Vector version
 		"cv_hdf_HDF5_dswrite_const_const__InputArrayR_const_StringR_const_intX",  // has corresponding Vector version
 		"cv_hdf_HDF5_dswrite_const_const__InputArrayR_const_StringR_const_intX_const_intX", // has corresponding Vector version
-		// ### imgproc ###
+	])
+}
+
+fn imgproc_factory() -> FuncExclude {
+	HashSet::from([
 		"cv_calcBackProject_const_MatX_int_const_intX_const_SparseMatR_const__OutputArrayR_const_floatXX_double_bool", // slice pointers
 		"cv_calcBackProject_const_MatX_int_const_intX_const__InputArrayR_const__OutputArrayR_const_floatXX_double_bool", // slice pointers
 		"cv_calcHist_const_MatX_int_const_intX_const__InputArrayR_SparseMatR_int_const_intX_const_floatXX_bool_bool", // slice pointers
@@ -65,30 +109,40 @@ pub static FUNC_EXCLUDE: Lazy<HashSet<&str>> = Lazy::new(|| {
 		"cv_fillPoly_const__InputOutputArrayR_const_PointXX_const_intX_int_const_ScalarR_int_int_Point",
 		"cv_polylines_MatR_const_PointXX_const_intX_int_bool_const_ScalarR_int_int_int", // 3.2 3.4
 		"cv_polylines_const__InputOutputArrayR_const_PointXX_const_intX_int_bool_const_ScalarR_int_int_int",
-		// ### objdetect ###
+	])
+}
+
+fn objdetect_factory() -> FuncExclude {
+	HashSet::from([
 		"cv_QRCodeDetector_detectAndDecodeMulti_const_const__InputArrayR_vectorLstringGR_const__OutputArrayR_const__OutputArrayR", // fixme: stores data to Vector<String>, that doesn't work yet
-		// ### optflow ###
+	])
+}
+
+fn optflow_factory() -> FuncExclude {
+	HashSet::from([
 		"cv_optflow_GPCTrainingSamples_operator_cv_optflow_GPCSamplesVector", // support of "operator &" missing
-		// ### text ###
-		"cv_text_OCRBeamSearchDecoder_create_const_PtrLClassifierCallbackG_const_stringR_const__InputArrayR_const__InputArrayR", // with OpenCV 4.2 this leads to https://github.com/twistedfall/opencv-rust/issues/505
-		"cv_text_OCRBeamSearchDecoder_create_const_PtrLClassifierCallbackG_const_StringR_const__InputArrayR_const__InputArrayR", // with OpenCV 4.2 this leads to https://github.com/twistedfall/opencv-rust/issues/505
+	])
+}
+
+fn stitching_factory() -> FuncExclude {
+	HashSet::from([
 		// those function are marked as CV_EXPORTS, but they are missing from the shared libraries
-		// ### core ###
-		"cv_MatConstIterator_MatConstIterator_const_MatX_const_intX",
-		"cv_SparseMatConstIterator_operatorSS",
-		"cv_SparseMatIterator_SparseMatIterator_SparseMatX_const_intX",
-		"cv__OutputArray__OutputArray_const_vectorLGpuMatGR",
-		"cv_cuda_convertFp16_const__InputArrayR_const__OutputArrayR_StreamR",
-		"cv_getImpl_vectorLintGR_vectorLStringGR",
-		// ### dnn ###
-		"cv_dnn_BackendNode_BackendNode_int",
-		// ### stitching ###
 		"cv_createStitcherScans_bool",
 		"cv_createStitcher_bool",
-		// ### surface_matching ###
+	])
+}
+
+fn surface_matching_factory() -> FuncExclude {
+	HashSet::from([
+		// those function are marked as CV_EXPORTS, but they are missing from the shared libraries
 		"cv_ppf_match_3d_PPF3DDetector_read_const_FileNodeR",
 		"cv_ppf_match_3d_PPF3DDetector_write_const_FileStorageR",
-		// ### tracking ###
+	])
+}
+
+fn tracking_factory() -> FuncExclude {
+	HashSet::from([
+		// those function are marked as CV_EXPORTS, but they are missing from the shared libraries
 		"cv_CvFeatureParams_CvFeatureParams",
 		"cv_CvFeatureParams_create_FeatureType",
 		"cv_CvFeatureParams_create_int",
@@ -106,4 +160,4 @@ pub static FUNC_EXCLUDE: Lazy<HashSet<&str>> = Lazy::new(|| {
 		"cv_SparseMatConstIterator_operatorSS",
 		"cv__OutputArray__OutputArray_const_vectorLGpuMatGR",
 	])
-});
+}

@@ -50,7 +50,8 @@ pub use element_exclude_kind::ELEMENT_EXCLUDE_KIND;
 pub use element_export_tweak::ELEMENT_EXPORT_TWEAK;
 pub use force_infallible::{force_infallible_factory, ForceInfallible};
 pub use func_cfg_attr::FUNC_CFG_ATTR;
-pub use func_exclude::FUNC_EXCLUDE;
+pub use func_companion_tweak::{func_companion_tweak_factory, CompanionTweak, FuncCompanionTweak};
+pub use func_exclude::{func_exclude_factory, FuncExclude};
 pub use func_inject::{func_inject_factory, FuncFactory, FuncInject};
 pub use func_rename::{func_rename_factory, FuncRename};
 pub use func_replace::{func_replace_factory, FuncInheritFactory, FuncReplace};
@@ -73,6 +74,7 @@ mod element_exclude_kind;
 mod element_export_tweak;
 mod force_infallible;
 mod func_cfg_attr;
+mod func_companion_tweak;
 mod func_exclude;
 mod func_inject;
 mod func_rename;
@@ -91,6 +93,8 @@ pub struct Settings {
 	pub arg_override: ArgOverride,
 	pub return_override: ReturnOverride,
 	pub force_infallible: ForceInfallible,
+	pub func_companion_tweak: FuncCompanionTweak,
+	pub func_exclude: FuncExclude,
 	pub func_inject: FuncInject,
 	pub func_rename: FuncRename,
 	pub func_replace: FuncReplace,
@@ -107,6 +111,8 @@ impl Settings {
 			arg_override: ArgOverride::empty(),
 			return_override: ReturnOverride::empty(),
 			force_infallible: ForceInfallible::empty(),
+			func_companion_tweak: FuncCompanionTweak::empty(),
+			func_exclude: FuncExclude::default(),
 			func_inject: FuncInject::default(),
 			func_rename: FuncRename::default(),
 			func_replace: FuncReplace::empty(),
@@ -123,6 +129,8 @@ impl Settings {
 			arg_override: arg_override_factory(module),
 			return_override: return_override_factory(module),
 			force_infallible: force_infallible_factory(module),
+			func_companion_tweak: func_companion_tweak_factory(module),
+			func_exclude: func_exclude_factory(module),
 			func_inject: func_inject_factory(module),
 			func_rename: func_rename_factory(module),
 			func_replace: func_replace_factory(module),
@@ -138,6 +146,7 @@ impl Settings {
 		self.arg_override.start_usage_tracking();
 		self.return_override.start_usage_tracking();
 		self.force_infallible.start_usage_tracking();
+		self.func_companion_tweak.start_usage_tracking();
 		self.func_replace.start_usage_tracking();
 		self.func_specialize.start_usage_tracking();
 		self.func_unsafe.start_usage_tracking();
@@ -148,6 +157,7 @@ impl Settings {
 			("ARG_OVERRIDE", self.arg_override.finish_usage_tracking()),
 			("RETURN_OVERRIDE", self.return_override.finish_usage_tracking()),
 			("FORCE_INFALLIBLE", self.force_infallible.finish_usage_tracking()),
+			("FUNC_COMPANION_TWEAK", self.func_companion_tweak.finish_usage_tracking()),
 			("FUNC_REPLACE", self.func_replace.finish_usage_tracking()),
 			("FUNC_SPECIALIZE", self.func_specialize.finish_usage_tracking()),
 			("FUNC_UNSAFE", self.func_unsafe.finish_usage_tracking()),
