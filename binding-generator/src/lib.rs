@@ -41,7 +41,7 @@ use tuple::Tuple;
 #[allow(unused)]
 use type_ref::dbg_clang_type;
 use type_ref::TypeRef;
-pub use type_ref::{CppNameStyle, NameStyle};
+pub use type_ref::{Constness, CppNameStyle, NameStyle};
 pub use typedef::Typedef;
 use vector::Vector;
 pub use walker::{EntityWalkerExt, EntityWalkerVisitor};

@@ -6,7 +6,7 @@ use std::rc::Rc;
 
 use clang::{Availability, Entity, EntityKind, ExceptionSpecification};
 pub use desc::{FuncCppBody, FuncDesc, FuncRustBody, FuncRustExtern};
-pub use func_matcher::{FuncMatchProperties, FuncMatcher, Pred};
+pub use func_matcher::{FuncMatchProperties, FuncMatcher, Pred, UsageTracker};
 pub use kind::{FuncKind, OperatorKind, ReturnKind};
 use once_cell::sync::Lazy;
 use regex::bytes::Regex;

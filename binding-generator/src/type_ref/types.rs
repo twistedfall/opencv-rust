@@ -289,7 +289,7 @@ pub enum ExternDir {
 	FromCpp,
 }
 
-#[derive(Clone, Copy, Debug, Hash, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, Hash, PartialEq, Eq, PartialOrd, Ord)]
 pub enum Constness {
 	Const,
 	Mut,

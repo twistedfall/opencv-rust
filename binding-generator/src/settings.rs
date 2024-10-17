@@ -64,7 +64,7 @@ pub use implemented::{
 use once_cell::sync::Lazy;
 pub use property_tweaks::{property_tweaks_factory, PropertyReadWrite, PropertyTweak, PropertyTweaks};
 
-use crate::func::FuncMatcher;
+use crate::func::{FuncMatcher, UsageTracker};
 use crate::type_ref::TypeRef;
 
 mod argument_names;
@@ -132,6 +132,26 @@ impl Settings {
 			property_override: property_override_factory(module),
 			property_tweaks: property_tweaks_factory(module),
 		}
+	}
+
+	pub fn start_usage_tracking(&mut self) {
+		self.arg_override.start_usage_tracking();
+		self.return_override.start_usage_tracking();
+		self.force_infallible.start_usage_tracking();
+		self.func_replace.start_usage_tracking();
+		self.func_specialize.start_usage_tracking();
+		self.func_unsafe.start_usage_tracking();
+	}
+
+	pub fn finish_usage_tracking(&mut self) -> HashMap<&'static str, HashSet<UsageTracker>> {
+		HashMap::from([
+			("ARG_OVERRIDE", self.arg_override.finish_usage_tracking()),
+			("RETURN_OVERRIDE", self.return_override.finish_usage_tracking()),
+			("FORCE_INFALLIBLE", self.force_infallible.finish_usage_tracking()),
+			("FUNC_REPLACE", self.func_replace.finish_usage_tracking()),
+			("FUNC_SPECIALIZE", self.func_specialize.finish_usage_tracking()),
+			("FUNC_UNSAFE", self.func_unsafe.finish_usage_tracking()),
+		])
 	}
 }
 

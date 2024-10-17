@@ -1,12 +1,14 @@
 use std::cell::RefCell;
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
 use std::ops::ControlFlow;
 use std::path::{Path, PathBuf};
+use std::rc::Rc;
 use std::{env, fmt};
 
 use clang::{Entity, EntityKind};
 use opencv_binding_generator::{
-	opencv_module_from_path, settings, Class, EntityExt, EntityWalkerExt, EntityWalkerVisitor, Func, Generator, GeneratorEnv,
+	opencv_module_from_path, settings, Class, Constness, EntityExt, EntityWalkerExt, EntityWalkerVisitor, Func, Generator,
+	GeneratorEnv, Pred,
 };
 
 struct FunctionFinder<'tu, 'f> {
@@ -18,6 +20,14 @@ struct FunctionFinder<'tu, 'f> {
 
 impl<'tu, 'f> FunctionFinder<'tu, 'f> {
 	pub fn update_used_func(&self, f: &Func) {
+		let mut matcher = f.matcher();
+		self.gen_env.settings.arg_override.get(&mut matcher);
+		self.gen_env.settings.return_override.get(&mut matcher);
+		self.gen_env.settings.force_infallible.get(&mut matcher);
+		self.gen_env.settings.func_replace.get(&mut matcher);
+		self.gen_env.settings.func_specialize.get(&mut matcher);
+		self.gen_env.settings.func_unsafe.get(&mut matcher);
+
 		let identifier = f.identifier();
 
 		self.func_exclude_unused.borrow_mut().remove(identifier.as_str());
@@ -25,7 +35,7 @@ impl<'tu, 'f> FunctionFinder<'tu, 'f> {
 	}
 }
 
-impl<'tu> EntityWalkerVisitor<'tu> for FunctionFinder<'tu, '_> {
+impl<'tu> EntityWalkerVisitor<'tu> for &mut FunctionFinder<'tu, '_> {
 	fn wants_file(&mut self, path: &Path) -> bool {
 		opencv_module_from_path(path).map_or(false, |m| m == self.module)
 	}
@@ -78,6 +88,11 @@ fn main() {
 	let opencv_header_dirs = args.map(PathBuf::from);
 	let mut func_exclude_unused = settings::FUNC_EXCLUDE.clone();
 	let mut func_cfg_attr_unused = settings::FUNC_CFG_ATTR.keys().copied().collect::<HashSet<_>>();
+	// module -> usage_section -> (name, preds)
+	let global_usage_tracking = Rc::new(RefCell::new(HashMap::<
+		String,
+		HashMap<&'static str, HashSet<UsageTrackerOwned>>,
+	>::new()));
 	for opencv_header_dir in opencv_header_dirs {
 		println!("Processing header dir: {}", opencv_header_dir.display());
 		let modules = opencv_header_dir
@@ -93,19 +108,84 @@ fn main() {
 		let gen = Generator::new(&opencv_header_dir, &[], &src_cpp_dir);
 		for module in modules {
 			println!("  {module}");
-			gen.pre_process(&module, false, |root_entity| {
-				let gen_env = GeneratorEnv::global(&module, root_entity);
-				root_entity.walk_opencv_entities(FunctionFinder {
-					module: &module,
-					gen_env,
-					func_exclude_unused: RefCell::new(&mut func_exclude_unused),
-					func_cfg_attr_unused: RefCell::new(&mut func_cfg_attr_unused),
-				});
+			gen.pre_process(&module, false, {
+				let global_usage_tracking = Rc::clone(&global_usage_tracking);
+				|root_entity| {
+					let global_usage_tracking = global_usage_tracking; // force move
+					let mut gen_env = GeneratorEnv::global(&module, root_entity);
+					gen_env.settings.start_usage_tracking();
+					let mut function_finder = FunctionFinder {
+						module: &module,
+						gen_env,
+						func_exclude_unused: RefCell::new(&mut func_exclude_unused),
+						func_cfg_attr_unused: RefCell::new(&mut func_cfg_attr_unused),
+					};
+					root_entity.walk_opencv_entities(&mut function_finder);
+
+					let usage_tracking = function_finder.gen_env.settings.finish_usage_tracking();
+					let mut global_usage_tracking = global_usage_tracking.borrow_mut();
+					let module_usage_tracking = global_usage_tracking.entry(module.to_string()).or_default();
+					for (usage_section, new_usage_tracking) in usage_tracking {
+						let new_usage_tracking: HashSet<UsageTrackerOwned> = new_usage_tracking
+							.into_iter()
+							.map(|(name, preds)| (name.to_string(), preds.iter().map(PredOwned::from_pred).collect()))
+							.collect();
+						if let Some(prev_usage_tracking) = module_usage_tracking.get_mut(usage_section) {
+							*prev_usage_tracking = new_usage_tracking.intersection(prev_usage_tracking).cloned().collect();
+						} else {
+							module_usage_tracking.insert(usage_section, new_usage_tracking);
+						}
+					}
+				}
 			});
+		}
+	}
+
+	let global_usage_tracking = Rc::try_unwrap(global_usage_tracking).expect("Not owned").into_inner();
+	let mut usage_per_section = HashMap::new();
+	for (_module, module_usage) in global_usage_tracking {
+		for (section, preds) in module_usage {
+			let section_usage = usage_per_section.entry(section).or_insert_with(Vec::new);
+			for (name, preds) in preds {
+				section_usage.push((name, preds));
+			}
+		}
+	}
+	for (section, mut usage_tracking) in usage_per_section {
+		if usage_tracking.is_empty() {
+			println!("No unused entries in {section}");
+		} else {
+			println!("Unused entries in {section} ({}):", usage_tracking.len());
+			usage_tracking.sort_unstable();
+			for (name, mut preds) in usage_tracking {
+				preds.sort_unstable();
+				println!("  {name}: {preds:?}");
+			}
 		}
 	}
 	println!("Unused entries in settings::FUNC_EXCLUDE ({}):", func_exclude_unused.len());
 	show(func_exclude_unused);
 	println!("Unused entries in settings::FUNC_CFG_ATTR ({}):", func_cfg_attr_unused.len());
 	show(func_cfg_attr_unused);
+}
+
+type UsageTrackerOwned = (String, Vec<PredOwned>);
+
+#[derive(Clone, Debug, PartialEq, Eq, Hash, PartialOrd, Ord)]
+enum PredOwned {
+	Constness(Constness),
+	Return(String),
+	ArgNames(Vec<String>),
+	ArgTypes(Vec<String>),
+}
+
+impl PredOwned {
+	fn from_pred(pred: &Pred) -> Self {
+		match pred {
+			Pred::Constness(c) => Self::Constness(*c),
+			Pred::Return(r) => Self::Return(r.to_string()),
+			Pred::ArgNames(a) => Self::ArgNames(a.iter().map(|s| s.to_string()).collect()),
+			Pred::ArgTypes(a) => Self::ArgTypes(a.iter().map(|s| s.to_string()).collect()),
+		}
+	}
 }
