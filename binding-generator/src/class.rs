@@ -14,6 +14,7 @@ use crate::element::ExcludeKind;
 use crate::entity::{ControlFlowExt, ToEntity};
 use crate::field::FieldDesc;
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, ReturnKind};
+use crate::settings::PropertyReadWrite;
 use crate::type_ref::{Constness, CppNameStyle, StrEnc, StrType, TypeRef, TypeRefDesc, TypeRefTypeHint};
 use crate::writer::rust_native::element::RustElement;
 use crate::{
@@ -438,71 +439,80 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 					let return_kind = ReturnKind::infallible(fld_type_kind.return_as_naked(fld_type_ref.type_hint()));
 					let fld_const = fld.constness();
 					let passed_by_ref = fld_type_kind.can_return_as_direct_reference();
-					let rust_custom_leafname = gen_env.settings.property_rename.get(fld_refname.as_ref()).copied();
+					let prop_tweak = gen_env.settings.property_tweaks.get(fld_refname.as_ref());
+					let rust_custom_leafname = prop_tweak.and_then(|tweak| tweak.rename);
+					let read_write = prop_tweak
+						.and_then(|tweak| tweak.read_write)
+						.unwrap_or(PropertyReadWrite::ReadWrite);
 					let fld_declname = fld_refname.localname();
-					let (mut read_const_yield, mut read_mut_yield) = if fld_const.is_mut() && passed_by_ref {
-						let read_const_func = if constness_filter.map_or(true, |c| c.is_const()) {
-							Some(Func::new_desc(
-								FuncDesc::new(
-									FuncKind::FieldAccessor(self.clone(), fld.clone()),
-									Constness::Const,
-									return_kind,
-									fld_declname,
-									Rc::clone(&rust_module),
-									[],
-									fld_type_ref.as_ref().clone().with_inherent_constness(Constness::Const),
-								)
-								.def_loc(def_loc.clone())
-								.doc_comment(Rc::clone(&doc_comment))
-								.cpp_body(FuncCppBody::ManualCall("{{name}}".into()))
-								.maybe_rust_custom_leafname(rust_custom_leafname),
-							))
+					let (mut read_const_yield, mut read_mut_yield) = if read_write.is_read() {
+						if fld_const.is_mut() && passed_by_ref {
+							let read_const_func = if constness_filter.map_or(true, |c| c.is_const()) {
+								Some(Func::new_desc(
+									FuncDesc::new(
+										FuncKind::FieldAccessor(self.clone(), fld.clone()),
+										Constness::Const,
+										return_kind,
+										fld_declname,
+										Rc::clone(&rust_module),
+										[],
+										fld_type_ref.as_ref().clone().with_inherent_constness(Constness::Const),
+									)
+									.def_loc(def_loc.clone())
+									.doc_comment(Rc::clone(&doc_comment))
+									.cpp_body(FuncCppBody::ManualCall("{{name}}".into()))
+									.maybe_rust_custom_leafname(rust_custom_leafname),
+								))
+							} else {
+								None
+							};
+							let read_mut_func = if constness_filter.map_or(true, |c| c.is_mut()) {
+								Some(Func::new_desc(
+									FuncDesc::new(
+										FuncKind::FieldAccessor(self.clone(), fld.clone()),
+										Constness::Mut,
+										return_kind,
+										format!("{fld_declname}Mut"),
+										Rc::clone(&rust_module),
+										[],
+										fld_type_ref.as_ref().clone().with_inherent_constness(Constness::Mut),
+									)
+									.def_loc(def_loc.clone())
+									.doc_comment(Rc::clone(&doc_comment))
+									.cpp_body(FuncCppBody::ManualCall("{{name}}".into()))
+									.maybe_rust_custom_leafname(rust_custom_leafname.map(|name| format!("{name}_mut"))),
+								))
+							} else {
+								None
+							};
+							(read_const_func, read_mut_func)
 						} else {
-							None
-						};
-						let read_mut_func = if constness_filter.map_or(true, |c| c.is_mut()) {
-							Some(Func::new_desc(
-								FuncDesc::new(
-									FuncKind::FieldAccessor(self.clone(), fld.clone()),
-									Constness::Mut,
-									return_kind,
-									format!("{fld_declname}Mut"),
-									Rc::clone(&rust_module),
-									[],
-									fld_type_ref.as_ref().clone().with_inherent_constness(Constness::Mut),
-								)
-								.def_loc(def_loc.clone())
-								.doc_comment(Rc::clone(&doc_comment))
-								.cpp_body(FuncCppBody::ManualCall("{{name}}".into()))
-								.maybe_rust_custom_leafname(rust_custom_leafname.map(|name| format!("{name}_mut"))),
-							))
-						} else {
-							None
-						};
-						(read_const_func, read_mut_func)
+							let single_read_func = if constness_filter.map_or(true, |c| c == fld_const) {
+								Some(Func::new_desc(
+									FuncDesc::new(
+										FuncKind::FieldAccessor(self.clone(), fld.clone()),
+										fld_const,
+										return_kind,
+										fld_declname,
+										Rc::clone(&rust_module),
+										[],
+										fld_type_ref.as_ref().clone(),
+									)
+									.def_loc(def_loc.clone())
+									.doc_comment(Rc::clone(&doc_comment))
+									.cpp_body(FuncCppBody::ManualCall("{{name}}".into()))
+									.maybe_rust_custom_leafname(rust_custom_leafname),
+								))
+							} else {
+								None
+							};
+							(single_read_func, None)
+						}
 					} else {
-						let single_read_func = if constness_filter.map_or(true, |c| c == fld_const) {
-							Some(Func::new_desc(
-								FuncDesc::new(
-									FuncKind::FieldAccessor(self.clone(), fld.clone()),
-									fld_const,
-									return_kind,
-									fld_declname,
-									Rc::clone(&rust_module),
-									[],
-									fld_type_ref.as_ref().clone(),
-								)
-								.def_loc(def_loc.clone())
-								.doc_comment(Rc::clone(&doc_comment))
-								.cpp_body(FuncCppBody::ManualCall("{{name}}".into()))
-								.maybe_rust_custom_leafname(rust_custom_leafname),
-							))
-						} else {
-							None
-						};
-						(single_read_func, None)
+						(None, None)
 					};
-					let mut write_yield = if constness_filter.map_or(true, |c| c.is_mut())
+					let mut write_yield = if read_write.is_write()
+						&& constness_filter.map_or(true, |c| c.is_mut())
 						&& !fld_type_ref.constness().is_const()
 						&& !fld_type_kind.as_fixed_array().is_some()
 					{

@@ -62,7 +62,7 @@ pub use implemented::{
 	IMPLEMENTED_SYSTEM_CLASSES,
 };
 use once_cell::sync::Lazy;
-pub use property_rename::{property_rename_factory, PropertyRename};
+pub use property_tweaks::{property_tweaks_factory, PropertyReadWrite, PropertyTweak, PropertyTweaks};
 
 use crate::func::FuncMatcher;
 use crate::type_ref::TypeRef;
@@ -81,7 +81,7 @@ mod func_specialize;
 mod func_unsafe;
 mod generator_module_tweaks;
 mod implemented;
-mod property_rename;
+mod property_tweaks;
 
 pub type TypeRefFactory = fn() -> TypeRef<'static, 'static>;
 
@@ -96,9 +96,9 @@ pub struct Settings {
 	pub func_replace: FuncReplace,
 	pub func_specialize: FuncSpecialize,
 	pub func_unsafe: FuncUnsafe,
-	pub generator_module_tweaks: ModuleTweak,
+	pub generator_module_tweaks: ModuleTweak<'static>,
 	pub property_override: PropertyOverride,
-	pub property_rename: PropertyRename,
+	pub property_tweaks: PropertyTweaks,
 }
 
 impl Settings {
@@ -114,7 +114,7 @@ impl Settings {
 			func_unsafe: FuncUnsafe::empty(),
 			generator_module_tweaks: ModuleTweak::empty(),
 			property_override: PropertyOverride::default(),
-			property_rename: PropertyRename::default(),
+			property_tweaks: PropertyTweaks::default(),
 		}
 	}
 
@@ -130,7 +130,7 @@ impl Settings {
 			func_unsafe: func_unsafe_factory(module),
 			generator_module_tweaks: generator_module_tweaks_factory(module),
 			property_override: property_override_factory(module),
-			property_rename: property_rename_factory(module),
+			property_tweaks: property_tweaks_factory(module),
 		}
 	}
 }

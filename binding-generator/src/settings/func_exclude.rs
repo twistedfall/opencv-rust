@@ -10,13 +10,11 @@ pub static FUNC_EXCLUDE: Lazy<HashSet<&str>> = Lazy::new(|| {
 		"cv_Mat_Mat_const_MatR_const_RangeX",    // duplicate of cv_Mat_Mat_Mat_VectorOfRange, but with pointers
 		"cv_Mat_copySize_const_MatR",            // internal function
 		"cv_Mat_operator___const_const_RangeX",  // duplicate of cv_Mat_operator___const_const_vectorLRangeGR, but with pointers
-		"cv_Mat_propStep_const_MatStep",         // MatStep type prevents assignment
 		"cv_Mat_push_back__const_voidX",         // internal method
 		"cv_Mat_operatorST_const_MatR",          // unsafe with the safe version that moves
 		"cv_UMat_UMat_const_UMatR_const_RangeX", // duplicate of cv_UMat_UMat_UMat_VectorOfRange, but with pointers
 		"cv_UMat_copySize_const_UMatR",          // internal function
 		"cv_UMat_operator___const_const_RangeX", // duplicate of cv_UMat_operator___const_const_vectorLRangeGR, but with pointers
-		"cv_UMat_propStep_const_MatStep",        // MatStep type prevents assignment
 		"cv_RNG_MT19937_operator__",             // the same as calling to_u32() or next()
 		"cv_addImpl_int_const_charX",
 		"cv_calcCovarMatrix_const_MatX_int_MatR_MatR_int_int", // duplicate of cv_calcCovarMatrix_const__InputArrayR_const__OutputArrayR_const__InputOutputArrayR_int_int, but with pointers
