@@ -46,7 +46,7 @@ pub fn render_constant_rust(tokens: &[Token]) -> Option<Value> {
 					out.kind = ValueKind::String;
 				} else if spelling.contains('.') {
 					out.kind = ValueKind::Float;
-				} else if let Some(unsigned_value) = spelling.strip_suffix(&['U', 'u']) {
+				} else if let Some(unsigned_value) = spelling.strip_suffix(['U', 'u']) {
 					out.kind = ValueKind::UnsignedInteger;
 					out.value += unsigned_value;
 					continue;

@@ -2,26 +2,26 @@ use crate::settings::TypeRefFactory;
 use crate::type_ref::TypeRefDesc;
 
 #[derive(Debug)]
-pub struct ModuleTweak {
-	pub generate_types: Vec<TypeRefFactory>,
+pub struct ModuleTweak<'l> {
+	pub generate_types: &'l [TypeRefFactory],
 }
 
-impl ModuleTweak {
+impl ModuleTweak<'_> {
 	pub fn empty() -> Self {
-		Self { generate_types: vec![] }
+		Self { generate_types: &[] }
 	}
 }
 
-pub fn generator_module_tweaks_factory(module: &str) -> ModuleTweak {
+pub fn generator_module_tweaks_factory(module: &str) -> ModuleTweak<'static> {
 	match module {
 		"core" => ModuleTweak {
-			generate_types: vec![TypeRefDesc::ptr_of_float],
+			generate_types: &[TypeRefDesc::ptr_of_float],
 		},
 		"aruco" => ModuleTweak {
-			generate_types: vec![TypeRefDesc::vector_of_cv_vec3f, TypeRefDesc::vector_of_cv_vec3d],
+			generate_types: &[TypeRefDesc::vector_of_cv_vec3f, TypeRefDesc::vector_of_cv_vec3d],
 		},
 		"ccalib" => ModuleTweak {
-			generate_types: vec![
+			generate_types: &[
 				// for cv::omnidir::calibrate objectPoints
 				TypeRefDesc::vector_of_vector_of_cv_vec3f,
 				TypeRefDesc::vector_of_vector_of_cv_vec3d,
@@ -35,7 +35,7 @@ pub fn generator_module_tweaks_factory(module: &str) -> ModuleTweak {
 			],
 		},
 		"calib3d" => ModuleTweak {
-			generate_types: vec![
+			generate_types: &[
 				// for calibrate_camera
 				TypeRefDesc::vector_of_cv_point3i,
 				TypeRefDesc::vector_of_vector_of_cv_point3i,
@@ -52,14 +52,14 @@ pub fn generator_module_tweaks_factory(module: &str) -> ModuleTweak {
 			],
 		},
 		"dnn" => ModuleTweak {
-			generate_types: vec![TypeRefDesc::vector_of_vector_of_int], // Make sure that `Vector<MatShape>` is generated
+			generate_types: &[TypeRefDesc::vector_of_vector_of_int], // Make sure that `Vector<MatShape>` is generated
 		},
 		"features2d" => ModuleTweak {
 			// type used in other modules, thus needs casting (https://github.com/twistedfall/opencv-rust/issues/218)
-			generate_types: vec![TypeRefDesc::ptr_of_cv_feature2d],
+			generate_types: &[TypeRefDesc::ptr_of_cv_feature2d],
 		},
 		"imgproc" => ModuleTweak {
-			generate_types: vec![
+			generate_types: &[
 				// for findContours()
 				TypeRefDesc::vector_of_cv_vec4i,
 				TypeRefDesc::vector_of_vector_of_cv_point,

@@ -2,7 +2,6 @@ use std::ffi::c_void;
 use std::{mem, thread};
 
 use matches::assert_matches;
-
 use opencv::core::{
 	MatConstIterator, MatIter, Point, Point2d, Point2f, Rect, Scalar, Size, Vec2b, Vec2s, Vec3d, Vec3f, Vec3s, Vec4w, Vector,
 };
@@ -1238,5 +1237,15 @@ fn mat_send_sync() -> Result<()> {
 		assert_eq!(10, *m.at_2d::<u8>(1, 1).unwrap());
 	}
 
+	Ok(())
+}
+
+#[test]
+fn mat_set_matexpr() -> Result<()> {
+	let mut mat = Mat::default();
+	mat.set_matexpr(&Mat::ones(3, 3, i32::opencv_type())?)?;
+	assert_eq!(Size::new(3, 3), mat.size()?);
+	assert_eq!(i32::opencv_type(), mat.typ());
+	assert_eq!(&[1, 1, 1], mat.at_row::<i32>(1)?);
 	Ok(())
 }

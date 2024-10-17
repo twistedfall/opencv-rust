@@ -844,51 +844,50 @@ fn companion_func_default_args<'tu, 'ge>(f: &Func<'tu, 'ge>) -> Option<Func<'tu,
 	}
 
 	let args = f.arguments();
-	// default args are usually in the end
-	if args.iter().rev().any(viable_default_arg) {
-		let first_non_default_arg_idx = args.iter().rposition(|arg| !viable_default_arg(arg));
-		let (args_without_def, args_with_def) = if let Some(first_non_default_arg_idx) = first_non_default_arg_idx {
-			if first_non_default_arg_idx + 1 == args.len() {
-				return None;
-			}
-			(&args[..=first_non_default_arg_idx], &args[first_non_default_arg_idx..])
-		} else {
-			([].as_slice(), args.as_ref())
-		};
-		let original_rust_leafname = f.rust_leafname(FishStyle::No);
-		let mut doc_comment = f.doc_comment().into_owned();
-		let rust_leafname = format!("{}_def", original_rust_leafname);
-		let default_args = comment::render_cpp_default_args(args_with_def);
-		if !doc_comment.is_empty() {
-			doc_comment.push_str("\n\n");
+	// default args are in the end
+	let last_non_default_arg_idx = args.iter().rposition(|arg| !viable_default_arg(arg));
+	let (args_without_def, args_with_def) = if let Some(last_non_default_arg_idx) = last_non_default_arg_idx {
+		if last_non_default_arg_idx + 1 == args.len() {
+			return None;
 		}
-		write!(
+		(&args[..=last_non_default_arg_idx], &args[last_non_default_arg_idx..])
+	} else {
+		([].as_slice(), args.as_ref())
+	};
+	if args_with_def.is_empty() {
+		return None;
+	}
+	let original_rust_leafname = f.rust_leafname(FishStyle::No);
+	let mut doc_comment = f.doc_comment().into_owned();
+	let rust_leafname = format!("{}_def", original_rust_leafname);
+	let default_args = comment::render_cpp_default_args(args_with_def);
+	if !doc_comment.is_empty() {
+		doc_comment.push_str("\n\n");
+	}
+	write!(
 			&mut doc_comment,
 			"## Note\nThis alternative version of [{refr}] function uses the following default values for its arguments:\n{default_args}",
 			refr = render_ref(f, Some(&original_rust_leafname))
 		)
-		.expect("Impossible");
-		let out = match f.clone() {
-			Func::Clang { .. } => {
-				let mut desc = f.to_desc(InheritConfig::empty().doc_comment().arguments());
-				let desc_mut = Rc::make_mut(&mut desc);
-				desc_mut.rust_custom_leafname = Some(rust_leafname.into());
-				desc_mut.arguments = args_without_def.into();
-				desc_mut.doc_comment = doc_comment.into();
-				Func::Desc(desc)
-			}
-			Func::Desc(mut desc) => {
-				let desc_ref = Rc::make_mut(&mut desc);
-				desc_ref.arguments = args_without_def.into();
-				desc_ref.rust_custom_leafname = Some(rust_leafname.into());
-				Func::Desc(desc)
-			}
-		};
-		if out.exclude_kind().is_included() {
-			Some(out)
-		} else {
-			None
+	.expect("Impossible");
+	let out = match f.clone() {
+		Func::Clang { .. } => {
+			let mut desc = f.to_desc(InheritConfig::empty().doc_comment().arguments());
+			let desc_mut = Rc::make_mut(&mut desc);
+			desc_mut.rust_custom_leafname = Some(rust_leafname.into());
+			desc_mut.arguments = args_without_def.into();
+			desc_mut.doc_comment = doc_comment.into();
+			Func::Desc(desc)
 		}
+		Func::Desc(mut desc) => {
+			let desc_ref = Rc::make_mut(&mut desc);
+			desc_ref.arguments = args_without_def.into();
+			desc_ref.rust_custom_leafname = Some(rust_leafname.into());
+			Func::Desc(desc)
+		}
+	};
+	if out.exclude_kind().is_included() {
+		Some(out)
 	} else {
 		None
 	}

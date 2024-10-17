@@ -566,10 +566,9 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			}
 			let decl_name = fld.cpp_name(CppNameStyle::Declaration);
 			name.reserve(decl_name.len() + 4);
-			let (first_letter, rest) = decl_name.split_at(1);
-			let [first_letter] = <[u8; 1]>::try_from(first_letter.as_bytes()).expect("first part of split_at(1)");
 			name.push_str("prop");
-			name.push(first_letter.to_ascii_uppercase().into());
+			let (first_letter, rest) = decl_name.capitalize_first_ascii_letter().expect("Empty decl_name");
+			name.push(first_letter);
 			name.push_str(rest);
 			name
 		} else {

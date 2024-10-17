@@ -40,7 +40,7 @@ mod implemented;
 #[derive(Debug)]
 pub struct Settings {
 	pub func_inject: Vec<FuncFactory>,
-	pub generator_module_tweaks: ModuleTweak,
+	pub generator_module_tweaks: ModuleTweak<'static>,
 }
 
 impl Settings {

@@ -69,6 +69,76 @@ static AFFECTING_ENV_VARS: [&str; 18] = [
 	"DOCS_RS",
 ];
 
+static SUPPORTED_MODULES: [&str; 67] = [
+	"alphamat",
+	"aruco",
+	"aruco_detector",
+	"barcode",
+	"bgsegm",
+	"bioinspired",
+	"calib3d",
+	"ccalib",
+	"core",
+	"cudaarithm",
+	"cudabgsegm",
+	"cudacodec",
+	"cudafeatures2d",
+	"cudafilters",
+	"cudaimgproc",
+	"cudaobjdetect",
+	"cudaoptflow",
+	"cudastereo",
+	"cudawarping",
+	"cvv",
+	"dnn",
+	"dnn_superres",
+	"dpm",
+	"face",
+	"features2d",
+	"flann",
+	"freetype",
+	"fuzzy",
+	"gapi",
+	"hdf",
+	"hfs",
+	"highgui",
+	"img_hash",
+	"imgcodecs",
+	"imgproc",
+	"intensity_transform",
+	"line_descriptor",
+	"mcc",
+	"ml",
+	"objdetect",
+	"optflow",
+	"ovis",
+	"phase_unwrapping",
+	"photo",
+	"plot",
+	"quality",
+	"rapid",
+	"rgbd",
+	"saliency",
+	"sfm",
+	"shape",
+	"stereo",
+	"stitching",
+	"structured_light",
+	"superres",
+	"surface_matching",
+	"text",
+	"tracking",
+	"video",
+	"videoio",
+	"videostab",
+	"viz",
+	"wechat_qrcode",
+	"xfeatures2d",
+	"ximgproc",
+	"xobjdetect",
+	"xphoto",
+];
+
 /// The contents of these vars will be present in the debug log, but will not cause the source rebuild
 static DEBUG_ENV_VARS: [&str; 1] = ["PATH"];
 
@@ -254,78 +324,6 @@ fn setup_rerun() -> Result<()> {
 fn build_wrapper(mut cc: cc::Build) {
 	eprintln!("=== Compiler information: {:#?}", cc.get_compiler());
 	let modules = MODULES.get().expect("MODULES not initialized");
-	static SUPPORTED_MODULES: [&str; 67] = [
-		"alphamat",
-		"aruco",
-		"aruco_detector",
-		"barcode",
-		"bgsegm",
-		"bioinspired",
-		"calib3d",
-		"ccalib",
-		"core",
-		"cudaarithm",
-		"cudabgsegm",
-		"cudacodec",
-		"cudafeatures2d",
-		"cudafilters",
-		"cudaimgproc",
-		"cudaobjdetect",
-		"cudaoptflow",
-		"cudastereo",
-		"cudawarping",
-		"cvv",
-		"dnn",
-		"dnn_superres",
-		"dpm",
-		"face",
-		"features2d",
-		"flann",
-		"freetype",
-		"fuzzy",
-		"gapi",
-		"hdf",
-		"hfs",
-		"highgui",
-		"img_hash",
-		"imgcodecs",
-		"imgproc",
-		"intensity_transform",
-		"line_descriptor",
-		"mcc",
-		"ml",
-		"objdetect",
-		"optflow",
-		"ovis",
-		"phase_unwrapping",
-		"photo",
-		"plot",
-		"quality",
-		"rapid",
-		"rgbd",
-		"saliency",
-		"sfm",
-		"shape",
-		"stereo",
-		"stitching",
-		"structured_light",
-		"superres",
-		"surface_matching",
-		"text",
-		"tracking",
-		"video",
-		"videoio",
-		"videostab",
-		"viz",
-		"wechat_qrcode",
-		"xfeatures2d",
-		"ximgproc",
-		"xobjdetect",
-		"xphoto",
-	];
-	for module in SUPPORTED_MODULES {
-		println!("cargo:rustc-check-cfg=cfg(ocvrs_has_module_{module})"); // replace with cargo:: syntax when MSRV is 1.77
-	}
 	for module in modules.iter() {
 		println!("cargo:rustc-cfg=ocvrs_has_module_{module}"); // replace with cargo:: syntax when MSRV is 1.77
 		cc.file(OUT_DIR.join(format!("{module}.cpp")));
@@ -340,6 +338,13 @@ fn build_wrapper(mut cc: cc::Build) {
 }
 
 fn main() -> Result<()> {
+	println!("cargo:rustc-check-cfg=cfg(ocvrs_opencv_branch_4)"); // replace with cargo:: syntax when MSRV is 1.77
+	println!("cargo:rustc-check-cfg=cfg(ocvrs_opencv_branch_34)"); // replace with cargo:: syntax when MSRV is 1.77
+	println!("cargo:rustc-check-cfg=cfg(ocvrs_opencv_branch_32)"); // replace with cargo:: syntax when MSRV is 1.77
+	for module in SUPPORTED_MODULES {
+		println!("cargo:rustc-check-cfg=cfg(ocvrs_has_module_{module})"); // replace with cargo:: syntax when MSRV is 1.77
+	}
+
 	if matches!(handle_running_in_docsrs(), GenerateFullBindings::Stop) {
 		return Ok(());
 	}
@@ -375,9 +380,6 @@ fn main() -> Result<()> {
 
 	let opencv = Library::probe()?;
 	eprintln!("=== OpenCV library configuration: {opencv:#?}");
-	println!("cargo:rustc-check-cfg=cfg(ocvrs_opencv_branch_4)"); // replace with cargo:: syntax when MSRV is 1.77
-	println!("cargo:rustc-check-cfg=cfg(ocvrs_opencv_branch_34)"); // replace with cargo:: syntax when MSRV is 1.77
-	println!("cargo:rustc-check-cfg=cfg(ocvrs_opencv_branch_32)"); // replace with cargo:: syntax when MSRV is 1.77
 	if OPENCV_BRANCH_4.matches(&opencv.version) {
 		println!("cargo:rustc-cfg=ocvrs_opencv_branch_4"); // replace with cargo:: syntax when MSRV is 1.77
 	} else if OPENCV_BRANCH_34.matches(&opencv.version) {

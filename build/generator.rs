@@ -91,28 +91,31 @@ impl BindingGenerator {
 				.iter()
 				.map(|module| {
 					let token = job_server.acquire().expect("Can't acquire token from job server");
-					scope.spawn({
-						let additional_include_dirs = additional_include_dirs.as_str();
-						move || {
-							let module_start = Instant::now();
-							let mut bin_generator = Command::new(&self.build_script_path);
-							bin_generator
-								.arg(opencv_header_dir)
-								.arg(&*SRC_CPP_DIR)
-								.arg(&*OUT_DIR)
-								.arg(module)
-								.arg(additional_include_dirs);
-							eprintln!("=== Running: {bin_generator:?}");
-							let res = bin_generator
-								.status()
-								.unwrap_or_else(|e| panic!("Can't run bindings generator for module: {module}, error: {e}"));
-							if !res.success() {
-								panic!("Failed to run the bindings generator for module: {module}");
+					thread::Builder::new()
+						.name(format!("gen-{module}"))
+						.spawn_scoped(scope, {
+							let additional_include_dirs = additional_include_dirs.as_str();
+							move || {
+								let module_start = Instant::now();
+								let mut bin_generator = Command::new(&self.build_script_path);
+								bin_generator
+									.arg(opencv_header_dir)
+									.arg(&*SRC_CPP_DIR)
+									.arg(&*OUT_DIR)
+									.arg(module)
+									.arg(additional_include_dirs);
+								eprintln!("=== Running: {bin_generator:?}");
+								let res = bin_generator
+									.status()
+									.unwrap_or_else(|e| panic!("Can't run bindings generator for module: {module}, error: {e}"));
+								if !res.success() {
+									panic!("Failed to run the bindings generator for module: {module}");
+								}
+								eprintln!("=== Generated: {module} in {:?}", module_start.elapsed());
+								drop(token); // needed to move the token to the thread
 							}
-							eprintln!("=== Generated: {module} in {:?}", module_start.elapsed());
-							drop(token); // needed to move the token to the thread
-						}
-					})
+						})
+						.expect("Error spawning thread")
 				})
 				.collect::<Vec<_>>();
 			for join_handle in join_handles {

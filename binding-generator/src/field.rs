@@ -192,42 +192,41 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 	pub fn slice_arg_eligibility(&self) -> SliceArgEligibility {
 		let type_ref = self.type_ref();
 		let kind = type_ref.kind();
-		kind
-			.as_pointer()
-			.filter(|inner| inner.kind().is_copy(inner.type_hint()))
-			.or_else(|| kind.as_variable_array())
-			.map_or_else(
-				|| {
-					// check if still can be a slice arg length
-					let can_be_slice_arg_len = kind.as_primitive().map_or(false, |(_, cpp)| {
-						if cpp == "int" || cpp == "size_t" {
-							let name = self.cpp_name(CppNameStyle::Declaration);
-							name.ends_with('s') && name.contains('n') && name != "thickness" // fixme: have to exclude thickness
-								|| ["size", "len", "argc"].contains(&name.as_ref())
-								|| name.contains("dims")
-								|| name.ends_with("Size")
-						} else {
-							false
-						}
-					});
-					if can_be_slice_arg_len {
-						SliceArgEligibility::SliceArgLength
-					} else {
-						SliceArgEligibility::None
-					}
-				},
-				|_| {
+		let is_copy_ptr = || {
+			kind
+				.as_pointer()
+				.filter(|inner| inner.kind().is_copy(inner.type_hint()))
+				.is_some()
+		};
+		if kind.as_variable_array().is_some() || is_copy_ptr() {
+			let name = self.cpp_name(CppNameStyle::Declaration);
+			let name = name.as_ref();
+			if ARGUMENT_NAMES_NOT_SLICE.contains(name) {
+				SliceArgEligibility::None
+			} else if ARGUMENT_NAMES_MULTIPLE_SLICE.contains(name) {
+				SliceArgEligibility::SliceArgMultiple
+			} else {
+				SliceArgEligibility::SliceArgSingle
+			}
+		} else {
+			// check if still can be a slice arg length
+			let can_be_slice_arg_len = kind.as_primitive().map_or(false, |(_, cpp)| {
+				if cpp == "int" || cpp == "size_t" {
 					let name = self.cpp_name(CppNameStyle::Declaration);
-					let name = name.as_ref();
-					if ARGUMENT_NAMES_NOT_SLICE.contains(name) {
-						SliceArgEligibility::None
-					} else if ARGUMENT_NAMES_MULTIPLE_SLICE.contains(name) {
-						SliceArgEligibility::SliceArgMultiple
-					} else {
-						SliceArgEligibility::SliceArgSingle
-					}
-				},
-			)
+					name.ends_with('s') && name.contains('n') && name != "thickness" // fixme: have to exclude thickness
+						|| ["size", "len", "argc"].contains(&name.as_ref())
+						|| name.contains("dims")
+						|| name.ends_with("Size")
+				} else {
+					false
+				}
+			});
+			if can_be_slice_arg_len {
+				SliceArgEligibility::SliceArgLength
+			} else {
+				SliceArgEligibility::None
+			}
+		}
 	}
 }
 

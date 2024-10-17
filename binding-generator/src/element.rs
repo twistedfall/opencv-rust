@@ -15,19 +15,12 @@ pub struct DefaultElement;
 impl DefaultElement {
 	pub fn exclude_kind(this: &(impl Element + ?Sized)) -> ExcludeKind {
 		let cpp_refname = this.cpp_name(CppNameStyle::Reference);
-		ExcludeKind::Included
-			.with_is_ignored(|| {
-				!this.is_public()
-					|| settings::ELEMENT_EXCLUDE_KIND
-						.get(cpp_refname.as_ref())
-						.map_or(false, |ek| ek.is_ignored())
-			})
-			.with_is_excluded(|| {
-				(this.is_system() && !settings::IMPLEMENTED_SYSTEM_CLASSES.contains(cpp_refname.as_ref()))
-					|| settings::ELEMENT_EXCLUDE_KIND
-						.get(cpp_refname.as_ref())
-						.map_or(false, |ek| ek.is_excluded())
-			})
+		ExcludeKind::Included.with_is_ignored(|| {
+			!this.is_public()
+				|| settings::ELEMENT_EXCLUDE_KIND
+					.get(cpp_refname.as_ref())
+					.map_or(false, |ek| ek.is_ignored())
+		})
 	}
 
 	pub fn is_system(entity: Entity) -> bool {

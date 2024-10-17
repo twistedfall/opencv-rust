@@ -39,23 +39,23 @@ pub trait ElemMul<Rhs = Self> {
 }
 
 #[inline]
-fn elemmul_mat_mat(a: &Mat, b: &Mat) -> Result<MatExpr> {
-	MatTraitConst::mul_def(a, b)
+fn elemmul_mat_mat(a: &impl MatTraitConst, b: &impl ToInputArray) -> Result<MatExpr> {
+	a.mul_def(b)
 }
 
 #[inline]
-fn elemmul_mat_matexpr(a: &Mat, b: &MatExpr) -> Result<MatExpr> {
-	MatTraitConst::mul_def(a, b)
+fn elemmul_mat_matexpr(a: &impl MatTraitConst, b: &impl ToInputArray) -> Result<MatExpr> {
+	a.mul_def(b)
 }
 
 #[inline]
-fn elemmul_matexpr_mat(a: &MatExpr, b: &Mat) -> Result<MatExpr> {
-	MatExprTraitConst::mul_def(a, b)
+fn elemmul_matexpr_mat(a: &impl MatExprTraitConst, b: &impl MatTraitConst) -> Result<MatExpr> {
+	a.mul_def(b)
 }
 
 #[inline]
-fn elemmul_matexpr_matexpr(a: &MatExpr, b: &MatExpr) -> Result<MatExpr> {
-	MatExprTraitConst::mul_matexpr_def(a, b)
+fn elemmul_matexpr_matexpr(a: &impl MatExprTraitConst, b: &impl MatExprTraitConst) -> Result<MatExpr> {
+	a.mul_matexpr_def(b)
 }
 
 /// Hints Rust about whether we need a borrow or a move for an argument passed to Mat operation function, only for internal usage

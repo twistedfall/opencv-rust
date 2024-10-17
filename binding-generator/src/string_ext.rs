@@ -385,6 +385,7 @@ pub trait StrExt {
 	/// For `crate::rapid::Rapid` and `rapid::Rapid` returns `rapid`
 	fn module(&self) -> &str;
 	fn cpp_name_from_fullname(&self, style: CppNameStyle) -> &str;
+	fn capitalize_first_ascii_letter(&self) -> Option<(char, &str)>;
 }
 
 impl StrExt for str {
@@ -538,5 +539,19 @@ impl StrExt for str {
 			CppNameStyle::Declaration => self.localname(),
 			CppNameStyle::Reference => self,
 		}
+	}
+
+	fn capitalize_first_ascii_letter(&self) -> Option<(char, &str)> {
+		// MSRV: replace with `split_at_checked()` when MSRV is 1.80
+		// self.split_at_checked(1).map(|(first_letter, rest)| {
+		// 	let [first_letter]: [u8; 1] = first_letter.as_bytes().try_into().expect("first part of split_at(1)");
+		// 	(char::from(first_letter.to_ascii_uppercase()), rest)
+		// })
+		if self.is_empty() || !self.is_ascii() {
+			return None;
+		}
+		let (first_letter, rest) = self.split_at(1);
+		let [first_letter]: [u8; 1] = first_letter.as_bytes().try_into().expect("first part of split_at(1)");
+		Some((char::from(first_letter.to_ascii_uppercase()), rest))
 	}
 }

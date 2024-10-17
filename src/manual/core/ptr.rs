@@ -38,6 +38,9 @@ where
 	/// Create a new `Ptr` which points to `NULL`
 	///
 	/// Not generally useful, mostly for internal use.
+	///
+	/// # Safety
+	/// Should only be used as an argument to OpenCV functions that accept `Ptr` to `NULL`.
 	pub unsafe fn new_null() -> Self {
 		unsafe { Self::from_raw(Self::extern_new_null()) }
 	}

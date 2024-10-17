@@ -195,7 +195,7 @@ impl<'tu, V: GeneratorVisitor<'tu>> EntityWalkerVisitor<'tu> for OpenCvWalker<'t
 				self.visitor.visit_func(inject_func);
 			}
 		}
-		for generated in &self.gen_env.settings.generator_module_tweaks.generate_types {
+		for generated in self.gen_env.settings.generator_module_tweaks.generate_types {
 			if let Ok(generated) = GeneratedType::try_from(generated()) {
 				self.visitor.visit_generated_type(generated);
 			}

@@ -7,7 +7,6 @@ pub static FUNC_EXCLUDE: Lazy<HashSet<&str>> = Lazy::new(|| {
 	HashSet::from([
 		// ### core ###
 		"cv_AsyncArray__getImpl_const",
-		"cv_MatExpr_propOp_const",               // fixme implement PointerOf types
 		"cv_Mat_Mat_const_MatR_const_RangeX",    // duplicate of cv_Mat_Mat_Mat_VectorOfRange, but with pointers
 		"cv_Mat_at_const_VecLint__cnGR", // fixme: due to FuncId only taking into account arg name we generate extra Mat::at with VecN args
 		"cv_Mat_at_const_const_VecLint__cnGR", // fixme: due to FuncId only taking into account arg name we generate extra Mat::at with VecN args
@@ -75,8 +74,6 @@ pub static FUNC_EXCLUDE: Lazy<HashSet<&str>> = Lazy::new(|| {
 		// ### optflow ###
 		"cv_optflow_GPCTrainingSamples_operator_cv_optflow_GPCSamplesVector", // support of "operator &" missing
 		// ### text ###
-		"cv_text_ERStat_propPixels", // fixme: reference to a vector, we don't handle it too well yet
-		"cv_text_ERStat_propPixels_vectorLintGX", // fixme: reference to a vector, we don't handle it too well yet
 		"cv_text_OCRBeamSearchDecoder_create_const_PtrLClassifierCallbackG_const_stringR_const__InputArrayR_const__InputArrayR", // with OpenCV 4.2 this leads to https://github.com/twistedfall/opencv-rust/issues/505
 		"cv_text_OCRBeamSearchDecoder_create_const_PtrLClassifierCallbackG_const_StringR_const__InputArrayR_const__InputArrayR", // with OpenCV 4.2 this leads to https://github.com/twistedfall/opencv-rust/issues/505
 		// those function are marked as CV_EXPORTS, but they are missing from the shared libraries

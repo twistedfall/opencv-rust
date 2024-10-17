@@ -57,18 +57,16 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 	/// Checks whether a class can be simple on Rust side, i.e. represented by plain struct with public fields
 	pub fn can_be_simple(&self) -> bool {
 		let cpp_refname = self.cpp_name(CppNameStyle::Reference);
-		if settings::IMPLEMENTED_GENERICS.contains(cpp_refname.as_ref()) {
-			return true;
-		}
-		self.has_fields()
-			&& !self.has_descendants()
-			&& !self.has_bases()
-			&& !self
-				.for_each_field(|field| {
-					let type_ref = field.type_ref();
-					ControlFlow::continue_until(!type_ref.kind().is_copy(type_ref.type_hint()))
-				})
-				.is_break()
+		settings::IMPLEMENTED_GENERICS.contains(cpp_refname.as_ref())
+			|| self.has_fields()
+				&& !self.has_descendants()
+				&& !self.has_bases()
+				&& !self
+					.for_each_field(|field| {
+						let type_ref = field.type_ref();
+						ControlFlow::continue_until(!type_ref.kind().is_copy(type_ref.type_hint()))
+					})
+					.is_break()
 	}
 
 	pub fn kind(&self) -> ClassKind {
@@ -502,13 +500,13 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 							&& !fld_type_kind.as_fixed_array().is_some()
 						{
 							let cpp_name = fld.cpp_name(CppNameStyle::Declaration);
-							let (first_letter, rest) = cpp_name.split_at(1);
+							let (first_letter, rest) = cpp_name.capitalize_first_ascii_letter().expect("Empty fld_declname");
 							Some(Func::new_desc(
 								FuncDesc::new(
 									FuncKind::FieldAccessor(self.clone(), fld.clone()),
 									Constness::Mut,
 									ReturnKind::InfallibleNaked,
-									format!("set{}{rest}", first_letter.to_uppercase()),
+									format!("set{first_letter}{rest}"),
 									rust_module.clone(),
 									[Field::new_desc(FieldDesc {
 										cpp_fullname: "val".into(),
