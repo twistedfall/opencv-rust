@@ -16,7 +16,7 @@ use crate::name_pool::NamePool;
 use crate::settings::ARG_OVERRIDE_SELF;
 use crate::type_ref::{Constness, CppNameStyle, ExternDir, FishStyle, NameStyle, StrEnc, StrType, TypeRef, TypeRefTypeHint};
 use crate::writer::rust_native::type_ref::render_lane::FunctionProps;
-use crate::{reserved_rename, settings, CompiledInterpolation, Element, Func, IteratorExt, NameDebug, StrExt, StringExt};
+use crate::{reserved_rename, CompiledInterpolation, Element, Func, IteratorExt, NameDebug, StrExt, StringExt};
 
 pub trait FuncExt<'tu, 'ge> {
 	fn companion_functions(&self) -> Vec<Func<'tu, 'ge>>;
@@ -329,7 +329,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		if self.is_no_discard() {
 			attributes.push(Borrowed("#[must_use]"));
 		}
-		if let Some((rust_attr, _)) = settings::FUNC_CFG_ATTR.get(identifier.as_str()) {
+		if let Some((rust_attr, _)) = self.cfg_attrs() {
 			if !rust_attr.is_empty() {
 				attributes.push(format!("#[cfg({rust_attr})]").into());
 			}
@@ -366,7 +366,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 
 		let identifier = self.identifier();
 		let mut attributes = String::new();
-		if let Some((rust_attr, _)) = settings::FUNC_CFG_ATTR.get(identifier.as_str()) {
+		if let Some((rust_attr, _)) = self.cfg_attrs() {
 			attributes = format!("#[cfg({rust_attr})]");
 		}
 		let mut args = vec![];
@@ -427,7 +427,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		// attributes
 		let mut attributes_begin = String::new();
 		let mut attributes_end = String::new();
-		if let Some((_, cpp_attr)) = settings::FUNC_CFG_ATTR.get(identifier.as_str()) {
+		if let Some((_, cpp_attr)) = self.cfg_attrs() {
 			attributes_begin = format!("#if {cpp_attr}");
 			attributes_end = "#endif".to_string();
 		}

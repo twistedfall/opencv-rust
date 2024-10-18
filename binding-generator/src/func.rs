@@ -627,6 +627,13 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			Self::Desc(desc) => &desc.cpp_body,
 		}
 	}
+
+	pub fn cfg_attrs(&self) -> Option<(&str, &str)> {
+		match self {
+			Self::Clang { gen_env, .. } => gen_env.settings.func_cfg_attr.get(&mut self.matcher()).copied(),
+			Self::Desc(_) => None,
+		}
+	}
 }
 
 impl<'tu> ToEntity<'tu> for &Func<'tu, '_> {

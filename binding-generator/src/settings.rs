@@ -49,7 +49,7 @@ pub use argument_override::{
 pub use element_exclude_kind::ELEMENT_EXCLUDE_KIND;
 pub use element_export_tweak::ELEMENT_EXPORT_TWEAK;
 pub use force_infallible::{force_infallible_factory, ForceInfallible};
-pub use func_cfg_attr::FUNC_CFG_ATTR;
+pub use func_cfg_attr::{func_cfg_attr_factory, FuncCfgAttr};
 pub use func_companion_tweak::{func_companion_tweak_factory, CompanionTweak, FuncCompanionTweak};
 pub use func_exclude::{func_exclude_factory, FuncExclude};
 pub use func_inject::{func_inject_factory, FuncFactory, FuncInject};
@@ -93,6 +93,7 @@ pub struct Settings {
 	pub arg_override: ArgOverride,
 	pub return_override: ReturnOverride,
 	pub force_infallible: ForceInfallible,
+	pub func_cfg_attr: FuncCfgAttr,
 	pub func_companion_tweak: FuncCompanionTweak,
 	pub func_exclude: FuncExclude,
 	pub func_inject: FuncInject,
@@ -111,6 +112,7 @@ impl Settings {
 			arg_override: ArgOverride::empty(),
 			return_override: ReturnOverride::empty(),
 			force_infallible: ForceInfallible::empty(),
+			func_cfg_attr: FuncCfgAttr::empty(),
 			func_companion_tweak: FuncCompanionTweak::empty(),
 			func_exclude: FuncExclude::default(),
 			func_inject: FuncInject::default(),
@@ -129,6 +131,7 @@ impl Settings {
 			arg_override: arg_override_factory(module),
 			return_override: return_override_factory(module),
 			force_infallible: force_infallible_factory(module),
+			func_cfg_attr: func_cfg_attr_factory(module),
 			func_companion_tweak: func_companion_tweak_factory(module),
 			func_exclude: func_exclude_factory(module),
 			func_inject: func_inject_factory(module),

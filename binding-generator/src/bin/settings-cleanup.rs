@@ -1,40 +1,36 @@
 use std::cell::RefCell;
 use std::collections::{HashMap, HashSet};
+use std::env;
 use std::ops::ControlFlow;
 use std::path::{Path, PathBuf};
 use std::rc::Rc;
-use std::{env, fmt};
 
 use clang::{Entity, EntityKind};
 use opencv_binding_generator::{
-	opencv_module_from_path, settings, Class, Constness, EntityExt, EntityWalkerExt, EntityWalkerVisitor, Func, Generator,
-	GeneratorEnv, Pred,
+	opencv_module_from_path, Class, Constness, EntityExt, EntityWalkerExt, EntityWalkerVisitor, Func, Generator, GeneratorEnv,
+	Pred,
 };
 
-struct FunctionFinder<'tu, 'f> {
+struct FunctionFinder<'tu> {
 	pub module: &'tu str,
 	pub gen_env: GeneratorEnv<'tu>,
-	pub func_cfg_attr_unused: RefCell<&'f mut HashSet<&'static str>>,
 }
 
-impl<'tu, 'f> FunctionFinder<'tu, 'f> {
+impl<'tu> FunctionFinder<'tu> {
 	pub fn update_used_func(&self, f: &Func) {
 		let mut matcher = f.matcher();
 		self.gen_env.settings.arg_override.get(&mut matcher);
 		self.gen_env.settings.return_override.get(&mut matcher);
 		self.gen_env.settings.force_infallible.get(&mut matcher);
+		self.gen_env.settings.func_cfg_attr.get(&mut matcher);
 		self.gen_env.settings.func_companion_tweak.get(&mut matcher);
 		self.gen_env.settings.func_replace.get(&mut matcher);
 		self.gen_env.settings.func_specialize.get(&mut matcher);
 		self.gen_env.settings.func_unsafe.get(&mut matcher);
-
-		let identifier = f.identifier();
-
-		self.func_cfg_attr_unused.borrow_mut().remove(identifier.as_str());
 	}
 }
 
-impl<'tu> EntityWalkerVisitor<'tu> for &mut FunctionFinder<'tu, '_> {
+impl<'tu> EntityWalkerVisitor<'tu> for &mut FunctionFinder<'tu> {
 	fn wants_file(&mut self, path: &Path) -> bool {
 		opencv_module_from_path(path).map_or(false, |m| m == self.module)
 	}
@@ -72,20 +68,10 @@ impl<'tu> EntityWalkerVisitor<'tu> for &mut FunctionFinder<'tu, '_> {
 	}
 }
 
-fn show<S: fmt::Display>(c: impl IntoIterator<Item = S>) {
-	let v = c.into_iter().collect::<Vec<_>>();
-	let mut sorted = v.iter().map(|s| s.to_string()).collect::<Vec<_>>();
-	sorted.sort_unstable();
-	for f in sorted {
-		println!("{f}");
-	}
-}
-
 fn main() {
 	let mut args = env::args_os().skip(1);
 	let src_cpp_dir = PathBuf::from(args.next().expect("2nd argument must be dir with custom cpp"));
 	let opencv_header_dirs = args.map(PathBuf::from);
-	let mut func_cfg_attr_unused = settings::FUNC_CFG_ATTR.keys().copied().collect::<HashSet<_>>();
 	// module -> usage_section -> (name, preds)
 	let global_usage_tracking = Rc::new(RefCell::new(HashMap::<
 		String,
@@ -115,7 +101,6 @@ fn main() {
 					let mut function_finder = FunctionFinder {
 						module: &module,
 						gen_env,
-						func_cfg_attr_unused: RefCell::new(&mut func_cfg_attr_unused),
 					};
 					root_entity.walk_opencv_entities(&mut function_finder);
 
@@ -160,8 +145,6 @@ fn main() {
 			}
 		}
 	}
-	println!("Unused entries in settings::FUNC_CFG_ATTR ({}):", func_cfg_attr_unused.len());
-	show(func_cfg_attr_unused);
 }
 
 type UsageTrackerOwned = (String, Vec<PredOwned>);
