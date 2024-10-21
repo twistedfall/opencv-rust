@@ -89,7 +89,7 @@ pub fn func_inject_factory(module: &str) -> FuncInject {
 						],
 						TypeRefDesc::cv_input_array()
 							.with_inherent_constness(Const)
-							.with_type_hint(TypeRefTypeHint::BoxedAsRef(Const, "vec", Lifetime::Elided)),
+							.with_type_hint(TypeRefTypeHint::BoxedAsRef(Const, &["vec"], Lifetime::Elided)),
 					)
 					.rust_custom_leafname("from_byte_slice"),
 				)

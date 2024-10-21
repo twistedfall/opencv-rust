@@ -587,7 +587,7 @@ fn method_input_array<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge>
 				.with_inherent_constness(Constness::Const)
 				.with_type_hint(TypeRefTypeHint::BoxedAsRef(
 					Constness::Mut,
-					ARG_OVERRIDE_SELF,
+					&[ARG_OVERRIDE_SELF],
 					Lifetime::Elided,
 				)),
 		)
@@ -608,7 +608,7 @@ fn method_output_array<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge
 				.with_inherent_constness(Constness::Mut)
 				.with_type_hint(TypeRefTypeHint::BoxedAsRef(
 					Constness::Mut,
-					ARG_OVERRIDE_SELF,
+					&[ARG_OVERRIDE_SELF],
 					Lifetime::Elided,
 				)),
 		)
@@ -629,7 +629,7 @@ fn method_input_output_array<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'t
 				.with_inherent_constness(Constness::Mut)
 				.with_type_hint(TypeRefTypeHint::BoxedAsRef(
 					Constness::Mut,
-					ARG_OVERRIDE_SELF,
+					&[ARG_OVERRIDE_SELF],
 					Lifetime::Elided,
 				)),
 		)

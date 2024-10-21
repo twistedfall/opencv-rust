@@ -227,7 +227,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 			let render_lane = cls_type_ref.render_lane();
 			let render_lane = render_lane.to_dyn();
 			let lt = boxed_ref_arg
-				.filter(|(_, boxed_arg_name, _)| *boxed_arg_name == ARG_OVERRIDE_SELF)
+				.filter(|(_, boxed_arg_names, _)| boxed_arg_names.contains(&ARG_OVERRIDE_SELF))
 				.map_or(Lifetime::Elided, |(_, _, lt)| lt);
 			decl_args.push(render_lane.rust_self_func_decl(lt));
 			call_args.push(render_lane.rust_arg_func_call("self"));
@@ -259,7 +259,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 				}
 				if !arg_as_slice_len.is_some() {
 					let lt = boxed_ref_arg
-						.filter(|(_, boxed_arg_name, _)| *boxed_arg_name == name)
+						.filter(|(_, boxed_arg_names, _)| boxed_arg_names.contains(&name.as_str()))
 						.map(|(_, _, lt)| lt)
 						.or_else(|| arg_type_hint.as_explicit_lifetime())
 						.unwrap_or(Lifetime::Elided);
@@ -912,7 +912,7 @@ fn companion_func_default_args<'tu, 'ge>(f: &Func<'tu, 'ge>) -> Option<Func<'tu,
 /// Companion function returning `BoxRefMut` for a corresponding function returning `BoxRef`
 fn companion_func_boxref_mut<'tu, 'ge>(f: &Func<'tu, 'ge>) -> Option<Func<'tu, 'ge>> {
 	let ret_type_ref = f.return_type_ref();
-	if let Some((Constness::Mut, borrow_arg_name, _)) = ret_type_ref.type_hint().as_boxed_as_ref() {
+	if let Some((Constness::Mut, borrow_arg_names, _)) = ret_type_ref.type_hint().as_boxed_as_ref() {
 		let mut desc = f.to_desc_with_skip_config(InheritConfig::empty());
 		let desc_mut = Rc::make_mut(&mut desc);
 		let mut cloned_args = None;
@@ -924,7 +924,7 @@ fn companion_func_boxref_mut<'tu, 'ge>(f: &Func<'tu, 'ge>) -> Option<Func<'tu, '
 			cloned_args.as_mut().unwrap()
 		};
 		let mut borrow_arg_is_const = false;
-		if borrow_arg_name == ARG_OVERRIDE_SELF {
+		if borrow_arg_names.contains(&ARG_OVERRIDE_SELF) {
 			if desc_mut.kind.as_instance_method().is_some() && desc_mut.constness.is_const() {
 				borrow_arg_is_const = true;
 				desc_mut.constness = Constness::Mut;
@@ -932,7 +932,7 @@ fn companion_func_boxref_mut<'tu, 'ge>(f: &Func<'tu, 'ge>) -> Option<Func<'tu, '
 		} else {
 			let borrow_arg = args
 				.iter_mut()
-				.find(|arg| arg.cpp_name(CppNameStyle::Declaration) == *borrow_arg_name);
+				.find(|arg| borrow_arg_names.contains(&arg.cpp_name(CppNameStyle::Declaration).as_ref()));
 			if let Some(borrow_arg) = borrow_arg {
 				let type_ref = borrow_arg.type_ref();
 				let kind = type_ref.kind();

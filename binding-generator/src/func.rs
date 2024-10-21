@@ -466,16 +466,16 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 				if let Some(return_hint) = gen_env.settings.return_override.get(&mut self.matcher()) {
 					out.set_type_hint(return_hint.clone());
 					// if we're returning a BoxedRef then assign its mutability to the mutability of the borrowed argument
-					if let Some((_, borrow_arg_name, _)) = return_hint.as_boxed_as_ref() {
-						let borrow_arg_constness = if borrow_arg_name == ARG_OVERRIDE_SELF {
+					if let Some((_, borrow_arg_names, _)) = return_hint.as_boxed_as_ref() {
+						let borrow_arg_constness = if borrow_arg_names.contains(&ARG_OVERRIDE_SELF) {
 							self.constness()
 						} else {
 							self
 								.arguments()
 								.iter()
-								.find(|arg| arg.cpp_name(CppNameStyle::Declaration) == *borrow_arg_name)
+								.find(|arg| borrow_arg_names.contains(&arg.cpp_name(CppNameStyle::Declaration).as_ref()))
 								.map(|arg| arg.type_ref().constness())
-								.unwrap_or_else(|| panic!("BoxedAsRef refers to the non-existent argument name: {borrow_arg_name}"))
+								.unwrap_or_else(|| panic!("BoxedAsRef refers to the non-existent argument names: {borrow_arg_names:?}"))
 						};
 						out.set_inherent_constness(borrow_arg_constness);
 					}

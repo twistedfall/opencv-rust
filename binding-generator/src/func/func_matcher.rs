@@ -236,7 +236,7 @@ mod test {
 				],
 				TypeRefDesc::cv_input_array()
 					.with_inherent_constness(Constness::Const)
-					.with_type_hint(TypeRefTypeHint::BoxedAsRef(Constness::Const, "vec", Lifetime::Elided)),
+					.with_type_hint(TypeRefTypeHint::BoxedAsRef(Constness::Const, &["vec"], Lifetime::Elided)),
 			)
 			.rust_custom_leafname("from_byte_slice"),
 		);
@@ -314,7 +314,7 @@ mod test {
 				],
 				TypeRefDesc::cv_input_array()
 					.with_inherent_constness(Constness::Const)
-					.with_type_hint(TypeRefTypeHint::BoxedAsRef(Constness::Const, "vec", Lifetime::Elided)),
+					.with_type_hint(TypeRefTypeHint::BoxedAsRef(Constness::Const, &["vec"], Lifetime::Elided)),
 			)
 			.rust_custom_leafname("from_byte_slice"),
 		);

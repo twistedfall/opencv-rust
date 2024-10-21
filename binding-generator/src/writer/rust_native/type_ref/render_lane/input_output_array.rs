@@ -21,8 +21,8 @@ impl RenderLaneTrait for InputArrayRenderLane<'_, '_> {
 		rust_self_func_decl(self.canonical.constness(), lifetime)
 	}
 
-	fn rust_arg_func_decl(&self, name: &str, _lifetime: Lifetime) -> String {
-		rust_arg_func_decl(name, Constness::Const, "&impl ToInputArray")
+	fn rust_arg_func_decl(&self, name: &str, lifetime: Lifetime) -> String {
+		rust_arg_func_decl(name, Constness::Const, &format!("&{lifetime: <}impl ToInputArray"))
 	}
 
 	fn rust_arg_pre_call(&self, name: &str, _function_props: &FunctionProps) -> String {
@@ -68,8 +68,8 @@ impl RenderLaneTrait for OutputArrayRenderLane<'_, '_> {
 		rust_self_func_decl(self.canonical.constness(), lifetime)
 	}
 
-	fn rust_arg_func_decl(&self, name: &str, _lifetime: Lifetime) -> String {
-		rust_arg_func_decl(name, Constness::Const, "&mut impl ToOutputArray")
+	fn rust_arg_func_decl(&self, name: &str, lifetime: Lifetime) -> String {
+		rust_arg_func_decl(name, Constness::Const, &format!("&{lifetime: <}mut impl ToOutputArray"))
 	}
 
 	fn rust_arg_pre_call(&self, name: &str, _function_props: &FunctionProps) -> String {
@@ -116,8 +116,8 @@ impl RenderLaneTrait for InputOutputArrayRenderLane<'_, '_> {
 		rust_self_func_decl(self.canonical.constness(), lifetime)
 	}
 
-	fn rust_arg_func_decl(&self, name: &str, _lifetime: Lifetime) -> String {
-		rust_arg_func_decl(name, Constness::Const, "&mut impl ToInputOutputArray")
+	fn rust_arg_func_decl(&self, name: &str, lifetime: Lifetime) -> String {
+		rust_arg_func_decl(name, Constness::Const, &format!("&{lifetime: <}mut impl ToInputOutputArray"))
 	}
 
 	fn rust_arg_pre_call(&self, name: &str, _function_props: &FunctionProps) -> String {

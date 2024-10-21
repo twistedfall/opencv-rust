@@ -284,19 +284,19 @@ fn core_return_override_factory() -> ReturnOverride {
 			vec![
 				(
 					pred!(mut, ["m"], ["const cv::Mat*"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, "m", Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Mut, &["m"], Lifetime::Elided),
 				),
 				(
 					pred!(mut, ["m", "roi"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, "m", Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Mut, &["m"], Lifetime::Elided),
 				),
 				(
 					pred!(mut, ["m", "ranges"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, "m", Lifetime::Custom("boxed")),
+					TypeRefTypeHint::BoxedAsRef(Mut, &["m"], Lifetime::Custom("boxed")),
 				),
 				(
 					pred!(mut, ["m", "rowRange", "colRange"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, "m", Lifetime::Custom("boxed")),
+					TypeRefTypeHint::BoxedAsRef(Mut, &["m"], Lifetime::Custom("boxed")),
 				),
 			],
 		),
@@ -305,15 +305,15 @@ fn core_return_override_factory() -> ReturnOverride {
 			vec![
 				(
 					pred!(const, ["cn", "rows"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 				),
 				(
 					pred!(const, ["cn", "newndims", "newsz"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 				),
 				(
 					pred!(const, ["cn", "newshape"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 				),
 			],
 		),
@@ -321,14 +321,14 @@ fn core_return_override_factory() -> ReturnOverride {
 			"cv::Mat::row",
 			vec![(
 				pred!(const, ["y"]),
-				TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+				TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 			)],
 		),
 		(
 			"cv::Mat::col",
 			vec![(
 				pred!(const, ["x"]),
-				TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+				TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 			)],
 		),
 		(
@@ -336,11 +336,11 @@ fn core_return_override_factory() -> ReturnOverride {
 			vec![
 				(
 					pred!(const, ["startrow", "endrow"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 				),
 				(
 					pred!(const, ["r"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 				),
 			],
 		),
@@ -349,11 +349,11 @@ fn core_return_override_factory() -> ReturnOverride {
 			vec![
 				(
 					pred!(const, ["startcol", "endcol"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 				),
 				(
 					pred!(const, ["r"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 				),
 			],
 		),
@@ -361,7 +361,7 @@ fn core_return_override_factory() -> ReturnOverride {
 			"cv::Mat::diag",
 			vec![(
 				pred!(const, ["d"]),
-				TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+				TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 			)],
 		),
 		(
@@ -369,15 +369,15 @@ fn core_return_override_factory() -> ReturnOverride {
 			vec![
 				(
 					pred!(const, ["roi"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 				),
 				(
 					pred!(const, ["rowRange", "colRange"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 				),
 				(
 					pred!(const, ["ranges"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 				),
 			],
 		),
@@ -387,11 +387,11 @@ fn core_return_override_factory() -> ReturnOverride {
 			vec![
 				(
 					pred!(const, ["idx", "rowRange", "colRange"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 				),
 				(
 					pred!(const, []),
-					TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 				),
 			],
 		),
@@ -400,11 +400,11 @@ fn core_return_override_factory() -> ReturnOverride {
 			vec![
 				(
 					pred!(const, ["idx", "rowRange", "colRange"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 				),
 				(
 					pred!(const, ["ranges"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 				),
 			],
 		),
@@ -414,11 +414,11 @@ fn core_return_override_factory() -> ReturnOverride {
 			vec![
 				(
 					pred!(mut, ["m", "rowRange", "colRange"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, "m", Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Mut, &["m"], Lifetime::Elided),
 				),
 				(
 					pred!(mut, ["m", "roi"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, "m", Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Mut, &["m"], Lifetime::Elided),
 				),
 			],
 		),
@@ -426,14 +426,14 @@ fn core_return_override_factory() -> ReturnOverride {
 			"cv::cuda::GpuMat::row",
 			vec![(
 				pred!(const, ["y"]),
-				TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+				TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 			)],
 		),
 		(
 			"cv::cuda::GpuMat::col",
 			vec![(
 				pred!(const, ["x"]),
-				TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+				TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 			)],
 		),
 		(
@@ -441,11 +441,11 @@ fn core_return_override_factory() -> ReturnOverride {
 			vec![
 				(
 					pred!(const, ["startrow", "endrow"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 				),
 				(
 					pred!(const, ["r"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 				),
 			],
 		),
@@ -454,11 +454,11 @@ fn core_return_override_factory() -> ReturnOverride {
 			vec![
 				(
 					pred!(const, ["startcol", "endcol"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 				),
 				(
 					pred!(const, ["r"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 				),
 			],
 		),
@@ -466,7 +466,7 @@ fn core_return_override_factory() -> ReturnOverride {
 			"cv::cuda::GpuMat::reshape",
 			vec![(
 				pred!(const, ["cn", "rows"]),
-				TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+				TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 			)],
 		),
 		(
@@ -474,11 +474,11 @@ fn core_return_override_factory() -> ReturnOverride {
 			vec![
 				(
 					pred!(const, ["rowRange", "colRange"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 				),
 				(
 					pred!(const, ["roi"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 				),
 			],
 		),
@@ -488,15 +488,15 @@ fn core_return_override_factory() -> ReturnOverride {
 			vec![
 				(
 					pred!(mut, ["m", "rowRange", "colRange"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, "m", Lifetime::Custom("boxed")),
+					TypeRefTypeHint::BoxedAsRef(Mut, &["m"], Lifetime::Custom("boxed")),
 				),
 				(
 					pred!(mut, ["m", "roi"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, "m", Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Mut, &["m"], Lifetime::Elided),
 				),
 				(
 					pred!(mut, ["m", "ranges"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, "m", Lifetime::Custom("boxed")),
+					TypeRefTypeHint::BoxedAsRef(Mut, &["m"], Lifetime::Custom("boxed")),
 				),
 			],
 		),
@@ -504,14 +504,14 @@ fn core_return_override_factory() -> ReturnOverride {
 			"cv::UMat::row",
 			vec![(
 				pred!(const, ["y"]),
-				TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+				TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 			)],
 		),
 		(
 			"cv::UMat::col",
 			vec![(
 				pred!(const, ["x"]),
-				TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+				TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 			)],
 		),
 		(
@@ -519,11 +519,11 @@ fn core_return_override_factory() -> ReturnOverride {
 			vec![
 				(
 					pred!(const, ["startrow", "endrow"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 				),
 				(
 					pred!(const, ["r"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 				),
 			],
 		),
@@ -532,11 +532,11 @@ fn core_return_override_factory() -> ReturnOverride {
 			vec![
 				(
 					pred!(const, ["startcol", "endcol"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 				),
 				(
 					pred!(const, ["r"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 				),
 			],
 		),
@@ -544,7 +544,7 @@ fn core_return_override_factory() -> ReturnOverride {
 			"cv::UMat::diag",
 			vec![(
 				pred!(const, ["d"]),
-				TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+				TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 			)],
 		),
 		(
@@ -552,11 +552,11 @@ fn core_return_override_factory() -> ReturnOverride {
 			vec![
 				(
 					pred!(const, ["cn", "rows"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 				),
 				(
 					pred!(const, ["cn", "newndims", "newsz"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 				),
 			],
 		),
@@ -565,98 +565,110 @@ fn core_return_override_factory() -> ReturnOverride {
 			vec![
 				(
 					pred!(const, ["rowRange", "colRange"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 				),
 				(
 					pred!(const, ["roi"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 				),
 				(
 					pred!(const, ["ranges"]),
-					TypeRefTypeHint::BoxedAsRef(Mut, ARG_OVERRIDE_SELF, Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Mut, &[ARG_OVERRIDE_SELF], Lifetime::Elided),
 				),
 			],
 		),
 		(
 			"cv::_InputArray::_InputArray",
 			vec![
-				(pred!(mut, ["m"]), TypeRefTypeHint::BoxedAsRef(Const, "m", Lifetime::Elided)),
+				(
+					pred!(mut, ["m"]),
+					TypeRefTypeHint::BoxedAsRef(Const, &["m"], Lifetime::Elided),
+				),
 				(
 					pred!(mut, ["expr"]),
-					TypeRefTypeHint::BoxedAsRef(Const, "expr", Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Const, &["expr"], Lifetime::Elided),
 				),
 				(
 					pred!(mut, ["vec"]),
-					TypeRefTypeHint::BoxedAsRef(Const, "vec", Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Const, &["vec"], Lifetime::Elided),
 				),
 				(
 					pred!(mut, ["val"]),
-					TypeRefTypeHint::BoxedAsRef(Const, "val", Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Const, &["val"], Lifetime::Elided),
 				),
 				(
 					pred!(mut, ["d_mat"]),
-					TypeRefTypeHint::BoxedAsRef(Const, "d_mat", Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Const, &["d_mat"], Lifetime::Elided),
 				),
 				(
 					pred!(mut, ["d_mat_array"]),
-					TypeRefTypeHint::BoxedAsRef(Const, "d_mat_array", Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Const, &["d_mat_array"], Lifetime::Elided),
 				),
 				(
 					pred!(mut, ["buf"]),
-					TypeRefTypeHint::BoxedAsRef(Const, "buf", Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Const, &["buf"], Lifetime::Elided),
 				),
 				(
 					pred!(mut, ["cuda_mem"]),
-					TypeRefTypeHint::BoxedAsRef(Const, "cuda_mem", Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Const, &["cuda_mem"], Lifetime::Elided),
 				),
-				(pred!(mut, ["um"]), TypeRefTypeHint::BoxedAsRef(Const, "um", Lifetime::Elided)),
+				(
+					pred!(mut, ["um"]),
+					TypeRefTypeHint::BoxedAsRef(Const, &["um"], Lifetime::Elided),
+				),
 				(
 					pred!(mut, ["umv"]),
-					TypeRefTypeHint::BoxedAsRef(Const, "umv", Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Const, &["umv"], Lifetime::Elided),
 				),
 			],
 		),
 		(
 			"cv::_OutputArray::_OutputArray",
 			vec![
-				(pred!(mut, ["m"]), TypeRefTypeHint::BoxedAsRef(Const, "m", Lifetime::Elided)),
+				(
+					pred!(mut, ["m"]),
+					TypeRefTypeHint::BoxedAsRef(Const, &["m"], Lifetime::Elided),
+				),
 				(
 					pred!(mut, ["vec"]),
-					TypeRefTypeHint::BoxedAsRef(Const, "vec", Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Const, &["vec"], Lifetime::Elided),
 				),
 				(
 					pred!(mut, ["d_mat"]),
-					TypeRefTypeHint::BoxedAsRef(Const, "d_mat", Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Const, &["d_mat"], Lifetime::Elided),
 				),
 				(
 					pred!(mut, ["buf"]),
-					TypeRefTypeHint::BoxedAsRef(Const, "buf", Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Const, &["buf"], Lifetime::Elided),
 				),
 				(
 					pred!(mut, ["cuda_mem"]),
-					TypeRefTypeHint::BoxedAsRef(Const, "cuda_mem", Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Const, &["cuda_mem"], Lifetime::Elided),
 				),
 			],
 		),
 		(
 			"cv::_InputOutputArray::_InputOutputArray",
 			vec![
-				(pred!(mut, ["m"]), TypeRefTypeHint::BoxedAsRef(Const, "m", Lifetime::Elided)),
+				(
+					pred!(mut, ["m"]),
+					TypeRefTypeHint::BoxedAsRef(Const, &["m"], Lifetime::Elided),
+				),
 				(
 					pred!(mut, ["vec"]),
-					TypeRefTypeHint::BoxedAsRef(Const, "vec", Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Const, &["vec"], Lifetime::Elided),
 				),
 				(
 					pred!(mut, ["d_mat"]),
-					TypeRefTypeHint::BoxedAsRef(Const, "d_mat", Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Const, &["d_mat"], Lifetime::Elided),
 				),
 				(
 					pred!(mut, ["buf"]),
-					TypeRefTypeHint::BoxedAsRef(Const, "buf", Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Const, &["buf"], Lifetime::Elided),
 				),
 				(
 					pred!(mut, ["cuda_mem"]),
-					TypeRefTypeHint::BoxedAsRef(Const, "cuda_mem", Lifetime::Elided),
+					TypeRefTypeHint::BoxedAsRef(Const, &["cuda_mem"], Lifetime::Elided),
 				),
 			],
 		),
