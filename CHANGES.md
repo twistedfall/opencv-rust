@@ -1,3 +1,6 @@
+* 0.93.4
+  * Various documentation, callback handling and other internal improvements.
+
 * 0.93.3
   * Fix issue with using `Option<Ptr>`, now behaves as expected and doesn't segfault.
   * Introduce `Mat::get_data_dump()` to get the dump of the Mat data, it's also included in the `Debug` output.

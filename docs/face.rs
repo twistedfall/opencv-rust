@@ -2817,8 +2817,8 @@ pub mod face {
 		/// set the custom face detector
 		#[inline]
 		fn set_face_detector(&mut self, f: Option<Box<dyn FnMut(*const c_void, *const c_void) -> bool + Send + Sync + 'static>>) -> Result<bool> {
-			callback_arg!(f_trampoline(unnamed: *const c_void, unnamed_1: *const c_void, unnamed_2: *mut c_void) -> bool => unnamed_2 in callbacks => f(unnamed: *const c_void, unnamed_1: *const c_void) -> bool);
-			userdata_arg!(user_data in callbacks => f);
+			callback_arg!(f_trampoline(unnamed: *const c_void, unnamed_1: *const c_void, unnamed_2: *mut c_void) -> bool => unnamed_2 in f(unnamed: *const c_void, unnamed_1: *const c_void) -> bool);
+			userdata_arg!(user_data: *mut c_void => f);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FacemarkKazemi_setFaceDetector_bool__X__const_cv__InputArrayR__const_cv__OutputArrayR__voidX__voidX(self.as_raw_mut_FacemarkKazemi(), f_trampoline, user_data, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -3669,8 +3669,8 @@ pub mod face {
 		/// * user_data: 0
 		#[inline]
 		fn set_face_detector(&mut self, detector: crate::face::FN_FaceDetector) -> Result<bool> {
-			callback_arg!(detector_trampoline(unnamed: *const c_void, unnamed_1: *const c_void, user_data: *mut c_void) -> bool => user_data in callbacks => detector(unnamed: *const c_void, unnamed_1: *const c_void) -> bool);
-			userdata_arg!(user_data in callbacks => detector);
+			callback_arg!(detector_trampoline(unnamed: *const c_void, unnamed_1: *const c_void, user_data: *mut c_void) -> bool => user_data in detector(unnamed: *const c_void, unnamed_1: *const c_void) -> bool);
+			userdata_arg!(user_data: *mut c_void => detector);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_face_FacemarkTrain_setFaceDetector_FN_FaceDetector_voidX(self.as_raw_mut_FacemarkTrain(), detector_trampoline, user_data, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

@@ -580,8 +580,8 @@ pub mod highgui {
 	#[inline]
 	pub fn create_button_def(bar_name: &str, on_change: crate::highgui::ButtonCallback) -> Result<i32> {
 		extern_container_arg!(bar_name);
-		callback_arg!(on_change_trampoline(state: i32, userdata: *mut c_void) -> () => userdata in callbacks => on_change(state: i32) -> ());
-		userdata_arg!(userdata in callbacks => on_change);
+		callback_arg!(on_change_trampoline(state: i32, userdata: *mut c_void) -> () => userdata in on_change(state: i32) -> ());
+		userdata_arg!(userdata: *mut c_void => on_change);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createButton_const_StringR_ButtonCallback_voidX(bar_name.opencv_as_extern(), on_change_trampoline, userdata, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -624,8 +624,8 @@ pub mod highgui {
 	#[inline]
 	pub fn create_button(bar_name: &str, on_change: crate::highgui::ButtonCallback, typ: i32, initial_button_state: bool) -> Result<i32> {
 		extern_container_arg!(bar_name);
-		callback_arg!(on_change_trampoline(state: i32, userdata: *mut c_void) -> () => userdata in callbacks => on_change(state: i32) -> ());
-		userdata_arg!(userdata in callbacks => on_change);
+		callback_arg!(on_change_trampoline(state: i32, userdata: *mut c_void) -> () => userdata in on_change(state: i32) -> ());
+		userdata_arg!(userdata: *mut c_void => on_change);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createButton_const_StringR_ButtonCallback_voidX_int_bool(bar_name.opencv_as_extern(), on_change_trampoline, userdata, typ, initial_button_state, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -666,8 +666,8 @@ pub mod highgui {
 	pub fn create_trackbar(trackbarname: &str, winname: &str, value: Option<&mut i32>, count: i32, on_change: crate::highgui::TrackbarCallback) -> Result<i32> {
 		extern_container_arg!(trackbarname);
 		extern_container_arg!(winname);
-		callback_arg!(on_change_trampoline(pos: i32, userdata: *mut c_void) -> () => userdata in callbacks => on_change(pos: i32) -> ());
-		userdata_arg!(userdata in callbacks => on_change);
+		callback_arg!(on_change_trampoline(pos: i32, userdata: *mut c_void) -> () => userdata in on_change(pos: i32) -> ());
+		userdata_arg!(userdata: *mut c_void => on_change);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_createTrackbar_const_StringR_const_StringR_intX_int_TrackbarCallback_voidX(trackbarname.opencv_as_extern(), winname.opencv_as_extern(), value.map_or(::core::ptr::null_mut(), |value| value), count, on_change_trampoline, userdata, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1447,8 +1447,8 @@ pub mod highgui {
 	#[inline]
 	pub fn set_mouse_callback(winname: &str, on_mouse: crate::highgui::MouseCallback) -> Result<()> {
 		extern_container_arg!(winname);
-		callback_arg!(on_mouse_trampoline(event: i32, x: i32, y: i32, flags: i32, userdata: *mut c_void) -> () => userdata in callbacks => on_mouse(event: i32, x: i32, y: i32, flags: i32) -> ());
-		userdata_arg!(userdata in callbacks => on_mouse);
+		callback_arg!(on_mouse_trampoline(event: i32, x: i32, y: i32, flags: i32, userdata: *mut c_void) -> () => userdata in on_mouse(event: i32, x: i32, y: i32, flags: i32) -> ());
+		userdata_arg!(userdata: *mut c_void => on_mouse);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_setMouseCallback_const_StringR_MouseCallback_voidX(winname.opencv_as_extern(), on_mouse_trampoline, userdata, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
@@ -1517,8 +1517,8 @@ pub mod highgui {
 	#[inline]
 	pub fn set_opengl_draw_callback(winname: &str, on_opengl_draw: crate::highgui::OpenGlDrawCallback) -> Result<()> {
 		extern_container_arg!(winname);
-		callback_arg!(on_opengl_draw_trampoline(userdata: *mut c_void) -> () => userdata in callbacks => on_opengl_draw() -> ());
-		userdata_arg!(userdata in callbacks => on_opengl_draw);
+		callback_arg!(on_opengl_draw_trampoline(userdata: *mut c_void) -> () => userdata in on_opengl_draw() -> ());
+		userdata_arg!(userdata: *mut c_void => on_opengl_draw);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_setOpenGlDrawCallback_const_StringR_OpenGlDrawCallback_voidX(winname.opencv_as_extern(), on_opengl_draw_trampoline, userdata, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);

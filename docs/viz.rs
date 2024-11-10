@@ -2423,8 +2423,8 @@ pub mod viz {
 		/// * cookie: 0
 		#[inline]
 		fn register_keyboard_callback(&mut self, callback: crate::viz::Viz3d_KeyboardCallback) -> Result<()> {
-			callback_arg!(callback_trampoline(unnamed: *const c_void, unnamed_1: *mut c_void) -> () => unnamed_1 in callbacks => callback(unnamed: *const c_void) -> ());
-			userdata_arg!(cookie in callbacks => callback);
+			callback_arg!(callback_trampoline(unnamed: *const c_void, unnamed_1: *mut c_void) -> () => unnamed_1 in callback(unnamed: *const c_void) -> ());
+			userdata_arg!(cookie: *mut c_void => callback);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_Viz3d_registerKeyboardCallback_KeyboardCallback_voidX(self.as_raw_mut_Viz3d(), callback_trampoline, cookie, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
@@ -2442,8 +2442,8 @@ pub mod viz {
 		/// * cookie: 0
 		#[inline]
 		fn register_mouse_callback(&mut self, callback: crate::viz::Viz3d_MouseCallback) -> Result<()> {
-			callback_arg!(callback_trampoline(unnamed: *const c_void, unnamed_1: *mut c_void) -> () => unnamed_1 in callbacks => callback(unnamed: *const c_void) -> ());
-			userdata_arg!(cookie in callbacks => callback);
+			callback_arg!(callback_trampoline(unnamed: *const c_void, unnamed_1: *mut c_void) -> () => unnamed_1 in callback(unnamed: *const c_void) -> ());
+			userdata_arg!(cookie: *mut c_void => callback);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_viz_Viz3d_registerMouseCallback_MouseCallback_voidX(self.as_raw_mut_Viz3d(), callback_trampoline, cookie, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

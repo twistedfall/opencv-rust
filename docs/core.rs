@@ -33694,8 +33694,8 @@ pub mod core {
 		/// serialized.
 		#[inline]
 		fn enqueue_host_callback(&mut self, callback: core::Stream_StreamCallback) -> Result<()> {
-			callback_arg!(callback_trampoline(status: i32, user_data: *mut c_void) -> () => user_data in callbacks => callback(status: i32) -> ());
-			userdata_arg!(user_data in callbacks => callback);
+			callback_arg!(callback_trampoline(status: i32, user_data: *mut c_void) -> () => user_data in callback(status: i32) -> ());
+			userdata_arg!(user_data: *mut c_void => callback);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cuda_Stream_enqueueHostCallback_StreamCallback_voidX(self.as_raw_mut_Stream(), callback_trampoline, user_data, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
