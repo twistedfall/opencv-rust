@@ -31,16 +31,15 @@ macro_rules! string_arg_output_receive {
 }
 
 macro_rules! callback_arg {
-	($tr_name: ident($($tr_arg_name: ident: $tr_arg_type: ty),*) -> $tr_ret: ty => $tr_userdata_name: ident in $callbacks_name: ident => $callback_name: ident($($fw_arg_name: ident: $fw_arg_type: ty),*) -> $fw_ret: ty) => {
+	($tr_name: ident($($tr_arg_name: ident: $tr_arg_type: ty),*) -> $tr_ret: ty => $tr_userdata_name: ident in $callback_name: ident($($fw_arg_name: ident: $fw_arg_type: ty),*) -> $fw_ret: ty) => {
 		unsafe extern "C" fn trampoline($($tr_arg_name: $tr_arg_type),*) -> $tr_ret {
-			let mut callback: Box<Box<dyn FnMut($($fw_arg_type),*) -> $fw_ret + Send + Sync>> = Box::from_raw($tr_userdata_name.cast());
-			let out = callback($($fw_arg_name),*);
-			Box::into_raw(callback);
+			let callback: *mut Box<dyn FnMut($($fw_arg_type),*) -> $fw_ret> = $tr_userdata_name.cast();
+			let out = (*callback)($($fw_arg_name),*);
 			out
 		}
 
 		let $tr_name = if $callback_name.is_some() {
-			Some(trampoline as unsafe extern "C" fn($($tr_arg_name: $tr_arg_type),*) -> $tr_ret)
+			Some(trampoline as unsafe extern "C" fn($($tr_arg_type),*) -> $tr_ret)
 		} else {
 			None
 		};
@@ -48,9 +47,9 @@ macro_rules! callback_arg {
 }
 
 macro_rules! userdata_arg {
-	($userdata_name: ident in $callbacks_name: ident => $callback_name: ident) => {
-		let $userdata_name = if let Some(callback) = $callback_name {
-			Box::into_raw(Box::new(callback)).cast::<::std::ffi::c_void>()
+	($userdata_name: ident: $userdata_type: ty => $callback_name: ident) => {
+		let $userdata_name: $userdata_type = if let Some(callback) = $callback_name {
+			Box::into_raw(Box::new(callback)).cast()
 		} else {
 			::std::ptr::null_mut() // fixme, remove previous callback
 		};

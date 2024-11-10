@@ -53,10 +53,9 @@ impl RenderLaneTrait for FunctionRenderLane<'_, '_> {
 				.join(", ");
 			let ret = self.func.return_type();
 			format!(
-				"callback_arg!({name}_trampoline({tramp_args}) -> {tramp_ret} => {userdata_name} in callbacks => {name}({fw_args}) -> {fw_ret})",
+				"callback_arg!({name}_trampoline({tramp_args}) -> {ret} => {userdata_name} in {name}({fw_args}) -> {ret})",
 				tramp_args = tramp_args.iter().map(|(_, decl)| decl).join(", "),
-				tramp_ret = ret.rust_extern(ExternDir::FromCpp),
-				fw_ret = ret.rust_extern(ExternDir::FromCpp),
+				ret = ret.rust_extern(ExternDir::FromCpp),
 			)
 		} else {
 			"".to_string()

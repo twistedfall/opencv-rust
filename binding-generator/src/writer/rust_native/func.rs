@@ -244,7 +244,8 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 			if arg.is_user_data() {
 				pre_post_arg_handle(
 					format!(
-						"userdata_arg!({name} in callbacks => {callback_name})",
+						"userdata_arg!({decl} => {callback_name})",
+						decl = arg_type_ref.render_lane().to_dyn().rust_extern_arg_func_decl(name),
 						callback_name = callback_arg_name.expect("Can't get name of the callback arg")
 					),
 					&mut pre_call_args,
