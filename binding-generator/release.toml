@@ -1,2 +1,3 @@
 tag = false
 pre-release-replacements = []
+pre-release-hook = ["true"]
