@@ -68,7 +68,7 @@ jobs:
           - windows-2022
           - macos-14
         vcpkg-version:
-          - 2024.07.12
+          - 2024.09.30
     runs-on: ${{ matrix.os-image }}
     env:
       VCPKG_VERSION: ${{ matrix.vcpkg-version }}
