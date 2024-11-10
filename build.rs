@@ -338,20 +338,19 @@ fn build_wrapper(mut cc: cc::Build) {
 }
 
 fn main() -> Result<()> {
-	println!("cargo:rustc-check-cfg=cfg(ocvrs_opencv_branch_4)"); // replace with cargo:: syntax when MSRV is 1.77
-	println!("cargo:rustc-check-cfg=cfg(ocvrs_opencv_branch_34)"); // replace with cargo:: syntax when MSRV is 1.77
-	println!("cargo:rustc-check-cfg=cfg(ocvrs_opencv_branch_32)"); // replace with cargo:: syntax when MSRV is 1.77
+	let args = env::args_os().skip(1).peekable();
+	if matches!(handle_running_binding_generator(args)?, GenerateFullBindings::Stop) {
+		return Ok(());
+	}
+
+	for branch in ["4", "34", "32"].iter() {
+		println!("cargo:rustc-check-cfg=cfg(ocvrs_opencv_branch_{branch})"); // replace with cargo:: syntax when MSRV is 1.77
+	}
 	for module in SUPPORTED_MODULES {
 		println!("cargo:rustc-check-cfg=cfg(ocvrs_has_module_{module})"); // replace with cargo:: syntax when MSRV is 1.77
 	}
 
 	if matches!(handle_running_in_docsrs(), GenerateFullBindings::Stop) {
-		return Ok(());
-	}
-
-	let args = env::args_os().skip(1).peekable();
-	let build_script_path = env::current_exe()?;
-	if matches!(handle_running_binding_generator(args)?, GenerateFullBindings::Stop) {
 		return Ok(());
 	}
 
@@ -428,6 +427,7 @@ fn main() -> Result<()> {
 	setup_rerun()?;
 
 	let ffi_export_suffix = format!("_{}", pkg_version.replace(".", "_"));
+	let build_script_path = env::current_exe()?;
 	let binding_generator = BindingGenerator::new(build_script_path);
 	binding_generator.generate_wrapper(opencv_header_dir, &opencv, &ffi_export_suffix)?;
 	let cc = build_compiler(&opencv, &ffi_export_suffix);
