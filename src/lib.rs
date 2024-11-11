@@ -1,4 +1,4 @@
-#![allow(broken_intra_doc_links)]
+#![allow(rustdoc::broken_intra_doc_links)]
 
 pub use error::{Error, Result};
 
