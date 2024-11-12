@@ -82,6 +82,11 @@
    Look for `Selected GCC installation` and `#include <...> search starts here` to get the sense of what system toolchain is used
    by clang. Refer to this [issue](https://github.com/twistedfall/opencv-rust/issues/322) for more fixes and workarounds.
 
+10. Using a language server IDE on macOS you're getting `dyld: Library not loaded` error from `rust-analyzer`
+
+    Check this [issue](https://github.com/twistedfall/opencv-rust/issues/592) for some ready-made configurations
+    for VSCode and Zed.
+
 ## Reporting issues
 
 If you still have trouble using the crate after going through the Troubleshooting steps please fill free to
