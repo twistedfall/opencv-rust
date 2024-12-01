@@ -1,3 +1,6 @@
+* 0.93.5
+  * Fix the `jobserver` minimum version (fixes https://github.com/twistedfall/opencv-rust/issues/639)
+
 * 0.93.4
   * Various documentation, callback handling and other internal improvements.
 
