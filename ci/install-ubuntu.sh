@@ -274,6 +274,11 @@ if [ ! -d "$opencv_contrib_src" ]; then
 	curl -L "https://github.com/opencv/opencv_contrib/archive/$OPENCV_VERSION.tar.gz" | tar -xz -C "$dist_dir"
 fi
 
+# Qt build is broken in OpenCV 5.0.0-alpha
+if [[ "$OPENCV_VERSION" == "5.0.0-alpha" ]]; then
+	BUILD_FLAGS="$BUILD_FLAGS -D WITH_QT=OFF"
+fi
+
 pushd "$build_dir" > /dev/null
 cmake $BUILD_FLAGS \
 	-D CMAKE_INSTALL_PREFIX=/usr \

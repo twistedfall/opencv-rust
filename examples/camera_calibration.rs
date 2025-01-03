@@ -5,7 +5,16 @@ use std::fs;
 
 use opencv::core::{no_array, Point2f, Point3f, Size, TermCriteria, TermCriteria_EPS, TermCriteria_MAX_ITER, Vector};
 use opencv::prelude::*;
-use opencv::{calib3d, highgui, imgcodecs, imgproc};
+use opencv::{highgui, imgcodecs, imgproc, not_opencv_branch_5, opencv_branch_5};
+
+opencv_branch_5! {
+	use opencv::calib::{find_chessboard_corners_def, draw_chessboard_corners, calibrate_camera_def};
+	use opencv::mod_3d::{undistort_def, init_undistort_rectify_map};
+}
+
+not_opencv_branch_5! {
+	use opencv::calib3d::{find_chessboard_corners_def, draw_chessboard_corners, calibrate_camera_def, undistort_def, init_undistort_rectify_map};
+}
 
 fn main() -> Result<(), Box<dyn Error>> {
 	// termination criteria
@@ -33,14 +42,14 @@ fn main() -> Result<(), Box<dyn Error>> {
 		imgproc::cvt_color_def(&img, &mut gray, imgproc::COLOR_BGR2GRAY)?;
 
 		let mut corners = Vector::<Point2f>::default();
-		let ret = calib3d::find_chessboard_corners_def(&gray, Size::new(7, 6), &mut corners)?;
+		let ret = find_chessboard_corners_def(&gray, Size::new(7, 6), &mut corners)?;
 		if ret {
 			objpoints.push(objp.clone());
 
 			imgproc::corner_sub_pix(&gray, &mut corners, Size::new(11, 11), Size::new(-1, -1), criteria)?;
 
 			// Draw and display the corners
-			calib3d::draw_chessboard_corners(&mut img, Size::new(7, 6), &corners, ret)?;
+			draw_chessboard_corners(&mut img, Size::new(7, 6), &corners, ret)?;
 			highgui::imshow("Source", &img)?;
 
 			imgpoints.push(corners);
@@ -50,7 +59,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 			let mut dist = Mat::default();
 			let mut rvecs = Vector::<Mat>::new();
 			let mut tvecs = Vector::<Mat>::new();
-			calib3d::calibrate_camera_def(
+			calibrate_camera_def(
 				&objpoints,
 				&imgpoints,
 				gray.size()?,
@@ -62,13 +71,13 @@ fn main() -> Result<(), Box<dyn Error>> {
 
 			// Using cv.undistort()
 			let mut dst_undistort = Mat::default();
-			calib3d::undistort_def(&img, &mut dst_undistort, &mtx, &dist)?;
+			undistort_def(&img, &mut dst_undistort, &mtx, &dist)?;
 			highgui::imshow("Result using undistort", &dst_undistort)?;
 
 			// Using remapping
 			let mut mapx = Mat::default();
 			let mut mapy = Mat::default();
-			calib3d::init_undistort_rectify_map(
+			init_undistort_rectify_map(
 				&mtx,
 				&dist,
 				&no_array(),

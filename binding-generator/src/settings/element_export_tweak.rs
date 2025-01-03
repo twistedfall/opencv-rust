@@ -18,22 +18,22 @@ pub static ELEMENT_EXPORT_TWEAK: Lazy<HashMap<&str, fn(ExportConfig) -> Option<E
 		("IDirect3DDevice9", ExportConfig::system as _),
 		("IDirect3DDevice9Ex", ExportConfig::system as _),
 		("IDirect3DSurface9", ExportConfig::system as _),
-		("cv::AffineWarper", ExportConfig::export as _), // 3.2 3.4 stitching warpers
-		("cv::CompressedRectilinearPortraitWarper", ExportConfig::export as _), // 3.2 3.4 stitching warpers
-		("cv::CompressedRectilinearWarper", ExportConfig::export as _), // 3.2 3.4 stitching warpers
-		("cv::CylindricalWarper", ExportConfig::export as _), // 3.2 3.4 stitching warpers
-		("cv::CylindricalWarperGpu", ExportConfig::export as _), // 3.2 3.4 stitching warpers
-		("cv::FisheyeWarper", ExportConfig::export as _), // 3.2 3.4 stitching warpers
-		("cv::MercatorWarper", ExportConfig::export as _), // 3.2 3.4 stitching warpers
-		("cv::PaniniPortraitWarper", ExportConfig::export as _), // 3.2 3.4 stitching warpers
-		("cv::PaniniWarper", ExportConfig::export as _), // 3.2 3.4 stitching warpers
-		("cv::PlaneWarper", ExportConfig::export as _),  // 3.2 3.4 stitching warpers
-		("cv::PlaneWarperGpu", ExportConfig::export as _), // 3.2 3.4 stitching warpers
-		("cv::SphericalWarper", ExportConfig::export as _), // 3.2 3.4 stitching warpers
-		("cv::SphericalWarperGpu", ExportConfig::export as _), // 3.2 3.4 stitching warpers
-		("cv::StereographicWarper", ExportConfig::export as _), // 3.2 3.4 stitching warpers
-		("cv::TransverseMercatorWarper", ExportConfig::export as _), // 3.2 3.4 stitching warpers
-		("cv::WarperCreator", ExportConfig::export as _), // 3.2 3.4 stitching warpers
+		("cv::AffineWarper", ExportConfig::export as _), // 3.4 stitching warpers
+		("cv::CompressedRectilinearPortraitWarper", ExportConfig::export as _), // 3.4 stitching warpers
+		("cv::CompressedRectilinearWarper", ExportConfig::export as _), // 3.4 stitching warpers
+		("cv::CylindricalWarper", ExportConfig::export as _), // 3.4 stitching warpers
+		("cv::CylindricalWarperGpu", ExportConfig::export as _), // 3.4 stitching warpers
+		("cv::FisheyeWarper", ExportConfig::export as _), // 3.4 stitching warpers
+		("cv::MercatorWarper", ExportConfig::export as _), // 3.4 stitching warpers
+		("cv::PaniniPortraitWarper", ExportConfig::export as _), // 3.4 stitching warpers
+		("cv::PaniniWarper", ExportConfig::export as _), // 3.4 stitching warpers
+		("cv::PlaneWarper", ExportConfig::export as _),  // 3.4 stitching warpers
+		("cv::PlaneWarperGpu", ExportConfig::export as _), // 3.4 stitching warpers
+		("cv::SphericalWarper", ExportConfig::export as _), // 3.4 stitching warpers
+		("cv::SphericalWarperGpu", ExportConfig::export as _), // 3.4 stitching warpers
+		("cv::StereographicWarper", ExportConfig::export as _), // 3.4 stitching warpers
+		("cv::TransverseMercatorWarper", ExportConfig::export as _), // 3.4 stitching warpers
+		("cv::WarperCreator", ExportConfig::export as _), // 3.4 stitching warpers
 		("cv::ConfidenceMap", ExportConfig::export as _),
 		("cv::CvFeatureParams", ExportConfig::export as _),
 		("cv::CvHaarEvaluator", ExportConfig::export as _),
@@ -51,13 +51,11 @@ pub static ELEMENT_EXPORT_TWEAK: Lazy<HashMap<&str, fn(ExportConfig) -> Option<E
 		("cv::aruco::EstimateParameters", ExportConfig::force_boxed as _), // used in Ptr
 		("cv::bioinspired::RetinaParameters", ExportConfig::force_boxed as _),
 		("cv::bioinspired::SegmentationParameters", ExportConfig::simple as _),
-		("cv::bioinspired::createRetina_OCL", ExportConfig::export as _), // 3.2 not exported
 		("cv::cudacodec::FormatInfo", ExportConfig::simple as _),
 		("cv::detail::CheckContext", ExportConfig::force_boxed as _),
 		("cv::detail::ImageFeatures", ExportConfig::force_boxed as _), // 3.4 marked as boxed, but has no constructors
 		("cv::dnn::BackendNode", ExportConfig::export as _),
 		("cv::dnn::BackendWrapper", ExportConfig::export as _),
-		("cv::dnn::DictValue", ExportConfig::export as _), // 3.2 not exported
 		("cv::dnn::MatShape", ExportConfig::export as _),
 		("cv::dnn::Net", ExportConfig::force_boxed as _), // incorrectly marked as simple
 		("cv::dnn::_Range", ExportConfig::export as _),   // dnn shape_utils
@@ -73,14 +71,13 @@ pub static ELEMENT_EXPORT_TWEAK: Lazy<HashMap<&str, fn(ExportConfig) -> Option<E
 		("cv::face::FacemarkAAM::Model::Texture", ExportConfig::export as _),
 		("cv::getElemSize", ExportConfig::export as _),
 		("cv::kinfu::Intr", ExportConfig::simple as _),
-		("cv::linemod::QuantizedPyramid", ExportConfig::export as _), // missing in 3.2
 		("cv::morphologyDefaultBorderValue", ExportConfig::export as _),
 		("cv::ocl::Device", ExportConfig::force_boxed as _),
 		("cv::optflow::GPCMatchingParams", ExportConfig::simple as _),
 		("cv::optflow::GPCTrainingParams", ExportConfig::simple as _),
 		("cv::ppf_match_3d::Pose3DPtr", ExportConfig::export as _),
 		("cv::superres::PyrLKOpticalFlow", ExportConfig::export as _),
-		("cv::utils::FunctionParams", ExportConfig::export as _), // missing in 4.8
+		("cv::utils::FunctionParams", ExportConfig::simple as _), // missing in 4.8
 		("cv::utils::logging::LogTag", ExportConfig::export as _),
 		("cv::videostab::MaskFrameSource", ExportConfig::export as _),
 		("cv::viz::Color", ExportConfig::export as _),
@@ -88,6 +85,7 @@ pub static ELEMENT_EXPORT_TWEAK: Lazy<HashMap<&str, fn(ExportConfig) -> Option<E
 		("cvv::impl::CallMetaData", ExportConfig::force_boxed as _),
 		// half-float types from core
 		("cv::hfloat", ExportConfig::simple as _),
+		("cv::bfloat", ExportConfig::simple as _),
 		("cv::float16_t", ExportConfig::simple as _),
 		// gapi
 		("cv::GCompileArg", ExportConfig::export as _),

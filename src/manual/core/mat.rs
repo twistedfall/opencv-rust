@@ -32,9 +32,7 @@ fn match_format<T: DataType>(mat_type: i32) -> Result<()> {
 	if mat_type == out_type {
 		Ok(())
 	} else {
-		#[cfg(not(ocvrs_opencv_branch_32))]
 		let mat_type = core::type_to_string(mat_type)?;
-		#[cfg(not(ocvrs_opencv_branch_32))]
 		let out_type = core::type_to_string(out_type)?;
 		Err(Error::new(
 			core::StsUnmatchedFormats,
@@ -98,9 +96,6 @@ fn match_is_continuous(mat: &(impl MatTraitConst + ?Sized)) -> Result<()> {
 }
 
 fn match_length(sizes: &[i32], slice_len: usize, size_mul: usize) -> Result<()> {
-	if sizes.is_empty() {
-		return Err(Error::new(core::StsUnmatchedSizes, "Dimensions must not be empty"));
-	}
 	let mut expected_len: u64 = 1;
 	for (i, size) in sizes.iter().enumerate() {
 		let size =
@@ -108,8 +103,9 @@ fn match_length(sizes: &[i32], slice_len: usize, size_mul: usize) -> Result<()> 
 		expected_len = expected_len.saturating_mul(size);
 	}
 	if size_mul > 1 {
-		// cast is safe because of the `> 1` check above
-		expected_len = expected_len.saturating_mul(size_mul as u64);
+		expected_len = expected_len.saturating_mul(
+			u64::try_from(size_mul).map_err(|_| Error::new(core::StsOutOfRange, "Size multiplier must fit in u64"))?,
+		);
 	}
 	let slice_len = u64::try_from(slice_len).map_err(|_| Error::new(core::StsOutOfRange, "Length must fit in u64"))?;
 	if expected_len != slice_len {
@@ -780,13 +776,26 @@ impl fmt::Debug for Mat {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		let typ = self.typ();
 		let depth = self.depth();
-		#[cfg(not(ocvrs_opencv_branch_32))]
 		let typ = core::type_to_string(typ).map_err(|_| fmt::Error)?;
-		#[cfg(not(ocvrs_opencv_branch_32))]
 		let depth = core::depth_to_string(depth).map_err(|_| fmt::Error)?;
+		let flags = self.flags();
+		let mut flags_str = String::new();
+		if flags & core::Mat_MAGIC_VAL != core::Mat_MAGIC_VAL {
+			flags_str.push_str("invalid magic value");
+		} else {
+			if flags & core::Mat_CONTINUOUS_FLAG != 0 {
+				flags_str.push_str("continuous");
+			}
+			if flags & core::Mat_SUBMATRIX_FLAG != 0 {
+				if !flags_str.is_empty() {
+					flags_str.push_str(", ");
+				}
+				flags_str.push_str("submatrix");
+			}
+		}
 		f.debug_struct("Mat")
 			.field("type", &typ)
-			.field("flags", &self.flags())
+			.field("flags", &format!("0x{flags:X} ({flags_str})"))
 			.field("channels", &self.channels())
 			.field("depth", &depth)
 			.field("dims", &self.dims())
@@ -829,8 +838,7 @@ impl Deref for MatSize {
 		if p.is_null() {
 			&[]
 		} else {
-			// safe because `Mat::dims()` returns value >= 2
-			let dims = self.dims() as usize;
+			let dims = usize::try_from(self.dims()).unwrap_or(0);
 			unsafe { slice::from_raw_parts(p, dims) }
 		}
 	}

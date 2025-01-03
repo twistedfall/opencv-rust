@@ -11,10 +11,10 @@ use opencv::imgproc::{canny_def, cvt_color_def, hough_lines_def, hough_lines_p, 
 use opencv::prelude::*;
 use opencv::Result;
 
-opencv::opencv_branch_4! {
+opencv::not_opencv_branch_34! {
 	use opencv::imgproc::LINE_AA;
 }
-opencv::not_opencv_branch_4! {
+opencv::opencv_branch_34! {
 	use opencv::core::LINE_AA;
 }
 

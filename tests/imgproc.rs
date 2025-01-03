@@ -59,10 +59,10 @@ fn line_iterator() -> Result<()> {
 
 #[test]
 fn call_def() -> Result<()> {
-	opencv::opencv_branch_4! {
+	opencv::not_opencv_branch_34! {
 		use opencv::imgproc::LINE_8;
 	}
-	opencv::not_opencv_branch_4! {
+	opencv::opencv_branch_34! {
 		use opencv::core::LINE_8;
 	}
 

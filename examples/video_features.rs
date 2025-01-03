@@ -1,6 +1,14 @@
 use opencv::core::Vector;
 use opencv::prelude::*;
-use opencv::{features2d, highgui, imgproc, videoio, Result};
+use opencv::{highgui, imgproc, not_opencv_branch_5, opencv_branch_5, videoio, Result};
+
+opencv_branch_5! {
+	use opencv::features as features2d;
+}
+
+not_opencv_branch_5! {
+	use opencv::features2d;
+}
 
 fn main() -> Result<()> {
 	let window = "video capture";

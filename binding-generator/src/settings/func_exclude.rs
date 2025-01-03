@@ -38,7 +38,7 @@ fn core_factory() -> FuncExclude {
 		"cv_detail_typeToString__int",                                    // detail function
 		"cv_fastFree_voidX",                                              // manual memory allocation
 		"cv_fastMalloc_size_t",                                           // manual memory allocation
-		"cv_format_const_charX",                                          // 3.2 accepts varargs, duplicate definition
+		"cv_format_const_charX",                                          // accepts varargs
 		"cv_hconcat_const_MatX_size_t_const__OutputArrayR",               // duplicate of cv_hconcat_VectorOfMat_Mat, but with pointers
 		"cv_merge_const_MatX_size_t_const__OutputArrayR", // duplicate of cv_merge_const__InputArrayR_const__OutputArrayR, but with pointers
 		"cv_mixChannels_const_MatX_size_t_MatX_size_t_const_intX_size_t", // duplicate of cv_mixChannels_VectorOfMat_VectorOfMat_VectorOfint, but with pointers
@@ -103,11 +103,11 @@ fn imgproc_factory() -> FuncExclude {
 		"cv_calcBackProject_const_MatX_int_const_intX_const__InputArrayR_const__OutputArrayR_const_floatXX_double_bool", // slice pointers
 		"cv_calcHist_const_MatX_int_const_intX_const__InputArrayR_SparseMatR_int_const_intX_const_floatXX_bool_bool", // slice pointers
 		"cv_calcHist_const_MatX_int_const_intX_const__InputArrayR_const__OutputArrayR_int_const_intX_const_floatXX_bool_bool", // slice pointers
-		"cv_fillConvexPoly_MatR_const_PointX_int_const_ScalarR_int_int", // 3.2 3.4
+		"cv_fillConvexPoly_MatR_const_PointX_int_const_ScalarR_int_int",                                                       // 3.4
 		"cv_fillConvexPoly_const__InputOutputArrayR_const_PointX_int_const_ScalarR_int_int",
-		"cv_fillPoly_MatR_const_PointXX_const_intX_int_const_ScalarR_int_int_Point", // 3.2
+		"cv_fillPoly_MatR_const_PointXX_const_intX_int_const_ScalarR_int_int_Point", // 3.4
 		"cv_fillPoly_const__InputOutputArrayR_const_PointXX_const_intX_int_const_ScalarR_int_int_Point",
-		"cv_polylines_MatR_const_PointXX_const_intX_int_bool_const_ScalarR_int_int_int", // 3.2 3.4
+		"cv_polylines_MatR_const_PointXX_const_intX_int_bool_const_ScalarR_int_int_int", // 3.4
 		"cv_polylines_const__InputOutputArrayR_const_PointXX_const_intX_int_bool_const_ScalarR_int_int_int",
 	])
 }

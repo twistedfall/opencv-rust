@@ -254,9 +254,14 @@ fn gen_rust_class(c: &Class, opencv_version: &str) -> String {
 			.map(|f| {
 				let type_ref = f.type_ref();
 				let typ = type_ref.rust_name(NameStyle::ref_());
+				let visibility = if f.is_public() {
+					"pub "
+				} else {
+					""
+				};
 				SIMPLE_FIELD_TPL.interpolate(&HashMap::from([
 					("doc_comment", Cow::Owned(f.rendered_doc_comment("///", opencv_version))),
-					("visibility", "pub ".into()),
+					("visibility", visibility.into()),
 					("name", f.rust_leafname(FishStyle::No)),
 					("type", typ),
 				]))

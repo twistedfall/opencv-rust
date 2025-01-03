@@ -3,26 +3,44 @@ use std::collections::HashMap;
 
 use once_cell::sync::Lazy;
 
-use crate::debug::NameDebug;
-use crate::type_ref::NameStyle;
-use crate::writer::rust_native::type_ref::Lifetime;
-use crate::{CompiledInterpolation, EntityElement, IteratorExt, StrExt, Typedef};
-
 use super::element::{DefaultRustNativeElement, RustElement};
 use super::type_ref::TypeRefExt;
 use super::RustNativeGeneratedElement;
+use crate::debug::NameDebug;
+use crate::type_ref::NameStyle;
+use crate::writer::rust_native::type_ref::Lifetime;
+use crate::{CompiledInterpolation, IteratorExt, StrExt, StringExt, Typedef};
 
 impl RustElement for Typedef<'_, '_> {
 	fn rust_module(&self) -> Cow<str> {
-		DefaultRustNativeElement::rust_module(self.entity())
+		match self {
+			Typedef::Clang { entity, .. } => DefaultRustNativeElement::rust_module(*entity),
+			Typedef::Desc(desc) => desc.rust_module.as_ref().into(),
+		}
 	}
 
 	fn rust_name(&self, style: NameStyle) -> Cow<str> {
-		DefaultRustNativeElement::rust_name(self, self.entity(), style).into()
+		match self {
+			Typedef::Clang { entity, .. } => DefaultRustNativeElement::rust_name(self, *entity, style).into(),
+			Typedef::Desc(_) => {
+				let decl_name = self.rust_leafname(style.turbo_fish_style());
+				match style {
+					NameStyle::Declaration => decl_name,
+					NameStyle::Reference(_) => {
+						let mut out = self.rust_module_reference().into_owned();
+						out.extend_sep("::", &decl_name);
+						out.into()
+					}
+				}
+			}
+		}
 	}
 
 	fn rendered_doc_comment(&self, comment_marker: &str, opencv_version: &str) -> String {
-		DefaultRustNativeElement::rendered_doc_comment(self.entity(), comment_marker, opencv_version)
+		match self {
+			Typedef::Clang { entity, .. } => DefaultRustNativeElement::rendered_doc_comment(*entity, comment_marker, opencv_version),
+			Typedef::Desc(_) => "".to_string(),
+		}
 	}
 }
 

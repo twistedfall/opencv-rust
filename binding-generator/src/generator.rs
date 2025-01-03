@@ -104,7 +104,12 @@ impl<'tu, V: GeneratorVisitor<'tu>> EntityWalkerVisitor<'tu> for OpenCvWalker<'t
 						"GAPI_EXPORTS_W",
 						"GAPI_WRAP",
 					];
-					const SIMPLE: [&str; 3] = ["CV_EXPORTS_W_SIMPLE", "CV_EXPORTS_W_MAP", "GAPI_EXPORTS_W_SIMPLE"];
+					const SIMPLE: [&str; 4] = [
+						"CV_EXPORTS_W_SIMPLE",
+						"CV_EXPORTS_W_PARAMS",
+						"CV_EXPORTS_W_MAP",
+						"GAPI_EXPORTS_W_SIMPLE",
+					];
 					const RENAME: [&str; 2] = ["CV_EXPORTS_AS", "CV_WRAP_AS"];
 					if BOXED.contains(&name.as_str()) {
 						self.gen_env.make_export_config(entity);
@@ -309,17 +314,16 @@ impl<'tu, 'r, V: GeneratorVisitor<'tu>> OpenCvWalker<'tu, 'r, V> {
 		if typedef.exclude_kind().is_included() {
 			match typedef {
 				NewTypedefResult::Typedef(typedef) => {
-					let type_ref = typedef.type_ref();
-					let export = gen_env.get_export_config(typedef_decl).is_some()
-						// we need to have a typedef even if it's not exported for e.g. cv::Size
-						|| type_ref.is_data_type()
-						|| {
+					let export = gen_env.get_export_config(typedef_decl).is_some() || {
 						let underlying_type = typedef.underlying_type_ref();
 						underlying_type.kind().is_function()
 							|| !underlying_type.exclude_kind().is_ignored()
-							|| underlying_type.template_kind().as_template_specialization().map_or(false, |templ| {
-							settings::IMPLEMENTED_GENERICS.contains(templ.cpp_name(CppNameStyle::Reference).as_ref())
-						})
+							|| underlying_type
+								.template_kind()
+								.as_template_specialization()
+								.map_or(false, |templ| {
+									settings::IMPLEMENTED_GENERICS.contains(templ.cpp_name(CppNameStyle::Reference).as_ref())
+								})
 					};
 
 					if export {
@@ -455,8 +459,8 @@ impl Generator {
 	}
 
 	/// Runs the full binding generation process using the supplied `visitor`
-	pub fn generate(&self, module: &str, visitor: impl for<'tu> GeneratorVisitor<'tu>) {
-		self.pre_process(module, true, |root_entity| {
+	pub fn generate(&self, module: &str, panic_on_error: bool, visitor: impl for<'tu> GeneratorVisitor<'tu>) {
+		self.pre_process(module, panic_on_error, |root_entity| {
 			let gen_env = GeneratorEnv::global(module, root_entity);
 			let opencv_walker = OpenCvWalker::new(module, &self.opencv_module_header_dir, visitor, gen_env);
 			root_entity.walk_opencv_entities(opencv_walker);

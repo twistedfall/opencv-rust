@@ -16,7 +16,6 @@ pub use sized::*;
 pub use tuple::*;
 pub use vec::*;
 pub use vector::*;
-pub use CV_MAKETYPE as CV_MAKE_TYPE;
 
 mod affine3;
 mod data_type;

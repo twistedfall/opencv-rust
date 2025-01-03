@@ -49,7 +49,7 @@ pub use argument_override::{
 pub use element_exclude_kind::ELEMENT_EXCLUDE_KIND;
 pub use element_export_tweak::ELEMENT_EXPORT_TWEAK;
 pub use force_infallible::{force_infallible_factory, ForceInfallible};
-pub use func_cfg_attr::{func_cfg_attr_factory, FuncCfgAttr};
+pub use func_cfg_attr::{func_cfg_attr_factory, FuncCfgAttr, CFG_ATTR_NOT_ON_WINDOWS, CFG_ATTR_ONLY_OPENCV_5};
 pub use func_companion_tweak::{func_companion_tweak_factory, CompanionTweak, FuncCompanionTweak};
 pub use func_exclude::{func_exclude_factory, FuncExclude};
 pub use func_inject::{func_inject_factory, FuncFactory, FuncInject};
@@ -187,6 +187,7 @@ pub static RESERVED_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		("impl", "impl_"),
 		("loop", "loop_"),
 		("yield", "yield_"),
+		("where", "where_"),
 	])
 });
 
@@ -219,53 +220,32 @@ pub static DATA_TYPES: Lazy<HashSet<&str>> = Lazy::new(|| {
 		"unsigned char",
 		"char",
 		"uint8_t",
+		"int8_t",
 		"unsigned short",
 		"short",
+		"uint16_t",
+		"int16_t",
+		"unsigned int",
 		"int",
+		"int32_t",
 		"float",
 		"double",
-		"cv::Vec2b",
-		"cv::Vec3b",
-		"cv::Vec4b",
-		"cv::Vec2s",
-		"cv::Vec3s",
-		"cv::Vec4s",
-		"cv::Vec2w",
-		"cv::Vec3w",
-		"cv::Vec4w",
-		"cv::Vec2i",
-		"cv::Vec3i",
-		"cv::Vec4i",
-		"cv::Vec6i",
-		"cv::Vec8i",
-		"cv::Vec2f",
-		"cv::Vec3f",
-		"cv::Vec4f",
-		"cv::Vec6f",
-		"cv::Vec2d",
-		"cv::Vec3d",
-		"cv::Vec4d",
-		"cv::Vec6d",
-		"cv::Scalar",
-		"cv::Point",
-		"cv::Point2i",
-		"cv::Point2f",
-		"cv::Point2d",
-		"cv::Point2l",
-		"cv::Point3i",
-		"cv::Point3f",
-		"cv::Point3d",
-		"cv::Size",
-		"cv::Size2i",
-		"cv::Size2f",
-		"cv::Size2d",
-		"cv::Size2l",
-		"cv::Rect",
-		"cv::Rect2i",
-		"cv::Rect2f",
-		"cv::Rect2d",
+		"hfloat",
+		"float16_t",
+		"__fp16",
+		"cv::Vec",
+		"cv::Scalar_",
+		"cv::Point_",
+		"cv::Point3_",
+		"cv::Size_",
+		"cv::Rect_",
 	])
 });
+
+/// Types that can be used as `Mat` element since OpenCV 5.0
+/// cpp_name(Reference)
+pub static DATA_TYPES_5_0: Lazy<HashSet<&str>> =
+	Lazy::new(|| HashSet::from(["uint32_t", "bfloat", "bfloat16_t", "uint64_t", "int64_t", "bool"]));
 
 pub static NO_SKIP_NAMESPACE_IN_LOCALNAME: Lazy<HashMap<&str, HashMap<&str, &str>>> = Lazy::new(|| {
 	HashMap::from([
@@ -275,6 +255,7 @@ pub static NO_SKIP_NAMESPACE_IN_LOCALNAME: Lazy<HashMap<&str, HashMap<&str, &str
 		("cudacodec", HashMap::from([("cudacodec", "CUDA")])),
 		("cudafeatures2d", HashMap::from([("cuda", "CUDA")])),
 		("cudaimgproc", HashMap::from([("cuda", "CUDA")])),
+		("cudalegacy", HashMap::from([("cuda", "CUDA")])),
 		("cudaobjdetect", HashMap::from([("cuda", "CUDA")])),
 		("cudaoptflow", HashMap::from([("cuda", "CUDA")])),
 		("cudastereo", HashMap::from([("cuda", "CUDA")])),
@@ -297,7 +278,9 @@ pub static NO_SKIP_NAMESPACE_IN_LOCALNAME: Lazy<HashMap<&str, HashMap<&str, &str
 
 pub static PREVENT_VECTOR_TYPEDEF_GENERATION: Lazy<HashSet<&str>> = Lazy::new(|| {
 	HashSet::from([
-		// `MatShape` is an alias to `Vector<i32>` and this leads to duplication of definition for that type
+		// `MatShape` is an alias to `Vector<i32>` and this leads to duplication of definition for the `Vector<Vector<i32>>` type
 		"cv::dnn::MatShape",
+		// `MatType` is an alias `i32` and we don't want to duplicate `Vector<i32>` with `Vector<MatType>`
+		"cv::dnn::MatType",
 	])
 });

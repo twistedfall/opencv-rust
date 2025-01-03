@@ -3,25 +3,23 @@ use std::fmt::Debug;
 
 use clang::{Entity, EntityKind};
 
+use super::comment::RenderComment;
 use crate::type_ref::FishStyle;
 use crate::{
 	opencv_module_from_path, reserved_rename, settings, CppNameStyle, Element, GeneratedType, IteratorExt, NameStyle, StringExt,
 };
 
-use super::comment::RenderComment;
-
 pub struct DefaultRustNativeElement;
 
 impl DefaultRustNativeElement {
 	pub fn rust_module(entity: Entity) -> Cow<'static, str> {
-		let loc = entity
+		entity
 			.get_location()
 			.expect("Can't get location")
 			.get_spelling_location()
 			.file
-			.expect("Can't file")
-			.get_path();
-		opencv_module_from_path(&loc).map_or_else(|| "core".into(), |x| x.to_string().into())
+			.and_then(|file| opencv_module_from_path(&file.get_path()).map(|m| m.to_string()))
+			.map_or_else(|| Cow::Borrowed("core"), Cow::Owned)
 	}
 
 	pub fn rust_module_reference(this: &(impl RustElement + ?Sized)) -> Cow<str> {
@@ -29,7 +27,7 @@ impl DefaultRustNativeElement {
 		if settings::STATIC_MODULES.contains(module.as_ref()) {
 			module
 		} else {
-			format!("crate::{}", module).into()
+			format!("crate::{}", module_safe_name(module)).into()
 		}
 	}
 
@@ -154,5 +152,13 @@ impl<'ne, 'tu: 'ne, 'ge: 'ne> AsRef<dyn RustNativeGeneratedElement + 'ne> for Ge
 			GeneratedType::Tuple(tuple) => tuple,
 			GeneratedType::AbstractRefWrapper(aref) => aref,
 		}
+	}
+}
+
+// There is a mirror function with the same name in the `opencv` crate
+fn module_safe_name(module: Cow<str>) -> Cow<str> {
+	match module.as_ref() {
+		"3d" => Cow::Borrowed("mod_3d"),
+		_ => module,
 	}
 }

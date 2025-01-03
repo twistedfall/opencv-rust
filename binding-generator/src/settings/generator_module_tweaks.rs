@@ -15,7 +15,11 @@ impl ModuleTweak<'_> {
 pub fn generator_module_tweaks_factory(module: &str) -> ModuleTweak<'static> {
 	match module {
 		"core" => ModuleTweak {
-			generate_types: &[TypeRefDesc::ptr_of_float],
+			generate_types: &[
+				TypeRefDesc::ptr_of_float,
+				// for the `field_access_on_ptr` test
+				TypeRefDesc::ptr_of_cv_keypoint,
+			],
 		},
 		"aruco" => ModuleTweak {
 			generate_types: &[TypeRefDesc::vector_of_cv_vec3f, TypeRefDesc::vector_of_cv_vec3d],
@@ -34,7 +38,7 @@ pub fn generator_module_tweaks_factory(module: &str) -> ModuleTweak<'static> {
 				TypeRefDesc::vector_of_vector_of_cv_point2d,
 			],
 		},
-		"calib3d" => ModuleTweak {
+		"calib3d" | "calib" | "3d" => ModuleTweak {
 			generate_types: &[
 				// for calibrate_camera
 				TypeRefDesc::vector_of_cv_point3i,
@@ -54,7 +58,7 @@ pub fn generator_module_tweaks_factory(module: &str) -> ModuleTweak<'static> {
 		"dnn" => ModuleTweak {
 			generate_types: &[TypeRefDesc::vector_of_vector_of_int], // Make sure that `Vector<MatShape>` is generated
 		},
-		"features2d" => ModuleTweak {
+		"features2d" | "features" => ModuleTweak {
 			// type used in other modules, thus needs casting (https://github.com/twistedfall/opencv-rust/issues/218)
 			generate_types: &[TypeRefDesc::ptr_of_cv_feature2d],
 		},

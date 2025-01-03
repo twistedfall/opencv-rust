@@ -55,6 +55,7 @@ impl<'tu, 'ge> TypeRefKind<'tu, 'ge> {
 			TypeKind::Double => Some(TypeRefKind::Primitive("f64", "double")),
 			TypeKind::LongDouble => Some(TypeRefKind::Primitive("u128", "long double")),
 			TypeKind::Float128 => Some(TypeRefKind::Primitive("u128", "__float128")),
+			TypeKind::Half => Some(TypeRefKind::Primitive("u16", "__fp16")),
 			_ => None,
 		}
 	}

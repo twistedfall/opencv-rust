@@ -10,7 +10,7 @@ use crate::function::Function;
 use crate::smart_ptr::{SmartPtr, SmartPtrDesc};
 use crate::tuple::Tuple;
 use crate::type_ref::{Constness, TemplateArg, TypeRef, TypeRefKind, TypeRefTypeHint};
-use crate::typedef::NewTypedefResult;
+use crate::typedef::{NewTypedefResult, TypedefDesc};
 use crate::vector::{Vector, VectorDesc};
 use crate::{settings, Class, CppNameStyle, Element, Enum, GeneratorEnv, StringExt, Typedef};
 
@@ -126,69 +126,89 @@ impl<'tu, 'ge> TypeRefDesc<'tu, 'ge> {
 		TypeRef::new_array(Self::uchar(), size)
 	}
 
+	/// `cv::Size_`
+	pub fn cv_size_() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_class(ClassDesc::cv_size_())
+	}
+
 	/// `cv::Size`
 	pub fn cv_size() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_class(ClassDesc::cv_size())
+		TypeRef::new_typedef(TypedefDesc::cv_size())
+	}
+
+	/// `cv::Point_`
+	pub fn cv_point_() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_class(ClassDesc::cv_point_())
 	}
 
 	/// `cv::Point`
 	pub fn cv_point() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_class(ClassDesc::cv_point())
+		TypeRef::new_typedef(TypedefDesc::cv_point())
 	}
 
 	/// `cv::Point2f`
 	pub fn cv_point2f() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_class(ClassDesc::cv_point2f())
+		TypeRef::new_typedef(TypedefDesc::cv_point2f())
 	}
 
 	/// `cv::Point2d`
 	pub fn cv_point2d() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_class(ClassDesc::cv_point2d())
+		TypeRef::new_typedef(TypedefDesc::cv_point2d())
 	}
 
 	/// `cv::Point3i`
 	pub fn cv_point3i() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_class(ClassDesc::cv_point3i())
+		TypeRef::new_typedef(TypedefDesc::cv_point3i())
 	}
 
 	/// `cv::Point3f`
 	pub fn cv_point3f() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_class(ClassDesc::cv_point3f())
+		TypeRef::new_typedef(TypedefDesc::cv_point3f())
 	}
 
 	/// `cv::Point3d`
 	pub fn cv_point3d() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_class(ClassDesc::cv_point3d())
+		TypeRef::new_typedef(TypedefDesc::cv_point3d())
+	}
+
+	/// `cv::Vec`
+	pub fn cv_vec() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_class(ClassDesc::cv_vec())
 	}
 
 	/// `cv::Vec2f`
 	pub fn cv_vec2f() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_class(ClassDesc::cv_vec2f())
+		TypeRef::new_typedef(TypedefDesc::cv_vec2f())
 	}
 
 	/// `cv::Vec2d`
 	pub fn cv_vec2d() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_class(ClassDesc::cv_vec2d())
+		TypeRef::new_typedef(TypedefDesc::cv_vec2d())
 	}
 
 	/// `cv::Vec3f`
 	pub fn cv_vec3f() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_class(ClassDesc::cv_vec3f())
+		TypeRef::new_typedef(TypedefDesc::cv_vec3f())
 	}
 
 	/// `cv::Vec3d`
 	pub fn cv_vec3d() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_class(ClassDesc::cv_vec3d())
+		TypeRef::new_typedef(TypedefDesc::cv_vec3d())
 	}
 
 	/// `cv::Vec4i`
 	pub fn cv_vec4i() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_class(ClassDesc::cv_vec4i())
+		TypeRef::new_typedef(TypedefDesc::cv_vec4i())
+	}
+
+	/// `cv::Scalar_`
+	pub fn cv_scalar_() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_class(ClassDesc::cv_scalar_())
 	}
 
 	/// `cv::Scalar`
 	pub fn cv_scalar() -> TypeRef<'tu, 'ge> {
-		TypeRef::new_class(ClassDesc::cv_scalar())
+		TypeRef::new_typedef(TypedefDesc::cv_scalar())
 	}
 
 	/// `cv::_InputArray`
@@ -359,6 +379,16 @@ impl<'tu, 'ge> TypeRefDesc<'tu, 'ge> {
 	pub fn cv_dnn_dict_value() -> TypeRef<'tu, 'ge> {
 		TypeRef::new_class(ClassDesc::cv_dnn_dict_value())
 	}
+
+	/// `cv::Ptr<cv::KeyPoint>`
+	pub fn ptr_of_cv_keypoint() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_smartptr(SmartPtr::new_desc(SmartPtrDesc::new(TypeRefDesc::cv_keypoint())))
+	}
+
+	/// `cv::KeyPoint`
+	pub fn cv_keypoint() -> TypeRef<'tu, 'ge> {
+		TypeRef::new_class(ClassDesc::cv_keypoint())
+	}
 }
 
 pub trait ClangTypeExt<'tu> {
@@ -509,11 +539,9 @@ impl<'tu> ClangTypeExt<'tu> for Type<'tu> {
 					)
 				}
 
-				TypeKind::MemberPointer | TypeKind::DependentSizedArray | TypeKind::Half => TypeRefKind::Ignored,
+				TypeKind::MemberPointer | TypeKind::DependentSizedArray => TypeRefKind::Ignored,
 
-				_ => {
-					unreachable!("Can't decide kind: {:#?}", self)
-				}
+				_ => unreachable!("Can't decide kind: {:#?}", self),
 			}
 		})
 	}

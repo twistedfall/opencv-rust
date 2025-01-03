@@ -1,7 +1,9 @@
 use std::ffi::c_void;
-use std::mem::transmute;
+use std::mem::{transmute, ManuallyDrop};
 
-use opencv::core::{Algorithm, KeyPoint, Ptr, Scalar, Vec4f, Vector};
+use opencv::core::{
+	Algorithm, ConjGradSolver, KeyPoint, MinProblemSolver, Ptr, Scalar, TermCriteria, TermCriteria_COUNT, Vec4f, Vector,
+};
 use opencv::features2d::Feature2D;
 use opencv::prelude::*;
 use opencv::Result;
@@ -59,18 +61,16 @@ fn into_raw() -> Result<()> {
 #[test]
 fn smart_ptr_crate_and_cast_to_base_class() -> Result<()> {
 	#![cfg(ocvrs_has_module_videostab)]
-	use opencv::{
-		core::Ptr,
-		features2d::{FastFeatureDetector, Feature2D},
-		videostab::{KeypointBasedMotionEstimator, MotionEstimatorRansacL2},
-	};
+	use opencv::core::Ptr;
+	use opencv::features2d::{FastFeatureDetector, Feature2D};
+	use opencv::videostab::{KeypointBasedMotionEstimator, MotionEstimatorRansacL2};
 
 	let est = MotionEstimatorRansacL2::new_def().unwrap();
 	let est_ptr = Ptr::new(est);
 	let mut estimator = KeypointBasedMotionEstimator::new(est_ptr.into()).unwrap();
-	#[cfg(ocvrs_opencv_branch_4)]
+	#[cfg(not(ocvrs_opencv_branch_34))]
 	let detector_ptr = FastFeatureDetector::create_def().unwrap();
-	#[cfg(not(ocvrs_opencv_branch_4))]
+	#[cfg(ocvrs_opencv_branch_34)]
 	let detector_ptr = FastFeatureDetector::create_def().unwrap();
 	let base_detector_ptr: Ptr<Feature2D> = detector_ptr.into();
 	estimator.set_detector(base_detector_ptr).unwrap();
@@ -80,11 +80,11 @@ fn smart_ptr_crate_and_cast_to_base_class() -> Result<()> {
 
 #[test]
 fn smart_ptr_cast_base() -> Result<()> {
-	#![cfg(ocvrs_has_module_features2d)]
-	#[cfg(ocvrs_opencv_branch_4)]
+	#![cfg(any(ocvrs_has_module_features2d, ocvrs_has_module_xfeatures2d))]
+	#[cfg(not(ocvrs_opencv_branch_5))]
 	use opencv::features2d::AKAZE;
-	#[cfg(not(ocvrs_opencv_branch_4))]
-	use opencv::features2d::AKAZE;
+	#[cfg(ocvrs_opencv_branch_5)]
+	use opencv::xfeatures2d::AKAZE;
 
 	let d = AKAZE::create_def()?;
 	assert!(Feature2DTraitConst::empty(&d)?);
@@ -97,7 +97,7 @@ fn smart_ptr_cast_base() -> Result<()> {
 
 #[test]
 fn cast_base() -> Result<()> {
-	#![cfg(ocvrs_has_module_features2d)]
+	#![cfg(any(ocvrs_has_module_features2d, ocvrs_has_module_features))]
 	use opencv::features2d::BFMatcher;
 
 	let m = BFMatcher::new_def()?;
@@ -111,25 +111,24 @@ fn cast_base() -> Result<()> {
 
 #[test]
 fn cast_descendant() -> Result<()> {
-	#![cfg(ocvrs_has_module_rgbd)]
-	use std::convert::TryFrom;
-
-	use opencv::rgbd::{OdometryFrame, RgbdFrame};
-
-	let image = Mat::new_rows_cols_with_default(1, 2, i32::opencv_type(), 1.into())?;
-	let depth = Mat::default();
-	let mask = Mat::default();
-	let normals = Mat::default();
-	let child = OdometryFrame::new(&image, &depth, &mask, &normals, 345)?;
-	assert_eq!(345, child.id());
-	assert_eq!(2, child.image().cols());
-	let mut base = RgbdFrame::from(child);
-	assert_eq!(345, base.id());
-	assert_eq!(2, base.image().cols());
-	base.set_image(Mat::new_rows_cols_with_default(10, 20, f64::opencv_type(), 2.into())?);
-	let child = OdometryFrame::try_from(base)?;
-	assert_eq!(345, child.id());
-	assert_eq!(20, child.image().cols());
+	let term_crit1 = TermCriteria::new(TermCriteria_COUNT, 2, 3.)?;
+	let term_crit2 = TermCriteria::new(TermCriteria_COUNT, 4, 6.12)?;
+	let mut solver = ConjGradSolver::create_def()?;
+	solver.set_term_criteria(term_crit1)?;
+	assert_eq!(term_crit1, solver.get_term_criteria()?);
+	{
+		// there is no way to create a simple, non `Ptr` `ConjGradSolver` object so we need to employ an unsafe workaround
+		let solver_boxed = unsafe { ConjGradSolver::from_raw(solver.inner_as_raw_mut()) };
+		assert_eq!(term_crit1, solver_boxed.get_term_criteria()?);
+		// cast to the base class
+		let mut min_solver_boxed = MinProblemSolver::from(solver_boxed);
+		assert_eq!(term_crit1, min_solver_boxed.get_term_criteria()?);
+		min_solver_boxed.set_term_criteria(term_crit2)?;
+		// cast back to the descendant class
+		let solver_boxed = ManuallyDrop::new(ConjGradSolver::try_from(min_solver_boxed)?);
+		assert_eq!(term_crit2, solver_boxed.get_term_criteria()?);
+	}
+	assert_eq!(term_crit2, solver.get_term_criteria()?);
 
 	Ok(())
 }

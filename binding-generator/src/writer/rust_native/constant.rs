@@ -4,13 +4,12 @@ use std::collections::HashMap;
 use clang::EntityKind;
 use once_cell::sync::Lazy;
 
+use super::element::{DefaultRustNativeElement, RustElement};
+use super::RustNativeGeneratedElement;
 use crate::constant::ValueKind;
 use crate::debug::NameDebug;
 use crate::type_ref::{FishStyle, NameStyle};
 use crate::{settings, CompiledInterpolation, Const, EntityElement, StrExt};
-
-use super::element::{DefaultRustNativeElement, RustElement};
-use super::RustNativeGeneratedElement;
 
 impl RustElement for Const<'_> {
 	fn rust_module(&self) -> Cow<str> {
@@ -55,7 +54,8 @@ impl RustNativeGeneratedElement for Const<'_> {
 				match value.kind {
 					ValueKind::Integer => "i32",
 					ValueKind::UnsignedInteger => "u32",
-					ValueKind::Float => "f64",
+					ValueKind::Float => "f32",
+					ValueKind::Double => "f64",
 					ValueKind::String => "&str",
 				}
 			};

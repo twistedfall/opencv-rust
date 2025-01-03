@@ -13,7 +13,7 @@ pub type PropertyOverride = HashMap<&'static str, TypeRefTypeHint>;
 
 pub fn arg_override_factory(module: &str) -> ArgOverride {
 	match module {
-		"calib3d" => calib3d_arg_override_factory(),
+		"calib3d" | "calib" | "3d" => calib3d_arg_override_factory(),
 		"core" => core_arg_override_factory(),
 		"freetype" => freetype_arg_override_factory(),
 		"highgui" => highgui_arg_override_factory(),

@@ -44,14 +44,21 @@ pub fn render_constant_rust(tokens: &[Token]) -> Option<Value> {
 				let spelling = t.get_spelling();
 				if spelling.contains(['"', '\'']) {
 					out.kind = ValueKind::String;
+					out.value += &spelling;
 				} else if spelling.contains('.') {
-					out.kind = ValueKind::Float;
+					if let Some(float) = spelling.strip_suffix(['F', 'f']) {
+						out.kind = ValueKind::Float;
+						out.value += float;
+					} else {
+						out.kind = ValueKind::Double;
+						out.value += &spelling;
+					}
 				} else if let Some(unsigned_value) = spelling.strip_suffix(['U', 'u']) {
 					out.kind = ValueKind::UnsignedInteger;
 					out.value += unsigned_value;
-					continue;
+				} else {
+					out.value += &spelling;
 				}
-				out.value += &spelling;
 			}
 			TokenKind::Punctuation => {
 				let spelling = t.get_spelling();
@@ -85,7 +92,7 @@ pub fn render_evaluation_result_rust(result: EvaluationResult) -> Value {
 			value: x.to_string(),
 		},
 		EvaluationResult::Float(x) => Value {
-			kind: ValueKind::Float,
+			kind: ValueKind::Double,
 			value: x.to_string(),
 		},
 		EvaluationResult::String(x)
@@ -181,6 +188,7 @@ pub enum ValueKind {
 	Integer,
 	UnsignedInteger,
 	Float,
+	Double,
 	String,
 }
 
@@ -192,7 +200,7 @@ pub struct Value {
 
 impl fmt::Display for Value {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-		if self.kind == ValueKind::Float && !self.value.contains('.') {
+		if self.kind == ValueKind::Double && !self.value.contains('.') {
 			write!(f, "{}.", self.value)
 		} else {
 			write!(f, "{}", self.value)

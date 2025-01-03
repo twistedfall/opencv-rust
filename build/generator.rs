@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 use std::ops::Deref;
 use std::path::{Path, PathBuf};
 use std::process::Command;
@@ -8,18 +9,24 @@ use collector::Collector;
 use opencv_binding_generator::{Generator, IteratorExt};
 
 use super::docs::transfer_bindings_to_docs;
-use super::{files_with_predicate, Library, Result, MODULES, OUT_DIR, SRC_CPP_DIR, SRC_DIR};
+use super::{files_with_predicate, Library, Result, OUT_DIR, SRC_CPP_DIR, SRC_DIR};
 
 #[path = "generator/collector.rs"]
 mod collector;
 
-pub struct BindingGenerator {
-	build_script_path: PathBuf,
+pub struct BindingGenerator<'r> {
+	build_script_path: &'r Path,
+	modules: &'r [String],
+	module_aliases: &'r HashMap<&'r str, &'r str>,
 }
 
-impl BindingGenerator {
-	pub fn new(build_script_path: PathBuf) -> Self {
-		Self { build_script_path }
+impl<'r> BindingGenerator<'r> {
+	pub fn new(build_script_path: &'r Path, modules: &'r [String], module_aliases: &'r HashMap<&'r str, &'r str>) -> Self {
+		Self {
+			build_script_path,
+			modules,
+			module_aliases,
+		}
 	}
 
 	pub fn generate_wrapper(&self, opencv_header_dir: &Path, opencv: &Library, ffi_export_suffix: &str) -> Result<()> {
@@ -44,11 +51,17 @@ impl BindingGenerator {
 			let _ = fs::remove_file(path);
 		}
 
-		let modules = MODULES.get().expect("MODULES not initialized");
+		self.run(opencv_header_dir, opencv)?;
 
-		self.run(modules, opencv_header_dir, opencv)?;
-
-		Collector::new(modules, ffi_export_suffix, &target_module_dir, &manual_dir, &OUT_DIR).collect_bindings()?;
+		Collector::new(
+			self.modules,
+			self.module_aliases,
+			ffi_export_suffix,
+			&target_module_dir,
+			&manual_dir,
+			&OUT_DIR,
+		)
+		.collect_bindings()?;
 
 		if let Some(target_docs_dir) = target_docs_dir {
 			if !target_docs_dir.exists() {
@@ -60,7 +73,7 @@ impl BindingGenerator {
 		Ok(())
 	}
 
-	fn run(&self, modules: &[String], opencv_header_dir: &Path, opencv: &Library) -> Result<()> {
+	fn run(&self, opencv_header_dir: &Path, opencv: &Library) -> Result<()> {
 		let additional_include_dirs = opencv
 			.include_paths
 			.iter()
@@ -85,9 +98,10 @@ impl BindingGenerator {
 			.join(",");
 		let job_server = Jobserver::build()?;
 		let start = Instant::now();
-		eprintln!("=== Generating {} modules", modules.len());
+		eprintln!("=== Generating {} modules", self.modules.len());
 		thread::scope(|scope| {
-			let join_handles = modules
+			let join_handles = self
+				.modules
 				.iter()
 				.map(|module| {
 					let token = job_server.acquire().expect("Can't acquire token from job server");
@@ -97,7 +111,7 @@ impl BindingGenerator {
 							let additional_include_dirs = additional_include_dirs.as_str();
 							move || {
 								let module_start = Instant::now();
-								let mut bin_generator = Command::new(&self.build_script_path);
+								let mut bin_generator = Command::new(self.build_script_path);
 								bin_generator
 									.arg(opencv_header_dir)
 									.arg(&*SRC_CPP_DIR)

@@ -43,69 +43,24 @@ impl<'tu, 'ge> ClassDesc<'tu, 'ge> {
 		}
 	}
 
-	/// `cv::Scalar`
-	pub fn cv_scalar() -> Class<'tu, 'ge> {
-		Class::new_desc(Self::simple("cv::Scalar", "core"))
+	/// `cv::Scalar_`
+	pub fn cv_scalar_() -> Class<'tu, 'ge> {
+		Class::new_desc(Self::simple("cv::Scalar_", "core"))
 	}
 
-	/// `cv::Size`
-	pub fn cv_size() -> Class<'tu, 'ge> {
-		Class::new_desc(Self::simple("cv::Size", "core"))
+	/// `cv::Size_`
+	pub fn cv_size_() -> Class<'tu, 'ge> {
+		Class::new_desc(Self::simple("cv::Size_", "core"))
 	}
 
-	/// `cv::Point`
-	pub fn cv_point() -> Class<'tu, 'ge> {
-		Class::new_desc(Self::simple("cv::Point", "core"))
+	/// `cv::Point_`
+	pub fn cv_point_() -> Class<'tu, 'ge> {
+		Class::new_desc(Self::simple("cv::Point_", "core"))
 	}
 
-	/// `cv::Point2f`
-	pub fn cv_point2f() -> Class<'tu, 'ge> {
-		Class::new_desc(Self::simple("cv::Point2f", "core"))
-	}
-
-	/// `cv::Point2d`
-	pub fn cv_point2d() -> Class<'tu, 'ge> {
-		Class::new_desc(Self::simple("cv::Point2d", "core"))
-	}
-
-	/// `cv::Point3i`
-	pub fn cv_point3i() -> Class<'tu, 'ge> {
-		Class::new_desc(Self::simple("cv::Point3i", "core"))
-	}
-
-	/// `cv::Point3f`
-	pub fn cv_point3f() -> Class<'tu, 'ge> {
-		Class::new_desc(Self::simple("cv::Point3f", "core"))
-	}
-
-	/// `cv::Point3d`
-	pub fn cv_point3d() -> Class<'tu, 'ge> {
-		Class::new_desc(Self::simple("cv::Point3d", "core"))
-	}
-
-	/// `cv::Vec2f`
-	pub fn cv_vec2f() -> Class<'tu, 'ge> {
-		Class::new_desc(Self::simple("cv::Vec2f", "core"))
-	}
-
-	/// `cv::Vec2d`
-	pub fn cv_vec2d() -> Class<'tu, 'ge> {
-		Class::new_desc(Self::simple("cv::Vec2d", "core"))
-	}
-
-	/// `cv::Vec3f`
-	pub fn cv_vec3f() -> Class<'tu, 'ge> {
-		Class::new_desc(Self::simple("cv::Vec3f", "core"))
-	}
-
-	/// `cv::Vec3d`
-	pub fn cv_vec3d() -> Class<'tu, 'ge> {
-		Class::new_desc(Self::simple("cv::Vec3d", "core"))
-	}
-
-	/// `cv::Vec4i`
-	pub fn cv_vec4i() -> Class<'tu, 'ge> {
-		Class::new_desc(Self::simple("cv::Vec4i", "core"))
+	/// `cv::Vec`
+	pub fn cv_vec() -> Class<'tu, 'ge> {
+		Class::new_desc(Self::simple("cv::Vec", "core"))
 	}
 
 	/// `cv::String`
@@ -155,5 +110,10 @@ impl<'tu, 'ge> ClassDesc<'tu, 'ge> {
 	/// `cv::dnn::DictValue`
 	pub fn cv_dnn_dict_value() -> Class<'tu, 'ge> {
 		Class::new_desc(Self::boxed("cv::dnn::DictValue", "dnn"))
+	}
+
+	/// `cv::Feature2D`
+	pub fn cv_keypoint() -> Class<'tu, 'ge> {
+		Class::new_desc(Self::boxed("cv::KeyPoint", "core"))
 	}
 }

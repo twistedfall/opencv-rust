@@ -3,7 +3,15 @@ use std::time::Duration;
 
 use opencv::core::{Rect, Size, Vector};
 use opencv::prelude::*;
-use opencv::{core, highgui, imgproc, objdetect, videoio, Result};
+use opencv::{core, highgui, imgproc, videoio, Result};
+
+opencv::opencv_branch_5! {
+	use opencv::xobjdetect::{CascadeClassifier, CASCADE_SCALE_IMAGE};
+}
+
+opencv::not_opencv_branch_5! {
+	use opencv::objdetect::{CascadeClassifier, CASCADE_SCALE_IMAGE};
+}
 
 fn main() -> Result<()> {
 	const WINDOW: &str = "video capture";
@@ -13,7 +21,7 @@ fn main() -> Result<()> {
 	if !cam.is_opened()? {
 		panic!("Unable to open default camera!");
 	}
-	let mut face = objdetect::CascadeClassifier::new(&xml)?;
+	let mut face = CascadeClassifier::new(&xml)?;
 	loop {
 		let mut frame = Mat::default();
 		cam.read(&mut frame)?;
@@ -31,7 +39,7 @@ fn main() -> Result<()> {
 			&mut faces,
 			1.1,
 			2,
-			objdetect::CASCADE_SCALE_IMAGE,
+			CASCADE_SCALE_IMAGE,
 			Size::new(30, 30),
 			Size::new(0, 0),
 		)?;

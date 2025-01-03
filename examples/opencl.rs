@@ -4,10 +4,10 @@ use opencv::core::{Device, Size, UMat, Vector};
 use opencv::prelude::*;
 use opencv::{core, imgcodecs, imgproc, Result};
 
-opencv::opencv_branch_4! {
+opencv::not_opencv_branch_34! {
 	use opencv::core::AccessFlag::ACCESS_READ;
 }
-opencv::not_opencv_branch_4! {
+opencv::opencv_branch_34! {
 	use opencv::core::ACCESS_READ;
 }
 

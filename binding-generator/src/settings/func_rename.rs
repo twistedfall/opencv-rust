@@ -7,10 +7,10 @@ pub fn func_rename_factory(module: &str) -> FuncRename {
 	match module {
 		"aruco" => aruco_factory(),
 		"bioinspired" => bioinspired_factory(),
-		"calib3d" => calib3d_factory(),
+		"calib3d" | "calib" | "3d" => calib3d_factory(),
 		"core" => core_factory(),
 		"dnn" => dnn_factory(),
-		"features2d" => features2d_factory(),
+		"features2d" | "features" => features2d_factory(),
 		"hdf" => hdf_factory(),
 		"highgui" => highgui_factory(),
 		"imgcodecs" => imgcodecs_factory(),
@@ -55,10 +55,6 @@ fn bioinspired_factory() -> HashMap<&'static str, &'static str> {
 			"cv_bioinspired_TransientAreasSegmentationModule_write_const_FileStorageR",
 			"+_to_storage",
 		),
-		(
-			"cv_bioinspired_createRetina_OCL_Size_const_bool_int_const_bool_const_float_const_float",
-			"+_ext",
-		), // 3.2 only
 	])
 }
 
@@ -150,7 +146,6 @@ fn core_factory() -> HashMap<&'static str, &'static str> {
 		("cv_Mat_diag_const_MatR", "+_mat"),
 		("cv_Mat_eye_Size_int", "+_size"),
 		("cv_Mat_getUMat_const_AccessFlag_UMatUsageFlags", "get_umat"),
-		("cv_Mat_getUMat_const_int_UMatUsageFlags", "get_umat"), // 3.2 only
 		("cv_Mat_ones_Size_int", "+_size"),
 		("cv_Mat_ones_int_const_intX_int", "+_nd"),
 		("cv_Mat_operator___const_Range_Range", "rowscols"),
@@ -301,9 +296,9 @@ fn core_factory() -> HashMap<&'static str, &'static str> {
 		("cv__OutputArray_assign_const_const_vectorLMatGR", "+_mat_vec"),
 		("cv__OutputArray_assign_const_const_vectorLUMatGR", "+_umat_vec"),
 		("cv__OutputArray_create_const_Size_int_int_bool_DepthMask", "+_size"),
-		("cv__OutputArray_create_const_Size_int_int_bool_int", "+_size"), // 3.2
+		("cv__OutputArray_create_const_Size_int_int_bool_int", "+_size"), // 3.4
 		("cv__OutputArray_create_const_int_const_intX_int_int_bool_DepthMask", "+_nd"),
-		("cv__OutputArray_create_const_int_const_intX_int_int_bool_int", "+_nd"), // 3.2
+		("cv__OutputArray_create_const_int_const_intX_int_int_bool_int", "+_nd"), // 3.4
 		("cv__OutputArray_move_const_MatR", "+mat"),
 		("cv__OutputArray_move_const_UMatR", "+umat"),
 		("cv_abs_const_MatExprR", "+_matexpr"),
@@ -489,7 +484,7 @@ fn features2d_factory() -> HashMap<&'static str, &'static str> {
 		("cv_BOWImgDescriptorExtractor_compute2_const_MatR_vectorLKeyPointGR_MatR", "compute2"),
 		("cv_BOWImgDescriptorExtractor_compute_const__InputArrayR_vectorLKeyPointGR_const__OutputArrayR_vectorLvectorLintGGX_MatX", "+_desc"),
 		("cv_BOWKMeansTrainer_cluster_const_const_MatR", "+_with_descriptor"),
-		("cv_BOWTrainer_cluster_const_const_MatR", "+_with_descriptors"), // 3.2
+		("cv_BOWTrainer_cluster_const_const_MatR", "+_with_descriptors"),
 		("cv_BRISK_create_const_vectorLfloatGR_const_vectorLintGR_float_float_const_vectorLintGR", "+_with_pattern"),
 		("cv_BRISK_create_int_int_const_vectorLfloatGR_const_vectorLintGR_float_float_const_vectorLintGR", "+_with_pattern_threshold_octaves"),
 		("cv_DescriptorMatcher_create_const_MatcherTypeR", "+_with_matcher_type"),
@@ -599,10 +594,10 @@ fn imgproc_factory() -> HashMap<&'static str, &'static str> {
 		("cv_ellipse2Poly_Point_Size_int_int_int_int_vectorLPointGR", "ellipse_2_poly"),
 		("cv_ellipse_const__InputOutputArrayR_const_RotatedRectR_const_ScalarR_int_int", "ellipse_rotated_rect"),
 		("cv_findContours_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_int_int_Point", "+_with_hierarchy"), // 4.x
-		("cv_findContours_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_int_Point", "+_with_hierarchy"), // 3.2 3.4
+		("cv_findContours_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_int_Point", "+_with_hierarchy"), // 3.4
 		("cv_floodFill_const__InputOutputArrayR_const__InputOutputArrayR_Point_Scalar_RectX_Scalar_Scalar_int", "+_mask"),
 		("cv_getAffineTransform_const_Point2fXX_const_Point2fXX", "+_slice"),
-		("cv_getPerspectiveTransform_const_Point2fXX_const_Point2fXX", "+_slice"), // 3.2 3.4
+		("cv_getPerspectiveTransform_const_Point2fXX_const_Point2fXX", "+_slice"), // 3.4
 		("cv_getPerspectiveTransform_const_Point2fXX_const_Point2fXX_int", "+_slice"), // 4.x
 		("cv_getRotationMatrix2D__Point2f_double_double", "get_rotation_matrix_2d_matx"),
 		("cv_goodFeaturesToTrack_const__InputArrayR_const__OutputArrayR_int_double_double_const__InputArrayR_int_int_bool_double", "+_with_gradient"),
@@ -632,7 +627,7 @@ fn objdetect_factory() -> HashMap<&'static str, &'static str> {
 		("cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayR_vectorLRectGR_vectorLintGR_vectorLdoubleGR_double_int_int_Size_Size_bool", "+_levels"),
 		("cv_HOGDescriptor_HOGDescriptor_const_StringR", "+_from_file"),
 		("cv_HOGDescriptor_detectMultiScale_const_const__InputArrayR_vectorLRectGR_vectorLdoubleGR_double_Size_Size_double_double_bool", "+_weights"),
-		("cv_HOGDescriptor_detect_const_const_MatR_vectorLPointGR_vectorLdoubleGR_double_Size_Size_const_vectorLPointGR", "+_weights"), // 3.2 3.4
+		("cv_HOGDescriptor_detect_const_const_MatR_vectorLPointGR_vectorLdoubleGR_double_Size_Size_const_vectorLPointGR", "+_weights"), // 3.4
 		("cv_HOGDescriptor_detect_const_const__InputArrayR_vectorLPointGR_vectorLdoubleGR_double_Size_Size_const_vectorLPointGR", "+_weights"), // 4.x
 		("cv_HOGDescriptor_setSVMDetector_const__InputArrayR", "+_input_array"),
 		("cv_aruco_getPredefinedDictionary_int", "+_i32"),
@@ -724,7 +719,7 @@ fn text_factory() -> HashMap<&'static str, &'static str> {
 
 fn videoio_factory() -> HashMap<&'static str, &'static str> {
 	HashMap::from([
-		("cv_VideoCapture_VideoCapture_const_StringR", "from_file_default"), // 3.2
+		("cv_VideoCapture_VideoCapture_const_StringR", "from_file_default"), // 3.4
 		("cv_VideoCapture_VideoCapture_const_StringR_int", "from_file"),
 		(
 			"cv_VideoCapture_VideoCapture_const_StringR_int_const_vectorLintGR",
@@ -732,13 +727,13 @@ fn videoio_factory() -> HashMap<&'static str, &'static str> {
 		),
 		("cv_VideoCapture_VideoCapture_int", "+_default"), // 3.4
 		("cv_VideoCapture_VideoCapture_int_int_const_vectorLintGR", "+_with_params"),
-		("cv_VideoCapture_open_const_StringR", "+_file_default"), // 3.2
+		("cv_VideoCapture_open_const_StringR", "+_file_default"), // 3.4
 		("cv_VideoCapture_open_const_StringR_int", "+_file"),
 		(
 			"cv_VideoCapture_open_const_StringR_int_const_vectorLintGR",
 			"+_file_with_params",
 		),
-		("cv_VideoCapture_open_int", "+_default"), // 3.2
+		("cv_VideoCapture_open_int", "+_default"), // 3.4
 		("cv_VideoCapture_open_int_int_const_vectorLintGR", "+_with_params"),
 		(
 			"cv_VideoWriter_VideoWriter_const_StringR_int_int_double_Size_bool",

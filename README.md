@@ -14,7 +14,7 @@ The API is usable, but unstable and not very battle-tested; use at your own risk
 
 ## Quickstart
 
-Make sure the supported OpenCV version (3.4 or 4.x) and Clang (part of LLVM, needed for automatic binding
+Make sure the supported OpenCV version (3.4, 4.x or 5.x) and Clang (part of LLVM, needed for automatic binding
 generation) are installed in your system.
 
 Update your Cargo.toml
@@ -145,6 +145,7 @@ The following variables affect the building the of the `opencv` crate, but belon
 * `clang-runtime` - enables the runtime detection of libclang (`runtime` feature of `clang-sys`). Useful as a
   workaround for when your dependencies (like `bindgen`) pull in `clang-sys` with hard `runtime` feature.
 * `rgb` - allow using [`rgb`](https://crates.io/crates/rgb) crate types as `Mat` elements
+* `f16` - add intergration with `f16` type from the `half` crate
 
 ## API details
 
@@ -158,6 +159,7 @@ The following OpenCV versions are supported at the moment:
 
 * 3.4
 * 4.x
+* 5.x (preliminary)
 
 ### Minimum rustc version (MSRV)
 
@@ -279,7 +281,7 @@ version because the crate has gone through the considerable rewrite since.
 ### OpenCV 3.2
 
 The last version with confirmed OpenCV 3.2 support is 0.75.0, after that this branch of OpenCV is no longer
-tested and supported. It may still work though.
+tested and supported. Since version 0.94.0 the support of OpenCV 3.2 is removed from the codebase.
 
 ## Contributor's Guide
 

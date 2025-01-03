@@ -1,6 +1,8 @@
 //! Contains all tests that cover marshalling types to and from C++
 
-use opencv::core::{CommandLineParser, Scalar, SparseMat, Tuple};
+use std::mem::ManuallyDrop;
+
+use opencv::core::{CommandLineParser, KeyPoint, Point2f, Ptr, Scalar, SparseMat, Tuple};
 use opencv::prelude::*;
 use opencv::{core, Result};
 
@@ -112,6 +114,7 @@ fn callback() -> Result<()> {
 #[test]
 fn fixed_array_return() -> Result<()> {
 	// mutable fixed array return and modification
+	#[cfg(not(ocvrs_opencv_branch_5))]
 	{
 		let m = Mat::new_rows_cols_with_default(5, 3, i32::opencv_type(), 1.into())?;
 		let mut mat_step = m.mat_step();
@@ -119,6 +122,15 @@ fn fixed_array_return() -> Result<()> {
 		mat_step.buf_mut()[0] = 16;
 		mat_step.buf_mut()[1] = 2;
 		assert_eq!([16, 2], *mat_step.buf());
+	}
+	#[cfg(ocvrs_opencv_branch_5)]
+	{
+		let m = Mat::new_rows_cols_with_default(5, 3, i32::opencv_type(), 1.into())?;
+		let mut mat_step = m.mat_step();
+		assert_eq!([12, 4, 153], *mat_step.buf());
+		mat_step.buf_mut()[0] = 16;
+		mat_step.buf_mut()[1] = 2;
+		assert_eq!([16, 2, 153], *mat_step.buf());
 	}
 
 	Ok(())
@@ -145,7 +157,7 @@ fn string_return() -> Result<()> {
 /// Return String via a mutable argument
 #[test]
 fn string_out_argument() -> Result<()> {
-	#![cfg(ocvrs_opencv_branch_4)]
+	#![cfg(not(ocvrs_opencv_branch_34))]
 	use matches::assert_matches;
 	use opencv::core::{FileNode, FileStorage, FileStorage_Mode};
 	use opencv::Error;
@@ -214,7 +226,7 @@ fn simple_struct_return_infallible() -> Result<()> {
 
 #[test]
 fn tuple() -> Result<()> {
-	#[cfg(all(ocvrs_has_module_imgproc, ocvrs_opencv_branch_4))]
+	#[cfg(all(ocvrs_has_module_imgproc, not(ocvrs_opencv_branch_34)))]
 	{
 		let src_tuple = (10, 20.);
 		let tuple = Tuple::<(i32, f32)>::new(src_tuple);
@@ -234,17 +246,21 @@ fn tuple() -> Result<()> {
 		assert_eq!(src_tuple, tuple.into_tuple());
 	}
 
-	#[cfg(all(ocvrs_has_module_stitching, ocvrs_opencv_branch_4))]
+	#[cfg(ocvrs_has_module_stitching)]
 	{
-		use opencv::core::{AccessFlag, UMat, UMatUsageFlags};
+		#[cfg(not(ocvrs_opencv_branch_34))]
+		use opencv::core::AccessFlag::ACCESS_READ;
+		#[cfg(ocvrs_opencv_branch_34)]
+		use opencv::core::ACCESS_READ;
+		use opencv::core::{UMat, UMatUsageFlags};
 
 		let mat = Mat::new_rows_cols_with_default(10, 20, f64::opencv_type(), Scalar::all(76.))?;
-		let src_tuple = (mat.get_umat(AccessFlag::ACCESS_READ, UMatUsageFlags::USAGE_DEFAULT)?, 8);
+		let src_tuple = (mat.get_umat(ACCESS_READ, UMatUsageFlags::USAGE_DEFAULT)?, 8);
 		let tuple = Tuple::<(UMat, u8)>::new(src_tuple);
 		assert_eq!(10, tuple.get_0().rows());
 		assert_eq!(8, tuple.get_1());
 		let (res_umat, res_val) = tuple.into_tuple();
-		let res_mat = res_umat.get_mat(AccessFlag::ACCESS_READ)?;
+		let res_mat = res_umat.get_mat(ACCESS_READ)?;
 		assert_eq!(10, res_mat.rows());
 		assert_eq!(20, res_mat.cols());
 		assert_eq!(76., *res_mat.at_2d::<f64>(5, 5)?);
@@ -253,7 +269,7 @@ fn tuple() -> Result<()> {
 	Ok(())
 }
 
-// The TrackerSamplerPF_Params no longer exists since OpenCV 4.5.1 and there no other methods that
+// The TrackerSamplerPF_Params no longer exists since OpenCV 4.5.1 and there are no other methods that
 // accept typed Mat's, so disable the test for now.
 // #[test]
 // fn typed_mat() -> Result<()> {
@@ -277,5 +293,21 @@ fn string_array() -> Result<()> {
 	let parser = CommandLineParser::new(&args, "{a | | }")?;
 	assert!(parser.has("a")?);
 	assert_eq!("b", parser.get_str("a", true)?);
+	Ok(())
+}
+
+/// Setting and getting fields through Ptr
+#[test]
+fn field_access_on_ptr() -> Result<()> {
+	let mut key_point = KeyPoint::default()?;
+	assert_eq!(Point2f::new(0., 0.), key_point.pt());
+	key_point.set_pt(Point2f::new(1., 2.));
+	let mut key_point_ptr = Ptr::<KeyPoint>::new(key_point);
+	assert_eq!(Point2f::new(1., 2.), key_point_ptr.pt());
+	key_point_ptr.set_pt(Point2f::new(3., 4.));
+
+	let wrapped_key_point = ManuallyDrop::new(unsafe { KeyPoint::from_raw(key_point_ptr.inner_as_raw_mut()) });
+	assert_eq!(Point2f::new(3., 4.), wrapped_key_point.pt());
+
 	Ok(())
 }

@@ -26,6 +26,7 @@ pub struct FuncDesc<'tu, 'ge> {
 	pub cpp_body: FuncCppBody,
 	pub rust_body: FuncRustBody,
 	pub rust_extern_definition: FuncRustExtern,
+	pub cfg_attr: Rc<Option<(String, String)>>,
 }
 
 impl<'tu, 'ge> FuncDesc<'tu, 'ge> {
@@ -54,6 +55,7 @@ impl<'tu, 'ge> FuncDesc<'tu, 'ge> {
 			cpp_body: FuncCppBody::Auto,
 			rust_body: FuncRustBody::Auto,
 			rust_extern_definition: FuncRustExtern::Auto,
+			cfg_attr: Rc::new(None),
 		}
 	}
 
@@ -102,6 +104,12 @@ impl<'tu, 'ge> FuncDesc<'tu, 'ge> {
 	#[inline]
 	pub fn rust_extern_definition(mut self, rust_extern_definition: FuncRustExtern) -> Self {
 		self.rust_extern_definition = rust_extern_definition;
+		self
+	}
+
+	#[inline]
+	pub fn cfg_attr(mut self, cfg_attr: Option<(String, String)>) -> Self {
+		self.cfg_attr = cfg_attr.into();
 		self
 	}
 

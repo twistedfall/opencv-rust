@@ -11,6 +11,11 @@ use opencv::{core, imgproc, Error, Result};
 const PIXEL: &[u8] = include_bytes!("pixel.png");
 
 #[test]
+fn mat_layout() {
+	assert_eq!(mem::size_of::<Mat>(), mem::size_of::<*mut c_void>());
+}
+
+#[test]
 fn mat_default() -> Result<()> {
 	let mat = Mat::default();
 	assert_eq!(u8::opencv_type(), mat.typ());
@@ -84,7 +89,12 @@ fn mat_for_rows_and_cols() -> Result<()> {
 	assert_eq!(400, mat.mat_size()[0]);
 	assert_eq!(300, mat.mat_size()[1]);
 	assert_eq!(2, mat.dims());
-	assert_eq!(2, mat.mat_step().buf().len());
+	let mast_step_len = if cfg!(ocvrs_opencv_branch_5) {
+		3
+	} else {
+		2
+	};
+	assert_eq!(mast_step_len, mat.mat_step().buf().len());
 	assert_eq!(7200, mat.mat_step().buf()[0]);
 	assert_eq!(24, mat.mat_step().buf()[1]);
 	assert_eq!(24, mat.elem_size()?);
@@ -596,7 +606,15 @@ fn mat_from_data() -> Result<()> {
 
 	{
 		let src = unsafe { Mat::new_nd_with_data_unsafe_def(&[3, 5, 6], u8::opencv_type(), bytes.as_mut_ptr().cast::<c_void>())? };
-		assert_eq!(Size::new(5, 3), src.size()?);
+		let expected_size = if cfg!(ocvrs_opencv_branch_5) {
+			Size::new(0, 0)
+		} else {
+			Size::new(5, 3)
+		};
+		assert_eq!(expected_size, src.size()?);
+		assert_eq!(3, src.dims());
+		assert_eq!(-1, src.rows());
+		assert_eq!(-1, src.cols());
 		assert_eq!(PIXEL.len(), src.total());
 		assert_eq!(0x89, *src.at_3d::<u8>(0, 0, 0)?);
 		assert_eq!(0x50, *src.at_3d::<u8>(0, 0, 1)?);
@@ -1247,5 +1265,64 @@ fn mat_set_matexpr() -> Result<()> {
 	assert_eq!(Size::new(3, 3), mat.size()?);
 	assert_eq!(i32::opencv_type(), mat.typ());
 	assert_eq!(&[1, 1, 1], mat.at_row::<i32>(1)?);
+	Ok(())
+}
+
+#[test]
+fn mat_dims_size() -> Result<()> {
+	// 1D Mat
+	{
+		let mat = Mat::new_nd_with_data(&[10], &[0, 1, 2, 3, 4, 5, 6, 7, 8, 9])?;
+		let expected_dims = if cfg!(ocvrs_opencv_branch_5) {
+			1
+		} else {
+			2
+		};
+		assert_eq!(expected_dims, mat.dims());
+		let expected_rows = if cfg!(ocvrs_opencv_branch_5) {
+			1
+		} else {
+			10
+		};
+		assert_eq!(expected_rows, mat.rows());
+		let expected_cols = if cfg!(ocvrs_opencv_branch_5) {
+			10
+		} else {
+			1
+		};
+		assert_eq!(expected_cols, mat.cols());
+		assert_eq!(10, mat.total());
+		let expected_size = if cfg!(ocvrs_opencv_branch_5) {
+			Size::new(10, 1)
+		} else {
+			Size::new(1, 10)
+		};
+		assert_eq!(expected_size, mat.size()?);
+	}
+
+	// 0D Mat (Scalar)
+	{
+		let mat = Mat::new_nd_with_data(&[], &[100])?;
+		assert_eq!(0, mat.dims());
+		let expected_rows_cols = if cfg!(ocvrs_opencv_branch_5) {
+			1
+		} else {
+			0
+		};
+		assert_eq!(expected_rows_cols, mat.rows());
+		assert_eq!(expected_rows_cols, mat.cols());
+		let expected_total = if cfg!(ocvrs_opencv_branch_5) {
+			1
+		} else {
+			0
+		};
+		assert_eq!(expected_total, mat.total());
+		let expected_size = if cfg!(ocvrs_opencv_branch_5) {
+			Size::new(1, 1)
+		} else {
+			Size::new(0, 0)
+		};
+		assert_eq!(expected_size, mat.size()?);
+	}
 	Ok(())
 }

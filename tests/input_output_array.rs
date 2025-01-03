@@ -1,16 +1,14 @@
 use matches::assert_matches;
-
 use opencv::boxed_ref::{BoxedRef, BoxedRefMut};
-#[cfg(ocvrs_opencv_branch_4)]
+#[cfg(not(ocvrs_opencv_branch_34))]
 use opencv::core::AccessFlag::ACCESS_READ;
-#[cfg(not(ocvrs_opencv_branch_4))]
+#[cfg(ocvrs_opencv_branch_34)]
 use opencv::core::ACCESS_READ;
 use opencv::core::{
-	Matx12d, Scalar, ToInputArray, ToInputOutputArray, ToOutputArray, UMat, Vec2b, VecN, Vector, _InputArray_MAT,
+	Matx12d, Scalar, ToInputArray, ToInputOutputArray, ToOutputArray, UMat, Vec2b, VecN, Vector, _InputArray, _InputArray_MAT,
 	_InputArray_MATX, _InputArray_STD_BOOL_VECTOR, _InputArray_STD_VECTOR, _InputArray_STD_VECTOR_MAT,
-	_InputArray_STD_VECTOR_UMAT, _InputArray_STD_VECTOR_VECTOR, _InputArray_UMAT,
+	_InputArray_STD_VECTOR_UMAT, _InputArray_STD_VECTOR_VECTOR, _InputArray_UMAT, _InputOutputArray, _OutputArray,
 };
-use opencv::core::{_InputArray, _InputOutputArray, _OutputArray};
 use opencv::prelude::*;
 use opencv::{core, Result};
 

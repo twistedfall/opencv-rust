@@ -7,16 +7,13 @@ use crate::element::ExcludeKind;
 /// cpp_name(Reference)
 pub static ELEMENT_EXCLUDE_KIND: Lazy<HashMap<&str, ExcludeKind>> = Lazy::new(|| {
 	HashMap::from([
-		("cv::internal::format", ExcludeKind::Excluded),        // 3.2 duplicate definition
 		("cv::face::FacemarkLBF::BBox", ExcludeKind::Excluded), // not used, not exported in windows dll
 		("CV_DEPRECATED", ExcludeKind::Ignored),
 		("CV_EXPORTS", ExcludeKind::Ignored),
-		("CV_IMPL", ExcludeKind::Ignored), // 3.2
+		("CV_IMPL", ExcludeKind::Ignored),
 		("CV_MAKE_TYPE", ExcludeKind::Ignored),
-		("CvFileNode", ExcludeKind::Ignored), // 3.2 3.4 C struct
-		("CvSeq", ExcludeKind::Ignored),      // 3.2 C struct
 		("FILE", ExcludeKind::Ignored),
-		("HG_AUTOSIZE", ExcludeKind::Ignored), // 3.2
+		("HG_AUTOSIZE", ExcludeKind::Ignored), // 3.4
 		("cv::ErrorCallback", ExcludeKind::Ignored),
 		("cv::MatAllocator", ExcludeKind::Ignored),         // doesn't handle cpp part too well
 		("cv::MatExpr::op", ExcludeKind::Ignored),          // fixme implement PointerOf types

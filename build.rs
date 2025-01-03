@@ -1,4 +1,4 @@
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
 use std::env;
 use std::ffi::OsStr;
 use std::fs::File;
@@ -10,7 +10,7 @@ use binding_generator::handle_running_binding_generator;
 use docs::handle_running_in_docsrs;
 use generator::BindingGenerator;
 use library::Library;
-use once_cell::sync::{Lazy, OnceCell};
+use once_cell::sync::Lazy;
 use semver::{Version, VersionReq};
 
 #[path = "build/binding-generator.rs"]
@@ -26,8 +26,6 @@ pub mod library;
 
 type Result<T, E = Box<dyn std::error::Error>> = std::result::Result<T, E>;
 
-static MODULES: OnceCell<Vec<String>> = OnceCell::new(); // replace with `OnceLock` when MSRV is 1.70.0
-
 // replace `Lazy` with `LazyLock` when MSRV is 1.80.0
 static OUT_DIR: Lazy<PathBuf> = Lazy::new(|| PathBuf::from(env::var_os("OUT_DIR").expect("Can't read OUT_DIR env var")));
 static MANIFEST_DIR: Lazy<PathBuf> =
@@ -39,12 +37,12 @@ static TARGET_ENV_MSVC: Lazy<bool> =
 static TARGET_VENDOR_APPLE: Lazy<bool> =
 	Lazy::new(|| env::var("CARGO_CFG_TARGET_VENDOR").map_or(false, |target_vendor| target_vendor == "apple"));
 
-static OPENCV_BRANCH_32: Lazy<VersionReq> =
-	Lazy::new(|| VersionReq::parse("~3.2").expect("Can't parse OpenCV 3.2 version requirement"));
 static OPENCV_BRANCH_34: Lazy<VersionReq> =
 	Lazy::new(|| VersionReq::parse("~3.4").expect("Can't parse OpenCV 3.4 version requirement"));
 static OPENCV_BRANCH_4: Lazy<VersionReq> =
 	Lazy::new(|| VersionReq::parse("~4").expect("Can't parse OpenCV 4 version requirement"));
+static OPENCV_BRANCH_5: Lazy<VersionReq> =
+	Lazy::new(|| VersionReq::parse("~5").expect("Can't parse OpenCV 5 version requirement"));
 
 /// Environment vars that affect the build, the source will be rebuilt if those change, the contents of those vars will also
 /// be present in the debug log
@@ -69,13 +67,15 @@ static AFFECTING_ENV_VARS: [&str; 18] = [
 	"DOCS_RS",
 ];
 
-static SUPPORTED_MODULES: [&str; 68] = [
+static SUPPORTED_MODULES: [&str; 73] = [
+	"3d",
 	"alphamat",
 	"aruco",
 	"aruco_detector",
 	"barcode",
 	"bgsegm",
 	"bioinspired",
+	"calib",
 	"calib3d",
 	// "cannops",
 	"ccalib",
@@ -86,6 +86,7 @@ static SUPPORTED_MODULES: [&str; 68] = [
 	"cudafeatures2d",
 	"cudafilters",
 	"cudaimgproc",
+	"cudalegacy",
 	"cudaobjdetect",
 	"cudaoptflow",
 	"cudastereo",
@@ -96,6 +97,7 @@ static SUPPORTED_MODULES: [&str; 68] = [
 	"dnn_superres",
 	"dpm",
 	"face",
+	"features",
 	"features2d",
 	"flann",
 	"freetype",
@@ -140,6 +142,7 @@ static SUPPORTED_MODULES: [&str; 68] = [
 	"ximgproc",
 	"xobjdetect",
 	"xphoto",
+	"xstereo",
 ];
 
 /// The contents of these vars will be present in the debug log, but will not cause the source rebuild
@@ -225,7 +228,10 @@ fn get_version_from_headers(header_dir: &Path) -> Option<Version> {
 	}
 }
 
-fn make_modules(opencv_dir: &Path) -> Result<()> {
+fn make_modules_and_alises(
+	opencv_dir: &Path,
+	opencv_version: &Version,
+) -> Result<(Vec<String>, HashMap<&'static str, &'static str>)> {
 	let enable_modules = ["core".to_string()]
 		.into_iter()
 		.chain(env::vars_os().filter_map(|(k, _)| {
@@ -244,16 +250,34 @@ fn make_modules(opencv_dir: &Path) -> Result<()> {
 				.map(str::to_string)
 		})
 		.collect::<Vec<_>>();
-	modules.sort_unstable();
 
-	MODULES.set(modules).expect("Can't set MODULES cache");
-	Ok(())
+	let aliases = if OPENCV_BRANCH_5.matches(opencv_version)
+		&& modules.iter().any(|x| x == "features2d")
+		&& modules.iter().any(|x| x == "features")
+	{
+		// In OpenCV 5 `features2d` is a compatibility header that just includes `features.hpp`, and they don't work together
+		HashMap::from([("features2d", "features")])
+	} else {
+		HashMap::new()
+	};
+
+	modules.sort_unstable();
+	Ok((modules, aliases))
 }
 
-fn build_compiler(opencv: &Library, ffi_export_suffix: &str) -> cc::Build {
+fn emit_inherent_features(opencv_version: &Version) {
+	if VersionReq::parse(">=4.10")
+		.expect("Static version requirement")
+		.matches(opencv_version)
+	{
+		println!("cargo:rustc-cfg=ocvrs_has_inherent_feature_hfloat");
+	}
+}
+
+fn make_compiler(opencv: &Library, ffi_export_suffix: &str) -> cc::Build {
 	let mut out = cc::Build::new();
 	out.cpp(true)
-		.std("c++14") // clang says error: 'auto' return without trailing return type; deduced return types are a C++14 extension
+		.std("c++17") // clang says error: 'auto' return without trailing return type; deduced return types are a C++14 extension
 		.include(&*SRC_CPP_DIR)
 		.include(&*OUT_DIR)
 		.include(".")
@@ -324,11 +348,9 @@ fn setup_rerun() -> Result<()> {
 	Ok(())
 }
 
-fn build_wrapper(mut cc: cc::Build) {
+fn build_wrapper(mut cc: cc::Build, modules: &[String], module_aliases: &HashMap<&str, &str>) {
 	eprintln!("=== Compiler information: {:#?}", cc.get_compiler());
-	let modules = MODULES.get().expect("MODULES not initialized");
-	for module in modules.iter() {
-		println!("cargo:rustc-cfg=ocvrs_has_module_{module}"); // replace with cargo:: syntax when MSRV is 1.77
+	for module in modules.iter().filter(|m| !module_aliases.contains_key(m.as_str())) {
 		cc.file(OUT_DIR.join(format!("{module}.cpp")));
 		let manual_cpp = SRC_CPP_DIR.join(format!("manual-{module}.cpp"));
 		if manual_cpp.exists() {
@@ -346,11 +368,16 @@ fn main() -> Result<()> {
 		return Ok(());
 	}
 
-	for branch in ["4", "34", "32"].iter() {
+	for branch in ["34", "4", "5"] {
 		println!("cargo:rustc-check-cfg=cfg(ocvrs_opencv_branch_{branch})"); // replace with cargo:: syntax when MSRV is 1.77
 	}
 	for module in SUPPORTED_MODULES {
 		println!("cargo:rustc-check-cfg=cfg(ocvrs_has_module_{module})"); // replace with cargo:: syntax when MSRV is 1.77
+	}
+	// MSRV: switch to #[expect] when MSRV is 1.81
+	#[allow(clippy::single_element_loop)]
+	for inherent_feature in ["hfloat"] {
+		println!("cargo::rustc-check-cfg=cfg(ocvrs_has_inherent_feature_{inherent_feature})");
 	}
 
 	if matches!(handle_running_in_docsrs(), GenerateFullBindings::Stop) {
@@ -376,30 +403,24 @@ fn main() -> Result<()> {
 
 	let opencv = Library::probe()?;
 	eprintln!("=== OpenCV library configuration: {opencv:#?}");
-	if OPENCV_BRANCH_4.matches(&opencv.version) {
+	if OPENCV_BRANCH_5.matches(&opencv.version) {
+		println!("cargo:rustc-cfg=ocvrs_opencv_branch_5"); // replace with cargo:: syntax when MSRV is 1.77
+	} else if OPENCV_BRANCH_4.matches(&opencv.version) {
 		println!("cargo:rustc-cfg=ocvrs_opencv_branch_4"); // replace with cargo:: syntax when MSRV is 1.77
 	} else if OPENCV_BRANCH_34.matches(&opencv.version) {
 		println!("cargo:rustc-cfg=ocvrs_opencv_branch_34"); // replace with cargo:: syntax when MSRV is 1.77
-	} else if OPENCV_BRANCH_32.matches(&opencv.version) {
-		println!("cargo:rustc-cfg=ocvrs_opencv_branch_32"); // replace with cargo:: syntax when MSRV is 1.77
 	} else {
 		panic!(
-			"Unsupported OpenCV version: {}, must be from 3.2, 3.4 or 4.x branch",
+			"Unsupported OpenCV version: {}, must be from 3.4, 4.x or 5.x branch",
 			opencv.version
 		);
 	}
+
 	let opencv_header_dir = opencv
 		.include_paths
 		.iter()
 		.find(|p| get_version_header(p).is_some())
 		.expect("Discovered OpenCV include paths is empty or contains non-existent paths");
-
-	let opencv_module_header_dir = get_module_header_dir(opencv_header_dir).expect("Can't find OpenCV module header dir");
-	eprintln!(
-		"=== Detected OpenCV module header dir at: {}",
-		opencv_module_header_dir.display()
-	);
-	make_modules(&opencv_module_header_dir)?;
 
 	if let Some(header_version) = get_version_from_headers(opencv_header_dir) {
 		if header_version != opencv.version {
@@ -421,14 +442,26 @@ fn main() -> Result<()> {
 		)
 	}
 
+	let opencv_module_header_dir = get_module_header_dir(opencv_header_dir).expect("Can't find OpenCV module header dir");
+	eprintln!(
+		"=== Detected OpenCV module header dir at: {}",
+		opencv_module_header_dir.display()
+	);
+	let (modules, module_aliases) = make_modules_and_alises(&opencv_module_header_dir, &opencv.version)?;
+	for module in &modules {
+		println!("cargo:rustc-cfg=ocvrs_has_module_{module}");
+	}
+
+	emit_inherent_features(&opencv.version);
+
 	setup_rerun()?;
 
 	let ffi_export_suffix = format!("_{}", pkg_version.replace(".", "_"));
 	let build_script_path = env::current_exe()?;
-	let binding_generator = BindingGenerator::new(build_script_path);
+	let binding_generator = BindingGenerator::new(&build_script_path, &modules, &module_aliases);
 	binding_generator.generate_wrapper(opencv_header_dir, &opencv, &ffi_export_suffix)?;
-	let cc = build_compiler(&opencv, &ffi_export_suffix);
-	build_wrapper(cc);
+	let cc = make_compiler(&opencv, &ffi_export_suffix);
+	build_wrapper(cc, &modules, &module_aliases);
 	// -l linker args should be emitted after -l static
 	opencv.emit_cargo_metadata();
 	Ok(())

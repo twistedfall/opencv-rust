@@ -22,6 +22,7 @@ maintenance = { status = "actively-developed" }
 members = ["binding-generator"]
 
 [dependencies]
+half = { version = "2", optional = true }
 libc = "0.2"
 num-traits = "0.2"
 once_cell = "1"
@@ -61,13 +62,16 @@ vcpkg = "0.2.9"
 
 [features]
 default = [
+	"3d",
 	"alphamat",
 	"aruco",
 	"aruco_detector",
 	"barcode",
 	"bgsegm",
 	"bioinspired",
+	"calib",
 	"calib3d",
+	#"cannops",
 	"ccalib",
 	"cudaarithm",
 	"cudabgsegm",
@@ -75,15 +79,18 @@ default = [
 	"cudafeatures2d",
 	"cudafilters",
 	"cudaimgproc",
+	"cudalegacy",
 	"cudaobjdetect",
 	"cudaoptflow",
 	"cudastereo",
 	"cudawarping",
+	#"cudev",
 	"cvv",
 	"dnn",
 	"dnn_superres",
 	"dpm",
 	"face",
+	"features",
 	"features2d",
 	"flann",
 	"freetype",
@@ -128,16 +135,20 @@ default = [
 	"ximgproc",
 	"xobjdetect",
 	"xphoto",
+	"xstereo",
 ]
 
 # OpenCV module features
+3d = []
 alphamat = []
 aruco = []
 aruco_detector = ["aruco"]
 barcode = []
 bgsegm = ["video"]
 bioinspired = []
+calib = ["features"]
 calib3d = ["features2d"]
+#cannops = []
 ccalib = ["features2d"]
 cudaarithm = []
 cudabgsegm = ["video"]
@@ -145,15 +156,18 @@ cudacodec = []
 cudafeatures2d = ["features2d"]
 cudafilters = []
 cudaimgproc = ["imgproc"]
+cudalegacy = []
 cudaobjdetect = ["objdetect"]
 cudaoptflow = []
 cudastereo = ["calib3d"]
 cudawarping = []
+#cudev = []
 cvv = []
 dnn = []
 dnn_superres = []
 dpm = []
 face = ["objdetect"]
+features = ["flann"]
 features2d = ["flann"]
 flann = []
 freetype = []
@@ -193,14 +207,16 @@ video = []
 videoio = []
 videostab = ["features2d"]
 viz = []
+wechat_qrcode = []
 xfeatures2d = ["features2d"]
 ximgproc = ["calib3d"]
 xobjdetect = []
 xphoto = ["photo"]
-wechat_qrcode = []
+xstereo = []
 
 # General features
 clang-runtime = ["opencv-binding-generator/clang-runtime"]
+f16 = ["dep:half"]
 
 [package.metadata.docs.rs]
 no-default-features = true

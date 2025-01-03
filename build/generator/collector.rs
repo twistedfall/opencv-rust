@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 use std::ffi::OsStr;
 use std::fs::{File, OpenOptions};
 use std::io::{BufRead, BufReader, BufWriter, Write};
@@ -9,6 +10,7 @@ use super::super::{files_with_extension, Result};
 
 pub struct Collector<'r> {
 	modules: &'r [String],
+	module_aliases: &'r HashMap<&'r str, &'r str>,
 	ffi_export_suffix: &'r str,
 	target_module_dir: &'r Path,
 	manual_dir: &'r Path,
@@ -18,6 +20,7 @@ pub struct Collector<'r> {
 impl<'r> Collector<'r> {
 	pub fn new(
 		modules: &'r [String],
+		module_aliases: &'r HashMap<&'r str, &'r str>,
 		ffi_export_suffix: &'r str,
 		target_module_dir: &'r Path,
 		manual_dir: &'r Path,
@@ -25,6 +28,7 @@ impl<'r> Collector<'r> {
 	) -> Self {
 		Self {
 			modules,
+			module_aliases,
 			ffi_export_suffix,
 			target_module_dir,
 			manual_dir,
@@ -62,9 +66,12 @@ impl<'r> Collector<'r> {
 
 		for module in self.modules {
 			// add module entry to hub.rs
-			write_has_module(&mut hub_rs, module)?;
-			write_module_include(&mut hub_rs, module)?;
-			self.collect_module(module, &mut sys_rs, &mut types_rs)?
+			if let Some(alias) = self.module_aliases.get(module.as_str()) {
+				writeln!(&mut hub_rs, "pub use {alias} as {module};",)?
+			} else {
+				write_module_include(&mut hub_rs, module)?;
+				self.collect_module(module, &mut sys_rs, &mut types_rs)?
+			}
 		}
 		writeln!(hub_rs, "pub mod types {{")?;
 		write!(hub_rs, "\t")?;
@@ -83,9 +90,7 @@ impl<'r> Collector<'r> {
 		// write hub_prelude that imports all module-specific preludes
 		writeln!(hub_rs, "pub mod hub_prelude {{")?;
 		for module in self.modules {
-			write!(hub_rs, "\t")?;
-			write_has_module(&mut hub_rs, module)?;
-			writeln!(hub_rs, "\tpub use super::{module}::prelude::*;")?;
+			writeln!(hub_rs, "\tpub use super::{}::prelude::*;", module_safe_name(module))?;
 		}
 		writeln!(hub_rs, "}}")?;
 		self.inject_ffi_exports(&mut hub_rs)?;
@@ -122,7 +127,7 @@ impl<'r> Collector<'r> {
 		// Need to wrap modules inside `mod { }` because they have top-level comments (//!) and those don't play well when
 		// module file is include!d (as opposed to connecting the module with `mod` from the parent module).
 		// The same doesn't apply to `sys` and `types` below because they don't contain top-level comments.
-		writeln!(module_rs, "pub mod {module} {{")?;
+		writeln!(module_rs, "pub mod {} {{", module_safe_name(module))?;
 		copy_indent(BufReader::new(File::open(&module_src_file)?), &mut module_rs, "\t")?;
 		self.write_use_manual(&mut module_rs, module)?;
 		writeln!(module_rs, "}}")?;
@@ -137,8 +142,7 @@ impl<'r> Collector<'r> {
 		for entry in type_files {
 			if entry.metadata().map(|meta| meta.len()).unwrap_or(0) > 0 {
 				if !header_written {
-					write_has_module(types_rs, module)?;
-					writeln!(types_rs, "mod {module}_types {{")?;
+					writeln!(types_rs, "mod {}_types {{", module_safe_name(module))?;
 					writeln!(types_rs, "\tuse crate::{{mod_prelude::*, core, types, sys}};")?;
 					writeln!(types_rs)?;
 					header_written = true;
@@ -149,15 +153,13 @@ impl<'r> Collector<'r> {
 		}
 		if header_written {
 			writeln!(types_rs, "}}")?;
-			write_has_module(types_rs, module)?;
-			writeln!(types_rs, "pub use {module}_types::*;")?;
+			writeln!(types_rs, "pub use {}_types::*;", module_safe_name(module))?;
 			writeln!(types_rs)?;
 		}
 
 		// merge module-specific *.externs.rs and generated type-specific *.type.externs.rs into a single sys.rs
 		let externs_rs = self.out_dir.join(format!("{module}.externs.rs"));
-		write_has_module(sys_rs, module)?;
-		writeln!(sys_rs, "mod {module}_sys {{")?;
+		writeln!(sys_rs, "mod {}_sys {{", module_safe_name(module))?;
 		writeln!(sys_rs, "\tuse super::*;")?;
 		writeln!(sys_rs)?;
 		writeln!(sys_rs, "\textern \"C\" {{")?;
@@ -175,8 +177,7 @@ impl<'r> Collector<'r> {
 		}
 		writeln!(sys_rs, "\t}}")?;
 		writeln!(sys_rs, "}}")?;
-		write_has_module(sys_rs, module)?;
-		writeln!(sys_rs, "pub use {module}_sys::*;")?;
+		writeln!(sys_rs, "pub use {}_sys::*;", module_safe_name(module))?;
 		writeln!(sys_rs)?;
 		Ok(())
 	}
@@ -250,6 +251,10 @@ fn copy_indent(mut read: impl BufRead, write: &mut impl Write, indent: &str) -> 
 	Ok(())
 }
 
-fn write_has_module(write: &mut impl Write, module: &str) -> Result<()> {
-	Ok(writeln!(write, "#[cfg(ocvrs_has_module_{module})]")?)
+// There is a mirror function with the same name in the `binding-generator` crate
+fn module_safe_name(module: &str) -> &str {
+	match module {
+		"3d" => "mod_3d",
+		_ => module,
+	}
 }

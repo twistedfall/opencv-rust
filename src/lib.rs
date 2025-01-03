@@ -55,5 +55,3 @@ pub mod mod_prelude {
 
 pub mod boxed_ref;
 mod cond_macros;
-#[cfg(test)]
-mod test;

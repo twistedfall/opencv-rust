@@ -191,6 +191,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 					cpp_body: FuncCppBody::Auto,
 					rust_body: FuncRustBody::Auto,
 					rust_extern_definition: FuncRustExtern::Auto,
+					cfg_attr: Rc::new(None),
 				})
 			}
 			Func::Desc(desc) => {
@@ -631,7 +632,11 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 	pub fn cfg_attrs(&self) -> Option<(&str, &str)> {
 		match self {
 			Self::Clang { gen_env, .. } => gen_env.settings.func_cfg_attr.get(&mut self.matcher()).copied(),
-			Self::Desc(_) => None,
+			Self::Desc(desc) => desc
+				.cfg_attr
+				.as_ref()
+				.as_ref()
+				.map(|(rust, cpp)| (rust.as_str(), cpp.as_str())),
 		}
 	}
 }

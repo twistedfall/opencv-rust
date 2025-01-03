@@ -9,12 +9,12 @@ use opencv::core::{bitwise_and, find_file, CommandLineParser, Point, Scalar, Vec
 use opencv::highgui::imshow;
 use opencv::imgcodecs::{imread, IMREAD_COLOR};
 use opencv::prelude::*;
-use opencv::{highgui, imgproc, not_opencv_branch_4, opencv_branch_4, Result};
+use opencv::{highgui, imgproc, not_opencv_branch_34, opencv_branch_34, Result};
 
-opencv_branch_4! {
+not_opencv_branch_34! {
 	use opencv::imgproc::LINE_8;
 }
-not_opencv_branch_4! {
+opencv_branch_34! {
 	use opencv::core::LINE_8;
 }
 

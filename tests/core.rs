@@ -1,12 +1,14 @@
-use opencv::core::{Moments, Point2f, RotatedRect, Scalar, Size2f, Vec3b, Vector, CV_32S, CV_64F, CV_8U, CV_MAKETYPE};
+use std::mem;
+
+use opencv::core::{Moments, Point2f, RotatedRect, Scalar, Size2f, Vec3b, Vector};
 use opencv::prelude::*;
 use opencv::{core, Result};
 
 #[test]
-fn make_type() {
-	assert_eq!(8, CV_MAKETYPE(CV_8U, 2));
-	assert_eq!(20, CV_MAKETYPE(CV_32S, 3));
-	assert_eq!(6, CV_MAKETYPE(CV_64F, 1));
+fn cv_return_type() {
+	assert_eq!(mem::size_of::<opencv::sys::Result<i32>>(), 24);
+	assert_eq!(mem::size_of::<opencv::sys::Result<u8>>(), 24);
+	assert_eq!(mem::size_of::<opencv::sys::ResultVoid>(), 16);
 }
 
 #[test]
@@ -55,7 +57,7 @@ fn in_range() -> Result<()> {
 }
 
 #[test]
-#[cfg(ocvrs_opencv_branch_4)]
+#[cfg(not(ocvrs_opencv_branch_34))]
 fn file_storage() -> Result<()> {
 	use opencv::core::{FileStorage, FileStorage_Mode};
 

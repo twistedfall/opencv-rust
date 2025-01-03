@@ -1,22 +1,29 @@
 use std::borrow::Cow;
 use std::fmt;
 use std::ops::ControlFlow;
+use std::rc::Rc;
 
 use clang::{Entity, EntityKind};
+pub use desc::TypedefDesc;
 
 use crate::comment::strip_doxygen_comment_markers;
-use crate::debug::LocationName;
+use crate::debug::{DefinitionLocation, LocationName};
 use crate::element::ExcludeKind;
-use crate::type_ref::{CppNameStyle, NameStyle, TypeRefTypeHint};
+use crate::type_ref::{CppNameStyle, NameStyle, TypeRefDesc, TypeRefKind, TypeRefTypeHint};
 use crate::writer::rust_native::type_ref::TypeRefExt;
 use crate::{
-	settings, Class, DefaultElement, Element, EntityElement, EntityExt, Enum, GeneratedType, GeneratorEnv, NameDebug, TypeRef,
+	settings, Class, Constness, DefaultElement, Element, EntityExt, Enum, GeneratedType, GeneratorEnv, NameDebug, StrExt, TypeRef,
 };
 
+mod desc;
+
 #[derive(Clone)]
-pub struct Typedef<'tu, 'ge> {
-	entity: Entity<'tu>,
-	gen_env: &'ge GeneratorEnv<'tu>,
+pub enum Typedef<'tu, 'ge> {
+	Clang {
+		entity: Entity<'tu>,
+		gen_env: &'ge GeneratorEnv<'tu>,
+	},
+	Desc(Rc<TypedefDesc<'tu, 'ge>>),
 }
 
 impl<'tu, 'ge> Typedef<'tu, 'ge> {
@@ -31,7 +38,7 @@ impl<'tu, 'ge> Typedef<'tu, 'ge> {
 	/// } Box;
 	/// ```
 	pub fn try_new(entity: Entity<'tu>, gen_env: &'ge GeneratorEnv<'tu>) -> NewTypedefResult<'tu, 'ge> {
-		let mut out = NewTypedefResult::Typedef(Self { entity, gen_env });
+		let mut out = NewTypedefResult::Typedef(Self::Clang { entity, gen_env });
 		entity.walk_children_while(|child| {
 			let child_unnamed_or_same_name = child
 				.get_name()
@@ -52,30 +59,36 @@ impl<'tu, 'ge> Typedef<'tu, 'ge> {
 		out
 	}
 
+	pub fn new_desc(desc: TypedefDesc<'tu, 'ge>) -> Self {
+		Self::Desc(Rc::new(desc))
+	}
+
 	pub fn type_ref(&self) -> TypeRef<'tu, 'ge> {
-		TypeRef::new(self.entity.get_type().expect("Can't get typedef type"), self.gen_env)
+		match self {
+			Self::Clang { entity, gen_env } => TypeRef::new(entity.get_type().expect("Can't get typedef type"), gen_env),
+			Self::Desc(desc) => TypeRef::new_desc(TypeRefDesc::new(
+				TypeRefKind::Typedef(Self::Desc(Rc::clone(desc))),
+				Constness::Mut,
+			)),
+		}
 	}
 
 	pub fn underlying_type_ref(&self) -> TypeRef<'tu, 'ge> {
-		TypeRef::new_ext(
-			self
-				.entity
-				.get_typedef_underlying_type()
-				.expect("Can't get typedef underlying type"),
-			TypeRefTypeHint::None,
-			Some(self.entity),
-			self.gen_env,
-		)
+		match self {
+			Self::Clang { entity, gen_env } => TypeRef::new_ext(
+				entity
+					.get_typedef_underlying_type()
+					.expect("Can't get typedef underlying type"),
+				TypeRefTypeHint::None,
+				Some(*entity),
+				gen_env,
+			),
+			Self::Desc(desc) => desc.underlying_type.clone(),
+		}
 	}
 
 	pub fn generated_types(&self) -> Vec<GeneratedType<'tu, 'ge>> {
 		self.underlying_type_ref().generated_types()
-	}
-}
-
-impl<'tu> EntityElement<'tu> for Typedef<'tu, '_> {
-	fn entity(&self) -> Entity<'tu> {
-		self.entity
 	}
 }
 
@@ -94,23 +107,38 @@ impl Element for Typedef<'_, '_> {
 	}
 
 	fn is_system(&self) -> bool {
-		DefaultElement::is_system(self.entity)
+		match self {
+			Self::Clang { entity, .. } => DefaultElement::is_system(*entity),
+			Self::Desc(_) => false,
+		}
 	}
 
 	fn is_public(&self) -> bool {
-		DefaultElement::is_public(self.entity)
+		match self {
+			Self::Clang { entity, .. } => DefaultElement::is_public(*entity),
+			Self::Desc(_) => true,
+		}
 	}
 
 	fn doc_comment(&self) -> Cow<str> {
-		strip_doxygen_comment_markers(&self.entity.get_comment().unwrap_or_default()).into()
+		match self {
+			Self::Clang { entity, .. } => strip_doxygen_comment_markers(&entity.get_comment().unwrap_or_default()).into(),
+			Self::Desc(_) => "".into(),
+		}
 	}
 
 	fn cpp_namespace(&self) -> Cow<str> {
-		DefaultElement::cpp_namespace(self.entity).into()
+		match self {
+			Self::Clang { entity, .. } => DefaultElement::cpp_namespace(*entity).into(),
+			Self::Desc(desc) => desc.cpp_fullname.namespace().into(),
+		}
 	}
 
 	fn cpp_name(&self, style: CppNameStyle) -> Cow<str> {
-		DefaultElement::cpp_name(self, self.entity, style)
+		match self {
+			Self::Clang { entity, .. } => DefaultElement::cpp_name(self, *entity, style),
+			Self::Desc(desc) => desc.cpp_fullname.cpp_name_from_fullname(style).into(),
+		}
 	}
 }
 
@@ -132,22 +160,27 @@ impl NewTypedefResult<'_, '_> {
 
 impl<'me> NameDebug<'me> for &'me Typedef<'_, '_> {
 	fn file_line_name(self) -> LocationName<'me> {
-		self.entity.file_line_name()
+		match self {
+			Typedef::Clang { entity, .. } => entity.file_line_name(),
+			Typedef::Desc(desc) => LocationName::new(DefinitionLocation::Generated, desc.cpp_fullname.as_ref()),
+		}
 	}
 }
 
 impl PartialEq for Typedef<'_, '_> {
 	fn eq(&self, other: &Self) -> bool {
-		self.entity == other.entity
+		self.cpp_name(CppNameStyle::Reference) == other.cpp_name(CppNameStyle::Reference)
 	}
 }
 
 impl fmt::Debug for Typedef<'_, '_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-		let mut debug_struct = f.debug_struct("Typedef");
+		let mut debug_struct = f.debug_struct(match self {
+			Self::Clang { .. } => "Typedef::Clang",
+			Self::Desc(_) => "Typedef::Desc",
+		});
 		self
 			.update_debug_struct(&mut debug_struct)
-			.field("export_config", &self.gen_env.get_export_config(self.entity))
 			.field("underlying_type_ref", &self.underlying_type_ref())
 			.finish()
 	}

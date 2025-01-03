@@ -82,5 +82,5 @@ fn main() {
 		.map(Path::new)
 		.collect::<Vec<_>>();
 	let bindings_writer = RustNativeBindingWriter::new(&src_cpp_dir, &out_dir, module, &version, debug);
-	Generator::new(&opencv_header_dir, &additional_include_dirs, &src_cpp_dir).generate(module, bindings_writer);
+	Generator::new(&opencv_header_dir, &additional_include_dirs, &src_cpp_dir).generate(module, !debug, bindings_writer);
 }

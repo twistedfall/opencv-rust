@@ -23,6 +23,9 @@ jobs:
             opencv-version: 4.11.0
             linkage: static
           - os-image: ubuntu-22.04
+            opencv-version: 5.0.0-alpha
+            linkage: dynamic
+          - os-image: ubuntu-22.04
             opencv-version: 3.4.20
             linkage: dynamic
           - os-image: macos-13

@@ -1,9 +1,7 @@
 use matches::assert_matches;
-
-use opencv::core;
 use opencv::core::{Matx22d, Matx23f, Matx32f, Matx33d, Matx66f, Scalar};
 use opencv::prelude::*;
-use opencv::Result;
+use opencv::{core, Result};
 
 #[test]
 fn matx_get() {
@@ -35,7 +33,7 @@ fn matx_set() {
 	assert_eq!(a[(1, 0)], 0.);
 }
 
-#[cfg(all(ocvrs_opencv_branch_4, not(target_env = "msvc")))]
+#[cfg(all(not(ocvrs_opencv_branch_34), not(target_env = "msvc")))]
 #[test]
 fn matx_return() -> Result<()> {
 	use opencv::core::Point2f;
@@ -52,7 +50,8 @@ fn matx_return() -> Result<()> {
 #[cfg(ocvrs_has_module_surface_matching)]
 #[test]
 fn matx_arg() -> Result<()> {
-	use opencv::{core::Matx44d, surface_matching::Pose3D};
+	use opencv::core::Matx44d;
+	use opencv::surface_matching::Pose3D;
 
 	let mut pose = Pose3D::default()?;
 	assert!(&pose.pose().val.iter().all(|&x| x == 0.));

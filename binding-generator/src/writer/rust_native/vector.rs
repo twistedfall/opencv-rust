@@ -9,7 +9,7 @@ use super::RustNativeGeneratedElement;
 use crate::class::ClassDesc;
 use crate::field::{Field, FieldDesc};
 use crate::func::{FuncCppBody, FuncDesc, FuncKind, ReturnKind};
-use crate::settings::ARG_OVERRIDE_SELF;
+use crate::settings::{ARG_OVERRIDE_SELF, CFG_ATTR_ONLY_OPENCV_5};
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle, TypeRefDesc, TypeRefTypeHint};
 use crate::{settings, Class, CompiledInterpolation, Func, IteratorExt, StrExt, StringExt, TypeRef, Vector};
 
@@ -131,6 +131,7 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 				("extern_set", extern_set.into()),
 				("extern_push", extern_push.into()),
 				("extern_insert", extern_insert.into()),
+				("cfg_attr", "".into()),
 			]);
 
 			if settings::PREVENT_VECTOR_TYPEDEF_GENERATION.contains(element_type.cpp_name(CppNameStyle::Reference).as_ref()) {
@@ -162,13 +163,15 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 					);
 					impls += &NON_COPY_OR_BOOL_TPL.interpolate(&inter_vars);
 				}
-				if element_type.is_element_data_type() || element_is_bool {
-					let input_array = method_input_array(vector_class.clone()).gen_rust(opencv_version);
+				let is_data_type_or_vec_of_data_type_opencv_4 = is_data_type_or_vec_of_data_type(&element_type, false);
+				let is_data_type_or_vec_of_data_type_opencv_5 = is_data_type_or_vec_of_data_type(&element_type, true);
+				if element_is_bool || is_data_type_or_vec_of_data_type_opencv_4 {
+					let input_array = method_input_array(vector_class.clone(), None).gen_rust(opencv_version);
 					inter_vars.insert("input_array_impl", input_array.into());
 					impls += &INPUT_ARRAY_TPL.interpolate(&inter_vars);
 					if !element_is_bool {
-						let output_array = method_output_array(vector_class.clone()).gen_rust(opencv_version);
-						let input_output_array = method_input_output_array(vector_class).gen_rust(opencv_version);
+						let output_array = method_output_array(vector_class.clone(), None).gen_rust(opencv_version);
+						let input_output_array = method_input_output_array(vector_class.clone(), None).gen_rust(opencv_version);
 						inter_vars.extend([
 							("output_array_impl", output_array.into()),
 							("input_output_array_impl", input_output_array.into()),
@@ -187,10 +190,23 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 						format!("BoxedRef<'t, {}>", inter_vars["inner_rust_full"]).into(),
 					);
 					impls += &EXTERN_TPL.interpolate(&inter_vars);
-					if element_type.is_element_data_type() {
+					if is_data_type_or_vec_of_data_type_opencv_4 || is_data_type_or_vec_of_data_type_opencv_5 {
 						inter_vars.insert("rust_full", format!("BoxedRef<'_, {}>", rust_localalias).into());
 						impls += &INPUT_ARRAY_TPL.interpolate(&inter_vars);
 					}
+				}
+				if !element_is_bool && is_data_type_or_vec_of_data_type_opencv_5 {
+					let input_array = method_input_array(vector_class.clone(), None).gen_rust(opencv_version);
+					inter_vars.insert("cfg_attr", format!("#[cfg({})]", CFG_ATTR_ONLY_OPENCV_5.0).into());
+					inter_vars.insert("input_array_impl", input_array.into());
+					impls += &INPUT_ARRAY_TPL.interpolate(&inter_vars);
+					let output_array = method_output_array(vector_class.clone(), None).gen_rust(opencv_version);
+					let input_output_array = method_input_output_array(vector_class, None).gen_rust(opencv_version);
+					inter_vars.extend([
+						("output_array_impl", output_array.into()),
+						("input_output_array_impl", input_output_array.into()),
+					]);
+					impls += &OUTPUT_ARRAY_TPL.interpolate(&inter_vars);
 				}
 			}
 		}
@@ -253,15 +269,41 @@ fn extern_functions<'tu, 'ge>(vec: &Vector<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
 			out.push(method_data_mut(vector_class.clone(), element_type.clone()));
 			out.push(method_from_slice(vec_type_ref, element_type.clone()));
 		}
-		if element_type.is_element_data_type() || element_is_bool {
-			out.push(method_input_array(vector_class.clone()));
+		if element_is_bool || is_data_type_or_vec_of_data_type(&element_type, false) {
+			out.push(method_input_array(vector_class.clone(), None));
 			if !element_is_bool {
-				out.push(method_output_array(vector_class.clone()));
-				out.push(method_input_output_array(vector_class));
+				out.push(method_output_array(vector_class.clone(), None));
+				out.push(method_input_output_array(vector_class.clone(), None));
 			}
+		}
+		if !element_is_bool && is_data_type_or_vec_of_data_type(&element_type, true) {
+			let only_opencv_5 = Some((CFG_ATTR_ONLY_OPENCV_5.0.to_string(), CFG_ATTR_ONLY_OPENCV_5.1.to_string()));
+			out.push(method_input_array(vector_class.clone(), only_opencv_5.clone()));
+			out.push(method_output_array(vector_class.clone(), only_opencv_5.clone()));
+			out.push(method_input_output_array(vector_class, only_opencv_5));
 		}
 	}
 	out
+}
+
+/// Returns true if self is a data type or a vector with the element being a data type
+fn is_data_type_or_vec_of_data_type(type_ref: &TypeRef, for_opencv_5: bool) -> bool {
+	type_ref.kind().as_vector().map_or_else(
+		|| {
+			if for_opencv_5 {
+				type_ref.is_data_type_in_opencv_5()
+			} else {
+				type_ref.is_data_type()
+			}
+		},
+		|vec| {
+			if for_opencv_5 {
+				vec.element_type().is_data_type_in_opencv_5()
+			} else {
+				vec.element_type().is_data_type()
+			}
+		},
+	)
 }
 
 pub trait VectorExt {
@@ -574,7 +616,7 @@ fn method_from_slice<'tu, 'ge>(vec_type_ref: TypeRef<'tu, 'ge>, element_type: Ty
 	)
 }
 
-fn method_input_array<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
+fn method_input_array<'tu, 'ge>(vector_class: Class<'tu, 'ge>, cfg_attr: Option<(String, String)>) -> Func<'tu, 'ge> {
 	Func::new_desc(
 		FuncDesc::new(
 			FuncKind::InstanceMethod(vector_class),
@@ -591,11 +633,12 @@ fn method_input_array<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge>
 					Lifetime::Elided,
 				)),
 		)
-		.cpp_body(FuncCppBody::ManualCall("cv::_InputArray(*instance)".into())),
+		.cpp_body(FuncCppBody::ManualCall("cv::_InputArray(*instance)".into()))
+		.cfg_attr(cfg_attr),
 	)
 }
 
-fn method_output_array<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
+fn method_output_array<'tu, 'ge>(vector_class: Class<'tu, 'ge>, cfg_attr: Option<(String, String)>) -> Func<'tu, 'ge> {
 	Func::new_desc(
 		FuncDesc::new(
 			FuncKind::InstanceMethod(vector_class),
@@ -612,11 +655,12 @@ fn method_output_array<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge
 					Lifetime::Elided,
 				)),
 		)
-		.cpp_body(FuncCppBody::ManualCall("cv::_OutputArray(*instance)".into())),
+		.cpp_body(FuncCppBody::ManualCall("cv::_OutputArray(*instance)".into()))
+		.cfg_attr(cfg_attr),
 	)
 }
 
-fn method_input_output_array<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'tu, 'ge> {
+fn method_input_output_array<'tu, 'ge>(vector_class: Class<'tu, 'ge>, cfg_attr: Option<(String, String)>) -> Func<'tu, 'ge> {
 	Func::new_desc(
 		FuncDesc::new(
 			FuncKind::InstanceMethod(vector_class),
@@ -633,6 +677,7 @@ fn method_input_output_array<'tu, 'ge>(vector_class: Class<'tu, 'ge>) -> Func<'t
 					Lifetime::Elided,
 				)),
 		)
-		.cpp_body(FuncCppBody::ManualCall("cv::_InputOutputArray(*instance)".into())),
+		.cpp_body(FuncCppBody::ManualCall("cv::_InputOutputArray(*instance)".into()))
+		.cfg_attr(cfg_attr),
 	)
 }

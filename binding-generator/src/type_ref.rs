@@ -1,4 +1,5 @@
 use std::borrow::Cow;
+use std::collections::HashSet;
 use std::fmt;
 use std::rc::Rc;
 
@@ -17,7 +18,8 @@ use crate::renderer::{CppExternReturnRenderer, CppRenderer, TypeRefRenderer};
 use crate::vector::VectorDesc;
 use crate::writer::rust_native::type_ref::TypeRefExt;
 use crate::{
-	settings, AbstractRefWrapper, Class, ClassKindOverride, Element, ExportConfig, GeneratedType, GeneratorEnv, SmartPtr, Vector,
+	settings, AbstractRefWrapper, Class, ClassKindOverride, Element, ExportConfig, GeneratedType, GeneratorEnv, SmartPtr, Typedef,
+	Vector,
 };
 
 mod desc;
@@ -88,6 +90,10 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		Self::new_desc(TypeRefDesc::new(TypeRefKind::SmartPtr(smart_ptr), Constness::Mut))
 	}
 
+	pub fn new_typedef(tdef: Typedef<'tu, 'ge>) -> Self {
+		Self::new_desc(TypeRefDesc::new(TypeRefKind::Typedef(tdef), Constness::Mut))
+	}
+
 	pub fn new_generic(name: impl Into<String>) -> Self {
 		Self::new_desc(TypeRefDesc::new(TypeRefKind::Generic(name.into()), Constness::Mut))
 	}
@@ -107,8 +113,7 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		} else if let Some(primitive_typeref) = TypeRefDesc::try_primitive(cpp_refname) {
 			primitive_typeref
 		} else {
-			let simplicity = settings::DATA_TYPES
-				.contains(cpp_refname)
+			let simplicity = (settings::DATA_TYPES.contains(cpp_refname) || settings::DATA_TYPES_5_0.contains(cpp_refname))
 				.then_some(ClassKindOverride::Simple)
 				.unwrap_or_else(|| {
 					settings::ELEMENT_EXPORT_TWEAK
@@ -348,16 +353,41 @@ impl<'tu, 'ge> TypeRef<'tu, 'ge> {
 		self
 	}
 
-	pub fn is_data_type(&self) -> bool {
-		settings::DATA_TYPES.contains(self.cpp_name(CppNameStyle::Reference).as_ref())
+	fn is_data_type_inner(&self, data_types: &HashSet<&str>) -> bool {
+		let kind = self.kind();
+		let maybe_data_type_cpp_refname = match kind.as_ref() {
+			TypeRefKind::Primitive(_, cpp_name) => Some(Borrowed(*cpp_name)),
+			TypeRefKind::Typedef(tdef) => return tdef.underlying_type_ref().is_data_type_inner(data_types),
+			TypeRefKind::Class(cls) => {
+				if cls.kind().is_simple() {
+					Some(cls.cpp_name(CppNameStyle::Reference))
+				} else {
+					None
+				}
+			}
+			TypeRefKind::Array(_, _)
+			| TypeRefKind::StdVector(_)
+			| TypeRefKind::StdTuple(_)
+			| TypeRefKind::Pointer(_)
+			| TypeRefKind::Reference(_)
+			| TypeRefKind::RValueReference(_)
+			| TypeRefKind::SmartPtr(_)
+			| TypeRefKind::Enum(_)
+			| TypeRefKind::Function(_)
+			| TypeRefKind::Generic(_)
+			| TypeRefKind::Ignored => None,
+		};
+		maybe_data_type_cpp_refname.is_some_and(|cpp_refname| data_types.contains(cpp_refname.as_ref()))
 	}
 
-	/// Returns true if self is a data type or it's a vector with the element being a data type
-	pub fn is_element_data_type(&self) -> bool {
-		self
-			.kind()
-			.as_vector()
-			.map_or_else(|| self.is_data_type(), |vec| vec.element_type().is_data_type())
+	/// Check if the type can be used as a `Mat` element, doesn't include new data types added in OpenCV 5
+	pub fn is_data_type(&self) -> bool {
+		self.is_data_type_inner(&settings::DATA_TYPES)
+	}
+
+	/// Same as [Self::is_data_type], but only checks the new types added in OpenCV 5 (u32, i64, u64 b16 and bool)
+	pub fn is_data_type_in_opencv_5(&self) -> bool {
+		self.is_data_type_inner(&settings::DATA_TYPES_5_0)
 	}
 
 	pub fn template_specialization_args(&self) -> Cow<[TemplateArg<'tu, 'ge>]> {
@@ -505,9 +535,6 @@ impl fmt::Debug for TypeRef<'_, '_> {
 		}
 		if kind.is_debug() {
 			props.push("debug");
-		}
-		if self.is_data_type() {
-			props.push("data_type");
 		}
 		if kind.return_as_naked(self.type_hint()) {
 			props.push("return_naked");
