@@ -1,6 +1,3 @@
-#[deprecated = "Use the the non-alias form `{{rust_full}}` instead, removal in Nov 2024"]
-pub type {{rust_localalias}} = {{rust_full}};
-
 ptr_extern! { {{inner_rust_full}},
 	{{extern_new_null}}, {{extern_delete}}, {{extern_get_inner_ptr}}, {{extern_get_inner_ptr_mut}}
 }
