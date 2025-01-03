@@ -22,6 +22,13 @@ if [[ "$os_family" == "Linux" ]]; then
 	if [[ "${VCPKG_VERSION:-}" != "" ]]; then # vcpkg build
 		"$ci_dir/install-ubuntu-vcpkg.sh"
 	else
+		# workaround for mozilla/sccache action problem /bin/sh: 1: sccache: not found when running `sudo make install`
+		if [[ "${CMAKE_C_COMPILER_LAUNCHER:-}" == "sccache" ]]; then
+			export CMAKE_C_COMPILER_LAUNCHER="$(which sccache)"
+		fi
+		if [[ "${CMAKE_CXX_COMPILER_LAUNCHER:-}" == "sccache" ]]; then
+			export CMAKE_CXX_COMPILER_LAUNCHER="$(which sccache)"
+		fi
 		"$ci_dir/install-ubuntu.sh"
 	fi
 elif [[ "$os_family" == "macOS" ]]; then
