@@ -279,7 +279,7 @@ fn main() -> Result<()> {
 		let frame_height;
 		let mut capture = videoio::VideoCapture::default()?;
 		let video = parser.get_str_def("video")?;
-		if video.len() == 1 && video.chars().next().map_or(false, |c| c.is_ascii_digit()) {
+		if video.len() == 1 && video.chars().next().is_some_and(|c| c.is_ascii_digit()) {
 			capture.open_def(parser.get_i32_def("video")?)?;
 		} else {
 			capture.open_file_def(&core::find_file_or_keep_def(&video)?)?;

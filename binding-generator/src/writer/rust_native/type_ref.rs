@@ -235,11 +235,7 @@ impl TypeRefExt for TypeRef<'_, '_> {
 	}
 
 	fn rust_extern_return_fallible(&self) -> Cow<str> {
-		if self.kind().is_void() {
-			"ResultVoid".into()
-		} else {
-			format!("Result<{ext}>", ext = self.rust_extern(ExternDir::FromCpp)).into()
-		}
+		format!("Result<{ext}>", ext = self.rust_extern(ExternDir::FromCpp)).into()
 	}
 
 	fn rust_lifetime_count(&self) -> usize {

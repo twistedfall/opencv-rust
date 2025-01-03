@@ -6,7 +6,7 @@ version = "0.93.0"
 license = "MIT"
 authors = ["Pro <twisted.fall@gmail.com>"]
 edition = "2021"
-rust-version = "1.65"
+rust-version = "1.77.0"
 exclude = ["release.toml"]
 
 [lib]
@@ -15,7 +15,7 @@ exclude = ["release.toml"]
 clang = { version = "2", features = ["clang_6_0"] }
 clang-sys = { version = "1", features = ["clang_6_0"] }
 dunce = "1"
-once_cell = "1" # replace with std::sync::OnceLock when MSRV is 1.70
+once_cell = "1" # replace with std::sync::LazyLock when MSRV is 1.80
 percent-encoding = { version = "2", default-features = false }
 regex = "1"
 shlex = { version = "1.3", default-features = false }

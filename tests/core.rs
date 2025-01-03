@@ -8,7 +8,7 @@ use opencv::{core, Result};
 fn cv_return_type() {
 	assert_eq!(mem::size_of::<opencv::sys::Result<i32>>(), 24);
 	assert_eq!(mem::size_of::<opencv::sys::Result<u8>>(), 24);
-	assert_eq!(mem::size_of::<opencv::sys::ResultVoid>(), 16);
+	assert_eq!(mem::size_of::<opencv::sys::Result<()>>(), 16);
 }
 
 #[test]

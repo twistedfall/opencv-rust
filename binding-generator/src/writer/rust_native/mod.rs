@@ -117,7 +117,7 @@ impl<'s> RustNativeBindingWriter<'s> {
 
 impl GeneratorVisitor<'_> for RustNativeBindingWriter<'_> {
 	fn wants_file(&mut self, path: &Path) -> bool {
-		opencv_module_from_path(path).map_or(false, |m| m == self.module)
+		opencv_module_from_path(path) == Some(self.module)
 	}
 
 	fn visit_module_comment(&mut self, comment: String) {

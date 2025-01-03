@@ -182,7 +182,7 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 				// string is a custom type in 3.4 so exclude it explicitly
 				if element_kind
 					.as_class()
-					.map_or(false, |cls| cls.kind().is_boxed() && cls.string_type().is_none())
+					.is_some_and( |cls| cls.kind().is_boxed() && cls.string_type().is_none())
 				{
 					impls += &BOXED_REF_TPL.interpolate(&inter_vars);
 					inter_vars.insert(

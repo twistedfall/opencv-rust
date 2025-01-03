@@ -149,7 +149,7 @@ impl RustElement for Func<'_, '_> {
 								.source()
 								.kind()
 								.as_class()
-								.map_or(false, |single_class| single_class.as_ref() == cls)
+								.is_some_and(|single_class| single_class.as_ref() == cls)
 						} else {
 							false
 						};
@@ -609,7 +609,7 @@ fn rust_return_map(
 			typ = return_type.rust_return(FishStyle::Turbo, lifetime),
 		)
 		.into()
-	} else if return_type_kind.as_pointer().map_or(false, |i| !i.kind().is_void())
+	} else if return_type_kind.as_pointer().is_some_and(|i| !i.kind().is_void())
 		&& !return_type_kind.is_rust_by_ptr(return_type.type_hint())
 		|| return_type_kind.as_fixed_array().is_some()
 	{
@@ -870,7 +870,7 @@ fn companion_func_default_args<'tu, 'ge>(f: &Func<'tu, 'ge>) -> Option<Func<'tu,
 				.settings
 				.func_companion_tweak
 				.get(&mut f.matcher())
-				.map_or(false, |t| t.skip_default())
+				.is_some_and(|t| t.skip_default())
 			{
 				return None;
 			}
@@ -939,7 +939,7 @@ fn companion_func_boxref_mut<'tu, 'ge>(f: &Func<'tu, 'ge>) -> Option<Func<'tu, '
 				borrow_arg_is_const = type_ref.constness().is_const()
 					&& kind
 						.as_pointer_reference_move()
-						.map_or(false, |ptr_or_ref| ptr_or_ref.kind().as_class().is_some());
+						.is_some_and(|ptr_or_ref| ptr_or_ref.kind().as_class().is_some());
 				if borrow_arg_is_const {
 					*borrow_arg = borrow_arg.clone().with_type_ref(
 						borrow_arg

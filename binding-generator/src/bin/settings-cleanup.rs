@@ -16,7 +16,7 @@ struct FunctionFinder<'tu> {
 	pub gen_env: GeneratorEnv<'tu>,
 }
 
-impl<'tu> FunctionFinder<'tu> {
+impl FunctionFinder<'_> {
 	pub fn update_used_func(&self, f: &Func) {
 		let mut matcher = f.matcher();
 		self.gen_env.settings.arg_override.get(&mut matcher);
@@ -32,7 +32,7 @@ impl<'tu> FunctionFinder<'tu> {
 
 impl<'tu> EntityWalkerVisitor<'tu> for &mut FunctionFinder<'tu> {
 	fn wants_file(&mut self, path: &Path) -> bool {
-		opencv_module_from_path(path).map_or(false, |m| m == self.module)
+		opencv_module_from_path(path) == Some(self.module)
 	}
 
 	fn visit_entity(&mut self, entity: Entity<'tu>) -> ControlFlow<()> {
@@ -84,7 +84,7 @@ fn main() {
 			.read_dir()
 			.expect("Can't read dir")
 			.map(|p| p.expect("Bad path").path())
-			.filter(|p| p.is_file() && p.extension().map_or(false, |e| e == "hpp"))
+			.filter(|p| p.is_file() && p.extension().is_some_and(|e| e == "hpp"))
 			.filter_map(|mut p| {
 				p.set_extension("");
 				p.file_name().and_then(|f| f.to_str()).map(|f| f.to_string())

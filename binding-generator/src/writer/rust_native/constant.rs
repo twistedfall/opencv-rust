@@ -38,9 +38,10 @@ impl RustNativeGeneratedElement for Const<'_> {
 	fn gen_rust(&self, opencv_version: &str) -> String {
 		static RUST_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/const/rust.tpl.rs").compile_interpolation());
 
-		let parent_is_class = self.entity().get_lexical_parent().map_or(false, |p| {
-			matches!(p.get_kind(), EntityKind::ClassDecl | EntityKind::StructDecl)
-		});
+		let parent_is_class = self
+			.entity()
+			.get_lexical_parent()
+			.is_some_and(|p| matches!(p.get_kind(), EntityKind::ClassDecl | EntityKind::StructDecl));
 		let name = if parent_is_class {
 			self.rust_leafname(FishStyle::No)
 		} else {

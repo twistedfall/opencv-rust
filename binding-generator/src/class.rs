@@ -75,7 +75,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 			&Self::Clang { entity, gen_env, .. } => {
 				if settings::ELEMENT_EXCLUDE_KIND
 					.get(self.cpp_name(CppNameStyle::Reference).as_ref())
-					.map_or(false, |ek| ek.is_excluded())
+					.is_some_and(|ek| ek.is_excluded())
 				{
 					return ClassKind::Other;
 				}
@@ -221,8 +221,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 			Class::Clang { entity, .. } => entity
 				.walk_children_while(|f| {
 					ControlFlow::continue_until(
-						f.get_kind() == EntityKind::Destructor
-							&& f.get_accessibility().map_or(true, |acc| acc != Accessibility::Public),
+						f.get_kind() == EntityKind::Destructor && f.get_accessibility() != Some(Accessibility::Public),
 					)
 				})
 				.is_break(),
@@ -427,11 +426,11 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 						let fld_type_kind = fld_type_ref.kind();
 						if fld_type_kind
 							.as_pointer()
-							.map_or(false, |inner| inner.kind().as_primitive().is_some())
+							.is_some_and(|inner| inner.kind().as_primitive().is_some())
 							&& !fld_type_kind.is_char_ptr_string(fld_type_ref.type_hint())
 						{
 							fld_type_ref.to_mut().set_type_hint(TypeRefTypeHint::PrimitivePtrAsRaw);
-						} else if fld_type_kind.as_class().map_or(false, |cls| cls.kind().is_trait()) {
+						} else if fld_type_kind.as_class().is_some_and(|cls| cls.kind().is_trait()) {
 							fld_type_ref.to_mut().set_type_hint(TypeRefTypeHint::TraitClassConcrete);
 						}
 					}

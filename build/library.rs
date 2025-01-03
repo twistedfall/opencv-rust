@@ -141,7 +141,7 @@ impl Linkage {
 	}
 
 	fn is_static_archive(ext: Option<&OsStr>) -> bool {
-		ext.map_or(false, |ext| ext.eq_ignore_ascii_case("a"))
+		ext.is_some_and(|ext| ext.eq_ignore_ascii_case("a"))
 	}
 }
 
@@ -201,7 +201,7 @@ impl Library {
 					&& p
 						.file_name()
 						.and_then(OsStr::to_str)
-						.map_or(false, |n| n.starts_with(tool_name))
+						.is_some_and(|n| n.starts_with(tool_name))
 			});
 
 		tool_dirs
@@ -294,7 +294,7 @@ impl Library {
 			link_libs,
 			opencv.libs.into_iter().map(|l| LinkLib(Linkage::Default, l)).collect(),
 		));
-		if link_libs.map_or(false, |link_libs| link_libs.is_extend()) {
+		if link_libs.is_some_and(|link_libs| link_libs.is_extend()) {
 			cargo_metadata.extend(Self::process_link_libs(
 				None,
 				opencv
@@ -337,7 +337,7 @@ impl Library {
 			&src_dir,
 			package_name.as_ref(),
 			toolchain,
-			env::var_os("PROFILE").map_or(false, |p| p == "release"),
+			env::var_os("PROFILE").is_some_and(|p| p == "release"),
 		);
 		let mut probe_result = cmake
 			.probe_ninja(ninja_bin)
@@ -404,12 +404,12 @@ impl Library {
 
 		let mut cargo_metadata = opencv.cargo_metadata;
 
-		if link_paths.as_ref().map_or(false, |lp| !lp.is_extend()) {
+		if link_paths.as_ref().is_some_and(|lp| !lp.is_extend()) {
 			cargo_metadata.retain(|p| !p.starts_with("cargo:rustc-link-search=") && !p.starts_with("cargo::rustc-link-search="));
 		}
 		cargo_metadata.extend(Self::process_link_paths(link_paths, vec![]));
 
-		if link_libs.as_ref().map_or(false, |ll| !ll.is_extend()) {
+		if link_libs.as_ref().is_some_and(|ll| !ll.is_extend()) {
 			cargo_metadata.retain(|p| !p.starts_with("cargo:rustc-link-lib=") && !p.starts_with("cargo::rustc-link-lib="));
 		}
 		cargo_metadata.extend(Self::process_link_libs(link_libs, vec![]));

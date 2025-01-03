@@ -301,14 +301,14 @@ impl<'tu, 'ge> TypeRefKind<'tu, 'ge> {
 	}
 
 	pub fn is_void_ptr(&self) -> bool {
-		self.as_pointer().map_or(false, |inner| inner.kind().is_void())
+		self.as_pointer().is_some_and(|inner| inner.kind().is_void())
 	}
 
 	/// Returns true if the type is a slice (judging by the type_hint) and its element is C++ `void`
 	///
 	/// We want to present such cases as `&[u8]` on the Rust side.
 	pub fn is_void_slice(&self, type_hint: &TypeRefTypeHint) -> bool {
-		matches!(type_hint, TypeRefTypeHint::Slice) && self.as_variable_array().map_or(false, |inner| inner.kind().is_void())
+		matches!(type_hint, TypeRefTypeHint::Slice) && self.as_variable_array().is_some_and(|inner| inner.kind().is_void())
 	}
 
 	pub fn is_generic(&self) -> bool {
@@ -397,12 +397,12 @@ impl<'tu, 'ge> TypeRefKind<'tu, 'ge> {
 
 	/// True for types that get passed in Rust by pointer as opposed to a reference or an owned value
 	pub fn is_rust_by_ptr(&self, type_hint: &TypeRefTypeHint) -> bool {
-		self.as_pointer().map_or(false, |inner| {
+		self.as_pointer().is_some_and(|inner| {
 			let inner_kind = inner.kind();
 			// todo: support receiving slices for CUDA_RawVideoSourceTrait::get_next_packet
 			inner_kind.is_void()
 				|| inner_kind.is_unsigned_char()
-				|| inner_kind.as_pointer().map_or(false, |inner| inner.kind().is_copy(type_hint))
+				|| inner_kind.as_pointer().is_some_and(|inner| inner.kind().is_copy(type_hint))
 				|| matches!(type_hint, TypeRefTypeHint::PrimitivePtrAsRaw)
 					&& inner_kind.as_primitive().is_some()
 					&& !self.as_string(type_hint).is_some()

@@ -36,7 +36,7 @@ impl<'tu> EntityWalkerExt<'tu> for Entity<'tu> {
 				.is_some();
 			if visitor_wants {
 				match root_decl.get_kind() {
-					EntityKind::Namespace if root_decl.get_name().map_or(false, |name| name.starts_with("cv")) => {
+					EntityKind::Namespace if root_decl.get_name().is_some_and(|name| name.starts_with("cv")) => {
 						visit_cv_namespace(root_decl, &mut visitor)
 					}
 					EntityKind::MacroDefinition | EntityKind::MacroExpansion | EntityKind::EnumDecl | EntityKind::TypedefDecl => {

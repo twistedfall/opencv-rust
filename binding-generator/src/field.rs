@@ -94,7 +94,7 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 				..
 			} => {
 				let type_ref_type_hint = type_ref_type_hint.clone().something_or_else(|| {
-					let default_value_string = self.default_value().map_or(false, |def| def.contains(['"', '\'']));
+					let default_value_string = self.default_value().is_some_and(|def| def.contains(['"', '\'']));
 					if default_value_string {
 						TypeRefTypeHint::CharAsRustChar
 					} else {
@@ -210,7 +210,7 @@ impl<'tu, 'ge> Field<'tu, 'ge> {
 			}
 		} else {
 			// check if still can be a slice arg length
-			let can_be_slice_arg_len = kind.as_primitive().map_or(false, |(_, cpp)| {
+			let can_be_slice_arg_len = kind.as_primitive().is_some_and(|(_, cpp)| {
 				if cpp == "int" || cpp == "size_t" {
 					let name = self.cpp_name(CppNameStyle::Declaration);
 					name.ends_with('s') && name.contains('n') && name != "thickness" // fixme: have to exclude thickness

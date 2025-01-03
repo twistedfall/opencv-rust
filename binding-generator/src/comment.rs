@@ -12,7 +12,7 @@ pub fn strip_doxygen_comment_markers(comment: &str) -> String {
 	const SINGLELINE_SIDE: &str = "<";
 
 	fn trim_last_empty_lines(lines: &mut Vec<&str>) {
-		while lines.last().map_or(false, |line| line.is_empty()) {
+		while lines.last().is_some_and(|line| line.is_empty()) {
 			lines.pop();
 		}
 	}

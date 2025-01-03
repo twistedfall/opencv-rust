@@ -61,7 +61,7 @@ fn main() {
 	let mut args = env::args_os().skip(1);
 	let mut opencv_header_dir = args.next();
 	let mut debug = false;
-	if opencv_header_dir.as_ref().map_or(false, |debug| debug == "--debug") {
+	if opencv_header_dir.as_ref().is_some_and(|debug| debug == "--debug") {
 		debug = true;
 		opencv_header_dir = args.next();
 	}

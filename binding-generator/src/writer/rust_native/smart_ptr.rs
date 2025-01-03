@@ -276,7 +276,7 @@ fn method_new<'tu, 'ge>(
 ) -> Func<'tu, 'ge> {
 	let pointee_kind = pointee_type.kind();
 	let val = if pointee_kind.is_copy(pointee_type.type_hint()) {
-		if pointee_kind.as_class().map_or(false, |cls| cls.kind().is_simple()) {
+		if pointee_kind.as_class().is_some_and(|cls| cls.kind().is_simple()) {
 			panic!("Ptr with simple class is not supported");
 		} else {
 			format!("new {typ}(val)", typ = pointee_type.cpp_name(CppNameStyle::Reference)).into()

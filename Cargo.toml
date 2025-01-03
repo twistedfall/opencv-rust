@@ -8,7 +8,7 @@ keywords = ["opencv", "vision"]
 license = "MIT"
 version = "0.93.7"
 edition = "2021"
-rust-version = "1.66"
+rust-version = "1.77.0"
 authors = ["Pro <twisted.fall@gmail.com>", "Mathieu Poumeyrol <kali@zoy.org>"]
 exclude = ["/.github", "/ci", "/tools", ".editorconfig", ".gitattributes", ".gitignore", "release.toml", "rustfmt.toml"]
 

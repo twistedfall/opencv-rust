@@ -32,10 +32,9 @@ static MANIFEST_DIR: Lazy<PathBuf> =
 	Lazy::new(|| PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").expect("Can't read CARGO_MANIFEST_DIR env var")));
 static SRC_DIR: Lazy<PathBuf> = Lazy::new(|| MANIFEST_DIR.join("src"));
 static SRC_CPP_DIR: Lazy<PathBuf> = Lazy::new(|| MANIFEST_DIR.join("src_cpp"));
-static TARGET_ENV_MSVC: Lazy<bool> =
-	Lazy::new(|| env::var("CARGO_CFG_TARGET_ENV").map_or(false, |target_env| target_env == "msvc"));
+static TARGET_ENV_MSVC: Lazy<bool> = Lazy::new(|| env::var("CARGO_CFG_TARGET_ENV").is_ok_and(|target_env| target_env == "msvc"));
 static TARGET_VENDOR_APPLE: Lazy<bool> =
-	Lazy::new(|| env::var("CARGO_CFG_TARGET_VENDOR").map_or(false, |target_vendor| target_vendor == "apple"));
+	Lazy::new(|| env::var("CARGO_CFG_TARGET_VENDOR").is_ok_and(|target_vendor| target_vendor == "apple"));
 
 static OPENCV_BRANCH_34: Lazy<VersionReq> =
 	Lazy::new(|| VersionReq::parse("~3.4").expect("Can't parse OpenCV 3.4 version requirement"));
@@ -160,13 +159,13 @@ fn files_with_predicate<'p>(
 	Ok(dir
 		.read_dir()?
 		.flatten()
-		.filter_map(|e| e.file_type().map_or(false, |typ| typ.is_file()).then(|| e.path()))
+		.filter_map(|e| e.file_type().is_ok_and(|typ| typ.is_file()).then(|| e.path()))
 		.filter(move |p| predicate(p)))
 }
 
 fn files_with_extension<'e>(dir: &Path, extension: impl AsRef<OsStr> + 'e) -> Result<impl Iterator<Item = PathBuf> + 'e> {
 	files_with_predicate(dir, move |p| {
-		p.extension().map_or(false, |e| e.eq_ignore_ascii_case(extension.as_ref()))
+		p.extension().is_some_and(|e| e.eq_ignore_ascii_case(extension.as_ref()))
 	})
 }
 
@@ -270,7 +269,7 @@ fn emit_inherent_features(opencv_version: &Version) {
 		.expect("Static version requirement")
 		.matches(opencv_version)
 	{
-		println!("cargo:rustc-cfg=ocvrs_has_inherent_feature_hfloat");
+		println!("cargo::rustc-cfg=ocvrs_has_inherent_feature_hfloat");
 	}
 }
 
@@ -333,18 +332,18 @@ fn make_compiler(opencv: &Library, ffi_export_suffix: &str) -> cc::Build {
 
 fn setup_rerun() -> Result<()> {
 	for &v in AFFECTING_ENV_VARS.iter() {
-		println!("cargo:rerun-if-env-changed={v}"); // replace with cargo:: syntax when MSRV is 1.77
+		println!("cargo::rerun-if-env-changed={v}");
 	}
 
 	let include_exts = &[OsStr::new("cpp"), OsStr::new("hpp")];
 	let files_with_include_exts =
-		files_with_predicate(&SRC_CPP_DIR, |p| p.extension().map_or(false, |e| include_exts.contains(&e)))?;
+		files_with_predicate(&SRC_CPP_DIR, |p| p.extension().is_some_and(|e| include_exts.contains(&e)))?;
 	for path in files_with_include_exts {
 		if let Some(path) = path.to_str() {
-			println!("cargo:rerun-if-changed={path}"); // replace with cargo:: syntax when MSRV is 1.77
+			println!("cargo::rerun-if-changed={path}");
 		}
 	}
-	println!("cargo:rerun-if-changed=Cargo.toml"); // replace with cargo:: syntax when MSRV is 1.77
+	println!("cargo::rerun-if-changed=Cargo.toml");
 	Ok(())
 }
 
@@ -369,10 +368,10 @@ fn main() -> Result<()> {
 	}
 
 	for branch in ["34", "4", "5"] {
-		println!("cargo:rustc-check-cfg=cfg(ocvrs_opencv_branch_{branch})"); // replace with cargo:: syntax when MSRV is 1.77
+		println!("cargo::rustc-check-cfg=cfg(ocvrs_opencv_branch_{branch})");
 	}
 	for module in SUPPORTED_MODULES {
-		println!("cargo:rustc-check-cfg=cfg(ocvrs_has_module_{module})"); // replace with cargo:: syntax when MSRV is 1.77
+		println!("cargo::rustc-check-cfg=cfg(ocvrs_has_module_{module})");
 	}
 	// MSRV: switch to #[expect] when MSRV is 1.81
 	#[allow(clippy::single_element_loop)]
@@ -404,11 +403,11 @@ fn main() -> Result<()> {
 	let opencv = Library::probe()?;
 	eprintln!("=== OpenCV library configuration: {opencv:#?}");
 	if OPENCV_BRANCH_5.matches(&opencv.version) {
-		println!("cargo:rustc-cfg=ocvrs_opencv_branch_5"); // replace with cargo:: syntax when MSRV is 1.77
+		println!("cargo::rustc-cfg=ocvrs_opencv_branch_5");
 	} else if OPENCV_BRANCH_4.matches(&opencv.version) {
-		println!("cargo:rustc-cfg=ocvrs_opencv_branch_4"); // replace with cargo:: syntax when MSRV is 1.77
+		println!("cargo::rustc-cfg=ocvrs_opencv_branch_4");
 	} else if OPENCV_BRANCH_34.matches(&opencv.version) {
-		println!("cargo:rustc-cfg=ocvrs_opencv_branch_34"); // replace with cargo:: syntax when MSRV is 1.77
+		println!("cargo::rustc-cfg=ocvrs_opencv_branch_34");
 	} else {
 		panic!(
 			"Unsupported OpenCV version: {}, must be from 3.4, 4.x or 5.x branch",
@@ -449,7 +448,7 @@ fn main() -> Result<()> {
 	);
 	let (modules, module_aliases) = make_modules_and_alises(&opencv_module_header_dir, &opencv.version)?;
 	for module in &modules {
-		println!("cargo:rustc-cfg=ocvrs_has_module_{module}");
+		println!("cargo::rustc-cfg=ocvrs_has_module_{module}");
 	}
 
 	emit_inherent_features(&opencv.version);

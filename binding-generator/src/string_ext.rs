@@ -407,7 +407,7 @@ impl StrExt for str {
 						State::LastLowercase => out.push('_'),
 						State::LastUppercase => {
 							// SVDValue => svd_value
-							if chars.peek().map_or(false, |next_c| next_c.is_ascii_lowercase()) {
+							if chars.peek().is_some_and(|next_c| next_c.is_ascii_lowercase()) {
 								out.push('_');
 							}
 						}

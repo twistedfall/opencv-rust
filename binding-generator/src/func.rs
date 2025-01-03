@@ -428,7 +428,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 	pub fn is_clone(&self) -> bool {
 		if self.cpp_name(CppNameStyle::Declaration) == "clone" {
 			if let Some(c) = self.kind().as_instance_method() {
-				!self.has_arguments() && self.return_type_ref().kind().as_class().map_or(false, |r| r.as_ref() == c)
+				!self.has_arguments() && self.return_type_ref().kind().as_class().is_some_and(|r| r.as_ref() == c)
 			} else {
 				false
 			}
@@ -439,7 +439,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 
 	pub fn is_no_discard(&self) -> bool {
 		match self {
-			&Self::Clang { entity, gen_env, .. } => gen_env.get_export_config(entity).map_or(false, |c| c.no_discard),
+			&Self::Clang { entity, gen_env, .. } => gen_env.get_export_config(entity).is_some_and(|c| c.no_discard),
 			Self::Desc(_) => false,
 		}
 	}
@@ -667,12 +667,12 @@ impl Element for Func<'_, '_> {
 				is_excluded
 					|| self.is_generic()
 					|| self.arguments().iter().any(|a| a.type_ref().exclude_kind().is_ignored())
-					|| kind.as_operator().map_or(false, |(_, kind)| match kind {
+					|| kind.as_operator().is_some_and(|(_, kind)| match kind {
 						OperatorKind::Unsupported => true,
 						// filter out postfix version of ++ and --: https://en.cppreference.com/w/cpp/language/operator_incdec
 						OperatorKind::Incr | OperatorKind::Decr if self.num_arguments() == 1 => true,
 						_ => false,
-					}) || kind.as_constructor().map_or(false, |cls| cls.is_abstract()) // don't generate constructors of abstract classes
+					}) || kind.as_constructor().is_some_and(|cls| cls.is_abstract()) // don't generate constructors of abstract classes
 			})
 	}
 

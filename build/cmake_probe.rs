@@ -18,10 +18,10 @@ impl LinkLib {
 	#[inline]
 	pub fn emit_cargo_rustc_link(&self) -> String {
 		format!(
-			"cargo:rustc-link-lib={}{}",
+			"cargo::rustc-link-lib={}{}",
 			self.0.as_cargo_rustc_link_spec_no_static(),
 			self.1
-		) // replace with cargo:: syntax when MSRV is 1.77
+		)
 	}
 
 	/// Returns Some(new_file_name) if some parts of the filename were removed, None otherwise
@@ -82,10 +82,10 @@ impl LinkSearch {
 	#[inline]
 	pub fn emit_cargo_rustc_link_search(&self) -> String {
 		format!(
-			"cargo:rustc-link-search={}{}",
+			"cargo::rustc-link-search={}{}",
 			self.0.as_cargo_rustc_link_search_spec(),
 			self.1.to_str().expect("Can't convert link search path to UTF-8 string")
-		) // replace with cargo:: syntax when MSRV is 1.77
+		)
 	}
 }
 

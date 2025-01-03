@@ -77,7 +77,7 @@ pub enum RenderLane<'tu, 'ge> {
 	SimpleClass(SimpleClassRenderLane<'tu, 'ge>),
 }
 
-impl<'tu, 'ge> RenderLane<'tu, 'ge> {
+impl RenderLane<'_, '_> {
 	#[inline(always)]
 	pub fn to_dyn(&self) -> &dyn RenderLaneTrait {
 		match self {

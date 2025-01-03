@@ -1,25 +1,24 @@
 // note to self, you can't use union here to store both result and error code because C++ side doesn't
 // support non-POD types as union fields
 
-use std::{ffi::c_void, marker::PhantomData, mem::MaybeUninit};
+use std::ffi::c_void;
+use std::mem::MaybeUninit;
 
 use crate::templ::receive_string;
-use crate::types::Unit;
 use crate::Error;
 
 #[repr(C)]
-pub struct Result<S, O = S> {
+pub struct Result<T> {
 	pub error_code: i32,
 	pub error_msg: *mut c_void,
-	pub result: MaybeUninit<S>,
-	_p: PhantomData<O>,
+	pub result: MaybeUninit<T>,
 }
 
-impl<S: Into<O>, O> Result<S, O> {
+impl<T> Result<T> {
 	#[inline]
-	pub fn into_result(self) -> crate::Result<O> {
+	pub fn into_result(self) -> crate::Result<T> {
 		if self.error_msg.is_null() {
-			Ok(unsafe { self.result.assume_init() }.into())
+			Ok(unsafe { self.result.assume_init() })
 		} else {
 			let error_msg = if self.error_msg.is_null() {
 				"Unable to receive error message".to_string()
@@ -30,5 +29,3 @@ impl<S: Into<O>, O> Result<S, O> {
 		}
 	}
 }
-
-pub type ResultVoid = Result<Unit, ()>;

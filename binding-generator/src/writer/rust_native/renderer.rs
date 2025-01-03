@@ -13,9 +13,10 @@ use crate::{settings, CowMapBorrowedExt, Element};
 fn render_rust_tpl<'a>(renderer: impl TypeRefRenderer<'a>, type_ref: &TypeRef, fish_style: FishStyle) -> String {
 	let generic_types = type_ref.template_specialization_args();
 	if !generic_types.is_empty() {
-		let const_generics_implemented = type_ref.kind().as_class().map_or(false, |cls| {
-			settings::IMPLEMENTED_CONST_GENERICS.contains(cls.cpp_name(CppNameStyle::Reference).as_ref())
-		});
+		let const_generics_implemented = type_ref
+			.kind()
+			.as_class()
+			.is_some_and(|cls| settings::IMPLEMENTED_CONST_GENERICS.contains(cls.cpp_name(CppNameStyle::Reference).as_ref()));
 		let mut constant_suffix = String::new();
 		let generic_types = generic_types
 			.iter()

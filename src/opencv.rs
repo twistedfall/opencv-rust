@@ -1,3 +1,4 @@
+// MSRV: switch to #[expect] when MSRV is 1.81
 #[allow(
 	dead_code,
 	deprecated,

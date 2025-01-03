@@ -135,7 +135,7 @@ impl<'tu> GeneratorEnvPopulator<'tu, '_> {
 
 impl<'tu> EntityWalkerVisitor<'tu> for GeneratorEnvPopulator<'tu, '_> {
 	fn wants_file(&mut self, path: &Path) -> bool {
-		is_opencv_path(path) || opencv_module_from_path(path).map_or(false, |m| m == self.module)
+		is_opencv_path(path) || opencv_module_from_path(path) == Some(self.module)
 	}
 
 	fn visit_entity(&mut self, entity: Entity<'tu>) -> ControlFlow<()> {

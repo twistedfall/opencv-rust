@@ -30,7 +30,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
 	let images = fs::read_dir(".")?
 		.flatten()
-		.filter(|entry| entry.path().extension().map_or(false, |ext| ext == "jpg"));
+		.filter(|entry| entry.path().extension().is_some_and(|ext| ext == "jpg"));
 
 	for image in images {
 		// Arrays to store object points and image points from all the images.

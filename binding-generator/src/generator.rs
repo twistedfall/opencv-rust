@@ -321,7 +321,7 @@ impl<'tu, 'r, V: GeneratorVisitor<'tu>> OpenCvWalker<'tu, 'r, V> {
 							|| underlying_type
 								.template_kind()
 								.as_template_specialization()
-								.map_or(false, |templ| {
+								.is_some_and(|templ| {
 									settings::IMPLEMENTED_GENERICS.contains(templ.cpp_name(CppNameStyle::Reference).as_ref())
 								})
 					};

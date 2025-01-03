@@ -29,7 +29,7 @@ impl<'s> CppRenderer<'s> {
 	}
 }
 
-impl<'a> TypeRefRenderer<'a> for CppRenderer<'_> {
+impl TypeRefRenderer<'_> for CppRenderer<'_> {
 	type Recursed = Self;
 
 	fn render<'t>(self, type_ref: &'t TypeRef) -> Cow<'t, str> {

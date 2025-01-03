@@ -335,7 +335,7 @@ pub struct MatIter<'m, T> {
 	_d: PhantomData<&'m T>,
 }
 
-impl<'m, T: DataType> MatIter<'m, T> {
+impl<T: DataType> MatIter<'_, T> {
 	pub fn new(iter: MatConstIterator) -> Result<Self> {
 		match_format::<T>(iter.typ())?;
 		Ok(Self {
@@ -368,7 +368,7 @@ pub struct MatIterMut<'m, T> {
 	_d: PhantomData<&'m mut T>,
 }
 
-impl<'m, T: DataType> MatIterMut<'m, T> {
+impl<T: DataType> MatIterMut<'_, T> {
 	pub fn new(iter: MatConstIterator) -> Result<Self> {
 		match_format::<T>(iter.typ())?;
 		Ok(Self {

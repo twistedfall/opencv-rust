@@ -217,7 +217,7 @@ impl<'r> Collector<'r> {
 }
 
 fn is_type_file(path: &Path, module: &str) -> bool {
-	path.file_stem().and_then(OsStr::to_str).map_or(false, |stem| {
+	path.file_stem().and_then(OsStr::to_str).is_some_and(|stem| {
 		let mut stem_chars = stem.chars();
 		(&mut stem_chars).take(3).all(|c| c.is_ascii_digit()) && // first 3 chars are digits
 			matches!(stem_chars.next(), Some('-')) && // dash
@@ -228,7 +228,7 @@ fn is_type_file(path: &Path, module: &str) -> bool {
 }
 
 fn is_type_externs_file(path: &Path, module: &str) -> bool {
-	path.file_stem().and_then(OsStr::to_str).map_or(false, |stem| {
+	path.file_stem().and_then(OsStr::to_str).is_some_and(|stem| {
 		let mut stem_chars = stem.chars();
 		(&mut stem_chars).take(3).all(|c| c.is_ascii_digit()) && // first 3 chars are digits
 			matches!(stem_chars.next(), Some('-')) && // dash

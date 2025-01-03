@@ -19,7 +19,7 @@ impl DefaultElement {
 			!this.is_public()
 				|| settings::ELEMENT_EXCLUDE_KIND
 					.get(cpp_refname.as_ref())
-					.map_or(false, |ek| ek.is_ignored())
+					.is_some_and(|ek| ek.is_ignored())
 		})
 	}
 

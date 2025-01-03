@@ -45,7 +45,8 @@ impl<'r> BindingGenerator<'r> {
 		eprintln!("=== Using OpenCV headers from: {}", opencv_header_dir.display());
 
 		let non_dll_files = files_with_predicate(&OUT_DIR, |p| {
-			p.extension().map_or(true, |ext| !ext.eq_ignore_ascii_case("dll"))
+			let extension_is_dll = p.extension().is_some_and(|ext| ext.eq_ignore_ascii_case("dll"));
+			!extension_is_dll
 		})?;
 		for path in non_dll_files {
 			let _ = fs::remove_file(path);
