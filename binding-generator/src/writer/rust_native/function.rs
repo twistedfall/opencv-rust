@@ -1,11 +1,10 @@
 use std::borrow::Cow;
 
+use super::element::RustElement;
+use super::type_ref::{NullabilityExt, TypeRefExt};
 use crate::function::Function;
 use crate::type_ref::{ExternDir, Nullability};
 use crate::{NameStyle, StringExt};
-
-use super::element::RustElement;
-use super::type_ref::{NullabilityExt, TypeRefExt};
 
 impl RustElement for Function<'_, '_> {
 	fn rust_module(&self) -> Cow<str> {

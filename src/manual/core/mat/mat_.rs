@@ -3,6 +3,7 @@ use std::ffi::c_void;
 use std::fmt;
 use std::marker::PhantomData;
 
+use super::{match_format, match_indices, match_is_continuous, match_total, DataType};
 use crate::boxed_ref::{BoxedRef, BoxedRefMut};
 use crate::core::{
 	Mat, MatTrait, MatTraitConst, MatTraitConstManual, MatTraitManual, Point, ToInputArray, ToInputOutputArray, ToOutputArray,
@@ -10,8 +11,6 @@ use crate::core::{
 };
 use crate::traits::Boxed;
 use crate::{Error, Result};
-
-use super::{match_format, match_indices, match_is_continuous, match_total, DataType};
 
 /// [docs.opencv.org](https://docs.opencv.org/master/df/dfc/classcv_1_1Mat__.html)
 ///

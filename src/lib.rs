@@ -1,5 +1,11 @@
 #![allow(rustdoc::broken_intra_doc_links)]
-
+/// Rust bindings for the OpenCV computer vision library
+///
+/// [Git](https://github.com/twistedfall/opencv-rust) | [Readme](https://github.com/twistedfall/opencv-rust/blob/master/README.md) |
+/// [Docs](https://docs.rs/opencv) | [Sponsor](https://github.com/sponsors/twistedfall)
+///
+/// Please note that this documentation is automatically generated from the C++ headers. So expect references to C++ items,
+/// code examples in C++ and other strange things.
 pub use error::{Error, Result};
 
 pub use crate::opencv::hub::*;

@@ -1,5 +1,6 @@
-use crate::{NameStyle, StrExt};
 use std::borrow::Cow;
+
+use crate::{NameStyle, StrExt};
 
 pub trait RustStringExt {
 	fn rust_name_from_fullname(&self, style: NameStyle) -> Cow<str>;

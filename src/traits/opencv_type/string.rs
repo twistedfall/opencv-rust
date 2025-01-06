@@ -1,9 +1,8 @@
 use std::ffi::{c_char, c_void, CString};
 
+use super::{OpenCVIntoExternContainer, OpenCVType, OpenCVTypeExternContainer};
 use crate::templ::receive_string;
 use crate::traits::OpenCVFromExtern;
-
-use super::{OpenCVIntoExternContainer, OpenCVType, OpenCVTypeExternContainer};
 
 fn cstring_new_nofail(bytes: impl Into<Vec<u8>>) -> CString {
 	CString::new(bytes).unwrap_or_else(|e| {

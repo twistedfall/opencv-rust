@@ -3,7 +3,6 @@ use std::fmt;
 use std::rc::Rc;
 
 use clang::Type;
-
 pub use desc::VectorDesc;
 
 use crate::element::ExcludeKind;

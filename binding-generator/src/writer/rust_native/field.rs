@@ -1,11 +1,10 @@
 use std::borrow::Cow;
 
+use super::element::{DefaultRustNativeElement, RustElement};
 use crate::field::Field;
 use crate::type_ref::FishStyle;
 use crate::writer::rust_native::element::DebugRust;
 use crate::{reserved_rename, CowMapBorrowedExt, NameStyle, StrExt};
-
-use super::element::{DefaultRustNativeElement, RustElement};
 
 impl RustElement for Field<'_, '_> {
 	fn rust_module(&self) -> Cow<str> {

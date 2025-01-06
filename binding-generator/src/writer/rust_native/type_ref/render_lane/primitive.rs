@@ -1,10 +1,9 @@
 use std::borrow::Cow;
 
+use super::{rust_arg_func_decl, rust_self_func_decl, RenderLaneTrait};
 use crate::type_ref::{Constness, ExternDir, FishStyle, TypeRef, TypeRefTypeHint};
 use crate::writer::rust_native::type_ref::{Lifetime, TypeRefExt};
 use crate::{CppNameStyle, NameStyle};
-
-use super::{rust_arg_func_decl, rust_self_func_decl, RenderLaneTrait};
 
 pub struct PrimitiveRenderLane<'tu, 'ge> {
 	cpp: &'static str,

@@ -6,6 +6,7 @@
 // fixme vector<Mat*> get's interpreted as Vector<Mat> which should be wrong (e.g. Layer::forward and Layer::apply_halide_scheduler)
 // fixme MatConstIterator::m return Mat**, is it handled correctly?
 // fixme VectorOfMat::get allows mutation
+// fixme MatSize looks like just a pointer inside a Mat so it should take a lifetime
 
 // copy-pasted form python generator (may be obsolete):
 // fixme returning MatAllocator (trait) by reference is bad, check knearestneighbour

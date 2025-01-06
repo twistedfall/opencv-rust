@@ -46,8 +46,9 @@ vcpkg = "0.2.9"
 
 [dev-dependencies]
 matches = "0.1"
+# copy of build-dependencies because we need to test methods of the build script
 opencv-binding-generator = { version = "0.93.0", path = "binding-generator" }
-cc = { version = ">=1.0.83", features = ["parallel"] }
+cc = { version = "1.0.83", features = ["parallel"] }
 dunce = "1"
 # jobserver-0.1.25 is the first one that has Client::available() method
 jobserver = "0.1.25"

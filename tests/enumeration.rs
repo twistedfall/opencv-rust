@@ -1,5 +1,4 @@
 use matches::assert_matches;
-
 use opencv::core::BorderTypes;
 use opencv::Result;
 

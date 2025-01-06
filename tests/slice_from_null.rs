@@ -1,7 +1,8 @@
+use std::ptr;
+
 use opencv::core::{Mat, MatSize, Vector};
 use opencv::prelude::*;
 use opencv::Result;
-use std::ptr;
 
 /// test that null pointers are handled and not passed to slice::from_raw_parts
 #[test]

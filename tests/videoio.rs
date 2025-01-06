@@ -1,8 +1,8 @@
 #![cfg(ocvrs_has_module_imgproc)]
 
 use matches::assert_matches;
-
-use opencv::{core, videoio::VideoWriter, Error, Result};
+use opencv::videoio::VideoWriter;
+use opencv::{core, Error, Result};
 
 #[test]
 fn fourcc() -> Result<()> {

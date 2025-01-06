@@ -4,7 +4,6 @@ use std::fmt;
 use std::rc::Rc;
 
 use clang::Entity;
-
 pub use desc::SmartPtrDesc;
 
 use crate::element::ExcludeKind;

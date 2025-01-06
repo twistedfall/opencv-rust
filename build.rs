@@ -364,20 +364,14 @@ fn main() -> Result<()> {
 		eprintln!("===   {v} = {:?}", env::var_os(v));
 	}
 	eprintln!("=== Enabled features:");
-	let features = env::vars().filter_map(|(mut name, val)| {
-		if val != "1" {
-			return None;
+	for (mut name, val) in env::vars() {
+		if val == "1" {
+			const PREFIX: &str = "CARGO_FEATURE_";
+			if name.starts_with(PREFIX) {
+				name.drain(..PREFIX.len());
+				eprintln!("===   {name}");
+			}
 		}
-		const PREFIX: &str = "CARGO_FEATURE_";
-		if name.starts_with(PREFIX) {
-			name.drain(..PREFIX.len());
-			Some(name)
-		} else {
-			None
-		}
-	});
-	for feature in features {
-		eprintln!("===   {feature}");
 	}
 
 	let opencv = Library::probe()?;

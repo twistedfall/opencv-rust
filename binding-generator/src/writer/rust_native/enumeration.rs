@@ -3,12 +3,11 @@ use std::collections::HashMap;
 
 use once_cell::sync::Lazy;
 
+use super::element::{DefaultRustNativeElement, RustElement};
+use super::RustNativeGeneratedElement;
 use crate::debug::NameDebug;
 use crate::type_ref::{FishStyle, NameStyle};
 use crate::{CompiledInterpolation, EntityElement, Enum, StrExt};
-
-use super::element::{DefaultRustNativeElement, RustElement};
-use super::RustNativeGeneratedElement;
 
 impl RustElement for Enum<'_> {
 	fn rust_module(&self) -> Cow<str> {

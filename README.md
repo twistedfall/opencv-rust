@@ -142,6 +142,8 @@ The following variables affect the building the of the `opencv` crate, but belon
   ```
   opencv = { version = ..., default-features = false, features = ["calib3d", "features2d", "flann"]}
   ```
+* `clang-runtime` - enables the runtime detection of libclang (`runtime` feature of `clang-sys`). Useful as a
+  workaround for when your dependencies (like `bindgen`) pull in `clang-sys` with hard `runtime` feature.
 * `rgb` - allow using [`rgb`](https://crates.io/crates/rgb) crate types as `Mat` elements
 
 ## API details

@@ -1,7 +1,6 @@
 #![cfg(ocvrs_has_module_dnn)]
 
 use matches::assert_matches;
-
 use opencv::core::Vector;
 use opencv::dnn::{DictValue, LayerParams, Net};
 use opencv::prelude::*;

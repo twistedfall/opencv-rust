@@ -1,5 +1,5 @@
-use std::{env, time};
-use time::Instant;
+use std::env;
+use std::time::Instant;
 
 use opencv::core::Size;
 use opencv::prelude::*;

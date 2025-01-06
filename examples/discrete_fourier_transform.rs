@@ -2,11 +2,9 @@
 
 use std::env;
 
-use opencv::{
-	core::{self, Rect, Scalar},
-	highgui, imgcodecs,
-	prelude::*,
-};
+use opencv::core::{self, Rect, Scalar};
+use opencv::prelude::*;
+use opencv::{highgui, imgcodecs};
 
 fn main() -> opencv::Result<()> {
 	#![allow(non_snake_case)]
