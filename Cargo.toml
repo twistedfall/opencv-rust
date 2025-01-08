@@ -29,7 +29,7 @@ once_cell = "1"
 rgb = { version = "0.8.20", features = ["argb"], optional = true }
 
 [target.'cfg(target_os = "windows")'.dependencies]
-windows = { version = "0.58", features = ["Win32_Graphics_Direct3D9", "Win32_Graphics_Direct3D10", "Win32_Graphics_Direct3D11"] }
+windows = { version = "0.59", features = ["Win32_Graphics_Direct3D9", "Win32_Graphics_Direct3D10", "Win32_Graphics_Direct3D11"] }
 
 [build-dependencies]
 opencv-binding-generator = { version = "0.93.0", path = "binding-generator" }
