@@ -69,7 +69,7 @@ static AFFECTING_ENV_VARS: [&str; 18] = [
 	"DOCS_RS",
 ];
 
-static SUPPORTED_MODULES: [&str; 67] = [
+static SUPPORTED_MODULES: [&str; 68] = [
 	"alphamat",
 	"aruco",
 	"aruco_detector",
@@ -77,6 +77,7 @@ static SUPPORTED_MODULES: [&str; 67] = [
 	"bgsegm",
 	"bioinspired",
 	"calib3d",
+	// "cannops",
 	"ccalib",
 	"core",
 	"cudaarithm",
@@ -89,6 +90,7 @@ static SUPPORTED_MODULES: [&str; 67] = [
 	"cudaoptflow",
 	"cudastereo",
 	"cudawarping",
+	// "cudev",
 	"cvv",
 	"dnn",
 	"dnn_superres",
@@ -121,6 +123,7 @@ static SUPPORTED_MODULES: [&str; 67] = [
 	"saliency",
 	"sfm",
 	"shape",
+	"signal",
 	"stereo",
 	"stitching",
 	"structured_light",

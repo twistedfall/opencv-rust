@@ -110,6 +110,7 @@ default = [
 	"saliency",
 	"sfm",
 	"shape",
+	"signal",
 	"stereo",
 	"stitching",
 	"structured_light",
@@ -179,6 +180,7 @@ rgbd = []
 saliency = []
 sfm = []
 shape = []
+signal = []
 stereo = []
 stitching = ["features2d", "imgproc"]
 structured_light = []
