@@ -50,7 +50,7 @@ elif [[ "$os_family" == "macOS" ]]; then
 			export OPENCV_LINK_LIBS="framework=opencv2,framework=OpenCL,framework=Cocoa,framework=Accelerate,framework=AVFoundation,framework=CoreGraphics,framework=CoreMedia,framework=CoreVideo,framework=QuartzCore,clang_rt.osx"
 		else
 			export OPENCV_LINK_PATHS="$opencv_build_path,$clang_dir/lib/darwin,$opencv_build_path/build/build-$(uname -m)-macosx/install/lib/"
-			export OPENCV_LINK_LIBS="framework=opencv2,framework=OpenCL,framework=Cocoa,framework=Accelerate,framework=AVFoundation,framework=CoreGraphics,framework=CoreMedia,framework=CoreVideo,framework=QuartzCore,clang_rt.osx,OrbbecSDK"
+			export OPENCV_LINK_LIBS="framework=opencv2,framework=OpenCL,framework=Cocoa,framework=Accelerate,framework=AVFoundation,framework=CoreGraphics,framework=CoreMedia,framework=CoreVideo,framework=QuartzCore,clang_rt.osx"
 		fi
 		export OPENCV_INCLUDE_PATHS="$opencv_build_path"
 	fi
@@ -71,9 +71,9 @@ elif [[ "$os_family" == "Linux" ]]; then
 fi
 
 # remove tests and examples that require the latest OpenCV version so that they don't fail due to missing modules
-if [[ "${OPENCV_VERSION:-}" != "4.10.0" ]]; then
+if [[ "${OPENCV_VERSION:-}" != "4.11.0" ]]; then
 	rm -vf tests/*_only_latest_opencv.rs
-	rm -vf examples/dnn_face_detect.rs examples/text_detection.rs examples/camera_calibration.rs
+	rm -vf examples/dnn_face_detect.rs examples/text_detection.rs examples/camera_calibration.rs examples/hough_circle.rs
 fi
 
 echo "=== Current directory: $(pwd)"

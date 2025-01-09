@@ -15,12 +15,12 @@ jobs:
           - ubuntu-22.04
           - macos-14
         opencv-version:
-          - 4.10.0
+          - 4.11.0
         linkage:
           - dynamic
         include:
           - os-image: ubuntu-22.04
-            opencv-version: 4.10.0
+            opencv-version: 4.11.0
             linkage: static
           - os-image: ubuntu-22.04
             opencv-version: 3.4.20
@@ -142,7 +142,7 @@ jobs:
   msrv:
     runs-on: ubuntu-20.04
     env:
-      OPENCV_VERSION: 4.10.0
+      OPENCV_VERSION: 4.11.0
       SCCACHE_GHA_ENABLED: "true"
       RUSTC_WRAPPER: "sccache"
       CMAKE_C_COMPILER_LAUNCHER: "sccache"

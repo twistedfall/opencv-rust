@@ -104,7 +104,7 @@ pub fn main() -> Result<()> {
 			// Text Recognition
 			let rec_input = if !imread_rgb {
 				let mut rec_input = Mat::default();
-				imgproc::cvt_color(&frame, &mut rec_input, imgproc::COLOR_BGR2GRAY, 0)?;
+				imgproc::cvt_color_def(&frame, &mut rec_input, imgproc::COLOR_BGR2GRAY)?;
 				Some(rec_input)
 			} else {
 				None

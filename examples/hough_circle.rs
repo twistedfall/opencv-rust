@@ -4,7 +4,7 @@ use std::env::args;
 use std::sync::atomic::{AtomicI32, Ordering};
 use std::sync::Arc;
 
-use opencv::core::{find_file, Point, Point2i, Size2i, Vec3f, Vector, BORDER_DEFAULT};
+use opencv::core::{find_file, AlgorithmHint, Point, Point2i, Size2i, Vec3f, Vector, BORDER_DEFAULT};
 use opencv::highgui::{create_trackbar, imshow, named_window, wait_key, WINDOW_AUTOSIZE};
 use opencv::imgcodecs::{imread, IMREAD_COLOR};
 use opencv::imgproc::{circle, cvt_color_def, gaussian_blur, hough_circles, COLOR_BGR2GRAY, HOUGH_GRADIENT};
@@ -89,7 +89,15 @@ fn main() -> Result<()> {
 
 	// Reduce the noise so we avoid false circle detection
 	let mut src_gray_blur = Mat::default();
-	gaussian_blur(&src_gray, &mut src_gray_blur, Size2i::new(9, 9), 2.0, 2.0, BORDER_DEFAULT)?;
+	gaussian_blur(
+		&src_gray,
+		&mut src_gray_blur,
+		Size2i::new(9, 9),
+		2.0,
+		2.0,
+		BORDER_DEFAULT,
+		AlgorithmHint::ALGO_HINT_DEFAULT,
+	)?;
 
 	// Declare and initialize both parameters that are subjects to change
 	let canny_threshold: Arc<AtomicI32> = Arc::new(AtomicI32::new(CANNY_THRESHOLD_INIT_VAL));
