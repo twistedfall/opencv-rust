@@ -93,6 +93,53 @@ pub mod cudaarithm {
 		Ok(ret)
 	}
 
+	/// Computes per-element absolute difference of a matrix and scalar.
+	///
+	/// ## Parameters
+	/// * src1: First source matrix.
+	/// * src2: Second source scalar.
+	/// * dst: Destination matrix that has the same size and type as the input array.
+	/// * stream: Stream for the asynchronous version.
+	/// ## See also
+	/// absdiff
+	///
+	/// ## Note
+	/// This alternative version of [absdiff_with_scalar] function uses the following default values for its arguments:
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn absdiff_with_scalar_def(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(src1);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_absdiffWithScalar_const__InputArrayR_Scalar_const__OutputArrayR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Computes per-element absolute difference of a matrix and scalar.
+	///
+	/// ## Parameters
+	/// * src1: First source matrix.
+	/// * src2: Second source scalar.
+	/// * dst: Destination matrix that has the same size and type as the input array.
+	/// * stream: Stream for the asynchronous version.
+	/// ## See also
+	/// absdiff
+	///
+	/// ## C++ default parameters
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn absdiff_with_scalar(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+		input_array_arg!(src1);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_absdiffWithScalar_const__InputArrayR_Scalar_const__OutputArrayR_StreamR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
 	/// Computes per-element absolute difference of two matrices (or of a matrix and scalar).
 	///
 	/// ## Parameters
@@ -100,8 +147,10 @@ pub mod cudaarithm {
 	/// * src2: Second source matrix or scalar.
 	/// * dst: Destination matrix that has the same size and type as the input array(s).
 	/// * stream: Stream for the asynchronous version.
+	///
+	/// @warning In python both @p src1 and @p src2 have to be matrices, see [absdiffWithScalar] for scalar overload.
 	/// ## See also
-	/// absdiff
+	/// cv::absdiff, absdiffWithScalar
 	///
 	/// ## Note
 	/// This alternative version of [absdiff] function uses the following default values for its arguments:
@@ -125,8 +174,10 @@ pub mod cudaarithm {
 	/// * src2: Second source matrix or scalar.
 	/// * dst: Destination matrix that has the same size and type as the input array(s).
 	/// * stream: Stream for the asynchronous version.
+	///
+	/// @warning In python both @p src1 and @p src2 have to be matrices, see [absdiffWithScalar] for scalar overload.
 	/// ## See also
-	/// absdiff
+	/// cv::absdiff, absdiffWithScalar
 	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
@@ -217,19 +268,81 @@ pub mod cudaarithm {
 		Ok(ret)
 	}
 
-	/// Computes a matrix-matrix or matrix-scalar sum.
+	/// Computes a matrix-scalar sum.
 	///
 	/// ## Parameters
-	/// * src1: First source matrix or scalar.
-	/// * src2: Second source matrix or scalar. Matrix should have the same size and type as src1 .
-	/// * dst: Destination matrix that has the same size and number of channels as the input array(s).
-	/// The depth is defined by dtype or src1 depth.
+	/// * src1: First source matrix.
+	/// * src2: Second source scalar.
+	/// * dst: Destination matrix that has the same size and number of channels as the input array.
+	/// The depth is defined by dtype or @p src1 depth.
 	/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
 	/// destination array to be changed. The mask can be used only with single channel images.
 	/// * dtype: Optional depth of the output array.
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
 	/// add
+	///
+	/// ## Note
+	/// This alternative version of [add_with_scalar] function uses the following default values for its arguments:
+	/// * mask: noArray()
+	/// * dtype: -1
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn add_with_scalar_def(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(src1);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_addWithScalar_const__InputArrayR_Scalar_const__OutputArrayR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Computes a matrix-scalar sum.
+	///
+	/// ## Parameters
+	/// * src1: First source matrix.
+	/// * src2: Second source scalar.
+	/// * dst: Destination matrix that has the same size and number of channels as the input array.
+	/// The depth is defined by dtype or @p src1 depth.
+	/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
+	/// destination array to be changed. The mask can be used only with single channel images.
+	/// * dtype: Optional depth of the output array.
+	/// * stream: Stream for the asynchronous version.
+	/// ## See also
+	/// add
+	///
+	/// ## C++ default parameters
+	/// * mask: noArray()
+	/// * dtype: -1
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn add_with_scalar(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray, mask: &impl ToInputArray, dtype: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
+		input_array_arg!(src1);
+		output_array_arg!(dst);
+		input_array_arg!(mask);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_addWithScalar_const__InputArrayR_Scalar_const__OutputArrayR_const__InputArrayR_int_StreamR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), mask.as_raw__InputArray(), dtype, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Computes a matrix-matrix or matrix-scalar sum.
+	///
+	/// ## Parameters
+	/// * src1: First source matrix or scalar.
+	/// * src2: Second source matrix or scalar. Matrix should have the same size and type as src1 .
+	/// * dst: Destination matrix that has the same size and number of channels as the input array(s).
+	/// The depth is defined by dtype or @p src1 depth.
+	/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
+	/// destination array to be changed. The mask can be used only with single channel images.
+	/// * dtype: Optional depth of the output array.
+	/// * stream: Stream for the asynchronous version.
+	///
+	/// @warning In python both @p src1 and @p src2 have to be matrices, see [addWithScalar] for scalar overload.
+	/// ## See also
+	/// cv::add, addWithScalar
 	///
 	/// ## Note
 	/// This alternative version of [add] function uses the following default values for its arguments:
@@ -254,13 +367,15 @@ pub mod cudaarithm {
 	/// * src1: First source matrix or scalar.
 	/// * src2: Second source matrix or scalar. Matrix should have the same size and type as src1 .
 	/// * dst: Destination matrix that has the same size and number of channels as the input array(s).
-	/// The depth is defined by dtype or src1 depth.
+	/// The depth is defined by dtype or @p src1 depth.
 	/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
 	/// destination array to be changed. The mask can be used only with single channel images.
 	/// * dtype: Optional depth of the output array.
 	/// * stream: Stream for the asynchronous version.
+	///
+	/// @warning In python both @p src1 and @p src2 have to be matrices, see [addWithScalar] for scalar overload.
 	/// ## See also
-	/// add
+	/// cv::add, addWithScalar
 	///
 	/// ## C++ default parameters
 	/// * mask: noArray()
@@ -289,6 +404,10 @@ pub mod cudaarithm {
 	/// destination array to be changed. The mask can be used only with single channel images.
 	/// * stream: Stream for the asynchronous version.
 	///
+	/// @warning In python both @p src1 and @p src2 have to be matrices, see [bitwise_and_with_scalar] for scalar overload.
+	/// ## See also
+	/// bitwise_and_with_scalar
+	///
 	/// ## Note
 	/// This alternative version of [bitwise_and] function uses the following default values for its arguments:
 	/// * mask: noArray()
@@ -315,6 +434,10 @@ pub mod cudaarithm {
 	/// destination array to be changed. The mask can be used only with single channel images.
 	/// * stream: Stream for the asynchronous version.
 	///
+	/// @warning In python both @p src1 and @p src2 have to be matrices, see [bitwise_and_with_scalar] for scalar overload.
+	/// ## See also
+	/// bitwise_and_with_scalar
+	///
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
@@ -326,6 +449,60 @@ pub mod cudaarithm {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_bitwise_and_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Performs a per-element bitwise conjunction of a matrix and a scalar.
+	///
+	/// ## Parameters
+	/// * src1: First source matrix.
+	/// * src2: Second source scalar.
+	/// * dst: Destination matrix that has the same size and type as the input array.
+	/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
+	/// destination array to be changed. The mask can be used only with single channel images.
+	/// * stream: Stream for the asynchronous version.
+	/// ## See also
+	/// bitwise_and
+	///
+	/// ## Note
+	/// This alternative version of [bitwise_and_with_scalar] function uses the following default values for its arguments:
+	/// * mask: noArray()
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn bitwise_and_with_scalar_def(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(src1);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_bitwise_and_with_scalar_const__InputArrayR_Scalar_const__OutputArrayR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Performs a per-element bitwise conjunction of a matrix and a scalar.
+	///
+	/// ## Parameters
+	/// * src1: First source matrix.
+	/// * src2: Second source scalar.
+	/// * dst: Destination matrix that has the same size and type as the input array.
+	/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
+	/// destination array to be changed. The mask can be used only with single channel images.
+	/// * stream: Stream for the asynchronous version.
+	/// ## See also
+	/// bitwise_and
+	///
+	/// ## C++ default parameters
+	/// * mask: noArray()
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn bitwise_and_with_scalar(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+		input_array_arg!(src1);
+		output_array_arg!(dst);
+		input_array_arg!(mask);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_bitwise_and_with_scalar_const__InputArrayR_Scalar_const__OutputArrayR_const__InputArrayR_StreamR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -389,6 +566,10 @@ pub mod cudaarithm {
 	/// destination array to be changed. The mask can be used only with single channel images.
 	/// * stream: Stream for the asynchronous version.
 	///
+	/// @warning In python both @p src1 and @p src2 have to be matrices, see [bitwise_or_with_scalar] for scalar overload.
+	/// ## See also
+	/// cv::bitwise_or, bitwise_or_with_scalar
+	///
 	/// ## Note
 	/// This alternative version of [bitwise_or] function uses the following default values for its arguments:
 	/// * mask: noArray()
@@ -415,6 +596,10 @@ pub mod cudaarithm {
 	/// destination array to be changed. The mask can be used only with single channel images.
 	/// * stream: Stream for the asynchronous version.
 	///
+	/// @warning In python both @p src1 and @p src2 have to be matrices, see [bitwise_or_with_scalar] for scalar overload.
+	/// ## See also
+	/// cv::bitwise_or, bitwise_or_with_scalar
+	///
 	/// ## C++ default parameters
 	/// * mask: noArray()
 	/// * stream: Stream::Null()
@@ -431,15 +616,73 @@ pub mod cudaarithm {
 		Ok(ret)
 	}
 
+	/// Performs a per-element bitwise disjunction of a matrix and scalar.
+	///
+	/// ## Parameters
+	/// * src1: First source matrix.
+	/// * src2: Second source scalar.
+	/// * dst: Destination matrix that has the same size and type as the input array.
+	/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
+	/// destination array to be changed. The mask can be used only with single channel images.
+	/// * stream: Stream for the asynchronous version.
+	/// ## See also
+	/// bitwise_or
+	///
+	/// ## Note
+	/// This alternative version of [bitwise_or_with_scalar] function uses the following default values for its arguments:
+	/// * mask: noArray()
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn bitwise_or_with_scalar_def(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(src1);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_bitwise_or_with_scalar_const__InputArrayR_Scalar_const__OutputArrayR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Performs a per-element bitwise disjunction of a matrix and scalar.
+	///
+	/// ## Parameters
+	/// * src1: First source matrix.
+	/// * src2: Second source scalar.
+	/// * dst: Destination matrix that has the same size and type as the input array.
+	/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
+	/// destination array to be changed. The mask can be used only with single channel images.
+	/// * stream: Stream for the asynchronous version.
+	/// ## See also
+	/// bitwise_or
+	///
+	/// ## C++ default parameters
+	/// * mask: noArray()
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn bitwise_or_with_scalar(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+		input_array_arg!(src1);
+		output_array_arg!(dst);
+		input_array_arg!(mask);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_bitwise_or_with_scalar_const__InputArrayR_Scalar_const__OutputArrayR_const__InputArrayR_StreamR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
 	/// Performs a per-element bitwise exclusive or operation of two matrices (or of matrix and scalar).
 	///
 	/// ## Parameters
 	/// * src1: First source matrix or scalar.
 	/// * src2: Second source matrix or scalar.
-	/// * dst: Destination matrix that has the same size and type as the input array(s).
+	/// * dst: Destination matrix that has the same size and type as the input array.
 	/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
 	/// destination array to be changed. The mask can be used only with single channel images.
 	/// * stream: Stream for the asynchronous version.
+	///
+	/// @warning In python both @p src1 and @p src2 have to be matrices, see [bitwise_xor_with_scalar] for scalar overload.
+	/// ## See also
+	/// cv::bitwise_xor, bitwise_xor_with_scalar
 	///
 	/// ## Note
 	/// This alternative version of [bitwise_xor] function uses the following default values for its arguments:
@@ -462,10 +705,14 @@ pub mod cudaarithm {
 	/// ## Parameters
 	/// * src1: First source matrix or scalar.
 	/// * src2: Second source matrix or scalar.
-	/// * dst: Destination matrix that has the same size and type as the input array(s).
+	/// * dst: Destination matrix that has the same size and type as the input array.
 	/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
 	/// destination array to be changed. The mask can be used only with single channel images.
 	/// * stream: Stream for the asynchronous version.
+	///
+	/// @warning In python both @p src1 and @p src2 have to be matrices, see [bitwise_xor_with_scalar] for scalar overload.
+	/// ## See also
+	/// cv::bitwise_xor, bitwise_xor_with_scalar
 	///
 	/// ## C++ default parameters
 	/// * mask: noArray()
@@ -478,6 +725,60 @@ pub mod cudaarithm {
 		input_array_arg!(mask);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_bitwise_xor_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Performs a per-element bitwise exclusive or operation of a matrix and a scalar.
+	///
+	/// ## Parameters
+	/// * src1: First source matrix.
+	/// * src2: Second source scalar.
+	/// * dst: Destination matrix that has the same size and type as the input array(s).
+	/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
+	/// destination array to be changed. The mask can be used only with single channel images.
+	/// * stream: Stream for the asynchronous version.
+	/// ## See also
+	/// bitwise_xor
+	///
+	/// ## Note
+	/// This alternative version of [bitwise_xor_with_scalar] function uses the following default values for its arguments:
+	/// * mask: noArray()
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn bitwise_xor_with_scalar_def(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(src1);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_bitwise_xor_with_scalar_const__InputArrayR_Scalar_const__OutputArrayR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Performs a per-element bitwise exclusive or operation of a matrix and a scalar.
+	///
+	/// ## Parameters
+	/// * src1: First source matrix.
+	/// * src2: Second source scalar.
+	/// * dst: Destination matrix that has the same size and type as the input array(s).
+	/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
+	/// destination array to be changed. The mask can be used only with single channel images.
+	/// * stream: Stream for the asynchronous version.
+	/// ## See also
+	/// bitwise_xor
+	///
+	/// ## C++ default parameters
+	/// * mask: noArray()
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn bitwise_xor_with_scalar(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray, mask: &impl ToInputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+		input_array_arg!(src1);
+		output_array_arg!(dst);
+		input_array_arg!(mask);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_bitwise_xor_with_scalar_const__InputArrayR_Scalar_const__OutputArrayR_const__InputArrayR_StreamR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), mask.as_raw__InputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -711,6 +1012,169 @@ pub mod cudaarithm {
 		Ok(ret)
 	}
 
+	/// Converts Cartesian coordinates into polar.
+	///
+	/// ## Parameters
+	/// * xy: Source matrix containing real and imaginary components ( CV_32FC2 ).
+	/// * magnitudeAngle: Destination matrix of float magnitudes and angles ( CV_32FC2 ).
+	/// * angleInDegrees: Flag for angles that must be evaluated in degrees.
+	/// * stream: Stream for the asynchronous version.
+	/// ## See also
+	/// cartToPolar
+	///
+	/// ## Note
+	/// This alternative version of [cart_to_polar_2] function uses the following default values for its arguments:
+	/// * angle_in_degrees: false
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn cart_to_polar_2_def(xy: &impl ToInputArray, magnitude_angle: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(xy);
+		output_array_arg!(magnitude_angle);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_cartToPolar_const__InputArrayR_const__OutputArrayR(xy.as_raw__InputArray(), magnitude_angle.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Converts Cartesian coordinates into polar.
+	///
+	/// ## Parameters
+	/// * xy: Source matrix containing real and imaginary components ( CV_32FC2 ).
+	/// * magnitudeAngle: Destination matrix of float magnitudes and angles ( CV_32FC2 ).
+	/// * angleInDegrees: Flag for angles that must be evaluated in degrees.
+	/// * stream: Stream for the asynchronous version.
+	/// ## See also
+	/// cartToPolar
+	///
+	/// ## C++ default parameters
+	/// * angle_in_degrees: false
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn cart_to_polar_2(xy: &impl ToInputArray, magnitude_angle: &mut impl ToOutputArray, angle_in_degrees: bool, stream: &mut impl core::StreamTrait) -> Result<()> {
+		input_array_arg!(xy);
+		output_array_arg!(magnitude_angle);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_cartToPolar_const__InputArrayR_const__OutputArrayR_bool_StreamR(xy.as_raw__InputArray(), magnitude_angle.as_raw__OutputArray(), angle_in_degrees, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Converts Cartesian coordinates into polar.
+	///
+	/// ## Parameters
+	/// * xy: Source matrix containing real and imaginary components ( CV_32FC2 ).
+	/// * magnitude: Destination matrix of float magnitudes ( CV_32FC1 ).
+	/// * angle: Destination matrix of angles ( CV_32FC1 ).
+	/// * angleInDegrees: Flag for angles that must be evaluated in degrees.
+	/// * stream: Stream for the asynchronous version.
+	/// ## See also
+	/// cartToPolar
+	///
+	/// ## Note
+	/// This alternative version of [cart_to_polar_1] function uses the following default values for its arguments:
+	/// * angle_in_degrees: false
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn cart_to_polar_1_def(xy: &impl ToInputArray, magnitude: &mut impl ToOutputArray, angle: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(xy);
+		output_array_arg!(magnitude);
+		output_array_arg!(angle);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_cartToPolar_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(xy.as_raw__InputArray(), magnitude.as_raw__OutputArray(), angle.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Converts Cartesian coordinates into polar.
+	///
+	/// ## Parameters
+	/// * xy: Source matrix containing real and imaginary components ( CV_32FC2 ).
+	/// * magnitude: Destination matrix of float magnitudes ( CV_32FC1 ).
+	/// * angle: Destination matrix of angles ( CV_32FC1 ).
+	/// * angleInDegrees: Flag for angles that must be evaluated in degrees.
+	/// * stream: Stream for the asynchronous version.
+	/// ## See also
+	/// cartToPolar
+	///
+	/// ## C++ default parameters
+	/// * angle_in_degrees: false
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn cart_to_polar_1(xy: &impl ToInputArray, magnitude: &mut impl ToOutputArray, angle: &mut impl ToOutputArray, angle_in_degrees: bool, stream: &mut impl core::StreamTrait) -> Result<()> {
+		input_array_arg!(xy);
+		output_array_arg!(magnitude);
+		output_array_arg!(angle);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_cartToPolar_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool_StreamR(xy.as_raw__InputArray(), magnitude.as_raw__OutputArray(), angle.as_raw__OutputArray(), angle_in_degrees, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Compares elements of a matrix and scalar.
+	///
+	/// ## Parameters
+	/// * src1: First source matrix.
+	/// * src2: Second source scalar.
+	/// * dst: Destination matrix that has the same size as the input array and type \ref CV_8U.
+	/// * cmpop: Flag specifying the relation between the elements to be checked:
+	/// *   **CMP_EQ:** a(.) == b(.)
+	/// *   **CMP_GT:** a(.) \> b(.)
+	/// *   **CMP_GE:** a(.) \>= b(.)
+	/// *   **CMP_LT:** a(.) \< b(.)
+	/// *   **CMP_LE:** a(.) \<= b(.)
+	/// *   **CMP_NE:** a(.) != b(.)
+	/// * stream: Stream for the asynchronous version.
+	/// ## See also
+	/// compare
+	///
+	/// ## Note
+	/// This alternative version of [compare_with_scalar] function uses the following default values for its arguments:
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn compare_with_scalar_def(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray, cmpop: i32) -> Result<()> {
+		input_array_arg!(src1);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_compareWithScalar_const__InputArrayR_Scalar_const__OutputArrayR_int(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), cmpop, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Compares elements of a matrix and scalar.
+	///
+	/// ## Parameters
+	/// * src1: First source matrix.
+	/// * src2: Second source scalar.
+	/// * dst: Destination matrix that has the same size as the input array and type \ref CV_8U.
+	/// * cmpop: Flag specifying the relation between the elements to be checked:
+	/// *   **CMP_EQ:** a(.) == b(.)
+	/// *   **CMP_GT:** a(.) \> b(.)
+	/// *   **CMP_GE:** a(.) \>= b(.)
+	/// *   **CMP_LT:** a(.) \< b(.)
+	/// *   **CMP_LE:** a(.) \<= b(.)
+	/// *   **CMP_NE:** a(.) != b(.)
+	/// * stream: Stream for the asynchronous version.
+	/// ## See also
+	/// compare
+	///
+	/// ## C++ default parameters
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn compare_with_scalar(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray, cmpop: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
+		input_array_arg!(src1);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_compareWithScalar_const__InputArrayR_Scalar_const__OutputArrayR_int_StreamR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), cmpop, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
 	/// Compares elements of two matrices (or of a matrix and scalar).
 	///
 	/// ## Parameters
@@ -725,8 +1189,10 @@ pub mod cudaarithm {
 	/// *   **CMP_LE:** a(.) \<= b(.)
 	/// *   **CMP_NE:** a(.) != b(.)
 	/// * stream: Stream for the asynchronous version.
+	///
+	/// @warning In python both @p src1 and @p src2 have to be matrices, see [compareWithScalar] for scalar overload.
 	/// ## See also
-	/// compare
+	/// cv::compare, compareWithScalar
 	///
 	/// ## Note
 	/// This alternative version of [compare] function uses the following default values for its arguments:
@@ -757,8 +1223,10 @@ pub mod cudaarithm {
 	/// *   **CMP_LE:** a(.) \<= b(.)
 	/// *   **CMP_NE:** a(.) != b(.)
 	/// * stream: Stream for the asynchronous version.
+	///
+	/// @warning In python both @p src1 and @p src2 have to be matrices, see [compareWithScalar] for scalar overload.
 	/// ## See also
-	/// compare
+	/// cv::compare, compareWithScalar
 	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
@@ -1071,13 +1539,13 @@ pub mod cudaarithm {
 		Ok(ret)
 	}
 
-	/// Computes a matrix-matrix or matrix-scalar division.
+	/// Computes a matrix-scalar division.
 	///
 	/// ## Parameters
-	/// * src1: First source matrix or a scalar.
-	/// * src2: Second source matrix or scalar.
-	/// * dst: Destination matrix that has the same size and number of channels as the input array(s).
-	/// The depth is defined by dtype or src1 depth.
+	/// * src1: First source matrix.
+	/// * src2: Second source scalar.
+	/// * dst: Destination matrix that has the same size and number of channels as the input array.
+	/// The depth is defined by dtype or @p src1 depth.
 	/// * scale: Optional scale factor.
 	/// * dtype: Optional depth of the output array.
 	/// * stream: Stream for the asynchronous version.
@@ -1085,6 +1553,69 @@ pub mod cudaarithm {
 	/// This function, in contrast to divide, uses a round-down rounding mode.
 	/// ## See also
 	/// divide
+	///
+	/// ## Note
+	/// This alternative version of [divide_with_scalar] function uses the following default values for its arguments:
+	/// * scale: 1
+	/// * dtype: -1
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn divide_with_scalar_def(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(src1);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_divideWithScalar_const__InputArrayR_Scalar_const__OutputArrayR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Computes a matrix-scalar division.
+	///
+	/// ## Parameters
+	/// * src1: First source matrix.
+	/// * src2: Second source scalar.
+	/// * dst: Destination matrix that has the same size and number of channels as the input array.
+	/// The depth is defined by dtype or @p src1 depth.
+	/// * scale: Optional scale factor.
+	/// * dtype: Optional depth of the output array.
+	/// * stream: Stream for the asynchronous version.
+	///
+	/// This function, in contrast to divide, uses a round-down rounding mode.
+	/// ## See also
+	/// divide
+	///
+	/// ## C++ default parameters
+	/// * scale: 1
+	/// * dtype: -1
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn divide_with_scalar(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray, scale: f64, dtype: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
+		input_array_arg!(src1);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_divideWithScalar_const__InputArrayR_Scalar_const__OutputArrayR_double_int_StreamR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), scale, dtype, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Computes a matrix-matrix or matrix-scalar division.
+	///
+	/// ## Parameters
+	/// * src1: First source matrix or scalar.
+	/// * src2: Second source matrix or scalar.
+	/// * dst: Destination matrix that has the same size and number of channels as the input array(s).
+	/// The depth is defined by dtype or @p src1 depth.
+	/// * scale: Optional scale factor.
+	/// * dtype: Optional depth of the output array.
+	/// * stream: Stream for the asynchronous version.
+	///
+	/// This function, in contrast to divide, uses a round-down rounding mode.
+	///
+	/// @warning In python both @p src1 and @p src2 have to be matrices, see [divideWithScalar] for scalar overload.
+	/// ## See also
+	/// cv::divide, divideWithScalar
 	///
 	/// ## Note
 	/// This alternative version of [divide] function uses the following default values for its arguments:
@@ -1106,17 +1637,19 @@ pub mod cudaarithm {
 	/// Computes a matrix-matrix or matrix-scalar division.
 	///
 	/// ## Parameters
-	/// * src1: First source matrix or a scalar.
+	/// * src1: First source matrix or scalar.
 	/// * src2: Second source matrix or scalar.
 	/// * dst: Destination matrix that has the same size and number of channels as the input array(s).
-	/// The depth is defined by dtype or src1 depth.
+	/// The depth is defined by dtype or @p src1 depth.
 	/// * scale: Optional scale factor.
 	/// * dtype: Optional depth of the output array.
 	/// * stream: Stream for the asynchronous version.
 	///
 	/// This function, in contrast to divide, uses a round-down rounding mode.
+	///
+	/// @warning In python both @p src1 and @p src2 have to be matrices, see [divideWithScalar] for scalar overload.
 	/// ## See also
-	/// divide
+	/// cv::divide, divideWithScalar
 	///
 	/// ## C++ default parameters
 	/// * scale: 1
@@ -1824,6 +2357,53 @@ pub mod cudaarithm {
 		Ok(ret)
 	}
 
+	/// Computes the per-element maximum of a matrix and a scalar.
+	///
+	/// ## Parameters
+	/// * src1: First source matrix.
+	/// * src2: Second source scalar.
+	/// * dst: Destination matrix that has the same size and type as the input array.
+	/// * stream: Stream for the asynchronous version.
+	/// ## See also
+	/// max
+	///
+	/// ## Note
+	/// This alternative version of [max_with_scalar] function uses the following default values for its arguments:
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn max_with_scalar_def(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(src1);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_maxWithScalar_const__InputArrayR_Scalar_const__OutputArrayR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Computes the per-element maximum of a matrix and a scalar.
+	///
+	/// ## Parameters
+	/// * src1: First source matrix.
+	/// * src2: Second source scalar.
+	/// * dst: Destination matrix that has the same size and type as the input array.
+	/// * stream: Stream for the asynchronous version.
+	/// ## See also
+	/// max
+	///
+	/// ## C++ default parameters
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn max_with_scalar(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+		input_array_arg!(src1);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_maxWithScalar_const__InputArrayR_Scalar_const__OutputArrayR_StreamR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
 	/// Computes the per-element maximum of two matrices (or a matrix and a scalar).
 	///
 	/// ## Parameters
@@ -1831,8 +2411,10 @@ pub mod cudaarithm {
 	/// * src2: Second source matrix or scalar.
 	/// * dst: Destination matrix that has the same size and type as the input array(s).
 	/// * stream: Stream for the asynchronous version.
+	///
+	/// @warning In python both @p src1 and @p src2 have to be matrices, see [maxWithScalar] for scalar overload.
 	/// ## See also
-	/// max
+	/// cv::max, maxWithScalar
 	///
 	/// ## Note
 	/// This alternative version of [max] function uses the following default values for its arguments:
@@ -1856,8 +2438,10 @@ pub mod cudaarithm {
 	/// * src2: Second source matrix or scalar.
 	/// * dst: Destination matrix that has the same size and type as the input array(s).
 	/// * stream: Stream for the asynchronous version.
+	///
+	/// @warning In python both @p src1 and @p src2 have to be matrices, see [maxWithScalar] for scalar overload.
 	/// ## See also
-	/// max
+	/// cv::max, maxWithScalar
 	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
@@ -2211,6 +2795,53 @@ pub mod cudaarithm {
 		Ok(ret)
 	}
 
+	/// Computes the per-element minimum or a matrix and a scalar.
+	///
+	/// ## Parameters
+	/// * src1: First source matrix.
+	/// * src2: Second source scalar.
+	/// * dst: Destination matrix that has the same size and type as the input array.
+	/// * stream: Stream for the asynchronous version.
+	/// ## See also
+	/// min
+	///
+	/// ## Note
+	/// This alternative version of [min_with_scalar] function uses the following default values for its arguments:
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn min_with_scalar_def(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(src1);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_minWithScalar_const__InputArrayR_Scalar_const__OutputArrayR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Computes the per-element minimum or a matrix and a scalar.
+	///
+	/// ## Parameters
+	/// * src1: First source matrix.
+	/// * src2: Second source scalar.
+	/// * dst: Destination matrix that has the same size and type as the input array.
+	/// * stream: Stream for the asynchronous version.
+	/// ## See also
+	/// min
+	///
+	/// ## C++ default parameters
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn min_with_scalar(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray, stream: &mut impl core::StreamTrait) -> Result<()> {
+		input_array_arg!(src1);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_minWithScalar_const__InputArrayR_Scalar_const__OutputArrayR_StreamR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
 	/// Computes the per-element minimum of two matrices (or a matrix and a scalar).
 	///
 	/// ## Parameters
@@ -2218,8 +2849,10 @@ pub mod cudaarithm {
 	/// * src2: Second source matrix or scalar.
 	/// * dst: Destination matrix that has the same size and type as the input array(s).
 	/// * stream: Stream for the asynchronous version.
+	///
+	/// @warning In python both @p src1 and @p src2 have to be matrices, see [minWithScalar] for scalar overload.
 	/// ## See also
-	/// min
+	/// cv::min, minWithScalar
 	///
 	/// ## Note
 	/// This alternative version of [min] function uses the following default values for its arguments:
@@ -2243,8 +2876,10 @@ pub mod cudaarithm {
 	/// * src2: Second source matrix or scalar.
 	/// * dst: Destination matrix that has the same size and type as the input array(s).
 	/// * stream: Stream for the asynchronous version.
+	///
+	/// @warning In python both @p src1 and @p src2 have to be matrices, see [minWithScalar] for scalar overload.
 	/// ## See also
-	/// min
+	/// cv::min, minWithScalar
 	///
 	/// ## C++ default parameters
 	/// * stream: Stream::Null()
@@ -2384,18 +3019,77 @@ pub mod cudaarithm {
 		Ok(ret)
 	}
 
+	/// Computes a matrix-scalar per-element product.
+	///
+	/// ## Parameters
+	/// * src1: First source matrix.
+	/// * src2: Second source scalar.
+	/// * dst: Destination matrix that has the same size and number of channels as the input array.
+	/// The depth is defined by dtype or @p src1 depth.
+	/// * scale: Optional scale factor.
+	/// * dtype: Optional depth of the output array.
+	/// * stream: Stream for the asynchronous version.
+	/// ## See also
+	/// multiply
+	///
+	/// ## Note
+	/// This alternative version of [multiply_with_scalar] function uses the following default values for its arguments:
+	/// * scale: 1
+	/// * dtype: -1
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn multiply_with_scalar_def(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(src1);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_multiplyWithScalar_const__InputArrayR_Scalar_const__OutputArrayR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Computes a matrix-scalar per-element product.
+	///
+	/// ## Parameters
+	/// * src1: First source matrix.
+	/// * src2: Second source scalar.
+	/// * dst: Destination matrix that has the same size and number of channels as the input array.
+	/// The depth is defined by dtype or @p src1 depth.
+	/// * scale: Optional scale factor.
+	/// * dtype: Optional depth of the output array.
+	/// * stream: Stream for the asynchronous version.
+	/// ## See also
+	/// multiply
+	///
+	/// ## C++ default parameters
+	/// * scale: 1
+	/// * dtype: -1
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn multiply_with_scalar(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray, scale: f64, dtype: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
+		input_array_arg!(src1);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_multiplyWithScalar_const__InputArrayR_Scalar_const__OutputArrayR_double_int_StreamR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), scale, dtype, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
 	/// Computes a matrix-matrix or matrix-scalar per-element product.
 	///
 	/// ## Parameters
 	/// * src1: First source matrix or scalar.
 	/// * src2: Second source matrix or scalar.
 	/// * dst: Destination matrix that has the same size and number of channels as the input array(s).
-	/// The depth is defined by dtype or src1 depth.
+	/// The depth is defined by dtype or @p src1 depth.
 	/// * scale: Optional scale factor.
 	/// * dtype: Optional depth of the output array.
 	/// * stream: Stream for the asynchronous version.
+	///
+	/// @warning In python both @p src1 and @p src2 have to be matrices, see [multiplyWithScalar] for scalar overload.
 	/// ## See also
-	/// multiply
+	/// cv::multiply, multiplyWithScalar
 	///
 	/// ## Note
 	/// This alternative version of [multiply] function uses the following default values for its arguments:
@@ -2420,12 +3114,14 @@ pub mod cudaarithm {
 	/// * src1: First source matrix or scalar.
 	/// * src2: Second source matrix or scalar.
 	/// * dst: Destination matrix that has the same size and number of channels as the input array(s).
-	/// The depth is defined by dtype or src1 depth.
+	/// The depth is defined by dtype or @p src1 depth.
 	/// * scale: Optional scale factor.
 	/// * dtype: Optional depth of the output array.
 	/// * stream: Stream for the asynchronous version.
+	///
+	/// @warning In python both @p src1 and @p src2 have to be matrices, see [multiplyWithScalar] for scalar overload.
 	/// ## See also
-	/// multiply
+	/// cv::multiply, multiplyWithScalar
 	///
 	/// ## C++ default parameters
 	/// * scale: 1
@@ -2649,6 +3345,104 @@ pub mod cudaarithm {
 		Ok(ret)
 	}
 
+	/// Computes polar angles of complex matrix elements.
+	///
+	/// ## Parameters
+	/// * xy: Source matrix containing real and imaginary components ( CV_32FC2 ).
+	/// * angle: Destination matrix of angles ( CV_32FC1 ).
+	/// * angleInDegrees: Flag for angles that must be evaluated in degrees.
+	/// * stream: Stream for the asynchronous version.
+	/// ## See also
+	/// phase
+	///
+	/// ## Note
+	/// This alternative version of [phase_1] function uses the following default values for its arguments:
+	/// * angle_in_degrees: false
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn phase_1_def(xy: &impl ToInputArray, angle: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(xy);
+		output_array_arg!(angle);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_phase_const__InputArrayR_const__OutputArrayR(xy.as_raw__InputArray(), angle.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Computes polar angles of complex matrix elements.
+	///
+	/// ## Parameters
+	/// * xy: Source matrix containing real and imaginary components ( CV_32FC2 ).
+	/// * angle: Destination matrix of angles ( CV_32FC1 ).
+	/// * angleInDegrees: Flag for angles that must be evaluated in degrees.
+	/// * stream: Stream for the asynchronous version.
+	/// ## See also
+	/// phase
+	///
+	/// ## C++ default parameters
+	/// * angle_in_degrees: false
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn phase_1(xy: &impl ToInputArray, angle: &mut impl ToOutputArray, angle_in_degrees: bool, stream: &mut impl core::StreamTrait) -> Result<()> {
+		input_array_arg!(xy);
+		output_array_arg!(angle);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_phase_const__InputArrayR_const__OutputArrayR_bool_StreamR(xy.as_raw__InputArray(), angle.as_raw__OutputArray(), angle_in_degrees, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Converts polar coordinates into Cartesian.
+	///
+	/// ## Parameters
+	/// * magnitude: Source matrix containing magnitudes ( CV_32FC1 or CV_64FC1 ).
+	/// * angle: Source matrix containing angles ( same type as magnitude ).
+	/// * xy: Destination matrix of real and imaginary components ( same depth as magnitude, i.e. CV_32FC2 or CV_64FC2 ).
+	/// * angleInDegrees: Flag that indicates angles in degrees.
+	/// * stream: Stream for the asynchronous version.
+	///
+	/// ## Note
+	/// This alternative version of [polar_to_cart_1] function uses the following default values for its arguments:
+	/// * angle_in_degrees: false
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn polar_to_cart_1_def(magnitude: &impl ToInputArray, angle: &impl ToInputArray, xy: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(magnitude);
+		input_array_arg!(angle);
+		output_array_arg!(xy);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_polarToCart_const__InputArrayR_const__InputArrayR_const__OutputArrayR(magnitude.as_raw__InputArray(), angle.as_raw__InputArray(), xy.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Converts polar coordinates into Cartesian.
+	///
+	/// ## Parameters
+	/// * magnitude: Source matrix containing magnitudes ( CV_32FC1 or CV_64FC1 ).
+	/// * angle: Source matrix containing angles ( same type as magnitude ).
+	/// * xy: Destination matrix of real and imaginary components ( same depth as magnitude, i.e. CV_32FC2 or CV_64FC2 ).
+	/// * angleInDegrees: Flag that indicates angles in degrees.
+	/// * stream: Stream for the asynchronous version.
+	///
+	/// ## C++ default parameters
+	/// * angle_in_degrees: false
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn polar_to_cart_1(magnitude: &impl ToInputArray, angle: &impl ToInputArray, xy: &mut impl ToOutputArray, angle_in_degrees: bool, stream: &mut impl core::StreamTrait) -> Result<()> {
+		input_array_arg!(magnitude);
+		input_array_arg!(angle);
+		output_array_arg!(xy);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_polarToCart_const__InputArrayR_const__InputArrayR_const__OutputArrayR_bool_StreamR(magnitude.as_raw__InputArray(), angle.as_raw__InputArray(), xy.as_raw__OutputArray(), angle_in_degrees, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
 	/// Converts polar coordinates into Cartesian.
 	///
 	/// ## Parameters
@@ -2697,6 +3491,51 @@ pub mod cudaarithm {
 		output_array_arg!(y);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cuda_polarToCart_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool_StreamR(magnitude.as_raw__InputArray(), angle.as_raw__InputArray(), x.as_raw__OutputArray(), y.as_raw__OutputArray(), angle_in_degrees, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Converts polar coordinates into Cartesian.
+	///
+	/// ## Parameters
+	/// * magnitudeAngle: Source matrix containing magnitudes and angles ( CV_32FC2 or CV_64FC2 ).
+	/// * xy: Destination matrix of real and imaginary components ( same depth as source ).
+	/// * angleInDegrees: Flag that indicates angles in degrees.
+	/// * stream: Stream for the asynchronous version.
+	///
+	/// ## Note
+	/// This alternative version of [polar_to_cart_2] function uses the following default values for its arguments:
+	/// * angle_in_degrees: false
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn polar_to_cart_2_def(magnitude_angle: &impl ToInputArray, xy: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(magnitude_angle);
+		output_array_arg!(xy);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_polarToCart_const__InputArrayR_const__OutputArrayR(magnitude_angle.as_raw__InputArray(), xy.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Converts polar coordinates into Cartesian.
+	///
+	/// ## Parameters
+	/// * magnitudeAngle: Source matrix containing magnitudes and angles ( CV_32FC2 or CV_64FC2 ).
+	/// * xy: Destination matrix of real and imaginary components ( same depth as source ).
+	/// * angleInDegrees: Flag that indicates angles in degrees.
+	/// * stream: Stream for the asynchronous version.
+	///
+	/// ## C++ default parameters
+	/// * angle_in_degrees: false
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn polar_to_cart_2(magnitude_angle: &impl ToInputArray, xy: &mut impl ToOutputArray, angle_in_degrees: bool, stream: &mut impl core::StreamTrait) -> Result<()> {
+		input_array_arg!(magnitude_angle);
+		output_array_arg!(xy);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_polarToCart_const__InputArrayR_const__OutputArrayR_bool_StreamR(magnitude_angle.as_raw__InputArray(), xy.as_raw__OutputArray(), angle_in_degrees, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -3205,19 +4044,81 @@ pub mod cudaarithm {
 		Ok(ret)
 	}
 
-	/// Computes a matrix-matrix or matrix-scalar difference.
+	/// Computes matrix-scalar difference.
 	///
 	/// ## Parameters
-	/// * src1: First source matrix or scalar.
-	/// * src2: Second source matrix or scalar. Matrix should have the same size and type as src1 .
-	/// * dst: Destination matrix that has the same size and number of channels as the input array(s).
-	/// The depth is defined by dtype or src1 depth.
+	/// * src1: First source matrix.
+	/// * src2: Second source scalar.
+	/// * dst: Destination matrix that has the same size and number of channels as the input array.
+	/// The depth is defined by dtype or @p src1 depth.
 	/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
 	/// destination array to be changed. The mask can be used only with single channel images.
 	/// * dtype: Optional depth of the output array.
 	/// * stream: Stream for the asynchronous version.
 	/// ## See also
-	/// subtract
+	/// cv::subtract
+	///
+	/// ## Note
+	/// This alternative version of [subtract_with_scalar] function uses the following default values for its arguments:
+	/// * mask: noArray()
+	/// * dtype: -1
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn subtract_with_scalar_def(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray) -> Result<()> {
+		input_array_arg!(src1);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_subtractWithScalar_const__InputArrayR_Scalar_const__OutputArrayR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Computes matrix-scalar difference.
+	///
+	/// ## Parameters
+	/// * src1: First source matrix.
+	/// * src2: Second source scalar.
+	/// * dst: Destination matrix that has the same size and number of channels as the input array.
+	/// The depth is defined by dtype or @p src1 depth.
+	/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
+	/// destination array to be changed. The mask can be used only with single channel images.
+	/// * dtype: Optional depth of the output array.
+	/// * stream: Stream for the asynchronous version.
+	/// ## See also
+	/// cv::subtract
+	///
+	/// ## C++ default parameters
+	/// * mask: noArray()
+	/// * dtype: -1
+	/// * stream: Stream::Null()
+	#[inline]
+	pub fn subtract_with_scalar(src1: &impl ToInputArray, src2: core::Scalar, dst: &mut impl ToOutputArray, mask: &impl ToInputArray, dtype: i32, stream: &mut impl core::StreamTrait) -> Result<()> {
+		input_array_arg!(src1);
+		output_array_arg!(dst);
+		input_array_arg!(mask);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cuda_subtractWithScalar_const__InputArrayR_Scalar_const__OutputArrayR_const__InputArrayR_int_StreamR(src1.as_raw__InputArray(), &src2, dst.as_raw__OutputArray(), mask.as_raw__InputArray(), dtype, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Computes a matrix-matrix or matrix-scalar difference.
+	///
+	/// ## Parameters
+	/// * src1: First source matrix or scalar.
+	/// * src2: Second source matrix or scalar. Matrix should have the same size and type as @p src1.
+	/// * dst: Destination matrix that has the same size and number of channels as the input array(s).
+	/// The depth is defined by dtype or @p src1 depth.
+	/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
+	/// destination array to be changed. The mask can be used only with single channel images.
+	/// * dtype: Optional depth of the output array.
+	/// * stream: Stream for the asynchronous version.
+	///
+	/// @warning In python both @p src1 and @p src2 have to be matrices, see [subtractWithScalar] for scalar overload.
+	/// ## See also
+	/// cv::subtract, subtractWithScalar
 	///
 	/// ## Note
 	/// This alternative version of [subtract] function uses the following default values for its arguments:
@@ -3240,15 +4141,17 @@ pub mod cudaarithm {
 	///
 	/// ## Parameters
 	/// * src1: First source matrix or scalar.
-	/// * src2: Second source matrix or scalar. Matrix should have the same size and type as src1 .
+	/// * src2: Second source matrix or scalar. Matrix should have the same size and type as @p src1.
 	/// * dst: Destination matrix that has the same size and number of channels as the input array(s).
-	/// The depth is defined by dtype or src1 depth.
+	/// The depth is defined by dtype or @p src1 depth.
 	/// * mask: Optional operation mask, 8-bit single channel array, that specifies elements of the
 	/// destination array to be changed. The mask can be used only with single channel images.
 	/// * dtype: Optional depth of the output array.
 	/// * stream: Stream for the asynchronous version.
+	///
+	/// @warning In python both @p src1 and @p src2 have to be matrices, see [subtractWithScalar] for scalar overload.
 	/// ## See also
-	/// subtract
+	/// cv::subtract, subtractWithScalar
 	///
 	/// ## C++ default parameters
 	/// * mask: noArray()

@@ -4072,6 +4072,30 @@ mod core_types {
 	}
 
 
+	#[deprecated = "Use the the non-alias form `core::Vector<u64>` instead, removal in Nov 2024"]
+	pub type VectorOfu64 = core::Vector<u64>;
+
+	impl core::Vector<u64> {
+		pub fn as_raw_VectorOfu64(&self) -> extern_send!(Self) { self.as_raw() }
+		pub fn as_raw_mut_VectorOfu64(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	vector_extern! { u64,
+		std_vectorLuint64_tG_new_const, std_vectorLuint64_tG_delete,
+		std_vectorLuint64_tG_len_const, std_vectorLuint64_tG_isEmpty_const,
+		std_vectorLuint64_tG_capacity_const, std_vectorLuint64_tG_shrinkToFit,
+		std_vectorLuint64_tG_reserve_size_t, std_vectorLuint64_tG_remove_size_t,
+		std_vectorLuint64_tG_swap_size_t_size_t, std_vectorLuint64_tG_clear,
+		std_vectorLuint64_tG_get_const_size_t, std_vectorLuint64_tG_set_size_t_const_uint64_t,
+		std_vectorLuint64_tG_push_const_uint64_t, std_vectorLuint64_tG_insert_size_t_const_uint64_t,
+	}
+
+	vector_copy_non_bool! { u64,
+		std_vectorLuint64_tG_data_const, std_vectorLuint64_tG_dataMut, cv_fromSlice_const_const_uint64_tX_size_t,
+		std_vectorLuint64_tG_clone_const,
+	}
+
+
 	#[deprecated = "Use the the non-alias form `core::Vector<u8>` instead, removal in Nov 2024"]
 	pub type VectorOfu8 = core::Vector<u8>;
 
@@ -4406,6 +4430,34 @@ mod cudacodec_types {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfCUDA_EncoderCallback")
+				.finish()
+		}
+	}
+
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudacodec::CUDA_NVSurfaceToColorConverter>` instead, removal in Nov 2024"]
+	pub type PtrOfCUDA_NVSurfaceToColorConverter = core::Ptr<crate::cudacodec::CUDA_NVSurfaceToColorConverter>;
+
+	ptr_extern! { crate::cudacodec::CUDA_NVSurfaceToColorConverter,
+		cv_PtrLcv_cudacodec_NVSurfaceToColorConverterG_new_null_const, cv_PtrLcv_cudacodec_NVSurfaceToColorConverterG_delete, cv_PtrLcv_cudacodec_NVSurfaceToColorConverterG_getInnerPtr_const, cv_PtrLcv_cudacodec_NVSurfaceToColorConverterG_getInnerPtrMut
+	}
+
+	impl core::Ptr<crate::cudacodec::CUDA_NVSurfaceToColorConverter> {
+		#[inline] pub fn as_raw_PtrOfCUDA_NVSurfaceToColorConverter(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCUDA_NVSurfaceToColorConverter(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::cudacodec::CUDA_NVSurfaceToColorConverterTraitConst for core::Ptr<crate::cudacodec::CUDA_NVSurfaceToColorConverter> {
+		#[inline] fn as_raw_CUDA_NVSurfaceToColorConverter(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::cudacodec::CUDA_NVSurfaceToColorConverterTrait for core::Ptr<crate::cudacodec::CUDA_NVSurfaceToColorConverter> {
+		#[inline] fn as_raw_mut_CUDA_NVSurfaceToColorConverter(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl std::fmt::Debug for core::Ptr<crate::cudacodec::CUDA_NVSurfaceToColorConverter> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfCUDA_NVSurfaceToColorConverter")
 				.finish()
 		}
 	}
@@ -7968,6 +8020,59 @@ mod dnn_types {
 				.field("pads_end", &crate::dnn::BaseConvolutionLayerTraitConst::pads_end(self))
 				.field("pad_mode", &crate::dnn::BaseConvolutionLayerTraitConst::pad_mode(self))
 				.field("num_output", &crate::dnn::BaseConvolutionLayerTraitConst::num_output(self))
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::DepthToSpaceLayer>` instead, removal in Nov 2024"]
+	pub type PtrOfDepthToSpaceLayer = core::Ptr<crate::dnn::DepthToSpaceLayer>;
+
+	ptr_extern! { crate::dnn::DepthToSpaceLayer,
+		cv_PtrLcv_dnn_DepthToSpaceLayerG_new_null_const, cv_PtrLcv_dnn_DepthToSpaceLayerG_delete, cv_PtrLcv_dnn_DepthToSpaceLayerG_getInnerPtr_const, cv_PtrLcv_dnn_DepthToSpaceLayerG_getInnerPtrMut
+	}
+
+	ptr_extern_ctor! { crate::dnn::DepthToSpaceLayer, cv_PtrLcv_dnn_DepthToSpaceLayerG_new_const_DepthToSpaceLayer }
+	impl core::Ptr<crate::dnn::DepthToSpaceLayer> {
+		#[inline] pub fn as_raw_PtrOfDepthToSpaceLayer(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfDepthToSpaceLayer(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::dnn::DepthToSpaceLayerTraitConst for core::Ptr<crate::dnn::DepthToSpaceLayer> {
+		#[inline] fn as_raw_DepthToSpaceLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::DepthToSpaceLayerTrait for core::Ptr<crate::dnn::DepthToSpaceLayer> {
+		#[inline] fn as_raw_mut_DepthToSpaceLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::DepthToSpaceLayer> {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl core::AlgorithmTrait for core::Ptr<crate::dnn::DepthToSpaceLayer> {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::DepthToSpaceLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_DepthToSpaceLayerG_to_PtrOfAlgorithm }
+
+	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::DepthToSpaceLayer> {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerTrait for core::Ptr<crate::dnn::DepthToSpaceLayer> {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::DepthToSpaceLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_DepthToSpaceLayerG_to_PtrOfLayer }
+
+	impl std::fmt::Debug for core::Ptr<crate::dnn::DepthToSpaceLayer> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfDepthToSpaceLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("name", &crate::dnn::LayerTraitConst::name(self))
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
@@ -12270,6 +12375,59 @@ mod dnn_types {
 		}
 	}
 
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::SpaceToDepthLayer>` instead, removal in Nov 2024"]
+	pub type PtrOfSpaceToDepthLayer = core::Ptr<crate::dnn::SpaceToDepthLayer>;
+
+	ptr_extern! { crate::dnn::SpaceToDepthLayer,
+		cv_PtrLcv_dnn_SpaceToDepthLayerG_new_null_const, cv_PtrLcv_dnn_SpaceToDepthLayerG_delete, cv_PtrLcv_dnn_SpaceToDepthLayerG_getInnerPtr_const, cv_PtrLcv_dnn_SpaceToDepthLayerG_getInnerPtrMut
+	}
+
+	ptr_extern_ctor! { crate::dnn::SpaceToDepthLayer, cv_PtrLcv_dnn_SpaceToDepthLayerG_new_const_SpaceToDepthLayer }
+	impl core::Ptr<crate::dnn::SpaceToDepthLayer> {
+		#[inline] pub fn as_raw_PtrOfSpaceToDepthLayer(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfSpaceToDepthLayer(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::dnn::SpaceToDepthLayerTraitConst for core::Ptr<crate::dnn::SpaceToDepthLayer> {
+		#[inline] fn as_raw_SpaceToDepthLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::SpaceToDepthLayerTrait for core::Ptr<crate::dnn::SpaceToDepthLayer> {
+		#[inline] fn as_raw_mut_SpaceToDepthLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::SpaceToDepthLayer> {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl core::AlgorithmTrait for core::Ptr<crate::dnn::SpaceToDepthLayer> {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::SpaceToDepthLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_SpaceToDepthLayerG_to_PtrOfAlgorithm }
+
+	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::SpaceToDepthLayer> {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerTrait for core::Ptr<crate::dnn::SpaceToDepthLayer> {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::SpaceToDepthLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_SpaceToDepthLayerG_to_PtrOfLayer }
+
+	impl std::fmt::Debug for core::Ptr<crate::dnn::SpaceToDepthLayer> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfSpaceToDepthLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+
 	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::SplitLayer>` instead, removal in Nov 2024"]
 	pub type PtrOfSplitLayer = core::Ptr<crate::dnn::SplitLayer>;
 
@@ -12685,6 +12843,59 @@ mod dnn_types {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("PtrOfTileLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::TopKLayer>` instead, removal in Nov 2024"]
+	pub type PtrOfTopKLayer = core::Ptr<crate::dnn::TopKLayer>;
+
+	ptr_extern! { crate::dnn::TopKLayer,
+		cv_PtrLcv_dnn_TopKLayerG_new_null_const, cv_PtrLcv_dnn_TopKLayerG_delete, cv_PtrLcv_dnn_TopKLayerG_getInnerPtr_const, cv_PtrLcv_dnn_TopKLayerG_getInnerPtrMut
+	}
+
+	ptr_extern_ctor! { crate::dnn::TopKLayer, cv_PtrLcv_dnn_TopKLayerG_new_const_TopKLayer }
+	impl core::Ptr<crate::dnn::TopKLayer> {
+		#[inline] pub fn as_raw_PtrOfTopKLayer(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfTopKLayer(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::dnn::TopKLayerTraitConst for core::Ptr<crate::dnn::TopKLayer> {
+		#[inline] fn as_raw_TopKLayer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::TopKLayerTrait for core::Ptr<crate::dnn::TopKLayer> {
+		#[inline] fn as_raw_mut_TopKLayer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl core::AlgorithmTraitConst for core::Ptr<crate::dnn::TopKLayer> {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl core::AlgorithmTrait for core::Ptr<crate::dnn::TopKLayer> {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::TopKLayer>, core::Ptr<core::Algorithm>, cv_PtrLcv_dnn_TopKLayerG_to_PtrOfAlgorithm }
+
+	impl crate::dnn::LayerTraitConst for core::Ptr<crate::dnn::TopKLayer> {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::dnn::LayerTrait for core::Ptr<crate::dnn::TopKLayer> {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::dnn::TopKLayer>, core::Ptr<crate::dnn::Layer>, cv_PtrLcv_dnn_TopKLayerG_to_PtrOfLayer }
+
+	impl std::fmt::Debug for core::Ptr<crate::dnn::TopKLayer> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfTopKLayer")
 				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
 				.field("name", &crate::dnn::LayerTraitConst::name(self))
 				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
@@ -25063,6 +25274,34 @@ pub use video_types::*;
 #[cfg(ocvrs_has_module_videoio)]
 mod videoio_types {
 	use crate::{mod_prelude::*, core, types, sys};
+
+	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videoio::IStreamReader>` instead, removal in Nov 2024"]
+	pub type PtrOfIStreamReader = core::Ptr<crate::videoio::IStreamReader>;
+
+	ptr_extern! { crate::videoio::IStreamReader,
+		cv_PtrLcv_IStreamReaderG_new_null_const, cv_PtrLcv_IStreamReaderG_delete, cv_PtrLcv_IStreamReaderG_getInnerPtr_const, cv_PtrLcv_IStreamReaderG_getInnerPtrMut
+	}
+
+	impl core::Ptr<crate::videoio::IStreamReader> {
+		#[inline] pub fn as_raw_PtrOfIStreamReader(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfIStreamReader(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::videoio::IStreamReaderTraitConst for core::Ptr<crate::videoio::IStreamReader> {
+		#[inline] fn as_raw_IStreamReader(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::videoio::IStreamReaderTrait for core::Ptr<crate::videoio::IStreamReader> {
+		#[inline] fn as_raw_mut_IStreamReader(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl std::fmt::Debug for core::Ptr<crate::videoio::IStreamReader> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfIStreamReader")
+				.finish()
+		}
+	}
 
 	#[deprecated = "Use the the non-alias form `core::Vector<crate::videoio::VideoCapture>` instead, removal in Nov 2024"]
 	pub type VectorOfVideoCapture = core::Vector<crate::videoio::VideoCapture>;

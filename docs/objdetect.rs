@@ -2,8 +2,8 @@ pub mod objdetect {
 	//! # Object Detection
 	//!    # Cascade Classifier for Object Detection
 	//!
-	//!    The object detector described below has been initially proposed by Paul Viola [Viola01](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Viola01) and
-	//!    improved by Rainer Lienhart [Lienhart02](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Lienhart02) .
+	//!    The object detector described below has been initially proposed by Paul Viola [Viola01](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Viola01) and
+	//!    improved by Rainer Lienhart [Lienhart02](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Lienhart02) .
 	//!
 	//!    First, a classifier (namely a *cascade of boosted classifiers working with haar-like features*) is
 	//!    trained with a few hundred sample views of a particular object (i.e., a face or a car), called
@@ -29,7 +29,7 @@ pub mod objdetect {
 	//!    classifiers, and are calculated as described below. The current algorithm uses the following
 	//!    Haar-like features:
 	//!
-	//!    ![image](https://docs.opencv.org/4.10.0/haarfeatures.png)
+	//!    ![image](https://docs.opencv.org/4.11.0/haarfeatures.png)
 	//!
 	//!    The feature used in a particular classifier is specified by its shape (1a, 2b etc.), position within
 	//!    the region of interest and the scale (this scale is not the same as the scale used at the detection
@@ -69,11 +69,11 @@ pub mod objdetect {
 	//!        ArUco markers can also be used for advanced chessboard corner finding. To do this, group the markers in the
 	//!        CharucoBoard and find the corners of the chessboard with the CharucoDetector::detectBoard().
 	//!
-	//!        The implementation is based on the ArUco Library by R. Muñoz-Salinas and S. Garrido-Jurado [Aruco2014](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Aruco2014).
+	//!        The implementation is based on the ArUco Library by R. Muñoz-Salinas and S. Garrido-Jurado [Aruco2014](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Aruco2014).
 	//!
-	//!        Markers can also be detected based on the AprilTag 2 [wang2016iros](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_wang2016iros) fiducial detection method.
+	//!        Markers can also be detected based on the AprilTag 2 [wang2016iros](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_wang2016iros) fiducial detection method.
 	//! ## See also
-	//! [Aruco2014](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Aruco2014)
+	//! [Aruco2014](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Aruco2014)
 	//!        This code has been originally developed by Sergio Garrido-Jurado as a project
 	//!        for Google Summer of Code 2015 (GSoC 15).
 	use crate::mod_prelude::*;
@@ -86,7 +86,7 @@ pub mod objdetect {
 	pub const CASCADE_DO_ROUGH_SEARCH: i32 = 8;
 	pub const CASCADE_FIND_BIGGEST_OBJECT: i32 = 4;
 	pub const CASCADE_SCALE_IMAGE: i32 = 2;
-	/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_wang2016iros)
+	/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_wang2016iros)
 	pub const CORNER_REFINE_APRILTAG: i32 = 3;
 	/// ArUco approach and refine the corners locations using the contour-points line fitting
 	pub const CORNER_REFINE_CONTOUR: i32 = 2;
@@ -171,7 +171,7 @@ pub mod objdetect {
 		CORNER_REFINE_SUBPIX = 1,
 		/// ArUco approach and refine the corners locations using the contour-points line fitting
 		CORNER_REFINE_CONTOUR = 2,
-		/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_wang2016iros)
+		/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_wang2016iros)
 		CORNER_REFINE_APRILTAG = 3,
 	}
 
@@ -2288,7 +2288,7 @@ pub mod objdetect {
 
 		/// Detects faces in the input image. Following is an example output.
 		///
-		/// * ![image](https://docs.opencv.org/4.10.0/lena-face-detection.jpg)
+		/// * ![image](https://docs.opencv.org/4.11.0/lena-face-detection.jpg)
 		///
 		/// ## Parameters
 		/// * image: an image to detect
@@ -2491,10 +2491,10 @@ pub mod objdetect {
 	pub trait FaceRecognizerSFTraitConst {
 		fn as_raw_FaceRecognizerSF(&self) -> *const c_void;
 
-		/// Aligning image to put face on the standard position
+		/// Aligns detected face with the source input image and crops it
 		/// ## Parameters
 		/// * src_img: input image
-		/// * face_box: the detection result used for indicate face in input image
+		/// * face_box: the detected face result from the input image
 		/// * aligned_img: output aligned image
 		#[inline]
 		fn align_crop(&self, src_img: &impl ToInputArray, face_box: &impl ToInputArray, aligned_img: &mut impl ToOutputArray) -> Result<()> {
@@ -2508,11 +2508,11 @@ pub mod objdetect {
 			Ok(ret)
 		}
 
-		/// Calculating the distance between two face features
+		/// Calculates the distance between two face features
 		/// ## Parameters
 		/// * face_feature1: the first input feature
 		/// * face_feature2: the second input feature of the same size and the same type as face_feature1
-		/// * dis_type: defining the similarity with optional values "FR_OSINE" or "FR_NORM_L2"
+		/// * dis_type: defines how to calculate the distance between two face features with optional values "FR_COSINE" or "FR_NORM_L2"
 		///
 		/// ## C++ default parameters
 		/// * dis_type: FaceRecognizerSF::FR_COSINE
@@ -2527,11 +2527,11 @@ pub mod objdetect {
 			Ok(ret)
 		}
 
-		/// Calculating the distance between two face features
+		/// Calculates the distance between two face features
 		/// ## Parameters
 		/// * face_feature1: the first input feature
 		/// * face_feature2: the second input feature of the same size and the same type as face_feature1
-		/// * dis_type: defining the similarity with optional values "FR_OSINE" or "FR_NORM_L2"
+		/// * dis_type: defines how to calculate the distance between two face features with optional values "FR_COSINE" or "FR_NORM_L2"
 		///
 		/// ## Note
 		/// This alternative version of [FaceRecognizerSFTraitConst::match_] function uses the following default values for its arguments:
@@ -2553,7 +2553,7 @@ pub mod objdetect {
 	pub trait FaceRecognizerSFTrait: crate::objdetect::FaceRecognizerSFTraitConst {
 		fn as_raw_mut_FaceRecognizerSF(&mut self) -> *mut c_void;
 
-		/// Extracting face feature from aligned image
+		/// Extracts face feature from aligned image
 		/// ## Parameters
 		/// * aligned_img: input aligned image
 		/// * face_feature: output face feature
@@ -2638,6 +2638,57 @@ pub mod objdetect {
 			extern_container_arg!(config);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FaceRecognizerSF_create_const_StringR_const_StringR(model.opencv_as_extern(), config.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::objdetect::FaceRecognizerSF>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Creates an instance of this class from a buffer containing the model weights and configuration.
+		/// ## Parameters
+		/// * framework: Name of the framework (ONNX, etc.)
+		/// * bufferModel: A buffer containing the binary model weights.
+		/// * bufferConfig: A buffer containing the network configuration.
+		/// * backend_id: The id of the backend.
+		/// * target_id: The id of the target device.
+		///
+		/// ## Returns
+		/// A pointer to the created instance of FaceRecognizerSF.
+		///
+		/// ## C++ default parameters
+		/// * backend_id: 0
+		/// * target_id: 0
+		#[inline]
+		pub fn create_1(framework: &str, buffer_model: &core::Vector<u8>, buffer_config: &core::Vector<u8>, backend_id: i32, target_id: i32) -> Result<core::Ptr<crate::objdetect::FaceRecognizerSF>> {
+			extern_container_arg!(framework);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FaceRecognizerSF_create_const_StringR_const_vectorLunsigned_charGR_const_vectorLunsigned_charGR_int_int(framework.opencv_as_extern(), buffer_model.as_raw_VectorOfu8(), buffer_config.as_raw_VectorOfu8(), backend_id, target_id, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::objdetect::FaceRecognizerSF>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Creates an instance of this class from a buffer containing the model weights and configuration.
+		/// ## Parameters
+		/// * framework: Name of the framework (ONNX, etc.)
+		/// * bufferModel: A buffer containing the binary model weights.
+		/// * bufferConfig: A buffer containing the network configuration.
+		/// * backend_id: The id of the backend.
+		/// * target_id: The id of the target device.
+		///
+		/// ## Returns
+		/// A pointer to the created instance of FaceRecognizerSF.
+		///
+		/// ## Note
+		/// This alternative version of [FaceRecognizerSF::create] function uses the following default values for its arguments:
+		/// * backend_id: 0
+		/// * target_id: 0
+		#[inline]
+		pub fn create_def_1(framework: &str, buffer_model: &core::Vector<u8>, buffer_config: &core::Vector<u8>) -> Result<core::Ptr<crate::objdetect::FaceRecognizerSF>> {
+			extern_container_arg!(framework);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FaceRecognizerSF_create_const_StringR_const_vectorLunsigned_charGR_const_vectorLunsigned_charGR(framework.opencv_as_extern(), buffer_model.as_raw_VectorOfu8(), buffer_config.as_raw_VectorOfu8(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { core::Ptr::<crate::objdetect::FaceRecognizerSF>::opencv_from_extern(ret) };
@@ -3799,7 +3850,7 @@ pub mod objdetect {
 
 	/// Implementation of HOG (Histogram of Oriented Gradients) descriptor and object detector.
 	///
-	/// the HOG descriptor algorithm introduced by Navneet Dalal and Bill Triggs [Dalal2005](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Dalal2005) .
+	/// the HOG descriptor algorithm introduced by Navneet Dalal and Bill Triggs [Dalal2005](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Dalal2005) .
 	///
 	/// useful links:
 	///

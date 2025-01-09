@@ -1,9 +1,13 @@
 pub mod core {
 	//! # Core functionality
+	//!
+	//! The Core module is the backbone of OpenCV, offering fundamental data structures, matrix operations,
+	//! and utility functions that other modules depend on. It’s essential for handling image data,
+	//! performing mathematical computations, and managing memory efficiently within the OpenCV ecosystem.
 	//!    # Basic structures
 	//!    # Operations on arrays
 	//!    # Asynchronous API
-	//!    # XML/YAML Persistence
+	//!    # XML/YAML/JSON Persistence
 	//!    # Clustering
 	//!    # Utility and system functions and macros
 	//!        # Logging facilities
@@ -13,7 +17,6 @@ pub mod core {
 	//!        # Softfloat support
 	//!        # Utility functions for OpenCV samples
 	//!    # OpenGL interoperability
-	//!    # Intel IPP Asynchronous C/C++ Converters
 	//!    # Optimization Algorithms
 	//!    # DirectX interoperability
 	//!    # Eigen support
@@ -27,6 +30,7 @@ pub mod core {
 	//!        # Low-level API for external libraries / plugins
 	//!    # Parallel Processing
 	//!        # Parallel backends API
+	//!    # Quaternion
 	use crate::mod_prelude::*;
 	use crate::{core, sys, types};
 	pub mod prelude {
@@ -38,6 +42,12 @@ pub mod core {
 	pub const ACCESS_READ: i32 = 16777216;
 	pub const ACCESS_RW: i32 = 50331648;
 	pub const ACCESS_WRITE: i32 = 33554432;
+	/// Use generic portable implementation
+	pub const ALGO_HINT_ACCURATE: i32 = 1;
+	/// Allow alternative approximations to get faster implementation. Behaviour and result depends on a platform
+	pub const ALGO_HINT_APPROX: i32 = 2;
+	/// Default algorithm behaviour defined during OpenCV build
+	pub const ALGO_HINT_DEFAULT: i32 = 0;
 	/// `iiiiii|abcdefgh|iiiiiii`  with some specified `i`
 	pub const BORDER_CONSTANT: i32 = 0;
 	/// same as BORDER_REFLECT_101
@@ -385,9 +395,9 @@ pub mod core {
 	pub const CV_SUBMAT_FLAG: i32 = (1<<CV_SUBMAT_FLAG_SHIFT);
 	pub const CV_SUBMAT_FLAG_SHIFT: i32 = 15;
 	pub const CV_SUBMINOR_VERSION: i32 = CV_VERSION_REVISION;
-	pub const CV_VERSION: &str = "4.10.0";
+	pub const CV_VERSION: &str = "4.11.0";
 	pub const CV_VERSION_MAJOR: i32 = 4;
-	pub const CV_VERSION_MINOR: i32 = 10;
+	pub const CV_VERSION_MINOR: i32 = 11;
 	pub const CV_VERSION_REVISION: i32 = 0;
 	pub const CV_VERSION_STATUS: &str = "";
 	pub const CV_VSX: i32 = 0;
@@ -556,14 +566,18 @@ pub mod core {
 	pub const FileStorage_FORMAT_XML: i32 = 8;
 	/// flag, YAML format
 	pub const FileStorage_FORMAT_YAML: i32 = 16;
+	/// Indicates being inside a map (a set of key-value pairs).
 	pub const FileStorage_INSIDE_MAP: i32 = 4;
 	/// < flag, read data from source or write data to the internal buffer (which is
 	/// returned by FileStorage::release)
 	pub const FileStorage_MEMORY: i32 = 4;
+	/// Expecting a key/name in the current position.
 	pub const FileStorage_NAME_EXPECTED: i32 = 2;
 	/// value, open the file for reading
 	pub const FileStorage_READ: i32 = 0;
+	/// Initial or uninitialized state.
 	pub const FileStorage_UNDEFINED: i32 = 0;
+	/// Expecting a value in the current position.
 	pub const FileStorage_VALUE_EXPECTED: i32 = 1;
 	/// value, open the file for writing
 	pub const FileStorage_WRITE: i32 = 1;
@@ -909,6 +923,33 @@ pub mod core {
 	}
 
 	opencv_type_enum! { core::AccessFlag }
+
+	/// ! Flags that allow to midify some functions behavior. Used as set of flags.
+	#[repr(C)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum AlgorithmHint {
+		/// Default algorithm behaviour defined during OpenCV build
+		ALGO_HINT_DEFAULT = 0,
+		/// Use generic portable implementation
+		ALGO_HINT_ACCURATE = 1,
+		/// Allow alternative approximations to get faster implementation. Behaviour and result depends on a platform
+		ALGO_HINT_APPROX = 2,
+	}
+
+	impl TryFrom<i32> for AlgorithmHint {
+		type Error = crate::Error;
+
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::ALGO_HINT_DEFAULT),
+				1 => Ok(Self::ALGO_HINT_ACCURATE),
+				2 => Ok(Self::ALGO_HINT_APPROX),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: core::AlgorithmHint"))),
+			}
+		}
+	}
+
+	opencv_type_enum! { core::AlgorithmHint }
 
 	/// Various border types, image boundaries are denoted with `|`
 	/// ## See also
@@ -1739,9 +1780,13 @@ pub mod core {
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum FileStorage_State {
+		/// Initial or uninitialized state.
 		UNDEFINED = 0,
+		/// Expecting a value in the current position.
 		VALUE_EXPECTED = 1,
+		/// Expecting a key/name in the current position.
 		NAME_EXPECTED = 2,
+		/// Indicates being inside a map (a set of key-value pairs).
 		INSIDE_MAP = 4,
 	}
 
@@ -1863,7 +1908,7 @@ pub mod core {
 
 	opencv_type_enum! { core::IMPL }
 
-	/// k-Means flags
+	/// k-means flags
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum KmeansFlags {
@@ -5710,20 +5755,20 @@ pub mod core {
 	/// then it either stops if setBreakOnError() had been called before or raises the exception.
 	/// It is possible to alternate error processing by using redirectError().
 	/// ## Parameters
-	/// * _code: - error code (Error::Code)
-	/// * _err: - error description
-	/// * _func: - function name. Available only when the compiler supports getting it
-	/// * _file: - source file name where the error has occurred
-	/// * _line: - line number in the source file where the error has occurred
+	/// * code: - error code (Error::Code)
+	/// * err: - error description
+	/// * func: - function name. Available only when the compiler supports getting it
+	/// * file: - source file name where the error has occurred
+	/// * line: - line number in the source file where the error has occurred
 	/// ## See also
 	/// CV_Error, CV_Error_, CV_Assert, CV_DbgAssert
 	#[inline]
-	pub fn error(_code: i32, _err: &str, _func: &str, _file: &str, _line: i32) -> Result<()> {
-		extern_container_arg!(_err);
-		extern_container_arg!(_func);
-		extern_container_arg!(_file);
+	pub fn error(code: i32, err: &str, func: &str, file: &str, line: i32) -> Result<()> {
+		extern_container_arg!(err);
+		extern_container_arg!(func);
+		extern_container_arg!(file);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_error_int_const_StringR_const_charX_const_charX_int(_code, _err.opencv_as_extern(), _func.opencv_as_extern(), _file.opencv_as_extern(), _line, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_error_int_const_StringR_const_charX_const_charX_int(code, err.opencv_as_extern(), func.opencv_as_extern(), file.opencv_as_extern(), line, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -6040,6 +6085,16 @@ pub mod core {
 		Ok(ret)
 	}
 
+	/// ! Returns AlgorithmHint defined during OpenCV compilation. Defines [ALGO_HINT_DEFAULT] behavior.
+	#[inline]
+	pub fn get_default_algorithm_hint() -> Result<core::AlgorithmHint> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_getDefaultAlgorithmHint(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
 	#[inline]
 	pub fn get_elem_size(typ: i32) -> Result<size_t> {
 		return_send!(via ocvrs_return);
@@ -6234,6 +6289,22 @@ pub mod core {
 		Ok(ret)
 	}
 
+	/// Searches for files matching the specified pattern in a directory.
+	///
+	/// This function searches for files that match a given pattern (e.g., `*.jpg`)
+	/// in the specified directory. The search can be limited to the directory itself
+	/// or be recursive, including subdirectories.
+	///
+	/// ## Parameters
+	/// * pattern: The file search pattern, which can include wildcards like `*`
+	/// (for matching multiple characters) or `?` (for matching a single character).
+	///
+	/// * result: Output vector where the file paths matching the search
+	/// pattern will be stored.
+	/// * recursive: (optional) Boolean flag indicating whether to search
+	/// subdirectories recursively. If true, the search will include all subdirectories.
+	/// The default value is `false`.
+	///
 	/// ## Note
 	/// This alternative version of [glob] function uses the following default values for its arguments:
 	/// * recursive: false
@@ -6247,6 +6318,22 @@ pub mod core {
 		Ok(ret)
 	}
 
+	/// Searches for files matching the specified pattern in a directory.
+	///
+	/// This function searches for files that match a given pattern (e.g., `*.jpg`)
+	/// in the specified directory. The search can be limited to the directory itself
+	/// or be recursive, including subdirectories.
+	///
+	/// ## Parameters
+	/// * pattern: The file search pattern, which can include wildcards like `*`
+	/// (for matching multiple characters) or `?` (for matching a single character).
+	///
+	/// * result: Output vector where the file paths matching the search
+	/// pattern will be stored.
+	/// * recursive: (optional) Boolean flag indicating whether to search
+	/// subdirectories recursively. If true, the search will include all subdirectories.
+	/// The default value is `false`.
+	///
 	/// ## C++ default parameters
 	/// * recursive: false
 	#[inline]
@@ -6801,7 +6888,7 @@ pub mod core {
 	///
 	///
 	/// Note:
-	/// *   (Python) An example on K-means clustering can be found at
+	/// *   (Python) An example on k-means clustering can be found at
 	///    opencv_source_code/samples/python/kmeans.py
 	/// ## Parameters
 	/// * data: Data for clustering. An array of N-Dimensional points with float coordinates is needed.
@@ -6851,7 +6938,7 @@ pub mod core {
 	///
 	///
 	/// Note:
-	/// *   (Python) An example on K-means clustering can be found at
+	/// *   (Python) An example on k-means clustering can be found at
 	///    opencv_source_code/samples/python/kmeans.py
 	/// ## Parameters
 	/// * data: Data for clustering. An array of N-Dimensional points with float coordinates is needed.
@@ -7182,7 +7269,7 @@ pub mod core {
 	/// advanced way, use cv::mixChannels.
 	///
 	/// The following example shows how to merge 3 single channel matrices into a single 3-channel matrix.
-	/// [example](https://github.com/opencv/opencv/blob/4.10.0/samples/cpp/tutorial_code/snippets/core_merge.cpp#L1)
+	/// [example](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_merge.cpp#L1)
 	///
 	/// ## Parameters
 	/// * mv: input array of matrices to be merged; all the matrices in mv must have the same
@@ -7312,13 +7399,21 @@ pub mod core {
 	/// Finds the global minimum and maximum in an array.
 	///
 	/// The function cv::minMaxLoc finds the minimum and maximum element values and their positions. The
-	/// extremums are searched across the whole array or, if mask is not an empty array, in the specified
+	/// extrema are searched across the whole array or, if mask is not an empty array, in the specified
 	/// array region.
 	///
-	/// The function do not work with multi-channel arrays. If you need to find minimum or maximum
-	/// elements across all the channels, use Mat::reshape first to reinterpret the array as
-	/// single-channel. Or you may extract the particular channel using either extractImageCOI, or
-	/// mixChannels, or split.
+	/// In C++, if the input is multi-channel, you should omit the minLoc, maxLoc, and mask arguments
+	/// (i.e. leave them as NULL, NULL, and noArray() respectively). These arguments are not
+	/// supported for multi-channel input arrays. If working with multi-channel input and you
+	/// need the minLoc, maxLoc, or mask arguments, then use Mat::reshape first to reinterpret
+	/// the array as single-channel. Alternatively, you can extract the particular channel using either
+	/// extractImageCOI, mixChannels, or split.
+	///
+	/// In Python, multi-channel input is not supported at all due to a limitation in the
+	/// binding generation process (there is no way to set minLoc and maxLoc to NULL). A
+	/// workaround is to operate on each channel individually or to use NumPy to achieve the same
+	/// functionality.
+	///
 	/// ## Parameters
 	/// * src: input single-channel array.
 	/// * minVal: pointer to the returned minimum value; NULL is used if not required.
@@ -7354,13 +7449,21 @@ pub mod core {
 	/// Finds the global minimum and maximum in an array.
 	///
 	/// The function cv::minMaxLoc finds the minimum and maximum element values and their positions. The
-	/// extremums are searched across the whole array or, if mask is not an empty array, in the specified
+	/// extrema are searched across the whole array or, if mask is not an empty array, in the specified
 	/// array region.
 	///
-	/// The function do not work with multi-channel arrays. If you need to find minimum or maximum
-	/// elements across all the channels, use Mat::reshape first to reinterpret the array as
-	/// single-channel. Or you may extract the particular channel using either extractImageCOI, or
-	/// mixChannels, or split.
+	/// In C++, if the input is multi-channel, you should omit the minLoc, maxLoc, and mask arguments
+	/// (i.e. leave them as NULL, NULL, and noArray() respectively). These arguments are not
+	/// supported for multi-channel input arrays. If working with multi-channel input and you
+	/// need the minLoc, maxLoc, or mask arguments, then use Mat::reshape first to reinterpret
+	/// the array as single-channel. Alternatively, you can extract the particular channel using either
+	/// extractImageCOI, mixChannels, or split.
+	///
+	/// In Python, multi-channel input is not supported at all due to a limitation in the
+	/// binding generation process (there is no way to set minLoc and maxLoc to NULL). A
+	/// workaround is to operate on each channel individually or to use NumPy to achieve the same
+	/// functionality.
+	///
 	/// ## Parameters
 	/// * src: input single-channel array.
 	/// * minVal: pointer to the returned minimum value; NULL is used if not required.
@@ -7390,13 +7493,21 @@ pub mod core {
 	/// Finds the global minimum and maximum in an array.
 	///
 	/// The function cv::minMaxLoc finds the minimum and maximum element values and their positions. The
-	/// extremums are searched across the whole array or, if mask is not an empty array, in the specified
+	/// extrema are searched across the whole array or, if mask is not an empty array, in the specified
 	/// array region.
 	///
-	/// The function do not work with multi-channel arrays. If you need to find minimum or maximum
-	/// elements across all the channels, use Mat::reshape first to reinterpret the array as
-	/// single-channel. Or you may extract the particular channel using either extractImageCOI, or
-	/// mixChannels, or split.
+	/// In C++, if the input is multi-channel, you should omit the minLoc, maxLoc, and mask arguments
+	/// (i.e. leave them as NULL, NULL, and noArray() respectively). These arguments are not
+	/// supported for multi-channel input arrays. If working with multi-channel input and you
+	/// need the minLoc, maxLoc, or mask arguments, then use Mat::reshape first to reinterpret
+	/// the array as single-channel. Alternatively, you can extract the particular channel using either
+	/// extractImageCOI, mixChannels, or split.
+	///
+	/// In Python, multi-channel input is not supported at all due to a limitation in the
+	/// binding generation process (there is no way to set minLoc and maxLoc to NULL). A
+	/// workaround is to operate on each channel individually or to use NumPy to achieve the same
+	/// functionality.
+	///
 	/// ## Parameters
 	/// * src: input single-channel array.
 	/// * minVal: pointer to the returned minimum value; NULL is used if not required.
@@ -7910,6 +8021,23 @@ pub mod core {
 		Ok(ret)
 	}
 
+	/// Returns an empty InputArray or OutputArray.
+	///
+	/// This function is used to provide an "empty" or "null" array when certain functions
+	/// take optional input or output arrays that you don't want to provide.
+	///
+	/// Many OpenCV functions accept optional arguments as `cv::InputArray` or `cv::OutputArray`.
+	/// When you don't want to pass any data for these optional parameters, you can use `cv::noArray()`
+	/// to indicate that you are omitting them.
+	///
+	/// ## Returns
+	/// An empty `cv::InputArray` or `cv::OutputArray` that can be used as a placeholder.
+	///
+	///
+	/// Note: This is often used when a function has optional arrays, and you do not want to
+	/// provide a specific input or output array.
+	/// ## See also
+	/// cv::InputArray, cv::OutputArray
 	#[inline]
 	pub fn no_array() -> core::_InputOutputArray {
 		let ret = unsafe { sys::cv_noArray() };
@@ -7962,7 +8090,7 @@ pub mod core {
 	/// \f}
 	/// The following graphic shows all values for the three norm functions ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F1%7D%2C%20%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F2%7D) and ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F%5Cinfty%7D).
 	/// It is notable that the ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B1%7D%20) norm forms the upper and the ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B%5Cinfty%7D%20) norm forms the lower border for the example function ![inline formula](https://latex.codecogs.com/png.latex?%20r%28x%29%20).
-	/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/4.10.0/NormTypes_OneArray_1-2-INF.png)
+	/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/4.11.0/NormTypes_OneArray_1-2-INF.png)
 	///
 	/// When the mask parameter is specified and it is not empty, the norm is
 	///
@@ -8067,7 +8195,7 @@ pub mod core {
 	/// \f}
 	/// The following graphic shows all values for the three norm functions ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F1%7D%2C%20%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F2%7D) and ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F%5Cinfty%7D).
 	/// It is notable that the ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B1%7D%20) norm forms the upper and the ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B%5Cinfty%7D%20) norm forms the lower border for the example function ![inline formula](https://latex.codecogs.com/png.latex?%20r%28x%29%20).
-	/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/4.10.0/NormTypes_OneArray_1-2-INF.png)
+	/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/4.11.0/NormTypes_OneArray_1-2-INF.png)
 	///
 	/// When the mask parameter is specified and it is not empty, the norm is
 	///
@@ -10052,6 +10180,15 @@ pub mod core {
 	}
 
 	#[inline]
+	pub fn read(node: &impl core::FileNodeTraitConst, value: &mut i64, default_value: i64) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_read_const_FileNodeR_int64_tR_int64_t(node.as_raw_FileNode(), value, default_value, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	#[inline]
 	pub fn read_i32(node: &impl core::FileNodeTraitConst, value: &mut i32, default_value: i32) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_read_const_FileNodeR_intR_int(node.as_raw_FileNode(), value, default_value, ocvrs_return.as_mut_ptr()) };
@@ -10239,10 +10376,10 @@ pub mod core {
 	/// And multi-channel arrays are also supported in these two reduction modes.
 	///
 	/// The following code demonstrates its usage for a single channel matrix.
-	/// [example](https://github.com/opencv/opencv/blob/4.10.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
+	/// [example](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
 	///
 	/// And the following code demonstrates its usage for a two-channel matrix.
-	/// [example2](https://github.com/opencv/opencv/blob/4.10.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
+	/// [example2](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
 	///
 	/// ## Parameters
 	/// * src: input 2D matrix.
@@ -10279,10 +10416,10 @@ pub mod core {
 	/// And multi-channel arrays are also supported in these two reduction modes.
 	///
 	/// The following code demonstrates its usage for a single channel matrix.
-	/// [example](https://github.com/opencv/opencv/blob/4.10.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
+	/// [example](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
 	///
 	/// And the following code demonstrates its usage for a two-channel matrix.
-	/// [example2](https://github.com/opencv/opencv/blob/4.10.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
+	/// [example2](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
 	///
 	/// ## Parameters
 	/// * src: input 2D matrix.
@@ -11021,7 +11158,7 @@ pub mod core {
 	/// mixChannels.
 	///
 	/// The following example demonstrates how to split a 3-channel matrix into 3 single channel matrices.
-	/// [example](https://github.com/opencv/opencv/blob/4.10.0/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
+	/// [example](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
 	///
 	/// ## Parameters
 	/// * src: input multi-channel array.
@@ -11046,7 +11183,7 @@ pub mod core {
 	/// mixChannels.
 	///
 	/// The following example demonstrates how to split a 3-channel matrix into 3 single channel matrices.
-	/// [example](https://github.com/opencv/opencv/blob/4.10.0/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
+	/// [example](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
 	///
 	/// ## Parameters
 	/// * src: input multi-channel array.
@@ -11252,6 +11389,24 @@ pub mod core {
 		Ok(ret)
 	}
 
+	/// Generates a unique temporary file name.
+	///
+	/// This function generates a full, unique file path for a temporary file,
+	/// which can be used to create temporary files for various purposes.
+	///
+	/// ## Parameters
+	/// * suffix: (optional) The desired file extension or suffix for the temporary file (e.g., ".png", ".txt").
+	/// If no suffix is provided (suffix = 0), the file will not have a specific extension.
+	///
+	/// ## Returns
+	/// cv::String A full unique path for the temporary file.
+	///
+	///
+	/// Note:
+	/// - The function does not create the file, it only generates the name.
+	/// - The file name is unique for the system session.
+	/// - Works cross-platform (Windows, Linux, macOS).
+	///
 	/// ## Note
 	/// This alternative version of [tempfile] function uses the following default values for its arguments:
 	/// * suffix: 0
@@ -11265,6 +11420,24 @@ pub mod core {
 		Ok(ret)
 	}
 
+	/// Generates a unique temporary file name.
+	///
+	/// This function generates a full, unique file path for a temporary file,
+	/// which can be used to create temporary files for various purposes.
+	///
+	/// ## Parameters
+	/// * suffix: (optional) The desired file extension or suffix for the temporary file (e.g., ".png", ".txt").
+	/// If no suffix is provided (suffix = 0), the file will not have a specific extension.
+	///
+	/// ## Returns
+	/// cv::String A full unique path for the temporary file.
+	///
+	///
+	/// Note:
+	/// - The function does not create the file, it only generates the name.
+	/// - The file name is unique for the system session.
+	/// - Works cross-platform (Windows, Linux, macOS).
+	///
 	/// ## C++ default parameters
 	/// * suffix: 0
 	#[inline]
@@ -11276,6 +11449,28 @@ pub mod core {
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
 		Ok(ret)
+	}
+
+	/// ! Signals an error and terminate application.
+	///
+	/// By default the function prints information about the error to stderr, then it terminates application
+	/// with std::terminate. The function is designed for invariants check in functions and methods with
+	/// noexcept attribute.
+	/// ## Parameters
+	/// * code: - error code (Error::Code)
+	/// * err: - error description
+	/// * func: - function name. Available only when the compiler supports getting it
+	/// * file: - source file name where the error has occurred
+	/// * line: - line number in the source file where the error has occurred
+	/// ## See also
+	/// CV_AssertTerminate
+	#[inline]
+	pub fn terminate(code: i32, err: &str, func: &str, file: &str, line: i32) {
+		extern_container_arg!(nofail err);
+		extern_container_arg!(nofail func);
+		extern_container_arg!(nofail file);
+		let ret = unsafe { sys::cv_terminate_int_const_StringR_const_charX_const_charX_int(code, err.opencv_as_extern(), func.opencv_as_extern(), file.opencv_as_extern(), line) };
+		ret
 	}
 
 	/// Returns the default random number generator.
@@ -12161,6 +12356,15 @@ pub mod core {
 	}
 
 	#[inline]
+	pub fn write_scalar(fs: &mut impl core::FileStorageTrait, value: i64) -> Result<()> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_writeScalar_FileStorageR_int64_t(fs.as_raw_mut_FileStorage(), value, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	#[inline]
 	pub fn write_mat(fs: &mut impl core::FileStorageTrait, name: &str, value: &impl core::MatTraitConst) -> Result<()> {
 		extern_container_arg!(name);
 		return_send!(via ocvrs_return);
@@ -12237,6 +12441,16 @@ pub mod core {
 		extern_container_arg!(name);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_write_FileStorageR_const_StringR_int(fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), value, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	#[inline]
+	pub fn write(fs: &mut impl core::FileStorageTrait, name: &str, value: i64) -> Result<()> {
+		extern_container_arg!(name);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_write_FileStorageR_const_StringR_int64_t(fs.as_raw_mut_FileStorage(), name.opencv_as_extern(), value, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -12368,7 +12582,7 @@ pub mod core {
 	/// etc.).
 	///
 	/// Here is example of SimpleBlobDetector use in your application via Algorithm interface:
-	/// [Algorithm](https://github.com/opencv/opencv/blob/4.10.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+	/// [Algorithm](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 	pub struct Algorithm {
 		ptr: *mut c_void,
 	}
@@ -14335,13 +14549,10 @@ pub mod core {
 		/// !
 		/// \return the error description and the context as a text string.
 		#[inline]
-		fn what(&self) -> Result<String> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Exception_what_const(self.as_raw_Exception(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
+		fn what(&self) -> String {
+			let ret = unsafe { sys::cv_Exception_what_const(self.as_raw_Exception()) };
 			let ret = unsafe { String::opencv_from_extern(ret) };
-			Ok(ret)
+			ret
 		}
 
 	}
@@ -14696,6 +14907,16 @@ pub mod core {
 		fn to_i32(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileNode_operator_int_const(self.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// returns the node content as a signed 64bit integer. If the node stores floating-point number, it is rounded.
+		#[inline]
+		fn to_i64(&self) -> Result<i64> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FileNode_operator_int64_t_const(self.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -15444,6 +15665,22 @@ pub mod core {
 			extern_container_arg!(name);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_FileStorage_write_const_StringR_int(self.as_raw_mut_FileStorage(), name.opencv_as_extern(), val, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Simplified writing API to use with bindings.
+		/// ## Parameters
+		/// * name: Name of the written object. When writing to sequences (a.k.a. "arrays"), pass an empty string.
+		/// * val: Value of the written object.
+		///
+		/// ## Overloaded parameters
+		#[inline]
+		fn write(&mut self, name: &str, val: i64) -> Result<()> {
+			extern_container_arg!(name);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FileStorage_write_const_StringR_int64_t(self.as_raw_mut_FileStorage(), name.opencv_as_extern(), val, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -17910,10 +18147,10 @@ pub mod core {
 		///        that an element may have multiple channels.
 		///
 		/// The following code demonstrates its usage for a 2-d matrix:
-		/// [example-2d](https://github.com/opencv/opencv/blob/4.10.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
+		/// [example-2d](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
 		///
 		/// The following code demonstrates its usage for a 3-d matrix:
-		/// [example-3d](https://github.com/opencv/opencv/blob/4.10.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
+		/// [example-3d](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
 		///
 		/// ## C++ default parameters
 		/// * depth: -1
@@ -17944,10 +18181,10 @@ pub mod core {
 		///        that an element may have multiple channels.
 		///
 		/// The following code demonstrates its usage for a 2-d matrix:
-		/// [example-2d](https://github.com/opencv/opencv/blob/4.10.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
+		/// [example-2d](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
 		///
 		/// The following code demonstrates its usage for a 3-d matrix:
-		/// [example-3d](https://github.com/opencv/opencv/blob/4.10.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
+		/// [example-3d](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
 		///
 		/// ## Note
 		/// This alternative version of [MatTraitConst::check_vector] function uses the following default values for its arguments:
@@ -24288,8 +24525,8 @@ pub mod core {
 	/// [size2f] structure) and the rotation angle in degrees.
 	///
 	/// The sample below demonstrates how to use RotatedRect:
-	/// [RotatedRect_demo](https://github.com/opencv/opencv/blob/4.10.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
-	/// ![image](https://docs.opencv.org/4.10.0/rotatedrect.png)
+	/// [RotatedRect_demo](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+	/// ![image](https://docs.opencv.org/4.11.0/rotatedrect.png)
 	/// ## See also
 	/// CamShift, fitEllipse, minAreaRect, CvBox2D
 	#[repr(C)]
@@ -26336,6 +26573,46 @@ pub mod core {
 			Ok(ret)
 		}
 
+		/// returns counted ticks of the last iteration.
+		#[inline]
+		fn get_last_time_ticks(&self) -> Result<i64> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_TickMeter_getLastTimeTicks_const(self.as_raw_TickMeter(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// returns passed time of the last iteration in microseconds.
+		#[inline]
+		fn get_last_time_micro(&self) -> Result<f64> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_TickMeter_getLastTimeMicro_const(self.as_raw_TickMeter(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// returns passed time of the last iteration in milliseconds.
+		#[inline]
+		fn get_last_time_milli(&self) -> Result<f64> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_TickMeter_getLastTimeMilli_const(self.as_raw_TickMeter(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// returns passed time of the last iteration in seconds.
+		#[inline]
+		fn get_last_time_sec(&self) -> Result<f64> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_TickMeter_getLastTimeSec_const(self.as_raw_TickMeter(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
 		/// returns internal counter value.
 		#[inline]
 		fn get_counter(&self) -> Result<i64> {
@@ -26418,10 +26695,10 @@ pub mod core {
 	///
 	/// The class computes passing time by counting the number of ticks per second. That is, the following code computes the
 	/// execution time in seconds:
-	/// [TickMeter_total](https://github.com/opencv/opencv/blob/4.10.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+	/// [TickMeter_total](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 	///
 	/// It is also possible to compute the average time over multiple runs:
-	/// [TickMeter_average](https://github.com/opencv/opencv/blob/4.10.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+	/// [TickMeter_average](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 	/// ## See also
 	/// getTickCount, getTickFrequency
 	pub struct TickMeter {
@@ -28951,9 +29228,10 @@ pub mod core {
 	///    typedef const _InputArray& InputArray;
 	/// ```
 	///
-	/// where _InputArray is a class that can be constructed from `Mat`, `Mat_<T>`, `Matx<T, m, n>`,
-	/// `std::vector<T>`, `std::vector<std::vector<T> >`, `std::vector<Mat>`, `std::vector<Mat_<T> >`,
-	/// `UMat`, `std::vector<UMat>` or `double`. It can also be constructed from a matrix expression.
+	/// where \ref cv::_InputArray is a class that can be constructed from \ref cv::Mat, \ref cv::Mat_<T>,
+	/// \ref cv::Matx<T, m, n>, std::vector<T>, std::vector<std::vector<T>>, std::vector<Mat>,
+	/// std::vector<Mat_<T>>, \ref cv::UMat, std::vector<UMat> or `double`. It can also be constructed from
+	/// a matrix expression.
 	///
 	/// Since this is mostly implementation-level class, and its interface may change in future versions, we
 	/// do not describe it in details. There are a few key things, though, that should be kept in mind:
@@ -32163,6 +32441,16 @@ pub mod core {
 			Ok(ret)
 		}
 
+		#[inline]
+		pub fn get_std_allocator() -> Result<types::AbstractRefMut<'static, core::GpuMat_Allocator>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_getStdAllocator(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { types::AbstractRefMut::<'static, core::GpuMat_Allocator>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 		/// default constructor
 		///
 		/// ## C++ default parameters
@@ -33041,8 +33329,9 @@ pub mod core {
 		/// data, which means that no data is copied. This operation is very efficient and can be used to
 		/// process external data using OpenCV functions. The external data is not automatically deallocated, so
 		/// you should take care of it.
-		/// * step: Array of _size.size()-1 steps in case of a multi-dimensional array (the last step is always
-		/// set to the element size). If not specified, the matrix is assumed to be continuous.
+		/// * step: Array of _size.size() or _size.size()-1 steps in case of a multi-dimensional array
+		/// (if specified, the last step must be equal to the element size, otherwise it will be added as such).
+		/// If not specified, the matrix is assumed to be continuous.
 		///
 		/// ## C++ default parameters
 		/// * step: StepArray()
@@ -33066,8 +33355,9 @@ pub mod core {
 		/// data, which means that no data is copied. This operation is very efficient and can be used to
 		/// process external data using OpenCV functions. The external data is not automatically deallocated, so
 		/// you should take care of it.
-		/// * step: Array of _size.size()-1 steps in case of a multi-dimensional array (the last step is always
-		/// set to the element size). If not specified, the matrix is assumed to be continuous.
+		/// * step: Array of _size.size() or _size.size()-1 steps in case of a multi-dimensional array
+		/// (if specified, the last step must be equal to the element size, otherwise it will be added as such).
+		/// If not specified, the matrix is assumed to be continuous.
 		///
 		/// ## Note
 		/// This alternative version of [new] function uses the following default values for its arguments:

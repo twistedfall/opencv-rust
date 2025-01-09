@@ -3,34 +3,40 @@ pub mod cudacodec {
 	use crate::mod_prelude::*;
 	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use super::{CUDA_EncoderCallbackTrait, CUDA_EncoderCallbackTraitConst, CUDA_RawVideoSourceTrait, CUDA_RawVideoSourceTraitConst, CUDA_VideoReaderTrait, CUDA_VideoReaderTraitConst, CUDA_VideoWriterTrait, CUDA_VideoWriterTraitConst};
+		pub use super::{CUDA_EncoderCallbackTrait, CUDA_EncoderCallbackTraitConst, CUDA_NVSurfaceToColorConverterTrait, CUDA_NVSurfaceToColorConverterTraitConst, CUDA_RawVideoSourceTrait, CUDA_RawVideoSourceTraitConst, CUDA_VideoReaderTrait, CUDA_VideoReaderTraitConst, CUDA_VideoWriterTrait, CUDA_VideoWriterTraitConst};
 	}
 
 	pub const CUDA_AV1: i32 = 11;
+	/// Adaptive deinterlacing needs more video memory than other deinterlacing modes.
 	pub const CUDA_Adaptive: i32 = 2;
+	/// OpenCV color format. VideoReader and VideoWriter.
+	pub const CUDA_BGR: i32 = 2;
+	/// OpenCV color format. VideoReader and VideoWriter.
+	pub const CUDA_BGRA: i32 = 1;
+	/// Drop one field.
 	pub const CUDA_Bob: i32 = 1;
-	/// OpenCV color format, can be used with both VideoReader and VideoWriter.
-	pub const CUDA_ColorFormat_BGR: i32 = 2;
-	/// OpenCV color format, can be used with both VideoReader and VideoWriter.
-	pub const CUDA_ColorFormat_BGRA: i32 = 1;
-	/// OpenCV color format, can be used with both VideoReader and VideoWriter.
-	pub const CUDA_ColorFormat_GRAY: i32 = 3;
-	/// Nvidia Buffer Format - 8 bit Packed A8Y8U8V8. This is a word-ordered format where a pixel is represented by a 32-bit word with V in the lowest 8 bits, U in the next 8 bits, Y in the 8 bits after that and A in the highest 8 bits, can only be used with VideoWriter.
-	pub const CUDA_ColorFormat_NV_AYUV: i32 = 11;
-	/// Nvidia Buffer Format - Planar YUV [Y plane followed by U and V planes], use with VideoReader, can only be used with VideoWriter.
-	pub const CUDA_ColorFormat_NV_IYUV: i32 = 9;
-	/// Nvidia color format - equivalent to YUV - Semi-Planar YUV [Y plane followed by interleaved UV plane], can be used with both VideoReader and VideoWriter.
-	pub const CUDA_ColorFormat_NV_NV12: i32 = 4;
-	/// Nvidia Buffer Format - Planar YUV [Y plane followed by U and V planes], use with VideoReader, can only be used with VideoWriter.
-	pub const CUDA_ColorFormat_NV_YUV444: i32 = 10;
-	/// Nvidia Buffer Format - Planar YUV [Y plane followed by V and U planes], use with VideoReader, can only be used with VideoWriter.
-	pub const CUDA_ColorFormat_NV_YV12: i32 = 8;
-	pub const CUDA_ColorFormat_PROP_NOT_SUPPORTED: i32 = 12;
-	/// OpenCV color format, can only be used with VideoWriter.
-	pub const CUDA_ColorFormat_RGB: i32 = 5;
-	/// OpenCV color format, can only be used with VideoWriter.
-	pub const CUDA_ColorFormat_RGBA: i32 = 6;
-	pub const CUDA_ColorFormat_UNDEFINED: i32 = 0;
+	/// ITU - R BT.2020, used for ultra-high-definition television.
+	pub const CUDA_ColorSpaceStandard_BT2020: i32 = 9;
+	/// ITU - R BT.2020 Constant Luminance, used for ultra-high-definition television.
+	pub const CUDA_ColorSpaceStandard_BT2020C: i32 = 10;
+	/// ITU - R BT.470, used for older analog television systems.
+	pub const CUDA_ColorSpaceStandard_BT470: i32 = 5;
+	/// ITU - R BT.601, used for standard definition television.
+	pub const CUDA_ColorSpaceStandard_BT601: i32 = 6;
+	/// ITU-R BT.709 standard for high-definition television.
+	pub const CUDA_ColorSpaceStandard_BT709: i32 = 1;
+	/// FCC color space standard.
+	pub const CUDA_ColorSpaceStandard_FCC: i32 = 4;
+	/// Reserved for future use.
+	pub const CUDA_ColorSpaceStandard_Reserved: i32 = 3;
+	/// SMPTE 240M, used for early HDTV systems.
+	pub const CUDA_ColorSpaceStandard_SMPTE240M: i32 = 7;
+	/// Unspecified color space standard.
+	pub const CUDA_ColorSpaceStandard_Unspecified: i32 = 2;
+	/// YCgCo color space, used in some video compression algorithms.
+	pub const CUDA_ColorSpaceStandard_YCgCo: i32 = 8;
+	/// 8 bit depth.
+	pub const CUDA_EIGHT: i32 = 0;
 	pub const CUDA_ENC_CODEC_PROFILE_AUTOSELECT: i32 = 0;
 	pub const CUDA_ENC_H264_PROFILE_BASELINE: i32 = 1;
 	pub const CUDA_ENC_H264_PROFILE_CONSTRAINED_HIGH: i32 = 7;
@@ -72,6 +78,8 @@ pub mod cudacodec {
 	pub const CUDA_ENC_TWO_PASS_FULL_RESOLUTION: i32 = 2;
 	/// Two Pass encoding is enabled where first Pass is quarter resolution.
 	pub const CUDA_ENC_TWO_PASS_QUARTER_RESOLUTION: i32 = 1;
+	/// OpenCV color format. VideoReader and VideoWriter.
+	pub const CUDA_GRAY: i32 = 3;
 	pub const CUDA_H264: i32 = 4;
 	pub const CUDA_H264_MVC: i32 = 7;
 	pub const CUDA_H264_SVC: i32 = 6;
@@ -81,8 +89,44 @@ pub mod cudacodec {
 	pub const CUDA_MPEG2: i32 = 1;
 	pub const CUDA_MPEG4: i32 = 2;
 	pub const CUDA_Monochrome: i32 = 0;
+	/// Nvidia Buffer Format - 8 bit Packed A8Y8U8V8. This is a word-ordered format where a pixel is represented by a 32-bit word with V in the lowest 8 bits, U in the next 8 bits, Y in the 8 bits after that and A in the highest 8 bits. VideoWriter only.
+	pub const CUDA_NV_AYUV: i32 = 11;
+	/// Nvidia Buffer Format - Planar YUV [Y plane followed by U and V planes]. VideoWriter only.
+	pub const CUDA_NV_IYUV: i32 = 9;
+	///
+	/// **Deprecated**: Deprecated for use with VideoReader, use [NV_YUV_SURFACE_FORMAT] instead.
+	#[deprecated = "Deprecated for use with VideoReader, use [NV_YUV_SURFACE_FORMAT] instead."]
+	pub const CUDA_NV_NV12: i32 = 4;
+	/// Nvidia Buffer Format - 10 bit Semi-Planar YUV [Y plane followed by interleaved UV plane]. Each pixel of size 2 bytes. Most Significant 10 bits contain pixel data. VideoWriter only.
+	pub const CUDA_NV_YUV420_10BIT: i32 = 12;
+	/// Nvidia Buffer Format - Planar YUV [Y plane followed by U and V planes]. VideoWriter only.
+	pub const CUDA_NV_YUV444: i32 = 10;
+	/// Nvidia Buffer Format - 10 bit Planar YUV444 [Y plane followed by U and V planes]. Each pixel of size 2 bytes. Most Significant 10 bits contain pixel data. VideoWriter only.
+	pub const CUDA_NV_YUV444_10BIT: i32 = 13;
+	/// Nvidia YUV Surface Format output by the Nvidia decoder, see [SurfaceFormat]. VideoReader only.
+	pub const CUDA_NV_YUV_SURFACE_FORMAT: i32 = 7;
+	/// Nvidia Buffer Format - Planar YUV [Y plane followed by V and U planes]. VideoWriter only.
+	pub const CUDA_NV_YV12: i32 = 8;
 	pub const CUDA_NumCodecs: i32 = 12;
 	pub const CUDA_NumFormats: i32 = 4;
+	pub const CUDA_PROP_NOT_SUPPORTED: i32 = 14;
+	/// OpenCV color format. VideoReader and VideoWriter.
+	pub const CUDA_RGB: i32 = 5;
+	/// OpenCV color format. VideoReader and VideoWriter.
+	pub const CUDA_RGBA: i32 = 6;
+	/// Semi-Planar YUV [Y plane followed by interleaved UV plane]
+	pub const CUDA_SF_NV12: i32 = 0;
+	/// 16 bit Semi-Planar YUV [Y plane followed by interleaved UV plane]. Can be used for 10 bit(6LSB bits 0), 12 bit (4LSB bits 0)
+	pub const CUDA_SF_P016: i32 = 1;
+	/// Planar YUV [Y plane followed by U and V planes]
+	pub const CUDA_SF_YUV444: i32 = 2;
+	/// 16 bit Planar YUV [Y plane followed by U and V planes]. Can be used for 10 bit(6LSB bits 0), 12 bit (4LSB bits 0)
+	pub const CUDA_SF_YUV444_16Bit: i32 = 3;
+	/// 16 bit depth.
+	pub const CUDA_SIXTEEN: i32 = 1;
+	/// Use source bit depth.
+	pub const CUDA_UNCHANGED: i32 = 2;
+	pub const CUDA_UNDEFINED: i32 = 0;
 	/// Y,UV  (4:2:0)
 	pub const CUDA_Uncompressed_NV12: i32 = 1314271538;
 	/// UYVY (4:2:2)
@@ -98,7 +142,9 @@ pub mod cudacodec {
 	pub const CUDA_VP9: i32 = 10;
 	/// Status of VideoReaderInitParams::allowFrameDrop initialization.
 	pub const CUDA_VideoReaderProps_PROP_ALLOW_FRAME_DROP: i32 = 8;
-	/// Set the ColorFormat of the decoded frame.  This can be changed before every call to nextFrame() and retrieve().
+	/// Bit depth of the decoded frame. This can be changed before every call to nextFrame() and retrieve().
+	pub const CUDA_VideoReaderProps_PROP_BIT_DEPTH: i32 = 9;
+	/// ColorFormat of the decoded frame.  This can be changed before every call to nextFrame() and retrieve().
 	pub const CUDA_VideoReaderProps_PROP_COLOR_FORMAT: i32 = 6;
 	/// Index for retrieving the decoded frame using retrieve().
 	pub const CUDA_VideoReaderProps_PROP_DECODED_FRAME_IDX: i32 = 0;
@@ -106,19 +152,49 @@ pub mod cudacodec {
 	pub const CUDA_VideoReaderProps_PROP_EXTRA_DATA_INDEX: i32 = 1;
 	/// FFmpeg source only - Indicates whether the Last Raw Frame (LRF), output from VideoReader::retrieve() when VideoReader is initialized in raw mode, contains encoded data for a key frame.
 	pub const CUDA_VideoReaderProps_PROP_LRF_HAS_KEY_FRAME: i32 = 5;
-	pub const CUDA_VideoReaderProps_PROP_NOT_SUPPORTED: i32 = 9;
+	pub const CUDA_VideoReaderProps_PROP_NOT_SUPPORTED: i32 = 11;
 	/// Number of raw packages recieved since the last call to grab().
 	pub const CUDA_VideoReaderProps_PROP_NUMBER_OF_RAW_PACKAGES_SINCE_LAST_GRAB: i32 = 3;
+	/// Planar when true, packed when false. This can be changed before every call to nextFrame() and retrieve().
+	pub const CUDA_VideoReaderProps_PROP_PLANAR: i32 = 10;
 	/// Status of raw mode.
 	pub const CUDA_VideoReaderProps_PROP_RAW_MODE: i32 = 4;
 	/// Base index for retrieving raw encoded data using retrieve().
 	pub const CUDA_VideoReaderProps_PROP_RAW_PACKAGES_BASE_INDEX: i32 = 2;
 	/// Status of VideoReaderInitParams::udpSource initialization.
 	pub const CUDA_VideoReaderProps_PROP_UDP_SOURCE: i32 = 7;
+	/// Weave both fields(no deinterlacing).For progressive content and for content that doesn't need deinterlacing.
 	pub const CUDA_Weave: i32 = 0;
 	pub const CUDA_YUV420: i32 = 1;
 	pub const CUDA_YUV422: i32 = 2;
 	pub const CUDA_YUV444: i32 = 3;
+	/// Bit depth of the frame returned by VideoReader::nextFrame() and VideoReader::retrieve()
+	#[repr(C)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum CUDA_BitDepth {
+		/// 8 bit depth.
+		EIGHT = 0,
+		/// 16 bit depth.
+		SIXTEEN = 1,
+		/// Use source bit depth.
+		UNCHANGED = 2,
+	}
+
+	impl TryFrom<i32> for CUDA_BitDepth {
+		type Error = crate::Error;
+
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::EIGHT),
+				1 => Ok(Self::SIXTEEN),
+				2 => Ok(Self::UNCHANGED),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudacodec::CUDA_BitDepth"))),
+			}
+		}
+	}
+
+	opencv_type_enum! { crate::cudacodec::CUDA_BitDepth }
+
 	/// Chroma formats supported by cudacodec::VideoReader.
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -214,27 +290,35 @@ pub mod cudacodec {
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum CUDA_ColorFormat {
 		UNDEFINED = 0,
-		/// OpenCV color format, can be used with both VideoReader and VideoWriter.
+		/// OpenCV color format. VideoReader and VideoWriter.
 		BGRA = 1,
-		/// OpenCV color format, can be used with both VideoReader and VideoWriter.
+		/// OpenCV color format. VideoReader and VideoWriter.
 		BGR = 2,
-		/// OpenCV color format, can be used with both VideoReader and VideoWriter.
+		/// OpenCV color format. VideoReader and VideoWriter.
 		GRAY = 3,
-		/// Nvidia color format - equivalent to YUV - Semi-Planar YUV [Y plane followed by interleaved UV plane], can be used with both VideoReader and VideoWriter.
-		NV_NV12 = 4,
-		/// OpenCV color format, can only be used with VideoWriter.
+		/// OpenCV color format. VideoReader and VideoWriter.
 		RGB = 5,
-		/// OpenCV color format, can only be used with VideoWriter.
+		/// OpenCV color format. VideoReader and VideoWriter.
 		RGBA = 6,
-		/// Nvidia Buffer Format - Planar YUV [Y plane followed by V and U planes], use with VideoReader, can only be used with VideoWriter.
+		/// Nvidia YUV Surface Format output by the Nvidia decoder, see [SurfaceFormat]. VideoReader only.
+		NV_YUV_SURFACE_FORMAT = 7,
+		///
+		/// **Deprecated**: Deprecated for use with VideoReader, use [NV_YUV_SURFACE_FORMAT] instead.
+		#[deprecated = "Deprecated for use with VideoReader, use [NV_YUV_SURFACE_FORMAT] instead."]
+		NV_NV12 = 4,
+		/// Nvidia Buffer Format - Planar YUV [Y plane followed by V and U planes]. VideoWriter only.
 		NV_YV12 = 8,
-		/// Nvidia Buffer Format - Planar YUV [Y plane followed by U and V planes], use with VideoReader, can only be used with VideoWriter.
+		/// Nvidia Buffer Format - Planar YUV [Y plane followed by U and V planes]. VideoWriter only.
 		NV_IYUV = 9,
-		/// Nvidia Buffer Format - Planar YUV [Y plane followed by U and V planes], use with VideoReader, can only be used with VideoWriter.
+		/// Nvidia Buffer Format - Planar YUV [Y plane followed by U and V planes]. VideoWriter only.
 		NV_YUV444 = 10,
-		/// Nvidia Buffer Format - 8 bit Packed A8Y8U8V8. This is a word-ordered format where a pixel is represented by a 32-bit word with V in the lowest 8 bits, U in the next 8 bits, Y in the 8 bits after that and A in the highest 8 bits, can only be used with VideoWriter.
+		/// Nvidia Buffer Format - 8 bit Packed A8Y8U8V8. This is a word-ordered format where a pixel is represented by a 32-bit word with V in the lowest 8 bits, U in the next 8 bits, Y in the 8 bits after that and A in the highest 8 bits. VideoWriter only.
 		NV_AYUV = 11,
-		PROP_NOT_SUPPORTED = 12,
+		/// Nvidia Buffer Format - 10 bit Semi-Planar YUV [Y plane followed by interleaved UV plane]. Each pixel of size 2 bytes. Most Significant 10 bits contain pixel data. VideoWriter only.
+		NV_YUV420_10BIT = 12,
+		/// Nvidia Buffer Format - 10 bit Planar YUV444 [Y plane followed by U and V planes]. Each pixel of size 2 bytes. Most Significant 10 bits contain pixel data. VideoWriter only.
+		NV_YUV444_10BIT = 13,
+		PROP_NOT_SUPPORTED = 14,
 	}
 
 	impl TryFrom<i32> for CUDA_ColorFormat {
@@ -246,14 +330,17 @@ pub mod cudacodec {
 				1 => Ok(Self::BGRA),
 				2 => Ok(Self::BGR),
 				3 => Ok(Self::GRAY),
-				4 => Ok(Self::NV_NV12),
 				5 => Ok(Self::RGB),
 				6 => Ok(Self::RGBA),
+				7 => Ok(Self::NV_YUV_SURFACE_FORMAT),
+				4 => Ok(Self::NV_NV12),
 				8 => Ok(Self::NV_YV12),
 				9 => Ok(Self::NV_IYUV),
 				10 => Ok(Self::NV_YUV444),
 				11 => Ok(Self::NV_AYUV),
-				12 => Ok(Self::PROP_NOT_SUPPORTED),
+				12 => Ok(Self::NV_YUV420_10BIT),
+				13 => Ok(Self::NV_YUV444_10BIT),
+				14 => Ok(Self::PROP_NOT_SUPPORTED),
 				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudacodec::CUDA_ColorFormat"))),
 			}
 		}
@@ -261,16 +348,63 @@ pub mod cudacodec {
 
 	opencv_type_enum! { crate::cudacodec::CUDA_ColorFormat }
 
+	/// Video Signal Description Color Primaries of the VideoReader source (section E.2.1 VUI parameters semantics of H265 spec file)
+	#[repr(C)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum CUDA_ColorSpaceStandard {
+		/// ITU-R BT.709 standard for high-definition television.
+		BT709 = 1,
+		/// Unspecified color space standard.
+		Unspecified = 2,
+		/// Reserved for future use.
+		Reserved = 3,
+		/// FCC color space standard.
+		FCC = 4,
+		/// ITU - R BT.470, used for older analog television systems.
+		BT470 = 5,
+		/// ITU - R BT.601, used for standard definition television.
+		BT601 = 6,
+		/// SMPTE 240M, used for early HDTV systems.
+		SMPTE240M = 7,
+		/// YCgCo color space, used in some video compression algorithms.
+		YCgCo = 8,
+		/// ITU - R BT.2020, used for ultra-high-definition television.
+		BT2020 = 9,
+		/// ITU - R BT.2020 Constant Luminance, used for ultra-high-definition television.
+		BT2020C = 10,
+	}
+
+	impl TryFrom<i32> for CUDA_ColorSpaceStandard {
+		type Error = crate::Error;
+
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				1 => Ok(Self::BT709),
+				2 => Ok(Self::Unspecified),
+				3 => Ok(Self::Reserved),
+				4 => Ok(Self::FCC),
+				5 => Ok(Self::BT470),
+				6 => Ok(Self::BT601),
+				7 => Ok(Self::SMPTE240M),
+				8 => Ok(Self::YCgCo),
+				9 => Ok(Self::BT2020),
+				10 => Ok(Self::BT2020C),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudacodec::CUDA_ColorSpaceStandard"))),
+			}
+		}
+	}
+
+	opencv_type_enum! { crate::cudacodec::CUDA_ColorSpaceStandard }
+
 	/// Deinterlacing mode used by decoder.
-	/// ## Parameters
-	/// * Weave: Weave both fields (no deinterlacing). For progressive content and for content that doesn't need deinterlacing.
-	/// * Bob: Drop one field.
-	/// * Adaptive: Adaptive deinterlacing needs more video memory than other deinterlacing modes.
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum CUDA_DeinterlaceMode {
+		/// Weave both fields(no deinterlacing).For progressive content and for content that doesn't need deinterlacing.
 		Weave = 0,
+		/// Drop one field.
 		Bob = 1,
+		/// Adaptive deinterlacing needs more video memory than other deinterlacing modes.
 		Adaptive = 2,
 	}
 
@@ -450,6 +584,36 @@ pub mod cudacodec {
 
 	opencv_type_enum! { crate::cudacodec::CUDA_EncodeTuningInfo }
 
+	/// Video surface formats output by the decoder
+	#[repr(C)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum CUDA_SurfaceFormat {
+		/// Semi-Planar YUV [Y plane followed by interleaved UV plane]
+		SF_NV12 = 0,
+		/// 16 bit Semi-Planar YUV [Y plane followed by interleaved UV plane]. Can be used for 10 bit(6LSB bits 0), 12 bit (4LSB bits 0)
+		SF_P016 = 1,
+		/// Planar YUV [Y plane followed by U and V planes]
+		SF_YUV444 = 2,
+		/// 16 bit Planar YUV [Y plane followed by U and V planes]. Can be used for 10 bit(6LSB bits 0), 12 bit (4LSB bits 0)
+		SF_YUV444_16Bit = 3,
+	}
+
+	impl TryFrom<i32> for CUDA_SurfaceFormat {
+		type Error = crate::Error;
+
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::SF_NV12),
+				1 => Ok(Self::SF_P016),
+				2 => Ok(Self::SF_YUV444),
+				3 => Ok(Self::SF_YUV444_16Bit),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudacodec::CUDA_SurfaceFormat"))),
+			}
+		}
+	}
+
+	opencv_type_enum! { crate::cudacodec::CUDA_SurfaceFormat }
+
 	/// cv::cudacodec::VideoReader generic properties identifier.
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
@@ -466,13 +630,17 @@ pub mod cudacodec {
 		PROP_RAW_MODE = 4,
 		/// FFmpeg source only - Indicates whether the Last Raw Frame (LRF), output from VideoReader::retrieve() when VideoReader is initialized in raw mode, contains encoded data for a key frame.
 		PROP_LRF_HAS_KEY_FRAME = 5,
-		/// Set the ColorFormat of the decoded frame.  This can be changed before every call to nextFrame() and retrieve().
+		/// ColorFormat of the decoded frame.  This can be changed before every call to nextFrame() and retrieve().
 		PROP_COLOR_FORMAT = 6,
 		/// Status of VideoReaderInitParams::udpSource initialization.
 		PROP_UDP_SOURCE = 7,
 		/// Status of VideoReaderInitParams::allowFrameDrop initialization.
 		PROP_ALLOW_FRAME_DROP = 8,
-		PROP_NOT_SUPPORTED = 9,
+		/// Bit depth of the decoded frame. This can be changed before every call to nextFrame() and retrieve().
+		PROP_BIT_DEPTH = 9,
+		/// Planar when true, packed when false. This can be changed before every call to nextFrame() and retrieve().
+		PROP_PLANAR = 10,
+		PROP_NOT_SUPPORTED = 11,
 	}
 
 	impl TryFrom<i32> for CUDA_VideoReaderProps {
@@ -489,7 +657,9 @@ pub mod cudacodec {
 				6 => Ok(Self::PROP_COLOR_FORMAT),
 				7 => Ok(Self::PROP_UDP_SOURCE),
 				8 => Ok(Self::PROP_ALLOW_FRAME_DROP),
-				9 => Ok(Self::PROP_NOT_SUPPORTED),
+				9 => Ok(Self::PROP_BIT_DEPTH),
+				10 => Ok(Self::PROP_PLANAR),
+				11 => Ok(Self::PROP_NOT_SUPPORTED),
 				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudacodec::CUDA_VideoReaderProps"))),
 			}
 		}
@@ -505,13 +675,48 @@ pub mod cudacodec {
 	///
 	/// Note:
 	/// *   This function demonstrates how to map the luma histogram back so that it is equivalent to the result obtained from cuda::calcHist()
-	/// if the returned frame was colorFormat::GRAY.
+	/// if the returned frame was ColorFormat::GRAY.
 	#[inline]
 	pub fn map_hist(hist: &impl core::GpuMatTraitConst, hist_full: &mut impl core::MatTrait) -> Result<()> {
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cudacodec_MapHist_const_GpuMatR_MatR(hist.as_raw_GpuMat(), hist_full.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Creates a NVSurfaceToColorConverter.
+	/// ## Parameters
+	/// * colorSpace: The requested [ColorSpaceStandard] for the converter.
+	/// * videoFullRangeFlag: Indicates if the black level, luma and chroma of the source are represented using the full or limited range (AKA TV or "analogue" range) of values as defined in Annex E of the ITU-T Specification.
+	///
+	/// ## Note
+	/// This alternative version of [create_nv_surface_to_color_converter] function uses the following default values for its arguments:
+	/// * video_full_range_flag: false
+	#[inline]
+	pub fn create_nv_surface_to_color_converter_def(color_space: crate::cudacodec::CUDA_ColorSpaceStandard) -> Result<core::Ptr<crate::cudacodec::CUDA_NVSurfaceToColorConverter>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_createNVSurfaceToColorConverter_const_ColorSpaceStandard(color_space, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::cudacodec::CUDA_NVSurfaceToColorConverter>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Creates a NVSurfaceToColorConverter.
+	/// ## Parameters
+	/// * colorSpace: The requested [ColorSpaceStandard] for the converter.
+	/// * videoFullRangeFlag: Indicates if the black level, luma and chroma of the source are represented using the full or limited range (AKA TV or "analogue" range) of values as defined in Annex E of the ITU-T Specification.
+	///
+	/// ## C++ default parameters
+	/// * video_full_range_flag: false
+	#[inline]
+	pub fn create_nv_surface_to_color_converter(color_space: crate::cudacodec::CUDA_ColorSpaceStandard, video_full_range_flag: bool) -> Result<core::Ptr<crate::cudacodec::CUDA_NVSurfaceToColorConverter>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cudacodec_createNVSurfaceToColorConverter_const_ColorSpaceStandard_const_bool(color_space, video_full_range_flag, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Ptr::<crate::cudacodec::CUDA_NVSurfaceToColorConverter>::opencv_from_extern(ret) };
 		Ok(ret)
 	}
 
@@ -765,10 +970,24 @@ pub mod cudacodec {
 		///
 		/// ## Parameters
 		/// * vPacket: The raw bitstream for one or more frames.
+		/// * pts: Presentation timestamps for each frame in vPacket using the FPS time base.  e.g. fps = 25, pts = 3, presentation time = 3/25 seconds.
 		#[inline]
-		fn on_encoded(&mut self, v_packet: &core::Vector<core::Vector<u8>>) -> Result<()> {
+		fn on_encoded(&mut self, v_packet: &core::Vector<core::Vector<u8>>, pts: &core::Vector<u64>) -> Result<()> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cudacodec_EncoderCallback_onEncoded_const_vectorLvectorLuint8_tGGR(self.as_raw_mut_CUDA_EncoderCallback(), v_packet.as_raw_VectorOfVectorOfu8(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cudacodec_EncoderCallback_onEncoded_const_vectorLvectorLuint8_tGGR_const_vectorLuint64_tGR(self.as_raw_mut_CUDA_EncoderCallback(), v_packet.as_raw_VectorOfVectorOfu8(), pts.as_raw_VectorOfu64(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Set the GOP pattern used by the encoder.
+		///
+		/// ## Parameters
+		/// * frameIntervalP: Specify the GOP pattern as follows : \p frameIntervalP = 0: I, 1 : IPP, 2 : IBP, 3 : IBBP.
+		#[inline]
+		fn set_frame_interval_p(&mut self, frame_interval_p: i32) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cudacodec_EncoderCallback_setFrameIntervalP_const_int(self.as_raw_mut_CUDA_EncoderCallback(), frame_interval_p, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -868,6 +1087,8 @@ pub mod cudacodec {
 	pub struct CUDA_FormatInfo {
 		pub codec: crate::cudacodec::CUDA_Codec,
 		pub chroma_format: crate::cudacodec::CUDA_ChromaFormat,
+		/// Surface format of the decoded frame.
+		pub surface_format: crate::cudacodec::CUDA_SurfaceFormat,
 		pub n_bit_depth_minus8: i32,
 		pub n_bit_depth_chroma_minus8: i32,
 		/// Coded sequence width in pixels.
@@ -893,8 +1114,10 @@ pub mod cudacodec {
 		pub src_roi: core::Rect,
 		/// Region of interest in the output frame containing the decoded frame.
 		pub target_roi: core::Rect,
-		/// Output value indicating if the black level, luma and chroma of the source are represented using the full or limited range (AKA TV or "analogue" range) of values as defined in Annex E of the ITU-T Specification.  Internally the conversion from NV12 to BGR obeys ITU 709.
+		/// Output value indicating if the black level, luma and chroma of the source are represented using the full or limited range (AKA TV or "analogue" range) of values as defined in Annex E of the ITU-T Specification.
 		pub video_full_range_flag: bool,
+		/// Video Signal Description Color Primaries of the VideoReader source (section E.2.1 VUI parameters semantics of H265 spec file)
+		pub color_space_standard: crate::cudacodec::CUDA_ColorSpaceStandard,
 		/// Flag requesting histogram output if supported. Exception will be thrown when requested but not supported.
 		pub enable_histogram: bool,
 		/// Bit depth of histogram bins if histogram output is requested and supported.
@@ -915,6 +1138,110 @@ pub mod cudacodec {
 			Ok(ret)
 		}
 
+	}
+
+	/// Constant methods for [crate::cudacodec::CUDA_NVSurfaceToColorConverter]
+	pub trait CUDA_NVSurfaceToColorConverterTraitConst {
+		fn as_raw_CUDA_NVSurfaceToColorConverter(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::cudacodec::CUDA_NVSurfaceToColorConverter]
+	pub trait CUDA_NVSurfaceToColorConverterTrait: crate::cudacodec::CUDA_NVSurfaceToColorConverterTraitConst {
+		fn as_raw_mut_CUDA_NVSurfaceToColorConverter(&mut self) -> *mut c_void;
+
+		/// Performs the conversion from the raw YUV Surface output from VideoReader to the requested color format. Use this function when you want to convert the raw YUV Surface output from VideoReader to more than one color format or you want both the raw Surface output in addition to a color frame.
+		/// ## Parameters
+		/// * yuv: The raw YUV Surface output from VideoReader see [SurfaceFormat].
+		/// * color: The converted frame.
+		/// * surfaceFormat: The surface format of the input YUV data.
+		/// * outputFormat: The requested output color format.
+		/// * bitDepth: The requested bit depth of the output frame.
+		/// * planar: Request seperate planes for each color plane.
+		/// * videoFullRangeFlag: Indicates if the black level, luma and chroma of the source are represented using the full or limited range (AKA TV or "analogue" range) of values as defined in Annex E of the ITU-T Specification.
+		/// * stream: Stream for the asynchronous version.
+		///
+		/// ## C++ default parameters
+		/// * bit_depth: BitDepth::UNCHANGED
+		/// * planar: false
+		/// * video_full_range_flag: false
+		/// * stream: cuda::Stream::Null()
+		#[inline]
+		fn convert(&mut self, yuv: &impl ToInputArray, color: &mut impl ToOutputArray, surface_format: crate::cudacodec::CUDA_SurfaceFormat, output_format: crate::cudacodec::CUDA_ColorFormat, bit_depth: crate::cudacodec::CUDA_BitDepth, planar: bool, video_full_range_flag: bool, stream: &mut impl core::StreamTrait) -> Result<bool> {
+			input_array_arg!(yuv);
+			output_array_arg!(color);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cudacodec_NVSurfaceToColorConverter_convert_const__InputArrayR_const__OutputArrayR_const_SurfaceFormat_const_ColorFormat_const_BitDepth_const_bool_const_bool_StreamR(self.as_raw_mut_CUDA_NVSurfaceToColorConverter(), yuv.as_raw__InputArray(), color.as_raw__OutputArray(), surface_format, output_format, bit_depth, planar, video_full_range_flag, stream.as_raw_mut_Stream(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Performs the conversion from the raw YUV Surface output from VideoReader to the requested color format. Use this function when you want to convert the raw YUV Surface output from VideoReader to more than one color format or you want both the raw Surface output in addition to a color frame.
+		/// ## Parameters
+		/// * yuv: The raw YUV Surface output from VideoReader see [SurfaceFormat].
+		/// * color: The converted frame.
+		/// * surfaceFormat: The surface format of the input YUV data.
+		/// * outputFormat: The requested output color format.
+		/// * bitDepth: The requested bit depth of the output frame.
+		/// * planar: Request seperate planes for each color plane.
+		/// * videoFullRangeFlag: Indicates if the black level, luma and chroma of the source are represented using the full or limited range (AKA TV or "analogue" range) of values as defined in Annex E of the ITU-T Specification.
+		/// * stream: Stream for the asynchronous version.
+		///
+		/// ## Note
+		/// This alternative version of [CUDA_NVSurfaceToColorConverterTrait::convert] function uses the following default values for its arguments:
+		/// * bit_depth: BitDepth::UNCHANGED
+		/// * planar: false
+		/// * video_full_range_flag: false
+		/// * stream: cuda::Stream::Null()
+		#[inline]
+		fn convert_def(&mut self, yuv: &impl ToInputArray, color: &mut impl ToOutputArray, surface_format: crate::cudacodec::CUDA_SurfaceFormat, output_format: crate::cudacodec::CUDA_ColorFormat) -> Result<bool> {
+			input_array_arg!(yuv);
+			output_array_arg!(color);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cudacodec_NVSurfaceToColorConverter_convert_const__InputArrayR_const__OutputArrayR_const_SurfaceFormat_const_ColorFormat(self.as_raw_mut_CUDA_NVSurfaceToColorConverter(), yuv.as_raw__InputArray(), color.as_raw__OutputArray(), surface_format, output_format, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	/// Class for converting the raw YUV Surface output from VideoReader if output color format is set to ColorFormat::NV_YUV_SURFACE_FORMAT (VideoReader::set(ColorFormat::NV_YUV_SURFACE_FORMAT)) to the requested [ColorFormat].
+	pub struct CUDA_NVSurfaceToColorConverter {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { CUDA_NVSurfaceToColorConverter }
+
+	impl Drop for CUDA_NVSurfaceToColorConverter {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_cudacodec_NVSurfaceToColorConverter_delete(self.as_raw_mut_CUDA_NVSurfaceToColorConverter()) };
+		}
+	}
+
+	unsafe impl Send for CUDA_NVSurfaceToColorConverter {}
+
+	impl crate::cudacodec::CUDA_NVSurfaceToColorConverterTraitConst for CUDA_NVSurfaceToColorConverter {
+		#[inline] fn as_raw_CUDA_NVSurfaceToColorConverter(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::cudacodec::CUDA_NVSurfaceToColorConverterTrait for CUDA_NVSurfaceToColorConverter {
+		#[inline] fn as_raw_mut_CUDA_NVSurfaceToColorConverter(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { CUDA_NVSurfaceToColorConverter, crate::cudacodec::CUDA_NVSurfaceToColorConverterTraitConst, as_raw_CUDA_NVSurfaceToColorConverter, crate::cudacodec::CUDA_NVSurfaceToColorConverterTrait, as_raw_mut_CUDA_NVSurfaceToColorConverter }
+
+	impl CUDA_NVSurfaceToColorConverter {
+	}
+
+	impl std::fmt::Debug for CUDA_NVSurfaceToColorConverter {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_NVSurfaceToColorConverter")
+				.finish()
+		}
 	}
 
 	/// Constant methods for [crate::cudacodec::CUDA_RawVideoSource]
@@ -1408,10 +1735,38 @@ pub mod cudacodec {
 		///
 		/// ## Parameters
 		/// * colorFormat: Value of the ColorFormat.
+		/// * bitDepth: Requested bit depth of the frame.
+		/// * planar: Set to true for planar and false for packed color format.
 		/// ## Returns
 		/// `true` unless the colorFormat is not supported.
+		///
+		/// ## C++ default parameters
+		/// * bit_depth: BitDepth::UNCHANGED
+		/// * planar: false
 		#[inline]
-		fn set_1(&mut self, color_format: crate::cudacodec::CUDA_ColorFormat) -> Result<bool> {
+		fn set_1(&mut self, color_format: crate::cudacodec::CUDA_ColorFormat, bit_depth: crate::cudacodec::CUDA_BitDepth, planar: bool) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cudacodec_VideoReader_set_const_ColorFormat_const_BitDepth_const_bool(self.as_raw_mut_CUDA_VideoReader(), color_format, bit_depth, planar, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Set the desired ColorFormat for the frame returned by nextFrame()/retrieve().
+		///
+		/// ## Parameters
+		/// * colorFormat: Value of the ColorFormat.
+		/// * bitDepth: Requested bit depth of the frame.
+		/// * planar: Set to true for planar and false for packed color format.
+		/// ## Returns
+		/// `true` unless the colorFormat is not supported.
+		///
+		/// ## Note
+		/// This alternative version of [CUDA_VideoReaderTrait::set] function uses the following default values for its arguments:
+		/// * bit_depth: BitDepth::UNCHANGED
+		/// * planar: false
+		#[inline]
+		fn set_def(&mut self, color_format: crate::cudacodec::CUDA_ColorFormat) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_cudacodec_VideoReader_set_const_ColorFormat(self.as_raw_mut_CUDA_VideoReader(), color_format, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);

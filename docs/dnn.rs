@@ -11,7 +11,7 @@ pub mod dnn {
 	use crate::mod_prelude::*;
 	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use super::{AbsLayerTrait, AbsLayerTraitConst, AccumLayerTrait, AccumLayerTraitConst, AcosLayerTrait, AcosLayerTraitConst, AcoshLayerTrait, AcoshLayerTraitConst, ActivationLayerInt8Trait, ActivationLayerInt8TraitConst, ActivationLayerTrait, ActivationLayerTraitConst, ArgLayerTrait, ArgLayerTraitConst, AsinLayerTrait, AsinLayerTraitConst, AsinhLayerTrait, AsinhLayerTraitConst, AtanLayerTrait, AtanLayerTraitConst, AtanhLayerTrait, AtanhLayerTraitConst, AttentionLayerTrait, AttentionLayerTraitConst, BNLLLayerTrait, BNLLLayerTraitConst, BackendNodeTrait, BackendNodeTraitConst, BackendWrapperTrait, BackendWrapperTraitConst, BaseConvolutionLayerTrait, BaseConvolutionLayerTraitConst, BatchNormLayerInt8Trait, BatchNormLayerInt8TraitConst, BatchNormLayerTrait, BatchNormLayerTraitConst, BlankLayerTrait, BlankLayerTraitConst, CeilLayerTrait, CeilLayerTraitConst, CeluLayerTrait, CeluLayerTraitConst, ChannelsPReLULayerTrait, ChannelsPReLULayerTraitConst, ClassificationModelTrait, ClassificationModelTraitConst, CompareLayerTrait, CompareLayerTraitConst, ConcatLayerTrait, ConcatLayerTraitConst, ConstLayerTrait, ConstLayerTraitConst, ConvolutionLayerInt8Trait, ConvolutionLayerInt8TraitConst, ConvolutionLayerTrait, ConvolutionLayerTraitConst, CorrelationLayerTrait, CorrelationLayerTraitConst, CosLayerTrait, CosLayerTraitConst, CoshLayerTrait, CoshLayerTraitConst, CropAndResizeLayerTrait, CropAndResizeLayerTraitConst, CropLayerTrait, CropLayerTraitConst, CumSumLayerTrait, CumSumLayerTraitConst, DataAugmentationLayerTrait, DataAugmentationLayerTraitConst, DeconvolutionLayerTrait, DeconvolutionLayerTraitConst, DequantizeLayerTrait, DequantizeLayerTraitConst, DetectionModelTrait, DetectionModelTraitConst, DetectionOutputLayerTrait, DetectionOutputLayerTraitConst, DictTrait, DictTraitConst, DictValueTrait, DictValueTraitConst, ELULayerTrait, ELULayerTraitConst, EinsumLayerTrait, EinsumLayerTraitConst, EltwiseLayerInt8Trait, EltwiseLayerInt8TraitConst, EltwiseLayerTrait, EltwiseLayerTraitConst, ErfLayerTrait, ErfLayerTraitConst, ExpLayerTrait, ExpLayerTraitConst, ExpandLayerTrait, ExpandLayerTraitConst, FlattenLayerTrait, FlattenLayerTraitConst, FloorLayerTrait, FloorLayerTraitConst, FlowWarpLayerTrait, FlowWarpLayerTraitConst, GRULayerTrait, GRULayerTraitConst, GatherElementsLayerTrait, GatherElementsLayerTraitConst, GatherLayerTrait, GatherLayerTraitConst, GeluApproximationLayerTrait, GeluApproximationLayerTraitConst, GeluLayerTrait, GeluLayerTraitConst, GemmLayerTrait, GemmLayerTraitConst, GroupNormLayerTrait, GroupNormLayerTraitConst, HardSigmoidLayerTrait, HardSigmoidLayerTraitConst, HardSwishLayerTrait, HardSwishLayerTraitConst, InnerProductLayerInt8Trait, InnerProductLayerInt8TraitConst, InnerProductLayerTrait, InnerProductLayerTraitConst, InstanceNormLayerTrait, InstanceNormLayerTraitConst, InterpLayerTrait, InterpLayerTraitConst, KeypointsModelTrait, KeypointsModelTraitConst, LRNLayerTrait, LRNLayerTraitConst, LSTMLayerTrait, LSTMLayerTraitConst, LayerFactoryTrait, LayerFactoryTraitConst, LayerNormLayerTrait, LayerNormLayerTraitConst, LayerParamsTrait, LayerParamsTraitConst, LayerTrait, LayerTraitConst, LogLayerTrait, LogLayerTraitConst, MVNLayerTrait, MVNLayerTraitConst, MatMulLayerTrait, MatMulLayerTraitConst, MaxUnpoolLayerTrait, MaxUnpoolLayerTraitConst, MishLayerTrait, MishLayerTraitConst, ModelTrait, ModelTraitConst, NaryEltwiseLayerTrait, NaryEltwiseLayerTraitConst, NetTrait, NetTraitConst, NormalizeBBoxLayerTrait, NormalizeBBoxLayerTraitConst, NotLayerTrait, NotLayerTraitConst, PaddingLayerTrait, PaddingLayerTraitConst, PermuteLayerTrait, PermuteLayerTraitConst, PoolingLayerInt8Trait, PoolingLayerInt8TraitConst, PoolingLayerTrait, PoolingLayerTraitConst, PowerLayerTrait, PowerLayerTraitConst, PriorBoxLayerTrait, PriorBoxLayerTraitConst, ProposalLayerTrait, ProposalLayerTraitConst, QuantizeLayerTrait, QuantizeLayerTraitConst, RNNLayerTrait, RNNLayerTraitConst, ReLU6LayerTrait, ReLU6LayerTraitConst, ReLULayerTrait, ReLULayerTraitConst, ReciprocalLayerTrait, ReciprocalLayerTraitConst, ReduceLayerTrait, ReduceLayerTraitConst, RegionLayerTrait, RegionLayerTraitConst, ReorgLayerTrait, ReorgLayerTraitConst, RequantizeLayerTrait, RequantizeLayerTraitConst, ReshapeLayerTrait, ReshapeLayerTraitConst, ResizeLayerTrait, ResizeLayerTraitConst, RoundLayerTrait, RoundLayerTraitConst, ScaleLayerInt8Trait, ScaleLayerInt8TraitConst, ScaleLayerTrait, ScaleLayerTraitConst, ScatterLayerTrait, ScatterLayerTraitConst, ScatterNDLayerTrait, ScatterNDLayerTraitConst, SegmentationModelTrait, SegmentationModelTraitConst, SeluLayerTrait, SeluLayerTraitConst, ShiftLayerInt8Trait, ShiftLayerInt8TraitConst, ShiftLayerTrait, ShiftLayerTraitConst, ShrinkLayerTrait, ShrinkLayerTraitConst, ShuffleChannelLayerTrait, ShuffleChannelLayerTraitConst, SigmoidLayerTrait, SigmoidLayerTraitConst, SignLayerTrait, SignLayerTraitConst, SinLayerTrait, SinLayerTraitConst, SinhLayerTrait, SinhLayerTraitConst, SliceLayerTrait, SliceLayerTraitConst, SoftmaxLayerInt8Trait, SoftmaxLayerInt8TraitConst, SoftmaxLayerTrait, SoftmaxLayerTraitConst, SoftplusLayerTrait, SoftplusLayerTraitConst, SoftsignLayerTrait, SoftsignLayerTraitConst, SplitLayerTrait, SplitLayerTraitConst, SqrtLayerTrait, SqrtLayerTraitConst, SwishLayerTrait, SwishLayerTraitConst, TanHLayerTrait, TanHLayerTraitConst, TanLayerTrait, TanLayerTraitConst, TextDetectionModelTrait, TextDetectionModelTraitConst, TextDetectionModel_DBTrait, TextDetectionModel_DBTraitConst, TextDetectionModel_EASTTrait, TextDetectionModel_EASTTraitConst, TextRecognitionModelTrait, TextRecognitionModelTraitConst, ThresholdedReluLayerTrait, ThresholdedReluLayerTraitConst, TileLayerTrait, TileLayerTraitConst, _RangeTrait, _RangeTraitConst};
+		pub use super::{AbsLayerTrait, AbsLayerTraitConst, AccumLayerTrait, AccumLayerTraitConst, AcosLayerTrait, AcosLayerTraitConst, AcoshLayerTrait, AcoshLayerTraitConst, ActivationLayerInt8Trait, ActivationLayerInt8TraitConst, ActivationLayerTrait, ActivationLayerTraitConst, ArgLayerTrait, ArgLayerTraitConst, AsinLayerTrait, AsinLayerTraitConst, AsinhLayerTrait, AsinhLayerTraitConst, AtanLayerTrait, AtanLayerTraitConst, AtanhLayerTrait, AtanhLayerTraitConst, AttentionLayerTrait, AttentionLayerTraitConst, BNLLLayerTrait, BNLLLayerTraitConst, BackendNodeTrait, BackendNodeTraitConst, BackendWrapperTrait, BackendWrapperTraitConst, BaseConvolutionLayerTrait, BaseConvolutionLayerTraitConst, BatchNormLayerInt8Trait, BatchNormLayerInt8TraitConst, BatchNormLayerTrait, BatchNormLayerTraitConst, BlankLayerTrait, BlankLayerTraitConst, CeilLayerTrait, CeilLayerTraitConst, CeluLayerTrait, CeluLayerTraitConst, ChannelsPReLULayerTrait, ChannelsPReLULayerTraitConst, ClassificationModelTrait, ClassificationModelTraitConst, CompareLayerTrait, CompareLayerTraitConst, ConcatLayerTrait, ConcatLayerTraitConst, ConstLayerTrait, ConstLayerTraitConst, ConvolutionLayerInt8Trait, ConvolutionLayerInt8TraitConst, ConvolutionLayerTrait, ConvolutionLayerTraitConst, CorrelationLayerTrait, CorrelationLayerTraitConst, CosLayerTrait, CosLayerTraitConst, CoshLayerTrait, CoshLayerTraitConst, CropAndResizeLayerTrait, CropAndResizeLayerTraitConst, CropLayerTrait, CropLayerTraitConst, CumSumLayerTrait, CumSumLayerTraitConst, DataAugmentationLayerTrait, DataAugmentationLayerTraitConst, DeconvolutionLayerTrait, DeconvolutionLayerTraitConst, DepthToSpaceLayerTrait, DepthToSpaceLayerTraitConst, DequantizeLayerTrait, DequantizeLayerTraitConst, DetectionModelTrait, DetectionModelTraitConst, DetectionOutputLayerTrait, DetectionOutputLayerTraitConst, DictTrait, DictTraitConst, DictValueTrait, DictValueTraitConst, ELULayerTrait, ELULayerTraitConst, EinsumLayerTrait, EinsumLayerTraitConst, EltwiseLayerInt8Trait, EltwiseLayerInt8TraitConst, EltwiseLayerTrait, EltwiseLayerTraitConst, ErfLayerTrait, ErfLayerTraitConst, ExpLayerTrait, ExpLayerTraitConst, ExpandLayerTrait, ExpandLayerTraitConst, FlattenLayerTrait, FlattenLayerTraitConst, FloorLayerTrait, FloorLayerTraitConst, FlowWarpLayerTrait, FlowWarpLayerTraitConst, GRULayerTrait, GRULayerTraitConst, GatherElementsLayerTrait, GatherElementsLayerTraitConst, GatherLayerTrait, GatherLayerTraitConst, GeluApproximationLayerTrait, GeluApproximationLayerTraitConst, GeluLayerTrait, GeluLayerTraitConst, GemmLayerTrait, GemmLayerTraitConst, GroupNormLayerTrait, GroupNormLayerTraitConst, HardSigmoidLayerTrait, HardSigmoidLayerTraitConst, HardSwishLayerTrait, HardSwishLayerTraitConst, InnerProductLayerInt8Trait, InnerProductLayerInt8TraitConst, InnerProductLayerTrait, InnerProductLayerTraitConst, InstanceNormLayerTrait, InstanceNormLayerTraitConst, InterpLayerTrait, InterpLayerTraitConst, KeypointsModelTrait, KeypointsModelTraitConst, LRNLayerTrait, LRNLayerTraitConst, LSTMLayerTrait, LSTMLayerTraitConst, LayerFactoryTrait, LayerFactoryTraitConst, LayerNormLayerTrait, LayerNormLayerTraitConst, LayerParamsTrait, LayerParamsTraitConst, LayerTrait, LayerTraitConst, LogLayerTrait, LogLayerTraitConst, MVNLayerTrait, MVNLayerTraitConst, MatMulLayerTrait, MatMulLayerTraitConst, MaxUnpoolLayerTrait, MaxUnpoolLayerTraitConst, MishLayerTrait, MishLayerTraitConst, ModelTrait, ModelTraitConst, NaryEltwiseLayerTrait, NaryEltwiseLayerTraitConst, NetTrait, NetTraitConst, NormalizeBBoxLayerTrait, NormalizeBBoxLayerTraitConst, NotLayerTrait, NotLayerTraitConst, PaddingLayerTrait, PaddingLayerTraitConst, PermuteLayerTrait, PermuteLayerTraitConst, PoolingLayerInt8Trait, PoolingLayerInt8TraitConst, PoolingLayerTrait, PoolingLayerTraitConst, PowerLayerTrait, PowerLayerTraitConst, PriorBoxLayerTrait, PriorBoxLayerTraitConst, ProposalLayerTrait, ProposalLayerTraitConst, QuantizeLayerTrait, QuantizeLayerTraitConst, RNNLayerTrait, RNNLayerTraitConst, ReLU6LayerTrait, ReLU6LayerTraitConst, ReLULayerTrait, ReLULayerTraitConst, ReciprocalLayerTrait, ReciprocalLayerTraitConst, ReduceLayerTrait, ReduceLayerTraitConst, RegionLayerTrait, RegionLayerTraitConst, ReorgLayerTrait, ReorgLayerTraitConst, RequantizeLayerTrait, RequantizeLayerTraitConst, ReshapeLayerTrait, ReshapeLayerTraitConst, ResizeLayerTrait, ResizeLayerTraitConst, RoundLayerTrait, RoundLayerTraitConst, ScaleLayerInt8Trait, ScaleLayerInt8TraitConst, ScaleLayerTrait, ScaleLayerTraitConst, ScatterLayerTrait, ScatterLayerTraitConst, ScatterNDLayerTrait, ScatterNDLayerTraitConst, SegmentationModelTrait, SegmentationModelTraitConst, SeluLayerTrait, SeluLayerTraitConst, ShiftLayerInt8Trait, ShiftLayerInt8TraitConst, ShiftLayerTrait, ShiftLayerTraitConst, ShrinkLayerTrait, ShrinkLayerTraitConst, ShuffleChannelLayerTrait, ShuffleChannelLayerTraitConst, SigmoidLayerTrait, SigmoidLayerTraitConst, SignLayerTrait, SignLayerTraitConst, SinLayerTrait, SinLayerTraitConst, SinhLayerTrait, SinhLayerTraitConst, SliceLayerTrait, SliceLayerTraitConst, SoftmaxLayerInt8Trait, SoftmaxLayerInt8TraitConst, SoftmaxLayerTrait, SoftmaxLayerTraitConst, SoftplusLayerTrait, SoftplusLayerTraitConst, SoftsignLayerTrait, SoftsignLayerTraitConst, SpaceToDepthLayerTrait, SpaceToDepthLayerTraitConst, SplitLayerTrait, SplitLayerTraitConst, SqrtLayerTrait, SqrtLayerTraitConst, SwishLayerTrait, SwishLayerTraitConst, TanHLayerTrait, TanHLayerTraitConst, TanLayerTrait, TanLayerTraitConst, TextDetectionModelTrait, TextDetectionModelTraitConst, TextDetectionModel_DBTrait, TextDetectionModel_DBTraitConst, TextDetectionModel_EASTTrait, TextDetectionModel_EASTTraitConst, TextRecognitionModelTrait, TextRecognitionModelTraitConst, ThresholdedReluLayerTrait, ThresholdedReluLayerTraitConst, TileLayerTrait, TileLayerTraitConst, TopKLayerTrait, TopKLayerTraitConst, _RangeTrait, _RangeTraitConst};
 	}
 
 	pub const CV_DNN_BACKEND_INFERENCE_ENGINE_NGRAPH: &str = "NGRAPH";
@@ -63,7 +63,7 @@ pub mod dnn {
 	pub const DNN_TARGET_OPENCL: i32 = 1;
 	pub const DNN_TARGET_OPENCL_FP16: i32 = 2;
 	pub const DNN_TARGET_VULKAN: i32 = 4;
-	pub const OPENCV_DNN_API_VERSION: i32 = 20240521;
+	pub const OPENCV_DNN_API_VERSION: i32 = 20241223;
 	pub const SoftNMSMethod_SOFTNMS_GAUSSIAN: i32 = 2;
 	pub const SoftNMSMethod_SOFTNMS_LINEAR: i32 = 1;
 	/// Enum of computation backends supported by layers.
@@ -6693,6 +6693,106 @@ pub mod dnn {
 		}
 	}
 
+	/// Constant methods for [crate::dnn::DepthToSpaceLayer]
+	pub trait DepthToSpaceLayerTraitConst: crate::dnn::LayerTraitConst {
+		fn as_raw_DepthToSpaceLayer(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::dnn::DepthToSpaceLayer]
+	pub trait DepthToSpaceLayerTrait: crate::dnn::DepthToSpaceLayerTraitConst + crate::dnn::LayerTrait {
+		fn as_raw_mut_DepthToSpaceLayer(&mut self) -> *mut c_void;
+
+	}
+
+	pub struct DepthToSpaceLayer {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { DepthToSpaceLayer }
+
+	impl Drop for DepthToSpaceLayer {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_dnn_DepthToSpaceLayer_delete(self.as_raw_mut_DepthToSpaceLayer()) };
+		}
+	}
+
+	unsafe impl Send for DepthToSpaceLayer {}
+
+	impl core::AlgorithmTraitConst for DepthToSpaceLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::AlgorithmTrait for DepthToSpaceLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { DepthToSpaceLayer, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+
+	impl crate::dnn::LayerTraitConst for DepthToSpaceLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::dnn::LayerTrait for DepthToSpaceLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { DepthToSpaceLayer, crate::dnn::LayerTraitConst, as_raw_Layer, crate::dnn::LayerTrait, as_raw_mut_Layer }
+
+	impl crate::dnn::DepthToSpaceLayerTraitConst for DepthToSpaceLayer {
+		#[inline] fn as_raw_DepthToSpaceLayer(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::dnn::DepthToSpaceLayerTrait for DepthToSpaceLayer {
+		#[inline] fn as_raw_mut_DepthToSpaceLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { DepthToSpaceLayer, crate::dnn::DepthToSpaceLayerTraitConst, as_raw_DepthToSpaceLayer, crate::dnn::DepthToSpaceLayerTrait, as_raw_mut_DepthToSpaceLayer }
+
+	impl DepthToSpaceLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_DepthToSpaceLayer_defaultNew_const()) }
+		}
+
+		#[inline]
+		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::DepthToSpaceLayer>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_DepthToSpaceLayer_create_const_LayerParamsR(params.as_raw_LayerParams(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::dnn::DepthToSpaceLayer>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	boxed_cast_base! { DepthToSpaceLayer, core::Algorithm, cv_dnn_DepthToSpaceLayer_to_Algorithm }
+
+	boxed_cast_base! { DepthToSpaceLayer, crate::dnn::Layer, cv_dnn_DepthToSpaceLayer_to_Layer }
+
+	impl std::fmt::Debug for DepthToSpaceLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DepthToSpaceLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+
+	impl Default for DepthToSpaceLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
+		}
+	}
+
 	/// Constant methods for [crate::dnn::DequantizeLayer]
 	pub trait DequantizeLayerTraitConst: crate::dnn::LayerTraitConst {
 		fn as_raw_DequantizeLayer(&self) -> *const c_void;
@@ -11687,6 +11787,8 @@ pub mod dnn {
 
 	boxed_cast_descendant! { Layer, crate::dnn::DeconvolutionLayer, cv_dnn_Layer_to_DeconvolutionLayer }
 
+	boxed_cast_descendant! { Layer, crate::dnn::DepthToSpaceLayer, cv_dnn_Layer_to_DepthToSpaceLayer }
+
 	boxed_cast_descendant! { Layer, crate::dnn::DequantizeLayer, cv_dnn_Layer_to_DequantizeLayer }
 
 	boxed_cast_descendant! { Layer, crate::dnn::DetectionOutputLayer, cv_dnn_Layer_to_DetectionOutputLayer }
@@ -11833,6 +11935,8 @@ pub mod dnn {
 
 	boxed_cast_descendant! { Layer, crate::dnn::SoftsignLayer, cv_dnn_Layer_to_SoftsignLayer }
 
+	boxed_cast_descendant! { Layer, crate::dnn::SpaceToDepthLayer, cv_dnn_Layer_to_SpaceToDepthLayer }
+
 	boxed_cast_descendant! { Layer, crate::dnn::SplitLayer, cv_dnn_Layer_to_SplitLayer }
 
 	boxed_cast_descendant! { Layer, crate::dnn::SqrtLayer, cv_dnn_Layer_to_SqrtLayer }
@@ -11846,6 +11950,8 @@ pub mod dnn {
 	boxed_cast_descendant! { Layer, crate::dnn::ThresholdedReluLayer, cv_dnn_Layer_to_ThresholdedReluLayer }
 
 	boxed_cast_descendant! { Layer, crate::dnn::TileLayer, cv_dnn_Layer_to_TileLayer }
+
+	boxed_cast_descendant! { Layer, crate::dnn::TopKLayer, cv_dnn_Layer_to_TopKLayer }
 
 	boxed_cast_base! { Layer, core::Algorithm, cv_dnn_Layer_to_Algorithm }
 
@@ -19563,6 +19669,106 @@ pub mod dnn {
 		}
 	}
 
+	/// Constant methods for [crate::dnn::SpaceToDepthLayer]
+	pub trait SpaceToDepthLayerTraitConst: crate::dnn::LayerTraitConst {
+		fn as_raw_SpaceToDepthLayer(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::dnn::SpaceToDepthLayer]
+	pub trait SpaceToDepthLayerTrait: crate::dnn::LayerTrait + crate::dnn::SpaceToDepthLayerTraitConst {
+		fn as_raw_mut_SpaceToDepthLayer(&mut self) -> *mut c_void;
+
+	}
+
+	pub struct SpaceToDepthLayer {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { SpaceToDepthLayer }
+
+	impl Drop for SpaceToDepthLayer {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_dnn_SpaceToDepthLayer_delete(self.as_raw_mut_SpaceToDepthLayer()) };
+		}
+	}
+
+	unsafe impl Send for SpaceToDepthLayer {}
+
+	impl core::AlgorithmTraitConst for SpaceToDepthLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::AlgorithmTrait for SpaceToDepthLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { SpaceToDepthLayer, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+
+	impl crate::dnn::LayerTraitConst for SpaceToDepthLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::dnn::LayerTrait for SpaceToDepthLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { SpaceToDepthLayer, crate::dnn::LayerTraitConst, as_raw_Layer, crate::dnn::LayerTrait, as_raw_mut_Layer }
+
+	impl crate::dnn::SpaceToDepthLayerTraitConst for SpaceToDepthLayer {
+		#[inline] fn as_raw_SpaceToDepthLayer(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::dnn::SpaceToDepthLayerTrait for SpaceToDepthLayer {
+		#[inline] fn as_raw_mut_SpaceToDepthLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { SpaceToDepthLayer, crate::dnn::SpaceToDepthLayerTraitConst, as_raw_SpaceToDepthLayer, crate::dnn::SpaceToDepthLayerTrait, as_raw_mut_SpaceToDepthLayer }
+
+	impl SpaceToDepthLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_SpaceToDepthLayer_defaultNew_const()) }
+		}
+
+		#[inline]
+		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::SpaceToDepthLayer>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_SpaceToDepthLayer_create_const_LayerParamsR(params.as_raw_LayerParams(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::dnn::SpaceToDepthLayer>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	boxed_cast_base! { SpaceToDepthLayer, core::Algorithm, cv_dnn_SpaceToDepthLayer_to_Algorithm }
+
+	boxed_cast_base! { SpaceToDepthLayer, crate::dnn::Layer, cv_dnn_SpaceToDepthLayer_to_Layer }
+
+	impl std::fmt::Debug for SpaceToDepthLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SpaceToDepthLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+
+	impl Default for SpaceToDepthLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
+		}
+	}
+
 	/// Constant methods for [crate::dnn::SplitLayer]
 	pub trait SplitLayerTraitConst: crate::dnn::LayerTraitConst {
 		fn as_raw_SplitLayer(&self) -> *const c_void;
@@ -20385,7 +20591,7 @@ pub mod dnn {
 
 	/// This class represents high-level API for text detection DL networks compatible with DB model.
 	///
-	/// Related publications: [liao2020real](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_liao2020real)
+	/// Related publications: [liao2020real](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_liao2020real)
 	/// Paper: <https://arxiv.org/abs/1911.08947>
 	/// For more information about the hyper-parameters setting, please refer to <https://github.com/MhLiao/DB>
 	///
@@ -21196,6 +21402,106 @@ pub mod dnn {
 	}
 
 	impl Default for TileLayer {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
+		}
+	}
+
+	/// Constant methods for [crate::dnn::TopKLayer]
+	pub trait TopKLayerTraitConst: crate::dnn::LayerTraitConst {
+		fn as_raw_TopKLayer(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::dnn::TopKLayer]
+	pub trait TopKLayerTrait: crate::dnn::LayerTrait + crate::dnn::TopKLayerTraitConst {
+		fn as_raw_mut_TopKLayer(&mut self) -> *mut c_void;
+
+	}
+
+	pub struct TopKLayer {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { TopKLayer }
+
+	impl Drop for TopKLayer {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_dnn_TopKLayer_delete(self.as_raw_mut_TopKLayer()) };
+		}
+	}
+
+	unsafe impl Send for TopKLayer {}
+
+	impl core::AlgorithmTraitConst for TopKLayer {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::AlgorithmTrait for TopKLayer {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { TopKLayer, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+
+	impl crate::dnn::LayerTraitConst for TopKLayer {
+		#[inline] fn as_raw_Layer(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::dnn::LayerTrait for TopKLayer {
+		#[inline] fn as_raw_mut_Layer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { TopKLayer, crate::dnn::LayerTraitConst, as_raw_Layer, crate::dnn::LayerTrait, as_raw_mut_Layer }
+
+	impl crate::dnn::TopKLayerTraitConst for TopKLayer {
+		#[inline] fn as_raw_TopKLayer(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::dnn::TopKLayerTrait for TopKLayer {
+		#[inline] fn as_raw_mut_TopKLayer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { TopKLayer, crate::dnn::TopKLayerTraitConst, as_raw_TopKLayer, crate::dnn::TopKLayerTrait, as_raw_mut_TopKLayer }
+
+	impl TopKLayer {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		fn default() -> Self {
+			unsafe { Self::from_raw(sys::cv_dnn_TopKLayer_defaultNew_const()) }
+		}
+
+		#[inline]
+		pub fn create(params: &impl crate::dnn::LayerParamsTraitConst) -> Result<core::Ptr<crate::dnn::TopKLayer>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_TopKLayer_create_const_LayerParamsR(params.as_raw_LayerParams(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::dnn::TopKLayer>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	boxed_cast_base! { TopKLayer, core::Algorithm, cv_dnn_TopKLayer_to_Algorithm }
+
+	boxed_cast_base! { TopKLayer, crate::dnn::Layer, cv_dnn_TopKLayer_to_Layer }
+
+	impl std::fmt::Debug for TopKLayer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TopKLayer")
+				.field("blobs", &crate::dnn::LayerTraitConst::blobs(self))
+				.field("name", &crate::dnn::LayerTraitConst::name(self))
+				.field("typ", &crate::dnn::LayerTraitConst::typ(self))
+				.field("preferable_target", &crate::dnn::LayerTraitConst::preferable_target(self))
+				.finish()
+		}
+	}
+
+	impl Default for TopKLayer {
 		#[inline]
 		/// Forwards to infallible Self::default()
 		fn default() -> Self {

@@ -4384,7 +4384,7 @@ pub mod face {
 	///    useful for authentication with (cancellable) biometrical features.
 	///    (does not need many positives to train (10-50), and no negatives at all, also robust to noise/salting)
 	///
-	///    see also: [Savvides04](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Savvides04)
+	///    see also: [Savvides04](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Savvides04)
 	///
 	///    this implementation is largely based on: <https://code.google.com/archive/p/pam-face-authentication> (GSOC 2009)
 	///

@@ -93,6 +93,9 @@ mod bgsegm_sys {
 		pub fn cv_bgsegm_BackgroundSubtractorCNT_to_Algorithm(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_bgsegm_BackgroundSubtractorCNT_to_BackgroundSubtractor(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_bgsegm_BackgroundSubtractorCNT_delete(instance: *mut c_void);
+		pub fn cv_bgsegm_BackgroundSubtractorGMG_apply_const__InputArrayR_const__OutputArrayR_double(instance: *mut c_void, image: *const c_void, fgmask: *const c_void, learning_rate: f64, ocvrs_return: *mut ResultVoid);
+		pub fn cv_bgsegm_BackgroundSubtractorGMG_apply_const__InputArrayR_const__OutputArrayR(instance: *mut c_void, image: *const c_void, fgmask: *const c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_bgsegm_BackgroundSubtractorGMG_getBackgroundImage_const_const__OutputArrayR(instance: *const c_void, background_image: *const c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_bgsegm_BackgroundSubtractorGMG_getMaxFeatures_const(instance: *const c_void, ocvrs_return: *mut Result<i32>);
 		pub fn cv_bgsegm_BackgroundSubtractorGMG_setMaxFeatures_int(instance: *mut c_void, max_features: i32, ocvrs_return: *mut ResultVoid);
 		pub fn cv_bgsegm_BackgroundSubtractorGMG_getDefaultLearningRate_const(instance: *const c_void, ocvrs_return: *mut Result<f64>);
@@ -367,6 +370,8 @@ mod calib3d_sys {
 		pub fn cv_fisheye_calibrate_const__InputArrayR_const__InputArrayR_const_SizeR_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR(object_points: *const c_void, image_points: *const c_void, image_size: *const core::Size, k: *const c_void, d: *const c_void, rvecs: *const c_void, tvecs: *const c_void, ocvrs_return: *mut Result<f64>);
 		pub fn cv_fisheye_calibrate_const__InputArrayR_const__InputArrayR_const_SizeR_const__InputOutputArrayR_const__InputOutputArrayR_const__OutputArrayR_const__OutputArrayR_int_TermCriteria(object_points: *const c_void, image_points: *const c_void, image_size: *const core::Size, k: *const c_void, d: *const c_void, rvecs: *const c_void, tvecs: *const c_void, flags: i32, criteria: *const core::TermCriteria, ocvrs_return: *mut Result<f64>);
 		pub fn cv_fisheye_distortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR(undistorted: *const c_void, distorted: *const c_void, k: *const c_void, d: *const c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_fisheye_distortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR(undistorted: *const c_void, distorted: *const c_void, kundistorted: *const c_void, k: *const c_void, d: *const c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_fisheye_distortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_const__InputArrayR_double(undistorted: *const c_void, distorted: *const c_void, kundistorted: *const c_void, k: *const c_void, d: *const c_void, alpha: f64, ocvrs_return: *mut ResultVoid);
 		pub fn cv_fisheye_distortPoints_const__InputArrayR_const__OutputArrayR_const__InputArrayR_const__InputArrayR_double(undistorted: *const c_void, distorted: *const c_void, k: *const c_void, d: *const c_void, alpha: f64, ocvrs_return: *mut ResultVoid);
 		pub fn cv_fisheye_estimateNewCameraMatrixForUndistortRectify_const__InputArrayR_const__InputArrayR_const_SizeR_const__InputArrayR_const__OutputArrayR(k: *const c_void, d: *const c_void, image_size: *const core::Size, r: *const c_void, p: *const c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_fisheye_estimateNewCameraMatrixForUndistortRectify_const__InputArrayR_const__InputArrayR_const_SizeR_const__InputArrayR_const__OutputArrayR_double_const_SizeR_double(k: *const c_void, d: *const c_void, image_size: *const core::Size, r: *const c_void, p: *const c_void, balance: f64, new_size: *const core::Size, fov_scale: f64, ocvrs_return: *mut ResultVoid);
@@ -767,7 +772,7 @@ mod core_sys {
 		pub fn cv_eigen_const__InputArrayR_const__OutputArrayR(src: *const c_void, eigenvalues: *const c_void, ocvrs_return: *mut Result<bool>);
 		pub fn cv_eigen_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(src: *const c_void, eigenvalues: *const c_void, eigenvectors: *const c_void, ocvrs_return: *mut Result<bool>);
 		pub fn cv_error_const_ExceptionR(exc: *const c_void, ocvrs_return: *mut ResultVoid);
-		pub fn cv_error_int_const_StringR_const_charX_const_charX_int(_code: i32, _err: *const c_char, _func: *const c_char, _file: *const c_char, _line: i32, ocvrs_return: *mut ResultVoid);
+		pub fn cv_error_int_const_StringR_const_charX_const_charX_int(code: i32, err: *const c_char, func: *const c_char, file: *const c_char, line: i32, ocvrs_return: *mut ResultVoid);
 		pub fn cv_exp_const__InputArrayR_const__OutputArrayR(src: *const c_void, dst: *const c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_extractChannel_const__InputArrayR_const__OutputArrayR_int(src: *const c_void, dst: *const c_void, coi: i32, ocvrs_return: *mut ResultVoid);
 		pub fn cv_fastAtan2_float_float(y: f32, x: f32, ocvrs_return: *mut Result<f32>);
@@ -779,6 +784,7 @@ mod core_sys {
 		pub fn cv_getBuildInformation(ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_getCPUFeaturesLine(ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_getCPUTickCount(ocvrs_return: *mut Result<i64>);
+		pub fn cv_getDefaultAlgorithmHint(ocvrs_return: *mut Result<core::AlgorithmHint>);
 		pub fn cv_getElemSize_int(typ: i32, ocvrs_return: *mut Result<size_t>);
 		pub fn cv_getHardwareFeatureName_int(feature: i32, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_getLogLevel(ocvrs_return: *mut Result<i32>);
@@ -989,6 +995,7 @@ mod core_sys {
 		pub fn cv_read_const_FileNodeR_SparseMatR_const_SparseMatR(node: *const c_void, mat: *mut c_void, default_mat: *const c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_read_const_FileNodeR_doubleR_double(node: *const c_void, value: *mut f64, default_value: f64, ocvrs_return: *mut ResultVoid);
 		pub fn cv_read_const_FileNodeR_floatR_float(node: *const c_void, value: *mut f32, default_value: f32, ocvrs_return: *mut ResultVoid);
+		pub fn cv_read_const_FileNodeR_int64_tR_int64_t(node: *const c_void, value: *mut i64, default_value: i64, ocvrs_return: *mut ResultVoid);
 		pub fn cv_read_const_FileNodeR_intR_int(node: *const c_void, value: *mut i32, default_value: i32, ocvrs_return: *mut ResultVoid);
 		pub fn cv_read_const_FileNodeR_stringR_const_stringR(node: *const c_void, value: *mut *mut c_void, default_value: *const c_char, ocvrs_return: *mut ResultVoid);
 		pub fn cv_read_const_FileNodeR_vectorLDMatchGR(node: *const c_void, matches: *mut c_void, ocvrs_return: *mut ResultVoid);
@@ -1037,6 +1044,7 @@ mod core_sys {
 		pub fn cv_swap_UMatR_UMatR(a: *mut c_void, b: *mut c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_tempfile(ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_tempfile_const_charX(suffix: *const c_char, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_terminate_int_const_StringR_const_charX_const_charX_int(code: i32, err: *const c_char, func: *const c_char, file: *const c_char, line: i32);
 		pub fn cv_theRNG(ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_trace_const__InputArrayR(mtx: *const c_void, ocvrs_return: *mut Result<core::Scalar>);
 		pub fn cv_transform_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src: *const c_void, dst: *const c_void, m: *const c_void, ocvrs_return: *mut ResultVoid);
@@ -1103,6 +1111,7 @@ mod core_sys {
 		pub fn cv_writeScalar_FileStorageR_double(fs: *mut c_void, value: f64, ocvrs_return: *mut ResultVoid);
 		pub fn cv_writeScalar_FileStorageR_float(fs: *mut c_void, value: f32, ocvrs_return: *mut ResultVoid);
 		pub fn cv_writeScalar_FileStorageR_int(fs: *mut c_void, value: i32, ocvrs_return: *mut ResultVoid);
+		pub fn cv_writeScalar_FileStorageR_int64_t(fs: *mut c_void, value: i64, ocvrs_return: *mut ResultVoid);
 		pub fn cv_write_FileStorageR_const_StringR_const_MatR(fs: *mut c_void, name: *const c_char, value: *const c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_write_FileStorageR_const_StringR_const_SparseMatR(fs: *mut c_void, name: *const c_char, value: *const c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_write_FileStorageR_const_StringR_const_StringR(fs: *mut c_void, name: *const c_char, value: *const c_char, ocvrs_return: *mut ResultVoid);
@@ -1111,6 +1120,7 @@ mod core_sys {
 		pub fn cv_write_FileStorageR_const_StringR_double(fs: *mut c_void, name: *const c_char, value: f64, ocvrs_return: *mut ResultVoid);
 		pub fn cv_write_FileStorageR_const_StringR_float(fs: *mut c_void, name: *const c_char, value: f32, ocvrs_return: *mut ResultVoid);
 		pub fn cv_write_FileStorageR_const_StringR_int(fs: *mut c_void, name: *const c_char, value: i32, ocvrs_return: *mut ResultVoid);
+		pub fn cv_write_FileStorageR_const_StringR_int64_t(fs: *mut c_void, name: *const c_char, value: i64, ocvrs_return: *mut ResultVoid);
 		pub fn cv_Algorithm_Algorithm(ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_Algorithm_clear(instance: *mut c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_Algorithm_write_const_FileStorageR(instance: *const c_void, fs: *mut c_void, ocvrs_return: *mut ResultVoid);
@@ -1197,7 +1207,7 @@ mod core_sys {
 		pub fn cv_DownhillSolver_delete(instance: *mut c_void);
 		pub fn cv_Exception_Exception(ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_Exception_Exception_int_const_StringR_const_StringR_const_StringR_int(_code: i32, _err: *const c_char, _func: *const c_char, _file: *const c_char, _line: i32, ocvrs_return: *mut Result<*mut c_void>);
-		pub fn cv_Exception_what_const(instance: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_Exception_what_const(instance: *const c_void) -> *mut c_void;
 		pub fn cv_Exception_formatMessage(instance: *mut c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_Exception_propMsg_const(instance: *const c_void) -> *mut c_void;
 		pub fn cv_Exception_propMsg_const_String(instance: *mut c_void, val: *const c_char);
@@ -1233,6 +1243,7 @@ mod core_sys {
 		pub fn cv_FileNode_size_const(instance: *const c_void, ocvrs_return: *mut Result<size_t>);
 		pub fn cv_FileNode_rawSize_const(instance: *const c_void, ocvrs_return: *mut Result<size_t>);
 		pub fn cv_FileNode_operator_int_const(instance: *const c_void, ocvrs_return: *mut Result<i32>);
+		pub fn cv_FileNode_operator_int64_t_const(instance: *const c_void, ocvrs_return: *mut Result<i64>);
 		pub fn cv_FileNode_operator_float_const(instance: *const c_void, ocvrs_return: *mut Result<f32>);
 		pub fn cv_FileNode_operator_double_const(instance: *const c_void, ocvrs_return: *mut Result<f64>);
 		pub fn cv_FileNode_operator_std_string_const(instance: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
@@ -1280,6 +1291,7 @@ mod core_sys {
 		pub fn cv_FileStorage_operator___const_const_StringR(instance: *const c_void, nodename: *const c_char, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_FileStorage_operator___const_const_charX(instance: *const c_void, nodename: *const c_char, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_FileStorage_write_const_StringR_int(instance: *mut c_void, name: *const c_char, val: i32, ocvrs_return: *mut ResultVoid);
+		pub fn cv_FileStorage_write_const_StringR_int64_t(instance: *mut c_void, name: *const c_char, val: i64, ocvrs_return: *mut ResultVoid);
 		pub fn cv_FileStorage_write_const_StringR_double(instance: *mut c_void, name: *const c_char, val: f64, ocvrs_return: *mut ResultVoid);
 		pub fn cv_FileStorage_write_const_StringR_const_StringR(instance: *mut c_void, name: *const c_char, val: *const c_char, ocvrs_return: *mut ResultVoid);
 		pub fn cv_FileStorage_write_const_StringR_const_MatR(instance: *mut c_void, name: *const c_char, val: *const c_void, ocvrs_return: *mut ResultVoid);
@@ -1878,6 +1890,10 @@ mod core_sys {
 		pub fn cv_TickMeter_getTimeMicro_const(instance: *const c_void, ocvrs_return: *mut Result<f64>);
 		pub fn cv_TickMeter_getTimeMilli_const(instance: *const c_void, ocvrs_return: *mut Result<f64>);
 		pub fn cv_TickMeter_getTimeSec_const(instance: *const c_void, ocvrs_return: *mut Result<f64>);
+		pub fn cv_TickMeter_getLastTimeTicks_const(instance: *const c_void, ocvrs_return: *mut Result<i64>);
+		pub fn cv_TickMeter_getLastTimeMicro_const(instance: *const c_void, ocvrs_return: *mut Result<f64>);
+		pub fn cv_TickMeter_getLastTimeMilli_const(instance: *const c_void, ocvrs_return: *mut Result<f64>);
+		pub fn cv_TickMeter_getLastTimeSec_const(instance: *const c_void, ocvrs_return: *mut Result<f64>);
 		pub fn cv_TickMeter_getCounter_const(instance: *const c_void, ocvrs_return: *mut Result<i64>);
 		pub fn cv_TickMeter_getFPS_const(instance: *const c_void, ocvrs_return: *mut Result<f64>);
 		pub fn cv_TickMeter_getAvgTimeSec_const(instance: *const c_void, ocvrs_return: *mut Result<f64>);
@@ -2275,6 +2291,7 @@ mod core_sys {
 		pub fn cv_cuda_GpuData_delete(instance: *mut c_void);
 		pub fn cv_cuda_GpuMat_defaultAllocator(ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_cuda_GpuMat_setDefaultAllocator_AllocatorX(allocator: *mut c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cuda_GpuMat_getStdAllocator(ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_cuda_GpuMat_GpuMat_AllocatorX(allocator: *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_cuda_GpuMat_GpuMat(ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_cuda_GpuMat_GpuMat_int_int_int_AllocatorX(rows: i32, cols: i32, typ: i32, allocator: *mut c_void, ocvrs_return: *mut Result<*mut c_void>);
@@ -4034,6 +4051,24 @@ mod core_sys {
 		pub fn std_vectorLsize_tG_data_const(instance: *const c_void) -> *const size_t;
 		pub fn std_vectorLsize_tG_dataMut(instance: *mut c_void) -> *mut size_t;
 		pub fn cv_fromSlice_const_const_size_tX_size_t(data: *const size_t, len: size_t) -> *mut c_void;
+		pub fn std_vectorLuint64_tG_new_const() -> *mut c_void;
+		pub fn std_vectorLuint64_tG_delete(instance: *mut c_void);
+		pub fn std_vectorLuint64_tG_len_const(instance: *const c_void) -> size_t;
+		pub fn std_vectorLuint64_tG_isEmpty_const(instance: *const c_void) -> bool;
+		pub fn std_vectorLuint64_tG_capacity_const(instance: *const c_void) -> size_t;
+		pub fn std_vectorLuint64_tG_shrinkToFit(instance: *mut c_void);
+		pub fn std_vectorLuint64_tG_reserve_size_t(instance: *mut c_void, additional: size_t);
+		pub fn std_vectorLuint64_tG_remove_size_t(instance: *mut c_void, index: size_t);
+		pub fn std_vectorLuint64_tG_swap_size_t_size_t(instance: *mut c_void, index1: size_t, index2: size_t);
+		pub fn std_vectorLuint64_tG_clear(instance: *mut c_void);
+		pub fn std_vectorLuint64_tG_push_const_uint64_t(instance: *mut c_void, val: u64);
+		pub fn std_vectorLuint64_tG_insert_size_t_const_uint64_t(instance: *mut c_void, index: size_t, val: u64);
+		pub fn std_vectorLuint64_tG_get_const_size_t(instance: *const c_void, index: size_t, ocvrs_return: *mut u64);
+		pub fn std_vectorLuint64_tG_set_size_t_const_uint64_t(instance: *mut c_void, index: size_t, val: u64);
+		pub fn std_vectorLuint64_tG_clone_const(instance: *const c_void) -> *mut c_void;
+		pub fn std_vectorLuint64_tG_data_const(instance: *const c_void) -> *const u64;
+		pub fn std_vectorLuint64_tG_dataMut(instance: *mut c_void) -> *mut u64;
+		pub fn cv_fromSlice_const_const_uint64_tX_size_t(data: *const u64, len: size_t) -> *mut c_void;
 		pub fn std_vectorLuint8_tG_new_const() -> *mut c_void;
 		pub fn std_vectorLuint8_tG_delete(instance: *mut c_void);
 		pub fn std_vectorLuint8_tG_len_const(instance: *const c_void) -> size_t;
@@ -4069,20 +4104,30 @@ mod cudaarithm_sys {
 		pub fn cv_cuda_absSum_const__InputArrayR_const__InputArrayR(src: *const c_void, mask: *const c_void, ocvrs_return: *mut Result<core::Scalar>);
 		pub fn cv_cuda_abs_const__InputArrayR_const__OutputArrayR(src: *const c_void, dst: *const c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_abs_const__InputArrayR_const__OutputArrayR_StreamR(src: *const c_void, dst: *const c_void, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cuda_absdiffWithScalar_const__InputArrayR_Scalar_const__OutputArrayR(src1: *const c_void, src2: *const core::Scalar, dst: *const c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cuda_absdiffWithScalar_const__InputArrayR_Scalar_const__OutputArrayR_StreamR(src1: *const c_void, src2: *const core::Scalar, dst: *const c_void, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_absdiff_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1: *const c_void, src2: *const c_void, dst: *const c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_absdiff_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(src1: *const c_void, src2: *const c_void, dst: *const c_void, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_addWeighted_const__InputArrayR_double_const__InputArrayR_double_double_const__OutputArrayR(src1: *const c_void, alpha: f64, src2: *const c_void, beta: f64, gamma: f64, dst: *const c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_addWeighted_const__InputArrayR_double_const__InputArrayR_double_double_const__OutputArrayR_int_StreamR(src1: *const c_void, alpha: f64, src2: *const c_void, beta: f64, gamma: f64, dst: *const c_void, dtype: i32, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cuda_addWithScalar_const__InputArrayR_Scalar_const__OutputArrayR(src1: *const c_void, src2: *const core::Scalar, dst: *const c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cuda_addWithScalar_const__InputArrayR_Scalar_const__OutputArrayR_const__InputArrayR_int_StreamR(src1: *const c_void, src2: *const core::Scalar, dst: *const c_void, mask: *const c_void, dtype: i32, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_add_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1: *const c_void, src2: *const c_void, dst: *const c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_add_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_int_StreamR(src1: *const c_void, src2: *const c_void, dst: *const c_void, mask: *const c_void, dtype: i32, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_bitwise_and_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1: *const c_void, src2: *const c_void, dst: *const c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_bitwise_and_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src1: *const c_void, src2: *const c_void, dst: *const c_void, mask: *const c_void, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cuda_bitwise_and_with_scalar_const__InputArrayR_Scalar_const__OutputArrayR(src1: *const c_void, src2: *const core::Scalar, dst: *const c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cuda_bitwise_and_with_scalar_const__InputArrayR_Scalar_const__OutputArrayR_const__InputArrayR_StreamR(src1: *const c_void, src2: *const core::Scalar, dst: *const c_void, mask: *const c_void, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_bitwise_not_const__InputArrayR_const__OutputArrayR(src: *const c_void, dst: *const c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_bitwise_not_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src: *const c_void, dst: *const c_void, mask: *const c_void, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_bitwise_or_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1: *const c_void, src2: *const c_void, dst: *const c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_bitwise_or_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src1: *const c_void, src2: *const c_void, dst: *const c_void, mask: *const c_void, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cuda_bitwise_or_with_scalar_const__InputArrayR_Scalar_const__OutputArrayR(src1: *const c_void, src2: *const core::Scalar, dst: *const c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cuda_bitwise_or_with_scalar_const__InputArrayR_Scalar_const__OutputArrayR_const__InputArrayR_StreamR(src1: *const c_void, src2: *const core::Scalar, dst: *const c_void, mask: *const c_void, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_bitwise_xor_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1: *const c_void, src2: *const c_void, dst: *const c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_bitwise_xor_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src1: *const c_void, src2: *const c_void, dst: *const c_void, mask: *const c_void, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cuda_bitwise_xor_with_scalar_const__InputArrayR_Scalar_const__OutputArrayR(src1: *const c_void, src2: *const core::Scalar, dst: *const c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cuda_bitwise_xor_with_scalar_const__InputArrayR_Scalar_const__OutputArrayR_const__InputArrayR_StreamR(src1: *const c_void, src2: *const core::Scalar, dst: *const c_void, mask: *const c_void, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_calcAbsSum_const__InputArrayR_const__OutputArrayR(src: *const c_void, dst: *const c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_calcAbsSum_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src: *const c_void, dst: *const c_void, mask: *const c_void, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_calcNormDiff_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1: *const c_void, src2: *const c_void, dst: *const c_void, ocvrs_return: *mut ResultVoid);
@@ -4095,6 +4140,12 @@ mod cudaarithm_sys {
 		pub fn cv_cuda_calcSum_const__InputArrayR_const__OutputArrayR_const__InputArrayR_StreamR(src: *const c_void, dst: *const c_void, mask: *const c_void, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_cartToPolar_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(x: *const c_void, y: *const c_void, magnitude: *const c_void, angle: *const c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_cartToPolar_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool_StreamR(x: *const c_void, y: *const c_void, magnitude: *const c_void, angle: *const c_void, angle_in_degrees: bool, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cuda_cartToPolar_const__InputArrayR_const__OutputArrayR(xy: *const c_void, magnitude_angle: *const c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cuda_cartToPolar_const__InputArrayR_const__OutputArrayR_bool_StreamR(xy: *const c_void, magnitude_angle: *const c_void, angle_in_degrees: bool, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cuda_cartToPolar_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(xy: *const c_void, magnitude: *const c_void, angle: *const c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cuda_cartToPolar_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool_StreamR(xy: *const c_void, magnitude: *const c_void, angle: *const c_void, angle_in_degrees: bool, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cuda_compareWithScalar_const__InputArrayR_Scalar_const__OutputArrayR_int(src1: *const c_void, src2: *const core::Scalar, dst: *const c_void, cmpop: i32, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cuda_compareWithScalar_const__InputArrayR_Scalar_const__OutputArrayR_int_StreamR(src1: *const c_void, src2: *const core::Scalar, dst: *const c_void, cmpop: i32, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_compare_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int(src1: *const c_void, src2: *const c_void, dst: *const c_void, cmpop: i32, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_compare_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_StreamR(src1: *const c_void, src2: *const c_void, dst: *const c_void, cmpop: i32, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_copyMakeBorder_const__InputArrayR_const__OutputArrayR_int_int_int_int_int(src: *const c_void, dst: *const c_void, top: i32, bottom: i32, left: i32, right: i32, border_type: i32, ocvrs_return: *mut ResultVoid);
@@ -4108,6 +4159,8 @@ mod cudaarithm_sys {
 		pub fn cv_cuda_createLookUpTable_const__InputArrayR(lut: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_cuda_dft_const__InputArrayR_const__OutputArrayR_Size(src: *const c_void, dst: *const c_void, dft_size: *const core::Size, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_dft_const__InputArrayR_const__OutputArrayR_Size_int_StreamR(src: *const c_void, dst: *const c_void, dft_size: *const core::Size, flags: i32, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cuda_divideWithScalar_const__InputArrayR_Scalar_const__OutputArrayR(src1: *const c_void, src2: *const core::Scalar, dst: *const c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cuda_divideWithScalar_const__InputArrayR_Scalar_const__OutputArrayR_double_int_StreamR(src1: *const c_void, src2: *const core::Scalar, dst: *const c_void, scale: f64, dtype: i32, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_divide_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1: *const c_void, src2: *const c_void, dst: *const c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_divide_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_int_StreamR(src1: *const c_void, src2: *const c_void, dst: *const c_void, scale: f64, dtype: i32, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_exp_const__InputArrayR_const__OutputArrayR(src: *const c_void, dst: *const c_void, ocvrs_return: *mut ResultVoid);
@@ -4138,6 +4191,8 @@ mod cudaarithm_sys {
 		pub fn cv_cuda_magnitude_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(x: *const c_void, y: *const c_void, magnitude: *const c_void, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_magnitude_const__InputArrayR_const__OutputArrayR(xy: *const c_void, magnitude: *const c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_magnitude_const__InputArrayR_const__OutputArrayR_StreamR(xy: *const c_void, magnitude: *const c_void, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cuda_maxWithScalar_const__InputArrayR_Scalar_const__OutputArrayR(src1: *const c_void, src2: *const core::Scalar, dst: *const c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cuda_maxWithScalar_const__InputArrayR_Scalar_const__OutputArrayR_StreamR(src1: *const c_void, src2: *const core::Scalar, dst: *const c_void, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_max_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1: *const c_void, src2: *const c_void, dst: *const c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_max_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(src1: *const c_void, src2: *const c_void, dst: *const c_void, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_meanStdDev_const__InputArrayR_ScalarR_ScalarR(mtx: *const c_void, mean: *mut core::Scalar, stddev: *mut core::Scalar, ocvrs_return: *mut ResultVoid);
@@ -4154,12 +4209,16 @@ mod cudaarithm_sys {
 		pub fn cv_cuda_minMaxLoc_const__InputArrayR_doubleX_doubleX_PointX_PointX_const__InputArrayR(src: *const c_void, min_val: *mut f64, max_val: *mut f64, min_loc: *mut core::Point, max_loc: *mut core::Point, mask: *const c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_minMax_const__InputArrayR_doubleX_doubleX(src: *const c_void, min_val: *mut f64, max_val: *mut f64, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_minMax_const__InputArrayR_doubleX_doubleX_const__InputArrayR(src: *const c_void, min_val: *mut f64, max_val: *mut f64, mask: *const c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cuda_minWithScalar_const__InputArrayR_Scalar_const__OutputArrayR(src1: *const c_void, src2: *const core::Scalar, dst: *const c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cuda_minWithScalar_const__InputArrayR_Scalar_const__OutputArrayR_StreamR(src1: *const c_void, src2: *const core::Scalar, dst: *const c_void, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_min_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1: *const c_void, src2: *const c_void, dst: *const c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_min_const__InputArrayR_const__InputArrayR_const__OutputArrayR_StreamR(src1: *const c_void, src2: *const c_void, dst: *const c_void, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_mulAndScaleSpectrums_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_float(src1: *const c_void, src2: *const c_void, dst: *const c_void, flags: i32, scale: f32, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_mulAndScaleSpectrums_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_float_bool_StreamR(src1: *const c_void, src2: *const c_void, dst: *const c_void, flags: i32, scale: f32, conj_b: bool, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_mulSpectrums_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int(src1: *const c_void, src2: *const c_void, dst: *const c_void, flags: i32, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_mulSpectrums_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_bool_StreamR(src1: *const c_void, src2: *const c_void, dst: *const c_void, flags: i32, conj_b: bool, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cuda_multiplyWithScalar_const__InputArrayR_Scalar_const__OutputArrayR(src1: *const c_void, src2: *const core::Scalar, dst: *const c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cuda_multiplyWithScalar_const__InputArrayR_Scalar_const__OutputArrayR_double_int_StreamR(src1: *const c_void, src2: *const core::Scalar, dst: *const c_void, scale: f64, dtype: i32, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_multiply_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1: *const c_void, src2: *const c_void, dst: *const c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_multiply_const__InputArrayR_const__InputArrayR_const__OutputArrayR_double_int_StreamR(src1: *const c_void, src2: *const c_void, dst: *const c_void, scale: f64, dtype: i32, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_norm_const__InputArrayR_const__InputArrayR(src1: *const c_void, src2: *const c_void, ocvrs_return: *mut Result<f64>);
@@ -4170,8 +4229,14 @@ mod cudaarithm_sys {
 		pub fn cv_cuda_normalize_const__InputArrayR_const__OutputArrayR_double_double_int_int_const__InputArrayR_StreamR(src: *const c_void, dst: *const c_void, alpha: f64, beta: f64, norm_type: i32, dtype: i32, mask: *const c_void, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_phase_const__InputArrayR_const__InputArrayR_const__OutputArrayR(x: *const c_void, y: *const c_void, angle: *const c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_phase_const__InputArrayR_const__InputArrayR_const__OutputArrayR_bool_StreamR(x: *const c_void, y: *const c_void, angle: *const c_void, angle_in_degrees: bool, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cuda_phase_const__InputArrayR_const__OutputArrayR(xy: *const c_void, angle: *const c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cuda_phase_const__InputArrayR_const__OutputArrayR_bool_StreamR(xy: *const c_void, angle: *const c_void, angle_in_degrees: bool, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cuda_polarToCart_const__InputArrayR_const__InputArrayR_const__OutputArrayR(magnitude: *const c_void, angle: *const c_void, xy: *const c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cuda_polarToCart_const__InputArrayR_const__InputArrayR_const__OutputArrayR_bool_StreamR(magnitude: *const c_void, angle: *const c_void, xy: *const c_void, angle_in_degrees: bool, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_polarToCart_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR(magnitude: *const c_void, angle: *const c_void, x: *const c_void, y: *const c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_polarToCart_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__OutputArrayR_bool_StreamR(magnitude: *const c_void, angle: *const c_void, x: *const c_void, y: *const c_void, angle_in_degrees: bool, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cuda_polarToCart_const__InputArrayR_const__OutputArrayR(magnitude_angle: *const c_void, xy: *const c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cuda_polarToCart_const__InputArrayR_const__OutputArrayR_bool_StreamR(magnitude_angle: *const c_void, xy: *const c_void, angle_in_degrees: bool, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_pow_const__InputArrayR_double_const__OutputArrayR(src: *const c_void, power: f64, dst: *const c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_pow_const__InputArrayR_double_const__OutputArrayR_StreamR(src: *const c_void, power: f64, dst: *const c_void, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_rectStdDev_const__InputArrayR_const__InputArrayR_const__OutputArrayR_Rect(src: *const c_void, sqr: *const c_void, dst: *const c_void, rect: *const core::Rect, ocvrs_return: *mut ResultVoid);
@@ -4194,6 +4259,8 @@ mod cudaarithm_sys {
 		pub fn cv_cuda_sqr_const__InputArrayR_const__OutputArrayR_StreamR(src: *const c_void, dst: *const c_void, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_sqrt_const__InputArrayR_const__OutputArrayR(src: *const c_void, dst: *const c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_sqrt_const__InputArrayR_const__OutputArrayR_StreamR(src: *const c_void, dst: *const c_void, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cuda_subtractWithScalar_const__InputArrayR_Scalar_const__OutputArrayR(src1: *const c_void, src2: *const core::Scalar, dst: *const c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cuda_subtractWithScalar_const__InputArrayR_Scalar_const__OutputArrayR_const__InputArrayR_int_StreamR(src1: *const c_void, src2: *const core::Scalar, dst: *const c_void, mask: *const c_void, dtype: i32, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_subtract_const__InputArrayR_const__InputArrayR_const__OutputArrayR(src1: *const c_void, src2: *const c_void, dst: *const c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_subtract_const__InputArrayR_const__InputArrayR_const__OutputArrayR_const__InputArrayR_int_StreamR(src1: *const c_void, src2: *const c_void, dst: *const c_void, mask: *const c_void, dtype: i32, stream: *mut c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cuda_sum_const__InputArrayR(src: *const c_void, ocvrs_return: *mut Result<core::Scalar>);
@@ -4288,6 +4355,8 @@ mod cudacodec_sys {
 
 	extern "C" {
 		pub fn cv_cudacodec_MapHist_const_GpuMatR_MatR(hist: *const c_void, hist_full: *mut c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cudacodec_createNVSurfaceToColorConverter_const_ColorSpaceStandard(color_space: crate::cudacodec::CUDA_ColorSpaceStandard, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_cudacodec_createNVSurfaceToColorConverter_const_ColorSpaceStandard_const_bool(color_space: crate::cudacodec::CUDA_ColorSpaceStandard, video_full_range_flag: bool, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_cudacodec_createVideoReader_const_PtrLRawVideoSourceGR(source: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_cudacodec_createVideoReader_const_PtrLRawVideoSourceGR_const_VideoReaderInitParams(source: *const c_void, params: *const crate::cudacodec::CUDA_VideoReaderInitParams, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_cudacodec_createVideoReader_const_StringR(filename: *const c_char, ocvrs_return: *mut Result<*mut c_void>);
@@ -4297,11 +4366,15 @@ mod cudacodec_sys {
 		pub fn cv_cudacodec_createVideoWriter_const_StringR_const_Size_const_Codec_const_double_const_ColorFormat_const_EncoderParamsR(file_name: *const c_char, frame_size: *const core::Size, codec: crate::cudacodec::CUDA_Codec, fps: f64, color_format: crate::cudacodec::CUDA_ColorFormat, params: *const crate::cudacodec::CUDA_EncoderParams, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_cudacodec_createVideoWriter_const_StringR_const_Size_const_Codec_const_double_const_ColorFormat_const_EncoderParamsR_PtrLEncoderCallbackG_const_StreamR(file_name: *const c_char, frame_size: *const core::Size, codec: crate::cudacodec::CUDA_Codec, fps: f64, color_format: crate::cudacodec::CUDA_ColorFormat, params: *const crate::cudacodec::CUDA_EncoderParams, encoder_callback: *mut c_void, stream: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_cudacodec_operatorEQ_const_EncoderParamsR_const_EncoderParamsR(lhs: *const crate::cudacodec::CUDA_EncoderParams, rhs: *const crate::cudacodec::CUDA_EncoderParams, ocvrs_return: *mut Result<bool>);
-		pub fn cv_cudacodec_EncoderCallback_onEncoded_const_vectorLvectorLuint8_tGGR(instance: *mut c_void, v_packet: *const c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cudacodec_EncoderCallback_onEncoded_const_vectorLvectorLuint8_tGGR_const_vectorLuint64_tGR(instance: *mut c_void, v_packet: *const c_void, pts: *const c_void, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cudacodec_EncoderCallback_setFrameIntervalP_const_int(instance: *mut c_void, frame_interval_p: i32, ocvrs_return: *mut Result<bool>);
 		pub fn cv_cudacodec_EncoderCallback_onEncodingFinished(instance: *mut c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cudacodec_EncoderCallback_delete(instance: *mut c_void);
 		pub fn cv_cudacodec_EncoderParams_EncoderParams(ocvrs_return: *mut Result<crate::cudacodec::CUDA_EncoderParams>);
 		pub fn cv_cudacodec_FormatInfo_FormatInfo(ocvrs_return: *mut Result<crate::cudacodec::CUDA_FormatInfo>);
+		pub fn cv_cudacodec_NVSurfaceToColorConverter_convert_const__InputArrayR_const__OutputArrayR_const_SurfaceFormat_const_ColorFormat_const_BitDepth_const_bool_const_bool_StreamR(instance: *mut c_void, yuv: *const c_void, color: *const c_void, surface_format: crate::cudacodec::CUDA_SurfaceFormat, output_format: crate::cudacodec::CUDA_ColorFormat, bit_depth: crate::cudacodec::CUDA_BitDepth, planar: bool, video_full_range_flag: bool, stream: *mut c_void, ocvrs_return: *mut Result<bool>);
+		pub fn cv_cudacodec_NVSurfaceToColorConverter_convert_const__InputArrayR_const__OutputArrayR_const_SurfaceFormat_const_ColorFormat(instance: *mut c_void, yuv: *const c_void, color: *const c_void, surface_format: crate::cudacodec::CUDA_SurfaceFormat, output_format: crate::cudacodec::CUDA_ColorFormat, ocvrs_return: *mut Result<bool>);
+		pub fn cv_cudacodec_NVSurfaceToColorConverter_delete(instance: *mut c_void);
 		pub fn cv_cudacodec_RawVideoSource_getNextPacket_unsigned_charXX_size_tX(instance: *mut c_void, data: *mut *mut u8, size: *mut size_t, ocvrs_return: *mut Result<bool>);
 		pub fn cv_cudacodec_RawVideoSource_lastPacketContainsKeyFrame_const(instance: *const c_void, ocvrs_return: *mut Result<bool>);
 		pub fn cv_cudacodec_RawVideoSource_format_const(instance: *const c_void, ocvrs_return: *mut Result<crate::cudacodec::CUDA_FormatInfo>);
@@ -4323,6 +4396,7 @@ mod cudacodec_sys {
 		pub fn cv_cudacodec_VideoReader_retrieve_const_GpuMatR(instance: *const c_void, frame: *mut c_void, ocvrs_return: *mut Result<bool>);
 		pub fn cv_cudacodec_VideoReader_set_const_VideoReaderProps_const_double(instance: *mut c_void, property_id: crate::cudacodec::CUDA_VideoReaderProps, property_val: f64, ocvrs_return: *mut Result<bool>);
 		pub fn cv_cudacodec_VideoReader_setVideoReaderProps_const_VideoReaderProps_double(instance: *mut c_void, property_id: crate::cudacodec::CUDA_VideoReaderProps, property_val: f64, ocvrs_return: *mut Result<bool>);
+		pub fn cv_cudacodec_VideoReader_set_const_ColorFormat_const_BitDepth_const_bool(instance: *mut c_void, color_format: crate::cudacodec::CUDA_ColorFormat, bit_depth: crate::cudacodec::CUDA_BitDepth, planar: bool, ocvrs_return: *mut Result<bool>);
 		pub fn cv_cudacodec_VideoReader_set_const_ColorFormat(instance: *mut c_void, color_format: crate::cudacodec::CUDA_ColorFormat, ocvrs_return: *mut Result<bool>);
 		pub fn cv_cudacodec_VideoReader_get_const_const_VideoReaderProps_doubleR(instance: *const c_void, property_id: crate::cudacodec::CUDA_VideoReaderProps, property_val: *mut f64, ocvrs_return: *mut Result<bool>);
 		pub fn cv_cudacodec_VideoReader_getVideoReaderProps_const_const_VideoReaderProps_doubleR_double(instance: *const c_void, property_id: crate::cudacodec::CUDA_VideoReaderProps, property_val_out: *mut f64, property_val_in: f64, ocvrs_return: *mut Result<bool>);
@@ -4338,6 +4412,10 @@ mod cudacodec_sys {
 		pub fn cv_PtrLcv_cudacodec_EncoderCallbackG_getInnerPtrMut(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_PtrLcv_cudacodec_EncoderCallbackG_new_null_const() -> *mut c_void;
 		pub fn cv_PtrLcv_cudacodec_EncoderCallbackG_delete(instance: *mut c_void);
+		pub fn cv_PtrLcv_cudacodec_NVSurfaceToColorConverterG_getInnerPtr_const(instance: *const c_void) -> *mut c_void;
+		pub fn cv_PtrLcv_cudacodec_NVSurfaceToColorConverterG_getInnerPtrMut(instance: *mut c_void) -> *mut c_void;
+		pub fn cv_PtrLcv_cudacodec_NVSurfaceToColorConverterG_new_null_const() -> *mut c_void;
+		pub fn cv_PtrLcv_cudacodec_NVSurfaceToColorConverterG_delete(instance: *mut c_void);
 		pub fn cv_PtrLcv_cudacodec_RawVideoSourceG_getInnerPtr_const(instance: *const c_void) -> *mut c_void;
 		pub fn cv_PtrLcv_cudacodec_RawVideoSourceG_getInnerPtrMut(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_PtrLcv_cudacodec_RawVideoSourceG_new_null_const() -> *mut c_void;
@@ -5587,6 +5665,11 @@ mod dnn_sys {
 		pub fn cv_dnn_DeconvolutionLayer_to_BaseConvolutionLayer(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_dnn_DeconvolutionLayer_to_Layer(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_dnn_DeconvolutionLayer_delete(instance: *mut c_void);
+		pub fn cv_dnn_DepthToSpaceLayer_create_const_LayerParamsR(params: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_dnn_DepthToSpaceLayer_defaultNew_const() -> *mut c_void;
+		pub fn cv_dnn_DepthToSpaceLayer_to_Algorithm(instance: *mut c_void) -> *mut c_void;
+		pub fn cv_dnn_DepthToSpaceLayer_to_Layer(instance: *mut c_void) -> *mut c_void;
+		pub fn cv_dnn_DepthToSpaceLayer_delete(instance: *mut c_void);
 		pub fn cv_dnn_DequantizeLayer_create_const_LayerParamsR(params: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_dnn_DequantizeLayer_defaultNew_const() -> *mut c_void;
 		pub fn cv_dnn_DequantizeLayer_propScales_const(instance: *const c_void) -> *mut c_void;
@@ -5924,6 +6007,7 @@ mod dnn_sys {
 		pub fn cv_dnn_Layer_to_CumSumLayer(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_dnn_Layer_to_DataAugmentationLayer(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_dnn_Layer_to_DeconvolutionLayer(instance: *mut c_void) -> *mut c_void;
+		pub fn cv_dnn_Layer_to_DepthToSpaceLayer(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_dnn_Layer_to_DequantizeLayer(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_dnn_Layer_to_DetectionOutputLayer(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_dnn_Layer_to_ELULayer(instance: *mut c_void) -> *mut c_void;
@@ -5997,6 +6081,7 @@ mod dnn_sys {
 		pub fn cv_dnn_Layer_to_SoftmaxLayerInt8(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_dnn_Layer_to_SoftplusLayer(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_dnn_Layer_to_SoftsignLayer(instance: *mut c_void) -> *mut c_void;
+		pub fn cv_dnn_Layer_to_SpaceToDepthLayer(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_dnn_Layer_to_SplitLayer(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_dnn_Layer_to_SqrtLayer(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_dnn_Layer_to_SwishLayer(instance: *mut c_void) -> *mut c_void;
@@ -6004,6 +6089,7 @@ mod dnn_sys {
 		pub fn cv_dnn_Layer_to_TanLayer(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_dnn_Layer_to_ThresholdedReluLayer(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_dnn_Layer_to_TileLayer(instance: *mut c_void) -> *mut c_void;
+		pub fn cv_dnn_Layer_to_TopKLayer(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_dnn_Layer_to_Algorithm(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_dnn_Layer_delete(instance: *mut c_void);
 		pub fn cv_dnn_LayerFactory_registerLayer_const_StringR_Constructor(typ: *const c_char, constructor: Option<unsafe extern "C" fn(*mut c_void) -> *mut c_void>, ocvrs_return: *mut ResultVoid);
@@ -6492,6 +6578,11 @@ mod dnn_sys {
 		pub fn cv_dnn_SoftsignLayer_to_Algorithm(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_dnn_SoftsignLayer_to_Layer(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_dnn_SoftsignLayer_delete(instance: *mut c_void);
+		pub fn cv_dnn_SpaceToDepthLayer_create_const_LayerParamsR(params: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_dnn_SpaceToDepthLayer_defaultNew_const() -> *mut c_void;
+		pub fn cv_dnn_SpaceToDepthLayer_to_Algorithm(instance: *mut c_void) -> *mut c_void;
+		pub fn cv_dnn_SpaceToDepthLayer_to_Layer(instance: *mut c_void) -> *mut c_void;
+		pub fn cv_dnn_SpaceToDepthLayer_delete(instance: *mut c_void);
 		pub fn cv_dnn_SplitLayer_create_const_LayerParamsR(params: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_dnn_SplitLayer_defaultNew_const() -> *mut c_void;
 		pub fn cv_dnn_SplitLayer_propOutputsCount_const(instance: *const c_void) -> i32;
@@ -6585,6 +6676,11 @@ mod dnn_sys {
 		pub fn cv_dnn_TileLayer_to_Algorithm(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_dnn_TileLayer_to_Layer(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_dnn_TileLayer_delete(instance: *mut c_void);
+		pub fn cv_dnn_TopKLayer_create_const_LayerParamsR(params: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_dnn_TopKLayer_defaultNew_const() -> *mut c_void;
+		pub fn cv_dnn_TopKLayer_to_Algorithm(instance: *mut c_void) -> *mut c_void;
+		pub fn cv_dnn_TopKLayer_to_Layer(instance: *mut c_void) -> *mut c_void;
+		pub fn cv_dnn_TopKLayer_delete(instance: *mut c_void);
 		pub fn cv_dnn__Range__Range_const_RangeR(r: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_dnn__Range__Range_int_int(start_: i32, size_: i32, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_dnn__Range__Range_int(start_: i32, ocvrs_return: *mut Result<*mut c_void>);
@@ -6850,6 +6946,13 @@ mod dnn_sys {
 		pub fn cv_PtrLcv_dnn_DeconvolutionLayerG_to_PtrOfBaseConvolutionLayer(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_PtrLcv_dnn_DeconvolutionLayerG_to_PtrOfLayer(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_PtrLcv_dnn_DeconvolutionLayerG_new_const_DeconvolutionLayer(val: *mut c_void) -> *mut c_void;
+		pub fn cv_PtrLcv_dnn_DepthToSpaceLayerG_getInnerPtr_const(instance: *const c_void) -> *mut c_void;
+		pub fn cv_PtrLcv_dnn_DepthToSpaceLayerG_getInnerPtrMut(instance: *mut c_void) -> *mut c_void;
+		pub fn cv_PtrLcv_dnn_DepthToSpaceLayerG_new_null_const() -> *mut c_void;
+		pub fn cv_PtrLcv_dnn_DepthToSpaceLayerG_delete(instance: *mut c_void);
+		pub fn cv_PtrLcv_dnn_DepthToSpaceLayerG_to_PtrOfAlgorithm(instance: *mut c_void) -> *mut c_void;
+		pub fn cv_PtrLcv_dnn_DepthToSpaceLayerG_to_PtrOfLayer(instance: *mut c_void) -> *mut c_void;
+		pub fn cv_PtrLcv_dnn_DepthToSpaceLayerG_new_const_DepthToSpaceLayer(val: *mut c_void) -> *mut c_void;
 		pub fn cv_PtrLcv_dnn_DequantizeLayerG_getInnerPtr_const(instance: *const c_void) -> *mut c_void;
 		pub fn cv_PtrLcv_dnn_DequantizeLayerG_getInnerPtrMut(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_PtrLcv_dnn_DequantizeLayerG_new_null_const() -> *mut c_void;
@@ -7393,6 +7496,13 @@ mod dnn_sys {
 		pub fn cv_PtrLcv_dnn_SoftsignLayerG_to_PtrOfActivationLayer(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_PtrLcv_dnn_SoftsignLayerG_to_PtrOfLayer(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_PtrLcv_dnn_SoftsignLayerG_new_const_SoftsignLayer(val: *mut c_void) -> *mut c_void;
+		pub fn cv_PtrLcv_dnn_SpaceToDepthLayerG_getInnerPtr_const(instance: *const c_void) -> *mut c_void;
+		pub fn cv_PtrLcv_dnn_SpaceToDepthLayerG_getInnerPtrMut(instance: *mut c_void) -> *mut c_void;
+		pub fn cv_PtrLcv_dnn_SpaceToDepthLayerG_new_null_const() -> *mut c_void;
+		pub fn cv_PtrLcv_dnn_SpaceToDepthLayerG_delete(instance: *mut c_void);
+		pub fn cv_PtrLcv_dnn_SpaceToDepthLayerG_to_PtrOfAlgorithm(instance: *mut c_void) -> *mut c_void;
+		pub fn cv_PtrLcv_dnn_SpaceToDepthLayerG_to_PtrOfLayer(instance: *mut c_void) -> *mut c_void;
+		pub fn cv_PtrLcv_dnn_SpaceToDepthLayerG_new_const_SpaceToDepthLayer(val: *mut c_void) -> *mut c_void;
 		pub fn cv_PtrLcv_dnn_SplitLayerG_getInnerPtr_const(instance: *const c_void) -> *mut c_void;
 		pub fn cv_PtrLcv_dnn_SplitLayerG_getInnerPtrMut(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_PtrLcv_dnn_SplitLayerG_new_null_const() -> *mut c_void;
@@ -7447,6 +7557,13 @@ mod dnn_sys {
 		pub fn cv_PtrLcv_dnn_TileLayerG_to_PtrOfAlgorithm(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_PtrLcv_dnn_TileLayerG_to_PtrOfLayer(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_PtrLcv_dnn_TileLayerG_new_const_TileLayer(val: *mut c_void) -> *mut c_void;
+		pub fn cv_PtrLcv_dnn_TopKLayerG_getInnerPtr_const(instance: *const c_void) -> *mut c_void;
+		pub fn cv_PtrLcv_dnn_TopKLayerG_getInnerPtrMut(instance: *mut c_void) -> *mut c_void;
+		pub fn cv_PtrLcv_dnn_TopKLayerG_new_null_const() -> *mut c_void;
+		pub fn cv_PtrLcv_dnn_TopKLayerG_delete(instance: *mut c_void);
+		pub fn cv_PtrLcv_dnn_TopKLayerG_to_PtrOfAlgorithm(instance: *mut c_void) -> *mut c_void;
+		pub fn cv_PtrLcv_dnn_TopKLayerG_to_PtrOfLayer(instance: *mut c_void) -> *mut c_void;
+		pub fn cv_PtrLcv_dnn_TopKLayerG_new_const_TopKLayer(val: *mut c_void) -> *mut c_void;
 		pub fn std_pairLcv_dnn_Backend__cv_dnn_TargetG_new_const_Backend_Target(arg: crate::dnn::Backend, arg_1: crate::dnn::Target) -> *mut c_void;
 		pub fn std_pairLcv_dnn_Backend__cv_dnn_TargetG_get_0_const(instance: *const c_void, ocvrs_return: *mut crate::dnn::Backend);
 		pub fn std_pairLcv_dnn_Backend__cv_dnn_TargetG_get_1_const(instance: *const c_void, ocvrs_return: *mut crate::dnn::Target);
@@ -9706,18 +9823,36 @@ mod imgcodecs_sys {
 		pub fn cv_imdecodemulti_const__InputArrayR_int_vectorLMatGR_const_RangeR(buf: *const c_void, flags: i32, mats: *mut c_void, range: *const c_void, ocvrs_return: *mut Result<bool>);
 		pub fn cv_imencode_const_StringR_const__InputArrayR_vectorLunsigned_charGR(ext: *const c_char, img: *const c_void, buf: *mut c_void, ocvrs_return: *mut Result<bool>);
 		pub fn cv_imencode_const_StringR_const__InputArrayR_vectorLunsigned_charGR_const_vectorLintGR(ext: *const c_char, img: *const c_void, buf: *mut c_void, params: *const c_void, ocvrs_return: *mut Result<bool>);
+		pub fn cv_imencodemulti_const_StringR_const__InputArrayR_vectorLunsigned_charGR(ext: *const c_char, imgs: *const c_void, buf: *mut c_void, ocvrs_return: *mut Result<bool>);
+		pub fn cv_imencodemulti_const_StringR_const__InputArrayR_vectorLunsigned_charGR_const_vectorLintGR(ext: *const c_char, imgs: *const c_void, buf: *mut c_void, params: *const c_void, ocvrs_return: *mut Result<bool>);
 		pub fn cv_imread_const_StringR(filename: *const c_char, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_imread_const_StringR_const__OutputArrayR(filename: *const c_char, dst: *const c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_imread_const_StringR_const__OutputArrayR_int(filename: *const c_char, dst: *const c_void, flags: i32, ocvrs_return: *mut ResultVoid);
 		pub fn cv_imread_const_StringR_int(filename: *const c_char, flags: i32, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_imreadanimation_const_StringR_AnimationR(filename: *const c_char, animation: *mut c_void, ocvrs_return: *mut Result<bool>);
+		pub fn cv_imreadanimation_const_StringR_AnimationR_int_int(filename: *const c_char, animation: *mut c_void, start: i32, count: i32, ocvrs_return: *mut Result<bool>);
 		pub fn cv_imreadmulti_const_StringR_vectorLMatGR(filename: *const c_char, mats: *mut c_void, ocvrs_return: *mut Result<bool>);
 		pub fn cv_imreadmulti_const_StringR_vectorLMatGR_int(filename: *const c_char, mats: *mut c_void, flags: i32, ocvrs_return: *mut Result<bool>);
 		pub fn cv_imreadmulti_const_StringR_vectorLMatGR_int_int(filename: *const c_char, mats: *mut c_void, start: i32, count: i32, ocvrs_return: *mut Result<bool>);
 		pub fn cv_imreadmulti_const_StringR_vectorLMatGR_int_int_int(filename: *const c_char, mats: *mut c_void, start: i32, count: i32, flags: i32, ocvrs_return: *mut Result<bool>);
 		pub fn cv_imwrite_const_StringR_const__InputArrayR(filename: *const c_char, img: *const c_void, ocvrs_return: *mut Result<bool>);
 		pub fn cv_imwrite_const_StringR_const__InputArrayR_const_vectorLintGR(filename: *const c_char, img: *const c_void, params: *const c_void, ocvrs_return: *mut Result<bool>);
+		pub fn cv_imwriteanimation_const_StringR_const_AnimationR(filename: *const c_char, animation: *const c_void, ocvrs_return: *mut Result<bool>);
+		pub fn cv_imwriteanimation_const_StringR_const_AnimationR_const_vectorLintGR(filename: *const c_char, animation: *const c_void, params: *const c_void, ocvrs_return: *mut Result<bool>);
 		pub fn cv_imwritemulti_const_StringR_const__InputArrayR(filename: *const c_char, img: *const c_void, ocvrs_return: *mut Result<bool>);
 		pub fn cv_imwritemulti_const_StringR_const__InputArrayR_const_vectorLintGR(filename: *const c_char, img: *const c_void, params: *const c_void, ocvrs_return: *mut Result<bool>);
+		pub fn cv_Animation_Animation_int_Scalar(loop_count: i32, bg_color: *const core::Scalar, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_Animation_Animation(ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_Animation_implicitClone_const(instance: *const c_void) -> *mut c_void;
+		pub fn cv_Animation_propLoop_count_const(instance: *const c_void) -> i32;
+		pub fn cv_Animation_propLoop_count_const_int(instance: *mut c_void, val: i32);
+		pub fn cv_Animation_propBgcolor_const(instance: *const c_void, ocvrs_return: *mut core::Scalar);
+		pub fn cv_Animation_propBgcolor_const_Scalar(instance: *mut c_void, val: *const core::Scalar);
+		pub fn cv_Animation_propDurations_const(instance: *const c_void) -> *mut c_void;
+		pub fn cv_Animation_propDurations_const_vectorLintG(instance: *mut c_void, val: *const c_void);
+		pub fn cv_Animation_propFrames_const(instance: *const c_void) -> *mut c_void;
+		pub fn cv_Animation_propFrames_const_vectorLMatG(instance: *mut c_void, val: *const c_void);
+		pub fn cv_Animation_delete(instance: *mut c_void);
 		pub fn cv_ImageCollection_ImageCollection(ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_ImageCollection_ImageCollection_const_StringR_int(filename: *const c_char, flags: i32, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_ImageCollection_init_const_StringR_int(instance: *mut c_void, img: *const c_char, flags: i32, ocvrs_return: *mut ResultVoid);
@@ -9750,14 +9885,14 @@ mod imgproc_sys {
 		pub fn cv_EMD_const__InputArrayR_const__InputArrayR_int(signature1: *const c_void, signature2: *const c_void, dist_type: i32, ocvrs_return: *mut Result<f32>);
 		pub fn cv_EMD_const__InputArrayR_const__InputArrayR_int_const__InputArrayR_floatX_const__OutputArrayR(signature1: *const c_void, signature2: *const c_void, dist_type: i32, cost: *const c_void, lower_bound: *mut f32, flow: *const c_void, ocvrs_return: *mut Result<f32>);
 		pub fn cv_GaussianBlur_const__InputArrayR_const__OutputArrayR_Size_double(src: *const c_void, dst: *const c_void, ksize: *const core::Size, sigma_x: f64, ocvrs_return: *mut ResultVoid);
-		pub fn cv_GaussianBlur_const__InputArrayR_const__OutputArrayR_Size_double_double_int(src: *const c_void, dst: *const c_void, ksize: *const core::Size, sigma_x: f64, sigma_y: f64, border_type: i32, ocvrs_return: *mut ResultVoid);
+		pub fn cv_GaussianBlur_const__InputArrayR_const__OutputArrayR_Size_double_double_int_AlgorithmHint(src: *const c_void, dst: *const c_void, ksize: *const core::Size, sigma_x: f64, sigma_y: f64, border_type: i32, hint: core::AlgorithmHint, ocvrs_return: *mut ResultVoid);
 		pub fn cv_HoughCircles_const__InputArrayR_const__OutputArrayR_int_double_double(image: *const c_void, circles: *const c_void, method: i32, dp: f64, min_dist: f64, ocvrs_return: *mut ResultVoid);
 		pub fn cv_HoughCircles_const__InputArrayR_const__OutputArrayR_int_double_double_double_double_int_int(image: *const c_void, circles: *const c_void, method: i32, dp: f64, min_dist: f64, param1: f64, param2: f64, min_radius: i32, max_radius: i32, ocvrs_return: *mut ResultVoid);
 		pub fn cv_HoughLinesP_const__InputArrayR_const__OutputArrayR_double_double_int(image: *const c_void, lines: *const c_void, rho: f64, theta: f64, threshold: i32, ocvrs_return: *mut ResultVoid);
 		pub fn cv_HoughLinesP_const__InputArrayR_const__OutputArrayR_double_double_int_double_double(image: *const c_void, lines: *const c_void, rho: f64, theta: f64, threshold: i32, min_line_length: f64, max_line_gap: f64, ocvrs_return: *mut ResultVoid);
 		pub fn cv_HoughLinesPointSet_const__InputArrayR_const__OutputArrayR_int_int_double_double_double_double_double_double(point: *const c_void, lines: *const c_void, lines_max: i32, threshold: i32, min_rho: f64, max_rho: f64, rho_step: f64, min_theta: f64, max_theta: f64, theta_step: f64, ocvrs_return: *mut ResultVoid);
 		pub fn cv_HoughLines_const__InputArrayR_const__OutputArrayR_double_double_int(image: *const c_void, lines: *const c_void, rho: f64, theta: f64, threshold: i32, ocvrs_return: *mut ResultVoid);
-		pub fn cv_HoughLines_const__InputArrayR_const__OutputArrayR_double_double_int_double_double_double_double(image: *const c_void, lines: *const c_void, rho: f64, theta: f64, threshold: i32, srn: f64, stn: f64, min_theta: f64, max_theta: f64, ocvrs_return: *mut ResultVoid);
+		pub fn cv_HoughLines_const__InputArrayR_const__OutputArrayR_double_double_int_double_double_double_double_bool(image: *const c_void, lines: *const c_void, rho: f64, theta: f64, threshold: i32, srn: f64, stn: f64, min_theta: f64, max_theta: f64, use_edgeval: bool, ocvrs_return: *mut ResultVoid);
 		pub fn cv_HuMoments_const_MomentsR_const__OutputArrayR(m: *const core::Moments, hu: *const c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_HuMoments_const_MomentsR_doubleXX(moments: *const core::Moments, hu: *mut [f64; 7], ocvrs_return: *mut ResultVoid);
 		pub fn cv_Laplacian_const__InputArrayR_const__OutputArrayR_int(src: *const c_void, dst: *const c_void, ddepth: i32, ocvrs_return: *mut ResultVoid);
@@ -9778,6 +9913,8 @@ mod imgproc_sys {
 		pub fn cv_applyColorMap_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src: *const c_void, dst: *const c_void, user_color: *const c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_applyColorMap_const__InputArrayR_const__OutputArrayR_int(src: *const c_void, dst: *const c_void, colormap: i32, ocvrs_return: *mut ResultVoid);
 		pub fn cv_approxPolyDP_const__InputArrayR_const__OutputArrayR_double_bool(curve: *const c_void, approx_curve: *const c_void, epsilon: f64, closed: bool, ocvrs_return: *mut ResultVoid);
+		pub fn cv_approxPolyN_const__InputArrayR_const__OutputArrayR_int(curve: *const c_void, approx_curve: *const c_void, nsides: i32, ocvrs_return: *mut ResultVoid);
+		pub fn cv_approxPolyN_const__InputArrayR_const__OutputArrayR_int_float_bool(curve: *const c_void, approx_curve: *const c_void, nsides: i32, epsilon_percentage: f32, ensure_convex: bool, ocvrs_return: *mut ResultVoid);
 		pub fn cv_arcLength_const__InputArrayR_bool(curve: *const c_void, closed: bool, ocvrs_return: *mut Result<f64>);
 		pub fn cv_arrowedLine_const__InputOutputArrayR_Point_Point_const_ScalarR(img: *const c_void, pt1: *const core::Point, pt2: *const core::Point, color: *const core::Scalar, ocvrs_return: *mut ResultVoid);
 		pub fn cv_arrowedLine_const__InputOutputArrayR_Point_Point_const_ScalarR_int_int_int_double(img: *const c_void, pt1: *const core::Point, pt2: *const core::Point, color: *const core::Scalar, thickness: i32, line_type: i32, shift: i32, tip_length: f64, ocvrs_return: *mut ResultVoid);
@@ -9830,8 +9967,9 @@ mod imgproc_sys {
 		pub fn cv_createLineSegmentDetector(ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_createLineSegmentDetector_int_double_double_double_double_double_double_int(refine: i32, scale: f64, sigma_scale: f64, quant: f64, ang_th: f64, log_eps: f64, density_th: f64, n_bins: i32, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_cvtColorTwoPlane_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int(src1: *const c_void, src2: *const c_void, dst: *const c_void, code: i32, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cvtColorTwoPlane_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_AlgorithmHint(src1: *const c_void, src2: *const c_void, dst: *const c_void, code: i32, hint: core::AlgorithmHint, ocvrs_return: *mut ResultVoid);
 		pub fn cv_cvtColor_const__InputArrayR_const__OutputArrayR_int(src: *const c_void, dst: *const c_void, code: i32, ocvrs_return: *mut ResultVoid);
-		pub fn cv_cvtColor_const__InputArrayR_const__OutputArrayR_int_int(src: *const c_void, dst: *const c_void, code: i32, dst_cn: i32, ocvrs_return: *mut ResultVoid);
+		pub fn cv_cvtColor_const__InputArrayR_const__OutputArrayR_int_int_AlgorithmHint(src: *const c_void, dst: *const c_void, code: i32, dst_cn: i32, hint: core::AlgorithmHint, ocvrs_return: *mut ResultVoid);
 		pub fn cv_demosaicing_const__InputArrayR_const__OutputArrayR_int(src: *const c_void, dst: *const c_void, code: i32, ocvrs_return: *mut ResultVoid);
 		pub fn cv_demosaicing_const__InputArrayR_const__OutputArrayR_int_int(src: *const c_void, dst: *const c_void, code: i32, dst_cn: i32, ocvrs_return: *mut ResultVoid);
 		pub fn cv_dilate_const__InputArrayR_const__OutputArrayR_const__InputArrayR(src: *const c_void, dst: *const c_void, kernel: *const c_void, ocvrs_return: *mut ResultVoid);
@@ -11031,6 +11169,8 @@ mod objdetect_sys {
 		pub fn cv_FaceRecognizerSF_match_const_const__InputArrayR_const__InputArrayR(instance: *const c_void, face_feature1: *const c_void, face_feature2: *const c_void, ocvrs_return: *mut Result<f64>);
 		pub fn cv_FaceRecognizerSF_create_const_StringR_const_StringR_int_int(model: *const c_char, config: *const c_char, backend_id: i32, target_id: i32, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_FaceRecognizerSF_create_const_StringR_const_StringR(model: *const c_char, config: *const c_char, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_FaceRecognizerSF_create_const_StringR_const_vectorLunsigned_charGR_const_vectorLunsigned_charGR_int_int(framework: *const c_char, buffer_model: *const c_void, buffer_config: *const c_void, backend_id: i32, target_id: i32, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_FaceRecognizerSF_create_const_StringR_const_vectorLunsigned_charGR_const_vectorLunsigned_charGR(framework: *const c_char, buffer_model: *const c_void, buffer_config: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_FaceRecognizerSF_delete(instance: *mut c_void);
 		pub fn cv_GraphicalCodeDetector_GraphicalCodeDetector(ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_GraphicalCodeDetector_GraphicalCodeDetector_const_GraphicalCodeDetectorR(unnamed: *const c_void) -> *mut c_void;
@@ -13525,6 +13665,17 @@ mod shape_sys {
 #[cfg(ocvrs_has_module_shape)]
 pub use shape_sys::*;
 
+#[cfg(ocvrs_has_module_signal)]
+mod signal_sys {
+	use super::*;
+
+	extern "C" {
+		pub fn cv_signal_resampleSignal_const__InputArrayR_const__OutputArrayR_const_int_const_int(input_signal: *const c_void, out_signal: *const c_void, in_freq: i32, out_freq: i32, ocvrs_return: *mut ResultVoid);
+	}
+}
+#[cfg(ocvrs_has_module_signal)]
+pub use signal_sys::*;
+
 #[cfg(ocvrs_has_module_stereo)]
 mod stereo_sys {
 	use super::*;
@@ -15570,6 +15721,8 @@ mod video_sys {
 		pub fn cv_TrackerVit_Params_propMeanvalue_const_Scalar(instance: *mut c_void, val: *const core::Scalar);
 		pub fn cv_TrackerVit_Params_propStdvalue_const(instance: *const c_void, ocvrs_return: *mut core::Scalar);
 		pub fn cv_TrackerVit_Params_propStdvalue_const_Scalar(instance: *mut c_void, val: *const core::Scalar);
+		pub fn cv_TrackerVit_Params_propTracking_score_threshold_const(instance: *const c_void) -> f32;
+		pub fn cv_TrackerVit_Params_propTracking_score_threshold_const_float(instance: *mut c_void, val: f32);
 		pub fn cv_TrackerVit_Params_delete(instance: *mut c_void);
 		pub fn cv_VariationalRefinement_calcUV_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR_const__InputOutputArrayR(instance: *mut c_void, i0: *const c_void, i1: *const c_void, flow_u: *const c_void, flow_v: *const c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_VariationalRefinement_getFixedPointIterations_const(instance: *const c_void, ocvrs_return: *mut Result<i32>);
@@ -15686,10 +15839,15 @@ mod videoio_sys {
 		pub fn cv_videoio_registry_getCameraBackends(ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_videoio_registry_getStreamBackendPluginVersion_VideoCaptureAPIs_intR_intR(api: crate::videoio::VideoCaptureAPIs, version_abi: *mut i32, version_api: *mut i32, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_videoio_registry_getStreamBackends(ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_videoio_registry_getStreamBufferedBackendPluginVersion_VideoCaptureAPIs_intR_intR(api: crate::videoio::VideoCaptureAPIs, version_abi: *mut i32, version_api: *mut i32, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_videoio_registry_getStreamBufferedBackends(ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_videoio_registry_getWriterBackendPluginVersion_VideoCaptureAPIs_intR_intR(api: crate::videoio::VideoCaptureAPIs, version_abi: *mut i32, version_api: *mut i32, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_videoio_registry_getWriterBackends(ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_videoio_registry_hasBackend_VideoCaptureAPIs(api: crate::videoio::VideoCaptureAPIs, ocvrs_return: *mut Result<bool>);
 		pub fn cv_videoio_registry_isBackendBuiltIn_VideoCaptureAPIs(api: crate::videoio::VideoCaptureAPIs, ocvrs_return: *mut Result<bool>);
+		pub fn cv_IStreamReader_read_charX_long_long(instance: *mut c_void, buffer: *mut *mut c_void, size: i64, ocvrs_return: *mut Result<i64>);
+		pub fn cv_IStreamReader_seek_long_long_int(instance: *mut c_void, offset: i64, origin: i32, ocvrs_return: *mut Result<i64>);
+		pub fn cv_IStreamReader_delete(instance: *mut c_void);
 		pub fn cv_VideoCapture_VideoCapture(ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_VideoCapture_VideoCapture_const_StringR_int(filename: *const c_char, api_preference: i32, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_VideoCapture_VideoCapture_const_StringR(filename: *const c_char, ocvrs_return: *mut Result<*mut c_void>);
@@ -15697,12 +15855,14 @@ mod videoio_sys {
 		pub fn cv_VideoCapture_VideoCapture_int_int(index: i32, api_preference: i32, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_VideoCapture_VideoCapture_int(index: i32, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_VideoCapture_VideoCapture_int_int_const_vectorLintGR(index: i32, api_preference: i32, params: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
+		pub fn cv_VideoCapture_VideoCapture_const_PtrLIStreamReaderGR_int_const_vectorLintGR(source: *const c_void, api_preference: i32, params: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_VideoCapture_open_const_StringR_int(instance: *mut c_void, filename: *const c_char, api_preference: i32, ocvrs_return: *mut Result<bool>);
 		pub fn cv_VideoCapture_open_const_StringR(instance: *mut c_void, filename: *const c_char, ocvrs_return: *mut Result<bool>);
 		pub fn cv_VideoCapture_open_const_StringR_int_const_vectorLintGR(instance: *mut c_void, filename: *const c_char, api_preference: i32, params: *const c_void, ocvrs_return: *mut Result<bool>);
 		pub fn cv_VideoCapture_open_int_int(instance: *mut c_void, index: i32, api_preference: i32, ocvrs_return: *mut Result<bool>);
 		pub fn cv_VideoCapture_open_int(instance: *mut c_void, index: i32, ocvrs_return: *mut Result<bool>);
 		pub fn cv_VideoCapture_open_int_int_const_vectorLintGR(instance: *mut c_void, index: i32, api_preference: i32, params: *const c_void, ocvrs_return: *mut Result<bool>);
+		pub fn cv_VideoCapture_open_const_PtrLIStreamReaderGR_int_const_vectorLintGR(instance: *mut c_void, source: *const c_void, api_preference: i32, params: *const c_void, ocvrs_return: *mut Result<bool>);
 		pub fn cv_VideoCapture_isOpened_const(instance: *const c_void, ocvrs_return: *mut Result<bool>);
 		pub fn cv_VideoCapture_release(instance: *mut c_void, ocvrs_return: *mut ResultVoid);
 		pub fn cv_VideoCapture_grab(instance: *mut c_void, ocvrs_return: *mut Result<bool>);
@@ -15738,6 +15898,10 @@ mod videoio_sys {
 		pub fn cv_VideoWriter_fourcc_char_char_char_char(c1: c_char, c2: c_char, c3: c_char, c4: c_char, ocvrs_return: *mut Result<i32>);
 		pub fn cv_VideoWriter_getBackendName_const(instance: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_VideoWriter_delete(instance: *mut c_void);
+		pub fn cv_PtrLcv_IStreamReaderG_getInnerPtr_const(instance: *const c_void) -> *mut c_void;
+		pub fn cv_PtrLcv_IStreamReaderG_getInnerPtrMut(instance: *mut c_void) -> *mut c_void;
+		pub fn cv_PtrLcv_IStreamReaderG_new_null_const() -> *mut c_void;
+		pub fn cv_PtrLcv_IStreamReaderG_delete(instance: *mut c_void);
 		pub fn std_vectorLcv_VideoCaptureG_new_const() -> *mut c_void;
 		pub fn std_vectorLcv_VideoCaptureG_delete(instance: *mut c_void);
 		pub fn std_vectorLcv_VideoCaptureG_len_const(instance: *const c_void) -> size_t;
@@ -17132,6 +17296,7 @@ mod xfeatures2d_sys {
 		pub fn cv_xfeatures2d_TBMR_getScaleFactor_const(instance: *const c_void, ocvrs_return: *mut Result<f32>);
 		pub fn cv_xfeatures2d_TBMR_setNScales_int(instance: *mut c_void, n_scales: i32, ocvrs_return: *mut ResultVoid);
 		pub fn cv_xfeatures2d_TBMR_getNScales_const(instance: *const c_void, ocvrs_return: *mut Result<i32>);
+		pub fn cv_xfeatures2d_TBMR_getDefaultName_const(instance: *const c_void, ocvrs_return: *mut Result<*mut c_void>);
 		pub fn cv_xfeatures2d_TBMR_to_AffineFeature2D(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_xfeatures2d_TBMR_to_Algorithm(instance: *mut c_void) -> *mut c_void;
 		pub fn cv_xfeatures2d_TBMR_to_Feature2D(instance: *mut c_void) -> *mut c_void;

@@ -302,6 +302,8 @@ pub mod cudawarping {
 	/// * ymap: Y values. Only CV_32FC1 type is supported.
 	/// * interpolation: Interpolation method (see resize ). INTER_NEAREST , INTER_LINEAR and
 	/// INTER_CUBIC are supported for now.
+	/// The extra flag WARP_RELATIVE_MAP can be ORed to the interpolation method
+	/// (e.g. INTER_LINEAR | WARP_RELATIVE_MAP)
 	/// * borderMode: Pixel extrapolation method (see borderInterpolate ). BORDER_REFLECT101 ,
 	/// BORDER_REPLICATE , BORDER_CONSTANT , BORDER_REFLECT and BORDER_WRAP are supported for now.
 	/// * borderValue: Value used in case of a constant border. By default, it is 0.
@@ -310,6 +312,10 @@ pub mod cudawarping {
 	/// The function transforms the source image using the specified map:
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Ctexttt%7Bsrc%7D%20%28xmap%28x%2Cy%29%2C%20ymap%28x%2Cy%29%29)
+	///
+	/// with the WARP_RELATIVE_MAP flag :
+	///
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Ctexttt%7Bsrc%7D%20%28x%2Bmap%5Fx%28x%2Cy%29%2Cy%2Bmap%5Fy%28x%2Cy%29%29)
 	///
 	/// Values of pixels with non-integer coordinates are computed using the bilinear interpolation.
 	/// ## See also
@@ -342,6 +348,8 @@ pub mod cudawarping {
 	/// * ymap: Y values. Only CV_32FC1 type is supported.
 	/// * interpolation: Interpolation method (see resize ). INTER_NEAREST , INTER_LINEAR and
 	/// INTER_CUBIC are supported for now.
+	/// The extra flag WARP_RELATIVE_MAP can be ORed to the interpolation method
+	/// (e.g. INTER_LINEAR | WARP_RELATIVE_MAP)
 	/// * borderMode: Pixel extrapolation method (see borderInterpolate ). BORDER_REFLECT101 ,
 	/// BORDER_REPLICATE , BORDER_CONSTANT , BORDER_REFLECT and BORDER_WRAP are supported for now.
 	/// * borderValue: Value used in case of a constant border. By default, it is 0.
@@ -350,6 +358,10 @@ pub mod cudawarping {
 	/// The function transforms the source image using the specified map:
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Ctexttt%7Bsrc%7D%20%28xmap%28x%2Cy%29%2C%20ymap%28x%2Cy%29%29)
+	///
+	/// with the WARP_RELATIVE_MAP flag :
+	///
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Ctexttt%7Bsrc%7D%20%28x%2Bmap%5Fx%28x%2Cy%29%2Cy%2Bmap%5Fy%28x%2Cy%29%29)
 	///
 	/// Values of pixels with non-integer coordinates are computed using the bilinear interpolation.
 	/// ## See also

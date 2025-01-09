@@ -16,7 +16,7 @@ pub mod videoio {
 	use crate::mod_prelude::*;
 	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use super::{VideoCaptureTrait, VideoCaptureTraitConst, VideoWriterTrait, VideoWriterTraitConst};
+		pub use super::{IStreamReaderTrait, IStreamReaderTraitConst, VideoCaptureTrait, VideoCaptureTraitConst, VideoWriterTrait, VideoWriterTraitConst};
 	}
 
 	/// MediaNDK (API Level 21+) and NDK Camera (API level 24+) for Android
@@ -123,6 +123,7 @@ pub mod videoio {
 	/// CV_8UC1
 	pub const CAP_OPENNI_VALID_DEPTH_MASK: i32 = 4;
 	pub const CAP_OPENNI_VGA_30HZ: i32 = 0;
+	pub const CAP_PROP_ANDROID_DEVICE_TORCH: i32 = 8001;
 	/// Aperture. Can be readonly, depends on camera program.
 	pub const CAP_PROP_APERTURE: i32 = 17008;
 	/// Automatically trigger frame capture if camera is configured with software trigger
@@ -176,6 +177,8 @@ pub mod videoio {
 	pub const CAP_PROP_DC1394_MODE_ONE_PUSH_AUTO: i32 = -1;
 	/// turn the feature off (not controlled manually nor automatically).
 	pub const CAP_PROP_DC1394_OFF: i32 = -4;
+	/// (read-only) FFmpeg back-end only - maximum difference between presentation (pts) and decompression timestamps (dts) using FPS time base.  e.g. delay is maximum when frame_num = 0, if true, VideoCapture::get(\ref CAP_PROP_PTS) = 0 and VideoCapture::get(\ref CAP_PROP_DTS_DELAY) = 2, dts = -2.  Non zero values usually imply the stream is encoded using B-frames which are not decoded in presentation order.
+	pub const CAP_PROP_DTS_DELAY: i32 = 72;
 	/// Exposure (only for those cameras that support).
 	pub const CAP_PROP_EXPOSURE: i32 = 15;
 	/// Camera exposure program.
@@ -287,6 +290,8 @@ pub mod videoio {
 	pub const CAP_PROP_POS_FRAMES: i32 = 1;
 	/// Current position of the video file in milliseconds.
 	pub const CAP_PROP_POS_MSEC: i32 = 0;
+	/// (read-only) FFmpeg back-end only - presentation timestamp of the most recently read frame using the FPS time base.  e.g. fps = 25, VideoCapture::get(\ref CAP_PROP_PTS) = 3, presentation time = 3/25 seconds.
+	pub const CAP_PROP_PTS: i32 = 71;
 	/// Horizontal binning factor.
 	pub const CAP_PROP_PVAPI_BINNINGX: i32 = 304;
 	/// Vertical binning factor.
@@ -691,10 +696,12 @@ pub mod videoio {
 	pub const CAP_XIAPI: i32 = 1100;
 	/// XINE engine (Linux)
 	pub const CAP_XINE: i32 = 2400;
-	pub const CV__CAP_PROP_LATEST: i32 = 71;
-	pub const CV__VIDEOWRITER_PROP_LATEST: i32 = 12;
+	pub const CV__CAP_PROP_LATEST: i32 = 73;
+	pub const CV__VIDEOWRITER_PROP_LATEST: i32 = 14;
 	/// Defaults to \ref CV_8U.
 	pub const VIDEOWRITER_PROP_DEPTH: i32 = 5;
+	/// Specifies the maximum difference between presentation (pts) and decompression timestamps (dts) using the FPS time base. This property is necessary **only** when encapsulating **externally** encoded video where the decoding order differs from the presentation order, such as in GOP patterns with bi-directional B-frames. The value should be calculated based on the specific GOP pattern used during encoding. For example, in a GOP with presentation order IBP and decoding order IPB, this value would be 1, as the B-frame is the second frame presented but the third to be decoded. It can be queried from the resulting encapsulated video file using VideoCapture::get(\ref CAP_PROP_DTS_DELAY). Non-zero values usually imply the stream is encoded using B-frames. FFmpeg back-end only.
+	pub const VIDEOWRITER_PROP_DTS_DELAY: i32 = 13;
 	/// (Read-only): Size of just encoded video frame. Note that the encoding order may be different from representation order.
 	pub const VIDEOWRITER_PROP_FRAMEBYTES: i32 = 2;
 	/// (**open-only**) Hardware acceleration type (see #VideoAccelerationType). Setting supported only via `params` parameter in VideoWriter constructor / .open() method. Default value is backend-specific.
@@ -706,12 +713,14 @@ pub mod videoio {
 	/// If it is not zero, the encoder will expect and encode color frames, otherwise it
 	/// will work with grayscale frames.
 	pub const VIDEOWRITER_PROP_IS_COLOR: i32 = 4;
-	/// Set to non-zero to signal that the following frames are key frames or zero if not, when encapsulating raw video (\ref VIDEOWRITER_PROP_RAW_VIDEO != 0). FFMpeg backend only.
+	/// Set to non-zero to signal that the following frames are key frames or zero if not, when encapsulating raw video (\ref VIDEOWRITER_PROP_RAW_VIDEO != 0). FFmpeg back-end only.
 	pub const VIDEOWRITER_PROP_KEY_FLAG: i32 = 11;
-	/// (**open-only**) Set the key frame interval using raw video encapsulation (\ref VIDEOWRITER_PROP_RAW_VIDEO != 0). Defaults to 1 when not set. FFMpeg backend only.
+	/// (**open-only**) Set the key frame interval using raw video encapsulation (\ref VIDEOWRITER_PROP_RAW_VIDEO != 0). Defaults to 1 when not set. FFmpeg back-end only.
 	pub const VIDEOWRITER_PROP_KEY_INTERVAL: i32 = 10;
 	/// Number of stripes for parallel encoding. -1 for auto detection.
 	pub const VIDEOWRITER_PROP_NSTRIPES: i32 = 3;
+	/// Specifies the frame presentation timestamp for each frame using the FPS time base. This property is **only** necessary when encapsulating **externally** encoded video where the decoding order differs from the presentation order, such as in GOP patterns with bi-directional B-frames. The value should be provided by your external encoder and for video sources with fixed frame rates it is equivalent to dividing the current frame's presentation time (\ref CAP_PROP_POS_MSEC) by the frame duration (1000.0 / VideoCapture::get(\ref CAP_PROP_FPS)). It can be queried from the resulting encapsulated video file using VideoCapture::get(\ref CAP_PROP_PTS). FFmpeg back-end only.
+	pub const VIDEOWRITER_PROP_PTS: i32 = 12;
 	/// Current quality (0..100%) of the encoded videostream. Can be adjusted dynamically in some codecs.
 	pub const VIDEOWRITER_PROP_QUALITY: i32 = 1;
 	/// (**open-only**) Set to non-zero to enable encapsulation of an encoded raw video stream. Each raw encoded video frame should be passed to VideoWriter::write() as single row or column of a \ref CV_8UC1 Mat. \note If the key frame interval is not 1 then it must be manually specified by the user. This can either be performed during initialization passing \ref VIDEOWRITER_PROP_KEY_INTERVAL as one of the extra encoder params  to \ref VideoWriter::VideoWriter(const String &, int, double, const Size &, const std::vector< int > &params) or afterwards by setting the \ref VIDEOWRITER_PROP_KEY_FLAG with \ref VideoWriter::set() before writing each frame. FFMpeg backend only.
@@ -1140,7 +1149,11 @@ pub mod videoio {
 		CAP_PROP_FRAME_TYPE = 69,
 		/// (**open-only**) Set the maximum number of threads to use. Use 0 to use as many threads as CPU cores (applicable for FFmpeg back-end only).
 		CAP_PROP_N_THREADS = 70,
-		CV__CAP_PROP_LATEST = 71,
+		/// (read-only) FFmpeg back-end only - presentation timestamp of the most recently read frame using the FPS time base.  e.g. fps = 25, VideoCapture::get(\ref CAP_PROP_PTS) = 3, presentation time = 3/25 seconds.
+		CAP_PROP_PTS = 71,
+		/// (read-only) FFmpeg back-end only - maximum difference between presentation (pts) and decompression timestamps (dts) using FPS time base.  e.g. delay is maximum when frame_num = 0, if true, VideoCapture::get(\ref CAP_PROP_PTS) = 0 and VideoCapture::get(\ref CAP_PROP_DTS_DELAY) = 2, dts = -2.  Non zero values usually imply the stream is encoded using B-frames which are not decoded in presentation order.
+		CAP_PROP_DTS_DELAY = 72,
+		CV__CAP_PROP_LATEST = 73,
 	}
 
 	impl TryFrom<i32> for VideoCaptureProperties {
@@ -1218,7 +1231,9 @@ pub mod videoio {
 				68 => Ok(Self::CAP_PROP_CODEC_EXTRADATA_INDEX),
 				69 => Ok(Self::CAP_PROP_FRAME_TYPE),
 				70 => Ok(Self::CAP_PROP_N_THREADS),
-				71 => Ok(Self::CV__CAP_PROP_LATEST),
+				71 => Ok(Self::CAP_PROP_PTS),
+				72 => Ok(Self::CAP_PROP_DTS_DELAY),
+				73 => Ok(Self::CV__CAP_PROP_LATEST),
 				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::videoio::VideoCaptureProperties"))),
 			}
 		}
@@ -1251,11 +1266,15 @@ pub mod videoio {
 		VIDEOWRITER_PROP_HW_ACCELERATION_USE_OPENCL = 8,
 		/// (**open-only**) Set to non-zero to enable encapsulation of an encoded raw video stream. Each raw encoded video frame should be passed to VideoWriter::write() as single row or column of a \ref CV_8UC1 Mat. \note If the key frame interval is not 1 then it must be manually specified by the user. This can either be performed during initialization passing \ref VIDEOWRITER_PROP_KEY_INTERVAL as one of the extra encoder params  to \ref VideoWriter::VideoWriter(const String &, int, double, const Size &, const std::vector< int > &params) or afterwards by setting the \ref VIDEOWRITER_PROP_KEY_FLAG with \ref VideoWriter::set() before writing each frame. FFMpeg backend only.
 		VIDEOWRITER_PROP_RAW_VIDEO = 9,
-		/// (**open-only**) Set the key frame interval using raw video encapsulation (\ref VIDEOWRITER_PROP_RAW_VIDEO != 0). Defaults to 1 when not set. FFMpeg backend only.
+		/// (**open-only**) Set the key frame interval using raw video encapsulation (\ref VIDEOWRITER_PROP_RAW_VIDEO != 0). Defaults to 1 when not set. FFmpeg back-end only.
 		VIDEOWRITER_PROP_KEY_INTERVAL = 10,
-		/// Set to non-zero to signal that the following frames are key frames or zero if not, when encapsulating raw video (\ref VIDEOWRITER_PROP_RAW_VIDEO != 0). FFMpeg backend only.
+		/// Set to non-zero to signal that the following frames are key frames or zero if not, when encapsulating raw video (\ref VIDEOWRITER_PROP_RAW_VIDEO != 0). FFmpeg back-end only.
 		VIDEOWRITER_PROP_KEY_FLAG = 11,
-		CV__VIDEOWRITER_PROP_LATEST = 12,
+		/// Specifies the frame presentation timestamp for each frame using the FPS time base. This property is **only** necessary when encapsulating **externally** encoded video where the decoding order differs from the presentation order, such as in GOP patterns with bi-directional B-frames. The value should be provided by your external encoder and for video sources with fixed frame rates it is equivalent to dividing the current frame's presentation time (\ref CAP_PROP_POS_MSEC) by the frame duration (1000.0 / VideoCapture::get(\ref CAP_PROP_FPS)). It can be queried from the resulting encapsulated video file using VideoCapture::get(\ref CAP_PROP_PTS). FFmpeg back-end only.
+		VIDEOWRITER_PROP_PTS = 12,
+		/// Specifies the maximum difference between presentation (pts) and decompression timestamps (dts) using the FPS time base. This property is necessary **only** when encapsulating **externally** encoded video where the decoding order differs from the presentation order, such as in GOP patterns with bi-directional B-frames. The value should be calculated based on the specific GOP pattern used during encoding. For example, in a GOP with presentation order IBP and decoding order IPB, this value would be 1, as the B-frame is the second frame presented but the third to be decoded. It can be queried from the resulting encapsulated video file using VideoCapture::get(\ref CAP_PROP_DTS_DELAY). Non-zero values usually imply the stream is encoded using B-frames. FFmpeg back-end only.
+		VIDEOWRITER_PROP_DTS_DELAY = 13,
+		CV__VIDEOWRITER_PROP_LATEST = 14,
 	}
 
 	impl TryFrom<i32> for VideoWriterProperties {
@@ -1274,7 +1293,9 @@ pub mod videoio {
 				9 => Ok(Self::VIDEOWRITER_PROP_RAW_VIDEO),
 				10 => Ok(Self::VIDEOWRITER_PROP_KEY_INTERVAL),
 				11 => Ok(Self::VIDEOWRITER_PROP_KEY_FLAG),
-				12 => Ok(Self::CV__VIDEOWRITER_PROP_LATEST),
+				12 => Ok(Self::VIDEOWRITER_PROP_PTS),
+				13 => Ok(Self::VIDEOWRITER_PROP_DTS_DELAY),
+				14 => Ok(Self::CV__VIDEOWRITER_PROP_LATEST),
 				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::videoio::VideoWriterProperties"))),
 			}
 		}
@@ -1350,6 +1371,28 @@ pub mod videoio {
 		Ok(ret)
 	}
 
+	/// Returns description and ABI/API version of videoio plugin's buffer capture interface
+	#[inline]
+	pub fn get_stream_buffered_backend_plugin_version(api: crate::videoio::VideoCaptureAPIs, version_abi: &mut i32, version_api: &mut i32) -> Result<String> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_videoio_registry_getStreamBufferedBackendPluginVersion_VideoCaptureAPIs_intR_intR(api, version_abi, version_api, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { String::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
+	/// Returns list of available backends which works via `cv::VideoCapture(buffer)`
+	#[inline]
+	pub fn get_stream_buffered_backends() -> Result<core::Vector<crate::videoio::VideoCaptureAPIs>> {
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_videoio_registry_getStreamBufferedBackends(ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		let ret = unsafe { core::Vector::<crate::videoio::VideoCaptureAPIs>::opencv_from_extern(ret) };
+		Ok(ret)
+	}
+
 	/// Returns description and ABI/API version of videoio plugin's writer interface
 	#[inline]
 	pub fn get_writer_backend_plugin_version(api: crate::videoio::VideoCaptureAPIs, version_abi: &mut i32, version_api: &mut i32) -> Result<String> {
@@ -1390,6 +1433,83 @@ pub mod videoio {
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
+	}
+
+	/// Constant methods for [crate::videoio::IStreamReader]
+	pub trait IStreamReaderTraitConst {
+		fn as_raw_IStreamReader(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::videoio::IStreamReader]
+	pub trait IStreamReaderTrait: crate::videoio::IStreamReaderTraitConst {
+		fn as_raw_mut_IStreamReader(&mut self) -> *mut c_void;
+
+		/// Read bytes from stream
+		#[inline]
+		fn read(&mut self, buffer: &mut String, size: i64) -> Result<i64> {
+			string_arg_output_send!(via buffer_via);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_IStreamReader_read_charX_long_long(self.as_raw_mut_IStreamReader(), &mut buffer_via, size, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			string_arg_output_receive!(buffer_via => buffer);
+			Ok(ret)
+		}
+
+		/// Sets the stream position
+		///
+		/// ## Parameters
+		/// * offset: Seek offset
+		/// * origin: SEEK_SET / SEEK_END / SEEK_CUR
+		/// ## See also
+		/// fseek
+		#[inline]
+		fn seek(&mut self, offset: i64, origin: i32) -> Result<i64> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_IStreamReader_seek_long_long_int(self.as_raw_mut_IStreamReader(), offset, origin, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	/// Read data stream interface
+	pub struct IStreamReader {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { IStreamReader }
+
+	impl Drop for IStreamReader {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_IStreamReader_delete(self.as_raw_mut_IStreamReader()) };
+		}
+	}
+
+	unsafe impl Send for IStreamReader {}
+
+	impl crate::videoio::IStreamReaderTraitConst for IStreamReader {
+		#[inline] fn as_raw_IStreamReader(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::videoio::IStreamReaderTrait for IStreamReader {
+		#[inline] fn as_raw_mut_IStreamReader(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { IStreamReader, crate::videoio::IStreamReaderTraitConst, as_raw_IStreamReader, crate::videoio::IStreamReaderTrait, as_raw_mut_IStreamReader }
+
+	impl IStreamReader {
+	}
+
+	impl std::fmt::Debug for IStreamReader {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("IStreamReader")
+				.finish()
+		}
 	}
 
 	/// Constant methods for [crate::videoio::VideoCapture]
@@ -1591,6 +1711,26 @@ pub mod videoio {
 		fn open_with_params(&mut self, index: i32, api_preference: i32, params: &core::Vector<i32>) -> Result<bool> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_open_int_int_const_vectorLintGR(self.as_raw_mut_VideoCapture(), index, api_preference, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Opens a video using data stream.
+		///
+		/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+		///
+		/// The `params` parameter allows to specify extra parameters encoded as pairs `(paramId_1, paramValue_1, paramId_2, paramValue_2, ...)`.
+		/// See cv::VideoCaptureProperties
+		///
+		/// ## Returns
+		/// `true` if the file has been successfully opened
+		///
+		/// The method first calls VideoCapture::release to close the already opened file or camera.
+		#[inline]
+		fn open_1(&mut self, source: &core::Ptr<crate::videoio::IStreamReader>, api_preference: i32, params: &core::Vector<i32>) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_VideoCapture_open_const_PtrLIStreamReaderGR_int_const_vectorLintGR(self.as_raw_mut_VideoCapture(), source.as_raw_PtrOfIStreamReader(), api_preference, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
@@ -1981,6 +2121,28 @@ pub mod videoio {
 		pub fn new_with_params(index: i32, api_preference: i32, params: &core::Vector<i32>) -> Result<crate::videoio::VideoCapture> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_VideoCapture_VideoCapture_int_int_const_vectorLintGR(index, api_preference, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::videoio::VideoCapture::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Default constructor
+		///
+		/// Note: In [videoio_c] "C API", when you finished working with video, release CvCapture structure with
+		/// cvReleaseCapture(), or use Ptr\<CvCapture\> that calls cvReleaseCapture() automatically in the
+		/// destructor.
+		///
+		/// ## Overloaded parameters
+		///
+		/// Opens a video using data stream.
+		///
+		/// The `params` parameter allows to specify extra parameters encoded as pairs `(paramId_1, paramValue_1, paramId_2, paramValue_2, ...)`.
+		/// See cv::VideoCaptureProperties
+		#[inline]
+		pub fn new_1(source: &core::Ptr<crate::videoio::IStreamReader>, api_preference: i32, params: &core::Vector<i32>) -> Result<crate::videoio::VideoCapture> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_VideoCapture_VideoCapture_const_PtrLIStreamReaderGR_int_const_vectorLintGR(source.as_raw_PtrOfIStreamReader(), api_preference, params.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { crate::videoio::VideoCapture::opencv_from_extern(ret) };

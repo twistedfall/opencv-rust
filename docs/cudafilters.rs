@@ -676,13 +676,15 @@ pub mod cudafilters {
 		Ok(ret)
 	}
 
-	/// Creates a separable linear filter.
+	/// Creates a separable linear filter. In-place processing is supported.
 	///
 	/// ## Parameters
 	/// * srcType: Source array type.
 	/// * dstType: Destination array type.
 	/// * rowKernel: Horizontal filter coefficients. Support kernels with size \<= 32 .
+	/// noArray() is supported to ignore the row filtering.
 	/// * columnKernel: Vertical filter coefficients. Support kernels with size \<= 32 .
+	/// noArray() is supported to ignore the column filtering.
 	/// * anchor: Anchor position within the kernel. Negative values mean that anchor is positioned at
 	/// the aperture center.
 	/// * rowBorderMode: Pixel extrapolation method in the vertical direction For details, see
@@ -708,13 +710,15 @@ pub mod cudafilters {
 		Ok(ret)
 	}
 
-	/// Creates a separable linear filter.
+	/// Creates a separable linear filter. In-place processing is supported.
 	///
 	/// ## Parameters
 	/// * srcType: Source array type.
 	/// * dstType: Destination array type.
 	/// * rowKernel: Horizontal filter coefficients. Support kernels with size \<= 32 .
+	/// noArray() is supported to ignore the row filtering.
 	/// * columnKernel: Vertical filter coefficients. Support kernels with size \<= 32 .
+	/// noArray() is supported to ignore the column filtering.
 	/// * anchor: Anchor position within the kernel. Negative values mean that anchor is positioned at
 	/// the aperture center.
 	/// * rowBorderMode: Pixel extrapolation method in the vertical direction For details, see

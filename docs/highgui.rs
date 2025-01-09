@@ -15,7 +15,7 @@ pub mod highgui {
 	//!    # OpenGL support
 	//!    # Qt New Functions
 	//!
-	//!    ![image](https://docs.opencv.org/4.10.0/qtgui.png)
+	//!    ![image](https://docs.opencv.org/4.11.0/qtgui.png)
 	//!
 	//!    This figure explains new functionality implemented with Qt\* GUI. The new GUI provides a statusbar,
 	//!    a toolbar, and a control panel. The control panel can have trackbars and buttonbars attached to it.
@@ -648,16 +648,22 @@ pub mod highgui {
 	///
 	/// ## Parameters
 	/// * trackbarname: Name of the created trackbar.
-	/// * winname: Name of the window that will be used as a parent of the created trackbar.
-	/// * value: Optional pointer to an integer variable whose value reflects the position of the
-	/// slider. Upon creation, the slider position is defined by this variable.
-	/// * count: Maximal position of the slider. The minimal position is always 0.
-	/// * onChange: Pointer to the function to be called every time the slider changes position. This
-	/// function should be prototyped as void Foo(int,void\*); , where the first parameter is the trackbar
-	/// position and the second parameter is the user data (see the next parameter). If the callback is
-	/// the NULL pointer, no callbacks are called, but only value is updated.
-	/// * userdata: User data that is passed as is to the callback. It can be used to handle trackbar
-	/// events without using global variables.
+	/// * winname: Name of the window that will contain the trackbar.
+	/// * value: Pointer to the integer value that will be changed by the trackbar.
+	/// Pass `nullptr` if the value pointer is not used. In this case, manually handle
+	/// the trackbar position in the callback function.
+	/// * count: Maximum position of the trackbar.
+	/// * onChange: Pointer to the function to be called every time the slider changes position.
+	/// This function should have the prototype void Foo(int, void\*);, where the first parameter is
+	/// the trackbar position, and the second parameter is the user data (see the next parameter).
+	/// If the callback is a nullptr, no callbacks are called, but the trackbar's value will still be
+	/// updated automatically.
+	/// * userdata: Optional user data that is passed to the callback.
+	///
+	/// Note: If the `value` pointer is `nullptr`, the trackbar position must be manually managed.
+	/// Call the callback function manually with the desired initial value to avoid runtime warnings.
+	/// ## See also
+	/// \ref tutorial_trackbar
 	///
 	/// ## C++ default parameters
 	/// * on_change: 0

@@ -6,9 +6,9 @@ pub mod stitching {
 	//! the particular needs. All building blocks from the pipeline are available in the detail namespace,
 	//! one can combine and use them separately.
 	//!
-	//! The implemented stitching pipeline is very similar to the one proposed in [BL07](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_BL07) .
+	//! The implemented stitching pipeline is very similar to the one proposed in [BL07](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_BL07) .
 	//!
-	//! ![stitching pipeline](https://docs.opencv.org/4.10.0/StitchingPipeline.jpg)
+	//! ![stitching pipeline](https://docs.opencv.org/4.11.0/StitchingPipeline.jpg)
 	//!
 	//! Camera models
 	//! -------------
@@ -2064,6 +2064,7 @@ pub mod stitching {
 			Ok(ret)
 		}
 
+		/// Returns indeces of input images used in panorama stitching
 		#[inline]
 		fn component(&self) -> Result<core::Vector<i32>> {
 			return_send!(via ocvrs_return);
@@ -2074,6 +2075,7 @@ pub mod stitching {
 			Ok(ret)
 		}
 
+		/// Returns estimated camera parameters for all stitched images
 		#[inline]
 		fn cameras(&self) -> Result<core::Vector<crate::stitching::Detail_CameraParams>> {
 			return_send!(via ocvrs_return);
@@ -3996,7 +3998,7 @@ pub mod stitching {
 	}
 
 	/// Exposure compensator which tries to remove exposure related artifacts by adjusting image block
-	/// intensities, see [UES01](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_UES01) for details.
+	/// intensities, see [UES01](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_UES01) for details.
 	pub struct Detail_BlocksGainCompensator {
 		ptr: *mut c_void,
 	}
@@ -6923,7 +6925,7 @@ pub mod stitching {
 	}
 
 	/// Exposure compensator which tries to remove exposure related artifacts by adjusting image
-	/// intensities, see [BL07](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_BL07) and [WJ10](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_WJ10) for details.
+	/// intensities, see [BL07](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_BL07) and [WJ10](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_WJ10) for details.
 	pub struct Detail_GainCompensator {
 		ptr: *mut c_void,
 	}
@@ -7113,7 +7115,7 @@ pub mod stitching {
 
 	}
 
-	/// Minimum graph cut-based seam estimator. See details in [V03](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_V03) .
+	/// Minimum graph cut-based seam estimator. See details in [V03](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_V03) .
 	pub struct Detail_GraphCutSeamFinder {
 		ptr: *mut c_void,
 	}
@@ -8206,7 +8208,7 @@ pub mod stitching {
 
 	}
 
-	/// Blender which uses multi-band blending algorithm (see [BA83](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_BA83)).
+	/// Blender which uses multi-band blending algorithm (see [BA83](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_BA83)).
 	pub struct Detail_MultiBandBlender {
 		ptr: *mut c_void,
 	}

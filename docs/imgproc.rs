@@ -1,7 +1,7 @@
 pub mod imgproc {
 	//! # Image Processing
 	//!
-	//! This module includes image-processing functions.
+	//! This module offers a comprehensive suite of image processing functions, enabling tasks such as those listed above.
 	//!    # Image Filtering
 	//!
 	//!    Functions and classes described in this section are used to perform various linear or non-linear
@@ -132,7 +132,7 @@ pub mod imgproc {
 	//!    In the figure below, the Delaunay's triangulation is marked with black lines and the Voronoi
 	//!    diagram with red lines.
 	//!
-	//!    ![Delaunay triangulation (black) and Voronoi (red)](https://docs.opencv.org/4.10.0/delaunay_voronoi.png)
+	//!    ![Delaunay triangulation (black) and Voronoi (red)](https://docs.opencv.org/4.11.0/delaunay_voronoi.png)
 	//!
 	//!    The subdivisions can be used for the 3D piece-wise transformation of a plane, morphing, fast
 	//!    location of points on the plane, building special graphs (such as NNG,RNG), and so forth.
@@ -161,17 +161,17 @@ pub mod imgproc {
 	pub const ADAPTIVE_THRESH_MEAN_C: i32 = 0;
 	/// Same as CCL_GRANA. It is preferable to use the flag with the name of the algorithm (CCL_BBDT) rather than the one with the name of the first author (CCL_GRANA).
 	pub const CCL_BBDT: i32 = 4;
-	/// Spaghetti [Bolelli2019](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, Spaghetti4C [Bolelli2021](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2021) algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both Spaghetti and Spaghetti4C.
+	/// Spaghetti [Bolelli2019](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, Spaghetti4C [Bolelli2021](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Bolelli2021) algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both Spaghetti and Spaghetti4C.
 	pub const CCL_BOLELLI: i32 = 2;
-	/// Spaghetti [Bolelli2019](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, Spaghetti4C [Bolelli2021](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2021) algorithm for 4-way connectivity.
+	/// Spaghetti [Bolelli2019](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, Spaghetti4C [Bolelli2021](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Bolelli2021) algorithm for 4-way connectivity.
 	pub const CCL_DEFAULT: i32 = -1;
-	/// BBDT [Grana2010](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Grana2010) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both BBDT and SAUF.
+	/// BBDT [Grana2010](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Grana2010) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both BBDT and SAUF.
 	pub const CCL_GRANA: i32 = 1;
 	/// Same as CCL_WU. It is preferable to use the flag with the name of the algorithm (CCL_SAUF) rather than the one with the name of the first author (CCL_WU).
 	pub const CCL_SAUF: i32 = 3;
 	/// Same as CCL_BOLELLI. It is preferable to use the flag with the name of the algorithm (CCL_SPAGHETTI) rather than the one with the name of the first author (CCL_BOLELLI).
 	pub const CCL_SPAGHETTI: i32 = 5;
-	/// SAUF [Wu2009](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for SAUF.
+	/// SAUF [Wu2009](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for SAUF.
 	pub const CCL_WU: i32 = 0;
 	/// The total area (in pixels) of the connected component
 	pub const CC_STAT_AREA: i32 = 4;
@@ -194,53 +194,53 @@ pub mod imgproc {
 	/// compresses horizontal, vertical, and diagonal segments and leaves only their end points.
 	/// For example, an up-right rectangular contour is encoded with 4 points.
 	pub const CHAIN_APPROX_SIMPLE: i32 = 2;
-	/// applies one of the flavors of the Teh-Chin chain approximation algorithm [TehChin89](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_TehChin89)
+	/// applies one of the flavors of the Teh-Chin chain approximation algorithm [TehChin89](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_TehChin89)
 	pub const CHAIN_APPROX_TC89_KCOS: i32 = 4;
-	/// applies one of the flavors of the Teh-Chin chain approximation algorithm [TehChin89](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_TehChin89)
+	/// applies one of the flavors of the Teh-Chin chain approximation algorithm [TehChin89](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_TehChin89)
 	pub const CHAIN_APPROX_TC89_L1: i32 = 3;
-	/// ![autumn](https://docs.opencv.org/4.10.0/colorscale_autumn.jpg)
+	/// ![autumn](https://docs.opencv.org/4.11.0/colorscale_autumn.jpg)
 	pub const COLORMAP_AUTUMN: i32 = 0;
-	/// ![bone](https://docs.opencv.org/4.10.0/colorscale_bone.jpg)
+	/// ![bone](https://docs.opencv.org/4.11.0/colorscale_bone.jpg)
 	pub const COLORMAP_BONE: i32 = 1;
-	/// ![cividis](https://docs.opencv.org/4.10.0/colorscale_cividis.jpg)
+	/// ![cividis](https://docs.opencv.org/4.11.0/colorscale_cividis.jpg)
 	pub const COLORMAP_CIVIDIS: i32 = 17;
-	/// ![cool](https://docs.opencv.org/4.10.0/colorscale_cool.jpg)
+	/// ![cool](https://docs.opencv.org/4.11.0/colorscale_cool.jpg)
 	pub const COLORMAP_COOL: i32 = 8;
-	/// ![deepgreen](https://docs.opencv.org/4.10.0/colorscale_deepgreen.jpg)
+	/// ![deepgreen](https://docs.opencv.org/4.11.0/colorscale_deepgreen.jpg)
 	pub const COLORMAP_DEEPGREEN: i32 = 21;
-	/// ![hot](https://docs.opencv.org/4.10.0/colorscale_hot.jpg)
+	/// ![hot](https://docs.opencv.org/4.11.0/colorscale_hot.jpg)
 	pub const COLORMAP_HOT: i32 = 11;
-	/// ![HSV](https://docs.opencv.org/4.10.0/colorscale_hsv.jpg)
+	/// ![HSV](https://docs.opencv.org/4.11.0/colorscale_hsv.jpg)
 	pub const COLORMAP_HSV: i32 = 9;
-	/// ![inferno](https://docs.opencv.org/4.10.0/colorscale_inferno.jpg)
+	/// ![inferno](https://docs.opencv.org/4.11.0/colorscale_inferno.jpg)
 	pub const COLORMAP_INFERNO: i32 = 14;
-	/// ![jet](https://docs.opencv.org/4.10.0/colorscale_jet.jpg)
+	/// ![jet](https://docs.opencv.org/4.11.0/colorscale_jet.jpg)
 	pub const COLORMAP_JET: i32 = 2;
-	/// ![magma](https://docs.opencv.org/4.10.0/colorscale_magma.jpg)
+	/// ![magma](https://docs.opencv.org/4.11.0/colorscale_magma.jpg)
 	pub const COLORMAP_MAGMA: i32 = 13;
-	/// ![ocean](https://docs.opencv.org/4.10.0/colorscale_ocean.jpg)
+	/// ![ocean](https://docs.opencv.org/4.11.0/colorscale_ocean.jpg)
 	pub const COLORMAP_OCEAN: i32 = 5;
-	/// ![parula](https://docs.opencv.org/4.10.0/colorscale_parula.jpg)
+	/// ![parula](https://docs.opencv.org/4.11.0/colorscale_parula.jpg)
 	pub const COLORMAP_PARULA: i32 = 12;
-	/// ![pink](https://docs.opencv.org/4.10.0/colorscale_pink.jpg)
+	/// ![pink](https://docs.opencv.org/4.11.0/colorscale_pink.jpg)
 	pub const COLORMAP_PINK: i32 = 10;
-	/// ![plasma](https://docs.opencv.org/4.10.0/colorscale_plasma.jpg)
+	/// ![plasma](https://docs.opencv.org/4.11.0/colorscale_plasma.jpg)
 	pub const COLORMAP_PLASMA: i32 = 15;
-	/// ![rainbow](https://docs.opencv.org/4.10.0/colorscale_rainbow.jpg)
+	/// ![rainbow](https://docs.opencv.org/4.11.0/colorscale_rainbow.jpg)
 	pub const COLORMAP_RAINBOW: i32 = 4;
-	/// ![spring](https://docs.opencv.org/4.10.0/colorscale_spring.jpg)
+	/// ![spring](https://docs.opencv.org/4.11.0/colorscale_spring.jpg)
 	pub const COLORMAP_SPRING: i32 = 7;
-	/// ![summer](https://docs.opencv.org/4.10.0/colorscale_summer.jpg)
+	/// ![summer](https://docs.opencv.org/4.11.0/colorscale_summer.jpg)
 	pub const COLORMAP_SUMMER: i32 = 6;
-	/// ![turbo](https://docs.opencv.org/4.10.0/colorscale_turbo.jpg)
+	/// ![turbo](https://docs.opencv.org/4.11.0/colorscale_turbo.jpg)
 	pub const COLORMAP_TURBO: i32 = 20;
-	/// ![twilight](https://docs.opencv.org/4.10.0/colorscale_twilight.jpg)
+	/// ![twilight](https://docs.opencv.org/4.11.0/colorscale_twilight.jpg)
 	pub const COLORMAP_TWILIGHT: i32 = 18;
-	/// ![twilight shifted](https://docs.opencv.org/4.10.0/colorscale_twilight_shifted.jpg)
+	/// ![twilight shifted](https://docs.opencv.org/4.11.0/colorscale_twilight_shifted.jpg)
 	pub const COLORMAP_TWILIGHT_SHIFTED: i32 = 19;
-	/// ![viridis](https://docs.opencv.org/4.10.0/colorscale_viridis.jpg)
+	/// ![viridis](https://docs.opencv.org/4.11.0/colorscale_viridis.jpg)
 	pub const COLORMAP_VIRIDIS: i32 = 16;
-	/// ![winter](https://docs.opencv.org/4.10.0/colorscale_winter.jpg)
+	/// ![winter](https://docs.opencv.org/4.11.0/colorscale_winter.jpg)
 	pub const COLORMAP_WINTER: i32 = 3;
 	/// convert between RGB/BGR and BGR555 (16-bit images)
 	pub const COLOR_BGR2BGR555: i32 = 22;
@@ -769,7 +769,7 @@ pub mod imgproc {
 	pub const HISTCMP_CHISQR: i32 = 1;
 	/// Alternative Chi-Square
 	/// ![block formula](https://latex.codecogs.com/png.latex?d%28H%5F1%2CH%5F2%29%20%3D%20%202%20%2A%20%5Csum%20%5FI%20%20%5Cfrac%7B%5Cleft%28H%5F1%28I%29%2DH%5F2%28I%29%5Cright%29%5E2%7D%7BH%5F1%28I%29%2BH%5F2%28I%29%7D)
-	/// This alternative formula is regularly used for texture comparison. See e.g. [Puzicha1997](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Puzicha1997)
+	/// This alternative formula is regularly used for texture comparison. See e.g. [Puzicha1997](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Puzicha1997)
 	pub const HISTCMP_CHISQR_ALT: i32 = 4;
 	/// Correlation
 	/// ![block formula](https://latex.codecogs.com/png.latex?d%28H%5F1%2CH%5F2%29%20%3D%20%20%5Cfrac%7B%5Csum%5FI%20%28H%5F1%28I%29%20%2D%20%5Cbar%7BH%5F1%7D%29%20%28H%5F2%28I%29%20%2D%20%5Cbar%7BH%5F2%7D%29%7D%7B%5Csqrt%7B%5Csum%5FI%28H%5F1%28I%29%20%2D%20%5Cbar%7BH%5F1%7D%29%5E2%20%5Csum%5FI%28H%5F2%28I%29%20%2D%20%5Cbar%7BH%5F2%7D%29%5E2%7D%7D)
@@ -785,7 +785,7 @@ pub mod imgproc {
 	/// Kullback-Leibler divergence
 	/// ![block formula](https://latex.codecogs.com/png.latex?d%28H%5F1%2CH%5F2%29%20%3D%20%5Csum%20%5FI%20H%5F1%28I%29%20%5Clog%20%5Cleft%28%5Cfrac%7BH%5F1%28I%29%7D%7BH%5F2%28I%29%7D%5Cright%29)
 	pub const HISTCMP_KL_DIV: i32 = 5;
-	/// basically *21HT*, described in [Yuen90](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Yuen90)
+	/// basically *21HT*, described in [Yuen90](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Yuen90)
 	pub const HOUGH_GRADIENT: i32 = 3;
 	/// variation of HOUGH_GRADIENT to get better accuracy
 	pub const HOUGH_GRADIENT_ALT: i32 = 4;
@@ -870,7 +870,7 @@ pub mod imgproc {
 	/// see #dilate
 	pub const MORPH_DILATE: i32 = 1;
 	/// an elliptic structuring element, that is, a filled ellipse inscribed
-	/// into the rectangle Rect(0, 0, esize.width, 0.esize.height)
+	/// into the rectangle Rect(0, 0, esize.width, esize.height)
 	pub const MORPH_ELLIPSE: i32 = 2;
 	/// see #erode
 	pub const MORPH_ERODE: i32 = 0;
@@ -1981,49 +1981,49 @@ pub mod imgproc {
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ColormapTypes {
-		/// ![autumn](https://docs.opencv.org/4.10.0/colorscale_autumn.jpg)
+		/// ![autumn](https://docs.opencv.org/4.11.0/colorscale_autumn.jpg)
 		COLORMAP_AUTUMN = 0,
-		/// ![bone](https://docs.opencv.org/4.10.0/colorscale_bone.jpg)
+		/// ![bone](https://docs.opencv.org/4.11.0/colorscale_bone.jpg)
 		COLORMAP_BONE = 1,
-		/// ![jet](https://docs.opencv.org/4.10.0/colorscale_jet.jpg)
+		/// ![jet](https://docs.opencv.org/4.11.0/colorscale_jet.jpg)
 		COLORMAP_JET = 2,
-		/// ![winter](https://docs.opencv.org/4.10.0/colorscale_winter.jpg)
+		/// ![winter](https://docs.opencv.org/4.11.0/colorscale_winter.jpg)
 		COLORMAP_WINTER = 3,
-		/// ![rainbow](https://docs.opencv.org/4.10.0/colorscale_rainbow.jpg)
+		/// ![rainbow](https://docs.opencv.org/4.11.0/colorscale_rainbow.jpg)
 		COLORMAP_RAINBOW = 4,
-		/// ![ocean](https://docs.opencv.org/4.10.0/colorscale_ocean.jpg)
+		/// ![ocean](https://docs.opencv.org/4.11.0/colorscale_ocean.jpg)
 		COLORMAP_OCEAN = 5,
-		/// ![summer](https://docs.opencv.org/4.10.0/colorscale_summer.jpg)
+		/// ![summer](https://docs.opencv.org/4.11.0/colorscale_summer.jpg)
 		COLORMAP_SUMMER = 6,
-		/// ![spring](https://docs.opencv.org/4.10.0/colorscale_spring.jpg)
+		/// ![spring](https://docs.opencv.org/4.11.0/colorscale_spring.jpg)
 		COLORMAP_SPRING = 7,
-		/// ![cool](https://docs.opencv.org/4.10.0/colorscale_cool.jpg)
+		/// ![cool](https://docs.opencv.org/4.11.0/colorscale_cool.jpg)
 		COLORMAP_COOL = 8,
-		/// ![HSV](https://docs.opencv.org/4.10.0/colorscale_hsv.jpg)
+		/// ![HSV](https://docs.opencv.org/4.11.0/colorscale_hsv.jpg)
 		COLORMAP_HSV = 9,
-		/// ![pink](https://docs.opencv.org/4.10.0/colorscale_pink.jpg)
+		/// ![pink](https://docs.opencv.org/4.11.0/colorscale_pink.jpg)
 		COLORMAP_PINK = 10,
-		/// ![hot](https://docs.opencv.org/4.10.0/colorscale_hot.jpg)
+		/// ![hot](https://docs.opencv.org/4.11.0/colorscale_hot.jpg)
 		COLORMAP_HOT = 11,
-		/// ![parula](https://docs.opencv.org/4.10.0/colorscale_parula.jpg)
+		/// ![parula](https://docs.opencv.org/4.11.0/colorscale_parula.jpg)
 		COLORMAP_PARULA = 12,
-		/// ![magma](https://docs.opencv.org/4.10.0/colorscale_magma.jpg)
+		/// ![magma](https://docs.opencv.org/4.11.0/colorscale_magma.jpg)
 		COLORMAP_MAGMA = 13,
-		/// ![inferno](https://docs.opencv.org/4.10.0/colorscale_inferno.jpg)
+		/// ![inferno](https://docs.opencv.org/4.11.0/colorscale_inferno.jpg)
 		COLORMAP_INFERNO = 14,
-		/// ![plasma](https://docs.opencv.org/4.10.0/colorscale_plasma.jpg)
+		/// ![plasma](https://docs.opencv.org/4.11.0/colorscale_plasma.jpg)
 		COLORMAP_PLASMA = 15,
-		/// ![viridis](https://docs.opencv.org/4.10.0/colorscale_viridis.jpg)
+		/// ![viridis](https://docs.opencv.org/4.11.0/colorscale_viridis.jpg)
 		COLORMAP_VIRIDIS = 16,
-		/// ![cividis](https://docs.opencv.org/4.10.0/colorscale_cividis.jpg)
+		/// ![cividis](https://docs.opencv.org/4.11.0/colorscale_cividis.jpg)
 		COLORMAP_CIVIDIS = 17,
-		/// ![twilight](https://docs.opencv.org/4.10.0/colorscale_twilight.jpg)
+		/// ![twilight](https://docs.opencv.org/4.11.0/colorscale_twilight.jpg)
 		COLORMAP_TWILIGHT = 18,
-		/// ![twilight shifted](https://docs.opencv.org/4.10.0/colorscale_twilight_shifted.jpg)
+		/// ![twilight shifted](https://docs.opencv.org/4.11.0/colorscale_twilight_shifted.jpg)
 		COLORMAP_TWILIGHT_SHIFTED = 19,
-		/// ![turbo](https://docs.opencv.org/4.10.0/colorscale_turbo.jpg)
+		/// ![turbo](https://docs.opencv.org/4.11.0/colorscale_turbo.jpg)
 		COLORMAP_TURBO = 20,
-		/// ![deepgreen](https://docs.opencv.org/4.10.0/colorscale_deepgreen.jpg)
+		/// ![deepgreen](https://docs.opencv.org/4.11.0/colorscale_deepgreen.jpg)
 		COLORMAP_DEEPGREEN = 21,
 	}
 
@@ -2065,13 +2065,13 @@ pub mod imgproc {
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ConnectedComponentsAlgorithmsTypes {
-		/// Spaghetti [Bolelli2019](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, Spaghetti4C [Bolelli2021](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2021) algorithm for 4-way connectivity.
+		/// Spaghetti [Bolelli2019](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, Spaghetti4C [Bolelli2021](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Bolelli2021) algorithm for 4-way connectivity.
 		CCL_DEFAULT = -1,
-		/// SAUF [Wu2009](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for SAUF.
+		/// SAUF [Wu2009](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for SAUF.
 		CCL_WU = 0,
-		/// BBDT [Grana2010](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Grana2010) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both BBDT and SAUF.
+		/// BBDT [Grana2010](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Grana2010) algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both BBDT and SAUF.
 		CCL_GRANA = 1,
-		/// Spaghetti [Bolelli2019](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, Spaghetti4C [Bolelli2021](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2021) algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both Spaghetti and Spaghetti4C.
+		/// Spaghetti [Bolelli2019](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Bolelli2019) algorithm for 8-way connectivity, Spaghetti4C [Bolelli2021](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Bolelli2021) algorithm for 4-way connectivity. The parallel implementation described in [Bolelli2017](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Bolelli2017) is available for both Spaghetti and Spaghetti4C.
 		CCL_BOLELLI = 2,
 		/// Same as CCL_WU. It is preferable to use the flag with the name of the algorithm (CCL_SAUF) rather than the one with the name of the first author (CCL_WU).
 		CCL_SAUF = 3,
@@ -2149,9 +2149,9 @@ pub mod imgproc {
 		/// compresses horizontal, vertical, and diagonal segments and leaves only their end points.
 		/// For example, an up-right rectangular contour is encoded with 4 points.
 		CHAIN_APPROX_SIMPLE = 2,
-		/// applies one of the flavors of the Teh-Chin chain approximation algorithm [TehChin89](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_TehChin89)
+		/// applies one of the flavors of the Teh-Chin chain approximation algorithm [TehChin89](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_TehChin89)
 		CHAIN_APPROX_TC89_L1 = 3,
-		/// applies one of the flavors of the Teh-Chin chain approximation algorithm [TehChin89](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_TehChin89)
+		/// applies one of the flavors of the Teh-Chin chain approximation algorithm [TehChin89](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_TehChin89)
 		CHAIN_APPROX_TC89_KCOS = 4,
 	}
 
@@ -2428,7 +2428,7 @@ pub mod imgproc {
 		// HISTCMP_HELLINGER = 3,
 		/// Alternative Chi-Square
 		/// ![block formula](https://latex.codecogs.com/png.latex?d%28H%5F1%2CH%5F2%29%20%3D%20%202%20%2A%20%5Csum%20%5FI%20%20%5Cfrac%7B%5Cleft%28H%5F1%28I%29%2DH%5F2%28I%29%5Cright%29%5E2%7D%7BH%5F1%28I%29%2BH%5F2%28I%29%7D)
-		/// This alternative formula is regularly used for texture comparison. See e.g. [Puzicha1997](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Puzicha1997)
+		/// This alternative formula is regularly used for texture comparison. See e.g. [Puzicha1997](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Puzicha1997)
 		HISTCMP_CHISQR_ALT = 4,
 		/// Kullback-Leibler divergence
 		/// ![block formula](https://latex.codecogs.com/png.latex?d%28H%5F1%2CH%5F2%29%20%3D%20%5Csum%20%5FI%20H%5F1%28I%29%20%5Clog%20%5Cleft%28%5Cfrac%7BH%5F1%28I%29%7D%7BH%5F2%28I%29%7D%5Cright%29)
@@ -2472,7 +2472,7 @@ pub mod imgproc {
 		/// multi-scale variant of the classical Hough transform. The lines are encoded the same way as
 		/// HOUGH_STANDARD.
 		HOUGH_MULTI_SCALE = 2,
-		/// basically *21HT*, described in [Yuen90](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Yuen90)
+		/// basically *21HT*, described in [Yuen90](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Yuen90)
 		HOUGH_GRADIENT = 3,
 		/// variation of HOUGH_GRADIENT to get better accuracy
 		HOUGH_GRADIENT_ALT = 4,
@@ -2691,7 +2691,7 @@ pub mod imgproc {
 		/// ![block formula](https://latex.codecogs.com/png.latex?E%5F%7Bij%7D%20%3D%20%5Cbegin%7Bcases%7D%201%20%26%20%5Ctexttt%7Bif%20%7D%20%7Bi%3D%5Ctexttt%7Banchor%2Ey%20%7D%20%7Bor%20%7D%20%7Bj%3D%5Ctexttt%7Banchor%2Ex%7D%7D%7D%20%5C%5C0%20%26%20%5Ctexttt%7Botherwise%7D%20%5Cend%7Bcases%7D)
 		MORPH_CROSS = 1,
 		/// an elliptic structuring element, that is, a filled ellipse inscribed
-		/// into the rectangle Rect(0, 0, esize.width, 0.esize.height)
+		/// into the rectangle Rect(0, 0, esize.width, esize.height)
 		MORPH_ELLIPSE = 2,
 	}
 
@@ -2922,7 +2922,7 @@ pub mod imgproc {
 	opencv_type_enum! { crate::imgproc::TemplateMatchModes }
 
 	/// type of the threshold operation
-	/// ![threshold types](https://docs.opencv.org/4.10.0/threshold.png)
+	/// ![threshold types](https://docs.opencv.org/4.11.0/threshold.png)
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
 	pub enum ThresholdTypes {
@@ -3048,7 +3048,7 @@ pub mod imgproc {
 		Ok(ret)
 	}
 
-	/// Finds edges in an image using the Canny algorithm [Canny86](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Canny86) .
+	/// Finds edges in an image using the Canny algorithm [Canny86](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Canny86) .
 	///
 	/// The function finds edges in the input image and marks them in the output map edges using the
 	/// Canny algorithm. The smallest value between threshold1 and threshold2 is used for edge linking. The
@@ -3081,7 +3081,7 @@ pub mod imgproc {
 		Ok(ret)
 	}
 
-	/// Finds edges in an image using the Canny algorithm [Canny86](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Canny86) .
+	/// Finds edges in an image using the Canny algorithm [Canny86](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Canny86) .
 	///
 	/// The function finds edges in the input image and marks them in the output map edges using the
 	/// Canny algorithm. The smallest value between threshold1 and threshold2 is used for edge linking. The
@@ -3116,8 +3116,8 @@ pub mod imgproc {
 	/// Computes the "minimal work" distance between two weighted point configurations.
 	///
 	/// The function computes the earth mover distance and/or a lower boundary of the distance between the
-	/// two weighted point configurations. One of the applications described in [RubnerSept98](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_RubnerSept98),
-	/// [Rubner2000](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Rubner2000) is multi-dimensional histogram comparison for image retrieval. EMD is a transportation
+	/// two weighted point configurations. One of the applications described in [RubnerSept98](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_RubnerSept98),
+	/// [Rubner2000](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Rubner2000) is multi-dimensional histogram comparison for image retrieval. EMD is a transportation
 	/// problem that is solved using some modification of a simplex algorithm, thus the complexity is
 	/// exponential in the worst case, though, on average it is much faster. In the case of a real metric
 	/// the lower boundary can be calculated even faster (using linear-time algorithm) and it can be used
@@ -3167,8 +3167,8 @@ pub mod imgproc {
 	/// Computes the "minimal work" distance between two weighted point configurations.
 	///
 	/// The function computes the earth mover distance and/or a lower boundary of the distance between the
-	/// two weighted point configurations. One of the applications described in [RubnerSept98](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_RubnerSept98),
-	/// [Rubner2000](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Rubner2000) is multi-dimensional histogram comparison for image retrieval. EMD is a transportation
+	/// two weighted point configurations. One of the applications described in [RubnerSept98](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_RubnerSept98),
+	/// [Rubner2000](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Rubner2000) is multi-dimensional histogram comparison for image retrieval. EMD is a transportation
 	/// problem that is solved using some modification of a simplex algorithm, thus the complexity is
 	/// exponential in the worst case, though, on average it is much faster. In the case of a real metric
 	/// the lower boundary can be calculated even faster (using linear-time algorithm) and it can be used
@@ -3234,6 +3234,7 @@ pub mod imgproc {
 	/// possible future modifications of all this semantics, it is recommended to specify all of ksize,
 	/// sigmaX, and sigmaY.
 	/// * borderType: pixel extrapolation method, see #BorderTypes. [BORDER_WRAP] is not supported.
+	/// * hint: Implementation modfication flags. See [algorithm_hint]
 	/// ## See also
 	/// sepFilter2D, filter2D, blur, boxFilter, bilateralFilter, medianBlur
 	///
@@ -3241,6 +3242,7 @@ pub mod imgproc {
 	/// This alternative version of [gaussian_blur] function uses the following default values for its arguments:
 	/// * sigma_y: 0
 	/// * border_type: BORDER_DEFAULT
+	/// * hint: cv::ALGO_HINT_DEFAULT
 	#[inline]
 	pub fn gaussian_blur_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, ksize: core::Size, sigma_x: f64) -> Result<()> {
 		input_array_arg!(src);
@@ -3270,18 +3272,20 @@ pub mod imgproc {
 	/// possible future modifications of all this semantics, it is recommended to specify all of ksize,
 	/// sigmaX, and sigmaY.
 	/// * borderType: pixel extrapolation method, see #BorderTypes. [BORDER_WRAP] is not supported.
+	/// * hint: Implementation modfication flags. See [algorithm_hint]
 	/// ## See also
 	/// sepFilter2D, filter2D, blur, boxFilter, bilateralFilter, medianBlur
 	///
 	/// ## C++ default parameters
 	/// * sigma_y: 0
 	/// * border_type: BORDER_DEFAULT
+	/// * hint: cv::ALGO_HINT_DEFAULT
 	#[inline]
-	pub fn gaussian_blur(src: &impl ToInputArray, dst: &mut impl ToOutputArray, ksize: core::Size, sigma_x: f64, sigma_y: f64, border_type: i32) -> Result<()> {
+	pub fn gaussian_blur(src: &impl ToInputArray, dst: &mut impl ToOutputArray, ksize: core::Size, sigma_x: f64, sigma_y: f64, border_type: i32, hint: core::AlgorithmHint) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_GaussianBlur_const__InputArrayR_const__OutputArrayR_Size_double_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), &ksize, sigma_x, sigma_y, border_type, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_GaussianBlur_const__InputArrayR_const__OutputArrayR_Size_double_double_int_AlgorithmHint(src.as_raw__InputArray(), dst.as_raw__OutputArray(), &ksize, sigma_x, sigma_y, border_type, hint, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -3413,17 +3417,17 @@ pub mod imgproc {
 	/// Finds line segments in a binary image using the probabilistic Hough transform.
 	///
 	/// The function implements the probabilistic Hough transform algorithm for line detection, described
-	/// in [Matas00](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Matas00)
+	/// in [Matas00](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Matas00)
 	///
 	/// See the line detection example below:
 	/// @include snippets/imgproc_HoughLinesP.cpp
 	/// This is a sample picture the function parameters have been tuned for:
 	///
-	/// ![image](https://docs.opencv.org/4.10.0/building.jpg)
+	/// ![image](https://docs.opencv.org/4.11.0/building.jpg)
 	///
 	/// And this is the output of the above program in case of the probabilistic Hough transform:
 	///
-	/// ![image](https://docs.opencv.org/4.10.0/houghp.png)
+	/// ![image](https://docs.opencv.org/4.11.0/houghp.png)
 	///
 	/// ## Parameters
 	/// * image: 8-bit, single-channel binary source image. The image may be modified by the function.
@@ -3457,17 +3461,17 @@ pub mod imgproc {
 	/// Finds line segments in a binary image using the probabilistic Hough transform.
 	///
 	/// The function implements the probabilistic Hough transform algorithm for line detection, described
-	/// in [Matas00](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Matas00)
+	/// in [Matas00](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Matas00)
 	///
 	/// See the line detection example below:
 	/// @include snippets/imgproc_HoughLinesP.cpp
 	/// This is a sample picture the function parameters have been tuned for:
 	///
-	/// ![image](https://docs.opencv.org/4.10.0/building.jpg)
+	/// ![image](https://docs.opencv.org/4.11.0/building.jpg)
 	///
 	/// And this is the output of the above program in case of the probabilistic Hough transform:
 	///
-	/// ![image](https://docs.opencv.org/4.10.0/houghp.png)
+	/// ![image](https://docs.opencv.org/4.11.0/houghp.png)
 	///
 	/// ## Parameters
 	/// * image: 8-bit, single-channel binary source image. The image may be modified by the function.
@@ -3553,6 +3557,7 @@ pub mod imgproc {
 	/// * max_theta: For standard and multi-scale Hough transform, an upper bound for the angle.
 	/// Must fall between min_theta and CV_PI. The actual maximum angle in the accumulator may be slightly
 	/// less than max_theta, depending on the parameters min_theta and theta.
+	/// * use_edgeval: True if you want to use weighted Hough transform.
 	///
 	/// ## Note
 	/// This alternative version of [hough_lines] function uses the following default values for its arguments:
@@ -3560,6 +3565,7 @@ pub mod imgproc {
 	/// * stn: 0
 	/// * min_theta: 0
 	/// * max_theta: CV_PI
+	/// * use_edgeval: false
 	#[inline]
 	pub fn hough_lines_def(image: &impl ToInputArray, lines: &mut impl ToOutputArray, rho: f64, theta: f64, threshold: i32) -> Result<()> {
 		input_array_arg!(image);
@@ -3598,18 +3604,20 @@ pub mod imgproc {
 	/// * max_theta: For standard and multi-scale Hough transform, an upper bound for the angle.
 	/// Must fall between min_theta and CV_PI. The actual maximum angle in the accumulator may be slightly
 	/// less than max_theta, depending on the parameters min_theta and theta.
+	/// * use_edgeval: True if you want to use weighted Hough transform.
 	///
 	/// ## C++ default parameters
 	/// * srn: 0
 	/// * stn: 0
 	/// * min_theta: 0
 	/// * max_theta: CV_PI
+	/// * use_edgeval: false
 	#[inline]
-	pub fn hough_lines(image: &impl ToInputArray, lines: &mut impl ToOutputArray, rho: f64, theta: f64, threshold: i32, srn: f64, stn: f64, min_theta: f64, max_theta: f64) -> Result<()> {
+	pub fn hough_lines(image: &impl ToInputArray, lines: &mut impl ToOutputArray, rho: f64, theta: f64, threshold: i32, srn: f64, stn: f64, min_theta: f64, max_theta: f64, use_edgeval: bool) -> Result<()> {
 		input_array_arg!(image);
 		output_array_arg!(lines);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_HoughLines_const__InputArrayR_const__OutputArrayR_double_double_int_double_double_double_double(image.as_raw__InputArray(), lines.as_raw__OutputArray(), rho, theta, threshold, srn, stn, min_theta, max_theta, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_HoughLines_const__InputArrayR_const__OutputArrayR_double_double_int_double_double_double_double_bool(image.as_raw__InputArray(), lines.as_raw__OutputArray(), rho, theta, threshold, srn, stn, min_theta, max_theta, use_edgeval, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -3617,7 +3625,7 @@ pub mod imgproc {
 
 	/// Calculates seven Hu invariants.
 	///
-	/// The function calculates seven Hu invariants (introduced in [Hu62](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Hu62); see also
+	/// The function calculates seven Hu invariants (introduced in [Hu62](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Hu62); see also
 	/// <http://en.wikipedia.org/wiki/Image_moment>) defined as:
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20hu%5B0%5D%3D%20%5Ceta%20%5F%7B20%7D%2B%20%5Ceta%20%5F%7B02%7D%20%5C%5C%20hu%5B1%5D%3D%28%20%5Ceta%20%5F%7B20%7D%2D%20%5Ceta%20%5F%7B02%7D%29%5E%7B2%7D%2B4%20%5Ceta%20%5F%7B11%7D%5E%7B2%7D%20%5C%5C%20hu%5B2%5D%3D%28%20%5Ceta%20%5F%7B30%7D%2D3%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2B%20%283%20%5Ceta%20%5F%7B21%7D%2D%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%20%5C%5C%20hu%5B3%5D%3D%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2B%20%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%20%5C%5C%20hu%5B4%5D%3D%28%20%5Ceta%20%5F%7B30%7D%2D3%20%5Ceta%20%5F%7B12%7D%29%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5B%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D3%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%2B%283%20%5Ceta%20%5F%7B21%7D%2D%20%5Ceta%20%5F%7B03%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5B3%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%20%5C%5C%20hu%5B5%5D%3D%28%20%5Ceta%20%5F%7B20%7D%2D%20%5Ceta%20%5F%7B02%7D%29%5B%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%20%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%2B4%20%5Ceta%20%5F%7B11%7D%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%20%5C%5C%20hu%5B6%5D%3D%283%20%5Ceta%20%5F%7B21%7D%2D%20%5Ceta%20%5F%7B03%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5B3%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%2D%28%20%5Ceta%20%5F%7B30%7D%2D3%20%5Ceta%20%5F%7B12%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5B3%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%20%5C%5C%20%5Cend%7Barray%7D)
@@ -3648,7 +3656,7 @@ pub mod imgproc {
 
 	/// Calculates seven Hu invariants.
 	///
-	/// The function calculates seven Hu invariants (introduced in [Hu62](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Hu62); see also
+	/// The function calculates seven Hu invariants (introduced in [Hu62](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Hu62); see also
 	/// <http://en.wikipedia.org/wiki/Image_moment>) defined as:
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20hu%5B0%5D%3D%20%5Ceta%20%5F%7B20%7D%2B%20%5Ceta%20%5F%7B02%7D%20%5C%5C%20hu%5B1%5D%3D%28%20%5Ceta%20%5F%7B20%7D%2D%20%5Ceta%20%5F%7B02%7D%29%5E%7B2%7D%2B4%20%5Ceta%20%5F%7B11%7D%5E%7B2%7D%20%5C%5C%20hu%5B2%5D%3D%28%20%5Ceta%20%5F%7B30%7D%2D3%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2B%20%283%20%5Ceta%20%5F%7B21%7D%2D%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%20%5C%5C%20hu%5B3%5D%3D%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2B%20%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%20%5C%5C%20hu%5B4%5D%3D%28%20%5Ceta%20%5F%7B30%7D%2D3%20%5Ceta%20%5F%7B12%7D%29%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5B%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D3%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%2B%283%20%5Ceta%20%5F%7B21%7D%2D%20%5Ceta%20%5F%7B03%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5B3%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%20%5C%5C%20hu%5B5%5D%3D%28%20%5Ceta%20%5F%7B20%7D%2D%20%5Ceta%20%5F%7B02%7D%29%5B%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%20%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%2B4%20%5Ceta%20%5F%7B11%7D%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%20%5C%5C%20hu%5B6%5D%3D%283%20%5Ceta%20%5F%7B21%7D%2D%20%5Ceta%20%5F%7B03%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5B3%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%2D%28%20%5Ceta%20%5F%7B30%7D%2D3%20%5Ceta%20%5F%7B12%7D%29%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5B3%28%20%5Ceta%20%5F%7B30%7D%2B%20%5Ceta%20%5F%7B12%7D%29%5E%7B2%7D%2D%28%20%5Ceta%20%5F%7B21%7D%2B%20%5Ceta%20%5F%7B03%7D%29%5E%7B2%7D%5D%20%5C%5C%20%5Cend%7Barray%7D)
@@ -4303,6 +4311,73 @@ pub mod imgproc {
 		output_array_arg!(approx_curve);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_approxPolyDP_const__InputArrayR_const__OutputArrayR_double_bool(curve.as_raw__InputArray(), approx_curve.as_raw__OutputArray(), epsilon, closed, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Approximates a polygon with a convex hull with a specified accuracy and number of sides.
+	///
+	/// The cv::approxPolyN function approximates a polygon with a convex hull
+	/// so that the difference between the contour area of the original contour and the new polygon is minimal.
+	/// It uses a greedy algorithm for contracting two vertices into one in such a way that the additional area is minimal.
+	/// Straight lines formed by each edge of the convex contour are drawn and the areas of the resulting triangles are considered.
+	/// Each vertex will lie either on the original contour or outside it.
+	///
+	/// The algorithm based on the paper [LowIlie2003](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_LowIlie2003) .
+	///
+	/// ## Parameters
+	/// * curve: Input vector of a 2D points stored in std::vector or Mat, points must be float or integer.
+	/// * approxCurve: Result of the approximation. The type is vector of a 2D point (Point2f or Point) in std::vector or Mat.
+	/// * nsides: The parameter defines the number of sides of the result polygon.
+	/// * epsilon_percentage: defines the percentage of the maximum of additional area.
+	/// If it equals -1, it is not used. Otherwise algorighm stops if additional area is greater than contourArea(_curve) * percentage.
+	/// If additional area exceeds the limit, algorithm returns as many vertices as there were at the moment the limit was exceeded.
+	/// * ensure_convex: If it is true, algorithm creates a convex hull of input contour. Otherwise input vector should be convex.
+	///
+	/// ## Note
+	/// This alternative version of [approx_poly_n] function uses the following default values for its arguments:
+	/// * epsilon_percentage: -1.0
+	/// * ensure_convex: true
+	#[inline]
+	pub fn approx_poly_n_def(curve: &impl ToInputArray, approx_curve: &mut impl ToOutputArray, nsides: i32) -> Result<()> {
+		input_array_arg!(curve);
+		output_array_arg!(approx_curve);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_approxPolyN_const__InputArrayR_const__OutputArrayR_int(curve.as_raw__InputArray(), approx_curve.as_raw__OutputArray(), nsides, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Approximates a polygon with a convex hull with a specified accuracy and number of sides.
+	///
+	/// The cv::approxPolyN function approximates a polygon with a convex hull
+	/// so that the difference between the contour area of the original contour and the new polygon is minimal.
+	/// It uses a greedy algorithm for contracting two vertices into one in such a way that the additional area is minimal.
+	/// Straight lines formed by each edge of the convex contour are drawn and the areas of the resulting triangles are considered.
+	/// Each vertex will lie either on the original contour or outside it.
+	///
+	/// The algorithm based on the paper [LowIlie2003](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_LowIlie2003) .
+	///
+	/// ## Parameters
+	/// * curve: Input vector of a 2D points stored in std::vector or Mat, points must be float or integer.
+	/// * approxCurve: Result of the approximation. The type is vector of a 2D point (Point2f or Point) in std::vector or Mat.
+	/// * nsides: The parameter defines the number of sides of the result polygon.
+	/// * epsilon_percentage: defines the percentage of the maximum of additional area.
+	/// If it equals -1, it is not used. Otherwise algorighm stops if additional area is greater than contourArea(_curve) * percentage.
+	/// If additional area exceeds the limit, algorithm returns as many vertices as there were at the moment the limit was exceeded.
+	/// * ensure_convex: If it is true, algorithm creates a convex hull of input contour. Otherwise input vector should be convex.
+	///
+	/// ## C++ default parameters
+	/// * epsilon_percentage: -1.0
+	/// * ensure_convex: true
+	#[inline]
+	pub fn approx_poly_n(curve: &impl ToInputArray, approx_curve: &mut impl ToOutputArray, nsides: i32, epsilon_percentage: f32, ensure_convex: bool) -> Result<()> {
+		input_array_arg!(curve);
+		output_array_arg!(approx_curve);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_approxPolyN_const__InputArrayR_const__OutputArrayR_int_float_bool(curve.as_raw__InputArray(), approx_curve.as_raw__OutputArray(), nsides, epsilon_percentage, ensure_convex, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -5071,7 +5146,7 @@ pub mod imgproc {
 	/// represents the background label. ltype specifies the output label image type, an important
 	/// consideration based on the total number of labels or alternatively the total number of pixels in
 	/// the source image. ccltype specifies the connected components labeling algorithm to use, currently
-	/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
+	/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
 	/// are supported, see the [connected_components_algorithms_types] for details. Note that SAUF algorithm forces
 	/// a row major ordering of labels while Spaghetti and BBDT do not.
 	/// This function uses parallel version of the algorithms (statistics included) if at least one allowed
@@ -5123,7 +5198,7 @@ pub mod imgproc {
 	/// represents the background label. ltype specifies the output label image type, an important
 	/// consideration based on the total number of labels or alternatively the total number of pixels in
 	/// the source image. ccltype specifies the connected components labeling algorithm to use, currently
-	/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
+	/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
 	/// are supported, see the [connected_components_algorithms_types] for details. Note that SAUF algorithm forces
 	/// a row major ordering of labels while Spaghetti and BBDT do not.
 	/// This function uses parallel version of the algorithms (statistics included) if at least one allowed
@@ -5182,7 +5257,7 @@ pub mod imgproc {
 	/// represents the background label. ltype specifies the output label image type, an important
 	/// consideration based on the total number of labels or alternatively the total number of pixels in
 	/// the source image. ccltype specifies the connected components labeling algorithm to use, currently
-	/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
+	/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
 	/// are supported, see the [connected_components_algorithms_types] for details. Note that SAUF algorithm forces
 	/// a row major ordering of labels while Spaghetti and BBDT do not.
 	/// This function uses parallel version of the algorithms if at least one allowed
@@ -5223,7 +5298,7 @@ pub mod imgproc {
 	/// represents the background label. ltype specifies the output label image type, an important
 	/// consideration based on the total number of labels or alternatively the total number of pixels in
 	/// the source image. ccltype specifies the connected components labeling algorithm to use, currently
-	/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
+	/// Bolelli (Spaghetti) [Bolelli2019](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Bolelli2019), Grana (BBDT) [Grana2010](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Grana2010) and Wu's (SAUF) [Wu2009](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Wu2009) algorithms
 	/// are supported, see the [connected_components_algorithms_types] for details. Note that SAUF algorithm forces
 	/// a row major ordering of labels while Spaghetti and BBDT do not.
 	/// This function uses parallel version of the algorithms if at least one allowed
@@ -5430,7 +5505,7 @@ pub mod imgproc {
 
 	/// Finds the convex hull of a point set.
 	///
-	/// The function cv::convexHull finds the convex hull of a 2D point set using the Sklansky's algorithm [Sklansky82](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Sklansky82)
+	/// The function cv::convexHull finds the convex hull of a 2D point set using the Sklansky's algorithm [Sklansky82](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Sklansky82)
 	/// that has *O(N logN)* complexity in the current implementation.
 	///
 	/// ## Parameters
@@ -5474,7 +5549,7 @@ pub mod imgproc {
 
 	/// Finds the convex hull of a point set.
 	///
-	/// The function cv::convexHull finds the convex hull of a 2D point set using the Sklansky's algorithm [Sklansky82](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Sklansky82)
+	/// The function cv::convexHull finds the convex hull of a 2D point set using the Sklansky's algorithm [Sklansky82](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Sklansky82)
 	/// that has *O(N logN)* complexity in the current implementation.
 	///
 	/// ## Parameters
@@ -5519,7 +5594,7 @@ pub mod imgproc {
 	///
 	/// The figure below displays convexity defects of a hand contour:
 	///
-	/// ![image](https://docs.opencv.org/4.10.0/defects.png)
+	/// ![image](https://docs.opencv.org/4.11.0/defects.png)
 	///
 	/// ## Parameters
 	/// * contour: Input contour.
@@ -5752,9 +5827,9 @@ pub mod imgproc {
 	/// Refines the corner locations.
 	///
 	/// The function iterates to find the sub-pixel accurate location of corners or radial saddle
-	/// points as described in [forstner1987fast](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_forstner1987fast), and as shown on the figure below.
+	/// points as described in [forstner1987fast](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_forstner1987fast), and as shown on the figure below.
 	///
-	/// ![image](https://docs.opencv.org/4.10.0/cornersubpix.png)
+	/// ![image](https://docs.opencv.org/4.11.0/cornersubpix.png)
 	///
 	/// Sub-pixel accurate corner locator is based on the observation that every vector from the center ![inline formula](https://latex.codecogs.com/png.latex?q)
 	/// to a point ![inline formula](https://latex.codecogs.com/png.latex?p) located within a neighborhood of ![inline formula](https://latex.codecogs.com/png.latex?q) is orthogonal to the image gradient at ![inline formula](https://latex.codecogs.com/png.latex?p)
@@ -5975,14 +6050,53 @@ pub mod imgproc {
 	/// - [COLOR_YUV2BGR_NV21]
 	/// - [COLOR_YUV2RGB_NV21]
 	/// - [COLOR_YUV2BGRA_NV21]
-	/// - #COLOR_YUV2RGBA_NV21
+	/// - [COLOR_YUV2RGBA_NV21]
+	/// * hint: Implementation modfication flags. See [algorithm_hint]
+	///
+	/// ## Note
+	/// This alternative version of [cvt_color_two_plane] function uses the following default values for its arguments:
+	/// * hint: cv::ALGO_HINT_DEFAULT
 	#[inline]
-	pub fn cvt_color_two_plane(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, code: i32) -> Result<()> {
+	pub fn cvt_color_two_plane_def(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, code: i32) -> Result<()> {
 		input_array_arg!(src1);
 		input_array_arg!(src2);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
 		unsafe { sys::cv_cvtColorTwoPlane_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), code, ocvrs_return.as_mut_ptr()) };
+		return_receive!(unsafe ocvrs_return => ret);
+		let ret = ret.into_result()?;
+		Ok(ret)
+	}
+
+	/// Converts an image from one color space to another where the source image is
+	/// stored in two planes.
+	///
+	/// This function only supports YUV420 to RGB conversion as of now.
+	///
+	/// ## Parameters
+	/// * src1: 8-bit image (#CV_8U) of the Y plane.
+	/// * src2: image containing interleaved U/V plane.
+	/// * dst: output image.
+	/// * code: Specifies the type of conversion. It can take any of the following values:
+	/// - [COLOR_YUV2BGR_NV12]
+	/// - [COLOR_YUV2RGB_NV12]
+	/// - [COLOR_YUV2BGRA_NV12]
+	/// - [COLOR_YUV2RGBA_NV12]
+	/// - [COLOR_YUV2BGR_NV21]
+	/// - [COLOR_YUV2RGB_NV21]
+	/// - [COLOR_YUV2BGRA_NV21]
+	/// - [COLOR_YUV2RGBA_NV21]
+	/// * hint: Implementation modfication flags. See #AlgorithmHint
+	///
+	/// ## C++ default parameters
+	/// * hint: cv::ALGO_HINT_DEFAULT
+	#[inline]
+	pub fn cvt_color_two_plane(src1: &impl ToInputArray, src2: &impl ToInputArray, dst: &mut impl ToOutputArray, code: i32, hint: core::AlgorithmHint) -> Result<()> {
+		input_array_arg!(src1);
+		input_array_arg!(src2);
+		output_array_arg!(dst);
+		return_send!(via ocvrs_return);
+		unsafe { sys::cv_cvtColorTwoPlane_const__InputArrayR_const__InputArrayR_const__OutputArrayR_int_AlgorithmHint(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), code, hint, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -6028,12 +6142,14 @@ pub mod imgproc {
 	/// * code: color space conversion code (see #ColorConversionCodes).
 	/// * dstCn: number of channels in the destination image; if the parameter is 0, the number of the
 	/// channels is derived automatically from src and code.
+	/// * hint: Implementation modfication flags. See [algorithm_hint]
 	/// ## See also
 	/// [imgproc_color_conversions]
 	///
 	/// ## Note
 	/// This alternative version of [cvt_color] function uses the following default values for its arguments:
 	/// * dst_cn: 0
+	/// * hint: cv::ALGO_HINT_DEFAULT
 	#[inline]
 	pub fn cvt_color_def(src: &impl ToInputArray, dst: &mut impl ToOutputArray, code: i32) -> Result<()> {
 		input_array_arg!(src);
@@ -6085,17 +6201,19 @@ pub mod imgproc {
 	/// * code: color space conversion code (see #ColorConversionCodes).
 	/// * dstCn: number of channels in the destination image; if the parameter is 0, the number of the
 	/// channels is derived automatically from src and code.
+	/// * hint: Implementation modfication flags. See [algorithm_hint]
 	/// ## See also
 	/// [imgproc_color_conversions]
 	///
 	/// ## C++ default parameters
 	/// * dst_cn: 0
+	/// * hint: cv::ALGO_HINT_DEFAULT
 	#[inline]
-	pub fn cvt_color(src: &impl ToInputArray, dst: &mut impl ToOutputArray, code: i32, dst_cn: i32) -> Result<()> {
+	pub fn cvt_color(src: &impl ToInputArray, dst: &mut impl ToOutputArray, code: i32, dst_cn: i32, hint: core::AlgorithmHint) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_cvtColor_const__InputArrayR_const__OutputArrayR_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), code, dst_cn, ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_cvtColor_const__InputArrayR_const__OutputArrayR_int_int_AlgorithmHint(src.as_raw__InputArray(), dst.as_raw__OutputArray(), code, dst_cn, hint, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		Ok(ret)
@@ -6277,9 +6395,9 @@ pub mod imgproc {
 	/// image pixel to the nearest zero pixel. For zero image pixels, the distance will obviously be zero.
 	///
 	/// When maskSize == [DIST_MASK_PRECISE] and distanceType == [DIST_L2] , the function runs the
-	/// algorithm described in [Felzenszwalb04](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Felzenszwalb04) . This algorithm is parallelized with the TBB library.
+	/// algorithm described in [Felzenszwalb04](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Felzenszwalb04) . This algorithm is parallelized with the TBB library.
 	///
-	/// In other cases, the algorithm [Borgefors86](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Borgefors86) is used. This means that for a pixel the function
+	/// In other cases, the algorithm [Borgefors86](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Borgefors86) is used. This means that for a pixel the function
 	/// finds the shortest path to the nearest zero pixel consisting of basic shifts: horizontal, vertical,
 	/// diagonal, or knight's move (the latest is available for a ![inline formula](https://latex.codecogs.com/png.latex?5%5Ctimes%205) mask). The overall
 	/// distance is calculated as a sum of these basic distances. Since the distance function should be
@@ -6345,9 +6463,9 @@ pub mod imgproc {
 	/// image pixel to the nearest zero pixel. For zero image pixels, the distance will obviously be zero.
 	///
 	/// When maskSize == [DIST_MASK_PRECISE] and distanceType == [DIST_L2] , the function runs the
-	/// algorithm described in [Felzenszwalb04](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Felzenszwalb04) . This algorithm is parallelized with the TBB library.
+	/// algorithm described in [Felzenszwalb04](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Felzenszwalb04) . This algorithm is parallelized with the TBB library.
 	///
-	/// In other cases, the algorithm [Borgefors86](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Borgefors86) is used. This means that for a pixel the function
+	/// In other cases, the algorithm [Borgefors86](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Borgefors86) is used. This means that for a pixel the function
 	/// finds the shortest path to the nearest zero pixel consisting of basic shifts: horizontal, vertical,
 	/// diagonal, or knight's move (the latest is available for a ![inline formula](https://latex.codecogs.com/png.latex?5%5Ctimes%205) mask). The overall
 	/// distance is calculated as a sum of these basic distances. Since the distance function should be
@@ -6438,9 +6556,9 @@ pub mod imgproc {
 	/// image pixel to the nearest zero pixel. For zero image pixels, the distance will obviously be zero.
 	///
 	/// When maskSize == [DIST_MASK_PRECISE] and distanceType == [DIST_L2] , the function runs the
-	/// algorithm described in [Felzenszwalb04](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Felzenszwalb04) . This algorithm is parallelized with the TBB library.
+	/// algorithm described in [Felzenszwalb04](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Felzenszwalb04) . This algorithm is parallelized with the TBB library.
 	///
-	/// In other cases, the algorithm [Borgefors86](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Borgefors86) is used. This means that for a pixel the function
+	/// In other cases, the algorithm [Borgefors86](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Borgefors86) is used. This means that for a pixel the function
 	/// finds the shortest path to the nearest zero pixel consisting of basic shifts: horizontal, vertical,
 	/// diagonal, or knight's move (the latest is available for a ![inline formula](https://latex.codecogs.com/png.latex?5%5Ctimes%205) mask). The overall
 	/// distance is calculated as a sum of these basic distances. Since the distance function should be
@@ -6789,7 +6907,7 @@ pub mod imgproc {
 	/// `endAngle=360`. If `startAngle` is greater than `endAngle`, they are swapped. The figure below explains
 	/// the meaning of the parameters to draw the blue arc.
 	///
-	/// ![Parameters of Elliptic Arc](https://docs.opencv.org/4.10.0/ellipse.svg)
+	/// ![Parameters of Elliptic Arc](https://docs.opencv.org/4.11.0/ellipse.svg)
 	///
 	/// ## Parameters
 	/// * img: Image.
@@ -6830,7 +6948,7 @@ pub mod imgproc {
 	/// `endAngle=360`. If `startAngle` is greater than `endAngle`, they are swapped. The figure below explains
 	/// the meaning of the parameters to draw the blue arc.
 	///
-	/// ![Parameters of Elliptic Arc](https://docs.opencv.org/4.10.0/ellipse.svg)
+	/// ![Parameters of Elliptic Arc](https://docs.opencv.org/4.11.0/ellipse.svg)
 	///
 	/// ## Parameters
 	/// * img: Image.
@@ -6894,7 +7012,7 @@ pub mod imgproc {
 	/// `endAngle=360`. If `startAngle` is greater than `endAngle`, they are swapped. The figure below explains
 	/// the meaning of the parameters to draw the blue arc.
 	///
-	/// ![Parameters of Elliptic Arc](https://docs.opencv.org/4.10.0/ellipse.svg)
+	/// ![Parameters of Elliptic Arc](https://docs.opencv.org/4.11.0/ellipse.svg)
 	///
 	/// ## Parameters
 	/// * img: Image.
@@ -7297,7 +7415,7 @@ pub mod imgproc {
 
 	/// Finds contours in a binary image.
 	///
-	/// The function retrieves contours from the binary image using the algorithm [Suzuki85](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Suzuki85) . The contours
+	/// The function retrieves contours from the binary image using the algorithm [Suzuki85](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Suzuki85) . The contours
 	/// are a useful tool for shape analysis and object detection and recognition. See squares.cpp in the
 	/// OpenCV sample directory.
 	///
@@ -7341,7 +7459,7 @@ pub mod imgproc {
 
 	/// Finds contours in a binary image.
 	///
-	/// The function retrieves contours from the binary image using the algorithm [Suzuki85](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Suzuki85) . The contours
+	/// The function retrieves contours from the binary image using the algorithm [Suzuki85](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Suzuki85) . The contours
 	/// are a useful tool for shape analysis and object detection and recognition. See squares.cpp in the
 	/// OpenCV sample directory.
 	///
@@ -7400,7 +7518,7 @@ pub mod imgproc {
 
 	/// Finds contours in a binary image.
 	///
-	/// The function retrieves contours from the binary image using the algorithm [Suzuki85](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Suzuki85) . The contours
+	/// The function retrieves contours from the binary image using the algorithm [Suzuki85](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Suzuki85) . The contours
 	/// are a useful tool for shape analysis and object detection and recognition. See squares.cpp in the
 	/// OpenCV sample directory.
 	///
@@ -7446,7 +7564,7 @@ pub mod imgproc {
 	///
 	/// The function calculates the ellipse that fits a set of 2D points.
 	/// It returns the rotated rectangle in which the ellipse is inscribed.
-	/// The Approximate Mean Square (AMS) proposed by [Taubin1991](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Taubin1991) is used.
+	/// The Approximate Mean Square (AMS) proposed by [Taubin1991](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Taubin1991) is used.
 	///
 	/// For an ellipse, this basis set is ![inline formula](https://latex.codecogs.com/png.latex?%20%5Cchi%3D%20%5Cleft%28x%5E2%2C%20x%20y%2C%20y%5E2%2C%20x%2C%20y%2C%201%5Cright%29%20),
 	/// which is a set of six free coefficients ![inline formula](https://latex.codecogs.com/png.latex?%20A%5ET%3D%5Cleft%5C%7BA%5F%7B%5Ctext%7Bxx%7D%7D%2CA%5F%7B%5Ctext%7Bxy%7D%7D%2CA%5F%7B%5Ctext%7Byy%7D%7D%2CA%5Fx%2CA%5Fy%2CA%5F0%5Cright%5C%7D%20).
@@ -7491,7 +7609,7 @@ pub mod imgproc {
 	///
 	/// The function calculates the ellipse that fits a set of 2D points.
 	/// It returns the rotated rectangle in which the ellipse is inscribed.
-	/// The Direct least square (Direct) method by [Fitzgibbon1999](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Fitzgibbon1999) is used.
+	/// The Direct least square (Direct) method by [oy1998NumericallySD](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_oy1998NumericallySD) is used.
 	///
 	/// For an ellipse, this basis set is ![inline formula](https://latex.codecogs.com/png.latex?%20%5Cchi%3D%20%5Cleft%28x%5E2%2C%20x%20y%2C%20y%5E2%2C%20x%2C%20y%2C%201%5Cright%29%20),
 	/// which is a set of six free coefficients ![inline formula](https://latex.codecogs.com/png.latex?%20A%5ET%3D%5Cleft%5C%7BA%5F%7B%5Ctext%7Bxx%7D%7D%2CA%5F%7B%5Ctext%7Bxy%7D%7D%2CA%5F%7B%5Ctext%7Byy%7D%7D%2CA%5Fx%2CA%5Fy%2CA%5F0%5Cright%5C%7D%20).
@@ -7542,7 +7660,7 @@ pub mod imgproc {
 	/// Fits an ellipse around a set of 2D points.
 	///
 	/// The function calculates the ellipse that fits (in a least-squares sense) a set of 2D points best of
-	/// all. It returns the rotated rectangle in which the ellipse is inscribed. The first algorithm described by [Fitzgibbon95](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Fitzgibbon95)
+	/// all. It returns the rotated rectangle in which the ellipse is inscribed. The first algorithm described by [Fitzgibbon95](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Fitzgibbon95)
 	/// is used. Developer should keep in mind that it is possible that the returned
 	/// ellipse/rotatedRect data contains negative indices, due to the data points being close to the
 	/// border of the containing Mat element.
@@ -8500,7 +8618,7 @@ pub mod imgproc {
 	/// Determines strong corners on an image.
 	///
 	/// The function finds the most prominent corners in the image or in the specified image region, as
-	/// described in [Shi94](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Shi94)
+	/// described in [Shi94](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Shi94)
 	///
 	/// *   Function calculates the corner quality measure at every source image pixel using the
 	///    [corner_min_eigen_val] or [corner_harris] .
@@ -8651,7 +8769,7 @@ pub mod imgproc {
 	/// Determines strong corners on an image.
 	///
 	/// The function finds the most prominent corners in the image or in the specified image region, as
-	/// described in [Shi94](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Shi94)
+	/// described in [Shi94](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Shi94)
 	///
 	/// *   Function calculates the corner quality measure at every source image pixel using the
 	///    [corner_min_eigen_val] or [corner_harris] .
@@ -8866,7 +8984,7 @@ pub mod imgproc {
 	/// rectangle Rect(4,4,3,2) and of a tilted rectangle Rect(5,1,2,3) . The selected pixels in the
 	/// original image are shown, as well as the relative pixels in the integral images sum and tilted .
 	///
-	/// ![integral calculation example](https://docs.opencv.org/4.10.0/integral.png)
+	/// ![integral calculation example](https://docs.opencv.org/4.11.0/integral.png)
 	///
 	/// ## Parameters
 	/// * src: input image as ![inline formula](https://latex.codecogs.com/png.latex?W%20%5Ctimes%20H), 8-bit or floating-point (32f or 64f).
@@ -8918,7 +9036,7 @@ pub mod imgproc {
 	/// rectangle Rect(4,4,3,2) and of a tilted rectangle Rect(5,1,2,3) . The selected pixels in the
 	/// original image are shown, as well as the relative pixels in the integral images sum and tilted .
 	///
-	/// ![integral calculation example](https://docs.opencv.org/4.10.0/integral.png)
+	/// ![integral calculation example](https://docs.opencv.org/4.11.0/integral.png)
 	///
 	/// ## Parameters
 	/// * src: input image as ![inline formula](https://latex.codecogs.com/png.latex?W%20%5Ctimes%20H), 8-bit or floating-point (32f or 64f).
@@ -8969,7 +9087,7 @@ pub mod imgproc {
 	/// rectangle Rect(4,4,3,2) and of a tilted rectangle Rect(5,1,2,3) . The selected pixels in the
 	/// original image are shown, as well as the relative pixels in the integral images sum and tilted .
 	///
-	/// ![integral calculation example](https://docs.opencv.org/4.10.0/integral.png)
+	/// ![integral calculation example](https://docs.opencv.org/4.11.0/integral.png)
 	///
 	/// ## Parameters
 	/// * src: input image as ![inline formula](https://latex.codecogs.com/png.latex?W%20%5Ctimes%20H), 8-bit or floating-point (32f or 64f).
@@ -9021,7 +9139,7 @@ pub mod imgproc {
 	/// rectangle Rect(4,4,3,2) and of a tilted rectangle Rect(5,1,2,3) . The selected pixels in the
 	/// original image are shown, as well as the relative pixels in the integral images sum and tilted .
 	///
-	/// ![integral calculation example](https://docs.opencv.org/4.10.0/integral.png)
+	/// ![integral calculation example](https://docs.opencv.org/4.11.0/integral.png)
 	///
 	/// ## Parameters
 	/// * src: input image as ![inline formula](https://latex.codecogs.com/png.latex?W%20%5Ctimes%20H), 8-bit or floating-point (32f or 64f).
@@ -9060,7 +9178,7 @@ pub mod imgproc {
 	/// of the other, they are not considered nested and an intersection will be found regardless of the value of handleNested.
 	///
 	/// ## Returns
-	/// Absolute value of area of intersecting polygon
+	/// Area of intersecting polygon. May be negative, if algorithm has not converged, e.g. non-convex input.
 	///
 	///
 	/// Note: intersectConvexConvex doesn't confirm that both polygons are convex and will return invalid results if they aren't.
@@ -9091,7 +9209,7 @@ pub mod imgproc {
 	/// of the other, they are not considered nested and an intersection will be found regardless of the value of handleNested.
 	///
 	/// ## Returns
-	/// Absolute value of area of intersecting polygon
+	/// Area of intersecting polygon. May be negative, if algorithm has not converged, e.g. non-convex input.
 	///
 	///
 	/// Note: intersectConvexConvex doesn't confirm that both polygons are convex and will return invalid results if they aren't.
@@ -9471,10 +9589,10 @@ pub mod imgproc {
 	/// area. The output for a given 2D point set is shown in the image below. 2D points are depicted in
 	/// *red* and the enclosing triangle in *yellow*.
 	///
-	/// ![Sample output of the minimum enclosing triangle function](https://docs.opencv.org/4.10.0/minenclosingtriangle.png)
+	/// ![Sample output of the minimum enclosing triangle function](https://docs.opencv.org/4.11.0/minenclosingtriangle.png)
 	///
-	/// The implementation of the algorithm is based on O'Rourke's [ORourke86](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_ORourke86) and Klee and Laskowski's
-	/// [KleeLaskowski85](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_KleeLaskowski85) papers. O'Rourke provides a ![inline formula](https://latex.codecogs.com/png.latex?%5Ctheta%28n%29) algorithm for finding the minimal
+	/// The implementation of the algorithm is based on O'Rourke's [ORourke86](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_ORourke86) and Klee and Laskowski's
+	/// [KleeLaskowski85](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_KleeLaskowski85) papers. O'Rourke provides a ![inline formula](https://latex.codecogs.com/png.latex?%5Ctheta%28n%29) algorithm for finding the minimal
 	/// enclosing triangle of a 2D convex polygon with n vertices. Since the [min_enclosing_triangle] function
 	/// takes a 2D point set as input an additional preprocessing step of computing the convex hull of the
 	/// 2D point set is required. The complexity of the [convex_hull] function is ![inline formula](https://latex.codecogs.com/png.latex?O%28n%20log%28n%29%29) which is higher
@@ -9770,7 +9888,7 @@ pub mod imgproc {
 	///
 	/// See below a sample output of the function where each image pixel is tested against the contour:
 	///
-	/// ![sample output](https://docs.opencv.org/4.10.0/pointpolygon.png)
+	/// ![sample output](https://docs.opencv.org/4.11.0/pointpolygon.png)
 	///
 	/// ## Parameters
 	/// * contour: Input contour.
@@ -10346,7 +10464,10 @@ pub mod imgproc {
 	/// The function remap transforms the source image using the specified map:
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Ctexttt%7Bsrc%7D%20%28map%5Fx%28x%2Cy%29%2Cmap%5Fy%28x%2Cy%29%29)
-	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Ctexttt%7Bsrc%7D%20%28x%2Bmap%5Fx%28x%2Cy%29%2Cy%2Bmap%5Fy%28x%2Cy%29%29) with WARP_RELATIVE_MAP
+	///
+	/// with the WARP_RELATIVE_MAP flag :
+	///
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Ctexttt%7Bsrc%7D%20%28x%2Bmap%5Fx%28x%2Cy%29%2Cy%2Bmap%5Fy%28x%2Cy%29%29)
 	///
 	/// where values of pixels with non-integer coordinates are computed using one of available
 	/// interpolation methods. ![inline formula](https://latex.codecogs.com/png.latex?map%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?map%5Fy) can be encoded as separate floating-point maps
@@ -10368,7 +10489,7 @@ pub mod imgproc {
 	/// if map1 is (x,y) points), respectively.
 	/// * interpolation: Interpolation method (see #InterpolationFlags). The methods [INTER_AREA]
 	/// [INTER_LINEAR_EXACT] and [INTER_NEAREST_EXACT] are not supported by this function.
-	/// The extra flag WARP_RELATIVE_MAP that can be ORed to the interpolation method
+	/// The extra flag WARP_RELATIVE_MAP can be ORed to the interpolation method
 	/// (e.g. INTER_LINEAR | WARP_RELATIVE_MAP)
 	/// * borderMode: Pixel extrapolation method (see #BorderTypes). When
 	/// borderMode=#BORDER_TRANSPARENT, it means that the pixels in the destination image that
@@ -10400,7 +10521,10 @@ pub mod imgproc {
 	/// The function remap transforms the source image using the specified map:
 	///
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Ctexttt%7Bsrc%7D%20%28map%5Fx%28x%2Cy%29%2Cmap%5Fy%28x%2Cy%29%29)
-	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Ctexttt%7Bsrc%7D%20%28x%2Bmap%5Fx%28x%2Cy%29%2Cy%2Bmap%5Fy%28x%2Cy%29%29) with WARP_RELATIVE_MAP
+	///
+	/// with the WARP_RELATIVE_MAP flag :
+	///
+	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Ctexttt%7Bsrc%7D%20%28x%2Bmap%5Fx%28x%2Cy%29%2Cy%2Bmap%5Fy%28x%2Cy%29%29)
 	///
 	/// where values of pixels with non-integer coordinates are computed using one of available
 	/// interpolation methods. ![inline formula](https://latex.codecogs.com/png.latex?map%5Fx) and ![inline formula](https://latex.codecogs.com/png.latex?map%5Fy) can be encoded as separate floating-point maps
@@ -10422,7 +10546,7 @@ pub mod imgproc {
 	/// if map1 is (x,y) points), respectively.
 	/// * interpolation: Interpolation method (see #InterpolationFlags). The methods [INTER_AREA]
 	/// [INTER_LINEAR_EXACT] and [INTER_NEAREST_EXACT] are not supported by this function.
-	/// The extra flag WARP_RELATIVE_MAP that can be ORed to the interpolation method
+	/// The extra flag WARP_RELATIVE_MAP can be ORed to the interpolation method
 	/// (e.g. INTER_LINEAR | WARP_RELATIVE_MAP)
 	/// * borderMode: Pixel extrapolation method (see #BorderTypes). When
 	/// borderMode=#BORDER_TRANSPARENT, it means that the pixels in the destination image that
@@ -10560,7 +10684,7 @@ pub mod imgproc {
 	/// Below are some examples of intersection configurations. The hatched pattern indicates the
 	/// intersecting region and the red vertices are returned by the function.
 	///
-	/// ![intersection examples](https://docs.opencv.org/4.10.0/intersection.png)
+	/// ![intersection examples](https://docs.opencv.org/4.11.0/intersection.png)
 	///
 	/// ## Parameters
 	/// * rect1: First rectangle
@@ -11020,7 +11144,7 @@ pub mod imgproc {
 	/// \brief Remaps an image to polar or semilog-polar coordinates space
 	///
 	/// @anchor polar_remaps_reference_image
-	/// ![Polar remaps reference](https://docs.opencv.org/4.10.0/polar_remap_doc.png)
+	/// ![Polar remaps reference](https://docs.opencv.org/4.11.0/polar_remap_doc.png)
 	///
 	/// Transform the source image using the following transformation:
 	/// ![block formula](https://latex.codecogs.com/png.latex?%0Adst%28%5Crho%20%2C%20%5Cphi%20%29%20%3D%20src%28x%2Cy%29%0A)
@@ -11095,7 +11219,7 @@ pub mod imgproc {
 	/// Performs a marker-based image segmentation using the watershed algorithm.
 	///
 	/// The function implements one of the variants of watershed, non-parametric marker-based segmentation
-	/// algorithm, described in [Meyer92](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Meyer92) .
+	/// algorithm, described in [Meyer92](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Meyer92) .
 	///
 	/// Before passing the image to the function, you have to roughly outline the desired regions in the
 	/// image markers with positive (\>0) indices. So, every region is represented as one or more connected
@@ -11628,7 +11752,7 @@ pub mod imgproc {
 
 	/// finds arbitrary template in the grayscale image using Generalized Hough Transform
 	///
-	/// Detects position only without translation and rotation [Ballard1981](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Ballard1981) .
+	/// Detects position only without translation and rotation [Ballard1981](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Ballard1981) .
 	pub struct GeneralizedHoughBallard {
 		ptr: *mut c_void,
 	}
@@ -11931,7 +12055,7 @@ pub mod imgproc {
 
 	/// finds arbitrary template in the grayscale image using Generalized Hough Transform
 	///
-	/// Detects position, translation and rotation [Guil1999](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Guil1999) .
+	/// Detects position, translation and rotation [Guil1999](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Guil1999) .
 	pub struct GeneralizedHoughGuil {
 		ptr: *mut c_void,
 	}
@@ -12448,7 +12572,7 @@ pub mod imgproc {
 		///
 		/// This is the output of the default parameters of the algorithm on the above shown image.
 		///
-		/// ![image](https://docs.opencv.org/4.10.0/building_lsd.png)
+		/// ![image](https://docs.opencv.org/4.11.0/building_lsd.png)
 		///
 		/// ## Parameters
 		/// * image: A grayscale (CV_8UC1) input image. If only a roi needs to be selected, use:
@@ -12487,7 +12611,7 @@ pub mod imgproc {
 		///
 		/// This is the output of the default parameters of the algorithm on the above shown image.
 		///
-		/// ![image](https://docs.opencv.org/4.10.0/building_lsd.png)
+		/// ![image](https://docs.opencv.org/4.11.0/building_lsd.png)
 		///
 		/// ## Parameters
 		/// * image: A grayscale (CV_8UC1) input image. If only a roi needs to be selected, use:
@@ -12586,7 +12710,7 @@ pub mod imgproc {
 
 	/// Line segment detector class
 	///
-	/// following the algorithm described at [Rafael12](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Rafael12) .
+	/// following the algorithm described at [Rafael12](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Rafael12) .
 	///
 	///
 	/// Note: Implementation has been removed from OpenCV version 3.4.6 to 3.4.15 and version 4.1.0 to 4.5.3 due original code license conflict.
@@ -12744,7 +12868,7 @@ pub mod imgproc {
 		/// *   PREV_AROUND_LEFT previous around the left facet (reversed eOnext )
 		/// *   PREV_AROUND_RIGHT previous around the right facet (reversed eDnext )
 		///
-		/// ![sample output](https://docs.opencv.org/4.10.0/quadedge.png)
+		/// ![sample output](https://docs.opencv.org/4.11.0/quadedge.png)
 		///
 		/// ## Returns
 		/// edge ID related to the input edge.
@@ -13123,7 +13247,7 @@ pub mod imgproc {
 		/// ## Parameters
 		/// * targetPt: The target point
 		/// * contour:[out] The list of pixels which contains optimal path between the source and the target points of the image. Type is CV_32SC2 (compatible with `std::vector<Point>`)
-		/// * backward: Flag to indicate reverse order of retrived pixels (use "true" value to fetch points from the target to the source point)
+		/// * backward: Flag to indicate reverse order of retrieved pixels (use "true" value to fetch points from the target to the source point)
 		///
 		/// ## C++ default parameters
 		/// * backward: false
@@ -13145,7 +13269,7 @@ pub mod imgproc {
 		/// ## Parameters
 		/// * targetPt: The target point
 		/// * contour:[out] The list of pixels which contains optimal path between the source and the target points of the image. Type is CV_32SC2 (compatible with `std::vector<Point>`)
-		/// * backward: Flag to indicate reverse order of retrived pixels (use "true" value to fetch points from the target to the source point)
+		/// * backward: Flag to indicate reverse order of retrieved pixels (use "true" value to fetch points from the target to the source point)
 		///
 		/// ## Note
 		/// This alternative version of [IntelligentScissorsMBTraitConst::get_contour] function uses the following default values for its arguments:
@@ -13421,11 +13545,11 @@ pub mod imgproc {
 	/// which can be used for image segmentation.
 	///
 	/// Usage example:
-	/// [usage_example_intelligent_scissors](https://github.com/opencv/opencv/blob/4.10.0/samples/cpp/tutorial_code/snippets/imgproc_segmentation.cpp#L1)
+	/// [usage_example_intelligent_scissors](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/imgproc_segmentation.cpp#L1)
 	///
 	/// Reference: <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.138.3811&rep=rep1&type=pdf">"Intelligent Scissors for Image Composition"</a>
 	/// algorithm designed by Eric N. Mortensen and William A. Barrett, Brigham Young University
-	/// [Mortensen95intelligentscissors](https://docs.opencv.org/4.10.0/d0/de3/citelist.html#CITEREF_Mortensen95intelligentscissors)
+	/// [Mortensen95intelligentscissors](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Mortensen95intelligentscissors)
 	pub struct IntelligentScissorsMB {
 		ptr: *mut c_void,
 	}

@@ -96,6 +96,8 @@ include!(concat!(env!("OUT_DIR"), "/opencv/saliency.rs"));
 include!(concat!(env!("OUT_DIR"), "/opencv/sfm.rs"));
 #[cfg(ocvrs_has_module_shape)]
 include!(concat!(env!("OUT_DIR"), "/opencv/shape.rs"));
+#[cfg(ocvrs_has_module_signal)]
+include!(concat!(env!("OUT_DIR"), "/opencv/signal.rs"));
 #[cfg(ocvrs_has_module_stereo)]
 include!(concat!(env!("OUT_DIR"), "/opencv/stereo.rs"));
 #[cfg(ocvrs_has_module_stitching)]
@@ -234,6 +236,8 @@ pub mod hub_prelude {
 	pub use super::sfm::prelude::*;
 	#[cfg(ocvrs_has_module_shape)]
 	pub use super::shape::prelude::*;
+	#[cfg(ocvrs_has_module_signal)]
+	pub use super::signal::prelude::*;
 	#[cfg(ocvrs_has_module_stereo)]
 	pub use super::stereo::prelude::*;
 	#[cfg(ocvrs_has_module_stitching)]
