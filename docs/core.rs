@@ -34,7 +34,7 @@ pub mod core {
 	use crate::mod_prelude::*;
 	use crate::{core, sys, types};
 	pub mod prelude {
-		pub use super::{AlgorithmTrait, AlgorithmTraitConst, ArraysTrait, ArraysTraitConst, AsyncArrayTrait, AsyncArrayTraitConst, AsyncPromiseTrait, AsyncPromiseTraitConst, BufferPoolTrait, BufferPoolTraitConst, BufferTrait, BufferTraitConst, CommandLineParserTrait, CommandLineParserTraitConst, ConjGradSolverTrait, ConjGradSolverTraitConst, ContextTrait, ContextTraitConst, Context_UserContextTrait, Context_UserContextTraitConst, Detail_CheckContextTrait, Detail_CheckContextTraitConst, DeviceInfoTrait, DeviceInfoTraitConst, DeviceTrait, DeviceTraitConst, DownhillSolverTrait, DownhillSolverTraitConst, EventTrait, EventTraitConst, ExceptionTrait, ExceptionTraitConst, FileNodeIteratorTrait, FileNodeIteratorTraitConst, FileNodeTrait, FileNodeTraitConst, FileStorageTrait, FileStorageTraitConst, FormattedTrait, FormattedTraitConst, FormatterTrait, FormatterTraitConst, FunctionParamsTrait, FunctionParamsTraitConst, GpuDataTrait, GpuDataTraitConst, GpuMatNDTrait, GpuMatNDTraitConst, GpuMatTrait, GpuMatTraitConst, GpuMat_AllocatorTrait, GpuMat_AllocatorTraitConst, HammingTrait, HammingTraitConst, HostMemTrait, HostMemTraitConst, Image2DTrait, Image2DTraitConst, KernelArgTrait, KernelArgTraitConst, KernelTrait, KernelTraitConst, KeyPointTrait, KeyPointTraitConst, LDATrait, LDATraitConst, LogTagTrait, LogTagTraitConst, MatConstIteratorTrait, MatConstIteratorTraitConst, MatExprTrait, MatExprTraitConst, MatOpTrait, MatOpTraitConst, MatSizeTrait, MatSizeTraitConst, MatStepTrait, MatStepTraitConst, MatTrait, MatTraitConst, Matx_AddOpTrait, Matx_AddOpTraitConst, Matx_DivOpTrait, Matx_DivOpTraitConst, Matx_MatMulOpTrait, Matx_MatMulOpTraitConst, Matx_MulOpTrait, Matx_MulOpTraitConst, Matx_ScaleOpTrait, Matx_ScaleOpTraitConst, Matx_SubOpTrait, Matx_SubOpTraitConst, Matx_TOpTrait, Matx_TOpTraitConst, MinProblemSolverTrait, MinProblemSolverTraitConst, MinProblemSolver_FunctionTrait, MinProblemSolver_FunctionTraitConst, NodeDataTrait, NodeDataTraitConst, OpenCLExecutionContextTrait, OpenCLExecutionContextTraitConst, OriginalClassNameTrait, OriginalClassNameTraitConst, PCATrait, PCATraitConst, ParallelLoopBodyTrait, ParallelLoopBodyTraitConst, PlatformInfoTrait, PlatformInfoTraitConst, PlatformTrait, PlatformTraitConst, ProgramSourceTrait, ProgramSourceTraitConst, ProgramTrait, ProgramTraitConst, QueueTrait, QueueTraitConst, RNGTrait, RNGTraitConst, RNG_MT19937Trait, RNG_MT19937TraitConst, RangeTrait, RangeTraitConst, SVDTrait, SVDTraitConst, SparseMatConstIteratorTrait, SparseMatConstIteratorTraitConst, SparseMatIteratorTrait, SparseMatIteratorTraitConst, SparseMatTrait, SparseMatTraitConst, SparseMat_HdrTrait, SparseMat_HdrTraitConst, SparseMat_NodeTrait, SparseMat_NodeTraitConst, StreamTrait, StreamTraitConst, TargetArchsTrait, TargetArchsTraitConst, Texture2DTrait, Texture2DTraitConst, TickMeterTrait, TickMeterTraitConst, TimerTrait, TimerTraitConst, UMatDataTrait, UMatDataTraitConst, UMatTrait, UMatTraitConst, WriteStructContextTrait, WriteStructContextTraitConst, _InputArrayTrait, _InputArrayTraitConst, _InputOutputArrayTrait, _InputOutputArrayTraitConst, _OutputArrayTrait, _OutputArrayTraitConst};
+		pub use super::{AlgorithmTrait, AlgorithmTraitConst, ArraysTrait, ArraysTraitConst, AsyncArrayTrait, AsyncArrayTraitConst, AsyncPromiseTrait, AsyncPromiseTraitConst, BufferPoolTrait, BufferPoolTraitConst, BufferTrait, BufferTraitConst, CommandLineParserTrait, CommandLineParserTraitConst, ConjGradSolverTrait, ConjGradSolverTraitConst, ContextTrait, ContextTraitConst, Context_UserContextTrait, Context_UserContextTraitConst, Detail_CheckContextTrait, Detail_CheckContextTraitConst, DeviceInfoTrait, DeviceInfoTraitConst, DeviceTrait, DeviceTraitConst, DownhillSolverTrait, DownhillSolverTraitConst, EventTrait, EventTraitConst, ExceptionTrait, ExceptionTraitConst, FileNodeIteratorTrait, FileNodeIteratorTraitConst, FileNodeTrait, FileNodeTraitConst, FileStorageTrait, FileStorageTraitConst, FormattedTrait, FormattedTraitConst, FormatterTrait, FormatterTraitConst, GpuDataTrait, GpuDataTraitConst, GpuMatNDTrait, GpuMatNDTraitConst, GpuMatTrait, GpuMatTraitConst, GpuMat_AllocatorTrait, GpuMat_AllocatorTraitConst, HammingTrait, HammingTraitConst, HostMemTrait, HostMemTraitConst, Image2DTrait, Image2DTraitConst, KernelArgTrait, KernelArgTraitConst, KernelTrait, KernelTraitConst, KeyPointTrait, KeyPointTraitConst, LDATrait, LDATraitConst, LogTagTrait, LogTagTraitConst, MatConstIteratorTrait, MatConstIteratorTraitConst, MatExprTrait, MatExprTraitConst, MatOpTrait, MatOpTraitConst, MatSizeTrait, MatSizeTraitConst, MatStepTrait, MatStepTraitConst, MatTrait, MatTraitConst, Matx_AddOpTrait, Matx_AddOpTraitConst, Matx_DivOpTrait, Matx_DivOpTraitConst, Matx_MatMulOpTrait, Matx_MatMulOpTraitConst, Matx_MulOpTrait, Matx_MulOpTraitConst, Matx_ScaleOpTrait, Matx_ScaleOpTraitConst, Matx_SubOpTrait, Matx_SubOpTraitConst, Matx_TOpTrait, Matx_TOpTraitConst, MinProblemSolverTrait, MinProblemSolverTraitConst, MinProblemSolver_FunctionTrait, MinProblemSolver_FunctionTraitConst, NodeDataTrait, NodeDataTraitConst, OpenCLExecutionContextTrait, OpenCLExecutionContextTraitConst, OriginalClassNameTrait, OriginalClassNameTraitConst, PCATrait, PCATraitConst, ParallelLoopBodyTrait, ParallelLoopBodyTraitConst, PlatformInfoTrait, PlatformInfoTraitConst, PlatformTrait, PlatformTraitConst, ProgramSourceTrait, ProgramSourceTraitConst, ProgramTrait, ProgramTraitConst, QueueTrait, QueueTraitConst, RNGTrait, RNGTraitConst, RNG_MT19937Trait, RNG_MT19937TraitConst, RangeTrait, RangeTraitConst, SVDTrait, SVDTraitConst, SparseMatConstIteratorTrait, SparseMatConstIteratorTraitConst, SparseMatIteratorTrait, SparseMatIteratorTraitConst, SparseMatTrait, SparseMatTraitConst, SparseMat_HdrTrait, SparseMat_HdrTraitConst, SparseMat_NodeTrait, SparseMat_NodeTraitConst, StreamTrait, StreamTraitConst, TargetArchsTrait, TargetArchsTraitConst, Texture2DTrait, Texture2DTraitConst, TickMeterTrait, TickMeterTraitConst, TimerTrait, TimerTraitConst, UMatDataTrait, UMatDataTraitConst, UMatTrait, UMatTraitConst, WriteStructContextTrait, WriteStructContextTraitConst, _InputArrayTrait, _InputArrayTraitConst, _InputOutputArrayTrait, _InputOutputArrayTraitConst, _OutputArrayTrait, _OutputArrayTraitConst};
 	}
 
 	pub const ACCESS_FAST: i32 = 67108864;
@@ -11638,11 +11638,11 @@ pub mod core {
 	/// ## C++ default parameters
 	/// * params: FunctionParams()
 	#[inline]
-	pub fn copy_mat_and_dump_named_arguments(src: &impl ToInputArray, dst: &mut impl ToOutputArray, params: &impl core::FunctionParamsTraitConst) -> Result<String> {
+	pub fn copy_mat_and_dump_named_arguments(src: &impl ToInputArray, dst: &mut impl ToOutputArray, params: core::FunctionParams) -> Result<String> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
 		return_send!(via ocvrs_return);
-		unsafe { sys::cv_utils_copyMatAndDumpNamedArguments_const__InputArrayR_const__OutputArrayR_const_FunctionParamsR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), params.as_raw_FunctionParams(), ocvrs_return.as_mut_ptr()) };
+		unsafe { sys::cv_utils_copyMatAndDumpNamedArguments_const__InputArrayR_const__OutputArrayR_const_FunctionParamsR(src.as_raw__InputArray(), dst.as_raw__OutputArray(), &params, ocvrs_return.as_mut_ptr()) };
 		return_receive!(unsafe ocvrs_return => ret);
 		let ret = ret.into_result()?;
 		let ret = unsafe { String::opencv_from_extern(ret) };
@@ -13066,6 +13066,10 @@ pub mod core {
 		/// parser.get<String>("@image");
 		/// ```
 		///
+		///
+		/// ## Note
+		/// This alternative version of [CommandLineParserTraitConst::get_bool] function uses the following default values for its arguments:
+		/// * space_delete: true
 		#[inline]
 		fn get_bool_def(&self, name: &str) -> Result<bool> {
 			extern_container_arg!(name);
@@ -13161,6 +13165,10 @@ pub mod core {
 		/// parser.get<String>("@image");
 		/// ```
 		///
+		///
+		/// ## Note
+		/// This alternative version of [CommandLineParserTraitConst::get_i32] function uses the following default values for its arguments:
+		/// * space_delete: true
 		#[inline]
 		fn get_i32_def(&self, name: &str) -> Result<i32> {
 			extern_container_arg!(name);
@@ -13256,6 +13264,10 @@ pub mod core {
 		/// parser.get<String>("@image");
 		/// ```
 		///
+		///
+		/// ## Note
+		/// This alternative version of [CommandLineParserTraitConst::get_f64] function uses the following default values for its arguments:
+		/// * space_delete: true
 		#[inline]
 		fn get_f64_def(&self, name: &str) -> Result<f64> {
 			extern_container_arg!(name);
@@ -13352,6 +13364,10 @@ pub mod core {
 		/// parser.get<String>("@image");
 		/// ```
 		///
+		///
+		/// ## Note
+		/// This alternative version of [CommandLineParserTraitConst::get_str] function uses the following default values for its arguments:
+		/// * space_delete: true
 		#[inline]
 		fn get_str_def(&self, name: &str) -> Result<String> {
 			extern_container_arg!(name);
@@ -13448,6 +13464,10 @@ pub mod core {
 		/// parser.get<String>("@image");
 		/// ```
 		///
+		///
+		/// ## Note
+		/// This alternative version of [CommandLineParserTraitConst::get_u64] function uses the following default values for its arguments:
+		/// * space_delete: true
 		#[inline]
 		fn get_u64_def(&self, name: &str) -> Result<u64> {
 			extern_container_arg!(name);
@@ -13524,6 +13544,10 @@ pub mod core {
 		/// * index: index of the argument
 		/// * space_delete: remove spaces from the left and right of the string
 		/// @tparam T the argument will be converted to this type if possible
+		///
+		/// ## Note
+		/// This alternative version of [CommandLineParserTraitConst::get_bool_idx] function uses the following default values for its arguments:
+		/// * space_delete: true
 		#[inline]
 		fn get_bool_idx_def(&self, index: i32) -> Result<bool> {
 			return_send!(via ocvrs_return);
@@ -13599,6 +13623,10 @@ pub mod core {
 		/// * index: index of the argument
 		/// * space_delete: remove spaces from the left and right of the string
 		/// @tparam T the argument will be converted to this type if possible
+		///
+		/// ## Note
+		/// This alternative version of [CommandLineParserTraitConst::get_i32_idx] function uses the following default values for its arguments:
+		/// * space_delete: true
 		#[inline]
 		fn get_i32_idx_def(&self, index: i32) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -13674,6 +13702,10 @@ pub mod core {
 		/// * index: index of the argument
 		/// * space_delete: remove spaces from the left and right of the string
 		/// @tparam T the argument will be converted to this type if possible
+		///
+		/// ## Note
+		/// This alternative version of [CommandLineParserTraitConst::get_f64_idx] function uses the following default values for its arguments:
+		/// * space_delete: true
 		#[inline]
 		fn get_f64_idx_def(&self, index: i32) -> Result<f64> {
 			return_send!(via ocvrs_return);
@@ -13750,6 +13782,10 @@ pub mod core {
 		/// * index: index of the argument
 		/// * space_delete: remove spaces from the left and right of the string
 		/// @tparam T the argument will be converted to this type if possible
+		///
+		/// ## Note
+		/// This alternative version of [CommandLineParserTraitConst::get_str_idx] function uses the following default values for its arguments:
+		/// * space_delete: true
 		#[inline]
 		fn get_str_idx_def(&self, index: i32) -> Result<String> {
 			return_send!(via ocvrs_return);
@@ -13826,6 +13862,10 @@ pub mod core {
 		/// * index: index of the argument
 		/// * space_delete: remove spaces from the left and right of the string
 		/// @tparam T the argument will be converted to this type if possible
+		///
+		/// ## Note
+		/// This alternative version of [CommandLineParserTraitConst::get_u64_idx] function uses the following default values for its arguments:
+		/// * space_delete: true
 		#[inline]
 		fn get_u64_idx_def(&self, index: i32) -> Result<u64> {
 			return_send!(via ocvrs_return);
@@ -15072,9 +15112,6 @@ pub mod core {
 
 		/// Internal method used when reading FileStorage.
 		/// Sets the type (int, real or string) and value of the previously created node.
-		///
-		/// ## C++ default parameters
-		/// * len: -1
 		#[inline]
 		fn set_value(&mut self, typ: i32, value: &mut [u8]) -> Result<()> {
 			return_send!(via ocvrs_return);
@@ -15311,9 +15348,6 @@ pub mod core {
 		/// * vec: Pointer to the destination array.
 		/// * len: Number of bytes to read (buffer size limit). If it is greater than number of
 		///            remaining elements then all of them will be read.
-		///
-		/// ## C++ default parameters
-		/// * len: (size_t)INT_MAX
 		#[inline]
 		fn read_raw(&mut self, fmt: &str, vec: &mut [u8]) -> Result<core::FileNodeIterator> {
 			extern_container_arg!(fmt);
@@ -18364,6 +18398,50 @@ pub mod core {
 		///
 		/// ## Overloaded parameters
 		///
+		/// * i0: Index along the dimension 0
+		///
+		/// ## Note
+		/// This alternative version of [MatTraitConst::at] function uses the following default values for its arguments:
+		/// * i0: 0
+		#[inline]
+		fn at_def<T: core::DataType>(&self) -> Result<&T> {
+			core::mat_forward::at_def(self, )
+		}
+
+		/// Returns a reference to the specified array element.
+		///
+		/// The template methods return a reference to the specified array element. For the sake of higher
+		/// performance, the index range checks are only performed in the Debug configuration.
+		///
+		/// Note that the variants with a single index (i) can be used to access elements of single-row or
+		/// single-column 2-dimensional arrays. That is, if, for example, A is a 1 x N floating-point matrix and
+		/// B is an M x 1 integer matrix, you can simply write `A.at<float>(k+4)` and `B.at<int>(2*i+1)`
+		/// instead of `A.at<float>(0,k+4)` and `B.at<int>(2*i+1,0)`, respectively.
+		///
+		/// The example below initializes a Hilbert matrix:
+		/// ```C++
+		///    Mat H(100, 100, CV_64F);
+		///    for(int i = 0; i < H.rows; i++)
+		///        for(int j = 0; j < H.cols; j++)
+		///            H.at<double>(i,j)=1./(i+j+1);
+		/// ```
+		///
+		///
+		/// Keep in mind that the size identifier used in the at operator cannot be chosen at random. It depends
+		/// on the image from which you are trying to retrieve the data. The table below gives a better insight in this:
+		///  - If matrix is of type `CV_8U` then use `Mat.at<uchar>(y,x)`.
+		///  - If matrix is of type `CV_8S` then use `Mat.at<schar>(y,x)`.
+		///  - If matrix is of type `CV_16U` then use `Mat.at<ushort>(y,x)`.
+		///  - If matrix is of type `CV_16S` then use `Mat.at<short>(y,x)`.
+		///  - If matrix is of type `CV_32S`  then use `Mat.at<int>(y,x)`.
+		///  - If matrix is of type `CV_32F`  then use `Mat.at<float>(y,x)`.
+		///  - If matrix is of type `CV_64F` then use `Mat.at<double>(y,x)`.
+		///
+		/// ## Parameters
+		/// * i0: Index along the dimension 0
+		///
+		/// ## Overloaded parameters
+		///
 		/// * row: Index along the dimension 0
 		/// * col: Index along the dimension 1
 		#[inline]
@@ -18582,7 +18660,7 @@ pub mod core {
 		}
 
 		#[inline]
-		fn set_size(&mut self, val: core::MatSize) {
+		fn set_mat_size(&mut self, val: core::MatSize) {
 			let ret = unsafe { sys::cv_Mat_propSize_const_MatSize(self.as_raw_mut_Mat(), val.as_raw_MatSize()) };
 			ret
 		}
@@ -19606,6 +19684,46 @@ pub mod core {
 		#[inline]
 		fn at_mut<T: core::DataType>(&mut self, i0: i32) -> Result<&mut T> {
 			core::mat_forward::at_mut(self, i0)
+		}
+
+		/// Returns a reference to the specified array element.
+		///
+		/// The template methods return a reference to the specified array element. For the sake of higher
+		/// performance, the index range checks are only performed in the Debug configuration.
+		///
+		/// Note that the variants with a single index (i) can be used to access elements of single-row or
+		/// single-column 2-dimensional arrays. That is, if, for example, A is a 1 x N floating-point matrix and
+		/// B is an M x 1 integer matrix, you can simply write `A.at<float>(k+4)` and `B.at<int>(2*i+1)`
+		/// instead of `A.at<float>(0,k+4)` and `B.at<int>(2*i+1,0)`, respectively.
+		///
+		/// The example below initializes a Hilbert matrix:
+		/// ```C++
+		///    Mat H(100, 100, CV_64F);
+		///    for(int i = 0; i < H.rows; i++)
+		///        for(int j = 0; j < H.cols; j++)
+		///            H.at<double>(i,j)=1./(i+j+1);
+		/// ```
+		///
+		///
+		/// Keep in mind that the size identifier used in the at operator cannot be chosen at random. It depends
+		/// on the image from which you are trying to retrieve the data. The table below gives a better insight in this:
+		///  - If matrix is of type `CV_8U` then use `Mat.at<uchar>(y,x)`.
+		///  - If matrix is of type `CV_8S` then use `Mat.at<schar>(y,x)`.
+		///  - If matrix is of type `CV_16U` then use `Mat.at<ushort>(y,x)`.
+		///  - If matrix is of type `CV_16S` then use `Mat.at<short>(y,x)`.
+		///  - If matrix is of type `CV_32S`  then use `Mat.at<int>(y,x)`.
+		///  - If matrix is of type `CV_32F`  then use `Mat.at<float>(y,x)`.
+		///  - If matrix is of type `CV_64F` then use `Mat.at<double>(y,x)`.
+		///
+		/// ## Parameters
+		/// * i0: Index along the dimension 0
+		///
+		/// ## Note
+		/// This alternative version of [MatTrait::at_mut] function uses the following default values for its arguments:
+		/// * i0: 0
+		#[inline]
+		fn at_mut_def<T: core::DataType>(&mut self) -> Result<&mut T> {
+			core::mat_forward::at_mut_def(self, )
 		}
 
 		/// Returns a reference to the specified array element.
@@ -20683,23 +20801,12 @@ pub mod core {
 
 		/// download data from GpuMat
 		#[inline]
-		pub fn from_gpumat(m: &impl core::GpuMatTraitConst) -> Result<BoxedRef<core::Mat>> {
+		pub fn from_gpumat(m: &impl core::GpuMatTraitConst) -> Result<core::Mat> {
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_Mat_Mat_const_GpuMatR(m.as_raw_GpuMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRef::<core::Mat>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// download data from GpuMat
-		#[inline]
-		pub fn from_gpumat_mut(m: &mut impl core::GpuMatTrait) -> Result<BoxedRefMut<core::Mat>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Mat_Mat_GpuMatR(m.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRefMut::<core::Mat>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -27397,7 +27504,7 @@ pub mod core {
 
 		/// dimensional size of the matrix; accessible in various formats
 		#[inline]
-		fn set_size(&mut self, val: core::MatSize) {
+		fn set_mat_size(&mut self, val: core::MatSize) {
 			let ret = unsafe { sys::cv_UMat_propSize_const_MatSize(self.as_raw_mut_UMat(), val.as_raw_MatSize()) };
 			ret
 		}
@@ -32066,8 +32173,8 @@ pub mod core {
 
 		/// allocator
 		#[inline]
-		unsafe fn set_allocator(&mut self, val: &impl core::GpuMat_AllocatorTraitConst) {
-			let ret = { sys::cv_cuda_GpuMat_propAllocator_AllocatorX(self.as_raw_mut_GpuMat(), val.as_raw_GpuMat_Allocator()) };
+		fn set_allocator(&mut self, val: &'static impl core::GpuMat_AllocatorTraitConst) {
+			let ret = unsafe { sys::cv_cuda_GpuMat_propAllocator_AllocatorX(self.as_raw_mut_GpuMat(), val.as_raw_GpuMat_Allocator()) };
 			ret
 		}
 
@@ -32433,10 +32540,10 @@ pub mod core {
 		}
 
 		#[inline]
-		pub unsafe fn set_default_allocator(allocator: &mut impl core::GpuMat_AllocatorTrait) -> Result<()> {
+		pub fn set_default_allocator(allocator: &'static mut impl core::GpuMat_AllocatorTrait) -> Result<()> {
 			return_send!(via ocvrs_return);
-			{ sys::cv_cuda_GpuMat_setDefaultAllocator_AllocatorX(allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
+			unsafe { sys::cv_cuda_GpuMat_setDefaultAllocator_AllocatorX(allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
@@ -34404,7 +34511,7 @@ pub mod core {
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq)]
 	pub struct hfloat {
-		pub w: u16,
+		w: u16,
 	}
 
 	opencv_type_simple! { core::hfloat }
@@ -39845,110 +39952,32 @@ pub mod core {
 
 	}
 
-	/// Constant methods for [core::FunctionParams]
-	pub trait FunctionParamsTraitConst {
-		fn as_raw_FunctionParams(&self) -> *const c_void;
-
-		#[inline]
-		fn lambda(&self) -> i32 {
-			let ret = unsafe { sys::cv_utils_FunctionParams_propLambda_const(self.as_raw_FunctionParams()) };
-			ret
-		}
-
-		#[inline]
-		fn sigma(&self) -> f32 {
-			let ret = unsafe { sys::cv_utils_FunctionParams_propSigma_const(self.as_raw_FunctionParams()) };
-			ret
-		}
-
-	}
-
-	/// Mutable methods for [core::FunctionParams]
-	pub trait FunctionParamsTrait: core::FunctionParamsTraitConst {
-		fn as_raw_mut_FunctionParams(&mut self) -> *mut c_void;
-
-		/// ## C++ default parameters
-		/// * val: -1
-		#[inline]
-		fn set_lambda(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_utils_FunctionParams_propLambda_const_int(self.as_raw_mut_FunctionParams(), val) };
-			ret
-		}
-
-		/// ## C++ default parameters
-		/// * val: 0.0f
-		#[inline]
-		fn set_sigma(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_utils_FunctionParams_propSigma_const_float(self.as_raw_mut_FunctionParams(), val) };
-			ret
-		}
-
-		#[inline]
-		fn set_lambda_1(&mut self, value: i32) -> core::FunctionParams {
-			let ret = unsafe { sys::cv_utils_FunctionParams_setLambda_int(self.as_raw_mut_FunctionParams(), value) };
-			let ret = unsafe { core::FunctionParams::opencv_from_extern(ret) };
-			ret
-		}
-
-		#[inline]
-		fn set_sigma_1(&mut self, value: f32) -> core::FunctionParams {
-			let ret = unsafe { sys::cv_utils_FunctionParams_setSigma_float(self.as_raw_mut_FunctionParams(), value) };
-			let ret = unsafe { core::FunctionParams::opencv_from_extern(ret) };
-			ret
-		}
-
-	}
-
+	#[repr(C)]
+	#[derive(Copy, Clone, Debug, PartialEq)]
 	pub struct FunctionParams {
-		ptr: *mut c_void,
+		pub lambda: i32,
+		pub sigma: f32,
 	}
 
-	opencv_type_boxed! { FunctionParams }
-
-	impl Drop for FunctionParams {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_utils_FunctionParams_delete(self.as_raw_mut_FunctionParams()) };
-		}
-	}
-
-	unsafe impl Send for FunctionParams {}
-
-	impl core::FunctionParamsTraitConst for FunctionParams {
-		#[inline] fn as_raw_FunctionParams(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::FunctionParamsTrait for FunctionParams {
-		#[inline] fn as_raw_mut_FunctionParams(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { FunctionParams, core::FunctionParamsTraitConst, as_raw_FunctionParams, core::FunctionParamsTrait, as_raw_mut_FunctionParams }
+	opencv_type_simple! { core::FunctionParams }
 
 	impl FunctionParams {
-		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_utils_FunctionParams_defaultNew_const()) }
+		pub fn set_lambda(self, value: i32) -> core::FunctionParams {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_utils_FunctionParams_setLambda_int(&self, value, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			ret
 		}
 
-	}
-
-	impl std::fmt::Debug for FunctionParams {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("FunctionParams")
-				.field("lambda", &core::FunctionParamsTraitConst::lambda(self))
-				.field("sigma", &core::FunctionParamsTraitConst::sigma(self))
-				.finish()
+		pub fn set_sigma(self, value: f32) -> core::FunctionParams {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_utils_FunctionParams_setSigma_float(&self, value, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			ret
 		}
-	}
 
-	impl Default for FunctionParams {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
 	}
 
 	/// Constant methods for [core::LogTag]

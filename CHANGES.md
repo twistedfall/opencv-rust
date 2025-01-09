@@ -1,3 +1,11 @@
+* 0.94.0
+  * Add support for the upcoming OpenCV 5.0.0 (based on the current alpha) and completely drop support for OpenCV 3.2.
+  * Bump the minimum Rust version to 1.77.0.
+  * Drop deprecated type aliases like `VectorOf...`.
+  * Add support for `f16` half precision floating point numbers via the `f16` crate feature.
+  * Multiple internal improvements that led to some minor function name changes.
+  * Add missing `CV_depthC(chan)` functions (e.g. `CV_8UC`) to construct OpenCV types with more than 4 channels.
+
 * 0.93.7
   * Fix building on windows with the latest vcpkg git version (fixes https://github.com/twistedfall/opencv-rust/issues/640
     and https://github.com/twistedfall/opencv-rust/issues/641).

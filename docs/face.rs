@@ -3664,9 +3664,6 @@ pub mod face {
 		///
 		///
 		/// TODO Lifetime of detector parameters is uncontrolled. Rework interface design to "Ptr<FaceDetector>".
-		///
-		/// ## C++ default parameters
-		/// * user_data: 0
 		#[inline]
 		fn set_face_detector(&mut self, detector: crate::face::FN_FaceDetector) -> Result<bool> {
 			callback_arg!(detector_trampoline(unnamed: *const c_void, unnamed_1: *const c_void, user_data: *mut c_void) -> bool => user_data in detector(unnamed: *const c_void, unnamed_1: *const c_void) -> bool);

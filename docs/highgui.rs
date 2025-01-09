@@ -571,12 +571,8 @@ pub mod highgui {
 	///
 	/// ## Note
 	/// This alternative version of [create_button] function uses the following default values for its arguments:
-	/// * userdata: 0
 	/// * typ: QT_PUSH_BUTTON
 	/// * initial_button_state: false
-	///
-	/// ## C++ default parameters
-	/// * userdata: 0
 	#[inline]
 	pub fn create_button_def(bar_name: &str, on_change: crate::highgui::ButtonCallback) -> Result<i32> {
 		extern_container_arg!(bar_name);
@@ -618,7 +614,6 @@ pub mod highgui {
 	/// value could be 0 or 1. (__Optional__)
 	///
 	/// ## C++ default parameters
-	/// * userdata: 0
 	/// * typ: QT_PUSH_BUTTON
 	/// * initial_button_state: false
 	#[inline]
@@ -664,10 +659,6 @@ pub mod highgui {
 	/// Call the callback function manually with the desired initial value to avoid runtime warnings.
 	/// ## See also
 	/// \ref tutorial_trackbar
-	///
-	/// ## C++ default parameters
-	/// * on_change: 0
-	/// * userdata: 0
 	#[inline]
 	pub fn create_trackbar(trackbarname: &str, winname: &str, value: Option<&mut i32>, count: i32, on_change: crate::highgui::TrackbarCallback) -> Result<i32> {
 		extern_container_arg!(trackbarname);
@@ -1447,9 +1438,6 @@ pub mod highgui {
 	/// * winname: Name of the window.
 	/// * onMouse: Callback function for mouse events. See OpenCV samples on how to specify and use the callback.
 	/// * userdata: The optional parameter passed to the callback.
-	///
-	/// ## C++ default parameters
-	/// * userdata: 0
 	#[inline]
 	pub fn set_mouse_callback(winname: &str, on_mouse: crate::highgui::MouseCallback) -> Result<()> {
 		extern_container_arg!(winname);
@@ -1517,9 +1505,6 @@ pub mod highgui {
 	/// * onOpenGlDraw: Pointer to the function to be called every frame. This function should be
 	/// prototyped as void Foo(void\*) .
 	/// * userdata: Pointer passed to the callback function.(__Optional__)
-	///
-	/// ## C++ default parameters
-	/// * userdata: 0
 	#[inline]
 	pub fn set_opengl_draw_callback(winname: &str, on_opengl_draw: crate::highgui::OpenGlDrawCallback) -> Result<()> {
 		extern_container_arg!(winname);

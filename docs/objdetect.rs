@@ -3750,7 +3750,7 @@ pub mod objdetect {
 
 		/// coefficients for the linear SVM classifier.
 		#[inline]
-		fn set_svm_detector_vec(&mut self, val: core::Vector<f32>) {
+		fn set_svm_detector(&mut self, val: core::Vector<f32>) {
 			let ret = unsafe { sys::cv_HOGDescriptor_propSvmDetector_const_vectorLfloatG(self.as_raw_mut_HOGDescriptor(), val.as_raw_VectorOff32()) };
 			ret
 		}
@@ -3789,7 +3789,7 @@ pub mod objdetect {
 		/// ## Parameters
 		/// * svmdetector: coefficients for the linear SVM classifier.
 		#[inline]
-		fn set_svm_detector(&mut self, svmdetector: &impl ToInputArray) -> Result<()> {
+		fn set_svm_detector_input_array(&mut self, svmdetector: &impl ToInputArray) -> Result<()> {
 			input_array_arg!(svmdetector);
 			return_send!(via ocvrs_return);
 			unsafe { sys::cv_HOGDescriptor_setSVMDetector_const__InputArrayR(self.as_raw_mut_HOGDescriptor(), svmdetector.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };

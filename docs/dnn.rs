@@ -7420,6 +7420,9 @@ pub mod dnn {
 			Ok(ret)
 		}
 
+		/// ## Note
+		/// This alternative version of [DictValueTraitConst::get_str] function uses the following default values for its arguments:
+		/// * idx: -1
 		#[inline]
 		fn get_str_def(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
@@ -7441,6 +7444,9 @@ pub mod dnn {
 			Ok(ret)
 		}
 
+		/// ## Note
+		/// This alternative version of [DictValueTraitConst::get_f64] function uses the following default values for its arguments:
+		/// * idx: -1
 		#[inline]
 		fn get_f64_def(&self) -> Result<f64> {
 			return_send!(via ocvrs_return);
@@ -7461,6 +7467,9 @@ pub mod dnn {
 			Ok(ret)
 		}
 
+		/// ## Note
+		/// This alternative version of [DictValueTraitConst::get_i32] function uses the following default values for its arguments:
+		/// * idx: -1
 		#[inline]
 		fn get_i32_def(&self) -> Result<i32> {
 			return_send!(via ocvrs_return);
@@ -7481,6 +7490,9 @@ pub mod dnn {
 			Ok(ret)
 		}
 
+		/// ## Note
+		/// This alternative version of [DictValueTraitConst::get_i64] function uses the following default values for its arguments:
+		/// * idx: -1
 		#[inline]
 		fn get_i64_def(&self) -> Result<i64> {
 			return_send!(via ocvrs_return);

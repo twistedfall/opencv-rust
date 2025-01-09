@@ -2418,9 +2418,6 @@ pub mod viz {
 		/// * callback: Keyboard callback (void (\*KeyboardCallbackFunction(const
 		/// KeyboardEvent&, void\*)).
 		/// * cookie: The optional parameter passed to the callback.
-		///
-		/// ## C++ default parameters
-		/// * cookie: 0
 		#[inline]
 		fn register_keyboard_callback(&mut self, callback: crate::viz::Viz3d_KeyboardCallback) -> Result<()> {
 			callback_arg!(callback_trampoline(unnamed: *const c_void, unnamed_1: *mut c_void) -> () => unnamed_1 in callback(unnamed: *const c_void) -> ());
@@ -2437,9 +2434,6 @@ pub mod viz {
 		/// ## Parameters
 		/// * callback: Mouse callback (void (\*MouseCallback)(const MouseEvent&, void\*)).
 		/// * cookie: The optional parameter passed to the callback.
-		///
-		/// ## C++ default parameters
-		/// * cookie: 0
 		#[inline]
 		fn register_mouse_callback(&mut self, callback: crate::viz::Viz3d_MouseCallback) -> Result<()> {
 			callback_arg!(callback_trampoline(unnamed: *const c_void, unnamed_1: *mut c_void) -> () => unnamed_1 in callback(unnamed: *const c_void) -> ());

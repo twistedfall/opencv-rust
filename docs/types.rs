@@ -1,10 +1,6 @@
 
-#[cfg(ocvrs_has_module_aruco)]
 mod aruco_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::aruco::EstimateParameters>` instead, removal in Nov 2024"]
-	pub type PtrOfEstimateParameters = core::Ptr<crate::aruco::EstimateParameters>;
 
 	ptr_extern! { crate::aruco::EstimateParameters,
 		cv_PtrLcv_aruco_EstimateParametersG_new_null_const, cv_PtrLcv_aruco_EstimateParametersG_delete, cv_PtrLcv_aruco_EstimateParametersG_getInnerPtr_const, cv_PtrLcv_aruco_EstimateParametersG_getInnerPtrMut
@@ -36,15 +32,10 @@ mod aruco_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_aruco)]
 pub use aruco_types::*;
 
-#[cfg(ocvrs_has_module_bgsegm)]
 mod bgsegm_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::bgsegm::BackgroundSubtractorCNT>` instead, removal in Nov 2024"]
-	pub type PtrOfBackgroundSubtractorCNT = core::Ptr<crate::bgsegm::BackgroundSubtractorCNT>;
 
 	ptr_extern! { crate::bgsegm::BackgroundSubtractorCNT,
 		cv_PtrLcv_bgsegm_BackgroundSubtractorCNTG_new_null_const, cv_PtrLcv_bgsegm_BackgroundSubtractorCNTG_delete, cv_PtrLcv_bgsegm_BackgroundSubtractorCNTG_getInnerPtr_const, cv_PtrLcv_bgsegm_BackgroundSubtractorCNTG_getInnerPtrMut
@@ -91,9 +82,6 @@ mod bgsegm_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::bgsegm::BackgroundSubtractorGMG>` instead, removal in Nov 2024"]
-	pub type PtrOfBackgroundSubtractorGMG = core::Ptr<crate::bgsegm::BackgroundSubtractorGMG>;
-
 	ptr_extern! { crate::bgsegm::BackgroundSubtractorGMG,
 		cv_PtrLcv_bgsegm_BackgroundSubtractorGMGG_new_null_const, cv_PtrLcv_bgsegm_BackgroundSubtractorGMGG_delete, cv_PtrLcv_bgsegm_BackgroundSubtractorGMGG_getInnerPtr_const, cv_PtrLcv_bgsegm_BackgroundSubtractorGMGG_getInnerPtrMut
 	}
@@ -138,9 +126,6 @@ mod bgsegm_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::bgsegm::BackgroundSubtractorGSOC>` instead, removal in Nov 2024"]
-	pub type PtrOfBackgroundSubtractorGSOC = core::Ptr<crate::bgsegm::BackgroundSubtractorGSOC>;
 
 	ptr_extern! { crate::bgsegm::BackgroundSubtractorGSOC,
 		cv_PtrLcv_bgsegm_BackgroundSubtractorGSOCG_new_null_const, cv_PtrLcv_bgsegm_BackgroundSubtractorGSOCG_delete, cv_PtrLcv_bgsegm_BackgroundSubtractorGSOCG_getInnerPtr_const, cv_PtrLcv_bgsegm_BackgroundSubtractorGSOCG_getInnerPtrMut
@@ -187,9 +172,6 @@ mod bgsegm_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::bgsegm::BackgroundSubtractorLSBP>` instead, removal in Nov 2024"]
-	pub type PtrOfBackgroundSubtractorLSBP = core::Ptr<crate::bgsegm::BackgroundSubtractorLSBP>;
-
 	ptr_extern! { crate::bgsegm::BackgroundSubtractorLSBP,
 		cv_PtrLcv_bgsegm_BackgroundSubtractorLSBPG_new_null_const, cv_PtrLcv_bgsegm_BackgroundSubtractorLSBPG_delete, cv_PtrLcv_bgsegm_BackgroundSubtractorLSBPG_getInnerPtr_const, cv_PtrLcv_bgsegm_BackgroundSubtractorLSBPG_getInnerPtrMut
 	}
@@ -234,9 +216,6 @@ mod bgsegm_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::bgsegm::BackgroundSubtractorMOG>` instead, removal in Nov 2024"]
-	pub type PtrOfBackgroundSubtractorMOG = core::Ptr<crate::bgsegm::BackgroundSubtractorMOG>;
 
 	ptr_extern! { crate::bgsegm::BackgroundSubtractorMOG,
 		cv_PtrLcv_bgsegm_BackgroundSubtractorMOGG_new_null_const, cv_PtrLcv_bgsegm_BackgroundSubtractorMOGG_delete, cv_PtrLcv_bgsegm_BackgroundSubtractorMOGG_getInnerPtr_const, cv_PtrLcv_bgsegm_BackgroundSubtractorMOGG_getInnerPtrMut
@@ -283,9 +262,6 @@ mod bgsegm_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::bgsegm::SyntheticSequenceGenerator>` instead, removal in Nov 2024"]
-	pub type PtrOfSyntheticSequenceGenerator = core::Ptr<crate::bgsegm::SyntheticSequenceGenerator>;
-
 	ptr_extern! { crate::bgsegm::SyntheticSequenceGenerator,
 		cv_PtrLcv_bgsegm_SyntheticSequenceGeneratorG_new_null_const, cv_PtrLcv_bgsegm_SyntheticSequenceGeneratorG_delete, cv_PtrLcv_bgsegm_SyntheticSequenceGeneratorG_getInnerPtr_const, cv_PtrLcv_bgsegm_SyntheticSequenceGeneratorG_getInnerPtrMut
 	}
@@ -323,15 +299,10 @@ mod bgsegm_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_bgsegm)]
 pub use bgsegm_types::*;
 
-#[cfg(ocvrs_has_module_bioinspired)]
 mod bioinspired_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::bioinspired::Retina>` instead, removal in Nov 2024"]
-	pub type PtrOfRetina = core::Ptr<crate::bioinspired::Retina>;
 
 	ptr_extern! { crate::bioinspired::Retina,
 		cv_PtrLcv_bioinspired_RetinaG_new_null_const, cv_PtrLcv_bioinspired_RetinaG_delete, cv_PtrLcv_bioinspired_RetinaG_getInnerPtr_const, cv_PtrLcv_bioinspired_RetinaG_getInnerPtrMut
@@ -368,9 +339,6 @@ mod bioinspired_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::bioinspired::RetinaFastToneMapping>` instead, removal in Nov 2024"]
-	pub type PtrOfRetinaFastToneMapping = core::Ptr<crate::bioinspired::RetinaFastToneMapping>;
-
 	ptr_extern! { crate::bioinspired::RetinaFastToneMapping,
 		cv_PtrLcv_bioinspired_RetinaFastToneMappingG_new_null_const, cv_PtrLcv_bioinspired_RetinaFastToneMappingG_delete, cv_PtrLcv_bioinspired_RetinaFastToneMappingG_getInnerPtr_const, cv_PtrLcv_bioinspired_RetinaFastToneMappingG_getInnerPtrMut
 	}
@@ -405,9 +373,6 @@ mod bioinspired_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::bioinspired::TransientAreasSegmentationModule>` instead, removal in Nov 2024"]
-	pub type PtrOfTransientAreasSegmentationModule = core::Ptr<crate::bioinspired::TransientAreasSegmentationModule>;
 
 	ptr_extern! { crate::bioinspired::TransientAreasSegmentationModule,
 		cv_PtrLcv_bioinspired_TransientAreasSegmentationModuleG_new_null_const, cv_PtrLcv_bioinspired_TransientAreasSegmentationModuleG_delete, cv_PtrLcv_bioinspired_TransientAreasSegmentationModuleG_getInnerPtr_const, cv_PtrLcv_bioinspired_TransientAreasSegmentationModuleG_getInnerPtrMut
@@ -445,15 +410,10 @@ mod bioinspired_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_bioinspired)]
 pub use bioinspired_types::*;
 
-#[cfg(ocvrs_has_module_calib3d)]
 mod calib3d_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::calib3d::LMSolver>` instead, removal in Nov 2024"]
-	pub type PtrOfLMSolver = core::Ptr<crate::calib3d::LMSolver>;
 
 	ptr_extern! { crate::calib3d::LMSolver,
 		cv_PtrLcv_LMSolverG_new_null_const, cv_PtrLcv_LMSolverG_delete, cv_PtrLcv_LMSolverG_getInnerPtr_const, cv_PtrLcv_LMSolverG_getInnerPtrMut
@@ -490,9 +450,6 @@ mod calib3d_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::calib3d::LMSolver_Callback>` instead, removal in Nov 2024"]
-	pub type PtrOfLMSolver_Callback = core::Ptr<crate::calib3d::LMSolver_Callback>;
-
 	ptr_extern! { crate::calib3d::LMSolver_Callback,
 		cv_PtrLcv_LMSolver_CallbackG_new_null_const, cv_PtrLcv_LMSolver_CallbackG_delete, cv_PtrLcv_LMSolver_CallbackG_getInnerPtr_const, cv_PtrLcv_LMSolver_CallbackG_getInnerPtrMut
 	}
@@ -517,9 +474,6 @@ mod calib3d_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::calib3d::StereoBM>` instead, removal in Nov 2024"]
-	pub type PtrOfStereoBM = core::Ptr<crate::calib3d::StereoBM>;
 
 	ptr_extern! { crate::calib3d::StereoBM,
 		cv_PtrLcv_StereoBMG_new_null_const, cv_PtrLcv_StereoBMG_delete, cv_PtrLcv_StereoBMG_getInnerPtr_const, cv_PtrLcv_StereoBMG_getInnerPtrMut
@@ -566,9 +520,6 @@ mod calib3d_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::calib3d::StereoMatcher>` instead, removal in Nov 2024"]
-	pub type PtrOfStereoMatcher = core::Ptr<crate::calib3d::StereoMatcher>;
-
 	ptr_extern! { crate::calib3d::StereoMatcher,
 		cv_PtrLcv_StereoMatcherG_new_null_const, cv_PtrLcv_StereoMatcherG_delete, cv_PtrLcv_StereoMatcherG_getInnerPtr_const, cv_PtrLcv_StereoMatcherG_getInnerPtrMut
 	}
@@ -603,9 +554,6 @@ mod calib3d_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::calib3d::StereoSGBM>` instead, removal in Nov 2024"]
-	pub type PtrOfStereoSGBM = core::Ptr<crate::calib3d::StereoSGBM>;
 
 	ptr_extern! { crate::calib3d::StereoSGBM,
 		cv_PtrLcv_StereoSGBMG_new_null_const, cv_PtrLcv_StereoSGBMG_delete, cv_PtrLcv_StereoSGBMG_getInnerPtr_const, cv_PtrLcv_StereoSGBMG_getInnerPtrMut
@@ -653,15 +601,10 @@ mod calib3d_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_calib3d)]
 pub use calib3d_types::*;
 
-#[cfg(ocvrs_has_module_ccalib)]
 mod ccalib_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ccalib::CustomPattern>` instead, removal in Nov 2024"]
-	pub type PtrOfCustomPattern = core::Ptr<crate::ccalib::CustomPattern>;
 
 	ptr_extern! { crate::ccalib::CustomPattern,
 		cv_PtrLcv_ccalib_CustomPatternG_new_null_const, cv_PtrLcv_ccalib_CustomPatternG_delete, cv_PtrLcv_ccalib_CustomPatternG_getInnerPtr_const, cv_PtrLcv_ccalib_CustomPatternG_getInnerPtrMut
@@ -700,10 +643,8 @@ mod ccalib_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_ccalib)]
 pub use ccalib_types::*;
 
-#[cfg(ocvrs_has_module_core)]
 mod core_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
@@ -722,9 +663,6 @@ mod core_types {
 	impl core::MatOpTrait for types::AbstractRefMut<'static, core::MatOp> {
 		#[inline] fn as_raw_mut_MatOp(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<core::Algorithm>` instead, removal in Nov 2024"]
-	pub type PtrOfAlgorithm = core::Ptr<core::Algorithm>;
 
 	ptr_extern! { core::Algorithm,
 		cv_PtrLcv_AlgorithmG_new_null_const, cv_PtrLcv_AlgorithmG_delete, cv_PtrLcv_AlgorithmG_getInnerPtr_const, cv_PtrLcv_AlgorithmG_getInnerPtrMut
@@ -751,9 +689,6 @@ mod core_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<core::ConjGradSolver>` instead, removal in Nov 2024"]
-	pub type PtrOfConjGradSolver = core::Ptr<core::ConjGradSolver>;
 
 	ptr_extern! { core::ConjGradSolver,
 		cv_PtrLcv_ConjGradSolverG_new_null_const, cv_PtrLcv_ConjGradSolverG_delete, cv_PtrLcv_ConjGradSolverG_getInnerPtr_const, cv_PtrLcv_ConjGradSolverG_getInnerPtrMut
@@ -800,9 +735,6 @@ mod core_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<core::DownhillSolver>` instead, removal in Nov 2024"]
-	pub type PtrOfDownhillSolver = core::Ptr<core::DownhillSolver>;
-
 	ptr_extern! { core::DownhillSolver,
 		cv_PtrLcv_DownhillSolverG_new_null_const, cv_PtrLcv_DownhillSolverG_delete, cv_PtrLcv_DownhillSolverG_getInnerPtr_const, cv_PtrLcv_DownhillSolverG_getInnerPtrMut
 	}
@@ -848,9 +780,6 @@ mod core_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<core::FileStorage>` instead, removal in Nov 2024"]
-	pub type PtrOfFileStorage = core::Ptr<core::FileStorage>;
-
 	ptr_extern! { core::FileStorage,
 		cv_PtrLcv_FileStorageG_new_null_const, cv_PtrLcv_FileStorageG_delete, cv_PtrLcv_FileStorageG_getInnerPtr_const, cv_PtrLcv_FileStorageG_getInnerPtrMut
 	}
@@ -879,9 +808,6 @@ mod core_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<core::Formatted>` instead, removal in Nov 2024"]
-	pub type PtrOfFormatted = core::Ptr<core::Formatted>;
-
 	ptr_extern! { core::Formatted,
 		cv_PtrLcv_FormattedG_new_null_const, cv_PtrLcv_FormattedG_delete, cv_PtrLcv_FormattedG_getInnerPtr_const, cv_PtrLcv_FormattedG_getInnerPtrMut
 	}
@@ -906,9 +832,6 @@ mod core_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<core::Formatter>` instead, removal in Nov 2024"]
-	pub type PtrOfFormatter = core::Ptr<core::Formatter>;
 
 	ptr_extern! { core::Formatter,
 		cv_PtrLcv_FormatterG_new_null_const, cv_PtrLcv_FormatterG_delete, cv_PtrLcv_FormatterG_getInnerPtr_const, cv_PtrLcv_FormatterG_getInnerPtrMut
@@ -935,9 +858,6 @@ mod core_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<core::GpuMat_Allocator>` instead, removal in Nov 2024"]
-	pub type PtrOfGpuMat_Allocator = core::Ptr<core::GpuMat_Allocator>;
-
 	ptr_extern! { core::GpuMat_Allocator,
 		cv_PtrLcv_cuda_GpuMat_AllocatorG_new_null_const, cv_PtrLcv_cuda_GpuMat_AllocatorG_delete, cv_PtrLcv_cuda_GpuMat_AllocatorG_getInnerPtr_const, cv_PtrLcv_cuda_GpuMat_AllocatorG_getInnerPtrMut
 	}
@@ -963,8 +883,31 @@ mod core_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<core::MinProblemSolver>` instead, removal in Nov 2024"]
-	pub type PtrOfMinProblemSolver = core::Ptr<core::MinProblemSolver>;
+	ptr_extern! { core::KeyPoint,
+		cv_PtrLcv_KeyPointG_new_null_const, cv_PtrLcv_KeyPointG_delete, cv_PtrLcv_KeyPointG_getInnerPtr_const, cv_PtrLcv_KeyPointG_getInnerPtrMut
+	}
+
+	ptr_extern_ctor! { core::KeyPoint, cv_PtrLcv_KeyPointG_new_const_KeyPoint }
+	impl core::Ptr<core::KeyPoint> {
+		#[inline] pub fn as_raw_PtrOfKeyPoint(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfKeyPoint(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl core::KeyPointTraitConst for core::Ptr<core::KeyPoint> {
+		#[inline] fn as_raw_KeyPoint(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl core::KeyPointTrait for core::Ptr<core::KeyPoint> {
+		#[inline] fn as_raw_mut_KeyPoint(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl std::fmt::Debug for core::Ptr<core::KeyPoint> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfKeyPoint")
+				.finish()
+		}
+	}
 
 	ptr_extern! { core::MinProblemSolver,
 		cv_PtrLcv_MinProblemSolverG_new_null_const, cv_PtrLcv_MinProblemSolverG_delete, cv_PtrLcv_MinProblemSolverG_getInnerPtr_const, cv_PtrLcv_MinProblemSolverG_getInnerPtrMut
@@ -1001,9 +944,6 @@ mod core_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<core::MinProblemSolver_Function>` instead, removal in Nov 2024"]
-	pub type PtrOfMinProblemSolver_Function = core::Ptr<core::MinProblemSolver_Function>;
-
 	ptr_extern! { core::MinProblemSolver_Function,
 		cv_PtrLcv_MinProblemSolver_FunctionG_new_null_const, cv_PtrLcv_MinProblemSolver_FunctionG_delete, cv_PtrLcv_MinProblemSolver_FunctionG_getInnerPtr_const, cv_PtrLcv_MinProblemSolver_FunctionG_getInnerPtrMut
 	}
@@ -1028,9 +968,6 @@ mod core_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<core::OriginalClassName>` instead, removal in Nov 2024"]
-	pub type PtrOfOriginalClassName = core::Ptr<core::OriginalClassName>;
 
 	ptr_extern! { core::OriginalClassName,
 		cv_PtrLcv_utils_nested_OriginalClassNameG_new_null_const, cv_PtrLcv_utils_nested_OriginalClassNameG_delete, cv_PtrLcv_utils_nested_OriginalClassNameG_getInnerPtr_const, cv_PtrLcv_utils_nested_OriginalClassNameG_getInnerPtrMut
@@ -1058,9 +995,6 @@ mod core_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<f32>` instead, removal in Nov 2024"]
-	pub type PtrOff32 = core::Ptr<f32>;
-
 	ptr_extern! { f32,
 		cv_PtrLfloatG_new_null_const, cv_PtrLfloatG_delete, cv_PtrLfloatG_getInnerPtr_const, cv_PtrLfloatG_getInnerPtrMut
 	}
@@ -1070,9 +1004,6 @@ mod core_types {
 		#[inline] pub fn as_raw_PtrOff32(&self) -> extern_send!(Self) { self.as_raw() }
 		#[inline] pub fn as_raw_mut_PtrOff32(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Tuple<(core::Point2i, core::Point2i)>` instead, removal in Nov 2024"]
-	pub type TupleOfPoint2i_Point2i = core::Tuple<(core::Point2i, core::Point2i)>;
 
 	impl core::Tuple<(core::Point2i, core::Point2i)> {
 		pub fn as_raw_TupleOfPoint2i_Point2i(&self) -> extern_send!(Self) { self.as_raw() }
@@ -1085,9 +1016,6 @@ mod core_types {
 		1 = arg_1: core::Point2i, get_1 via std_pairLcv_Point2i__cv_Point2iG_get_1_const
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Tuple<(core::Rect, i32)>` instead, removal in Nov 2024"]
-	pub type TupleOfRect_i32 = core::Tuple<(core::Rect, i32)>;
-
 	impl core::Tuple<(core::Rect, i32)> {
 		pub fn as_raw_TupleOfRect_i32(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_TupleOfRect_i32(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -1098,9 +1026,6 @@ mod core_types {
 		0 = arg: core::Rect, get_0 via std_pairLcv_Rect__intG_get_0_const,
 		1 = arg_1: i32, get_1 via std_pairLcv_Rect__intG_get_1_const
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Tuple<(core::UMat, u8)>` instead, removal in Nov 2024"]
-	pub type TupleOfUMat_u8 = core::Tuple<(core::UMat, u8)>;
 
 	impl core::Tuple<(core::UMat, u8)> {
 		pub fn as_raw_TupleOfUMat_u8(&self) -> extern_send!(Self) { self.as_raw() }
@@ -1113,9 +1038,6 @@ mod core_types {
 		1 = arg_1: u8, get_1 via std_pairLcv_UMat__unsigned_charG_get_1_const
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Tuple<(i32, f32)>` instead, removal in Nov 2024"]
-	pub type TupleOfi32_f32 = core::Tuple<(i32, f32)>;
-
 	impl core::Tuple<(i32, f32)> {
 		pub fn as_raw_TupleOfi32_f32(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_TupleOfi32_f32(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -1127,9 +1049,6 @@ mod core_types {
 		1 = arg_1: f32, get_1 via std_pairLint__floatG_get_1_const
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Tuple<(i32, f64)>` instead, removal in Nov 2024"]
-	pub type TupleOfi32_f64 = core::Tuple<(i32, f64)>;
-
 	impl core::Tuple<(i32, f64)> {
 		pub fn as_raw_TupleOfi32_f64(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_TupleOfi32_f64(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -1140,9 +1059,6 @@ mod core_types {
 		0 = arg: i32, get_0 via std_pairLint__doubleG_get_0_const,
 		1 = arg_1: f64, get_1 via std_pairLint__doubleG_get_1_const
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Vector<core::DMatch>` instead, removal in Nov 2024"]
-	pub type VectorOfDMatch = core::Vector<core::DMatch>;
 
 	impl core::Vector<core::DMatch> {
 		pub fn as_raw_VectorOfDMatch(&self) -> extern_send!(Self) { self.as_raw() }
@@ -1164,9 +1080,6 @@ mod core_types {
 		std_vectorLcv_DMatchG_clone_const,
 	}
 
-
-	#[deprecated = "Use the the non-alias form `core::Vector<core::GpuMat>` instead, removal in Nov 2024"]
-	pub type VectorOfGpuMat = core::Vector<core::GpuMat>;
 
 	impl core::Vector<core::GpuMat> {
 		pub fn as_raw_VectorOfGpuMat(&self) -> extern_send!(Self) { self.as_raw() }
@@ -1198,9 +1111,6 @@ mod core_types {
 	}
 
 
-	#[deprecated = "Use the the non-alias form `core::Vector<core::KeyPoint>` instead, removal in Nov 2024"]
-	pub type VectorOfKeyPoint = core::Vector<core::KeyPoint>;
-
 	impl core::Vector<core::KeyPoint> {
 		pub fn as_raw_VectorOfKeyPoint(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfKeyPoint(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -1230,9 +1140,6 @@ mod core_types {
 		std_vectorLcv_KeyPointG_push_const_KeyPoint, std_vectorLcv_KeyPointG_insert_size_t_const_KeyPoint,
 	}
 
-
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Mat>` instead, removal in Nov 2024"]
-	pub type VectorOfMat = core::Vector<core::Mat>;
 
 	impl core::Vector<core::Mat> {
 		pub fn as_raw_VectorOfMat(&self) -> extern_send!(Self) { self.as_raw() }
@@ -1264,9 +1171,6 @@ mod core_types {
 	}
 
 
-	#[deprecated = "Use the the non-alias form `core::Vector<core::PlatformInfo>` instead, removal in Nov 2024"]
-	pub type VectorOfPlatformInfo = core::Vector<core::PlatformInfo>;
-
 	impl core::Vector<core::PlatformInfo> {
 		pub fn as_raw_VectorOfPlatformInfo(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfPlatformInfo(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -1296,9 +1200,6 @@ mod core_types {
 		std_vectorLcv_ocl_PlatformInfoG_push_const_PlatformInfo, std_vectorLcv_ocl_PlatformInfoG_insert_size_t_const_PlatformInfo,
 	}
 
-
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Point>` instead, removal in Nov 2024"]
-	pub type VectorOfPoint = core::Vector<core::Point>;
 
 	impl core::Vector<core::Point> {
 		pub fn as_raw_VectorOfPoint(&self) -> extern_send!(Self) { self.as_raw() }
@@ -1363,9 +1264,6 @@ mod core_types {
 
 	output_array_ref_forward! { core::Vector<core::Point> }
 
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Point2d>` instead, removal in Nov 2024"]
-	pub type VectorOfPoint2d = core::Vector<core::Point2d>;
-
 	impl core::Vector<core::Point2d> {
 		pub fn as_raw_VectorOfPoint2d(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfPoint2d(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -1428,9 +1326,6 @@ mod core_types {
 	}
 
 	output_array_ref_forward! { core::Vector<core::Point2d> }
-
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Point2f>` instead, removal in Nov 2024"]
-	pub type VectorOfPoint2f = core::Vector<core::Point2f>;
 
 	impl core::Vector<core::Point2f> {
 		pub fn as_raw_VectorOfPoint2f(&self) -> extern_send!(Self) { self.as_raw() }
@@ -1495,9 +1390,6 @@ mod core_types {
 
 	output_array_ref_forward! { core::Vector<core::Point2f> }
 
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Point3d>` instead, removal in Nov 2024"]
-	pub type VectorOfPoint3d = core::Vector<core::Point3d>;
-
 	impl core::Vector<core::Point3d> {
 		pub fn as_raw_VectorOfPoint3d(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfPoint3d(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -1560,9 +1452,6 @@ mod core_types {
 	}
 
 	output_array_ref_forward! { core::Vector<core::Point3d> }
-
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Point3f>` instead, removal in Nov 2024"]
-	pub type VectorOfPoint3f = core::Vector<core::Point3f>;
 
 	impl core::Vector<core::Point3f> {
 		pub fn as_raw_VectorOfPoint3f(&self) -> extern_send!(Self) { self.as_raw() }
@@ -1627,9 +1516,6 @@ mod core_types {
 
 	output_array_ref_forward! { core::Vector<core::Point3f> }
 
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Point3i>` instead, removal in Nov 2024"]
-	pub type VectorOfPoint3i = core::Vector<core::Point3i>;
-
 	impl core::Vector<core::Point3i> {
 		pub fn as_raw_VectorOfPoint3i(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfPoint3i(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -1693,9 +1579,6 @@ mod core_types {
 
 	output_array_ref_forward! { core::Vector<core::Point3i> }
 
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Range>` instead, removal in Nov 2024"]
-	pub type VectorOfRange = core::Vector<core::Range>;
-
 	impl core::Vector<core::Range> {
 		pub fn as_raw_VectorOfRange(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfRange(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -1725,9 +1608,6 @@ mod core_types {
 		std_vectorLcv_RangeG_push_const_Range, std_vectorLcv_RangeG_insert_size_t_const_Range,
 	}
 
-
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Rect>` instead, removal in Nov 2024"]
-	pub type VectorOfRect = core::Vector<core::Rect>;
 
 	impl core::Vector<core::Rect> {
 		pub fn as_raw_VectorOfRect(&self) -> extern_send!(Self) { self.as_raw() }
@@ -1792,9 +1672,6 @@ mod core_types {
 
 	output_array_ref_forward! { core::Vector<core::Rect> }
 
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Rect2d>` instead, removal in Nov 2024"]
-	pub type VectorOfRect2d = core::Vector<core::Rect2d>;
-
 	impl core::Vector<core::Rect2d> {
 		pub fn as_raw_VectorOfRect2d(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfRect2d(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -1858,9 +1735,6 @@ mod core_types {
 
 	output_array_ref_forward! { core::Vector<core::Rect2d> }
 
-	#[deprecated = "Use the the non-alias form `core::Vector<core::RotatedRect>` instead, removal in Nov 2024"]
-	pub type VectorOfRotatedRect = core::Vector<core::RotatedRect>;
-
 	impl core::Vector<core::RotatedRect> {
 		pub fn as_raw_VectorOfRotatedRect(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfRotatedRect(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -1881,9 +1755,6 @@ mod core_types {
 		std_vectorLcv_RotatedRectG_clone_const,
 	}
 
-
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Scalar>` instead, removal in Nov 2024"]
-	pub type VectorOfScalar = core::Vector<core::Scalar>;
 
 	impl core::Vector<core::Scalar> {
 		pub fn as_raw_VectorOfScalar(&self) -> extern_send!(Self) { self.as_raw() }
@@ -1948,9 +1819,6 @@ mod core_types {
 
 	output_array_ref_forward! { core::Vector<core::Scalar> }
 
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Size>` instead, removal in Nov 2024"]
-	pub type VectorOfSize = core::Vector<core::Size>;
-
 	impl core::Vector<core::Size> {
 		pub fn as_raw_VectorOfSize(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfSize(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -2014,9 +1882,6 @@ mod core_types {
 
 	output_array_ref_forward! { core::Vector<core::Size> }
 
-	#[deprecated = "Use the the non-alias form `core::Vector<String>` instead, removal in Nov 2024"]
-	pub type VectorOfString = core::Vector<String>;
-
 	impl core::Vector<String> {
 		pub fn as_raw_VectorOfString(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfString(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -2034,9 +1899,6 @@ mod core_types {
 
 	vector_non_copy_or_bool! { String }
 
-
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Tuple<(core::Point2i, core::Point2i)>>` instead, removal in Nov 2024"]
-	pub type VectorOfTupleOfPoint2i_Point2i = core::Vector<core::Tuple<(core::Point2i, core::Point2i)>>;
 
 	impl core::Vector<core::Tuple<(core::Point2i, core::Point2i)>> {
 		pub fn as_raw_VectorOfTupleOfPoint2i_Point2i(&self) -> extern_send!(Self) { self.as_raw() }
@@ -2056,9 +1918,6 @@ mod core_types {
 	vector_non_copy_or_bool! { core::Tuple<(core::Point2i, core::Point2i)> }
 
 
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Tuple<(core::UMat, u8)>>` instead, removal in Nov 2024"]
-	pub type VectorOfTupleOfUMat_u8 = core::Vector<core::Tuple<(core::UMat, u8)>>;
-
 	impl core::Vector<core::Tuple<(core::UMat, u8)>> {
 		pub fn as_raw_VectorOfTupleOfUMat_u8(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfTupleOfUMat_u8(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -2077,9 +1936,6 @@ mod core_types {
 	vector_non_copy_or_bool! { core::Tuple<(core::UMat, u8)> }
 
 
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Tuple<(i32, f64)>>` instead, removal in Nov 2024"]
-	pub type VectorOfTupleOfi32_f64 = core::Vector<core::Tuple<(i32, f64)>>;
-
 	impl core::Vector<core::Tuple<(i32, f64)>> {
 		pub fn as_raw_VectorOfTupleOfi32_f64(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfTupleOfi32_f64(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -2097,9 +1953,6 @@ mod core_types {
 
 	vector_non_copy_or_bool! { core::Tuple<(i32, f64)> }
 
-
-	#[deprecated = "Use the the non-alias form `core::Vector<core::UMat>` instead, removal in Nov 2024"]
-	pub type VectorOfUMat = core::Vector<core::UMat>;
 
 	impl core::Vector<core::UMat> {
 		pub fn as_raw_VectorOfUMat(&self) -> extern_send!(Self) { self.as_raw() }
@@ -2130,9 +1983,6 @@ mod core_types {
 		std_vectorLcv_UMatG_push_const_UMat, std_vectorLcv_UMatG_insert_size_t_const_UMat,
 	}
 
-
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Vec2d>` instead, removal in Nov 2024"]
-	pub type VectorOfVec2d = core::Vector<core::Vec2d>;
 
 	impl core::Vector<core::Vec2d> {
 		pub fn as_raw_VectorOfVec2d(&self) -> extern_send!(Self) { self.as_raw() }
@@ -2197,9 +2047,6 @@ mod core_types {
 
 	output_array_ref_forward! { core::Vector<core::Vec2d> }
 
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Vec2f>` instead, removal in Nov 2024"]
-	pub type VectorOfVec2f = core::Vector<core::Vec2f>;
-
 	impl core::Vector<core::Vec2f> {
 		pub fn as_raw_VectorOfVec2f(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfVec2f(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -2262,9 +2109,6 @@ mod core_types {
 	}
 
 	output_array_ref_forward! { core::Vector<core::Vec2f> }
-
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Vec2i>` instead, removal in Nov 2024"]
-	pub type VectorOfVec2i = core::Vector<core::Vec2i>;
 
 	impl core::Vector<core::Vec2i> {
 		pub fn as_raw_VectorOfVec2i(&self) -> extern_send!(Self) { self.as_raw() }
@@ -2329,9 +2173,6 @@ mod core_types {
 
 	output_array_ref_forward! { core::Vector<core::Vec2i> }
 
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Vec3d>` instead, removal in Nov 2024"]
-	pub type VectorOfVec3d = core::Vector<core::Vec3d>;
-
 	impl core::Vector<core::Vec3d> {
 		pub fn as_raw_VectorOfVec3d(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfVec3d(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -2394,9 +2235,6 @@ mod core_types {
 	}
 
 	output_array_ref_forward! { core::Vector<core::Vec3d> }
-
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Vec3f>` instead, removal in Nov 2024"]
-	pub type VectorOfVec3f = core::Vector<core::Vec3f>;
 
 	impl core::Vector<core::Vec3f> {
 		pub fn as_raw_VectorOfVec3f(&self) -> extern_send!(Self) { self.as_raw() }
@@ -2461,9 +2299,6 @@ mod core_types {
 
 	output_array_ref_forward! { core::Vector<core::Vec3f> }
 
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Vec3i>` instead, removal in Nov 2024"]
-	pub type VectorOfVec3i = core::Vector<core::Vec3i>;
-
 	impl core::Vector<core::Vec3i> {
 		pub fn as_raw_VectorOfVec3i(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfVec3i(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -2526,9 +2361,6 @@ mod core_types {
 	}
 
 	output_array_ref_forward! { core::Vector<core::Vec3i> }
-
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Vec4f>` instead, removal in Nov 2024"]
-	pub type VectorOfVec4f = core::Vector<core::Vec4f>;
 
 	impl core::Vector<core::Vec4f> {
 		pub fn as_raw_VectorOfVec4f(&self) -> extern_send!(Self) { self.as_raw() }
@@ -2593,9 +2425,6 @@ mod core_types {
 
 	output_array_ref_forward! { core::Vector<core::Vec4f> }
 
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Vec4i>` instead, removal in Nov 2024"]
-	pub type VectorOfVec4i = core::Vector<core::Vec4i>;
-
 	impl core::Vector<core::Vec4i> {
 		pub fn as_raw_VectorOfVec4i(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfVec4i(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -2658,9 +2487,6 @@ mod core_types {
 	}
 
 	output_array_ref_forward! { core::Vector<core::Vec4i> }
-
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Vec6f>` instead, removal in Nov 2024"]
-	pub type VectorOfVec6f = core::Vector<core::Vec6f>;
 
 	impl core::Vector<core::Vec6f> {
 		pub fn as_raw_VectorOfVec6f(&self) -> extern_send!(Self) { self.as_raw() }
@@ -2725,9 +2551,6 @@ mod core_types {
 
 	output_array_ref_forward! { core::Vector<core::Vec6f> }
 
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<core::DMatch>>` instead, removal in Nov 2024"]
-	pub type VectorOfVectorOfDMatch = core::Vector<core::Vector<core::DMatch>>;
-
 	impl core::Vector<core::Vector<core::DMatch>> {
 		pub fn as_raw_VectorOfVectorOfDMatch(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfVectorOfDMatch(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -2745,9 +2568,6 @@ mod core_types {
 
 	vector_non_copy_or_bool! { clone core::Vector<core::DMatch> }
 
-
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<core::KeyPoint>>` instead, removal in Nov 2024"]
-	pub type VectorOfVectorOfKeyPoint = core::Vector<core::Vector<core::KeyPoint>>;
 
 	impl core::Vector<core::Vector<core::KeyPoint>> {
 		pub fn as_raw_VectorOfVectorOfKeyPoint(&self) -> extern_send!(Self) { self.as_raw() }
@@ -2767,9 +2587,6 @@ mod core_types {
 	vector_non_copy_or_bool! { clone core::Vector<core::KeyPoint> }
 
 
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<core::Mat>>` instead, removal in Nov 2024"]
-	pub type VectorOfVectorOfMat = core::Vector<core::Vector<core::Mat>>;
-
 	impl core::Vector<core::Vector<core::Mat>> {
 		pub fn as_raw_VectorOfVectorOfMat(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfVectorOfMat(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -2787,9 +2604,6 @@ mod core_types {
 
 	vector_non_copy_or_bool! { clone core::Vector<core::Mat> }
 
-
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<core::Point>>` instead, removal in Nov 2024"]
-	pub type VectorOfVectorOfPoint = core::Vector<core::Vector<core::Point>>;
 
 	impl core::Vector<core::Vector<core::Point>> {
 		pub fn as_raw_VectorOfVectorOfPoint(&self) -> extern_send!(Self) { self.as_raw() }
@@ -2851,9 +2665,6 @@ mod core_types {
 
 	output_array_ref_forward! { core::Vector<core::Vector<core::Point>> }
 
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<core::Point2d>>` instead, removal in Nov 2024"]
-	pub type VectorOfVectorOfPoint2d = core::Vector<core::Vector<core::Point2d>>;
-
 	impl core::Vector<core::Vector<core::Point2d>> {
 		pub fn as_raw_VectorOfVectorOfPoint2d(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfVectorOfPoint2d(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -2913,9 +2724,6 @@ mod core_types {
 	}
 
 	output_array_ref_forward! { core::Vector<core::Vector<core::Point2d>> }
-
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<core::Point2f>>` instead, removal in Nov 2024"]
-	pub type VectorOfVectorOfPoint2f = core::Vector<core::Vector<core::Point2f>>;
 
 	impl core::Vector<core::Vector<core::Point2f>> {
 		pub fn as_raw_VectorOfVectorOfPoint2f(&self) -> extern_send!(Self) { self.as_raw() }
@@ -2977,9 +2785,6 @@ mod core_types {
 
 	output_array_ref_forward! { core::Vector<core::Vector<core::Point2f>> }
 
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<core::Point3d>>` instead, removal in Nov 2024"]
-	pub type VectorOfVectorOfPoint3d = core::Vector<core::Vector<core::Point3d>>;
-
 	impl core::Vector<core::Vector<core::Point3d>> {
 		pub fn as_raw_VectorOfVectorOfPoint3d(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfVectorOfPoint3d(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -3039,9 +2844,6 @@ mod core_types {
 	}
 
 	output_array_ref_forward! { core::Vector<core::Vector<core::Point3d>> }
-
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<core::Point3f>>` instead, removal in Nov 2024"]
-	pub type VectorOfVectorOfPoint3f = core::Vector<core::Vector<core::Point3f>>;
 
 	impl core::Vector<core::Vector<core::Point3f>> {
 		pub fn as_raw_VectorOfVectorOfPoint3f(&self) -> extern_send!(Self) { self.as_raw() }
@@ -3103,9 +2905,6 @@ mod core_types {
 
 	output_array_ref_forward! { core::Vector<core::Vector<core::Point3f>> }
 
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<core::Point3i>>` instead, removal in Nov 2024"]
-	pub type VectorOfVectorOfPoint3i = core::Vector<core::Vector<core::Point3i>>;
-
 	impl core::Vector<core::Vector<core::Point3i>> {
 		pub fn as_raw_VectorOfVectorOfPoint3i(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfVectorOfPoint3i(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -3166,9 +2965,6 @@ mod core_types {
 
 	output_array_ref_forward! { core::Vector<core::Vector<core::Point3i>> }
 
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<core::Range>>` instead, removal in Nov 2024"]
-	pub type VectorOfVectorOfRange = core::Vector<core::Vector<core::Range>>;
-
 	impl core::Vector<core::Vector<core::Range>> {
 		pub fn as_raw_VectorOfVectorOfRange(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfVectorOfRange(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -3186,9 +2982,6 @@ mod core_types {
 
 	vector_non_copy_or_bool! { core::Vector<core::Range> }
 
-
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<core::Vec2d>>` instead, removal in Nov 2024"]
-	pub type VectorOfVectorOfVec2d = core::Vector<core::Vector<core::Vec2d>>;
 
 	impl core::Vector<core::Vector<core::Vec2d>> {
 		pub fn as_raw_VectorOfVectorOfVec2d(&self) -> extern_send!(Self) { self.as_raw() }
@@ -3250,9 +3043,6 @@ mod core_types {
 
 	output_array_ref_forward! { core::Vector<core::Vector<core::Vec2d>> }
 
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<core::Vec2f>>` instead, removal in Nov 2024"]
-	pub type VectorOfVectorOfVec2f = core::Vector<core::Vector<core::Vec2f>>;
-
 	impl core::Vector<core::Vector<core::Vec2f>> {
 		pub fn as_raw_VectorOfVectorOfVec2f(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfVectorOfVec2f(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -3312,9 +3102,6 @@ mod core_types {
 	}
 
 	output_array_ref_forward! { core::Vector<core::Vector<core::Vec2f>> }
-
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<core::Vec2i>>` instead, removal in Nov 2024"]
-	pub type VectorOfVectorOfVec2i = core::Vector<core::Vector<core::Vec2i>>;
 
 	impl core::Vector<core::Vector<core::Vec2i>> {
 		pub fn as_raw_VectorOfVectorOfVec2i(&self) -> extern_send!(Self) { self.as_raw() }
@@ -3376,9 +3163,6 @@ mod core_types {
 
 	output_array_ref_forward! { core::Vector<core::Vector<core::Vec2i>> }
 
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<core::Vec3d>>` instead, removal in Nov 2024"]
-	pub type VectorOfVectorOfVec3d = core::Vector<core::Vector<core::Vec3d>>;
-
 	impl core::Vector<core::Vector<core::Vec3d>> {
 		pub fn as_raw_VectorOfVectorOfVec3d(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfVectorOfVec3d(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -3438,9 +3222,6 @@ mod core_types {
 	}
 
 	output_array_ref_forward! { core::Vector<core::Vector<core::Vec3d>> }
-
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<core::Vec3f>>` instead, removal in Nov 2024"]
-	pub type VectorOfVectorOfVec3f = core::Vector<core::Vector<core::Vec3f>>;
 
 	impl core::Vector<core::Vector<core::Vec3f>> {
 		pub fn as_raw_VectorOfVectorOfVec3f(&self) -> extern_send!(Self) { self.as_raw() }
@@ -3502,16 +3283,10 @@ mod core_types {
 
 	output_array_ref_forward! { core::Vector<core::Vector<core::Vec3f>> }
 
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<c_char>>` instead, removal in Nov 2024"]
-	pub type VectorOfVectorOfc_char = core::Vector<core::Vector<c_char>>;
-
 	impl core::Vector<core::Vector<c_char>> {
 		pub fn as_raw_VectorOfVectorOfc_char(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfVectorOfc_char(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<f32>>` instead, removal in Nov 2024"]
-	pub type VectorOfVectorOff32 = core::Vector<core::Vector<f32>>;
 
 	impl core::Vector<core::Vector<f32>> {
 		pub fn as_raw_VectorOfVectorOff32(&self) -> extern_send!(Self) { self.as_raw() }
@@ -3573,9 +3348,6 @@ mod core_types {
 
 	output_array_ref_forward! { core::Vector<core::Vector<f32>> }
 
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<f64>>` instead, removal in Nov 2024"]
-	pub type VectorOfVectorOff64 = core::Vector<core::Vector<f64>>;
-
 	impl core::Vector<core::Vector<f64>> {
 		pub fn as_raw_VectorOfVectorOff64(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfVectorOff64(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -3635,9 +3407,6 @@ mod core_types {
 	}
 
 	output_array_ref_forward! { core::Vector<core::Vector<f64>> }
-
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<i32>>` instead, removal in Nov 2024"]
-	pub type VectorOfVectorOfi32 = core::Vector<core::Vector<i32>>;
 
 	impl core::Vector<core::Vector<i32>> {
 		pub fn as_raw_VectorOfVectorOfi32(&self) -> extern_send!(Self) { self.as_raw() }
@@ -3699,9 +3468,6 @@ mod core_types {
 
 	output_array_ref_forward! { core::Vector<core::Vector<i32>> }
 
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<i8>>` instead, removal in Nov 2024"]
-	pub type VectorOfVectorOfi8 = core::Vector<core::Vector<i8>>;
-
 	impl core::Vector<core::Vector<i8>> {
 		pub fn as_raw_VectorOfVectorOfi8(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfVectorOfi8(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -3719,9 +3485,6 @@ mod core_types {
 
 	vector_non_copy_or_bool! { clone core::Vector<i8> }
 
-
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<u8>>` instead, removal in Nov 2024"]
-	pub type VectorOfVectorOfu8 = core::Vector<core::Vector<u8>>;
 
 	impl core::Vector<core::Vector<u8>> {
 		pub fn as_raw_VectorOfVectorOfu8(&self) -> extern_send!(Self) { self.as_raw() }
@@ -3783,9 +3546,6 @@ mod core_types {
 
 	output_array_ref_forward! { core::Vector<core::Vector<u8>> }
 
-	#[deprecated = "Use the the non-alias form `core::Vector<bool>` instead, removal in Nov 2024"]
-	pub type VectorOfbool = core::Vector<bool>;
-
 	impl core::Vector<bool> {
 		pub fn as_raw_VectorOfbool(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfbool(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -3818,16 +3578,10 @@ mod core_types {
 
 	input_array_ref_forward! { core::Vector<bool> }
 
-	#[deprecated = "Use the the non-alias form `core::Vector<c_char>` instead, removal in Nov 2024"]
-	pub type VectorOfc_char = core::Vector<c_char>;
-
 	impl core::Vector<c_char> {
 		pub fn as_raw_VectorOfc_char(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfc_char(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Vector<f32>` instead, removal in Nov 2024"]
-	pub type VectorOff32 = core::Vector<f32>;
 
 	impl core::Vector<f32> {
 		pub fn as_raw_VectorOff32(&self) -> extern_send!(Self) { self.as_raw() }
@@ -3892,9 +3646,6 @@ mod core_types {
 
 	output_array_ref_forward! { core::Vector<f32> }
 
-	#[deprecated = "Use the the non-alias form `core::Vector<f64>` instead, removal in Nov 2024"]
-	pub type VectorOff64 = core::Vector<f64>;
-
 	impl core::Vector<f64> {
 		pub fn as_raw_VectorOff64(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOff64(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -3957,9 +3708,6 @@ mod core_types {
 	}
 
 	output_array_ref_forward! { core::Vector<f64> }
-
-	#[deprecated = "Use the the non-alias form `core::Vector<i32>` instead, removal in Nov 2024"]
-	pub type VectorOfi32 = core::Vector<i32>;
 
 	impl core::Vector<i32> {
 		pub fn as_raw_VectorOfi32(&self) -> extern_send!(Self) { self.as_raw() }
@@ -4024,9 +3772,6 @@ mod core_types {
 
 	output_array_ref_forward! { core::Vector<i32> }
 
-	#[deprecated = "Use the the non-alias form `core::Vector<i8>` instead, removal in Nov 2024"]
-	pub type VectorOfi8 = core::Vector<i8>;
-
 	impl core::Vector<i8> {
 		pub fn as_raw_VectorOfi8(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfi8(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -4047,9 +3792,6 @@ mod core_types {
 		std_vectorLsigned_charG_clone_const,
 	}
 
-
-	#[deprecated = "Use the the non-alias form `core::Vector<size_t>` instead, removal in Nov 2024"]
-	pub type VectorOfsize_t = core::Vector<size_t>;
 
 	impl core::Vector<size_t> {
 		pub fn as_raw_VectorOfsize_t(&self) -> extern_send!(Self) { self.as_raw() }
@@ -4072,9 +3814,6 @@ mod core_types {
 	}
 
 
-	#[deprecated = "Use the the non-alias form `core::Vector<u64>` instead, removal in Nov 2024"]
-	pub type VectorOfu64 = core::Vector<u64>;
-
 	impl core::Vector<u64> {
 		pub fn as_raw_VectorOfu64(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfu64(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -4095,9 +3834,53 @@ mod core_types {
 		std_vectorLuint64_tG_clone_const,
 	}
 
+	#[cfg(ocvrs_opencv_branch_5)]
+	impl ToInputArray for core::Vector<u64> {
+		#[inline]
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::std_vectorLuint64_tG_inputArray_const(self.as_raw_VectorOfu64(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
 
-	#[deprecated = "Use the the non-alias form `core::Vector<u8>` instead, removal in Nov 2024"]
-	pub type VectorOfu8 = core::Vector<u8>;
+	}
+
+	#[cfg(ocvrs_opencv_branch_5)]
+	input_array_ref_forward! { core::Vector<u64> }
+
+	#[cfg(ocvrs_opencv_branch_5)]
+	impl ToOutputArray for core::Vector<u64> {
+		#[inline]
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::std_vectorLuint64_tG_outputArray(self.as_raw_mut_VectorOfu64(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	#[cfg(ocvrs_opencv_branch_5)]
+	impl ToInputOutputArray for core::Vector<u64> {
+		#[inline]
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::std_vectorLuint64_tG_inputOutputArray(self.as_raw_mut_VectorOfu64(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	#[cfg(ocvrs_opencv_branch_5)]
+	output_array_ref_forward! { core::Vector<u64> }
 
 	impl core::Vector<u8> {
 		pub fn as_raw_VectorOfu8(&self) -> extern_send!(Self) { self.as_raw() }
@@ -4163,15 +3946,10 @@ mod core_types {
 	output_array_ref_forward! { core::Vector<u8> }
 
 }
-#[cfg(ocvrs_has_module_core)]
 pub use core_types::*;
 
-#[cfg(ocvrs_has_module_cudaarithm)]
 mod cudaarithm_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaarithm::Convolution>` instead, removal in Nov 2024"]
-	pub type PtrOfConvolution = core::Ptr<crate::cudaarithm::Convolution>;
 
 	ptr_extern! { crate::cudaarithm::Convolution,
 		cv_PtrLcv_cuda_ConvolutionG_new_null_const, cv_PtrLcv_cuda_ConvolutionG_delete, cv_PtrLcv_cuda_ConvolutionG_getInnerPtr_const, cv_PtrLcv_cuda_ConvolutionG_getInnerPtrMut
@@ -4208,9 +3986,6 @@ mod cudaarithm_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaarithm::DFT>` instead, removal in Nov 2024"]
-	pub type PtrOfDFT = core::Ptr<crate::cudaarithm::DFT>;
-
 	ptr_extern! { crate::cudaarithm::DFT,
 		cv_PtrLcv_cuda_DFTG_new_null_const, cv_PtrLcv_cuda_DFTG_delete, cv_PtrLcv_cuda_DFTG_getInnerPtr_const, cv_PtrLcv_cuda_DFTG_getInnerPtrMut
 	}
@@ -4245,9 +4020,6 @@ mod cudaarithm_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaarithm::LookUpTable>` instead, removal in Nov 2024"]
-	pub type PtrOfLookUpTable = core::Ptr<crate::cudaarithm::LookUpTable>;
 
 	ptr_extern! { crate::cudaarithm::LookUpTable,
 		cv_PtrLcv_cuda_LookUpTableG_new_null_const, cv_PtrLcv_cuda_LookUpTableG_delete, cv_PtrLcv_cuda_LookUpTableG_getInnerPtr_const, cv_PtrLcv_cuda_LookUpTableG_getInnerPtrMut
@@ -4285,15 +4057,10 @@ mod cudaarithm_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_cudaarithm)]
 pub use cudaarithm_types::*;
 
-#[cfg(ocvrs_has_module_cudabgsegm)]
 mod cudabgsegm_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_BackgroundSubtractorMOG = core::Ptr<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG>;
 
 	ptr_extern! { crate::cudabgsegm::CUDA_BackgroundSubtractorMOG,
 		cv_PtrLcv_cuda_BackgroundSubtractorMOGG_new_null_const, cv_PtrLcv_cuda_BackgroundSubtractorMOGG_delete, cv_PtrLcv_cuda_BackgroundSubtractorMOGG_getInnerPtr_const, cv_PtrLcv_cuda_BackgroundSubtractorMOGG_getInnerPtrMut
@@ -4339,9 +4106,6 @@ mod cudabgsegm_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_BackgroundSubtractorMOG2 = core::Ptr<crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2>;
 
 	ptr_extern! { crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2,
 		cv_PtrLcv_cuda_BackgroundSubtractorMOG2G_new_null_const, cv_PtrLcv_cuda_BackgroundSubtractorMOG2G_delete, cv_PtrLcv_cuda_BackgroundSubtractorMOG2G_getInnerPtr_const, cv_PtrLcv_cuda_BackgroundSubtractorMOG2G_getInnerPtrMut
@@ -4399,15 +4163,10 @@ mod cudabgsegm_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_cudabgsegm)]
 pub use cudabgsegm_types::*;
 
-#[cfg(ocvrs_has_module_cudacodec)]
 mod cudacodec_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudacodec::CUDA_EncoderCallback>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_EncoderCallback = core::Ptr<crate::cudacodec::CUDA_EncoderCallback>;
 
 	ptr_extern! { crate::cudacodec::CUDA_EncoderCallback,
 		cv_PtrLcv_cudacodec_EncoderCallbackG_new_null_const, cv_PtrLcv_cudacodec_EncoderCallbackG_delete, cv_PtrLcv_cudacodec_EncoderCallbackG_getInnerPtr_const, cv_PtrLcv_cudacodec_EncoderCallbackG_getInnerPtrMut
@@ -4434,9 +4193,6 @@ mod cudacodec_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudacodec::CUDA_NVSurfaceToColorConverter>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_NVSurfaceToColorConverter = core::Ptr<crate::cudacodec::CUDA_NVSurfaceToColorConverter>;
-
 	ptr_extern! { crate::cudacodec::CUDA_NVSurfaceToColorConverter,
 		cv_PtrLcv_cudacodec_NVSurfaceToColorConverterG_new_null_const, cv_PtrLcv_cudacodec_NVSurfaceToColorConverterG_delete, cv_PtrLcv_cudacodec_NVSurfaceToColorConverterG_getInnerPtr_const, cv_PtrLcv_cudacodec_NVSurfaceToColorConverterG_getInnerPtrMut
 	}
@@ -4461,9 +4217,6 @@ mod cudacodec_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudacodec::CUDA_RawVideoSource>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_RawVideoSource = core::Ptr<crate::cudacodec::CUDA_RawVideoSource>;
 
 	ptr_extern! { crate::cudacodec::CUDA_RawVideoSource,
 		cv_PtrLcv_cudacodec_RawVideoSourceG_new_null_const, cv_PtrLcv_cudacodec_RawVideoSourceG_delete, cv_PtrLcv_cudacodec_RawVideoSourceG_getInnerPtr_const, cv_PtrLcv_cudacodec_RawVideoSourceG_getInnerPtrMut
@@ -4490,9 +4243,6 @@ mod cudacodec_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudacodec::CUDA_VideoReader>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_VideoReader = core::Ptr<crate::cudacodec::CUDA_VideoReader>;
-
 	ptr_extern! { crate::cudacodec::CUDA_VideoReader,
 		cv_PtrLcv_cudacodec_VideoReaderG_new_null_const, cv_PtrLcv_cudacodec_VideoReaderG_delete, cv_PtrLcv_cudacodec_VideoReaderG_getInnerPtr_const, cv_PtrLcv_cudacodec_VideoReaderG_getInnerPtrMut
 	}
@@ -4517,9 +4267,6 @@ mod cudacodec_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudacodec::CUDA_VideoWriter>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_VideoWriter = core::Ptr<crate::cudacodec::CUDA_VideoWriter>;
 
 	ptr_extern! { crate::cudacodec::CUDA_VideoWriter,
 		cv_PtrLcv_cudacodec_VideoWriterG_new_null_const, cv_PtrLcv_cudacodec_VideoWriterG_delete, cv_PtrLcv_cudacodec_VideoWriterG_getInnerPtr_const, cv_PtrLcv_cudacodec_VideoWriterG_getInnerPtrMut
@@ -4547,15 +4294,10 @@ mod cudacodec_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_cudacodec)]
 pub use cudacodec_types::*;
 
-#[cfg(ocvrs_has_module_cudafeatures2d)]
 mod cudafeatures2d_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudafeatures2d::CUDA_DescriptorMatcher>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_DescriptorMatcher = core::Ptr<crate::cudafeatures2d::CUDA_DescriptorMatcher>;
 
 	ptr_extern! { crate::cudafeatures2d::CUDA_DescriptorMatcher,
 		cv_PtrLcv_cuda_DescriptorMatcherG_new_null_const, cv_PtrLcv_cuda_DescriptorMatcherG_delete, cv_PtrLcv_cuda_DescriptorMatcherG_getInnerPtr_const, cv_PtrLcv_cuda_DescriptorMatcherG_getInnerPtrMut
@@ -4591,9 +4333,6 @@ mod cudafeatures2d_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudafeatures2d::CUDA_FastFeatureDetector>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_FastFeatureDetector = core::Ptr<crate::cudafeatures2d::CUDA_FastFeatureDetector>;
 
 	ptr_extern! { crate::cudafeatures2d::CUDA_FastFeatureDetector,
 		cv_PtrLcv_cuda_FastFeatureDetectorG_new_null_const, cv_PtrLcv_cuda_FastFeatureDetectorG_delete, cv_PtrLcv_cuda_FastFeatureDetectorG_getInnerPtr_const, cv_PtrLcv_cuda_FastFeatureDetectorG_getInnerPtrMut
@@ -4650,9 +4389,6 @@ mod cudafeatures2d_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudafeatures2d::CUDA_Feature2DAsync>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_Feature2DAsync = core::Ptr<crate::cudafeatures2d::CUDA_Feature2DAsync>;
-
 	ptr_extern! { crate::cudafeatures2d::CUDA_Feature2DAsync,
 		cv_PtrLcv_cuda_Feature2DAsyncG_new_null_const, cv_PtrLcv_cuda_Feature2DAsyncG_delete, cv_PtrLcv_cuda_Feature2DAsyncG_getInnerPtr_const, cv_PtrLcv_cuda_Feature2DAsyncG_getInnerPtrMut
 	}
@@ -4697,9 +4433,6 @@ mod cudafeatures2d_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudafeatures2d::CUDA_ORB>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_ORB = core::Ptr<crate::cudafeatures2d::CUDA_ORB>;
 
 	ptr_extern! { crate::cudafeatures2d::CUDA_ORB,
 		cv_PtrLcv_cuda_ORBG_new_null_const, cv_PtrLcv_cuda_ORBG_delete, cv_PtrLcv_cuda_ORBG_getInnerPtr_const, cv_PtrLcv_cuda_ORBG_getInnerPtrMut
@@ -4757,15 +4490,10 @@ mod cudafeatures2d_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_cudafeatures2d)]
 pub use cudafeatures2d_types::*;
 
-#[cfg(ocvrs_has_module_cudafilters)]
 mod cudafilters_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudafilters::Filter>` instead, removal in Nov 2024"]
-	pub type PtrOfFilter = core::Ptr<crate::cudafilters::Filter>;
 
 	ptr_extern! { crate::cudafilters::Filter,
 		cv_PtrLcv_cuda_FilterG_new_null_const, cv_PtrLcv_cuda_FilterG_delete, cv_PtrLcv_cuda_FilterG_getInnerPtr_const, cv_PtrLcv_cuda_FilterG_getInnerPtrMut
@@ -4803,15 +4531,10 @@ mod cudafilters_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_cudafilters)]
 pub use cudafilters_types::*;
 
-#[cfg(ocvrs_has_module_cudaimgproc)]
 mod cudaimgproc_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaimgproc::CUDA_CLAHE>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_CLAHE = core::Ptr<crate::cudaimgproc::CUDA_CLAHE>;
 
 	ptr_extern! { crate::cudaimgproc::CUDA_CLAHE,
 		cv_PtrLcv_cuda_CLAHEG_new_null_const, cv_PtrLcv_cuda_CLAHEG_delete, cv_PtrLcv_cuda_CLAHEG_getInnerPtr_const, cv_PtrLcv_cuda_CLAHEG_getInnerPtrMut
@@ -4858,9 +4581,6 @@ mod cudaimgproc_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaimgproc::CUDA_CannyEdgeDetector>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_CannyEdgeDetector = core::Ptr<crate::cudaimgproc::CUDA_CannyEdgeDetector>;
-
 	ptr_extern! { crate::cudaimgproc::CUDA_CannyEdgeDetector,
 		cv_PtrLcv_cuda_CannyEdgeDetectorG_new_null_const, cv_PtrLcv_cuda_CannyEdgeDetectorG_delete, cv_PtrLcv_cuda_CannyEdgeDetectorG_getInnerPtr_const, cv_PtrLcv_cuda_CannyEdgeDetectorG_getInnerPtrMut
 	}
@@ -4895,9 +4615,6 @@ mod cudaimgproc_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaimgproc::CUDA_CornernessCriteria>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_CornernessCriteria = core::Ptr<crate::cudaimgproc::CUDA_CornernessCriteria>;
 
 	ptr_extern! { crate::cudaimgproc::CUDA_CornernessCriteria,
 		cv_PtrLcv_cuda_CornernessCriteriaG_new_null_const, cv_PtrLcv_cuda_CornernessCriteriaG_delete, cv_PtrLcv_cuda_CornernessCriteriaG_getInnerPtr_const, cv_PtrLcv_cuda_CornernessCriteriaG_getInnerPtrMut
@@ -4934,9 +4651,6 @@ mod cudaimgproc_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaimgproc::CUDA_CornersDetector>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_CornersDetector = core::Ptr<crate::cudaimgproc::CUDA_CornersDetector>;
-
 	ptr_extern! { crate::cudaimgproc::CUDA_CornersDetector,
 		cv_PtrLcv_cuda_CornersDetectorG_new_null_const, cv_PtrLcv_cuda_CornersDetectorG_delete, cv_PtrLcv_cuda_CornersDetectorG_getInnerPtr_const, cv_PtrLcv_cuda_CornersDetectorG_getInnerPtrMut
 	}
@@ -4971,9 +4685,6 @@ mod cudaimgproc_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaimgproc::CUDA_HoughCirclesDetector>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_HoughCirclesDetector = core::Ptr<crate::cudaimgproc::CUDA_HoughCirclesDetector>;
 
 	ptr_extern! { crate::cudaimgproc::CUDA_HoughCirclesDetector,
 		cv_PtrLcv_cuda_HoughCirclesDetectorG_new_null_const, cv_PtrLcv_cuda_HoughCirclesDetectorG_delete, cv_PtrLcv_cuda_HoughCirclesDetectorG_getInnerPtr_const, cv_PtrLcv_cuda_HoughCirclesDetectorG_getInnerPtrMut
@@ -5010,9 +4721,6 @@ mod cudaimgproc_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaimgproc::CUDA_HoughLinesDetector>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_HoughLinesDetector = core::Ptr<crate::cudaimgproc::CUDA_HoughLinesDetector>;
-
 	ptr_extern! { crate::cudaimgproc::CUDA_HoughLinesDetector,
 		cv_PtrLcv_cuda_HoughLinesDetectorG_new_null_const, cv_PtrLcv_cuda_HoughLinesDetectorG_delete, cv_PtrLcv_cuda_HoughLinesDetectorG_getInnerPtr_const, cv_PtrLcv_cuda_HoughLinesDetectorG_getInnerPtrMut
 	}
@@ -5048,9 +4756,6 @@ mod cudaimgproc_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaimgproc::CUDA_HoughSegmentDetector>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_HoughSegmentDetector = core::Ptr<crate::cudaimgproc::CUDA_HoughSegmentDetector>;
-
 	ptr_extern! { crate::cudaimgproc::CUDA_HoughSegmentDetector,
 		cv_PtrLcv_cuda_HoughSegmentDetectorG_new_null_const, cv_PtrLcv_cuda_HoughSegmentDetectorG_delete, cv_PtrLcv_cuda_HoughSegmentDetectorG_getInnerPtr_const, cv_PtrLcv_cuda_HoughSegmentDetectorG_getInnerPtrMut
 	}
@@ -5085,9 +4790,6 @@ mod cudaimgproc_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaimgproc::CUDA_TemplateMatching>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_TemplateMatching = core::Ptr<crate::cudaimgproc::CUDA_TemplateMatching>;
 
 	ptr_extern! { crate::cudaimgproc::CUDA_TemplateMatching,
 		cv_PtrLcv_cuda_TemplateMatchingG_new_null_const, cv_PtrLcv_cuda_TemplateMatchingG_delete, cv_PtrLcv_cuda_TemplateMatchingG_getInnerPtr_const, cv_PtrLcv_cuda_TemplateMatchingG_getInnerPtrMut
@@ -5125,15 +4827,141 @@ mod cudaimgproc_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_cudaimgproc)]
 pub use cudaimgproc_types::*;
 
-#[cfg(ocvrs_has_module_cudaobjdetect)]
-mod cudaobjdetect_types {
+mod cudalegacy_types {
 	use crate::{mod_prelude::*, core, types, sys};
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaobjdetect::CUDA_CascadeClassifier>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_CascadeClassifier = core::Ptr<crate::cudaobjdetect::CUDA_CascadeClassifier>;
+	ptr_extern! { crate::cudalegacy::CUDA_BackgroundSubtractorFGD,
+		cv_PtrLcv_cuda_BackgroundSubtractorFGDG_new_null_const, cv_PtrLcv_cuda_BackgroundSubtractorFGDG_delete, cv_PtrLcv_cuda_BackgroundSubtractorFGDG_getInnerPtr_const, cv_PtrLcv_cuda_BackgroundSubtractorFGDG_getInnerPtrMut
+	}
+
+	impl core::Ptr<crate::cudalegacy::CUDA_BackgroundSubtractorFGD> {
+		#[inline] pub fn as_raw_PtrOfCUDA_BackgroundSubtractorFGD(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCUDA_BackgroundSubtractorFGD(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::cudalegacy::CUDA_BackgroundSubtractorFGDTraitConst for core::Ptr<crate::cudalegacy::CUDA_BackgroundSubtractorFGD> {
+		#[inline] fn as_raw_CUDA_BackgroundSubtractorFGD(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::cudalegacy::CUDA_BackgroundSubtractorFGDTrait for core::Ptr<crate::cudalegacy::CUDA_BackgroundSubtractorFGD> {
+		#[inline] fn as_raw_mut_CUDA_BackgroundSubtractorFGD(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl core::AlgorithmTraitConst for core::Ptr<crate::cudalegacy::CUDA_BackgroundSubtractorFGD> {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl core::AlgorithmTrait for core::Ptr<crate::cudalegacy::CUDA_BackgroundSubtractorFGD> {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::cudalegacy::CUDA_BackgroundSubtractorFGD>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_BackgroundSubtractorFGDG_to_PtrOfAlgorithm }
+
+	impl crate::video::BackgroundSubtractorTraitConst for core::Ptr<crate::cudalegacy::CUDA_BackgroundSubtractorFGD> {
+		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::video::BackgroundSubtractorTrait for core::Ptr<crate::cudalegacy::CUDA_BackgroundSubtractorFGD> {
+		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::cudalegacy::CUDA_BackgroundSubtractorFGD>, core::Ptr<crate::video::BackgroundSubtractor>, cv_PtrLcv_cuda_BackgroundSubtractorFGDG_to_PtrOfBackgroundSubtractor }
+
+	impl std::fmt::Debug for core::Ptr<crate::cudalegacy::CUDA_BackgroundSubtractorFGD> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfCUDA_BackgroundSubtractorFGD")
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::cudalegacy::CUDA_BackgroundSubtractorGMG,
+		cv_PtrLcv_cuda_BackgroundSubtractorGMGG_new_null_const, cv_PtrLcv_cuda_BackgroundSubtractorGMGG_delete, cv_PtrLcv_cuda_BackgroundSubtractorGMGG_getInnerPtr_const, cv_PtrLcv_cuda_BackgroundSubtractorGMGG_getInnerPtrMut
+	}
+
+	impl core::Ptr<crate::cudalegacy::CUDA_BackgroundSubtractorGMG> {
+		#[inline] pub fn as_raw_PtrOfCUDA_BackgroundSubtractorGMG(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCUDA_BackgroundSubtractorGMG(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::cudalegacy::CUDA_BackgroundSubtractorGMGTraitConst for core::Ptr<crate::cudalegacy::CUDA_BackgroundSubtractorGMG> {
+		#[inline] fn as_raw_CUDA_BackgroundSubtractorGMG(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::cudalegacy::CUDA_BackgroundSubtractorGMGTrait for core::Ptr<crate::cudalegacy::CUDA_BackgroundSubtractorGMG> {
+		#[inline] fn as_raw_mut_CUDA_BackgroundSubtractorGMG(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl core::AlgorithmTraitConst for core::Ptr<crate::cudalegacy::CUDA_BackgroundSubtractorGMG> {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl core::AlgorithmTrait for core::Ptr<crate::cudalegacy::CUDA_BackgroundSubtractorGMG> {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::cudalegacy::CUDA_BackgroundSubtractorGMG>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_BackgroundSubtractorGMGG_to_PtrOfAlgorithm }
+
+	impl crate::video::BackgroundSubtractorTraitConst for core::Ptr<crate::cudalegacy::CUDA_BackgroundSubtractorGMG> {
+		#[inline] fn as_raw_BackgroundSubtractor(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::video::BackgroundSubtractorTrait for core::Ptr<crate::cudalegacy::CUDA_BackgroundSubtractorGMG> {
+		#[inline] fn as_raw_mut_BackgroundSubtractor(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::cudalegacy::CUDA_BackgroundSubtractorGMG>, core::Ptr<crate::video::BackgroundSubtractor>, cv_PtrLcv_cuda_BackgroundSubtractorGMGG_to_PtrOfBackgroundSubtractor }
+
+	impl std::fmt::Debug for core::Ptr<crate::cudalegacy::CUDA_BackgroundSubtractorGMG> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfCUDA_BackgroundSubtractorGMG")
+				.finish()
+		}
+	}
+
+	ptr_extern! { crate::cudalegacy::CUDA_ImagePyramid,
+		cv_PtrLcv_cuda_ImagePyramidG_new_null_const, cv_PtrLcv_cuda_ImagePyramidG_delete, cv_PtrLcv_cuda_ImagePyramidG_getInnerPtr_const, cv_PtrLcv_cuda_ImagePyramidG_getInnerPtrMut
+	}
+
+	impl core::Ptr<crate::cudalegacy::CUDA_ImagePyramid> {
+		#[inline] pub fn as_raw_PtrOfCUDA_ImagePyramid(&self) -> extern_send!(Self) { self.as_raw() }
+		#[inline] pub fn as_raw_mut_PtrOfCUDA_ImagePyramid(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
+
+	impl crate::cudalegacy::CUDA_ImagePyramidTraitConst for core::Ptr<crate::cudalegacy::CUDA_ImagePyramid> {
+		#[inline] fn as_raw_CUDA_ImagePyramid(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl crate::cudalegacy::CUDA_ImagePyramidTrait for core::Ptr<crate::cudalegacy::CUDA_ImagePyramid> {
+		#[inline] fn as_raw_mut_CUDA_ImagePyramid(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	impl core::AlgorithmTraitConst for core::Ptr<crate::cudalegacy::CUDA_ImagePyramid> {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.inner_as_raw() }
+	}
+
+	impl core::AlgorithmTrait for core::Ptr<crate::cudalegacy::CUDA_ImagePyramid> {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.inner_as_raw_mut() }
+	}
+
+	ptr_cast_base! { core::Ptr<crate::cudalegacy::CUDA_ImagePyramid>, core::Ptr<core::Algorithm>, cv_PtrLcv_cuda_ImagePyramidG_to_PtrOfAlgorithm }
+
+	impl std::fmt::Debug for core::Ptr<crate::cudalegacy::CUDA_ImagePyramid> {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PtrOfCUDA_ImagePyramid")
+				.finish()
+		}
+	}
+
+}
+pub use cudalegacy_types::*;
+
+mod cudaobjdetect_types {
+	use crate::{mod_prelude::*, core, types, sys};
 
 	ptr_extern! { crate::cudaobjdetect::CUDA_CascadeClassifier,
 		cv_PtrLcv_cuda_CascadeClassifierG_new_null_const, cv_PtrLcv_cuda_CascadeClassifierG_delete, cv_PtrLcv_cuda_CascadeClassifierG_getInnerPtr_const, cv_PtrLcv_cuda_CascadeClassifierG_getInnerPtrMut
@@ -5169,9 +4997,6 @@ mod cudaobjdetect_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaobjdetect::CUDA_HOG>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_HOG = core::Ptr<crate::cudaobjdetect::CUDA_HOG>;
 
 	ptr_extern! { crate::cudaobjdetect::CUDA_HOG,
 		cv_PtrLcv_cuda_HOGG_new_null_const, cv_PtrLcv_cuda_HOGG_delete, cv_PtrLcv_cuda_HOGG_getInnerPtr_const, cv_PtrLcv_cuda_HOGG_getInnerPtrMut
@@ -5209,15 +5034,10 @@ mod cudaobjdetect_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_cudaobjdetect)]
 pub use cudaobjdetect_types::*;
 
-#[cfg(ocvrs_has_module_cudaoptflow)]
 mod cudaoptflow_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaoptflow::CUDA_BroxOpticalFlow>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_BroxOpticalFlow = core::Ptr<crate::cudaoptflow::CUDA_BroxOpticalFlow>;
 
 	ptr_extern! { crate::cudaoptflow::CUDA_BroxOpticalFlow,
 		cv_PtrLcv_cuda_BroxOpticalFlowG_new_null_const, cv_PtrLcv_cuda_BroxOpticalFlowG_delete, cv_PtrLcv_cuda_BroxOpticalFlowG_getInnerPtr_const, cv_PtrLcv_cuda_BroxOpticalFlowG_getInnerPtrMut
@@ -5264,9 +5084,6 @@ mod cudaoptflow_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaoptflow::CUDA_DenseOpticalFlow>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_DenseOpticalFlow = core::Ptr<crate::cudaoptflow::CUDA_DenseOpticalFlow>;
-
 	ptr_extern! { crate::cudaoptflow::CUDA_DenseOpticalFlow,
 		cv_PtrLcv_cuda_DenseOpticalFlowG_new_null_const, cv_PtrLcv_cuda_DenseOpticalFlowG_delete, cv_PtrLcv_cuda_DenseOpticalFlowG_getInnerPtr_const, cv_PtrLcv_cuda_DenseOpticalFlowG_getInnerPtrMut
 	}
@@ -5301,9 +5118,6 @@ mod cudaoptflow_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_DensePyrLKOpticalFlow = core::Ptr<crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow>;
 
 	ptr_extern! { crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow,
 		cv_PtrLcv_cuda_DensePyrLKOpticalFlowG_new_null_const, cv_PtrLcv_cuda_DensePyrLKOpticalFlowG_delete, cv_PtrLcv_cuda_DensePyrLKOpticalFlowG_getInnerPtr_const, cv_PtrLcv_cuda_DensePyrLKOpticalFlowG_getInnerPtrMut
@@ -5350,9 +5164,6 @@ mod cudaoptflow_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaoptflow::CUDA_FarnebackOpticalFlow>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_FarnebackOpticalFlow = core::Ptr<crate::cudaoptflow::CUDA_FarnebackOpticalFlow>;
-
 	ptr_extern! { crate::cudaoptflow::CUDA_FarnebackOpticalFlow,
 		cv_PtrLcv_cuda_FarnebackOpticalFlowG_new_null_const, cv_PtrLcv_cuda_FarnebackOpticalFlowG_delete, cv_PtrLcv_cuda_FarnebackOpticalFlowG_getInnerPtr_const, cv_PtrLcv_cuda_FarnebackOpticalFlowG_getInnerPtrMut
 	}
@@ -5398,9 +5209,6 @@ mod cudaoptflow_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaoptflow::CUDA_NvidiaHWOpticalFlow>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_NvidiaHWOpticalFlow = core::Ptr<crate::cudaoptflow::CUDA_NvidiaHWOpticalFlow>;
-
 	ptr_extern! { crate::cudaoptflow::CUDA_NvidiaHWOpticalFlow,
 		cv_PtrLcv_cuda_NvidiaHWOpticalFlowG_new_null_const, cv_PtrLcv_cuda_NvidiaHWOpticalFlowG_delete, cv_PtrLcv_cuda_NvidiaHWOpticalFlowG_getInnerPtr_const, cv_PtrLcv_cuda_NvidiaHWOpticalFlowG_getInnerPtrMut
 	}
@@ -5435,9 +5243,6 @@ mod cudaoptflow_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_NvidiaOpticalFlow_1_0 = core::Ptr<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0>;
 
 	ptr_extern! { crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0,
 		cv_PtrLcv_cuda_NvidiaOpticalFlow_1_0G_new_null_const, cv_PtrLcv_cuda_NvidiaOpticalFlow_1_0G_delete, cv_PtrLcv_cuda_NvidiaOpticalFlow_1_0G_getInnerPtr_const, cv_PtrLcv_cuda_NvidiaOpticalFlow_1_0G_getInnerPtrMut
@@ -5484,9 +5289,6 @@ mod cudaoptflow_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_NvidiaOpticalFlow_2_0 = core::Ptr<crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0>;
-
 	ptr_extern! { crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0,
 		cv_PtrLcv_cuda_NvidiaOpticalFlow_2_0G_new_null_const, cv_PtrLcv_cuda_NvidiaOpticalFlow_2_0G_delete, cv_PtrLcv_cuda_NvidiaOpticalFlow_2_0G_getInnerPtr_const, cv_PtrLcv_cuda_NvidiaOpticalFlow_2_0G_getInnerPtrMut
 	}
@@ -5531,9 +5333,6 @@ mod cudaoptflow_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_OpticalFlowDual_TVL1 = core::Ptr<crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1>;
 
 	ptr_extern! { crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1,
 		cv_PtrLcv_cuda_OpticalFlowDual_TVL1G_new_null_const, cv_PtrLcv_cuda_OpticalFlowDual_TVL1G_delete, cv_PtrLcv_cuda_OpticalFlowDual_TVL1G_getInnerPtr_const, cv_PtrLcv_cuda_OpticalFlowDual_TVL1G_getInnerPtrMut
@@ -5580,9 +5379,6 @@ mod cudaoptflow_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaoptflow::CUDA_SparseOpticalFlow>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_SparseOpticalFlow = core::Ptr<crate::cudaoptflow::CUDA_SparseOpticalFlow>;
-
 	ptr_extern! { crate::cudaoptflow::CUDA_SparseOpticalFlow,
 		cv_PtrLcv_cuda_SparseOpticalFlowG_new_null_const, cv_PtrLcv_cuda_SparseOpticalFlowG_delete, cv_PtrLcv_cuda_SparseOpticalFlowG_getInnerPtr_const, cv_PtrLcv_cuda_SparseOpticalFlowG_getInnerPtrMut
 	}
@@ -5617,9 +5413,6 @@ mod cudaoptflow_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_SparsePyrLKOpticalFlow = core::Ptr<crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow>;
 
 	ptr_extern! { crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow,
 		cv_PtrLcv_cuda_SparsePyrLKOpticalFlowG_new_null_const, cv_PtrLcv_cuda_SparsePyrLKOpticalFlowG_delete, cv_PtrLcv_cuda_SparsePyrLKOpticalFlowG_getInnerPtr_const, cv_PtrLcv_cuda_SparsePyrLKOpticalFlowG_getInnerPtrMut
@@ -5667,15 +5460,10 @@ mod cudaoptflow_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_cudaoptflow)]
 pub use cudaoptflow_types::*;
 
-#[cfg(ocvrs_has_module_cudastereo)]
 mod cudastereo_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudastereo::CUDA_DisparityBilateralFilter>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_DisparityBilateralFilter = core::Ptr<crate::cudastereo::CUDA_DisparityBilateralFilter>;
 
 	ptr_extern! { crate::cudastereo::CUDA_DisparityBilateralFilter,
 		cv_PtrLcv_cuda_DisparityBilateralFilterG_new_null_const, cv_PtrLcv_cuda_DisparityBilateralFilterG_delete, cv_PtrLcv_cuda_DisparityBilateralFilterG_getInnerPtr_const, cv_PtrLcv_cuda_DisparityBilateralFilterG_getInnerPtrMut
@@ -5711,9 +5499,6 @@ mod cudastereo_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudastereo::CUDA_StereoBM>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_StereoBM = core::Ptr<crate::cudastereo::CUDA_StereoBM>;
 
 	ptr_extern! { crate::cudastereo::CUDA_StereoBM,
 		cv_PtrLcv_cuda_StereoBMG_new_null_const, cv_PtrLcv_cuda_StereoBMG_delete, cv_PtrLcv_cuda_StereoBMG_getInnerPtr_const, cv_PtrLcv_cuda_StereoBMG_getInnerPtrMut
@@ -5770,9 +5555,6 @@ mod cudastereo_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudastereo::CUDA_StereoBeliefPropagation>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_StereoBeliefPropagation = core::Ptr<crate::cudastereo::CUDA_StereoBeliefPropagation>;
-
 	ptr_extern! { crate::cudastereo::CUDA_StereoBeliefPropagation,
 		cv_PtrLcv_cuda_StereoBeliefPropagationG_new_null_const, cv_PtrLcv_cuda_StereoBeliefPropagationG_delete, cv_PtrLcv_cuda_StereoBeliefPropagationG_getInnerPtr_const, cv_PtrLcv_cuda_StereoBeliefPropagationG_getInnerPtrMut
 	}
@@ -5817,9 +5599,6 @@ mod cudastereo_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudastereo::CUDA_StereoConstantSpaceBP>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_StereoConstantSpaceBP = core::Ptr<crate::cudastereo::CUDA_StereoConstantSpaceBP>;
 
 	ptr_extern! { crate::cudastereo::CUDA_StereoConstantSpaceBP,
 		cv_PtrLcv_cuda_StereoConstantSpaceBPG_new_null_const, cv_PtrLcv_cuda_StereoConstantSpaceBPG_delete, cv_PtrLcv_cuda_StereoConstantSpaceBPG_getInnerPtr_const, cv_PtrLcv_cuda_StereoConstantSpaceBPG_getInnerPtrMut
@@ -5875,9 +5654,6 @@ mod cudastereo_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::cudastereo::CUDA_StereoSGM>` instead, removal in Nov 2024"]
-	pub type PtrOfCUDA_StereoSGM = core::Ptr<crate::cudastereo::CUDA_StereoSGM>;
 
 	ptr_extern! { crate::cudastereo::CUDA_StereoSGM,
 		cv_PtrLcv_cuda_StereoSGMG_new_null_const, cv_PtrLcv_cuda_StereoSGMG_delete, cv_PtrLcv_cuda_StereoSGMG_getInnerPtr_const, cv_PtrLcv_cuda_StereoSGMG_getInnerPtrMut
@@ -5935,15 +5711,10 @@ mod cudastereo_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_cudastereo)]
 pub use cudastereo_types::*;
 
-#[cfg(ocvrs_has_module_dnn)]
 mod dnn_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::AbsLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfAbsLayer = core::Ptr<crate::dnn::AbsLayer>;
 
 	ptr_extern! { crate::dnn::AbsLayer,
 		cv_PtrLcv_dnn_AbsLayerG_new_null_const, cv_PtrLcv_dnn_AbsLayerG_delete, cv_PtrLcv_dnn_AbsLayerG_getInnerPtr_const, cv_PtrLcv_dnn_AbsLayerG_getInnerPtrMut
@@ -6005,9 +5776,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::AccumLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfAccumLayer = core::Ptr<crate::dnn::AccumLayer>;
-
 	ptr_extern! { crate::dnn::AccumLayer,
 		cv_PtrLcv_dnn_AccumLayerG_new_null_const, cv_PtrLcv_dnn_AccumLayerG_delete, cv_PtrLcv_dnn_AccumLayerG_getInnerPtr_const, cv_PtrLcv_dnn_AccumLayerG_getInnerPtrMut
 	}
@@ -6057,9 +5825,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::AcosLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfAcosLayer = core::Ptr<crate::dnn::AcosLayer>;
 
 	ptr_extern! { crate::dnn::AcosLayer,
 		cv_PtrLcv_dnn_AcosLayerG_new_null_const, cv_PtrLcv_dnn_AcosLayerG_delete, cv_PtrLcv_dnn_AcosLayerG_getInnerPtr_const, cv_PtrLcv_dnn_AcosLayerG_getInnerPtrMut
@@ -6121,9 +5886,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::AcoshLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfAcoshLayer = core::Ptr<crate::dnn::AcoshLayer>;
-
 	ptr_extern! { crate::dnn::AcoshLayer,
 		cv_PtrLcv_dnn_AcoshLayerG_new_null_const, cv_PtrLcv_dnn_AcoshLayerG_delete, cv_PtrLcv_dnn_AcoshLayerG_getInnerPtr_const, cv_PtrLcv_dnn_AcoshLayerG_getInnerPtrMut
 	}
@@ -6184,9 +5946,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ActivationLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfActivationLayer = core::Ptr<crate::dnn::ActivationLayer>;
-
 	ptr_extern! { crate::dnn::ActivationLayer,
 		cv_PtrLcv_dnn_ActivationLayerG_new_null_const, cv_PtrLcv_dnn_ActivationLayerG_delete, cv_PtrLcv_dnn_ActivationLayerG_getInnerPtr_const, cv_PtrLcv_dnn_ActivationLayerG_getInnerPtrMut
 	}
@@ -6236,9 +5995,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ActivationLayerInt8>` instead, removal in Nov 2024"]
-	pub type PtrOfActivationLayerInt8 = core::Ptr<crate::dnn::ActivationLayerInt8>;
 
 	ptr_extern! { crate::dnn::ActivationLayerInt8,
 		cv_PtrLcv_dnn_ActivationLayerInt8G_new_null_const, cv_PtrLcv_dnn_ActivationLayerInt8G_delete, cv_PtrLcv_dnn_ActivationLayerInt8G_getInnerPtr_const, cv_PtrLcv_dnn_ActivationLayerInt8G_getInnerPtrMut
@@ -6300,9 +6056,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ArgLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfArgLayer = core::Ptr<crate::dnn::ArgLayer>;
-
 	ptr_extern! { crate::dnn::ArgLayer,
 		cv_PtrLcv_dnn_ArgLayerG_new_null_const, cv_PtrLcv_dnn_ArgLayerG_delete, cv_PtrLcv_dnn_ArgLayerG_getInnerPtr_const, cv_PtrLcv_dnn_ArgLayerG_getInnerPtrMut
 	}
@@ -6352,9 +6105,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::AsinLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfAsinLayer = core::Ptr<crate::dnn::AsinLayer>;
 
 	ptr_extern! { crate::dnn::AsinLayer,
 		cv_PtrLcv_dnn_AsinLayerG_new_null_const, cv_PtrLcv_dnn_AsinLayerG_delete, cv_PtrLcv_dnn_AsinLayerG_getInnerPtr_const, cv_PtrLcv_dnn_AsinLayerG_getInnerPtrMut
@@ -6416,9 +6166,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::AsinhLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfAsinhLayer = core::Ptr<crate::dnn::AsinhLayer>;
-
 	ptr_extern! { crate::dnn::AsinhLayer,
 		cv_PtrLcv_dnn_AsinhLayerG_new_null_const, cv_PtrLcv_dnn_AsinhLayerG_delete, cv_PtrLcv_dnn_AsinhLayerG_getInnerPtr_const, cv_PtrLcv_dnn_AsinhLayerG_getInnerPtrMut
 	}
@@ -6478,9 +6225,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::AtanLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfAtanLayer = core::Ptr<crate::dnn::AtanLayer>;
 
 	ptr_extern! { crate::dnn::AtanLayer,
 		cv_PtrLcv_dnn_AtanLayerG_new_null_const, cv_PtrLcv_dnn_AtanLayerG_delete, cv_PtrLcv_dnn_AtanLayerG_getInnerPtr_const, cv_PtrLcv_dnn_AtanLayerG_getInnerPtrMut
@@ -6542,9 +6286,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::AtanhLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfAtanhLayer = core::Ptr<crate::dnn::AtanhLayer>;
-
 	ptr_extern! { crate::dnn::AtanhLayer,
 		cv_PtrLcv_dnn_AtanhLayerG_new_null_const, cv_PtrLcv_dnn_AtanhLayerG_delete, cv_PtrLcv_dnn_AtanhLayerG_getInnerPtr_const, cv_PtrLcv_dnn_AtanhLayerG_getInnerPtrMut
 	}
@@ -6605,9 +6346,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::AttentionLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfAttentionLayer = core::Ptr<crate::dnn::AttentionLayer>;
-
 	ptr_extern! { crate::dnn::AttentionLayer,
 		cv_PtrLcv_dnn_AttentionLayerG_new_null_const, cv_PtrLcv_dnn_AttentionLayerG_delete, cv_PtrLcv_dnn_AttentionLayerG_getInnerPtr_const, cv_PtrLcv_dnn_AttentionLayerG_getInnerPtrMut
 	}
@@ -6657,9 +6395,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::BNLLLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfBNLLLayer = core::Ptr<crate::dnn::BNLLLayer>;
 
 	ptr_extern! { crate::dnn::BNLLLayer,
 		cv_PtrLcv_dnn_BNLLLayerG_new_null_const, cv_PtrLcv_dnn_BNLLLayerG_delete, cv_PtrLcv_dnn_BNLLLayerG_getInnerPtr_const, cv_PtrLcv_dnn_BNLLLayerG_getInnerPtrMut
@@ -6721,9 +6456,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::BackendNode>` instead, removal in Nov 2024"]
-	pub type PtrOfBackendNode = core::Ptr<crate::dnn::BackendNode>;
-
 	ptr_extern! { crate::dnn::BackendNode,
 		cv_PtrLcv_dnn_BackendNodeG_new_null_const, cv_PtrLcv_dnn_BackendNodeG_delete, cv_PtrLcv_dnn_BackendNodeG_getInnerPtr_const, cv_PtrLcv_dnn_BackendNodeG_getInnerPtrMut
 	}
@@ -6751,9 +6483,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::BackendWrapper>` instead, removal in Nov 2024"]
-	pub type PtrOfBackendWrapper = core::Ptr<crate::dnn::BackendWrapper>;
-
 	ptr_extern! { crate::dnn::BackendWrapper,
 		cv_PtrLcv_dnn_BackendWrapperG_new_null_const, cv_PtrLcv_dnn_BackendWrapperG_delete, cv_PtrLcv_dnn_BackendWrapperG_getInnerPtr_const, cv_PtrLcv_dnn_BackendWrapperG_getInnerPtrMut
 	}
@@ -6780,9 +6509,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::BaseConvolutionLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfBaseConvolutionLayer = core::Ptr<crate::dnn::BaseConvolutionLayer>;
 
 	ptr_extern! { crate::dnn::BaseConvolutionLayer,
 		cv_PtrLcv_dnn_BaseConvolutionLayerG_new_null_const, cv_PtrLcv_dnn_BaseConvolutionLayerG_delete, cv_PtrLcv_dnn_BaseConvolutionLayerG_getInnerPtr_const, cv_PtrLcv_dnn_BaseConvolutionLayerG_getInnerPtrMut
@@ -6847,9 +6573,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::BatchNormLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfBatchNormLayer = core::Ptr<crate::dnn::BatchNormLayer>;
-
 	ptr_extern! { crate::dnn::BatchNormLayer,
 		cv_PtrLcv_dnn_BatchNormLayerG_new_null_const, cv_PtrLcv_dnn_BatchNormLayerG_delete, cv_PtrLcv_dnn_BatchNormLayerG_getInnerPtr_const, cv_PtrLcv_dnn_BatchNormLayerG_getInnerPtrMut
 	}
@@ -6912,9 +6635,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::BatchNormLayerInt8>` instead, removal in Nov 2024"]
-	pub type PtrOfBatchNormLayerInt8 = core::Ptr<crate::dnn::BatchNormLayerInt8>;
 
 	ptr_extern! { crate::dnn::BatchNormLayerInt8,
 		cv_PtrLcv_dnn_BatchNormLayerInt8G_new_null_const, cv_PtrLcv_dnn_BatchNormLayerInt8G_delete, cv_PtrLcv_dnn_BatchNormLayerInt8G_getInnerPtr_const, cv_PtrLcv_dnn_BatchNormLayerInt8G_getInnerPtrMut
@@ -6993,9 +6713,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::BlankLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfBlankLayer = core::Ptr<crate::dnn::BlankLayer>;
-
 	ptr_extern! { crate::dnn::BlankLayer,
 		cv_PtrLcv_dnn_BlankLayerG_new_null_const, cv_PtrLcv_dnn_BlankLayerG_delete, cv_PtrLcv_dnn_BlankLayerG_getInnerPtr_const, cv_PtrLcv_dnn_BlankLayerG_getInnerPtrMut
 	}
@@ -7045,9 +6762,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::CeilLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfCeilLayer = core::Ptr<crate::dnn::CeilLayer>;
 
 	ptr_extern! { crate::dnn::CeilLayer,
 		cv_PtrLcv_dnn_CeilLayerG_new_null_const, cv_PtrLcv_dnn_CeilLayerG_delete, cv_PtrLcv_dnn_CeilLayerG_getInnerPtr_const, cv_PtrLcv_dnn_CeilLayerG_getInnerPtrMut
@@ -7108,9 +6822,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::CeluLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfCeluLayer = core::Ptr<crate::dnn::CeluLayer>;
 
 	ptr_extern! { crate::dnn::CeluLayer,
 		cv_PtrLcv_dnn_CeluLayerG_new_null_const, cv_PtrLcv_dnn_CeluLayerG_delete, cv_PtrLcv_dnn_CeluLayerG_getInnerPtr_const, cv_PtrLcv_dnn_CeluLayerG_getInnerPtrMut
@@ -7173,9 +6884,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ChannelsPReLULayer>` instead, removal in Nov 2024"]
-	pub type PtrOfChannelsPReLULayer = core::Ptr<crate::dnn::ChannelsPReLULayer>;
-
 	ptr_extern! { crate::dnn::ChannelsPReLULayer,
 		cv_PtrLcv_dnn_ChannelsPReLULayerG_new_null_const, cv_PtrLcv_dnn_ChannelsPReLULayerG_delete, cv_PtrLcv_dnn_ChannelsPReLULayerG_getInnerPtr_const, cv_PtrLcv_dnn_ChannelsPReLULayerG_getInnerPtrMut
 	}
@@ -7236,9 +6944,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::CompareLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfCompareLayer = core::Ptr<crate::dnn::CompareLayer>;
-
 	ptr_extern! { crate::dnn::CompareLayer,
 		cv_PtrLcv_dnn_CompareLayerG_new_null_const, cv_PtrLcv_dnn_CompareLayerG_delete, cv_PtrLcv_dnn_CompareLayerG_getInnerPtr_const, cv_PtrLcv_dnn_CompareLayerG_getInnerPtrMut
 	}
@@ -7288,9 +6993,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ConcatLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfConcatLayer = core::Ptr<crate::dnn::ConcatLayer>;
 
 	ptr_extern! { crate::dnn::ConcatLayer,
 		cv_PtrLcv_dnn_ConcatLayerG_new_null_const, cv_PtrLcv_dnn_ConcatLayerG_delete, cv_PtrLcv_dnn_ConcatLayerG_getInnerPtr_const, cv_PtrLcv_dnn_ConcatLayerG_getInnerPtrMut
@@ -7345,9 +7047,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ConstLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfConstLayer = core::Ptr<crate::dnn::ConstLayer>;
-
 	ptr_extern! { crate::dnn::ConstLayer,
 		cv_PtrLcv_dnn_ConstLayerG_new_null_const, cv_PtrLcv_dnn_ConstLayerG_delete, cv_PtrLcv_dnn_ConstLayerG_getInnerPtr_const, cv_PtrLcv_dnn_ConstLayerG_getInnerPtrMut
 	}
@@ -7397,9 +7096,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ConvolutionLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfConvolutionLayer = core::Ptr<crate::dnn::ConvolutionLayer>;
 
 	ptr_extern! { crate::dnn::ConvolutionLayer,
 		cv_PtrLcv_dnn_ConvolutionLayerG_new_null_const, cv_PtrLcv_dnn_ConvolutionLayerG_delete, cv_PtrLcv_dnn_ConvolutionLayerG_getInnerPtr_const, cv_PtrLcv_dnn_ConvolutionLayerG_getInnerPtrMut
@@ -7476,9 +7172,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ConvolutionLayerInt8>` instead, removal in Nov 2024"]
-	pub type PtrOfConvolutionLayerInt8 = core::Ptr<crate::dnn::ConvolutionLayerInt8>;
 
 	ptr_extern! { crate::dnn::ConvolutionLayerInt8,
 		cv_PtrLcv_dnn_ConvolutionLayerInt8G_new_null_const, cv_PtrLcv_dnn_ConvolutionLayerInt8G_delete, cv_PtrLcv_dnn_ConvolutionLayerInt8G_getInnerPtr_const, cv_PtrLcv_dnn_ConvolutionLayerInt8G_getInnerPtrMut
@@ -7559,9 +7252,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::CorrelationLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfCorrelationLayer = core::Ptr<crate::dnn::CorrelationLayer>;
-
 	ptr_extern! { crate::dnn::CorrelationLayer,
 		cv_PtrLcv_dnn_CorrelationLayerG_new_null_const, cv_PtrLcv_dnn_CorrelationLayerG_delete, cv_PtrLcv_dnn_CorrelationLayerG_getInnerPtr_const, cv_PtrLcv_dnn_CorrelationLayerG_getInnerPtrMut
 	}
@@ -7611,9 +7301,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::CosLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfCosLayer = core::Ptr<crate::dnn::CosLayer>;
 
 	ptr_extern! { crate::dnn::CosLayer,
 		cv_PtrLcv_dnn_CosLayerG_new_null_const, cv_PtrLcv_dnn_CosLayerG_delete, cv_PtrLcv_dnn_CosLayerG_getInnerPtr_const, cv_PtrLcv_dnn_CosLayerG_getInnerPtrMut
@@ -7675,9 +7362,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::CoshLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfCoshLayer = core::Ptr<crate::dnn::CoshLayer>;
-
 	ptr_extern! { crate::dnn::CoshLayer,
 		cv_PtrLcv_dnn_CoshLayerG_new_null_const, cv_PtrLcv_dnn_CoshLayerG_delete, cv_PtrLcv_dnn_CoshLayerG_getInnerPtr_const, cv_PtrLcv_dnn_CoshLayerG_getInnerPtrMut
 	}
@@ -7738,9 +7422,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::CropAndResizeLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfCropAndResizeLayer = core::Ptr<crate::dnn::CropAndResizeLayer>;
-
 	ptr_extern! { crate::dnn::CropAndResizeLayer,
 		cv_PtrLcv_dnn_CropAndResizeLayerG_new_null_const, cv_PtrLcv_dnn_CropAndResizeLayerG_delete, cv_PtrLcv_dnn_CropAndResizeLayerG_getInnerPtr_const, cv_PtrLcv_dnn_CropAndResizeLayerG_getInnerPtrMut
 	}
@@ -7791,9 +7472,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::CropLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfCropLayer = core::Ptr<crate::dnn::CropLayer>;
-
 	ptr_extern! { crate::dnn::CropLayer,
 		cv_PtrLcv_dnn_CropLayerG_new_null_const, cv_PtrLcv_dnn_CropLayerG_delete, cv_PtrLcv_dnn_CropLayerG_getInnerPtr_const, cv_PtrLcv_dnn_CropLayerG_getInnerPtrMut
 	}
@@ -7843,9 +7521,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::CumSumLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfCumSumLayer = core::Ptr<crate::dnn::CumSumLayer>;
 
 	ptr_extern! { crate::dnn::CumSumLayer,
 		cv_PtrLcv_dnn_CumSumLayerG_new_null_const, cv_PtrLcv_dnn_CumSumLayerG_delete, cv_PtrLcv_dnn_CumSumLayerG_getInnerPtr_const, cv_PtrLcv_dnn_CumSumLayerG_getInnerPtrMut
@@ -7899,9 +7574,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::DataAugmentationLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfDataAugmentationLayer = core::Ptr<crate::dnn::DataAugmentationLayer>;
-
 	ptr_extern! { crate::dnn::DataAugmentationLayer,
 		cv_PtrLcv_dnn_DataAugmentationLayerG_new_null_const, cv_PtrLcv_dnn_DataAugmentationLayerG_delete, cv_PtrLcv_dnn_DataAugmentationLayerG_getInnerPtr_const, cv_PtrLcv_dnn_DataAugmentationLayerG_getInnerPtrMut
 	}
@@ -7951,9 +7623,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::DeconvolutionLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfDeconvolutionLayer = core::Ptr<crate::dnn::DeconvolutionLayer>;
 
 	ptr_extern! { crate::dnn::DeconvolutionLayer,
 		cv_PtrLcv_dnn_DeconvolutionLayerG_new_null_const, cv_PtrLcv_dnn_DeconvolutionLayerG_delete, cv_PtrLcv_dnn_DeconvolutionLayerG_getInnerPtr_const, cv_PtrLcv_dnn_DeconvolutionLayerG_getInnerPtrMut
@@ -8028,9 +7697,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::DepthToSpaceLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfDepthToSpaceLayer = core::Ptr<crate::dnn::DepthToSpaceLayer>;
-
 	ptr_extern! { crate::dnn::DepthToSpaceLayer,
 		cv_PtrLcv_dnn_DepthToSpaceLayerG_new_null_const, cv_PtrLcv_dnn_DepthToSpaceLayerG_delete, cv_PtrLcv_dnn_DepthToSpaceLayerG_getInnerPtr_const, cv_PtrLcv_dnn_DepthToSpaceLayerG_getInnerPtrMut
 	}
@@ -8080,9 +7746,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::DequantizeLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfDequantizeLayer = core::Ptr<crate::dnn::DequantizeLayer>;
 
 	ptr_extern! { crate::dnn::DequantizeLayer,
 		cv_PtrLcv_dnn_DequantizeLayerG_new_null_const, cv_PtrLcv_dnn_DequantizeLayerG_delete, cv_PtrLcv_dnn_DequantizeLayerG_getInnerPtr_const, cv_PtrLcv_dnn_DequantizeLayerG_getInnerPtrMut
@@ -8136,9 +7799,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::DetectionOutputLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfDetectionOutputLayer = core::Ptr<crate::dnn::DetectionOutputLayer>;
-
 	ptr_extern! { crate::dnn::DetectionOutputLayer,
 		cv_PtrLcv_dnn_DetectionOutputLayerG_new_null_const, cv_PtrLcv_dnn_DetectionOutputLayerG_delete, cv_PtrLcv_dnn_DetectionOutputLayerG_getInnerPtr_const, cv_PtrLcv_dnn_DetectionOutputLayerG_getInnerPtrMut
 	}
@@ -8188,9 +7848,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ELULayer>` instead, removal in Nov 2024"]
-	pub type PtrOfELULayer = core::Ptr<crate::dnn::ELULayer>;
 
 	ptr_extern! { crate::dnn::ELULayer,
 		cv_PtrLcv_dnn_ELULayerG_new_null_const, cv_PtrLcv_dnn_ELULayerG_delete, cv_PtrLcv_dnn_ELULayerG_getInnerPtr_const, cv_PtrLcv_dnn_ELULayerG_getInnerPtrMut
@@ -8253,9 +7910,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::EinsumLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfEinsumLayer = core::Ptr<crate::dnn::EinsumLayer>;
-
 	ptr_extern! { crate::dnn::EinsumLayer,
 		cv_PtrLcv_dnn_EinsumLayerG_new_null_const, cv_PtrLcv_dnn_EinsumLayerG_delete, cv_PtrLcv_dnn_EinsumLayerG_getInnerPtr_const, cv_PtrLcv_dnn_EinsumLayerG_getInnerPtrMut
 	}
@@ -8305,9 +7959,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::EltwiseLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfEltwiseLayer = core::Ptr<crate::dnn::EltwiseLayer>;
 
 	ptr_extern! { crate::dnn::EltwiseLayer,
 		cv_PtrLcv_dnn_EltwiseLayerG_new_null_const, cv_PtrLcv_dnn_EltwiseLayerG_delete, cv_PtrLcv_dnn_EltwiseLayerG_getInnerPtr_const, cv_PtrLcv_dnn_EltwiseLayerG_getInnerPtrMut
@@ -8359,9 +8010,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::EltwiseLayerInt8>` instead, removal in Nov 2024"]
-	pub type PtrOfEltwiseLayerInt8 = core::Ptr<crate::dnn::EltwiseLayerInt8>;
-
 	ptr_extern! { crate::dnn::EltwiseLayerInt8,
 		cv_PtrLcv_dnn_EltwiseLayerInt8G_new_null_const, cv_PtrLcv_dnn_EltwiseLayerInt8G_delete, cv_PtrLcv_dnn_EltwiseLayerInt8G_getInnerPtr_const, cv_PtrLcv_dnn_EltwiseLayerInt8G_getInnerPtrMut
 	}
@@ -8411,9 +8059,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ErfLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfErfLayer = core::Ptr<crate::dnn::ErfLayer>;
 
 	ptr_extern! { crate::dnn::ErfLayer,
 		cv_PtrLcv_dnn_ErfLayerG_new_null_const, cv_PtrLcv_dnn_ErfLayerG_delete, cv_PtrLcv_dnn_ErfLayerG_getInnerPtr_const, cv_PtrLcv_dnn_ErfLayerG_getInnerPtrMut
@@ -8474,9 +8119,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ExpLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfExpLayer = core::Ptr<crate::dnn::ExpLayer>;
 
 	ptr_extern! { crate::dnn::ExpLayer,
 		cv_PtrLcv_dnn_ExpLayerG_new_null_const, cv_PtrLcv_dnn_ExpLayerG_delete, cv_PtrLcv_dnn_ExpLayerG_getInnerPtr_const, cv_PtrLcv_dnn_ExpLayerG_getInnerPtrMut
@@ -8541,9 +8183,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ExpandLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfExpandLayer = core::Ptr<crate::dnn::ExpandLayer>;
-
 	ptr_extern! { crate::dnn::ExpandLayer,
 		cv_PtrLcv_dnn_ExpandLayerG_new_null_const, cv_PtrLcv_dnn_ExpandLayerG_delete, cv_PtrLcv_dnn_ExpandLayerG_getInnerPtr_const, cv_PtrLcv_dnn_ExpandLayerG_getInnerPtrMut
 	}
@@ -8594,9 +8233,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::FlattenLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfFlattenLayer = core::Ptr<crate::dnn::FlattenLayer>;
-
 	ptr_extern! { crate::dnn::FlattenLayer,
 		cv_PtrLcv_dnn_FlattenLayerG_new_null_const, cv_PtrLcv_dnn_FlattenLayerG_delete, cv_PtrLcv_dnn_FlattenLayerG_getInnerPtr_const, cv_PtrLcv_dnn_FlattenLayerG_getInnerPtrMut
 	}
@@ -8646,9 +8282,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::FloorLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfFloorLayer = core::Ptr<crate::dnn::FloorLayer>;
 
 	ptr_extern! { crate::dnn::FloorLayer,
 		cv_PtrLcv_dnn_FloorLayerG_new_null_const, cv_PtrLcv_dnn_FloorLayerG_delete, cv_PtrLcv_dnn_FloorLayerG_getInnerPtr_const, cv_PtrLcv_dnn_FloorLayerG_getInnerPtrMut
@@ -8710,9 +8343,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::FlowWarpLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfFlowWarpLayer = core::Ptr<crate::dnn::FlowWarpLayer>;
-
 	ptr_extern! { crate::dnn::FlowWarpLayer,
 		cv_PtrLcv_dnn_FlowWarpLayerG_new_null_const, cv_PtrLcv_dnn_FlowWarpLayerG_delete, cv_PtrLcv_dnn_FlowWarpLayerG_getInnerPtr_const, cv_PtrLcv_dnn_FlowWarpLayerG_getInnerPtrMut
 	}
@@ -8762,9 +8392,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::GRULayer>` instead, removal in Nov 2024"]
-	pub type PtrOfGRULayer = core::Ptr<crate::dnn::GRULayer>;
 
 	ptr_extern! { crate::dnn::GRULayer,
 		cv_PtrLcv_dnn_GRULayerG_new_null_const, cv_PtrLcv_dnn_GRULayerG_delete, cv_PtrLcv_dnn_GRULayerG_getInnerPtr_const, cv_PtrLcv_dnn_GRULayerG_getInnerPtrMut
@@ -8816,9 +8443,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::GatherElementsLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfGatherElementsLayer = core::Ptr<crate::dnn::GatherElementsLayer>;
-
 	ptr_extern! { crate::dnn::GatherElementsLayer,
 		cv_PtrLcv_dnn_GatherElementsLayerG_new_null_const, cv_PtrLcv_dnn_GatherElementsLayerG_delete, cv_PtrLcv_dnn_GatherElementsLayerG_getInnerPtr_const, cv_PtrLcv_dnn_GatherElementsLayerG_getInnerPtrMut
 	}
@@ -8869,9 +8493,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::GatherLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfGatherLayer = core::Ptr<crate::dnn::GatherLayer>;
-
 	ptr_extern! { crate::dnn::GatherLayer,
 		cv_PtrLcv_dnn_GatherLayerG_new_null_const, cv_PtrLcv_dnn_GatherLayerG_delete, cv_PtrLcv_dnn_GatherLayerG_getInnerPtr_const, cv_PtrLcv_dnn_GatherLayerG_getInnerPtrMut
 	}
@@ -8921,9 +8542,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::GeluApproximationLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfGeluApproximationLayer = core::Ptr<crate::dnn::GeluApproximationLayer>;
 
 	ptr_extern! { crate::dnn::GeluApproximationLayer,
 		cv_PtrLcv_dnn_GeluApproximationLayerG_new_null_const, cv_PtrLcv_dnn_GeluApproximationLayerG_delete, cv_PtrLcv_dnn_GeluApproximationLayerG_getInnerPtr_const, cv_PtrLcv_dnn_GeluApproximationLayerG_getInnerPtrMut
@@ -8985,9 +8603,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::GeluLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfGeluLayer = core::Ptr<crate::dnn::GeluLayer>;
-
 	ptr_extern! { crate::dnn::GeluLayer,
 		cv_PtrLcv_dnn_GeluLayerG_new_null_const, cv_PtrLcv_dnn_GeluLayerG_delete, cv_PtrLcv_dnn_GeluLayerG_getInnerPtr_const, cv_PtrLcv_dnn_GeluLayerG_getInnerPtrMut
 	}
@@ -9048,9 +8663,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::GemmLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfGemmLayer = core::Ptr<crate::dnn::GemmLayer>;
-
 	ptr_extern! { crate::dnn::GemmLayer,
 		cv_PtrLcv_dnn_GemmLayerG_new_null_const, cv_PtrLcv_dnn_GemmLayerG_delete, cv_PtrLcv_dnn_GemmLayerG_getInnerPtr_const, cv_PtrLcv_dnn_GemmLayerG_getInnerPtrMut
 	}
@@ -9105,9 +8717,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::GroupNormLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfGroupNormLayer = core::Ptr<crate::dnn::GroupNormLayer>;
-
 	ptr_extern! { crate::dnn::GroupNormLayer,
 		cv_PtrLcv_dnn_GroupNormLayerG_new_null_const, cv_PtrLcv_dnn_GroupNormLayerG_delete, cv_PtrLcv_dnn_GroupNormLayerG_getInnerPtr_const, cv_PtrLcv_dnn_GroupNormLayerG_getInnerPtrMut
 	}
@@ -9157,9 +8766,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::HardSigmoidLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfHardSigmoidLayer = core::Ptr<crate::dnn::HardSigmoidLayer>;
 
 	ptr_extern! { crate::dnn::HardSigmoidLayer,
 		cv_PtrLcv_dnn_HardSigmoidLayerG_new_null_const, cv_PtrLcv_dnn_HardSigmoidLayerG_delete, cv_PtrLcv_dnn_HardSigmoidLayerG_getInnerPtr_const, cv_PtrLcv_dnn_HardSigmoidLayerG_getInnerPtrMut
@@ -9223,9 +8829,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::HardSwishLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfHardSwishLayer = core::Ptr<crate::dnn::HardSwishLayer>;
-
 	ptr_extern! { crate::dnn::HardSwishLayer,
 		cv_PtrLcv_dnn_HardSwishLayerG_new_null_const, cv_PtrLcv_dnn_HardSwishLayerG_delete, cv_PtrLcv_dnn_HardSwishLayerG_getInnerPtr_const, cv_PtrLcv_dnn_HardSwishLayerG_getInnerPtrMut
 	}
@@ -9286,9 +8889,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::InnerProductLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfInnerProductLayer = core::Ptr<crate::dnn::InnerProductLayer>;
-
 	ptr_extern! { crate::dnn::InnerProductLayer,
 		cv_PtrLcv_dnn_InnerProductLayerG_new_null_const, cv_PtrLcv_dnn_InnerProductLayerG_delete, cv_PtrLcv_dnn_InnerProductLayerG_getInnerPtr_const, cv_PtrLcv_dnn_InnerProductLayerG_getInnerPtrMut
 	}
@@ -9339,9 +8939,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::InnerProductLayerInt8>` instead, removal in Nov 2024"]
-	pub type PtrOfInnerProductLayerInt8 = core::Ptr<crate::dnn::InnerProductLayerInt8>;
 
 	ptr_extern! { crate::dnn::InnerProductLayerInt8,
 		cv_PtrLcv_dnn_InnerProductLayerInt8G_new_null_const, cv_PtrLcv_dnn_InnerProductLayerInt8G_delete, cv_PtrLcv_dnn_InnerProductLayerInt8G_getInnerPtr_const, cv_PtrLcv_dnn_InnerProductLayerInt8G_getInnerPtrMut
@@ -9409,9 +9006,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::InstanceNormLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfInstanceNormLayer = core::Ptr<crate::dnn::InstanceNormLayer>;
-
 	ptr_extern! { crate::dnn::InstanceNormLayer,
 		cv_PtrLcv_dnn_InstanceNormLayerG_new_null_const, cv_PtrLcv_dnn_InstanceNormLayerG_delete, cv_PtrLcv_dnn_InstanceNormLayerG_getInnerPtr_const, cv_PtrLcv_dnn_InstanceNormLayerG_getInnerPtrMut
 	}
@@ -9463,9 +9057,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::InterpLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfInterpLayer = core::Ptr<crate::dnn::InterpLayer>;
-
 	ptr_extern! { crate::dnn::InterpLayer,
 		cv_PtrLcv_dnn_InterpLayerG_new_null_const, cv_PtrLcv_dnn_InterpLayerG_delete, cv_PtrLcv_dnn_InterpLayerG_getInnerPtr_const, cv_PtrLcv_dnn_InterpLayerG_getInnerPtrMut
 	}
@@ -9515,9 +9106,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::LRNLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfLRNLayer = core::Ptr<crate::dnn::LRNLayer>;
 
 	ptr_extern! { crate::dnn::LRNLayer,
 		cv_PtrLcv_dnn_LRNLayerG_new_null_const, cv_PtrLcv_dnn_LRNLayerG_delete, cv_PtrLcv_dnn_LRNLayerG_getInnerPtr_const, cv_PtrLcv_dnn_LRNLayerG_getInnerPtrMut
@@ -9575,9 +9163,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::LSTMLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfLSTMLayer = core::Ptr<crate::dnn::LSTMLayer>;
-
 	ptr_extern! { crate::dnn::LSTMLayer,
 		cv_PtrLcv_dnn_LSTMLayerG_new_null_const, cv_PtrLcv_dnn_LSTMLayerG_delete, cv_PtrLcv_dnn_LSTMLayerG_getInnerPtr_const, cv_PtrLcv_dnn_LSTMLayerG_getInnerPtrMut
 	}
@@ -9627,9 +9212,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::Layer>` instead, removal in Nov 2024"]
-	pub type PtrOfLayer = core::Ptr<crate::dnn::Layer>;
-
 	ptr_extern! { crate::dnn::Layer,
 		cv_PtrLcv_dnn_LayerG_new_null_const, cv_PtrLcv_dnn_LayerG_delete, cv_PtrLcv_dnn_LayerG_getInnerPtr_const, cv_PtrLcv_dnn_LayerG_getInnerPtrMut
 	}
@@ -9669,9 +9251,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::LayerNormLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfLayerNormLayer = core::Ptr<crate::dnn::LayerNormLayer>;
 
 	ptr_extern! { crate::dnn::LayerNormLayer,
 		cv_PtrLcv_dnn_LayerNormLayerG_new_null_const, cv_PtrLcv_dnn_LayerNormLayerG_delete, cv_PtrLcv_dnn_LayerNormLayerG_getInnerPtr_const, cv_PtrLcv_dnn_LayerNormLayerG_getInnerPtrMut
@@ -9725,9 +9304,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::LogLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfLogLayer = core::Ptr<crate::dnn::LogLayer>;
 
 	ptr_extern! { crate::dnn::LogLayer,
 		cv_PtrLcv_dnn_LogLayerG_new_null_const, cv_PtrLcv_dnn_LogLayerG_delete, cv_PtrLcv_dnn_LogLayerG_getInnerPtr_const, cv_PtrLcv_dnn_LogLayerG_getInnerPtrMut
@@ -9789,9 +9365,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::MVNLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfMVNLayer = core::Ptr<crate::dnn::MVNLayer>;
-
 	ptr_extern! { crate::dnn::MVNLayer,
 		cv_PtrLcv_dnn_MVNLayerG_new_null_const, cv_PtrLcv_dnn_MVNLayerG_delete, cv_PtrLcv_dnn_MVNLayerG_getInnerPtr_const, cv_PtrLcv_dnn_MVNLayerG_getInnerPtrMut
 	}
@@ -9845,9 +9418,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::MatMulLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfMatMulLayer = core::Ptr<crate::dnn::MatMulLayer>;
-
 	ptr_extern! { crate::dnn::MatMulLayer,
 		cv_PtrLcv_dnn_MatMulLayerG_new_null_const, cv_PtrLcv_dnn_MatMulLayerG_delete, cv_PtrLcv_dnn_MatMulLayerG_getInnerPtr_const, cv_PtrLcv_dnn_MatMulLayerG_getInnerPtrMut
 	}
@@ -9897,9 +9467,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::MaxUnpoolLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfMaxUnpoolLayer = core::Ptr<crate::dnn::MaxUnpoolLayer>;
 
 	ptr_extern! { crate::dnn::MaxUnpoolLayer,
 		cv_PtrLcv_dnn_MaxUnpoolLayerG_new_null_const, cv_PtrLcv_dnn_MaxUnpoolLayerG_delete, cv_PtrLcv_dnn_MaxUnpoolLayerG_getInnerPtr_const, cv_PtrLcv_dnn_MaxUnpoolLayerG_getInnerPtrMut
@@ -9953,9 +9520,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::MishLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfMishLayer = core::Ptr<crate::dnn::MishLayer>;
 
 	ptr_extern! { crate::dnn::MishLayer,
 		cv_PtrLcv_dnn_MishLayerG_new_null_const, cv_PtrLcv_dnn_MishLayerG_delete, cv_PtrLcv_dnn_MishLayerG_getInnerPtr_const, cv_PtrLcv_dnn_MishLayerG_getInnerPtrMut
@@ -10017,9 +9581,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::NaryEltwiseLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfNaryEltwiseLayer = core::Ptr<crate::dnn::NaryEltwiseLayer>;
-
 	ptr_extern! { crate::dnn::NaryEltwiseLayer,
 		cv_PtrLcv_dnn_NaryEltwiseLayerG_new_null_const, cv_PtrLcv_dnn_NaryEltwiseLayerG_delete, cv_PtrLcv_dnn_NaryEltwiseLayerG_getInnerPtr_const, cv_PtrLcv_dnn_NaryEltwiseLayerG_getInnerPtrMut
 	}
@@ -10069,9 +9630,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::NormalizeBBoxLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfNormalizeBBoxLayer = core::Ptr<crate::dnn::NormalizeBBoxLayer>;
 
 	ptr_extern! { crate::dnn::NormalizeBBoxLayer,
 		cv_PtrLcv_dnn_NormalizeBBoxLayerG_new_null_const, cv_PtrLcv_dnn_NormalizeBBoxLayerG_delete, cv_PtrLcv_dnn_NormalizeBBoxLayerG_getInnerPtr_const, cv_PtrLcv_dnn_NormalizeBBoxLayerG_getInnerPtrMut
@@ -10125,9 +9683,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::NotLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfNotLayer = core::Ptr<crate::dnn::NotLayer>;
 
 	ptr_extern! { crate::dnn::NotLayer,
 		cv_PtrLcv_dnn_NotLayerG_new_null_const, cv_PtrLcv_dnn_NotLayerG_delete, cv_PtrLcv_dnn_NotLayerG_getInnerPtr_const, cv_PtrLcv_dnn_NotLayerG_getInnerPtrMut
@@ -10189,9 +9744,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::PaddingLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfPaddingLayer = core::Ptr<crate::dnn::PaddingLayer>;
-
 	ptr_extern! { crate::dnn::PaddingLayer,
 		cv_PtrLcv_dnn_PaddingLayerG_new_null_const, cv_PtrLcv_dnn_PaddingLayerG_delete, cv_PtrLcv_dnn_PaddingLayerG_getInnerPtr_const, cv_PtrLcv_dnn_PaddingLayerG_getInnerPtrMut
 	}
@@ -10242,9 +9794,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::PermuteLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfPermuteLayer = core::Ptr<crate::dnn::PermuteLayer>;
-
 	ptr_extern! { crate::dnn::PermuteLayer,
 		cv_PtrLcv_dnn_PermuteLayerG_new_null_const, cv_PtrLcv_dnn_PermuteLayerG_delete, cv_PtrLcv_dnn_PermuteLayerG_getInnerPtr_const, cv_PtrLcv_dnn_PermuteLayerG_getInnerPtrMut
 	}
@@ -10294,9 +9843,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::PoolingLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfPoolingLayer = core::Ptr<crate::dnn::PoolingLayer>;
 
 	ptr_extern! { crate::dnn::PoolingLayer,
 		cv_PtrLcv_dnn_PoolingLayerG_new_null_const, cv_PtrLcv_dnn_PoolingLayerG_delete, cv_PtrLcv_dnn_PoolingLayerG_getInnerPtr_const, cv_PtrLcv_dnn_PoolingLayerG_getInnerPtrMut
@@ -10361,9 +9907,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::PoolingLayerInt8>` instead, removal in Nov 2024"]
-	pub type PtrOfPoolingLayerInt8 = core::Ptr<crate::dnn::PoolingLayerInt8>;
 
 	ptr_extern! { crate::dnn::PoolingLayerInt8,
 		cv_PtrLcv_dnn_PoolingLayerInt8G_new_null_const, cv_PtrLcv_dnn_PoolingLayerInt8G_delete, cv_PtrLcv_dnn_PoolingLayerInt8G_getInnerPtr_const, cv_PtrLcv_dnn_PoolingLayerInt8G_getInnerPtrMut
@@ -10443,9 +9986,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::PowerLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfPowerLayer = core::Ptr<crate::dnn::PowerLayer>;
-
 	ptr_extern! { crate::dnn::PowerLayer,
 		cv_PtrLcv_dnn_PowerLayerG_new_null_const, cv_PtrLcv_dnn_PowerLayerG_delete, cv_PtrLcv_dnn_PowerLayerG_getInnerPtr_const, cv_PtrLcv_dnn_PowerLayerG_getInnerPtrMut
 	}
@@ -10509,9 +10049,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::PriorBoxLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfPriorBoxLayer = core::Ptr<crate::dnn::PriorBoxLayer>;
-
 	ptr_extern! { crate::dnn::PriorBoxLayer,
 		cv_PtrLcv_dnn_PriorBoxLayerG_new_null_const, cv_PtrLcv_dnn_PriorBoxLayerG_delete, cv_PtrLcv_dnn_PriorBoxLayerG_getInnerPtr_const, cv_PtrLcv_dnn_PriorBoxLayerG_getInnerPtrMut
 	}
@@ -10562,9 +10099,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ProposalLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfProposalLayer = core::Ptr<crate::dnn::ProposalLayer>;
-
 	ptr_extern! { crate::dnn::ProposalLayer,
 		cv_PtrLcv_dnn_ProposalLayerG_new_null_const, cv_PtrLcv_dnn_ProposalLayerG_delete, cv_PtrLcv_dnn_ProposalLayerG_getInnerPtr_const, cv_PtrLcv_dnn_ProposalLayerG_getInnerPtrMut
 	}
@@ -10614,9 +10148,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::QuantizeLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfQuantizeLayer = core::Ptr<crate::dnn::QuantizeLayer>;
 
 	ptr_extern! { crate::dnn::QuantizeLayer,
 		cv_PtrLcv_dnn_QuantizeLayerG_new_null_const, cv_PtrLcv_dnn_QuantizeLayerG_delete, cv_PtrLcv_dnn_QuantizeLayerG_getInnerPtr_const, cv_PtrLcv_dnn_QuantizeLayerG_getInnerPtrMut
@@ -10670,9 +10201,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::RNNLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfRNNLayer = core::Ptr<crate::dnn::RNNLayer>;
-
 	ptr_extern! { crate::dnn::RNNLayer,
 		cv_PtrLcv_dnn_RNNLayerG_new_null_const, cv_PtrLcv_dnn_RNNLayerG_delete, cv_PtrLcv_dnn_RNNLayerG_getInnerPtr_const, cv_PtrLcv_dnn_RNNLayerG_getInnerPtrMut
 	}
@@ -10721,9 +10249,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ReLU6Layer>` instead, removal in Nov 2024"]
-	pub type PtrOfReLU6Layer = core::Ptr<crate::dnn::ReLU6Layer>;
 
 	ptr_extern! { crate::dnn::ReLU6Layer,
 		cv_PtrLcv_dnn_ReLU6LayerG_new_null_const, cv_PtrLcv_dnn_ReLU6LayerG_delete, cv_PtrLcv_dnn_ReLU6LayerG_getInnerPtr_const, cv_PtrLcv_dnn_ReLU6LayerG_getInnerPtrMut
@@ -10787,9 +10312,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ReLULayer>` instead, removal in Nov 2024"]
-	pub type PtrOfReLULayer = core::Ptr<crate::dnn::ReLULayer>;
-
 	ptr_extern! { crate::dnn::ReLULayer,
 		cv_PtrLcv_dnn_ReLULayerG_new_null_const, cv_PtrLcv_dnn_ReLULayerG_delete, cv_PtrLcv_dnn_ReLULayerG_getInnerPtr_const, cv_PtrLcv_dnn_ReLULayerG_getInnerPtrMut
 	}
@@ -10851,9 +10373,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ReciprocalLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfReciprocalLayer = core::Ptr<crate::dnn::ReciprocalLayer>;
-
 	ptr_extern! { crate::dnn::ReciprocalLayer,
 		cv_PtrLcv_dnn_ReciprocalLayerG_new_null_const, cv_PtrLcv_dnn_ReciprocalLayerG_delete, cv_PtrLcv_dnn_ReciprocalLayerG_getInnerPtr_const, cv_PtrLcv_dnn_ReciprocalLayerG_getInnerPtrMut
 	}
@@ -10914,9 +10433,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ReduceLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfReduceLayer = core::Ptr<crate::dnn::ReduceLayer>;
-
 	ptr_extern! { crate::dnn::ReduceLayer,
 		cv_PtrLcv_dnn_ReduceLayerG_new_null_const, cv_PtrLcv_dnn_ReduceLayerG_delete, cv_PtrLcv_dnn_ReduceLayerG_getInnerPtr_const, cv_PtrLcv_dnn_ReduceLayerG_getInnerPtrMut
 	}
@@ -10966,9 +10482,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::RegionLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfRegionLayer = core::Ptr<crate::dnn::RegionLayer>;
 
 	ptr_extern! { crate::dnn::RegionLayer,
 		cv_PtrLcv_dnn_RegionLayerG_new_null_const, cv_PtrLcv_dnn_RegionLayerG_delete, cv_PtrLcv_dnn_RegionLayerG_getInnerPtr_const, cv_PtrLcv_dnn_RegionLayerG_getInnerPtrMut
@@ -11021,9 +10534,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ReorgLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfReorgLayer = core::Ptr<crate::dnn::ReorgLayer>;
-
 	ptr_extern! { crate::dnn::ReorgLayer,
 		cv_PtrLcv_dnn_ReorgLayerG_new_null_const, cv_PtrLcv_dnn_ReorgLayerG_delete, cv_PtrLcv_dnn_ReorgLayerG_getInnerPtr_const, cv_PtrLcv_dnn_ReorgLayerG_getInnerPtrMut
 	}
@@ -11073,9 +10583,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::RequantizeLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfRequantizeLayer = core::Ptr<crate::dnn::RequantizeLayer>;
 
 	ptr_extern! { crate::dnn::RequantizeLayer,
 		cv_PtrLcv_dnn_RequantizeLayerG_new_null_const, cv_PtrLcv_dnn_RequantizeLayerG_delete, cv_PtrLcv_dnn_RequantizeLayerG_getInnerPtr_const, cv_PtrLcv_dnn_RequantizeLayerG_getInnerPtrMut
@@ -11129,9 +10636,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ReshapeLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfReshapeLayer = core::Ptr<crate::dnn::ReshapeLayer>;
-
 	ptr_extern! { crate::dnn::ReshapeLayer,
 		cv_PtrLcv_dnn_ReshapeLayerG_new_null_const, cv_PtrLcv_dnn_ReshapeLayerG_delete, cv_PtrLcv_dnn_ReshapeLayerG_getInnerPtr_const, cv_PtrLcv_dnn_ReshapeLayerG_getInnerPtrMut
 	}
@@ -11184,9 +10688,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ResizeLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfResizeLayer = core::Ptr<crate::dnn::ResizeLayer>;
-
 	ptr_extern! { crate::dnn::ResizeLayer,
 		cv_PtrLcv_dnn_ResizeLayerG_new_null_const, cv_PtrLcv_dnn_ResizeLayerG_delete, cv_PtrLcv_dnn_ResizeLayerG_getInnerPtr_const, cv_PtrLcv_dnn_ResizeLayerG_getInnerPtrMut
 	}
@@ -11236,9 +10737,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::RoundLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfRoundLayer = core::Ptr<crate::dnn::RoundLayer>;
 
 	ptr_extern! { crate::dnn::RoundLayer,
 		cv_PtrLcv_dnn_RoundLayerG_new_null_const, cv_PtrLcv_dnn_RoundLayerG_delete, cv_PtrLcv_dnn_RoundLayerG_getInnerPtr_const, cv_PtrLcv_dnn_RoundLayerG_getInnerPtrMut
@@ -11300,9 +10798,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ScaleLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfScaleLayer = core::Ptr<crate::dnn::ScaleLayer>;
-
 	ptr_extern! { crate::dnn::ScaleLayer,
 		cv_PtrLcv_dnn_ScaleLayerG_new_null_const, cv_PtrLcv_dnn_ScaleLayerG_delete, cv_PtrLcv_dnn_ScaleLayerG_getInnerPtr_const, cv_PtrLcv_dnn_ScaleLayerG_getInnerPtrMut
 	}
@@ -11355,9 +10850,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ScaleLayerInt8>` instead, removal in Nov 2024"]
-	pub type PtrOfScaleLayerInt8 = core::Ptr<crate::dnn::ScaleLayerInt8>;
 
 	ptr_extern! { crate::dnn::ScaleLayerInt8,
 		cv_PtrLcv_dnn_ScaleLayerInt8G_new_null_const, cv_PtrLcv_dnn_ScaleLayerInt8G_delete, cv_PtrLcv_dnn_ScaleLayerInt8G_getInnerPtr_const, cv_PtrLcv_dnn_ScaleLayerInt8G_getInnerPtrMut
@@ -11424,9 +10916,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ScatterLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfScatterLayer = core::Ptr<crate::dnn::ScatterLayer>;
-
 	ptr_extern! { crate::dnn::ScatterLayer,
 		cv_PtrLcv_dnn_ScatterLayerG_new_null_const, cv_PtrLcv_dnn_ScatterLayerG_delete, cv_PtrLcv_dnn_ScatterLayerG_getInnerPtr_const, cv_PtrLcv_dnn_ScatterLayerG_getInnerPtrMut
 	}
@@ -11477,9 +10966,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ScatterNDLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfScatterNDLayer = core::Ptr<crate::dnn::ScatterNDLayer>;
-
 	ptr_extern! { crate::dnn::ScatterNDLayer,
 		cv_PtrLcv_dnn_ScatterNDLayerG_new_null_const, cv_PtrLcv_dnn_ScatterNDLayerG_delete, cv_PtrLcv_dnn_ScatterNDLayerG_getInnerPtr_const, cv_PtrLcv_dnn_ScatterNDLayerG_getInnerPtrMut
 	}
@@ -11529,9 +11015,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::SeluLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfSeluLayer = core::Ptr<crate::dnn::SeluLayer>;
 
 	ptr_extern! { crate::dnn::SeluLayer,
 		cv_PtrLcv_dnn_SeluLayerG_new_null_const, cv_PtrLcv_dnn_SeluLayerG_delete, cv_PtrLcv_dnn_SeluLayerG_getInnerPtr_const, cv_PtrLcv_dnn_SeluLayerG_getInnerPtrMut
@@ -11595,9 +11078,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ShiftLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfShiftLayer = core::Ptr<crate::dnn::ShiftLayer>;
-
 	ptr_extern! { crate::dnn::ShiftLayer,
 		cv_PtrLcv_dnn_ShiftLayerG_new_null_const, cv_PtrLcv_dnn_ShiftLayerG_delete, cv_PtrLcv_dnn_ShiftLayerG_getInnerPtr_const, cv_PtrLcv_dnn_ShiftLayerG_getInnerPtrMut
 	}
@@ -11648,9 +11128,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ShiftLayerInt8>` instead, removal in Nov 2024"]
-	pub type PtrOfShiftLayerInt8 = core::Ptr<crate::dnn::ShiftLayerInt8>;
-
 	ptr_extern! { crate::dnn::ShiftLayerInt8,
 		cv_PtrLcv_dnn_ShiftLayerInt8G_new_null_const, cv_PtrLcv_dnn_ShiftLayerInt8G_delete, cv_PtrLcv_dnn_ShiftLayerInt8G_getInnerPtr_const, cv_PtrLcv_dnn_ShiftLayerInt8G_getInnerPtrMut
 	}
@@ -11700,9 +11177,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ShrinkLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfShrinkLayer = core::Ptr<crate::dnn::ShrinkLayer>;
 
 	ptr_extern! { crate::dnn::ShrinkLayer,
 		cv_PtrLcv_dnn_ShrinkLayerG_new_null_const, cv_PtrLcv_dnn_ShrinkLayerG_delete, cv_PtrLcv_dnn_ShrinkLayerG_getInnerPtr_const, cv_PtrLcv_dnn_ShrinkLayerG_getInnerPtrMut
@@ -11766,9 +11240,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ShuffleChannelLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfShuffleChannelLayer = core::Ptr<crate::dnn::ShuffleChannelLayer>;
-
 	ptr_extern! { crate::dnn::ShuffleChannelLayer,
 		cv_PtrLcv_dnn_ShuffleChannelLayerG_new_null_const, cv_PtrLcv_dnn_ShuffleChannelLayerG_delete, cv_PtrLcv_dnn_ShuffleChannelLayerG_getInnerPtr_const, cv_PtrLcv_dnn_ShuffleChannelLayerG_getInnerPtrMut
 	}
@@ -11819,9 +11290,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::SigmoidLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfSigmoidLayer = core::Ptr<crate::dnn::SigmoidLayer>;
 
 	ptr_extern! { crate::dnn::SigmoidLayer,
 		cv_PtrLcv_dnn_SigmoidLayerG_new_null_const, cv_PtrLcv_dnn_SigmoidLayerG_delete, cv_PtrLcv_dnn_SigmoidLayerG_getInnerPtr_const, cv_PtrLcv_dnn_SigmoidLayerG_getInnerPtrMut
@@ -11883,9 +11351,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::SignLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfSignLayer = core::Ptr<crate::dnn::SignLayer>;
-
 	ptr_extern! { crate::dnn::SignLayer,
 		cv_PtrLcv_dnn_SignLayerG_new_null_const, cv_PtrLcv_dnn_SignLayerG_delete, cv_PtrLcv_dnn_SignLayerG_getInnerPtr_const, cv_PtrLcv_dnn_SignLayerG_getInnerPtrMut
 	}
@@ -11945,9 +11410,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::SinLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfSinLayer = core::Ptr<crate::dnn::SinLayer>;
 
 	ptr_extern! { crate::dnn::SinLayer,
 		cv_PtrLcv_dnn_SinLayerG_new_null_const, cv_PtrLcv_dnn_SinLayerG_delete, cv_PtrLcv_dnn_SinLayerG_getInnerPtr_const, cv_PtrLcv_dnn_SinLayerG_getInnerPtrMut
@@ -12009,9 +11471,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::SinhLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfSinhLayer = core::Ptr<crate::dnn::SinhLayer>;
-
 	ptr_extern! { crate::dnn::SinhLayer,
 		cv_PtrLcv_dnn_SinhLayerG_new_null_const, cv_PtrLcv_dnn_SinhLayerG_delete, cv_PtrLcv_dnn_SinhLayerG_getInnerPtr_const, cv_PtrLcv_dnn_SinhLayerG_getInnerPtrMut
 	}
@@ -12072,9 +11531,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::SliceLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfSliceLayer = core::Ptr<crate::dnn::SliceLayer>;
-
 	ptr_extern! { crate::dnn::SliceLayer,
 		cv_PtrLcv_dnn_SliceLayerG_new_null_const, cv_PtrLcv_dnn_SliceLayerG_delete, cv_PtrLcv_dnn_SliceLayerG_getInnerPtr_const, cv_PtrLcv_dnn_SliceLayerG_getInnerPtrMut
 	}
@@ -12129,9 +11585,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::SoftmaxLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfSoftmaxLayer = core::Ptr<crate::dnn::SoftmaxLayer>;
-
 	ptr_extern! { crate::dnn::SoftmaxLayer,
 		cv_PtrLcv_dnn_SoftmaxLayerG_new_null_const, cv_PtrLcv_dnn_SoftmaxLayerG_delete, cv_PtrLcv_dnn_SoftmaxLayerG_getInnerPtr_const, cv_PtrLcv_dnn_SoftmaxLayerG_getInnerPtrMut
 	}
@@ -12182,9 +11635,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::SoftmaxLayerInt8>` instead, removal in Nov 2024"]
-	pub type PtrOfSoftmaxLayerInt8 = core::Ptr<crate::dnn::SoftmaxLayerInt8>;
 
 	ptr_extern! { crate::dnn::SoftmaxLayerInt8,
 		cv_PtrLcv_dnn_SoftmaxLayerInt8G_new_null_const, cv_PtrLcv_dnn_SoftmaxLayerInt8G_delete, cv_PtrLcv_dnn_SoftmaxLayerInt8G_getInnerPtr_const, cv_PtrLcv_dnn_SoftmaxLayerInt8G_getInnerPtrMut
@@ -12249,9 +11699,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::SoftplusLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfSoftplusLayer = core::Ptr<crate::dnn::SoftplusLayer>;
-
 	ptr_extern! { crate::dnn::SoftplusLayer,
 		cv_PtrLcv_dnn_SoftplusLayerG_new_null_const, cv_PtrLcv_dnn_SoftplusLayerG_delete, cv_PtrLcv_dnn_SoftplusLayerG_getInnerPtr_const, cv_PtrLcv_dnn_SoftplusLayerG_getInnerPtrMut
 	}
@@ -12311,9 +11758,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::SoftsignLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfSoftsignLayer = core::Ptr<crate::dnn::SoftsignLayer>;
 
 	ptr_extern! { crate::dnn::SoftsignLayer,
 		cv_PtrLcv_dnn_SoftsignLayerG_new_null_const, cv_PtrLcv_dnn_SoftsignLayerG_delete, cv_PtrLcv_dnn_SoftsignLayerG_getInnerPtr_const, cv_PtrLcv_dnn_SoftsignLayerG_getInnerPtrMut
@@ -12375,9 +11819,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::SpaceToDepthLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfSpaceToDepthLayer = core::Ptr<crate::dnn::SpaceToDepthLayer>;
-
 	ptr_extern! { crate::dnn::SpaceToDepthLayer,
 		cv_PtrLcv_dnn_SpaceToDepthLayerG_new_null_const, cv_PtrLcv_dnn_SpaceToDepthLayerG_delete, cv_PtrLcv_dnn_SpaceToDepthLayerG_getInnerPtr_const, cv_PtrLcv_dnn_SpaceToDepthLayerG_getInnerPtrMut
 	}
@@ -12427,9 +11868,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::SplitLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfSplitLayer = core::Ptr<crate::dnn::SplitLayer>;
 
 	ptr_extern! { crate::dnn::SplitLayer,
 		cv_PtrLcv_dnn_SplitLayerG_new_null_const, cv_PtrLcv_dnn_SplitLayerG_delete, cv_PtrLcv_dnn_SplitLayerG_getInnerPtr_const, cv_PtrLcv_dnn_SplitLayerG_getInnerPtrMut
@@ -12481,9 +11919,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::SqrtLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfSqrtLayer = core::Ptr<crate::dnn::SqrtLayer>;
 
 	ptr_extern! { crate::dnn::SqrtLayer,
 		cv_PtrLcv_dnn_SqrtLayerG_new_null_const, cv_PtrLcv_dnn_SqrtLayerG_delete, cv_PtrLcv_dnn_SqrtLayerG_getInnerPtr_const, cv_PtrLcv_dnn_SqrtLayerG_getInnerPtrMut
@@ -12545,9 +11980,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::SwishLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfSwishLayer = core::Ptr<crate::dnn::SwishLayer>;
-
 	ptr_extern! { crate::dnn::SwishLayer,
 		cv_PtrLcv_dnn_SwishLayerG_new_null_const, cv_PtrLcv_dnn_SwishLayerG_delete, cv_PtrLcv_dnn_SwishLayerG_getInnerPtr_const, cv_PtrLcv_dnn_SwishLayerG_getInnerPtrMut
 	}
@@ -12607,9 +12039,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::TanHLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfTanHLayer = core::Ptr<crate::dnn::TanHLayer>;
 
 	ptr_extern! { crate::dnn::TanHLayer,
 		cv_PtrLcv_dnn_TanHLayerG_new_null_const, cv_PtrLcv_dnn_TanHLayerG_delete, cv_PtrLcv_dnn_TanHLayerG_getInnerPtr_const, cv_PtrLcv_dnn_TanHLayerG_getInnerPtrMut
@@ -12671,9 +12100,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::TanLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfTanLayer = core::Ptr<crate::dnn::TanLayer>;
-
 	ptr_extern! { crate::dnn::TanLayer,
 		cv_PtrLcv_dnn_TanLayerG_new_null_const, cv_PtrLcv_dnn_TanLayerG_delete, cv_PtrLcv_dnn_TanLayerG_getInnerPtr_const, cv_PtrLcv_dnn_TanLayerG_getInnerPtrMut
 	}
@@ -12733,9 +12159,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::ThresholdedReluLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfThresholdedReluLayer = core::Ptr<crate::dnn::ThresholdedReluLayer>;
 
 	ptr_extern! { crate::dnn::ThresholdedReluLayer,
 		cv_PtrLcv_dnn_ThresholdedReluLayerG_new_null_const, cv_PtrLcv_dnn_ThresholdedReluLayerG_delete, cv_PtrLcv_dnn_ThresholdedReluLayerG_getInnerPtr_const, cv_PtrLcv_dnn_ThresholdedReluLayerG_getInnerPtrMut
@@ -12798,9 +12221,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::TileLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfTileLayer = core::Ptr<crate::dnn::TileLayer>;
-
 	ptr_extern! { crate::dnn::TileLayer,
 		cv_PtrLcv_dnn_TileLayerG_new_null_const, cv_PtrLcv_dnn_TileLayerG_delete, cv_PtrLcv_dnn_TileLayerG_getInnerPtr_const, cv_PtrLcv_dnn_TileLayerG_getInnerPtrMut
 	}
@@ -12850,9 +12270,6 @@ mod dnn_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn::TopKLayer>` instead, removal in Nov 2024"]
-	pub type PtrOfTopKLayer = core::Ptr<crate::dnn::TopKLayer>;
 
 	ptr_extern! { crate::dnn::TopKLayer,
 		cv_PtrLcv_dnn_TopKLayerG_new_null_const, cv_PtrLcv_dnn_TopKLayerG_delete, cv_PtrLcv_dnn_TopKLayerG_getInnerPtr_const, cv_PtrLcv_dnn_TopKLayerG_getInnerPtrMut
@@ -12904,9 +12321,6 @@ mod dnn_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Tuple<(crate::dnn::Backend, crate::dnn::Target)>` instead, removal in Nov 2024"]
-	pub type TupleOfBackend_Target = core::Tuple<(crate::dnn::Backend, crate::dnn::Target)>;
-
 	impl core::Tuple<(crate::dnn::Backend, crate::dnn::Target)> {
 		pub fn as_raw_TupleOfBackend_Target(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_TupleOfBackend_Target(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -12918,16 +12332,10 @@ mod dnn_types {
 		1 = arg_1: crate::dnn::Target, get_1 via std_pairLcv_dnn_Backend__cv_dnn_TargetG_get_1_const
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::dnn::MatShape>` instead, removal in Nov 2024"]
-	pub type VectorOfMatShape = core::Vector<crate::dnn::MatShape>;
-
 	impl core::Vector<crate::dnn::MatShape> {
 		pub fn as_raw_VectorOfMatShape(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfMatShape(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Ptr<crate::dnn::BackendNode>>` instead, removal in Nov 2024"]
-	pub type VectorOfPtrOfBackendNode = core::Vector<core::Ptr<crate::dnn::BackendNode>>;
 
 	impl core::Vector<core::Ptr<crate::dnn::BackendNode>> {
 		pub fn as_raw_VectorOfPtrOfBackendNode(&self) -> extern_send!(Self) { self.as_raw() }
@@ -12947,9 +12355,6 @@ mod dnn_types {
 	vector_non_copy_or_bool! { core::Ptr<crate::dnn::BackendNode> }
 
 
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Ptr<crate::dnn::BackendWrapper>>` instead, removal in Nov 2024"]
-	pub type VectorOfPtrOfBackendWrapper = core::Vector<core::Ptr<crate::dnn::BackendWrapper>>;
-
 	impl core::Vector<core::Ptr<crate::dnn::BackendWrapper>> {
 		pub fn as_raw_VectorOfPtrOfBackendWrapper(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfPtrOfBackendWrapper(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -12968,9 +12373,6 @@ mod dnn_types {
 	vector_non_copy_or_bool! { core::Ptr<crate::dnn::BackendWrapper> }
 
 
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Ptr<crate::dnn::Layer>>` instead, removal in Nov 2024"]
-	pub type VectorOfPtrOfLayer = core::Vector<core::Ptr<crate::dnn::Layer>>;
-
 	impl core::Vector<core::Ptr<crate::dnn::Layer>> {
 		pub fn as_raw_VectorOfPtrOfLayer(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfPtrOfLayer(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -12988,9 +12390,6 @@ mod dnn_types {
 
 	vector_non_copy_or_bool! { core::Ptr<crate::dnn::Layer> }
 
-
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::dnn::Target>` instead, removal in Nov 2024"]
-	pub type VectorOfTarget = core::Vector<crate::dnn::Target>;
 
 	impl core::Vector<crate::dnn::Target> {
 		pub fn as_raw_VectorOfTarget(&self) -> extern_send!(Self) { self.as_raw() }
@@ -13013,9 +12412,6 @@ mod dnn_types {
 	}
 
 
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Tuple<(crate::dnn::Backend, crate::dnn::Target)>>` instead, removal in Nov 2024"]
-	pub type VectorOfTupleOfBackend_Target = core::Vector<core::Tuple<(crate::dnn::Backend, crate::dnn::Target)>>;
-
 	impl core::Vector<core::Tuple<(crate::dnn::Backend, crate::dnn::Target)>> {
 		pub fn as_raw_VectorOfTupleOfBackend_Target(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfTupleOfBackend_Target(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -13033,9 +12429,6 @@ mod dnn_types {
 
 	vector_non_copy_or_bool! { core::Tuple<(crate::dnn::Backend, crate::dnn::Target)> }
 
-
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<crate::dnn::MatShape>>` instead, removal in Nov 2024"]
-	pub type VectorOfVectorOfMatShape = core::Vector<core::Vector<crate::dnn::MatShape>>;
 
 	impl core::Vector<core::Vector<crate::dnn::MatShape>> {
 		pub fn as_raw_VectorOfVectorOfMatShape(&self) -> extern_send!(Self) { self.as_raw() }
@@ -13056,15 +12449,10 @@ mod dnn_types {
 
 
 }
-#[cfg(ocvrs_has_module_dnn)]
 pub use dnn_types::*;
 
-#[cfg(ocvrs_has_module_dnn_superres)]
 mod dnn_superres_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dnn_superres::DnnSuperResImpl>` instead, removal in Nov 2024"]
-	pub type PtrOfDnnSuperResImpl = core::Ptr<crate::dnn_superres::DnnSuperResImpl>;
 
 	ptr_extern! { crate::dnn_superres::DnnSuperResImpl,
 		cv_PtrLcv_dnn_superres_DnnSuperResImplG_new_null_const, cv_PtrLcv_dnn_superres_DnnSuperResImplG_delete, cv_PtrLcv_dnn_superres_DnnSuperResImplG_getInnerPtr_const, cv_PtrLcv_dnn_superres_DnnSuperResImplG_getInnerPtrMut
@@ -13093,15 +12481,10 @@ mod dnn_superres_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_dnn_superres)]
 pub use dnn_superres_types::*;
 
-#[cfg(ocvrs_has_module_dpm)]
 mod dpm_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::dpm::DPMDetector>` instead, removal in Nov 2024"]
-	pub type PtrOfDPMDetector = core::Ptr<crate::dpm::DPMDetector>;
 
 	ptr_extern! { crate::dpm::DPMDetector,
 		cv_PtrLcv_dpm_DPMDetectorG_new_null_const, cv_PtrLcv_dpm_DPMDetectorG_delete, cv_PtrLcv_dpm_DPMDetectorG_getInnerPtr_const, cv_PtrLcv_dpm_DPMDetectorG_getInnerPtrMut
@@ -13127,9 +12510,6 @@ mod dpm_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::dpm::DPMDetector_ObjectDetection>` instead, removal in Nov 2024"]
-	pub type VectorOfDPMDetector_ObjectDetection = core::Vector<crate::dpm::DPMDetector_ObjectDetection>;
 
 	impl core::Vector<crate::dpm::DPMDetector_ObjectDetection> {
 		pub fn as_raw_VectorOfDPMDetector_ObjectDetection(&self) -> extern_send!(Self) { self.as_raw() }
@@ -13162,15 +12542,10 @@ mod dpm_types {
 
 
 }
-#[cfg(ocvrs_has_module_dpm)]
 pub use dpm_types::*;
 
-#[cfg(ocvrs_has_module_face)]
 mod face_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::face::BIF>` instead, removal in Nov 2024"]
-	pub type PtrOfBIF = core::Ptr<crate::face::BIF>;
 
 	ptr_extern! { crate::face::BIF,
 		cv_PtrLcv_face_BIFG_new_null_const, cv_PtrLcv_face_BIFG_delete, cv_PtrLcv_face_BIFG_getInnerPtr_const, cv_PtrLcv_face_BIFG_getInnerPtrMut
@@ -13206,9 +12581,6 @@ mod face_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::face::BasicFaceRecognizer>` instead, removal in Nov 2024"]
-	pub type PtrOfBasicFaceRecognizer = core::Ptr<crate::face::BasicFaceRecognizer>;
 
 	ptr_extern! { crate::face::BasicFaceRecognizer,
 		cv_PtrLcv_face_BasicFaceRecognizerG_new_null_const, cv_PtrLcv_face_BasicFaceRecognizerG_delete, cv_PtrLcv_face_BasicFaceRecognizerG_getInnerPtr_const, cv_PtrLcv_face_BasicFaceRecognizerG_getInnerPtrMut
@@ -13254,9 +12626,6 @@ mod face_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::face::EigenFaceRecognizer>` instead, removal in Nov 2024"]
-	pub type PtrOfEigenFaceRecognizer = core::Ptr<crate::face::EigenFaceRecognizer>;
 
 	ptr_extern! { crate::face::EigenFaceRecognizer,
 		cv_PtrLcv_face_EigenFaceRecognizerG_new_null_const, cv_PtrLcv_face_EigenFaceRecognizerG_delete, cv_PtrLcv_face_EigenFaceRecognizerG_getInnerPtr_const, cv_PtrLcv_face_EigenFaceRecognizerG_getInnerPtrMut
@@ -13313,9 +12682,6 @@ mod face_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::face::FaceRecognizer>` instead, removal in Nov 2024"]
-	pub type PtrOfFaceRecognizer = core::Ptr<crate::face::FaceRecognizer>;
-
 	ptr_extern! { crate::face::FaceRecognizer,
 		cv_PtrLcv_face_FaceRecognizerG_new_null_const, cv_PtrLcv_face_FaceRecognizerG_delete, cv_PtrLcv_face_FaceRecognizerG_getInnerPtr_const, cv_PtrLcv_face_FaceRecognizerG_getInnerPtrMut
 	}
@@ -13351,9 +12717,6 @@ mod face_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::face::Facemark>` instead, removal in Nov 2024"]
-	pub type PtrOfFacemark = core::Ptr<crate::face::Facemark>;
-
 	ptr_extern! { crate::face::Facemark,
 		cv_PtrLcv_face_FacemarkG_new_null_const, cv_PtrLcv_face_FacemarkG_delete, cv_PtrLcv_face_FacemarkG_getInnerPtr_const, cv_PtrLcv_face_FacemarkG_getInnerPtrMut
 	}
@@ -13388,9 +12751,6 @@ mod face_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::face::FacemarkAAM>` instead, removal in Nov 2024"]
-	pub type PtrOfFacemarkAAM = core::Ptr<crate::face::FacemarkAAM>;
 
 	ptr_extern! { crate::face::FacemarkAAM,
 		cv_PtrLcv_face_FacemarkAAMG_new_null_const, cv_PtrLcv_face_FacemarkAAMG_delete, cv_PtrLcv_face_FacemarkAAMG_getInnerPtr_const, cv_PtrLcv_face_FacemarkAAMG_getInnerPtrMut
@@ -13447,9 +12807,6 @@ mod face_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::face::FacemarkKazemi>` instead, removal in Nov 2024"]
-	pub type PtrOfFacemarkKazemi = core::Ptr<crate::face::FacemarkKazemi>;
-
 	ptr_extern! { crate::face::FacemarkKazemi,
 		cv_PtrLcv_face_FacemarkKazemiG_new_null_const, cv_PtrLcv_face_FacemarkKazemiG_delete, cv_PtrLcv_face_FacemarkKazemiG_getInnerPtr_const, cv_PtrLcv_face_FacemarkKazemiG_getInnerPtrMut
 	}
@@ -13494,9 +12851,6 @@ mod face_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::face::FacemarkLBF>` instead, removal in Nov 2024"]
-	pub type PtrOfFacemarkLBF = core::Ptr<crate::face::FacemarkLBF>;
 
 	ptr_extern! { crate::face::FacemarkLBF,
 		cv_PtrLcv_face_FacemarkLBFG_new_null_const, cv_PtrLcv_face_FacemarkLBFG_delete, cv_PtrLcv_face_FacemarkLBFG_getInnerPtr_const, cv_PtrLcv_face_FacemarkLBFG_getInnerPtrMut
@@ -13553,9 +12907,6 @@ mod face_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::face::FacemarkTrain>` instead, removal in Nov 2024"]
-	pub type PtrOfFacemarkTrain = core::Ptr<crate::face::FacemarkTrain>;
-
 	ptr_extern! { crate::face::FacemarkTrain,
 		cv_PtrLcv_face_FacemarkTrainG_new_null_const, cv_PtrLcv_face_FacemarkTrainG_delete, cv_PtrLcv_face_FacemarkTrainG_getInnerPtr_const, cv_PtrLcv_face_FacemarkTrainG_getInnerPtrMut
 	}
@@ -13600,9 +12951,6 @@ mod face_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::face::FisherFaceRecognizer>` instead, removal in Nov 2024"]
-	pub type PtrOfFisherFaceRecognizer = core::Ptr<crate::face::FisherFaceRecognizer>;
 
 	ptr_extern! { crate::face::FisherFaceRecognizer,
 		cv_PtrLcv_face_FisherFaceRecognizerG_new_null_const, cv_PtrLcv_face_FisherFaceRecognizerG_delete, cv_PtrLcv_face_FisherFaceRecognizerG_getInnerPtr_const, cv_PtrLcv_face_FisherFaceRecognizerG_getInnerPtrMut
@@ -13659,9 +13007,6 @@ mod face_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::face::LBPHFaceRecognizer>` instead, removal in Nov 2024"]
-	pub type PtrOfLBPHFaceRecognizer = core::Ptr<crate::face::LBPHFaceRecognizer>;
-
 	ptr_extern! { crate::face::LBPHFaceRecognizer,
 		cv_PtrLcv_face_LBPHFaceRecognizerG_new_null_const, cv_PtrLcv_face_LBPHFaceRecognizerG_delete, cv_PtrLcv_face_LBPHFaceRecognizerG_getInnerPtr_const, cv_PtrLcv_face_LBPHFaceRecognizerG_getInnerPtrMut
 	}
@@ -13707,9 +13052,6 @@ mod face_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::face::MACE>` instead, removal in Nov 2024"]
-	pub type PtrOfMACE = core::Ptr<crate::face::MACE>;
-
 	ptr_extern! { crate::face::MACE,
 		cv_PtrLcv_face_MACEG_new_null_const, cv_PtrLcv_face_MACEG_delete, cv_PtrLcv_face_MACEG_getInnerPtr_const, cv_PtrLcv_face_MACEG_getInnerPtrMut
 	}
@@ -13745,9 +13087,6 @@ mod face_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::face::PredictCollector>` instead, removal in Nov 2024"]
-	pub type PtrOfPredictCollector = core::Ptr<crate::face::PredictCollector>;
-
 	ptr_extern! { crate::face::PredictCollector,
 		cv_PtrLcv_face_PredictCollectorG_new_null_const, cv_PtrLcv_face_PredictCollectorG_delete, cv_PtrLcv_face_PredictCollectorG_getInnerPtr_const, cv_PtrLcv_face_PredictCollectorG_getInnerPtrMut
 	}
@@ -13772,9 +13111,6 @@ mod face_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::face::StandardCollector>` instead, removal in Nov 2024"]
-	pub type PtrOfStandardCollector = core::Ptr<crate::face::StandardCollector>;
 
 	ptr_extern! { crate::face::StandardCollector,
 		cv_PtrLcv_face_StandardCollectorG_new_null_const, cv_PtrLcv_face_StandardCollectorG_delete, cv_PtrLcv_face_StandardCollectorG_getInnerPtr_const, cv_PtrLcv_face_StandardCollectorG_getInnerPtrMut
@@ -13812,9 +13148,6 @@ mod face_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::face::FacemarkAAM_Config>` instead, removal in Nov 2024"]
-	pub type VectorOfFacemarkAAM_Config = core::Vector<crate::face::FacemarkAAM_Config>;
-
 	impl core::Vector<crate::face::FacemarkAAM_Config> {
 		pub fn as_raw_VectorOfFacemarkAAM_Config(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfFacemarkAAM_Config(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -13844,9 +13177,6 @@ mod face_types {
 		std_vectorLcv_face_FacemarkAAM_ConfigG_push_const_Config, std_vectorLcv_face_FacemarkAAM_ConfigG_insert_size_t_const_Config,
 	}
 
-
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::face::FacemarkAAM_Model_Texture>` instead, removal in Nov 2024"]
-	pub type VectorOfFacemarkAAM_Model_Texture = core::Vector<crate::face::FacemarkAAM_Model_Texture>;
 
 	impl core::Vector<crate::face::FacemarkAAM_Model_Texture> {
 		pub fn as_raw_VectorOfFacemarkAAM_Model_Texture(&self) -> extern_send!(Self) { self.as_raw() }
@@ -13879,15 +13209,10 @@ mod face_types {
 
 
 }
-#[cfg(ocvrs_has_module_face)]
 pub use face_types::*;
 
-#[cfg(ocvrs_has_module_features2d)]
 mod features2d_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::features2d::AKAZE>` instead, removal in Nov 2024"]
-	pub type PtrOfAKAZE = core::Ptr<crate::features2d::AKAZE>;
 
 	ptr_extern! { crate::features2d::AKAZE,
 		cv_PtrLcv_AKAZEG_new_null_const, cv_PtrLcv_AKAZEG_delete, cv_PtrLcv_AKAZEG_getInnerPtr_const, cv_PtrLcv_AKAZEG_getInnerPtrMut
@@ -13934,9 +13259,6 @@ mod features2d_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::features2d::AffineFeature>` instead, removal in Nov 2024"]
-	pub type PtrOfAffineFeature = core::Ptr<crate::features2d::AffineFeature>;
-
 	ptr_extern! { crate::features2d::AffineFeature,
 		cv_PtrLcv_AffineFeatureG_new_null_const, cv_PtrLcv_AffineFeatureG_delete, cv_PtrLcv_AffineFeatureG_getInnerPtr_const, cv_PtrLcv_AffineFeatureG_getInnerPtrMut
 	}
@@ -13982,9 +13304,6 @@ mod features2d_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::features2d::AgastFeatureDetector>` instead, removal in Nov 2024"]
-	pub type PtrOfAgastFeatureDetector = core::Ptr<crate::features2d::AgastFeatureDetector>;
-
 	ptr_extern! { crate::features2d::AgastFeatureDetector,
 		cv_PtrLcv_AgastFeatureDetectorG_new_null_const, cv_PtrLcv_AgastFeatureDetectorG_delete, cv_PtrLcv_AgastFeatureDetectorG_getInnerPtr_const, cv_PtrLcv_AgastFeatureDetectorG_getInnerPtrMut
 	}
@@ -14029,9 +13348,6 @@ mod features2d_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::features2d::BFMatcher>` instead, removal in Nov 2024"]
-	pub type PtrOfBFMatcher = core::Ptr<crate::features2d::BFMatcher>;
 
 	ptr_extern! { crate::features2d::BFMatcher,
 		cv_PtrLcv_BFMatcherG_new_null_const, cv_PtrLcv_BFMatcherG_delete, cv_PtrLcv_BFMatcherG_getInnerPtr_const, cv_PtrLcv_BFMatcherG_getInnerPtrMut
@@ -14079,9 +13395,6 @@ mod features2d_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::features2d::BRISK>` instead, removal in Nov 2024"]
-	pub type PtrOfBRISK = core::Ptr<crate::features2d::BRISK>;
-
 	ptr_extern! { crate::features2d::BRISK,
 		cv_PtrLcv_BRISKG_new_null_const, cv_PtrLcv_BRISKG_delete, cv_PtrLcv_BRISKG_getInnerPtr_const, cv_PtrLcv_BRISKG_getInnerPtrMut
 	}
@@ -14127,9 +13440,6 @@ mod features2d_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::features2d::DescriptorMatcher>` instead, removal in Nov 2024"]
-	pub type PtrOfDescriptorMatcher = core::Ptr<crate::features2d::DescriptorMatcher>;
-
 	ptr_extern! { crate::features2d::DescriptorMatcher,
 		cv_PtrLcv_DescriptorMatcherG_new_null_const, cv_PtrLcv_DescriptorMatcherG_delete, cv_PtrLcv_DescriptorMatcherG_getInnerPtr_const, cv_PtrLcv_DescriptorMatcherG_getInnerPtrMut
 	}
@@ -14164,9 +13474,6 @@ mod features2d_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::features2d::FastFeatureDetector>` instead, removal in Nov 2024"]
-	pub type PtrOfFastFeatureDetector = core::Ptr<crate::features2d::FastFeatureDetector>;
 
 	ptr_extern! { crate::features2d::FastFeatureDetector,
 		cv_PtrLcv_FastFeatureDetectorG_new_null_const, cv_PtrLcv_FastFeatureDetectorG_delete, cv_PtrLcv_FastFeatureDetectorG_getInnerPtr_const, cv_PtrLcv_FastFeatureDetectorG_getInnerPtrMut
@@ -14213,9 +13520,6 @@ mod features2d_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::features2d::Feature2D>` instead, removal in Nov 2024"]
-	pub type PtrOfFeature2D = core::Ptr<crate::features2d::Feature2D>;
-
 	ptr_extern! { crate::features2d::Feature2D,
 		cv_PtrLcv_Feature2DG_new_null_const, cv_PtrLcv_Feature2DG_delete, cv_PtrLcv_Feature2DG_getInnerPtr_const, cv_PtrLcv_Feature2DG_getInnerPtrMut
 	}
@@ -14251,9 +13555,6 @@ mod features2d_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::features2d::FlannBasedMatcher>` instead, removal in Nov 2024"]
-	pub type PtrOfFlannBasedMatcher = core::Ptr<crate::features2d::FlannBasedMatcher>;
 
 	ptr_extern! { crate::features2d::FlannBasedMatcher,
 		cv_PtrLcv_FlannBasedMatcherG_new_null_const, cv_PtrLcv_FlannBasedMatcherG_delete, cv_PtrLcv_FlannBasedMatcherG_getInnerPtr_const, cv_PtrLcv_FlannBasedMatcherG_getInnerPtrMut
@@ -14301,9 +13602,6 @@ mod features2d_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::features2d::GFTTDetector>` instead, removal in Nov 2024"]
-	pub type PtrOfGFTTDetector = core::Ptr<crate::features2d::GFTTDetector>;
-
 	ptr_extern! { crate::features2d::GFTTDetector,
 		cv_PtrLcv_GFTTDetectorG_new_null_const, cv_PtrLcv_GFTTDetectorG_delete, cv_PtrLcv_GFTTDetectorG_getInnerPtr_const, cv_PtrLcv_GFTTDetectorG_getInnerPtrMut
 	}
@@ -14348,9 +13646,6 @@ mod features2d_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::features2d::KAZE>` instead, removal in Nov 2024"]
-	pub type PtrOfKAZE = core::Ptr<crate::features2d::KAZE>;
 
 	ptr_extern! { crate::features2d::KAZE,
 		cv_PtrLcv_KAZEG_new_null_const, cv_PtrLcv_KAZEG_delete, cv_PtrLcv_KAZEG_getInnerPtr_const, cv_PtrLcv_KAZEG_getInnerPtrMut
@@ -14397,9 +13692,6 @@ mod features2d_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::features2d::MSER>` instead, removal in Nov 2024"]
-	pub type PtrOfMSER = core::Ptr<crate::features2d::MSER>;
-
 	ptr_extern! { crate::features2d::MSER,
 		cv_PtrLcv_MSERG_new_null_const, cv_PtrLcv_MSERG_delete, cv_PtrLcv_MSERG_getInnerPtr_const, cv_PtrLcv_MSERG_getInnerPtrMut
 	}
@@ -14444,9 +13736,6 @@ mod features2d_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::features2d::ORB>` instead, removal in Nov 2024"]
-	pub type PtrOfORB = core::Ptr<crate::features2d::ORB>;
 
 	ptr_extern! { crate::features2d::ORB,
 		cv_PtrLcv_ORBG_new_null_const, cv_PtrLcv_ORBG_delete, cv_PtrLcv_ORBG_getInnerPtr_const, cv_PtrLcv_ORBG_getInnerPtrMut
@@ -14493,9 +13782,6 @@ mod features2d_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::features2d::SIFT>` instead, removal in Nov 2024"]
-	pub type PtrOfSIFT = core::Ptr<crate::features2d::SIFT>;
-
 	ptr_extern! { crate::features2d::SIFT,
 		cv_PtrLcv_SIFTG_new_null_const, cv_PtrLcv_SIFTG_delete, cv_PtrLcv_SIFTG_getInnerPtr_const, cv_PtrLcv_SIFTG_getInnerPtrMut
 	}
@@ -14540,9 +13826,6 @@ mod features2d_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::features2d::SimpleBlobDetector>` instead, removal in Nov 2024"]
-	pub type PtrOfSimpleBlobDetector = core::Ptr<crate::features2d::SimpleBlobDetector>;
 
 	ptr_extern! { crate::features2d::SimpleBlobDetector,
 		cv_PtrLcv_SimpleBlobDetectorG_new_null_const, cv_PtrLcv_SimpleBlobDetectorG_delete, cv_PtrLcv_SimpleBlobDetectorG_getInnerPtr_const, cv_PtrLcv_SimpleBlobDetectorG_getInnerPtrMut
@@ -14590,15 +13873,10 @@ mod features2d_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_features2d)]
 pub use features2d_types::*;
 
-#[cfg(ocvrs_has_module_flann)]
 mod flann_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::flann::AutotunedIndexParams>` instead, removal in Nov 2024"]
-	pub type PtrOfAutotunedIndexParams = core::Ptr<crate::flann::AutotunedIndexParams>;
 
 	ptr_extern! { crate::flann::AutotunedIndexParams,
 		cv_PtrLcv_flann_AutotunedIndexParamsG_new_null_const, cv_PtrLcv_flann_AutotunedIndexParamsG_delete, cv_PtrLcv_flann_AutotunedIndexParamsG_getInnerPtr_const, cv_PtrLcv_flann_AutotunedIndexParamsG_getInnerPtrMut
@@ -14636,9 +13914,6 @@ mod flann_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::flann::CompositeIndexParams>` instead, removal in Nov 2024"]
-	pub type PtrOfCompositeIndexParams = core::Ptr<crate::flann::CompositeIndexParams>;
-
 	ptr_extern! { crate::flann::CompositeIndexParams,
 		cv_PtrLcv_flann_CompositeIndexParamsG_new_null_const, cv_PtrLcv_flann_CompositeIndexParamsG_delete, cv_PtrLcv_flann_CompositeIndexParamsG_getInnerPtr_const, cv_PtrLcv_flann_CompositeIndexParamsG_getInnerPtrMut
 	}
@@ -14674,9 +13949,6 @@ mod flann_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::flann::HierarchicalClusteringIndexParams>` instead, removal in Nov 2024"]
-	pub type PtrOfHierarchicalClusteringIndexParams = core::Ptr<crate::flann::HierarchicalClusteringIndexParams>;
 
 	ptr_extern! { crate::flann::HierarchicalClusteringIndexParams,
 		cv_PtrLcv_flann_HierarchicalClusteringIndexParamsG_new_null_const, cv_PtrLcv_flann_HierarchicalClusteringIndexParamsG_delete, cv_PtrLcv_flann_HierarchicalClusteringIndexParamsG_getInnerPtr_const, cv_PtrLcv_flann_HierarchicalClusteringIndexParamsG_getInnerPtrMut
@@ -14714,9 +13986,6 @@ mod flann_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::flann::IndexParams>` instead, removal in Nov 2024"]
-	pub type PtrOfIndexParams = core::Ptr<crate::flann::IndexParams>;
-
 	ptr_extern! { crate::flann::IndexParams,
 		cv_PtrLcv_flann_IndexParamsG_new_null_const, cv_PtrLcv_flann_IndexParamsG_delete, cv_PtrLcv_flann_IndexParamsG_getInnerPtr_const, cv_PtrLcv_flann_IndexParamsG_getInnerPtrMut
 	}
@@ -14742,9 +14011,6 @@ mod flann_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::flann::KDTreeIndexParams>` instead, removal in Nov 2024"]
-	pub type PtrOfKDTreeIndexParams = core::Ptr<crate::flann::KDTreeIndexParams>;
 
 	ptr_extern! { crate::flann::KDTreeIndexParams,
 		cv_PtrLcv_flann_KDTreeIndexParamsG_new_null_const, cv_PtrLcv_flann_KDTreeIndexParamsG_delete, cv_PtrLcv_flann_KDTreeIndexParamsG_getInnerPtr_const, cv_PtrLcv_flann_KDTreeIndexParamsG_getInnerPtrMut
@@ -14782,9 +14048,6 @@ mod flann_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::flann::KMeansIndexParams>` instead, removal in Nov 2024"]
-	pub type PtrOfKMeansIndexParams = core::Ptr<crate::flann::KMeansIndexParams>;
-
 	ptr_extern! { crate::flann::KMeansIndexParams,
 		cv_PtrLcv_flann_KMeansIndexParamsG_new_null_const, cv_PtrLcv_flann_KMeansIndexParamsG_delete, cv_PtrLcv_flann_KMeansIndexParamsG_getInnerPtr_const, cv_PtrLcv_flann_KMeansIndexParamsG_getInnerPtrMut
 	}
@@ -14820,9 +14083,6 @@ mod flann_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::flann::LinearIndexParams>` instead, removal in Nov 2024"]
-	pub type PtrOfLinearIndexParams = core::Ptr<crate::flann::LinearIndexParams>;
 
 	ptr_extern! { crate::flann::LinearIndexParams,
 		cv_PtrLcv_flann_LinearIndexParamsG_new_null_const, cv_PtrLcv_flann_LinearIndexParamsG_delete, cv_PtrLcv_flann_LinearIndexParamsG_getInnerPtr_const, cv_PtrLcv_flann_LinearIndexParamsG_getInnerPtrMut
@@ -14860,9 +14120,6 @@ mod flann_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::flann::LshIndexParams>` instead, removal in Nov 2024"]
-	pub type PtrOfLshIndexParams = core::Ptr<crate::flann::LshIndexParams>;
-
 	ptr_extern! { crate::flann::LshIndexParams,
 		cv_PtrLcv_flann_LshIndexParamsG_new_null_const, cv_PtrLcv_flann_LshIndexParamsG_delete, cv_PtrLcv_flann_LshIndexParamsG_getInnerPtr_const, cv_PtrLcv_flann_LshIndexParamsG_getInnerPtrMut
 	}
@@ -14898,9 +14155,6 @@ mod flann_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::flann::SavedIndexParams>` instead, removal in Nov 2024"]
-	pub type PtrOfSavedIndexParams = core::Ptr<crate::flann::SavedIndexParams>;
 
 	ptr_extern! { crate::flann::SavedIndexParams,
 		cv_PtrLcv_flann_SavedIndexParamsG_new_null_const, cv_PtrLcv_flann_SavedIndexParamsG_delete, cv_PtrLcv_flann_SavedIndexParamsG_getInnerPtr_const, cv_PtrLcv_flann_SavedIndexParamsG_getInnerPtrMut
@@ -14938,9 +14192,6 @@ mod flann_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::flann::SearchParams>` instead, removal in Nov 2024"]
-	pub type PtrOfSearchParams = core::Ptr<crate::flann::SearchParams>;
-
 	ptr_extern! { crate::flann::SearchParams,
 		cv_PtrLcv_flann_SearchParamsG_new_null_const, cv_PtrLcv_flann_SearchParamsG_delete, cv_PtrLcv_flann_SearchParamsG_getInnerPtr_const, cv_PtrLcv_flann_SearchParamsG_getInnerPtrMut
 	}
@@ -14977,9 +14228,6 @@ mod flann_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::flann::FeatureIndex>` instead, removal in Nov 2024"]
-	pub type VectorOfFeatureIndex = core::Vector<crate::flann::FeatureIndex>;
-
 	impl core::Vector<crate::flann::FeatureIndex> {
 		pub fn as_raw_VectorOfFeatureIndex(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfFeatureIndex(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -15000,9 +14248,53 @@ mod flann_types {
 		std_vectorLcvflann_lsh_FeatureIndexG_clone_const,
 	}
 
+	#[cfg(ocvrs_opencv_branch_5)]
+	impl ToInputArray for core::Vector<crate::flann::FeatureIndex> {
+		#[inline]
+		fn input_array(&self) -> Result<BoxedRef<core::_InputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::std_vectorLcvflann_lsh_FeatureIndexG_inputArray_const(self.as_raw_VectorOfFeatureIndex(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
 
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::flann::FlannIndexType>` instead, removal in Nov 2024"]
-	pub type VectorOfFlannIndexType = core::Vector<crate::flann::FlannIndexType>;
+	}
+
+	#[cfg(ocvrs_opencv_branch_5)]
+	input_array_ref_forward! { core::Vector<crate::flann::FeatureIndex> }
+
+	#[cfg(ocvrs_opencv_branch_5)]
+	impl ToOutputArray for core::Vector<crate::flann::FeatureIndex> {
+		#[inline]
+		fn output_array(&mut self) -> Result<BoxedRefMut<core::_OutputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::std_vectorLcvflann_lsh_FeatureIndexG_outputArray(self.as_raw_mut_VectorOfFeatureIndex(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	#[cfg(ocvrs_opencv_branch_5)]
+	impl ToInputOutputArray for core::Vector<crate::flann::FeatureIndex> {
+		#[inline]
+		fn input_output_array(&mut self) -> Result<BoxedRefMut<core::_InputOutputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::std_vectorLcvflann_lsh_FeatureIndexG_inputOutputArray(self.as_raw_mut_VectorOfFeatureIndex(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRefMut::<core::_InputOutputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	#[cfg(ocvrs_opencv_branch_5)]
+	output_array_ref_forward! { core::Vector<crate::flann::FeatureIndex> }
 
 	impl core::Vector<crate::flann::FlannIndexType> {
 		pub fn as_raw_VectorOfFlannIndexType(&self) -> extern_send!(Self) { self.as_raw() }
@@ -15026,15 +14318,10 @@ mod flann_types {
 
 
 }
-#[cfg(ocvrs_has_module_flann)]
 pub use flann_types::*;
 
-#[cfg(ocvrs_has_module_freetype)]
 mod freetype_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::freetype::FreeType2>` instead, removal in Nov 2024"]
-	pub type PtrOfFreeType2 = core::Ptr<crate::freetype::FreeType2>;
 
 	ptr_extern! { crate::freetype::FreeType2,
 		cv_PtrLcv_freetype_FreeType2G_new_null_const, cv_PtrLcv_freetype_FreeType2G_delete, cv_PtrLcv_freetype_FreeType2G_getInnerPtr_const, cv_PtrLcv_freetype_FreeType2G_getInnerPtrMut
@@ -15072,15 +14359,10 @@ mod freetype_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_freetype)]
 pub use freetype_types::*;
 
-#[cfg(ocvrs_has_module_gapi)]
 mod gapi_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Tuple<(crate::gapi::GBackend, crate::gapi::GKernelImpl)>` instead, removal in Nov 2024"]
-	pub type TupleOfGBackend_GKernelImpl = core::Tuple<(crate::gapi::GBackend, crate::gapi::GKernelImpl)>;
 
 	impl core::Tuple<(crate::gapi::GBackend, crate::gapi::GKernelImpl)> {
 		pub fn as_raw_TupleOfGBackend_GKernelImpl(&self) -> extern_send!(Self) { self.as_raw() }
@@ -15093,9 +14375,6 @@ mod gapi_types {
 		1 = arg_1: crate::gapi::GKernelImpl, get_1 via std_pairLcv_gapi_GBackend__cv_GKernelImplG_get_1_const
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Tuple<(crate::gapi::GMat, crate::gapi::GMat)>` instead, removal in Nov 2024"]
-	pub type TupleOfGMat_GMat = core::Tuple<(crate::gapi::GMat, crate::gapi::GMat)>;
-
 	impl core::Tuple<(crate::gapi::GMat, crate::gapi::GMat)> {
 		pub fn as_raw_TupleOfGMat_GMat(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_TupleOfGMat_GMat(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -15106,9 +14385,6 @@ mod gapi_types {
 		0 = arg: crate::gapi::GMat, get_0 via std_tupleLcv_GMat__cv_GMatG_get_0_const,
 		1 = arg_1: crate::gapi::GMat, get_1 via std_tupleLcv_GMat__cv_GMatG_get_1_const
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Tuple<(crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat)>` instead, removal in Nov 2024"]
-	pub type TupleOfGMat_GMat_GMat = core::Tuple<(crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat)>;
 
 	impl core::Tuple<(crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat)> {
 		pub fn as_raw_TupleOfGMat_GMat_GMat(&self) -> extern_send!(Self) { self.as_raw() }
@@ -15121,9 +14397,6 @@ mod gapi_types {
 		1 = arg_1: crate::gapi::GMat, get_1 via std_tupleLcv_GMat__cv_GMat__cv_GMatG_get_1_const,
 		2 = arg_2: crate::gapi::GMat, get_2 via std_tupleLcv_GMat__cv_GMat__cv_GMatG_get_2_const
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Tuple<(crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat)>` instead, removal in Nov 2024"]
-	pub type TupleOfGMat_GMat_GMat_GMat = core::Tuple<(crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat)>;
 
 	impl core::Tuple<(crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat, crate::gapi::GMat)> {
 		pub fn as_raw_TupleOfGMat_GMat_GMat_GMat(&self) -> extern_send!(Self) { self.as_raw() }
@@ -15138,9 +14411,6 @@ mod gapi_types {
 		3 = arg_3: crate::gapi::GMat, get_3 via std_tupleLcv_GMat__cv_GMat__cv_GMat__cv_GMatG_get_3_const
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Tuple<(crate::gapi::GMat, crate::gapi::GScalar)>` instead, removal in Nov 2024"]
-	pub type TupleOfGMat_GScalar = core::Tuple<(crate::gapi::GMat, crate::gapi::GScalar)>;
-
 	impl core::Tuple<(crate::gapi::GMat, crate::gapi::GScalar)> {
 		pub fn as_raw_TupleOfGMat_GScalar(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_TupleOfGMat_GScalar(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -15151,9 +14421,6 @@ mod gapi_types {
 		0 = arg: crate::gapi::GMat, get_0 via std_tupleLcv_GMat__cv_GScalarG_get_0_const,
 		1 = arg_1: crate::gapi::GScalar, get_1 via std_tupleLcv_GMat__cv_GScalarG_get_1_const
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::gapi::Detail_OpaqueKind>` instead, removal in Nov 2024"]
-	pub type VectorOfDetail_OpaqueKind = core::Vector<crate::gapi::Detail_OpaqueKind>;
 
 	impl core::Vector<crate::gapi::Detail_OpaqueKind> {
 		pub fn as_raw_VectorOfDetail_OpaqueKind(&self) -> extern_send!(Self) { self.as_raw() }
@@ -15175,9 +14442,6 @@ mod gapi_types {
 		std_vectorLcv_detail_OpaqueKindG_clone_const,
 	}
 
-
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::gapi::GArg>` instead, removal in Nov 2024"]
-	pub type VectorOfGArg = core::Vector<crate::gapi::GArg>;
 
 	impl core::Vector<crate::gapi::GArg> {
 		pub fn as_raw_VectorOfGArg(&self) -> extern_send!(Self) { self.as_raw() }
@@ -15209,9 +14473,6 @@ mod gapi_types {
 	}
 
 
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::gapi::GBackend>` instead, removal in Nov 2024"]
-	pub type VectorOfGBackend = core::Vector<crate::gapi::GBackend>;
-
 	impl core::Vector<crate::gapi::GBackend> {
 		pub fn as_raw_VectorOfGBackend(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfGBackend(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -15241,9 +14502,6 @@ mod gapi_types {
 		std_vectorLcv_gapi_GBackendG_push_const_GBackend, std_vectorLcv_gapi_GBackendG_insert_size_t_const_GBackend,
 	}
 
-
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::gapi::GCompileArg>` instead, removal in Nov 2024"]
-	pub type VectorOfGCompileArg = core::Vector<crate::gapi::GCompileArg>;
 
 	impl core::Vector<crate::gapi::GCompileArg> {
 		pub fn as_raw_VectorOfGCompileArg(&self) -> extern_send!(Self) { self.as_raw() }
@@ -15275,9 +14533,6 @@ mod gapi_types {
 	}
 
 
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::gapi::GMat>` instead, removal in Nov 2024"]
-	pub type VectorOfGMat = core::Vector<crate::gapi::GMat>;
-
 	impl core::Vector<crate::gapi::GMat> {
 		pub fn as_raw_VectorOfGMat(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfGMat(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -15307,9 +14562,6 @@ mod gapi_types {
 		std_vectorLcv_GMatG_push_const_GMat, std_vectorLcv_GMatG_insert_size_t_const_GMat,
 	}
 
-
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::gapi::GRunArg>` instead, removal in Nov 2024"]
-	pub type VectorOfGRunArg = core::Vector<crate::gapi::GRunArg>;
 
 	impl core::Vector<crate::gapi::GRunArg> {
 		pub fn as_raw_VectorOfGRunArg(&self) -> extern_send!(Self) { self.as_raw() }
@@ -15341,9 +14593,6 @@ mod gapi_types {
 	}
 
 
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::gapi::GShape>` instead, removal in Nov 2024"]
-	pub type VectorOfGShape = core::Vector<crate::gapi::GShape>;
-
 	impl core::Vector<crate::gapi::GShape> {
 		pub fn as_raw_VectorOfGShape(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfGShape(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -15364,9 +14613,6 @@ mod gapi_types {
 		std_vectorLcv_GShapeG_clone_const,
 	}
 
-
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::gapi::GTransform>` instead, removal in Nov 2024"]
-	pub type VectorOfGTransform = core::Vector<crate::gapi::GTransform>;
 
 	impl core::Vector<crate::gapi::GTransform> {
 		pub fn as_raw_VectorOfGTransform(&self) -> extern_send!(Self) { self.as_raw() }
@@ -15397,9 +14643,6 @@ mod gapi_types {
 		std_vectorLcv_GTransformG_push_const_GTransform, std_vectorLcv_GTransformG_insert_size_t_const_GTransform,
 	}
 
-
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::gapi::GTypeInfo>` instead, removal in Nov 2024"]
-	pub type VectorOfGTypeInfo = core::Vector<crate::gapi::GTypeInfo>;
 
 	impl core::Vector<crate::gapi::GTypeInfo> {
 		pub fn as_raw_VectorOfGTypeInfo(&self) -> extern_send!(Self) { self.as_raw() }
@@ -15432,15 +14675,10 @@ mod gapi_types {
 
 
 }
-#[cfg(ocvrs_has_module_gapi)]
 pub use gapi_types::*;
 
-#[cfg(ocvrs_has_module_hdf)]
 mod hdf_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::hdf::HDF5>` instead, removal in Nov 2024"]
-	pub type PtrOfHDF5 = core::Ptr<crate::hdf::HDF5>;
 
 	ptr_extern! { crate::hdf::HDF5,
 		cv_PtrLcv_hdf_HDF5G_new_null_const, cv_PtrLcv_hdf_HDF5G_delete, cv_PtrLcv_hdf_HDF5G_getInnerPtr_const, cv_PtrLcv_hdf_HDF5G_getInnerPtrMut
@@ -15468,15 +14706,10 @@ mod hdf_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_hdf)]
 pub use hdf_types::*;
 
-#[cfg(ocvrs_has_module_hfs)]
 mod hfs_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::hfs::HfsSegment>` instead, removal in Nov 2024"]
-	pub type PtrOfHfsSegment = core::Ptr<crate::hfs::HfsSegment>;
 
 	ptr_extern! { crate::hfs::HfsSegment,
 		cv_PtrLcv_hfs_HfsSegmentG_new_null_const, cv_PtrLcv_hfs_HfsSegmentG_delete, cv_PtrLcv_hfs_HfsSegmentG_getInnerPtr_const, cv_PtrLcv_hfs_HfsSegmentG_getInnerPtrMut
@@ -15514,15 +14747,10 @@ mod hfs_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_hfs)]
 pub use hfs_types::*;
 
-#[cfg(ocvrs_has_module_img_hash)]
 mod img_hash_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::img_hash::AverageHash>` instead, removal in Nov 2024"]
-	pub type PtrOfAverageHash = core::Ptr<crate::img_hash::AverageHash>;
 
 	ptr_extern! { crate::img_hash::AverageHash,
 		cv_PtrLcv_img_hash_AverageHashG_new_null_const, cv_PtrLcv_img_hash_AverageHashG_delete, cv_PtrLcv_img_hash_AverageHashG_getInnerPtr_const, cv_PtrLcv_img_hash_AverageHashG_getInnerPtrMut
@@ -15570,9 +14798,6 @@ mod img_hash_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::img_hash::BlockMeanHash>` instead, removal in Nov 2024"]
-	pub type PtrOfBlockMeanHash = core::Ptr<crate::img_hash::BlockMeanHash>;
-
 	ptr_extern! { crate::img_hash::BlockMeanHash,
 		cv_PtrLcv_img_hash_BlockMeanHashG_new_null_const, cv_PtrLcv_img_hash_BlockMeanHashG_delete, cv_PtrLcv_img_hash_BlockMeanHashG_getInnerPtr_const, cv_PtrLcv_img_hash_BlockMeanHashG_getInnerPtrMut
 	}
@@ -15618,9 +14843,6 @@ mod img_hash_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::img_hash::ColorMomentHash>` instead, removal in Nov 2024"]
-	pub type PtrOfColorMomentHash = core::Ptr<crate::img_hash::ColorMomentHash>;
 
 	ptr_extern! { crate::img_hash::ColorMomentHash,
 		cv_PtrLcv_img_hash_ColorMomentHashG_new_null_const, cv_PtrLcv_img_hash_ColorMomentHashG_delete, cv_PtrLcv_img_hash_ColorMomentHashG_getInnerPtr_const, cv_PtrLcv_img_hash_ColorMomentHashG_getInnerPtrMut
@@ -15668,9 +14890,6 @@ mod img_hash_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::img_hash::ImgHashBase>` instead, removal in Nov 2024"]
-	pub type PtrOfImgHashBase = core::Ptr<crate::img_hash::ImgHashBase>;
-
 	ptr_extern! { crate::img_hash::ImgHashBase,
 		cv_PtrLcv_img_hash_ImgHashBaseG_new_null_const, cv_PtrLcv_img_hash_ImgHashBaseG_delete, cv_PtrLcv_img_hash_ImgHashBaseG_getInnerPtr_const, cv_PtrLcv_img_hash_ImgHashBaseG_getInnerPtrMut
 	}
@@ -15706,9 +14925,6 @@ mod img_hash_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::img_hash::MarrHildrethHash>` instead, removal in Nov 2024"]
-	pub type PtrOfMarrHildrethHash = core::Ptr<crate::img_hash::MarrHildrethHash>;
 
 	ptr_extern! { crate::img_hash::MarrHildrethHash,
 		cv_PtrLcv_img_hash_MarrHildrethHashG_new_null_const, cv_PtrLcv_img_hash_MarrHildrethHashG_delete, cv_PtrLcv_img_hash_MarrHildrethHashG_getInnerPtr_const, cv_PtrLcv_img_hash_MarrHildrethHashG_getInnerPtrMut
@@ -15756,9 +14972,6 @@ mod img_hash_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::img_hash::PHash>` instead, removal in Nov 2024"]
-	pub type PtrOfPHash = core::Ptr<crate::img_hash::PHash>;
-
 	ptr_extern! { crate::img_hash::PHash,
 		cv_PtrLcv_img_hash_PHashG_new_null_const, cv_PtrLcv_img_hash_PHashG_delete, cv_PtrLcv_img_hash_PHashG_getInnerPtr_const, cv_PtrLcv_img_hash_PHashG_getInnerPtrMut
 	}
@@ -15804,9 +15017,6 @@ mod img_hash_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::img_hash::RadialVarianceHash>` instead, removal in Nov 2024"]
-	pub type PtrOfRadialVarianceHash = core::Ptr<crate::img_hash::RadialVarianceHash>;
 
 	ptr_extern! { crate::img_hash::RadialVarianceHash,
 		cv_PtrLcv_img_hash_RadialVarianceHashG_new_null_const, cv_PtrLcv_img_hash_RadialVarianceHashG_delete, cv_PtrLcv_img_hash_RadialVarianceHashG_getInnerPtr_const, cv_PtrLcv_img_hash_RadialVarianceHashG_getInnerPtrMut
@@ -15855,15 +15065,10 @@ mod img_hash_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_img_hash)]
 pub use img_hash_types::*;
 
-#[cfg(ocvrs_has_module_imgproc)]
 mod imgproc_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::imgproc::CLAHE>` instead, removal in Nov 2024"]
-	pub type PtrOfCLAHE = core::Ptr<crate::imgproc::CLAHE>;
 
 	ptr_extern! { crate::imgproc::CLAHE,
 		cv_PtrLcv_CLAHEG_new_null_const, cv_PtrLcv_CLAHEG_delete, cv_PtrLcv_CLAHEG_getInnerPtr_const, cv_PtrLcv_CLAHEG_getInnerPtrMut
@@ -15900,9 +15105,6 @@ mod imgproc_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::imgproc::GeneralizedHough>` instead, removal in Nov 2024"]
-	pub type PtrOfGeneralizedHough = core::Ptr<crate::imgproc::GeneralizedHough>;
-
 	ptr_extern! { crate::imgproc::GeneralizedHough,
 		cv_PtrLcv_GeneralizedHoughG_new_null_const, cv_PtrLcv_GeneralizedHoughG_delete, cv_PtrLcv_GeneralizedHoughG_getInnerPtr_const, cv_PtrLcv_GeneralizedHoughG_getInnerPtrMut
 	}
@@ -15937,9 +15139,6 @@ mod imgproc_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::imgproc::GeneralizedHoughBallard>` instead, removal in Nov 2024"]
-	pub type PtrOfGeneralizedHoughBallard = core::Ptr<crate::imgproc::GeneralizedHoughBallard>;
 
 	ptr_extern! { crate::imgproc::GeneralizedHoughBallard,
 		cv_PtrLcv_GeneralizedHoughBallardG_new_null_const, cv_PtrLcv_GeneralizedHoughBallardG_delete, cv_PtrLcv_GeneralizedHoughBallardG_getInnerPtr_const, cv_PtrLcv_GeneralizedHoughBallardG_getInnerPtrMut
@@ -15986,9 +15185,6 @@ mod imgproc_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::imgproc::GeneralizedHoughGuil>` instead, removal in Nov 2024"]
-	pub type PtrOfGeneralizedHoughGuil = core::Ptr<crate::imgproc::GeneralizedHoughGuil>;
-
 	ptr_extern! { crate::imgproc::GeneralizedHoughGuil,
 		cv_PtrLcv_GeneralizedHoughGuilG_new_null_const, cv_PtrLcv_GeneralizedHoughGuilG_delete, cv_PtrLcv_GeneralizedHoughGuilG_getInnerPtr_const, cv_PtrLcv_GeneralizedHoughGuilG_getInnerPtrMut
 	}
@@ -16034,9 +15230,6 @@ mod imgproc_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::imgproc::LineSegmentDetector>` instead, removal in Nov 2024"]
-	pub type PtrOfLineSegmentDetector = core::Ptr<crate::imgproc::LineSegmentDetector>;
-
 	ptr_extern! { crate::imgproc::LineSegmentDetector,
 		cv_PtrLcv_LineSegmentDetectorG_new_null_const, cv_PtrLcv_LineSegmentDetectorG_delete, cv_PtrLcv_LineSegmentDetectorG_getInnerPtr_const, cv_PtrLcv_LineSegmentDetectorG_getInnerPtrMut
 	}
@@ -16073,15 +15266,10 @@ mod imgproc_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_imgproc)]
 pub use imgproc_types::*;
 
-#[cfg(ocvrs_has_module_line_descriptor)]
 mod line_descriptor_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::line_descriptor::BinaryDescriptor>` instead, removal in Nov 2024"]
-	pub type PtrOfBinaryDescriptor = core::Ptr<crate::line_descriptor::BinaryDescriptor>;
 
 	ptr_extern! { crate::line_descriptor::BinaryDescriptor,
 		cv_PtrLcv_line_descriptor_BinaryDescriptorG_new_null_const, cv_PtrLcv_line_descriptor_BinaryDescriptorG_delete, cv_PtrLcv_line_descriptor_BinaryDescriptorG_getInnerPtr_const, cv_PtrLcv_line_descriptor_BinaryDescriptorG_getInnerPtrMut
@@ -16119,9 +15307,6 @@ mod line_descriptor_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::line_descriptor::BinaryDescriptorMatcher>` instead, removal in Nov 2024"]
-	pub type PtrOfBinaryDescriptorMatcher = core::Ptr<crate::line_descriptor::BinaryDescriptorMatcher>;
-
 	ptr_extern! { crate::line_descriptor::BinaryDescriptorMatcher,
 		cv_PtrLcv_line_descriptor_BinaryDescriptorMatcherG_new_null_const, cv_PtrLcv_line_descriptor_BinaryDescriptorMatcherG_delete, cv_PtrLcv_line_descriptor_BinaryDescriptorMatcherG_getInnerPtr_const, cv_PtrLcv_line_descriptor_BinaryDescriptorMatcherG_getInnerPtrMut
 	}
@@ -16157,9 +15342,6 @@ mod line_descriptor_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::line_descriptor::LSDDetector>` instead, removal in Nov 2024"]
-	pub type PtrOfLSDDetector = core::Ptr<crate::line_descriptor::LSDDetector>;
 
 	ptr_extern! { crate::line_descriptor::LSDDetector,
 		cv_PtrLcv_line_descriptor_LSDDetectorG_new_null_const, cv_PtrLcv_line_descriptor_LSDDetectorG_delete, cv_PtrLcv_line_descriptor_LSDDetectorG_getInnerPtr_const, cv_PtrLcv_line_descriptor_LSDDetectorG_getInnerPtrMut
@@ -16197,9 +15379,6 @@ mod line_descriptor_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::line_descriptor::KeyLine>` instead, removal in Nov 2024"]
-	pub type VectorOfKeyLine = core::Vector<crate::line_descriptor::KeyLine>;
-
 	impl core::Vector<crate::line_descriptor::KeyLine> {
 		pub fn as_raw_VectorOfKeyLine(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfKeyLine(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -16221,9 +15400,6 @@ mod line_descriptor_types {
 	}
 
 
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<crate::line_descriptor::KeyLine>>` instead, removal in Nov 2024"]
-	pub type VectorOfVectorOfKeyLine = core::Vector<core::Vector<crate::line_descriptor::KeyLine>>;
-
 	impl core::Vector<core::Vector<crate::line_descriptor::KeyLine>> {
 		pub fn as_raw_VectorOfVectorOfKeyLine(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfVectorOfKeyLine(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -16243,15 +15419,10 @@ mod line_descriptor_types {
 
 
 }
-#[cfg(ocvrs_has_module_line_descriptor)]
 pub use line_descriptor_types::*;
 
-#[cfg(ocvrs_has_module_mcc)]
 mod mcc_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::mcc::MCC_CChecker>` instead, removal in Nov 2024"]
-	pub type PtrOfMCC_CChecker = core::Ptr<crate::mcc::MCC_CChecker>;
 
 	ptr_extern! { crate::mcc::MCC_CChecker,
 		cv_PtrLcv_mcc_CCheckerG_new_null_const, cv_PtrLcv_mcc_CCheckerG_delete, cv_PtrLcv_mcc_CCheckerG_getInnerPtr_const, cv_PtrLcv_mcc_CCheckerG_getInnerPtrMut
@@ -16277,9 +15448,6 @@ mod mcc_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::mcc::MCC_CCheckerDetector>` instead, removal in Nov 2024"]
-	pub type PtrOfMCC_CCheckerDetector = core::Ptr<crate::mcc::MCC_CCheckerDetector>;
 
 	ptr_extern! { crate::mcc::MCC_CCheckerDetector,
 		cv_PtrLcv_mcc_CCheckerDetectorG_new_null_const, cv_PtrLcv_mcc_CCheckerDetectorG_delete, cv_PtrLcv_mcc_CCheckerDetectorG_getInnerPtr_const, cv_PtrLcv_mcc_CCheckerDetectorG_getInnerPtrMut
@@ -16316,9 +15484,6 @@ mod mcc_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::mcc::MCC_CCheckerDraw>` instead, removal in Nov 2024"]
-	pub type PtrOfMCC_CCheckerDraw = core::Ptr<crate::mcc::MCC_CCheckerDraw>;
-
 	ptr_extern! { crate::mcc::MCC_CCheckerDraw,
 		cv_PtrLcv_mcc_CCheckerDrawG_new_null_const, cv_PtrLcv_mcc_CCheckerDrawG_delete, cv_PtrLcv_mcc_CCheckerDrawG_getInnerPtr_const, cv_PtrLcv_mcc_CCheckerDrawG_getInnerPtrMut
 	}
@@ -16343,9 +15508,6 @@ mod mcc_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::mcc::MCC_DetectorParameters>` instead, removal in Nov 2024"]
-	pub type PtrOfMCC_DetectorParameters = core::Ptr<crate::mcc::MCC_DetectorParameters>;
 
 	ptr_extern! { crate::mcc::MCC_DetectorParameters,
 		cv_PtrLcv_mcc_DetectorParametersG_new_null_const, cv_PtrLcv_mcc_DetectorParametersG_delete, cv_PtrLcv_mcc_DetectorParametersG_getInnerPtr_const, cv_PtrLcv_mcc_DetectorParametersG_getInnerPtrMut
@@ -16391,9 +15553,6 @@ mod mcc_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Ptr<crate::mcc::MCC_CChecker>>` instead, removal in Nov 2024"]
-	pub type VectorOfPtrOfMCC_CChecker = core::Vector<core::Ptr<crate::mcc::MCC_CChecker>>;
-
 	impl core::Vector<core::Ptr<crate::mcc::MCC_CChecker>> {
 		pub fn as_raw_VectorOfPtrOfMCC_CChecker(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfPtrOfMCC_CChecker(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -16413,15 +15572,10 @@ mod mcc_types {
 
 
 }
-#[cfg(ocvrs_has_module_mcc)]
 pub use mcc_types::*;
 
-#[cfg(ocvrs_has_module_ml)]
 mod ml_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ml::ANN_MLP>` instead, removal in Nov 2024"]
-	pub type PtrOfANN_MLP = core::Ptr<crate::ml::ANN_MLP>;
 
 	ptr_extern! { crate::ml::ANN_MLP,
 		cv_PtrLcv_ml_ANN_MLPG_new_null_const, cv_PtrLcv_ml_ANN_MLPG_delete, cv_PtrLcv_ml_ANN_MLPG_getInnerPtr_const, cv_PtrLcv_ml_ANN_MLPG_getInnerPtrMut
@@ -16467,9 +15621,6 @@ mod ml_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ml::Boost>` instead, removal in Nov 2024"]
-	pub type PtrOfBoost = core::Ptr<crate::ml::Boost>;
 
 	ptr_extern! { crate::ml::Boost,
 		cv_PtrLcv_ml_BoostG_new_null_const, cv_PtrLcv_ml_BoostG_delete, cv_PtrLcv_ml_BoostG_getInnerPtr_const, cv_PtrLcv_ml_BoostG_getInnerPtrMut
@@ -16526,9 +15677,6 @@ mod ml_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ml::DTrees>` instead, removal in Nov 2024"]
-	pub type PtrOfDTrees = core::Ptr<crate::ml::DTrees>;
-
 	ptr_extern! { crate::ml::DTrees,
 		cv_PtrLcv_ml_DTreesG_new_null_const, cv_PtrLcv_ml_DTreesG_delete, cv_PtrLcv_ml_DTreesG_getInnerPtr_const, cv_PtrLcv_ml_DTreesG_getInnerPtrMut
 	}
@@ -16573,9 +15721,6 @@ mod ml_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ml::EM>` instead, removal in Nov 2024"]
-	pub type PtrOfEM = core::Ptr<crate::ml::EM>;
 
 	ptr_extern! { crate::ml::EM,
 		cv_PtrLcv_ml_EMG_new_null_const, cv_PtrLcv_ml_EMG_delete, cv_PtrLcv_ml_EMG_getInnerPtr_const, cv_PtrLcv_ml_EMG_getInnerPtrMut
@@ -16622,9 +15767,6 @@ mod ml_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ml::KNearest>` instead, removal in Nov 2024"]
-	pub type PtrOfKNearest = core::Ptr<crate::ml::KNearest>;
-
 	ptr_extern! { crate::ml::KNearest,
 		cv_PtrLcv_ml_KNearestG_new_null_const, cv_PtrLcv_ml_KNearestG_delete, cv_PtrLcv_ml_KNearestG_getInnerPtr_const, cv_PtrLcv_ml_KNearestG_getInnerPtrMut
 	}
@@ -16669,9 +15811,6 @@ mod ml_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ml::LogisticRegression>` instead, removal in Nov 2024"]
-	pub type PtrOfLogisticRegression = core::Ptr<crate::ml::LogisticRegression>;
 
 	ptr_extern! { crate::ml::LogisticRegression,
 		cv_PtrLcv_ml_LogisticRegressionG_new_null_const, cv_PtrLcv_ml_LogisticRegressionG_delete, cv_PtrLcv_ml_LogisticRegressionG_getInnerPtr_const, cv_PtrLcv_ml_LogisticRegressionG_getInnerPtrMut
@@ -16718,9 +15857,6 @@ mod ml_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ml::NormalBayesClassifier>` instead, removal in Nov 2024"]
-	pub type PtrOfNormalBayesClassifier = core::Ptr<crate::ml::NormalBayesClassifier>;
-
 	ptr_extern! { crate::ml::NormalBayesClassifier,
 		cv_PtrLcv_ml_NormalBayesClassifierG_new_null_const, cv_PtrLcv_ml_NormalBayesClassifierG_delete, cv_PtrLcv_ml_NormalBayesClassifierG_getInnerPtr_const, cv_PtrLcv_ml_NormalBayesClassifierG_getInnerPtrMut
 	}
@@ -16766,9 +15902,6 @@ mod ml_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ml::ParamGrid>` instead, removal in Nov 2024"]
-	pub type PtrOfParamGrid = core::Ptr<crate::ml::ParamGrid>;
-
 	ptr_extern! { crate::ml::ParamGrid,
 		cv_PtrLcv_ml_ParamGridG_new_null_const, cv_PtrLcv_ml_ParamGridG_delete, cv_PtrLcv_ml_ParamGridG_getInnerPtr_const, cv_PtrLcv_ml_ParamGridG_getInnerPtrMut
 	}
@@ -16797,9 +15930,6 @@ mod ml_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ml::RTrees>` instead, removal in Nov 2024"]
-	pub type PtrOfRTrees = core::Ptr<crate::ml::RTrees>;
 
 	ptr_extern! { crate::ml::RTrees,
 		cv_PtrLcv_ml_RTreesG_new_null_const, cv_PtrLcv_ml_RTreesG_delete, cv_PtrLcv_ml_RTreesG_getInnerPtr_const, cv_PtrLcv_ml_RTreesG_getInnerPtrMut
@@ -16856,9 +15986,6 @@ mod ml_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ml::SVM>` instead, removal in Nov 2024"]
-	pub type PtrOfSVM = core::Ptr<crate::ml::SVM>;
-
 	ptr_extern! { crate::ml::SVM,
 		cv_PtrLcv_ml_SVMG_new_null_const, cv_PtrLcv_ml_SVMG_delete, cv_PtrLcv_ml_SVMG_getInnerPtr_const, cv_PtrLcv_ml_SVMG_getInnerPtrMut
 	}
@@ -16903,9 +16030,6 @@ mod ml_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ml::SVMSGD>` instead, removal in Nov 2024"]
-	pub type PtrOfSVMSGD = core::Ptr<crate::ml::SVMSGD>;
 
 	ptr_extern! { crate::ml::SVMSGD,
 		cv_PtrLcv_ml_SVMSGDG_new_null_const, cv_PtrLcv_ml_SVMSGDG_delete, cv_PtrLcv_ml_SVMSGDG_getInnerPtr_const, cv_PtrLcv_ml_SVMSGDG_getInnerPtrMut
@@ -16952,9 +16076,6 @@ mod ml_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ml::SVM_Kernel>` instead, removal in Nov 2024"]
-	pub type PtrOfSVM_Kernel = core::Ptr<crate::ml::SVM_Kernel>;
-
 	ptr_extern! { crate::ml::SVM_Kernel,
 		cv_PtrLcv_ml_SVM_KernelG_new_null_const, cv_PtrLcv_ml_SVM_KernelG_delete, cv_PtrLcv_ml_SVM_KernelG_getInnerPtr_const, cv_PtrLcv_ml_SVM_KernelG_getInnerPtrMut
 	}
@@ -16989,9 +16110,6 @@ mod ml_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ml::StatModel>` instead, removal in Nov 2024"]
-	pub type PtrOfStatModel = core::Ptr<crate::ml::StatModel>;
 
 	ptr_extern! { crate::ml::StatModel,
 		cv_PtrLcv_ml_StatModelG_new_null_const, cv_PtrLcv_ml_StatModelG_delete, cv_PtrLcv_ml_StatModelG_getInnerPtr_const, cv_PtrLcv_ml_StatModelG_getInnerPtrMut
@@ -17028,9 +16146,6 @@ mod ml_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ml::TrainData>` instead, removal in Nov 2024"]
-	pub type PtrOfTrainData = core::Ptr<crate::ml::TrainData>;
-
 	ptr_extern! { crate::ml::TrainData,
 		cv_PtrLcv_ml_TrainDataG_new_null_const, cv_PtrLcv_ml_TrainDataG_delete, cv_PtrLcv_ml_TrainDataG_getInnerPtr_const, cv_PtrLcv_ml_TrainDataG_getInnerPtrMut
 	}
@@ -17055,9 +16170,6 @@ mod ml_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::ml::DTrees_Node>` instead, removal in Nov 2024"]
-	pub type VectorOfDTrees_Node = core::Vector<crate::ml::DTrees_Node>;
 
 	impl core::Vector<crate::ml::DTrees_Node> {
 		pub fn as_raw_VectorOfDTrees_Node(&self) -> extern_send!(Self) { self.as_raw() }
@@ -17088,9 +16200,6 @@ mod ml_types {
 		std_vectorLcv_ml_DTrees_NodeG_push_const_Node, std_vectorLcv_ml_DTrees_NodeG_insert_size_t_const_Node,
 	}
 
-
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::ml::DTrees_Split>` instead, removal in Nov 2024"]
-	pub type VectorOfDTrees_Split = core::Vector<crate::ml::DTrees_Split>;
 
 	impl core::Vector<crate::ml::DTrees_Split> {
 		pub fn as_raw_VectorOfDTrees_Split(&self) -> extern_send!(Self) { self.as_raw() }
@@ -17123,15 +16232,10 @@ mod ml_types {
 
 
 }
-#[cfg(ocvrs_has_module_ml)]
 pub use ml_types::*;
 
-#[cfg(ocvrs_has_module_objdetect)]
 mod objdetect_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::objdetect::ArucoDetector>` instead, removal in Nov 2024"]
-	pub type PtrOfArucoDetector = core::Ptr<crate::objdetect::ArucoDetector>;
 
 	ptr_extern! { crate::objdetect::ArucoDetector,
 		cv_PtrLcv_aruco_ArucoDetectorG_new_null_const, cv_PtrLcv_aruco_ArucoDetectorG_delete, cv_PtrLcv_aruco_ArucoDetectorG_getInnerPtr_const, cv_PtrLcv_aruco_ArucoDetectorG_getInnerPtrMut
@@ -17169,9 +16273,6 @@ mod objdetect_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::objdetect::BaseCascadeClassifier>` instead, removal in Nov 2024"]
-	pub type PtrOfBaseCascadeClassifier = core::Ptr<crate::objdetect::BaseCascadeClassifier>;
-
 	ptr_extern! { crate::objdetect::BaseCascadeClassifier,
 		cv_PtrLcv_BaseCascadeClassifierG_new_null_const, cv_PtrLcv_BaseCascadeClassifierG_delete, cv_PtrLcv_BaseCascadeClassifierG_getInnerPtr_const, cv_PtrLcv_BaseCascadeClassifierG_getInnerPtrMut
 	}
@@ -17207,9 +16308,6 @@ mod objdetect_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::objdetect::BaseCascadeClassifier_MaskGenerator>` instead, removal in Nov 2024"]
-	pub type PtrOfBaseCascadeClassifier_MaskGenerator = core::Ptr<crate::objdetect::BaseCascadeClassifier_MaskGenerator>;
-
 	ptr_extern! { crate::objdetect::BaseCascadeClassifier_MaskGenerator,
 		cv_PtrLcv_BaseCascadeClassifier_MaskGeneratorG_new_null_const, cv_PtrLcv_BaseCascadeClassifier_MaskGeneratorG_delete, cv_PtrLcv_BaseCascadeClassifier_MaskGeneratorG_getInnerPtr_const, cv_PtrLcv_BaseCascadeClassifier_MaskGeneratorG_getInnerPtrMut
 	}
@@ -17234,9 +16332,6 @@ mod objdetect_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::objdetect::Board>` instead, removal in Nov 2024"]
-	pub type PtrOfBoard = core::Ptr<crate::objdetect::Board>;
 
 	ptr_extern! { crate::objdetect::Board,
 		cv_PtrLcv_aruco_BoardG_new_null_const, cv_PtrLcv_aruco_BoardG_delete, cv_PtrLcv_aruco_BoardG_getInnerPtr_const, cv_PtrLcv_aruco_BoardG_getInnerPtrMut
@@ -17263,9 +16358,6 @@ mod objdetect_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::objdetect::CharucoBoard>` instead, removal in Nov 2024"]
-	pub type PtrOfCharucoBoard = core::Ptr<crate::objdetect::CharucoBoard>;
 
 	ptr_extern! { crate::objdetect::CharucoBoard,
 		cv_PtrLcv_aruco_CharucoBoardG_new_null_const, cv_PtrLcv_aruco_CharucoBoardG_delete, cv_PtrLcv_aruco_CharucoBoardG_getInnerPtr_const, cv_PtrLcv_aruco_CharucoBoardG_getInnerPtrMut
@@ -17303,9 +16395,6 @@ mod objdetect_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::objdetect::CharucoDetector>` instead, removal in Nov 2024"]
-	pub type PtrOfCharucoDetector = core::Ptr<crate::objdetect::CharucoDetector>;
-
 	ptr_extern! { crate::objdetect::CharucoDetector,
 		cv_PtrLcv_aruco_CharucoDetectorG_new_null_const, cv_PtrLcv_aruco_CharucoDetectorG_delete, cv_PtrLcv_aruco_CharucoDetectorG_getInnerPtr_const, cv_PtrLcv_aruco_CharucoDetectorG_getInnerPtrMut
 	}
@@ -17342,9 +16431,6 @@ mod objdetect_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::objdetect::DetectionBasedTracker_IDetector>` instead, removal in Nov 2024"]
-	pub type PtrOfDetectionBasedTracker_IDetector = core::Ptr<crate::objdetect::DetectionBasedTracker_IDetector>;
-
 	ptr_extern! { crate::objdetect::DetectionBasedTracker_IDetector,
 		cv_PtrLcv_DetectionBasedTracker_IDetectorG_new_null_const, cv_PtrLcv_DetectionBasedTracker_IDetectorG_delete, cv_PtrLcv_DetectionBasedTracker_IDetectorG_getInnerPtr_const, cv_PtrLcv_DetectionBasedTracker_IDetectorG_getInnerPtrMut
 	}
@@ -17369,9 +16455,6 @@ mod objdetect_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::objdetect::DetectorParameters>` instead, removal in Nov 2024"]
-	pub type PtrOfDetectorParameters = core::Ptr<crate::objdetect::DetectorParameters>;
 
 	ptr_extern! { crate::objdetect::DetectorParameters,
 		cv_PtrLcv_aruco_DetectorParametersG_new_null_const, cv_PtrLcv_aruco_DetectorParametersG_delete, cv_PtrLcv_aruco_DetectorParametersG_getInnerPtr_const, cv_PtrLcv_aruco_DetectorParametersG_getInnerPtrMut
@@ -17433,9 +16516,6 @@ mod objdetect_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::objdetect::Dictionary>` instead, removal in Nov 2024"]
-	pub type PtrOfDictionary = core::Ptr<crate::objdetect::Dictionary>;
-
 	ptr_extern! { crate::objdetect::Dictionary,
 		cv_PtrLcv_aruco_DictionaryG_new_null_const, cv_PtrLcv_aruco_DictionaryG_delete, cv_PtrLcv_aruco_DictionaryG_getInnerPtr_const, cv_PtrLcv_aruco_DictionaryG_getInnerPtrMut
 	}
@@ -17465,9 +16545,6 @@ mod objdetect_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::objdetect::FaceDetectorYN>` instead, removal in Nov 2024"]
-	pub type PtrOfFaceDetectorYN = core::Ptr<crate::objdetect::FaceDetectorYN>;
-
 	ptr_extern! { crate::objdetect::FaceDetectorYN,
 		cv_PtrLcv_FaceDetectorYNG_new_null_const, cv_PtrLcv_FaceDetectorYNG_delete, cv_PtrLcv_FaceDetectorYNG_getInnerPtr_const, cv_PtrLcv_FaceDetectorYNG_getInnerPtrMut
 	}
@@ -17493,9 +16570,6 @@ mod objdetect_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::objdetect::FaceRecognizerSF>` instead, removal in Nov 2024"]
-	pub type PtrOfFaceRecognizerSF = core::Ptr<crate::objdetect::FaceRecognizerSF>;
-
 	ptr_extern! { crate::objdetect::FaceRecognizerSF,
 		cv_PtrLcv_FaceRecognizerSFG_new_null_const, cv_PtrLcv_FaceRecognizerSFG_delete, cv_PtrLcv_FaceRecognizerSFG_getInnerPtr_const, cv_PtrLcv_FaceRecognizerSFG_getInnerPtrMut
 	}
@@ -17520,9 +16594,6 @@ mod objdetect_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::objdetect::GridBoard>` instead, removal in Nov 2024"]
-	pub type PtrOfGridBoard = core::Ptr<crate::objdetect::GridBoard>;
 
 	ptr_extern! { crate::objdetect::GridBoard,
 		cv_PtrLcv_aruco_GridBoardG_new_null_const, cv_PtrLcv_aruco_GridBoardG_delete, cv_PtrLcv_aruco_GridBoardG_getInnerPtr_const, cv_PtrLcv_aruco_GridBoardG_getInnerPtrMut
@@ -17560,9 +16631,6 @@ mod objdetect_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::objdetect::QRCodeEncoder>` instead, removal in Nov 2024"]
-	pub type PtrOfQRCodeEncoder = core::Ptr<crate::objdetect::QRCodeEncoder>;
-
 	ptr_extern! { crate::objdetect::QRCodeEncoder,
 		cv_PtrLcv_QRCodeEncoderG_new_null_const, cv_PtrLcv_QRCodeEncoderG_delete, cv_PtrLcv_QRCodeEncoderG_getInnerPtr_const, cv_PtrLcv_QRCodeEncoderG_getInnerPtrMut
 	}
@@ -17587,9 +16655,6 @@ mod objdetect_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::objdetect::DetectionBasedTracker_ExtObject>` instead, removal in Nov 2024"]
-	pub type VectorOfDetectionBasedTracker_ExtObject = core::Vector<crate::objdetect::DetectionBasedTracker_ExtObject>;
 
 	impl core::Vector<crate::objdetect::DetectionBasedTracker_ExtObject> {
 		pub fn as_raw_VectorOfDetectionBasedTracker_ExtObject(&self) -> extern_send!(Self) { self.as_raw() }
@@ -17621,9 +16686,6 @@ mod objdetect_types {
 	}
 
 
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::objdetect::DetectionBasedTracker_Object>` instead, removal in Nov 2024"]
-	pub type VectorOfDetectionBasedTracker_Object = core::Vector<crate::objdetect::DetectionBasedTracker_Object>;
-
 	impl core::Vector<crate::objdetect::DetectionBasedTracker_Object> {
 		pub fn as_raw_VectorOfDetectionBasedTracker_Object(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfDetectionBasedTracker_Object(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -17641,9 +16703,6 @@ mod objdetect_types {
 
 	vector_non_copy_or_bool! { crate::objdetect::DetectionBasedTracker_Object }
 
-
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::objdetect::DetectionROI>` instead, removal in Nov 2024"]
-	pub type VectorOfDetectionROI = core::Vector<crate::objdetect::DetectionROI>;
 
 	impl core::Vector<crate::objdetect::DetectionROI> {
 		pub fn as_raw_VectorOfDetectionROI(&self) -> extern_send!(Self) { self.as_raw() }
@@ -17676,15 +16735,10 @@ mod objdetect_types {
 
 
 }
-#[cfg(ocvrs_has_module_objdetect)]
 pub use objdetect_types::*;
 
-#[cfg(ocvrs_has_module_optflow)]
 mod optflow_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::optflow::DenseRLOFOpticalFlow>` instead, removal in Nov 2024"]
-	pub type PtrOfDenseRLOFOpticalFlow = core::Ptr<crate::optflow::DenseRLOFOpticalFlow>;
 
 	ptr_extern! { crate::optflow::DenseRLOFOpticalFlow,
 		cv_PtrLcv_optflow_DenseRLOFOpticalFlowG_new_null_const, cv_PtrLcv_optflow_DenseRLOFOpticalFlowG_delete, cv_PtrLcv_optflow_DenseRLOFOpticalFlowG_getInnerPtr_const, cv_PtrLcv_optflow_DenseRLOFOpticalFlowG_getInnerPtrMut
@@ -17731,9 +16785,6 @@ mod optflow_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::optflow::DualTVL1OpticalFlow>` instead, removal in Nov 2024"]
-	pub type PtrOfDualTVL1OpticalFlow = core::Ptr<crate::optflow::DualTVL1OpticalFlow>;
-
 	ptr_extern! { crate::optflow::DualTVL1OpticalFlow,
 		cv_PtrLcv_optflow_DualTVL1OpticalFlowG_new_null_const, cv_PtrLcv_optflow_DualTVL1OpticalFlowG_delete, cv_PtrLcv_optflow_DualTVL1OpticalFlowG_getInnerPtr_const, cv_PtrLcv_optflow_DualTVL1OpticalFlowG_getInnerPtrMut
 	}
@@ -17779,9 +16830,6 @@ mod optflow_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::optflow::GPCTrainingSamples>` instead, removal in Nov 2024"]
-	pub type PtrOfGPCTrainingSamples = core::Ptr<crate::optflow::GPCTrainingSamples>;
-
 	ptr_extern! { crate::optflow::GPCTrainingSamples,
 		cv_PtrLcv_optflow_GPCTrainingSamplesG_new_null_const, cv_PtrLcv_optflow_GPCTrainingSamplesG_delete, cv_PtrLcv_optflow_GPCTrainingSamplesG_getInnerPtr_const, cv_PtrLcv_optflow_GPCTrainingSamplesG_getInnerPtrMut
 	}
@@ -17807,9 +16855,6 @@ mod optflow_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::optflow::GPCTree>` instead, removal in Nov 2024"]
-	pub type PtrOfGPCTree = core::Ptr<crate::optflow::GPCTree>;
 
 	ptr_extern! { crate::optflow::GPCTree,
 		cv_PtrLcv_optflow_GPCTreeG_new_null_const, cv_PtrLcv_optflow_GPCTreeG_delete, cv_PtrLcv_optflow_GPCTreeG_getInnerPtr_const, cv_PtrLcv_optflow_GPCTreeG_getInnerPtrMut
@@ -17846,9 +16891,6 @@ mod optflow_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::optflow::OpticalFlowPCAFlow>` instead, removal in Nov 2024"]
-	pub type PtrOfOpticalFlowPCAFlow = core::Ptr<crate::optflow::OpticalFlowPCAFlow>;
 
 	ptr_extern! { crate::optflow::OpticalFlowPCAFlow,
 		cv_PtrLcv_optflow_OpticalFlowPCAFlowG_new_null_const, cv_PtrLcv_optflow_OpticalFlowPCAFlowG_delete, cv_PtrLcv_optflow_OpticalFlowPCAFlowG_getInnerPtr_const, cv_PtrLcv_optflow_OpticalFlowPCAFlowG_getInnerPtrMut
@@ -17896,9 +16938,6 @@ mod optflow_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::optflow::PCAPrior>` instead, removal in Nov 2024"]
-	pub type PtrOfPCAPrior = core::Ptr<crate::optflow::PCAPrior>;
-
 	ptr_extern! { crate::optflow::PCAPrior,
 		cv_PtrLcv_optflow_PCAPriorG_new_null_const, cv_PtrLcv_optflow_PCAPriorG_delete, cv_PtrLcv_optflow_PCAPriorG_getInnerPtr_const, cv_PtrLcv_optflow_PCAPriorG_getInnerPtrMut
 	}
@@ -17924,9 +16963,6 @@ mod optflow_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::optflow::RLOFOpticalFlowParameter>` instead, removal in Nov 2024"]
-	pub type PtrOfRLOFOpticalFlowParameter = core::Ptr<crate::optflow::RLOFOpticalFlowParameter>;
 
 	ptr_extern! { crate::optflow::RLOFOpticalFlowParameter,
 		cv_PtrLcv_optflow_RLOFOpticalFlowParameterG_new_null_const, cv_PtrLcv_optflow_RLOFOpticalFlowParameterG_delete, cv_PtrLcv_optflow_RLOFOpticalFlowParameterG_getInnerPtr_const, cv_PtrLcv_optflow_RLOFOpticalFlowParameterG_getInnerPtrMut
@@ -17967,9 +17003,6 @@ mod optflow_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::optflow::SparseRLOFOpticalFlow>` instead, removal in Nov 2024"]
-	pub type PtrOfSparseRLOFOpticalFlow = core::Ptr<crate::optflow::SparseRLOFOpticalFlow>;
 
 	ptr_extern! { crate::optflow::SparseRLOFOpticalFlow,
 		cv_PtrLcv_optflow_SparseRLOFOpticalFlowG_new_null_const, cv_PtrLcv_optflow_SparseRLOFOpticalFlowG_delete, cv_PtrLcv_optflow_SparseRLOFOpticalFlowG_getInnerPtr_const, cv_PtrLcv_optflow_SparseRLOFOpticalFlowG_getInnerPtrMut
@@ -18016,9 +17049,6 @@ mod optflow_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::optflow::GPCPatchDescriptor>` instead, removal in Nov 2024"]
-	pub type VectorOfGPCPatchDescriptor = core::Vector<crate::optflow::GPCPatchDescriptor>;
-
 	impl core::Vector<crate::optflow::GPCPatchDescriptor> {
 		pub fn as_raw_VectorOfGPCPatchDescriptor(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfGPCPatchDescriptor(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -18048,9 +17078,6 @@ mod optflow_types {
 		std_vectorLcv_optflow_GPCPatchDescriptorG_push_const_GPCPatchDescriptor, std_vectorLcv_optflow_GPCPatchDescriptorG_insert_size_t_const_GPCPatchDescriptor,
 	}
 
-
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::optflow::GPCPatchSample>` instead, removal in Nov 2024"]
-	pub type VectorOfGPCPatchSample = core::Vector<crate::optflow::GPCPatchSample>;
 
 	impl core::Vector<crate::optflow::GPCPatchSample> {
 		pub fn as_raw_VectorOfGPCPatchSample(&self) -> extern_send!(Self) { self.as_raw() }
@@ -18083,15 +17110,10 @@ mod optflow_types {
 
 
 }
-#[cfg(ocvrs_has_module_optflow)]
 pub use optflow_types::*;
 
-#[cfg(ocvrs_has_module_ovis)]
 mod ovis_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ovis::WindowScene>` instead, removal in Nov 2024"]
-	pub type PtrOfWindowScene = core::Ptr<crate::ovis::WindowScene>;
 
 	ptr_extern! { crate::ovis::WindowScene,
 		cv_PtrLcv_ovis_WindowSceneG_new_null_const, cv_PtrLcv_ovis_WindowSceneG_delete, cv_PtrLcv_ovis_WindowSceneG_getInnerPtr_const, cv_PtrLcv_ovis_WindowSceneG_getInnerPtrMut
@@ -18119,15 +17141,10 @@ mod ovis_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_ovis)]
 pub use ovis_types::*;
 
-#[cfg(ocvrs_has_module_phase_unwrapping)]
 mod phase_unwrapping_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::phase_unwrapping::HistogramPhaseUnwrapping>` instead, removal in Nov 2024"]
-	pub type PtrOfHistogramPhaseUnwrapping = core::Ptr<crate::phase_unwrapping::HistogramPhaseUnwrapping>;
 
 	ptr_extern! { crate::phase_unwrapping::HistogramPhaseUnwrapping,
 		cv_PtrLcv_phase_unwrapping_HistogramPhaseUnwrappingG_new_null_const, cv_PtrLcv_phase_unwrapping_HistogramPhaseUnwrappingG_delete, cv_PtrLcv_phase_unwrapping_HistogramPhaseUnwrappingG_getInnerPtr_const, cv_PtrLcv_phase_unwrapping_HistogramPhaseUnwrappingG_getInnerPtrMut
@@ -18174,9 +17191,6 @@ mod phase_unwrapping_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::phase_unwrapping::PhaseUnwrapping>` instead, removal in Nov 2024"]
-	pub type PtrOfPhaseUnwrapping = core::Ptr<crate::phase_unwrapping::PhaseUnwrapping>;
-
 	ptr_extern! { crate::phase_unwrapping::PhaseUnwrapping,
 		cv_PtrLcv_phase_unwrapping_PhaseUnwrappingG_new_null_const, cv_PtrLcv_phase_unwrapping_PhaseUnwrappingG_delete, cv_PtrLcv_phase_unwrapping_PhaseUnwrappingG_getInnerPtr_const, cv_PtrLcv_phase_unwrapping_PhaseUnwrappingG_getInnerPtrMut
 	}
@@ -18213,15 +17227,10 @@ mod phase_unwrapping_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_phase_unwrapping)]
 pub use phase_unwrapping_types::*;
 
-#[cfg(ocvrs_has_module_photo)]
 mod photo_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::photo::AlignExposures>` instead, removal in Nov 2024"]
-	pub type PtrOfAlignExposures = core::Ptr<crate::photo::AlignExposures>;
 
 	ptr_extern! { crate::photo::AlignExposures,
 		cv_PtrLcv_AlignExposuresG_new_null_const, cv_PtrLcv_AlignExposuresG_delete, cv_PtrLcv_AlignExposuresG_getInnerPtr_const, cv_PtrLcv_AlignExposuresG_getInnerPtrMut
@@ -18257,9 +17266,6 @@ mod photo_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::photo::AlignMTB>` instead, removal in Nov 2024"]
-	pub type PtrOfAlignMTB = core::Ptr<crate::photo::AlignMTB>;
 
 	ptr_extern! { crate::photo::AlignMTB,
 		cv_PtrLcv_AlignMTBG_new_null_const, cv_PtrLcv_AlignMTBG_delete, cv_PtrLcv_AlignMTBG_getInnerPtr_const, cv_PtrLcv_AlignMTBG_getInnerPtrMut
@@ -18306,9 +17312,6 @@ mod photo_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::photo::CalibrateCRF>` instead, removal in Nov 2024"]
-	pub type PtrOfCalibrateCRF = core::Ptr<crate::photo::CalibrateCRF>;
-
 	ptr_extern! { crate::photo::CalibrateCRF,
 		cv_PtrLcv_CalibrateCRFG_new_null_const, cv_PtrLcv_CalibrateCRFG_delete, cv_PtrLcv_CalibrateCRFG_getInnerPtr_const, cv_PtrLcv_CalibrateCRFG_getInnerPtrMut
 	}
@@ -18343,9 +17346,6 @@ mod photo_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::photo::CalibrateDebevec>` instead, removal in Nov 2024"]
-	pub type PtrOfCalibrateDebevec = core::Ptr<crate::photo::CalibrateDebevec>;
 
 	ptr_extern! { crate::photo::CalibrateDebevec,
 		cv_PtrLcv_CalibrateDebevecG_new_null_const, cv_PtrLcv_CalibrateDebevecG_delete, cv_PtrLcv_CalibrateDebevecG_getInnerPtr_const, cv_PtrLcv_CalibrateDebevecG_getInnerPtrMut
@@ -18392,9 +17392,6 @@ mod photo_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::photo::CalibrateRobertson>` instead, removal in Nov 2024"]
-	pub type PtrOfCalibrateRobertson = core::Ptr<crate::photo::CalibrateRobertson>;
-
 	ptr_extern! { crate::photo::CalibrateRobertson,
 		cv_PtrLcv_CalibrateRobertsonG_new_null_const, cv_PtrLcv_CalibrateRobertsonG_delete, cv_PtrLcv_CalibrateRobertsonG_getInnerPtr_const, cv_PtrLcv_CalibrateRobertsonG_getInnerPtrMut
 	}
@@ -18439,9 +17436,6 @@ mod photo_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::photo::MergeDebevec>` instead, removal in Nov 2024"]
-	pub type PtrOfMergeDebevec = core::Ptr<crate::photo::MergeDebevec>;
 
 	ptr_extern! { crate::photo::MergeDebevec,
 		cv_PtrLcv_MergeDebevecG_new_null_const, cv_PtrLcv_MergeDebevecG_delete, cv_PtrLcv_MergeDebevecG_getInnerPtr_const, cv_PtrLcv_MergeDebevecG_getInnerPtrMut
@@ -18488,9 +17482,6 @@ mod photo_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::photo::MergeExposures>` instead, removal in Nov 2024"]
-	pub type PtrOfMergeExposures = core::Ptr<crate::photo::MergeExposures>;
-
 	ptr_extern! { crate::photo::MergeExposures,
 		cv_PtrLcv_MergeExposuresG_new_null_const, cv_PtrLcv_MergeExposuresG_delete, cv_PtrLcv_MergeExposuresG_getInnerPtr_const, cv_PtrLcv_MergeExposuresG_getInnerPtrMut
 	}
@@ -18525,9 +17516,6 @@ mod photo_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::photo::MergeMertens>` instead, removal in Nov 2024"]
-	pub type PtrOfMergeMertens = core::Ptr<crate::photo::MergeMertens>;
 
 	ptr_extern! { crate::photo::MergeMertens,
 		cv_PtrLcv_MergeMertensG_new_null_const, cv_PtrLcv_MergeMertensG_delete, cv_PtrLcv_MergeMertensG_getInnerPtr_const, cv_PtrLcv_MergeMertensG_getInnerPtrMut
@@ -18574,9 +17562,6 @@ mod photo_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::photo::MergeRobertson>` instead, removal in Nov 2024"]
-	pub type PtrOfMergeRobertson = core::Ptr<crate::photo::MergeRobertson>;
-
 	ptr_extern! { crate::photo::MergeRobertson,
 		cv_PtrLcv_MergeRobertsonG_new_null_const, cv_PtrLcv_MergeRobertsonG_delete, cv_PtrLcv_MergeRobertsonG_getInnerPtr_const, cv_PtrLcv_MergeRobertsonG_getInnerPtrMut
 	}
@@ -18622,9 +17607,6 @@ mod photo_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::photo::Tonemap>` instead, removal in Nov 2024"]
-	pub type PtrOfTonemap = core::Ptr<crate::photo::Tonemap>;
-
 	ptr_extern! { crate::photo::Tonemap,
 		cv_PtrLcv_TonemapG_new_null_const, cv_PtrLcv_TonemapG_delete, cv_PtrLcv_TonemapG_getInnerPtr_const, cv_PtrLcv_TonemapG_getInnerPtrMut
 	}
@@ -18659,9 +17641,6 @@ mod photo_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::photo::TonemapDrago>` instead, removal in Nov 2024"]
-	pub type PtrOfTonemapDrago = core::Ptr<crate::photo::TonemapDrago>;
 
 	ptr_extern! { crate::photo::TonemapDrago,
 		cv_PtrLcv_TonemapDragoG_new_null_const, cv_PtrLcv_TonemapDragoG_delete, cv_PtrLcv_TonemapDragoG_getInnerPtr_const, cv_PtrLcv_TonemapDragoG_getInnerPtrMut
@@ -18708,9 +17687,6 @@ mod photo_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::photo::TonemapMantiuk>` instead, removal in Nov 2024"]
-	pub type PtrOfTonemapMantiuk = core::Ptr<crate::photo::TonemapMantiuk>;
-
 	ptr_extern! { crate::photo::TonemapMantiuk,
 		cv_PtrLcv_TonemapMantiukG_new_null_const, cv_PtrLcv_TonemapMantiukG_delete, cv_PtrLcv_TonemapMantiukG_getInnerPtr_const, cv_PtrLcv_TonemapMantiukG_getInnerPtrMut
 	}
@@ -18755,9 +17731,6 @@ mod photo_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::photo::TonemapReinhard>` instead, removal in Nov 2024"]
-	pub type PtrOfTonemapReinhard = core::Ptr<crate::photo::TonemapReinhard>;
 
 	ptr_extern! { crate::photo::TonemapReinhard,
 		cv_PtrLcv_TonemapReinhardG_new_null_const, cv_PtrLcv_TonemapReinhardG_delete, cv_PtrLcv_TonemapReinhardG_getInnerPtr_const, cv_PtrLcv_TonemapReinhardG_getInnerPtrMut
@@ -18805,15 +17778,10 @@ mod photo_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_photo)]
 pub use photo_types::*;
 
-#[cfg(ocvrs_has_module_plot)]
 mod plot_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::plot::Plot2d>` instead, removal in Nov 2024"]
-	pub type PtrOfPlot2d = core::Ptr<crate::plot::Plot2d>;
 
 	ptr_extern! { crate::plot::Plot2d,
 		cv_PtrLcv_plot_Plot2dG_new_null_const, cv_PtrLcv_plot_Plot2dG_delete, cv_PtrLcv_plot_Plot2dG_getInnerPtr_const, cv_PtrLcv_plot_Plot2dG_getInnerPtrMut
@@ -18851,15 +17819,10 @@ mod plot_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_plot)]
 pub use plot_types::*;
 
-#[cfg(ocvrs_has_module_quality)]
 mod quality_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::quality::QualityBRISQUE>` instead, removal in Nov 2024"]
-	pub type PtrOfQualityBRISQUE = core::Ptr<crate::quality::QualityBRISQUE>;
 
 	ptr_extern! { crate::quality::QualityBRISQUE,
 		cv_PtrLcv_quality_QualityBRISQUEG_new_null_const, cv_PtrLcv_quality_QualityBRISQUEG_delete, cv_PtrLcv_quality_QualityBRISQUEG_getInnerPtr_const, cv_PtrLcv_quality_QualityBRISQUEG_getInnerPtrMut
@@ -18907,9 +17870,6 @@ mod quality_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::quality::QualityBase>` instead, removal in Nov 2024"]
-	pub type PtrOfQualityBase = core::Ptr<crate::quality::QualityBase>;
-
 	ptr_extern! { crate::quality::QualityBase,
 		cv_PtrLcv_quality_QualityBaseG_new_null_const, cv_PtrLcv_quality_QualityBaseG_delete, cv_PtrLcv_quality_QualityBaseG_getInnerPtr_const, cv_PtrLcv_quality_QualityBaseG_getInnerPtrMut
 	}
@@ -18944,9 +17904,6 @@ mod quality_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::quality::QualityGMSD>` instead, removal in Nov 2024"]
-	pub type PtrOfQualityGMSD = core::Ptr<crate::quality::QualityGMSD>;
 
 	ptr_extern! { crate::quality::QualityGMSD,
 		cv_PtrLcv_quality_QualityGMSDG_new_null_const, cv_PtrLcv_quality_QualityGMSDG_delete, cv_PtrLcv_quality_QualityGMSDG_getInnerPtr_const, cv_PtrLcv_quality_QualityGMSDG_getInnerPtrMut
@@ -18994,9 +17951,6 @@ mod quality_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::quality::QualityMSE>` instead, removal in Nov 2024"]
-	pub type PtrOfQualityMSE = core::Ptr<crate::quality::QualityMSE>;
-
 	ptr_extern! { crate::quality::QualityMSE,
 		cv_PtrLcv_quality_QualityMSEG_new_null_const, cv_PtrLcv_quality_QualityMSEG_delete, cv_PtrLcv_quality_QualityMSEG_getInnerPtr_const, cv_PtrLcv_quality_QualityMSEG_getInnerPtrMut
 	}
@@ -19043,9 +17997,6 @@ mod quality_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::quality::QualityPSNR>` instead, removal in Nov 2024"]
-	pub type PtrOfQualityPSNR = core::Ptr<crate::quality::QualityPSNR>;
-
 	ptr_extern! { crate::quality::QualityPSNR,
 		cv_PtrLcv_quality_QualityPSNRG_new_null_const, cv_PtrLcv_quality_QualityPSNRG_delete, cv_PtrLcv_quality_QualityPSNRG_getInnerPtr_const, cv_PtrLcv_quality_QualityPSNRG_getInnerPtrMut
 	}
@@ -19091,9 +18042,6 @@ mod quality_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::quality::QualitySSIM>` instead, removal in Nov 2024"]
-	pub type PtrOfQualitySSIM = core::Ptr<crate::quality::QualitySSIM>;
 
 	ptr_extern! { crate::quality::QualitySSIM,
 		cv_PtrLcv_quality_QualitySSIMG_new_null_const, cv_PtrLcv_quality_QualitySSIMG_delete, cv_PtrLcv_quality_QualitySSIMG_getInnerPtr_const, cv_PtrLcv_quality_QualitySSIMG_getInnerPtrMut
@@ -19142,15 +18090,10 @@ mod quality_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_quality)]
 pub use quality_types::*;
 
-#[cfg(ocvrs_has_module_rapid)]
 mod rapid_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rapid::Rapid_GOSTracker>` instead, removal in Nov 2024"]
-	pub type PtrOfRapid_GOSTracker = core::Ptr<crate::rapid::Rapid_GOSTracker>;
 
 	ptr_extern! { crate::rapid::Rapid_GOSTracker,
 		cv_PtrLcv_rapid_GOSTrackerG_new_null_const, cv_PtrLcv_rapid_GOSTrackerG_delete, cv_PtrLcv_rapid_GOSTrackerG_getInnerPtr_const, cv_PtrLcv_rapid_GOSTrackerG_getInnerPtrMut
@@ -19197,9 +18140,6 @@ mod rapid_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rapid::Rapid_OLSTracker>` instead, removal in Nov 2024"]
-	pub type PtrOfRapid_OLSTracker = core::Ptr<crate::rapid::Rapid_OLSTracker>;
-
 	ptr_extern! { crate::rapid::Rapid_OLSTracker,
 		cv_PtrLcv_rapid_OLSTrackerG_new_null_const, cv_PtrLcv_rapid_OLSTrackerG_delete, cv_PtrLcv_rapid_OLSTrackerG_getInnerPtr_const, cv_PtrLcv_rapid_OLSTrackerG_getInnerPtrMut
 	}
@@ -19244,9 +18184,6 @@ mod rapid_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rapid::Rapid_Rapid>` instead, removal in Nov 2024"]
-	pub type PtrOfRapid_Rapid = core::Ptr<crate::rapid::Rapid_Rapid>;
 
 	ptr_extern! { crate::rapid::Rapid_Rapid,
 		cv_PtrLcv_rapid_RapidG_new_null_const, cv_PtrLcv_rapid_RapidG_delete, cv_PtrLcv_rapid_RapidG_getInnerPtr_const, cv_PtrLcv_rapid_RapidG_getInnerPtrMut
@@ -19293,9 +18230,6 @@ mod rapid_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rapid::Rapid_Tracker>` instead, removal in Nov 2024"]
-	pub type PtrOfRapid_Tracker = core::Ptr<crate::rapid::Rapid_Tracker>;
-
 	ptr_extern! { crate::rapid::Rapid_Tracker,
 		cv_PtrLcv_rapid_TrackerG_new_null_const, cv_PtrLcv_rapid_TrackerG_delete, cv_PtrLcv_rapid_TrackerG_getInnerPtr_const, cv_PtrLcv_rapid_TrackerG_getInnerPtrMut
 	}
@@ -19332,15 +18266,10 @@ mod rapid_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_rapid)]
 pub use rapid_types::*;
 
-#[cfg(ocvrs_has_module_rgbd)]
 mod rgbd_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::ColoredKinfu_ColoredKinFu>` instead, removal in Nov 2024"]
-	pub type PtrOfColoredKinfu_ColoredKinFu = core::Ptr<crate::rgbd::ColoredKinfu_ColoredKinFu>;
 
 	ptr_extern! { crate::rgbd::ColoredKinfu_ColoredKinFu,
 		cv_PtrLcv_colored_kinfu_ColoredKinFuG_new_null_const, cv_PtrLcv_colored_kinfu_ColoredKinFuG_delete, cv_PtrLcv_colored_kinfu_ColoredKinFuG_getInnerPtr_const, cv_PtrLcv_colored_kinfu_ColoredKinFuG_getInnerPtrMut
@@ -19366,9 +18295,6 @@ mod rgbd_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::ColoredKinfu_Params>` instead, removal in Nov 2024"]
-	pub type PtrOfColoredKinfu_Params = core::Ptr<crate::rgbd::ColoredKinfu_Params>;
 
 	ptr_extern! { crate::rgbd::ColoredKinfu_Params,
 		cv_PtrLcv_colored_kinfu_ParamsG_new_null_const, cv_PtrLcv_colored_kinfu_ParamsG_delete, cv_PtrLcv_colored_kinfu_ParamsG_getInnerPtr_const, cv_PtrLcv_colored_kinfu_ParamsG_getInnerPtrMut
@@ -19418,9 +18344,6 @@ mod rgbd_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::DepthCleaner>` instead, removal in Nov 2024"]
-	pub type PtrOfDepthCleaner = core::Ptr<crate::rgbd::DepthCleaner>;
-
 	ptr_extern! { crate::rgbd::DepthCleaner,
 		cv_PtrLcv_rgbd_DepthCleanerG_new_null_const, cv_PtrLcv_rgbd_DepthCleanerG_delete, cv_PtrLcv_rgbd_DepthCleanerG_getInnerPtr_const, cv_PtrLcv_rgbd_DepthCleanerG_getInnerPtrMut
 	}
@@ -19457,9 +18380,6 @@ mod rgbd_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::Dynafu_DynaFu>` instead, removal in Nov 2024"]
-	pub type PtrOfDynafu_DynaFu = core::Ptr<crate::rgbd::Dynafu_DynaFu>;
-
 	ptr_extern! { crate::rgbd::Dynafu_DynaFu,
 		cv_PtrLcv_dynafu_DynaFuG_new_null_const, cv_PtrLcv_dynafu_DynaFuG_delete, cv_PtrLcv_dynafu_DynaFuG_getInnerPtr_const, cv_PtrLcv_dynafu_DynaFuG_getInnerPtrMut
 	}
@@ -19484,9 +18404,6 @@ mod rgbd_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::FastICPOdometry>` instead, removal in Nov 2024"]
-	pub type PtrOfFastICPOdometry = core::Ptr<crate::rgbd::FastICPOdometry>;
 
 	ptr_extern! { crate::rgbd::FastICPOdometry,
 		cv_PtrLcv_rgbd_FastICPOdometryG_new_null_const, cv_PtrLcv_rgbd_FastICPOdometryG_delete, cv_PtrLcv_rgbd_FastICPOdometryG_getInnerPtr_const, cv_PtrLcv_rgbd_FastICPOdometryG_getInnerPtrMut
@@ -19534,9 +18451,6 @@ mod rgbd_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::ICPOdometry>` instead, removal in Nov 2024"]
-	pub type PtrOfICPOdometry = core::Ptr<crate::rgbd::ICPOdometry>;
-
 	ptr_extern! { crate::rgbd::ICPOdometry,
 		cv_PtrLcv_rgbd_ICPOdometryG_new_null_const, cv_PtrLcv_rgbd_ICPOdometryG_delete, cv_PtrLcv_rgbd_ICPOdometryG_getInnerPtr_const, cv_PtrLcv_rgbd_ICPOdometryG_getInnerPtrMut
 	}
@@ -19583,9 +18497,6 @@ mod rgbd_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::Kinfu_Detail_PoseGraph>` instead, removal in Nov 2024"]
-	pub type PtrOfKinfu_Detail_PoseGraph = core::Ptr<crate::rgbd::Kinfu_Detail_PoseGraph>;
-
 	ptr_extern! { crate::rgbd::Kinfu_Detail_PoseGraph,
 		cv_PtrLcv_kinfu_detail_PoseGraphG_new_null_const, cv_PtrLcv_kinfu_detail_PoseGraphG_delete, cv_PtrLcv_kinfu_detail_PoseGraphG_getInnerPtr_const, cv_PtrLcv_kinfu_detail_PoseGraphG_getInnerPtrMut
 	}
@@ -19611,9 +18522,6 @@ mod rgbd_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::Kinfu_KinFu>` instead, removal in Nov 2024"]
-	pub type PtrOfKinfu_KinFu = core::Ptr<crate::rgbd::Kinfu_KinFu>;
-
 	ptr_extern! { crate::rgbd::Kinfu_KinFu,
 		cv_PtrLcv_kinfu_KinFuG_new_null_const, cv_PtrLcv_kinfu_KinFuG_delete, cv_PtrLcv_kinfu_KinFuG_getInnerPtr_const, cv_PtrLcv_kinfu_KinFuG_getInnerPtrMut
 	}
@@ -19638,9 +18546,6 @@ mod rgbd_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::Kinfu_Params>` instead, removal in Nov 2024"]
-	pub type PtrOfKinfu_Params = core::Ptr<crate::rgbd::Kinfu_Params>;
 
 	ptr_extern! { crate::rgbd::Kinfu_Params,
 		cv_PtrLcv_kinfu_ParamsG_new_null_const, cv_PtrLcv_kinfu_ParamsG_delete, cv_PtrLcv_kinfu_ParamsG_getInnerPtr_const, cv_PtrLcv_kinfu_ParamsG_getInnerPtrMut
@@ -19689,9 +18594,6 @@ mod rgbd_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::Kinfu_Volume>` instead, removal in Nov 2024"]
-	pub type PtrOfKinfu_Volume = core::Ptr<crate::rgbd::Kinfu_Volume>;
-
 	ptr_extern! { crate::rgbd::Kinfu_Volume,
 		cv_PtrLcv_kinfu_VolumeG_new_null_const, cv_PtrLcv_kinfu_VolumeG_delete, cv_PtrLcv_kinfu_VolumeG_getInnerPtr_const, cv_PtrLcv_kinfu_VolumeG_getInnerPtrMut
 	}
@@ -19720,9 +18622,6 @@ mod rgbd_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::Kinfu_VolumeParams>` instead, removal in Nov 2024"]
-	pub type PtrOfKinfu_VolumeParams = core::Ptr<crate::rgbd::Kinfu_VolumeParams>;
 
 	ptr_extern! { crate::rgbd::Kinfu_VolumeParams,
 		cv_PtrLcv_kinfu_VolumeParamsG_new_null_const, cv_PtrLcv_kinfu_VolumeParamsG_delete, cv_PtrLcv_kinfu_VolumeParamsG_getInnerPtr_const, cv_PtrLcv_kinfu_VolumeParamsG_getInnerPtrMut
@@ -19759,9 +18658,6 @@ mod rgbd_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::LargeKinfu>` instead, removal in Nov 2024"]
-	pub type PtrOfLargeKinfu = core::Ptr<crate::rgbd::LargeKinfu>;
-
 	ptr_extern! { crate::rgbd::LargeKinfu,
 		cv_PtrLcv_large_kinfu_LargeKinfuG_new_null_const, cv_PtrLcv_large_kinfu_LargeKinfuG_delete, cv_PtrLcv_large_kinfu_LargeKinfuG_getInnerPtr_const, cv_PtrLcv_large_kinfu_LargeKinfuG_getInnerPtrMut
 	}
@@ -19786,9 +18682,6 @@ mod rgbd_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::LineMod_ColorGradient>` instead, removal in Nov 2024"]
-	pub type PtrOfLineMod_ColorGradient = core::Ptr<crate::rgbd::LineMod_ColorGradient>;
 
 	ptr_extern! { crate::rgbd::LineMod_ColorGradient,
 		cv_PtrLcv_linemod_ColorGradientG_new_null_const, cv_PtrLcv_linemod_ColorGradientG_delete, cv_PtrLcv_linemod_ColorGradientG_getInnerPtr_const, cv_PtrLcv_linemod_ColorGradientG_getInnerPtrMut
@@ -19828,9 +18721,6 @@ mod rgbd_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::LineMod_DepthNormal>` instead, removal in Nov 2024"]
-	pub type PtrOfLineMod_DepthNormal = core::Ptr<crate::rgbd::LineMod_DepthNormal>;
 
 	ptr_extern! { crate::rgbd::LineMod_DepthNormal,
 		cv_PtrLcv_linemod_DepthNormalG_new_null_const, cv_PtrLcv_linemod_DepthNormalG_delete, cv_PtrLcv_linemod_DepthNormalG_getInnerPtr_const, cv_PtrLcv_linemod_DepthNormalG_getInnerPtrMut
@@ -19872,9 +18762,6 @@ mod rgbd_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::LineMod_Detector>` instead, removal in Nov 2024"]
-	pub type PtrOfLineMod_Detector = core::Ptr<crate::rgbd::LineMod_Detector>;
-
 	ptr_extern! { crate::rgbd::LineMod_Detector,
 		cv_PtrLcv_linemod_DetectorG_new_null_const, cv_PtrLcv_linemod_DetectorG_delete, cv_PtrLcv_linemod_DetectorG_getInnerPtr_const, cv_PtrLcv_linemod_DetectorG_getInnerPtrMut
 	}
@@ -19901,9 +18788,6 @@ mod rgbd_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::LineMod_Modality>` instead, removal in Nov 2024"]
-	pub type PtrOfLineMod_Modality = core::Ptr<crate::rgbd::LineMod_Modality>;
-
 	ptr_extern! { crate::rgbd::LineMod_Modality,
 		cv_PtrLcv_linemod_ModalityG_new_null_const, cv_PtrLcv_linemod_ModalityG_delete, cv_PtrLcv_linemod_ModalityG_getInnerPtr_const, cv_PtrLcv_linemod_ModalityG_getInnerPtrMut
 	}
@@ -19929,9 +18813,6 @@ mod rgbd_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::LineMod_QuantizedPyramid>` instead, removal in Nov 2024"]
-	pub type PtrOfLineMod_QuantizedPyramid = core::Ptr<crate::rgbd::LineMod_QuantizedPyramid>;
-
 	ptr_extern! { crate::rgbd::LineMod_QuantizedPyramid,
 		cv_PtrLcv_linemod_QuantizedPyramidG_new_null_const, cv_PtrLcv_linemod_QuantizedPyramidG_delete, cv_PtrLcv_linemod_QuantizedPyramidG_getInnerPtr_const, cv_PtrLcv_linemod_QuantizedPyramidG_getInnerPtrMut
 	}
@@ -19956,9 +18837,6 @@ mod rgbd_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::Odometry>` instead, removal in Nov 2024"]
-	pub type PtrOfOdometry = core::Ptr<crate::rgbd::Odometry>;
 
 	ptr_extern! { crate::rgbd::Odometry,
 		cv_PtrLcv_rgbd_OdometryG_new_null_const, cv_PtrLcv_rgbd_OdometryG_delete, cv_PtrLcv_rgbd_OdometryG_getInnerPtr_const, cv_PtrLcv_rgbd_OdometryG_getInnerPtrMut
@@ -19994,9 +18872,6 @@ mod rgbd_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::OdometryFrame>` instead, removal in Nov 2024"]
-	pub type PtrOfOdometryFrame = core::Ptr<crate::rgbd::OdometryFrame>;
 
 	ptr_extern! { crate::rgbd::OdometryFrame,
 		cv_PtrLcv_rgbd_OdometryFrameG_new_null_const, cv_PtrLcv_rgbd_OdometryFrameG_delete, cv_PtrLcv_rgbd_OdometryFrameG_getInnerPtr_const, cv_PtrLcv_rgbd_OdometryFrameG_getInnerPtrMut
@@ -20048,9 +18923,6 @@ mod rgbd_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::Params>` instead, removal in Nov 2024"]
-	pub type PtrOfParams = core::Ptr<crate::rgbd::Params>;
-
 	ptr_extern! { crate::rgbd::Params,
 		cv_PtrLcv_large_kinfu_ParamsG_new_null_const, cv_PtrLcv_large_kinfu_ParamsG_delete, cv_PtrLcv_large_kinfu_ParamsG_getInnerPtr_const, cv_PtrLcv_large_kinfu_ParamsG_getInnerPtrMut
 	}
@@ -20092,9 +18964,6 @@ mod rgbd_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::RgbdFrame>` instead, removal in Nov 2024"]
-	pub type PtrOfRgbdFrame = core::Ptr<crate::rgbd::RgbdFrame>;
-
 	ptr_extern! { crate::rgbd::RgbdFrame,
 		cv_PtrLcv_rgbd_RgbdFrameG_new_null_const, cv_PtrLcv_rgbd_RgbdFrameG_delete, cv_PtrLcv_rgbd_RgbdFrameG_getInnerPtr_const, cv_PtrLcv_rgbd_RgbdFrameG_getInnerPtrMut
 	}
@@ -20125,9 +18994,6 @@ mod rgbd_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::RgbdICPOdometry>` instead, removal in Nov 2024"]
-	pub type PtrOfRgbdICPOdometry = core::Ptr<crate::rgbd::RgbdICPOdometry>;
 
 	ptr_extern! { crate::rgbd::RgbdICPOdometry,
 		cv_PtrLcv_rgbd_RgbdICPOdometryG_new_null_const, cv_PtrLcv_rgbd_RgbdICPOdometryG_delete, cv_PtrLcv_rgbd_RgbdICPOdometryG_getInnerPtr_const, cv_PtrLcv_rgbd_RgbdICPOdometryG_getInnerPtrMut
@@ -20175,9 +19041,6 @@ mod rgbd_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::RgbdNormals>` instead, removal in Nov 2024"]
-	pub type PtrOfRgbdNormals = core::Ptr<crate::rgbd::RgbdNormals>;
-
 	ptr_extern! { crate::rgbd::RgbdNormals,
 		cv_PtrLcv_rgbd_RgbdNormalsG_new_null_const, cv_PtrLcv_rgbd_RgbdNormalsG_delete, cv_PtrLcv_rgbd_RgbdNormalsG_getInnerPtr_const, cv_PtrLcv_rgbd_RgbdNormalsG_getInnerPtrMut
 	}
@@ -20213,9 +19076,6 @@ mod rgbd_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::RgbdOdometry>` instead, removal in Nov 2024"]
-	pub type PtrOfRgbdOdometry = core::Ptr<crate::rgbd::RgbdOdometry>;
 
 	ptr_extern! { crate::rgbd::RgbdOdometry,
 		cv_PtrLcv_rgbd_RgbdOdometryG_new_null_const, cv_PtrLcv_rgbd_RgbdOdometryG_delete, cv_PtrLcv_rgbd_RgbdOdometryG_getInnerPtr_const, cv_PtrLcv_rgbd_RgbdOdometryG_getInnerPtrMut
@@ -20263,9 +19123,6 @@ mod rgbd_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::rgbd::RgbdPlane>` instead, removal in Nov 2024"]
-	pub type PtrOfRgbdPlane = core::Ptr<crate::rgbd::RgbdPlane>;
-
 	ptr_extern! { crate::rgbd::RgbdPlane,
 		cv_PtrLcv_rgbd_RgbdPlaneG_new_null_const, cv_PtrLcv_rgbd_RgbdPlaneG_delete, cv_PtrLcv_rgbd_RgbdPlaneG_getInnerPtr_const, cv_PtrLcv_rgbd_RgbdPlaneG_getInnerPtrMut
 	}
@@ -20302,9 +19159,6 @@ mod rgbd_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::rgbd::LineMod_Feature>` instead, removal in Nov 2024"]
-	pub type VectorOfLineMod_Feature = core::Vector<crate::rgbd::LineMod_Feature>;
-
 	impl core::Vector<crate::rgbd::LineMod_Feature> {
 		pub fn as_raw_VectorOfLineMod_Feature(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfLineMod_Feature(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -20325,9 +19179,6 @@ mod rgbd_types {
 		std_vectorLcv_linemod_FeatureG_clone_const,
 	}
 
-
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::rgbd::LineMod_Match>` instead, removal in Nov 2024"]
-	pub type VectorOfLineMod_Match = core::Vector<crate::rgbd::LineMod_Match>;
 
 	impl core::Vector<crate::rgbd::LineMod_Match> {
 		pub fn as_raw_VectorOfLineMod_Match(&self) -> extern_send!(Self) { self.as_raw() }
@@ -20359,9 +19210,6 @@ mod rgbd_types {
 	}
 
 
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::rgbd::LineMod_Template>` instead, removal in Nov 2024"]
-	pub type VectorOfLineMod_Template = core::Vector<crate::rgbd::LineMod_Template>;
-
 	impl core::Vector<crate::rgbd::LineMod_Template> {
 		pub fn as_raw_VectorOfLineMod_Template(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfLineMod_Template(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -20392,9 +19240,6 @@ mod rgbd_types {
 	}
 
 
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Ptr<crate::rgbd::LineMod_Modality>>` instead, removal in Nov 2024"]
-	pub type VectorOfPtrOfLineMod_Modality = core::Vector<core::Ptr<crate::rgbd::LineMod_Modality>>;
-
 	impl core::Vector<core::Ptr<crate::rgbd::LineMod_Modality>> {
 		pub fn as_raw_VectorOfPtrOfLineMod_Modality(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfPtrOfLineMod_Modality(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -20414,15 +19259,10 @@ mod rgbd_types {
 
 
 }
-#[cfg(ocvrs_has_module_rgbd)]
 pub use rgbd_types::*;
 
-#[cfg(ocvrs_has_module_saliency)]
 mod saliency_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::saliency::MotionSaliency>` instead, removal in Nov 2024"]
-	pub type PtrOfMotionSaliency = core::Ptr<crate::saliency::MotionSaliency>;
 
 	ptr_extern! { crate::saliency::MotionSaliency,
 		cv_PtrLcv_saliency_MotionSaliencyG_new_null_const, cv_PtrLcv_saliency_MotionSaliencyG_delete, cv_PtrLcv_saliency_MotionSaliencyG_getInnerPtr_const, cv_PtrLcv_saliency_MotionSaliencyG_getInnerPtrMut
@@ -20468,9 +19308,6 @@ mod saliency_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::saliency::MotionSaliencyBinWangApr2014>` instead, removal in Nov 2024"]
-	pub type PtrOfMotionSaliencyBinWangApr2014 = core::Ptr<crate::saliency::MotionSaliencyBinWangApr2014>;
 
 	ptr_extern! { crate::saliency::MotionSaliencyBinWangApr2014,
 		cv_PtrLcv_saliency_MotionSaliencyBinWangApr2014G_new_null_const, cv_PtrLcv_saliency_MotionSaliencyBinWangApr2014G_delete, cv_PtrLcv_saliency_MotionSaliencyBinWangApr2014G_getInnerPtr_const, cv_PtrLcv_saliency_MotionSaliencyBinWangApr2014G_getInnerPtrMut
@@ -20528,9 +19365,6 @@ mod saliency_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::saliency::Objectness>` instead, removal in Nov 2024"]
-	pub type PtrOfObjectness = core::Ptr<crate::saliency::Objectness>;
-
 	ptr_extern! { crate::saliency::Objectness,
 		cv_PtrLcv_saliency_ObjectnessG_new_null_const, cv_PtrLcv_saliency_ObjectnessG_delete, cv_PtrLcv_saliency_ObjectnessG_getInnerPtr_const, cv_PtrLcv_saliency_ObjectnessG_getInnerPtrMut
 	}
@@ -20575,9 +19409,6 @@ mod saliency_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::saliency::ObjectnessBING>` instead, removal in Nov 2024"]
-	pub type PtrOfObjectnessBING = core::Ptr<crate::saliency::ObjectnessBING>;
 
 	ptr_extern! { crate::saliency::ObjectnessBING,
 		cv_PtrLcv_saliency_ObjectnessBINGG_new_null_const, cv_PtrLcv_saliency_ObjectnessBINGG_delete, cv_PtrLcv_saliency_ObjectnessBINGG_getInnerPtr_const, cv_PtrLcv_saliency_ObjectnessBINGG_getInnerPtrMut
@@ -20635,9 +19466,6 @@ mod saliency_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::saliency::Saliency>` instead, removal in Nov 2024"]
-	pub type PtrOfSaliency = core::Ptr<crate::saliency::Saliency>;
-
 	ptr_extern! { crate::saliency::Saliency,
 		cv_PtrLcv_saliency_SaliencyG_new_null_const, cv_PtrLcv_saliency_SaliencyG_delete, cv_PtrLcv_saliency_SaliencyG_getInnerPtr_const, cv_PtrLcv_saliency_SaliencyG_getInnerPtrMut
 	}
@@ -20672,9 +19500,6 @@ mod saliency_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::saliency::StaticSaliency>` instead, removal in Nov 2024"]
-	pub type PtrOfStaticSaliency = core::Ptr<crate::saliency::StaticSaliency>;
 
 	ptr_extern! { crate::saliency::StaticSaliency,
 		cv_PtrLcv_saliency_StaticSaliencyG_new_null_const, cv_PtrLcv_saliency_StaticSaliencyG_delete, cv_PtrLcv_saliency_StaticSaliencyG_getInnerPtr_const, cv_PtrLcv_saliency_StaticSaliencyG_getInnerPtrMut
@@ -20720,9 +19545,6 @@ mod saliency_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::saliency::StaticSaliencyFineGrained>` instead, removal in Nov 2024"]
-	pub type PtrOfStaticSaliencyFineGrained = core::Ptr<crate::saliency::StaticSaliencyFineGrained>;
 
 	ptr_extern! { crate::saliency::StaticSaliencyFineGrained,
 		cv_PtrLcv_saliency_StaticSaliencyFineGrainedG_new_null_const, cv_PtrLcv_saliency_StaticSaliencyFineGrainedG_delete, cv_PtrLcv_saliency_StaticSaliencyFineGrainedG_getInnerPtr_const, cv_PtrLcv_saliency_StaticSaliencyFineGrainedG_getInnerPtrMut
@@ -20779,9 +19601,6 @@ mod saliency_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::saliency::StaticSaliencySpectralResidual>` instead, removal in Nov 2024"]
-	pub type PtrOfStaticSaliencySpectralResidual = core::Ptr<crate::saliency::StaticSaliencySpectralResidual>;
 
 	ptr_extern! { crate::saliency::StaticSaliencySpectralResidual,
 		cv_PtrLcv_saliency_StaticSaliencySpectralResidualG_new_null_const, cv_PtrLcv_saliency_StaticSaliencySpectralResidualG_delete, cv_PtrLcv_saliency_StaticSaliencySpectralResidualG_getInnerPtr_const, cv_PtrLcv_saliency_StaticSaliencySpectralResidualG_getInnerPtrMut
@@ -20840,15 +19659,10 @@ mod saliency_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_saliency)]
 pub use saliency_types::*;
 
-#[cfg(ocvrs_has_module_sfm)]
 mod sfm_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::sfm::BaseSFM>` instead, removal in Nov 2024"]
-	pub type PtrOfBaseSFM = core::Ptr<crate::sfm::BaseSFM>;
 
 	ptr_extern! { crate::sfm::BaseSFM,
 		cv_PtrLcv_sfm_BaseSFMG_new_null_const, cv_PtrLcv_sfm_BaseSFMG_delete, cv_PtrLcv_sfm_BaseSFMG_getInnerPtr_const, cv_PtrLcv_sfm_BaseSFMG_getInnerPtrMut
@@ -20874,9 +19688,6 @@ mod sfm_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::sfm::SFMLibmvEuclideanReconstruction>` instead, removal in Nov 2024"]
-	pub type PtrOfSFMLibmvEuclideanReconstruction = core::Ptr<crate::sfm::SFMLibmvEuclideanReconstruction>;
 
 	ptr_extern! { crate::sfm::SFMLibmvEuclideanReconstruction,
 		cv_PtrLcv_sfm_SFMLibmvEuclideanReconstructionG_new_null_const, cv_PtrLcv_sfm_SFMLibmvEuclideanReconstructionG_delete, cv_PtrLcv_sfm_SFMLibmvEuclideanReconstructionG_getInnerPtr_const, cv_PtrLcv_sfm_SFMLibmvEuclideanReconstructionG_getInnerPtrMut
@@ -20914,15 +19725,10 @@ mod sfm_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_sfm)]
 pub use sfm_types::*;
 
-#[cfg(ocvrs_has_module_shape)]
 mod shape_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::shape::AffineTransformer>` instead, removal in Nov 2024"]
-	pub type PtrOfAffineTransformer = core::Ptr<crate::shape::AffineTransformer>;
 
 	ptr_extern! { crate::shape::AffineTransformer,
 		cv_PtrLcv_AffineTransformerG_new_null_const, cv_PtrLcv_AffineTransformerG_delete, cv_PtrLcv_AffineTransformerG_getInnerPtr_const, cv_PtrLcv_AffineTransformerG_getInnerPtrMut
@@ -20969,9 +19775,6 @@ mod shape_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::shape::ChiHistogramCostExtractor>` instead, removal in Nov 2024"]
-	pub type PtrOfChiHistogramCostExtractor = core::Ptr<crate::shape::ChiHistogramCostExtractor>;
-
 	ptr_extern! { crate::shape::ChiHistogramCostExtractor,
 		cv_PtrLcv_ChiHistogramCostExtractorG_new_null_const, cv_PtrLcv_ChiHistogramCostExtractorG_delete, cv_PtrLcv_ChiHistogramCostExtractorG_getInnerPtr_const, cv_PtrLcv_ChiHistogramCostExtractorG_getInnerPtrMut
 	}
@@ -21016,9 +19819,6 @@ mod shape_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::shape::EMDHistogramCostExtractor>` instead, removal in Nov 2024"]
-	pub type PtrOfEMDHistogramCostExtractor = core::Ptr<crate::shape::EMDHistogramCostExtractor>;
 
 	ptr_extern! { crate::shape::EMDHistogramCostExtractor,
 		cv_PtrLcv_EMDHistogramCostExtractorG_new_null_const, cv_PtrLcv_EMDHistogramCostExtractorG_delete, cv_PtrLcv_EMDHistogramCostExtractorG_getInnerPtr_const, cv_PtrLcv_EMDHistogramCostExtractorG_getInnerPtrMut
@@ -21065,9 +19865,6 @@ mod shape_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::shape::EMDL1HistogramCostExtractor>` instead, removal in Nov 2024"]
-	pub type PtrOfEMDL1HistogramCostExtractor = core::Ptr<crate::shape::EMDL1HistogramCostExtractor>;
-
 	ptr_extern! { crate::shape::EMDL1HistogramCostExtractor,
 		cv_PtrLcv_EMDL1HistogramCostExtractorG_new_null_const, cv_PtrLcv_EMDL1HistogramCostExtractorG_delete, cv_PtrLcv_EMDL1HistogramCostExtractorG_getInnerPtr_const, cv_PtrLcv_EMDL1HistogramCostExtractorG_getInnerPtrMut
 	}
@@ -21112,9 +19909,6 @@ mod shape_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::shape::HausdorffDistanceExtractor>` instead, removal in Nov 2024"]
-	pub type PtrOfHausdorffDistanceExtractor = core::Ptr<crate::shape::HausdorffDistanceExtractor>;
 
 	ptr_extern! { crate::shape::HausdorffDistanceExtractor,
 		cv_PtrLcv_HausdorffDistanceExtractorG_new_null_const, cv_PtrLcv_HausdorffDistanceExtractorG_delete, cv_PtrLcv_HausdorffDistanceExtractorG_getInnerPtr_const, cv_PtrLcv_HausdorffDistanceExtractorG_getInnerPtrMut
@@ -21161,9 +19955,6 @@ mod shape_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::shape::HistogramCostExtractor>` instead, removal in Nov 2024"]
-	pub type PtrOfHistogramCostExtractor = core::Ptr<crate::shape::HistogramCostExtractor>;
-
 	ptr_extern! { crate::shape::HistogramCostExtractor,
 		cv_PtrLcv_HistogramCostExtractorG_new_null_const, cv_PtrLcv_HistogramCostExtractorG_delete, cv_PtrLcv_HistogramCostExtractorG_getInnerPtr_const, cv_PtrLcv_HistogramCostExtractorG_getInnerPtrMut
 	}
@@ -21198,9 +19989,6 @@ mod shape_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::shape::NormHistogramCostExtractor>` instead, removal in Nov 2024"]
-	pub type PtrOfNormHistogramCostExtractor = core::Ptr<crate::shape::NormHistogramCostExtractor>;
 
 	ptr_extern! { crate::shape::NormHistogramCostExtractor,
 		cv_PtrLcv_NormHistogramCostExtractorG_new_null_const, cv_PtrLcv_NormHistogramCostExtractorG_delete, cv_PtrLcv_NormHistogramCostExtractorG_getInnerPtr_const, cv_PtrLcv_NormHistogramCostExtractorG_getInnerPtrMut
@@ -21247,9 +20035,6 @@ mod shape_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::shape::ShapeContextDistanceExtractor>` instead, removal in Nov 2024"]
-	pub type PtrOfShapeContextDistanceExtractor = core::Ptr<crate::shape::ShapeContextDistanceExtractor>;
-
 	ptr_extern! { crate::shape::ShapeContextDistanceExtractor,
 		cv_PtrLcv_ShapeContextDistanceExtractorG_new_null_const, cv_PtrLcv_ShapeContextDistanceExtractorG_delete, cv_PtrLcv_ShapeContextDistanceExtractorG_getInnerPtr_const, cv_PtrLcv_ShapeContextDistanceExtractorG_getInnerPtrMut
 	}
@@ -21295,9 +20080,6 @@ mod shape_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::shape::ShapeDistanceExtractor>` instead, removal in Nov 2024"]
-	pub type PtrOfShapeDistanceExtractor = core::Ptr<crate::shape::ShapeDistanceExtractor>;
-
 	ptr_extern! { crate::shape::ShapeDistanceExtractor,
 		cv_PtrLcv_ShapeDistanceExtractorG_new_null_const, cv_PtrLcv_ShapeDistanceExtractorG_delete, cv_PtrLcv_ShapeDistanceExtractorG_getInnerPtr_const, cv_PtrLcv_ShapeDistanceExtractorG_getInnerPtrMut
 	}
@@ -21333,9 +20115,6 @@ mod shape_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::shape::ShapeTransformer>` instead, removal in Nov 2024"]
-	pub type PtrOfShapeTransformer = core::Ptr<crate::shape::ShapeTransformer>;
-
 	ptr_extern! { crate::shape::ShapeTransformer,
 		cv_PtrLcv_ShapeTransformerG_new_null_const, cv_PtrLcv_ShapeTransformerG_delete, cv_PtrLcv_ShapeTransformerG_getInnerPtr_const, cv_PtrLcv_ShapeTransformerG_getInnerPtrMut
 	}
@@ -21370,9 +20149,6 @@ mod shape_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::shape::ThinPlateSplineShapeTransformer>` instead, removal in Nov 2024"]
-	pub type PtrOfThinPlateSplineShapeTransformer = core::Ptr<crate::shape::ThinPlateSplineShapeTransformer>;
 
 	ptr_extern! { crate::shape::ThinPlateSplineShapeTransformer,
 		cv_PtrLcv_ThinPlateSplineShapeTransformerG_new_null_const, cv_PtrLcv_ThinPlateSplineShapeTransformerG_delete, cv_PtrLcv_ThinPlateSplineShapeTransformerG_getInnerPtr_const, cv_PtrLcv_ThinPlateSplineShapeTransformerG_getInnerPtrMut
@@ -21420,15 +20196,10 @@ mod shape_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_shape)]
 pub use shape_types::*;
 
-#[cfg(ocvrs_has_module_stereo)]
 mod stereo_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stereo::QuasiDenseStereo>` instead, removal in Nov 2024"]
-	pub type PtrOfQuasiDenseStereo = core::Ptr<crate::stereo::QuasiDenseStereo>;
 
 	ptr_extern! { crate::stereo::QuasiDenseStereo,
 		cv_PtrLcv_stereo_QuasiDenseStereoG_new_null_const, cv_PtrLcv_stereo_QuasiDenseStereoG_delete, cv_PtrLcv_stereo_QuasiDenseStereoG_getInnerPtr_const, cv_PtrLcv_stereo_QuasiDenseStereoG_getInnerPtrMut
@@ -21456,9 +20227,6 @@ mod stereo_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::stereo::MatchQuasiDense>` instead, removal in Nov 2024"]
-	pub type VectorOfMatchQuasiDense = core::Vector<crate::stereo::MatchQuasiDense>;
-
 	impl core::Vector<crate::stereo::MatchQuasiDense> {
 		pub fn as_raw_VectorOfMatchQuasiDense(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfMatchQuasiDense(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -21481,15 +20249,10 @@ mod stereo_types {
 
 
 }
-#[cfg(ocvrs_has_module_stereo)]
 pub use stereo_types::*;
 
-#[cfg(ocvrs_has_module_stitching)]
 mod stitching_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::AffineWarper>` instead, removal in Nov 2024"]
-	pub type PtrOfAffineWarper = core::Ptr<crate::stitching::AffineWarper>;
 
 	ptr_extern! { crate::stitching::AffineWarper,
 		cv_PtrLcv_AffineWarperG_new_null_const, cv_PtrLcv_AffineWarperG_delete, cv_PtrLcv_AffineWarperG_getInnerPtr_const, cv_PtrLcv_AffineWarperG_getInnerPtrMut
@@ -21527,9 +20290,6 @@ mod stitching_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::CompressedRectilinearPortraitWarper>` instead, removal in Nov 2024"]
-	pub type PtrOfCompressedRectilinearPortraitWarper = core::Ptr<crate::stitching::CompressedRectilinearPortraitWarper>;
-
 	ptr_extern! { crate::stitching::CompressedRectilinearPortraitWarper,
 		cv_PtrLcv_CompressedRectilinearPortraitWarperG_new_null_const, cv_PtrLcv_CompressedRectilinearPortraitWarperG_delete, cv_PtrLcv_CompressedRectilinearPortraitWarperG_getInnerPtr_const, cv_PtrLcv_CompressedRectilinearPortraitWarperG_getInnerPtrMut
 	}
@@ -21565,9 +20325,6 @@ mod stitching_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::CompressedRectilinearWarper>` instead, removal in Nov 2024"]
-	pub type PtrOfCompressedRectilinearWarper = core::Ptr<crate::stitching::CompressedRectilinearWarper>;
 
 	ptr_extern! { crate::stitching::CompressedRectilinearWarper,
 		cv_PtrLcv_CompressedRectilinearWarperG_new_null_const, cv_PtrLcv_CompressedRectilinearWarperG_delete, cv_PtrLcv_CompressedRectilinearWarperG_getInnerPtr_const, cv_PtrLcv_CompressedRectilinearWarperG_getInnerPtrMut
@@ -21605,9 +20362,6 @@ mod stitching_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::CylindricalWarper>` instead, removal in Nov 2024"]
-	pub type PtrOfCylindricalWarper = core::Ptr<crate::stitching::CylindricalWarper>;
-
 	ptr_extern! { crate::stitching::CylindricalWarper,
 		cv_PtrLcv_CylindricalWarperG_new_null_const, cv_PtrLcv_CylindricalWarperG_delete, cv_PtrLcv_CylindricalWarperG_getInnerPtr_const, cv_PtrLcv_CylindricalWarperG_getInnerPtrMut
 	}
@@ -21643,9 +20397,6 @@ mod stitching_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::CylindricalWarperGpu>` instead, removal in Nov 2024"]
-	pub type PtrOfCylindricalWarperGpu = core::Ptr<crate::stitching::CylindricalWarperGpu>;
 
 	ptr_extern! { crate::stitching::CylindricalWarperGpu,
 		cv_PtrLcv_CylindricalWarperGpuG_new_null_const, cv_PtrLcv_CylindricalWarperGpuG_delete, cv_PtrLcv_CylindricalWarperGpuG_getInnerPtr_const, cv_PtrLcv_CylindricalWarperGpuG_getInnerPtrMut
@@ -21683,9 +20434,6 @@ mod stitching_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_AffineBasedEstimator>` instead, removal in Nov 2024"]
-	pub type PtrOfDetail_AffineBasedEstimator = core::Ptr<crate::stitching::Detail_AffineBasedEstimator>;
-
 	ptr_extern! { crate::stitching::Detail_AffineBasedEstimator,
 		cv_PtrLcv_detail_AffineBasedEstimatorG_new_null_const, cv_PtrLcv_detail_AffineBasedEstimatorG_delete, cv_PtrLcv_detail_AffineBasedEstimatorG_getInnerPtr_const, cv_PtrLcv_detail_AffineBasedEstimatorG_getInnerPtrMut
 	}
@@ -21721,9 +20469,6 @@ mod stitching_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_AffineBestOf2NearestMatcher>` instead, removal in Nov 2024"]
-	pub type PtrOfDetail_AffineBestOf2NearestMatcher = core::Ptr<crate::stitching::Detail_AffineBestOf2NearestMatcher>;
 
 	ptr_extern! { crate::stitching::Detail_AffineBestOf2NearestMatcher,
 		cv_PtrLcv_detail_AffineBestOf2NearestMatcherG_new_null_const, cv_PtrLcv_detail_AffineBestOf2NearestMatcherG_delete, cv_PtrLcv_detail_AffineBestOf2NearestMatcherG_getInnerPtr_const, cv_PtrLcv_detail_AffineBestOf2NearestMatcherG_getInnerPtrMut
@@ -21771,9 +20516,6 @@ mod stitching_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_BestOf2NearestMatcher>` instead, removal in Nov 2024"]
-	pub type PtrOfDetail_BestOf2NearestMatcher = core::Ptr<crate::stitching::Detail_BestOf2NearestMatcher>;
-
 	ptr_extern! { crate::stitching::Detail_BestOf2NearestMatcher,
 		cv_PtrLcv_detail_BestOf2NearestMatcherG_new_null_const, cv_PtrLcv_detail_BestOf2NearestMatcherG_delete, cv_PtrLcv_detail_BestOf2NearestMatcherG_getInnerPtr_const, cv_PtrLcv_detail_BestOf2NearestMatcherG_getInnerPtrMut
 	}
@@ -21809,9 +20551,6 @@ mod stitching_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_BestOf2NearestRangeMatcher>` instead, removal in Nov 2024"]
-	pub type PtrOfDetail_BestOf2NearestRangeMatcher = core::Ptr<crate::stitching::Detail_BestOf2NearestRangeMatcher>;
 
 	ptr_extern! { crate::stitching::Detail_BestOf2NearestRangeMatcher,
 		cv_PtrLcv_detail_BestOf2NearestRangeMatcherG_new_null_const, cv_PtrLcv_detail_BestOf2NearestRangeMatcherG_delete, cv_PtrLcv_detail_BestOf2NearestRangeMatcherG_getInnerPtr_const, cv_PtrLcv_detail_BestOf2NearestRangeMatcherG_getInnerPtrMut
@@ -21859,9 +20598,6 @@ mod stitching_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_Blender>` instead, removal in Nov 2024"]
-	pub type PtrOfDetail_Blender = core::Ptr<crate::stitching::Detail_Blender>;
-
 	ptr_extern! { crate::stitching::Detail_Blender,
 		cv_PtrLcv_detail_BlenderG_new_null_const, cv_PtrLcv_detail_BlenderG_delete, cv_PtrLcv_detail_BlenderG_getInnerPtr_const, cv_PtrLcv_detail_BlenderG_getInnerPtrMut
 	}
@@ -21887,9 +20623,6 @@ mod stitching_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_BlocksChannelsCompensator>` instead, removal in Nov 2024"]
-	pub type PtrOfDetail_BlocksChannelsCompensator = core::Ptr<crate::stitching::Detail_BlocksChannelsCompensator>;
 
 	ptr_extern! { crate::stitching::Detail_BlocksChannelsCompensator,
 		cv_PtrLcv_detail_BlocksChannelsCompensatorG_new_null_const, cv_PtrLcv_detail_BlocksChannelsCompensatorG_delete, cv_PtrLcv_detail_BlocksChannelsCompensatorG_getInnerPtr_const, cv_PtrLcv_detail_BlocksChannelsCompensatorG_getInnerPtrMut
@@ -21937,9 +20670,6 @@ mod stitching_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_BlocksCompensator>` instead, removal in Nov 2024"]
-	pub type PtrOfDetail_BlocksCompensator = core::Ptr<crate::stitching::Detail_BlocksCompensator>;
-
 	ptr_extern! { crate::stitching::Detail_BlocksCompensator,
 		cv_PtrLcv_detail_BlocksCompensatorG_new_null_const, cv_PtrLcv_detail_BlocksCompensatorG_delete, cv_PtrLcv_detail_BlocksCompensatorG_getInnerPtr_const, cv_PtrLcv_detail_BlocksCompensatorG_getInnerPtrMut
 	}
@@ -21974,9 +20704,6 @@ mod stitching_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_BlocksGainCompensator>` instead, removal in Nov 2024"]
-	pub type PtrOfDetail_BlocksGainCompensator = core::Ptr<crate::stitching::Detail_BlocksGainCompensator>;
 
 	ptr_extern! { crate::stitching::Detail_BlocksGainCompensator,
 		cv_PtrLcv_detail_BlocksGainCompensatorG_new_null_const, cv_PtrLcv_detail_BlocksGainCompensatorG_delete, cv_PtrLcv_detail_BlocksGainCompensatorG_getInnerPtr_const, cv_PtrLcv_detail_BlocksGainCompensatorG_getInnerPtrMut
@@ -22024,9 +20751,6 @@ mod stitching_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_BundleAdjusterAffine>` instead, removal in Nov 2024"]
-	pub type PtrOfDetail_BundleAdjusterAffine = core::Ptr<crate::stitching::Detail_BundleAdjusterAffine>;
-
 	ptr_extern! { crate::stitching::Detail_BundleAdjusterAffine,
 		cv_PtrLcv_detail_BundleAdjusterAffineG_new_null_const, cv_PtrLcv_detail_BundleAdjusterAffineG_delete, cv_PtrLcv_detail_BundleAdjusterAffineG_getInnerPtr_const, cv_PtrLcv_detail_BundleAdjusterAffineG_getInnerPtrMut
 	}
@@ -22072,9 +20796,6 @@ mod stitching_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_BundleAdjusterAffinePartial>` instead, removal in Nov 2024"]
-	pub type PtrOfDetail_BundleAdjusterAffinePartial = core::Ptr<crate::stitching::Detail_BundleAdjusterAffinePartial>;
 
 	ptr_extern! { crate::stitching::Detail_BundleAdjusterAffinePartial,
 		cv_PtrLcv_detail_BundleAdjusterAffinePartialG_new_null_const, cv_PtrLcv_detail_BundleAdjusterAffinePartialG_delete, cv_PtrLcv_detail_BundleAdjusterAffinePartialG_getInnerPtr_const, cv_PtrLcv_detail_BundleAdjusterAffinePartialG_getInnerPtrMut
@@ -22122,9 +20843,6 @@ mod stitching_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_BundleAdjusterBase>` instead, removal in Nov 2024"]
-	pub type PtrOfDetail_BundleAdjusterBase = core::Ptr<crate::stitching::Detail_BundleAdjusterBase>;
-
 	ptr_extern! { crate::stitching::Detail_BundleAdjusterBase,
 		cv_PtrLcv_detail_BundleAdjusterBaseG_new_null_const, cv_PtrLcv_detail_BundleAdjusterBaseG_delete, cv_PtrLcv_detail_BundleAdjusterBaseG_getInnerPtr_const, cv_PtrLcv_detail_BundleAdjusterBaseG_getInnerPtrMut
 	}
@@ -22159,9 +20877,6 @@ mod stitching_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_BundleAdjusterRay>` instead, removal in Nov 2024"]
-	pub type PtrOfDetail_BundleAdjusterRay = core::Ptr<crate::stitching::Detail_BundleAdjusterRay>;
 
 	ptr_extern! { crate::stitching::Detail_BundleAdjusterRay,
 		cv_PtrLcv_detail_BundleAdjusterRayG_new_null_const, cv_PtrLcv_detail_BundleAdjusterRayG_delete, cv_PtrLcv_detail_BundleAdjusterRayG_getInnerPtr_const, cv_PtrLcv_detail_BundleAdjusterRayG_getInnerPtrMut
@@ -22209,9 +20924,6 @@ mod stitching_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_BundleAdjusterReproj>` instead, removal in Nov 2024"]
-	pub type PtrOfDetail_BundleAdjusterReproj = core::Ptr<crate::stitching::Detail_BundleAdjusterReproj>;
-
 	ptr_extern! { crate::stitching::Detail_BundleAdjusterReproj,
 		cv_PtrLcv_detail_BundleAdjusterReprojG_new_null_const, cv_PtrLcv_detail_BundleAdjusterReprojG_delete, cv_PtrLcv_detail_BundleAdjusterReprojG_getInnerPtr_const, cv_PtrLcv_detail_BundleAdjusterReprojG_getInnerPtrMut
 	}
@@ -22258,9 +20970,6 @@ mod stitching_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_ChannelsCompensator>` instead, removal in Nov 2024"]
-	pub type PtrOfDetail_ChannelsCompensator = core::Ptr<crate::stitching::Detail_ChannelsCompensator>;
-
 	ptr_extern! { crate::stitching::Detail_ChannelsCompensator,
 		cv_PtrLcv_detail_ChannelsCompensatorG_new_null_const, cv_PtrLcv_detail_ChannelsCompensatorG_delete, cv_PtrLcv_detail_ChannelsCompensatorG_getInnerPtr_const, cv_PtrLcv_detail_ChannelsCompensatorG_getInnerPtrMut
 	}
@@ -22296,9 +21005,6 @@ mod stitching_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_DpSeamFinder>` instead, removal in Nov 2024"]
-	pub type PtrOfDetail_DpSeamFinder = core::Ptr<crate::stitching::Detail_DpSeamFinder>;
 
 	ptr_extern! { crate::stitching::Detail_DpSeamFinder,
 		cv_PtrLcv_detail_DpSeamFinderG_new_null_const, cv_PtrLcv_detail_DpSeamFinderG_delete, cv_PtrLcv_detail_DpSeamFinderG_getInnerPtr_const, cv_PtrLcv_detail_DpSeamFinderG_getInnerPtrMut
@@ -22336,9 +21042,6 @@ mod stitching_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_Estimator>` instead, removal in Nov 2024"]
-	pub type PtrOfDetail_Estimator = core::Ptr<crate::stitching::Detail_Estimator>;
-
 	ptr_extern! { crate::stitching::Detail_Estimator,
 		cv_PtrLcv_detail_EstimatorG_new_null_const, cv_PtrLcv_detail_EstimatorG_delete, cv_PtrLcv_detail_EstimatorG_getInnerPtr_const, cv_PtrLcv_detail_EstimatorG_getInnerPtrMut
 	}
@@ -22364,9 +21067,6 @@ mod stitching_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_ExposureCompensator>` instead, removal in Nov 2024"]
-	pub type PtrOfDetail_ExposureCompensator = core::Ptr<crate::stitching::Detail_ExposureCompensator>;
-
 	ptr_extern! { crate::stitching::Detail_ExposureCompensator,
 		cv_PtrLcv_detail_ExposureCompensatorG_new_null_const, cv_PtrLcv_detail_ExposureCompensatorG_delete, cv_PtrLcv_detail_ExposureCompensatorG_getInnerPtr_const, cv_PtrLcv_detail_ExposureCompensatorG_getInnerPtrMut
 	}
@@ -22391,9 +21091,6 @@ mod stitching_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_FeatherBlender>` instead, removal in Nov 2024"]
-	pub type PtrOfDetail_FeatherBlender = core::Ptr<crate::stitching::Detail_FeatherBlender>;
 
 	ptr_extern! { crate::stitching::Detail_FeatherBlender,
 		cv_PtrLcv_detail_FeatherBlenderG_new_null_const, cv_PtrLcv_detail_FeatherBlenderG_delete, cv_PtrLcv_detail_FeatherBlenderG_getInnerPtr_const, cv_PtrLcv_detail_FeatherBlenderG_getInnerPtrMut
@@ -22431,9 +21128,6 @@ mod stitching_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_FeaturesMatcher>` instead, removal in Nov 2024"]
-	pub type PtrOfDetail_FeaturesMatcher = core::Ptr<crate::stitching::Detail_FeaturesMatcher>;
-
 	ptr_extern! { crate::stitching::Detail_FeaturesMatcher,
 		cv_PtrLcv_detail_FeaturesMatcherG_new_null_const, cv_PtrLcv_detail_FeaturesMatcherG_delete, cv_PtrLcv_detail_FeaturesMatcherG_getInnerPtr_const, cv_PtrLcv_detail_FeaturesMatcherG_getInnerPtrMut
 	}
@@ -22458,9 +21152,6 @@ mod stitching_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_GainCompensator>` instead, removal in Nov 2024"]
-	pub type PtrOfDetail_GainCompensator = core::Ptr<crate::stitching::Detail_GainCompensator>;
 
 	ptr_extern! { crate::stitching::Detail_GainCompensator,
 		cv_PtrLcv_detail_GainCompensatorG_new_null_const, cv_PtrLcv_detail_GainCompensatorG_delete, cv_PtrLcv_detail_GainCompensatorG_getInnerPtr_const, cv_PtrLcv_detail_GainCompensatorG_getInnerPtrMut
@@ -22497,9 +21188,6 @@ mod stitching_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_GraphCutSeamFinder>` instead, removal in Nov 2024"]
-	pub type PtrOfDetail_GraphCutSeamFinder = core::Ptr<crate::stitching::Detail_GraphCutSeamFinder>;
 
 	ptr_extern! { crate::stitching::Detail_GraphCutSeamFinder,
 		cv_PtrLcv_detail_GraphCutSeamFinderG_new_null_const, cv_PtrLcv_detail_GraphCutSeamFinderG_delete, cv_PtrLcv_detail_GraphCutSeamFinderG_getInnerPtr_const, cv_PtrLcv_detail_GraphCutSeamFinderG_getInnerPtrMut
@@ -22547,9 +21235,6 @@ mod stitching_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_GraphCutSeamFinderBase>` instead, removal in Nov 2024"]
-	pub type PtrOfDetail_GraphCutSeamFinderBase = core::Ptr<crate::stitching::Detail_GraphCutSeamFinderBase>;
-
 	ptr_extern! { crate::stitching::Detail_GraphCutSeamFinderBase,
 		cv_PtrLcv_detail_GraphCutSeamFinderBaseG_new_null_const, cv_PtrLcv_detail_GraphCutSeamFinderBaseG_delete, cv_PtrLcv_detail_GraphCutSeamFinderBaseG_getInnerPtr_const, cv_PtrLcv_detail_GraphCutSeamFinderBaseG_getInnerPtrMut
 	}
@@ -22575,9 +21260,6 @@ mod stitching_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_GraphCutSeamFinderGpu>` instead, removal in Nov 2024"]
-	pub type PtrOfDetail_GraphCutSeamFinderGpu = core::Ptr<crate::stitching::Detail_GraphCutSeamFinderGpu>;
 
 	ptr_extern! { crate::stitching::Detail_GraphCutSeamFinderGpu,
 		cv_PtrLcv_detail_GraphCutSeamFinderGpuG_new_null_const, cv_PtrLcv_detail_GraphCutSeamFinderGpuG_delete, cv_PtrLcv_detail_GraphCutSeamFinderGpuG_getInnerPtr_const, cv_PtrLcv_detail_GraphCutSeamFinderGpuG_getInnerPtrMut
@@ -22635,9 +21317,6 @@ mod stitching_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_HomographyBasedEstimator>` instead, removal in Nov 2024"]
-	pub type PtrOfDetail_HomographyBasedEstimator = core::Ptr<crate::stitching::Detail_HomographyBasedEstimator>;
-
 	ptr_extern! { crate::stitching::Detail_HomographyBasedEstimator,
 		cv_PtrLcv_detail_HomographyBasedEstimatorG_new_null_const, cv_PtrLcv_detail_HomographyBasedEstimatorG_delete, cv_PtrLcv_detail_HomographyBasedEstimatorG_getInnerPtr_const, cv_PtrLcv_detail_HomographyBasedEstimatorG_getInnerPtrMut
 	}
@@ -22674,9 +21353,6 @@ mod stitching_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_MultiBandBlender>` instead, removal in Nov 2024"]
-	pub type PtrOfDetail_MultiBandBlender = core::Ptr<crate::stitching::Detail_MultiBandBlender>;
-
 	ptr_extern! { crate::stitching::Detail_MultiBandBlender,
 		cv_PtrLcv_detail_MultiBandBlenderG_new_null_const, cv_PtrLcv_detail_MultiBandBlenderG_delete, cv_PtrLcv_detail_MultiBandBlenderG_getInnerPtr_const, cv_PtrLcv_detail_MultiBandBlenderG_getInnerPtrMut
 	}
@@ -22712,9 +21388,6 @@ mod stitching_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_NoBundleAdjuster>` instead, removal in Nov 2024"]
-	pub type PtrOfDetail_NoBundleAdjuster = core::Ptr<crate::stitching::Detail_NoBundleAdjuster>;
 
 	ptr_extern! { crate::stitching::Detail_NoBundleAdjuster,
 		cv_PtrLcv_detail_NoBundleAdjusterG_new_null_const, cv_PtrLcv_detail_NoBundleAdjusterG_delete, cv_PtrLcv_detail_NoBundleAdjusterG_getInnerPtr_const, cv_PtrLcv_detail_NoBundleAdjusterG_getInnerPtrMut
@@ -22762,9 +21435,6 @@ mod stitching_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_NoExposureCompensator>` instead, removal in Nov 2024"]
-	pub type PtrOfDetail_NoExposureCompensator = core::Ptr<crate::stitching::Detail_NoExposureCompensator>;
-
 	ptr_extern! { crate::stitching::Detail_NoExposureCompensator,
 		cv_PtrLcv_detail_NoExposureCompensatorG_new_null_const, cv_PtrLcv_detail_NoExposureCompensatorG_delete, cv_PtrLcv_detail_NoExposureCompensatorG_getInnerPtr_const, cv_PtrLcv_detail_NoExposureCompensatorG_getInnerPtrMut
 	}
@@ -22800,9 +21470,6 @@ mod stitching_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_NoSeamFinder>` instead, removal in Nov 2024"]
-	pub type PtrOfDetail_NoSeamFinder = core::Ptr<crate::stitching::Detail_NoSeamFinder>;
 
 	ptr_extern! { crate::stitching::Detail_NoSeamFinder,
 		cv_PtrLcv_detail_NoSeamFinderG_new_null_const, cv_PtrLcv_detail_NoSeamFinderG_delete, cv_PtrLcv_detail_NoSeamFinderG_getInnerPtr_const, cv_PtrLcv_detail_NoSeamFinderG_getInnerPtrMut
@@ -22840,9 +21507,6 @@ mod stitching_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_PairwiseSeamFinder>` instead, removal in Nov 2024"]
-	pub type PtrOfDetail_PairwiseSeamFinder = core::Ptr<crate::stitching::Detail_PairwiseSeamFinder>;
-
 	ptr_extern! { crate::stitching::Detail_PairwiseSeamFinder,
 		cv_PtrLcv_detail_PairwiseSeamFinderG_new_null_const, cv_PtrLcv_detail_PairwiseSeamFinderG_delete, cv_PtrLcv_detail_PairwiseSeamFinderG_getInnerPtr_const, cv_PtrLcv_detail_PairwiseSeamFinderG_getInnerPtrMut
 	}
@@ -22878,9 +21542,6 @@ mod stitching_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_RotationWarper>` instead, removal in Nov 2024"]
-	pub type PtrOfDetail_RotationWarper = core::Ptr<crate::stitching::Detail_RotationWarper>;
-
 	ptr_extern! { crate::stitching::Detail_RotationWarper,
 		cv_PtrLcv_detail_RotationWarperG_new_null_const, cv_PtrLcv_detail_RotationWarperG_delete, cv_PtrLcv_detail_RotationWarperG_getInnerPtr_const, cv_PtrLcv_detail_RotationWarperG_getInnerPtrMut
 	}
@@ -22906,9 +21567,6 @@ mod stitching_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_SeamFinder>` instead, removal in Nov 2024"]
-	pub type PtrOfDetail_SeamFinder = core::Ptr<crate::stitching::Detail_SeamFinder>;
-
 	ptr_extern! { crate::stitching::Detail_SeamFinder,
 		cv_PtrLcv_detail_SeamFinderG_new_null_const, cv_PtrLcv_detail_SeamFinderG_delete, cv_PtrLcv_detail_SeamFinderG_getInnerPtr_const, cv_PtrLcv_detail_SeamFinderG_getInnerPtrMut
 	}
@@ -22933,9 +21591,6 @@ mod stitching_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Detail_VoronoiSeamFinder>` instead, removal in Nov 2024"]
-	pub type PtrOfDetail_VoronoiSeamFinder = core::Ptr<crate::stitching::Detail_VoronoiSeamFinder>;
 
 	ptr_extern! { crate::stitching::Detail_VoronoiSeamFinder,
 		cv_PtrLcv_detail_VoronoiSeamFinderG_new_null_const, cv_PtrLcv_detail_VoronoiSeamFinderG_delete, cv_PtrLcv_detail_VoronoiSeamFinderG_getInnerPtr_const, cv_PtrLcv_detail_VoronoiSeamFinderG_getInnerPtrMut
@@ -22983,9 +21638,6 @@ mod stitching_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::FisheyeWarper>` instead, removal in Nov 2024"]
-	pub type PtrOfFisheyeWarper = core::Ptr<crate::stitching::FisheyeWarper>;
-
 	ptr_extern! { crate::stitching::FisheyeWarper,
 		cv_PtrLcv_FisheyeWarperG_new_null_const, cv_PtrLcv_FisheyeWarperG_delete, cv_PtrLcv_FisheyeWarperG_getInnerPtr_const, cv_PtrLcv_FisheyeWarperG_getInnerPtrMut
 	}
@@ -23021,9 +21673,6 @@ mod stitching_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::MercatorWarper>` instead, removal in Nov 2024"]
-	pub type PtrOfMercatorWarper = core::Ptr<crate::stitching::MercatorWarper>;
 
 	ptr_extern! { crate::stitching::MercatorWarper,
 		cv_PtrLcv_MercatorWarperG_new_null_const, cv_PtrLcv_MercatorWarperG_delete, cv_PtrLcv_MercatorWarperG_getInnerPtr_const, cv_PtrLcv_MercatorWarperG_getInnerPtrMut
@@ -23061,9 +21710,6 @@ mod stitching_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::PaniniPortraitWarper>` instead, removal in Nov 2024"]
-	pub type PtrOfPaniniPortraitWarper = core::Ptr<crate::stitching::PaniniPortraitWarper>;
-
 	ptr_extern! { crate::stitching::PaniniPortraitWarper,
 		cv_PtrLcv_PaniniPortraitWarperG_new_null_const, cv_PtrLcv_PaniniPortraitWarperG_delete, cv_PtrLcv_PaniniPortraitWarperG_getInnerPtr_const, cv_PtrLcv_PaniniPortraitWarperG_getInnerPtrMut
 	}
@@ -23099,9 +21745,6 @@ mod stitching_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::PaniniWarper>` instead, removal in Nov 2024"]
-	pub type PtrOfPaniniWarper = core::Ptr<crate::stitching::PaniniWarper>;
 
 	ptr_extern! { crate::stitching::PaniniWarper,
 		cv_PtrLcv_PaniniWarperG_new_null_const, cv_PtrLcv_PaniniWarperG_delete, cv_PtrLcv_PaniniWarperG_getInnerPtr_const, cv_PtrLcv_PaniniWarperG_getInnerPtrMut
@@ -23139,9 +21782,6 @@ mod stitching_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::PlaneWarper>` instead, removal in Nov 2024"]
-	pub type PtrOfPlaneWarper = core::Ptr<crate::stitching::PlaneWarper>;
-
 	ptr_extern! { crate::stitching::PlaneWarper,
 		cv_PtrLcv_PlaneWarperG_new_null_const, cv_PtrLcv_PlaneWarperG_delete, cv_PtrLcv_PlaneWarperG_getInnerPtr_const, cv_PtrLcv_PlaneWarperG_getInnerPtrMut
 	}
@@ -23177,9 +21817,6 @@ mod stitching_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::PlaneWarperGpu>` instead, removal in Nov 2024"]
-	pub type PtrOfPlaneWarperGpu = core::Ptr<crate::stitching::PlaneWarperGpu>;
 
 	ptr_extern! { crate::stitching::PlaneWarperGpu,
 		cv_PtrLcv_PlaneWarperGpuG_new_null_const, cv_PtrLcv_PlaneWarperGpuG_delete, cv_PtrLcv_PlaneWarperGpuG_getInnerPtr_const, cv_PtrLcv_PlaneWarperGpuG_getInnerPtrMut
@@ -23217,9 +21854,6 @@ mod stitching_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::SphericalWarper>` instead, removal in Nov 2024"]
-	pub type PtrOfSphericalWarper = core::Ptr<crate::stitching::SphericalWarper>;
-
 	ptr_extern! { crate::stitching::SphericalWarper,
 		cv_PtrLcv_SphericalWarperG_new_null_const, cv_PtrLcv_SphericalWarperG_delete, cv_PtrLcv_SphericalWarperG_getInnerPtr_const, cv_PtrLcv_SphericalWarperG_getInnerPtrMut
 	}
@@ -23255,9 +21889,6 @@ mod stitching_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::SphericalWarperGpu>` instead, removal in Nov 2024"]
-	pub type PtrOfSphericalWarperGpu = core::Ptr<crate::stitching::SphericalWarperGpu>;
 
 	ptr_extern! { crate::stitching::SphericalWarperGpu,
 		cv_PtrLcv_SphericalWarperGpuG_new_null_const, cv_PtrLcv_SphericalWarperGpuG_delete, cv_PtrLcv_SphericalWarperGpuG_getInnerPtr_const, cv_PtrLcv_SphericalWarperGpuG_getInnerPtrMut
@@ -23295,9 +21926,6 @@ mod stitching_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::StereographicWarper>` instead, removal in Nov 2024"]
-	pub type PtrOfStereographicWarper = core::Ptr<crate::stitching::StereographicWarper>;
-
 	ptr_extern! { crate::stitching::StereographicWarper,
 		cv_PtrLcv_StereographicWarperG_new_null_const, cv_PtrLcv_StereographicWarperG_delete, cv_PtrLcv_StereographicWarperG_getInnerPtr_const, cv_PtrLcv_StereographicWarperG_getInnerPtrMut
 	}
@@ -23334,9 +21962,6 @@ mod stitching_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::Stitcher>` instead, removal in Nov 2024"]
-	pub type PtrOfStitcher = core::Ptr<crate::stitching::Stitcher>;
-
 	ptr_extern! { crate::stitching::Stitcher,
 		cv_PtrLcv_StitcherG_new_null_const, cv_PtrLcv_StitcherG_delete, cv_PtrLcv_StitcherG_getInnerPtr_const, cv_PtrLcv_StitcherG_getInnerPtrMut
 	}
@@ -23362,9 +21987,6 @@ mod stitching_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::TransverseMercatorWarper>` instead, removal in Nov 2024"]
-	pub type PtrOfTransverseMercatorWarper = core::Ptr<crate::stitching::TransverseMercatorWarper>;
 
 	ptr_extern! { crate::stitching::TransverseMercatorWarper,
 		cv_PtrLcv_TransverseMercatorWarperG_new_null_const, cv_PtrLcv_TransverseMercatorWarperG_delete, cv_PtrLcv_TransverseMercatorWarperG_getInnerPtr_const, cv_PtrLcv_TransverseMercatorWarperG_getInnerPtrMut
@@ -23402,9 +22024,6 @@ mod stitching_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::stitching::WarperCreator>` instead, removal in Nov 2024"]
-	pub type PtrOfWarperCreator = core::Ptr<crate::stitching::WarperCreator>;
-
 	ptr_extern! { crate::stitching::WarperCreator,
 		cv_PtrLcv_WarperCreatorG_new_null_const, cv_PtrLcv_WarperCreatorG_delete, cv_PtrLcv_WarperCreatorG_getInnerPtr_const, cv_PtrLcv_WarperCreatorG_getInnerPtrMut
 	}
@@ -23429,9 +22048,6 @@ mod stitching_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::stitching::Detail_CameraParams>` instead, removal in Nov 2024"]
-	pub type VectorOfDetail_CameraParams = core::Vector<crate::stitching::Detail_CameraParams>;
 
 	impl core::Vector<crate::stitching::Detail_CameraParams> {
 		pub fn as_raw_VectorOfDetail_CameraParams(&self) -> extern_send!(Self) { self.as_raw() }
@@ -23463,9 +22079,6 @@ mod stitching_types {
 	}
 
 
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::stitching::Detail_ImageFeatures>` instead, removal in Nov 2024"]
-	pub type VectorOfDetail_ImageFeatures = core::Vector<crate::stitching::Detail_ImageFeatures>;
-
 	impl core::Vector<crate::stitching::Detail_ImageFeatures> {
 		pub fn as_raw_VectorOfDetail_ImageFeatures(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfDetail_ImageFeatures(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -23495,9 +22108,6 @@ mod stitching_types {
 		std_vectorLcv_detail_ImageFeaturesG_push_const_ImageFeatures, std_vectorLcv_detail_ImageFeaturesG_insert_size_t_const_ImageFeatures,
 	}
 
-
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::stitching::Detail_MatchesInfo>` instead, removal in Nov 2024"]
-	pub type VectorOfDetail_MatchesInfo = core::Vector<crate::stitching::Detail_MatchesInfo>;
 
 	impl core::Vector<crate::stitching::Detail_MatchesInfo> {
 		pub fn as_raw_VectorOfDetail_MatchesInfo(&self) -> extern_send!(Self) { self.as_raw() }
@@ -23530,15 +22140,10 @@ mod stitching_types {
 
 
 }
-#[cfg(ocvrs_has_module_stitching)]
 pub use stitching_types::*;
 
-#[cfg(ocvrs_has_module_structured_light)]
 mod structured_light_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::structured_light::GrayCodePattern>` instead, removal in Nov 2024"]
-	pub type PtrOfGrayCodePattern = core::Ptr<crate::structured_light::GrayCodePattern>;
 
 	ptr_extern! { crate::structured_light::GrayCodePattern,
 		cv_PtrLcv_structured_light_GrayCodePatternG_new_null_const, cv_PtrLcv_structured_light_GrayCodePatternG_delete, cv_PtrLcv_structured_light_GrayCodePatternG_getInnerPtr_const, cv_PtrLcv_structured_light_GrayCodePatternG_getInnerPtrMut
@@ -23585,9 +22190,6 @@ mod structured_light_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::structured_light::SinusoidalPattern>` instead, removal in Nov 2024"]
-	pub type PtrOfSinusoidalPattern = core::Ptr<crate::structured_light::SinusoidalPattern>;
-
 	ptr_extern! { crate::structured_light::SinusoidalPattern,
 		cv_PtrLcv_structured_light_SinusoidalPatternG_new_null_const, cv_PtrLcv_structured_light_SinusoidalPatternG_delete, cv_PtrLcv_structured_light_SinusoidalPatternG_getInnerPtr_const, cv_PtrLcv_structured_light_SinusoidalPatternG_getInnerPtrMut
 	}
@@ -23633,9 +22235,6 @@ mod structured_light_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::structured_light::SinusoidalPattern_Params>` instead, removal in Nov 2024"]
-	pub type PtrOfSinusoidalPattern_Params = core::Ptr<crate::structured_light::SinusoidalPattern_Params>;
-
 	ptr_extern! { crate::structured_light::SinusoidalPattern_Params,
 		cv_PtrLcv_structured_light_SinusoidalPattern_ParamsG_new_null_const, cv_PtrLcv_structured_light_SinusoidalPattern_ParamsG_delete, cv_PtrLcv_structured_light_SinusoidalPattern_ParamsG_getInnerPtr_const, cv_PtrLcv_structured_light_SinusoidalPattern_ParamsG_getInnerPtrMut
 	}
@@ -23670,9 +22269,6 @@ mod structured_light_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::structured_light::StructuredLightPattern>` instead, removal in Nov 2024"]
-	pub type PtrOfStructuredLightPattern = core::Ptr<crate::structured_light::StructuredLightPattern>;
 
 	ptr_extern! { crate::structured_light::StructuredLightPattern,
 		cv_PtrLcv_structured_light_StructuredLightPatternG_new_null_const, cv_PtrLcv_structured_light_StructuredLightPatternG_delete, cv_PtrLcv_structured_light_StructuredLightPatternG_getInnerPtr_const, cv_PtrLcv_structured_light_StructuredLightPatternG_getInnerPtrMut
@@ -23710,15 +22306,10 @@ mod structured_light_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_structured_light)]
 pub use structured_light_types::*;
 
-#[cfg(ocvrs_has_module_superres)]
 mod superres_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::superres::SuperRes_BroxOpticalFlow>` instead, removal in Nov 2024"]
-	pub type PtrOfSuperRes_BroxOpticalFlow = core::Ptr<crate::superres::SuperRes_BroxOpticalFlow>;
 
 	ptr_extern! { crate::superres::SuperRes_BroxOpticalFlow,
 		cv_PtrLcv_superres_BroxOpticalFlowG_new_null_const, cv_PtrLcv_superres_BroxOpticalFlowG_delete, cv_PtrLcv_superres_BroxOpticalFlowG_getInnerPtr_const, cv_PtrLcv_superres_BroxOpticalFlowG_getInnerPtrMut
@@ -23765,9 +22356,6 @@ mod superres_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::superres::SuperRes_DenseOpticalFlowExt>` instead, removal in Nov 2024"]
-	pub type PtrOfSuperRes_DenseOpticalFlowExt = core::Ptr<crate::superres::SuperRes_DenseOpticalFlowExt>;
-
 	ptr_extern! { crate::superres::SuperRes_DenseOpticalFlowExt,
 		cv_PtrLcv_superres_DenseOpticalFlowExtG_new_null_const, cv_PtrLcv_superres_DenseOpticalFlowExtG_delete, cv_PtrLcv_superres_DenseOpticalFlowExtG_getInnerPtr_const, cv_PtrLcv_superres_DenseOpticalFlowExtG_getInnerPtrMut
 	}
@@ -23802,9 +22390,6 @@ mod superres_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::superres::SuperRes_DualTVL1OpticalFlow>` instead, removal in Nov 2024"]
-	pub type PtrOfSuperRes_DualTVL1OpticalFlow = core::Ptr<crate::superres::SuperRes_DualTVL1OpticalFlow>;
 
 	ptr_extern! { crate::superres::SuperRes_DualTVL1OpticalFlow,
 		cv_PtrLcv_superres_DualTVL1OpticalFlowG_new_null_const, cv_PtrLcv_superres_DualTVL1OpticalFlowG_delete, cv_PtrLcv_superres_DualTVL1OpticalFlowG_getInnerPtr_const, cv_PtrLcv_superres_DualTVL1OpticalFlowG_getInnerPtrMut
@@ -23851,9 +22436,6 @@ mod superres_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::superres::SuperRes_FarnebackOpticalFlow>` instead, removal in Nov 2024"]
-	pub type PtrOfSuperRes_FarnebackOpticalFlow = core::Ptr<crate::superres::SuperRes_FarnebackOpticalFlow>;
-
 	ptr_extern! { crate::superres::SuperRes_FarnebackOpticalFlow,
 		cv_PtrLcv_superres_FarnebackOpticalFlowG_new_null_const, cv_PtrLcv_superres_FarnebackOpticalFlowG_delete, cv_PtrLcv_superres_FarnebackOpticalFlowG_getInnerPtr_const, cv_PtrLcv_superres_FarnebackOpticalFlowG_getInnerPtrMut
 	}
@@ -23899,9 +22481,6 @@ mod superres_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::superres::SuperRes_FrameSource>` instead, removal in Nov 2024"]
-	pub type PtrOfSuperRes_FrameSource = core::Ptr<crate::superres::SuperRes_FrameSource>;
-
 	ptr_extern! { crate::superres::SuperRes_FrameSource,
 		cv_PtrLcv_superres_FrameSourceG_new_null_const, cv_PtrLcv_superres_FrameSourceG_delete, cv_PtrLcv_superres_FrameSourceG_getInnerPtr_const, cv_PtrLcv_superres_FrameSourceG_getInnerPtrMut
 	}
@@ -23926,9 +22505,6 @@ mod superres_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::superres::SuperRes_PyrLKOpticalFlow>` instead, removal in Nov 2024"]
-	pub type PtrOfSuperRes_PyrLKOpticalFlow = core::Ptr<crate::superres::SuperRes_PyrLKOpticalFlow>;
 
 	ptr_extern! { crate::superres::SuperRes_PyrLKOpticalFlow,
 		cv_PtrLcv_superres_PyrLKOpticalFlowG_new_null_const, cv_PtrLcv_superres_PyrLKOpticalFlowG_delete, cv_PtrLcv_superres_PyrLKOpticalFlowG_getInnerPtr_const, cv_PtrLcv_superres_PyrLKOpticalFlowG_getInnerPtrMut
@@ -23974,9 +22550,6 @@ mod superres_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::superres::SuperRes_SuperResolution>` instead, removal in Nov 2024"]
-	pub type PtrOfSuperRes_SuperResolution = core::Ptr<crate::superres::SuperRes_SuperResolution>;
 
 	ptr_extern! { crate::superres::SuperRes_SuperResolution,
 		cv_PtrLcv_superres_SuperResolutionG_new_null_const, cv_PtrLcv_superres_SuperResolutionG_delete, cv_PtrLcv_superres_SuperResolutionG_getInnerPtr_const, cv_PtrLcv_superres_SuperResolutionG_getInnerPtrMut
@@ -24024,15 +22597,10 @@ mod superres_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_superres)]
 pub use superres_types::*;
 
-#[cfg(ocvrs_has_module_surface_matching)]
 mod surface_matching_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::surface_matching::Pose3D>` instead, removal in Nov 2024"]
-	pub type PtrOfPose3D = core::Ptr<crate::surface_matching::Pose3D>;
 
 	ptr_extern! { crate::surface_matching::Pose3D,
 		cv_PtrLcv_ppf_match_3d_Pose3DG_new_null_const, cv_PtrLcv_ppf_match_3d_Pose3DG_delete, cv_PtrLcv_ppf_match_3d_Pose3DG_getInnerPtr_const, cv_PtrLcv_ppf_match_3d_Pose3DG_getInnerPtrMut
@@ -24068,9 +22636,6 @@ mod surface_matching_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::surface_matching::PoseCluster3D>` instead, removal in Nov 2024"]
-	pub type PtrOfPoseCluster3D = core::Ptr<crate::surface_matching::PoseCluster3D>;
-
 	ptr_extern! { crate::surface_matching::PoseCluster3D,
 		cv_PtrLcv_ppf_match_3d_PoseCluster3DG_new_null_const, cv_PtrLcv_ppf_match_3d_PoseCluster3DG_delete, cv_PtrLcv_ppf_match_3d_PoseCluster3DG_getInnerPtr_const, cv_PtrLcv_ppf_match_3d_PoseCluster3DG_getInnerPtrMut
 	}
@@ -24100,9 +22665,6 @@ mod surface_matching_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::surface_matching::Pose3DPtr>` instead, removal in Nov 2024"]
-	pub type VectorOfPose3DPtr = core::Vector<crate::surface_matching::Pose3DPtr>;
-
 	impl core::Vector<crate::surface_matching::Pose3DPtr> {
 		pub fn as_raw_VectorOfPose3DPtr(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfPose3DPtr(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -24122,15 +22684,10 @@ mod surface_matching_types {
 
 
 }
-#[cfg(ocvrs_has_module_surface_matching)]
 pub use surface_matching_types::*;
 
-#[cfg(ocvrs_has_module_text)]
 mod text_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::text::BaseOCR>` instead, removal in Nov 2024"]
-	pub type PtrOfBaseOCR = core::Ptr<crate::text::BaseOCR>;
 
 	ptr_extern! { crate::text::BaseOCR,
 		cv_PtrLcv_text_BaseOCRG_new_null_const, cv_PtrLcv_text_BaseOCRG_delete, cv_PtrLcv_text_BaseOCRG_getInnerPtr_const, cv_PtrLcv_text_BaseOCRG_getInnerPtrMut
@@ -24156,9 +22713,6 @@ mod text_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::text::ERFilter>` instead, removal in Nov 2024"]
-	pub type PtrOfERFilter = core::Ptr<crate::text::ERFilter>;
 
 	ptr_extern! { crate::text::ERFilter,
 		cv_PtrLcv_text_ERFilterG_new_null_const, cv_PtrLcv_text_ERFilterG_delete, cv_PtrLcv_text_ERFilterG_getInnerPtr_const, cv_PtrLcv_text_ERFilterG_getInnerPtrMut
@@ -24195,9 +22749,6 @@ mod text_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::text::ERFilter_Callback>` instead, removal in Nov 2024"]
-	pub type PtrOfERFilter_Callback = core::Ptr<crate::text::ERFilter_Callback>;
-
 	ptr_extern! { crate::text::ERFilter_Callback,
 		cv_PtrLcv_text_ERFilter_CallbackG_new_null_const, cv_PtrLcv_text_ERFilter_CallbackG_delete, cv_PtrLcv_text_ERFilter_CallbackG_getInnerPtr_const, cv_PtrLcv_text_ERFilter_CallbackG_getInnerPtrMut
 	}
@@ -24222,9 +22773,6 @@ mod text_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::text::OCRBeamSearchDecoder>` instead, removal in Nov 2024"]
-	pub type PtrOfOCRBeamSearchDecoder = core::Ptr<crate::text::OCRBeamSearchDecoder>;
 
 	ptr_extern! { crate::text::OCRBeamSearchDecoder,
 		cv_PtrLcv_text_OCRBeamSearchDecoderG_new_null_const, cv_PtrLcv_text_OCRBeamSearchDecoderG_delete, cv_PtrLcv_text_OCRBeamSearchDecoderG_getInnerPtr_const, cv_PtrLcv_text_OCRBeamSearchDecoderG_getInnerPtrMut
@@ -24262,9 +22810,6 @@ mod text_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::text::OCRBeamSearchDecoder_ClassifierCallback>` instead, removal in Nov 2024"]
-	pub type PtrOfOCRBeamSearchDecoder_ClassifierCallback = core::Ptr<crate::text::OCRBeamSearchDecoder_ClassifierCallback>;
-
 	ptr_extern! { crate::text::OCRBeamSearchDecoder_ClassifierCallback,
 		cv_PtrLcv_text_OCRBeamSearchDecoder_ClassifierCallbackG_new_null_const, cv_PtrLcv_text_OCRBeamSearchDecoder_ClassifierCallbackG_delete, cv_PtrLcv_text_OCRBeamSearchDecoder_ClassifierCallbackG_getInnerPtr_const, cv_PtrLcv_text_OCRBeamSearchDecoder_ClassifierCallbackG_getInnerPtrMut
 	}
@@ -24290,9 +22835,6 @@ mod text_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::text::OCRHMMDecoder>` instead, removal in Nov 2024"]
-	pub type PtrOfOCRHMMDecoder = core::Ptr<crate::text::OCRHMMDecoder>;
 
 	ptr_extern! { crate::text::OCRHMMDecoder,
 		cv_PtrLcv_text_OCRHMMDecoderG_new_null_const, cv_PtrLcv_text_OCRHMMDecoderG_delete, cv_PtrLcv_text_OCRHMMDecoderG_getInnerPtr_const, cv_PtrLcv_text_OCRHMMDecoderG_getInnerPtrMut
@@ -24330,9 +22872,6 @@ mod text_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::text::OCRHMMDecoder_ClassifierCallback>` instead, removal in Nov 2024"]
-	pub type PtrOfOCRHMMDecoder_ClassifierCallback = core::Ptr<crate::text::OCRHMMDecoder_ClassifierCallback>;
-
 	ptr_extern! { crate::text::OCRHMMDecoder_ClassifierCallback,
 		cv_PtrLcv_text_OCRHMMDecoder_ClassifierCallbackG_new_null_const, cv_PtrLcv_text_OCRHMMDecoder_ClassifierCallbackG_delete, cv_PtrLcv_text_OCRHMMDecoder_ClassifierCallbackG_getInnerPtr_const, cv_PtrLcv_text_OCRHMMDecoder_ClassifierCallbackG_getInnerPtrMut
 	}
@@ -24358,9 +22897,6 @@ mod text_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::text::OCRHolisticWordRecognizer>` instead, removal in Nov 2024"]
-	pub type PtrOfOCRHolisticWordRecognizer = core::Ptr<crate::text::OCRHolisticWordRecognizer>;
 
 	ptr_extern! { crate::text::OCRHolisticWordRecognizer,
 		cv_PtrLcv_text_OCRHolisticWordRecognizerG_new_null_const, cv_PtrLcv_text_OCRHolisticWordRecognizerG_delete, cv_PtrLcv_text_OCRHolisticWordRecognizerG_getInnerPtr_const, cv_PtrLcv_text_OCRHolisticWordRecognizerG_getInnerPtrMut
@@ -24397,9 +22933,6 @@ mod text_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::text::OCRTesseract>` instead, removal in Nov 2024"]
-	pub type PtrOfOCRTesseract = core::Ptr<crate::text::OCRTesseract>;
-
 	ptr_extern! { crate::text::OCRTesseract,
 		cv_PtrLcv_text_OCRTesseractG_new_null_const, cv_PtrLcv_text_OCRTesseractG_delete, cv_PtrLcv_text_OCRTesseractG_getInnerPtr_const, cv_PtrLcv_text_OCRTesseractG_getInnerPtrMut
 	}
@@ -24435,9 +22968,6 @@ mod text_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::text::TextDetector>` instead, removal in Nov 2024"]
-	pub type PtrOfTextDetector = core::Ptr<crate::text::TextDetector>;
-
 	ptr_extern! { crate::text::TextDetector,
 		cv_PtrLcv_text_TextDetectorG_new_null_const, cv_PtrLcv_text_TextDetectorG_delete, cv_PtrLcv_text_TextDetectorG_getInnerPtr_const, cv_PtrLcv_text_TextDetectorG_getInnerPtrMut
 	}
@@ -24462,9 +22992,6 @@ mod text_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::text::TextDetectorCNN>` instead, removal in Nov 2024"]
-	pub type PtrOfTextDetectorCNN = core::Ptr<crate::text::TextDetectorCNN>;
 
 	ptr_extern! { crate::text::TextDetectorCNN,
 		cv_PtrLcv_text_TextDetectorCNNG_new_null_const, cv_PtrLcv_text_TextDetectorCNNG_delete, cv_PtrLcv_text_TextDetectorCNNG_getInnerPtr_const, cv_PtrLcv_text_TextDetectorCNNG_getInnerPtrMut
@@ -24501,9 +23028,6 @@ mod text_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::text::ERStat>` instead, removal in Nov 2024"]
-	pub type VectorOfERStat = core::Vector<crate::text::ERStat>;
-
 	impl core::Vector<crate::text::ERStat> {
 		pub fn as_raw_VectorOfERStat(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfERStat(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -24534,9 +23058,6 @@ mod text_types {
 	}
 
 
-	#[deprecated = "Use the the non-alias form `core::Vector<core::Vector<crate::text::ERStat>>` instead, removal in Nov 2024"]
-	pub type VectorOfVectorOfERStat = core::Vector<core::Vector<crate::text::ERStat>>;
-
 	impl core::Vector<core::Vector<crate::text::ERStat>> {
 		pub fn as_raw_VectorOfVectorOfERStat(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfVectorOfERStat(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -24556,15 +23077,10 @@ mod text_types {
 
 
 }
-#[cfg(ocvrs_has_module_text)]
 pub use text_types::*;
 
-#[cfg(ocvrs_has_module_tracking)]
 mod tracking_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::tracking::TrackerCSRT>` instead, removal in Nov 2024"]
-	pub type PtrOfTrackerCSRT = core::Ptr<crate::tracking::TrackerCSRT>;
 
 	ptr_extern! { crate::tracking::TrackerCSRT,
 		cv_PtrLcv_tracking_TrackerCSRTG_new_null_const, cv_PtrLcv_tracking_TrackerCSRTG_delete, cv_PtrLcv_tracking_TrackerCSRTG_getInnerPtr_const, cv_PtrLcv_tracking_TrackerCSRTG_getInnerPtrMut
@@ -24600,9 +23116,6 @@ mod tracking_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::tracking::TrackerKCF>` instead, removal in Nov 2024"]
-	pub type PtrOfTrackerKCF = core::Ptr<crate::tracking::TrackerKCF>;
 
 	ptr_extern! { crate::tracking::TrackerKCF,
 		cv_PtrLcv_tracking_TrackerKCFG_new_null_const, cv_PtrLcv_tracking_TrackerKCFG_delete, cv_PtrLcv_tracking_TrackerKCFG_getInnerPtr_const, cv_PtrLcv_tracking_TrackerKCFG_getInnerPtrMut
@@ -24640,15 +23153,10 @@ mod tracking_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_tracking)]
 pub use tracking_types::*;
 
-#[cfg(ocvrs_has_module_video)]
 mod video_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::video::BackgroundSubtractor>` instead, removal in Nov 2024"]
-	pub type PtrOfBackgroundSubtractor = core::Ptr<crate::video::BackgroundSubtractor>;
 
 	ptr_extern! { crate::video::BackgroundSubtractor,
 		cv_PtrLcv_BackgroundSubtractorG_new_null_const, cv_PtrLcv_BackgroundSubtractorG_delete, cv_PtrLcv_BackgroundSubtractorG_getInnerPtr_const, cv_PtrLcv_BackgroundSubtractorG_getInnerPtrMut
@@ -24684,9 +23192,6 @@ mod video_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::video::BackgroundSubtractorKNN>` instead, removal in Nov 2024"]
-	pub type PtrOfBackgroundSubtractorKNN = core::Ptr<crate::video::BackgroundSubtractorKNN>;
 
 	ptr_extern! { crate::video::BackgroundSubtractorKNN,
 		cv_PtrLcv_BackgroundSubtractorKNNG_new_null_const, cv_PtrLcv_BackgroundSubtractorKNNG_delete, cv_PtrLcv_BackgroundSubtractorKNNG_getInnerPtr_const, cv_PtrLcv_BackgroundSubtractorKNNG_getInnerPtrMut
@@ -24733,9 +23238,6 @@ mod video_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::video::BackgroundSubtractorMOG2>` instead, removal in Nov 2024"]
-	pub type PtrOfBackgroundSubtractorMOG2 = core::Ptr<crate::video::BackgroundSubtractorMOG2>;
-
 	ptr_extern! { crate::video::BackgroundSubtractorMOG2,
 		cv_PtrLcv_BackgroundSubtractorMOG2G_new_null_const, cv_PtrLcv_BackgroundSubtractorMOG2G_delete, cv_PtrLcv_BackgroundSubtractorMOG2G_getInnerPtr_const, cv_PtrLcv_BackgroundSubtractorMOG2G_getInnerPtrMut
 	}
@@ -24780,9 +23282,6 @@ mod video_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::video::DISOpticalFlow>` instead, removal in Nov 2024"]
-	pub type PtrOfDISOpticalFlow = core::Ptr<crate::video::DISOpticalFlow>;
 
 	ptr_extern! { crate::video::DISOpticalFlow,
 		cv_PtrLcv_DISOpticalFlowG_new_null_const, cv_PtrLcv_DISOpticalFlowG_delete, cv_PtrLcv_DISOpticalFlowG_getInnerPtr_const, cv_PtrLcv_DISOpticalFlowG_getInnerPtrMut
@@ -24829,9 +23328,6 @@ mod video_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::video::DenseOpticalFlow>` instead, removal in Nov 2024"]
-	pub type PtrOfDenseOpticalFlow = core::Ptr<crate::video::DenseOpticalFlow>;
-
 	ptr_extern! { crate::video::DenseOpticalFlow,
 		cv_PtrLcv_DenseOpticalFlowG_new_null_const, cv_PtrLcv_DenseOpticalFlowG_delete, cv_PtrLcv_DenseOpticalFlowG_getInnerPtr_const, cv_PtrLcv_DenseOpticalFlowG_getInnerPtrMut
 	}
@@ -24866,9 +23362,6 @@ mod video_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::video::FarnebackOpticalFlow>` instead, removal in Nov 2024"]
-	pub type PtrOfFarnebackOpticalFlow = core::Ptr<crate::video::FarnebackOpticalFlow>;
 
 	ptr_extern! { crate::video::FarnebackOpticalFlow,
 		cv_PtrLcv_FarnebackOpticalFlowG_new_null_const, cv_PtrLcv_FarnebackOpticalFlowG_delete, cv_PtrLcv_FarnebackOpticalFlowG_getInnerPtr_const, cv_PtrLcv_FarnebackOpticalFlowG_getInnerPtrMut
@@ -24915,9 +23408,6 @@ mod video_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::video::SparseOpticalFlow>` instead, removal in Nov 2024"]
-	pub type PtrOfSparseOpticalFlow = core::Ptr<crate::video::SparseOpticalFlow>;
-
 	ptr_extern! { crate::video::SparseOpticalFlow,
 		cv_PtrLcv_SparseOpticalFlowG_new_null_const, cv_PtrLcv_SparseOpticalFlowG_delete, cv_PtrLcv_SparseOpticalFlowG_getInnerPtr_const, cv_PtrLcv_SparseOpticalFlowG_getInnerPtrMut
 	}
@@ -24952,9 +23442,6 @@ mod video_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::video::SparsePyrLKOpticalFlow>` instead, removal in Nov 2024"]
-	pub type PtrOfSparsePyrLKOpticalFlow = core::Ptr<crate::video::SparsePyrLKOpticalFlow>;
 
 	ptr_extern! { crate::video::SparsePyrLKOpticalFlow,
 		cv_PtrLcv_SparsePyrLKOpticalFlowG_new_null_const, cv_PtrLcv_SparsePyrLKOpticalFlowG_delete, cv_PtrLcv_SparsePyrLKOpticalFlowG_getInnerPtr_const, cv_PtrLcv_SparsePyrLKOpticalFlowG_getInnerPtrMut
@@ -25001,9 +23488,6 @@ mod video_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::video::Tracker>` instead, removal in Nov 2024"]
-	pub type PtrOfTracker = core::Ptr<crate::video::Tracker>;
-
 	ptr_extern! { crate::video::Tracker,
 		cv_PtrLcv_TrackerG_new_null_const, cv_PtrLcv_TrackerG_delete, cv_PtrLcv_TrackerG_getInnerPtr_const, cv_PtrLcv_TrackerG_getInnerPtrMut
 	}
@@ -25028,9 +23512,6 @@ mod video_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::video::TrackerDaSiamRPN>` instead, removal in Nov 2024"]
-	pub type PtrOfTrackerDaSiamRPN = core::Ptr<crate::video::TrackerDaSiamRPN>;
 
 	ptr_extern! { crate::video::TrackerDaSiamRPN,
 		cv_PtrLcv_TrackerDaSiamRPNG_new_null_const, cv_PtrLcv_TrackerDaSiamRPNG_delete, cv_PtrLcv_TrackerDaSiamRPNG_getInnerPtr_const, cv_PtrLcv_TrackerDaSiamRPNG_getInnerPtrMut
@@ -25067,9 +23548,6 @@ mod video_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::video::TrackerGOTURN>` instead, removal in Nov 2024"]
-	pub type PtrOfTrackerGOTURN = core::Ptr<crate::video::TrackerGOTURN>;
-
 	ptr_extern! { crate::video::TrackerGOTURN,
 		cv_PtrLcv_TrackerGOTURNG_new_null_const, cv_PtrLcv_TrackerGOTURNG_delete, cv_PtrLcv_TrackerGOTURNG_getInnerPtr_const, cv_PtrLcv_TrackerGOTURNG_getInnerPtrMut
 	}
@@ -25104,9 +23582,6 @@ mod video_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::video::TrackerMIL>` instead, removal in Nov 2024"]
-	pub type PtrOfTrackerMIL = core::Ptr<crate::video::TrackerMIL>;
 
 	ptr_extern! { crate::video::TrackerMIL,
 		cv_PtrLcv_TrackerMILG_new_null_const, cv_PtrLcv_TrackerMILG_delete, cv_PtrLcv_TrackerMILG_getInnerPtr_const, cv_PtrLcv_TrackerMILG_getInnerPtrMut
@@ -25143,9 +23618,6 @@ mod video_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::video::TrackerNano>` instead, removal in Nov 2024"]
-	pub type PtrOfTrackerNano = core::Ptr<crate::video::TrackerNano>;
-
 	ptr_extern! { crate::video::TrackerNano,
 		cv_PtrLcv_TrackerNanoG_new_null_const, cv_PtrLcv_TrackerNanoG_delete, cv_PtrLcv_TrackerNanoG_getInnerPtr_const, cv_PtrLcv_TrackerNanoG_getInnerPtrMut
 	}
@@ -25181,9 +23653,6 @@ mod video_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::video::TrackerVit>` instead, removal in Nov 2024"]
-	pub type PtrOfTrackerVit = core::Ptr<crate::video::TrackerVit>;
-
 	ptr_extern! { crate::video::TrackerVit,
 		cv_PtrLcv_TrackerVitG_new_null_const, cv_PtrLcv_TrackerVitG_delete, cv_PtrLcv_TrackerVitG_getInnerPtr_const, cv_PtrLcv_TrackerVitG_getInnerPtrMut
 	}
@@ -25218,9 +23687,6 @@ mod video_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::video::VariationalRefinement>` instead, removal in Nov 2024"]
-	pub type PtrOfVariationalRefinement = core::Ptr<crate::video::VariationalRefinement>;
 
 	ptr_extern! { crate::video::VariationalRefinement,
 		cv_PtrLcv_VariationalRefinementG_new_null_const, cv_PtrLcv_VariationalRefinementG_delete, cv_PtrLcv_VariationalRefinementG_getInnerPtr_const, cv_PtrLcv_VariationalRefinementG_getInnerPtrMut
@@ -25268,15 +23734,10 @@ mod video_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_video)]
 pub use video_types::*;
 
-#[cfg(ocvrs_has_module_videoio)]
 mod videoio_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videoio::IStreamReader>` instead, removal in Nov 2024"]
-	pub type PtrOfIStreamReader = core::Ptr<crate::videoio::IStreamReader>;
 
 	ptr_extern! { crate::videoio::IStreamReader,
 		cv_PtrLcv_IStreamReaderG_new_null_const, cv_PtrLcv_IStreamReaderG_delete, cv_PtrLcv_IStreamReaderG_getInnerPtr_const, cv_PtrLcv_IStreamReaderG_getInnerPtrMut
@@ -25302,9 +23763,6 @@ mod videoio_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::videoio::VideoCapture>` instead, removal in Nov 2024"]
-	pub type VectorOfVideoCapture = core::Vector<crate::videoio::VideoCapture>;
 
 	impl core::Vector<crate::videoio::VideoCapture> {
 		pub fn as_raw_VectorOfVideoCapture(&self) -> extern_send!(Self) { self.as_raw() }
@@ -25336,9 +23794,6 @@ mod videoio_types {
 	}
 
 
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::videoio::VideoCaptureAPIs>` instead, removal in Nov 2024"]
-	pub type VectorOfVideoCaptureAPIs = core::Vector<crate::videoio::VideoCaptureAPIs>;
-
 	impl core::Vector<crate::videoio::VideoCaptureAPIs> {
 		pub fn as_raw_VectorOfVideoCaptureAPIs(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfVideoCaptureAPIs(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -25361,15 +23816,10 @@ mod videoio_types {
 
 
 }
-#[cfg(ocvrs_has_module_videoio)]
 pub use videoio_types::*;
 
-#[cfg(ocvrs_has_module_videostab)]
 mod videostab_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::ColorAverageInpainter>` instead, removal in Nov 2024"]
-	pub type PtrOfColorAverageInpainter = core::Ptr<crate::videostab::ColorAverageInpainter>;
 
 	ptr_extern! { crate::videostab::ColorAverageInpainter,
 		cv_PtrLcv_videostab_ColorAverageInpainterG_new_null_const, cv_PtrLcv_videostab_ColorAverageInpainterG_delete, cv_PtrLcv_videostab_ColorAverageInpainterG_getInnerPtr_const, cv_PtrLcv_videostab_ColorAverageInpainterG_getInnerPtrMut
@@ -25407,9 +23857,6 @@ mod videostab_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::ColorInpainter>` instead, removal in Nov 2024"]
-	pub type PtrOfColorInpainter = core::Ptr<crate::videostab::ColorInpainter>;
-
 	ptr_extern! { crate::videostab::ColorInpainter,
 		cv_PtrLcv_videostab_ColorInpainterG_new_null_const, cv_PtrLcv_videostab_ColorInpainterG_delete, cv_PtrLcv_videostab_ColorInpainterG_getInnerPtr_const, cv_PtrLcv_videostab_ColorInpainterG_getInnerPtrMut
 	}
@@ -25445,9 +23892,6 @@ mod videostab_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::ConsistentMosaicInpainter>` instead, removal in Nov 2024"]
-	pub type PtrOfConsistentMosaicInpainter = core::Ptr<crate::videostab::ConsistentMosaicInpainter>;
 
 	ptr_extern! { crate::videostab::ConsistentMosaicInpainter,
 		cv_PtrLcv_videostab_ConsistentMosaicInpainterG_new_null_const, cv_PtrLcv_videostab_ConsistentMosaicInpainterG_delete, cv_PtrLcv_videostab_ConsistentMosaicInpainterG_getInnerPtr_const, cv_PtrLcv_videostab_ConsistentMosaicInpainterG_getInnerPtrMut
@@ -25485,9 +23929,6 @@ mod videostab_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::DeblurerBase>` instead, removal in Nov 2024"]
-	pub type PtrOfDeblurerBase = core::Ptr<crate::videostab::DeblurerBase>;
-
 	ptr_extern! { crate::videostab::DeblurerBase,
 		cv_PtrLcv_videostab_DeblurerBaseG_new_null_const, cv_PtrLcv_videostab_DeblurerBaseG_delete, cv_PtrLcv_videostab_DeblurerBaseG_getInnerPtr_const, cv_PtrLcv_videostab_DeblurerBaseG_getInnerPtrMut
 	}
@@ -25512,9 +23953,6 @@ mod videostab_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::DensePyrLkOptFlowEstimatorGpu>` instead, removal in Nov 2024"]
-	pub type PtrOfDensePyrLkOptFlowEstimatorGpu = core::Ptr<crate::videostab::DensePyrLkOptFlowEstimatorGpu>;
 
 	ptr_extern! { crate::videostab::DensePyrLkOptFlowEstimatorGpu,
 		cv_PtrLcv_videostab_DensePyrLkOptFlowEstimatorGpuG_new_null_const, cv_PtrLcv_videostab_DensePyrLkOptFlowEstimatorGpuG_delete, cv_PtrLcv_videostab_DensePyrLkOptFlowEstimatorGpuG_getInnerPtr_const, cv_PtrLcv_videostab_DensePyrLkOptFlowEstimatorGpuG_getInnerPtrMut
@@ -25562,9 +24000,6 @@ mod videostab_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::FromFileMotionReader>` instead, removal in Nov 2024"]
-	pub type PtrOfFromFileMotionReader = core::Ptr<crate::videostab::FromFileMotionReader>;
-
 	ptr_extern! { crate::videostab::FromFileMotionReader,
 		cv_PtrLcv_videostab_FromFileMotionReaderG_new_null_const, cv_PtrLcv_videostab_FromFileMotionReaderG_delete, cv_PtrLcv_videostab_FromFileMotionReaderG_getInnerPtr_const, cv_PtrLcv_videostab_FromFileMotionReaderG_getInnerPtrMut
 	}
@@ -25600,9 +24035,6 @@ mod videostab_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::GaussianMotionFilter>` instead, removal in Nov 2024"]
-	pub type PtrOfGaussianMotionFilter = core::Ptr<crate::videostab::GaussianMotionFilter>;
 
 	ptr_extern! { crate::videostab::GaussianMotionFilter,
 		cv_PtrLcv_videostab_GaussianMotionFilterG_new_null_const, cv_PtrLcv_videostab_GaussianMotionFilterG_delete, cv_PtrLcv_videostab_GaussianMotionFilterG_getInnerPtr_const, cv_PtrLcv_videostab_GaussianMotionFilterG_getInnerPtrMut
@@ -25650,9 +24082,6 @@ mod videostab_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::IDenseOptFlowEstimator>` instead, removal in Nov 2024"]
-	pub type PtrOfIDenseOptFlowEstimator = core::Ptr<crate::videostab::IDenseOptFlowEstimator>;
-
 	ptr_extern! { crate::videostab::IDenseOptFlowEstimator,
 		cv_PtrLcv_videostab_IDenseOptFlowEstimatorG_new_null_const, cv_PtrLcv_videostab_IDenseOptFlowEstimatorG_delete, cv_PtrLcv_videostab_IDenseOptFlowEstimatorG_getInnerPtr_const, cv_PtrLcv_videostab_IDenseOptFlowEstimatorG_getInnerPtrMut
 	}
@@ -25677,9 +24106,6 @@ mod videostab_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::IFrameSource>` instead, removal in Nov 2024"]
-	pub type PtrOfIFrameSource = core::Ptr<crate::videostab::IFrameSource>;
 
 	ptr_extern! { crate::videostab::IFrameSource,
 		cv_PtrLcv_videostab_IFrameSourceG_new_null_const, cv_PtrLcv_videostab_IFrameSourceG_delete, cv_PtrLcv_videostab_IFrameSourceG_getInnerPtr_const, cv_PtrLcv_videostab_IFrameSourceG_getInnerPtrMut
@@ -25706,9 +24132,6 @@ mod videostab_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::ILog>` instead, removal in Nov 2024"]
-	pub type PtrOfILog = core::Ptr<crate::videostab::ILog>;
-
 	ptr_extern! { crate::videostab::ILog,
 		cv_PtrLcv_videostab_ILogG_new_null_const, cv_PtrLcv_videostab_ILogG_delete, cv_PtrLcv_videostab_ILogG_getInnerPtr_const, cv_PtrLcv_videostab_ILogG_getInnerPtrMut
 	}
@@ -25733,9 +24156,6 @@ mod videostab_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::IMotionStabilizer>` instead, removal in Nov 2024"]
-	pub type PtrOfIMotionStabilizer = core::Ptr<crate::videostab::IMotionStabilizer>;
 
 	ptr_extern! { crate::videostab::IMotionStabilizer,
 		cv_PtrLcv_videostab_IMotionStabilizerG_new_null_const, cv_PtrLcv_videostab_IMotionStabilizerG_delete, cv_PtrLcv_videostab_IMotionStabilizerG_getInnerPtr_const, cv_PtrLcv_videostab_IMotionStabilizerG_getInnerPtrMut
@@ -25762,9 +24182,6 @@ mod videostab_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::IOutlierRejector>` instead, removal in Nov 2024"]
-	pub type PtrOfIOutlierRejector = core::Ptr<crate::videostab::IOutlierRejector>;
-
 	ptr_extern! { crate::videostab::IOutlierRejector,
 		cv_PtrLcv_videostab_IOutlierRejectorG_new_null_const, cv_PtrLcv_videostab_IOutlierRejectorG_delete, cv_PtrLcv_videostab_IOutlierRejectorG_getInnerPtr_const, cv_PtrLcv_videostab_IOutlierRejectorG_getInnerPtrMut
 	}
@@ -25789,9 +24206,6 @@ mod videostab_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::ISparseOptFlowEstimator>` instead, removal in Nov 2024"]
-	pub type PtrOfISparseOptFlowEstimator = core::Ptr<crate::videostab::ISparseOptFlowEstimator>;
 
 	ptr_extern! { crate::videostab::ISparseOptFlowEstimator,
 		cv_PtrLcv_videostab_ISparseOptFlowEstimatorG_new_null_const, cv_PtrLcv_videostab_ISparseOptFlowEstimatorG_delete, cv_PtrLcv_videostab_ISparseOptFlowEstimatorG_getInnerPtr_const, cv_PtrLcv_videostab_ISparseOptFlowEstimatorG_getInnerPtrMut
@@ -25818,9 +24232,6 @@ mod videostab_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::ImageMotionEstimatorBase>` instead, removal in Nov 2024"]
-	pub type PtrOfImageMotionEstimatorBase = core::Ptr<crate::videostab::ImageMotionEstimatorBase>;
-
 	ptr_extern! { crate::videostab::ImageMotionEstimatorBase,
 		cv_PtrLcv_videostab_ImageMotionEstimatorBaseG_new_null_const, cv_PtrLcv_videostab_ImageMotionEstimatorBaseG_delete, cv_PtrLcv_videostab_ImageMotionEstimatorBaseG_getInnerPtr_const, cv_PtrLcv_videostab_ImageMotionEstimatorBaseG_getInnerPtrMut
 	}
@@ -25846,9 +24257,6 @@ mod videostab_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::InpainterBase>` instead, removal in Nov 2024"]
-	pub type PtrOfInpainterBase = core::Ptr<crate::videostab::InpainterBase>;
-
 	ptr_extern! { crate::videostab::InpainterBase,
 		cv_PtrLcv_videostab_InpainterBaseG_new_null_const, cv_PtrLcv_videostab_InpainterBaseG_delete, cv_PtrLcv_videostab_InpainterBaseG_getInnerPtr_const, cv_PtrLcv_videostab_InpainterBaseG_getInnerPtrMut
 	}
@@ -25873,9 +24281,6 @@ mod videostab_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::InpaintingPipeline>` instead, removal in Nov 2024"]
-	pub type PtrOfInpaintingPipeline = core::Ptr<crate::videostab::InpaintingPipeline>;
 
 	ptr_extern! { crate::videostab::InpaintingPipeline,
 		cv_PtrLcv_videostab_InpaintingPipelineG_new_null_const, cv_PtrLcv_videostab_InpaintingPipelineG_delete, cv_PtrLcv_videostab_InpaintingPipelineG_getInnerPtr_const, cv_PtrLcv_videostab_InpaintingPipelineG_getInnerPtrMut
@@ -25913,9 +24318,6 @@ mod videostab_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::KeypointBasedMotionEstimator>` instead, removal in Nov 2024"]
-	pub type PtrOfKeypointBasedMotionEstimator = core::Ptr<crate::videostab::KeypointBasedMotionEstimator>;
-
 	ptr_extern! { crate::videostab::KeypointBasedMotionEstimator,
 		cv_PtrLcv_videostab_KeypointBasedMotionEstimatorG_new_null_const, cv_PtrLcv_videostab_KeypointBasedMotionEstimatorG_delete, cv_PtrLcv_videostab_KeypointBasedMotionEstimatorG_getInnerPtr_const, cv_PtrLcv_videostab_KeypointBasedMotionEstimatorG_getInnerPtrMut
 	}
@@ -25951,9 +24353,6 @@ mod videostab_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::KeypointBasedMotionEstimatorGpu>` instead, removal in Nov 2024"]
-	pub type PtrOfKeypointBasedMotionEstimatorGpu = core::Ptr<crate::videostab::KeypointBasedMotionEstimatorGpu>;
 
 	ptr_extern! { crate::videostab::KeypointBasedMotionEstimatorGpu,
 		cv_PtrLcv_videostab_KeypointBasedMotionEstimatorGpuG_new_null_const, cv_PtrLcv_videostab_KeypointBasedMotionEstimatorGpuG_delete, cv_PtrLcv_videostab_KeypointBasedMotionEstimatorGpuG_getInnerPtr_const, cv_PtrLcv_videostab_KeypointBasedMotionEstimatorGpuG_getInnerPtrMut
@@ -25991,9 +24390,6 @@ mod videostab_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::LogToStdout>` instead, removal in Nov 2024"]
-	pub type PtrOfLogToStdout = core::Ptr<crate::videostab::LogToStdout>;
-
 	ptr_extern! { crate::videostab::LogToStdout,
 		cv_PtrLcv_videostab_LogToStdoutG_new_null_const, cv_PtrLcv_videostab_LogToStdoutG_delete, cv_PtrLcv_videostab_LogToStdoutG_getInnerPtr_const, cv_PtrLcv_videostab_LogToStdoutG_getInnerPtrMut
 	}
@@ -26029,9 +24425,6 @@ mod videostab_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::LpMotionStabilizer>` instead, removal in Nov 2024"]
-	pub type PtrOfLpMotionStabilizer = core::Ptr<crate::videostab::LpMotionStabilizer>;
 
 	ptr_extern! { crate::videostab::LpMotionStabilizer,
 		cv_PtrLcv_videostab_LpMotionStabilizerG_new_null_const, cv_PtrLcv_videostab_LpMotionStabilizerG_delete, cv_PtrLcv_videostab_LpMotionStabilizerG_getInnerPtr_const, cv_PtrLcv_videostab_LpMotionStabilizerG_getInnerPtrMut
@@ -26069,9 +24462,6 @@ mod videostab_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::MaskFrameSource>` instead, removal in Nov 2024"]
-	pub type PtrOfMaskFrameSource = core::Ptr<crate::videostab::MaskFrameSource>;
-
 	ptr_extern! { crate::videostab::MaskFrameSource,
 		cv_PtrLcv_videostab_MaskFrameSourceG_new_null_const, cv_PtrLcv_videostab_MaskFrameSourceG_delete, cv_PtrLcv_videostab_MaskFrameSourceG_getInnerPtr_const, cv_PtrLcv_videostab_MaskFrameSourceG_getInnerPtrMut
 	}
@@ -26107,9 +24497,6 @@ mod videostab_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressor>` instead, removal in Nov 2024"]
-	pub type PtrOfMoreAccurateMotionWobbleSuppressor = core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressor>;
 
 	ptr_extern! { crate::videostab::MoreAccurateMotionWobbleSuppressor,
 		cv_PtrLcv_videostab_MoreAccurateMotionWobbleSuppressorG_new_null_const, cv_PtrLcv_videostab_MoreAccurateMotionWobbleSuppressorG_delete, cv_PtrLcv_videostab_MoreAccurateMotionWobbleSuppressorG_getInnerPtr_const, cv_PtrLcv_videostab_MoreAccurateMotionWobbleSuppressorG_getInnerPtrMut
@@ -26157,9 +24544,6 @@ mod videostab_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressorBase>` instead, removal in Nov 2024"]
-	pub type PtrOfMoreAccurateMotionWobbleSuppressorBase = core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressorBase>;
-
 	ptr_extern! { crate::videostab::MoreAccurateMotionWobbleSuppressorBase,
 		cv_PtrLcv_videostab_MoreAccurateMotionWobbleSuppressorBaseG_new_null_const, cv_PtrLcv_videostab_MoreAccurateMotionWobbleSuppressorBaseG_delete, cv_PtrLcv_videostab_MoreAccurateMotionWobbleSuppressorBaseG_getInnerPtr_const, cv_PtrLcv_videostab_MoreAccurateMotionWobbleSuppressorBaseG_getInnerPtrMut
 	}
@@ -26194,9 +24578,6 @@ mod videostab_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressorGpu>` instead, removal in Nov 2024"]
-	pub type PtrOfMoreAccurateMotionWobbleSuppressorGpu = core::Ptr<crate::videostab::MoreAccurateMotionWobbleSuppressorGpu>;
 
 	ptr_extern! { crate::videostab::MoreAccurateMotionWobbleSuppressorGpu,
 		cv_PtrLcv_videostab_MoreAccurateMotionWobbleSuppressorGpuG_new_null_const, cv_PtrLcv_videostab_MoreAccurateMotionWobbleSuppressorGpuG_delete, cv_PtrLcv_videostab_MoreAccurateMotionWobbleSuppressorGpuG_getInnerPtr_const, cv_PtrLcv_videostab_MoreAccurateMotionWobbleSuppressorGpuG_getInnerPtrMut
@@ -26244,9 +24625,6 @@ mod videostab_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::MotionEstimatorBase>` instead, removal in Nov 2024"]
-	pub type PtrOfMotionEstimatorBase = core::Ptr<crate::videostab::MotionEstimatorBase>;
-
 	ptr_extern! { crate::videostab::MotionEstimatorBase,
 		cv_PtrLcv_videostab_MotionEstimatorBaseG_new_null_const, cv_PtrLcv_videostab_MotionEstimatorBaseG_delete, cv_PtrLcv_videostab_MotionEstimatorBaseG_getInnerPtr_const, cv_PtrLcv_videostab_MotionEstimatorBaseG_getInnerPtrMut
 	}
@@ -26271,9 +24649,6 @@ mod videostab_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::MotionEstimatorL1>` instead, removal in Nov 2024"]
-	pub type PtrOfMotionEstimatorL1 = core::Ptr<crate::videostab::MotionEstimatorL1>;
 
 	ptr_extern! { crate::videostab::MotionEstimatorL1,
 		cv_PtrLcv_videostab_MotionEstimatorL1G_new_null_const, cv_PtrLcv_videostab_MotionEstimatorL1G_delete, cv_PtrLcv_videostab_MotionEstimatorL1G_getInnerPtr_const, cv_PtrLcv_videostab_MotionEstimatorL1G_getInnerPtrMut
@@ -26311,9 +24686,6 @@ mod videostab_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::MotionEstimatorRansacL2>` instead, removal in Nov 2024"]
-	pub type PtrOfMotionEstimatorRansacL2 = core::Ptr<crate::videostab::MotionEstimatorRansacL2>;
-
 	ptr_extern! { crate::videostab::MotionEstimatorRansacL2,
 		cv_PtrLcv_videostab_MotionEstimatorRansacL2G_new_null_const, cv_PtrLcv_videostab_MotionEstimatorRansacL2G_delete, cv_PtrLcv_videostab_MotionEstimatorRansacL2G_getInnerPtr_const, cv_PtrLcv_videostab_MotionEstimatorRansacL2G_getInnerPtrMut
 	}
@@ -26350,9 +24722,6 @@ mod videostab_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::MotionFilterBase>` instead, removal in Nov 2024"]
-	pub type PtrOfMotionFilterBase = core::Ptr<crate::videostab::MotionFilterBase>;
-
 	ptr_extern! { crate::videostab::MotionFilterBase,
 		cv_PtrLcv_videostab_MotionFilterBaseG_new_null_const, cv_PtrLcv_videostab_MotionFilterBaseG_delete, cv_PtrLcv_videostab_MotionFilterBaseG_getInnerPtr_const, cv_PtrLcv_videostab_MotionFilterBaseG_getInnerPtrMut
 	}
@@ -26387,9 +24756,6 @@ mod videostab_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::MotionInpainter>` instead, removal in Nov 2024"]
-	pub type PtrOfMotionInpainter = core::Ptr<crate::videostab::MotionInpainter>;
 
 	ptr_extern! { crate::videostab::MotionInpainter,
 		cv_PtrLcv_videostab_MotionInpainterG_new_null_const, cv_PtrLcv_videostab_MotionInpainterG_delete, cv_PtrLcv_videostab_MotionInpainterG_getInnerPtr_const, cv_PtrLcv_videostab_MotionInpainterG_getInnerPtrMut
@@ -26427,9 +24793,6 @@ mod videostab_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::MotionStabilizationPipeline>` instead, removal in Nov 2024"]
-	pub type PtrOfMotionStabilizationPipeline = core::Ptr<crate::videostab::MotionStabilizationPipeline>;
-
 	ptr_extern! { crate::videostab::MotionStabilizationPipeline,
 		cv_PtrLcv_videostab_MotionStabilizationPipelineG_new_null_const, cv_PtrLcv_videostab_MotionStabilizationPipelineG_delete, cv_PtrLcv_videostab_MotionStabilizationPipelineG_getInnerPtr_const, cv_PtrLcv_videostab_MotionStabilizationPipelineG_getInnerPtrMut
 	}
@@ -26465,9 +24828,6 @@ mod videostab_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::NullDeblurer>` instead, removal in Nov 2024"]
-	pub type PtrOfNullDeblurer = core::Ptr<crate::videostab::NullDeblurer>;
 
 	ptr_extern! { crate::videostab::NullDeblurer,
 		cv_PtrLcv_videostab_NullDeblurerG_new_null_const, cv_PtrLcv_videostab_NullDeblurerG_delete, cv_PtrLcv_videostab_NullDeblurerG_getInnerPtr_const, cv_PtrLcv_videostab_NullDeblurerG_getInnerPtrMut
@@ -26505,9 +24865,6 @@ mod videostab_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::NullFrameSource>` instead, removal in Nov 2024"]
-	pub type PtrOfNullFrameSource = core::Ptr<crate::videostab::NullFrameSource>;
-
 	ptr_extern! { crate::videostab::NullFrameSource,
 		cv_PtrLcv_videostab_NullFrameSourceG_new_null_const, cv_PtrLcv_videostab_NullFrameSourceG_delete, cv_PtrLcv_videostab_NullFrameSourceG_getInnerPtr_const, cv_PtrLcv_videostab_NullFrameSourceG_getInnerPtrMut
 	}
@@ -26543,9 +24900,6 @@ mod videostab_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::NullInpainter>` instead, removal in Nov 2024"]
-	pub type PtrOfNullInpainter = core::Ptr<crate::videostab::NullInpainter>;
 
 	ptr_extern! { crate::videostab::NullInpainter,
 		cv_PtrLcv_videostab_NullInpainterG_new_null_const, cv_PtrLcv_videostab_NullInpainterG_delete, cv_PtrLcv_videostab_NullInpainterG_getInnerPtr_const, cv_PtrLcv_videostab_NullInpainterG_getInnerPtrMut
@@ -26583,9 +24937,6 @@ mod videostab_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::NullLog>` instead, removal in Nov 2024"]
-	pub type PtrOfNullLog = core::Ptr<crate::videostab::NullLog>;
-
 	ptr_extern! { crate::videostab::NullLog,
 		cv_PtrLcv_videostab_NullLogG_new_null_const, cv_PtrLcv_videostab_NullLogG_delete, cv_PtrLcv_videostab_NullLogG_getInnerPtr_const, cv_PtrLcv_videostab_NullLogG_getInnerPtrMut
 	}
@@ -26621,9 +24972,6 @@ mod videostab_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::NullOutlierRejector>` instead, removal in Nov 2024"]
-	pub type PtrOfNullOutlierRejector = core::Ptr<crate::videostab::NullOutlierRejector>;
 
 	ptr_extern! { crate::videostab::NullOutlierRejector,
 		cv_PtrLcv_videostab_NullOutlierRejectorG_new_null_const, cv_PtrLcv_videostab_NullOutlierRejectorG_delete, cv_PtrLcv_videostab_NullOutlierRejectorG_getInnerPtr_const, cv_PtrLcv_videostab_NullOutlierRejectorG_getInnerPtrMut
@@ -26661,9 +25009,6 @@ mod videostab_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::NullWobbleSuppressor>` instead, removal in Nov 2024"]
-	pub type PtrOfNullWobbleSuppressor = core::Ptr<crate::videostab::NullWobbleSuppressor>;
-
 	ptr_extern! { crate::videostab::NullWobbleSuppressor,
 		cv_PtrLcv_videostab_NullWobbleSuppressorG_new_null_const, cv_PtrLcv_videostab_NullWobbleSuppressorG_delete, cv_PtrLcv_videostab_NullWobbleSuppressorG_getInnerPtr_const, cv_PtrLcv_videostab_NullWobbleSuppressorG_getInnerPtrMut
 	}
@@ -26699,9 +25044,6 @@ mod videostab_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::OnePassStabilizer>` instead, removal in Nov 2024"]
-	pub type PtrOfOnePassStabilizer = core::Ptr<crate::videostab::OnePassStabilizer>;
 
 	ptr_extern! { crate::videostab::OnePassStabilizer,
 		cv_PtrLcv_videostab_OnePassStabilizerG_new_null_const, cv_PtrLcv_videostab_OnePassStabilizerG_delete, cv_PtrLcv_videostab_OnePassStabilizerG_getInnerPtr_const, cv_PtrLcv_videostab_OnePassStabilizerG_getInnerPtrMut
@@ -26749,9 +25091,6 @@ mod videostab_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::PyrLkOptFlowEstimatorBase>` instead, removal in Nov 2024"]
-	pub type PtrOfPyrLkOptFlowEstimatorBase = core::Ptr<crate::videostab::PyrLkOptFlowEstimatorBase>;
-
 	ptr_extern! { crate::videostab::PyrLkOptFlowEstimatorBase,
 		cv_PtrLcv_videostab_PyrLkOptFlowEstimatorBaseG_new_null_const, cv_PtrLcv_videostab_PyrLkOptFlowEstimatorBaseG_delete, cv_PtrLcv_videostab_PyrLkOptFlowEstimatorBaseG_getInnerPtr_const, cv_PtrLcv_videostab_PyrLkOptFlowEstimatorBaseG_getInnerPtrMut
 	}
@@ -26777,9 +25116,6 @@ mod videostab_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::SparsePyrLkOptFlowEstimator>` instead, removal in Nov 2024"]
-	pub type PtrOfSparsePyrLkOptFlowEstimator = core::Ptr<crate::videostab::SparsePyrLkOptFlowEstimator>;
 
 	ptr_extern! { crate::videostab::SparsePyrLkOptFlowEstimator,
 		cv_PtrLcv_videostab_SparsePyrLkOptFlowEstimatorG_new_null_const, cv_PtrLcv_videostab_SparsePyrLkOptFlowEstimatorG_delete, cv_PtrLcv_videostab_SparsePyrLkOptFlowEstimatorG_getInnerPtr_const, cv_PtrLcv_videostab_SparsePyrLkOptFlowEstimatorG_getInnerPtrMut
@@ -26827,9 +25163,6 @@ mod videostab_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::SparsePyrLkOptFlowEstimatorGpu>` instead, removal in Nov 2024"]
-	pub type PtrOfSparsePyrLkOptFlowEstimatorGpu = core::Ptr<crate::videostab::SparsePyrLkOptFlowEstimatorGpu>;
-
 	ptr_extern! { crate::videostab::SparsePyrLkOptFlowEstimatorGpu,
 		cv_PtrLcv_videostab_SparsePyrLkOptFlowEstimatorGpuG_new_null_const, cv_PtrLcv_videostab_SparsePyrLkOptFlowEstimatorGpuG_delete, cv_PtrLcv_videostab_SparsePyrLkOptFlowEstimatorGpuG_getInnerPtr_const, cv_PtrLcv_videostab_SparsePyrLkOptFlowEstimatorGpuG_getInnerPtrMut
 	}
@@ -26876,9 +25209,6 @@ mod videostab_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::StabilizerBase>` instead, removal in Nov 2024"]
-	pub type PtrOfStabilizerBase = core::Ptr<crate::videostab::StabilizerBase>;
-
 	ptr_extern! { crate::videostab::StabilizerBase,
 		cv_PtrLcv_videostab_StabilizerBaseG_new_null_const, cv_PtrLcv_videostab_StabilizerBaseG_delete, cv_PtrLcv_videostab_StabilizerBaseG_getInnerPtr_const, cv_PtrLcv_videostab_StabilizerBaseG_getInnerPtrMut
 	}
@@ -26903,9 +25233,6 @@ mod videostab_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::ToFileMotionWriter>` instead, removal in Nov 2024"]
-	pub type PtrOfToFileMotionWriter = core::Ptr<crate::videostab::ToFileMotionWriter>;
 
 	ptr_extern! { crate::videostab::ToFileMotionWriter,
 		cv_PtrLcv_videostab_ToFileMotionWriterG_new_null_const, cv_PtrLcv_videostab_ToFileMotionWriterG_delete, cv_PtrLcv_videostab_ToFileMotionWriterG_getInnerPtr_const, cv_PtrLcv_videostab_ToFileMotionWriterG_getInnerPtrMut
@@ -26943,9 +25270,6 @@ mod videostab_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::TranslationBasedLocalOutlierRejector>` instead, removal in Nov 2024"]
-	pub type PtrOfTranslationBasedLocalOutlierRejector = core::Ptr<crate::videostab::TranslationBasedLocalOutlierRejector>;
-
 	ptr_extern! { crate::videostab::TranslationBasedLocalOutlierRejector,
 		cv_PtrLcv_videostab_TranslationBasedLocalOutlierRejectorG_new_null_const, cv_PtrLcv_videostab_TranslationBasedLocalOutlierRejectorG_delete, cv_PtrLcv_videostab_TranslationBasedLocalOutlierRejectorG_getInnerPtr_const, cv_PtrLcv_videostab_TranslationBasedLocalOutlierRejectorG_getInnerPtrMut
 	}
@@ -26981,9 +25305,6 @@ mod videostab_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::TwoPassStabilizer>` instead, removal in Nov 2024"]
-	pub type PtrOfTwoPassStabilizer = core::Ptr<crate::videostab::TwoPassStabilizer>;
 
 	ptr_extern! { crate::videostab::TwoPassStabilizer,
 		cv_PtrLcv_videostab_TwoPassStabilizerG_new_null_const, cv_PtrLcv_videostab_TwoPassStabilizerG_delete, cv_PtrLcv_videostab_TwoPassStabilizerG_getInnerPtr_const, cv_PtrLcv_videostab_TwoPassStabilizerG_getInnerPtrMut
@@ -27031,9 +25352,6 @@ mod videostab_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::VideoFileSource>` instead, removal in Nov 2024"]
-	pub type PtrOfVideoFileSource = core::Ptr<crate::videostab::VideoFileSource>;
-
 	ptr_extern! { crate::videostab::VideoFileSource,
 		cv_PtrLcv_videostab_VideoFileSourceG_new_null_const, cv_PtrLcv_videostab_VideoFileSourceG_delete, cv_PtrLcv_videostab_VideoFileSourceG_getInnerPtr_const, cv_PtrLcv_videostab_VideoFileSourceG_getInnerPtrMut
 	}
@@ -27069,9 +25387,6 @@ mod videostab_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::WeightingDeblurer>` instead, removal in Nov 2024"]
-	pub type PtrOfWeightingDeblurer = core::Ptr<crate::videostab::WeightingDeblurer>;
 
 	ptr_extern! { crate::videostab::WeightingDeblurer,
 		cv_PtrLcv_videostab_WeightingDeblurerG_new_null_const, cv_PtrLcv_videostab_WeightingDeblurerG_delete, cv_PtrLcv_videostab_WeightingDeblurerG_getInnerPtr_const, cv_PtrLcv_videostab_WeightingDeblurerG_getInnerPtrMut
@@ -27109,9 +25424,6 @@ mod videostab_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::videostab::WobbleSuppressorBase>` instead, removal in Nov 2024"]
-	pub type PtrOfWobbleSuppressorBase = core::Ptr<crate::videostab::WobbleSuppressorBase>;
-
 	ptr_extern! { crate::videostab::WobbleSuppressorBase,
 		cv_PtrLcv_videostab_WobbleSuppressorBaseG_new_null_const, cv_PtrLcv_videostab_WobbleSuppressorBaseG_delete, cv_PtrLcv_videostab_WobbleSuppressorBaseG_getInnerPtr_const, cv_PtrLcv_videostab_WobbleSuppressorBaseG_getInnerPtrMut
 	}
@@ -27138,15 +25450,10 @@ mod videostab_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_videostab)]
 pub use videostab_types::*;
 
-#[cfg(ocvrs_has_module_xfeatures2d)]
 mod xfeatures2d_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::AffineFeature2D>` instead, removal in Nov 2024"]
-	pub type PtrOfAffineFeature2D = core::Ptr<crate::xfeatures2d::AffineFeature2D>;
 
 	ptr_extern! { crate::xfeatures2d::AffineFeature2D,
 		cv_PtrLcv_xfeatures2d_AffineFeature2DG_new_null_const, cv_PtrLcv_xfeatures2d_AffineFeature2DG_delete, cv_PtrLcv_xfeatures2d_AffineFeature2DG_getInnerPtr_const, cv_PtrLcv_xfeatures2d_AffineFeature2DG_getInnerPtrMut
@@ -27193,9 +25500,6 @@ mod xfeatures2d_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::BEBLID>` instead, removal in Nov 2024"]
-	pub type PtrOfBEBLID = core::Ptr<crate::xfeatures2d::BEBLID>;
-
 	ptr_extern! { crate::xfeatures2d::BEBLID,
 		cv_PtrLcv_xfeatures2d_BEBLIDG_new_null_const, cv_PtrLcv_xfeatures2d_BEBLIDG_delete, cv_PtrLcv_xfeatures2d_BEBLIDG_getInnerPtr_const, cv_PtrLcv_xfeatures2d_BEBLIDG_getInnerPtrMut
 	}
@@ -27240,9 +25544,6 @@ mod xfeatures2d_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::BoostDesc>` instead, removal in Nov 2024"]
-	pub type PtrOfBoostDesc = core::Ptr<crate::xfeatures2d::BoostDesc>;
 
 	ptr_extern! { crate::xfeatures2d::BoostDesc,
 		cv_PtrLcv_xfeatures2d_BoostDescG_new_null_const, cv_PtrLcv_xfeatures2d_BoostDescG_delete, cv_PtrLcv_xfeatures2d_BoostDescG_getInnerPtr_const, cv_PtrLcv_xfeatures2d_BoostDescG_getInnerPtrMut
@@ -27289,9 +25590,6 @@ mod xfeatures2d_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::BriefDescriptorExtractor>` instead, removal in Nov 2024"]
-	pub type PtrOfBriefDescriptorExtractor = core::Ptr<crate::xfeatures2d::BriefDescriptorExtractor>;
-
 	ptr_extern! { crate::xfeatures2d::BriefDescriptorExtractor,
 		cv_PtrLcv_xfeatures2d_BriefDescriptorExtractorG_new_null_const, cv_PtrLcv_xfeatures2d_BriefDescriptorExtractorG_delete, cv_PtrLcv_xfeatures2d_BriefDescriptorExtractorG_getInnerPtr_const, cv_PtrLcv_xfeatures2d_BriefDescriptorExtractorG_getInnerPtrMut
 	}
@@ -27336,9 +25634,6 @@ mod xfeatures2d_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::DAISY>` instead, removal in Nov 2024"]
-	pub type PtrOfDAISY = core::Ptr<crate::xfeatures2d::DAISY>;
 
 	ptr_extern! { crate::xfeatures2d::DAISY,
 		cv_PtrLcv_xfeatures2d_DAISYG_new_null_const, cv_PtrLcv_xfeatures2d_DAISYG_delete, cv_PtrLcv_xfeatures2d_DAISYG_getInnerPtr_const, cv_PtrLcv_xfeatures2d_DAISYG_getInnerPtrMut
@@ -27385,9 +25680,6 @@ mod xfeatures2d_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::FREAK>` instead, removal in Nov 2024"]
-	pub type PtrOfFREAK = core::Ptr<crate::xfeatures2d::FREAK>;
-
 	ptr_extern! { crate::xfeatures2d::FREAK,
 		cv_PtrLcv_xfeatures2d_FREAKG_new_null_const, cv_PtrLcv_xfeatures2d_FREAKG_delete, cv_PtrLcv_xfeatures2d_FREAKG_getInnerPtr_const, cv_PtrLcv_xfeatures2d_FREAKG_getInnerPtrMut
 	}
@@ -27432,9 +25724,6 @@ mod xfeatures2d_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::HarrisLaplaceFeatureDetector>` instead, removal in Nov 2024"]
-	pub type PtrOfHarrisLaplaceFeatureDetector = core::Ptr<crate::xfeatures2d::HarrisLaplaceFeatureDetector>;
 
 	ptr_extern! { crate::xfeatures2d::HarrisLaplaceFeatureDetector,
 		cv_PtrLcv_xfeatures2d_HarrisLaplaceFeatureDetectorG_new_null_const, cv_PtrLcv_xfeatures2d_HarrisLaplaceFeatureDetectorG_delete, cv_PtrLcv_xfeatures2d_HarrisLaplaceFeatureDetectorG_getInnerPtr_const, cv_PtrLcv_xfeatures2d_HarrisLaplaceFeatureDetectorG_getInnerPtrMut
@@ -27481,9 +25770,6 @@ mod xfeatures2d_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::LATCH>` instead, removal in Nov 2024"]
-	pub type PtrOfLATCH = core::Ptr<crate::xfeatures2d::LATCH>;
-
 	ptr_extern! { crate::xfeatures2d::LATCH,
 		cv_PtrLcv_xfeatures2d_LATCHG_new_null_const, cv_PtrLcv_xfeatures2d_LATCHG_delete, cv_PtrLcv_xfeatures2d_LATCHG_getInnerPtr_const, cv_PtrLcv_xfeatures2d_LATCHG_getInnerPtrMut
 	}
@@ -27528,9 +25814,6 @@ mod xfeatures2d_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::LUCID>` instead, removal in Nov 2024"]
-	pub type PtrOfLUCID = core::Ptr<crate::xfeatures2d::LUCID>;
 
 	ptr_extern! { crate::xfeatures2d::LUCID,
 		cv_PtrLcv_xfeatures2d_LUCIDG_new_null_const, cv_PtrLcv_xfeatures2d_LUCIDG_delete, cv_PtrLcv_xfeatures2d_LUCIDG_getInnerPtr_const, cv_PtrLcv_xfeatures2d_LUCIDG_getInnerPtrMut
@@ -27577,9 +25860,6 @@ mod xfeatures2d_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::MSDDetector>` instead, removal in Nov 2024"]
-	pub type PtrOfMSDDetector = core::Ptr<crate::xfeatures2d::MSDDetector>;
-
 	ptr_extern! { crate::xfeatures2d::MSDDetector,
 		cv_PtrLcv_xfeatures2d_MSDDetectorG_new_null_const, cv_PtrLcv_xfeatures2d_MSDDetectorG_delete, cv_PtrLcv_xfeatures2d_MSDDetectorG_getInnerPtr_const, cv_PtrLcv_xfeatures2d_MSDDetectorG_getInnerPtrMut
 	}
@@ -27625,9 +25905,6 @@ mod xfeatures2d_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::PCTSignatures>` instead, removal in Nov 2024"]
-	pub type PtrOfPCTSignatures = core::Ptr<crate::xfeatures2d::PCTSignatures>;
-
 	ptr_extern! { crate::xfeatures2d::PCTSignatures,
 		cv_PtrLcv_xfeatures2d_PCTSignaturesG_new_null_const, cv_PtrLcv_xfeatures2d_PCTSignaturesG_delete, cv_PtrLcv_xfeatures2d_PCTSignaturesG_getInnerPtr_const, cv_PtrLcv_xfeatures2d_PCTSignaturesG_getInnerPtrMut
 	}
@@ -27663,9 +25940,6 @@ mod xfeatures2d_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::PCTSignaturesSQFD>` instead, removal in Nov 2024"]
-	pub type PtrOfPCTSignaturesSQFD = core::Ptr<crate::xfeatures2d::PCTSignaturesSQFD>;
-
 	ptr_extern! { crate::xfeatures2d::PCTSignaturesSQFD,
 		cv_PtrLcv_xfeatures2d_PCTSignaturesSQFDG_new_null_const, cv_PtrLcv_xfeatures2d_PCTSignaturesSQFDG_delete, cv_PtrLcv_xfeatures2d_PCTSignaturesSQFDG_getInnerPtr_const, cv_PtrLcv_xfeatures2d_PCTSignaturesSQFDG_getInnerPtrMut
 	}
@@ -27700,9 +25974,6 @@ mod xfeatures2d_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::SURF>` instead, removal in Nov 2024"]
-	pub type PtrOfSURF = core::Ptr<crate::xfeatures2d::SURF>;
 
 	ptr_extern! { crate::xfeatures2d::SURF,
 		cv_PtrLcv_xfeatures2d_SURFG_new_null_const, cv_PtrLcv_xfeatures2d_SURFG_delete, cv_PtrLcv_xfeatures2d_SURFG_getInnerPtr_const, cv_PtrLcv_xfeatures2d_SURFG_getInnerPtrMut
@@ -27749,9 +26020,6 @@ mod xfeatures2d_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::SURF_CUDA>` instead, removal in Nov 2024"]
-	pub type PtrOfSURF_CUDA = core::Ptr<crate::xfeatures2d::SURF_CUDA>;
-
 	ptr_extern! { crate::xfeatures2d::SURF_CUDA,
 		cv_PtrLcv_cuda_SURF_CUDAG_new_null_const, cv_PtrLcv_cuda_SURF_CUDAG_delete, cv_PtrLcv_cuda_SURF_CUDAG_getInnerPtr_const, cv_PtrLcv_cuda_SURF_CUDAG_getInnerPtrMut
 	}
@@ -27789,9 +26057,6 @@ mod xfeatures2d_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::StarDetector>` instead, removal in Nov 2024"]
-	pub type PtrOfStarDetector = core::Ptr<crate::xfeatures2d::StarDetector>;
 
 	ptr_extern! { crate::xfeatures2d::StarDetector,
 		cv_PtrLcv_xfeatures2d_StarDetectorG_new_null_const, cv_PtrLcv_xfeatures2d_StarDetectorG_delete, cv_PtrLcv_xfeatures2d_StarDetectorG_getInnerPtr_const, cv_PtrLcv_xfeatures2d_StarDetectorG_getInnerPtrMut
@@ -27837,9 +26102,6 @@ mod xfeatures2d_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::TBMR>` instead, removal in Nov 2024"]
-	pub type PtrOfTBMR = core::Ptr<crate::xfeatures2d::TBMR>;
 
 	ptr_extern! { crate::xfeatures2d::TBMR,
 		cv_PtrLcv_xfeatures2d_TBMRG_new_null_const, cv_PtrLcv_xfeatures2d_TBMRG_delete, cv_PtrLcv_xfeatures2d_TBMRG_getInnerPtr_const, cv_PtrLcv_xfeatures2d_TBMRG_getInnerPtrMut
@@ -27896,9 +26158,6 @@ mod xfeatures2d_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::TEBLID>` instead, removal in Nov 2024"]
-	pub type PtrOfTEBLID = core::Ptr<crate::xfeatures2d::TEBLID>;
-
 	ptr_extern! { crate::xfeatures2d::TEBLID,
 		cv_PtrLcv_xfeatures2d_TEBLIDG_new_null_const, cv_PtrLcv_xfeatures2d_TEBLIDG_delete, cv_PtrLcv_xfeatures2d_TEBLIDG_getInnerPtr_const, cv_PtrLcv_xfeatures2d_TEBLIDG_getInnerPtrMut
 	}
@@ -27945,9 +26204,6 @@ mod xfeatures2d_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xfeatures2d::VGG>` instead, removal in Nov 2024"]
-	pub type PtrOfVGG = core::Ptr<crate::xfeatures2d::VGG>;
-
 	ptr_extern! { crate::xfeatures2d::VGG,
 		cv_PtrLcv_xfeatures2d_VGGG_new_null_const, cv_PtrLcv_xfeatures2d_VGGG_delete, cv_PtrLcv_xfeatures2d_VGGG_getInnerPtr_const, cv_PtrLcv_xfeatures2d_VGGG_getInnerPtrMut
 	}
@@ -27993,9 +26249,6 @@ mod xfeatures2d_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::xfeatures2d::Elliptic_KeyPoint>` instead, removal in Nov 2024"]
-	pub type VectorOfElliptic_KeyPoint = core::Vector<crate::xfeatures2d::Elliptic_KeyPoint>;
-
 	impl core::Vector<crate::xfeatures2d::Elliptic_KeyPoint> {
 		pub fn as_raw_VectorOfElliptic_KeyPoint(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfElliptic_KeyPoint(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -28027,15 +26280,10 @@ mod xfeatures2d_types {
 
 
 }
-#[cfg(ocvrs_has_module_xfeatures2d)]
 pub use xfeatures2d_types::*;
 
-#[cfg(ocvrs_has_module_ximgproc)]
 mod ximgproc_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::AdaptiveManifoldFilter>` instead, removal in Nov 2024"]
-	pub type PtrOfAdaptiveManifoldFilter = core::Ptr<crate::ximgproc::AdaptiveManifoldFilter>;
 
 	ptr_extern! { crate::ximgproc::AdaptiveManifoldFilter,
 		cv_PtrLcv_ximgproc_AdaptiveManifoldFilterG_new_null_const, cv_PtrLcv_ximgproc_AdaptiveManifoldFilterG_delete, cv_PtrLcv_ximgproc_AdaptiveManifoldFilterG_getInnerPtr_const, cv_PtrLcv_ximgproc_AdaptiveManifoldFilterG_getInnerPtrMut
@@ -28071,9 +26319,6 @@ mod ximgproc_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::ContourFitting>` instead, removal in Nov 2024"]
-	pub type PtrOfContourFitting = core::Ptr<crate::ximgproc::ContourFitting>;
 
 	ptr_extern! { crate::ximgproc::ContourFitting,
 		cv_PtrLcv_ximgproc_ContourFittingG_new_null_const, cv_PtrLcv_ximgproc_ContourFittingG_delete, cv_PtrLcv_ximgproc_ContourFittingG_getInnerPtr_const, cv_PtrLcv_ximgproc_ContourFittingG_getInnerPtrMut
@@ -28111,9 +26356,6 @@ mod ximgproc_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::DTFilter>` instead, removal in Nov 2024"]
-	pub type PtrOfDTFilter = core::Ptr<crate::ximgproc::DTFilter>;
-
 	ptr_extern! { crate::ximgproc::DTFilter,
 		cv_PtrLcv_ximgproc_DTFilterG_new_null_const, cv_PtrLcv_ximgproc_DTFilterG_delete, cv_PtrLcv_ximgproc_DTFilterG_getInnerPtr_const, cv_PtrLcv_ximgproc_DTFilterG_getInnerPtrMut
 	}
@@ -28149,9 +26391,6 @@ mod ximgproc_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::DisparityFilter>` instead, removal in Nov 2024"]
-	pub type PtrOfDisparityFilter = core::Ptr<crate::ximgproc::DisparityFilter>;
-
 	ptr_extern! { crate::ximgproc::DisparityFilter,
 		cv_PtrLcv_ximgproc_DisparityFilterG_new_null_const, cv_PtrLcv_ximgproc_DisparityFilterG_delete, cv_PtrLcv_ximgproc_DisparityFilterG_getInnerPtr_const, cv_PtrLcv_ximgproc_DisparityFilterG_getInnerPtrMut
 	}
@@ -28186,9 +26425,6 @@ mod ximgproc_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::DisparityWLSFilter>` instead, removal in Nov 2024"]
-	pub type PtrOfDisparityWLSFilter = core::Ptr<crate::ximgproc::DisparityWLSFilter>;
 
 	ptr_extern! { crate::ximgproc::DisparityWLSFilter,
 		cv_PtrLcv_ximgproc_DisparityWLSFilterG_new_null_const, cv_PtrLcv_ximgproc_DisparityWLSFilterG_delete, cv_PtrLcv_ximgproc_DisparityWLSFilterG_getInnerPtr_const, cv_PtrLcv_ximgproc_DisparityWLSFilterG_getInnerPtrMut
@@ -28235,9 +26471,6 @@ mod ximgproc_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::EdgeAwareInterpolator>` instead, removal in Nov 2024"]
-	pub type PtrOfEdgeAwareInterpolator = core::Ptr<crate::ximgproc::EdgeAwareInterpolator>;
-
 	ptr_extern! { crate::ximgproc::EdgeAwareInterpolator,
 		cv_PtrLcv_ximgproc_EdgeAwareInterpolatorG_new_null_const, cv_PtrLcv_ximgproc_EdgeAwareInterpolatorG_delete, cv_PtrLcv_ximgproc_EdgeAwareInterpolatorG_getInnerPtr_const, cv_PtrLcv_ximgproc_EdgeAwareInterpolatorG_getInnerPtrMut
 	}
@@ -28283,9 +26516,6 @@ mod ximgproc_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::EdgeBoxes>` instead, removal in Nov 2024"]
-	pub type PtrOfEdgeBoxes = core::Ptr<crate::ximgproc::EdgeBoxes>;
-
 	ptr_extern! { crate::ximgproc::EdgeBoxes,
 		cv_PtrLcv_ximgproc_EdgeBoxesG_new_null_const, cv_PtrLcv_ximgproc_EdgeBoxesG_delete, cv_PtrLcv_ximgproc_EdgeBoxesG_getInnerPtr_const, cv_PtrLcv_ximgproc_EdgeBoxesG_getInnerPtrMut
 	}
@@ -28320,9 +26550,6 @@ mod ximgproc_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::EdgeDrawing>` instead, removal in Nov 2024"]
-	pub type PtrOfEdgeDrawing = core::Ptr<crate::ximgproc::EdgeDrawing>;
 
 	ptr_extern! { crate::ximgproc::EdgeDrawing,
 		cv_PtrLcv_ximgproc_EdgeDrawingG_new_null_const, cv_PtrLcv_ximgproc_EdgeDrawingG_delete, cv_PtrLcv_ximgproc_EdgeDrawingG_getInnerPtr_const, cv_PtrLcv_ximgproc_EdgeDrawingG_getInnerPtrMut
@@ -28360,9 +26587,6 @@ mod ximgproc_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::FastBilateralSolverFilter>` instead, removal in Nov 2024"]
-	pub type PtrOfFastBilateralSolverFilter = core::Ptr<crate::ximgproc::FastBilateralSolverFilter>;
-
 	ptr_extern! { crate::ximgproc::FastBilateralSolverFilter,
 		cv_PtrLcv_ximgproc_FastBilateralSolverFilterG_new_null_const, cv_PtrLcv_ximgproc_FastBilateralSolverFilterG_delete, cv_PtrLcv_ximgproc_FastBilateralSolverFilterG_getInnerPtr_const, cv_PtrLcv_ximgproc_FastBilateralSolverFilterG_getInnerPtrMut
 	}
@@ -28397,9 +26621,6 @@ mod ximgproc_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::FastGlobalSmootherFilter>` instead, removal in Nov 2024"]
-	pub type PtrOfFastGlobalSmootherFilter = core::Ptr<crate::ximgproc::FastGlobalSmootherFilter>;
 
 	ptr_extern! { crate::ximgproc::FastGlobalSmootherFilter,
 		cv_PtrLcv_ximgproc_FastGlobalSmootherFilterG_new_null_const, cv_PtrLcv_ximgproc_FastGlobalSmootherFilterG_delete, cv_PtrLcv_ximgproc_FastGlobalSmootherFilterG_getInnerPtr_const, cv_PtrLcv_ximgproc_FastGlobalSmootherFilterG_getInnerPtrMut
@@ -28436,9 +26657,6 @@ mod ximgproc_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::FastLineDetector>` instead, removal in Nov 2024"]
-	pub type PtrOfFastLineDetector = core::Ptr<crate::ximgproc::FastLineDetector>;
-
 	ptr_extern! { crate::ximgproc::FastLineDetector,
 		cv_PtrLcv_ximgproc_FastLineDetectorG_new_null_const, cv_PtrLcv_ximgproc_FastLineDetectorG_delete, cv_PtrLcv_ximgproc_FastLineDetectorG_getInnerPtr_const, cv_PtrLcv_ximgproc_FastLineDetectorG_getInnerPtrMut
 	}
@@ -28473,9 +26691,6 @@ mod ximgproc_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::GraphSegmentation>` instead, removal in Nov 2024"]
-	pub type PtrOfGraphSegmentation = core::Ptr<crate::ximgproc::GraphSegmentation>;
 
 	ptr_extern! { crate::ximgproc::GraphSegmentation,
 		cv_PtrLcv_ximgproc_segmentation_GraphSegmentationG_new_null_const, cv_PtrLcv_ximgproc_segmentation_GraphSegmentationG_delete, cv_PtrLcv_ximgproc_segmentation_GraphSegmentationG_getInnerPtr_const, cv_PtrLcv_ximgproc_segmentation_GraphSegmentationG_getInnerPtrMut
@@ -28512,9 +26727,6 @@ mod ximgproc_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::GuidedFilter>` instead, removal in Nov 2024"]
-	pub type PtrOfGuidedFilter = core::Ptr<crate::ximgproc::GuidedFilter>;
-
 	ptr_extern! { crate::ximgproc::GuidedFilter,
 		cv_PtrLcv_ximgproc_GuidedFilterG_new_null_const, cv_PtrLcv_ximgproc_GuidedFilterG_delete, cv_PtrLcv_ximgproc_GuidedFilterG_getInnerPtr_const, cv_PtrLcv_ximgproc_GuidedFilterG_getInnerPtrMut
 	}
@@ -28550,9 +26762,6 @@ mod ximgproc_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::RFFeatureGetter>` instead, removal in Nov 2024"]
-	pub type PtrOfRFFeatureGetter = core::Ptr<crate::ximgproc::RFFeatureGetter>;
-
 	ptr_extern! { crate::ximgproc::RFFeatureGetter,
 		cv_PtrLcv_ximgproc_RFFeatureGetterG_new_null_const, cv_PtrLcv_ximgproc_RFFeatureGetterG_delete, cv_PtrLcv_ximgproc_RFFeatureGetterG_getInnerPtr_const, cv_PtrLcv_ximgproc_RFFeatureGetterG_getInnerPtrMut
 	}
@@ -28587,9 +26796,6 @@ mod ximgproc_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::RICInterpolator>` instead, removal in Nov 2024"]
-	pub type PtrOfRICInterpolator = core::Ptr<crate::ximgproc::RICInterpolator>;
 
 	ptr_extern! { crate::ximgproc::RICInterpolator,
 		cv_PtrLcv_ximgproc_RICInterpolatorG_new_null_const, cv_PtrLcv_ximgproc_RICInterpolatorG_delete, cv_PtrLcv_ximgproc_RICInterpolatorG_getInnerPtr_const, cv_PtrLcv_ximgproc_RICInterpolatorG_getInnerPtrMut
@@ -28636,9 +26842,6 @@ mod ximgproc_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::RidgeDetectionFilter>` instead, removal in Nov 2024"]
-	pub type PtrOfRidgeDetectionFilter = core::Ptr<crate::ximgproc::RidgeDetectionFilter>;
-
 	ptr_extern! { crate::ximgproc::RidgeDetectionFilter,
 		cv_PtrLcv_ximgproc_RidgeDetectionFilterG_new_null_const, cv_PtrLcv_ximgproc_RidgeDetectionFilterG_delete, cv_PtrLcv_ximgproc_RidgeDetectionFilterG_getInnerPtr_const, cv_PtrLcv_ximgproc_RidgeDetectionFilterG_getInnerPtrMut
 	}
@@ -28673,9 +26876,6 @@ mod ximgproc_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::ScanSegment>` instead, removal in Nov 2024"]
-	pub type PtrOfScanSegment = core::Ptr<crate::ximgproc::ScanSegment>;
 
 	ptr_extern! { crate::ximgproc::ScanSegment,
 		cv_PtrLcv_ximgproc_ScanSegmentG_new_null_const, cv_PtrLcv_ximgproc_ScanSegmentG_delete, cv_PtrLcv_ximgproc_ScanSegmentG_getInnerPtr_const, cv_PtrLcv_ximgproc_ScanSegmentG_getInnerPtrMut
@@ -28712,9 +26912,6 @@ mod ximgproc_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::SelectiveSearchSegmentation>` instead, removal in Nov 2024"]
-	pub type PtrOfSelectiveSearchSegmentation = core::Ptr<crate::ximgproc::SelectiveSearchSegmentation>;
-
 	ptr_extern! { crate::ximgproc::SelectiveSearchSegmentation,
 		cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationG_new_null_const, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationG_delete, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationG_getInnerPtr_const, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationG_getInnerPtrMut
 	}
@@ -28750,9 +26947,6 @@ mod ximgproc_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy>` instead, removal in Nov 2024"]
-	pub type PtrOfSelectiveSearchSegmentationStrategy = core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategy>;
-
 	ptr_extern! { crate::ximgproc::SelectiveSearchSegmentationStrategy,
 		cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyG_new_null_const, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyG_delete, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyG_getInnerPtr_const, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyG_getInnerPtrMut
 	}
@@ -28787,9 +26981,6 @@ mod ximgproc_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyColor>` instead, removal in Nov 2024"]
-	pub type PtrOfSelectiveSearchSegmentationStrategyColor = core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyColor>;
 
 	ptr_extern! { crate::ximgproc::SelectiveSearchSegmentationStrategyColor,
 		cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyColorG_new_null_const, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyColorG_delete, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyColorG_getInnerPtr_const, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyColorG_getInnerPtrMut
@@ -28836,9 +27027,6 @@ mod ximgproc_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyFill>` instead, removal in Nov 2024"]
-	pub type PtrOfSelectiveSearchSegmentationStrategyFill = core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyFill>;
-
 	ptr_extern! { crate::ximgproc::SelectiveSearchSegmentationStrategyFill,
 		cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyFillG_new_null_const, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyFillG_delete, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyFillG_getInnerPtr_const, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyFillG_getInnerPtrMut
 	}
@@ -28883,9 +27071,6 @@ mod ximgproc_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>` instead, removal in Nov 2024"]
-	pub type PtrOfSelectiveSearchSegmentationStrategyMultiple = core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple>;
 
 	ptr_extern! { crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple,
 		cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyMultipleG_new_null_const, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyMultipleG_delete, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyMultipleG_getInnerPtr_const, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyMultipleG_getInnerPtrMut
@@ -28932,9 +27117,6 @@ mod ximgproc_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategySize>` instead, removal in Nov 2024"]
-	pub type PtrOfSelectiveSearchSegmentationStrategySize = core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategySize>;
-
 	ptr_extern! { crate::ximgproc::SelectiveSearchSegmentationStrategySize,
 		cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategySizeG_new_null_const, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategySizeG_delete, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategySizeG_getInnerPtr_const, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategySizeG_getInnerPtrMut
 	}
@@ -28979,9 +27161,6 @@ mod ximgproc_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyTexture>` instead, removal in Nov 2024"]
-	pub type PtrOfSelectiveSearchSegmentationStrategyTexture = core::Ptr<crate::ximgproc::SelectiveSearchSegmentationStrategyTexture>;
 
 	ptr_extern! { crate::ximgproc::SelectiveSearchSegmentationStrategyTexture,
 		cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyTextureG_new_null_const, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyTextureG_delete, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyTextureG_getInnerPtr_const, cv_PtrLcv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyTextureG_getInnerPtrMut
@@ -29028,9 +27207,6 @@ mod ximgproc_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::SparseMatchInterpolator>` instead, removal in Nov 2024"]
-	pub type PtrOfSparseMatchInterpolator = core::Ptr<crate::ximgproc::SparseMatchInterpolator>;
-
 	ptr_extern! { crate::ximgproc::SparseMatchInterpolator,
 		cv_PtrLcv_ximgproc_SparseMatchInterpolatorG_new_null_const, cv_PtrLcv_ximgproc_SparseMatchInterpolatorG_delete, cv_PtrLcv_ximgproc_SparseMatchInterpolatorG_getInnerPtr_const, cv_PtrLcv_ximgproc_SparseMatchInterpolatorG_getInnerPtrMut
 	}
@@ -29065,9 +27241,6 @@ mod ximgproc_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::StructuredEdgeDetection>` instead, removal in Nov 2024"]
-	pub type PtrOfStructuredEdgeDetection = core::Ptr<crate::ximgproc::StructuredEdgeDetection>;
 
 	ptr_extern! { crate::ximgproc::StructuredEdgeDetection,
 		cv_PtrLcv_ximgproc_StructuredEdgeDetectionG_new_null_const, cv_PtrLcv_ximgproc_StructuredEdgeDetectionG_delete, cv_PtrLcv_ximgproc_StructuredEdgeDetectionG_getInnerPtr_const, cv_PtrLcv_ximgproc_StructuredEdgeDetectionG_getInnerPtrMut
@@ -29104,9 +27277,6 @@ mod ximgproc_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::SuperpixelLSC>` instead, removal in Nov 2024"]
-	pub type PtrOfSuperpixelLSC = core::Ptr<crate::ximgproc::SuperpixelLSC>;
-
 	ptr_extern! { crate::ximgproc::SuperpixelLSC,
 		cv_PtrLcv_ximgproc_SuperpixelLSCG_new_null_const, cv_PtrLcv_ximgproc_SuperpixelLSCG_delete, cv_PtrLcv_ximgproc_SuperpixelLSCG_getInnerPtr_const, cv_PtrLcv_ximgproc_SuperpixelLSCG_getInnerPtrMut
 	}
@@ -29141,9 +27311,6 @@ mod ximgproc_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::SuperpixelSEEDS>` instead, removal in Nov 2024"]
-	pub type PtrOfSuperpixelSEEDS = core::Ptr<crate::ximgproc::SuperpixelSEEDS>;
 
 	ptr_extern! { crate::ximgproc::SuperpixelSEEDS,
 		cv_PtrLcv_ximgproc_SuperpixelSEEDSG_new_null_const, cv_PtrLcv_ximgproc_SuperpixelSEEDSG_delete, cv_PtrLcv_ximgproc_SuperpixelSEEDSG_getInnerPtr_const, cv_PtrLcv_ximgproc_SuperpixelSEEDSG_getInnerPtrMut
@@ -29180,9 +27347,6 @@ mod ximgproc_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::ximgproc::SuperpixelSLIC>` instead, removal in Nov 2024"]
-	pub type PtrOfSuperpixelSLIC = core::Ptr<crate::ximgproc::SuperpixelSLIC>;
-
 	ptr_extern! { crate::ximgproc::SuperpixelSLIC,
 		cv_PtrLcv_ximgproc_SuperpixelSLICG_new_null_const, cv_PtrLcv_ximgproc_SuperpixelSLICG_delete, cv_PtrLcv_ximgproc_SuperpixelSLICG_getInnerPtr_const, cv_PtrLcv_ximgproc_SuperpixelSLICG_getInnerPtrMut
 	}
@@ -29218,9 +27382,6 @@ mod ximgproc_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Vector<crate::ximgproc::Box>` instead, removal in Nov 2024"]
-	pub type VectorOfBox = core::Vector<crate::ximgproc::Box>;
-
 	impl core::Vector<crate::ximgproc::Box> {
 		pub fn as_raw_VectorOfBox(&self) -> extern_send!(Self) { self.as_raw() }
 		pub fn as_raw_mut_VectorOfBox(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
@@ -29243,15 +27404,10 @@ mod ximgproc_types {
 
 
 }
-#[cfg(ocvrs_has_module_ximgproc)]
 pub use ximgproc_types::*;
 
-#[cfg(ocvrs_has_module_xobjdetect)]
 mod xobjdetect_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xobjdetect::WBDetector>` instead, removal in Nov 2024"]
-	pub type PtrOfWBDetector = core::Ptr<crate::xobjdetect::WBDetector>;
 
 	ptr_extern! { crate::xobjdetect::WBDetector,
 		cv_PtrLcv_xobjdetect_WBDetectorG_new_null_const, cv_PtrLcv_xobjdetect_WBDetectorG_delete, cv_PtrLcv_xobjdetect_WBDetectorG_getInnerPtr_const, cv_PtrLcv_xobjdetect_WBDetectorG_getInnerPtrMut
@@ -29279,15 +27435,10 @@ mod xobjdetect_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_xobjdetect)]
 pub use xobjdetect_types::*;
 
-#[cfg(ocvrs_has_module_xphoto)]
 mod xphoto_types {
 	use crate::{mod_prelude::*, core, types, sys};
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xphoto::GrayworldWB>` instead, removal in Nov 2024"]
-	pub type PtrOfGrayworldWB = core::Ptr<crate::xphoto::GrayworldWB>;
 
 	ptr_extern! { crate::xphoto::GrayworldWB,
 		cv_PtrLcv_xphoto_GrayworldWBG_new_null_const, cv_PtrLcv_xphoto_GrayworldWBG_delete, cv_PtrLcv_xphoto_GrayworldWBG_getInnerPtr_const, cv_PtrLcv_xphoto_GrayworldWBG_getInnerPtrMut
@@ -29334,9 +27485,6 @@ mod xphoto_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xphoto::LearningBasedWB>` instead, removal in Nov 2024"]
-	pub type PtrOfLearningBasedWB = core::Ptr<crate::xphoto::LearningBasedWB>;
-
 	ptr_extern! { crate::xphoto::LearningBasedWB,
 		cv_PtrLcv_xphoto_LearningBasedWBG_new_null_const, cv_PtrLcv_xphoto_LearningBasedWBG_delete, cv_PtrLcv_xphoto_LearningBasedWBG_getInnerPtr_const, cv_PtrLcv_xphoto_LearningBasedWBG_getInnerPtrMut
 	}
@@ -29381,9 +27529,6 @@ mod xphoto_types {
 				.finish()
 		}
 	}
-
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xphoto::SimpleWB>` instead, removal in Nov 2024"]
-	pub type PtrOfSimpleWB = core::Ptr<crate::xphoto::SimpleWB>;
 
 	ptr_extern! { crate::xphoto::SimpleWB,
 		cv_PtrLcv_xphoto_SimpleWBG_new_null_const, cv_PtrLcv_xphoto_SimpleWBG_delete, cv_PtrLcv_xphoto_SimpleWBG_getInnerPtr_const, cv_PtrLcv_xphoto_SimpleWBG_getInnerPtrMut
@@ -29430,9 +27575,6 @@ mod xphoto_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xphoto::TonemapDurand>` instead, removal in Nov 2024"]
-	pub type PtrOfTonemapDurand = core::Ptr<crate::xphoto::TonemapDurand>;
-
 	ptr_extern! { crate::xphoto::TonemapDurand,
 		cv_PtrLcv_xphoto_TonemapDurandG_new_null_const, cv_PtrLcv_xphoto_TonemapDurandG_delete, cv_PtrLcv_xphoto_TonemapDurandG_getInnerPtr_const, cv_PtrLcv_xphoto_TonemapDurandG_getInnerPtrMut
 	}
@@ -29478,9 +27620,6 @@ mod xphoto_types {
 		}
 	}
 
-	#[deprecated = "Use the the non-alias form `core::Ptr<crate::xphoto::WhiteBalancer>` instead, removal in Nov 2024"]
-	pub type PtrOfWhiteBalancer = core::Ptr<crate::xphoto::WhiteBalancer>;
-
 	ptr_extern! { crate::xphoto::WhiteBalancer,
 		cv_PtrLcv_xphoto_WhiteBalancerG_new_null_const, cv_PtrLcv_xphoto_WhiteBalancerG_delete, cv_PtrLcv_xphoto_WhiteBalancerG_getInnerPtr_const, cv_PtrLcv_xphoto_WhiteBalancerG_getInnerPtrMut
 	}
@@ -29517,7 +27656,6 @@ mod xphoto_types {
 	}
 
 }
-#[cfg(ocvrs_has_module_xphoto)]
 pub use xphoto_types::*;
 
 pub use crate::manual::types::*;
