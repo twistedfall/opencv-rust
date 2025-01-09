@@ -1,3 +1,7 @@
+* 0.93.6
+  * Adjust the CI, examples and docs to OpenCV 4.11.0.
+  * Add the `signal` module support.
+
 * 0.93.5
   * Fix the `jobserver` minimum version (fixes https://github.com/twistedfall/opencv-rust/issues/639)
 
