@@ -28,7 +28,7 @@ export VCPKG_DEFAULT_TRIPLET=arm64-osx
 	set +e
 	which cmake
 	cmake --version
-	if ! ./vcpkg install --clean-after-build --recurse "opencv[contrib,nonfree,ade]"; then
+	if ! ./vcpkg install --clean-after-build --recurse "opencv[contrib,nonfree,ade,opencl]"; then
 		for log in "$VCPKG_ROOT/buildtrees"/**/*out.log; do
 			echo "=== $log"
 			cat "$log"

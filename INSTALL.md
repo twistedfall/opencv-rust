@@ -56,7 +56,7 @@ Installing OpenCV is easy through the following sources:
 * from [vcpkg](https://docs.microsoft.com/en-us/cpp/build/vcpkg), also install `llvm` package,
   necessary for building:
   ```shell script
-  vcpkg install llvm opencv4[contrib,nonfree]
+  vcpkg install llvm opencv4[contrib,nonfree,opencl]
   ```
   You most probably want to set environment variable `VCPKGRS_DYNAMIC` to "1" unless you're specifically
   targeting a static build.

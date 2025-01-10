@@ -387,9 +387,20 @@ impl Library {
 		}
 		let opencv = opencv.ok_or_else(|| errors.join(", "))?;
 
-		let version = Self::version_from_include_paths(&opencv.include_paths);
+		let mut opencv_include_paths = opencv.include_paths;
+		// workaround for the wrong detected include path for vcpkg 2024.11.16+: https://github.com/twistedfall/opencv-rust/issues/640
+		for include_path in &mut opencv_include_paths {
+			if include_path.ends_with("include") {
+				let fixed_include_path = include_path.join("opencv4");
+				if fixed_include_path.exists() {
+					*include_path = fixed_include_path;
+				}
+			}
+		}
 
-		let include_paths = Self::process_env_var_list(include_paths, opencv.include_paths);
+		let version = Self::version_from_include_paths(&opencv_include_paths);
+
+		let include_paths = Self::process_env_var_list(include_paths, opencv_include_paths);
 
 		let mut cargo_metadata = opencv.cargo_metadata;
 
