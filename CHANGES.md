@@ -1,3 +1,7 @@
+* 0.93.7
+  * Fix building on windows with the latest vcpkg git version (fixes https://github.com/twistedfall/opencv-rust/issues/640
+    and https://github.com/twistedfall/opencv-rust/issues/641).
+
 * 0.93.6
   * Adjust the CI, examples and docs to OpenCV 4.11.0.
   * Add the `signal` module support.
