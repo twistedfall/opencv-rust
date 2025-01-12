@@ -2,6 +2,7 @@ use std::borrow::Cow;
 use std::env;
 use std::fs::File;
 use std::io::BufReader;
+use std::mem::ManuallyDrop;
 use std::ops::ControlFlow;
 use std::path::{Path, PathBuf};
 
@@ -355,7 +356,24 @@ pub struct Generator {
 	opencv_include_dir: PathBuf,
 	opencv_module_header_dir: PathBuf,
 	src_cpp_dir: PathBuf,
-	clang: Clang,
+	clang: ManuallyDrop<Clang>,
+}
+
+impl Drop for Generator {
+	fn drop(&mut self) {
+		#[cfg(any(not(windows), feature = "clang-runtime"))]
+		{
+			// `clang` has an issue on Windows when running with `runtime` feature and clang-19:
+			// https://github.com/KyleMayes/clang-rs/issues/63
+			// So we avoid dropping clang in that case as a workaround.
+			// `clang::get_version()` is string like "Apple clang version 15.0.0 (clang-1500.1.0.2.5)"
+			if !clang::get_version().contains(" 19.") {
+				unsafe {
+					ManuallyDrop::drop(&mut self.clang);
+				}
+			}
+		}
+	}
 }
 
 impl Generator {
@@ -383,7 +401,7 @@ impl Generator {
 			opencv_include_dir: canonicalize(opencv_include_dir).expect("Can't canonicalize opencv_include_dir"),
 			opencv_module_header_dir: canonicalize(opencv_module_header_dir).expect("Can't canonicalize opencv_module_header_dir"),
 			src_cpp_dir: canonicalize(src_cpp_dir).expect("Can't canonicalize src_cpp_dir"),
-			clang: Clang::new().expect("Can't initialize clang"),
+			clang: ManuallyDrop::new(Clang::new().expect("Can't initialize clang")),
 		}
 	}
 
