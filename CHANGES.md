@@ -1,3 +1,6 @@
+* 0.94.1
+  * Add workaround for building on Windows with clang-19 and `clang-runtime` feature enabled (fixes https://github.com/twistedfall/opencv-rust/issues/628).
+
 * 0.94.0
   * Add support for the upcoming OpenCV 5.0.0 (based on the current alpha) and completely drop support for OpenCV 3.2.
   * Bump the minimum Rust version to 1.77.0.
