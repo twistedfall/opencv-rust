@@ -144,6 +144,6 @@ pub mod hub_prelude {
 
 mod ffi_exports {
 	use crate::mod_prelude_sys::*;
-	#[no_mangle] unsafe extern "C" fn ocvrs_create_string_0_94_0(s: *const c_char) -> *mut String { crate::templ::ocvrs_create_string(s) }
-	#[no_mangle] unsafe extern "C" fn ocvrs_create_byte_string_0_94_0(v: *const u8, len: size_t) -> *mut Vec<u8> { crate::templ::ocvrs_create_byte_string(v, len) }
+	#[no_mangle] unsafe extern "C" fn ocvrs_create_string_0_94_1(s: *const c_char) -> *mut String { crate::templ::ocvrs_create_string(s) }
+	#[no_mangle] unsafe extern "C" fn ocvrs_create_byte_string_0_94_1(v: *const u8, len: size_t) -> *mut Vec<u8> { crate::templ::ocvrs_create_byte_string(v, len) }
 }
