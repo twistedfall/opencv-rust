@@ -92,7 +92,7 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 			("inner_rust_full", element_type.rust_name(NameStyle::ref_())),
 		]);
 
-		let mut impls = String::new();
+		let mut impls = String::with_capacity(1024);
 		// Generate only the basic type alias and as_raw* methods for char, the rest will be handled by the generated Vector<u8> and
 		// Vector<i8> to handle the dualistic nature of C++ char on different platforms, see also `TypeRef::generated_types()`
 		// in binding-generator/src/type_ref.rs
@@ -137,7 +137,7 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 			if settings::PREVENT_VECTOR_TYPEDEF_GENERATION.contains(element_type.cpp_name(CppNameStyle::Reference).as_ref()) {
 				inter_vars.extend([("extern", "".into()), ("additional_methods", "".into())]);
 			} else {
-				impls += &EXTERN_TPL.interpolate(&inter_vars);
+				EXTERN_TPL.interpolate_into(&mut impls, &inter_vars);
 
 				if element_kind.is_copy(element_type.type_hint()) && !element_is_bool {
 					let extern_clone = method_clone(vector_class.clone(), vec_type_ref.clone()).identifier();
@@ -150,7 +150,7 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 						("extern_data_mut", extern_data_mut.into()),
 						("extern_from_slice", extern_from_slice.into()),
 					]);
-					impls += &COPY_NON_BOOL_TPL.interpolate(&inter_vars);
+					COPY_NON_BOOL_TPL.interpolate_into(&mut impls, &inter_vars);
 				} else {
 					inter_vars.insert(
 						"clone",
@@ -161,14 +161,14 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 						}
 						.into(),
 					);
-					impls += &NON_COPY_OR_BOOL_TPL.interpolate(&inter_vars);
+					NON_COPY_OR_BOOL_TPL.interpolate_into(&mut impls, &inter_vars);
 				}
 				let is_data_type_or_vec_of_data_type_opencv_4 = is_data_type_or_vec_of_data_type(&element_type, false);
 				let is_data_type_or_vec_of_data_type_opencv_5 = is_data_type_or_vec_of_data_type(&element_type, true);
 				if element_is_bool || is_data_type_or_vec_of_data_type_opencv_4 {
 					let input_array = method_input_array(vector_class.clone(), None).gen_rust(opencv_version);
 					inter_vars.insert("input_array_impl", input_array.into());
-					impls += &INPUT_ARRAY_TPL.interpolate(&inter_vars);
+					INPUT_ARRAY_TPL.interpolate_into(&mut impls, &inter_vars);
 					if !element_is_bool {
 						let output_array = method_output_array(vector_class.clone(), None).gen_rust(opencv_version);
 						let input_output_array = method_input_output_array(vector_class.clone(), None).gen_rust(opencv_version);
@@ -176,37 +176,37 @@ impl RustNativeGeneratedElement for Vector<'_, '_> {
 							("output_array_impl", output_array.into()),
 							("input_output_array_impl", input_output_array.into()),
 						]);
-						impls += &OUTPUT_ARRAY_TPL.interpolate(&inter_vars);
+						OUTPUT_ARRAY_TPL.interpolate_into(&mut impls, &inter_vars);
 					}
 				}
 				// string is a custom type in 3.4 so exclude it explicitly
 				if element_kind
 					.as_class()
-					.is_some_and( |cls| cls.kind().is_boxed() && cls.string_type().is_none())
+					.is_some_and(|cls| cls.kind().is_boxed() && cls.string_type().is_none())
 				{
-					impls += &BOXED_REF_TPL.interpolate(&inter_vars);
+					BOXED_REF_TPL.interpolate_into(&mut impls, &inter_vars);
 					inter_vars.insert(
 						"inner_rust_full",
 						format!("BoxedRef<'t, {}>", inter_vars["inner_rust_full"]).into(),
 					);
-					impls += &EXTERN_TPL.interpolate(&inter_vars);
+					EXTERN_TPL.interpolate_into(&mut impls, &inter_vars);
 					if is_data_type_or_vec_of_data_type_opencv_4 || is_data_type_or_vec_of_data_type_opencv_5 {
 						inter_vars.insert("rust_full", format!("BoxedRef<'_, {}>", rust_localalias).into());
-						impls += &INPUT_ARRAY_TPL.interpolate(&inter_vars);
+						INPUT_ARRAY_TPL.interpolate_into(&mut impls, &inter_vars);
 					}
 				}
 				if !element_is_bool && is_data_type_or_vec_of_data_type_opencv_5 {
 					let input_array = method_input_array(vector_class.clone(), None).gen_rust(opencv_version);
 					inter_vars.insert("cfg_attr", format!("#[cfg({})]", CFG_ATTR_ONLY_OPENCV_5.0).into());
 					inter_vars.insert("input_array_impl", input_array.into());
-					impls += &INPUT_ARRAY_TPL.interpolate(&inter_vars);
+					INPUT_ARRAY_TPL.interpolate_into(&mut impls, &inter_vars);
 					let output_array = method_output_array(vector_class.clone(), None).gen_rust(opencv_version);
 					let input_output_array = method_input_output_array(vector_class, None).gen_rust(opencv_version);
 					inter_vars.extend([
 						("output_array_impl", output_array.into()),
 						("input_output_array_impl", input_output_array.into()),
 					]);
-					impls += &OUTPUT_ARRAY_TPL.interpolate(&inter_vars);
+					OUTPUT_ARRAY_TPL.interpolate_into(&mut impls, &inter_vars);
 				}
 			}
 		}

@@ -31,21 +31,24 @@ impl RustNativeGeneratedElement for Enum<'_> {
 	fn gen_rust(&self, opencv_version: &str) -> String {
 		static ENUM_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/enum/enum.tpl.rs").compile_interpolation());
 
-		static CONST_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/enum/const.tpl.rs").compile_interpolation());
+		static CONST_TPL_SRC: &str = include_str!("tpl/enum/const.tpl.rs");
+		static CONST_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| CONST_TPL_SRC.compile_interpolation());
 
-		static CONST_IGNORED_TPL: Lazy<CompiledInterpolation> =
-			Lazy::new(|| include_str!("tpl/enum/const_ignored.tpl.rs").compile_interpolation());
+		static CONST_IGNORED_TPL_SRC: &str = include_str!("tpl/enum/const_ignored.tpl.rs");
+		static CONST_IGNORED_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| CONST_IGNORED_TPL_SRC.compile_interpolation());
 
-		static FROM_CONST_TPL: Lazy<CompiledInterpolation> =
-			Lazy::new(|| include_str!("tpl/enum/from_const.tpl.rs").compile_interpolation());
+		static FROM_CONST_TPL_SRC: &str = include_str!("tpl/enum/from_const.tpl.rs");
+		static FROM_CONST_TPL: Lazy<CompiledInterpolation> = Lazy::new(|| FROM_CONST_TPL_SRC.compile_interpolation());
 
+		static FROM_CONST_IGNORED_TPL_SRC: &str = include_str!("tpl/enum/from_const_ignored.tpl.rs");
 		static FROM_CONST_IGNORED_TPL: Lazy<CompiledInterpolation> =
-			Lazy::new(|| include_str!("tpl/enum/from_const_ignored.tpl.rs").compile_interpolation());
+			Lazy::new(|| FROM_CONST_IGNORED_TPL_SRC.compile_interpolation());
 
 		let consts = self.consts();
 
-		let mut enum_consts = Vec::with_capacity(consts.len());
-		let mut from_consts = Vec::with_capacity(consts.len());
+		let mut enum_consts = String::with_capacity(consts.len() * (CONST_IGNORED_TPL_SRC.len().max(CONST_TPL_SRC.len())) + 32);
+		let mut from_consts =
+			String::with_capacity(consts.len() * (FROM_CONST_IGNORED_TPL_SRC.len().max(FROM_CONST_TPL_SRC.len())) + 32);
 
 		let mut generated_values = HashMap::<String, Cow<str>>::with_capacity(consts.len());
 		for c in &consts {
@@ -70,19 +73,19 @@ impl RustNativeGeneratedElement for Enum<'_> {
 				("doc_comment", &doc_comment),
 				("duplicate_name", duplicate_name.unwrap_or("")),
 			]);
-			enum_consts.push(enum_const_tpl.interpolate(&inter_vars));
-			from_consts.push(from_const_tpl.interpolate(&inter_vars));
+			enum_const_tpl.interpolate_into(&mut enum_consts, &inter_vars);
+			from_const_tpl.interpolate_into(&mut from_consts, &inter_vars);
 
 			generated_values.insert(value, name);
 		}
 
 		ENUM_TPL.interpolate(&HashMap::from([
 			("rust_local", self.rust_name(NameStyle::decl()).as_ref()),
-			("rust_full", self.rust_name(NameStyle::ref_()).as_ref()),
+			("rust_full", &self.rust_name(NameStyle::ref_())),
 			("doc_comment", &self.rendered_doc_comment("///", opencv_version)),
 			("debug", &self.get_debug()),
-			("enum_consts", &enum_consts.join("")),
-			("from_consts", &from_consts.join("")),
+			("enum_consts", &enum_consts),
+			("from_consts", &from_consts),
 		]))
 	}
 }

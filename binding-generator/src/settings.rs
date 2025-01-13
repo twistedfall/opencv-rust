@@ -46,6 +46,7 @@ pub use argument_override::{
 	arg_override_factory, property_override_factory, return_override_factory, ArgOverride, PropertyOverride, ReturnOverride,
 	ARG_OVERRIDE_SELF,
 };
+pub use const_tweak::CONST_TYPE_OVERRIDE;
 pub use element_exclude_kind::ELEMENT_EXCLUDE_KIND;
 pub use element_export_tweak::ELEMENT_EXPORT_TWEAK;
 pub use force_infallible::{force_infallible_factory, ForceInfallible};
@@ -70,6 +71,7 @@ use crate::type_ref::TypeRef;
 
 mod argument_names;
 mod argument_override;
+mod const_tweak;
 mod element_exclude_kind;
 mod element_export_tweak;
 mod force_infallible;
@@ -167,9 +169,6 @@ impl Settings {
 		])
 	}
 }
-
-// fixme, generalize, make it use constant::ValueKind
-pub static CONST_TYPE_USIZE: Lazy<HashSet<&str>> = Lazy::new(|| HashSet::from(["Mat_AUTO_STEP"]));
 
 /// map of reserved Rust keywords and their replacement to be used in var, function and class names
 /// key: reserved keyword

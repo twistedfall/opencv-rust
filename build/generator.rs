@@ -84,7 +84,7 @@ impl<'r> BindingGenerator<'r> {
 
 		let gen = Generator::new(opencv_header_dir, &additional_include_dirs, &SRC_CPP_DIR);
 		if !gen.is_clang_loaded() {
-			eprintln!("=== ERROR: Unable to load libclang library, check item #8 in https://github.com/twistedfall/opencv-rust/blob/master/README.md#troubleshooting");
+			eprintln!("=== ERROR: Unable to load libclang library, check item #8 in https://github.com/twistedfall/opencv-rust/blob/master/TROUBLESHOOTING.md");
 			eprintln!(
 				"=== Try enabling `clang-runtime` feature of the `opencv` crate, or alternatively disabling it if it's enabled"
 			);

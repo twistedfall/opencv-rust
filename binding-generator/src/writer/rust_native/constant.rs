@@ -49,16 +49,13 @@ impl RustNativeGeneratedElement for Const<'_> {
 		};
 
 		if let Some(value) = self.value() {
-			let typ = if settings::CONST_TYPE_USIZE.contains(name.as_ref()) {
-				"usize"
-			} else {
-				match value.kind {
-					ValueKind::Integer => "i32",
-					ValueKind::UnsignedInteger => "u32",
-					ValueKind::Float => "f32",
-					ValueKind::Double => "f64",
-					ValueKind::String => "&str",
-				}
+			let typ = match settings::CONST_TYPE_OVERRIDE.get(name.as_ref()).unwrap_or(&value.kind) {
+				ValueKind::Integer => "i32",
+				ValueKind::UnsignedInteger => "u32",
+				ValueKind::Usize => "usize",
+				ValueKind::Float => "f32",
+				ValueKind::Double => "f64",
+				ValueKind::String => "&str",
 			};
 			RUST_TPL.interpolate(&HashMap::from([
 				("doc_comment", Cow::Owned(self.rendered_doc_comment("///", opencv_version))),
@@ -68,7 +65,7 @@ impl RustNativeGeneratedElement for Const<'_> {
 				("value", value.to_string().into()),
 			]))
 		} else {
-			String::new()
+			"".to_string()
 		}
 	}
 }

@@ -34,7 +34,6 @@ pub use generator_env::{ClassKindOverride, ExportConfig, GeneratorEnv};
 pub use iterator_ext::IteratorExt;
 pub use map_borrowed::CowMapBorrowedExt;
 use memoize::{MemoizeMap, MemoizeMapExt};
-use name_pool::NamePool;
 use smart_ptr::SmartPtr;
 pub use string_ext::{CompiledInterpolation, StrExt, StringExt};
 use tuple::Tuple;

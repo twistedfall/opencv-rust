@@ -25,13 +25,6 @@ impl Lifetime {
 		Self::Custom("static")
 	}
 
-	pub fn is_elided(&self) -> bool {
-		match self {
-			Lifetime::Elided => true,
-			Lifetime::Custom(_) | Lifetime::Automatic(_) => false,
-		}
-	}
-
 	pub fn is_explicit(&self) -> bool {
 		match self {
 			Lifetime::Elided => false,

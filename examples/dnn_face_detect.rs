@@ -7,7 +7,14 @@ use objdetect::FaceDetectorYN;
 use opencv::core::{CommandLineParser, Point, Point2f, Rect2f, Size, StsBadArg, StsError, TickMeter};
 use opencv::objdetect::{FaceRecognizerSF, FaceRecognizerSF_DisType};
 use opencv::prelude::*;
-use opencv::{core, highgui, imgcodecs, imgproc, objdetect, videoio, Error, Result};
+use opencv::{core, highgui, imgcodecs, imgproc, not_opencv_branch_34, objdetect, opencv_branch_34, videoio, Error, Result};
+
+not_opencv_branch_34! {
+	use opencv::imgproc::{LINE_8, FONT_HERSHEY_SIMPLEX};
+}
+opencv_branch_34! {
+	use opencv::core::{LINE_8, FONT_HERSHEY_SIMPLEX};
+}
 
 fn visualize(input: &mut Mat, frame: i32, faces: &Mat, fps: f64, thickness: i32) -> Result<()> {
 	let fps_string = format!("FPS : {:.2}", fps);
@@ -35,7 +42,7 @@ fn visualize(input: &mut Mat, frame: i32, faces: &Mat, fps: f64, thickness: i32)
 		)
 		.to::<i32>()
 		.ok_or_else(|| Error::new(StsBadArg, "Invalid rect"))?;
-		imgproc::rectangle(input, rect, (0., 255., 0.).into(), thickness, imgproc::LINE_8, 0)?;
+		imgproc::rectangle(input, rect, (0., 255., 0.).into(), thickness, LINE_8, 0)?;
 		// Draw landmarks
 		imgproc::circle(
 			input,
@@ -45,7 +52,7 @@ fn visualize(input: &mut Mat, frame: i32, faces: &Mat, fps: f64, thickness: i32)
 			2,
 			(255., 0., 0.).into(),
 			thickness,
-			imgproc::LINE_8,
+			LINE_8,
 			0,
 		)?;
 		imgproc::circle(
@@ -56,7 +63,7 @@ fn visualize(input: &mut Mat, frame: i32, faces: &Mat, fps: f64, thickness: i32)
 			2,
 			(0., 0., 255.).into(),
 			thickness,
-			imgproc::LINE_8,
+			LINE_8,
 			0,
 		)?;
 		imgproc::circle(
@@ -67,7 +74,7 @@ fn visualize(input: &mut Mat, frame: i32, faces: &Mat, fps: f64, thickness: i32)
 			2,
 			(0., 255., 0.).into(),
 			thickness,
-			imgproc::LINE_8,
+			LINE_8,
 			0,
 		)?;
 		imgproc::circle(
@@ -78,7 +85,7 @@ fn visualize(input: &mut Mat, frame: i32, faces: &Mat, fps: f64, thickness: i32)
 			2,
 			(255., 0., 255.).into(),
 			thickness,
-			imgproc::LINE_8,
+			LINE_8,
 			0,
 		)?;
 		imgproc::circle(
@@ -89,7 +96,7 @@ fn visualize(input: &mut Mat, frame: i32, faces: &Mat, fps: f64, thickness: i32)
 			2,
 			(0., 255., 255.).into(),
 			thickness,
-			imgproc::LINE_8,
+			LINE_8,
 			0,
 		)?;
 	}
@@ -97,11 +104,11 @@ fn visualize(input: &mut Mat, frame: i32, faces: &Mat, fps: f64, thickness: i32)
 		input,
 		&fps_string,
 		Point::new(0, 15),
-		imgproc::FONT_HERSHEY_SIMPLEX,
+		FONT_HERSHEY_SIMPLEX,
 		0.5,
 		(0., 255., 0.).into(),
 		thickness,
-		imgproc::LINE_8,
+		LINE_8,
 		false,
 	)?;
 	Ok(())

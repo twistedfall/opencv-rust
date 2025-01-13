@@ -184,7 +184,7 @@ fn get_module_header_dir(header_dir: &Path) -> Option<PathBuf> {
 fn get_version_header(header_dir: &Path) -> Option<PathBuf> {
 	get_module_header_dir(header_dir)
 		.map(|dir| dir.join("core/version.hpp"))
-		.filter(|dir| dir.is_file())
+		.filter(|hdr| hdr.is_file())
 }
 
 fn get_version_from_headers(header_dir: &Path) -> Option<Version> {
@@ -286,12 +286,13 @@ fn make_compiler(opencv: &Library, ffi_export_suffix: &str) -> cc::Build {
 		.flag_if_supported("-Wno-unused-parameter") // unused parameter ‘src’ in virtual void cv::dnn::dnn4_v20211004::ActivationLayer::forwardSlice(const float*, float*, int, size_t, int, int) const
 		.flag_if_supported("-Wno-sign-compare") // comparison of integer expressions of different signedness: ‘size_t’ {aka ‘long unsigned int’} and ‘int’ in bool cv::dnn::dnn4_v20211004::isAllOnes(const MatShape&, int, int)
 		.flag_if_supported("-Wno-comment") // multi-line comment in include/opencv4/opencv2/mcc/ccm.hpp:73:25
-		.flag_if_supported("-Wunused-but-set-variable") // /usr/local/Cellar/opencv@3/3.4.16_10.reinstall/include/opencv2/flann/index_testing.h:249:11: warning: variable 'p1' set but not used
+		.flag_if_supported("-Wno-uninitialized") // /usr/include/opencv4/opencv2/gapi/render/render_types.hpp:164:30: warning: 'ret.cv::gapi::wip::draw::Circle::radius' is used uninitialized
 		// crate warnings
 		.flag_if_supported("-Wno-unused-variable") // ‘cv::CV_VERSION_OCVRS_OVERRIDE’ defined but not used
 		.flag_if_supported("-Wno-ignored-qualifiers") // type qualifiers ignored on function return type in const size_t cv_MatStep_operator___const_int(const cv::MatStep* instance, int i)
 		.flag_if_supported("-Wno-return-type-c-linkage") // warning: 'cv_aruco_CharucoBoard_getChessboardSize_const' has C-linkage specified, but returns user-defined type 'Result<cv::Size>' (aka 'Result<Size_<int> >') which is incompatible with C
-		.flag_if_supported("-Wno-overloaded-virtual");
+		.flag_if_supported("-Wno-overloaded-virtual")
+		.flag_if_supported("-Wno-delete-non-virtual-dtor"); // warning: deleting object of abstract class type 'cv::cudacodec::NVSurfaceToColorConverter' which has non-virtual destructor will cause undefined behavior
 
 	opencv.include_paths.iter().for_each(|p| {
 		out.include(p);

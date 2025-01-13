@@ -1,9 +1,9 @@
 use std::collections::HashMap;
 use std::fmt::Debug;
 use std::fs::{File, OpenOptions};
-use std::io::{ErrorKind, Write};
+use std::io::{BufWriter, ErrorKind, Write};
 use std::path::{Path, PathBuf};
-use std::{fs, iter};
+use std::{fs, io, iter};
 
 use class::ClassExt;
 use comment::RenderComment;
@@ -50,10 +50,7 @@ pub struct RustNativeBindingWriter<'s> {
 	module: &'s str,
 	opencv_version: &'s str,
 	debug_path: PathBuf,
-	rust_path: PathBuf,
-	types_dir: PathBuf,
-	exports_path: PathBuf,
-	cpp_path: PathBuf,
+	out_dir: PathBuf,
 	comment: String,
 	prelude_traits: Vec<String>,
 	consts: Entries,
@@ -61,8 +58,8 @@ pub struct RustNativeBindingWriter<'s> {
 	rust_funcs: Entries,
 	rust_typedefs: UniqueEntries,
 	rust_classes: Entries,
-	export_funcs: Entries,
-	export_classes: Entries,
+	extern_funcs: Entries,
+	extern_classes: Entries,
 	cpp_funcs: Entries,
 	cpp_classes: Entries,
 }
@@ -83,10 +80,7 @@ impl<'s> RustNativeBindingWriter<'s> {
 			module,
 			opencv_version,
 			debug_path,
-			rust_path: out_dir.join(format!("{module}.rs")),
-			exports_path: out_dir.join(format!("{module}.externs.rs")),
-			cpp_path: out_dir.join(format!("{module}.cpp")),
-			types_dir: out_dir,
+			out_dir,
 			comment: String::new(),
 			prelude_traits: vec![],
 			consts: vec![],
@@ -94,8 +88,8 @@ impl<'s> RustNativeBindingWriter<'s> {
 			rust_funcs: vec![],
 			rust_typedefs: UniqueEntries::new(),
 			rust_classes: vec![],
-			export_funcs: vec![],
-			export_classes: vec![],
+			extern_funcs: vec![],
+			extern_classes: vec![],
 			cpp_funcs: vec![],
 			cpp_classes: vec![],
 		}
@@ -146,7 +140,7 @@ impl GeneratorVisitor<'_> for RustNativeBindingWriter<'_> {
 		for func in iter::once(func).chain(companion_funcs) {
 			let name = func.identifier();
 			self.rust_funcs.push((name.clone(), func.gen_rust(self.opencv_version)));
-			self.export_funcs.push((name.clone(), func.gen_rust_externs()));
+			self.extern_funcs.push((name.clone(), func.gen_rust_externs()));
 			self.cpp_funcs.push((name, func.gen_cpp()));
 		}
 	}
@@ -174,18 +168,17 @@ impl GeneratorVisitor<'_> for RustNativeBindingWriter<'_> {
 		}
 		let name = class.cpp_name(CppNameStyle::Reference).into_owned();
 		self.rust_classes.push((name.clone(), class.gen_rust(self.opencv_version)));
-		self.export_classes.push((name.clone(), class.gen_rust_externs()));
+		self.extern_classes.push((name.clone(), class.gen_rust_externs()));
 		self.cpp_classes.push((name, class.gen_cpp()));
 	}
 
 	fn visit_generated_type(&mut self, typ: GeneratedType) {
 		let typ = typ.as_ref();
-		let prio = typ.element_order();
 		let safe_id = typ.element_safe_id();
 
-		fn write_generated_type(types_dir: &Path, typ: &str, prio: u8, safe_id: &str, generator: impl FnOnce() -> String) {
+		fn write_generated_type(types_dir: &Path, typ: &str, safe_id: &str, generator: impl FnOnce() -> String) {
 			let suffix = format!(".type.{typ}");
-			let mut file_name = format!("{prio:03}-{safe_id}");
+			let mut file_name = format!("050-{safe_id}");
 			ensure_filename_length(&mut file_name, suffix.len());
 			file_name.push_str(&suffix);
 			let path = types_dir.join(file_name);
@@ -208,25 +201,21 @@ impl GeneratorVisitor<'_> for RustNativeBindingWriter<'_> {
 			}
 		}
 
-		write_generated_type(&self.types_dir, "rs", prio, &safe_id, || typ.gen_rust(self.opencv_version));
-		write_generated_type(&self.types_dir, "externs.rs", prio, &safe_id, || typ.gen_rust_externs());
-		write_generated_type(&self.types_dir, "cpp", prio, &safe_id, || typ.gen_cpp());
+		write_generated_type(&self.out_dir, "rs", &safe_id, || typ.gen_rust(self.opencv_version));
+		write_generated_type(&self.out_dir, "externs.rs", &safe_id, || typ.gen_rust_externs());
+		write_generated_type(&self.out_dir, "cpp", &safe_id, || typ.gen_cpp());
 	}
 
 	fn goodbye(mut self) {
-		static RUST: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/module/rust.tpl.rs").compile_interpolation());
+		static RUST_HDR: Lazy<CompiledInterpolation> =
+			Lazy::new(|| include_str!("tpl/module/rust_hdr.tpl").compile_interpolation());
 
 		static RUST_PRELUDE: Lazy<CompiledInterpolation> =
 			Lazy::new(|| include_str!("tpl/module/prelude.tpl.rs").compile_interpolation());
 
-		static CPP: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/module/cpp.tpl.cpp").compile_interpolation());
+		static CPP_HDR: Lazy<CompiledInterpolation> =
+			Lazy::new(|| include_str!("tpl/module/cpp_hdr.tpl.cpp").compile_interpolation());
 
-		let mut rust = String::new();
-		insert_lines(&mut rust, self.consts);
-		insert_lines(&mut rust, self.enums);
-		insert_lines(&mut rust, self.rust_typedefs.into_iter().collect());
-		insert_lines(&mut rust, self.rust_funcs);
-		insert_lines(&mut rust, self.rust_classes);
 		let pub_use_traits = if self.prelude_traits.is_empty() {
 			"".to_string()
 		} else {
@@ -236,59 +225,61 @@ impl GeneratorVisitor<'_> for RustNativeBindingWriter<'_> {
 		let prelude = RUST_PRELUDE.interpolate(&HashMap::from([("pub_use_traits", pub_use_traits)]));
 		let comment = RenderComment::new(&self.comment, self.opencv_version);
 		let comment = comment.render_with_comment_marker("//!");
-		File::create(&self.rust_path)
-			.expect("Can't create rust file")
-			.write_all(
-				RUST
-					.interpolate(&HashMap::from([
-						("static_modules", settings::STATIC_MODULES.iter().join(", ").as_str()),
-						("comment", comment.as_ref()),
-						("prelude", &prelude),
-						("code", &rust),
-					]))
+		let rust_path = self.out_dir.join(format!("{}.rs", self.module));
+		{
+			let mut rust = BufWriter::new(File::create(rust_path).expect("Can't create rust file"));
+			rust
+				.write_all(
+					RUST_HDR
+						.interpolate(&HashMap::from([
+							("static_modules", settings::STATIC_MODULES.iter().join(", ").as_str()),
+							("comment", comment.as_ref()),
+							("prelude", &prelude),
+						]))
+						.as_bytes(),
+				)
+				.expect("Can't write rust file");
+			write_lines(&mut rust, self.consts).expect("Can't write consts to rust file");
+			write_lines(&mut rust, self.enums).expect("Can't write enums to rust file");
+			write_lines(&mut rust, self.rust_typedefs.into_iter().collect()).expect("Can't write typedefs to rust file");
+			write_lines(&mut rust, self.rust_funcs).expect("Can't write funcs to rust file");
+			write_lines(&mut rust, self.rust_classes).expect("Can't write classes to rust file");
+		}
+
+		let includes = if self.src_cpp_dir.join(format!("{}.hpp", self.module)).exists() {
+			format!("#include \"{}.hpp\"", self.module)
+		} else {
+			format!("#include \"ocvrs_common.hpp\"\n#include <opencv2/{}.hpp>", self.module)
+		};
+		{
+			let cpp_path = self.out_dir.join(format!("{}.cpp", self.module));
+			let mut cpp = BufWriter::new(File::create(cpp_path).expect("Can't create cpp file"));
+			cpp.write_all(
+				CPP_HDR
+					.interpolate(&HashMap::from([("module", self.module), ("includes", &includes)]))
 					.as_bytes(),
 			)
-			.expect("Can't write rust file");
-
-		let mut cpp = String::new();
-		insert_lines(&mut cpp, self.cpp_funcs);
-		insert_lines(&mut cpp, self.cpp_classes);
-		let includes = if self.src_cpp_dir.join(format!("{}.hpp", self.module)).exists() {
-			format!("#include \"{module}.hpp\"", module = self.module)
-		} else {
-			format!(
-				"#include \"ocvrs_common.hpp\"\n#include <opencv2/{module}.hpp>",
-				module = self.module
-			)
-		};
-		File::create(&self.cpp_path)
-			.expect("Can't create cpp file")
-			.write_all(
-				CPP.interpolate(&HashMap::from([
-					("module", self.module),
-					("includes", includes.as_str()),
-					("code", cpp.as_str()),
-				]))
-				.as_bytes(),
-			)
 			.expect("Can't write cpp file");
+			cpp.write_all(b"extern \"C\" {\n")
+				.expect("Can't write code wrapper begin to cpp file");
+			write_lines(&mut cpp, self.cpp_funcs).expect("Can't write cpp funcs to file");
+			write_lines(&mut cpp, self.cpp_classes).expect("Can't write cpp classes to file");
+			cpp.write_all(b"}\n").expect("Can't write code wrapper end to cpp file");
+		}
 
-		let mut exports = String::new();
-		insert_lines(&mut exports, self.export_funcs);
-		insert_lines(&mut exports, self.export_classes);
-		File::create(&self.exports_path)
-			.expect("Can't create rust exports file")
-			.write_all(exports.as_bytes())
-			.expect("Can't write rust exports file");
+		let externs_path = self.out_dir.join(format!("{}.externs.rs", self.module));
+		let mut externs_rs = BufWriter::new(File::create(externs_path).expect("Can't create rust exports file"));
+		write_lines(&mut externs_rs, self.extern_funcs).expect("Can't write extern funcs to file");
+		write_lines(&mut externs_rs, self.extern_classes).expect("Can't write extern classes to file");
 	}
 }
 
-fn insert_lines<T: AsRef<str>>(out: &mut String, mut v: Vec<(String, T)>) {
+fn write_lines<T: AsRef<[u8]>>(mut out: impl Write, mut v: Vec<(String, T)>) -> io::Result<()> {
 	v.sort_unstable_by(|(name_left, _), (name_right, _)| name_left.cmp(name_right));
-	out.reserve(v.first().map_or(0, |(name, _)| name.len()) * v.len());
 	for (_, code) in v {
-		out.push_str(code.as_ref());
+		out.write_all(code.as_ref())?;
 	}
+	Ok(())
 }
 
 fn ensure_filename_length(file_name: &mut String, reserve: usize) {

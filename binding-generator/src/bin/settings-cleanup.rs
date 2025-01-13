@@ -43,10 +43,8 @@ impl<'tu> EntityWalkerVisitor<'tu> for &mut FunctionFinder<'tu> {
 			| EntityKind::StructDecl => {
 				let c = Class::new(entity, &self.gen_env);
 				if !c.template_kind().is_template() {
-					c.methods().into_iter().for_each(|f| self.update_used_func(&f));
-					let fields = c.fields();
-					c.field_methods(fields.iter(), None)
-						.into_iter()
+					c.methods(|_| true).into_iter().for_each(|f| self.update_used_func(&f));
+					c.field_methods(&c.fields(|_| true), None)
 						.for_each(|f| self.update_used_func(&f));
 					entity.walk_methods_while(|child| {
 						let func = Func::new(child, &self.gen_env);

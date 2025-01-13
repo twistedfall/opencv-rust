@@ -55,7 +55,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		Self::Desc(Rc::new(desc))
 	}
 
-	/// Checks whether a class can be simple on Rust side, i.e. represented by plain struct with public fields
+	/// Checks whether a class can be simple on Rust side, i.e. represented by plain struct with fields
 	pub fn can_be_simple(&self) -> bool {
 		let cpp_refname = self.cpp_name(CppNameStyle::Reference);
 		settings::IMPLEMENTED_GENERICS.contains(cpp_refname.as_ref())
@@ -329,7 +329,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		}
 	}
 
-	pub fn methods(&self) -> Vec<Func<'tu, 'ge>> {
+	pub fn methods(&self, filter: impl Fn(&Func) -> bool) -> Vec<Func<'tu, 'ge>> {
 		match self {
 			Class::Clang { entity, gen_env, .. } => {
 				let mut out = Vec::with_capacity(32);
@@ -343,18 +343,23 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 					if func.is_generic() {
 						if let Some(specs) = gen_env.settings.func_specialize.get(&mut func.matcher()) {
 							for spec in specs {
-								out.push(func.clone().specialize(spec));
+								let spec_func = func.clone().specialize(spec);
+								if filter(&spec_func) {
+									out.push(spec_func);
+								}
 							}
 							return ControlFlow::Continue(());
 						}
 					}
-					out.push(func);
+					if filter(&func) {
+						out.push(func);
+					}
 					ControlFlow::Continue(())
 				});
 				for inject_func_fact in &gen_env.settings.func_inject {
 					let inject_func: Func = inject_func_fact();
 					if let Some(cls) = inject_func.kind().as_class_method() {
-						if cls == self {
+						if cls == self && filter(&inject_func) {
 							out.push(inject_func);
 						}
 					}
@@ -377,10 +382,12 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 		}
 	}
 
-	pub fn fields(&self) -> Vec<Field<'tu, 'ge>> {
+	pub fn fields(&self, filter: impl Fn(&Field) -> bool) -> Vec<Field<'tu, 'ge>> {
 		let mut out = Vec::with_capacity(32);
 		self.for_each_field(|f| {
-			out.push(f);
+			if filter(&f) {
+				out.push(f);
+			}
 			ControlFlow::Continue(())
 		});
 		out
@@ -405,16 +412,13 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 
 	pub fn field_methods<'f>(
 		&self,
-		fields: impl Iterator<Item = &'f Field<'tu, 'ge>>,
+		fields: &'f [Field<'tu, 'ge>],
 		constness_filter: Option<Constness>,
-	) -> Vec<Func<'tu, 'ge>>
-	where
-		'tu: 'f,
-		'ge: 'f,
-	{
+	) -> impl Iterator<Item = Func<'tu, 'ge>> + 'f {
 		match self {
 			&Self::Clang { gen_env, .. } => {
-				let accessor_generator = |fld: &Field<'tu, 'ge>| {
+				let cls = self.clone();
+				let accessor_generator = move |fld: &Field<'tu, 'ge>| {
 					let doc_comment = Rc::from(fld.doc_comment());
 					let def_loc = fld.file_line_name().location;
 					let rust_module = Rc::from(fld.rust_module());
@@ -449,7 +453,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 							let read_const_func = if constness_filter.map_or(true, |c| c.is_const()) {
 								Some(Func::new_desc(
 									FuncDesc::new(
-										FuncKind::FieldAccessor(self.clone(), fld.clone()),
+										FuncKind::FieldAccessor(cls.clone(), fld.clone()),
 										Constness::Const,
 										return_kind,
 										fld_declname,
@@ -468,7 +472,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 							let read_mut_func = if constness_filter.map_or(true, |c| c.is_mut()) {
 								Some(Func::new_desc(
 									FuncDesc::new(
-										FuncKind::FieldAccessor(self.clone(), fld.clone()),
+										FuncKind::FieldAccessor(cls.clone(), fld.clone()),
 										Constness::Mut,
 										return_kind,
 										format!("{fld_declname}Mut"),
@@ -489,7 +493,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 							let single_read_func = if constness_filter.map_or(true, |c| c == fld_const) {
 								Some(Func::new_desc(
 									FuncDesc::new(
-										FuncKind::FieldAccessor(self.clone(), fld.clone()),
+										FuncKind::FieldAccessor(cls.clone(), fld.clone()),
 										fld_const,
 										return_kind,
 										fld_declname,
@@ -518,7 +522,7 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 						let (first_letter, rest) = fld_declname.capitalize_first_ascii_letter().expect("Empty fld_declname");
 						Some(Func::new_desc(
 							FuncDesc::new(
-								FuncKind::FieldAccessor(self.clone(), fld.clone()),
+								FuncKind::FieldAccessor(cls.clone(), fld.clone()),
 								Constness::Mut,
 								ReturnKind::InfallibleNaked,
 								format!("set{first_letter}{rest}"),
@@ -545,9 +549,9 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 							.or_else(|| write_yield.take())
 					})
 				};
-				fields.flat_map(accessor_generator).collect()
+				FieldMethodsIter::Clang(fields.iter().flat_map(accessor_generator))
 			}
-			Self::Desc(_) => vec![],
+			Self::Desc(_) => FieldMethodsIter::Desc,
 		}
 	}
 
@@ -574,15 +578,13 @@ impl<'tu, 'ge> Class<'tu, 'ge> {
 
 	pub fn generated_types(&self) -> Vec<GeneratedType<'tu, 'ge>> {
 		self
-			.fields()
+			.fields(|f| f.exclude_kind().is_included())
 			.into_iter()
-			.filter(|f| f.exclude_kind().is_included())
 			.flat_map(|f| f.type_ref().generated_types())
 			.chain(
 				self
-					.methods()
+					.methods(|m| m.exclude_kind().is_included())
 					.into_iter()
-					.filter(|m| m.exclude_kind().is_included())
 					.flat_map(|m| m.generated_types()),
 			)
 			.collect()
@@ -834,6 +836,22 @@ impl<'tu, 'ge> TemplateKind<'tu, 'ge> {
 		match self {
 			TemplateKind::Specialization(cls) => Some(cls),
 			TemplateKind::No | TemplateKind::Template => None,
+		}
+	}
+}
+
+pub enum FieldMethodsIter<'tu: 'ge, 'ge, I: Iterator<Item = Func<'tu, 'ge>>> {
+	Clang(I),
+	Desc,
+}
+
+impl<'tu, 'ge, I: Iterator<Item = Func<'tu, 'ge>>> Iterator for FieldMethodsIter<'tu, 'ge, I> {
+	type Item = Func<'tu, 'ge>;
+
+	fn next(&mut self) -> Option<Self::Item> {
+		match self {
+			FieldMethodsIter::Clang(iter) => iter.next(),
+			FieldMethodsIter::Desc => None,
 		}
 	}
 }

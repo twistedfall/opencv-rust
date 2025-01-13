@@ -315,7 +315,14 @@ pub struct CompiledInterpolation<'s> {
 }
 
 impl CompiledInterpolation<'_> {
+	#[inline]
 	pub fn interpolate(&self, params: &HashMap<&str, impl AsRef<str>>) -> String {
+		let mut out = String::new();
+		self.interpolate_into(&mut out, params);
+		out
+	}
+
+	pub fn interpolate_into(&self, out: &mut String, params: &HashMap<&str, impl AsRef<str>>) {
 		#[inline(always)]
 		fn remove_trailing_empty_line(out: &mut String) -> bool {
 			let last_line_start = out.rfind('\n').map_or(0, |i| i + 1);
@@ -338,36 +345,35 @@ impl CompiledInterpolation<'_> {
 					.map_or_else(|| INVALID_PARAM_NAME.len(), |x| x.as_ref().len()),
 			}
 		});
-		let mut out = String::with_capacity(result_len);
+		out.reserve(result_len);
 		let mut line_indent = Indent::default();
 		// interpolate vars keeping indent
 		for elem in &self.elems {
 			match elem {
 				Compiled::IntpLineStart(s) => {
 					line_indent = s.detect_indent();
-					out += s;
+					out.push_str(s);
 				}
-				Compiled::IntpLiteral(s) => out += s,
+				Compiled::IntpLiteral(s) => out.push_str(s),
 				Compiled::Var(name) => {
 					out.push_indented_lines(line_indent, params.get(name).map_or(INVALID_PARAM_NAME, |x| x.as_ref()))
 				}
 				Compiled::IntpLineEnd(s) => {
-					out += s;
-					if !remove_trailing_empty_line(&mut out) {
+					out.push_str(s);
+					if !remove_trailing_empty_line(out) {
 						out.push('\n');
 					}
 				}
 				Compiled::LiteralLine(s) => {
 					line_indent = s.detect_indent();
-					out += s;
+					out.push_str(s);
 					out.push('\n');
 				}
 			}
 		}
-		if let Some('\n') = out.chars().next_back() {
-			out.pop();
+		if let Some((n, '\n')) = out.char_indices().next_back() {
+			out.drain(n..);
 		}
-		out
 	}
 }
 
@@ -473,7 +479,7 @@ impl StrExt for str {
 			}
 		}
 
-		let mut elems = vec![];
+		let mut elems = Vec::with_capacity(16);
 		// interpolate vars keeping indent
 		if let Some(common_indent_len) = common_indent_len {
 			for line in tpl.lines() {

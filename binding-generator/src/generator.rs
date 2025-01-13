@@ -361,16 +361,13 @@ pub struct Generator {
 
 impl Drop for Generator {
 	fn drop(&mut self) {
-		#[cfg(any(not(windows), feature = "clang-runtime"))]
-		{
+		if !(cfg!(windows) && cfg!(feature = "clang-runtime") && clang::get_version().contains(" 19.")) {
 			// `clang` has an issue on Windows when running with `runtime` feature and clang-19:
 			// https://github.com/KyleMayes/clang-rs/issues/63
 			// So we avoid dropping clang in that case as a workaround.
 			// `clang::get_version()` is string like "Apple clang version 15.0.0 (clang-1500.1.0.2.5)"
-			if !clang::get_version().contains(" 19.") {
-				unsafe {
-					ManuallyDrop::drop(&mut self.clang);
-				}
+			unsafe {
+				ManuallyDrop::drop(&mut self.clang);
 			}
 		}
 	}
@@ -448,8 +445,7 @@ impl Generator {
 			.collect::<Vec<_>>();
 		args.push("-DOCVRS_PARSING_HEADERS".into());
 		args.push("-includeocvrs_common.hpp".into());
-		// need to have c++14 here because VS headers contain features that require it
-		args.push("-std=c++14".into());
+		args.push("-std=c++17".into());
 		// allow us to use some custom clang args
 		let clang_arg = env::var_os("OPENCV_CLANG_ARGS");
 		if let Some(clang_arg) = clang_arg.as_ref().and_then(|s| s.to_str()) {

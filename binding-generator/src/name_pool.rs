@@ -24,11 +24,6 @@ impl NamePool {
 		out
 	}
 
-	pub fn add_name(&mut self, name: impl Into<Cow<'static, str>>) -> MakeUniqueNameResult {
-		let mut name = name.into();
-		self.make_unique_name(&mut name)
-	}
-
 	pub fn into_disambiguator<T, I, CB>(mut self, args: I, mut name_cb: CB) -> impl Iterator<Item = (String, T)>
 	where
 		I: IntoIterator<Item = T>,

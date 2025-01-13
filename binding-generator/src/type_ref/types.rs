@@ -31,8 +31,8 @@ pub enum TypeRefTypeHint {
 	PrimitivePtrAsRaw,
 	/// Adds a length to an unsized array
 	AddArrayLength(usize),
-	/// Return boxed class as a wrapped reference to maintain lifetime connection to the source boxed object
-	/// (cpp_name(Declaration), lifetime)
+	/// Return boxed class as a wrapped reference to maintain lifetime connection to the indicated argument names
+	/// (Constness, cpp_name(Declaration), lifetime)
 	BoxedAsRef(Constness, &'static [&'static str], Lifetime),
 	/// Make sure to pass TraitClass as a concrete type, not as a trait object, it's used for property setters as we don't want
 	/// to be able to use `BoxedRef` there.

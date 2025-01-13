@@ -132,18 +132,18 @@ impl fmt::Debug for RenderLane<'_, '_> {
 }
 
 fn rust_self_func_decl(method_constness: Constness, lifetime: Lifetime) -> Cow<'static, str> {
-	if lifetime.is_elided() {
-		if method_constness.is_const() {
-			"&self"
-		} else {
-			"&mut self"
-		}
-		.into()
-	} else {
+	if lifetime.is_explicit() {
 		if method_constness.is_const() {
 			format!("&{lifetime: <}self")
 		} else {
 			format!("&mut {lifetime: <}self")
+		}
+		.into()
+	} else {
+		if method_constness.is_const() {
+			"&self"
+		} else {
+			"&mut self"
 		}
 		.into()
 	}

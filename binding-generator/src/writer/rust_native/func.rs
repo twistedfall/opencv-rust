@@ -203,7 +203,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		format!("{}-{}", self.rust_module(), self.rust_name(NameStyle::decl()))
 	}
 
-	fn gen_rust(&self, _opencv_version: &str) -> String {
+	fn gen_rust(&self, opencv_version: &str) -> String {
 		static TPL: Lazy<CompiledInterpolation> = Lazy::new(|| include_str!("tpl/func/rust.tpl.rs").compile_interpolation());
 
 		let name = self.rust_leafname(FishStyle::No);
@@ -300,7 +300,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 			call_args.push("ocvrs_return.as_mut_ptr()".to_string());
 		}
 
-		let doc_comment = self.rendered_doc_comment("///", _opencv_version);
+		let doc_comment = self.rendered_doc_comment("///", opencv_version);
 		let visibility = if let Some(cls) = as_instance_method {
 			if cls.kind().is_trait() {
 				""
@@ -320,7 +320,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 			return_type_func_decl = format!("Result<{return_type_func_decl}>").into()
 		};
 		let return_type_func_decl = if return_type_func_decl == "()" {
-			String::new()
+			"".to_string()
 		} else {
 			format!(" -> {return_type_func_decl}")
 		};

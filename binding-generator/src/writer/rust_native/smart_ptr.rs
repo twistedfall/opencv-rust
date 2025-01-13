@@ -93,54 +93,61 @@ impl RustNativeGeneratedElement for SmartPtr<'_, '_> {
 		)
 		.identifier();
 
-		let mut impls = String::new();
+		let mut impls = String::with_capacity(1024);
 		if let Some(cls) = pointee_kind.as_class().filter(|cls| cls.kind().is_trait()) {
-			impls += &TRAIT_RAW_TPL.interpolate(&HashMap::from([
-				("rust_full", rust_full.as_ref()),
-				("base_rust_as_raw_const", &cls.rust_as_raw_name(Constness::Const)),
-				("base_rust_as_raw_mut", &cls.rust_as_raw_name(Constness::Mut)),
-				("base_rust_full_mut", &cls.rust_trait_name(NameStyle::ref_(), Constness::Mut)),
-				(
-					"base_rust_full_const",
-					&cls.rust_trait_name(NameStyle::ref_(), Constness::Const),
-				),
-			]));
-			let fields = cls.fields();
-			let mut field_const_methods = cls.field_methods(
-				fields.iter().filter(|f| f.exclude_kind().is_included()),
-				Some(Constness::Const),
+			TRAIT_RAW_TPL.interpolate_into(
+				&mut impls,
+				&HashMap::from([
+					("rust_full", rust_full.as_ref()),
+					("base_rust_as_raw_const", &cls.rust_as_raw_name(Constness::Const)),
+					("base_rust_as_raw_mut", &cls.rust_as_raw_name(Constness::Mut)),
+					("base_rust_full_mut", &cls.rust_trait_name(NameStyle::ref_(), Constness::Mut)),
+					(
+						"base_rust_full_const",
+						&cls.rust_trait_name(NameStyle::ref_(), Constness::Const),
+					),
+				]),
+			);
+			let mut debug_fields = rust_generate_debug_fields(
+				cls.field_methods(&cls.fields(|f| f.exclude_kind().is_included()), Some(Constness::Const)),
 			);
 			for base in all_bases(&cls) {
 				let base_rust_local = base.rust_name(NameStyle::decl());
-				impls += &TRAIT_RAW_TPL.interpolate(&HashMap::from([
-					("rust_full", rust_full.as_ref()),
-					("base_rust_as_raw_const", &base.rust_as_raw_name(Constness::Const)),
-					("base_rust_as_raw_mut", &base.rust_as_raw_name(Constness::Mut)),
-					("base_rust_full_mut", &base.rust_trait_name(NameStyle::ref_(), Constness::Mut)),
-					(
-						"base_rust_full_const",
-						&base.rust_trait_name(NameStyle::ref_(), Constness::Const),
-					),
-				]));
+				TRAIT_RAW_TPL.interpolate_into(
+					&mut impls,
+					&HashMap::from([
+						("rust_full", rust_full.as_ref()),
+						("base_rust_as_raw_const", &base.rust_as_raw_name(Constness::Const)),
+						("base_rust_as_raw_mut", &base.rust_as_raw_name(Constness::Mut)),
+						("base_rust_full_mut", &base.rust_trait_name(NameStyle::ref_(), Constness::Mut)),
+						(
+							"base_rust_full_const",
+							&base.rust_trait_name(NameStyle::ref_(), Constness::Const),
+						),
+					]),
+				);
 
 				let extern_cast_to_base = method_cast_to_base(smartptr_class.clone(), base.type_ref(), &base_rust_local).identifier();
-				impls += &BASE_CAST_TPL.interpolate(&HashMap::from([
-					("rust_full", rust_full.as_ref()),
-					("base_rust_full_ref", &base.rust_name(NameStyle::ref_())),
-					("extern_cast_to_base", &extern_cast_to_base),
-				]));
-				let base_field_const_methods = base.field_methods(
-					base.fields().iter().filter(|f| f.exclude_kind().is_included()),
-					Some(Constness::Const),
+				BASE_CAST_TPL.interpolate_into(
+					&mut impls,
+					&HashMap::from([
+						("rust_full", rust_full.as_ref()),
+						("base_rust_full_ref", &base.rust_name(NameStyle::ref_())),
+						("extern_cast_to_base", &extern_cast_to_base),
+					]),
 				);
-				field_const_methods.extend(base_field_const_methods);
+				let base_fields = base.fields(|f| f.exclude_kind().is_included());
+				let base_field_const_methods = base.field_methods(&base_fields, Some(Constness::Const));
+				debug_fields.push_str(&rust_generate_debug_fields(base_field_const_methods));
 			}
-			let debug_fields = rust_generate_debug_fields(field_const_methods);
-			impls += &IMPL_DEBUG_TPL.interpolate(&HashMap::from([
-				("rust_full", rust_full.as_ref()),
-				("rust_localalias", &rust_localalias),
-				("debug_fields", &debug_fields),
-			]));
+			IMPL_DEBUG_TPL.interpolate_into(
+				&mut impls,
+				&HashMap::from([
+					("rust_full", rust_full.as_ref()),
+					("rust_localalias", &rust_localalias),
+					("debug_fields", &debug_fields),
+				]),
+			);
 		};
 
 		let rust_as_raw_const = type_ref.rust_as_raw_name(Constness::Const);

@@ -10,8 +10,15 @@ use std::io::{BufRead, BufReader};
 use dnn::{TextDetectionModel_EAST, TextRecognitionModel};
 use opencv::core::{CommandLineParser, Point, Point2f, Scalar, Size, Vector};
 use opencv::prelude::*;
-use opencv::{core, dnn, highgui, imgproc, videoio};
+use opencv::{core, dnn, highgui, imgproc, not_opencv_branch_34, opencv_branch_34, videoio};
 use videoio::VideoCapture;
+
+not_opencv_branch_34! {
+	use opencv::imgproc::{LINE_8, FONT_HERSHEY_SIMPLEX};
+}
+opencv_branch_34! {
+	use opencv::core::{LINE_8, FONT_HERSHEY_SIMPLEX};
+}
 
 type Result<T, E = Box<dyn Error>> = std::result::Result<T, E>;
 
@@ -122,16 +129,16 @@ pub fn main() -> Result<()> {
 					&mut frame,
 					&recognition_result,
 					quadrangle.get(3)?,
-					imgproc::FONT_HERSHEY_SIMPLEX,
+					FONT_HERSHEY_SIMPLEX,
 					1.5,
 					(0, 0, 255).into(),
 					2,
-					imgproc::LINE_8,
+					LINE_8,
 					false,
 				)?;
 				contours.push(quadrangle);
 			}
-			imgproc::polylines(&mut frame, &contours, true, (0, 255, 0).into(), 2, imgproc::LINE_8, 0)?;
+			imgproc::polylines(&mut frame, &contours, true, (0, 255, 0).into(), 2, LINE_8, 0)?;
 		}
 		let mut big_frame = Mat::default();
 		imgproc::resize(&frame, &mut big_frame, Size::default(), 3., 3., imgproc::INTER_NEAREST)?;

@@ -221,9 +221,6 @@ impl Library {
 		link_libs: Option<EnvList>,
 	) -> Result<Self> {
 		if let (Some(include_paths), Some(link_paths), Some(link_libs)) = (include_paths, link_paths, link_libs) {
-			if include_paths.is_extend() || link_paths.is_extend() || link_libs.is_extend() {
-				return Err("Some environment variables extend the system default paths (i.e. start with '+')".into());
-			}
 			eprintln!("=== Configuring OpenCV library from the environment:");
 			eprintln!("===   include_paths: {include_paths}");
 			eprintln!("===   link_paths: {link_paths}");

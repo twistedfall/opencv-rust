@@ -80,9 +80,7 @@ pub fn render_constant_cpp(tokens: &[Token]) -> String {
 
 pub fn render_evaluation_result_rust(result: EvaluationResult) -> Value {
 	match result {
-		EvaluationResult::Unexposed => {
-			panic!("Can't render evaluation result")
-		}
+		EvaluationResult::Unexposed => panic!("Can't render evaluation result"),
 		EvaluationResult::SignedInteger(x) => Value {
 			kind: ValueKind::Integer,
 			value: x.to_string(),
@@ -135,9 +133,7 @@ impl<'tu> Const<'tu> {
 					.to_string(),
 			}),
 			EntityKind::VarDecl => self.entity.evaluate().map(render_evaluation_result_rust),
-			_ => {
-				unreachable!("Invalid entity type for constant")
-			}
+			_ => unreachable!("Invalid entity type for constant"),
 		}
 	}
 }
@@ -187,6 +183,7 @@ impl<'me> NameDebug<'me> for &'me Const<'_> {
 pub enum ValueKind {
 	Integer,
 	UnsignedInteger,
+	Usize,
 	Float,
 	Double,
 	String,

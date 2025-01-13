@@ -427,11 +427,10 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 
 	pub fn is_clone(&self) -> bool {
 		if self.cpp_name(CppNameStyle::Declaration) == "clone" {
-			if let Some(c) = self.kind().as_instance_method() {
-				!self.has_arguments() && self.return_type_ref().kind().as_class().is_some_and(|r| r.as_ref() == c)
-			} else {
-				false
-			}
+			self
+				.kind()
+				.as_instance_method()
+				.is_some_and(|c| !self.has_arguments() && self.return_type_ref().kind().as_class().is_some_and(|r| r.as_ref() == c))
 		} else {
 			false
 		}
@@ -449,7 +448,7 @@ impl<'tu, 'ge> Func<'tu, 'ge> {
 			&Self::Clang { entity, gen_env, .. } => {
 				let mut out = match self.kind().as_ref() {
 					FuncKind::Constructor(cls) => cls.type_ref(),
-					// `operator =` returns a reference to the `self` value and it's quite cumbersome to handle correctly
+					// `operator =` returns a reference to the `self` value, and it's quite cumbersome to handle correctly
 					FuncKind::InstanceOperator(_, OperatorKind::Set) => TypeRefDesc::void(),
 					FuncKind::Function
 					| FuncKind::InstanceMethod(..)

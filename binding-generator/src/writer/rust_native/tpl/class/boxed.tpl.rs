@@ -15,7 +15,8 @@ impl Drop for {{rust_local}} {
 
 unsafe impl Send for {{rust_local}} {}
 
-{{bases}}
 {{impl}}
+{{traits}}
 {{impls}}
+{{bases}}
 

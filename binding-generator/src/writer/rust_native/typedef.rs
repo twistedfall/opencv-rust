@@ -57,21 +57,18 @@ impl RustNativeGeneratedElement for Typedef<'_, '_> {
 			.take(underlying_type.rust_lifetime_count())
 			.map(|l| l.to_string())
 			.join(", ");
-		let generic_args = if lifetimes.is_empty() {
-			"".to_string()
+		let (generic_args, lifetime) = if lifetimes.is_empty() {
+			("".to_string(), Lifetime::Elided)
 		} else {
-			format!("<{lifetimes}>")
+			(format!("<{lifetimes}>"), Lifetime::automatic())
 		};
 
 		TPL.interpolate(&HashMap::from([
-			("doc_comment", Cow::Owned(self.rendered_doc_comment("///", opencv_version))),
-			("debug", self.get_debug().into()),
-			("rust_local", self.rust_name(NameStyle::decl())),
-			("generic_args", generic_args.into()),
-			(
-				"definition",
-				underlying_type.rust_name_ext(NameStyle::ref_(), Lifetime::automatic()),
-			),
+			("doc_comment", self.rendered_doc_comment("///", opencv_version).as_str()),
+			("debug", &self.get_debug()),
+			("rust_local", &self.rust_name(NameStyle::decl())),
+			("generic_args", &generic_args),
+			("definition", &underlying_type.rust_name_ext(NameStyle::ref_(), lifetime)),
 		]))
 	}
 }

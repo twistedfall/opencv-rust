@@ -8,7 +8,7 @@ use crate::type_ref::{
 use crate::writer::rust_native::element::RustElement;
 use crate::writer::rust_native::function::FunctionExt;
 use crate::writer::rust_native::type_ref::{Lifetime, NullabilityExt, TypeRefExt};
-use crate::{settings, CowMapBorrowedExt, Element};
+use crate::{settings, CowMapBorrowedExt, Element, IteratorExt};
 
 fn render_rust_tpl<'a>(renderer: impl TypeRefRenderer<'a>, type_ref: &TypeRef, fish_style: FishStyle) -> String {
 	let generic_types = type_ref.template_specialization_args();
@@ -18,27 +18,20 @@ fn render_rust_tpl<'a>(renderer: impl TypeRefRenderer<'a>, type_ref: &TypeRef, f
 			.as_class()
 			.is_some_and(|cls| settings::IMPLEMENTED_CONST_GENERICS.contains(cls.cpp_name(CppNameStyle::Reference).as_ref()));
 		let mut constant_suffix = String::new();
-		let generic_types = generic_types
-			.iter()
-			.filter_map(|t| match t {
-				TemplateArg::Typename(type_ref) => Some(renderer.recurse().render(type_ref)),
-				TemplateArg::Constant(literal) => {
-					if const_generics_implemented {
-						Some(literal.into())
-					} else {
-						constant_suffix += literal;
-						None
-					}
+		let generic_types = generic_types.iter().filter_map(|t| match t {
+			TemplateArg::Typename(type_ref) => Some(renderer.recurse().render(type_ref)),
+			TemplateArg::Constant(literal) => {
+				if const_generics_implemented {
+					Some(literal.into())
+				} else {
+					constant_suffix += literal;
+					None
 				}
-				TemplateArg::Unknown => None,
-			})
-			.collect::<Vec<_>>();
-		format!(
-			"{cnst}{fish}<{typ}>",
-			cnst = constant_suffix,
-			fish = fish_style.rust_qual(),
-			typ = generic_types.join(", ")
-		)
+			}
+			TemplateArg::Unknown => None,
+		});
+		let generics = generic_types.join(", ");
+		format!("{constant_suffix}{fish}<{generics}>", fish = fish_style.rust_qual())
 	} else {
 		"".to_string()
 	}
@@ -70,15 +63,10 @@ impl TypeRefRenderer<'_> for RustRenderer {
 		let kind = type_ref.kind();
 		if let Some((_, str_type)) = kind.as_string(type_ref.type_hint()) {
 			if str_type.is_binary() {
-				if self.name_style.turbo_fish_style().is_turbo() {
-					"Vec::<u8>"
-				} else {
-					"Vec<u8>"
-				}
+				format!("Vec{fish}<u8>", fish = self.name_style.turbo_fish_style().rust_qual()).into()
 			} else {
-				"String"
+				"String".into()
 			}
-			.into()
 		} else {
 			kind.map_borrowed(|kind| match kind {
 				TypeRefKind::Primitive(rust, _) => (*rust).into(),
@@ -146,7 +134,7 @@ impl TypeRefRenderer<'_> for RustRenderer {
 
 	fn recurse(&self) -> Self::Recursed {
 		Self {
-			lifetime: Lifetime::Elided,
+			lifetime: self.lifetime.next().unwrap_or(Lifetime::Elided),
 			..*self
 		}
 	}
@@ -243,41 +231,41 @@ impl RustReturnRenderer {
 			lifetime,
 		}
 	}
+
+	fn next_lifetime(&mut self) -> Lifetime {
+		let out = self.lifetime;
+		self.lifetime = self.lifetime.next().unwrap_or(Lifetime::Elided);
+		out
+	}
 }
 
 impl TypeRefRenderer<'_> for RustReturnRenderer {
 	type Recursed = RustRenderer;
 
-	fn render<'t>(self, type_ref: &'t TypeRef) -> Cow<'t, str> {
+	fn render<'t>(mut self, type_ref: &'t TypeRef) -> Cow<'t, str> {
 		let kind = type_ref.kind();
 		if kind.as_abstract_class_ptr().is_some() {
+			let lt = self.next_lifetime();
 			format!(
 				"types::AbstractRef{mut_suf}{fish}<{lt:,<}{typ}>",
 				mut_suf = type_ref.constness().rust_name_qual(),
 				fish = self.turbo_fish_style.rust_qual(),
-				lt = self.lifetime,
-				typ = type_ref
-					.source()
-					.rust_name_ext(NameStyle::Reference(self.turbo_fish_style), self.lifetime),
+				typ = self.recurse().render(&type_ref.source()),
 			)
 			.into()
 		} else if type_ref.type_hint().as_boxed_as_ref().is_some() {
+			let lt = self.next_lifetime();
 			format!(
-				"BoxedRef{mut_suf}{fish}<{lt:,<}{name}>",
+				"BoxedRef{mut_suf}{fish}<{lt:,<}{typ}>",
 				mut_suf = type_ref.constness().rust_name_qual(),
 				fish = self.turbo_fish_style.rust_qual(),
-				lt = self.lifetime,
-				name = type_ref.rust_name_ext(NameStyle::Reference(self.turbo_fish_style), self.lifetime)
+				typ = self.recurse().render(type_ref)
 			)
 			.into()
 		} else if kind.extern_pass_kind().is_by_void_ptr() {
-			type_ref
-				.source()
-				.rust_name(NameStyle::Reference(self.turbo_fish_style))
-				.into_owned()
-				.into()
+			self.recurse().render(&type_ref.source()).into_owned().into()
 		} else {
-			type_ref.rust_name(NameStyle::Reference(self.turbo_fish_style))
+			self.recurse().render(type_ref).into_owned().into()
 		}
 	}
 
