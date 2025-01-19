@@ -32,6 +32,13 @@ impl Lifetime {
 		}
 	}
 
+	pub fn to_explicit(self) -> Self {
+		match self {
+			Self::Elided => Self::automatic(),
+			Self::Custom(_) | Self::Automatic(_) => self,
+		}
+	}
+
 	pub fn next(self) -> Option<Self> {
 		match self {
 			Self::Elided => Some(Self::Elided),

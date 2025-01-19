@@ -18,6 +18,7 @@ use crate::func::{FuncCppBody, FuncKind, FuncRustBody, FuncRustExtern, InheritCo
 use crate::name_pool::NamePool;
 use crate::settings::ARG_OVERRIDE_SELF;
 use crate::type_ref::{Constness, CppNameStyle, ExternDir, FishStyle, NameStyle, StrEnc, StrType, TypeRef, TypeRefTypeHint};
+use crate::writer::rust_native::class::ClassExt;
 use crate::writer::rust_native::type_ref::render_lane::FunctionProps;
 use crate::{reserved_rename, CompiledInterpolation, Element, Func, IteratorExt, NameDebug, StrExt, StringExt};
 
@@ -232,6 +233,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		let mut forward_args = Vec::with_capacity(args.len());
 		let mut post_success_call_args = Vec::with_capacity(args.len());
 		let boxed_ref_arg = return_type_ref.type_hint().as_boxed_as_ref();
+		let mut any_arg_can_borrow = false;
 		if let Some(cls) = as_instance_method {
 			let constness = self.constness();
 			let cls_type_ref = cls.type_ref().with_inherent_constness(constness);
@@ -242,6 +244,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 				.map_or(Lifetime::Elided, |(_, _, lt)| lt);
 			decl_args.push(render_lane.rust_self_func_decl(lt));
 			call_args.push(render_lane.rust_arg_func_call("self"));
+			any_arg_can_borrow |= !cls_type_ref.kind().is_copy(cls_type_ref.type_hint());
 		}
 		let mut callback_arg_name: Option<&str> = None;
 		let function_props = FunctionProps {
@@ -254,6 +257,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 			let arg_kind = arg_type_ref.kind();
 			let render_lane = arg_type_ref.render_lane();
 			let render_lane = render_lane.to_dyn();
+			any_arg_can_borrow |= arg_kind.rust_can_borrow(arg_type_hint);
 			if arg.is_user_data() {
 				pre_post_arg_handle(
 					format!(
@@ -322,8 +326,20 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		};
 		let return_lifetime = match boxed_ref_arg {
 			Some((_, _, lifetime)) => lifetime,
-			None if matches!(kind.as_ref(), FuncKind::Function | FuncKind::StaticMethod(_)) => Lifetime::statik(),
-			None => Lifetime::Elided,
+			None => {
+				if matches!(kind.as_ref(), FuncKind::Function | FuncKind::StaticMethod(_)) {
+					Lifetime::statik()
+				} else if let Some(lt) = return_type_ref
+					.kind()
+					.as_class()
+					.and_then(|cls| cls.rust_lifetime())
+					.filter(|_| !any_arg_can_borrow)
+				{
+					lt
+				} else {
+					Lifetime::Elided
+				}
+			}
 		};
 		let mut return_type_func_decl = return_type_ref.rust_return(FishStyle::No, return_lifetime);
 		if !return_kind.is_infallible() {

@@ -247,6 +247,7 @@ impl TypeRefExt for TypeRef<'_, '_> {
 				kind @ TypeRefKind::Pointer(inner) if !kind.is_rust_by_ptr(self.type_hint()) => 1 + inner.rust_lifetime_count(),
 				TypeRefKind::Reference(inner) => 1 + inner.rust_lifetime_count(),
 				TypeRefKind::Typedef(tdef) => tdef.underlying_type_ref().rust_lifetime_count(),
+				TypeRefKind::Class(cls) => cls.rust_lifetime().map_or(0, |_| 1),
 				_ => 0,
 			}
 		}

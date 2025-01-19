@@ -456,6 +456,28 @@ impl<'tu, 'ge> TypeRefKind<'tu, 'ge> {
 			kind => kind.extern_pass_kind().is_by_void_ptr() || kind.as_string(type_hint).is_some(),
 		}
 	}
+
+	/// True if it's possible to borrow from this type in Rust
+	///
+	/// Used mainly to decide whether the return type of function should have explicit or elided lifetime.
+	pub fn rust_can_borrow(&self, type_hint: &TypeRefTypeHint) -> bool {
+		match self {
+			TypeRefKind::Array(elem, _) => elem.kind().rust_can_borrow(type_hint),
+			TypeRefKind::StdVector(vec) => vec.element_type().kind().rust_can_borrow(type_hint),
+			TypeRefKind::StdTuple(tup) => tup.elements().iter().any(|e| e.kind().rust_can_borrow(type_hint)),
+			TypeRefKind::RValueReference(inner) => inner.kind().rust_can_borrow(type_hint),
+			TypeRefKind::SmartPtr(ptr) => ptr.pointee().kind().rust_can_borrow(type_hint),
+			TypeRefKind::Typedef(tdef) => tdef.underlying_type_ref().kind().rust_can_borrow(type_hint),
+			TypeRefKind::Pointer(_) if self.is_rust_by_ptr(type_hint) => false,
+			TypeRefKind::Pointer(_) | TypeRefKind::Reference(_) => true,
+			TypeRefKind::Primitive(_, _)
+			| TypeRefKind::Class(_)
+			| TypeRefKind::Enum(_)
+			| TypeRefKind::Function(_)
+			| TypeRefKind::Generic(_)
+			| TypeRefKind::Ignored => false,
+		}
+	}
 }
 
 #[derive(Clone, Copy, Debug)]

@@ -829,7 +829,7 @@ impl fmt::Debug for MatDataDumper<'_> {
 input_output_array! { UMat, from_umat, from_umat_mut }
 input_output_array_vector! { UMat, from_umat_vec, from_umat_vec_mut }
 
-impl Deref for MatSize {
+impl Deref for MatSize<'_> {
 	type Target = [i32];
 
 	#[inline]
@@ -844,7 +844,7 @@ impl Deref for MatSize {
 	}
 }
 
-impl fmt::Debug for MatSize {
+impl fmt::Debug for MatSize<'_> {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		writeln!(f, "{:#?}", self.deref())
 	}

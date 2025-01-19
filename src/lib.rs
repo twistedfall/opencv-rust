@@ -43,6 +43,8 @@ pub mod mod_prelude_sys {
 
 /// Prelude for generated modules and types
 pub mod mod_prelude {
+	pub use std::marker::PhantomData;
+
 	pub use crate::boxed_ref::{BoxedRef, BoxedRefMut};
 	pub use crate::core::{ToInputArray, ToInputOutputArray, ToOutputArray};
 	pub use crate::hub_prelude::*;

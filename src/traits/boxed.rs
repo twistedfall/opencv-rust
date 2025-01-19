@@ -78,11 +78,11 @@ impl<T: Boxed> OpenCVTypeExternContainerMove for T {
 #[doc(hidden)]
 #[macro_export]
 macro_rules! opencv_type_boxed {
-	($type: ty) => {
-		impl $crate::traits::Boxed for $type {
+	($type: ty $(: for <$lt: lifetime>)?) => {
+		impl<$($lt)?> $crate::traits::Boxed for $type {
 			#[inline]
 			unsafe fn from_raw(ptr: $crate::extern_receive!($type)) -> Self {
-				Self { ptr }
+				Self { ptr, $(_d: ::std::marker::PhantomData::<&$lt mut ()>)? }
 			}
 
 			#[inline]

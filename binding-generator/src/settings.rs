@@ -46,6 +46,7 @@ pub use argument_override::{
 	arg_override_factory, property_override_factory, return_override_factory, ArgOverride, PropertyOverride, ReturnOverride,
 	ARG_OVERRIDE_SELF,
 };
+pub use class_tweaks::{class_tweaks_factory, ClassTweak, ClassTweaks};
 pub use const_tweak::CONST_TYPE_OVERRIDE;
 pub use element_exclude_kind::ELEMENT_EXCLUDE_KIND;
 pub use element_export_tweak::ELEMENT_EXPORT_TWEAK;
@@ -71,6 +72,7 @@ use crate::type_ref::TypeRef;
 
 mod argument_names;
 mod argument_override;
+mod class_tweaks;
 mod const_tweak;
 mod element_exclude_kind;
 mod element_export_tweak;
@@ -106,6 +108,7 @@ pub struct Settings {
 	pub generator_module_tweaks: ModuleTweak<'static>,
 	pub property_override: PropertyOverride,
 	pub property_tweaks: PropertyTweaks,
+	pub class_tweak: ClassTweaks,
 }
 
 impl Settings {
@@ -125,6 +128,7 @@ impl Settings {
 			generator_module_tweaks: ModuleTweak::empty(),
 			property_override: PropertyOverride::default(),
 			property_tweaks: PropertyTweaks::default(),
+			class_tweak: ClassTweaks::default(),
 		}
 	}
 
@@ -144,6 +148,7 @@ impl Settings {
 			generator_module_tweaks: generator_module_tweaks_factory(module),
 			property_override: property_override_factory(module),
 			property_tweaks: property_tweaks_factory(module),
+			class_tweak: class_tweaks_factory(module),
 		}
 	}
 

@@ -5,7 +5,9 @@ use std::borrow::Cow;
 use super::element::{DefaultRustNativeElement, RustElement};
 use super::RustNativeGeneratedElement;
 use crate::class::ClassKind;
+use crate::settings::ClassTweak;
 use crate::type_ref::{Constness, CppNameStyle, FishStyle, NameStyle};
+use crate::writer::rust_native::type_ref::Lifetime;
 use crate::{Class, Element, Func, IteratorExt};
 
 impl RustElement for Class<'_, '_> {
@@ -77,6 +79,7 @@ impl RustNativeGeneratedElement for Class<'_, '_> {
 pub trait ClassExt {
 	fn rust_trait_name(&self, style: NameStyle, constness: Constness) -> Cow<str>;
 	fn rust_as_raw_name(&self, constness: Constness) -> String;
+	fn rust_lifetime(&self) -> Option<Lifetime>;
 }
 
 impl ClassExt for Class<'_, '_> {
@@ -98,6 +101,24 @@ impl ClassExt for Class<'_, '_> {
 			const_qual = constness.rust_function_name_qual(),
 			name = self.rust_name(NameStyle::Declaration)
 		)
+	}
+
+	/// Rust lifetime use by the objects of this class
+	fn rust_lifetime(&self) -> Option<Lifetime> {
+		match self {
+			Class::Clang { gen_env, .. } =>
+			{
+				#[allow(clippy::bind_instead_of_map)]
+				gen_env
+					.settings
+					.class_tweak
+					.get(self.cpp_name(CppNameStyle::Reference).as_ref())
+					.and_then(|tweak| match tweak {
+						ClassTweak::Lifetime(lt) => Some(*lt),
+					})
+			}
+			Class::Desc(_) => None,
+		}
 	}
 }
 
