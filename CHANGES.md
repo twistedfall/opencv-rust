@@ -1,3 +1,11 @@
+* 0.95.0
+  * `MatSize` now carries a lifetime because it borrows the data from a `Mat` on creation.
+  * Conditional compilation macros for detecting which module is enabled are now added in the form `opencv_has_module_<MODULE_NAME>!`.
+  * Conditional compilation macros for detecting supported OpenCV compilation-time features: `opencv_has_inherent_feature_<FEATURE>!`.
+  * OpenCV branch conditional compilation macros now support both positive and negative code branch in the same macro call.
+    E.g., `opencv_branch_4! { { <code block when branch is 4.x> } else { <code block when branch is not 4.x> } }`.
+  * Fix building when OpenCV CUDA-related headers are missing.
+
 * 0.94.4
   * Downgrade the `windows` dependency for now to fix the build issue in https://github.com/twistedfall/opencv-rust/issues/660.
 

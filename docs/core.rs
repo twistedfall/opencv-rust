@@ -22151,27 +22151,28 @@ pub mod core {
 
 	boxed_ref! { MatOp, core::MatOpTraitConst, as_raw_MatOp, core::MatOpTrait, as_raw_mut_MatOp }
 
-	pub struct MatSize {
+	pub struct MatSize<'mat> {
 		ptr: *mut c_void,
+		_d: PhantomData<&'mat mut ()>,
 	}
 
-	opencv_type_boxed! { MatSize }
+	opencv_type_boxed! { MatSize<'mat>: for <'mat> }
 
-	impl Drop for MatSize {
+	impl Drop for MatSize<'_> {
 		#[inline]
 		fn drop(&mut self) {
 			unsafe { sys::cv_MatSize_delete(self.as_raw_mut_MatSize()) };
 		}
 	}
 
-	unsafe impl Send for MatSize {}
+	unsafe impl Send for MatSize<'_> {}
 
-	impl MatSize {
+	impl<'mat> MatSize<'mat> {
 		/// ////////////////////////// MatSize ////////////////////////////
 		#[inline]
-		pub unsafe fn new(_p: *mut i32) -> core::MatSize {
+		pub unsafe fn new(_p: *mut i32) -> core::MatSize<'mat> {
 			let ret = unsafe { sys::cv_MatSize_MatSize_intX(_p) };
-			let ret = unsafe { core::MatSize::opencv_from_extern(ret) };
+			let ret = unsafe { core::MatSize::<'mat>::opencv_from_extern(ret) };
 			ret
 		}
 
@@ -22258,15 +22259,15 @@ pub mod core {
 
 	}
 
-	impl core::MatSizeTraitConst for MatSize {
+	impl core::MatSizeTraitConst for MatSize<'_> {
 		#[inline] fn as_raw_MatSize(&self) -> *const c_void { self.as_raw() }
 	}
 
-	impl core::MatSizeTrait for MatSize {
+	impl core::MatSizeTrait for MatSize<'_> {
 		#[inline] fn as_raw_mut_MatSize(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 
-	boxed_ref! { MatSize, core::MatSizeTraitConst, as_raw_MatSize, core::MatSizeTrait, as_raw_mut_MatSize }
+	boxed_ref! { MatSize<'_>, core::MatSizeTraitConst, as_raw_MatSize, core::MatSizeTrait, as_raw_mut_MatSize }
 
 	pub struct MatStep {
 		ptr: *mut c_void,
