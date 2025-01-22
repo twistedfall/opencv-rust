@@ -1,11 +1,15 @@
 #include "ocvrs_common.hpp"
 #include <opencv2/core/affine.hpp>
-#include <opencv2/core/directx.hpp>
-#include <opencv2/core/ocl.hpp>
-#include <opencv2/core/va_intel.hpp>
+#ifdef HAVE_OPENCL
+	#include <opencv2/core/ocl.hpp>
+	// opengl.hpp, va_intel.hpp and directx.hpp unconditionally include ocl.hpp thus it needs to be within ifdef HAVE_OPENCL
+	#ifdef HAVE_OPENGL
+		#include <opencv2/core/opengl.hpp>
+	#endif
+	#include <opencv2/core/va_intel.hpp>
+	#include <opencv2/core/directx.hpp>
+#endif
 #include <opencv2/core/cuda.hpp>
-#include <opencv2/core/opengl.hpp>
-#include <opencv2/core/directx.hpp>
 #if (CV_VERSION_MAJOR == 3 && CV_VERSION_MINOR == 4 && CV_VERSION_REVISION >= 4) /* 3.4.4+ */ \
 	|| (CV_VERSION_MAJOR == 4) /* 4.0+ */ \
 	|| (CV_VERSION_MAJOR == 5) /* 5.0+ */

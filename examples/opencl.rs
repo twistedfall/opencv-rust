@@ -1,19 +1,21 @@
-use std::{env, time};
+use opencv::Result;
 
-use opencv::core::{Device, Size, UMat, Vector};
-use opencv::prelude::*;
-use opencv::{core, imgcodecs, imgproc, Result};
-
-opencv::not_opencv_branch_34! {
-	use opencv::core::AccessFlag::ACCESS_READ;
-}
-opencv::opencv_branch_34! {
-	use opencv::core::ACCESS_READ;
-}
-
-const ITERATIONS: usize = 100;
-
+#[cfg(ocvrs_has_inherent_feature_opencl)]
 fn main() -> Result<()> {
+	use std::{env, time};
+
+	use opencv::core::{Device, Size, UMat, Vector};
+	use opencv::prelude::*;
+	use opencv::{core, imgcodecs, imgproc};
+
+	opencv::not_opencv_branch_34! {
+		use opencv::core::AccessFlag::ACCESS_READ;
+	}
+	opencv::opencv_branch_34! {
+		use opencv::core::ACCESS_READ;
+	}
+
+	const ITERATIONS: usize = 100;
 	let img_file = env::args().nth(1).expect("Please supply image file name");
 	let opencl_have = core::have_opencl()?;
 	if opencl_have {
@@ -72,5 +74,12 @@ fn main() -> Result<()> {
 		}
 		println!("{:#?}", start.elapsed());
 	}
+	Ok(())
+}
+
+#[cfg(not(ocvrs_has_inherent_feature_opencl))]
+fn main() -> Result<()> {
+	eprintln!("This example requires that OpenCV is build with OpenCL support:");
+	eprintln!("{}", opencv::core::get_build_information()?);
 	Ok(())
 }

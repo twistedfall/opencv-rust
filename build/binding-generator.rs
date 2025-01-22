@@ -5,7 +5,8 @@ use std::path::{Path, PathBuf};
 use opencv_binding_generator::writer::RustNativeBindingWriter;
 use opencv_binding_generator::Generator;
 
-use super::{get_version_from_headers, GenerateFullBindings, Result};
+use super::header::IncludePath;
+use super::{GenerateFullBindings, Result};
 
 /// Because clang can't be used from multiple threads we run the binding generator helper for each
 /// module as a separate process. Building an additional helper binary from the build script is problematic,
@@ -27,7 +28,8 @@ pub fn run(mut args: impl Iterator<Item = OsString>) -> Result<()> {
 	let out_dir = PathBuf::from(args.next().ok_or("3rd argument must be output dir")?);
 	let module = args.next().ok_or("4th argument must be module name")?;
 	let module = module.to_str().ok_or("Not a valid module name")?;
-	let version = get_version_from_headers(&opencv_header_dir)
+	let version = opencv_header_dir
+		.find_version()
 		.ok_or("Can't find the version in the headers")?
 		.to_string();
 	let arg_additional_include_dirs = args.next();

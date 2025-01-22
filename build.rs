@@ -1,14 +1,13 @@
 use std::collections::{HashMap, HashSet};
 use std::env;
 use std::ffi::OsStr;
-use std::fs::File;
-use std::io::{BufRead, BufReader};
 use std::path::{Path, PathBuf};
 use std::time::Instant;
 
 use binding_generator::handle_running_binding_generator;
 use docs::handle_running_in_docsrs;
 use generator::BindingGenerator;
+use header::IncludePath;
 use library::Library;
 use once_cell::sync::Lazy;
 use semver::{Version, VersionReq};
@@ -21,6 +20,8 @@ pub mod cmake_probe;
 mod docs;
 #[path = "build/generator.rs"]
 mod generator;
+#[path = "build/header.rs"]
+mod header;
 #[path = "build/library.rs"]
 pub mod library;
 
@@ -144,6 +145,8 @@ static SUPPORTED_MODULES: [&str; 73] = [
 	"xstereo",
 ];
 
+static SUPPORTED_INHERENT_FEATURES: [&str; 2] = ["hfloat", "opencl"];
+
 /// The contents of these vars will be present in the debug log, but will not cause the source rebuild
 static DEBUG_ENV_VARS: [&str; 1] = ["PATH"];
 
@@ -167,64 +170,6 @@ fn files_with_extension<'e>(dir: &Path, extension: impl AsRef<OsStr> + 'e) -> Re
 	files_with_predicate(dir, move |p| {
 		p.extension().is_some_and(|e| e.eq_ignore_ascii_case(extension.as_ref()))
 	})
-}
-
-fn get_module_header_dir(header_dir: &Path) -> Option<PathBuf> {
-	let mut out = header_dir.join("opencv2.framework/Headers");
-	if out.exists() {
-		return Some(out);
-	}
-	out = header_dir.join("opencv2");
-	if out.exists() {
-		return Some(out);
-	}
-	None
-}
-
-fn get_version_header(header_dir: &Path) -> Option<PathBuf> {
-	get_module_header_dir(header_dir)
-		.map(|dir| dir.join("core/version.hpp"))
-		.filter(|hdr| hdr.is_file())
-}
-
-fn get_version_from_headers(header_dir: &Path) -> Option<Version> {
-	let version_hpp = get_version_header(header_dir)?;
-	let mut major = None;
-	let mut minor = None;
-	let mut revision = None;
-	let mut line = String::with_capacity(256);
-	let mut reader = BufReader::new(File::open(version_hpp).ok()?);
-	while let Ok(bytes_read) = reader.read_line(&mut line) {
-		if bytes_read == 0 {
-			break;
-		}
-		if let Some(line) = line.strip_prefix("#define CV_VERSION_") {
-			let mut parts = line.split_whitespace();
-			if let (Some(ver_spec), Some(version)) = (parts.next(), parts.next()) {
-				match ver_spec {
-					"MAJOR" => {
-						major = Some(version.parse().ok()?);
-					}
-					"MINOR" => {
-						minor = Some(version.parse().ok()?);
-					}
-					"REVISION" => {
-						revision = Some(version.parse().ok()?);
-					}
-					_ => {}
-				}
-			}
-			if major.is_some() && minor.is_some() && revision.is_some() {
-				break;
-			}
-		}
-		line.clear();
-	}
-	if let (Some(major), Some(minor), Some(revision)) = (major, minor, revision) {
-		Some(Version::new(major, minor, revision))
-	} else {
-		None
-	}
 }
 
 fn make_modules_and_alises(
@@ -264,12 +209,17 @@ fn make_modules_and_alises(
 	Ok((modules, aliases))
 }
 
-fn emit_inherent_features(opencv_version: &Version) {
+fn emit_inherent_features(opencv: &Library) {
 	if VersionReq::parse(">=4.10")
 		.expect("Static version requirement")
-		.matches(opencv_version)
+		.matches(&opencv.version)
 	{
 		println!("cargo::rustc-cfg=ocvrs_has_inherent_feature_hfloat");
+	}
+	for feature in &opencv.enabled_features {
+		if SUPPORTED_INHERENT_FEATURES.contains(&feature.as_str()) {
+			println!("cargo::rustc-cfg=ocvrs_has_inherent_feature_{feature}");
+		}
 	}
 }
 
@@ -374,9 +324,7 @@ fn main() -> Result<()> {
 	for module in SUPPORTED_MODULES {
 		println!("cargo::rustc-check-cfg=cfg(ocvrs_has_module_{module})");
 	}
-	// MSRV: switch to #[expect] when MSRV is 1.81
-	#[allow(clippy::single_element_loop)]
-	for inherent_feature in ["hfloat"] {
+	for inherent_feature in SUPPORTED_INHERENT_FEATURES {
 		println!("cargo::rustc-check-cfg=cfg(ocvrs_has_inherent_feature_{inherent_feature})");
 	}
 
@@ -419,10 +367,10 @@ fn main() -> Result<()> {
 	let opencv_header_dir = opencv
 		.include_paths
 		.iter()
-		.find(|p| get_version_header(p).is_some())
-		.expect("Discovered OpenCV include paths is empty or contains non-existent paths");
+		.find(|p| p.get_version_header().is_some())
+		.expect("Discovered OpenCV include paths do not contain valid OpenCV headers");
 
-	if let Some(header_version) = get_version_from_headers(opencv_header_dir) {
+	if let Some(header_version) = opencv_header_dir.find_version() {
 		if header_version != opencv.version {
 			panic!(
 				"OpenCV version from the headers: {header_version} (at {}) must match version of the OpenCV library: {} (include paths: {:?})",
@@ -442,7 +390,9 @@ fn main() -> Result<()> {
 		)
 	}
 
-	let opencv_module_header_dir = get_module_header_dir(opencv_header_dir).expect("Can't find OpenCV module header dir");
+	let opencv_module_header_dir = opencv_header_dir
+		.get_module_header_dir()
+		.expect("Can't find OpenCV module header dir");
 	eprintln!(
 		"=== Detected OpenCV module header dir at: {}",
 		opencv_module_header_dir.display()
@@ -452,7 +402,7 @@ fn main() -> Result<()> {
 		println!("cargo::rustc-cfg=ocvrs_has_module_{module}");
 	}
 
-	emit_inherent_features(&opencv.version);
+	emit_inherent_features(&opencv);
 
 	setup_rerun()?;
 

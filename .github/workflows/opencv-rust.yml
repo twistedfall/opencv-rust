@@ -68,9 +68,19 @@ jobs:
           - macos-14
         vcpkg-version:
           - 2025.01.13 # https://github.com/microsoft/vcpkg/releases
+        vcpkg-features-cache-key:
+          - full
+        vcpkg-features:
+          - contrib,nonfree,ade,opencl
+        include:
+          - os-image: windows-2022
+            vcpkg-version: 2025.01.13
+            vcpkg-features-cache-key: min
+            vcpkg-features: contrib
     runs-on: ${{ matrix.os-image }}
     env:
       VCPKG_VERSION: ${{ matrix.vcpkg-version }}
+      VCPKG_FEATURES: ${{ matrix.vcpkg-features }}
       SCCACHE_GHA_ENABLED: "true"
       RUSTC_WRAPPER: "sccache"
     steps:
@@ -80,7 +90,7 @@ jobs:
       - uses: actions/cache@v4
         with:
           path: ~/build
-          key: vcpkg-${{ matrix.vcpkg-version }}-${{ matrix.os-image }}
+          key: vcpkg-${{ matrix.vcpkg-version }}-${{ matrix.os-image }}-${{ matrix.vcpkg-features-cache-key }}
 
       - name: Install dependencies
         run: ci/install.sh

@@ -2,6 +2,7 @@ use opencv::{core, Result};
 
 #[test]
 fn convert_type_str() -> Result<()> {
+	#[cfg(ocvrs_has_inherent_feature_opencl)]
 	if core::have_opencl()? {
 		// this function writes to buf argument and returns it
 		let mut test = "test".to_string();

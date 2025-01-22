@@ -8,7 +8,8 @@ use dunce::canonicalize;
 use semver::Version;
 
 use super::cmake_probe::{CmakeProbe, LinkLib, LinkSearch};
-use super::{get_version_from_headers, Result, MANIFEST_DIR, OUT_DIR, TARGET_VENDOR_APPLE};
+use super::header::IncludePath;
+use super::{header, Result, MANIFEST_DIR, OUT_DIR, TARGET_VENDOR_APPLE};
 
 struct PackageName;
 
@@ -149,12 +150,25 @@ impl Linkage {
 pub struct Library {
 	pub include_paths: Vec<PathBuf>,
 	pub version: Version,
+	pub enabled_features: Vec<String>,
 	pub cargo_metadata: Vec<String>,
 }
 
 impl Library {
+	fn add_multiarch_dir_if_needed(include_paths: &mut Vec<PathBuf>) {
+		if include_paths.iter().all(|p| p.get_config_header().is_none()) {
+			if let Some(multiarch_include_path) = header::get_multiarch_header_dir() {
+				include_paths.push(multiarch_include_path);
+			}
+		}
+	}
+
 	fn version_from_include_paths(include_paths: impl IntoIterator<Item = impl AsRef<Path>>) -> Option<Version> {
-		include_paths.into_iter().find_map(|x| get_version_from_headers(x.as_ref()))
+		include_paths.into_iter().find_map(|x| x.as_ref().find_version())
+	}
+
+	fn enabled_features_from_include_paths(include_paths: impl IntoIterator<Item = impl AsRef<Path>>) -> Option<Vec<String>> {
+		include_paths.into_iter().find_map(|x| x.as_ref().find_enabled_features())
 	}
 
 	fn process_env_var_list<'a, T: From<&'a str>>(env_list: Option<EnvList<'a>>, sys_list: Vec<T>) -> Vec<T> {
@@ -226,9 +240,12 @@ impl Library {
 			eprintln!("===   link_paths: {link_paths}");
 			eprintln!("===   link_libs: {link_libs}");
 			let mut cargo_metadata = Vec::with_capacity(64);
-			let include_paths: Vec<_> = include_paths.iter().map(PathBuf::from).collect();
+			let include_paths = include_paths.iter().map(PathBuf::from).collect::<Vec<_>>();
 
-			let version = Self::version_from_include_paths(&include_paths).ok_or("Could not OpenCV version from include_paths")?;
+			let version =
+				Self::version_from_include_paths(&include_paths).ok_or("Could not get OpenCV version from include_paths")?;
+			let enabled_features =
+				Self::enabled_features_from_include_paths(&include_paths).ok_or("Could not get OpenCV config from include_paths")?;
 
 			cargo_metadata.extend(Self::process_link_paths(Some(link_paths), vec![]));
 			cargo_metadata.extend(Self::process_link_libs(Some(link_libs), vec![]));
@@ -236,6 +253,7 @@ impl Library {
 			Ok(Self {
 				include_paths,
 				version,
+				enabled_features,
 				cargo_metadata,
 			})
 		} else {
@@ -302,11 +320,15 @@ impl Library {
 			));
 		}
 
-		let include_paths = Self::process_env_var_list(include_paths, opencv.include_paths);
+		let mut include_paths = Self::process_env_var_list(include_paths, opencv.include_paths);
+		Self::add_multiarch_dir_if_needed(&mut include_paths);
+		let enabled_features =
+			Self::enabled_features_from_include_paths(&include_paths).ok_or("Could not get OpenCV config from include_paths")?;
 
 		Ok(Self {
 			include_paths,
 			version: Version::parse(&opencv.version)?,
+			enabled_features,
 			cargo_metadata,
 		})
 	}
@@ -355,9 +377,15 @@ impl Library {
 		cargo_metadata.extend(Self::process_link_paths(link_paths, probe_result.link_paths));
 		cargo_metadata.extend(Self::process_link_libs(link_libs, probe_result.link_libs));
 
+		let mut include_paths = Self::process_env_var_list(include_paths, probe_result.include_paths);
+		Self::add_multiarch_dir_if_needed(&mut include_paths);
+		let enabled_features =
+			Self::enabled_features_from_include_paths(&include_paths).ok_or("Could not get OpenCV config from include_paths")?;
+
 		Ok(Self {
-			include_paths: Self::process_env_var_list(include_paths, probe_result.include_paths),
+			include_paths,
 			version: probe_result.version.unwrap_or_else(|| Version::new(0, 0, 0)),
+			enabled_features,
 			cargo_metadata,
 		})
 	}
@@ -397,8 +425,6 @@ impl Library {
 
 		let version = Self::version_from_include_paths(&opencv_include_paths);
 
-		let include_paths = Self::process_env_var_list(include_paths, opencv_include_paths);
-
 		let mut cargo_metadata = opencv.cargo_metadata;
 
 		if link_paths.as_ref().is_some_and(|lp| !lp.is_extend()) {
@@ -411,9 +437,15 @@ impl Library {
 		}
 		cargo_metadata.extend(Self::process_link_libs(link_libs, vec![]));
 
+		let mut include_paths = Self::process_env_var_list(include_paths, opencv_include_paths);
+		Self::add_multiarch_dir_if_needed(&mut include_paths);
+		let enabled_features =
+			Self::enabled_features_from_include_paths(&include_paths).ok_or("Could not get OpenCV config from include_paths")?;
+
 		Ok(Self {
 			include_paths,
 			version: version.unwrap_or_else(|| Version::new(0, 0, 0)),
+			enabled_features,
 			cargo_metadata,
 		})
 	}
