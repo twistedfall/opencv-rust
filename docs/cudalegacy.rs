@@ -6,6 +6,196 @@ pub mod cudalegacy {
 		pub use super::{CUDA_BackgroundSubtractorFGDTrait, CUDA_BackgroundSubtractorFGDTraitConst, CUDA_BackgroundSubtractorGMGTrait, CUDA_BackgroundSubtractorGMGTraitConst, CUDA_FGDParamsTrait, CUDA_FGDParamsTraitConst, CUDA_FastOpticalFlowBMTrait, CUDA_FastOpticalFlowBMTraitConst, CUDA_ImagePyramidTrait, CUDA_ImagePyramidTraitConst};
 	}
 
+	pub const HAAR_STDDEV_BORDER: i32 = 1;
+	pub const HaarFeature64_CreateCheck_MaxRectField: i32 = 0xFF;
+	pub const HaarFeatureDescriptor32_CreateCheck_MaxFeatureOffset: i32 = 0x00FFFFFF;
+	pub const HaarFeatureDescriptor32_CreateCheck_MaxNumFeatures: i32 = 0x1F;
+	pub const HaarFeatureDescriptor32_Interpret_MaskFlagLeftNodeLeaf: i32 = 0x40000000;
+	pub const HaarFeatureDescriptor32_Interpret_MaskFlagRightNodeLeaf: i32 = 0x20000000;
+	pub const HaarFeatureDescriptor32_Interpret_MaskFlagTilted: i32 = 0x80000000;
+	pub const HaarFeatureDescriptor32_NumFeatures_Shift: i32 = 24;
+	pub const HaarStage64_Interpret_MaskRootNodeOffset: i32 = 0xFFFF0000;
+	pub const HaarStage64_Interpret_MaskRootNodes: i32 = 0x0000FFFF;
+	pub const HaarStage64_Interpret_ShiftRootNodeOffset: i32 = 16;
+	pub const NCVMemoryTypeDevice: i32 = 3;
+	pub const NCVMemoryTypeHostPageable: i32 = 1;
+	pub const NCVMemoryTypeHostPinned: i32 = 2;
+	pub const NCVMemoryTypeNone: i32 = 0;
+	pub const NCVPipeObjDet_Default: i32 = 0;
+	pub const NCVPipeObjDet_FindLargestObject: i32 = 2;
+	pub const NCVPipeObjDet_UseFairImageScaling: i32 = 1;
+	pub const NCVPipeObjDet_VisualizeInPlace: i32 = 4;
+	pub const NCV_ALLOCATOR_BAD_ALLOC: i32 = 13;
+	pub const NCV_ALLOCATOR_BAD_DEALLOC: i32 = 14;
+	pub const NCV_ALLOCATOR_BAD_REUSE: i32 = 17;
+	pub const NCV_ALLOCATOR_DEALLOC_ORDER: i32 = 16;
+	pub const NCV_ALLOCATOR_INSUFFICIENT_CAPACITY: i32 = 15;
+	pub const NCV_ALLOCATOR_NOT_INITIALIZED: i32 = 12;
+	pub const NCV_CUDA_ERROR: i32 = 2;
+	pub const NCV_DIMENSIONS_INVALID: i32 = 8;
+	pub const NCV_FILE_ERROR: i32 = 4;
+	pub const NCV_HAAR_INVALID_PIXEL_STEP: i32 = 21;
+	pub const NCV_HAAR_TOO_LARGE_FEATURES: i32 = 24;
+	pub const NCV_HAAR_TOO_MANY_FEATURES_IN_CASCADE: i32 = 23;
+	pub const NCV_HAAR_TOO_MANY_FEATURES_IN_CLASSIFIER: i32 = 22;
+	pub const NCV_HAAR_XML_LOADING_EXCEPTION: i32 = 25;
+	pub const NCV_INCONSISTENT_INPUT: i32 = 6;
+	pub const NCV_INVALID_ROI: i32 = 9;
+	pub const NCV_INVALID_SCALE: i32 = 11;
+	pub const NCV_INVALID_STEP: i32 = 10;
+	/// Marker to continue error numeration in other files
+	pub const NCV_LAST_STATUS: i32 = 14;
+	pub const NCV_MEM_COPY_ERROR: i32 = 18;
+	pub const NCV_MEM_INSUFFICIENT_CAPACITY: i32 = 20;
+	pub const NCV_MEM_RESIDENCE_ERROR: i32 = 19;
+	pub const NCV_NOIMPL_HAAR_TILTED_FEATURES: i32 = 26;
+	pub const NCV_NOT_IMPLEMENTED: i32 = 27;
+	pub const NCV_NPP_ERROR: i32 = 3;
+	pub const NCV_NULL_PTR: i32 = 5;
+	pub const NCV_SUCCESS: i32 = 0;
+	pub const NCV_TEXTURE_BIND_ERROR: i32 = 7;
+	pub const NCV_UNKNOWN_ERROR: i32 = 1;
+	pub const NCV_WARNING_HAAR_DETECTIONS_VECTOR_OVERFLOW: i32 = 28;
+	/// CUDA kernel execution error
+	pub const NPPST_CUDA_KERNEL_EXECUTION_ERROR: i32 = 2;
+	/// Unknown error
+	pub const NPPST_ERROR: i32 = 1;
+	/// Invalid region of interest argument
+	pub const NPPST_INVALID_ROI: i32 = 8;
+	/// Invalid scale parameter passed
+	pub const NPPST_INVALID_SCALE: i32 = 10;
+	/// Invalid image lines step argument (check sign, alignment, relation to image width)
+	pub const NPPST_INVALID_STEP: i32 = 9;
+	/// CUDA memory copy error
+	pub const NPPST_MEMCPY_ERROR: i32 = 5;
+	/// CUDA memory deallocation error
+	pub const NPPST_MEMFREE_ERR: i32 = 7;
+	/// CUDA memory allocation error
+	pub const NPPST_MEM_ALLOC_ERR: i32 = 6;
+	/// Insufficient user-allocated buffer
+	pub const NPPST_MEM_INSUFFICIENT_BUFFER: i32 = 11;
+	/// Internal memory management error
+	pub const NPPST_MEM_INTERNAL_ERROR: i32 = 13;
+	/// Memory residence error detected (check if pointers should be device or pinned)
+	pub const NPPST_MEM_RESIDENCE_ERROR: i32 = 12;
+	/// NULL pointer argument error
+	pub const NPPST_NULL_POINTER_ERROR: i32 = 3;
+	/// Successful operation (same as NPP_NO_ERROR)
+	pub const NPPST_SUCCESS: i32 = 0;
+	/// CUDA texture binding error or non-zero offset returned
+	pub const NPPST_TEXTURE_BIND_ERROR: i32 = 4;
+	pub const OBJDET_MASK_ELEMENT_INVALID_32U: i32 = 0xFFFFFFFF;
+	pub const RECT_SIMILARITY_PROPORTION: f32 = 0.2;
+	/// Bicubic convolution filter, a = -0.5 (cubic Hermite spline)
+	pub const nppStBicubic: i32 = 1;
+	/// Clamp out of range position to borders
+	pub const nppStBorderClamp: i32 = 1;
+	/// reflect out of range position across borders
+	pub const nppStBorderMirror: i32 = 3;
+	/// There is no need to define additional pixels, image is extended already
+	pub const nppStBorderNone: i32 = 0;
+	/// Wrap out of range position. Image becomes periodic.
+	pub const nppStBorderWrap: i32 = 2;
+	/// Supersampling. For downscaling only
+	pub const nppStSupersample: i32 = 0;
+	/// NCVMemoryType
+	#[repr(C)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum NCVMemoryType {
+		NCVMemoryTypeNone = 0,
+		NCVMemoryTypeHostPageable = 1,
+		NCVMemoryTypeHostPinned = 2,
+		NCVMemoryTypeDevice = 3,
+	}
+
+	impl TryFrom<i32> for NCVMemoryType {
+		type Error = crate::Error;
+
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::NCVMemoryTypeNone),
+				1 => Ok(Self::NCVMemoryTypeHostPageable),
+				2 => Ok(Self::NCVMemoryTypeHostPinned),
+				3 => Ok(Self::NCVMemoryTypeDevice),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudalegacy::NCVMemoryType"))),
+			}
+		}
+	}
+
+	opencv_type_enum! { crate::cudalegacy::NCVMemoryType }
+
+	/// Border type
+	///
+	/// Filtering operations assume that each pixel has a neighborhood of pixels.
+	/// The following structure describes possible ways to define non-existent pixels.
+	#[repr(C)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum NppStBorderType {
+		/// There is no need to define additional pixels, image is extended already
+		nppStBorderNone = 0,
+		/// Clamp out of range position to borders
+		nppStBorderClamp = 1,
+		/// Wrap out of range position. Image becomes periodic.
+		nppStBorderWrap = 2,
+		/// reflect out of range position across borders
+		nppStBorderMirror = 3,
+	}
+
+	impl TryFrom<i32> for NppStBorderType {
+		type Error = crate::Error;
+
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::nppStBorderNone),
+				1 => Ok(Self::nppStBorderClamp),
+				2 => Ok(Self::nppStBorderWrap),
+				3 => Ok(Self::nppStBorderMirror),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudalegacy::NppStBorderType"))),
+			}
+		}
+	}
+
+	opencv_type_enum! { crate::cudalegacy::NppStBorderType }
+
+	/// Filter types for image resizing
+	#[repr(C)]
+	#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+	pub enum NppStInterpMode {
+		/// Supersampling. For downscaling only
+		nppStSupersample = 0,
+		/// Bicubic convolution filter, a = -0.5 (cubic Hermite spline)
+		nppStBicubic = 1,
+	}
+
+	impl TryFrom<i32> for NppStInterpMode {
+		type Error = crate::Error;
+
+		fn try_from(value: i32) -> Result<Self, Self::Error> {
+			match value {
+				0 => Ok(Self::nppStSupersample),
+				1 => Ok(Self::nppStBicubic),
+				_ => Err(crate::Error::new(crate::core::StsBadArg, format!("Value: {value} is not valid for enum: crate::cudalegacy::NppStInterpMode"))),
+			}
+		}
+	}
+
+	opencv_type_enum! { crate::cudalegacy::NppStInterpMode }
+
+	pub type NCVDebugOutputHandler = Option<unsafe extern "C" fn(*const c_char) -> ()>;
+	pub type NCVStatus = crate::cudalegacy::Ncv32u;
+	pub type Ncv16s = i16;
+	pub type Ncv16u = u16;
+	pub type Ncv32f = f32;
+	pub type Ncv32f_a = crate::cudalegacy::Ncv32f;
+	pub type Ncv32s = i32;
+	pub type Ncv32u = u32;
+	pub type Ncv32u_a = crate::cudalegacy::Ncv32u;
+	pub type Ncv64f = f64;
+	pub type Ncv64s = i64;
+	pub type Ncv64u = u64;
+	pub type Ncv8s = i8;
+	pub type Ncv8u = u8;
+	pub type NcvBool = bool;
 	/// Calculates optical flow for 2 images using block matching algorithm
 	///
 	/// ## Note
@@ -423,6 +613,28 @@ pub mod cudalegacy {
 		Ok(ret)
 	}
 
+	/// The class discriminates between foreground and background pixels by building and maintaining a model
+	/// of the background.
+	///
+	/// Any pixel which does not fit this model is then deemed to be foreground. The class implements
+	/// algorithm described in [FGD2003](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_FGD2003) .
+	/// ## See also
+	/// BackgroundSubtractor
+	pub struct CUDA_BackgroundSubtractorFGD {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { CUDA_BackgroundSubtractorFGD }
+
+	impl Drop for CUDA_BackgroundSubtractorFGD {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_BackgroundSubtractorFGD_delete(self.as_raw_mut_CUDA_BackgroundSubtractorFGD()) };
+		}
+	}
+
+	unsafe impl Send for CUDA_BackgroundSubtractorFGD {}
+
 	/// Constant methods for [crate::cudalegacy::CUDA_BackgroundSubtractorFGD]
 	pub trait CUDA_BackgroundSubtractorFGDTraitConst: crate::video::BackgroundSubtractorTraitConst {
 		fn as_raw_CUDA_BackgroundSubtractorFGD(&self) -> *const c_void;
@@ -449,27 +661,17 @@ pub mod cudalegacy {
 
 	}
 
-	/// The class discriminates between foreground and background pixels by building and maintaining a model
-	/// of the background.
-	///
-	/// Any pixel which does not fit this model is then deemed to be foreground. The class implements
-	/// algorithm described in [FGD2003](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_FGD2003) .
-	/// ## See also
-	/// BackgroundSubtractor
-	pub struct CUDA_BackgroundSubtractorFGD {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CUDA_BackgroundSubtractorFGD }
-
-	impl Drop for CUDA_BackgroundSubtractorFGD {
+	impl std::fmt::Debug for CUDA_BackgroundSubtractorFGD {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_BackgroundSubtractorFGD_delete(self.as_raw_mut_CUDA_BackgroundSubtractorFGD()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_BackgroundSubtractorFGD")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for CUDA_BackgroundSubtractorFGD {}
+	boxed_cast_base! { CUDA_BackgroundSubtractorFGD, core::Algorithm, cv_cuda_BackgroundSubtractorFGD_to_Algorithm }
+
+	boxed_cast_base! { CUDA_BackgroundSubtractorFGD, crate::video::BackgroundSubtractor, cv_cuda_BackgroundSubtractorFGD_to_BackgroundSubtractor }
 
 	impl core::AlgorithmTraitConst for CUDA_BackgroundSubtractorFGD {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -501,20 +703,25 @@ pub mod cudalegacy {
 
 	boxed_ref! { CUDA_BackgroundSubtractorFGD, crate::cudalegacy::CUDA_BackgroundSubtractorFGDTraitConst, as_raw_CUDA_BackgroundSubtractorFGD, crate::cudalegacy::CUDA_BackgroundSubtractorFGDTrait, as_raw_mut_CUDA_BackgroundSubtractorFGD }
 
-	impl CUDA_BackgroundSubtractorFGD {
+	/// Background/Foreground Segmentation Algorithm.
+	///
+	/// The class discriminates between foreground and background pixels by building and maintaining a model
+	/// of the background. Any pixel which does not fit this model is then deemed to be foreground. The
+	/// class implements algorithm described in [Gold2012](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Gold2012) .
+	pub struct CUDA_BackgroundSubtractorGMG {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { CUDA_BackgroundSubtractorFGD, core::Algorithm, cv_cuda_BackgroundSubtractorFGD_to_Algorithm }
+	opencv_type_boxed! { CUDA_BackgroundSubtractorGMG }
 
-	boxed_cast_base! { CUDA_BackgroundSubtractorFGD, crate::video::BackgroundSubtractor, cv_cuda_BackgroundSubtractorFGD_to_BackgroundSubtractor }
-
-	impl std::fmt::Debug for CUDA_BackgroundSubtractorFGD {
+	impl Drop for CUDA_BackgroundSubtractorGMG {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CUDA_BackgroundSubtractorFGD")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_BackgroundSubtractorGMG_delete(self.as_raw_mut_CUDA_BackgroundSubtractorGMG()) };
 		}
 	}
+
+	unsafe impl Send for CUDA_BackgroundSubtractorGMG {}
 
 	/// Constant methods for [crate::cudalegacy::CUDA_BackgroundSubtractorGMG]
 	pub trait CUDA_BackgroundSubtractorGMGTraitConst: crate::video::BackgroundSubtractorTraitConst {
@@ -719,25 +926,17 @@ pub mod cudalegacy {
 
 	}
 
-	/// Background/Foreground Segmentation Algorithm.
-	///
-	/// The class discriminates between foreground and background pixels by building and maintaining a model
-	/// of the background. Any pixel which does not fit this model is then deemed to be foreground. The
-	/// class implements algorithm described in [Gold2012](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Gold2012) .
-	pub struct CUDA_BackgroundSubtractorGMG {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CUDA_BackgroundSubtractorGMG }
-
-	impl Drop for CUDA_BackgroundSubtractorGMG {
+	impl std::fmt::Debug for CUDA_BackgroundSubtractorGMG {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_BackgroundSubtractorGMG_delete(self.as_raw_mut_CUDA_BackgroundSubtractorGMG()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_BackgroundSubtractorGMG")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for CUDA_BackgroundSubtractorGMG {}
+	boxed_cast_base! { CUDA_BackgroundSubtractorGMG, core::Algorithm, cv_cuda_BackgroundSubtractorGMG_to_Algorithm }
+
+	boxed_cast_base! { CUDA_BackgroundSubtractorGMG, crate::video::BackgroundSubtractor, cv_cuda_BackgroundSubtractorGMG_to_BackgroundSubtractor }
 
 	impl core::AlgorithmTraitConst for CUDA_BackgroundSubtractorGMG {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -769,19 +968,33 @@ pub mod cudalegacy {
 
 	boxed_ref! { CUDA_BackgroundSubtractorGMG, crate::cudalegacy::CUDA_BackgroundSubtractorGMGTraitConst, as_raw_CUDA_BackgroundSubtractorGMG, crate::cudalegacy::CUDA_BackgroundSubtractorGMGTrait, as_raw_mut_CUDA_BackgroundSubtractorGMG }
 
-	impl CUDA_BackgroundSubtractorGMG {
+	pub struct CUDA_FGDParams {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { CUDA_BackgroundSubtractorGMG, core::Algorithm, cv_cuda_BackgroundSubtractorGMG_to_Algorithm }
+	opencv_type_boxed! { CUDA_FGDParams }
 
-	boxed_cast_base! { CUDA_BackgroundSubtractorGMG, crate::video::BackgroundSubtractor, cv_cuda_BackgroundSubtractorGMG_to_BackgroundSubtractor }
-
-	impl std::fmt::Debug for CUDA_BackgroundSubtractorGMG {
+	impl Drop for CUDA_FGDParams {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CUDA_BackgroundSubtractorGMG")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_FGDParams_delete(self.as_raw_mut_CUDA_FGDParams()) };
 		}
+	}
+
+	unsafe impl Send for CUDA_FGDParams {}
+
+	impl CUDA_FGDParams {
+		/// default Params
+		#[inline]
+		pub fn default() -> Result<crate::cudalegacy::CUDA_FGDParams> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_FGDParams_FGDParams(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::cudalegacy::CUDA_FGDParams::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::cudalegacy::CUDA_FGDParams]
@@ -998,45 +1211,6 @@ pub mod cudalegacy {
 
 	}
 
-	pub struct CUDA_FGDParams {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CUDA_FGDParams }
-
-	impl Drop for CUDA_FGDParams {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_FGDParams_delete(self.as_raw_mut_CUDA_FGDParams()) };
-		}
-	}
-
-	unsafe impl Send for CUDA_FGDParams {}
-
-	impl crate::cudalegacy::CUDA_FGDParamsTraitConst for CUDA_FGDParams {
-		#[inline] fn as_raw_CUDA_FGDParams(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::cudalegacy::CUDA_FGDParamsTrait for CUDA_FGDParams {
-		#[inline] fn as_raw_mut_CUDA_FGDParams(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { CUDA_FGDParams, crate::cudalegacy::CUDA_FGDParamsTraitConst, as_raw_CUDA_FGDParams, crate::cudalegacy::CUDA_FGDParamsTrait, as_raw_mut_CUDA_FGDParams }
-
-	impl CUDA_FGDParams {
-		/// default Params
-		#[inline]
-		pub fn default() -> Result<crate::cudalegacy::CUDA_FGDParams> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_FGDParams_FGDParams(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::cudalegacy::CUDA_FGDParams::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
 	impl std::fmt::Debug for CUDA_FGDParams {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -1057,6 +1231,42 @@ pub mod cudalegacy {
 				.field("min_area", &crate::cudalegacy::CUDA_FGDParamsTraitConst::min_area(self))
 				.finish()
 		}
+	}
+
+	impl crate::cudalegacy::CUDA_FGDParamsTraitConst for CUDA_FGDParams {
+		#[inline] fn as_raw_CUDA_FGDParams(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::cudalegacy::CUDA_FGDParamsTrait for CUDA_FGDParams {
+		#[inline] fn as_raw_mut_CUDA_FGDParams(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { CUDA_FGDParams, crate::cudalegacy::CUDA_FGDParamsTraitConst, as_raw_CUDA_FGDParams, crate::cudalegacy::CUDA_FGDParamsTrait, as_raw_mut_CUDA_FGDParams }
+
+	pub struct CUDA_FastOpticalFlowBM {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { CUDA_FastOpticalFlowBM }
+
+	impl Drop for CUDA_FastOpticalFlowBM {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_FastOpticalFlowBM_delete(self.as_raw_mut_CUDA_FastOpticalFlowBM()) };
+		}
+	}
+
+	unsafe impl Send for CUDA_FastOpticalFlowBM {}
+
+	impl CUDA_FastOpticalFlowBM {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::cudalegacy::CUDA_FastOpticalFlowBM {
+			let ret = unsafe { sys::cv_cuda_FastOpticalFlowBM_defaultNew_const() };
+			let ret = unsafe { crate::cudalegacy::CUDA_FastOpticalFlowBM::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::cudalegacy::CUDA_FastOpticalFlowBM]
@@ -1098,20 +1308,21 @@ pub mod cudalegacy {
 
 	}
 
-	pub struct CUDA_FastOpticalFlowBM {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CUDA_FastOpticalFlowBM }
-
-	impl Drop for CUDA_FastOpticalFlowBM {
+	impl Default for CUDA_FastOpticalFlowBM {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_FastOpticalFlowBM_delete(self.as_raw_mut_CUDA_FastOpticalFlowBM()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for CUDA_FastOpticalFlowBM {}
+	impl std::fmt::Debug for CUDA_FastOpticalFlowBM {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_FastOpticalFlowBM")
+				.finish()
+		}
+	}
 
 	impl crate::cudalegacy::CUDA_FastOpticalFlowBMTraitConst for CUDA_FastOpticalFlowBM {
 		#[inline] fn as_raw_CUDA_FastOpticalFlowBM(&self) -> *const c_void { self.as_raw() }
@@ -1123,30 +1334,20 @@ pub mod cudalegacy {
 
 	boxed_ref! { CUDA_FastOpticalFlowBM, crate::cudalegacy::CUDA_FastOpticalFlowBMTraitConst, as_raw_CUDA_FastOpticalFlowBM, crate::cudalegacy::CUDA_FastOpticalFlowBMTrait, as_raw_mut_CUDA_FastOpticalFlowBM }
 
-	impl CUDA_FastOpticalFlowBM {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_cuda_FastOpticalFlowBM_defaultNew_const()) }
-		}
-
+	pub struct CUDA_ImagePyramid {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for CUDA_FastOpticalFlowBM {
+	opencv_type_boxed! { CUDA_ImagePyramid }
+
+	impl Drop for CUDA_ImagePyramid {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CUDA_FastOpticalFlowBM")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_ImagePyramid_delete(self.as_raw_mut_CUDA_ImagePyramid()) };
 		}
 	}
 
-	impl Default for CUDA_FastOpticalFlowBM {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
-	}
+	unsafe impl Send for CUDA_ImagePyramid {}
 
 	/// Constant methods for [crate::cudalegacy::CUDA_ImagePyramid]
 	pub trait CUDA_ImagePyramidTraitConst: core::AlgorithmTraitConst {
@@ -1185,20 +1386,15 @@ pub mod cudalegacy {
 
 	}
 
-	pub struct CUDA_ImagePyramid {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CUDA_ImagePyramid }
-
-	impl Drop for CUDA_ImagePyramid {
+	impl std::fmt::Debug for CUDA_ImagePyramid {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_ImagePyramid_delete(self.as_raw_mut_CUDA_ImagePyramid()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_ImagePyramid")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for CUDA_ImagePyramid {}
+	boxed_cast_base! { CUDA_ImagePyramid, core::Algorithm, cv_cuda_ImagePyramid_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for CUDA_ImagePyramid {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -1220,16 +1416,4 @@ pub mod cudalegacy {
 
 	boxed_ref! { CUDA_ImagePyramid, crate::cudalegacy::CUDA_ImagePyramidTraitConst, as_raw_CUDA_ImagePyramid, crate::cudalegacy::CUDA_ImagePyramidTrait, as_raw_mut_CUDA_ImagePyramid }
 
-	impl CUDA_ImagePyramid {
-	}
-
-	boxed_cast_base! { CUDA_ImagePyramid, core::Algorithm, cv_cuda_ImagePyramid_to_Algorithm }
-
-	impl std::fmt::Debug for CUDA_ImagePyramid {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CUDA_ImagePyramid")
-				.finish()
-		}
-	}
 }

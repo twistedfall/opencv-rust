@@ -518,6 +518,22 @@ pub mod ovis {
 		Ok(ret)
 	}
 
+	/// A 3D viewport and the associated scene
+	pub struct WindowScene {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { WindowScene }
+
+	impl Drop for WindowScene {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_ovis_WindowScene_delete(self.as_raw_mut_WindowScene()) };
+		}
+	}
+
+	unsafe impl Send for WindowScene {}
+
 	/// Constant methods for [crate::ovis::WindowScene]
 	pub trait WindowSceneTraitConst {
 		fn as_raw_WindowScene(&self) -> *const c_void;
@@ -1350,21 +1366,13 @@ pub mod ovis {
 
 	}
 
-	/// A 3D viewport and the associated scene
-	pub struct WindowScene {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { WindowScene }
-
-	impl Drop for WindowScene {
+	impl std::fmt::Debug for WindowScene {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ovis_WindowScene_delete(self.as_raw_mut_WindowScene()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WindowScene")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for WindowScene {}
 
 	impl crate::ovis::WindowSceneTraitConst for WindowScene {
 		#[inline] fn as_raw_WindowScene(&self) -> *const c_void { self.as_raw() }
@@ -1376,14 +1384,4 @@ pub mod ovis {
 
 	boxed_ref! { WindowScene, crate::ovis::WindowSceneTraitConst, as_raw_WindowScene, crate::ovis::WindowSceneTrait, as_raw_mut_WindowScene }
 
-	impl WindowScene {
-	}
-
-	impl std::fmt::Debug for WindowScene {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("WindowScene")
-				.finish()
-		}
-	}
 }

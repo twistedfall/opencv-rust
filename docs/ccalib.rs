@@ -587,6 +587,34 @@ pub mod ccalib {
 		Ok(ret)
 	}
 
+	pub struct CustomPattern {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { CustomPattern }
+
+	impl Drop for CustomPattern {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_ccalib_CustomPattern_delete(self.as_raw_mut_CustomPattern()) };
+		}
+	}
+
+	unsafe impl Send for CustomPattern {}
+
+	impl CustomPattern {
+		#[inline]
+		pub fn default() -> Result<crate::ccalib::CustomPattern> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccalib_CustomPattern_CustomPattern(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::ccalib::CustomPattern::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
 	/// Constant methods for [crate::ccalib::CustomPattern]
 	pub trait CustomPatternTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_CustomPattern(&self) -> *const c_void;
@@ -985,20 +1013,15 @@ pub mod ccalib {
 
 	}
 
-	pub struct CustomPattern {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CustomPattern }
-
-	impl Drop for CustomPattern {
+	impl std::fmt::Debug for CustomPattern {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ccalib_CustomPattern_delete(self.as_raw_mut_CustomPattern()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CustomPattern")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for CustomPattern {}
+	boxed_cast_base! { CustomPattern, core::Algorithm, cv_ccalib_CustomPattern_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for CustomPattern {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -1020,27 +1043,75 @@ pub mod ccalib {
 
 	boxed_ref! { CustomPattern, crate::ccalib::CustomPatternTraitConst, as_raw_CustomPattern, crate::ccalib::CustomPatternTrait, as_raw_mut_CustomPattern }
 
-	impl CustomPattern {
+	/// Class for multiple camera calibration that supports pinhole camera and omnidirection camera.
+	/// For omnidirectional camera model, please refer to omnidir.hpp in ccalib module.
+	/// It first calibrate each camera individually, then a bundle adjustment like optimization is applied to
+	/// refine extrinsic parameters. So far, it only support "random" pattern for calibration,
+	/// see randomPattern.hpp in ccalib module for details.
+	/// Images that are used should be named by "cameraIdx-timestamp.*", several images with the same timestamp
+	/// means that they are the same pattern that are photographed. cameraIdx should start from 0.
+	///
+	/// For more details, please refer to paper
+	///    B. Li, L. Heng, K. Kevin  and M. Pollefeys, "A Multiple-Camera System
+	///    Calibration Toolbox Using A Feature Descriptor-Based Calibration
+	///    Pattern", in IROS 2013.
+	pub struct MultiCameraCalibration {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { MultiCameraCalibration }
+
+	impl Drop for MultiCameraCalibration {
 		#[inline]
-		pub fn default() -> Result<crate::ccalib::CustomPattern> {
+		fn drop(&mut self) {
+			unsafe { sys::cv_multicalib_MultiCameraCalibration_delete(self.as_raw_mut_MultiCameraCalibration()) };
+		}
+	}
+
+	unsafe impl Send for MultiCameraCalibration {}
+
+	impl MultiCameraCalibration {
+		/// ## C++ default parameters
+		/// * verbose: 0
+		/// * show_extration: 0
+		/// * n_mini_matches: 20
+		/// * flags: 0
+		/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,200,1e-7)
+		/// * detector: AKAZE::create(AKAZE::DESCRIPTOR_MLDB,0,3,0.006f)
+		/// * descriptor: AKAZE::create(AKAZE::DESCRIPTOR_MLDB,0,3,0.006f)
+		/// * matcher: DescriptorMatcher::create("BruteForce-L1")
+		#[inline]
+		pub fn new(camera_type: i32, n_cameras: i32, file_name: &str, pattern_width: f32, pattern_height: f32, verbose: i32, show_extration: i32, n_mini_matches: i32, flags: i32, criteria: core::TermCriteria, mut detector: core::Ptr<crate::features2d::Feature2D>, mut descriptor: core::Ptr<crate::features2d::Feature2D>, mut matcher: core::Ptr<crate::features2d::DescriptorMatcher>) -> Result<crate::ccalib::MultiCameraCalibration> {
+			extern_container_arg!(file_name);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ccalib_CustomPattern_CustomPattern(ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_multicalib_MultiCameraCalibration_MultiCameraCalibration_int_int_const_stringR_float_float_int_int_int_int_TermCriteria_PtrLFeature2DG_PtrLFeature2DG_PtrLDescriptorMatcherG(camera_type, n_cameras, file_name.opencv_as_extern(), pattern_width, pattern_height, verbose, show_extration, n_mini_matches, flags, &criteria, detector.as_raw_mut_PtrOfFeature2D(), descriptor.as_raw_mut_PtrOfFeature2D(), matcher.as_raw_mut_PtrOfDescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::ccalib::CustomPattern::opencv_from_extern(ret) };
+			let ret = unsafe { crate::ccalib::MultiCameraCalibration::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	boxed_cast_base! { CustomPattern, core::Algorithm, cv_ccalib_CustomPattern_to_Algorithm }
-
-	impl std::fmt::Debug for CustomPattern {
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * verbose: 0
+		/// * show_extration: 0
+		/// * n_mini_matches: 20
+		/// * flags: 0
+		/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,200,1e-7)
+		/// * detector: AKAZE::create(AKAZE::DESCRIPTOR_MLDB,0,3,0.006f)
+		/// * descriptor: AKAZE::create(AKAZE::DESCRIPTOR_MLDB,0,3,0.006f)
+		/// * matcher: DescriptorMatcher::create("BruteForce-L1")
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CustomPattern")
-				.finish()
+		pub fn new_def(camera_type: i32, n_cameras: i32, file_name: &str, pattern_width: f32, pattern_height: f32) -> Result<crate::ccalib::MultiCameraCalibration> {
+			extern_container_arg!(file_name);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_multicalib_MultiCameraCalibration_MultiCameraCalibration_int_int_const_stringR_float_float(camera_type, n_cameras, file_name.opencv_as_extern(), pattern_width, pattern_height, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::ccalib::MultiCameraCalibration::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
 	}
 
 	/// Constant methods for [crate::ccalib::MultiCameraCalibration]
@@ -1101,32 +1172,13 @@ pub mod ccalib {
 
 	}
 
-	/// Class for multiple camera calibration that supports pinhole camera and omnidirection camera.
-	/// For omnidirectional camera model, please refer to omnidir.hpp in ccalib module.
-	/// It first calibrate each camera individually, then a bundle adjustment like optimization is applied to
-	/// refine extrinsic parameters. So far, it only support "random" pattern for calibration,
-	/// see randomPattern.hpp in ccalib module for details.
-	/// Images that are used should be named by "cameraIdx-timestamp.*", several images with the same timestamp
-	/// means that they are the same pattern that are photographed. cameraIdx should start from 0.
-	///
-	/// For more details, please refer to paper
-	///    B. Li, L. Heng, K. Kevin  and M. Pollefeys, "A Multiple-Camera System
-	///    Calibration Toolbox Using A Feature Descriptor-Based Calibration
-	///    Pattern", in IROS 2013.
-	pub struct MultiCameraCalibration {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { MultiCameraCalibration }
-
-	impl Drop for MultiCameraCalibration {
+	impl std::fmt::Debug for MultiCameraCalibration {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_multicalib_MultiCameraCalibration_delete(self.as_raw_mut_MultiCameraCalibration()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MultiCameraCalibration")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for MultiCameraCalibration {}
 
 	impl crate::ccalib::MultiCameraCalibrationTraitConst for MultiCameraCalibration {
 		#[inline] fn as_raw_MultiCameraCalibration(&self) -> *const c_void { self.as_raw() }
@@ -1138,56 +1190,32 @@ pub mod ccalib {
 
 	boxed_ref! { MultiCameraCalibration, crate::ccalib::MultiCameraCalibrationTraitConst, as_raw_MultiCameraCalibration, crate::ccalib::MultiCameraCalibrationTrait, as_raw_mut_MultiCameraCalibration }
 
-	impl MultiCameraCalibration {
-		/// ## C++ default parameters
-		/// * verbose: 0
-		/// * show_extration: 0
-		/// * n_mini_matches: 20
-		/// * flags: 0
-		/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,200,1e-7)
-		/// * detector: AKAZE::create(AKAZE::DESCRIPTOR_MLDB,0,3,0.006f)
-		/// * descriptor: AKAZE::create(AKAZE::DESCRIPTOR_MLDB,0,3,0.006f)
-		/// * matcher: DescriptorMatcher::create("BruteForce-L1")
-		#[inline]
-		pub fn new(camera_type: i32, n_cameras: i32, file_name: &str, pattern_width: f32, pattern_height: f32, verbose: i32, show_extration: i32, n_mini_matches: i32, flags: i32, criteria: core::TermCriteria, mut detector: core::Ptr<crate::features2d::Feature2D>, mut descriptor: core::Ptr<crate::features2d::Feature2D>, mut matcher: core::Ptr<crate::features2d::DescriptorMatcher>) -> Result<crate::ccalib::MultiCameraCalibration> {
-			extern_container_arg!(file_name);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_multicalib_MultiCameraCalibration_MultiCameraCalibration_int_int_const_stringR_float_float_int_int_int_int_TermCriteria_PtrLFeature2DG_PtrLFeature2DG_PtrLDescriptorMatcherG(camera_type, n_cameras, file_name.opencv_as_extern(), pattern_width, pattern_height, verbose, show_extration, n_mini_matches, flags, &criteria, detector.as_raw_mut_PtrOfFeature2D(), descriptor.as_raw_mut_PtrOfFeature2D(), matcher.as_raw_mut_PtrOfDescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::ccalib::MultiCameraCalibration::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * verbose: 0
-		/// * show_extration: 0
-		/// * n_mini_matches: 20
-		/// * flags: 0
-		/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,200,1e-7)
-		/// * detector: AKAZE::create(AKAZE::DESCRIPTOR_MLDB,0,3,0.006f)
-		/// * descriptor: AKAZE::create(AKAZE::DESCRIPTOR_MLDB,0,3,0.006f)
-		/// * matcher: DescriptorMatcher::create("BruteForce-L1")
-		#[inline]
-		pub fn new_def(camera_type: i32, n_cameras: i32, file_name: &str, pattern_width: f32, pattern_height: f32) -> Result<crate::ccalib::MultiCameraCalibration> {
-			extern_container_arg!(file_name);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_multicalib_MultiCameraCalibration_MultiCameraCalibration_int_int_const_stringR_float_float(camera_type, n_cameras, file_name.opencv_as_extern(), pattern_width, pattern_height, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::ccalib::MultiCameraCalibration::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	pub struct MultiCameraCalibration_edge {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for MultiCameraCalibration {
+	opencv_type_boxed! { MultiCameraCalibration_edge }
+
+	impl Drop for MultiCameraCalibration_edge {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("MultiCameraCalibration")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_delete(self.as_raw_mut_MultiCameraCalibration_edge()) };
 		}
+	}
+
+	unsafe impl Send for MultiCameraCalibration_edge {}
+
+	impl MultiCameraCalibration_edge {
+		#[inline]
+		pub fn new(cv: i32, pv: i32, pi: i32, mut trans: impl core::MatTrait) -> Result<crate::ccalib::MultiCameraCalibration_edge> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_edge_int_int_int_Mat(cv, pv, pi, trans.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::ccalib::MultiCameraCalibration_edge::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::ccalib::MultiCameraCalibration_edge]
@@ -1251,20 +1279,17 @@ pub mod ccalib {
 
 	}
 
-	pub struct MultiCameraCalibration_edge {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { MultiCameraCalibration_edge }
-
-	impl Drop for MultiCameraCalibration_edge {
+	impl std::fmt::Debug for MultiCameraCalibration_edge {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_delete(self.as_raw_mut_MultiCameraCalibration_edge()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MultiCameraCalibration_edge")
+				.field("camera_vertex", &crate::ccalib::MultiCameraCalibration_edgeTraitConst::camera_vertex(self))
+				.field("photo_vertex", &crate::ccalib::MultiCameraCalibration_edgeTraitConst::photo_vertex(self))
+				.field("photo_index", &crate::ccalib::MultiCameraCalibration_edgeTraitConst::photo_index(self))
+				.field("transform", &crate::ccalib::MultiCameraCalibration_edgeTraitConst::transform(self))
+				.finish()
 		}
 	}
-
-	unsafe impl Send for MultiCameraCalibration_edge {}
 
 	impl crate::ccalib::MultiCameraCalibration_edgeTraitConst for MultiCameraCalibration_edge {
 		#[inline] fn as_raw_MultiCameraCalibration_edge(&self) -> *const c_void { self.as_raw() }
@@ -1276,29 +1301,42 @@ pub mod ccalib {
 
 	boxed_ref! { MultiCameraCalibration_edge, crate::ccalib::MultiCameraCalibration_edgeTraitConst, as_raw_MultiCameraCalibration_edge, crate::ccalib::MultiCameraCalibration_edgeTrait, as_raw_mut_MultiCameraCalibration_edge }
 
-	impl MultiCameraCalibration_edge {
+	pub struct MultiCameraCalibration_vertex {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { MultiCameraCalibration_vertex }
+
+	impl Drop for MultiCameraCalibration_vertex {
 		#[inline]
-		pub fn new(cv: i32, pv: i32, pi: i32, mut trans: impl core::MatTrait) -> Result<crate::ccalib::MultiCameraCalibration_edge> {
+		fn drop(&mut self) {
+			unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_delete(self.as_raw_mut_MultiCameraCalibration_vertex()) };
+		}
+	}
+
+	unsafe impl Send for MultiCameraCalibration_vertex {}
+
+	impl MultiCameraCalibration_vertex {
+		#[inline]
+		pub fn new(mut po: impl core::MatTrait, ts: i32) -> Result<crate::ccalib::MultiCameraCalibration_vertex> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_edge_int_int_int_Mat(cv, pv, pi, trans.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_vertex_Mat_int(po.as_raw_mut_Mat(), ts, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::ccalib::MultiCameraCalibration_edge::opencv_from_extern(ret) };
+			let ret = unsafe { crate::ccalib::MultiCameraCalibration_vertex::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	impl std::fmt::Debug for MultiCameraCalibration_edge {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("MultiCameraCalibration_edge")
-				.field("camera_vertex", &crate::ccalib::MultiCameraCalibration_edgeTraitConst::camera_vertex(self))
-				.field("photo_vertex", &crate::ccalib::MultiCameraCalibration_edgeTraitConst::photo_vertex(self))
-				.field("photo_index", &crate::ccalib::MultiCameraCalibration_edgeTraitConst::photo_index(self))
-				.field("transform", &crate::ccalib::MultiCameraCalibration_edgeTraitConst::transform(self))
-				.finish()
+		pub fn default() -> Result<crate::ccalib::MultiCameraCalibration_vertex> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_vertex(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::ccalib::MultiCameraCalibration_vertex::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
 	}
 
 	/// Constant methods for [crate::ccalib::MultiCameraCalibration_vertex]
@@ -1338,20 +1376,15 @@ pub mod ccalib {
 
 	}
 
-	pub struct MultiCameraCalibration_vertex {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { MultiCameraCalibration_vertex }
-
-	impl Drop for MultiCameraCalibration_vertex {
+	impl std::fmt::Debug for MultiCameraCalibration_vertex {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_delete(self.as_raw_mut_MultiCameraCalibration_vertex()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MultiCameraCalibration_vertex")
+				.field("pose", &crate::ccalib::MultiCameraCalibration_vertexTraitConst::pose(self))
+				.field("timestamp", &crate::ccalib::MultiCameraCalibration_vertexTraitConst::timestamp(self))
+				.finish()
 		}
 	}
-
-	unsafe impl Send for MultiCameraCalibration_vertex {}
 
 	impl crate::ccalib::MultiCameraCalibration_vertexTraitConst for MultiCameraCalibration_vertex {
 		#[inline] fn as_raw_MultiCameraCalibration_vertex(&self) -> *const c_void { self.as_raw() }
@@ -1363,37 +1396,68 @@ pub mod ccalib {
 
 	boxed_ref! { MultiCameraCalibration_vertex, crate::ccalib::MultiCameraCalibration_vertexTraitConst, as_raw_MultiCameraCalibration_vertex, crate::ccalib::MultiCameraCalibration_vertexTrait, as_raw_mut_MultiCameraCalibration_vertex }
 
-	impl MultiCameraCalibration_vertex {
-		#[inline]
-		pub fn new(mut po: impl core::MatTrait, ts: i32) -> Result<crate::ccalib::MultiCameraCalibration_vertex> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_vertex_Mat_int(po.as_raw_mut_Mat(), ts, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::ccalib::MultiCameraCalibration_vertex::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn default() -> Result<crate::ccalib::MultiCameraCalibration_vertex> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_vertex(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::ccalib::MultiCameraCalibration_vertex::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// Class for finding features points and corresponding 3D in world coordinate of
+	/// a "random" pattern, which can be to be used in calibration. It is useful when pattern is
+	/// partly occluded or only a part of pattern can be observed in multiple cameras calibration.
+	/// The pattern can be generated by RandomPatternGenerator class described in this file.
+	///
+	/// Please refer to paper
+	///    B. Li, L. Heng, K. Kevin  and M. Pollefeys, "A Multiple-Camera System
+	///    Calibration Toolbox Using A Feature Descriptor-Based Calibration
+	///    Pattern", in IROS 2013.
+	pub struct RandomPatternCornerFinder {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for MultiCameraCalibration_vertex {
+	opencv_type_boxed! { RandomPatternCornerFinder }
+
+	impl Drop for RandomPatternCornerFinder {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("MultiCameraCalibration_vertex")
-				.field("pose", &crate::ccalib::MultiCameraCalibration_vertexTraitConst::pose(self))
-				.field("timestamp", &crate::ccalib::MultiCameraCalibration_vertexTraitConst::timestamp(self))
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_randpattern_RandomPatternCornerFinder_delete(self.as_raw_mut_RandomPatternCornerFinder()) };
 		}
+	}
+
+	unsafe impl Send for RandomPatternCornerFinder {}
+
+	impl RandomPatternCornerFinder {
+		/// ## C++ default parameters
+		/// * nmini_match: 20
+		/// * depth: CV_32F
+		/// * verbose: 0
+		/// * show_extraction: 0
+		/// * detector: AKAZE::create(AKAZE::DESCRIPTOR_MLDB,0,3,0.005f)
+		/// * descriptor: AKAZE::create(AKAZE::DESCRIPTOR_MLDB,0,3,0.005f)
+		/// * matcher: DescriptorMatcher::create("BruteForce-L1")
+		#[inline]
+		pub fn new(pattern_width: f32, pattern_height: f32, nmini_match: i32, depth: i32, verbose: i32, show_extraction: i32, mut detector: core::Ptr<crate::features2d::Feature2D>, mut descriptor: core::Ptr<crate::features2d::Feature2D>, mut matcher: core::Ptr<crate::features2d::DescriptorMatcher>) -> Result<crate::ccalib::RandomPatternCornerFinder> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_randpattern_RandomPatternCornerFinder_RandomPatternCornerFinder_float_float_int_int_int_int_PtrLFeature2DG_PtrLFeature2DG_PtrLDescriptorMatcherG(pattern_width, pattern_height, nmini_match, depth, verbose, show_extraction, detector.as_raw_mut_PtrOfFeature2D(), descriptor.as_raw_mut_PtrOfFeature2D(), matcher.as_raw_mut_PtrOfDescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::ccalib::RandomPatternCornerFinder::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * nmini_match: 20
+		/// * depth: CV_32F
+		/// * verbose: 0
+		/// * show_extraction: 0
+		/// * detector: AKAZE::create(AKAZE::DESCRIPTOR_MLDB,0,3,0.005f)
+		/// * descriptor: AKAZE::create(AKAZE::DESCRIPTOR_MLDB,0,3,0.005f)
+		/// * matcher: DescriptorMatcher::create("BruteForce-L1")
+		#[inline]
+		pub fn new_def(pattern_width: f32, pattern_height: f32) -> Result<crate::ccalib::RandomPatternCornerFinder> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_randpattern_RandomPatternCornerFinder_RandomPatternCornerFinder_float_float(pattern_width, pattern_height, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::ccalib::RandomPatternCornerFinder::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::ccalib::RandomPatternCornerFinder]
@@ -1465,29 +1529,13 @@ pub mod ccalib {
 
 	}
 
-	/// Class for finding features points and corresponding 3D in world coordinate of
-	/// a "random" pattern, which can be to be used in calibration. It is useful when pattern is
-	/// partly occluded or only a part of pattern can be observed in multiple cameras calibration.
-	/// The pattern can be generated by RandomPatternGenerator class described in this file.
-	///
-	/// Please refer to paper
-	///    B. Li, L. Heng, K. Kevin  and M. Pollefeys, "A Multiple-Camera System
-	///    Calibration Toolbox Using A Feature Descriptor-Based Calibration
-	///    Pattern", in IROS 2013.
-	pub struct RandomPatternCornerFinder {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { RandomPatternCornerFinder }
-
-	impl Drop for RandomPatternCornerFinder {
+	impl std::fmt::Debug for RandomPatternCornerFinder {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_randpattern_RandomPatternCornerFinder_delete(self.as_raw_mut_RandomPatternCornerFinder()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("RandomPatternCornerFinder")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for RandomPatternCornerFinder {}
 
 	impl crate::ccalib::RandomPatternCornerFinderTraitConst for RandomPatternCornerFinder {
 		#[inline] fn as_raw_RandomPatternCornerFinder(&self) -> *const c_void { self.as_raw() }
@@ -1499,52 +1547,32 @@ pub mod ccalib {
 
 	boxed_ref! { RandomPatternCornerFinder, crate::ccalib::RandomPatternCornerFinderTraitConst, as_raw_RandomPatternCornerFinder, crate::ccalib::RandomPatternCornerFinderTrait, as_raw_mut_RandomPatternCornerFinder }
 
-	impl RandomPatternCornerFinder {
-		/// ## C++ default parameters
-		/// * nmini_match: 20
-		/// * depth: CV_32F
-		/// * verbose: 0
-		/// * show_extraction: 0
-		/// * detector: AKAZE::create(AKAZE::DESCRIPTOR_MLDB,0,3,0.005f)
-		/// * descriptor: AKAZE::create(AKAZE::DESCRIPTOR_MLDB,0,3,0.005f)
-		/// * matcher: DescriptorMatcher::create("BruteForce-L1")
-		#[inline]
-		pub fn new(pattern_width: f32, pattern_height: f32, nmini_match: i32, depth: i32, verbose: i32, show_extraction: i32, mut detector: core::Ptr<crate::features2d::Feature2D>, mut descriptor: core::Ptr<crate::features2d::Feature2D>, mut matcher: core::Ptr<crate::features2d::DescriptorMatcher>) -> Result<crate::ccalib::RandomPatternCornerFinder> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_randpattern_RandomPatternCornerFinder_RandomPatternCornerFinder_float_float_int_int_int_int_PtrLFeature2DG_PtrLFeature2DG_PtrLDescriptorMatcherG(pattern_width, pattern_height, nmini_match, depth, verbose, show_extraction, detector.as_raw_mut_PtrOfFeature2D(), descriptor.as_raw_mut_PtrOfFeature2D(), matcher.as_raw_mut_PtrOfDescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::ccalib::RandomPatternCornerFinder::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * nmini_match: 20
-		/// * depth: CV_32F
-		/// * verbose: 0
-		/// * show_extraction: 0
-		/// * detector: AKAZE::create(AKAZE::DESCRIPTOR_MLDB,0,3,0.005f)
-		/// * descriptor: AKAZE::create(AKAZE::DESCRIPTOR_MLDB,0,3,0.005f)
-		/// * matcher: DescriptorMatcher::create("BruteForce-L1")
-		#[inline]
-		pub fn new_def(pattern_width: f32, pattern_height: f32) -> Result<crate::ccalib::RandomPatternCornerFinder> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_randpattern_RandomPatternCornerFinder_RandomPatternCornerFinder_float_float(pattern_width, pattern_height, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::ccalib::RandomPatternCornerFinder::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	pub struct RandomPatternGenerator {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for RandomPatternCornerFinder {
+	opencv_type_boxed! { RandomPatternGenerator }
+
+	impl Drop for RandomPatternGenerator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("RandomPatternCornerFinder")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_randpattern_RandomPatternGenerator_delete(self.as_raw_mut_RandomPatternGenerator()) };
 		}
+	}
+
+	unsafe impl Send for RandomPatternGenerator {}
+
+	impl RandomPatternGenerator {
+		#[inline]
+		pub fn new(image_width: i32, image_height: i32) -> Result<crate::ccalib::RandomPatternGenerator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_randpattern_RandomPatternGenerator_RandomPatternGenerator_int_int(image_width, image_height, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::ccalib::RandomPatternGenerator::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::ccalib::RandomPatternGenerator]
@@ -1578,20 +1606,13 @@ pub mod ccalib {
 
 	}
 
-	pub struct RandomPatternGenerator {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { RandomPatternGenerator }
-
-	impl Drop for RandomPatternGenerator {
+	impl std::fmt::Debug for RandomPatternGenerator {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_randpattern_RandomPatternGenerator_delete(self.as_raw_mut_RandomPatternGenerator()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("RandomPatternGenerator")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for RandomPatternGenerator {}
 
 	impl crate::ccalib::RandomPatternGeneratorTraitConst for RandomPatternGenerator {
 		#[inline] fn as_raw_RandomPatternGenerator(&self) -> *const c_void { self.as_raw() }
@@ -1603,24 +1624,4 @@ pub mod ccalib {
 
 	boxed_ref! { RandomPatternGenerator, crate::ccalib::RandomPatternGeneratorTraitConst, as_raw_RandomPatternGenerator, crate::ccalib::RandomPatternGeneratorTrait, as_raw_mut_RandomPatternGenerator }
 
-	impl RandomPatternGenerator {
-		#[inline]
-		pub fn new(image_width: i32, image_height: i32) -> Result<crate::ccalib::RandomPatternGenerator> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_randpattern_RandomPatternGenerator_RandomPatternGenerator_int_int(image_width, image_height, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::ccalib::RandomPatternGenerator::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	impl std::fmt::Debug for RandomPatternGenerator {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("RandomPatternGenerator")
-				.finish()
-		}
-	}
 }

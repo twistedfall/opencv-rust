@@ -656,14 +656,6 @@ mod core_types {
 		#[inline] fn as_raw_mut_GpuMat_Allocator(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
 	}
 
-	impl core::MatOpTraitConst for types::AbstractRefMut<'static, core::MatOp> {
-		#[inline] fn as_raw_MatOp(&self) -> extern_send!(Self) { self.as_raw() }
-	}
-
-	impl core::MatOpTrait for types::AbstractRefMut<'static, core::MatOp> {
-		#[inline] fn as_raw_mut_MatOp(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
-	}
-
 	ptr_extern! { core::Algorithm,
 		cv_PtrLcv_AlgorithmG_new_null_const, cv_PtrLcv_AlgorithmG_delete, cv_PtrLcv_AlgorithmG_getInnerPtr_const, cv_PtrLcv_AlgorithmG_getInnerPtrMut
 	}
@@ -3944,6 +3936,14 @@ mod core_types {
 	}
 
 	output_array_ref_forward! { core::Vector<u8> }
+
+	impl core::MatOpTraitConst for types::AbstractRefMut<'static, core::MatOp> {
+		#[inline] fn as_raw_MatOp(&self) -> extern_send!(Self) { self.as_raw() }
+	}
+
+	impl core::MatOpTrait for types::AbstractRefMut<'static, core::MatOp> {
+		#[inline] fn as_raw_mut_MatOp(&mut self) -> extern_send!(mut Self) { self.as_raw_mut() }
+	}
 
 }
 pub use core_types::*;

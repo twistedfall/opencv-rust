@@ -1011,6 +1011,48 @@ pub mod aruco {
 		Ok(ret)
 	}
 
+	/// Pose estimation parameters
+	///
+	/// ## Parameters
+	/// * pattern: Defines center this system and axes direction (default PatternPositionType::ARUCO_CCW_CENTER).
+	/// * useExtrinsicGuess: Parameter used for SOLVEPNP_ITERATIVE. If true (1), the function uses the provided
+	/// rvec and tvec values as initial approximations of the rotation and translation vectors, respectively, and further
+	/// optimizes them (default false).
+	/// * solvePnPMethod: Method for solving a PnP problem: see [calib3d_solvePnP_flags] (default SOLVEPNP_ITERATIVE).
+	///
+	///
+	/// **Deprecated**: Use Board::matchImagePoints and cv::solvePnP
+	/// ## See also
+	/// PatternPositionType, solvePnP()
+	#[deprecated = "Use Board::matchImagePoints and cv::solvePnP"]
+	pub struct EstimateParameters {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { EstimateParameters }
+
+	impl Drop for EstimateParameters {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_aruco_EstimateParameters_delete(self.as_raw_mut_EstimateParameters()) };
+		}
+	}
+
+	unsafe impl Send for EstimateParameters {}
+
+	impl EstimateParameters {
+		#[inline]
+		pub fn default() -> Result<crate::aruco::EstimateParameters> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_aruco_EstimateParameters_EstimateParameters(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::aruco::EstimateParameters::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
 	/// Constant methods for [crate::aruco::EstimateParameters]
 	pub trait EstimateParametersTraitConst {
 		fn as_raw_EstimateParameters(&self) -> *const c_void;
@@ -1061,58 +1103,6 @@ pub mod aruco {
 
 	}
 
-	/// Pose estimation parameters
-	///
-	/// ## Parameters
-	/// * pattern: Defines center this system and axes direction (default PatternPositionType::ARUCO_CCW_CENTER).
-	/// * useExtrinsicGuess: Parameter used for SOLVEPNP_ITERATIVE. If true (1), the function uses the provided
-	/// rvec and tvec values as initial approximations of the rotation and translation vectors, respectively, and further
-	/// optimizes them (default false).
-	/// * solvePnPMethod: Method for solving a PnP problem: see [calib3d_solvePnP_flags] (default SOLVEPNP_ITERATIVE).
-	///
-	///
-	/// **Deprecated**: Use Board::matchImagePoints and cv::solvePnP
-	/// ## See also
-	/// PatternPositionType, solvePnP()
-	#[deprecated = "Use Board::matchImagePoints and cv::solvePnP"]
-	pub struct EstimateParameters {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { EstimateParameters }
-
-	impl Drop for EstimateParameters {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_aruco_EstimateParameters_delete(self.as_raw_mut_EstimateParameters()) };
-		}
-	}
-
-	unsafe impl Send for EstimateParameters {}
-
-	impl crate::aruco::EstimateParametersTraitConst for EstimateParameters {
-		#[inline] fn as_raw_EstimateParameters(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::aruco::EstimateParametersTrait for EstimateParameters {
-		#[inline] fn as_raw_mut_EstimateParameters(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { EstimateParameters, crate::aruco::EstimateParametersTraitConst, as_raw_EstimateParameters, crate::aruco::EstimateParametersTrait, as_raw_mut_EstimateParameters }
-
-	impl EstimateParameters {
-		#[inline]
-		pub fn default() -> Result<crate::aruco::EstimateParameters> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_aruco_EstimateParameters_EstimateParameters(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::aruco::EstimateParameters::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
 	impl Clone for EstimateParameters {
 		#[inline]
 		fn clone(&self) -> Self {
@@ -1130,4 +1120,15 @@ pub mod aruco {
 				.finish()
 		}
 	}
+
+	impl crate::aruco::EstimateParametersTraitConst for EstimateParameters {
+		#[inline] fn as_raw_EstimateParameters(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::aruco::EstimateParametersTrait for EstimateParameters {
+		#[inline] fn as_raw_mut_EstimateParameters(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { EstimateParameters, crate::aruco::EstimateParametersTraitConst, as_raw_EstimateParameters, crate::aruco::EstimateParametersTrait, as_raw_mut_EstimateParameters }
+
 }

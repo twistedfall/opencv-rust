@@ -11285,6 +11285,22 @@ pub mod imgproc {
 		Ok(ret)
 	}
 
+	/// Base class for Contrast Limited Adaptive Histogram Equalization.
+	pub struct CLAHE {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { CLAHE }
+
+	impl Drop for CLAHE {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_CLAHE_delete(self.as_raw_mut_CLAHE()) };
+		}
+	}
+
+	unsafe impl Send for CLAHE {}
+
 	/// Constant methods for [crate::imgproc::CLAHE]
 	pub trait CLAHETraitConst: core::AlgorithmTraitConst {
 		fn as_raw_CLAHE(&self) -> *const c_void;
@@ -11369,21 +11385,15 @@ pub mod imgproc {
 
 	}
 
-	/// Base class for Contrast Limited Adaptive Histogram Equalization.
-	pub struct CLAHE {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CLAHE }
-
-	impl Drop for CLAHE {
+	impl std::fmt::Debug for CLAHE {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_CLAHE_delete(self.as_raw_mut_CLAHE()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CLAHE")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for CLAHE {}
+	boxed_cast_base! { CLAHE, core::Algorithm, cv_CLAHE_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for CLAHE {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -11405,18 +11415,21 @@ pub mod imgproc {
 
 	boxed_ref! { CLAHE, crate::imgproc::CLAHETraitConst, as_raw_CLAHE, crate::imgproc::CLAHETrait, as_raw_mut_CLAHE }
 
-	impl CLAHE {
+	/// finds arbitrary template in the grayscale image using Generalized Hough Transform
+	pub struct GeneralizedHough {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { CLAHE, core::Algorithm, cv_CLAHE_to_Algorithm }
+	opencv_type_boxed! { GeneralizedHough }
 
-	impl std::fmt::Debug for CLAHE {
+	impl Drop for GeneralizedHough {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CLAHE")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_GeneralizedHough_delete(self.as_raw_mut_GeneralizedHough()) };
 		}
 	}
+
+	unsafe impl Send for GeneralizedHough {}
 
 	/// Constant methods for [crate::imgproc::GeneralizedHough]
 	pub trait GeneralizedHoughTraitConst: core::AlgorithmTraitConst {
@@ -11647,21 +11660,19 @@ pub mod imgproc {
 
 	}
 
-	/// finds arbitrary template in the grayscale image using Generalized Hough Transform
-	pub struct GeneralizedHough {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GeneralizedHough }
-
-	impl Drop for GeneralizedHough {
+	impl std::fmt::Debug for GeneralizedHough {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_GeneralizedHough_delete(self.as_raw_mut_GeneralizedHough()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GeneralizedHough")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for GeneralizedHough {}
+	boxed_cast_base! { GeneralizedHough, core::Algorithm, cv_GeneralizedHough_to_Algorithm }
+
+	boxed_cast_descendant! { GeneralizedHough, crate::imgproc::GeneralizedHoughBallard, cv_GeneralizedHough_to_GeneralizedHoughBallard }
+
+	boxed_cast_descendant! { GeneralizedHough, crate::imgproc::GeneralizedHoughGuil, cv_GeneralizedHough_to_GeneralizedHoughGuil }
 
 	impl core::AlgorithmTraitConst for GeneralizedHough {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -11683,22 +11694,23 @@ pub mod imgproc {
 
 	boxed_ref! { GeneralizedHough, crate::imgproc::GeneralizedHoughTraitConst, as_raw_GeneralizedHough, crate::imgproc::GeneralizedHoughTrait, as_raw_mut_GeneralizedHough }
 
-	impl GeneralizedHough {
+	/// finds arbitrary template in the grayscale image using Generalized Hough Transform
+	///
+	/// Detects position only without translation and rotation [Ballard1981](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Ballard1981) .
+	pub struct GeneralizedHoughBallard {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { GeneralizedHough, crate::imgproc::GeneralizedHoughBallard, cv_GeneralizedHough_to_GeneralizedHoughBallard }
+	opencv_type_boxed! { GeneralizedHoughBallard }
 
-	boxed_cast_descendant! { GeneralizedHough, crate::imgproc::GeneralizedHoughGuil, cv_GeneralizedHough_to_GeneralizedHoughGuil }
-
-	boxed_cast_base! { GeneralizedHough, core::Algorithm, cv_GeneralizedHough_to_Algorithm }
-
-	impl std::fmt::Debug for GeneralizedHough {
+	impl Drop for GeneralizedHoughBallard {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("GeneralizedHough")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_GeneralizedHoughBallard_delete(self.as_raw_mut_GeneralizedHoughBallard()) };
 		}
 	}
+
+	unsafe impl Send for GeneralizedHoughBallard {}
 
 	/// Constant methods for [crate::imgproc::GeneralizedHoughBallard]
 	pub trait GeneralizedHoughBallardTraitConst: crate::imgproc::GeneralizedHoughTraitConst {
@@ -11750,23 +11762,17 @@ pub mod imgproc {
 
 	}
 
-	/// finds arbitrary template in the grayscale image using Generalized Hough Transform
-	///
-	/// Detects position only without translation and rotation [Ballard1981](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Ballard1981) .
-	pub struct GeneralizedHoughBallard {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GeneralizedHoughBallard }
-
-	impl Drop for GeneralizedHoughBallard {
+	impl std::fmt::Debug for GeneralizedHoughBallard {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_GeneralizedHoughBallard_delete(self.as_raw_mut_GeneralizedHoughBallard()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GeneralizedHoughBallard")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for GeneralizedHoughBallard {}
+	boxed_cast_base! { GeneralizedHoughBallard, core::Algorithm, cv_GeneralizedHoughBallard_to_Algorithm }
+
+	boxed_cast_base! { GeneralizedHoughBallard, crate::imgproc::GeneralizedHough, cv_GeneralizedHoughBallard_to_GeneralizedHough }
 
 	impl core::AlgorithmTraitConst for GeneralizedHoughBallard {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -11798,20 +11804,23 @@ pub mod imgproc {
 
 	boxed_ref! { GeneralizedHoughBallard, crate::imgproc::GeneralizedHoughBallardTraitConst, as_raw_GeneralizedHoughBallard, crate::imgproc::GeneralizedHoughBallardTrait, as_raw_mut_GeneralizedHoughBallard }
 
-	impl GeneralizedHoughBallard {
+	/// finds arbitrary template in the grayscale image using Generalized Hough Transform
+	///
+	/// Detects position, translation and rotation [Guil1999](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Guil1999) .
+	pub struct GeneralizedHoughGuil {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { GeneralizedHoughBallard, core::Algorithm, cv_GeneralizedHoughBallard_to_Algorithm }
+	opencv_type_boxed! { GeneralizedHoughGuil }
 
-	boxed_cast_base! { GeneralizedHoughBallard, crate::imgproc::GeneralizedHough, cv_GeneralizedHoughBallard_to_GeneralizedHough }
-
-	impl std::fmt::Debug for GeneralizedHoughBallard {
+	impl Drop for GeneralizedHoughGuil {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("GeneralizedHoughBallard")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_GeneralizedHoughGuil_delete(self.as_raw_mut_GeneralizedHoughGuil()) };
 		}
 	}
+
+	unsafe impl Send for GeneralizedHoughGuil {}
 
 	/// Constant methods for [crate::imgproc::GeneralizedHoughGuil]
 	pub trait GeneralizedHoughGuilTraitConst: crate::imgproc::GeneralizedHoughTraitConst {
@@ -12053,23 +12062,17 @@ pub mod imgproc {
 
 	}
 
-	/// finds arbitrary template in the grayscale image using Generalized Hough Transform
-	///
-	/// Detects position, translation and rotation [Guil1999](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Guil1999) .
-	pub struct GeneralizedHoughGuil {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GeneralizedHoughGuil }
-
-	impl Drop for GeneralizedHoughGuil {
+	impl std::fmt::Debug for GeneralizedHoughGuil {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_GeneralizedHoughGuil_delete(self.as_raw_mut_GeneralizedHoughGuil()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GeneralizedHoughGuil")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for GeneralizedHoughGuil {}
+	boxed_cast_base! { GeneralizedHoughGuil, core::Algorithm, cv_GeneralizedHoughGuil_to_Algorithm }
+
+	boxed_cast_base! { GeneralizedHoughGuil, crate::imgproc::GeneralizedHough, cv_GeneralizedHoughGuil_to_GeneralizedHough }
 
 	impl core::AlgorithmTraitConst for GeneralizedHoughGuil {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -12101,19 +12104,190 @@ pub mod imgproc {
 
 	boxed_ref! { GeneralizedHoughGuil, crate::imgproc::GeneralizedHoughGuilTraitConst, as_raw_GeneralizedHoughGuil, crate::imgproc::GeneralizedHoughGuilTrait, as_raw_mut_GeneralizedHoughGuil }
 
-	impl GeneralizedHoughGuil {
+	/// Class for iterating over all pixels on a raster line segment.
+	///
+	/// The class LineIterator is used to get each pixel of a raster line connecting
+	/// two specified points.
+	/// It can be treated as a versatile implementation of the Bresenham algorithm
+	/// where you can stop at each pixel and do some extra processing, for
+	/// example, grab pixel values along the line or draw a line with an effect
+	/// (for example, with XOR operation).
+	///
+	/// The number of pixels along the line is stored in LineIterator::count.
+	/// The method LineIterator::pos returns the current position in the image:
+	///
+	/// ```C++
+	/// // grabs pixels along the line (pt1, pt2)
+	/// // from 8-bit 3-channel image to the buffer
+	/// LineIterator it(img, pt1, pt2, 8);
+	/// LineIterator it2 = it;
+	/// vector<Vec3b> buf(it.count);
+	///
+	/// for(int i = 0; i < it.count; i++, ++it)
+	///    buf[i] = *(const Vec3b*)*it;
+	///
+	/// // alternative way of iterating through the line
+	/// for(int i = 0; i < it2.count; i++, ++it2)
+	/// {
+	///    Vec3b val = img.at<Vec3b>(it2.pos());
+	///    CV_Assert(buf[i] == val);
+	/// }
+	/// ```
+	///
+	pub struct LineIterator {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { GeneralizedHoughGuil, core::Algorithm, cv_GeneralizedHoughGuil_to_Algorithm }
+	opencv_type_boxed! { LineIterator }
 
-	boxed_cast_base! { GeneralizedHoughGuil, crate::imgproc::GeneralizedHough, cv_GeneralizedHoughGuil_to_GeneralizedHough }
-
-	impl std::fmt::Debug for GeneralizedHoughGuil {
+	impl Drop for LineIterator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("GeneralizedHoughGuil")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_LineIterator_delete(self.as_raw_mut_LineIterator()) };
 		}
+	}
+
+	unsafe impl Send for LineIterator {}
+
+	impl LineIterator {
+		/// Initializes iterator object for the given line and image.
+		///
+		/// The returned iterator can be used to traverse all pixels on a line that
+		/// connects the given two points.
+		/// The line will be clipped on the image boundaries.
+		///
+		/// ## Parameters
+		/// * img: Underlying image.
+		/// * pt1: First endpoint of the line.
+		/// * pt2: The other endpoint of the line.
+		/// * connectivity: Pixel connectivity of the iterator. Valid values are 4 (iterator can move
+		/// up, down, left and right) and 8 (iterator can also move diagonally).
+		/// * leftToRight: If true, the line is traversed from the leftmost endpoint to the rightmost
+		/// endpoint. Otherwise, the line is traversed from \p pt1 to \p pt2.
+		///
+		/// ## C++ default parameters
+		/// * connectivity: 8
+		/// * left_to_right: false
+		#[inline]
+		pub fn new(img: &impl core::MatTraitConst, pt1: core::Point, pt2: core::Point, connectivity: i32, left_to_right: bool) -> Result<crate::imgproc::LineIterator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_LineIterator_LineIterator_const_MatR_Point_Point_int_bool(img.as_raw_Mat(), &pt1, &pt2, connectivity, left_to_right, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::imgproc::LineIterator::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Initializes iterator object for the given line and image.
+		///
+		/// The returned iterator can be used to traverse all pixels on a line that
+		/// connects the given two points.
+		/// The line will be clipped on the image boundaries.
+		///
+		/// ## Parameters
+		/// * img: Underlying image.
+		/// * pt1: First endpoint of the line.
+		/// * pt2: The other endpoint of the line.
+		/// * connectivity: Pixel connectivity of the iterator. Valid values are 4 (iterator can move
+		/// up, down, left and right) and 8 (iterator can also move diagonally).
+		/// * leftToRight: If true, the line is traversed from the leftmost endpoint to the rightmost
+		/// endpoint. Otherwise, the line is traversed from \p pt1 to \p pt2.
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * connectivity: 8
+		/// * left_to_right: false
+		#[inline]
+		pub fn new_def(img: &impl core::MatTraitConst, pt1: core::Point, pt2: core::Point) -> Result<crate::imgproc::LineIterator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_LineIterator_LineIterator_const_MatR_Point_Point(img.as_raw_Mat(), &pt1, &pt2, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::imgproc::LineIterator::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## C++ default parameters
+		/// * connectivity: 8
+		/// * left_to_right: false
+		#[inline]
+		pub fn new_1(pt1: core::Point, pt2: core::Point, connectivity: i32, left_to_right: bool) -> Result<crate::imgproc::LineIterator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_LineIterator_LineIterator_Point_Point_int_bool(&pt1, &pt2, connectivity, left_to_right, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::imgproc::LineIterator::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * connectivity: 8
+		/// * left_to_right: false
+		#[inline]
+		pub fn new_def_1(pt1: core::Point, pt2: core::Point) -> Result<crate::imgproc::LineIterator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_LineIterator_LineIterator_Point_Point(&pt1, &pt2, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::imgproc::LineIterator::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## C++ default parameters
+		/// * connectivity: 8
+		/// * left_to_right: false
+		#[inline]
+		pub fn new_2(bounding_area_size: core::Size, pt1: core::Point, pt2: core::Point, connectivity: i32, left_to_right: bool) -> Result<crate::imgproc::LineIterator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_LineIterator_LineIterator_Size_Point_Point_int_bool(&bounding_area_size, &pt1, &pt2, connectivity, left_to_right, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::imgproc::LineIterator::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * connectivity: 8
+		/// * left_to_right: false
+		#[inline]
+		pub fn new_def_2(bounding_area_size: core::Size, pt1: core::Point, pt2: core::Point) -> Result<crate::imgproc::LineIterator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_LineIterator_LineIterator_Size_Point_Point(&bounding_area_size, &pt1, &pt2, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::imgproc::LineIterator::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## C++ default parameters
+		/// * connectivity: 8
+		/// * left_to_right: false
+		#[inline]
+		pub fn new_3(bounding_area_rect: core::Rect, pt1: core::Point, pt2: core::Point, connectivity: i32, left_to_right: bool) -> Result<crate::imgproc::LineIterator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_LineIterator_LineIterator_Rect_Point_Point_int_bool(&bounding_area_rect, &pt1, &pt2, connectivity, left_to_right, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::imgproc::LineIterator::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * connectivity: 8
+		/// * left_to_right: false
+		#[inline]
+		pub fn new_def_3(bounding_area_rect: core::Rect, pt1: core::Point, pt2: core::Point) -> Result<crate::imgproc::LineIterator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_LineIterator_LineIterator_Rect_Point_Point(&bounding_area_rect, &pt1, &pt2, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::imgproc::LineIterator::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::imgproc::LineIterator]
@@ -12340,202 +12514,6 @@ pub mod imgproc {
 
 	}
 
-	/// Class for iterating over all pixels on a raster line segment.
-	///
-	/// The class LineIterator is used to get each pixel of a raster line connecting
-	/// two specified points.
-	/// It can be treated as a versatile implementation of the Bresenham algorithm
-	/// where you can stop at each pixel and do some extra processing, for
-	/// example, grab pixel values along the line or draw a line with an effect
-	/// (for example, with XOR operation).
-	///
-	/// The number of pixels along the line is stored in LineIterator::count.
-	/// The method LineIterator::pos returns the current position in the image:
-	///
-	/// ```C++
-	/// // grabs pixels along the line (pt1, pt2)
-	/// // from 8-bit 3-channel image to the buffer
-	/// LineIterator it(img, pt1, pt2, 8);
-	/// LineIterator it2 = it;
-	/// vector<Vec3b> buf(it.count);
-	///
-	/// for(int i = 0; i < it.count; i++, ++it)
-	///    buf[i] = *(const Vec3b*)*it;
-	///
-	/// // alternative way of iterating through the line
-	/// for(int i = 0; i < it2.count; i++, ++it2)
-	/// {
-	///    Vec3b val = img.at<Vec3b>(it2.pos());
-	///    CV_Assert(buf[i] == val);
-	/// }
-	/// ```
-	///
-	pub struct LineIterator {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { LineIterator }
-
-	impl Drop for LineIterator {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_LineIterator_delete(self.as_raw_mut_LineIterator()) };
-		}
-	}
-
-	unsafe impl Send for LineIterator {}
-
-	impl crate::imgproc::LineIteratorTraitConst for LineIterator {
-		#[inline] fn as_raw_LineIterator(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::imgproc::LineIteratorTrait for LineIterator {
-		#[inline] fn as_raw_mut_LineIterator(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { LineIterator, crate::imgproc::LineIteratorTraitConst, as_raw_LineIterator, crate::imgproc::LineIteratorTrait, as_raw_mut_LineIterator }
-
-	impl LineIterator {
-		/// Initializes iterator object for the given line and image.
-		///
-		/// The returned iterator can be used to traverse all pixels on a line that
-		/// connects the given two points.
-		/// The line will be clipped on the image boundaries.
-		///
-		/// ## Parameters
-		/// * img: Underlying image.
-		/// * pt1: First endpoint of the line.
-		/// * pt2: The other endpoint of the line.
-		/// * connectivity: Pixel connectivity of the iterator. Valid values are 4 (iterator can move
-		/// up, down, left and right) and 8 (iterator can also move diagonally).
-		/// * leftToRight: If true, the line is traversed from the leftmost endpoint to the rightmost
-		/// endpoint. Otherwise, the line is traversed from \p pt1 to \p pt2.
-		///
-		/// ## C++ default parameters
-		/// * connectivity: 8
-		/// * left_to_right: false
-		#[inline]
-		pub fn new(img: &impl core::MatTraitConst, pt1: core::Point, pt2: core::Point, connectivity: i32, left_to_right: bool) -> Result<crate::imgproc::LineIterator> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_LineIterator_LineIterator_const_MatR_Point_Point_int_bool(img.as_raw_Mat(), &pt1, &pt2, connectivity, left_to_right, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::imgproc::LineIterator::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Initializes iterator object for the given line and image.
-		///
-		/// The returned iterator can be used to traverse all pixels on a line that
-		/// connects the given two points.
-		/// The line will be clipped on the image boundaries.
-		///
-		/// ## Parameters
-		/// * img: Underlying image.
-		/// * pt1: First endpoint of the line.
-		/// * pt2: The other endpoint of the line.
-		/// * connectivity: Pixel connectivity of the iterator. Valid values are 4 (iterator can move
-		/// up, down, left and right) and 8 (iterator can also move diagonally).
-		/// * leftToRight: If true, the line is traversed from the leftmost endpoint to the rightmost
-		/// endpoint. Otherwise, the line is traversed from \p pt1 to \p pt2.
-		///
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * connectivity: 8
-		/// * left_to_right: false
-		#[inline]
-		pub fn new_def(img: &impl core::MatTraitConst, pt1: core::Point, pt2: core::Point) -> Result<crate::imgproc::LineIterator> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_LineIterator_LineIterator_const_MatR_Point_Point(img.as_raw_Mat(), &pt1, &pt2, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::imgproc::LineIterator::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## C++ default parameters
-		/// * connectivity: 8
-		/// * left_to_right: false
-		#[inline]
-		pub fn new_1(pt1: core::Point, pt2: core::Point, connectivity: i32, left_to_right: bool) -> Result<crate::imgproc::LineIterator> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_LineIterator_LineIterator_Point_Point_int_bool(&pt1, &pt2, connectivity, left_to_right, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::imgproc::LineIterator::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * connectivity: 8
-		/// * left_to_right: false
-		#[inline]
-		pub fn new_def_1(pt1: core::Point, pt2: core::Point) -> Result<crate::imgproc::LineIterator> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_LineIterator_LineIterator_Point_Point(&pt1, &pt2, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::imgproc::LineIterator::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## C++ default parameters
-		/// * connectivity: 8
-		/// * left_to_right: false
-		#[inline]
-		pub fn new_2(bounding_area_size: core::Size, pt1: core::Point, pt2: core::Point, connectivity: i32, left_to_right: bool) -> Result<crate::imgproc::LineIterator> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_LineIterator_LineIterator_Size_Point_Point_int_bool(&bounding_area_size, &pt1, &pt2, connectivity, left_to_right, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::imgproc::LineIterator::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * connectivity: 8
-		/// * left_to_right: false
-		#[inline]
-		pub fn new_def_2(bounding_area_size: core::Size, pt1: core::Point, pt2: core::Point) -> Result<crate::imgproc::LineIterator> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_LineIterator_LineIterator_Size_Point_Point(&bounding_area_size, &pt1, &pt2, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::imgproc::LineIterator::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## C++ default parameters
-		/// * connectivity: 8
-		/// * left_to_right: false
-		#[inline]
-		pub fn new_3(bounding_area_rect: core::Rect, pt1: core::Point, pt2: core::Point, connectivity: i32, left_to_right: bool) -> Result<crate::imgproc::LineIterator> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_LineIterator_LineIterator_Rect_Point_Point_int_bool(&bounding_area_rect, &pt1, &pt2, connectivity, left_to_right, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::imgproc::LineIterator::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * connectivity: 8
-		/// * left_to_right: false
-		#[inline]
-		pub fn new_def_3(bounding_area_rect: core::Rect, pt1: core::Point, pt2: core::Point) -> Result<crate::imgproc::LineIterator> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_LineIterator_LineIterator_Rect_Point_Point(&bounding_area_rect, &pt1, &pt2, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::imgproc::LineIterator::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
 	impl std::fmt::Debug for LineIterator {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -12557,6 +12535,38 @@ pub mod imgproc {
 				.finish()
 		}
 	}
+
+	impl crate::imgproc::LineIteratorTraitConst for LineIterator {
+		#[inline] fn as_raw_LineIterator(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::imgproc::LineIteratorTrait for LineIterator {
+		#[inline] fn as_raw_mut_LineIterator(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { LineIterator, crate::imgproc::LineIteratorTraitConst, as_raw_LineIterator, crate::imgproc::LineIteratorTrait, as_raw_mut_LineIterator }
+
+	/// Line segment detector class
+	///
+	/// following the algorithm described at [Rafael12](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Rafael12) .
+	///
+	///
+	/// Note: Implementation has been removed from OpenCV version 3.4.6 to 3.4.15 and version 4.1.0 to 4.5.3 due original code license conflict.
+	/// restored again after [Computation of a NFA](https://github.com/rafael-grompone-von-gioi/binomial_nfa) code published under the MIT license.
+	pub struct LineSegmentDetector {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { LineSegmentDetector }
+
+	impl Drop for LineSegmentDetector {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_LineSegmentDetector_delete(self.as_raw_mut_LineSegmentDetector()) };
+		}
+	}
+
+	unsafe impl Send for LineSegmentDetector {}
 
 	/// Constant methods for [crate::imgproc::LineSegmentDetector]
 	pub trait LineSegmentDetectorTraitConst: core::AlgorithmTraitConst {
@@ -12708,27 +12718,15 @@ pub mod imgproc {
 
 	}
 
-	/// Line segment detector class
-	///
-	/// following the algorithm described at [Rafael12](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Rafael12) .
-	///
-	///
-	/// Note: Implementation has been removed from OpenCV version 3.4.6 to 3.4.15 and version 4.1.0 to 4.5.3 due original code license conflict.
-	/// restored again after [Computation of a NFA](https://github.com/rafael-grompone-von-gioi/binomial_nfa) code published under the MIT license.
-	pub struct LineSegmentDetector {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { LineSegmentDetector }
-
-	impl Drop for LineSegmentDetector {
+	impl std::fmt::Debug for LineSegmentDetector {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_LineSegmentDetector_delete(self.as_raw_mut_LineSegmentDetector()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("LineSegmentDetector")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for LineSegmentDetector {}
+	boxed_cast_base! { LineSegmentDetector, core::Algorithm, cv_LineSegmentDetector_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for LineSegmentDetector {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -12750,17 +12748,56 @@ pub mod imgproc {
 
 	boxed_ref! { LineSegmentDetector, crate::imgproc::LineSegmentDetectorTraitConst, as_raw_LineSegmentDetector, crate::imgproc::LineSegmentDetectorTrait, as_raw_mut_LineSegmentDetector }
 
-	impl LineSegmentDetector {
+	pub struct Subdiv2D {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { LineSegmentDetector, core::Algorithm, cv_LineSegmentDetector_to_Algorithm }
+	opencv_type_boxed! { Subdiv2D }
 
-	impl std::fmt::Debug for LineSegmentDetector {
+	impl Drop for Subdiv2D {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("LineSegmentDetector")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_Subdiv2D_delete(self.as_raw_mut_Subdiv2D()) };
 		}
+	}
+
+	unsafe impl Send for Subdiv2D {}
+
+	impl Subdiv2D {
+		/// creates an empty Subdiv2D object.
+		/// To create a new empty Delaunay subdivision you need to use the [init_delaunay] function.
+		#[inline]
+		pub fn default() -> Result<crate::imgproc::Subdiv2D> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Subdiv2D_Subdiv2D(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::imgproc::Subdiv2D::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// creates an empty Subdiv2D object.
+		/// To create a new empty Delaunay subdivision you need to use the [init_delaunay] function.
+		///
+		/// ## Overloaded parameters
+		///
+		///
+		/// ## Parameters
+		/// * rect: Rectangle that includes all of the 2D points that are to be added to the subdivision.
+		///
+		/// The function creates an empty Delaunay subdivision where 2D points can be added using the function
+		/// insert() . All of the points to be added must be within the specified rectangle, otherwise a runtime
+		/// error is raised.
+		#[inline]
+		pub fn new(rect: core::Rect) -> Result<crate::imgproc::Subdiv2D> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Subdiv2D_Subdiv2D_Rect(&rect, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::imgproc::Subdiv2D::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::imgproc::Subdiv2D]
@@ -13165,20 +13202,13 @@ pub mod imgproc {
 
 	}
 
-	pub struct Subdiv2D {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Subdiv2D }
-
-	impl Drop for Subdiv2D {
+	impl std::fmt::Debug for Subdiv2D {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_Subdiv2D_delete(self.as_raw_mut_Subdiv2D()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Subdiv2D")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for Subdiv2D {}
 
 	impl crate::imgproc::Subdiv2DTraitConst for Subdiv2D {
 		#[inline] fn as_raw_Subdiv2D(&self) -> *const c_void { self.as_raw() }
@@ -13190,49 +13220,43 @@ pub mod imgproc {
 
 	boxed_ref! { Subdiv2D, crate::imgproc::Subdiv2DTraitConst, as_raw_Subdiv2D, crate::imgproc::Subdiv2DTrait, as_raw_mut_Subdiv2D }
 
-	impl Subdiv2D {
-		/// creates an empty Subdiv2D object.
-		/// To create a new empty Delaunay subdivision you need to use the [init_delaunay] function.
-		#[inline]
-		pub fn default() -> Result<crate::imgproc::Subdiv2D> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Subdiv2D_Subdiv2D(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::imgproc::Subdiv2D::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// creates an empty Subdiv2D object.
-		/// To create a new empty Delaunay subdivision you need to use the [init_delaunay] function.
-		///
-		/// ## Overloaded parameters
-		///
-		///
-		/// ## Parameters
-		/// * rect: Rectangle that includes all of the 2D points that are to be added to the subdivision.
-		///
-		/// The function creates an empty Delaunay subdivision where 2D points can be added using the function
-		/// insert() . All of the points to be added must be within the specified rectangle, otherwise a runtime
-		/// error is raised.
-		#[inline]
-		pub fn new(rect: core::Rect) -> Result<crate::imgproc::Subdiv2D> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Subdiv2D_Subdiv2D_Rect(&rect, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::imgproc::Subdiv2D::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// Intelligent Scissors image segmentation
+	///
+	/// This class is used to find the path (contour) between two points
+	/// which can be used for image segmentation.
+	///
+	/// Usage example:
+	/// [usage_example_intelligent_scissors](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/imgproc_segmentation.cpp#L1)
+	///
+	/// Reference: <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.138.3811&rep=rep1&type=pdf">"Intelligent Scissors for Image Composition"</a>
+	/// algorithm designed by Eric N. Mortensen and William A. Barrett, Brigham Young University
+	/// [Mortensen95intelligentscissors](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Mortensen95intelligentscissors)
+	pub struct IntelligentScissorsMB {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for Subdiv2D {
+	opencv_type_boxed! { IntelligentScissorsMB }
+
+	impl Drop for IntelligentScissorsMB {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Subdiv2D")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_segmentation_IntelligentScissorsMB_delete(self.as_raw_mut_IntelligentScissorsMB()) };
 		}
+	}
+
+	unsafe impl Send for IntelligentScissorsMB {}
+
+	impl IntelligentScissorsMB {
+		#[inline]
+		pub fn default() -> Result<crate::imgproc::IntelligentScissorsMB> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_segmentation_IntelligentScissorsMB_IntelligentScissorsMB(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::imgproc::IntelligentScissorsMB::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::imgproc::IntelligentScissorsMB]
@@ -13539,55 +13563,6 @@ pub mod imgproc {
 
 	}
 
-	/// Intelligent Scissors image segmentation
-	///
-	/// This class is used to find the path (contour) between two points
-	/// which can be used for image segmentation.
-	///
-	/// Usage example:
-	/// [usage_example_intelligent_scissors](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/imgproc_segmentation.cpp#L1)
-	///
-	/// Reference: <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.138.3811&rep=rep1&type=pdf">"Intelligent Scissors for Image Composition"</a>
-	/// algorithm designed by Eric N. Mortensen and William A. Barrett, Brigham Young University
-	/// [Mortensen95intelligentscissors](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Mortensen95intelligentscissors)
-	pub struct IntelligentScissorsMB {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { IntelligentScissorsMB }
-
-	impl Drop for IntelligentScissorsMB {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_segmentation_IntelligentScissorsMB_delete(self.as_raw_mut_IntelligentScissorsMB()) };
-		}
-	}
-
-	unsafe impl Send for IntelligentScissorsMB {}
-
-	impl crate::imgproc::IntelligentScissorsMBTraitConst for IntelligentScissorsMB {
-		#[inline] fn as_raw_IntelligentScissorsMB(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::imgproc::IntelligentScissorsMBTrait for IntelligentScissorsMB {
-		#[inline] fn as_raw_mut_IntelligentScissorsMB(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { IntelligentScissorsMB, crate::imgproc::IntelligentScissorsMBTraitConst, as_raw_IntelligentScissorsMB, crate::imgproc::IntelligentScissorsMBTrait, as_raw_mut_IntelligentScissorsMB }
-
-	impl IntelligentScissorsMB {
-		#[inline]
-		pub fn default() -> Result<crate::imgproc::IntelligentScissorsMB> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_segmentation_IntelligentScissorsMB_IntelligentScissorsMB(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::imgproc::IntelligentScissorsMB::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
 	impl Clone for IntelligentScissorsMB {
 		#[inline]
 		fn clone(&self) -> Self {
@@ -13602,4 +13577,15 @@ pub mod imgproc {
 				.finish()
 		}
 	}
+
+	impl crate::imgproc::IntelligentScissorsMBTraitConst for IntelligentScissorsMB {
+		#[inline] fn as_raw_IntelligentScissorsMB(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::imgproc::IntelligentScissorsMBTrait for IntelligentScissorsMB {
+		#[inline] fn as_raw_mut_IntelligentScissorsMB(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { IntelligentScissorsMB, crate::imgproc::IntelligentScissorsMBTraitConst, as_raw_IntelligentScissorsMB, crate::imgproc::IntelligentScissorsMBTrait, as_raw_mut_IntelligentScissorsMB }
+
 }

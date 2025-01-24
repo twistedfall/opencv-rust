@@ -63,6 +63,51 @@ pub mod cvv {
 		Ok(ret)
 	}
 
+	/// Optional information about a location in Code.
+	pub struct CallMetaData {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { CallMetaData }
+
+	impl Drop for CallMetaData {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cvv_impl_CallMetaData_delete(self.as_raw_mut_CallMetaData()) };
+		}
+	}
+
+	unsafe impl Send for CallMetaData {}
+
+	impl CallMetaData {
+		/// Creates an unknown location.
+		#[inline]
+		pub fn default() -> Result<crate::cvv::CallMetaData> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cvv_impl_CallMetaData_CallMetaData(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::cvv::CallMetaData::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Creates the provided location.
+		///
+		/// Argument should be self-explaining.
+		#[inline]
+		pub fn new(file: &str, line: size_t, function: &str) -> Result<crate::cvv::CallMetaData> {
+			extern_container_arg!(file);
+			extern_container_arg!(function);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cvv_impl_CallMetaData_CallMetaData_const_charX_size_t_const_charX(file.opencv_as_extern(), line, function.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::cvv::CallMetaData::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
 	/// Constant methods for [crate::cvv::CallMetaData]
 	pub trait CallMetaDataTraitConst {
 		fn as_raw_CallMetaData(&self) -> *const c_void;
@@ -111,61 +156,6 @@ pub mod cvv {
 
 	}
 
-	/// Optional information about a location in Code.
-	pub struct CallMetaData {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CallMetaData }
-
-	impl Drop for CallMetaData {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cvv_impl_CallMetaData_delete(self.as_raw_mut_CallMetaData()) };
-		}
-	}
-
-	unsafe impl Send for CallMetaData {}
-
-	impl crate::cvv::CallMetaDataTraitConst for CallMetaData {
-		#[inline] fn as_raw_CallMetaData(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::cvv::CallMetaDataTrait for CallMetaData {
-		#[inline] fn as_raw_mut_CallMetaData(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { CallMetaData, crate::cvv::CallMetaDataTraitConst, as_raw_CallMetaData, crate::cvv::CallMetaDataTrait, as_raw_mut_CallMetaData }
-
-	impl CallMetaData {
-		/// Creates an unknown location.
-		#[inline]
-		pub fn default() -> Result<crate::cvv::CallMetaData> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cvv_impl_CallMetaData_CallMetaData(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::cvv::CallMetaData::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Creates the provided location.
-		///
-		/// Argument should be self-explaining.
-		#[inline]
-		pub fn new(file: &str, line: size_t, function: &str) -> Result<crate::cvv::CallMetaData> {
-			extern_container_arg!(file);
-			extern_container_arg!(function);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cvv_impl_CallMetaData_CallMetaData_const_charX_size_t_const_charX(file.opencv_as_extern(), line, function.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::cvv::CallMetaData::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
 	impl Clone for CallMetaData {
 		#[inline]
 		fn clone(&self) -> Self {
@@ -184,4 +174,15 @@ pub mod cvv {
 				.finish()
 		}
 	}
+
+	impl crate::cvv::CallMetaDataTraitConst for CallMetaData {
+		#[inline] fn as_raw_CallMetaData(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::cvv::CallMetaDataTrait for CallMetaData {
+		#[inline] fn as_raw_mut_CallMetaData(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { CallMetaData, crate::cvv::CallMetaDataTraitConst, as_raw_CallMetaData, crate::cvv::CallMetaDataTrait, as_raw_mut_CallMetaData }
+
 }

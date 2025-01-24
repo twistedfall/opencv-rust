@@ -6,6 +6,57 @@ pub mod plot {
 		pub use super::{Plot2dTrait, Plot2dTraitConst};
 	}
 
+	pub struct Plot2d {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Plot2d }
+
+	impl Drop for Plot2d {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_plot_Plot2d_delete(self.as_raw_mut_Plot2d()) };
+		}
+	}
+
+	unsafe impl Send for Plot2d {}
+
+	impl Plot2d {
+		/// Creates Plot2d object
+		///
+		/// ## Parameters
+		/// * data: ![inline formula](https://latex.codecogs.com/png.latex?1xN) or ![inline formula](https://latex.codecogs.com/png.latex?Nx1) matrix containing ![inline formula](https://latex.codecogs.com/png.latex?Y) values of points to plot. ![inline formula](https://latex.codecogs.com/png.latex?X) values
+		/// will be equal to indexes of correspondind elements in data matrix.
+		#[inline]
+		pub fn create(data: &impl ToInputArray) -> Result<core::Ptr<crate::plot::Plot2d>> {
+			input_array_arg!(data);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_plot_Plot2d_create_const__InputArrayR(data.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::plot::Plot2d>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Creates Plot2d object
+		///
+		/// ## Parameters
+		/// * dataX: ![inline formula](https://latex.codecogs.com/png.latex?1xN) or ![inline formula](https://latex.codecogs.com/png.latex?Nx1) matrix ![inline formula](https://latex.codecogs.com/png.latex?X) values of points to plot.
+		/// * dataY: ![inline formula](https://latex.codecogs.com/png.latex?1xN) or ![inline formula](https://latex.codecogs.com/png.latex?Nx1) matrix containing ![inline formula](https://latex.codecogs.com/png.latex?Y) values of points to plot.
+		#[inline]
+		pub fn create_1(data_x: &impl ToInputArray, data_y: &impl ToInputArray) -> Result<core::Ptr<crate::plot::Plot2d>> {
+			input_array_arg!(data_x);
+			input_array_arg!(data_y);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_plot_Plot2d_create_const__InputArrayR_const__InputArrayR(data_x.as_raw__InputArray(), data_y.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::plot::Plot2d>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
 	/// Constant methods for [crate::plot::Plot2d]
 	pub trait Plot2dTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_Plot2d(&self) -> *const c_void;
@@ -190,20 +241,15 @@ pub mod plot {
 
 	}
 
-	pub struct Plot2d {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Plot2d }
-
-	impl Drop for Plot2d {
+	impl std::fmt::Debug for Plot2d {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_plot_Plot2d_delete(self.as_raw_mut_Plot2d()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Plot2d")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for Plot2d {}
+	boxed_cast_base! { Plot2d, core::Algorithm, cv_plot_Plot2d_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for Plot2d {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -225,49 +271,4 @@ pub mod plot {
 
 	boxed_ref! { Plot2d, crate::plot::Plot2dTraitConst, as_raw_Plot2d, crate::plot::Plot2dTrait, as_raw_mut_Plot2d }
 
-	impl Plot2d {
-		/// Creates Plot2d object
-		///
-		/// ## Parameters
-		/// * data: ![inline formula](https://latex.codecogs.com/png.latex?1xN) or ![inline formula](https://latex.codecogs.com/png.latex?Nx1) matrix containing ![inline formula](https://latex.codecogs.com/png.latex?Y) values of points to plot. ![inline formula](https://latex.codecogs.com/png.latex?X) values
-		/// will be equal to indexes of correspondind elements in data matrix.
-		#[inline]
-		pub fn create(data: &impl ToInputArray) -> Result<core::Ptr<crate::plot::Plot2d>> {
-			input_array_arg!(data);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_plot_Plot2d_create_const__InputArrayR(data.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::plot::Plot2d>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Creates Plot2d object
-		///
-		/// ## Parameters
-		/// * dataX: ![inline formula](https://latex.codecogs.com/png.latex?1xN) or ![inline formula](https://latex.codecogs.com/png.latex?Nx1) matrix ![inline formula](https://latex.codecogs.com/png.latex?X) values of points to plot.
-		/// * dataY: ![inline formula](https://latex.codecogs.com/png.latex?1xN) or ![inline formula](https://latex.codecogs.com/png.latex?Nx1) matrix containing ![inline formula](https://latex.codecogs.com/png.latex?Y) values of points to plot.
-		#[inline]
-		pub fn create_1(data_x: &impl ToInputArray, data_y: &impl ToInputArray) -> Result<core::Ptr<crate::plot::Plot2d>> {
-			input_array_arg!(data_x);
-			input_array_arg!(data_y);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_plot_Plot2d_create_const__InputArrayR_const__InputArrayR(data_x.as_raw__InputArray(), data_y.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::plot::Plot2d>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_base! { Plot2d, core::Algorithm, cv_plot_Plot2d_to_Algorithm }
-
-	impl std::fmt::Debug for Plot2d {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Plot2d")
-				.finish()
-		}
-	}
 }

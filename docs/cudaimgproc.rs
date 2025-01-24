@@ -1906,6 +1906,22 @@ pub mod cudaimgproc {
 		Ok(ret)
 	}
 
+	/// Base class for Contrast Limited Adaptive Histogram Equalization. :
+	pub struct CUDA_CLAHE {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { CUDA_CLAHE }
+
+	impl Drop for CUDA_CLAHE {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_CLAHE_delete(self.as_raw_mut_CUDA_CLAHE()) };
+		}
+	}
+
+	unsafe impl Send for CUDA_CLAHE {}
+
 	/// Constant methods for [crate::cudaimgproc::CUDA_CLAHE]
 	pub trait CUDA_CLAHETraitConst: crate::imgproc::CLAHETraitConst {
 		fn as_raw_CUDA_CLAHE(&self) -> *const c_void;
@@ -1935,21 +1951,17 @@ pub mod cudaimgproc {
 
 	}
 
-	/// Base class for Contrast Limited Adaptive Histogram Equalization. :
-	pub struct CUDA_CLAHE {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CUDA_CLAHE }
-
-	impl Drop for CUDA_CLAHE {
+	impl std::fmt::Debug for CUDA_CLAHE {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_CLAHE_delete(self.as_raw_mut_CUDA_CLAHE()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_CLAHE")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for CUDA_CLAHE {}
+	boxed_cast_base! { CUDA_CLAHE, core::Algorithm, cv_cuda_CLAHE_to_Algorithm }
+
+	boxed_cast_base! { CUDA_CLAHE, crate::imgproc::CLAHE, cv_cuda_CLAHE_to_CLAHE }
 
 	impl core::AlgorithmTraitConst for CUDA_CLAHE {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -1981,20 +1993,21 @@ pub mod cudaimgproc {
 
 	boxed_ref! { CUDA_CLAHE, crate::cudaimgproc::CUDA_CLAHETraitConst, as_raw_CUDA_CLAHE, crate::cudaimgproc::CUDA_CLAHETrait, as_raw_mut_CUDA_CLAHE }
 
-	impl CUDA_CLAHE {
+	/// Base class for Canny Edge Detector. :
+	pub struct CUDA_CannyEdgeDetector {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { CUDA_CLAHE, core::Algorithm, cv_cuda_CLAHE_to_Algorithm }
+	opencv_type_boxed! { CUDA_CannyEdgeDetector }
 
-	boxed_cast_base! { CUDA_CLAHE, crate::imgproc::CLAHE, cv_cuda_CLAHE_to_CLAHE }
-
-	impl std::fmt::Debug for CUDA_CLAHE {
+	impl Drop for CUDA_CannyEdgeDetector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CUDA_CLAHE")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_CannyEdgeDetector_delete(self.as_raw_mut_CUDA_CannyEdgeDetector()) };
 		}
 	}
+
+	unsafe impl Send for CUDA_CannyEdgeDetector {}
 
 	/// Constant methods for [crate::cudaimgproc::CUDA_CannyEdgeDetector]
 	pub trait CUDA_CannyEdgeDetectorTraitConst: core::AlgorithmTraitConst {
@@ -2171,21 +2184,15 @@ pub mod cudaimgproc {
 
 	}
 
-	/// Base class for Canny Edge Detector. :
-	pub struct CUDA_CannyEdgeDetector {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CUDA_CannyEdgeDetector }
-
-	impl Drop for CUDA_CannyEdgeDetector {
+	impl std::fmt::Debug for CUDA_CannyEdgeDetector {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_CannyEdgeDetector_delete(self.as_raw_mut_CUDA_CannyEdgeDetector()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_CannyEdgeDetector")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for CUDA_CannyEdgeDetector {}
+	boxed_cast_base! { CUDA_CannyEdgeDetector, core::Algorithm, cv_cuda_CannyEdgeDetector_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for CUDA_CannyEdgeDetector {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -2207,18 +2214,21 @@ pub mod cudaimgproc {
 
 	boxed_ref! { CUDA_CannyEdgeDetector, crate::cudaimgproc::CUDA_CannyEdgeDetectorTraitConst, as_raw_CUDA_CannyEdgeDetector, crate::cudaimgproc::CUDA_CannyEdgeDetectorTrait, as_raw_mut_CUDA_CannyEdgeDetector }
 
-	impl CUDA_CannyEdgeDetector {
+	/// Base class for Cornerness Criteria computation. :
+	pub struct CUDA_CornernessCriteria {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { CUDA_CannyEdgeDetector, core::Algorithm, cv_cuda_CannyEdgeDetector_to_Algorithm }
+	opencv_type_boxed! { CUDA_CornernessCriteria }
 
-	impl std::fmt::Debug for CUDA_CannyEdgeDetector {
+	impl Drop for CUDA_CornernessCriteria {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CUDA_CannyEdgeDetector")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_CornernessCriteria_delete(self.as_raw_mut_CUDA_CornernessCriteria()) };
 		}
 	}
+
+	unsafe impl Send for CUDA_CornernessCriteria {}
 
 	/// Constant methods for [crate::cudaimgproc::CUDA_CornernessCriteria]
 	pub trait CUDA_CornernessCriteriaTraitConst: core::AlgorithmTraitConst {
@@ -2275,21 +2285,15 @@ pub mod cudaimgproc {
 
 	}
 
-	/// Base class for Cornerness Criteria computation. :
-	pub struct CUDA_CornernessCriteria {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CUDA_CornernessCriteria }
-
-	impl Drop for CUDA_CornernessCriteria {
+	impl std::fmt::Debug for CUDA_CornernessCriteria {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_CornernessCriteria_delete(self.as_raw_mut_CUDA_CornernessCriteria()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_CornernessCriteria")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for CUDA_CornernessCriteria {}
+	boxed_cast_base! { CUDA_CornernessCriteria, core::Algorithm, cv_cuda_CornernessCriteria_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for CUDA_CornernessCriteria {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -2311,18 +2315,21 @@ pub mod cudaimgproc {
 
 	boxed_ref! { CUDA_CornernessCriteria, crate::cudaimgproc::CUDA_CornernessCriteriaTraitConst, as_raw_CUDA_CornernessCriteria, crate::cudaimgproc::CUDA_CornernessCriteriaTrait, as_raw_mut_CUDA_CornernessCriteria }
 
-	impl CUDA_CornernessCriteria {
+	/// Base class for Corners Detector. :
+	pub struct CUDA_CornersDetector {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { CUDA_CornernessCriteria, core::Algorithm, cv_cuda_CornernessCriteria_to_Algorithm }
+	opencv_type_boxed! { CUDA_CornersDetector }
 
-	impl std::fmt::Debug for CUDA_CornernessCriteria {
+	impl Drop for CUDA_CornersDetector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CUDA_CornernessCriteria")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_CornersDetector_delete(self.as_raw_mut_CUDA_CornersDetector()) };
 		}
 	}
+
+	unsafe impl Send for CUDA_CornersDetector {}
 
 	/// Constant methods for [crate::cudaimgproc::CUDA_CornersDetector]
 	pub trait CUDA_CornersDetectorTraitConst: core::AlgorithmTraitConst {
@@ -2404,21 +2411,15 @@ pub mod cudaimgproc {
 
 	}
 
-	/// Base class for Corners Detector. :
-	pub struct CUDA_CornersDetector {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CUDA_CornersDetector }
-
-	impl Drop for CUDA_CornersDetector {
+	impl std::fmt::Debug for CUDA_CornersDetector {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_CornersDetector_delete(self.as_raw_mut_CUDA_CornersDetector()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_CornersDetector")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for CUDA_CornersDetector {}
+	boxed_cast_base! { CUDA_CornersDetector, core::Algorithm, cv_cuda_CornersDetector_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for CUDA_CornersDetector {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -2440,18 +2441,21 @@ pub mod cudaimgproc {
 
 	boxed_ref! { CUDA_CornersDetector, crate::cudaimgproc::CUDA_CornersDetectorTraitConst, as_raw_CUDA_CornersDetector, crate::cudaimgproc::CUDA_CornersDetectorTrait, as_raw_mut_CUDA_CornersDetector }
 
-	impl CUDA_CornersDetector {
+	/// Base class for circles detector algorithm. :
+	pub struct CUDA_HoughCirclesDetector {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { CUDA_CornersDetector, core::Algorithm, cv_cuda_CornersDetector_to_Algorithm }
+	opencv_type_boxed! { CUDA_HoughCirclesDetector }
 
-	impl std::fmt::Debug for CUDA_CornersDetector {
+	impl Drop for CUDA_HoughCirclesDetector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CUDA_CornersDetector")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_HoughCirclesDetector_delete(self.as_raw_mut_CUDA_HoughCirclesDetector()) };
 		}
 	}
+
+	unsafe impl Send for CUDA_HoughCirclesDetector {}
 
 	/// Constant methods for [crate::cudaimgproc::CUDA_HoughCirclesDetector]
 	pub trait CUDA_HoughCirclesDetectorTraitConst: core::AlgorithmTraitConst {
@@ -2638,21 +2642,15 @@ pub mod cudaimgproc {
 
 	}
 
-	/// Base class for circles detector algorithm. :
-	pub struct CUDA_HoughCirclesDetector {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CUDA_HoughCirclesDetector }
-
-	impl Drop for CUDA_HoughCirclesDetector {
+	impl std::fmt::Debug for CUDA_HoughCirclesDetector {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_HoughCirclesDetector_delete(self.as_raw_mut_CUDA_HoughCirclesDetector()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_HoughCirclesDetector")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for CUDA_HoughCirclesDetector {}
+	boxed_cast_base! { CUDA_HoughCirclesDetector, core::Algorithm, cv_cuda_HoughCirclesDetector_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for CUDA_HoughCirclesDetector {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -2674,18 +2672,21 @@ pub mod cudaimgproc {
 
 	boxed_ref! { CUDA_HoughCirclesDetector, crate::cudaimgproc::CUDA_HoughCirclesDetectorTraitConst, as_raw_CUDA_HoughCirclesDetector, crate::cudaimgproc::CUDA_HoughCirclesDetectorTrait, as_raw_mut_CUDA_HoughCirclesDetector }
 
-	impl CUDA_HoughCirclesDetector {
+	/// Base class for lines detector algorithm. :
+	pub struct CUDA_HoughLinesDetector {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { CUDA_HoughCirclesDetector, core::Algorithm, cv_cuda_HoughCirclesDetector_to_Algorithm }
+	opencv_type_boxed! { CUDA_HoughLinesDetector }
 
-	impl std::fmt::Debug for CUDA_HoughCirclesDetector {
+	impl Drop for CUDA_HoughLinesDetector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CUDA_HoughCirclesDetector")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_HoughLinesDetector_delete(self.as_raw_mut_CUDA_HoughLinesDetector()) };
 		}
 	}
+
+	unsafe impl Send for CUDA_HoughLinesDetector {}
 
 	/// Constant methods for [crate::cudaimgproc::CUDA_HoughLinesDetector]
 	pub trait CUDA_HoughLinesDetectorTraitConst: core::AlgorithmTraitConst {
@@ -2886,21 +2887,15 @@ pub mod cudaimgproc {
 
 	}
 
-	/// Base class for lines detector algorithm. :
-	pub struct CUDA_HoughLinesDetector {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CUDA_HoughLinesDetector }
-
-	impl Drop for CUDA_HoughLinesDetector {
+	impl std::fmt::Debug for CUDA_HoughLinesDetector {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_HoughLinesDetector_delete(self.as_raw_mut_CUDA_HoughLinesDetector()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_HoughLinesDetector")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for CUDA_HoughLinesDetector {}
+	boxed_cast_base! { CUDA_HoughLinesDetector, core::Algorithm, cv_cuda_HoughLinesDetector_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for CUDA_HoughLinesDetector {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -2922,18 +2917,21 @@ pub mod cudaimgproc {
 
 	boxed_ref! { CUDA_HoughLinesDetector, crate::cudaimgproc::CUDA_HoughLinesDetectorTraitConst, as_raw_CUDA_HoughLinesDetector, crate::cudaimgproc::CUDA_HoughLinesDetectorTrait, as_raw_mut_CUDA_HoughLinesDetector }
 
-	impl CUDA_HoughLinesDetector {
+	/// Base class for line segments detector algorithm. :
+	pub struct CUDA_HoughSegmentDetector {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { CUDA_HoughLinesDetector, core::Algorithm, cv_cuda_HoughLinesDetector_to_Algorithm }
+	opencv_type_boxed! { CUDA_HoughSegmentDetector }
 
-	impl std::fmt::Debug for CUDA_HoughLinesDetector {
+	impl Drop for CUDA_HoughSegmentDetector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CUDA_HoughLinesDetector")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_HoughSegmentDetector_delete(self.as_raw_mut_CUDA_HoughSegmentDetector()) };
 		}
 	}
+
+	unsafe impl Send for CUDA_HoughSegmentDetector {}
 
 	/// Constant methods for [crate::cudaimgproc::CUDA_HoughSegmentDetector]
 	pub trait CUDA_HoughSegmentDetectorTraitConst: core::AlgorithmTraitConst {
@@ -3104,21 +3102,15 @@ pub mod cudaimgproc {
 
 	}
 
-	/// Base class for line segments detector algorithm. :
-	pub struct CUDA_HoughSegmentDetector {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CUDA_HoughSegmentDetector }
-
-	impl Drop for CUDA_HoughSegmentDetector {
+	impl std::fmt::Debug for CUDA_HoughSegmentDetector {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_HoughSegmentDetector_delete(self.as_raw_mut_CUDA_HoughSegmentDetector()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_HoughSegmentDetector")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for CUDA_HoughSegmentDetector {}
+	boxed_cast_base! { CUDA_HoughSegmentDetector, core::Algorithm, cv_cuda_HoughSegmentDetector_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for CUDA_HoughSegmentDetector {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -3140,18 +3132,21 @@ pub mod cudaimgproc {
 
 	boxed_ref! { CUDA_HoughSegmentDetector, crate::cudaimgproc::CUDA_HoughSegmentDetectorTraitConst, as_raw_CUDA_HoughSegmentDetector, crate::cudaimgproc::CUDA_HoughSegmentDetectorTrait, as_raw_mut_CUDA_HoughSegmentDetector }
 
-	impl CUDA_HoughSegmentDetector {
+	/// Base class for Template Matching. :
+	pub struct CUDA_TemplateMatching {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { CUDA_HoughSegmentDetector, core::Algorithm, cv_cuda_HoughSegmentDetector_to_Algorithm }
+	opencv_type_boxed! { CUDA_TemplateMatching }
 
-	impl std::fmt::Debug for CUDA_HoughSegmentDetector {
+	impl Drop for CUDA_TemplateMatching {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CUDA_HoughSegmentDetector")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_TemplateMatching_delete(self.as_raw_mut_CUDA_TemplateMatching()) };
 		}
 	}
+
+	unsafe impl Send for CUDA_TemplateMatching {}
 
 	/// Constant methods for [crate::cudaimgproc::CUDA_TemplateMatching]
 	pub trait CUDA_TemplateMatchingTraitConst: core::AlgorithmTraitConst {
@@ -3212,21 +3207,15 @@ pub mod cudaimgproc {
 
 	}
 
-	/// Base class for Template Matching. :
-	pub struct CUDA_TemplateMatching {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CUDA_TemplateMatching }
-
-	impl Drop for CUDA_TemplateMatching {
+	impl std::fmt::Debug for CUDA_TemplateMatching {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_TemplateMatching_delete(self.as_raw_mut_CUDA_TemplateMatching()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_TemplateMatching")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for CUDA_TemplateMatching {}
+	boxed_cast_base! { CUDA_TemplateMatching, core::Algorithm, cv_cuda_TemplateMatching_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for CUDA_TemplateMatching {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -3248,16 +3237,4 @@ pub mod cudaimgproc {
 
 	boxed_ref! { CUDA_TemplateMatching, crate::cudaimgproc::CUDA_TemplateMatchingTraitConst, as_raw_CUDA_TemplateMatching, crate::cudaimgproc::CUDA_TemplateMatchingTrait, as_raw_mut_CUDA_TemplateMatching }
 
-	impl CUDA_TemplateMatching {
-	}
-
-	boxed_cast_base! { CUDA_TemplateMatching, core::Algorithm, cv_cuda_TemplateMatching_to_Algorithm }
-
-	impl std::fmt::Debug for CUDA_TemplateMatching {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CUDA_TemplateMatching")
-				.finish()
-		}
-	}
 }

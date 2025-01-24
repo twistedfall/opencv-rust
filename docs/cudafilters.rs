@@ -806,6 +806,22 @@ pub mod cudafilters {
 		Ok(ret)
 	}
 
+	/// Common interface for all CUDA filters :
+	pub struct Filter {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Filter }
+
+	impl Drop for Filter {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_Filter_delete(self.as_raw_mut_Filter()) };
+		}
+	}
+
+	unsafe impl Send for Filter {}
+
 	/// Constant methods for [crate::cudafilters::Filter]
 	pub trait FilterTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_Filter(&self) -> *const c_void;
@@ -859,21 +875,15 @@ pub mod cudafilters {
 
 	}
 
-	/// Common interface for all CUDA filters :
-	pub struct Filter {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Filter }
-
-	impl Drop for Filter {
+	impl std::fmt::Debug for Filter {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_Filter_delete(self.as_raw_mut_Filter()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Filter")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for Filter {}
+	boxed_cast_base! { Filter, core::Algorithm, cv_cuda_Filter_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for Filter {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -895,16 +905,4 @@ pub mod cudafilters {
 
 	boxed_ref! { Filter, crate::cudafilters::FilterTraitConst, as_raw_Filter, crate::cudafilters::FilterTrait, as_raw_mut_Filter }
 
-	impl Filter {
-	}
-
-	boxed_cast_base! { Filter, core::Algorithm, cv_cuda_Filter_to_Algorithm }
-
-	impl std::fmt::Debug for Filter {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Filter")
-				.finish()
-		}
-	}
 }

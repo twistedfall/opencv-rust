@@ -364,57 +364,6 @@ pub mod surface_matching {
 	pub type KeyType = u32;
 	pub type Pose3DPtr = core::Ptr<crate::surface_matching::Pose3D>;
 	pub type PoseCluster3DPtr = core::Ptr<crate::surface_matching::PoseCluster3D>;
-	/// Constant methods for [crate::surface_matching::ICP]
-	pub trait ICPTraitConst {
-		fn as_raw_ICP(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::surface_matching::ICP]
-	pub trait ICPTrait: crate::surface_matching::ICPTraitConst {
-		fn as_raw_mut_ICP(&mut self) -> *mut c_void;
-
-		/// \brief Perform registration
-		///
-		/// ## Parameters
-		/// * srcPC: The input point cloud for the model. Expected to have the normals (Nx6). Currently,
-		/// CV_32F is the only supported data type.
-		/// * dstPC: The input point cloud for the scene. It is assumed that the model is registered on the scene. Scene remains static. Expected to have the normals (Nx6). Currently, CV_32F is the only supported data type.
-		/// * residual:[out] The output registration error.
-		/// * pose:[out] Transformation between srcPC and dstPC.
-		/// \return On successful termination, the function returns 0.
-		///
-		/// \details It is assumed that the model is registered on the scene. Scene remains static, while the model transforms. The output poses transform the models onto the scene. Because of the point to plane minimization, the scene is expected to have the normals available. Expected to have the normals (Nx6).
-		#[inline]
-		fn register_model_to_scene(&mut self, src_pc: &impl core::MatTraitConst, dst_pc: &impl core::MatTraitConst, residual: &mut f64, pose: &mut core::Matx44d) -> Result<i32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ppf_match_3d_ICP_registerModelToScene_const_MatR_const_MatR_doubleR_Matx44dR(self.as_raw_mut_ICP(), src_pc.as_raw_Mat(), dst_pc.as_raw_Mat(), residual, pose, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// \brief Perform registration with multiple initial poses
-		///
-		/// ## Parameters
-		/// * srcPC: The input point cloud for the model. Expected to have the normals (Nx6). Currently,
-		/// CV_32F is the only supported data type.
-		/// * dstPC: The input point cloud for the scene. Currently, CV_32F is the only supported data type.
-		/// @param [in,out] poses Input poses to start with but also list output of poses.
-		/// \return On successful termination, the function returns 0.
-		///
-		/// \details It is assumed that the model is registered on the scene. Scene remains static, while the model transforms. The output poses transform the models onto the scene. Because of the point to plane minimization, the scene is expected to have the normals available. Expected to have the normals (Nx6).
-		#[inline]
-		fn register_model_to_scene_vec(&mut self, src_pc: &impl core::MatTraitConst, dst_pc: &impl core::MatTraitConst, poses: &mut core::Vector<crate::surface_matching::Pose3DPtr>) -> Result<i32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ppf_match_3d_ICP_registerModelToScene_const_MatR_const_MatR_vectorLPose3DPtrGR(self.as_raw_mut_ICP(), src_pc.as_raw_Mat(), dst_pc.as_raw_Mat(), poses.as_raw_mut_VectorOfPose3DPtr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
-
 	/// This class implements a very efficient and robust variant of the iterative closest point (ICP) algorithm.
 	/// The task is to register a 3D model (or point cloud) against a set of noisy target data. The variants are put together
 	/// by myself after certain tests. The task is to be able to match partial, noisy point clouds in cluttered scenes, quickly.
@@ -445,16 +394,6 @@ pub mod surface_matching {
 	}
 
 	unsafe impl Send for ICP {}
-
-	impl crate::surface_matching::ICPTraitConst for ICP {
-		#[inline] fn as_raw_ICP(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::surface_matching::ICPTrait for ICP {
-		#[inline] fn as_raw_mut_ICP(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { ICP, crate::surface_matching::ICPTraitConst, as_raw_ICP, crate::surface_matching::ICPTrait, as_raw_mut_ICP }
 
 	impl ICP {
 		#[inline]
@@ -532,12 +471,152 @@ pub mod surface_matching {
 
 	}
 
+	/// Constant methods for [crate::surface_matching::ICP]
+	pub trait ICPTraitConst {
+		fn as_raw_ICP(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::surface_matching::ICP]
+	pub trait ICPTrait: crate::surface_matching::ICPTraitConst {
+		fn as_raw_mut_ICP(&mut self) -> *mut c_void;
+
+		/// \brief Perform registration
+		///
+		/// ## Parameters
+		/// * srcPC: The input point cloud for the model. Expected to have the normals (Nx6). Currently,
+		/// CV_32F is the only supported data type.
+		/// * dstPC: The input point cloud for the scene. It is assumed that the model is registered on the scene. Scene remains static. Expected to have the normals (Nx6). Currently, CV_32F is the only supported data type.
+		/// * residual:[out] The output registration error.
+		/// * pose:[out] Transformation between srcPC and dstPC.
+		/// \return On successful termination, the function returns 0.
+		///
+		/// \details It is assumed that the model is registered on the scene. Scene remains static, while the model transforms. The output poses transform the models onto the scene. Because of the point to plane minimization, the scene is expected to have the normals available. Expected to have the normals (Nx6).
+		#[inline]
+		fn register_model_to_scene(&mut self, src_pc: &impl core::MatTraitConst, dst_pc: &impl core::MatTraitConst, residual: &mut f64, pose: &mut core::Matx44d) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ppf_match_3d_ICP_registerModelToScene_const_MatR_const_MatR_doubleR_Matx44dR(self.as_raw_mut_ICP(), src_pc.as_raw_Mat(), dst_pc.as_raw_Mat(), residual, pose, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// \brief Perform registration with multiple initial poses
+		///
+		/// ## Parameters
+		/// * srcPC: The input point cloud for the model. Expected to have the normals (Nx6). Currently,
+		/// CV_32F is the only supported data type.
+		/// * dstPC: The input point cloud for the scene. Currently, CV_32F is the only supported data type.
+		/// @param [in,out] poses Input poses to start with but also list output of poses.
+		/// \return On successful termination, the function returns 0.
+		///
+		/// \details It is assumed that the model is registered on the scene. Scene remains static, while the model transforms. The output poses transform the models onto the scene. Because of the point to plane minimization, the scene is expected to have the normals available. Expected to have the normals (Nx6).
+		#[inline]
+		fn register_model_to_scene_vec(&mut self, src_pc: &impl core::MatTraitConst, dst_pc: &impl core::MatTraitConst, poses: &mut core::Vector<crate::surface_matching::Pose3DPtr>) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ppf_match_3d_ICP_registerModelToScene_const_MatR_const_MatR_vectorLPose3DPtrGR(self.as_raw_mut_ICP(), src_pc.as_raw_Mat(), dst_pc.as_raw_Mat(), poses.as_raw_mut_VectorOfPose3DPtr(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
 	impl std::fmt::Debug for ICP {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("ICP")
 				.finish()
 		}
+	}
+
+	impl crate::surface_matching::ICPTraitConst for ICP {
+		#[inline] fn as_raw_ICP(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::surface_matching::ICPTrait for ICP {
+		#[inline] fn as_raw_mut_ICP(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { ICP, crate::surface_matching::ICPTraitConst, as_raw_ICP, crate::surface_matching::ICPTrait, as_raw_mut_ICP }
+
+	/// Class, allowing the load and matching 3D models.
+	/// Typical Use:
+	/// ```C++
+	/// // Train a model
+	/// ppf_match_3d::PPF3DDetector detector(0.05, 0.05);
+	/// detector.trainModel(pc);
+	/// // Search the model in a given scene
+	/// vector<Pose3DPtr> results;
+	/// detector.match(pcTest, results, 1.0/5.0,0.05);
+	/// ```
+	///
+	pub struct PPF3DDetector {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { PPF3DDetector }
+
+	impl Drop for PPF3DDetector {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_ppf_match_3d_PPF3DDetector_delete(self.as_raw_mut_PPF3DDetector()) };
+		}
+	}
+
+	unsafe impl Send for PPF3DDetector {}
+
+	impl PPF3DDetector {
+		/// \brief Empty constructor. Sets default arguments
+		#[inline]
+		pub fn default() -> Result<crate::surface_matching::PPF3DDetector> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ppf_match_3d_PPF3DDetector_PPF3DDetector(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::surface_matching::PPF3DDetector::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Constructor with arguments
+		/// ## Parameters
+		/// * relativeSamplingStep: Sampling distance relative to the object's diameter. Models are first sampled uniformly in order to improve efficiency. Decreasing this value leads to a denser model, and a more accurate pose estimation but the larger the model, the slower the training. Increasing the value leads to a less accurate pose computation but a smaller model and faster model generation and matching. Beware of the memory consumption when using small values.
+		/// * relativeDistanceStep: The discretization distance of the point pair distance relative to the model's diameter. This value has a direct impact on the hashtable. Using small values would lead to too fine discretization, and thus ambiguity in the bins of hashtable. Too large values would lead to no discrimination over the feature vectors and different point pair features would be assigned to the same bin. This argument defaults to the value of RelativeSamplingStep. For noisy scenes, the value can be increased to improve the robustness of the matching against noisy points.
+		/// * numAngles: Set the discretization of the point pair orientation as the number of subdivisions of the angle. This value is the equivalent of RelativeDistanceStep for the orientations. Increasing the value increases the precision of the matching but decreases the robustness against incorrect normal directions. Decreasing the value decreases the precision of the matching but increases the robustness against incorrect normal directions. For very noisy scenes where the normal directions can not be computed accurately, the value can be set to 25 or 20.
+		///
+		/// ## C++ default parameters
+		/// * relative_distance_step: 0.05
+		/// * num_angles: 30
+		#[inline]
+		pub fn new(relative_sampling_step: f64, relative_distance_step: f64, num_angles: f64) -> Result<crate::surface_matching::PPF3DDetector> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ppf_match_3d_PPF3DDetector_PPF3DDetector_const_double_const_double_const_double(relative_sampling_step, relative_distance_step, num_angles, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::surface_matching::PPF3DDetector::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Constructor with arguments
+		/// ## Parameters
+		/// * relativeSamplingStep: Sampling distance relative to the object's diameter. Models are first sampled uniformly in order to improve efficiency. Decreasing this value leads to a denser model, and a more accurate pose estimation but the larger the model, the slower the training. Increasing the value leads to a less accurate pose computation but a smaller model and faster model generation and matching. Beware of the memory consumption when using small values.
+		/// * relativeDistanceStep: The discretization distance of the point pair distance relative to the model's diameter. This value has a direct impact on the hashtable. Using small values would lead to too fine discretization, and thus ambiguity in the bins of hashtable. Too large values would lead to no discrimination over the feature vectors and different point pair features would be assigned to the same bin. This argument defaults to the value of RelativeSamplingStep. For noisy scenes, the value can be increased to improve the robustness of the matching against noisy points.
+		/// * numAngles: Set the discretization of the point pair orientation as the number of subdivisions of the angle. This value is the equivalent of RelativeDistanceStep for the orientations. Increasing the value increases the precision of the matching but decreases the robustness against incorrect normal directions. Decreasing the value decreases the precision of the matching but increases the robustness against incorrect normal directions. For very noisy scenes where the normal directions can not be computed accurately, the value can be set to 25 or 20.
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * relative_distance_step: 0.05
+		/// * num_angles: 30
+		#[inline]
+		pub fn new_def(relative_sampling_step: f64) -> Result<crate::surface_matching::PPF3DDetector> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ppf_match_3d_PPF3DDetector_PPF3DDetector_const_double(relative_sampling_step, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::surface_matching::PPF3DDetector::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::surface_matching::PPF3DDetector]
@@ -647,31 +726,13 @@ pub mod surface_matching {
 
 	}
 
-	/// Class, allowing the load and matching 3D models.
-	/// Typical Use:
-	/// ```C++
-	/// // Train a model
-	/// ppf_match_3d::PPF3DDetector detector(0.05, 0.05);
-	/// detector.trainModel(pc);
-	/// // Search the model in a given scene
-	/// vector<Pose3DPtr> results;
-	/// detector.match(pcTest, results, 1.0/5.0,0.05);
-	/// ```
-	///
-	pub struct PPF3DDetector {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { PPF3DDetector }
-
-	impl Drop for PPF3DDetector {
+	impl std::fmt::Debug for PPF3DDetector {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ppf_match_3d_PPF3DDetector_delete(self.as_raw_mut_PPF3DDetector()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PPF3DDetector")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for PPF3DDetector {}
 
 	impl crate::surface_matching::PPF3DDetectorTraitConst for PPF3DDetector {
 		#[inline] fn as_raw_PPF3DDetector(&self) -> *const c_void { self.as_raw() }
@@ -683,65 +744,62 @@ pub mod surface_matching {
 
 	boxed_ref! { PPF3DDetector, crate::surface_matching::PPF3DDetectorTraitConst, as_raw_PPF3DDetector, crate::surface_matching::PPF3DDetectorTrait, as_raw_mut_PPF3DDetector }
 
-	impl PPF3DDetector {
-		/// \brief Empty constructor. Sets default arguments
-		#[inline]
-		pub fn default() -> Result<crate::surface_matching::PPF3DDetector> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ppf_match_3d_PPF3DDetector_PPF3DDetector(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::surface_matching::PPF3DDetector::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Constructor with arguments
-		/// ## Parameters
-		/// * relativeSamplingStep: Sampling distance relative to the object's diameter. Models are first sampled uniformly in order to improve efficiency. Decreasing this value leads to a denser model, and a more accurate pose estimation but the larger the model, the slower the training. Increasing the value leads to a less accurate pose computation but a smaller model and faster model generation and matching. Beware of the memory consumption when using small values.
-		/// * relativeDistanceStep: The discretization distance of the point pair distance relative to the model's diameter. This value has a direct impact on the hashtable. Using small values would lead to too fine discretization, and thus ambiguity in the bins of hashtable. Too large values would lead to no discrimination over the feature vectors and different point pair features would be assigned to the same bin. This argument defaults to the value of RelativeSamplingStep. For noisy scenes, the value can be increased to improve the robustness of the matching against noisy points.
-		/// * numAngles: Set the discretization of the point pair orientation as the number of subdivisions of the angle. This value is the equivalent of RelativeDistanceStep for the orientations. Increasing the value increases the precision of the matching but decreases the robustness against incorrect normal directions. Decreasing the value decreases the precision of the matching but increases the robustness against incorrect normal directions. For very noisy scenes where the normal directions can not be computed accurately, the value can be set to 25 or 20.
-		///
-		/// ## C++ default parameters
-		/// * relative_distance_step: 0.05
-		/// * num_angles: 30
-		#[inline]
-		pub fn new(relative_sampling_step: f64, relative_distance_step: f64, num_angles: f64) -> Result<crate::surface_matching::PPF3DDetector> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ppf_match_3d_PPF3DDetector_PPF3DDetector_const_double_const_double_const_double(relative_sampling_step, relative_distance_step, num_angles, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::surface_matching::PPF3DDetector::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Constructor with arguments
-		/// ## Parameters
-		/// * relativeSamplingStep: Sampling distance relative to the object's diameter. Models are first sampled uniformly in order to improve efficiency. Decreasing this value leads to a denser model, and a more accurate pose estimation but the larger the model, the slower the training. Increasing the value leads to a less accurate pose computation but a smaller model and faster model generation and matching. Beware of the memory consumption when using small values.
-		/// * relativeDistanceStep: The discretization distance of the point pair distance relative to the model's diameter. This value has a direct impact on the hashtable. Using small values would lead to too fine discretization, and thus ambiguity in the bins of hashtable. Too large values would lead to no discrimination over the feature vectors and different point pair features would be assigned to the same bin. This argument defaults to the value of RelativeSamplingStep. For noisy scenes, the value can be increased to improve the robustness of the matching against noisy points.
-		/// * numAngles: Set the discretization of the point pair orientation as the number of subdivisions of the angle. This value is the equivalent of RelativeDistanceStep for the orientations. Increasing the value increases the precision of the matching but decreases the robustness against incorrect normal directions. Decreasing the value decreases the precision of the matching but increases the robustness against incorrect normal directions. For very noisy scenes where the normal directions can not be computed accurately, the value can be set to 25 or 20.
-		///
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * relative_distance_step: 0.05
-		/// * num_angles: 30
-		#[inline]
-		pub fn new_def(relative_sampling_step: f64) -> Result<crate::surface_matching::PPF3DDetector> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ppf_match_3d_PPF3DDetector_PPF3DDetector_const_double(relative_sampling_step, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::surface_matching::PPF3DDetector::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// Class, allowing the storage of a pose. The data structure stores both
+	/// the quaternions and the matrix forms. It supports IO functionality together with
+	/// various helper methods to work with poses
+	pub struct Pose3D {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for PPF3DDetector {
+	opencv_type_boxed! { Pose3D }
+
+	impl Drop for Pose3D {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("PPF3DDetector")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_ppf_match_3d_Pose3D_delete(self.as_raw_mut_Pose3D()) };
 		}
+	}
+
+	unsafe impl Send for Pose3D {}
+
+	impl Pose3D {
+		#[inline]
+		pub fn default() -> Result<crate::surface_matching::Pose3D> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ppf_match_3d_Pose3D_Pose3D(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::surface_matching::Pose3D::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## C++ default parameters
+		/// * model_index: 0
+		/// * num_votes: 0
+		#[inline]
+		pub fn new(alpha: f64, model_index: size_t, num_votes: size_t) -> Result<crate::surface_matching::Pose3D> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ppf_match_3d_Pose3D_Pose3D_double_size_t_size_t(alpha, model_index, num_votes, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::surface_matching::Pose3D::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * model_index: 0
+		/// * num_votes: 0
+		#[inline]
+		pub fn new_def(alpha: f64) -> Result<crate::surface_matching::Pose3D> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ppf_match_3d_Pose3D_Pose3D_double(alpha, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::surface_matching::Pose3D::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::surface_matching::Pose3D]
@@ -939,74 +997,6 @@ pub mod surface_matching {
 
 	}
 
-	/// Class, allowing the storage of a pose. The data structure stores both
-	/// the quaternions and the matrix forms. It supports IO functionality together with
-	/// various helper methods to work with poses
-	pub struct Pose3D {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Pose3D }
-
-	impl Drop for Pose3D {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ppf_match_3d_Pose3D_delete(self.as_raw_mut_Pose3D()) };
-		}
-	}
-
-	unsafe impl Send for Pose3D {}
-
-	impl crate::surface_matching::Pose3DTraitConst for Pose3D {
-		#[inline] fn as_raw_Pose3D(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::surface_matching::Pose3DTrait for Pose3D {
-		#[inline] fn as_raw_mut_Pose3D(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Pose3D, crate::surface_matching::Pose3DTraitConst, as_raw_Pose3D, crate::surface_matching::Pose3DTrait, as_raw_mut_Pose3D }
-
-	impl Pose3D {
-		#[inline]
-		pub fn default() -> Result<crate::surface_matching::Pose3D> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ppf_match_3d_Pose3D_Pose3D(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::surface_matching::Pose3D::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## C++ default parameters
-		/// * model_index: 0
-		/// * num_votes: 0
-		#[inline]
-		pub fn new(alpha: f64, model_index: size_t, num_votes: size_t) -> Result<crate::surface_matching::Pose3D> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ppf_match_3d_Pose3D_Pose3D_double_size_t_size_t(alpha, model_index, num_votes, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::surface_matching::Pose3D::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * model_index: 0
-		/// * num_votes: 0
-		#[inline]
-		pub fn new_def(alpha: f64) -> Result<crate::surface_matching::Pose3D> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ppf_match_3d_Pose3D_Pose3D_double(alpha, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::surface_matching::Pose3D::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
 	impl std::fmt::Debug for Pose3D {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -1021,6 +1011,67 @@ pub mod surface_matching {
 				.field("q", &crate::surface_matching::Pose3DTraitConst::q(self))
 				.finish()
 		}
+	}
+
+	impl crate::surface_matching::Pose3DTraitConst for Pose3D {
+		#[inline] fn as_raw_Pose3D(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::surface_matching::Pose3DTrait for Pose3D {
+		#[inline] fn as_raw_mut_Pose3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Pose3D, crate::surface_matching::Pose3DTraitConst, as_raw_Pose3D, crate::surface_matching::Pose3DTrait, as_raw_mut_Pose3D }
+
+	/// When multiple poses (see Pose3D) are grouped together (contribute to the same transformation)
+	/// pose clusters occur. This class is a general container for such groups of poses. It is possible to store,
+	/// load and perform IO on these poses.
+	pub struct PoseCluster3D {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { PoseCluster3D }
+
+	impl Drop for PoseCluster3D {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_ppf_match_3d_PoseCluster3D_delete(self.as_raw_mut_PoseCluster3D()) };
+		}
+	}
+
+	unsafe impl Send for PoseCluster3D {}
+
+	impl PoseCluster3D {
+		#[inline]
+		pub fn default() -> Result<crate::surface_matching::PoseCluster3D> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ppf_match_3d_PoseCluster3D_PoseCluster3D(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::surface_matching::PoseCluster3D::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn new(mut new_pose: crate::surface_matching::Pose3DPtr) -> Result<crate::surface_matching::PoseCluster3D> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ppf_match_3d_PoseCluster3D_PoseCluster3D_Pose3DPtr(new_pose.as_raw_mut_PtrOfPose3D(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::surface_matching::PoseCluster3D::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn new_1(mut new_pose: crate::surface_matching::Pose3DPtr, new_id: i32) -> Result<crate::surface_matching::PoseCluster3D> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ppf_match_3d_PoseCluster3D_PoseCluster3D_Pose3DPtr_int(new_pose.as_raw_mut_PtrOfPose3D(), new_id, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::surface_matching::PoseCluster3D::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::surface_matching::PoseCluster3D]
@@ -1104,23 +1155,16 @@ pub mod surface_matching {
 
 	}
 
-	/// When multiple poses (see Pose3D) are grouped together (contribute to the same transformation)
-	/// pose clusters occur. This class is a general container for such groups of poses. It is possible to store,
-	/// load and perform IO on these poses.
-	pub struct PoseCluster3D {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { PoseCluster3D }
-
-	impl Drop for PoseCluster3D {
+	impl std::fmt::Debug for PoseCluster3D {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ppf_match_3d_PoseCluster3D_delete(self.as_raw_mut_PoseCluster3D()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PoseCluster3D")
+				.field("pose_list", &crate::surface_matching::PoseCluster3DTraitConst::pose_list(self))
+				.field("num_votes", &crate::surface_matching::PoseCluster3DTraitConst::num_votes(self))
+				.field("id", &crate::surface_matching::PoseCluster3DTraitConst::id(self))
+				.finish()
 		}
 	}
-
-	unsafe impl Send for PoseCluster3D {}
 
 	impl crate::surface_matching::PoseCluster3DTraitConst for PoseCluster3D {
 		#[inline] fn as_raw_PoseCluster3D(&self) -> *const c_void { self.as_raw() }
@@ -1132,47 +1176,4 @@ pub mod surface_matching {
 
 	boxed_ref! { PoseCluster3D, crate::surface_matching::PoseCluster3DTraitConst, as_raw_PoseCluster3D, crate::surface_matching::PoseCluster3DTrait, as_raw_mut_PoseCluster3D }
 
-	impl PoseCluster3D {
-		#[inline]
-		pub fn default() -> Result<crate::surface_matching::PoseCluster3D> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ppf_match_3d_PoseCluster3D_PoseCluster3D(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::surface_matching::PoseCluster3D::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn new(mut new_pose: crate::surface_matching::Pose3DPtr) -> Result<crate::surface_matching::PoseCluster3D> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ppf_match_3d_PoseCluster3D_PoseCluster3D_Pose3DPtr(new_pose.as_raw_mut_PtrOfPose3D(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::surface_matching::PoseCluster3D::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn new_1(mut new_pose: crate::surface_matching::Pose3DPtr, new_id: i32) -> Result<crate::surface_matching::PoseCluster3D> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ppf_match_3d_PoseCluster3D_PoseCluster3D_Pose3DPtr_int(new_pose.as_raw_mut_PtrOfPose3D(), new_id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::surface_matching::PoseCluster3D::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	impl std::fmt::Debug for PoseCluster3D {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("PoseCluster3D")
-				.field("pose_list", &crate::surface_matching::PoseCluster3DTraitConst::pose_list(self))
-				.field("num_votes", &crate::surface_matching::PoseCluster3DTraitConst::num_votes(self))
-				.field("id", &crate::surface_matching::PoseCluster3DTraitConst::id(self))
-				.finish()
-		}
-	}
 }

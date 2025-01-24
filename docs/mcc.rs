@@ -589,6 +589,88 @@ pub mod mcc {
 
 	opencv_type_enum! { crate::mcc::MCC_TYPECHART }
 
+	/// Core class of ccm model
+	///
+	/// Produce a ColorCorrectionModel instance for inference
+	pub struct ColorCorrectionModel {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { ColorCorrectionModel }
+
+	impl Drop for ColorCorrectionModel {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_ccm_ColorCorrectionModel_delete(self.as_raw_mut_ColorCorrectionModel()) };
+		}
+	}
+
+	unsafe impl Send for ColorCorrectionModel {}
+
+	impl ColorCorrectionModel {
+		/// Color Correction Model
+		///
+		/// Supported list of color cards:
+		/// - [COLORCHECKER_Macbeth], the Macbeth ColorChecker
+		/// - [COLORCHECKER_Vinyl], the DKK ColorChecker
+		/// - [COLORCHECKER_DigitalSG], the DigitalSG ColorChecker with 140 squares
+		///
+		/// ## Parameters
+		/// * src: detected colors of ColorChecker patches;
+		///
+		///            the color type is RGB not BGR, and the color values are in [0, 1];
+		/// * constcolor: the Built-in color card
+		#[inline]
+		pub fn new(src: &impl core::MatTraitConst, constcolor: crate::mcc::CONST_COLOR) -> Result<crate::mcc::ColorCorrectionModel> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccm_ColorCorrectionModel_ColorCorrectionModel_const_MatR_CONST_COLOR(src.as_raw_Mat(), constcolor, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::mcc::ColorCorrectionModel::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Color Correction Model
+		/// ## Parameters
+		/// * src: detected colors of ColorChecker patches;
+		///
+		///           the color type is RGB not BGR, and the color values are in [0, 1];
+		/// * colors: the reference color values, the color values are in [0, 1].
+		///
+		/// * ref_cs: the corresponding color space
+		///            If the color type is some RGB, the format is RGB not BGR;
+		///
+		#[inline]
+		pub fn new_1(src: &impl core::MatTraitConst, mut colors: impl core::MatTrait, ref_cs: crate::mcc::COLOR_SPACE) -> Result<crate::mcc::ColorCorrectionModel> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccm_ColorCorrectionModel_ColorCorrectionModel_const_MatR_Mat_COLOR_SPACE(src.as_raw_Mat(), colors.as_raw_mut_Mat(), ref_cs, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::mcc::ColorCorrectionModel::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Color Correction Model
+		/// ## Parameters
+		/// * src: detected colors of ColorChecker patches;
+		///
+		///            the color type is RGB not BGR, and the color values are in [0, 1];
+		/// * colors: the reference color values, the color values are in [0, 1].
+		/// * ref_cs: the corresponding color space
+		///            If the color type is some RGB, the format is RGB not BGR;
+		/// * colored: mask of colored color
+		#[inline]
+		pub fn new_2(src: &impl core::MatTraitConst, mut colors: impl core::MatTrait, ref_cs: crate::mcc::COLOR_SPACE, mut colored: impl core::MatTrait) -> Result<crate::mcc::ColorCorrectionModel> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ccm_ColorCorrectionModel_ColorCorrectionModel_const_MatR_Mat_COLOR_SPACE_Mat(src.as_raw_Mat(), colors.as_raw_mut_Mat(), ref_cs, colored.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::mcc::ColorCorrectionModel::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
 	/// Constant methods for [crate::mcc::ColorCorrectionModel]
 	pub trait ColorCorrectionModelTraitConst {
 		fn as_raw_ColorCorrectionModel(&self) -> *const c_void;
@@ -909,23 +991,13 @@ pub mod mcc {
 
 	}
 
-	/// Core class of ccm model
-	///
-	/// Produce a ColorCorrectionModel instance for inference
-	pub struct ColorCorrectionModel {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { ColorCorrectionModel }
-
-	impl Drop for ColorCorrectionModel {
+	impl std::fmt::Debug for ColorCorrectionModel {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ccm_ColorCorrectionModel_delete(self.as_raw_mut_ColorCorrectionModel()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ColorCorrectionModel")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for ColorCorrectionModel {}
 
 	impl crate::mcc::ColorCorrectionModelTraitConst for ColorCorrectionModel {
 		#[inline] fn as_raw_ColorCorrectionModel(&self) -> *const c_void { self.as_raw() }
@@ -937,76 +1009,41 @@ pub mod mcc {
 
 	boxed_ref! { ColorCorrectionModel, crate::mcc::ColorCorrectionModelTraitConst, as_raw_ColorCorrectionModel, crate::mcc::ColorCorrectionModelTrait, as_raw_mut_ColorCorrectionModel }
 
-	impl ColorCorrectionModel {
-		/// Color Correction Model
-		///
-		/// Supported list of color cards:
-		/// - [COLORCHECKER_Macbeth], the Macbeth ColorChecker
-		/// - [COLORCHECKER_Vinyl], the DKK ColorChecker
-		/// - [COLORCHECKER_DigitalSG], the DigitalSG ColorChecker with 140 squares
-		///
-		/// ## Parameters
-		/// * src: detected colors of ColorChecker patches;
-		///
-		///            the color type is RGB not BGR, and the color values are in [0, 1];
-		/// * constcolor: the Built-in color card
-		#[inline]
-		pub fn new(src: &impl core::MatTraitConst, constcolor: crate::mcc::CONST_COLOR) -> Result<crate::mcc::ColorCorrectionModel> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ccm_ColorCorrectionModel_ColorCorrectionModel_const_MatR_CONST_COLOR(src.as_raw_Mat(), constcolor, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::mcc::ColorCorrectionModel::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Color Correction Model
-		/// ## Parameters
-		/// * src: detected colors of ColorChecker patches;
-		///
-		///           the color type is RGB not BGR, and the color values are in [0, 1];
-		/// * colors: the reference color values, the color values are in [0, 1].
-		///
-		/// * ref_cs: the corresponding color space
-		///            If the color type is some RGB, the format is RGB not BGR;
-		///
-		#[inline]
-		pub fn new_1(src: &impl core::MatTraitConst, mut colors: impl core::MatTrait, ref_cs: crate::mcc::COLOR_SPACE) -> Result<crate::mcc::ColorCorrectionModel> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ccm_ColorCorrectionModel_ColorCorrectionModel_const_MatR_Mat_COLOR_SPACE(src.as_raw_Mat(), colors.as_raw_mut_Mat(), ref_cs, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::mcc::ColorCorrectionModel::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Color Correction Model
-		/// ## Parameters
-		/// * src: detected colors of ColorChecker patches;
-		///
-		///            the color type is RGB not BGR, and the color values are in [0, 1];
-		/// * colors: the reference color values, the color values are in [0, 1].
-		/// * ref_cs: the corresponding color space
-		///            If the color type is some RGB, the format is RGB not BGR;
-		/// * colored: mask of colored color
-		#[inline]
-		pub fn new_2(src: &impl core::MatTraitConst, mut colors: impl core::MatTrait, ref_cs: crate::mcc::COLOR_SPACE, mut colored: impl core::MatTrait) -> Result<crate::mcc::ColorCorrectionModel> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ccm_ColorCorrectionModel_ColorCorrectionModel_const_MatR_Mat_COLOR_SPACE_Mat(src.as_raw_Mat(), colors.as_raw_mut_Mat(), ref_cs, colored.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::mcc::ColorCorrectionModel::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// CChecker
+	///
+	/// \brief checker object
+	///
+	///    This class contains the information about the detected checkers,i.e, their
+	///    type, the corners of the chart, the color profile, the cost, centers chart,
+	///    etc.
+	pub struct MCC_CChecker {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for ColorCorrectionModel {
+	opencv_type_boxed! { MCC_CChecker }
+
+	impl Drop for MCC_CChecker {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("ColorCorrectionModel")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_mcc_CChecker_delete(self.as_raw_mut_MCC_CChecker()) };
 		}
+	}
+
+	unsafe impl Send for MCC_CChecker {}
+
+	impl MCC_CChecker {
+		/// \brief Create a new CChecker object.
+		/// \return A pointer to the implementation of the CChecker
+		#[inline]
+		pub fn create() -> Result<core::Ptr<crate::mcc::MCC_CChecker>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CChecker_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::mcc::MCC_CChecker>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::mcc::MCC_CChecker]
@@ -1147,27 +1184,13 @@ pub mod mcc {
 
 	}
 
-	/// CChecker
-	///
-	/// \brief checker object
-	///
-	///    This class contains the information about the detected checkers,i.e, their
-	///    type, the corners of the chart, the color profile, the cost, centers chart,
-	///    etc.
-	pub struct MCC_CChecker {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { MCC_CChecker }
-
-	impl Drop for MCC_CChecker {
+	impl std::fmt::Debug for MCC_CChecker {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_mcc_CChecker_delete(self.as_raw_mut_MCC_CChecker()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MCC_CChecker")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for MCC_CChecker {}
 
 	impl crate::mcc::MCC_CCheckerTraitConst for MCC_CChecker {
 		#[inline] fn as_raw_MCC_CChecker(&self) -> *const c_void { self.as_raw() }
@@ -1179,27 +1202,34 @@ pub mod mcc {
 
 	boxed_ref! { MCC_CChecker, crate::mcc::MCC_CCheckerTraitConst, as_raw_MCC_CChecker, crate::mcc::MCC_CCheckerTrait, as_raw_mut_MCC_CChecker }
 
-	impl MCC_CChecker {
-		/// \brief Create a new CChecker object.
-		/// \return A pointer to the implementation of the CChecker
+	/// A class to find the positions of the ColorCharts in the image.
+	pub struct MCC_CCheckerDetector {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { MCC_CCheckerDetector }
+
+	impl Drop for MCC_CCheckerDetector {
 		#[inline]
-		pub fn create() -> Result<core::Ptr<crate::mcc::MCC_CChecker>> {
+		fn drop(&mut self) {
+			unsafe { sys::cv_mcc_CCheckerDetector_delete(self.as_raw_mut_MCC_CCheckerDetector()) };
+		}
+	}
+
+	unsafe impl Send for MCC_CCheckerDetector {}
+
+	impl MCC_CCheckerDetector {
+		/// \brief Returns the implementation of the CCheckerDetector.
+		#[inline]
+		pub fn create() -> Result<core::Ptr<crate::mcc::MCC_CCheckerDetector>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_mcc_CChecker_create(ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_mcc_CCheckerDetector_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::mcc::MCC_CChecker>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::mcc::MCC_CCheckerDetector>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	impl std::fmt::Debug for MCC_CChecker {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("MCC_CChecker")
-				.finish()
-		}
 	}
 
 	/// Constant methods for [crate::mcc::MCC_CCheckerDetector]
@@ -1395,21 +1425,15 @@ pub mod mcc {
 
 	}
 
-	/// A class to find the positions of the ColorCharts in the image.
-	pub struct MCC_CCheckerDetector {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { MCC_CCheckerDetector }
-
-	impl Drop for MCC_CCheckerDetector {
+	impl std::fmt::Debug for MCC_CCheckerDetector {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_mcc_CCheckerDetector_delete(self.as_raw_mut_MCC_CCheckerDetector()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MCC_CCheckerDetector")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for MCC_CCheckerDetector {}
+	boxed_cast_base! { MCC_CCheckerDetector, core::Algorithm, cv_mcc_CCheckerDetector_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for MCC_CCheckerDetector {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -1430,54 +1454,6 @@ pub mod mcc {
 	}
 
 	boxed_ref! { MCC_CCheckerDetector, crate::mcc::MCC_CCheckerDetectorTraitConst, as_raw_MCC_CCheckerDetector, crate::mcc::MCC_CCheckerDetectorTrait, as_raw_mut_MCC_CCheckerDetector }
-
-	impl MCC_CCheckerDetector {
-		/// \brief Returns the implementation of the CCheckerDetector.
-		#[inline]
-		pub fn create() -> Result<core::Ptr<crate::mcc::MCC_CCheckerDetector>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_mcc_CCheckerDetector_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::mcc::MCC_CCheckerDetector>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_base! { MCC_CCheckerDetector, core::Algorithm, cv_mcc_CCheckerDetector_to_Algorithm }
-
-	impl std::fmt::Debug for MCC_CCheckerDetector {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("MCC_CCheckerDetector")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::mcc::MCC_CCheckerDraw]
-	pub trait MCC_CCheckerDrawTraitConst {
-		fn as_raw_MCC_CCheckerDraw(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::mcc::MCC_CCheckerDraw]
-	pub trait MCC_CCheckerDrawTrait: crate::mcc::MCC_CCheckerDrawTraitConst {
-		fn as_raw_mut_MCC_CCheckerDraw(&mut self) -> *mut c_void;
-
-		/// \brief Draws the checker to the given image.
-		/// \param img image in color space BGR
-		#[inline]
-		fn draw(&mut self, img: &mut impl ToInputOutputArray) -> Result<()> {
-			input_output_array_arg!(img);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_mcc_CCheckerDraw_draw_const__InputOutputArrayR(self.as_raw_mut_MCC_CCheckerDraw(), img.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
 
 	/// \brief checker draw
 	///
@@ -1506,16 +1482,6 @@ pub mod mcc {
 	}
 
 	unsafe impl Send for MCC_CCheckerDraw {}
-
-	impl crate::mcc::MCC_CCheckerDrawTraitConst for MCC_CCheckerDraw {
-		#[inline] fn as_raw_MCC_CCheckerDraw(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::mcc::MCC_CCheckerDrawTrait for MCC_CCheckerDraw {
-		#[inline] fn as_raw_mut_MCC_CCheckerDraw(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { MCC_CCheckerDraw, crate::mcc::MCC_CCheckerDrawTraitConst, as_raw_MCC_CCheckerDraw, crate::mcc::MCC_CCheckerDrawTrait, as_raw_mut_MCC_CCheckerDraw }
 
 	impl MCC_CCheckerDraw {
 		/// \brief Create a new CCheckerDraw object.
@@ -1563,12 +1529,131 @@ pub mod mcc {
 
 	}
 
+	/// Constant methods for [crate::mcc::MCC_CCheckerDraw]
+	pub trait MCC_CCheckerDrawTraitConst {
+		fn as_raw_MCC_CCheckerDraw(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::mcc::MCC_CCheckerDraw]
+	pub trait MCC_CCheckerDrawTrait: crate::mcc::MCC_CCheckerDrawTraitConst {
+		fn as_raw_mut_MCC_CCheckerDraw(&mut self) -> *mut c_void;
+
+		/// \brief Draws the checker to the given image.
+		/// \param img image in color space BGR
+		#[inline]
+		fn draw(&mut self, img: &mut impl ToInputOutputArray) -> Result<()> {
+			input_output_array_arg!(img);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_CCheckerDraw_draw_const__InputOutputArrayR(self.as_raw_mut_MCC_CCheckerDraw(), img.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
 	impl std::fmt::Debug for MCC_CCheckerDraw {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MCC_CCheckerDraw")
 				.finish()
 		}
+	}
+
+	impl crate::mcc::MCC_CCheckerDrawTraitConst for MCC_CCheckerDraw {
+		#[inline] fn as_raw_MCC_CCheckerDraw(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::mcc::MCC_CCheckerDrawTrait for MCC_CCheckerDraw {
+		#[inline] fn as_raw_mut_MCC_CCheckerDraw(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { MCC_CCheckerDraw, crate::mcc::MCC_CCheckerDrawTraitConst, as_raw_MCC_CCheckerDraw, crate::mcc::MCC_CCheckerDrawTrait, as_raw_mut_MCC_CCheckerDraw }
+
+	/// Parameters for the detectMarker process:
+	/// - int adaptiveThreshWinSizeMin : minimum window size for adaptive
+	///                                  thresholding before finding contours
+	///                                  (default 23).
+	/// - int adaptiveThreshWinSizeMax : maximum window size for adaptive
+	///                                  thresholding before finding contours
+	///                                  (default 153).
+	/// - int adaptiveThreshWinSizeStep : increments from adaptiveThreshWinSizeMin to
+	///                                   adaptiveThreshWinSizeMax during the
+	///                                   thresholding (default 16).
+	/// - double adaptiveThreshConstant : constant for adaptive thresholding before
+	///                                   finding contours (default 7)
+	/// - double minContoursAreaRate : determine minimum area for marker contour to
+	///                                be detected. This is defined as a rate respect
+	///                                to the area of the input image. Used only if
+	///                                neural network is used (default 0.003).
+	/// - double minContoursArea : determine minimum area for marker contour to be
+	///                            detected. This is defined as the actual area. Used
+	///                            only if neural network is not used (default 100).
+	/// - double confidenceThreshold : minimum confidence for a bounding box detected
+	///                                by neural network to classify as
+	///                                detection.(default 0.5)
+	///                                (0<=confidenceThreshold<=1)
+	/// - double minContourSolidity : minimum solidity of a contour for it be
+	///                               detected as a square in the chart. (default
+	///                               0.9).
+	/// - double findCandidatesApproxPolyDPEpsMultiplier : multipler to be used in
+	///                                                    cv::ApproxPolyDP function
+	///                                                    (default 0.05)
+	/// - int borderWidth : width of the padding used to pass the inital neural
+	///                    network detection in the succeeding system.(default 0)
+	/// - float B0factor : distance between two neighbours squares of the same chart.
+	///                    Defined as the ratio between distance and large dimension
+	///                    of square (default 1.25)
+	/// - float maxError : maximum allowed error in the detection of a chart.
+	///                    default(0.1)
+	/// - int minContourPointsAllowed : minium points in a detected contour.
+	///                                 default(4)
+	/// - int minContourLengthAllowed : minimum length of a countour. default(100)
+	/// - int minInterContourDistance : minimum distance between two contours.
+	///                                 default(100)
+	/// - int minInterCheckerDistance : minimum distance between two checkers.
+	///                                 default(10000)
+	/// - int minImageSize : minimum size of the smaller dimension of the image.
+	///                      default(1000)
+	/// - unsigned minGroupSize : minimum number of a squared of a chart that must be
+	///                           detected. default(4)
+	pub struct MCC_DetectorParameters {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { MCC_DetectorParameters }
+
+	impl Drop for MCC_DetectorParameters {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_mcc_DetectorParameters_delete(self.as_raw_mut_MCC_DetectorParameters()) };
+		}
+	}
+
+	unsafe impl Send for MCC_DetectorParameters {}
+
+	impl MCC_DetectorParameters {
+		#[inline]
+		pub fn default() -> Result<crate::mcc::MCC_DetectorParameters> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_DetectorParameters_DetectorParameters(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::mcc::MCC_DetectorParameters::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn create() -> Result<core::Ptr<crate::mcc::MCC_DetectorParameters>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_mcc_DetectorParameters_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::mcc::MCC_DetectorParameters>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::mcc::MCC_DetectorParameters]
@@ -1799,101 +1884,6 @@ pub mod mcc {
 
 	}
 
-	/// Parameters for the detectMarker process:
-	/// - int adaptiveThreshWinSizeMin : minimum window size for adaptive
-	///                                  thresholding before finding contours
-	///                                  (default 23).
-	/// - int adaptiveThreshWinSizeMax : maximum window size for adaptive
-	///                                  thresholding before finding contours
-	///                                  (default 153).
-	/// - int adaptiveThreshWinSizeStep : increments from adaptiveThreshWinSizeMin to
-	///                                   adaptiveThreshWinSizeMax during the
-	///                                   thresholding (default 16).
-	/// - double adaptiveThreshConstant : constant for adaptive thresholding before
-	///                                   finding contours (default 7)
-	/// - double minContoursAreaRate : determine minimum area for marker contour to
-	///                                be detected. This is defined as a rate respect
-	///                                to the area of the input image. Used only if
-	///                                neural network is used (default 0.003).
-	/// - double minContoursArea : determine minimum area for marker contour to be
-	///                            detected. This is defined as the actual area. Used
-	///                            only if neural network is not used (default 100).
-	/// - double confidenceThreshold : minimum confidence for a bounding box detected
-	///                                by neural network to classify as
-	///                                detection.(default 0.5)
-	///                                (0<=confidenceThreshold<=1)
-	/// - double minContourSolidity : minimum solidity of a contour for it be
-	///                               detected as a square in the chart. (default
-	///                               0.9).
-	/// - double findCandidatesApproxPolyDPEpsMultiplier : multipler to be used in
-	///                                                    cv::ApproxPolyDP function
-	///                                                    (default 0.05)
-	/// - int borderWidth : width of the padding used to pass the inital neural
-	///                    network detection in the succeeding system.(default 0)
-	/// - float B0factor : distance between two neighbours squares of the same chart.
-	///                    Defined as the ratio between distance and large dimension
-	///                    of square (default 1.25)
-	/// - float maxError : maximum allowed error in the detection of a chart.
-	///                    default(0.1)
-	/// - int minContourPointsAllowed : minium points in a detected contour.
-	///                                 default(4)
-	/// - int minContourLengthAllowed : minimum length of a countour. default(100)
-	/// - int minInterContourDistance : minimum distance between two contours.
-	///                                 default(100)
-	/// - int minInterCheckerDistance : minimum distance between two checkers.
-	///                                 default(10000)
-	/// - int minImageSize : minimum size of the smaller dimension of the image.
-	///                      default(1000)
-	/// - unsigned minGroupSize : minimum number of a squared of a chart that must be
-	///                           detected. default(4)
-	pub struct MCC_DetectorParameters {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { MCC_DetectorParameters }
-
-	impl Drop for MCC_DetectorParameters {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_mcc_DetectorParameters_delete(self.as_raw_mut_MCC_DetectorParameters()) };
-		}
-	}
-
-	unsafe impl Send for MCC_DetectorParameters {}
-
-	impl crate::mcc::MCC_DetectorParametersTraitConst for MCC_DetectorParameters {
-		#[inline] fn as_raw_MCC_DetectorParameters(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::mcc::MCC_DetectorParametersTrait for MCC_DetectorParameters {
-		#[inline] fn as_raw_mut_MCC_DetectorParameters(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { MCC_DetectorParameters, crate::mcc::MCC_DetectorParametersTraitConst, as_raw_MCC_DetectorParameters, crate::mcc::MCC_DetectorParametersTrait, as_raw_mut_MCC_DetectorParameters }
-
-	impl MCC_DetectorParameters {
-		#[inline]
-		pub fn default() -> Result<crate::mcc::MCC_DetectorParameters> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_mcc_DetectorParameters_DetectorParameters(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::mcc::MCC_DetectorParameters::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn create() -> Result<core::Ptr<crate::mcc::MCC_DetectorParameters>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_mcc_DetectorParameters_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::mcc::MCC_DetectorParameters>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
 	impl std::fmt::Debug for MCC_DetectorParameters {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -1919,4 +1909,15 @@ pub mod mcc {
 				.finish()
 		}
 	}
+
+	impl crate::mcc::MCC_DetectorParametersTraitConst for MCC_DetectorParameters {
+		#[inline] fn as_raw_MCC_DetectorParameters(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::mcc::MCC_DetectorParametersTrait for MCC_DetectorParameters {
+		#[inline] fn as_raw_mut_MCC_DetectorParameters(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { MCC_DetectorParameters, crate::mcc::MCC_DetectorParametersTraitConst, as_raw_MCC_DetectorParameters, crate::mcc::MCC_DetectorParametersTrait, as_raw_mut_MCC_DetectorParameters }
+
 }

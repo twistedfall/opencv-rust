@@ -14,6 +14,71 @@ pub mod dnn_superres {
 		pub use super::{DnnSuperResImplTrait, DnnSuperResImplTraitConst};
 	}
 
+	/// A class to upscale images via convolutional neural networks.
+	/// The following four models are implemented:
+	///
+	/// - edsr
+	/// - espcn
+	/// - fsrcnn
+	/// - lapsrn
+	pub struct DnnSuperResImpl {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { DnnSuperResImpl }
+
+	impl Drop for DnnSuperResImpl {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_dnn_superres_DnnSuperResImpl_delete(self.as_raw_mut_DnnSuperResImpl()) };
+		}
+	}
+
+	unsafe impl Send for DnnSuperResImpl {}
+
+	impl DnnSuperResImpl {
+		/// Empty constructor for python
+		#[inline]
+		pub fn create() -> Result<core::Ptr<crate::dnn_superres::DnnSuperResImpl>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_superres_DnnSuperResImpl_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::dnn_superres::DnnSuperResImpl>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn default() -> Result<crate::dnn_superres::DnnSuperResImpl> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_superres_DnnSuperResImpl_DnnSuperResImpl(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::dnn_superres::DnnSuperResImpl::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Constructor which immediately sets the desired model
+		/// ## Parameters
+		/// * algo: String containing one of the desired models:
+		///    - __edsr__
+		///    - __espcn__
+		///    - __fsrcnn__
+		///    - __lapsrn__
+		/// * scale: Integer specifying the upscale factor
+		#[inline]
+		pub fn new(algo: &str, scale: i32) -> Result<crate::dnn_superres::DnnSuperResImpl> {
+			extern_container_arg!(algo);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dnn_superres_DnnSuperResImpl_DnnSuperResImpl_const_StringR_int(algo.opencv_as_extern(), scale, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::dnn_superres::DnnSuperResImpl::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
 	/// Constant methods for [crate::dnn_superres::DnnSuperResImpl]
 	pub trait DnnSuperResImplTraitConst {
 		fn as_raw_DnnSuperResImpl(&self) -> *const c_void;
@@ -148,27 +213,13 @@ pub mod dnn_superres {
 
 	}
 
-	/// A class to upscale images via convolutional neural networks.
-	/// The following four models are implemented:
-	///
-	/// - edsr
-	/// - espcn
-	/// - fsrcnn
-	/// - lapsrn
-	pub struct DnnSuperResImpl {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { DnnSuperResImpl }
-
-	impl Drop for DnnSuperResImpl {
+	impl std::fmt::Debug for DnnSuperResImpl {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_dnn_superres_DnnSuperResImpl_delete(self.as_raw_mut_DnnSuperResImpl()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DnnSuperResImpl")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for DnnSuperResImpl {}
 
 	impl crate::dnn_superres::DnnSuperResImplTraitConst for DnnSuperResImpl {
 		#[inline] fn as_raw_DnnSuperResImpl(&self) -> *const c_void { self.as_raw() }
@@ -180,54 +231,4 @@ pub mod dnn_superres {
 
 	boxed_ref! { DnnSuperResImpl, crate::dnn_superres::DnnSuperResImplTraitConst, as_raw_DnnSuperResImpl, crate::dnn_superres::DnnSuperResImplTrait, as_raw_mut_DnnSuperResImpl }
 
-	impl DnnSuperResImpl {
-		/// Empty constructor for python
-		#[inline]
-		pub fn create() -> Result<core::Ptr<crate::dnn_superres::DnnSuperResImpl>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_dnn_superres_DnnSuperResImpl_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::dnn_superres::DnnSuperResImpl>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn default() -> Result<crate::dnn_superres::DnnSuperResImpl> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_dnn_superres_DnnSuperResImpl_DnnSuperResImpl(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::dnn_superres::DnnSuperResImpl::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Constructor which immediately sets the desired model
-		/// ## Parameters
-		/// * algo: String containing one of the desired models:
-		///    - __edsr__
-		///    - __espcn__
-		///    - __fsrcnn__
-		///    - __lapsrn__
-		/// * scale: Integer specifying the upscale factor
-		#[inline]
-		pub fn new(algo: &str, scale: i32) -> Result<crate::dnn_superres::DnnSuperResImpl> {
-			extern_container_arg!(algo);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_dnn_superres_DnnSuperResImpl_DnnSuperResImpl_const_StringR_int(algo.opencv_as_extern(), scale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::dnn_superres::DnnSuperResImpl::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	impl std::fmt::Debug for DnnSuperResImpl {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("DnnSuperResImpl")
-				.finish()
-		}
-	}
 }

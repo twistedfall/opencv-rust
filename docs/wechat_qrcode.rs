@@ -6,6 +6,84 @@ pub mod wechat_qrcode {
 		pub use super::{WeChatQRCodeTrait, WeChatQRCodeTraitConst};
 	}
 
+	/// * WeChat QRCode includes two CNN-based models:
+	/// * A object detection model and a super resolution model.
+	/// * Object detection model is applied to detect QRCode with the bounding box.
+	/// * super resolution model is applied to zoom in QRCode when it is small.
+	///*
+	pub struct WeChatQRCode {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { WeChatQRCode }
+
+	impl Drop for WeChatQRCode {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_wechat_qrcode_WeChatQRCode_delete(self.as_raw_mut_WeChatQRCode()) };
+		}
+	}
+
+	unsafe impl Send for WeChatQRCode {}
+
+	impl WeChatQRCode {
+		/// Initialize the WeChatQRCode.
+		/// It includes two models, which are packaged with caffe format.
+		/// Therefore, there are prototxt and caffe models (In total, four paramenters).
+		///
+		/// ## Parameters
+		/// * detector_prototxt_path: prototxt file path for the detector
+		/// * detector_caffe_model_path: caffe model file path for the detector
+		/// * super_resolution_prototxt_path: prototxt file path for the super resolution model
+		/// * super_resolution_caffe_model_path: caffe file path for the super resolution model
+		///
+		/// ## C++ default parameters
+		/// * detector_prototxt_path: ""
+		/// * detector_caffe_model_path: ""
+		/// * super_resolution_prototxt_path: ""
+		/// * super_resolution_caffe_model_path: ""
+		#[inline]
+		pub fn new(detector_prototxt_path: &str, detector_caffe_model_path: &str, super_resolution_prototxt_path: &str, super_resolution_caffe_model_path: &str) -> Result<crate::wechat_qrcode::WeChatQRCode> {
+			extern_container_arg!(detector_prototxt_path);
+			extern_container_arg!(detector_caffe_model_path);
+			extern_container_arg!(super_resolution_prototxt_path);
+			extern_container_arg!(super_resolution_caffe_model_path);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_wechat_qrcode_WeChatQRCode_WeChatQRCode_const_stringR_const_stringR_const_stringR_const_stringR(detector_prototxt_path.opencv_as_extern(), detector_caffe_model_path.opencv_as_extern(), super_resolution_prototxt_path.opencv_as_extern(), super_resolution_caffe_model_path.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::wechat_qrcode::WeChatQRCode::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Initialize the WeChatQRCode.
+		/// It includes two models, which are packaged with caffe format.
+		/// Therefore, there are prototxt and caffe models (In total, four paramenters).
+		///
+		/// ## Parameters
+		/// * detector_prototxt_path: prototxt file path for the detector
+		/// * detector_caffe_model_path: caffe model file path for the detector
+		/// * super_resolution_prototxt_path: prototxt file path for the super resolution model
+		/// * super_resolution_caffe_model_path: caffe file path for the super resolution model
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * detector_prototxt_path: ""
+		/// * detector_caffe_model_path: ""
+		/// * super_resolution_prototxt_path: ""
+		/// * super_resolution_caffe_model_path: ""
+		#[inline]
+		pub fn new_def() -> Result<crate::wechat_qrcode::WeChatQRCode> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_wechat_qrcode_WeChatQRCode_WeChatQRCode(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::wechat_qrcode::WeChatQRCode::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
 	/// Constant methods for [crate::wechat_qrcode::WeChatQRCode]
 	pub trait WeChatQRCodeTraitConst {
 		fn as_raw_WeChatQRCode(&self) -> *const c_void;
@@ -94,25 +172,13 @@ pub mod wechat_qrcode {
 
 	}
 
-	/// * WeChat QRCode includes two CNN-based models:
-	/// * A object detection model and a super resolution model.
-	/// * Object detection model is applied to detect QRCode with the bounding box.
-	/// * super resolution model is applied to zoom in QRCode when it is small.
-	///*
-	pub struct WeChatQRCode {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { WeChatQRCode }
-
-	impl Drop for WeChatQRCode {
+	impl std::fmt::Debug for WeChatQRCode {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_wechat_qrcode_WeChatQRCode_delete(self.as_raw_mut_WeChatQRCode()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WeChatQRCode")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for WeChatQRCode {}
 
 	impl crate::wechat_qrcode::WeChatQRCodeTraitConst for WeChatQRCode {
 		#[inline] fn as_raw_WeChatQRCode(&self) -> *const c_void { self.as_raw() }
@@ -124,69 +190,4 @@ pub mod wechat_qrcode {
 
 	boxed_ref! { WeChatQRCode, crate::wechat_qrcode::WeChatQRCodeTraitConst, as_raw_WeChatQRCode, crate::wechat_qrcode::WeChatQRCodeTrait, as_raw_mut_WeChatQRCode }
 
-	impl WeChatQRCode {
-		/// Initialize the WeChatQRCode.
-		/// It includes two models, which are packaged with caffe format.
-		/// Therefore, there are prototxt and caffe models (In total, four paramenters).
-		///
-		/// ## Parameters
-		/// * detector_prototxt_path: prototxt file path for the detector
-		/// * detector_caffe_model_path: caffe model file path for the detector
-		/// * super_resolution_prototxt_path: prototxt file path for the super resolution model
-		/// * super_resolution_caffe_model_path: caffe file path for the super resolution model
-		///
-		/// ## C++ default parameters
-		/// * detector_prototxt_path: ""
-		/// * detector_caffe_model_path: ""
-		/// * super_resolution_prototxt_path: ""
-		/// * super_resolution_caffe_model_path: ""
-		#[inline]
-		pub fn new(detector_prototxt_path: &str, detector_caffe_model_path: &str, super_resolution_prototxt_path: &str, super_resolution_caffe_model_path: &str) -> Result<crate::wechat_qrcode::WeChatQRCode> {
-			extern_container_arg!(detector_prototxt_path);
-			extern_container_arg!(detector_caffe_model_path);
-			extern_container_arg!(super_resolution_prototxt_path);
-			extern_container_arg!(super_resolution_caffe_model_path);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_wechat_qrcode_WeChatQRCode_WeChatQRCode_const_stringR_const_stringR_const_stringR_const_stringR(detector_prototxt_path.opencv_as_extern(), detector_caffe_model_path.opencv_as_extern(), super_resolution_prototxt_path.opencv_as_extern(), super_resolution_caffe_model_path.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::wechat_qrcode::WeChatQRCode::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Initialize the WeChatQRCode.
-		/// It includes two models, which are packaged with caffe format.
-		/// Therefore, there are prototxt and caffe models (In total, four paramenters).
-		///
-		/// ## Parameters
-		/// * detector_prototxt_path: prototxt file path for the detector
-		/// * detector_caffe_model_path: caffe model file path for the detector
-		/// * super_resolution_prototxt_path: prototxt file path for the super resolution model
-		/// * super_resolution_caffe_model_path: caffe file path for the super resolution model
-		///
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * detector_prototxt_path: ""
-		/// * detector_caffe_model_path: ""
-		/// * super_resolution_prototxt_path: ""
-		/// * super_resolution_caffe_model_path: ""
-		#[inline]
-		pub fn new_def() -> Result<crate::wechat_qrcode::WeChatQRCode> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_wechat_qrcode_WeChatQRCode_WeChatQRCode(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::wechat_qrcode::WeChatQRCode::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	impl std::fmt::Debug for WeChatQRCode {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("WeChatQRCode")
-				.finish()
-		}
-	}
 }

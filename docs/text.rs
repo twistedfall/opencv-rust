@@ -949,6 +949,21 @@ pub mod text {
 		Ok(ret)
 	}
 
+	pub struct BaseOCR {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { BaseOCR }
+
+	impl Drop for BaseOCR {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_text_BaseOCR_delete(self.as_raw_mut_BaseOCR()) };
+		}
+	}
+
+	unsafe impl Send for BaseOCR {}
+
 	/// Constant methods for [crate::text::BaseOCR]
 	pub trait BaseOCRTraitConst {
 		fn as_raw_BaseOCR(&self) -> *const c_void;
@@ -1027,20 +1042,21 @@ pub mod text {
 
 	}
 
-	pub struct BaseOCR {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { BaseOCR }
-
-	impl Drop for BaseOCR {
+	impl std::fmt::Debug for BaseOCR {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_text_BaseOCR_delete(self.as_raw_mut_BaseOCR()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BaseOCR")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for BaseOCR {}
+	boxed_cast_descendant! { BaseOCR, crate::text::OCRBeamSearchDecoder, cv_text_BaseOCR_to_OCRBeamSearchDecoder }
+
+	boxed_cast_descendant! { BaseOCR, crate::text::OCRHMMDecoder, cv_text_BaseOCR_to_OCRHMMDecoder }
+
+	boxed_cast_descendant! { BaseOCR, crate::text::OCRHolisticWordRecognizer, cv_text_BaseOCR_to_OCRHolisticWordRecognizer }
+
+	boxed_cast_descendant! { BaseOCR, crate::text::OCRTesseract, cv_text_BaseOCR_to_OCRTesseract }
 
 	impl crate::text::BaseOCRTraitConst for BaseOCR {
 		#[inline] fn as_raw_BaseOCR(&self) -> *const c_void { self.as_raw() }
@@ -1052,24 +1068,23 @@ pub mod text {
 
 	boxed_ref! { BaseOCR, crate::text::BaseOCRTraitConst, as_raw_BaseOCR, crate::text::BaseOCRTrait, as_raw_mut_BaseOCR }
 
-	impl BaseOCR {
+	/// Base class for 1st and 2nd stages of Neumann and Matas scene text detection algorithm [Neumann12](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Neumann12). :
+	///
+	/// Extracts the component tree (if needed) and filter the extremal regions (ER's) by using a given classifier.
+	pub struct ERFilter {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { BaseOCR, crate::text::OCRBeamSearchDecoder, cv_text_BaseOCR_to_OCRBeamSearchDecoder }
+	opencv_type_boxed! { ERFilter }
 
-	boxed_cast_descendant! { BaseOCR, crate::text::OCRHMMDecoder, cv_text_BaseOCR_to_OCRHMMDecoder }
-
-	boxed_cast_descendant! { BaseOCR, crate::text::OCRHolisticWordRecognizer, cv_text_BaseOCR_to_OCRHolisticWordRecognizer }
-
-	boxed_cast_descendant! { BaseOCR, crate::text::OCRTesseract, cv_text_BaseOCR_to_OCRTesseract }
-
-	impl std::fmt::Debug for BaseOCR {
+	impl Drop for ERFilter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("BaseOCR")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_text_ERFilter_delete(self.as_raw_mut_ERFilter()) };
 		}
 	}
+
+	unsafe impl Send for ERFilter {}
 
 	/// Constant methods for [crate::text::ERFilter]
 	pub trait ERFilterTraitConst: core::AlgorithmTraitConst {
@@ -1179,23 +1194,15 @@ pub mod text {
 
 	}
 
-	/// Base class for 1st and 2nd stages of Neumann and Matas scene text detection algorithm [Neumann12](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Neumann12). :
-	///
-	/// Extracts the component tree (if needed) and filter the extremal regions (ER's) by using a given classifier.
-	pub struct ERFilter {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { ERFilter }
-
-	impl Drop for ERFilter {
+	impl std::fmt::Debug for ERFilter {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_text_ERFilter_delete(self.as_raw_mut_ERFilter()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ERFilter")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for ERFilter {}
+	boxed_cast_base! { ERFilter, core::Algorithm, cv_text_ERFilter_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for ERFilter {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -1217,18 +1224,24 @@ pub mod text {
 
 	boxed_ref! { ERFilter, crate::text::ERFilterTraitConst, as_raw_ERFilter, crate::text::ERFilterTrait, as_raw_mut_ERFilter }
 
-	impl ERFilter {
+	/// Callback with the classifier is made a class.
+	///
+	/// By doing it we hide SVM, Boost etc. Developers can provide their own classifiers to the
+	/// ERFilter algorithm.
+	pub struct ERFilter_Callback {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { ERFilter, core::Algorithm, cv_text_ERFilter_to_Algorithm }
+	opencv_type_boxed! { ERFilter_Callback }
 
-	impl std::fmt::Debug for ERFilter {
+	impl Drop for ERFilter_Callback {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("ERFilter")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_text_ERFilter_Callback_delete(self.as_raw_mut_ERFilter_Callback()) };
 		}
 	}
+
+	unsafe impl Send for ERFilter_Callback {}
 
 	/// Constant methods for [crate::text::ERFilter_Callback]
 	pub trait ERFilter_CallbackTraitConst {
@@ -1255,24 +1268,13 @@ pub mod text {
 
 	}
 
-	/// Callback with the classifier is made a class.
-	///
-	/// By doing it we hide SVM, Boost etc. Developers can provide their own classifiers to the
-	/// ERFilter algorithm.
-	pub struct ERFilter_Callback {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { ERFilter_Callback }
-
-	impl Drop for ERFilter_Callback {
+	impl std::fmt::Debug for ERFilter_Callback {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_text_ERFilter_Callback_delete(self.as_raw_mut_ERFilter_Callback()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ERFilter_Callback")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for ERFilter_Callback {}
 
 	impl crate::text::ERFilter_CallbackTraitConst for ERFilter_Callback {
 		#[inline] fn as_raw_ERFilter_Callback(&self) -> *const c_void { self.as_raw() }
@@ -1284,15 +1286,62 @@ pub mod text {
 
 	boxed_ref! { ERFilter_Callback, crate::text::ERFilter_CallbackTraitConst, as_raw_ERFilter_Callback, crate::text::ERFilter_CallbackTrait, as_raw_mut_ERFilter_Callback }
 
-	impl ERFilter_Callback {
+	/// The ERStat structure represents a class-specific Extremal Region (ER).
+	///
+	/// An ER is a 4-connected set of pixels with all its grey-level values smaller than the values in its
+	/// outer boundary. A class-specific ER is selected (using a classifier) from all the ER's in the
+	/// component tree of the image. :
+	pub struct ERStat {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for ERFilter_Callback {
+	opencv_type_boxed! { ERStat }
+
+	impl Drop for ERStat {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("ERFilter_Callback")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_text_ERStat_delete(self.as_raw_mut_ERStat()) };
 		}
+	}
+
+	unsafe impl Send for ERStat {}
+
+	impl ERStat {
+		/// Constructor
+		///
+		/// ## C++ default parameters
+		/// * level: 256
+		/// * pixel: 0
+		/// * x: 0
+		/// * y: 0
+		#[inline]
+		pub fn new(level: i32, pixel: i32, x: i32, y: i32) -> Result<crate::text::ERStat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_text_ERStat_ERStat_int_int_int_int(level, pixel, x, y, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::text::ERStat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Constructor
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * level: 256
+		/// * pixel: 0
+		/// * x: 0
+		/// * y: 0
+		#[inline]
+		pub fn new_def() -> Result<crate::text::ERStat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_text_ERStat_ERStat(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::text::ERStat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::text::ERStat]
@@ -1579,74 +1628,6 @@ pub mod text {
 
 	}
 
-	/// The ERStat structure represents a class-specific Extremal Region (ER).
-	///
-	/// An ER is a 4-connected set of pixels with all its grey-level values smaller than the values in its
-	/// outer boundary. A class-specific ER is selected (using a classifier) from all the ER's in the
-	/// component tree of the image. :
-	pub struct ERStat {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { ERStat }
-
-	impl Drop for ERStat {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_text_ERStat_delete(self.as_raw_mut_ERStat()) };
-		}
-	}
-
-	unsafe impl Send for ERStat {}
-
-	impl crate::text::ERStatTraitConst for ERStat {
-		#[inline] fn as_raw_ERStat(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::text::ERStatTrait for ERStat {
-		#[inline] fn as_raw_mut_ERStat(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { ERStat, crate::text::ERStatTraitConst, as_raw_ERStat, crate::text::ERStatTrait, as_raw_mut_ERStat }
-
-	impl ERStat {
-		/// Constructor
-		///
-		/// ## C++ default parameters
-		/// * level: 256
-		/// * pixel: 0
-		/// * x: 0
-		/// * y: 0
-		#[inline]
-		pub fn new(level: i32, pixel: i32, x: i32, y: i32) -> Result<crate::text::ERStat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_text_ERStat_ERStat_int_int_int_int(level, pixel, x, y, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::text::ERStat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Constructor
-		///
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * level: 256
-		/// * pixel: 0
-		/// * x: 0
-		/// * y: 0
-		#[inline]
-		pub fn new_def() -> Result<crate::text::ERStat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_text_ERStat_ERStat(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::text::ERStat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
 	impl std::fmt::Debug for ERStat {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -1667,6 +1648,146 @@ pub mod text {
 				.field("local_maxima", &crate::text::ERStatTraitConst::local_maxima(self))
 				.finish()
 		}
+	}
+
+	impl crate::text::ERStatTraitConst for ERStat {
+		#[inline] fn as_raw_ERStat(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::text::ERStatTrait for ERStat {
+		#[inline] fn as_raw_mut_ERStat(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { ERStat, crate::text::ERStatTraitConst, as_raw_ERStat, crate::text::ERStatTrait, as_raw_mut_ERStat }
+
+	/// OCRBeamSearchDecoder class provides an interface for OCR using Beam Search algorithm.
+	///
+	///
+	/// Note:
+	///    *   (C++) An example on using OCRBeamSearchDecoder recognition combined with scene text detection can
+	///        be found at the demo sample:
+	///        <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/word_recognition.cpp>
+	pub struct OCRBeamSearchDecoder {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { OCRBeamSearchDecoder }
+
+	impl Drop for OCRBeamSearchDecoder {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_text_OCRBeamSearchDecoder_delete(self.as_raw_mut_OCRBeamSearchDecoder()) };
+		}
+	}
+
+	unsafe impl Send for OCRBeamSearchDecoder {}
+
+	impl OCRBeamSearchDecoder {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::text::OCRBeamSearchDecoder {
+			let ret = unsafe { sys::cv_text_OCRBeamSearchDecoder_defaultNew_const() };
+			let ret = unsafe { crate::text::OCRBeamSearchDecoder::opencv_from_extern(ret) };
+			ret
+		}
+
+		/// Creates an instance of the OCRBeamSearchDecoder class. Initializes HMMDecoder.
+		///
+		/// ## Parameters
+		/// * classifier: The character classifier with built in feature extractor.
+		///
+		/// * vocabulary: The language vocabulary (chars when ASCII English text). vocabulary.size()
+		/// must be equal to the number of classes of the classifier.
+		///
+		/// * transition_probabilities_table: Table with transition probabilities between character
+		/// pairs. cols == rows == vocabulary.size().
+		///
+		/// * emission_probabilities_table: Table with observation emission probabilities. cols ==
+		/// rows == vocabulary.size().
+		///
+		/// * mode: HMM Decoding algorithm. Only OCR_DECODER_VITERBI is available for the moment
+		/// (<http://en.wikipedia.org/wiki/Viterbi_algorithm>).
+		///
+		/// * beam_size: Size of the beam in Beam Search algorithm.
+		///
+		/// ## C++ default parameters
+		/// * mode: OCR_DECODER_VITERBI
+		/// * beam_size: 500
+		#[inline]
+		pub fn create(classifier: core::Ptr<crate::text::OCRBeamSearchDecoder_ClassifierCallback>, vocabulary: &str, transition_probabilities_table: &impl ToInputArray, emission_probabilities_table: &impl ToInputArray, mode: crate::text::decoder_mode, beam_size: i32) -> Result<core::Ptr<crate::text::OCRBeamSearchDecoder>> {
+			extern_container_arg!(vocabulary);
+			input_array_arg!(transition_probabilities_table);
+			input_array_arg!(emission_probabilities_table);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_text_OCRBeamSearchDecoder_create_const_PtrLClassifierCallbackG_const_stringR_const__InputArrayR_const__InputArrayR_decoder_mode_int(classifier.as_raw_PtrOfOCRBeamSearchDecoder_ClassifierCallback(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, beam_size, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Creates an instance of the OCRBeamSearchDecoder class. Initializes HMMDecoder from the specified path.
+		///
+		/// Creates an instance of the OCRBeamSearchDecoder class. Initializes HMMDecoder.
+		///
+		/// ## Parameters
+		/// * classifier: The character classifier with built in feature extractor.
+		///
+		/// * vocabulary: The language vocabulary (chars when ASCII English text). vocabulary.size()
+		/// must be equal to the number of classes of the classifier.
+		///
+		/// * transition_probabilities_table: Table with transition probabilities between character
+		/// pairs. cols == rows == vocabulary.size().
+		///
+		/// * emission_probabilities_table: Table with observation emission probabilities. cols ==
+		/// rows == vocabulary.size().
+		///
+		/// * mode: HMM Decoding algorithm. Only OCR_DECODER_VITERBI is available for the moment
+		/// (<http://en.wikipedia.org/wiki/Viterbi_algorithm>).
+		///
+		/// * beam_size: Size of the beam in Beam Search algorithm.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## C++ default parameters
+		/// * mode: OCR_DECODER_VITERBI
+		/// * beam_size: 500
+		#[inline]
+		pub fn create_from_file(filename: &str, vocabulary: &str, transition_probabilities_table: &impl ToInputArray, emission_probabilities_table: &impl ToInputArray, mode: crate::text::decoder_mode, beam_size: i32) -> Result<core::Ptr<crate::text::OCRBeamSearchDecoder>> {
+			extern_container_arg!(filename);
+			extern_container_arg!(vocabulary);
+			input_array_arg!(transition_probabilities_table);
+			input_array_arg!(emission_probabilities_table);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_text_OCRBeamSearchDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR_decoder_mode_int(filename.opencv_as_extern(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, beam_size, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Creates an instance of the OCRBeamSearchDecoder class. Initializes HMMDecoder from the specified path.
+		///
+		/// @overload
+		///
+		/// ## Note
+		/// This alternative version of [OCRBeamSearchDecoder::create_from_file] function uses the following default values for its arguments:
+		/// * mode: OCR_DECODER_VITERBI
+		/// * beam_size: 500
+		#[inline]
+		pub fn create_from_file_def(filename: &str, vocabulary: &str, transition_probabilities_table: &impl ToInputArray, emission_probabilities_table: &impl ToInputArray) -> Result<core::Ptr<crate::text::OCRBeamSearchDecoder>> {
+			extern_container_arg!(filename);
+			extern_container_arg!(vocabulary);
+			input_array_arg!(transition_probabilities_table);
+			input_array_arg!(emission_probabilities_table);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_text_OCRBeamSearchDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR(filename.opencv_as_extern(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::text::OCRBeamSearchDecoder]
@@ -1847,27 +1968,23 @@ pub mod text {
 
 	}
 
-	/// OCRBeamSearchDecoder class provides an interface for OCR using Beam Search algorithm.
-	///
-	///
-	/// Note:
-	///    *   (C++) An example on using OCRBeamSearchDecoder recognition combined with scene text detection can
-	///        be found at the demo sample:
-	///        <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/word_recognition.cpp>
-	pub struct OCRBeamSearchDecoder {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { OCRBeamSearchDecoder }
-
-	impl Drop for OCRBeamSearchDecoder {
+	impl Default for OCRBeamSearchDecoder {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_text_OCRBeamSearchDecoder_delete(self.as_raw_mut_OCRBeamSearchDecoder()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for OCRBeamSearchDecoder {}
+	impl std::fmt::Debug for OCRBeamSearchDecoder {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("OCRBeamSearchDecoder")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { OCRBeamSearchDecoder, crate::text::BaseOCR, cv_text_OCRBeamSearchDecoder_to_BaseOCR }
 
 	impl crate::text::BaseOCRTraitConst for OCRBeamSearchDecoder {
 		#[inline] fn as_raw_BaseOCR(&self) -> *const c_void { self.as_raw() }
@@ -1889,128 +2006,38 @@ pub mod text {
 
 	boxed_ref! { OCRBeamSearchDecoder, crate::text::OCRBeamSearchDecoderTraitConst, as_raw_OCRBeamSearchDecoder, crate::text::OCRBeamSearchDecoderTrait, as_raw_mut_OCRBeamSearchDecoder }
 
-	impl OCRBeamSearchDecoder {
+	/// Callback with the character classifier is made a class.
+	///
+	/// This way it hides the feature extractor and the classifier itself, so developers can write
+	/// their own OCR code.
+	///
+	/// The default character classifier and feature extractor can be loaded using the utility function
+	/// loadOCRBeamSearchClassifierCNN with all its parameters provided in
+	/// <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/OCRBeamSearch_CNN_model_data.xml.gz>.
+	pub struct OCRBeamSearchDecoder_ClassifierCallback {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { OCRBeamSearchDecoder_ClassifierCallback }
+
+	impl Drop for OCRBeamSearchDecoder_ClassifierCallback {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_text_OCRBeamSearchDecoder_ClassifierCallback_delete(self.as_raw_mut_OCRBeamSearchDecoder_ClassifierCallback()) };
+		}
+	}
+
+	unsafe impl Send for OCRBeamSearchDecoder_ClassifierCallback {}
+
+	impl OCRBeamSearchDecoder_ClassifierCallback {
 		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_text_OCRBeamSearchDecoder_defaultNew_const()) }
+		pub fn default() -> crate::text::OCRBeamSearchDecoder_ClassifierCallback {
+			let ret = unsafe { sys::cv_text_OCRBeamSearchDecoder_ClassifierCallback_defaultNew_const() };
+			let ret = unsafe { crate::text::OCRBeamSearchDecoder_ClassifierCallback::opencv_from_extern(ret) };
+			ret
 		}
 
-		/// Creates an instance of the OCRBeamSearchDecoder class. Initializes HMMDecoder.
-		///
-		/// ## Parameters
-		/// * classifier: The character classifier with built in feature extractor.
-		///
-		/// * vocabulary: The language vocabulary (chars when ASCII English text). vocabulary.size()
-		/// must be equal to the number of classes of the classifier.
-		///
-		/// * transition_probabilities_table: Table with transition probabilities between character
-		/// pairs. cols == rows == vocabulary.size().
-		///
-		/// * emission_probabilities_table: Table with observation emission probabilities. cols ==
-		/// rows == vocabulary.size().
-		///
-		/// * mode: HMM Decoding algorithm. Only OCR_DECODER_VITERBI is available for the moment
-		/// (<http://en.wikipedia.org/wiki/Viterbi_algorithm>).
-		///
-		/// * beam_size: Size of the beam in Beam Search algorithm.
-		///
-		/// ## C++ default parameters
-		/// * mode: OCR_DECODER_VITERBI
-		/// * beam_size: 500
-		#[inline]
-		pub fn create(classifier: core::Ptr<crate::text::OCRBeamSearchDecoder_ClassifierCallback>, vocabulary: &str, transition_probabilities_table: &impl ToInputArray, emission_probabilities_table: &impl ToInputArray, mode: crate::text::decoder_mode, beam_size: i32) -> Result<core::Ptr<crate::text::OCRBeamSearchDecoder>> {
-			extern_container_arg!(vocabulary);
-			input_array_arg!(transition_probabilities_table);
-			input_array_arg!(emission_probabilities_table);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_text_OCRBeamSearchDecoder_create_const_PtrLClassifierCallbackG_const_stringR_const__InputArrayR_const__InputArrayR_decoder_mode_int(classifier.as_raw_PtrOfOCRBeamSearchDecoder_ClassifierCallback(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, beam_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Creates an instance of the OCRBeamSearchDecoder class. Initializes HMMDecoder from the specified path.
-		///
-		/// Creates an instance of the OCRBeamSearchDecoder class. Initializes HMMDecoder.
-		///
-		/// ## Parameters
-		/// * classifier: The character classifier with built in feature extractor.
-		///
-		/// * vocabulary: The language vocabulary (chars when ASCII English text). vocabulary.size()
-		/// must be equal to the number of classes of the classifier.
-		///
-		/// * transition_probabilities_table: Table with transition probabilities between character
-		/// pairs. cols == rows == vocabulary.size().
-		///
-		/// * emission_probabilities_table: Table with observation emission probabilities. cols ==
-		/// rows == vocabulary.size().
-		///
-		/// * mode: HMM Decoding algorithm. Only OCR_DECODER_VITERBI is available for the moment
-		/// (<http://en.wikipedia.org/wiki/Viterbi_algorithm>).
-		///
-		/// * beam_size: Size of the beam in Beam Search algorithm.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## C++ default parameters
-		/// * mode: OCR_DECODER_VITERBI
-		/// * beam_size: 500
-		#[inline]
-		pub fn create_from_file(filename: &str, vocabulary: &str, transition_probabilities_table: &impl ToInputArray, emission_probabilities_table: &impl ToInputArray, mode: crate::text::decoder_mode, beam_size: i32) -> Result<core::Ptr<crate::text::OCRBeamSearchDecoder>> {
-			extern_container_arg!(filename);
-			extern_container_arg!(vocabulary);
-			input_array_arg!(transition_probabilities_table);
-			input_array_arg!(emission_probabilities_table);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_text_OCRBeamSearchDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR_decoder_mode_int(filename.opencv_as_extern(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, beam_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Creates an instance of the OCRBeamSearchDecoder class. Initializes HMMDecoder from the specified path.
-		///
-		/// @overload
-		///
-		/// ## Note
-		/// This alternative version of [OCRBeamSearchDecoder::create_from_file] function uses the following default values for its arguments:
-		/// * mode: OCR_DECODER_VITERBI
-		/// * beam_size: 500
-		#[inline]
-		pub fn create_from_file_def(filename: &str, vocabulary: &str, transition_probabilities_table: &impl ToInputArray, emission_probabilities_table: &impl ToInputArray) -> Result<core::Ptr<crate::text::OCRBeamSearchDecoder>> {
-			extern_container_arg!(filename);
-			extern_container_arg!(vocabulary);
-			input_array_arg!(transition_probabilities_table);
-			input_array_arg!(emission_probabilities_table);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_text_OCRBeamSearchDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR(filename.opencv_as_extern(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_base! { OCRBeamSearchDecoder, crate::text::BaseOCR, cv_text_OCRBeamSearchDecoder_to_BaseOCR }
-
-	impl std::fmt::Debug for OCRBeamSearchDecoder {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("OCRBeamSearchDecoder")
-				.finish()
-		}
-	}
-
-	impl Default for OCRBeamSearchDecoder {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
 	}
 
 	/// Constant methods for [crate::text::OCRBeamSearchDecoder_ClassifierCallback]
@@ -2061,28 +2088,21 @@ pub mod text {
 
 	}
 
-	/// Callback with the character classifier is made a class.
-	///
-	/// This way it hides the feature extractor and the classifier itself, so developers can write
-	/// their own OCR code.
-	///
-	/// The default character classifier and feature extractor can be loaded using the utility function
-	/// loadOCRBeamSearchClassifierCNN with all its parameters provided in
-	/// <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/OCRBeamSearch_CNN_model_data.xml.gz>.
-	pub struct OCRBeamSearchDecoder_ClassifierCallback {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { OCRBeamSearchDecoder_ClassifierCallback }
-
-	impl Drop for OCRBeamSearchDecoder_ClassifierCallback {
+	impl Default for OCRBeamSearchDecoder_ClassifierCallback {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_text_OCRBeamSearchDecoder_ClassifierCallback_delete(self.as_raw_mut_OCRBeamSearchDecoder_ClassifierCallback()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for OCRBeamSearchDecoder_ClassifierCallback {}
+	impl std::fmt::Debug for OCRBeamSearchDecoder_ClassifierCallback {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("OCRBeamSearchDecoder_ClassifierCallback")
+				.finish()
+		}
+	}
 
 	impl crate::text::OCRBeamSearchDecoder_ClassifierCallbackTraitConst for OCRBeamSearchDecoder_ClassifierCallback {
 		#[inline] fn as_raw_OCRBeamSearchDecoder_ClassifierCallback(&self) -> *const c_void { self.as_raw() }
@@ -2094,29 +2114,162 @@ pub mod text {
 
 	boxed_ref! { OCRBeamSearchDecoder_ClassifierCallback, crate::text::OCRBeamSearchDecoder_ClassifierCallbackTraitConst, as_raw_OCRBeamSearchDecoder_ClassifierCallback, crate::text::OCRBeamSearchDecoder_ClassifierCallbackTrait, as_raw_mut_OCRBeamSearchDecoder_ClassifierCallback }
 
-	impl OCRBeamSearchDecoder_ClassifierCallback {
+	/// OCRHMMDecoder class provides an interface for OCR using Hidden Markov Models.
+	///
+	///
+	/// Note:
+	///    *   (C++) An example on using OCRHMMDecoder recognition combined with scene text detection can
+	///        be found at the webcam_demo sample:
+	///        <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/webcam_demo.cpp>
+	pub struct OCRHMMDecoder {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { OCRHMMDecoder }
+
+	impl Drop for OCRHMMDecoder {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_text_OCRHMMDecoder_delete(self.as_raw_mut_OCRHMMDecoder()) };
+		}
+	}
+
+	unsafe impl Send for OCRHMMDecoder {}
+
+	impl OCRHMMDecoder {
 		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_text_OCRBeamSearchDecoder_ClassifierCallback_defaultNew_const()) }
+		pub fn default() -> crate::text::OCRHMMDecoder {
+			let ret = unsafe { sys::cv_text_OCRHMMDecoder_defaultNew_const() };
+			let ret = unsafe { crate::text::OCRHMMDecoder::opencv_from_extern(ret) };
+			ret
 		}
 
-	}
-
-	impl std::fmt::Debug for OCRBeamSearchDecoder_ClassifierCallback {
+		/// Creates an instance of the OCRHMMDecoder class. Initializes HMMDecoder.
+		///
+		/// ## Parameters
+		/// * classifier: The character classifier with built in feature extractor.
+		///
+		/// * vocabulary: The language vocabulary (chars when ascii english text). vocabulary.size()
+		/// must be equal to the number of classes of the classifier.
+		///
+		/// * transition_probabilities_table: Table with transition probabilities between character
+		/// pairs. cols == rows == vocabulary.size().
+		///
+		/// * emission_probabilities_table: Table with observation emission probabilities. cols ==
+		/// rows == vocabulary.size().
+		///
+		/// * mode: HMM Decoding algorithm. Only OCR_DECODER_VITERBI is available for the moment
+		/// (<http://en.wikipedia.org/wiki/Viterbi_algorithm>).
+		///
+		/// ## C++ default parameters
+		/// * mode: OCR_DECODER_VITERBI
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("OCRBeamSearchDecoder_ClassifierCallback")
-				.finish()
+		pub fn create(classifier: core::Ptr<crate::text::OCRHMMDecoder_ClassifierCallback>, vocabulary: &str, transition_probabilities_table: &impl ToInputArray, emission_probabilities_table: &impl ToInputArray, mode: i32) -> Result<core::Ptr<crate::text::OCRHMMDecoder>> {
+			extern_container_arg!(vocabulary);
+			input_array_arg!(transition_probabilities_table);
+			input_array_arg!(emission_probabilities_table);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_text_OCRHMMDecoder_create_const_PtrLClassifierCallbackG_const_StringR_const__InputArrayR_const__InputArrayR_int(classifier.as_raw_PtrOfOCRHMMDecoder_ClassifierCallback(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::text::OCRHMMDecoder>::opencv_from_extern(ret) };
+			Ok(ret)
 		}
-	}
 
-	impl Default for OCRBeamSearchDecoder_ClassifierCallback {
+		/// Creates an instance of the OCRHMMDecoder class. Initializes HMMDecoder.
+		///
+		/// ## Parameters
+		/// * classifier: The character classifier with built in feature extractor.
+		///
+		/// * vocabulary: The language vocabulary (chars when ascii english text). vocabulary.size()
+		/// must be equal to the number of classes of the classifier.
+		///
+		/// * transition_probabilities_table: Table with transition probabilities between character
+		/// pairs. cols == rows == vocabulary.size().
+		///
+		/// * emission_probabilities_table: Table with observation emission probabilities. cols ==
+		/// rows == vocabulary.size().
+		///
+		/// * mode: HMM Decoding algorithm. Only OCR_DECODER_VITERBI is available for the moment
+		/// (<http://en.wikipedia.org/wiki/Viterbi_algorithm>).
+		///
+		/// ## Note
+		/// This alternative version of [OCRHMMDecoder::create] function uses the following default values for its arguments:
+		/// * mode: OCR_DECODER_VITERBI
 		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
+		pub fn create_def(classifier: core::Ptr<crate::text::OCRHMMDecoder_ClassifierCallback>, vocabulary: &str, transition_probabilities_table: &impl ToInputArray, emission_probabilities_table: &impl ToInputArray) -> Result<core::Ptr<crate::text::OCRHMMDecoder>> {
+			extern_container_arg!(vocabulary);
+			input_array_arg!(transition_probabilities_table);
+			input_array_arg!(emission_probabilities_table);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_text_OCRHMMDecoder_create_const_PtrLClassifierCallbackG_const_StringR_const__InputArrayR_const__InputArrayR(classifier.as_raw_PtrOfOCRHMMDecoder_ClassifierCallback(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::text::OCRHMMDecoder>::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
+		/// Creates an instance of the OCRHMMDecoder class. Loads and initializes HMMDecoder from the specified path
+		///
+		/// Creates an instance of the OCRHMMDecoder class. Initializes HMMDecoder.
+		///
+		/// ## Parameters
+		/// * classifier: The character classifier with built in feature extractor.
+		///
+		/// * vocabulary: The language vocabulary (chars when ascii english text). vocabulary.size()
+		/// must be equal to the number of classes of the classifier.
+		///
+		/// * transition_probabilities_table: Table with transition probabilities between character
+		/// pairs. cols == rows == vocabulary.size().
+		///
+		/// * emission_probabilities_table: Table with observation emission probabilities. cols ==
+		/// rows == vocabulary.size().
+		///
+		/// * mode: HMM Decoding algorithm. Only OCR_DECODER_VITERBI is available for the moment
+		/// (<http://en.wikipedia.org/wiki/Viterbi_algorithm>).
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## C++ default parameters
+		/// * mode: OCR_DECODER_VITERBI
+		/// * classifier: OCR_KNN_CLASSIFIER
+		#[inline]
+		pub fn create_from_file(filename: &str, vocabulary: &str, transition_probabilities_table: &impl ToInputArray, emission_probabilities_table: &impl ToInputArray, mode: i32, classifier: i32) -> Result<core::Ptr<crate::text::OCRHMMDecoder>> {
+			extern_container_arg!(filename);
+			extern_container_arg!(vocabulary);
+			input_array_arg!(transition_probabilities_table);
+			input_array_arg!(emission_probabilities_table);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_text_OCRHMMDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR_int_int(filename.opencv_as_extern(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, classifier, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::text::OCRHMMDecoder>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Creates an instance of the OCRHMMDecoder class. Loads and initializes HMMDecoder from the specified path
+		///
+		/// @overload
+		///
+		/// ## Note
+		/// This alternative version of [OCRHMMDecoder::create_from_file] function uses the following default values for its arguments:
+		/// * mode: OCR_DECODER_VITERBI
+		/// * classifier: OCR_KNN_CLASSIFIER
+		#[inline]
+		pub fn create_from_file_def(filename: &str, vocabulary: &str, transition_probabilities_table: &impl ToInputArray, emission_probabilities_table: &impl ToInputArray) -> Result<core::Ptr<crate::text::OCRHMMDecoder>> {
+			extern_container_arg!(filename);
+			extern_container_arg!(vocabulary);
+			input_array_arg!(transition_probabilities_table);
+			input_array_arg!(emission_probabilities_table);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_text_OCRHMMDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR(filename.opencv_as_extern(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::text::OCRHMMDecoder>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::text::OCRHMMDecoder]
@@ -2345,27 +2498,23 @@ pub mod text {
 
 	}
 
-	/// OCRHMMDecoder class provides an interface for OCR using Hidden Markov Models.
-	///
-	///
-	/// Note:
-	///    *   (C++) An example on using OCRHMMDecoder recognition combined with scene text detection can
-	///        be found at the webcam_demo sample:
-	///        <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/webcam_demo.cpp>
-	pub struct OCRHMMDecoder {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { OCRHMMDecoder }
-
-	impl Drop for OCRHMMDecoder {
+	impl Default for OCRHMMDecoder {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_text_OCRHMMDecoder_delete(self.as_raw_mut_OCRHMMDecoder()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for OCRHMMDecoder {}
+	impl std::fmt::Debug for OCRHMMDecoder {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("OCRHMMDecoder")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { OCRHMMDecoder, crate::text::BaseOCR, cv_text_OCRHMMDecoder_to_BaseOCR }
 
 	impl crate::text::BaseOCRTraitConst for OCRHMMDecoder {
 		#[inline] fn as_raw_BaseOCR(&self) -> *const c_void { self.as_raw() }
@@ -2387,156 +2536,38 @@ pub mod text {
 
 	boxed_ref! { OCRHMMDecoder, crate::text::OCRHMMDecoderTraitConst, as_raw_OCRHMMDecoder, crate::text::OCRHMMDecoderTrait, as_raw_mut_OCRHMMDecoder }
 
-	impl OCRHMMDecoder {
+	/// Callback with the character classifier is made a class.
+	///
+	/// This way it hides the feature extractor and the classifier itself, so developers can write
+	/// their own OCR code.
+	///
+	/// The default character classifier and feature extractor can be loaded using the utility function
+	/// loadOCRHMMClassifierNM and KNN model provided in
+	/// <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/OCRHMM_knn_model_data.xml.gz>.
+	pub struct OCRHMMDecoder_ClassifierCallback {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { OCRHMMDecoder_ClassifierCallback }
+
+	impl Drop for OCRHMMDecoder_ClassifierCallback {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_text_OCRHMMDecoder_ClassifierCallback_delete(self.as_raw_mut_OCRHMMDecoder_ClassifierCallback()) };
+		}
+	}
+
+	unsafe impl Send for OCRHMMDecoder_ClassifierCallback {}
+
+	impl OCRHMMDecoder_ClassifierCallback {
 		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_text_OCRHMMDecoder_defaultNew_const()) }
+		pub fn default() -> crate::text::OCRHMMDecoder_ClassifierCallback {
+			let ret = unsafe { sys::cv_text_OCRHMMDecoder_ClassifierCallback_defaultNew_const() };
+			let ret = unsafe { crate::text::OCRHMMDecoder_ClassifierCallback::opencv_from_extern(ret) };
+			ret
 		}
 
-		/// Creates an instance of the OCRHMMDecoder class. Initializes HMMDecoder.
-		///
-		/// ## Parameters
-		/// * classifier: The character classifier with built in feature extractor.
-		///
-		/// * vocabulary: The language vocabulary (chars when ascii english text). vocabulary.size()
-		/// must be equal to the number of classes of the classifier.
-		///
-		/// * transition_probabilities_table: Table with transition probabilities between character
-		/// pairs. cols == rows == vocabulary.size().
-		///
-		/// * emission_probabilities_table: Table with observation emission probabilities. cols ==
-		/// rows == vocabulary.size().
-		///
-		/// * mode: HMM Decoding algorithm. Only OCR_DECODER_VITERBI is available for the moment
-		/// (<http://en.wikipedia.org/wiki/Viterbi_algorithm>).
-		///
-		/// ## C++ default parameters
-		/// * mode: OCR_DECODER_VITERBI
-		#[inline]
-		pub fn create(classifier: core::Ptr<crate::text::OCRHMMDecoder_ClassifierCallback>, vocabulary: &str, transition_probabilities_table: &impl ToInputArray, emission_probabilities_table: &impl ToInputArray, mode: i32) -> Result<core::Ptr<crate::text::OCRHMMDecoder>> {
-			extern_container_arg!(vocabulary);
-			input_array_arg!(transition_probabilities_table);
-			input_array_arg!(emission_probabilities_table);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_text_OCRHMMDecoder_create_const_PtrLClassifierCallbackG_const_StringR_const__InputArrayR_const__InputArrayR_int(classifier.as_raw_PtrOfOCRHMMDecoder_ClassifierCallback(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::text::OCRHMMDecoder>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Creates an instance of the OCRHMMDecoder class. Initializes HMMDecoder.
-		///
-		/// ## Parameters
-		/// * classifier: The character classifier with built in feature extractor.
-		///
-		/// * vocabulary: The language vocabulary (chars when ascii english text). vocabulary.size()
-		/// must be equal to the number of classes of the classifier.
-		///
-		/// * transition_probabilities_table: Table with transition probabilities between character
-		/// pairs. cols == rows == vocabulary.size().
-		///
-		/// * emission_probabilities_table: Table with observation emission probabilities. cols ==
-		/// rows == vocabulary.size().
-		///
-		/// * mode: HMM Decoding algorithm. Only OCR_DECODER_VITERBI is available for the moment
-		/// (<http://en.wikipedia.org/wiki/Viterbi_algorithm>).
-		///
-		/// ## Note
-		/// This alternative version of [OCRHMMDecoder::create] function uses the following default values for its arguments:
-		/// * mode: OCR_DECODER_VITERBI
-		#[inline]
-		pub fn create_def(classifier: core::Ptr<crate::text::OCRHMMDecoder_ClassifierCallback>, vocabulary: &str, transition_probabilities_table: &impl ToInputArray, emission_probabilities_table: &impl ToInputArray) -> Result<core::Ptr<crate::text::OCRHMMDecoder>> {
-			extern_container_arg!(vocabulary);
-			input_array_arg!(transition_probabilities_table);
-			input_array_arg!(emission_probabilities_table);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_text_OCRHMMDecoder_create_const_PtrLClassifierCallbackG_const_StringR_const__InputArrayR_const__InputArrayR(classifier.as_raw_PtrOfOCRHMMDecoder_ClassifierCallback(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::text::OCRHMMDecoder>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Creates an instance of the OCRHMMDecoder class. Loads and initializes HMMDecoder from the specified path
-		///
-		/// Creates an instance of the OCRHMMDecoder class. Initializes HMMDecoder.
-		///
-		/// ## Parameters
-		/// * classifier: The character classifier with built in feature extractor.
-		///
-		/// * vocabulary: The language vocabulary (chars when ascii english text). vocabulary.size()
-		/// must be equal to the number of classes of the classifier.
-		///
-		/// * transition_probabilities_table: Table with transition probabilities between character
-		/// pairs. cols == rows == vocabulary.size().
-		///
-		/// * emission_probabilities_table: Table with observation emission probabilities. cols ==
-		/// rows == vocabulary.size().
-		///
-		/// * mode: HMM Decoding algorithm. Only OCR_DECODER_VITERBI is available for the moment
-		/// (<http://en.wikipedia.org/wiki/Viterbi_algorithm>).
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## C++ default parameters
-		/// * mode: OCR_DECODER_VITERBI
-		/// * classifier: OCR_KNN_CLASSIFIER
-		#[inline]
-		pub fn create_from_file(filename: &str, vocabulary: &str, transition_probabilities_table: &impl ToInputArray, emission_probabilities_table: &impl ToInputArray, mode: i32, classifier: i32) -> Result<core::Ptr<crate::text::OCRHMMDecoder>> {
-			extern_container_arg!(filename);
-			extern_container_arg!(vocabulary);
-			input_array_arg!(transition_probabilities_table);
-			input_array_arg!(emission_probabilities_table);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_text_OCRHMMDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR_int_int(filename.opencv_as_extern(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, classifier, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::text::OCRHMMDecoder>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Creates an instance of the OCRHMMDecoder class. Loads and initializes HMMDecoder from the specified path
-		///
-		/// @overload
-		///
-		/// ## Note
-		/// This alternative version of [OCRHMMDecoder::create_from_file] function uses the following default values for its arguments:
-		/// * mode: OCR_DECODER_VITERBI
-		/// * classifier: OCR_KNN_CLASSIFIER
-		#[inline]
-		pub fn create_from_file_def(filename: &str, vocabulary: &str, transition_probabilities_table: &impl ToInputArray, emission_probabilities_table: &impl ToInputArray) -> Result<core::Ptr<crate::text::OCRHMMDecoder>> {
-			extern_container_arg!(filename);
-			extern_container_arg!(vocabulary);
-			input_array_arg!(transition_probabilities_table);
-			input_array_arg!(emission_probabilities_table);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_text_OCRHMMDecoder_create_const_StringR_const_StringR_const__InputArrayR_const__InputArrayR(filename.opencv_as_extern(), vocabulary.opencv_as_extern(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::text::OCRHMMDecoder>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_base! { OCRHMMDecoder, crate::text::BaseOCR, cv_text_OCRHMMDecoder_to_BaseOCR }
-
-	impl std::fmt::Debug for OCRHMMDecoder {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("OCRHMMDecoder")
-				.finish()
-		}
-	}
-
-	impl Default for OCRHMMDecoder {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
 	}
 
 	/// Constant methods for [crate::text::OCRHMMDecoder_ClassifierCallback]
@@ -2569,28 +2600,21 @@ pub mod text {
 
 	}
 
-	/// Callback with the character classifier is made a class.
-	///
-	/// This way it hides the feature extractor and the classifier itself, so developers can write
-	/// their own OCR code.
-	///
-	/// The default character classifier and feature extractor can be loaded using the utility function
-	/// loadOCRHMMClassifierNM and KNN model provided in
-	/// <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/OCRHMM_knn_model_data.xml.gz>.
-	pub struct OCRHMMDecoder_ClassifierCallback {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { OCRHMMDecoder_ClassifierCallback }
-
-	impl Drop for OCRHMMDecoder_ClassifierCallback {
+	impl Default for OCRHMMDecoder_ClassifierCallback {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_text_OCRHMMDecoder_ClassifierCallback_delete(self.as_raw_mut_OCRHMMDecoder_ClassifierCallback()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for OCRHMMDecoder_ClassifierCallback {}
+	impl std::fmt::Debug for OCRHMMDecoder_ClassifierCallback {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("OCRHMMDecoder_ClassifierCallback")
+				.finish()
+		}
+	}
 
 	impl crate::text::OCRHMMDecoder_ClassifierCallbackTraitConst for OCRHMMDecoder_ClassifierCallback {
 		#[inline] fn as_raw_OCRHMMDecoder_ClassifierCallback(&self) -> *const c_void { self.as_raw() }
@@ -2602,29 +2626,43 @@ pub mod text {
 
 	boxed_ref! { OCRHMMDecoder_ClassifierCallback, crate::text::OCRHMMDecoder_ClassifierCallbackTraitConst, as_raw_OCRHMMDecoder_ClassifierCallback, crate::text::OCRHMMDecoder_ClassifierCallbackTrait, as_raw_mut_OCRHMMDecoder_ClassifierCallback }
 
-	impl OCRHMMDecoder_ClassifierCallback {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_text_OCRHMMDecoder_ClassifierCallback_defaultNew_const()) }
-		}
-
+	/// OCRHolisticWordRecognizer class provides the functionallity of segmented wordspotting.
+	/// Given a predefined vocabulary , a DictNet is employed to select the most probable
+	/// word given an input image.
+	///
+	/// DictNet is described in detail in:
+	/// Max Jaderberg et al.: Reading Text in the Wild with Convolutional Neural Networks, IJCV 2015
+	/// <http://arxiv.org/abs/1412.1842>
+	pub struct OCRHolisticWordRecognizer {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for OCRHMMDecoder_ClassifierCallback {
+	opencv_type_boxed! { OCRHolisticWordRecognizer }
+
+	impl Drop for OCRHolisticWordRecognizer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("OCRHMMDecoder_ClassifierCallback")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_text_OCRHolisticWordRecognizer_delete(self.as_raw_mut_OCRHolisticWordRecognizer()) };
 		}
 	}
 
-	impl Default for OCRHMMDecoder_ClassifierCallback {
+	unsafe impl Send for OCRHolisticWordRecognizer {}
+
+	impl OCRHolisticWordRecognizer {
+		/// Creates an instance of the OCRHolisticWordRecognizer class.
 		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
+		pub fn create(arch_filename: &str, weights_filename: &str, words_filename: &str) -> Result<core::Ptr<crate::text::OCRHolisticWordRecognizer>> {
+			extern_container_arg!(arch_filename);
+			extern_container_arg!(weights_filename);
+			extern_container_arg!(words_filename);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_text_OCRHolisticWordRecognizer_create_const_stringR_const_stringR_const_stringR(arch_filename.opencv_as_extern(), weights_filename.opencv_as_extern(), words_filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::text::OCRHolisticWordRecognizer>::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
 	}
 
 	/// Constant methods for [crate::text::OCRHolisticWordRecognizer]
@@ -2753,27 +2791,15 @@ pub mod text {
 
 	}
 
-	/// OCRHolisticWordRecognizer class provides the functionallity of segmented wordspotting.
-	/// Given a predefined vocabulary , a DictNet is employed to select the most probable
-	/// word given an input image.
-	///
-	/// DictNet is described in detail in:
-	/// Max Jaderberg et al.: Reading Text in the Wild with Convolutional Neural Networks, IJCV 2015
-	/// <http://arxiv.org/abs/1412.1842>
-	pub struct OCRHolisticWordRecognizer {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { OCRHolisticWordRecognizer }
-
-	impl Drop for OCRHolisticWordRecognizer {
+	impl std::fmt::Debug for OCRHolisticWordRecognizer {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_text_OCRHolisticWordRecognizer_delete(self.as_raw_mut_OCRHolisticWordRecognizer()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("OCRHolisticWordRecognizer")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for OCRHolisticWordRecognizer {}
+	boxed_cast_base! { OCRHolisticWordRecognizer, crate::text::BaseOCR, cv_text_OCRHolisticWordRecognizer_to_BaseOCR }
 
 	impl crate::text::BaseOCRTraitConst for OCRHolisticWordRecognizer {
 		#[inline] fn as_raw_BaseOCR(&self) -> *const c_void { self.as_raw() }
@@ -2795,31 +2821,106 @@ pub mod text {
 
 	boxed_ref! { OCRHolisticWordRecognizer, crate::text::OCRHolisticWordRecognizerTraitConst, as_raw_OCRHolisticWordRecognizer, crate::text::OCRHolisticWordRecognizerTrait, as_raw_mut_OCRHolisticWordRecognizer }
 
-	impl OCRHolisticWordRecognizer {
-		/// Creates an instance of the OCRHolisticWordRecognizer class.
+	/// OCRTesseract class provides an interface with the tesseract-ocr API (v3.02.02) in C++.
+	///
+	/// Notice that it is compiled only when tesseract-ocr is correctly installed.
+	///
+	///
+	/// Note:
+	///    *   (C++) An example of OCRTesseract recognition combined with scene text detection can be found
+	///        at the end_to_end_recognition demo:
+	///        <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/end_to_end_recognition.cpp>
+	///    *   (C++) Another example of OCRTesseract recognition combined with scene text detection can be
+	///        found at the webcam_demo:
+	///        <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/webcam_demo.cpp>
+	pub struct OCRTesseract {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { OCRTesseract }
+
+	impl Drop for OCRTesseract {
 		#[inline]
-		pub fn create(arch_filename: &str, weights_filename: &str, words_filename: &str) -> Result<core::Ptr<crate::text::OCRHolisticWordRecognizer>> {
-			extern_container_arg!(arch_filename);
-			extern_container_arg!(weights_filename);
-			extern_container_arg!(words_filename);
+		fn drop(&mut self) {
+			unsafe { sys::cv_text_OCRTesseract_delete(self.as_raw_mut_OCRTesseract()) };
+		}
+	}
+
+	unsafe impl Send for OCRTesseract {}
+
+	impl OCRTesseract {
+		/// Creates an instance of the OCRTesseract class. Initializes Tesseract.
+		///
+		/// ## Parameters
+		/// * datapath: the name of the parent directory of tessdata ended with "/", or NULL to use the
+		/// system's default directory.
+		/// * language: an ISO 639-3 code or NULL will default to "eng".
+		/// * char_whitelist: specifies the list of characters used for recognition. NULL defaults to ""
+		/// (All characters will be used for recognition).
+		/// * oem: tesseract-ocr offers different OCR Engine Modes (OEM), by default
+		/// tesseract::OEM_DEFAULT is used. See the tesseract-ocr API documentation for other possible
+		/// values.
+		/// * psmode: tesseract-ocr offers different Page Segmentation Modes (PSM) tesseract::PSM_AUTO
+		/// (fully automatic layout analysis) is used. See the tesseract-ocr API documentation for other
+		/// possible values.
+		///
+		///
+		/// Note: The char_whitelist default is changed after OpenCV 4.7.0/3.19.0 from "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" to "".
+		///
+		/// ## C++ default parameters
+		/// * datapath: NULL
+		/// * language: NULL
+		/// * char_whitelist: NULL
+		/// * oem: OEM_DEFAULT
+		/// * psmode: PSM_AUTO
+		#[inline]
+		pub fn create(datapath: &str, language: &str, char_whitelist: &str, oem: i32, psmode: i32) -> Result<core::Ptr<crate::text::OCRTesseract>> {
+			extern_container_arg!(datapath);
+			extern_container_arg!(language);
+			extern_container_arg!(char_whitelist);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_text_OCRHolisticWordRecognizer_create_const_stringR_const_stringR_const_stringR(arch_filename.opencv_as_extern(), weights_filename.opencv_as_extern(), words_filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_text_OCRTesseract_create_const_charX_const_charX_const_charX_int_int(datapath.opencv_as_extern(), language.opencv_as_extern(), char_whitelist.opencv_as_extern(), oem, psmode, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::text::OCRHolisticWordRecognizer>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::text::OCRTesseract>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	boxed_cast_base! { OCRHolisticWordRecognizer, crate::text::BaseOCR, cv_text_OCRHolisticWordRecognizer_to_BaseOCR }
-
-	impl std::fmt::Debug for OCRHolisticWordRecognizer {
+		/// Creates an instance of the OCRTesseract class. Initializes Tesseract.
+		///
+		/// ## Parameters
+		/// * datapath: the name of the parent directory of tessdata ended with "/", or NULL to use the
+		/// system's default directory.
+		/// * language: an ISO 639-3 code or NULL will default to "eng".
+		/// * char_whitelist: specifies the list of characters used for recognition. NULL defaults to ""
+		/// (All characters will be used for recognition).
+		/// * oem: tesseract-ocr offers different OCR Engine Modes (OEM), by default
+		/// tesseract::OEM_DEFAULT is used. See the tesseract-ocr API documentation for other possible
+		/// values.
+		/// * psmode: tesseract-ocr offers different Page Segmentation Modes (PSM) tesseract::PSM_AUTO
+		/// (fully automatic layout analysis) is used. See the tesseract-ocr API documentation for other
+		/// possible values.
+		///
+		///
+		/// Note: The char_whitelist default is changed after OpenCV 4.7.0/3.19.0 from "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" to "".
+		///
+		/// ## Note
+		/// This alternative version of [OCRTesseract::create] function uses the following default values for its arguments:
+		/// * datapath: NULL
+		/// * language: NULL
+		/// * char_whitelist: NULL
+		/// * oem: OEM_DEFAULT
+		/// * psmode: PSM_AUTO
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("OCRHolisticWordRecognizer")
-				.finish()
+		pub fn create_def() -> Result<core::Ptr<crate::text::OCRTesseract>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_text_OCRTesseract_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::text::OCRTesseract>::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
 	}
 
 	/// Constant methods for [crate::text::OCRTesseract]
@@ -3000,32 +3101,15 @@ pub mod text {
 
 	}
 
-	/// OCRTesseract class provides an interface with the tesseract-ocr API (v3.02.02) in C++.
-	///
-	/// Notice that it is compiled only when tesseract-ocr is correctly installed.
-	///
-	///
-	/// Note:
-	///    *   (C++) An example of OCRTesseract recognition combined with scene text detection can be found
-	///        at the end_to_end_recognition demo:
-	///        <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/end_to_end_recognition.cpp>
-	///    *   (C++) Another example of OCRTesseract recognition combined with scene text detection can be
-	///        found at the webcam_demo:
-	///        <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/webcam_demo.cpp>
-	pub struct OCRTesseract {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { OCRTesseract }
-
-	impl Drop for OCRTesseract {
+	impl std::fmt::Debug for OCRTesseract {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_text_OCRTesseract_delete(self.as_raw_mut_OCRTesseract()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("OCRTesseract")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for OCRTesseract {}
+	boxed_cast_base! { OCRTesseract, crate::text::BaseOCR, cv_text_OCRTesseract_to_BaseOCR }
 
 	impl crate::text::BaseOCRTraitConst for OCRTesseract {
 		#[inline] fn as_raw_BaseOCR(&self) -> *const c_void { self.as_raw() }
@@ -3047,90 +3131,21 @@ pub mod text {
 
 	boxed_ref! { OCRTesseract, crate::text::OCRTesseractTraitConst, as_raw_OCRTesseract, crate::text::OCRTesseractTrait, as_raw_mut_OCRTesseract }
 
-	impl OCRTesseract {
-		/// Creates an instance of the OCRTesseract class. Initializes Tesseract.
-		///
-		/// ## Parameters
-		/// * datapath: the name of the parent directory of tessdata ended with "/", or NULL to use the
-		/// system's default directory.
-		/// * language: an ISO 639-3 code or NULL will default to "eng".
-		/// * char_whitelist: specifies the list of characters used for recognition. NULL defaults to ""
-		/// (All characters will be used for recognition).
-		/// * oem: tesseract-ocr offers different OCR Engine Modes (OEM), by default
-		/// tesseract::OEM_DEFAULT is used. See the tesseract-ocr API documentation for other possible
-		/// values.
-		/// * psmode: tesseract-ocr offers different Page Segmentation Modes (PSM) tesseract::PSM_AUTO
-		/// (fully automatic layout analysis) is used. See the tesseract-ocr API documentation for other
-		/// possible values.
-		///
-		///
-		/// Note: The char_whitelist default is changed after OpenCV 4.7.0/3.19.0 from "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" to "".
-		///
-		/// ## C++ default parameters
-		/// * datapath: NULL
-		/// * language: NULL
-		/// * char_whitelist: NULL
-		/// * oem: OEM_DEFAULT
-		/// * psmode: PSM_AUTO
-		#[inline]
-		pub fn create(datapath: &str, language: &str, char_whitelist: &str, oem: i32, psmode: i32) -> Result<core::Ptr<crate::text::OCRTesseract>> {
-			extern_container_arg!(datapath);
-			extern_container_arg!(language);
-			extern_container_arg!(char_whitelist);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_text_OCRTesseract_create_const_charX_const_charX_const_charX_int_int(datapath.opencv_as_extern(), language.opencv_as_extern(), char_whitelist.opencv_as_extern(), oem, psmode, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::text::OCRTesseract>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Creates an instance of the OCRTesseract class. Initializes Tesseract.
-		///
-		/// ## Parameters
-		/// * datapath: the name of the parent directory of tessdata ended with "/", or NULL to use the
-		/// system's default directory.
-		/// * language: an ISO 639-3 code or NULL will default to "eng".
-		/// * char_whitelist: specifies the list of characters used for recognition. NULL defaults to ""
-		/// (All characters will be used for recognition).
-		/// * oem: tesseract-ocr offers different OCR Engine Modes (OEM), by default
-		/// tesseract::OEM_DEFAULT is used. See the tesseract-ocr API documentation for other possible
-		/// values.
-		/// * psmode: tesseract-ocr offers different Page Segmentation Modes (PSM) tesseract::PSM_AUTO
-		/// (fully automatic layout analysis) is used. See the tesseract-ocr API documentation for other
-		/// possible values.
-		///
-		///
-		/// Note: The char_whitelist default is changed after OpenCV 4.7.0/3.19.0 from "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" to "".
-		///
-		/// ## Note
-		/// This alternative version of [OCRTesseract::create] function uses the following default values for its arguments:
-		/// * datapath: NULL
-		/// * language: NULL
-		/// * char_whitelist: NULL
-		/// * oem: OEM_DEFAULT
-		/// * psmode: PSM_AUTO
-		#[inline]
-		pub fn create_def() -> Result<core::Ptr<crate::text::OCRTesseract>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_text_OCRTesseract_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::text::OCRTesseract>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// An abstract class providing interface for text detection algorithms
+	pub struct TextDetector {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { OCRTesseract, crate::text::BaseOCR, cv_text_OCRTesseract_to_BaseOCR }
+	opencv_type_boxed! { TextDetector }
 
-	impl std::fmt::Debug for OCRTesseract {
+	impl Drop for TextDetector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("OCRTesseract")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_text_TextDetector_delete(self.as_raw_mut_TextDetector()) };
 		}
 	}
+
+	unsafe impl Send for TextDetector {}
 
 	/// Constant methods for [crate::text::TextDetector]
 	pub trait TextDetectorTraitConst {
@@ -3160,21 +3175,15 @@ pub mod text {
 
 	}
 
-	/// An abstract class providing interface for text detection algorithms
-	pub struct TextDetector {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { TextDetector }
-
-	impl Drop for TextDetector {
+	impl std::fmt::Debug for TextDetector {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_text_TextDetector_delete(self.as_raw_mut_TextDetector()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TextDetector")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for TextDetector {}
+	boxed_cast_descendant! { TextDetector, crate::text::TextDetectorCNN, cv_text_TextDetector_to_TextDetectorCNN }
 
 	impl crate::text::TextDetectorTraitConst for TextDetector {
 		#[inline] fn as_raw_TextDetector(&self) -> *const c_void { self.as_raw() }
@@ -3185,47 +3194,6 @@ pub mod text {
 	}
 
 	boxed_ref! { TextDetector, crate::text::TextDetectorTraitConst, as_raw_TextDetector, crate::text::TextDetectorTrait, as_raw_mut_TextDetector }
-
-	impl TextDetector {
-	}
-
-	boxed_cast_descendant! { TextDetector, crate::text::TextDetectorCNN, cv_text_TextDetector_to_TextDetectorCNN }
-
-	impl std::fmt::Debug for TextDetector {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("TextDetector")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::text::TextDetectorCNN]
-	pub trait TextDetectorCNNTraitConst: crate::text::TextDetectorTraitConst {
-		fn as_raw_TextDetectorCNN(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::text::TextDetectorCNN]
-	pub trait TextDetectorCNNTrait: crate::text::TextDetectorCNNTraitConst + crate::text::TextDetectorTrait {
-		fn as_raw_mut_TextDetectorCNN(&mut self) -> *mut c_void;
-
-		/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
-		///
-		/// ## Parameters
-		/// * inputImage: an image expected to be a CV_U8C3 of any size
-		/// * Bbox: a vector of Rect that will store the detected word bounding box
-		/// * confidence: a vector of float that will be updated with the confidence the classifier has for the selected bounding box
-		#[inline]
-		fn detect(&mut self, input_image: &impl ToInputArray, bbox: &mut core::Vector<core::Rect>, confidence: &mut core::Vector<f32>) -> Result<()> {
-			input_array_arg!(input_image);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_text_TextDetectorCNN_detect_const__InputArrayR_vectorLRectGR_vectorLfloatGR(self.as_raw_mut_TextDetectorCNN(), input_image.as_raw__InputArray(), bbox.as_raw_mut_VectorOfRect(), confidence.as_raw_mut_VectorOff32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
 
 	/// TextDetectorCNN class provides the functionallity of text bounding box detection.
 	/// This class is representing to find bounding boxes of text words given an input image.
@@ -3247,26 +3215,6 @@ pub mod text {
 	}
 
 	unsafe impl Send for TextDetectorCNN {}
-
-	impl crate::text::TextDetectorTraitConst for TextDetectorCNN {
-		#[inline] fn as_raw_TextDetector(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::text::TextDetectorTrait for TextDetectorCNN {
-		#[inline] fn as_raw_mut_TextDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { TextDetectorCNN, crate::text::TextDetectorTraitConst, as_raw_TextDetector, crate::text::TextDetectorTrait, as_raw_mut_TextDetector }
-
-	impl crate::text::TextDetectorCNNTraitConst for TextDetectorCNN {
-		#[inline] fn as_raw_TextDetectorCNN(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::text::TextDetectorCNNTrait for TextDetectorCNN {
-		#[inline] fn as_raw_mut_TextDetectorCNN(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { TextDetectorCNN, crate::text::TextDetectorCNNTraitConst, as_raw_TextDetectorCNN, crate::text::TextDetectorCNNTrait, as_raw_mut_TextDetectorCNN }
 
 	impl TextDetectorCNN {
 		/// Creates an instance of the TextDetectorCNN class using the provided parameters.
@@ -3311,7 +3259,33 @@ pub mod text {
 
 	}
 
-	boxed_cast_base! { TextDetectorCNN, crate::text::TextDetector, cv_text_TextDetectorCNN_to_TextDetector }
+	/// Constant methods for [crate::text::TextDetectorCNN]
+	pub trait TextDetectorCNNTraitConst: crate::text::TextDetectorTraitConst {
+		fn as_raw_TextDetectorCNN(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::text::TextDetectorCNN]
+	pub trait TextDetectorCNNTrait: crate::text::TextDetectorCNNTraitConst + crate::text::TextDetectorTrait {
+		fn as_raw_mut_TextDetectorCNN(&mut self) -> *mut c_void;
+
+		/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+		///
+		/// ## Parameters
+		/// * inputImage: an image expected to be a CV_U8C3 of any size
+		/// * Bbox: a vector of Rect that will store the detected word bounding box
+		/// * confidence: a vector of float that will be updated with the confidence the classifier has for the selected bounding box
+		#[inline]
+		fn detect(&mut self, input_image: &impl ToInputArray, bbox: &mut core::Vector<core::Rect>, confidence: &mut core::Vector<f32>) -> Result<()> {
+			input_array_arg!(input_image);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_text_TextDetectorCNN_detect_const__InputArrayR_vectorLRectGR_vectorLfloatGR(self.as_raw_mut_TextDetectorCNN(), input_image.as_raw__InputArray(), bbox.as_raw_mut_VectorOfRect(), confidence.as_raw_mut_VectorOff32(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
 
 	impl std::fmt::Debug for TextDetectorCNN {
 		#[inline]
@@ -3320,4 +3294,27 @@ pub mod text {
 				.finish()
 		}
 	}
+
+	boxed_cast_base! { TextDetectorCNN, crate::text::TextDetector, cv_text_TextDetectorCNN_to_TextDetector }
+
+	impl crate::text::TextDetectorTraitConst for TextDetectorCNN {
+		#[inline] fn as_raw_TextDetector(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::text::TextDetectorTrait for TextDetectorCNN {
+		#[inline] fn as_raw_mut_TextDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { TextDetectorCNN, crate::text::TextDetectorTraitConst, as_raw_TextDetector, crate::text::TextDetectorTrait, as_raw_mut_TextDetector }
+
+	impl crate::text::TextDetectorCNNTraitConst for TextDetectorCNN {
+		#[inline] fn as_raw_TextDetectorCNN(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::text::TextDetectorCNNTrait for TextDetectorCNN {
+		#[inline] fn as_raw_mut_TextDetectorCNN(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { TextDetectorCNN, crate::text::TextDetectorCNNTraitConst, as_raw_TextDetectorCNN, crate::text::TextDetectorCNNTrait, as_raw_mut_TextDetectorCNN }
+
 }

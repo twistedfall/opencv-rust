@@ -3476,6 +3476,51 @@ pub mod ximgproc {
 		Ok(ret)
 	}
 
+	/// Interface for Adaptive Manifold Filter realizations.
+	///
+	/// For more details about this filter see [Gastal12](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Gastal12) and References_.
+	///
+	/// Below listed optional parameters which may be set up with Algorithm::set function.
+	/// *   member double sigma_s = 16.0
+	/// Spatial standard deviation.
+	/// *   member double sigma_r = 0.2
+	/// Color space standard deviation.
+	/// *   member int tree_height = -1
+	/// Height of the manifold tree (default = -1 : automatically computed).
+	/// *   member int num_pca_iterations = 1
+	/// Number of iterations to computed the eigenvector.
+	/// *   member bool adjust_outliers = false
+	/// Specify adjust outliers using Eq. 9 or not.
+	/// *   member bool use_RNG = true
+	/// Specify use random number generator to compute eigenvector or not.
+	pub struct AdaptiveManifoldFilter {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { AdaptiveManifoldFilter }
+
+	impl Drop for AdaptiveManifoldFilter {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_delete(self.as_raw_mut_AdaptiveManifoldFilter()) };
+		}
+	}
+
+	unsafe impl Send for AdaptiveManifoldFilter {}
+
+	impl AdaptiveManifoldFilter {
+		#[inline]
+		pub fn create() -> Result<core::Ptr<crate::ximgproc::AdaptiveManifoldFilter>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::ximgproc::AdaptiveManifoldFilter>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
 	/// Constant methods for [crate::ximgproc::AdaptiveManifoldFilter]
 	pub trait AdaptiveManifoldFilterTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_AdaptiveManifoldFilter(&self) -> *const c_void;
@@ -3675,37 +3720,15 @@ pub mod ximgproc {
 
 	}
 
-	/// Interface for Adaptive Manifold Filter realizations.
-	///
-	/// For more details about this filter see [Gastal12](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Gastal12) and References_.
-	///
-	/// Below listed optional parameters which may be set up with Algorithm::set function.
-	/// *   member double sigma_s = 16.0
-	/// Spatial standard deviation.
-	/// *   member double sigma_r = 0.2
-	/// Color space standard deviation.
-	/// *   member int tree_height = -1
-	/// Height of the manifold tree (default = -1 : automatically computed).
-	/// *   member int num_pca_iterations = 1
-	/// Number of iterations to computed the eigenvector.
-	/// *   member bool adjust_outliers = false
-	/// Specify adjust outliers using Eq. 9 or not.
-	/// *   member bool use_RNG = true
-	/// Specify use random number generator to compute eigenvector or not.
-	pub struct AdaptiveManifoldFilter {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { AdaptiveManifoldFilter }
-
-	impl Drop for AdaptiveManifoldFilter {
+	impl std::fmt::Debug for AdaptiveManifoldFilter {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_delete(self.as_raw_mut_AdaptiveManifoldFilter()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("AdaptiveManifoldFilter")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for AdaptiveManifoldFilter {}
+	boxed_cast_base! { AdaptiveManifoldFilter, core::Algorithm, cv_ximgproc_AdaptiveManifoldFilter_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for AdaptiveManifoldFilter {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -3727,29 +3750,6 @@ pub mod ximgproc {
 
 	boxed_ref! { AdaptiveManifoldFilter, crate::ximgproc::AdaptiveManifoldFilterTraitConst, as_raw_AdaptiveManifoldFilter, crate::ximgproc::AdaptiveManifoldFilterTrait, as_raw_mut_AdaptiveManifoldFilter }
 
-	impl AdaptiveManifoldFilter {
-		#[inline]
-		pub fn create() -> Result<core::Ptr<crate::ximgproc::AdaptiveManifoldFilter>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ximgproc_AdaptiveManifoldFilter_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::ximgproc::AdaptiveManifoldFilter>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_base! { AdaptiveManifoldFilter, core::Algorithm, cv_ximgproc_AdaptiveManifoldFilter_to_Algorithm }
-
-	impl std::fmt::Debug for AdaptiveManifoldFilter {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("AdaptiveManifoldFilter")
-				.finish()
-		}
-	}
-
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq)]
 	pub struct Box {
@@ -3762,7 +3762,64 @@ pub mod ximgproc {
 
 	opencv_type_simple! { crate::ximgproc::Box }
 
-	impl Box {
+	/// Class for ContourFitting algorithms.
+	/// ContourFitting match two contours ![inline formula](https://latex.codecogs.com/png.latex?%20z%5Fa%20) and ![inline formula](https://latex.codecogs.com/png.latex?%20z%5Fb%20) minimizing distance
+	/// ![block formula](https://latex.codecogs.com/png.latex?%20d%28z%5Fa%2Cz%5Fb%29%3D%5Csum%20%28a%5Fn%20%2D%20s%20%20b%5Fn%20e%5E%7Bj%28n%20%5Calpha%20%2B%5Cphi%20%29%7D%29%5E2%20) where ![inline formula](https://latex.codecogs.com/png.latex?%20a%5Fn%20) and ![inline formula](https://latex.codecogs.com/png.latex?%20b%5Fn%20) are Fourier descriptors of ![inline formula](https://latex.codecogs.com/png.latex?%20z%5Fa%20) and ![inline formula](https://latex.codecogs.com/png.latex?%20z%5Fb%20) and s is a scaling factor and  ![inline formula](https://latex.codecogs.com/png.latex?%20%5Cphi%20) is angle rotation and ![inline formula](https://latex.codecogs.com/png.latex?%20%5Calpha%20) is starting point factor adjustement
+	pub struct ContourFitting {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { ContourFitting }
+
+	impl Drop for ContourFitting {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_ximgproc_ContourFitting_delete(self.as_raw_mut_ContourFitting()) };
+		}
+	}
+
+	unsafe impl Send for ContourFitting {}
+
+	impl ContourFitting {
+		/// Fit two closed curves using fourier descriptors. More details in [PersoonFu1977](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_PersoonFu1977) and [BergerRaghunathan1998](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_BergerRaghunathan1998)
+		///
+		/// ## Parameters
+		/// * ctr: number of Fourier descriptors equal to number of contour points after resampling.
+		/// * fd: Contour defining second shape (Target).
+		///
+		/// ## C++ default parameters
+		/// * ctr: 1024
+		/// * fd: 16
+		#[inline]
+		pub fn new(ctr: i32, fd: i32) -> Result<crate::ximgproc::ContourFitting> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_ContourFitting_ContourFitting_int_int(ctr, fd, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::ximgproc::ContourFitting::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Fit two closed curves using fourier descriptors. More details in [PersoonFu1977](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_PersoonFu1977) and [BergerRaghunathan1998](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_BergerRaghunathan1998)
+		///
+		/// ## Parameters
+		/// * ctr: number of Fourier descriptors equal to number of contour points after resampling.
+		/// * fd: Contour defining second shape (Target).
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * ctr: 1024
+		/// * fd: 16
+		#[inline]
+		pub fn new_def() -> Result<crate::ximgproc::ContourFitting> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_ContourFitting_ContourFitting(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::ximgproc::ContourFitting::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::ximgproc::ContourFitting]
@@ -3921,23 +3978,15 @@ pub mod ximgproc {
 
 	}
 
-	/// Class for ContourFitting algorithms.
-	/// ContourFitting match two contours ![inline formula](https://latex.codecogs.com/png.latex?%20z%5Fa%20) and ![inline formula](https://latex.codecogs.com/png.latex?%20z%5Fb%20) minimizing distance
-	/// ![block formula](https://latex.codecogs.com/png.latex?%20d%28z%5Fa%2Cz%5Fb%29%3D%5Csum%20%28a%5Fn%20%2D%20s%20%20b%5Fn%20e%5E%7Bj%28n%20%5Calpha%20%2B%5Cphi%20%29%7D%29%5E2%20) where ![inline formula](https://latex.codecogs.com/png.latex?%20a%5Fn%20) and ![inline formula](https://latex.codecogs.com/png.latex?%20b%5Fn%20) are Fourier descriptors of ![inline formula](https://latex.codecogs.com/png.latex?%20z%5Fa%20) and ![inline formula](https://latex.codecogs.com/png.latex?%20z%5Fb%20) and s is a scaling factor and  ![inline formula](https://latex.codecogs.com/png.latex?%20%5Cphi%20) is angle rotation and ![inline formula](https://latex.codecogs.com/png.latex?%20%5Calpha%20) is starting point factor adjustement
-	pub struct ContourFitting {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { ContourFitting }
-
-	impl Drop for ContourFitting {
+	impl std::fmt::Debug for ContourFitting {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ximgproc_ContourFitting_delete(self.as_raw_mut_ContourFitting()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ContourFitting")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for ContourFitting {}
+	boxed_cast_base! { ContourFitting, core::Algorithm, cv_ximgproc_ContourFitting_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for ContourFitting {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -3959,57 +4008,23 @@ pub mod ximgproc {
 
 	boxed_ref! { ContourFitting, crate::ximgproc::ContourFittingTraitConst, as_raw_ContourFitting, crate::ximgproc::ContourFittingTrait, as_raw_mut_ContourFitting }
 
-	impl ContourFitting {
-		/// Fit two closed curves using fourier descriptors. More details in [PersoonFu1977](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_PersoonFu1977) and [BergerRaghunathan1998](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_BergerRaghunathan1998)
-		///
-		/// ## Parameters
-		/// * ctr: number of Fourier descriptors equal to number of contour points after resampling.
-		/// * fd: Contour defining second shape (Target).
-		///
-		/// ## C++ default parameters
-		/// * ctr: 1024
-		/// * fd: 16
-		#[inline]
-		pub fn new(ctr: i32, fd: i32) -> Result<crate::ximgproc::ContourFitting> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ximgproc_ContourFitting_ContourFitting_int_int(ctr, fd, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::ximgproc::ContourFitting::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Fit two closed curves using fourier descriptors. More details in [PersoonFu1977](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_PersoonFu1977) and [BergerRaghunathan1998](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_BergerRaghunathan1998)
-		///
-		/// ## Parameters
-		/// * ctr: number of Fourier descriptors equal to number of contour points after resampling.
-		/// * fd: Contour defining second shape (Target).
-		///
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * ctr: 1024
-		/// * fd: 16
-		#[inline]
-		pub fn new_def() -> Result<crate::ximgproc::ContourFitting> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ximgproc_ContourFitting_ContourFitting(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::ximgproc::ContourFitting::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// Interface for realizations of Domain Transform filter.
+	///
+	/// For more details about this filter see [Gastal11](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Gastal11) .
+	pub struct DTFilter {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { ContourFitting, core::Algorithm, cv_ximgproc_ContourFitting_to_Algorithm }
+	opencv_type_boxed! { DTFilter }
 
-	impl std::fmt::Debug for ContourFitting {
+	impl Drop for DTFilter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("ContourFitting")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_ximgproc_DTFilter_delete(self.as_raw_mut_DTFilter()) };
 		}
 	}
+
+	unsafe impl Send for DTFilter {}
 
 	/// Constant methods for [crate::ximgproc::DTFilter]
 	pub trait DTFilterTraitConst: core::AlgorithmTraitConst {
@@ -4070,23 +4085,15 @@ pub mod ximgproc {
 
 	}
 
-	/// Interface for realizations of Domain Transform filter.
-	///
-	/// For more details about this filter see [Gastal11](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Gastal11) .
-	pub struct DTFilter {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { DTFilter }
-
-	impl Drop for DTFilter {
+	impl std::fmt::Debug for DTFilter {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ximgproc_DTFilter_delete(self.as_raw_mut_DTFilter()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DTFilter")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for DTFilter {}
+	boxed_cast_base! { DTFilter, core::Algorithm, cv_ximgproc_DTFilter_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for DTFilter {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -4108,18 +4115,21 @@ pub mod ximgproc {
 
 	boxed_ref! { DTFilter, crate::ximgproc::DTFilterTraitConst, as_raw_DTFilter, crate::ximgproc::DTFilterTrait, as_raw_mut_DTFilter }
 
-	impl DTFilter {
+	/// Main interface for all disparity map filters.
+	pub struct DisparityFilter {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { DTFilter, core::Algorithm, cv_ximgproc_DTFilter_to_Algorithm }
+	opencv_type_boxed! { DisparityFilter }
 
-	impl std::fmt::Debug for DTFilter {
+	impl Drop for DisparityFilter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("DTFilter")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_ximgproc_DisparityFilter_delete(self.as_raw_mut_DisparityFilter()) };
 		}
 	}
+
+	unsafe impl Send for DisparityFilter {}
 
 	/// Constant methods for [crate::ximgproc::DisparityFilter]
 	pub trait DisparityFilterTraitConst: core::AlgorithmTraitConst {
@@ -4208,21 +4218,17 @@ pub mod ximgproc {
 
 	}
 
-	/// Main interface for all disparity map filters.
-	pub struct DisparityFilter {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { DisparityFilter }
-
-	impl Drop for DisparityFilter {
+	impl std::fmt::Debug for DisparityFilter {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ximgproc_DisparityFilter_delete(self.as_raw_mut_DisparityFilter()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DisparityFilter")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for DisparityFilter {}
+	boxed_cast_base! { DisparityFilter, core::Algorithm, cv_ximgproc_DisparityFilter_to_Algorithm }
+
+	boxed_cast_descendant! { DisparityFilter, crate::ximgproc::DisparityWLSFilter, cv_ximgproc_DisparityFilter_to_DisparityWLSFilter }
 
 	impl core::AlgorithmTraitConst for DisparityFilter {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -4244,20 +4250,23 @@ pub mod ximgproc {
 
 	boxed_ref! { DisparityFilter, crate::ximgproc::DisparityFilterTraitConst, as_raw_DisparityFilter, crate::ximgproc::DisparityFilterTrait, as_raw_mut_DisparityFilter }
 
-	impl DisparityFilter {
+	/// Disparity map filter based on Weighted Least Squares filter (in form of Fast Global Smoother that
+	/// is a lot faster than traditional Weighted Least Squares filter implementations) and optional use of
+	/// left-right-consistency-based confidence to refine the results in half-occlusions and uniform areas.
+	pub struct DisparityWLSFilter {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { DisparityFilter, crate::ximgproc::DisparityWLSFilter, cv_ximgproc_DisparityFilter_to_DisparityWLSFilter }
+	opencv_type_boxed! { DisparityWLSFilter }
 
-	boxed_cast_base! { DisparityFilter, core::Algorithm, cv_ximgproc_DisparityFilter_to_Algorithm }
-
-	impl std::fmt::Debug for DisparityFilter {
+	impl Drop for DisparityWLSFilter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("DisparityFilter")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_ximgproc_DisparityWLSFilter_delete(self.as_raw_mut_DisparityWLSFilter()) };
 		}
 	}
+
+	unsafe impl Send for DisparityWLSFilter {}
 
 	/// Constant methods for [crate::ximgproc::DisparityWLSFilter]
 	pub trait DisparityWLSFilterTraitConst: crate::ximgproc::DisparityFilterTraitConst {
@@ -4383,23 +4392,17 @@ pub mod ximgproc {
 
 	}
 
-	/// Disparity map filter based on Weighted Least Squares filter (in form of Fast Global Smoother that
-	/// is a lot faster than traditional Weighted Least Squares filter implementations) and optional use of
-	/// left-right-consistency-based confidence to refine the results in half-occlusions and uniform areas.
-	pub struct DisparityWLSFilter {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { DisparityWLSFilter }
-
-	impl Drop for DisparityWLSFilter {
+	impl std::fmt::Debug for DisparityWLSFilter {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ximgproc_DisparityWLSFilter_delete(self.as_raw_mut_DisparityWLSFilter()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DisparityWLSFilter")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for DisparityWLSFilter {}
+	boxed_cast_base! { DisparityWLSFilter, core::Algorithm, cv_ximgproc_DisparityWLSFilter_to_Algorithm }
+
+	boxed_cast_base! { DisparityWLSFilter, crate::ximgproc::DisparityFilter, cv_ximgproc_DisparityWLSFilter_to_DisparityFilter }
 
 	impl core::AlgorithmTraitConst for DisparityWLSFilter {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -4431,20 +4434,22 @@ pub mod ximgproc {
 
 	boxed_ref! { DisparityWLSFilter, crate::ximgproc::DisparityWLSFilterTraitConst, as_raw_DisparityWLSFilter, crate::ximgproc::DisparityWLSFilterTrait, as_raw_mut_DisparityWLSFilter }
 
-	impl DisparityWLSFilter {
+	/// Sparse match interpolation algorithm based on modified locally-weighted affine
+	/// estimator from [Revaud2015](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Revaud2015) and Fast Global Smoother as post-processing filter.
+	pub struct EdgeAwareInterpolator {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { DisparityWLSFilter, core::Algorithm, cv_ximgproc_DisparityWLSFilter_to_Algorithm }
+	opencv_type_boxed! { EdgeAwareInterpolator }
 
-	boxed_cast_base! { DisparityWLSFilter, crate::ximgproc::DisparityFilter, cv_ximgproc_DisparityWLSFilter_to_DisparityFilter }
-
-	impl std::fmt::Debug for DisparityWLSFilter {
+	impl Drop for EdgeAwareInterpolator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("DisparityWLSFilter")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_ximgproc_EdgeAwareInterpolator_delete(self.as_raw_mut_EdgeAwareInterpolator()) };
 		}
 	}
+
+	unsafe impl Send for EdgeAwareInterpolator {}
 
 	/// Constant methods for [crate::ximgproc::EdgeAwareInterpolator]
 	pub trait EdgeAwareInterpolatorTraitConst: crate::ximgproc::SparseMatchInterpolatorTraitConst {
@@ -4613,22 +4618,17 @@ pub mod ximgproc {
 
 	}
 
-	/// Sparse match interpolation algorithm based on modified locally-weighted affine
-	/// estimator from [Revaud2015](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Revaud2015) and Fast Global Smoother as post-processing filter.
-	pub struct EdgeAwareInterpolator {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { EdgeAwareInterpolator }
-
-	impl Drop for EdgeAwareInterpolator {
+	impl std::fmt::Debug for EdgeAwareInterpolator {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ximgproc_EdgeAwareInterpolator_delete(self.as_raw_mut_EdgeAwareInterpolator()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("EdgeAwareInterpolator")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for EdgeAwareInterpolator {}
+	boxed_cast_base! { EdgeAwareInterpolator, core::Algorithm, cv_ximgproc_EdgeAwareInterpolator_to_Algorithm }
+
+	boxed_cast_base! { EdgeAwareInterpolator, crate::ximgproc::SparseMatchInterpolator, cv_ximgproc_EdgeAwareInterpolator_to_SparseMatchInterpolator }
 
 	impl core::AlgorithmTraitConst for EdgeAwareInterpolator {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -4660,20 +4660,21 @@ pub mod ximgproc {
 
 	boxed_ref! { EdgeAwareInterpolator, crate::ximgproc::EdgeAwareInterpolatorTraitConst, as_raw_EdgeAwareInterpolator, crate::ximgproc::EdgeAwareInterpolatorTrait, as_raw_mut_EdgeAwareInterpolator }
 
-	impl EdgeAwareInterpolator {
+	/// Class implementing EdgeBoxes algorithm from [ZitnickECCV14edgeBoxes](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_ZitnickECCV14edgeBoxes) :
+	pub struct EdgeBoxes {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { EdgeAwareInterpolator, core::Algorithm, cv_ximgproc_EdgeAwareInterpolator_to_Algorithm }
+	opencv_type_boxed! { EdgeBoxes }
 
-	boxed_cast_base! { EdgeAwareInterpolator, crate::ximgproc::SparseMatchInterpolator, cv_ximgproc_EdgeAwareInterpolator_to_SparseMatchInterpolator }
-
-	impl std::fmt::Debug for EdgeAwareInterpolator {
+	impl Drop for EdgeBoxes {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("EdgeAwareInterpolator")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_ximgproc_EdgeBoxes_delete(self.as_raw_mut_EdgeBoxes()) };
 		}
 	}
+
+	unsafe impl Send for EdgeBoxes {}
 
 	/// Constant methods for [crate::ximgproc::EdgeBoxes]
 	pub trait EdgeBoxesTraitConst: core::AlgorithmTraitConst {
@@ -4971,21 +4972,15 @@ pub mod ximgproc {
 
 	}
 
-	/// Class implementing EdgeBoxes algorithm from [ZitnickECCV14edgeBoxes](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_ZitnickECCV14edgeBoxes) :
-	pub struct EdgeBoxes {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { EdgeBoxes }
-
-	impl Drop for EdgeBoxes {
+	impl std::fmt::Debug for EdgeBoxes {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ximgproc_EdgeBoxes_delete(self.as_raw_mut_EdgeBoxes()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("EdgeBoxes")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for EdgeBoxes {}
+	boxed_cast_base! { EdgeBoxes, core::Algorithm, cv_ximgproc_EdgeBoxes_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for EdgeBoxes {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -5007,18 +5002,21 @@ pub mod ximgproc {
 
 	boxed_ref! { EdgeBoxes, crate::ximgproc::EdgeBoxesTraitConst, as_raw_EdgeBoxes, crate::ximgproc::EdgeBoxesTrait, as_raw_mut_EdgeBoxes }
 
-	impl EdgeBoxes {
+	/// Class implementing the ED (EdgeDrawing) [topal2012edge](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_topal2012edge), EDLines [akinlar2011edlines](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_akinlar2011edlines), EDPF [akinlar2012edpf](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_akinlar2012edpf) and EDCircles [akinlar2013edcircles](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_akinlar2013edcircles) algorithms
+	pub struct EdgeDrawing {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { EdgeBoxes, core::Algorithm, cv_ximgproc_EdgeBoxes_to_Algorithm }
+	opencv_type_boxed! { EdgeDrawing }
 
-	impl std::fmt::Debug for EdgeBoxes {
+	impl Drop for EdgeDrawing {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("EdgeBoxes")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_ximgproc_EdgeDrawing_delete(self.as_raw_mut_EdgeDrawing()) };
 		}
 	}
+
+	unsafe impl Send for EdgeDrawing {}
 
 	/// Constant methods for [crate::ximgproc::EdgeDrawing]
 	pub trait EdgeDrawingTraitConst: core::AlgorithmTraitConst {
@@ -5156,21 +5154,16 @@ pub mod ximgproc {
 
 	}
 
-	/// Class implementing the ED (EdgeDrawing) [topal2012edge](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_topal2012edge), EDLines [akinlar2011edlines](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_akinlar2011edlines), EDPF [akinlar2012edpf](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_akinlar2012edpf) and EDCircles [akinlar2013edcircles](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_akinlar2013edcircles) algorithms
-	pub struct EdgeDrawing {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { EdgeDrawing }
-
-	impl Drop for EdgeDrawing {
+	impl std::fmt::Debug for EdgeDrawing {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ximgproc_EdgeDrawing_delete(self.as_raw_mut_EdgeDrawing()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("EdgeDrawing")
+				.field("params", &crate::ximgproc::EdgeDrawingTraitConst::params(self))
+				.finish()
 		}
 	}
 
-	unsafe impl Send for EdgeDrawing {}
+	boxed_cast_base! { EdgeDrawing, core::Algorithm, cv_ximgproc_EdgeDrawing_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for EdgeDrawing {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -5191,20 +5184,6 @@ pub mod ximgproc {
 	}
 
 	boxed_ref! { EdgeDrawing, crate::ximgproc::EdgeDrawingTraitConst, as_raw_EdgeDrawing, crate::ximgproc::EdgeDrawingTrait, as_raw_mut_EdgeDrawing }
-
-	impl EdgeDrawing {
-	}
-
-	boxed_cast_base! { EdgeDrawing, core::Algorithm, cv_ximgproc_EdgeDrawing_to_Algorithm }
-
-	impl std::fmt::Debug for EdgeDrawing {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("EdgeDrawing")
-				.field("params", &crate::ximgproc::EdgeDrawingTraitConst::params(self))
-				.finish()
-		}
-	}
 
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq)]
@@ -5273,6 +5252,24 @@ pub mod ximgproc {
 
 	}
 
+	/// Interface for implementations of Fast Bilateral Solver.
+	///
+	/// For more details about this solver see [BarronPoole2016](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_BarronPoole2016) .
+	pub struct FastBilateralSolverFilter {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { FastBilateralSolverFilter }
+
+	impl Drop for FastBilateralSolverFilter {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_ximgproc_FastBilateralSolverFilter_delete(self.as_raw_mut_FastBilateralSolverFilter()) };
+		}
+	}
+
+	unsafe impl Send for FastBilateralSolverFilter {}
+
 	/// Constant methods for [crate::ximgproc::FastBilateralSolverFilter]
 	pub trait FastBilateralSolverFilterTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_FastBilateralSolverFilter(&self) -> *const c_void;
@@ -5308,23 +5305,15 @@ pub mod ximgproc {
 
 	}
 
-	/// Interface for implementations of Fast Bilateral Solver.
-	///
-	/// For more details about this solver see [BarronPoole2016](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_BarronPoole2016) .
-	pub struct FastBilateralSolverFilter {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { FastBilateralSolverFilter }
-
-	impl Drop for FastBilateralSolverFilter {
+	impl std::fmt::Debug for FastBilateralSolverFilter {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ximgproc_FastBilateralSolverFilter_delete(self.as_raw_mut_FastBilateralSolverFilter()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FastBilateralSolverFilter")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for FastBilateralSolverFilter {}
+	boxed_cast_base! { FastBilateralSolverFilter, core::Algorithm, cv_ximgproc_FastBilateralSolverFilter_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for FastBilateralSolverFilter {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -5346,18 +5335,23 @@ pub mod ximgproc {
 
 	boxed_ref! { FastBilateralSolverFilter, crate::ximgproc::FastBilateralSolverFilterTraitConst, as_raw_FastBilateralSolverFilter, crate::ximgproc::FastBilateralSolverFilterTrait, as_raw_mut_FastBilateralSolverFilter }
 
-	impl FastBilateralSolverFilter {
+	/// Interface for implementations of Fast Global Smoother filter.
+	///
+	/// For more details about this filter see [Min2014](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Min2014) and [Farbman2008](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Farbman2008) .
+	pub struct FastGlobalSmootherFilter {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { FastBilateralSolverFilter, core::Algorithm, cv_ximgproc_FastBilateralSolverFilter_to_Algorithm }
+	opencv_type_boxed! { FastGlobalSmootherFilter }
 
-	impl std::fmt::Debug for FastBilateralSolverFilter {
+	impl Drop for FastGlobalSmootherFilter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("FastBilateralSolverFilter")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_ximgproc_FastGlobalSmootherFilter_delete(self.as_raw_mut_FastGlobalSmootherFilter()) };
 		}
 	}
+
+	unsafe impl Send for FastGlobalSmootherFilter {}
 
 	/// Constant methods for [crate::ximgproc::FastGlobalSmootherFilter]
 	pub trait FastGlobalSmootherFilterTraitConst: core::AlgorithmTraitConst {
@@ -5388,23 +5382,15 @@ pub mod ximgproc {
 
 	}
 
-	/// Interface for implementations of Fast Global Smoother filter.
-	///
-	/// For more details about this filter see [Min2014](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Min2014) and [Farbman2008](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Farbman2008) .
-	pub struct FastGlobalSmootherFilter {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { FastGlobalSmootherFilter }
-
-	impl Drop for FastGlobalSmootherFilter {
+	impl std::fmt::Debug for FastGlobalSmootherFilter {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ximgproc_FastGlobalSmootherFilter_delete(self.as_raw_mut_FastGlobalSmootherFilter()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FastGlobalSmootherFilter")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for FastGlobalSmootherFilter {}
+	boxed_cast_base! { FastGlobalSmootherFilter, core::Algorithm, cv_ximgproc_FastGlobalSmootherFilter_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for FastGlobalSmootherFilter {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -5426,18 +5412,21 @@ pub mod ximgproc {
 
 	boxed_ref! { FastGlobalSmootherFilter, crate::ximgproc::FastGlobalSmootherFilterTraitConst, as_raw_FastGlobalSmootherFilter, crate::ximgproc::FastGlobalSmootherFilterTrait, as_raw_mut_FastGlobalSmootherFilter }
 
-	impl FastGlobalSmootherFilter {
+	/// @include samples/fld_lines.cpp
+	pub struct FastLineDetector {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { FastGlobalSmootherFilter, core::Algorithm, cv_ximgproc_FastGlobalSmootherFilter_to_Algorithm }
+	opencv_type_boxed! { FastLineDetector }
 
-	impl std::fmt::Debug for FastGlobalSmootherFilter {
+	impl Drop for FastLineDetector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("FastGlobalSmootherFilter")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_ximgproc_FastLineDetector_delete(self.as_raw_mut_FastLineDetector()) };
 		}
 	}
+
+	unsafe impl Send for FastLineDetector {}
 
 	/// Constant methods for [crate::ximgproc::FastLineDetector]
 	pub trait FastLineDetectorTraitConst: core::AlgorithmTraitConst {
@@ -5528,21 +5517,15 @@ pub mod ximgproc {
 
 	}
 
-	/// @include samples/fld_lines.cpp
-	pub struct FastLineDetector {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { FastLineDetector }
-
-	impl Drop for FastLineDetector {
+	impl std::fmt::Debug for FastLineDetector {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ximgproc_FastLineDetector_delete(self.as_raw_mut_FastLineDetector()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FastLineDetector")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for FastLineDetector {}
+	boxed_cast_base! { FastLineDetector, core::Algorithm, cv_ximgproc_FastLineDetector_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for FastLineDetector {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -5564,18 +5547,23 @@ pub mod ximgproc {
 
 	boxed_ref! { FastLineDetector, crate::ximgproc::FastLineDetectorTraitConst, as_raw_FastLineDetector, crate::ximgproc::FastLineDetectorTrait, as_raw_mut_FastLineDetector }
 
-	impl FastLineDetector {
+	/// Interface for realizations of (Fast) Guided Filter.
+	///
+	/// For more details about this filter see [Kaiming10](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Kaiming10) [Kaiming15](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Kaiming15) .
+	pub struct GuidedFilter {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { FastLineDetector, core::Algorithm, cv_ximgproc_FastLineDetector_to_Algorithm }
+	opencv_type_boxed! { GuidedFilter }
 
-	impl std::fmt::Debug for FastLineDetector {
+	impl Drop for GuidedFilter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("FastLineDetector")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_ximgproc_GuidedFilter_delete(self.as_raw_mut_GuidedFilter()) };
 		}
 	}
+
+	unsafe impl Send for GuidedFilter {}
 
 	/// Constant methods for [crate::ximgproc::GuidedFilter]
 	pub trait GuidedFilterTraitConst: core::AlgorithmTraitConst {
@@ -5636,23 +5624,15 @@ pub mod ximgproc {
 
 	}
 
-	/// Interface for realizations of (Fast) Guided Filter.
-	///
-	/// For more details about this filter see [Kaiming10](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Kaiming10) [Kaiming15](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Kaiming15) .
-	pub struct GuidedFilter {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GuidedFilter }
-
-	impl Drop for GuidedFilter {
+	impl std::fmt::Debug for GuidedFilter {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ximgproc_GuidedFilter_delete(self.as_raw_mut_GuidedFilter()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GuidedFilter")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for GuidedFilter {}
+	boxed_cast_base! { GuidedFilter, core::Algorithm, cv_ximgproc_GuidedFilter_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for GuidedFilter {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -5674,18 +5654,22 @@ pub mod ximgproc {
 
 	boxed_ref! { GuidedFilter, crate::ximgproc::GuidedFilterTraitConst, as_raw_GuidedFilter, crate::ximgproc::GuidedFilterTrait, as_raw_mut_GuidedFilter }
 
-	impl GuidedFilter {
+	/// !
+	/// Helper class for training part of [P. Dollar and C. L. Zitnick. Structured Forests for Fast Edge Detection, 2013].
+	pub struct RFFeatureGetter {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { GuidedFilter, core::Algorithm, cv_ximgproc_GuidedFilter_to_Algorithm }
+	opencv_type_boxed! { RFFeatureGetter }
 
-	impl std::fmt::Debug for GuidedFilter {
+	impl Drop for RFFeatureGetter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("GuidedFilter")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_ximgproc_RFFeatureGetter_delete(self.as_raw_mut_RFFeatureGetter()) };
 		}
 	}
+
+	unsafe impl Send for RFFeatureGetter {}
 
 	/// Constant methods for [crate::ximgproc::RFFeatureGetter]
 	pub trait RFFeatureGetterTraitConst: core::AlgorithmTraitConst {
@@ -5721,22 +5705,15 @@ pub mod ximgproc {
 
 	}
 
-	/// !
-	/// Helper class for training part of [P. Dollar and C. L. Zitnick. Structured Forests for Fast Edge Detection, 2013].
-	pub struct RFFeatureGetter {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { RFFeatureGetter }
-
-	impl Drop for RFFeatureGetter {
+	impl std::fmt::Debug for RFFeatureGetter {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ximgproc_RFFeatureGetter_delete(self.as_raw_mut_RFFeatureGetter()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("RFFeatureGetter")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for RFFeatureGetter {}
+	boxed_cast_base! { RFFeatureGetter, core::Algorithm, cv_ximgproc_RFFeatureGetter_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for RFFeatureGetter {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -5758,18 +5735,25 @@ pub mod ximgproc {
 
 	boxed_ref! { RFFeatureGetter, crate::ximgproc::RFFeatureGetterTraitConst, as_raw_RFFeatureGetter, crate::ximgproc::RFFeatureGetterTrait, as_raw_mut_RFFeatureGetter }
 
-	impl RFFeatureGetter {
+	/// Sparse match interpolation algorithm based on modified piecewise locally-weighted affine
+	/// estimator called Robust Interpolation method of Correspondences or RIC from [Hu2017](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Hu2017) and Variational
+	/// and Fast Global Smoother as post-processing filter. The RICInterpolator is a extension of the EdgeAwareInterpolator.
+	/// Main concept of this extension is an piece-wise affine model based on over-segmentation via SLIC superpixel estimation.
+	/// The method contains an efficient propagation mechanism to estimate among the pieces-wise models.
+	pub struct RICInterpolator {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { RFFeatureGetter, core::Algorithm, cv_ximgproc_RFFeatureGetter_to_Algorithm }
+	opencv_type_boxed! { RICInterpolator }
 
-	impl std::fmt::Debug for RFFeatureGetter {
+	impl Drop for RICInterpolator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("RFFeatureGetter")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_ximgproc_RICInterpolator_delete(self.as_raw_mut_RICInterpolator()) };
 		}
 	}
+
+	unsafe impl Send for RICInterpolator {}
 
 	/// Constant methods for [crate::ximgproc::RICInterpolator]
 	pub trait RICInterpolatorTraitConst: crate::ximgproc::SparseMatchInterpolatorTraitConst {
@@ -6344,25 +6328,17 @@ pub mod ximgproc {
 
 	}
 
-	/// Sparse match interpolation algorithm based on modified piecewise locally-weighted affine
-	/// estimator called Robust Interpolation method of Correspondences or RIC from [Hu2017](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Hu2017) and Variational
-	/// and Fast Global Smoother as post-processing filter. The RICInterpolator is a extension of the EdgeAwareInterpolator.
-	/// Main concept of this extension is an piece-wise affine model based on over-segmentation via SLIC superpixel estimation.
-	/// The method contains an efficient propagation mechanism to estimate among the pieces-wise models.
-	pub struct RICInterpolator {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { RICInterpolator }
-
-	impl Drop for RICInterpolator {
+	impl std::fmt::Debug for RICInterpolator {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ximgproc_RICInterpolator_delete(self.as_raw_mut_RICInterpolator()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("RICInterpolator")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for RICInterpolator {}
+	boxed_cast_base! { RICInterpolator, core::Algorithm, cv_ximgproc_RICInterpolator_to_Algorithm }
+
+	boxed_cast_base! { RICInterpolator, crate::ximgproc::SparseMatchInterpolator, cv_ximgproc_RICInterpolator_to_SparseMatchInterpolator }
 
 	impl core::AlgorithmTraitConst for RICInterpolator {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -6394,48 +6370,6 @@ pub mod ximgproc {
 
 	boxed_ref! { RICInterpolator, crate::ximgproc::RICInterpolatorTraitConst, as_raw_RICInterpolator, crate::ximgproc::RICInterpolatorTrait, as_raw_mut_RICInterpolator }
 
-	impl RICInterpolator {
-	}
-
-	boxed_cast_base! { RICInterpolator, core::Algorithm, cv_ximgproc_RICInterpolator_to_Algorithm }
-
-	boxed_cast_base! { RICInterpolator, crate::ximgproc::SparseMatchInterpolator, cv_ximgproc_RICInterpolator_to_SparseMatchInterpolator }
-
-	impl std::fmt::Debug for RICInterpolator {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("RICInterpolator")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::ximgproc::RidgeDetectionFilter]
-	pub trait RidgeDetectionFilterTraitConst: core::AlgorithmTraitConst {
-		fn as_raw_RidgeDetectionFilter(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::ximgproc::RidgeDetectionFilter]
-	pub trait RidgeDetectionFilterTrait: core::AlgorithmTrait + crate::ximgproc::RidgeDetectionFilterTraitConst {
-		fn as_raw_mut_RidgeDetectionFilter(&mut self) -> *mut c_void;
-
-		/// Apply Ridge detection filter on input image.
-		/// ## Parameters
-		/// * _img: InputArray as supported by Sobel. img can be 1-Channel or 3-Channels.
-		/// * out: OutputAray of structure as RidgeDetectionFilter::ddepth. Output image with ridges.
-		#[inline]
-		fn get_ridge_filtered_image(&mut self, _img: &impl ToInputArray, out: &mut impl ToOutputArray) -> Result<()> {
-			input_array_arg!(_img);
-			output_array_arg!(out);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ximgproc_RidgeDetectionFilter_getRidgeFilteredImage_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_RidgeDetectionFilter(), _img.as_raw__InputArray(), out.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
-
 	/// Applies Ridge Detection Filter to an input image.
 	/// Implements Ridge detection similar to the one in [Mathematica](http://reference.wolfram.com/language/ref/RidgeFilter.html)
 	/// using the eigen values from the Hessian Matrix of the input image using Sobel Derivatives.
@@ -6454,26 +6388,6 @@ pub mod ximgproc {
 	}
 
 	unsafe impl Send for RidgeDetectionFilter {}
-
-	impl core::AlgorithmTraitConst for RidgeDetectionFilter {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::AlgorithmTrait for RidgeDetectionFilter {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { RidgeDetectionFilter, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-
-	impl crate::ximgproc::RidgeDetectionFilterTraitConst for RidgeDetectionFilter {
-		#[inline] fn as_raw_RidgeDetectionFilter(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::ximgproc::RidgeDetectionFilterTrait for RidgeDetectionFilter {
-		#[inline] fn as_raw_mut_RidgeDetectionFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { RidgeDetectionFilter, crate::ximgproc::RidgeDetectionFilterTraitConst, as_raw_RidgeDetectionFilter, crate::ximgproc::RidgeDetectionFilterTrait, as_raw_mut_RidgeDetectionFilter }
 
 	impl RidgeDetectionFilter {
 		/// Create pointer to the Ridge detection filter.
@@ -6543,7 +6457,32 @@ pub mod ximgproc {
 
 	}
 
-	boxed_cast_base! { RidgeDetectionFilter, core::Algorithm, cv_ximgproc_RidgeDetectionFilter_to_Algorithm }
+	/// Constant methods for [crate::ximgproc::RidgeDetectionFilter]
+	pub trait RidgeDetectionFilterTraitConst: core::AlgorithmTraitConst {
+		fn as_raw_RidgeDetectionFilter(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::ximgproc::RidgeDetectionFilter]
+	pub trait RidgeDetectionFilterTrait: core::AlgorithmTrait + crate::ximgproc::RidgeDetectionFilterTraitConst {
+		fn as_raw_mut_RidgeDetectionFilter(&mut self) -> *mut c_void;
+
+		/// Apply Ridge detection filter on input image.
+		/// ## Parameters
+		/// * _img: InputArray as supported by Sobel. img can be 1-Channel or 3-Channels.
+		/// * out: OutputAray of structure as RidgeDetectionFilter::ddepth. Output image with ridges.
+		#[inline]
+		fn get_ridge_filtered_image(&mut self, _img: &impl ToInputArray, out: &mut impl ToOutputArray) -> Result<()> {
+			input_array_arg!(_img);
+			output_array_arg!(out);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ximgproc_RidgeDetectionFilter_getRidgeFilteredImage_const__InputArrayR_const__OutputArrayR(self.as_raw_mut_RidgeDetectionFilter(), _img.as_raw__InputArray(), out.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
 
 	impl std::fmt::Debug for RidgeDetectionFilter {
 		#[inline]
@@ -6552,6 +6491,51 @@ pub mod ximgproc {
 				.finish()
 		}
 	}
+
+	boxed_cast_base! { RidgeDetectionFilter, core::Algorithm, cv_ximgproc_RidgeDetectionFilter_to_Algorithm }
+
+	impl core::AlgorithmTraitConst for RidgeDetectionFilter {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::AlgorithmTrait for RidgeDetectionFilter {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { RidgeDetectionFilter, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+
+	impl crate::ximgproc::RidgeDetectionFilterTraitConst for RidgeDetectionFilter {
+		#[inline] fn as_raw_RidgeDetectionFilter(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::ximgproc::RidgeDetectionFilterTrait for RidgeDetectionFilter {
+		#[inline] fn as_raw_mut_RidgeDetectionFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { RidgeDetectionFilter, crate::ximgproc::RidgeDetectionFilterTraitConst, as_raw_RidgeDetectionFilter, crate::ximgproc::RidgeDetectionFilterTrait, as_raw_mut_RidgeDetectionFilter }
+
+	/// Class implementing the F-DBSCAN (Accelerated superpixel image segmentation with a parallelized DBSCAN algorithm) superpixels
+	/// algorithm by Loke SC, et al. [loke2021accelerated](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_loke2021accelerated) for original paper.
+	///
+	/// The algorithm uses a parallelised DBSCAN cluster search that is resistant to noise, competitive in segmentation quality, and faster than
+	/// existing superpixel segmentation methods. When tested on the Berkeley Segmentation Dataset, the average processing speed is 175 frames/s
+	/// with a Boundary Recall of 0.797 and an Achievable Segmentation Accuracy of 0.944. The computational complexity is quadratic O(n2) and
+	/// more suited to smaller images, but can still process a 2MP colour image faster than the SEEDS algorithm in OpenCV. The output is deterministic
+	/// when the number of processing threads is fixed, and requires the source image to be in Lab colour format.
+	pub struct ScanSegment {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { ScanSegment }
+
+	impl Drop for ScanSegment {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_ximgproc_ScanSegment_delete(self.as_raw_mut_ScanSegment()) };
+		}
+	}
+
+	unsafe impl Send for ScanSegment {}
 
 	/// Constant methods for [crate::ximgproc::ScanSegment]
 	pub trait ScanSegmentTraitConst: core::AlgorithmTraitConst {
@@ -6654,28 +6638,15 @@ pub mod ximgproc {
 
 	}
 
-	/// Class implementing the F-DBSCAN (Accelerated superpixel image segmentation with a parallelized DBSCAN algorithm) superpixels
-	/// algorithm by Loke SC, et al. [loke2021accelerated](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_loke2021accelerated) for original paper.
-	///
-	/// The algorithm uses a parallelised DBSCAN cluster search that is resistant to noise, competitive in segmentation quality, and faster than
-	/// existing superpixel segmentation methods. When tested on the Berkeley Segmentation Dataset, the average processing speed is 175 frames/s
-	/// with a Boundary Recall of 0.797 and an Achievable Segmentation Accuracy of 0.944. The computational complexity is quadratic O(n2) and
-	/// more suited to smaller images, but can still process a 2MP colour image faster than the SEEDS algorithm in OpenCV. The output is deterministic
-	/// when the number of processing threads is fixed, and requires the source image to be in Lab colour format.
-	pub struct ScanSegment {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { ScanSegment }
-
-	impl Drop for ScanSegment {
+	impl std::fmt::Debug for ScanSegment {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ximgproc_ScanSegment_delete(self.as_raw_mut_ScanSegment()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ScanSegment")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for ScanSegment {}
+	boxed_cast_base! { ScanSegment, core::Algorithm, cv_ximgproc_ScanSegment_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for ScanSegment {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -6697,18 +6668,22 @@ pub mod ximgproc {
 
 	boxed_ref! { ScanSegment, crate::ximgproc::ScanSegmentTraitConst, as_raw_ScanSegment, crate::ximgproc::ScanSegmentTrait, as_raw_mut_ScanSegment }
 
-	impl ScanSegment {
+	/// Main interface for all filters, that take sparse matches as an
+	/// input and produce a dense per-pixel matching (optical flow) as an output.
+	pub struct SparseMatchInterpolator {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { ScanSegment, core::Algorithm, cv_ximgproc_ScanSegment_to_Algorithm }
+	opencv_type_boxed! { SparseMatchInterpolator }
 
-	impl std::fmt::Debug for ScanSegment {
+	impl Drop for SparseMatchInterpolator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("ScanSegment")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_ximgproc_SparseMatchInterpolator_delete(self.as_raw_mut_SparseMatchInterpolator()) };
 		}
 	}
+
+	unsafe impl Send for SparseMatchInterpolator {}
 
 	/// Constant methods for [crate::ximgproc::SparseMatchInterpolator]
 	pub trait SparseMatchInterpolatorTraitConst: core::AlgorithmTraitConst {
@@ -6750,22 +6725,19 @@ pub mod ximgproc {
 
 	}
 
-	/// Main interface for all filters, that take sparse matches as an
-	/// input and produce a dense per-pixel matching (optical flow) as an output.
-	pub struct SparseMatchInterpolator {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { SparseMatchInterpolator }
-
-	impl Drop for SparseMatchInterpolator {
+	impl std::fmt::Debug for SparseMatchInterpolator {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ximgproc_SparseMatchInterpolator_delete(self.as_raw_mut_SparseMatchInterpolator()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SparseMatchInterpolator")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for SparseMatchInterpolator {}
+	boxed_cast_base! { SparseMatchInterpolator, core::Algorithm, cv_ximgproc_SparseMatchInterpolator_to_Algorithm }
+
+	boxed_cast_descendant! { SparseMatchInterpolator, crate::ximgproc::EdgeAwareInterpolator, cv_ximgproc_SparseMatchInterpolator_to_EdgeAwareInterpolator }
+
+	boxed_cast_descendant! { SparseMatchInterpolator, crate::ximgproc::RICInterpolator, cv_ximgproc_SparseMatchInterpolator_to_RICInterpolator }
 
 	impl core::AlgorithmTraitConst for SparseMatchInterpolator {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -6787,22 +6759,21 @@ pub mod ximgproc {
 
 	boxed_ref! { SparseMatchInterpolator, crate::ximgproc::SparseMatchInterpolatorTraitConst, as_raw_SparseMatchInterpolator, crate::ximgproc::SparseMatchInterpolatorTrait, as_raw_mut_SparseMatchInterpolator }
 
-	impl SparseMatchInterpolator {
+	/// Class implementing edge detection algorithm from [Dollar2013](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Dollar2013) :
+	pub struct StructuredEdgeDetection {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { SparseMatchInterpolator, crate::ximgproc::EdgeAwareInterpolator, cv_ximgproc_SparseMatchInterpolator_to_EdgeAwareInterpolator }
+	opencv_type_boxed! { StructuredEdgeDetection }
 
-	boxed_cast_descendant! { SparseMatchInterpolator, crate::ximgproc::RICInterpolator, cv_ximgproc_SparseMatchInterpolator_to_RICInterpolator }
-
-	boxed_cast_base! { SparseMatchInterpolator, core::Algorithm, cv_ximgproc_SparseMatchInterpolator_to_Algorithm }
-
-	impl std::fmt::Debug for SparseMatchInterpolator {
+	impl Drop for StructuredEdgeDetection {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("SparseMatchInterpolator")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_ximgproc_StructuredEdgeDetection_delete(self.as_raw_mut_StructuredEdgeDetection()) };
 		}
 	}
+
+	unsafe impl Send for StructuredEdgeDetection {}
 
 	/// Constant methods for [crate::ximgproc::StructuredEdgeDetection]
 	pub trait StructuredEdgeDetectionTraitConst: core::AlgorithmTraitConst {
@@ -6909,21 +6880,15 @@ pub mod ximgproc {
 
 	}
 
-	/// Class implementing edge detection algorithm from [Dollar2013](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Dollar2013) :
-	pub struct StructuredEdgeDetection {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { StructuredEdgeDetection }
-
-	impl Drop for StructuredEdgeDetection {
+	impl std::fmt::Debug for StructuredEdgeDetection {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ximgproc_StructuredEdgeDetection_delete(self.as_raw_mut_StructuredEdgeDetection()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("StructuredEdgeDetection")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for StructuredEdgeDetection {}
+	boxed_cast_base! { StructuredEdgeDetection, core::Algorithm, cv_ximgproc_StructuredEdgeDetection_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for StructuredEdgeDetection {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -6945,18 +6910,28 @@ pub mod ximgproc {
 
 	boxed_ref! { StructuredEdgeDetection, crate::ximgproc::StructuredEdgeDetectionTraitConst, as_raw_StructuredEdgeDetection, crate::ximgproc::StructuredEdgeDetectionTrait, as_raw_mut_StructuredEdgeDetection }
 
-	impl StructuredEdgeDetection {
+	/// Class implementing the LSC (Linear Spectral Clustering) superpixels
+	/// algorithm described in [LiCVPR2015LSC](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_LiCVPR2015LSC).
+	///
+	/// LSC (Linear Spectral Clustering) produces compact and uniform superpixels with low
+	/// computational costs. Basically, a normalized cuts formulation of the superpixel
+	/// segmentation is adopted based on a similarity metric that measures the color
+	/// similarity and space proximity between image pixels. LSC is of linear computational
+	/// complexity and high memory efficiency and is able to preserve global properties of images
+	pub struct SuperpixelLSC {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { StructuredEdgeDetection, core::Algorithm, cv_ximgproc_StructuredEdgeDetection_to_Algorithm }
+	opencv_type_boxed! { SuperpixelLSC }
 
-	impl std::fmt::Debug for StructuredEdgeDetection {
+	impl Drop for SuperpixelLSC {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("StructuredEdgeDetection")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_ximgproc_SuperpixelLSC_delete(self.as_raw_mut_SuperpixelLSC()) };
 		}
 	}
+
+	unsafe impl Send for SuperpixelLSC {}
 
 	/// Constant methods for [crate::ximgproc::SuperpixelLSC]
 	pub trait SuperpixelLSCTraitConst: core::AlgorithmTraitConst {
@@ -7142,28 +7117,15 @@ pub mod ximgproc {
 
 	}
 
-	/// Class implementing the LSC (Linear Spectral Clustering) superpixels
-	/// algorithm described in [LiCVPR2015LSC](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_LiCVPR2015LSC).
-	///
-	/// LSC (Linear Spectral Clustering) produces compact and uniform superpixels with low
-	/// computational costs. Basically, a normalized cuts formulation of the superpixel
-	/// segmentation is adopted based on a similarity metric that measures the color
-	/// similarity and space proximity between image pixels. LSC is of linear computational
-	/// complexity and high memory efficiency and is able to preserve global properties of images
-	pub struct SuperpixelLSC {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { SuperpixelLSC }
-
-	impl Drop for SuperpixelLSC {
+	impl std::fmt::Debug for SuperpixelLSC {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ximgproc_SuperpixelLSC_delete(self.as_raw_mut_SuperpixelLSC()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SuperpixelLSC")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for SuperpixelLSC {}
+	boxed_cast_base! { SuperpixelLSC, core::Algorithm, cv_ximgproc_SuperpixelLSC_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for SuperpixelLSC {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -7185,18 +7147,29 @@ pub mod ximgproc {
 
 	boxed_ref! { SuperpixelLSC, crate::ximgproc::SuperpixelLSCTraitConst, as_raw_SuperpixelLSC, crate::ximgproc::SuperpixelLSCTrait, as_raw_mut_SuperpixelLSC }
 
-	impl SuperpixelLSC {
+	/// Class implementing the SEEDS (Superpixels Extracted via Energy-Driven Sampling) superpixels
+	/// algorithm described in [VBRV14](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_VBRV14) .
+	///
+	/// The algorithm uses an efficient hill-climbing algorithm to optimize the superpixels' energy
+	/// function that is based on color histograms and a boundary term, which is optional. The energy
+	/// function encourages superpixels to be of the same color, and if the boundary term is activated, the
+	/// superpixels have smooth boundaries and are of similar shape. In practice it starts from a regular
+	/// grid of superpixels and moves the pixels or blocks of pixels at the boundaries to refine the
+	/// solution. The algorithm runs in real-time using a single CPU.
+	pub struct SuperpixelSEEDS {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { SuperpixelLSC, core::Algorithm, cv_ximgproc_SuperpixelLSC_to_Algorithm }
+	opencv_type_boxed! { SuperpixelSEEDS }
 
-	impl std::fmt::Debug for SuperpixelLSC {
+	impl Drop for SuperpixelSEEDS {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("SuperpixelLSC")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_ximgproc_SuperpixelSEEDS_delete(self.as_raw_mut_SuperpixelSEEDS()) };
 		}
 	}
+
+	unsafe impl Send for SuperpixelSEEDS {}
 
 	/// Constant methods for [crate::ximgproc::SuperpixelSEEDS]
 	pub trait SuperpixelSEEDSTraitConst: core::AlgorithmTraitConst {
@@ -7395,29 +7368,15 @@ pub mod ximgproc {
 
 	}
 
-	/// Class implementing the SEEDS (Superpixels Extracted via Energy-Driven Sampling) superpixels
-	/// algorithm described in [VBRV14](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_VBRV14) .
-	///
-	/// The algorithm uses an efficient hill-climbing algorithm to optimize the superpixels' energy
-	/// function that is based on color histograms and a boundary term, which is optional. The energy
-	/// function encourages superpixels to be of the same color, and if the boundary term is activated, the
-	/// superpixels have smooth boundaries and are of similar shape. In practice it starts from a regular
-	/// grid of superpixels and moves the pixels or blocks of pixels at the boundaries to refine the
-	/// solution. The algorithm runs in real-time using a single CPU.
-	pub struct SuperpixelSEEDS {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { SuperpixelSEEDS }
-
-	impl Drop for SuperpixelSEEDS {
+	impl std::fmt::Debug for SuperpixelSEEDS {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ximgproc_SuperpixelSEEDS_delete(self.as_raw_mut_SuperpixelSEEDS()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SuperpixelSEEDS")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for SuperpixelSEEDS {}
+	boxed_cast_base! { SuperpixelSEEDS, core::Algorithm, cv_ximgproc_SuperpixelSEEDS_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for SuperpixelSEEDS {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -7439,18 +7398,30 @@ pub mod ximgproc {
 
 	boxed_ref! { SuperpixelSEEDS, crate::ximgproc::SuperpixelSEEDSTraitConst, as_raw_SuperpixelSEEDS, crate::ximgproc::SuperpixelSEEDSTrait, as_raw_mut_SuperpixelSEEDS }
 
-	impl SuperpixelSEEDS {
+	/// Class implementing the SLIC (Simple Linear Iterative Clustering) superpixels
+	/// algorithm described in [Achanta2012](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Achanta2012).
+	///
+	/// SLIC (Simple Linear Iterative Clustering) clusters pixels using pixel channels and image plane space
+	/// to efficiently generate compact, nearly uniform superpixels. The simplicity of approach makes it
+	/// extremely easy to use a lone parameter specifies the number of superpixels and the efficiency of
+	/// the algorithm makes it very practical.
+	/// Several optimizations are available for SLIC class:
+	/// SLICO stands for "Zero parameter SLIC" and it is an optimization of baseline SLIC described in [Achanta2012](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Achanta2012).
+	/// MSLIC stands for "Manifold SLIC" and it is an optimization of baseline SLIC described in [Liu_2017_IEEE](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Liu_2017_IEEE).
+	pub struct SuperpixelSLIC {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { SuperpixelSEEDS, core::Algorithm, cv_ximgproc_SuperpixelSEEDS_to_Algorithm }
+	opencv_type_boxed! { SuperpixelSLIC }
 
-	impl std::fmt::Debug for SuperpixelSEEDS {
+	impl Drop for SuperpixelSLIC {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("SuperpixelSEEDS")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_ximgproc_SuperpixelSLIC_delete(self.as_raw_mut_SuperpixelSLIC()) };
 		}
 	}
+
+	unsafe impl Send for SuperpixelSLIC {}
 
 	/// Constant methods for [crate::ximgproc::SuperpixelSLIC]
 	pub trait SuperpixelSLICTraitConst: core::AlgorithmTraitConst {
@@ -7636,30 +7607,15 @@ pub mod ximgproc {
 
 	}
 
-	/// Class implementing the SLIC (Simple Linear Iterative Clustering) superpixels
-	/// algorithm described in [Achanta2012](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Achanta2012).
-	///
-	/// SLIC (Simple Linear Iterative Clustering) clusters pixels using pixel channels and image plane space
-	/// to efficiently generate compact, nearly uniform superpixels. The simplicity of approach makes it
-	/// extremely easy to use a lone parameter specifies the number of superpixels and the efficiency of
-	/// the algorithm makes it very practical.
-	/// Several optimizations are available for SLIC class:
-	/// SLICO stands for "Zero parameter SLIC" and it is an optimization of baseline SLIC described in [Achanta2012](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Achanta2012).
-	/// MSLIC stands for "Manifold SLIC" and it is an optimization of baseline SLIC described in [Liu_2017_IEEE](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Liu_2017_IEEE).
-	pub struct SuperpixelSLIC {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { SuperpixelSLIC }
-
-	impl Drop for SuperpixelSLIC {
+	impl std::fmt::Debug for SuperpixelSLIC {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ximgproc_SuperpixelSLIC_delete(self.as_raw_mut_SuperpixelSLIC()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SuperpixelSLIC")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for SuperpixelSLIC {}
+	boxed_cast_base! { SuperpixelSLIC, core::Algorithm, cv_ximgproc_SuperpixelSLIC_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for SuperpixelSLIC {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -7681,18 +7637,22 @@ pub mod ximgproc {
 
 	boxed_ref! { SuperpixelSLIC, crate::ximgproc::SuperpixelSLICTraitConst, as_raw_SuperpixelSLIC, crate::ximgproc::SuperpixelSLICTrait, as_raw_mut_SuperpixelSLIC }
 
-	impl SuperpixelSLIC {
+	/// Graph Based Segmentation Algorithm.
+	/// The class implements the algorithm described in [PFF2004](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_PFF2004) .
+	pub struct GraphSegmentation {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { SuperpixelSLIC, core::Algorithm, cv_ximgproc_SuperpixelSLIC_to_Algorithm }
+	opencv_type_boxed! { GraphSegmentation }
 
-	impl std::fmt::Debug for SuperpixelSLIC {
+	impl Drop for GraphSegmentation {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("SuperpixelSLIC")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_ximgproc_segmentation_GraphSegmentation_delete(self.as_raw_mut_GraphSegmentation()) };
 		}
 	}
+
+	unsafe impl Send for GraphSegmentation {}
 
 	/// Constant methods for [crate::ximgproc::GraphSegmentation]
 	pub trait GraphSegmentationTraitConst: core::AlgorithmTraitConst {
@@ -7775,22 +7735,15 @@ pub mod ximgproc {
 
 	}
 
-	/// Graph Based Segmentation Algorithm.
-	/// The class implements the algorithm described in [PFF2004](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_PFF2004) .
-	pub struct GraphSegmentation {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GraphSegmentation }
-
-	impl Drop for GraphSegmentation {
+	impl std::fmt::Debug for GraphSegmentation {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ximgproc_segmentation_GraphSegmentation_delete(self.as_raw_mut_GraphSegmentation()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GraphSegmentation")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for GraphSegmentation {}
+	boxed_cast_base! { GraphSegmentation, core::Algorithm, cv_ximgproc_segmentation_GraphSegmentation_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for GraphSegmentation {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -7812,18 +7765,22 @@ pub mod ximgproc {
 
 	boxed_ref! { GraphSegmentation, crate::ximgproc::GraphSegmentationTraitConst, as_raw_GraphSegmentation, crate::ximgproc::GraphSegmentationTrait, as_raw_mut_GraphSegmentation }
 
-	impl GraphSegmentation {
+	/// Selective search segmentation algorithm
+	/// The class implements the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
+	pub struct SelectiveSearchSegmentation {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { GraphSegmentation, core::Algorithm, cv_ximgproc_segmentation_GraphSegmentation_to_Algorithm }
+	opencv_type_boxed! { SelectiveSearchSegmentation }
 
-	impl std::fmt::Debug for GraphSegmentation {
+	impl Drop for SelectiveSearchSegmentation {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("GraphSegmentation")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentation_delete(self.as_raw_mut_SelectiveSearchSegmentation()) };
 		}
 	}
+
+	unsafe impl Send for SelectiveSearchSegmentation {}
 
 	/// Constant methods for [crate::ximgproc::SelectiveSearchSegmentation]
 	pub trait SelectiveSearchSegmentationTraitConst: core::AlgorithmTraitConst {
@@ -8042,22 +7999,15 @@ pub mod ximgproc {
 
 	}
 
-	/// Selective search segmentation algorithm
-	/// The class implements the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
-	pub struct SelectiveSearchSegmentation {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { SelectiveSearchSegmentation }
-
-	impl Drop for SelectiveSearchSegmentation {
+	impl std::fmt::Debug for SelectiveSearchSegmentation {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentation_delete(self.as_raw_mut_SelectiveSearchSegmentation()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SelectiveSearchSegmentation")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for SelectiveSearchSegmentation {}
+	boxed_cast_base! { SelectiveSearchSegmentation, core::Algorithm, cv_ximgproc_segmentation_SelectiveSearchSegmentation_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for SelectiveSearchSegmentation {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -8079,18 +8029,22 @@ pub mod ximgproc {
 
 	boxed_ref! { SelectiveSearchSegmentation, crate::ximgproc::SelectiveSearchSegmentationTraitConst, as_raw_SelectiveSearchSegmentation, crate::ximgproc::SelectiveSearchSegmentationTrait, as_raw_mut_SelectiveSearchSegmentation }
 
-	impl SelectiveSearchSegmentation {
+	/// Strategie for the selective search segmentation algorithm
+	/// The class implements a generic stragery for the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
+	pub struct SelectiveSearchSegmentationStrategy {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { SelectiveSearchSegmentation, core::Algorithm, cv_ximgproc_segmentation_SelectiveSearchSegmentation_to_Algorithm }
+	opencv_type_boxed! { SelectiveSearchSegmentationStrategy }
 
-	impl std::fmt::Debug for SelectiveSearchSegmentation {
+	impl Drop for SelectiveSearchSegmentationStrategy {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("SelectiveSearchSegmentation")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategy_delete(self.as_raw_mut_SelectiveSearchSegmentationStrategy()) };
 		}
 	}
+
+	unsafe impl Send for SelectiveSearchSegmentationStrategy {}
 
 	/// Constant methods for [crate::ximgproc::SelectiveSearchSegmentationStrategy]
 	pub trait SelectiveSearchSegmentationStrategyTraitConst: core::AlgorithmTraitConst {
@@ -8173,22 +8127,25 @@ pub mod ximgproc {
 
 	}
 
-	/// Strategie for the selective search segmentation algorithm
-	/// The class implements a generic stragery for the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
-	pub struct SelectiveSearchSegmentationStrategy {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { SelectiveSearchSegmentationStrategy }
-
-	impl Drop for SelectiveSearchSegmentationStrategy {
+	impl std::fmt::Debug for SelectiveSearchSegmentationStrategy {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategy_delete(self.as_raw_mut_SelectiveSearchSegmentationStrategy()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SelectiveSearchSegmentationStrategy")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for SelectiveSearchSegmentationStrategy {}
+	boxed_cast_base! { SelectiveSearchSegmentationStrategy, core::Algorithm, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategy_to_Algorithm }
+
+	boxed_cast_descendant! { SelectiveSearchSegmentationStrategy, crate::ximgproc::SelectiveSearchSegmentationStrategyColor, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategy_to_SelectiveSearchSegmentationStrategyColor }
+
+	boxed_cast_descendant! { SelectiveSearchSegmentationStrategy, crate::ximgproc::SelectiveSearchSegmentationStrategyFill, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategy_to_SelectiveSearchSegmentationStrategyFill }
+
+	boxed_cast_descendant! { SelectiveSearchSegmentationStrategy, crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategy_to_SelectiveSearchSegmentationStrategyMultiple }
+
+	boxed_cast_descendant! { SelectiveSearchSegmentationStrategy, crate::ximgproc::SelectiveSearchSegmentationStrategySize, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategy_to_SelectiveSearchSegmentationStrategySize }
+
+	boxed_cast_descendant! { SelectiveSearchSegmentationStrategy, crate::ximgproc::SelectiveSearchSegmentationStrategyTexture, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategy_to_SelectiveSearchSegmentationStrategyTexture }
 
 	impl core::AlgorithmTraitConst for SelectiveSearchSegmentationStrategy {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -8210,41 +8167,6 @@ pub mod ximgproc {
 
 	boxed_ref! { SelectiveSearchSegmentationStrategy, crate::ximgproc::SelectiveSearchSegmentationStrategyTraitConst, as_raw_SelectiveSearchSegmentationStrategy, crate::ximgproc::SelectiveSearchSegmentationStrategyTrait, as_raw_mut_SelectiveSearchSegmentationStrategy }
 
-	impl SelectiveSearchSegmentationStrategy {
-	}
-
-	boxed_cast_descendant! { SelectiveSearchSegmentationStrategy, crate::ximgproc::SelectiveSearchSegmentationStrategyColor, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategy_to_SelectiveSearchSegmentationStrategyColor }
-
-	boxed_cast_descendant! { SelectiveSearchSegmentationStrategy, crate::ximgproc::SelectiveSearchSegmentationStrategyFill, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategy_to_SelectiveSearchSegmentationStrategyFill }
-
-	boxed_cast_descendant! { SelectiveSearchSegmentationStrategy, crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategy_to_SelectiveSearchSegmentationStrategyMultiple }
-
-	boxed_cast_descendant! { SelectiveSearchSegmentationStrategy, crate::ximgproc::SelectiveSearchSegmentationStrategySize, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategy_to_SelectiveSearchSegmentationStrategySize }
-
-	boxed_cast_descendant! { SelectiveSearchSegmentationStrategy, crate::ximgproc::SelectiveSearchSegmentationStrategyTexture, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategy_to_SelectiveSearchSegmentationStrategyTexture }
-
-	boxed_cast_base! { SelectiveSearchSegmentationStrategy, core::Algorithm, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategy_to_Algorithm }
-
-	impl std::fmt::Debug for SelectiveSearchSegmentationStrategy {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("SelectiveSearchSegmentationStrategy")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::ximgproc::SelectiveSearchSegmentationStrategyColor]
-	pub trait SelectiveSearchSegmentationStrategyColorTraitConst: crate::ximgproc::SelectiveSearchSegmentationStrategyTraitConst {
-		fn as_raw_SelectiveSearchSegmentationStrategyColor(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::ximgproc::SelectiveSearchSegmentationStrategyColor]
-	pub trait SelectiveSearchSegmentationStrategyColorTrait: crate::ximgproc::SelectiveSearchSegmentationStrategyColorTraitConst + crate::ximgproc::SelectiveSearchSegmentationStrategyTrait {
-		fn as_raw_mut_SelectiveSearchSegmentationStrategyColor(&mut self) -> *mut c_void;
-
-	}
-
 	/// Color-based strategy for the selective search segmentation algorithm
 	/// The class is implemented from the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
 	pub struct SelectiveSearchSegmentationStrategyColor {
@@ -8261,6 +8183,30 @@ pub mod ximgproc {
 	}
 
 	unsafe impl Send for SelectiveSearchSegmentationStrategyColor {}
+
+	/// Constant methods for [crate::ximgproc::SelectiveSearchSegmentationStrategyColor]
+	pub trait SelectiveSearchSegmentationStrategyColorTraitConst: crate::ximgproc::SelectiveSearchSegmentationStrategyTraitConst {
+		fn as_raw_SelectiveSearchSegmentationStrategyColor(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::ximgproc::SelectiveSearchSegmentationStrategyColor]
+	pub trait SelectiveSearchSegmentationStrategyColorTrait: crate::ximgproc::SelectiveSearchSegmentationStrategyColorTraitConst + crate::ximgproc::SelectiveSearchSegmentationStrategyTrait {
+		fn as_raw_mut_SelectiveSearchSegmentationStrategyColor(&mut self) -> *mut c_void;
+
+	}
+
+	impl std::fmt::Debug for SelectiveSearchSegmentationStrategyColor {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SelectiveSearchSegmentationStrategyColor")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { SelectiveSearchSegmentationStrategyColor, core::Algorithm, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyColor_to_Algorithm }
+
+	boxed_cast_base! { SelectiveSearchSegmentationStrategyColor, crate::ximgproc::SelectiveSearchSegmentationStrategy, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyColor_to_SelectiveSearchSegmentationStrategy }
 
 	impl core::AlgorithmTraitConst for SelectiveSearchSegmentationStrategyColor {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -8292,33 +8238,6 @@ pub mod ximgproc {
 
 	boxed_ref! { SelectiveSearchSegmentationStrategyColor, crate::ximgproc::SelectiveSearchSegmentationStrategyColorTraitConst, as_raw_SelectiveSearchSegmentationStrategyColor, crate::ximgproc::SelectiveSearchSegmentationStrategyColorTrait, as_raw_mut_SelectiveSearchSegmentationStrategyColor }
 
-	impl SelectiveSearchSegmentationStrategyColor {
-	}
-
-	boxed_cast_base! { SelectiveSearchSegmentationStrategyColor, core::Algorithm, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyColor_to_Algorithm }
-
-	boxed_cast_base! { SelectiveSearchSegmentationStrategyColor, crate::ximgproc::SelectiveSearchSegmentationStrategy, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyColor_to_SelectiveSearchSegmentationStrategy }
-
-	impl std::fmt::Debug for SelectiveSearchSegmentationStrategyColor {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("SelectiveSearchSegmentationStrategyColor")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::ximgproc::SelectiveSearchSegmentationStrategyFill]
-	pub trait SelectiveSearchSegmentationStrategyFillTraitConst: crate::ximgproc::SelectiveSearchSegmentationStrategyTraitConst {
-		fn as_raw_SelectiveSearchSegmentationStrategyFill(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::ximgproc::SelectiveSearchSegmentationStrategyFill]
-	pub trait SelectiveSearchSegmentationStrategyFillTrait: crate::ximgproc::SelectiveSearchSegmentationStrategyFillTraitConst + crate::ximgproc::SelectiveSearchSegmentationStrategyTrait {
-		fn as_raw_mut_SelectiveSearchSegmentationStrategyFill(&mut self) -> *mut c_void;
-
-	}
-
 	/// Fill-based strategy for the selective search segmentation algorithm
 	/// The class is implemented from the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
 	pub struct SelectiveSearchSegmentationStrategyFill {
@@ -8335,6 +8254,30 @@ pub mod ximgproc {
 	}
 
 	unsafe impl Send for SelectiveSearchSegmentationStrategyFill {}
+
+	/// Constant methods for [crate::ximgproc::SelectiveSearchSegmentationStrategyFill]
+	pub trait SelectiveSearchSegmentationStrategyFillTraitConst: crate::ximgproc::SelectiveSearchSegmentationStrategyTraitConst {
+		fn as_raw_SelectiveSearchSegmentationStrategyFill(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::ximgproc::SelectiveSearchSegmentationStrategyFill]
+	pub trait SelectiveSearchSegmentationStrategyFillTrait: crate::ximgproc::SelectiveSearchSegmentationStrategyFillTraitConst + crate::ximgproc::SelectiveSearchSegmentationStrategyTrait {
+		fn as_raw_mut_SelectiveSearchSegmentationStrategyFill(&mut self) -> *mut c_void;
+
+	}
+
+	impl std::fmt::Debug for SelectiveSearchSegmentationStrategyFill {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SelectiveSearchSegmentationStrategyFill")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { SelectiveSearchSegmentationStrategyFill, core::Algorithm, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyFill_to_Algorithm }
+
+	boxed_cast_base! { SelectiveSearchSegmentationStrategyFill, crate::ximgproc::SelectiveSearchSegmentationStrategy, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyFill_to_SelectiveSearchSegmentationStrategy }
 
 	impl core::AlgorithmTraitConst for SelectiveSearchSegmentationStrategyFill {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -8366,20 +8309,21 @@ pub mod ximgproc {
 
 	boxed_ref! { SelectiveSearchSegmentationStrategyFill, crate::ximgproc::SelectiveSearchSegmentationStrategyFillTraitConst, as_raw_SelectiveSearchSegmentationStrategyFill, crate::ximgproc::SelectiveSearchSegmentationStrategyFillTrait, as_raw_mut_SelectiveSearchSegmentationStrategyFill }
 
-	impl SelectiveSearchSegmentationStrategyFill {
+	/// Regroup multiple strategies for the selective search segmentation algorithm
+	pub struct SelectiveSearchSegmentationStrategyMultiple {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { SelectiveSearchSegmentationStrategyFill, core::Algorithm, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyFill_to_Algorithm }
+	opencv_type_boxed! { SelectiveSearchSegmentationStrategyMultiple }
 
-	boxed_cast_base! { SelectiveSearchSegmentationStrategyFill, crate::ximgproc::SelectiveSearchSegmentationStrategy, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyFill_to_SelectiveSearchSegmentationStrategy }
-
-	impl std::fmt::Debug for SelectiveSearchSegmentationStrategyFill {
+	impl Drop for SelectiveSearchSegmentationStrategyMultiple {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("SelectiveSearchSegmentationStrategyFill")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyMultiple_delete(self.as_raw_mut_SelectiveSearchSegmentationStrategyMultiple()) };
 		}
 	}
+
+	unsafe impl Send for SelectiveSearchSegmentationStrategyMultiple {}
 
 	/// Constant methods for [crate::ximgproc::SelectiveSearchSegmentationStrategyMultiple]
 	pub trait SelectiveSearchSegmentationStrategyMultipleTraitConst: crate::ximgproc::SelectiveSearchSegmentationStrategyTraitConst {
@@ -8416,21 +8360,17 @@ pub mod ximgproc {
 
 	}
 
-	/// Regroup multiple strategies for the selective search segmentation algorithm
-	pub struct SelectiveSearchSegmentationStrategyMultiple {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { SelectiveSearchSegmentationStrategyMultiple }
-
-	impl Drop for SelectiveSearchSegmentationStrategyMultiple {
+	impl std::fmt::Debug for SelectiveSearchSegmentationStrategyMultiple {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyMultiple_delete(self.as_raw_mut_SelectiveSearchSegmentationStrategyMultiple()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SelectiveSearchSegmentationStrategyMultiple")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for SelectiveSearchSegmentationStrategyMultiple {}
+	boxed_cast_base! { SelectiveSearchSegmentationStrategyMultiple, core::Algorithm, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyMultiple_to_Algorithm }
+
+	boxed_cast_base! { SelectiveSearchSegmentationStrategyMultiple, crate::ximgproc::SelectiveSearchSegmentationStrategy, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyMultiple_to_SelectiveSearchSegmentationStrategy }
 
 	impl core::AlgorithmTraitConst for SelectiveSearchSegmentationStrategyMultiple {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -8462,33 +8402,6 @@ pub mod ximgproc {
 
 	boxed_ref! { SelectiveSearchSegmentationStrategyMultiple, crate::ximgproc::SelectiveSearchSegmentationStrategyMultipleTraitConst, as_raw_SelectiveSearchSegmentationStrategyMultiple, crate::ximgproc::SelectiveSearchSegmentationStrategyMultipleTrait, as_raw_mut_SelectiveSearchSegmentationStrategyMultiple }
 
-	impl SelectiveSearchSegmentationStrategyMultiple {
-	}
-
-	boxed_cast_base! { SelectiveSearchSegmentationStrategyMultiple, core::Algorithm, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyMultiple_to_Algorithm }
-
-	boxed_cast_base! { SelectiveSearchSegmentationStrategyMultiple, crate::ximgproc::SelectiveSearchSegmentationStrategy, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyMultiple_to_SelectiveSearchSegmentationStrategy }
-
-	impl std::fmt::Debug for SelectiveSearchSegmentationStrategyMultiple {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("SelectiveSearchSegmentationStrategyMultiple")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::ximgproc::SelectiveSearchSegmentationStrategySize]
-	pub trait SelectiveSearchSegmentationStrategySizeTraitConst: crate::ximgproc::SelectiveSearchSegmentationStrategyTraitConst {
-		fn as_raw_SelectiveSearchSegmentationStrategySize(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::ximgproc::SelectiveSearchSegmentationStrategySize]
-	pub trait SelectiveSearchSegmentationStrategySizeTrait: crate::ximgproc::SelectiveSearchSegmentationStrategySizeTraitConst + crate::ximgproc::SelectiveSearchSegmentationStrategyTrait {
-		fn as_raw_mut_SelectiveSearchSegmentationStrategySize(&mut self) -> *mut c_void;
-
-	}
-
 	/// Size-based strategy for the selective search segmentation algorithm
 	/// The class is implemented from the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
 	pub struct SelectiveSearchSegmentationStrategySize {
@@ -8505,6 +8418,30 @@ pub mod ximgproc {
 	}
 
 	unsafe impl Send for SelectiveSearchSegmentationStrategySize {}
+
+	/// Constant methods for [crate::ximgproc::SelectiveSearchSegmentationStrategySize]
+	pub trait SelectiveSearchSegmentationStrategySizeTraitConst: crate::ximgproc::SelectiveSearchSegmentationStrategyTraitConst {
+		fn as_raw_SelectiveSearchSegmentationStrategySize(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::ximgproc::SelectiveSearchSegmentationStrategySize]
+	pub trait SelectiveSearchSegmentationStrategySizeTrait: crate::ximgproc::SelectiveSearchSegmentationStrategySizeTraitConst + crate::ximgproc::SelectiveSearchSegmentationStrategyTrait {
+		fn as_raw_mut_SelectiveSearchSegmentationStrategySize(&mut self) -> *mut c_void;
+
+	}
+
+	impl std::fmt::Debug for SelectiveSearchSegmentationStrategySize {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SelectiveSearchSegmentationStrategySize")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { SelectiveSearchSegmentationStrategySize, core::Algorithm, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategySize_to_Algorithm }
+
+	boxed_cast_base! { SelectiveSearchSegmentationStrategySize, crate::ximgproc::SelectiveSearchSegmentationStrategy, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategySize_to_SelectiveSearchSegmentationStrategy }
 
 	impl core::AlgorithmTraitConst for SelectiveSearchSegmentationStrategySize {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -8536,33 +8473,6 @@ pub mod ximgproc {
 
 	boxed_ref! { SelectiveSearchSegmentationStrategySize, crate::ximgproc::SelectiveSearchSegmentationStrategySizeTraitConst, as_raw_SelectiveSearchSegmentationStrategySize, crate::ximgproc::SelectiveSearchSegmentationStrategySizeTrait, as_raw_mut_SelectiveSearchSegmentationStrategySize }
 
-	impl SelectiveSearchSegmentationStrategySize {
-	}
-
-	boxed_cast_base! { SelectiveSearchSegmentationStrategySize, core::Algorithm, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategySize_to_Algorithm }
-
-	boxed_cast_base! { SelectiveSearchSegmentationStrategySize, crate::ximgproc::SelectiveSearchSegmentationStrategy, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategySize_to_SelectiveSearchSegmentationStrategy }
-
-	impl std::fmt::Debug for SelectiveSearchSegmentationStrategySize {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("SelectiveSearchSegmentationStrategySize")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::ximgproc::SelectiveSearchSegmentationStrategyTexture]
-	pub trait SelectiveSearchSegmentationStrategyTextureTraitConst: crate::ximgproc::SelectiveSearchSegmentationStrategyTraitConst {
-		fn as_raw_SelectiveSearchSegmentationStrategyTexture(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::ximgproc::SelectiveSearchSegmentationStrategyTexture]
-	pub trait SelectiveSearchSegmentationStrategyTextureTrait: crate::ximgproc::SelectiveSearchSegmentationStrategyTextureTraitConst + crate::ximgproc::SelectiveSearchSegmentationStrategyTrait {
-		fn as_raw_mut_SelectiveSearchSegmentationStrategyTexture(&mut self) -> *mut c_void;
-
-	}
-
 	/// Texture-based strategy for the selective search segmentation algorithm
 	/// The class is implemented from the algorithm described in [uijlings2013selective](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_uijlings2013selective).
 	pub struct SelectiveSearchSegmentationStrategyTexture {
@@ -8579,6 +8489,30 @@ pub mod ximgproc {
 	}
 
 	unsafe impl Send for SelectiveSearchSegmentationStrategyTexture {}
+
+	/// Constant methods for [crate::ximgproc::SelectiveSearchSegmentationStrategyTexture]
+	pub trait SelectiveSearchSegmentationStrategyTextureTraitConst: crate::ximgproc::SelectiveSearchSegmentationStrategyTraitConst {
+		fn as_raw_SelectiveSearchSegmentationStrategyTexture(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::ximgproc::SelectiveSearchSegmentationStrategyTexture]
+	pub trait SelectiveSearchSegmentationStrategyTextureTrait: crate::ximgproc::SelectiveSearchSegmentationStrategyTextureTraitConst + crate::ximgproc::SelectiveSearchSegmentationStrategyTrait {
+		fn as_raw_mut_SelectiveSearchSegmentationStrategyTexture(&mut self) -> *mut c_void;
+
+	}
+
+	impl std::fmt::Debug for SelectiveSearchSegmentationStrategyTexture {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SelectiveSearchSegmentationStrategyTexture")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { SelectiveSearchSegmentationStrategyTexture, core::Algorithm, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyTexture_to_Algorithm }
+
+	boxed_cast_base! { SelectiveSearchSegmentationStrategyTexture, crate::ximgproc::SelectiveSearchSegmentationStrategy, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyTexture_to_SelectiveSearchSegmentationStrategy }
 
 	impl core::AlgorithmTraitConst for SelectiveSearchSegmentationStrategyTexture {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -8610,18 +8544,4 @@ pub mod ximgproc {
 
 	boxed_ref! { SelectiveSearchSegmentationStrategyTexture, crate::ximgproc::SelectiveSearchSegmentationStrategyTextureTraitConst, as_raw_SelectiveSearchSegmentationStrategyTexture, crate::ximgproc::SelectiveSearchSegmentationStrategyTextureTrait, as_raw_mut_SelectiveSearchSegmentationStrategyTexture }
 
-	impl SelectiveSearchSegmentationStrategyTexture {
-	}
-
-	boxed_cast_base! { SelectiveSearchSegmentationStrategyTexture, core::Algorithm, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyTexture_to_Algorithm }
-
-	boxed_cast_base! { SelectiveSearchSegmentationStrategyTexture, crate::ximgproc::SelectiveSearchSegmentationStrategy, cv_ximgproc_segmentation_SelectiveSearchSegmentationStrategyTexture_to_SelectiveSearchSegmentationStrategy }
-
-	impl std::fmt::Debug for SelectiveSearchSegmentationStrategyTexture {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("SelectiveSearchSegmentationStrategyTexture")
-				.finish()
-		}
-	}
 }

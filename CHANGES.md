@@ -1,3 +1,6 @@
+* 0.94.2
+  * Fix building on Windows using vcpkg without OpenCL support (fixes https://github.com/twistedfall/opencv-rust/issues/532).
+
 * 0.94.1
   * Add workaround for building on Windows with clang-19 and `clang-runtime` feature enabled (fixes https://github.com/twistedfall/opencv-rust/issues/628).
 

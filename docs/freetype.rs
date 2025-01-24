@@ -30,6 +30,21 @@ pub mod freetype {
 		Ok(ret)
 	}
 
+	pub struct FreeType2 {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { FreeType2 }
+
+	impl Drop for FreeType2 {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_freetype_FreeType2_delete(self.as_raw_mut_FreeType2()) };
+		}
+	}
+
+	unsafe impl Send for FreeType2 {}
+
 	/// Constant methods for [crate::freetype::FreeType2]
 	pub trait FreeType2TraitConst: core::AlgorithmTraitConst {
 		fn as_raw_FreeType2(&self) -> *const c_void;
@@ -186,20 +201,15 @@ pub mod freetype {
 
 	}
 
-	pub struct FreeType2 {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { FreeType2 }
-
-	impl Drop for FreeType2 {
+	impl std::fmt::Debug for FreeType2 {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_freetype_FreeType2_delete(self.as_raw_mut_FreeType2()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FreeType2")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for FreeType2 {}
+	boxed_cast_base! { FreeType2, core::Algorithm, cv_freetype_FreeType2_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for FreeType2 {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -221,16 +231,4 @@ pub mod freetype {
 
 	boxed_ref! { FreeType2, crate::freetype::FreeType2TraitConst, as_raw_FreeType2, crate::freetype::FreeType2Trait, as_raw_mut_FreeType2 }
 
-	impl FreeType2 {
-	}
-
-	boxed_cast_base! { FreeType2, core::Algorithm, cv_freetype_FreeType2_to_Algorithm }
-
-	impl std::fmt::Debug for FreeType2 {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("FreeType2")
-				.finish()
-		}
-	}
 }

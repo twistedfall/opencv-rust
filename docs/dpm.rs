@@ -36,6 +36,66 @@ pub mod dpm {
 		pub use super::{DPMDetectorTrait, DPMDetectorTraitConst, DPMDetector_ObjectDetectionTrait, DPMDetector_ObjectDetectionTraitConst};
 	}
 
+	/// This is a C++ abstract class, it provides external user API to work with DPM.
+	pub struct DPMDetector {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { DPMDetector }
+
+	impl Drop for DPMDetector {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_dpm_DPMDetector_delete(self.as_raw_mut_DPMDetector()) };
+		}
+	}
+
+	unsafe impl Send for DPMDetector {}
+
+	impl DPMDetector {
+		/// Load the trained models from given .xml files and return cv::Ptr\<DPMDetector\>.
+		/// ## Parameters
+		/// * filenames: A set of filenames storing the trained detectors (models). Each file contains one
+		/// model. See examples of such files here `/opencv_extra/testdata/cv/dpm/VOC2007_Cascade/`.
+		/// * classNames: A set of trained models names. If it's empty then the name of each model will be
+		/// constructed from the name of file containing the model. E.g. the model stored in
+		/// "/home/user/cat.xml" will get the name "cat".
+		///
+		/// ## C++ default parameters
+		/// * class_names: std::vector<std::string>()
+		#[inline]
+		pub fn create(filenames: &core::Vector<String>, class_names: &core::Vector<String>) -> Result<core::Ptr<crate::dpm::DPMDetector>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dpm_DPMDetector_create_const_vectorLstringGR_const_vectorLstringGR(filenames.as_raw_VectorOfString(), class_names.as_raw_VectorOfString(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::dpm::DPMDetector>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Load the trained models from given .xml files and return cv::Ptr\<DPMDetector\>.
+		/// ## Parameters
+		/// * filenames: A set of filenames storing the trained detectors (models). Each file contains one
+		/// model. See examples of such files here `/opencv_extra/testdata/cv/dpm/VOC2007_Cascade/`.
+		/// * classNames: A set of trained models names. If it's empty then the name of each model will be
+		/// constructed from the name of file containing the model. E.g. the model stored in
+		/// "/home/user/cat.xml" will get the name "cat".
+		///
+		/// ## Note
+		/// This alternative version of [DPMDetector::create] function uses the following default values for its arguments:
+		/// * class_names: std::vector<std::string>()
+		#[inline]
+		pub fn create_def(filenames: &core::Vector<String>) -> Result<core::Ptr<crate::dpm::DPMDetector>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dpm_DPMDetector_create_const_vectorLstringGR(filenames.as_raw_VectorOfString(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::dpm::DPMDetector>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
 	/// Constant methods for [crate::dpm::DPMDetector]
 	pub trait DPMDetectorTraitConst {
 		fn as_raw_DPMDetector(&self) -> *const c_void;
@@ -93,21 +153,13 @@ pub mod dpm {
 
 	}
 
-	/// This is a C++ abstract class, it provides external user API to work with DPM.
-	pub struct DPMDetector {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { DPMDetector }
-
-	impl Drop for DPMDetector {
+	impl std::fmt::Debug for DPMDetector {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_dpm_DPMDetector_delete(self.as_raw_mut_DPMDetector()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DPMDetector")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for DPMDetector {}
 
 	impl crate::dpm::DPMDetectorTraitConst for DPMDetector {
 		#[inline] fn as_raw_DPMDetector(&self) -> *const c_void { self.as_raw() }
@@ -119,56 +171,57 @@ pub mod dpm {
 
 	boxed_ref! { DPMDetector, crate::dpm::DPMDetectorTraitConst, as_raw_DPMDetector, crate::dpm::DPMDetectorTrait, as_raw_mut_DPMDetector }
 
-	impl DPMDetector {
-		/// Load the trained models from given .xml files and return cv::Ptr\<DPMDetector\>.
-		/// ## Parameters
-		/// * filenames: A set of filenames storing the trained detectors (models). Each file contains one
-		/// model. See examples of such files here `/opencv_extra/testdata/cv/dpm/VOC2007_Cascade/`.
-		/// * classNames: A set of trained models names. If it's empty then the name of each model will be
-		/// constructed from the name of file containing the model. E.g. the model stored in
-		/// "/home/user/cat.xml" will get the name "cat".
-		///
-		/// ## C++ default parameters
-		/// * class_names: std::vector<std::string>()
-		#[inline]
-		pub fn create(filenames: &core::Vector<String>, class_names: &core::Vector<String>) -> Result<core::Ptr<crate::dpm::DPMDetector>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_dpm_DPMDetector_create_const_vectorLstringGR_const_vectorLstringGR(filenames.as_raw_VectorOfString(), class_names.as_raw_VectorOfString(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::dpm::DPMDetector>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Load the trained models from given .xml files and return cv::Ptr\<DPMDetector\>.
-		/// ## Parameters
-		/// * filenames: A set of filenames storing the trained detectors (models). Each file contains one
-		/// model. See examples of such files here `/opencv_extra/testdata/cv/dpm/VOC2007_Cascade/`.
-		/// * classNames: A set of trained models names. If it's empty then the name of each model will be
-		/// constructed from the name of file containing the model. E.g. the model stored in
-		/// "/home/user/cat.xml" will get the name "cat".
-		///
-		/// ## Note
-		/// This alternative version of [DPMDetector::create] function uses the following default values for its arguments:
-		/// * class_names: std::vector<std::string>()
-		#[inline]
-		pub fn create_def(filenames: &core::Vector<String>) -> Result<core::Ptr<crate::dpm::DPMDetector>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_dpm_DPMDetector_create_const_vectorLstringGR(filenames.as_raw_VectorOfString(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::dpm::DPMDetector>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	pub struct DPMDetector_ObjectDetection {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for DPMDetector {
+	opencv_type_boxed! { DPMDetector_ObjectDetection }
+
+	impl Drop for DPMDetector_ObjectDetection {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("DPMDetector")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_delete(self.as_raw_mut_DPMDetector_ObjectDetection()) };
 		}
+	}
+
+	unsafe impl Send for DPMDetector_ObjectDetection {}
+
+	impl DPMDetector_ObjectDetection {
+		#[inline]
+		pub fn default() -> Result<crate::dpm::DPMDetector_ObjectDetection> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_ObjectDetection(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::dpm::DPMDetector_ObjectDetection::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## C++ default parameters
+		/// * class_id: -1
+		#[inline]
+		pub fn new(rect: core::Rect, score: f32, class_id: i32) -> Result<crate::dpm::DPMDetector_ObjectDetection> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_ObjectDetection_const_RectR_float_int(&rect, score, class_id, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::dpm::DPMDetector_ObjectDetection::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * class_id: -1
+		#[inline]
+		pub fn new_def(rect: core::Rect, score: f32) -> Result<crate::dpm::DPMDetector_ObjectDetection> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_ObjectDetection_const_RectR_float(&rect, score, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::dpm::DPMDetector_ObjectDetection::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::dpm::DPMDetector_ObjectDetection]
@@ -221,20 +274,16 @@ pub mod dpm {
 
 	}
 
-	pub struct DPMDetector_ObjectDetection {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { DPMDetector_ObjectDetection }
-
-	impl Drop for DPMDetector_ObjectDetection {
+	impl std::fmt::Debug for DPMDetector_ObjectDetection {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_delete(self.as_raw_mut_DPMDetector_ObjectDetection()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DPMDetector_ObjectDetection")
+				.field("rect", &crate::dpm::DPMDetector_ObjectDetectionTraitConst::rect(self))
+				.field("score", &crate::dpm::DPMDetector_ObjectDetectionTraitConst::score(self))
+				.field("class_id", &crate::dpm::DPMDetector_ObjectDetectionTraitConst::class_id(self))
+				.finish()
 		}
 	}
-
-	unsafe impl Send for DPMDetector_ObjectDetection {}
 
 	impl crate::dpm::DPMDetector_ObjectDetectionTraitConst for DPMDetector_ObjectDetection {
 		#[inline] fn as_raw_DPMDetector_ObjectDetection(&self) -> *const c_void { self.as_raw() }
@@ -246,52 +295,4 @@ pub mod dpm {
 
 	boxed_ref! { DPMDetector_ObjectDetection, crate::dpm::DPMDetector_ObjectDetectionTraitConst, as_raw_DPMDetector_ObjectDetection, crate::dpm::DPMDetector_ObjectDetectionTrait, as_raw_mut_DPMDetector_ObjectDetection }
 
-	impl DPMDetector_ObjectDetection {
-		#[inline]
-		pub fn default() -> Result<crate::dpm::DPMDetector_ObjectDetection> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_ObjectDetection(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::dpm::DPMDetector_ObjectDetection::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## C++ default parameters
-		/// * class_id: -1
-		#[inline]
-		pub fn new(rect: core::Rect, score: f32, class_id: i32) -> Result<crate::dpm::DPMDetector_ObjectDetection> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_ObjectDetection_const_RectR_float_int(&rect, score, class_id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::dpm::DPMDetector_ObjectDetection::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * class_id: -1
-		#[inline]
-		pub fn new_def(rect: core::Rect, score: f32) -> Result<crate::dpm::DPMDetector_ObjectDetection> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_ObjectDetection_const_RectR_float(&rect, score, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::dpm::DPMDetector_ObjectDetection::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	impl std::fmt::Debug for DPMDetector_ObjectDetection {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("DPMDetector_ObjectDetection")
-				.field("rect", &crate::dpm::DPMDetector_ObjectDetectionTraitConst::rect(self))
-				.field("score", &crate::dpm::DPMDetector_ObjectDetectionTraitConst::score(self))
-				.field("class_id", &crate::dpm::DPMDetector_ObjectDetectionTraitConst::class_id(self))
-				.finish()
-		}
-	}
 }

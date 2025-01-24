@@ -242,6 +242,22 @@ pub mod shape {
 		Ok(ret)
 	}
 
+	/// Wrapper class for the OpenCV Affine Transformation algorithm. :
+	pub struct AffineTransformer {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { AffineTransformer }
+
+	impl Drop for AffineTransformer {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_AffineTransformer_delete(self.as_raw_mut_AffineTransformer()) };
+		}
+	}
+
+	unsafe impl Send for AffineTransformer {}
+
 	/// Constant methods for [crate::shape::AffineTransformer]
 	pub trait AffineTransformerTraitConst: crate::shape::ShapeTransformerTraitConst {
 		fn as_raw_AffineTransformer(&self) -> *const c_void;
@@ -272,21 +288,17 @@ pub mod shape {
 
 	}
 
-	/// Wrapper class for the OpenCV Affine Transformation algorithm. :
-	pub struct AffineTransformer {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { AffineTransformer }
-
-	impl Drop for AffineTransformer {
+	impl std::fmt::Debug for AffineTransformer {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_AffineTransformer_delete(self.as_raw_mut_AffineTransformer()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("AffineTransformer")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for AffineTransformer {}
+	boxed_cast_base! { AffineTransformer, core::Algorithm, cv_AffineTransformer_to_Algorithm }
+
+	boxed_cast_base! { AffineTransformer, crate::shape::ShapeTransformer, cv_AffineTransformer_to_ShapeTransformer }
 
 	impl core::AlgorithmTraitConst for AffineTransformer {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -318,33 +330,6 @@ pub mod shape {
 
 	boxed_ref! { AffineTransformer, crate::shape::AffineTransformerTraitConst, as_raw_AffineTransformer, crate::shape::AffineTransformerTrait, as_raw_mut_AffineTransformer }
 
-	impl AffineTransformer {
-	}
-
-	boxed_cast_base! { AffineTransformer, core::Algorithm, cv_AffineTransformer_to_Algorithm }
-
-	boxed_cast_base! { AffineTransformer, crate::shape::ShapeTransformer, cv_AffineTransformer_to_ShapeTransformer }
-
-	impl std::fmt::Debug for AffineTransformer {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("AffineTransformer")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::shape::ChiHistogramCostExtractor]
-	pub trait ChiHistogramCostExtractorTraitConst: crate::shape::HistogramCostExtractorTraitConst {
-		fn as_raw_ChiHistogramCostExtractor(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::shape::ChiHistogramCostExtractor]
-	pub trait ChiHistogramCostExtractorTrait: crate::shape::ChiHistogramCostExtractorTraitConst + crate::shape::HistogramCostExtractorTrait {
-		fn as_raw_mut_ChiHistogramCostExtractor(&mut self) -> *mut c_void;
-
-	}
-
 	/// An Chi based cost extraction. :
 	pub struct ChiHistogramCostExtractor {
 		ptr: *mut c_void,
@@ -360,6 +345,30 @@ pub mod shape {
 	}
 
 	unsafe impl Send for ChiHistogramCostExtractor {}
+
+	/// Constant methods for [crate::shape::ChiHistogramCostExtractor]
+	pub trait ChiHistogramCostExtractorTraitConst: crate::shape::HistogramCostExtractorTraitConst {
+		fn as_raw_ChiHistogramCostExtractor(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::shape::ChiHistogramCostExtractor]
+	pub trait ChiHistogramCostExtractorTrait: crate::shape::ChiHistogramCostExtractorTraitConst + crate::shape::HistogramCostExtractorTrait {
+		fn as_raw_mut_ChiHistogramCostExtractor(&mut self) -> *mut c_void;
+
+	}
+
+	impl std::fmt::Debug for ChiHistogramCostExtractor {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ChiHistogramCostExtractor")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { ChiHistogramCostExtractor, core::Algorithm, cv_ChiHistogramCostExtractor_to_Algorithm }
+
+	boxed_cast_base! { ChiHistogramCostExtractor, crate::shape::HistogramCostExtractor, cv_ChiHistogramCostExtractor_to_HistogramCostExtractor }
 
 	impl core::AlgorithmTraitConst for ChiHistogramCostExtractor {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -391,20 +400,21 @@ pub mod shape {
 
 	boxed_ref! { ChiHistogramCostExtractor, crate::shape::ChiHistogramCostExtractorTraitConst, as_raw_ChiHistogramCostExtractor, crate::shape::ChiHistogramCostExtractorTrait, as_raw_mut_ChiHistogramCostExtractor }
 
-	impl ChiHistogramCostExtractor {
+	/// An EMD based cost extraction. :
+	pub struct EMDHistogramCostExtractor {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { ChiHistogramCostExtractor, core::Algorithm, cv_ChiHistogramCostExtractor_to_Algorithm }
+	opencv_type_boxed! { EMDHistogramCostExtractor }
 
-	boxed_cast_base! { ChiHistogramCostExtractor, crate::shape::HistogramCostExtractor, cv_ChiHistogramCostExtractor_to_HistogramCostExtractor }
-
-	impl std::fmt::Debug for ChiHistogramCostExtractor {
+	impl Drop for EMDHistogramCostExtractor {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("ChiHistogramCostExtractor")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_EMDHistogramCostExtractor_delete(self.as_raw_mut_EMDHistogramCostExtractor()) };
 		}
 	}
+
+	unsafe impl Send for EMDHistogramCostExtractor {}
 
 	/// Constant methods for [crate::shape::EMDHistogramCostExtractor]
 	pub trait EMDHistogramCostExtractorTraitConst: crate::shape::HistogramCostExtractorTraitConst {
@@ -436,21 +446,17 @@ pub mod shape {
 
 	}
 
-	/// An EMD based cost extraction. :
-	pub struct EMDHistogramCostExtractor {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { EMDHistogramCostExtractor }
-
-	impl Drop for EMDHistogramCostExtractor {
+	impl std::fmt::Debug for EMDHistogramCostExtractor {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_EMDHistogramCostExtractor_delete(self.as_raw_mut_EMDHistogramCostExtractor()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("EMDHistogramCostExtractor")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for EMDHistogramCostExtractor {}
+	boxed_cast_base! { EMDHistogramCostExtractor, core::Algorithm, cv_EMDHistogramCostExtractor_to_Algorithm }
+
+	boxed_cast_base! { EMDHistogramCostExtractor, crate::shape::HistogramCostExtractor, cv_EMDHistogramCostExtractor_to_HistogramCostExtractor }
 
 	impl core::AlgorithmTraitConst for EMDHistogramCostExtractor {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -482,33 +488,6 @@ pub mod shape {
 
 	boxed_ref! { EMDHistogramCostExtractor, crate::shape::EMDHistogramCostExtractorTraitConst, as_raw_EMDHistogramCostExtractor, crate::shape::EMDHistogramCostExtractorTrait, as_raw_mut_EMDHistogramCostExtractor }
 
-	impl EMDHistogramCostExtractor {
-	}
-
-	boxed_cast_base! { EMDHistogramCostExtractor, core::Algorithm, cv_EMDHistogramCostExtractor_to_Algorithm }
-
-	boxed_cast_base! { EMDHistogramCostExtractor, crate::shape::HistogramCostExtractor, cv_EMDHistogramCostExtractor_to_HistogramCostExtractor }
-
-	impl std::fmt::Debug for EMDHistogramCostExtractor {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("EMDHistogramCostExtractor")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::shape::EMDL1HistogramCostExtractor]
-	pub trait EMDL1HistogramCostExtractorTraitConst: crate::shape::HistogramCostExtractorTraitConst {
-		fn as_raw_EMDL1HistogramCostExtractor(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::shape::EMDL1HistogramCostExtractor]
-	pub trait EMDL1HistogramCostExtractorTrait: crate::shape::EMDL1HistogramCostExtractorTraitConst + crate::shape::HistogramCostExtractorTrait {
-		fn as_raw_mut_EMDL1HistogramCostExtractor(&mut self) -> *mut c_void;
-
-	}
-
 	/// An EMD-L1 based cost extraction. :
 	pub struct EMDL1HistogramCostExtractor {
 		ptr: *mut c_void,
@@ -524,6 +503,30 @@ pub mod shape {
 	}
 
 	unsafe impl Send for EMDL1HistogramCostExtractor {}
+
+	/// Constant methods for [crate::shape::EMDL1HistogramCostExtractor]
+	pub trait EMDL1HistogramCostExtractorTraitConst: crate::shape::HistogramCostExtractorTraitConst {
+		fn as_raw_EMDL1HistogramCostExtractor(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::shape::EMDL1HistogramCostExtractor]
+	pub trait EMDL1HistogramCostExtractorTrait: crate::shape::EMDL1HistogramCostExtractorTraitConst + crate::shape::HistogramCostExtractorTrait {
+		fn as_raw_mut_EMDL1HistogramCostExtractor(&mut self) -> *mut c_void;
+
+	}
+
+	impl std::fmt::Debug for EMDL1HistogramCostExtractor {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("EMDL1HistogramCostExtractor")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { EMDL1HistogramCostExtractor, core::Algorithm, cv_EMDL1HistogramCostExtractor_to_Algorithm }
+
+	boxed_cast_base! { EMDL1HistogramCostExtractor, crate::shape::HistogramCostExtractor, cv_EMDL1HistogramCostExtractor_to_HistogramCostExtractor }
 
 	impl core::AlgorithmTraitConst for EMDL1HistogramCostExtractor {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -555,20 +558,27 @@ pub mod shape {
 
 	boxed_ref! { EMDL1HistogramCostExtractor, crate::shape::EMDL1HistogramCostExtractorTraitConst, as_raw_EMDL1HistogramCostExtractor, crate::shape::EMDL1HistogramCostExtractorTrait, as_raw_mut_EMDL1HistogramCostExtractor }
 
-	impl EMDL1HistogramCostExtractor {
+	/// ********************************************************************************
+	/// /
+	/// /
+	/// A simple Hausdorff distance measure between shapes defined by contours
+	///
+	/// according to the paper "Comparing Images using the Hausdorff distance." by D.P. Huttenlocher, G.A.
+	/// Klanderman, and W.J. Rucklidge. (PAMI 1993). :
+	pub struct HausdorffDistanceExtractor {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { EMDL1HistogramCostExtractor, core::Algorithm, cv_EMDL1HistogramCostExtractor_to_Algorithm }
+	opencv_type_boxed! { HausdorffDistanceExtractor }
 
-	boxed_cast_base! { EMDL1HistogramCostExtractor, crate::shape::HistogramCostExtractor, cv_EMDL1HistogramCostExtractor_to_HistogramCostExtractor }
-
-	impl std::fmt::Debug for EMDL1HistogramCostExtractor {
+	impl Drop for HausdorffDistanceExtractor {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("EMDL1HistogramCostExtractor")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_HausdorffDistanceExtractor_delete(self.as_raw_mut_HausdorffDistanceExtractor()) };
 		}
 	}
+
+	unsafe impl Send for HausdorffDistanceExtractor {}
 
 	/// Constant methods for [crate::shape::HausdorffDistanceExtractor]
 	pub trait HausdorffDistanceExtractorTraitConst: crate::shape::ShapeDistanceExtractorTraitConst {
@@ -629,27 +639,17 @@ pub mod shape {
 
 	}
 
-	/// ********************************************************************************
-	/// /
-	/// /
-	/// A simple Hausdorff distance measure between shapes defined by contours
-	///
-	/// according to the paper "Comparing Images using the Hausdorff distance." by D.P. Huttenlocher, G.A.
-	/// Klanderman, and W.J. Rucklidge. (PAMI 1993). :
-	pub struct HausdorffDistanceExtractor {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { HausdorffDistanceExtractor }
-
-	impl Drop for HausdorffDistanceExtractor {
+	impl std::fmt::Debug for HausdorffDistanceExtractor {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_HausdorffDistanceExtractor_delete(self.as_raw_mut_HausdorffDistanceExtractor()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("HausdorffDistanceExtractor")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for HausdorffDistanceExtractor {}
+	boxed_cast_base! { HausdorffDistanceExtractor, core::Algorithm, cv_HausdorffDistanceExtractor_to_Algorithm }
+
+	boxed_cast_base! { HausdorffDistanceExtractor, crate::shape::ShapeDistanceExtractor, cv_HausdorffDistanceExtractor_to_ShapeDistanceExtractor }
 
 	impl core::AlgorithmTraitConst for HausdorffDistanceExtractor {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -681,20 +681,21 @@ pub mod shape {
 
 	boxed_ref! { HausdorffDistanceExtractor, crate::shape::HausdorffDistanceExtractorTraitConst, as_raw_HausdorffDistanceExtractor, crate::shape::HausdorffDistanceExtractorTrait, as_raw_mut_HausdorffDistanceExtractor }
 
-	impl HausdorffDistanceExtractor {
+	/// Abstract base class for histogram cost algorithms.
+	pub struct HistogramCostExtractor {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { HausdorffDistanceExtractor, core::Algorithm, cv_HausdorffDistanceExtractor_to_Algorithm }
+	opencv_type_boxed! { HistogramCostExtractor }
 
-	boxed_cast_base! { HausdorffDistanceExtractor, crate::shape::ShapeDistanceExtractor, cv_HausdorffDistanceExtractor_to_ShapeDistanceExtractor }
-
-	impl std::fmt::Debug for HausdorffDistanceExtractor {
+	impl Drop for HistogramCostExtractor {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("HausdorffDistanceExtractor")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_HistogramCostExtractor_delete(self.as_raw_mut_HistogramCostExtractor()) };
 		}
 	}
+
+	unsafe impl Send for HistogramCostExtractor {}
 
 	/// Constant methods for [crate::shape::HistogramCostExtractor]
 	pub trait HistogramCostExtractorTraitConst: core::AlgorithmTraitConst {
@@ -756,21 +757,23 @@ pub mod shape {
 
 	}
 
-	/// Abstract base class for histogram cost algorithms.
-	pub struct HistogramCostExtractor {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { HistogramCostExtractor }
-
-	impl Drop for HistogramCostExtractor {
+	impl std::fmt::Debug for HistogramCostExtractor {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_HistogramCostExtractor_delete(self.as_raw_mut_HistogramCostExtractor()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("HistogramCostExtractor")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for HistogramCostExtractor {}
+	boxed_cast_base! { HistogramCostExtractor, core::Algorithm, cv_HistogramCostExtractor_to_Algorithm }
+
+	boxed_cast_descendant! { HistogramCostExtractor, crate::shape::ChiHistogramCostExtractor, cv_HistogramCostExtractor_to_ChiHistogramCostExtractor }
+
+	boxed_cast_descendant! { HistogramCostExtractor, crate::shape::EMDHistogramCostExtractor, cv_HistogramCostExtractor_to_EMDHistogramCostExtractor }
+
+	boxed_cast_descendant! { HistogramCostExtractor, crate::shape::EMDL1HistogramCostExtractor, cv_HistogramCostExtractor_to_EMDL1HistogramCostExtractor }
+
+	boxed_cast_descendant! { HistogramCostExtractor, crate::shape::NormHistogramCostExtractor, cv_HistogramCostExtractor_to_NormHistogramCostExtractor }
 
 	impl core::AlgorithmTraitConst for HistogramCostExtractor {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -792,26 +795,21 @@ pub mod shape {
 
 	boxed_ref! { HistogramCostExtractor, crate::shape::HistogramCostExtractorTraitConst, as_raw_HistogramCostExtractor, crate::shape::HistogramCostExtractorTrait, as_raw_mut_HistogramCostExtractor }
 
-	impl HistogramCostExtractor {
+	/// A norm based cost extraction. :
+	pub struct NormHistogramCostExtractor {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { HistogramCostExtractor, crate::shape::ChiHistogramCostExtractor, cv_HistogramCostExtractor_to_ChiHistogramCostExtractor }
+	opencv_type_boxed! { NormHistogramCostExtractor }
 
-	boxed_cast_descendant! { HistogramCostExtractor, crate::shape::EMDHistogramCostExtractor, cv_HistogramCostExtractor_to_EMDHistogramCostExtractor }
-
-	boxed_cast_descendant! { HistogramCostExtractor, crate::shape::EMDL1HistogramCostExtractor, cv_HistogramCostExtractor_to_EMDL1HistogramCostExtractor }
-
-	boxed_cast_descendant! { HistogramCostExtractor, crate::shape::NormHistogramCostExtractor, cv_HistogramCostExtractor_to_NormHistogramCostExtractor }
-
-	boxed_cast_base! { HistogramCostExtractor, core::Algorithm, cv_HistogramCostExtractor_to_Algorithm }
-
-	impl std::fmt::Debug for HistogramCostExtractor {
+	impl Drop for NormHistogramCostExtractor {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("HistogramCostExtractor")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_NormHistogramCostExtractor_delete(self.as_raw_mut_NormHistogramCostExtractor()) };
 		}
 	}
+
+	unsafe impl Send for NormHistogramCostExtractor {}
 
 	/// Constant methods for [crate::shape::NormHistogramCostExtractor]
 	pub trait NormHistogramCostExtractorTraitConst: crate::shape::HistogramCostExtractorTraitConst {
@@ -843,21 +841,17 @@ pub mod shape {
 
 	}
 
-	/// A norm based cost extraction. :
-	pub struct NormHistogramCostExtractor {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { NormHistogramCostExtractor }
-
-	impl Drop for NormHistogramCostExtractor {
+	impl std::fmt::Debug for NormHistogramCostExtractor {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_NormHistogramCostExtractor_delete(self.as_raw_mut_NormHistogramCostExtractor()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("NormHistogramCostExtractor")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for NormHistogramCostExtractor {}
+	boxed_cast_base! { NormHistogramCostExtractor, core::Algorithm, cv_NormHistogramCostExtractor_to_Algorithm }
+
+	boxed_cast_base! { NormHistogramCostExtractor, crate::shape::HistogramCostExtractor, cv_NormHistogramCostExtractor_to_HistogramCostExtractor }
 
 	impl core::AlgorithmTraitConst for NormHistogramCostExtractor {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -889,20 +883,28 @@ pub mod shape {
 
 	boxed_ref! { NormHistogramCostExtractor, crate::shape::NormHistogramCostExtractorTraitConst, as_raw_NormHistogramCostExtractor, crate::shape::NormHistogramCostExtractorTrait, as_raw_mut_NormHistogramCostExtractor }
 
-	impl NormHistogramCostExtractor {
+	/// ********************************************************************************
+	/// /
+	/// /
+	/// Implementation of the Shape Context descriptor and matching algorithm
+	///
+	/// proposed by Belongie et al. in "Shape Matching and Object Recognition Using Shape Contexts" (PAMI
+	/// 2002). This implementation is packaged in a generic scheme, in order to allow you the
+	/// implementation of the common variations of the original pipeline.
+	pub struct ShapeContextDistanceExtractor {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { NormHistogramCostExtractor, core::Algorithm, cv_NormHistogramCostExtractor_to_Algorithm }
+	opencv_type_boxed! { ShapeContextDistanceExtractor }
 
-	boxed_cast_base! { NormHistogramCostExtractor, crate::shape::HistogramCostExtractor, cv_NormHistogramCostExtractor_to_HistogramCostExtractor }
-
-	impl std::fmt::Debug for NormHistogramCostExtractor {
+	impl Drop for ShapeContextDistanceExtractor {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("NormHistogramCostExtractor")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_ShapeContextDistanceExtractor_delete(self.as_raw_mut_ShapeContextDistanceExtractor()) };
 		}
 	}
+
+	unsafe impl Send for ShapeContextDistanceExtractor {}
 
 	/// Constant methods for [crate::shape::ShapeContextDistanceExtractor]
 	pub trait ShapeContextDistanceExtractorTraitConst: crate::shape::ShapeDistanceExtractorTraitConst {
@@ -1217,28 +1219,17 @@ pub mod shape {
 
 	}
 
-	/// ********************************************************************************
-	/// /
-	/// /
-	/// Implementation of the Shape Context descriptor and matching algorithm
-	///
-	/// proposed by Belongie et al. in "Shape Matching and Object Recognition Using Shape Contexts" (PAMI
-	/// 2002). This implementation is packaged in a generic scheme, in order to allow you the
-	/// implementation of the common variations of the original pipeline.
-	pub struct ShapeContextDistanceExtractor {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { ShapeContextDistanceExtractor }
-
-	impl Drop for ShapeContextDistanceExtractor {
+	impl std::fmt::Debug for ShapeContextDistanceExtractor {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ShapeContextDistanceExtractor_delete(self.as_raw_mut_ShapeContextDistanceExtractor()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ShapeContextDistanceExtractor")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for ShapeContextDistanceExtractor {}
+	boxed_cast_base! { ShapeContextDistanceExtractor, core::Algorithm, cv_ShapeContextDistanceExtractor_to_Algorithm }
+
+	boxed_cast_base! { ShapeContextDistanceExtractor, crate::shape::ShapeDistanceExtractor, cv_ShapeContextDistanceExtractor_to_ShapeDistanceExtractor }
 
 	impl core::AlgorithmTraitConst for ShapeContextDistanceExtractor {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -1270,20 +1261,24 @@ pub mod shape {
 
 	boxed_ref! { ShapeContextDistanceExtractor, crate::shape::ShapeContextDistanceExtractorTraitConst, as_raw_ShapeContextDistanceExtractor, crate::shape::ShapeContextDistanceExtractorTrait, as_raw_mut_ShapeContextDistanceExtractor }
 
-	impl ShapeContextDistanceExtractor {
+	/// @example modules/shape/samples/shape_example.cpp
+	/// An example using shape distance algorithm
+	///
+	/// Abstract base class for shape distance algorithms.
+	pub struct ShapeDistanceExtractor {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { ShapeContextDistanceExtractor, core::Algorithm, cv_ShapeContextDistanceExtractor_to_Algorithm }
+	opencv_type_boxed! { ShapeDistanceExtractor }
 
-	boxed_cast_base! { ShapeContextDistanceExtractor, crate::shape::ShapeDistanceExtractor, cv_ShapeContextDistanceExtractor_to_ShapeDistanceExtractor }
-
-	impl std::fmt::Debug for ShapeContextDistanceExtractor {
+	impl Drop for ShapeDistanceExtractor {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("ShapeContextDistanceExtractor")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_ShapeDistanceExtractor_delete(self.as_raw_mut_ShapeDistanceExtractor()) };
 		}
 	}
+
+	unsafe impl Send for ShapeDistanceExtractor {}
 
 	/// Constant methods for [crate::shape::ShapeDistanceExtractor]
 	pub trait ShapeDistanceExtractorTraitConst: core::AlgorithmTraitConst {
@@ -1313,24 +1308,19 @@ pub mod shape {
 
 	}
 
-	/// @example modules/shape/samples/shape_example.cpp
-	/// An example using shape distance algorithm
-	///
-	/// Abstract base class for shape distance algorithms.
-	pub struct ShapeDistanceExtractor {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { ShapeDistanceExtractor }
-
-	impl Drop for ShapeDistanceExtractor {
+	impl std::fmt::Debug for ShapeDistanceExtractor {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ShapeDistanceExtractor_delete(self.as_raw_mut_ShapeDistanceExtractor()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ShapeDistanceExtractor")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for ShapeDistanceExtractor {}
+	boxed_cast_base! { ShapeDistanceExtractor, core::Algorithm, cv_ShapeDistanceExtractor_to_Algorithm }
+
+	boxed_cast_descendant! { ShapeDistanceExtractor, crate::shape::HausdorffDistanceExtractor, cv_ShapeDistanceExtractor_to_HausdorffDistanceExtractor }
+
+	boxed_cast_descendant! { ShapeDistanceExtractor, crate::shape::ShapeContextDistanceExtractor, cv_ShapeDistanceExtractor_to_ShapeContextDistanceExtractor }
 
 	impl core::AlgorithmTraitConst for ShapeDistanceExtractor {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -1352,22 +1342,21 @@ pub mod shape {
 
 	boxed_ref! { ShapeDistanceExtractor, crate::shape::ShapeDistanceExtractorTraitConst, as_raw_ShapeDistanceExtractor, crate::shape::ShapeDistanceExtractorTrait, as_raw_mut_ShapeDistanceExtractor }
 
-	impl ShapeDistanceExtractor {
+	/// Abstract base class for shape transformation algorithms.
+	pub struct ShapeTransformer {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { ShapeDistanceExtractor, crate::shape::HausdorffDistanceExtractor, cv_ShapeDistanceExtractor_to_HausdorffDistanceExtractor }
+	opencv_type_boxed! { ShapeTransformer }
 
-	boxed_cast_descendant! { ShapeDistanceExtractor, crate::shape::ShapeContextDistanceExtractor, cv_ShapeDistanceExtractor_to_ShapeContextDistanceExtractor }
-
-	boxed_cast_base! { ShapeDistanceExtractor, core::Algorithm, cv_ShapeDistanceExtractor_to_Algorithm }
-
-	impl std::fmt::Debug for ShapeDistanceExtractor {
+	impl Drop for ShapeTransformer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("ShapeDistanceExtractor")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_ShapeTransformer_delete(self.as_raw_mut_ShapeTransformer()) };
 		}
 	}
+
+	unsafe impl Send for ShapeTransformer {}
 
 	/// Constant methods for [crate::shape::ShapeTransformer]
 	pub trait ShapeTransformerTraitConst: core::AlgorithmTraitConst {
@@ -1485,21 +1474,19 @@ pub mod shape {
 
 	}
 
-	/// Abstract base class for shape transformation algorithms.
-	pub struct ShapeTransformer {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { ShapeTransformer }
-
-	impl Drop for ShapeTransformer {
+	impl std::fmt::Debug for ShapeTransformer {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ShapeTransformer_delete(self.as_raw_mut_ShapeTransformer()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ShapeTransformer")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for ShapeTransformer {}
+	boxed_cast_base! { ShapeTransformer, core::Algorithm, cv_ShapeTransformer_to_Algorithm }
+
+	boxed_cast_descendant! { ShapeTransformer, crate::shape::AffineTransformer, cv_ShapeTransformer_to_AffineTransformer }
+
+	boxed_cast_descendant! { ShapeTransformer, crate::shape::ThinPlateSplineShapeTransformer, cv_ShapeTransformer_to_ThinPlateSplineShapeTransformer }
 
 	impl core::AlgorithmTraitConst for ShapeTransformer {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -1521,22 +1508,24 @@ pub mod shape {
 
 	boxed_ref! { ShapeTransformer, crate::shape::ShapeTransformerTraitConst, as_raw_ShapeTransformer, crate::shape::ShapeTransformerTrait, as_raw_mut_ShapeTransformer }
 
-	impl ShapeTransformer {
+	/// Definition of the transformation
+	///
+	/// occupied in the paper "Principal Warps: Thin-Plate Splines and Decomposition of Deformations", by
+	/// F.L. Bookstein (PAMI 1989). :
+	pub struct ThinPlateSplineShapeTransformer {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { ShapeTransformer, crate::shape::AffineTransformer, cv_ShapeTransformer_to_AffineTransformer }
+	opencv_type_boxed! { ThinPlateSplineShapeTransformer }
 
-	boxed_cast_descendant! { ShapeTransformer, crate::shape::ThinPlateSplineShapeTransformer, cv_ShapeTransformer_to_ThinPlateSplineShapeTransformer }
-
-	boxed_cast_base! { ShapeTransformer, core::Algorithm, cv_ShapeTransformer_to_Algorithm }
-
-	impl std::fmt::Debug for ShapeTransformer {
+	impl Drop for ThinPlateSplineShapeTransformer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("ShapeTransformer")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_ThinPlateSplineShapeTransformer_delete(self.as_raw_mut_ThinPlateSplineShapeTransformer()) };
 		}
 	}
+
+	unsafe impl Send for ThinPlateSplineShapeTransformer {}
 
 	/// Constant methods for [crate::shape::ThinPlateSplineShapeTransformer]
 	pub trait ThinPlateSplineShapeTransformerTraitConst: crate::shape::ShapeTransformerTraitConst {
@@ -1573,24 +1562,17 @@ pub mod shape {
 
 	}
 
-	/// Definition of the transformation
-	///
-	/// occupied in the paper "Principal Warps: Thin-Plate Splines and Decomposition of Deformations", by
-	/// F.L. Bookstein (PAMI 1989). :
-	pub struct ThinPlateSplineShapeTransformer {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { ThinPlateSplineShapeTransformer }
-
-	impl Drop for ThinPlateSplineShapeTransformer {
+	impl std::fmt::Debug for ThinPlateSplineShapeTransformer {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ThinPlateSplineShapeTransformer_delete(self.as_raw_mut_ThinPlateSplineShapeTransformer()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ThinPlateSplineShapeTransformer")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for ThinPlateSplineShapeTransformer {}
+	boxed_cast_base! { ThinPlateSplineShapeTransformer, core::Algorithm, cv_ThinPlateSplineShapeTransformer_to_Algorithm }
+
+	boxed_cast_base! { ThinPlateSplineShapeTransformer, crate::shape::ShapeTransformer, cv_ThinPlateSplineShapeTransformer_to_ShapeTransformer }
 
 	impl core::AlgorithmTraitConst for ThinPlateSplineShapeTransformer {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -1622,18 +1604,4 @@ pub mod shape {
 
 	boxed_ref! { ThinPlateSplineShapeTransformer, crate::shape::ThinPlateSplineShapeTransformerTraitConst, as_raw_ThinPlateSplineShapeTransformer, crate::shape::ThinPlateSplineShapeTransformerTrait, as_raw_mut_ThinPlateSplineShapeTransformer }
 
-	impl ThinPlateSplineShapeTransformer {
-	}
-
-	boxed_cast_base! { ThinPlateSplineShapeTransformer, core::Algorithm, cv_ThinPlateSplineShapeTransformer_to_Algorithm }
-
-	boxed_cast_base! { ThinPlateSplineShapeTransformer, crate::shape::ShapeTransformer, cv_ThinPlateSplineShapeTransformer_to_ShapeTransformer }
-
-	impl std::fmt::Debug for ThinPlateSplineShapeTransformer {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("ThinPlateSplineShapeTransformer")
-				.finish()
-		}
-	}
 }

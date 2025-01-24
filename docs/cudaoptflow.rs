@@ -167,6 +167,60 @@ pub mod cudaoptflow {
 
 	opencv_type_enum! { crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0_NVIDIA_OF_PERF_LEVEL }
 
+	/// Class computing the optical flow for two images using Brox et al Optical Flow algorithm ([Brox2004](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Brox2004)).
+	pub struct CUDA_BroxOpticalFlow {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { CUDA_BroxOpticalFlow }
+
+	impl Drop for CUDA_BroxOpticalFlow {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_BroxOpticalFlow_delete(self.as_raw_mut_CUDA_BroxOpticalFlow()) };
+		}
+	}
+
+	unsafe impl Send for CUDA_BroxOpticalFlow {}
+
+	impl CUDA_BroxOpticalFlow {
+		/// ## C++ default parameters
+		/// * alpha: 0.197
+		/// * gamma: 50.0
+		/// * scale_factor: 0.8
+		/// * inner_iterations: 5
+		/// * outer_iterations: 150
+		/// * solver_iterations: 10
+		#[inline]
+		pub fn create(alpha: f64, gamma: f64, scale_factor: f64, inner_iterations: i32, outer_iterations: i32, solver_iterations: i32) -> Result<core::Ptr<crate::cudaoptflow::CUDA_BroxOpticalFlow>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_BroxOpticalFlow_create_double_double_double_int_int_int(alpha, gamma, scale_factor, inner_iterations, outer_iterations, solver_iterations, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_BroxOpticalFlow>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [CUDA_BroxOpticalFlow::create] function uses the following default values for its arguments:
+		/// * alpha: 0.197
+		/// * gamma: 50.0
+		/// * scale_factor: 0.8
+		/// * inner_iterations: 5
+		/// * outer_iterations: 150
+		/// * solver_iterations: 10
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::cudaoptflow::CUDA_BroxOpticalFlow>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_BroxOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_BroxOpticalFlow>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
 	/// Constant methods for [crate::cudaoptflow::CUDA_BroxOpticalFlow]
 	pub trait CUDA_BroxOpticalFlowTraitConst: crate::cudaoptflow::CUDA_DenseOpticalFlowTraitConst {
 		fn as_raw_CUDA_BroxOpticalFlow(&self) -> *const c_void;
@@ -290,21 +344,17 @@ pub mod cudaoptflow {
 
 	}
 
-	/// Class computing the optical flow for two images using Brox et al Optical Flow algorithm ([Brox2004](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Brox2004)).
-	pub struct CUDA_BroxOpticalFlow {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CUDA_BroxOpticalFlow }
-
-	impl Drop for CUDA_BroxOpticalFlow {
+	impl std::fmt::Debug for CUDA_BroxOpticalFlow {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_BroxOpticalFlow_delete(self.as_raw_mut_CUDA_BroxOpticalFlow()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_BroxOpticalFlow")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for CUDA_BroxOpticalFlow {}
+	boxed_cast_base! { CUDA_BroxOpticalFlow, core::Algorithm, cv_cuda_BroxOpticalFlow_to_Algorithm }
+
+	boxed_cast_base! { CUDA_BroxOpticalFlow, crate::cudaoptflow::CUDA_DenseOpticalFlow, cv_cuda_BroxOpticalFlow_to_CUDA_DenseOpticalFlow }
 
 	impl core::AlgorithmTraitConst for CUDA_BroxOpticalFlow {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -336,55 +386,21 @@ pub mod cudaoptflow {
 
 	boxed_ref! { CUDA_BroxOpticalFlow, crate::cudaoptflow::CUDA_BroxOpticalFlowTraitConst, as_raw_CUDA_BroxOpticalFlow, crate::cudaoptflow::CUDA_BroxOpticalFlowTrait, as_raw_mut_CUDA_BroxOpticalFlow }
 
-	impl CUDA_BroxOpticalFlow {
-		/// ## C++ default parameters
-		/// * alpha: 0.197
-		/// * gamma: 50.0
-		/// * scale_factor: 0.8
-		/// * inner_iterations: 5
-		/// * outer_iterations: 150
-		/// * solver_iterations: 10
-		#[inline]
-		pub fn create(alpha: f64, gamma: f64, scale_factor: f64, inner_iterations: i32, outer_iterations: i32, solver_iterations: i32) -> Result<core::Ptr<crate::cudaoptflow::CUDA_BroxOpticalFlow>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_BroxOpticalFlow_create_double_double_double_int_int_int(alpha, gamma, scale_factor, inner_iterations, outer_iterations, solver_iterations, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_BroxOpticalFlow>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [CUDA_BroxOpticalFlow::create] function uses the following default values for its arguments:
-		/// * alpha: 0.197
-		/// * gamma: 50.0
-		/// * scale_factor: 0.8
-		/// * inner_iterations: 5
-		/// * outer_iterations: 150
-		/// * solver_iterations: 10
-		#[inline]
-		pub fn create_def() -> Result<core::Ptr<crate::cudaoptflow::CUDA_BroxOpticalFlow>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_BroxOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_BroxOpticalFlow>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// Base interface for dense optical flow algorithms.
+	pub struct CUDA_DenseOpticalFlow {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { CUDA_BroxOpticalFlow, core::Algorithm, cv_cuda_BroxOpticalFlow_to_Algorithm }
+	opencv_type_boxed! { CUDA_DenseOpticalFlow }
 
-	boxed_cast_base! { CUDA_BroxOpticalFlow, crate::cudaoptflow::CUDA_DenseOpticalFlow, cv_cuda_BroxOpticalFlow_to_CUDA_DenseOpticalFlow }
-
-	impl std::fmt::Debug for CUDA_BroxOpticalFlow {
+	impl Drop for CUDA_DenseOpticalFlow {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CUDA_BroxOpticalFlow")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_DenseOpticalFlow_delete(self.as_raw_mut_CUDA_DenseOpticalFlow()) };
 		}
 	}
+
+	unsafe impl Send for CUDA_DenseOpticalFlow {}
 
 	/// Constant methods for [crate::cudaoptflow::CUDA_DenseOpticalFlow]
 	pub trait CUDA_DenseOpticalFlowTraitConst: core::AlgorithmTraitConst {
@@ -443,21 +459,23 @@ pub mod cudaoptflow {
 
 	}
 
-	/// Base interface for dense optical flow algorithms.
-	pub struct CUDA_DenseOpticalFlow {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CUDA_DenseOpticalFlow }
-
-	impl Drop for CUDA_DenseOpticalFlow {
+	impl std::fmt::Debug for CUDA_DenseOpticalFlow {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_DenseOpticalFlow_delete(self.as_raw_mut_CUDA_DenseOpticalFlow()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_DenseOpticalFlow")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for CUDA_DenseOpticalFlow {}
+	boxed_cast_base! { CUDA_DenseOpticalFlow, core::Algorithm, cv_cuda_DenseOpticalFlow_to_Algorithm }
+
+	boxed_cast_descendant! { CUDA_DenseOpticalFlow, crate::cudaoptflow::CUDA_BroxOpticalFlow, cv_cuda_DenseOpticalFlow_to_CUDA_BroxOpticalFlow }
+
+	boxed_cast_descendant! { CUDA_DenseOpticalFlow, crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow, cv_cuda_DenseOpticalFlow_to_CUDA_DensePyrLKOpticalFlow }
+
+	boxed_cast_descendant! { CUDA_DenseOpticalFlow, crate::cudaoptflow::CUDA_FarnebackOpticalFlow, cv_cuda_DenseOpticalFlow_to_CUDA_FarnebackOpticalFlow }
+
+	boxed_cast_descendant! { CUDA_DenseOpticalFlow, crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1, cv_cuda_DenseOpticalFlow_to_CUDA_OpticalFlowDual_TVL1 }
 
 	impl core::AlgorithmTraitConst for CUDA_DenseOpticalFlow {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -479,25 +497,57 @@ pub mod cudaoptflow {
 
 	boxed_ref! { CUDA_DenseOpticalFlow, crate::cudaoptflow::CUDA_DenseOpticalFlowTraitConst, as_raw_CUDA_DenseOpticalFlow, crate::cudaoptflow::CUDA_DenseOpticalFlowTrait, as_raw_mut_CUDA_DenseOpticalFlow }
 
-	impl CUDA_DenseOpticalFlow {
+	/// Class used for calculating a dense optical flow.
+	///
+	/// The class can calculate an optical flow for a dense optical flow using the
+	/// iterative Lucas-Kanade method with pyramids.
+	pub struct CUDA_DensePyrLKOpticalFlow {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { CUDA_DenseOpticalFlow, crate::cudaoptflow::CUDA_BroxOpticalFlow, cv_cuda_DenseOpticalFlow_to_CUDA_BroxOpticalFlow }
+	opencv_type_boxed! { CUDA_DensePyrLKOpticalFlow }
 
-	boxed_cast_descendant! { CUDA_DenseOpticalFlow, crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow, cv_cuda_DenseOpticalFlow_to_CUDA_DensePyrLKOpticalFlow }
-
-	boxed_cast_descendant! { CUDA_DenseOpticalFlow, crate::cudaoptflow::CUDA_FarnebackOpticalFlow, cv_cuda_DenseOpticalFlow_to_CUDA_FarnebackOpticalFlow }
-
-	boxed_cast_descendant! { CUDA_DenseOpticalFlow, crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1, cv_cuda_DenseOpticalFlow_to_CUDA_OpticalFlowDual_TVL1 }
-
-	boxed_cast_base! { CUDA_DenseOpticalFlow, core::Algorithm, cv_cuda_DenseOpticalFlow_to_Algorithm }
-
-	impl std::fmt::Debug for CUDA_DenseOpticalFlow {
+	impl Drop for CUDA_DensePyrLKOpticalFlow {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CUDA_DenseOpticalFlow")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_delete(self.as_raw_mut_CUDA_DensePyrLKOpticalFlow()) };
 		}
+	}
+
+	unsafe impl Send for CUDA_DensePyrLKOpticalFlow {}
+
+	impl CUDA_DensePyrLKOpticalFlow {
+		/// ## C++ default parameters
+		/// * win_size: Size(13,13)
+		/// * max_level: 3
+		/// * iters: 30
+		/// * use_initial_flow: false
+		#[inline]
+		pub fn create(win_size: core::Size, max_level: i32, iters: i32, use_initial_flow: bool) -> Result<core::Ptr<crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_create_Size_int_int_bool(&win_size, max_level, iters, use_initial_flow, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [CUDA_DensePyrLKOpticalFlow::create] function uses the following default values for its arguments:
+		/// * win_size: Size(13,13)
+		/// * max_level: 3
+		/// * iters: 30
+		/// * use_initial_flow: false
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow]
@@ -584,24 +634,17 @@ pub mod cudaoptflow {
 
 	}
 
-	/// Class used for calculating a dense optical flow.
-	///
-	/// The class can calculate an optical flow for a dense optical flow using the
-	/// iterative Lucas-Kanade method with pyramids.
-	pub struct CUDA_DensePyrLKOpticalFlow {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CUDA_DensePyrLKOpticalFlow }
-
-	impl Drop for CUDA_DensePyrLKOpticalFlow {
+	impl std::fmt::Debug for CUDA_DensePyrLKOpticalFlow {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_delete(self.as_raw_mut_CUDA_DensePyrLKOpticalFlow()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_DensePyrLKOpticalFlow")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for CUDA_DensePyrLKOpticalFlow {}
+	boxed_cast_base! { CUDA_DensePyrLKOpticalFlow, core::Algorithm, cv_cuda_DensePyrLKOpticalFlow_to_Algorithm }
+
+	boxed_cast_base! { CUDA_DensePyrLKOpticalFlow, crate::cudaoptflow::CUDA_DenseOpticalFlow, cv_cuda_DensePyrLKOpticalFlow_to_CUDA_DenseOpticalFlow }
 
 	impl core::AlgorithmTraitConst for CUDA_DensePyrLKOpticalFlow {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -633,50 +676,62 @@ pub mod cudaoptflow {
 
 	boxed_ref! { CUDA_DensePyrLKOpticalFlow, crate::cudaoptflow::CUDA_DensePyrLKOpticalFlowTraitConst, as_raw_CUDA_DensePyrLKOpticalFlow, crate::cudaoptflow::CUDA_DensePyrLKOpticalFlowTrait, as_raw_mut_CUDA_DensePyrLKOpticalFlow }
 
-	impl CUDA_DensePyrLKOpticalFlow {
-		/// ## C++ default parameters
-		/// * win_size: Size(13,13)
-		/// * max_level: 3
-		/// * iters: 30
-		/// * use_initial_flow: false
+	/// Class computing a dense optical flow using the Gunnar Farneback's algorithm.
+	pub struct CUDA_FarnebackOpticalFlow {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { CUDA_FarnebackOpticalFlow }
+
+	impl Drop for CUDA_FarnebackOpticalFlow {
 		#[inline]
-		pub fn create(win_size: core::Size, max_level: i32, iters: i32, use_initial_flow: bool) -> Result<core::Ptr<crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow>> {
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_FarnebackOpticalFlow_delete(self.as_raw_mut_CUDA_FarnebackOpticalFlow()) };
+		}
+	}
+
+	unsafe impl Send for CUDA_FarnebackOpticalFlow {}
+
+	impl CUDA_FarnebackOpticalFlow {
+		/// ## C++ default parameters
+		/// * num_levels: 5
+		/// * pyr_scale: 0.5
+		/// * fast_pyramids: false
+		/// * win_size: 13
+		/// * num_iters: 10
+		/// * poly_n: 5
+		/// * poly_sigma: 1.1
+		/// * flags: 0
+		#[inline]
+		pub fn create(num_levels: i32, pyr_scale: f64, fast_pyramids: bool, win_size: i32, num_iters: i32, poly_n: i32, poly_sigma: f64, flags: i32) -> Result<core::Ptr<crate::cudaoptflow::CUDA_FarnebackOpticalFlow>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_create_Size_int_int_bool(&win_size, max_level, iters, use_initial_flow, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_FarnebackOpticalFlow_create_int_double_bool_int_int_int_double_int(num_levels, pyr_scale, fast_pyramids, win_size, num_iters, poly_n, poly_sigma, flags, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_FarnebackOpticalFlow>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
 		/// ## Note
-		/// This alternative version of [CUDA_DensePyrLKOpticalFlow::create] function uses the following default values for its arguments:
-		/// * win_size: Size(13,13)
-		/// * max_level: 3
-		/// * iters: 30
-		/// * use_initial_flow: false
+		/// This alternative version of [CUDA_FarnebackOpticalFlow::create] function uses the following default values for its arguments:
+		/// * num_levels: 5
+		/// * pyr_scale: 0.5
+		/// * fast_pyramids: false
+		/// * win_size: 13
+		/// * num_iters: 10
+		/// * poly_n: 5
+		/// * poly_sigma: 1.1
+		/// * flags: 0
 		#[inline]
-		pub fn create_def() -> Result<core::Ptr<crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow>> {
+		pub fn create_def() -> Result<core::Ptr<crate::cudaoptflow::CUDA_FarnebackOpticalFlow>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_DensePyrLKOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_FarnebackOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_DensePyrLKOpticalFlow>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_FarnebackOpticalFlow>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	boxed_cast_base! { CUDA_DensePyrLKOpticalFlow, core::Algorithm, cv_cuda_DensePyrLKOpticalFlow_to_Algorithm }
-
-	boxed_cast_base! { CUDA_DensePyrLKOpticalFlow, crate::cudaoptflow::CUDA_DenseOpticalFlow, cv_cuda_DensePyrLKOpticalFlow_to_CUDA_DenseOpticalFlow }
-
-	impl std::fmt::Debug for CUDA_DensePyrLKOpticalFlow {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CUDA_DensePyrLKOpticalFlow")
-				.finish()
-		}
 	}
 
 	/// Constant methods for [crate::cudaoptflow::CUDA_FarnebackOpticalFlow]
@@ -835,21 +890,17 @@ pub mod cudaoptflow {
 
 	}
 
-	/// Class computing a dense optical flow using the Gunnar Farneback's algorithm.
-	pub struct CUDA_FarnebackOpticalFlow {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CUDA_FarnebackOpticalFlow }
-
-	impl Drop for CUDA_FarnebackOpticalFlow {
+	impl std::fmt::Debug for CUDA_FarnebackOpticalFlow {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_FarnebackOpticalFlow_delete(self.as_raw_mut_CUDA_FarnebackOpticalFlow()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_FarnebackOpticalFlow")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for CUDA_FarnebackOpticalFlow {}
+	boxed_cast_base! { CUDA_FarnebackOpticalFlow, core::Algorithm, cv_cuda_FarnebackOpticalFlow_to_Algorithm }
+
+	boxed_cast_base! { CUDA_FarnebackOpticalFlow, crate::cudaoptflow::CUDA_DenseOpticalFlow, cv_cuda_FarnebackOpticalFlow_to_CUDA_DenseOpticalFlow }
 
 	impl core::AlgorithmTraitConst for CUDA_FarnebackOpticalFlow {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -881,59 +932,21 @@ pub mod cudaoptflow {
 
 	boxed_ref! { CUDA_FarnebackOpticalFlow, crate::cudaoptflow::CUDA_FarnebackOpticalFlowTraitConst, as_raw_CUDA_FarnebackOpticalFlow, crate::cudaoptflow::CUDA_FarnebackOpticalFlowTrait, as_raw_mut_CUDA_FarnebackOpticalFlow }
 
-	impl CUDA_FarnebackOpticalFlow {
-		/// ## C++ default parameters
-		/// * num_levels: 5
-		/// * pyr_scale: 0.5
-		/// * fast_pyramids: false
-		/// * win_size: 13
-		/// * num_iters: 10
-		/// * poly_n: 5
-		/// * poly_sigma: 1.1
-		/// * flags: 0
-		#[inline]
-		pub fn create(num_levels: i32, pyr_scale: f64, fast_pyramids: bool, win_size: i32, num_iters: i32, poly_n: i32, poly_sigma: f64, flags: i32) -> Result<core::Ptr<crate::cudaoptflow::CUDA_FarnebackOpticalFlow>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_FarnebackOpticalFlow_create_int_double_bool_int_int_int_double_int(num_levels, pyr_scale, fast_pyramids, win_size, num_iters, poly_n, poly_sigma, flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_FarnebackOpticalFlow>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [CUDA_FarnebackOpticalFlow::create] function uses the following default values for its arguments:
-		/// * num_levels: 5
-		/// * pyr_scale: 0.5
-		/// * fast_pyramids: false
-		/// * win_size: 13
-		/// * num_iters: 10
-		/// * poly_n: 5
-		/// * poly_sigma: 1.1
-		/// * flags: 0
-		#[inline]
-		pub fn create_def() -> Result<core::Ptr<crate::cudaoptflow::CUDA_FarnebackOpticalFlow>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_FarnebackOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_FarnebackOpticalFlow>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// Base Interface for optical flow algorithms using NVIDIA Optical Flow SDK.
+	pub struct CUDA_NvidiaHWOpticalFlow {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { CUDA_FarnebackOpticalFlow, core::Algorithm, cv_cuda_FarnebackOpticalFlow_to_Algorithm }
+	opencv_type_boxed! { CUDA_NvidiaHWOpticalFlow }
 
-	boxed_cast_base! { CUDA_FarnebackOpticalFlow, crate::cudaoptflow::CUDA_DenseOpticalFlow, cv_cuda_FarnebackOpticalFlow_to_CUDA_DenseOpticalFlow }
-
-	impl std::fmt::Debug for CUDA_FarnebackOpticalFlow {
+	impl Drop for CUDA_NvidiaHWOpticalFlow {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CUDA_FarnebackOpticalFlow")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_NvidiaHWOpticalFlow_delete(self.as_raw_mut_CUDA_NvidiaHWOpticalFlow()) };
 		}
 	}
+
+	unsafe impl Send for CUDA_NvidiaHWOpticalFlow {}
 
 	/// Constant methods for [crate::cudaoptflow::CUDA_NvidiaHWOpticalFlow]
 	pub trait CUDA_NvidiaHWOpticalFlowTraitConst: core::AlgorithmTraitConst {
@@ -1050,21 +1063,19 @@ pub mod cudaoptflow {
 
 	}
 
-	/// Base Interface for optical flow algorithms using NVIDIA Optical Flow SDK.
-	pub struct CUDA_NvidiaHWOpticalFlow {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CUDA_NvidiaHWOpticalFlow }
-
-	impl Drop for CUDA_NvidiaHWOpticalFlow {
+	impl std::fmt::Debug for CUDA_NvidiaHWOpticalFlow {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_NvidiaHWOpticalFlow_delete(self.as_raw_mut_CUDA_NvidiaHWOpticalFlow()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_NvidiaHWOpticalFlow")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for CUDA_NvidiaHWOpticalFlow {}
+	boxed_cast_base! { CUDA_NvidiaHWOpticalFlow, core::Algorithm, cv_cuda_NvidiaHWOpticalFlow_to_Algorithm }
+
+	boxed_cast_descendant! { CUDA_NvidiaHWOpticalFlow, crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0, cv_cuda_NvidiaHWOpticalFlow_to_CUDA_NvidiaOpticalFlow_1_0 }
+
+	boxed_cast_descendant! { CUDA_NvidiaHWOpticalFlow, crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0, cv_cuda_NvidiaHWOpticalFlow_to_CUDA_NvidiaOpticalFlow_2_0 }
 
 	impl core::AlgorithmTraitConst for CUDA_NvidiaHWOpticalFlow {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -1085,55 +1096,6 @@ pub mod cudaoptflow {
 	}
 
 	boxed_ref! { CUDA_NvidiaHWOpticalFlow, crate::cudaoptflow::CUDA_NvidiaHWOpticalFlowTraitConst, as_raw_CUDA_NvidiaHWOpticalFlow, crate::cudaoptflow::CUDA_NvidiaHWOpticalFlowTrait, as_raw_mut_CUDA_NvidiaHWOpticalFlow }
-
-	impl CUDA_NvidiaHWOpticalFlow {
-	}
-
-	boxed_cast_descendant! { CUDA_NvidiaHWOpticalFlow, crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0, cv_cuda_NvidiaHWOpticalFlow_to_CUDA_NvidiaOpticalFlow_1_0 }
-
-	boxed_cast_descendant! { CUDA_NvidiaHWOpticalFlow, crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0, cv_cuda_NvidiaHWOpticalFlow_to_CUDA_NvidiaOpticalFlow_2_0 }
-
-	boxed_cast_base! { CUDA_NvidiaHWOpticalFlow, core::Algorithm, cv_cuda_NvidiaHWOpticalFlow_to_Algorithm }
-
-	impl std::fmt::Debug for CUDA_NvidiaHWOpticalFlow {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CUDA_NvidiaHWOpticalFlow")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0]
-	pub trait CUDA_NvidiaOpticalFlow_1_0TraitConst: crate::cudaoptflow::CUDA_NvidiaHWOpticalFlowTraitConst {
-		fn as_raw_CUDA_NvidiaOpticalFlow_1_0(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0]
-	pub trait CUDA_NvidiaOpticalFlow_1_0Trait: crate::cudaoptflow::CUDA_NvidiaHWOpticalFlowTrait + crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0TraitConst {
-		fn as_raw_mut_CUDA_NvidiaOpticalFlow_1_0(&mut self) -> *mut c_void;
-
-		/// The NVIDIA optical flow hardware generates flow vectors at granularity gridSize, which can be queried via function getGridSize().
-		/// Upsampler() helper function converts the hardware-generated flow vectors to dense representation (1 flow vector for each pixel)
-		/// using nearest neighbour upsampling method.
-		///
-		/// ## Parameters
-		/// * flow: Buffer of type CV_16FC2 containing flow vectors generated by calc().
-		/// * imageSize: Size of the input image in pixels for which these flow vectors were generated.
-		/// * gridSize: Granularity of the optical flow vectors returned by calc() function. Can be queried using getGridSize().
-		/// * upsampledFlow: Buffer of type CV_32FC2, containing upsampled flow vectors, each flow vector for 1 pixel, in the pitch-linear layout.
-		#[inline]
-		fn up_sampler(&mut self, flow: &impl ToInputArray, image_size: core::Size, grid_size: i32, upsampled_flow: &mut impl ToInputOutputArray) -> Result<()> {
-			input_array_arg!(flow);
-			input_output_array_arg!(upsampled_flow);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_NvidiaOpticalFlow_1_0_upSampler_const__InputArrayR_Size_int_const__InputOutputArrayR(self.as_raw_mut_CUDA_NvidiaOpticalFlow_1_0(), flow.as_raw__InputArray(), &image_size, grid_size, upsampled_flow.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
 
 	/// Class for computing the optical flow vectors between two images using NVIDIA Optical Flow hardware and Optical Flow SDK 1.0.
 	///
@@ -1156,36 +1118,6 @@ pub mod cudaoptflow {
 	}
 
 	unsafe impl Send for CUDA_NvidiaOpticalFlow_1_0 {}
-
-	impl core::AlgorithmTraitConst for CUDA_NvidiaOpticalFlow_1_0 {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::AlgorithmTrait for CUDA_NvidiaOpticalFlow_1_0 {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { CUDA_NvidiaOpticalFlow_1_0, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-
-	impl crate::cudaoptflow::CUDA_NvidiaHWOpticalFlowTraitConst for CUDA_NvidiaOpticalFlow_1_0 {
-		#[inline] fn as_raw_CUDA_NvidiaHWOpticalFlow(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::cudaoptflow::CUDA_NvidiaHWOpticalFlowTrait for CUDA_NvidiaOpticalFlow_1_0 {
-		#[inline] fn as_raw_mut_CUDA_NvidiaHWOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { CUDA_NvidiaOpticalFlow_1_0, crate::cudaoptflow::CUDA_NvidiaHWOpticalFlowTraitConst, as_raw_CUDA_NvidiaHWOpticalFlow, crate::cudaoptflow::CUDA_NvidiaHWOpticalFlowTrait, as_raw_mut_CUDA_NvidiaHWOpticalFlow }
-
-	impl crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0TraitConst for CUDA_NvidiaOpticalFlow_1_0 {
-		#[inline] fn as_raw_CUDA_NvidiaOpticalFlow_1_0(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0Trait for CUDA_NvidiaOpticalFlow_1_0 {
-		#[inline] fn as_raw_mut_CUDA_NvidiaOpticalFlow_1_0(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { CUDA_NvidiaOpticalFlow_1_0, crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0TraitConst, as_raw_CUDA_NvidiaOpticalFlow_1_0, crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0Trait, as_raw_mut_CUDA_NvidiaOpticalFlow_1_0 }
 
 	impl CUDA_NvidiaOpticalFlow_1_0 {
 		/// Instantiate NVIDIA Optical Flow
@@ -1265,9 +1197,37 @@ pub mod cudaoptflow {
 
 	}
 
-	boxed_cast_base! { CUDA_NvidiaOpticalFlow_1_0, core::Algorithm, cv_cuda_NvidiaOpticalFlow_1_0_to_Algorithm }
+	/// Constant methods for [crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0]
+	pub trait CUDA_NvidiaOpticalFlow_1_0TraitConst: crate::cudaoptflow::CUDA_NvidiaHWOpticalFlowTraitConst {
+		fn as_raw_CUDA_NvidiaOpticalFlow_1_0(&self) -> *const c_void;
 
-	boxed_cast_base! { CUDA_NvidiaOpticalFlow_1_0, crate::cudaoptflow::CUDA_NvidiaHWOpticalFlow, cv_cuda_NvidiaOpticalFlow_1_0_to_CUDA_NvidiaHWOpticalFlow }
+	}
+
+	/// Mutable methods for [crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0]
+	pub trait CUDA_NvidiaOpticalFlow_1_0Trait: crate::cudaoptflow::CUDA_NvidiaHWOpticalFlowTrait + crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0TraitConst {
+		fn as_raw_mut_CUDA_NvidiaOpticalFlow_1_0(&mut self) -> *mut c_void;
+
+		/// The NVIDIA optical flow hardware generates flow vectors at granularity gridSize, which can be queried via function getGridSize().
+		/// Upsampler() helper function converts the hardware-generated flow vectors to dense representation (1 flow vector for each pixel)
+		/// using nearest neighbour upsampling method.
+		///
+		/// ## Parameters
+		/// * flow: Buffer of type CV_16FC2 containing flow vectors generated by calc().
+		/// * imageSize: Size of the input image in pixels for which these flow vectors were generated.
+		/// * gridSize: Granularity of the optical flow vectors returned by calc() function. Can be queried using getGridSize().
+		/// * upsampledFlow: Buffer of type CV_32FC2, containing upsampled flow vectors, each flow vector for 1 pixel, in the pitch-linear layout.
+		#[inline]
+		fn up_sampler(&mut self, flow: &impl ToInputArray, image_size: core::Size, grid_size: i32, upsampled_flow: &mut impl ToInputOutputArray) -> Result<()> {
+			input_array_arg!(flow);
+			input_output_array_arg!(upsampled_flow);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_NvidiaOpticalFlow_1_0_upSampler_const__InputArrayR_Size_int_const__InputOutputArrayR(self.as_raw_mut_CUDA_NvidiaOpticalFlow_1_0(), flow.as_raw__InputArray(), &image_size, grid_size, upsampled_flow.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
 
 	impl std::fmt::Debug for CUDA_NvidiaOpticalFlow_1_0 {
 		#[inline]
@@ -1277,34 +1237,39 @@ pub mod cudaoptflow {
 		}
 	}
 
-	/// Constant methods for [crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0]
-	pub trait CUDA_NvidiaOpticalFlow_2_0TraitConst: crate::cudaoptflow::CUDA_NvidiaHWOpticalFlowTraitConst {
-		fn as_raw_CUDA_NvidiaOpticalFlow_2_0(&self) -> *const c_void;
+	boxed_cast_base! { CUDA_NvidiaOpticalFlow_1_0, core::Algorithm, cv_cuda_NvidiaOpticalFlow_1_0_to_Algorithm }
 
+	boxed_cast_base! { CUDA_NvidiaOpticalFlow_1_0, crate::cudaoptflow::CUDA_NvidiaHWOpticalFlow, cv_cuda_NvidiaOpticalFlow_1_0_to_CUDA_NvidiaHWOpticalFlow }
+
+	impl core::AlgorithmTraitConst for CUDA_NvidiaOpticalFlow_1_0 {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0]
-	pub trait CUDA_NvidiaOpticalFlow_2_0Trait: crate::cudaoptflow::CUDA_NvidiaHWOpticalFlowTrait + crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0TraitConst {
-		fn as_raw_mut_CUDA_NvidiaOpticalFlow_2_0(&mut self) -> *mut c_void;
-
-		/// convertToFloat() helper function converts the hardware-generated flow vectors to floating point representation (1 flow vector for gridSize).
-		/// gridSize can be queried via function getGridSize().
-		///
-		/// ## Parameters
-		/// * flow: Buffer of type CV_16FC2 containing flow vectors generated by calc().
-		/// * floatFlow: Buffer of type CV_32FC2, containing flow vectors in floating point representation, each flow vector for 1 pixel per gridSize, in the pitch-linear layout.
-		#[inline]
-		fn convert_to_float(&mut self, flow: &impl ToInputArray, float_flow: &mut impl ToInputOutputArray) -> Result<()> {
-			input_array_arg!(flow);
-			input_output_array_arg!(float_flow);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_NvidiaOpticalFlow_2_0_convertToFloat_const__InputArrayR_const__InputOutputArrayR(self.as_raw_mut_CUDA_NvidiaOpticalFlow_2_0(), flow.as_raw__InputArray(), float_flow.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
+	impl core::AlgorithmTrait for CUDA_NvidiaOpticalFlow_1_0 {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { CUDA_NvidiaOpticalFlow_1_0, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+
+	impl crate::cudaoptflow::CUDA_NvidiaHWOpticalFlowTraitConst for CUDA_NvidiaOpticalFlow_1_0 {
+		#[inline] fn as_raw_CUDA_NvidiaHWOpticalFlow(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::cudaoptflow::CUDA_NvidiaHWOpticalFlowTrait for CUDA_NvidiaOpticalFlow_1_0 {
+		#[inline] fn as_raw_mut_CUDA_NvidiaHWOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { CUDA_NvidiaOpticalFlow_1_0, crate::cudaoptflow::CUDA_NvidiaHWOpticalFlowTraitConst, as_raw_CUDA_NvidiaHWOpticalFlow, crate::cudaoptflow::CUDA_NvidiaHWOpticalFlowTrait, as_raw_mut_CUDA_NvidiaHWOpticalFlow }
+
+	impl crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0TraitConst for CUDA_NvidiaOpticalFlow_1_0 {
+		#[inline] fn as_raw_CUDA_NvidiaOpticalFlow_1_0(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0Trait for CUDA_NvidiaOpticalFlow_1_0 {
+		#[inline] fn as_raw_mut_CUDA_NvidiaOpticalFlow_1_0(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { CUDA_NvidiaOpticalFlow_1_0, crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0TraitConst, as_raw_CUDA_NvidiaOpticalFlow_1_0, crate::cudaoptflow::CUDA_NvidiaOpticalFlow_1_0Trait, as_raw_mut_CUDA_NvidiaOpticalFlow_1_0 }
 
 	/// Class for computing the optical flow vectors between two images using NVIDIA Optical Flow hardware and Optical Flow SDK 2.0.
 	///
@@ -1327,36 +1292,6 @@ pub mod cudaoptflow {
 	}
 
 	unsafe impl Send for CUDA_NvidiaOpticalFlow_2_0 {}
-
-	impl core::AlgorithmTraitConst for CUDA_NvidiaOpticalFlow_2_0 {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::AlgorithmTrait for CUDA_NvidiaOpticalFlow_2_0 {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { CUDA_NvidiaOpticalFlow_2_0, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-
-	impl crate::cudaoptflow::CUDA_NvidiaHWOpticalFlowTraitConst for CUDA_NvidiaOpticalFlow_2_0 {
-		#[inline] fn as_raw_CUDA_NvidiaHWOpticalFlow(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::cudaoptflow::CUDA_NvidiaHWOpticalFlowTrait for CUDA_NvidiaOpticalFlow_2_0 {
-		#[inline] fn as_raw_mut_CUDA_NvidiaHWOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { CUDA_NvidiaOpticalFlow_2_0, crate::cudaoptflow::CUDA_NvidiaHWOpticalFlowTraitConst, as_raw_CUDA_NvidiaHWOpticalFlow, crate::cudaoptflow::CUDA_NvidiaHWOpticalFlowTrait, as_raw_mut_CUDA_NvidiaHWOpticalFlow }
-
-	impl crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0TraitConst for CUDA_NvidiaOpticalFlow_2_0 {
-		#[inline] fn as_raw_CUDA_NvidiaOpticalFlow_2_0(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0Trait for CUDA_NvidiaOpticalFlow_2_0 {
-		#[inline] fn as_raw_mut_CUDA_NvidiaOpticalFlow_2_0(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { CUDA_NvidiaOpticalFlow_2_0, crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0TraitConst, as_raw_CUDA_NvidiaOpticalFlow_2_0, crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0Trait, as_raw_mut_CUDA_NvidiaOpticalFlow_2_0 }
 
 	impl CUDA_NvidiaOpticalFlow_2_0 {
 		/// Instantiate NVIDIA Optical Flow
@@ -1537,9 +1472,34 @@ pub mod cudaoptflow {
 
 	}
 
-	boxed_cast_base! { CUDA_NvidiaOpticalFlow_2_0, core::Algorithm, cv_cuda_NvidiaOpticalFlow_2_0_to_Algorithm }
+	/// Constant methods for [crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0]
+	pub trait CUDA_NvidiaOpticalFlow_2_0TraitConst: crate::cudaoptflow::CUDA_NvidiaHWOpticalFlowTraitConst {
+		fn as_raw_CUDA_NvidiaOpticalFlow_2_0(&self) -> *const c_void;
 
-	boxed_cast_base! { CUDA_NvidiaOpticalFlow_2_0, crate::cudaoptflow::CUDA_NvidiaHWOpticalFlow, cv_cuda_NvidiaOpticalFlow_2_0_to_CUDA_NvidiaHWOpticalFlow }
+	}
+
+	/// Mutable methods for [crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0]
+	pub trait CUDA_NvidiaOpticalFlow_2_0Trait: crate::cudaoptflow::CUDA_NvidiaHWOpticalFlowTrait + crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0TraitConst {
+		fn as_raw_mut_CUDA_NvidiaOpticalFlow_2_0(&mut self) -> *mut c_void;
+
+		/// convertToFloat() helper function converts the hardware-generated flow vectors to floating point representation (1 flow vector for gridSize).
+		/// gridSize can be queried via function getGridSize().
+		///
+		/// ## Parameters
+		/// * flow: Buffer of type CV_16FC2 containing flow vectors generated by calc().
+		/// * floatFlow: Buffer of type CV_32FC2, containing flow vectors in floating point representation, each flow vector for 1 pixel per gridSize, in the pitch-linear layout.
+		#[inline]
+		fn convert_to_float(&mut self, flow: &impl ToInputArray, float_flow: &mut impl ToInputOutputArray) -> Result<()> {
+			input_array_arg!(flow);
+			input_output_array_arg!(float_flow);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_NvidiaOpticalFlow_2_0_convertToFloat_const__InputArrayR_const__InputOutputArrayR(self.as_raw_mut_CUDA_NvidiaOpticalFlow_2_0(), flow.as_raw__InputArray(), float_flow.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
 
 	impl std::fmt::Debug for CUDA_NvidiaOpticalFlow_2_0 {
 		#[inline]
@@ -1547,6 +1507,107 @@ pub mod cudaoptflow {
 			f.debug_struct("CUDA_NvidiaOpticalFlow_2_0")
 				.finish()
 		}
+	}
+
+	boxed_cast_base! { CUDA_NvidiaOpticalFlow_2_0, core::Algorithm, cv_cuda_NvidiaOpticalFlow_2_0_to_Algorithm }
+
+	boxed_cast_base! { CUDA_NvidiaOpticalFlow_2_0, crate::cudaoptflow::CUDA_NvidiaHWOpticalFlow, cv_cuda_NvidiaOpticalFlow_2_0_to_CUDA_NvidiaHWOpticalFlow }
+
+	impl core::AlgorithmTraitConst for CUDA_NvidiaOpticalFlow_2_0 {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::AlgorithmTrait for CUDA_NvidiaOpticalFlow_2_0 {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { CUDA_NvidiaOpticalFlow_2_0, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+
+	impl crate::cudaoptflow::CUDA_NvidiaHWOpticalFlowTraitConst for CUDA_NvidiaOpticalFlow_2_0 {
+		#[inline] fn as_raw_CUDA_NvidiaHWOpticalFlow(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::cudaoptflow::CUDA_NvidiaHWOpticalFlowTrait for CUDA_NvidiaOpticalFlow_2_0 {
+		#[inline] fn as_raw_mut_CUDA_NvidiaHWOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { CUDA_NvidiaOpticalFlow_2_0, crate::cudaoptflow::CUDA_NvidiaHWOpticalFlowTraitConst, as_raw_CUDA_NvidiaHWOpticalFlow, crate::cudaoptflow::CUDA_NvidiaHWOpticalFlowTrait, as_raw_mut_CUDA_NvidiaHWOpticalFlow }
+
+	impl crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0TraitConst for CUDA_NvidiaOpticalFlow_2_0 {
+		#[inline] fn as_raw_CUDA_NvidiaOpticalFlow_2_0(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0Trait for CUDA_NvidiaOpticalFlow_2_0 {
+		#[inline] fn as_raw_mut_CUDA_NvidiaOpticalFlow_2_0(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { CUDA_NvidiaOpticalFlow_2_0, crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0TraitConst, as_raw_CUDA_NvidiaOpticalFlow_2_0, crate::cudaoptflow::CUDA_NvidiaOpticalFlow_2_0Trait, as_raw_mut_CUDA_NvidiaOpticalFlow_2_0 }
+
+	/// Implementation of the Zach, Pock and Bischof Dual TV-L1 Optical Flow method.
+	///
+	///
+	/// Note: C. Zach, T. Pock and H. Bischof, "A Duality Based Approach for Realtime TV-L1 Optical Flow".
+	///
+	/// Note: Javier Sanchez, Enric Meinhardt-Llopis and Gabriele Facciolo. "TV-L1 Optical Flow Estimation".
+	pub struct CUDA_OpticalFlowDual_TVL1 {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { CUDA_OpticalFlowDual_TVL1 }
+
+	impl Drop for CUDA_OpticalFlowDual_TVL1 {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_delete(self.as_raw_mut_CUDA_OpticalFlowDual_TVL1()) };
+		}
+	}
+
+	unsafe impl Send for CUDA_OpticalFlowDual_TVL1 {}
+
+	impl CUDA_OpticalFlowDual_TVL1 {
+		/// ## C++ default parameters
+		/// * tau: 0.25
+		/// * lambda: 0.15
+		/// * theta: 0.3
+		/// * nscales: 5
+		/// * warps: 5
+		/// * epsilon: 0.01
+		/// * iterations: 300
+		/// * scale_step: 0.8
+		/// * gamma: 0.0
+		/// * use_initial_flow: false
+		#[inline]
+		pub fn create(tau: f64, lambda: f64, theta: f64, nscales: i32, warps: i32, epsilon: f64, iterations: i32, scale_step: f64, gamma: f64, use_initial_flow: bool) -> Result<core::Ptr<crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_create_double_double_double_int_int_double_int_double_double_bool(tau, lambda, theta, nscales, warps, epsilon, iterations, scale_step, gamma, use_initial_flow, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [CUDA_OpticalFlowDual_TVL1::create] function uses the following default values for its arguments:
+		/// * tau: 0.25
+		/// * lambda: 0.15
+		/// * theta: 0.3
+		/// * nscales: 5
+		/// * warps: 5
+		/// * epsilon: 0.01
+		/// * iterations: 300
+		/// * scale_step: 0.8
+		/// * gamma: 0.0
+		/// * use_initial_flow: false
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1]
@@ -1762,26 +1823,17 @@ pub mod cudaoptflow {
 
 	}
 
-	/// Implementation of the Zach, Pock and Bischof Dual TV-L1 Optical Flow method.
-	///
-	///
-	/// Note: C. Zach, T. Pock and H. Bischof, "A Duality Based Approach for Realtime TV-L1 Optical Flow".
-	///
-	/// Note: Javier Sanchez, Enric Meinhardt-Llopis and Gabriele Facciolo. "TV-L1 Optical Flow Estimation".
-	pub struct CUDA_OpticalFlowDual_TVL1 {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CUDA_OpticalFlowDual_TVL1 }
-
-	impl Drop for CUDA_OpticalFlowDual_TVL1 {
+	impl std::fmt::Debug for CUDA_OpticalFlowDual_TVL1 {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_delete(self.as_raw_mut_CUDA_OpticalFlowDual_TVL1()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_OpticalFlowDual_TVL1")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for CUDA_OpticalFlowDual_TVL1 {}
+	boxed_cast_base! { CUDA_OpticalFlowDual_TVL1, core::Algorithm, cv_cuda_OpticalFlowDual_TVL1_to_Algorithm }
+
+	boxed_cast_base! { CUDA_OpticalFlowDual_TVL1, crate::cudaoptflow::CUDA_DenseOpticalFlow, cv_cuda_OpticalFlowDual_TVL1_to_CUDA_DenseOpticalFlow }
 
 	impl core::AlgorithmTraitConst for CUDA_OpticalFlowDual_TVL1 {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -1813,63 +1865,21 @@ pub mod cudaoptflow {
 
 	boxed_ref! { CUDA_OpticalFlowDual_TVL1, crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1TraitConst, as_raw_CUDA_OpticalFlowDual_TVL1, crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1Trait, as_raw_mut_CUDA_OpticalFlowDual_TVL1 }
 
-	impl CUDA_OpticalFlowDual_TVL1 {
-		/// ## C++ default parameters
-		/// * tau: 0.25
-		/// * lambda: 0.15
-		/// * theta: 0.3
-		/// * nscales: 5
-		/// * warps: 5
-		/// * epsilon: 0.01
-		/// * iterations: 300
-		/// * scale_step: 0.8
-		/// * gamma: 0.0
-		/// * use_initial_flow: false
-		#[inline]
-		pub fn create(tau: f64, lambda: f64, theta: f64, nscales: i32, warps: i32, epsilon: f64, iterations: i32, scale_step: f64, gamma: f64, use_initial_flow: bool) -> Result<core::Ptr<crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_create_double_double_double_int_int_double_int_double_double_bool(tau, lambda, theta, nscales, warps, epsilon, iterations, scale_step, gamma, use_initial_flow, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [CUDA_OpticalFlowDual_TVL1::create] function uses the following default values for its arguments:
-		/// * tau: 0.25
-		/// * lambda: 0.15
-		/// * theta: 0.3
-		/// * nscales: 5
-		/// * warps: 5
-		/// * epsilon: 0.01
-		/// * iterations: 300
-		/// * scale_step: 0.8
-		/// * gamma: 0.0
-		/// * use_initial_flow: false
-		#[inline]
-		pub fn create_def() -> Result<core::Ptr<crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_OpticalFlowDual_TVL1_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_OpticalFlowDual_TVL1>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// Base interface for sparse optical flow algorithms.
+	pub struct CUDA_SparseOpticalFlow {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { CUDA_OpticalFlowDual_TVL1, core::Algorithm, cv_cuda_OpticalFlowDual_TVL1_to_Algorithm }
+	opencv_type_boxed! { CUDA_SparseOpticalFlow }
 
-	boxed_cast_base! { CUDA_OpticalFlowDual_TVL1, crate::cudaoptflow::CUDA_DenseOpticalFlow, cv_cuda_OpticalFlowDual_TVL1_to_CUDA_DenseOpticalFlow }
-
-	impl std::fmt::Debug for CUDA_OpticalFlowDual_TVL1 {
+	impl Drop for CUDA_SparseOpticalFlow {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CUDA_OpticalFlowDual_TVL1")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_SparseOpticalFlow_delete(self.as_raw_mut_CUDA_SparseOpticalFlow()) };
 		}
 	}
+
+	unsafe impl Send for CUDA_SparseOpticalFlow {}
 
 	/// Constant methods for [crate::cudaoptflow::CUDA_SparseOpticalFlow]
 	pub trait CUDA_SparseOpticalFlowTraitConst: core::AlgorithmTraitConst {
@@ -1943,21 +1953,17 @@ pub mod cudaoptflow {
 
 	}
 
-	/// Base interface for sparse optical flow algorithms.
-	pub struct CUDA_SparseOpticalFlow {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CUDA_SparseOpticalFlow }
-
-	impl Drop for CUDA_SparseOpticalFlow {
+	impl std::fmt::Debug for CUDA_SparseOpticalFlow {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_SparseOpticalFlow_delete(self.as_raw_mut_CUDA_SparseOpticalFlow()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_SparseOpticalFlow")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for CUDA_SparseOpticalFlow {}
+	boxed_cast_base! { CUDA_SparseOpticalFlow, core::Algorithm, cv_cuda_SparseOpticalFlow_to_Algorithm }
+
+	boxed_cast_descendant! { CUDA_SparseOpticalFlow, crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow, cv_cuda_SparseOpticalFlow_to_CUDA_SparsePyrLKOpticalFlow }
 
 	impl core::AlgorithmTraitConst for CUDA_SparseOpticalFlow {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -1979,19 +1985,64 @@ pub mod cudaoptflow {
 
 	boxed_ref! { CUDA_SparseOpticalFlow, crate::cudaoptflow::CUDA_SparseOpticalFlowTraitConst, as_raw_CUDA_SparseOpticalFlow, crate::cudaoptflow::CUDA_SparseOpticalFlowTrait, as_raw_mut_CUDA_SparseOpticalFlow }
 
-	impl CUDA_SparseOpticalFlow {
+	/// Class used for calculating a sparse optical flow.
+	///
+	/// The class can calculate an optical flow for a sparse feature set using the
+	/// iterative Lucas-Kanade method with pyramids.
+	/// ## See also
+	/// calcOpticalFlowPyrLK
+	///
+	///
+	/// Note:
+	///    *   An example of the Lucas Kanade optical flow algorithm can be found at
+	///        opencv_source_code/samples/gpu/pyrlk_optical_flow.cpp
+	pub struct CUDA_SparsePyrLKOpticalFlow {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { CUDA_SparseOpticalFlow, crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow, cv_cuda_SparseOpticalFlow_to_CUDA_SparsePyrLKOpticalFlow }
+	opencv_type_boxed! { CUDA_SparsePyrLKOpticalFlow }
 
-	boxed_cast_base! { CUDA_SparseOpticalFlow, core::Algorithm, cv_cuda_SparseOpticalFlow_to_Algorithm }
-
-	impl std::fmt::Debug for CUDA_SparseOpticalFlow {
+	impl Drop for CUDA_SparsePyrLKOpticalFlow {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CUDA_SparseOpticalFlow")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_delete(self.as_raw_mut_CUDA_SparsePyrLKOpticalFlow()) };
 		}
+	}
+
+	unsafe impl Send for CUDA_SparsePyrLKOpticalFlow {}
+
+	impl CUDA_SparsePyrLKOpticalFlow {
+		/// ## C++ default parameters
+		/// * win_size: Size(21,21)
+		/// * max_level: 3
+		/// * iters: 30
+		/// * use_initial_flow: false
+		#[inline]
+		pub fn create(win_size: core::Size, max_level: i32, iters: i32, use_initial_flow: bool) -> Result<core::Ptr<crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_create_Size_int_int_bool(&win_size, max_level, iters, use_initial_flow, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [CUDA_SparsePyrLKOpticalFlow::create] function uses the following default values for its arguments:
+		/// * win_size: Size(21,21)
+		/// * max_level: 3
+		/// * iters: 30
+		/// * use_initial_flow: false
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow]
@@ -2078,31 +2129,17 @@ pub mod cudaoptflow {
 
 	}
 
-	/// Class used for calculating a sparse optical flow.
-	///
-	/// The class can calculate an optical flow for a sparse feature set using the
-	/// iterative Lucas-Kanade method with pyramids.
-	/// ## See also
-	/// calcOpticalFlowPyrLK
-	///
-	///
-	/// Note:
-	///    *   An example of the Lucas Kanade optical flow algorithm can be found at
-	///        opencv_source_code/samples/gpu/pyrlk_optical_flow.cpp
-	pub struct CUDA_SparsePyrLKOpticalFlow {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CUDA_SparsePyrLKOpticalFlow }
-
-	impl Drop for CUDA_SparsePyrLKOpticalFlow {
+	impl std::fmt::Debug for CUDA_SparsePyrLKOpticalFlow {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_delete(self.as_raw_mut_CUDA_SparsePyrLKOpticalFlow()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_SparsePyrLKOpticalFlow")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for CUDA_SparsePyrLKOpticalFlow {}
+	boxed_cast_base! { CUDA_SparsePyrLKOpticalFlow, core::Algorithm, cv_cuda_SparsePyrLKOpticalFlow_to_Algorithm }
+
+	boxed_cast_base! { CUDA_SparsePyrLKOpticalFlow, crate::cudaoptflow::CUDA_SparseOpticalFlow, cv_cuda_SparsePyrLKOpticalFlow_to_CUDA_SparseOpticalFlow }
 
 	impl core::AlgorithmTraitConst for CUDA_SparsePyrLKOpticalFlow {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -2134,49 +2171,4 @@ pub mod cudaoptflow {
 
 	boxed_ref! { CUDA_SparsePyrLKOpticalFlow, crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlowTraitConst, as_raw_CUDA_SparsePyrLKOpticalFlow, crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlowTrait, as_raw_mut_CUDA_SparsePyrLKOpticalFlow }
 
-	impl CUDA_SparsePyrLKOpticalFlow {
-		/// ## C++ default parameters
-		/// * win_size: Size(21,21)
-		/// * max_level: 3
-		/// * iters: 30
-		/// * use_initial_flow: false
-		#[inline]
-		pub fn create(win_size: core::Size, max_level: i32, iters: i32, use_initial_flow: bool) -> Result<core::Ptr<crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_create_Size_int_int_bool(&win_size, max_level, iters, use_initial_flow, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [CUDA_SparsePyrLKOpticalFlow::create] function uses the following default values for its arguments:
-		/// * win_size: Size(21,21)
-		/// * max_level: 3
-		/// * iters: 30
-		/// * use_initial_flow: false
-		#[inline]
-		pub fn create_def() -> Result<core::Ptr<crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_SparsePyrLKOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::cudaoptflow::CUDA_SparsePyrLKOpticalFlow>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_base! { CUDA_SparsePyrLKOpticalFlow, core::Algorithm, cv_cuda_SparsePyrLKOpticalFlow_to_Algorithm }
-
-	boxed_cast_base! { CUDA_SparsePyrLKOpticalFlow, crate::cudaoptflow::CUDA_SparseOpticalFlow, cv_cuda_SparsePyrLKOpticalFlow_to_CUDA_SparseOpticalFlow }
-
-	impl std::fmt::Debug for CUDA_SparsePyrLKOpticalFlow {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CUDA_SparsePyrLKOpticalFlow")
-				.finish()
-		}
-	}
 }

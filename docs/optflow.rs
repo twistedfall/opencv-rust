@@ -866,6 +866,134 @@ pub mod optflow {
 		Ok(ret)
 	}
 
+	/// Fast dense optical flow computation based on robust local optical flow (RLOF) algorithms and sparse-to-dense interpolation
+	/// scheme.
+	///
+	/// The RLOF is a fast local optical flow approach described in [Senst2012](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2012) [Senst2013](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2013) [Senst2014](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2014)
+	/// and [Senst2016](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2016) similar to the pyramidal iterative Lucas-Kanade method as
+	/// proposed by [Bouguet00](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Bouguet00). More details and experiments can be found in the following thesis [Senst2019](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2019).
+	/// The implementation is derived from optflow::calcOpticalFlowPyrLK().
+	///
+	/// The sparse-to-dense interpolation scheme allows for fast computation of dense optical flow using RLOF (see [Geistert2016](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Geistert2016)).
+	/// For this scheme the following steps are applied:
+	/// -# motion vector seeded at a regular sampled grid are computed. The sparsity of this grid can be configured with setGridStep
+	/// -# (optinally) errornous motion vectors are filter based on the forward backward confidence. The threshold can be configured
+	/// with setForwardBackward. The filter is only applied if the threshold >0 but than the runtime is doubled due to the estimation
+	/// of the backward flow.
+	/// -# Vector field interpolation is applied to the motion vector set to obtain a dense vector field.
+	///
+	/// For the RLOF configuration see optflow::RLOFOpticalFlowParameter for further details.
+	/// Parameters have been described in [Senst2012](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2012) [Senst2013](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2013) [Senst2014](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2014) and [Senst2016](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2016).
+	///
+	///
+	/// Note: If the grid size is set to (1,1) and the forward backward threshold <= 0 than pixelwise dense optical flow field is
+	/// computed by RLOF without using interpolation.
+	///
+	///
+	/// Note: Note that in output, if no correspondences are found between \a I0 and \a I1, the \a flow is set to 0.
+	/// ## See also
+	/// optflow::calcOpticalFlowDenseRLOF(), optflow::RLOFOpticalFlowParameter
+	pub struct DenseRLOFOpticalFlow {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { DenseRLOFOpticalFlow }
+
+	impl Drop for DenseRLOFOpticalFlow {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_delete(self.as_raw_mut_DenseRLOFOpticalFlow()) };
+		}
+	}
+
+	unsafe impl Send for DenseRLOFOpticalFlow {}
+
+	impl DenseRLOFOpticalFlow {
+		/// Creates instance of optflow::DenseRLOFOpticalFlow
+		///
+		/// ## Parameters
+		/// * rlofParam: see optflow::RLOFOpticalFlowParameter
+		/// * forwardBackwardThreshold: see setForwardBackward
+		/// * gridStep: see setGridStep
+		/// * interp_type: see setInterpolation
+		/// * epicK: see setEPICK
+		/// * epicSigma: see setEPICSigma
+		/// * epicLambda: see setEPICLambda
+		/// * ricSPSize: see setRICSPSize
+		/// * ricSLICType: see setRICSLICType
+		/// * use_post_proc: see setUsePostProc
+		/// * fgsLambda: see setFgsLambda
+		/// * fgsSigma: see setFgsSigma
+		/// * use_variational_refinement: see setUseVariationalRefinement
+		///
+		/// ## C++ default parameters
+		/// * rlof_param: Ptr<RLOFOpticalFlowParameter>()
+		/// * forward_backward_threshold: 1.f
+		/// * grid_step: Size(6,6)
+		/// * interp_type: InterpolationType::INTERP_EPIC
+		/// * epic_k: 128
+		/// * epic_sigma: 0.05f
+		/// * epic_lambda: 999.0f
+		/// * ric_sp_size: 15
+		/// * ric_slic_type: 100
+		/// * use_post_proc: true
+		/// * fgs_lambda: 500.0f
+		/// * fgs_sigma: 1.5f
+		/// * use_variational_refinement: false
+		#[inline]
+		pub fn create(mut rlof_param: core::Ptr<crate::optflow::RLOFOpticalFlowParameter>, forward_backward_threshold: f32, grid_step: core::Size, interp_type: crate::optflow::InterpolationType, epic_k: i32, epic_sigma: f32, epic_lambda: f32, ric_sp_size: i32, ric_slic_type: i32, use_post_proc: bool, fgs_lambda: f32, fgs_sigma: f32, use_variational_refinement: bool) -> Result<core::Ptr<crate::optflow::DenseRLOFOpticalFlow>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_create_PtrLRLOFOpticalFlowParameterG_float_Size_InterpolationType_int_float_float_int_int_bool_float_float_bool(rlof_param.as_raw_mut_PtrOfRLOFOpticalFlowParameter(), forward_backward_threshold, &grid_step, interp_type, epic_k, epic_sigma, epic_lambda, ric_sp_size, ric_slic_type, use_post_proc, fgs_lambda, fgs_sigma, use_variational_refinement, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::optflow::DenseRLOFOpticalFlow>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Creates instance of optflow::DenseRLOFOpticalFlow
+		///
+		/// ## Parameters
+		/// * rlofParam: see optflow::RLOFOpticalFlowParameter
+		/// * forwardBackwardThreshold: see setForwardBackward
+		/// * gridStep: see setGridStep
+		/// * interp_type: see setInterpolation
+		/// * epicK: see setEPICK
+		/// * epicSigma: see setEPICSigma
+		/// * epicLambda: see setEPICLambda
+		/// * ricSPSize: see setRICSPSize
+		/// * ricSLICType: see setRICSLICType
+		/// * use_post_proc: see setUsePostProc
+		/// * fgsLambda: see setFgsLambda
+		/// * fgsSigma: see setFgsSigma
+		/// * use_variational_refinement: see setUseVariationalRefinement
+		///
+		/// ## Note
+		/// This alternative version of [DenseRLOFOpticalFlow::create] function uses the following default values for its arguments:
+		/// * rlof_param: Ptr<RLOFOpticalFlowParameter>()
+		/// * forward_backward_threshold: 1.f
+		/// * grid_step: Size(6,6)
+		/// * interp_type: InterpolationType::INTERP_EPIC
+		/// * epic_k: 128
+		/// * epic_sigma: 0.05f
+		/// * epic_lambda: 999.0f
+		/// * ric_sp_size: 15
+		/// * ric_slic_type: 100
+		/// * use_post_proc: true
+		/// * fgs_lambda: 500.0f
+		/// * fgs_sigma: 1.5f
+		/// * use_variational_refinement: false
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::optflow::DenseRLOFOpticalFlow>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::optflow::DenseRLOFOpticalFlow>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
 	/// Constant methods for [crate::optflow::DenseRLOFOpticalFlow]
 	pub trait DenseRLOFOpticalFlowTraitConst: crate::video::DenseOpticalFlowTraitConst {
 		fn as_raw_DenseRLOFOpticalFlow(&self) -> *const c_void;
@@ -1243,47 +1371,17 @@ pub mod optflow {
 
 	}
 
-	/// Fast dense optical flow computation based on robust local optical flow (RLOF) algorithms and sparse-to-dense interpolation
-	/// scheme.
-	///
-	/// The RLOF is a fast local optical flow approach described in [Senst2012](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2012) [Senst2013](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2013) [Senst2014](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2014)
-	/// and [Senst2016](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2016) similar to the pyramidal iterative Lucas-Kanade method as
-	/// proposed by [Bouguet00](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Bouguet00). More details and experiments can be found in the following thesis [Senst2019](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2019).
-	/// The implementation is derived from optflow::calcOpticalFlowPyrLK().
-	///
-	/// The sparse-to-dense interpolation scheme allows for fast computation of dense optical flow using RLOF (see [Geistert2016](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Geistert2016)).
-	/// For this scheme the following steps are applied:
-	/// -# motion vector seeded at a regular sampled grid are computed. The sparsity of this grid can be configured with setGridStep
-	/// -# (optinally) errornous motion vectors are filter based on the forward backward confidence. The threshold can be configured
-	/// with setForwardBackward. The filter is only applied if the threshold >0 but than the runtime is doubled due to the estimation
-	/// of the backward flow.
-	/// -# Vector field interpolation is applied to the motion vector set to obtain a dense vector field.
-	///
-	/// For the RLOF configuration see optflow::RLOFOpticalFlowParameter for further details.
-	/// Parameters have been described in [Senst2012](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2012) [Senst2013](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2013) [Senst2014](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2014) and [Senst2016](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2016).
-	///
-	///
-	/// Note: If the grid size is set to (1,1) and the forward backward threshold <= 0 than pixelwise dense optical flow field is
-	/// computed by RLOF without using interpolation.
-	///
-	///
-	/// Note: Note that in output, if no correspondences are found between \a I0 and \a I1, the \a flow is set to 0.
-	/// ## See also
-	/// optflow::calcOpticalFlowDenseRLOF(), optflow::RLOFOpticalFlowParameter
-	pub struct DenseRLOFOpticalFlow {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { DenseRLOFOpticalFlow }
-
-	impl Drop for DenseRLOFOpticalFlow {
+	impl std::fmt::Debug for DenseRLOFOpticalFlow {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_delete(self.as_raw_mut_DenseRLOFOpticalFlow()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DenseRLOFOpticalFlow")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for DenseRLOFOpticalFlow {}
+	boxed_cast_base! { DenseRLOFOpticalFlow, core::Algorithm, cv_optflow_DenseRLOFOpticalFlow_to_Algorithm }
+
+	boxed_cast_base! { DenseRLOFOpticalFlow, crate::video::DenseOpticalFlow, cv_optflow_DenseRLOFOpticalFlow_to_DenseOpticalFlow }
 
 	impl core::AlgorithmTraitConst for DenseRLOFOpticalFlow {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -1315,102 +1413,114 @@ pub mod optflow {
 
 	boxed_ref! { DenseRLOFOpticalFlow, crate::optflow::DenseRLOFOpticalFlowTraitConst, as_raw_DenseRLOFOpticalFlow, crate::optflow::DenseRLOFOpticalFlowTrait, as_raw_mut_DenseRLOFOpticalFlow }
 
-	impl DenseRLOFOpticalFlow {
-		/// Creates instance of optflow::DenseRLOFOpticalFlow
-		///
-		/// ## Parameters
-		/// * rlofParam: see optflow::RLOFOpticalFlowParameter
-		/// * forwardBackwardThreshold: see setForwardBackward
-		/// * gridStep: see setGridStep
-		/// * interp_type: see setInterpolation
-		/// * epicK: see setEPICK
-		/// * epicSigma: see setEPICSigma
-		/// * epicLambda: see setEPICLambda
-		/// * ricSPSize: see setRICSPSize
-		/// * ricSLICType: see setRICSLICType
-		/// * use_post_proc: see setUsePostProc
-		/// * fgsLambda: see setFgsLambda
-		/// * fgsSigma: see setFgsSigma
-		/// * use_variational_refinement: see setUseVariationalRefinement
-		///
-		/// ## C++ default parameters
-		/// * rlof_param: Ptr<RLOFOpticalFlowParameter>()
-		/// * forward_backward_threshold: 1.f
-		/// * grid_step: Size(6,6)
-		/// * interp_type: InterpolationType::INTERP_EPIC
-		/// * epic_k: 128
-		/// * epic_sigma: 0.05f
-		/// * epic_lambda: 999.0f
-		/// * ric_sp_size: 15
-		/// * ric_slic_type: 100
-		/// * use_post_proc: true
-		/// * fgs_lambda: 500.0f
-		/// * fgs_sigma: 1.5f
-		/// * use_variational_refinement: false
-		#[inline]
-		pub fn create(mut rlof_param: core::Ptr<crate::optflow::RLOFOpticalFlowParameter>, forward_backward_threshold: f32, grid_step: core::Size, interp_type: crate::optflow::InterpolationType, epic_k: i32, epic_sigma: f32, epic_lambda: f32, ric_sp_size: i32, ric_slic_type: i32, use_post_proc: bool, fgs_lambda: f32, fgs_sigma: f32, use_variational_refinement: bool) -> Result<core::Ptr<crate::optflow::DenseRLOFOpticalFlow>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_create_PtrLRLOFOpticalFlowParameterG_float_Size_InterpolationType_int_float_float_int_int_bool_float_float_bool(rlof_param.as_raw_mut_PtrOfRLOFOpticalFlowParameter(), forward_backward_threshold, &grid_step, interp_type, epic_k, epic_sigma, epic_lambda, ric_sp_size, ric_slic_type, use_post_proc, fgs_lambda, fgs_sigma, use_variational_refinement, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::optflow::DenseRLOFOpticalFlow>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Creates instance of optflow::DenseRLOFOpticalFlow
-		///
-		/// ## Parameters
-		/// * rlofParam: see optflow::RLOFOpticalFlowParameter
-		/// * forwardBackwardThreshold: see setForwardBackward
-		/// * gridStep: see setGridStep
-		/// * interp_type: see setInterpolation
-		/// * epicK: see setEPICK
-		/// * epicSigma: see setEPICSigma
-		/// * epicLambda: see setEPICLambda
-		/// * ricSPSize: see setRICSPSize
-		/// * ricSLICType: see setRICSLICType
-		/// * use_post_proc: see setUsePostProc
-		/// * fgsLambda: see setFgsLambda
-		/// * fgsSigma: see setFgsSigma
-		/// * use_variational_refinement: see setUseVariationalRefinement
-		///
-		/// ## Note
-		/// This alternative version of [DenseRLOFOpticalFlow::create] function uses the following default values for its arguments:
-		/// * rlof_param: Ptr<RLOFOpticalFlowParameter>()
-		/// * forward_backward_threshold: 1.f
-		/// * grid_step: Size(6,6)
-		/// * interp_type: InterpolationType::INTERP_EPIC
-		/// * epic_k: 128
-		/// * epic_sigma: 0.05f
-		/// * epic_lambda: 999.0f
-		/// * ric_sp_size: 15
-		/// * ric_slic_type: 100
-		/// * use_post_proc: true
-		/// * fgs_lambda: 500.0f
-		/// * fgs_sigma: 1.5f
-		/// * use_variational_refinement: false
-		#[inline]
-		pub fn create_def() -> Result<core::Ptr<crate::optflow::DenseRLOFOpticalFlow>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_optflow_DenseRLOFOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::optflow::DenseRLOFOpticalFlow>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// "Dual TV L1" Optical Flow Algorithm.
+	///
+	/// The class implements the "Dual TV L1" optical flow algorithm described in [Zach2007](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Zach2007) and
+	/// [Javier2012](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Javier2012) .
+	/// Here are important members of the class that control the algorithm, which you can set after
+	/// constructing the class instance:
+	///
+	/// *   member double tau
+	///    Time step of the numerical scheme.
+	///
+	/// *   member double lambda
+	///    Weight parameter for the data term, attachment parameter. This is the most relevant
+	///    parameter, which determines the smoothness of the output. The smaller this parameter is,
+	///    the smoother the solutions we obtain. It depends on the range of motions of the images, so
+	///    its value should be adapted to each image sequence.
+	///
+	/// *   member double theta
+	///    Weight parameter for (u - v)\^2, tightness parameter. It serves as a link between the
+	///    attachment and the regularization terms. In theory, it should have a small value in order
+	///    to maintain both parts in correspondence. The method is stable for a large range of values
+	///    of this parameter.
+	///
+	/// *   member int nscales
+	///    Number of scales used to create the pyramid of images.
+	///
+	/// *   member int warps
+	///    Number of warpings per scale. Represents the number of times that I1(x+u0) and grad(
+	///    I1(x+u0) ) are computed per scale. This is a parameter that assures the stability of the
+	///    method. It also affects the running time, so it is a compromise between speed and
+	///    accuracy.
+	///
+	/// *   member double epsilon
+	///    Stopping criterion threshold used in the numerical scheme, which is a trade-off between
+	///    precision and running time. A small value will yield more accurate solutions at the
+	///    expense of a slower convergence.
+	///
+	/// *   member int iterations
+	///    Stopping criterion iterations number used in the numerical scheme.
+	///
+	/// C. Zach, T. Pock and H. Bischof, "A Duality Based Approach for Realtime TV-L1 Optical Flow".
+	/// Javier Sanchez, Enric Meinhardt-Llopis and Gabriele Facciolo. "TV-L1 Optical Flow Estimation".
+	pub struct DualTVL1OpticalFlow {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { DenseRLOFOpticalFlow, core::Algorithm, cv_optflow_DenseRLOFOpticalFlow_to_Algorithm }
+	opencv_type_boxed! { DualTVL1OpticalFlow }
 
-	boxed_cast_base! { DenseRLOFOpticalFlow, crate::video::DenseOpticalFlow, cv_optflow_DenseRLOFOpticalFlow_to_DenseOpticalFlow }
-
-	impl std::fmt::Debug for DenseRLOFOpticalFlow {
+	impl Drop for DualTVL1OpticalFlow {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("DenseRLOFOpticalFlow")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_optflow_DualTVL1OpticalFlow_delete(self.as_raw_mut_DualTVL1OpticalFlow()) };
 		}
+	}
+
+	unsafe impl Send for DualTVL1OpticalFlow {}
+
+	impl DualTVL1OpticalFlow {
+		/// Creates instance of cv::DualTVL1OpticalFlow
+		///
+		/// ## C++ default parameters
+		/// * tau: 0.25
+		/// * lambda: 0.15
+		/// * theta: 0.3
+		/// * nscales: 5
+		/// * warps: 5
+		/// * epsilon: 0.01
+		/// * innner_iterations: 30
+		/// * outer_iterations: 10
+		/// * scale_step: 0.8
+		/// * gamma: 0.0
+		/// * median_filtering: 5
+		/// * use_initial_flow: false
+		#[inline]
+		pub fn create(tau: f64, lambda: f64, theta: f64, nscales: i32, warps: i32, epsilon: f64, innner_iterations: i32, outer_iterations: i32, scale_step: f64, gamma: f64, median_filtering: i32, use_initial_flow: bool) -> Result<core::Ptr<crate::optflow::DualTVL1OpticalFlow>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_optflow_DualTVL1OpticalFlow_create_double_double_double_int_int_double_int_int_double_double_int_bool(tau, lambda, theta, nscales, warps, epsilon, innner_iterations, outer_iterations, scale_step, gamma, median_filtering, use_initial_flow, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::optflow::DualTVL1OpticalFlow>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Creates instance of cv::DualTVL1OpticalFlow
+		///
+		/// ## Note
+		/// This alternative version of [DualTVL1OpticalFlow::create] function uses the following default values for its arguments:
+		/// * tau: 0.25
+		/// * lambda: 0.15
+		/// * theta: 0.3
+		/// * nscales: 5
+		/// * warps: 5
+		/// * epsilon: 0.01
+		/// * innner_iterations: 30
+		/// * outer_iterations: 10
+		/// * scale_step: 0.8
+		/// * gamma: 0.0
+		/// * median_filtering: 5
+		/// * use_initial_flow: false
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::optflow::DualTVL1OpticalFlow>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_optflow_DualTVL1OpticalFlow_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::optflow::DualTVL1OpticalFlow>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::optflow::DualTVL1OpticalFlow]
@@ -1713,61 +1823,17 @@ pub mod optflow {
 
 	}
 
-	/// "Dual TV L1" Optical Flow Algorithm.
-	///
-	/// The class implements the "Dual TV L1" optical flow algorithm described in [Zach2007](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Zach2007) and
-	/// [Javier2012](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Javier2012) .
-	/// Here are important members of the class that control the algorithm, which you can set after
-	/// constructing the class instance:
-	///
-	/// *   member double tau
-	///    Time step of the numerical scheme.
-	///
-	/// *   member double lambda
-	///    Weight parameter for the data term, attachment parameter. This is the most relevant
-	///    parameter, which determines the smoothness of the output. The smaller this parameter is,
-	///    the smoother the solutions we obtain. It depends on the range of motions of the images, so
-	///    its value should be adapted to each image sequence.
-	///
-	/// *   member double theta
-	///    Weight parameter for (u - v)\^2, tightness parameter. It serves as a link between the
-	///    attachment and the regularization terms. In theory, it should have a small value in order
-	///    to maintain both parts in correspondence. The method is stable for a large range of values
-	///    of this parameter.
-	///
-	/// *   member int nscales
-	///    Number of scales used to create the pyramid of images.
-	///
-	/// *   member int warps
-	///    Number of warpings per scale. Represents the number of times that I1(x+u0) and grad(
-	///    I1(x+u0) ) are computed per scale. This is a parameter that assures the stability of the
-	///    method. It also affects the running time, so it is a compromise between speed and
-	///    accuracy.
-	///
-	/// *   member double epsilon
-	///    Stopping criterion threshold used in the numerical scheme, which is a trade-off between
-	///    precision and running time. A small value will yield more accurate solutions at the
-	///    expense of a slower convergence.
-	///
-	/// *   member int iterations
-	///    Stopping criterion iterations number used in the numerical scheme.
-	///
-	/// C. Zach, T. Pock and H. Bischof, "A Duality Based Approach for Realtime TV-L1 Optical Flow".
-	/// Javier Sanchez, Enric Meinhardt-Llopis and Gabriele Facciolo. "TV-L1 Optical Flow Estimation".
-	pub struct DualTVL1OpticalFlow {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { DualTVL1OpticalFlow }
-
-	impl Drop for DualTVL1OpticalFlow {
+	impl std::fmt::Debug for DualTVL1OpticalFlow {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_optflow_DualTVL1OpticalFlow_delete(self.as_raw_mut_DualTVL1OpticalFlow()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DualTVL1OpticalFlow")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for DualTVL1OpticalFlow {}
+	boxed_cast_base! { DualTVL1OpticalFlow, core::Algorithm, cv_optflow_DualTVL1OpticalFlow_to_Algorithm }
+
+	boxed_cast_base! { DualTVL1OpticalFlow, crate::video::DenseOpticalFlow, cv_optflow_DualTVL1OpticalFlow_to_DenseOpticalFlow }
 
 	impl core::AlgorithmTraitConst for DualTVL1OpticalFlow {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -1799,84 +1865,6 @@ pub mod optflow {
 
 	boxed_ref! { DualTVL1OpticalFlow, crate::optflow::DualTVL1OpticalFlowTraitConst, as_raw_DualTVL1OpticalFlow, crate::optflow::DualTVL1OpticalFlowTrait, as_raw_mut_DualTVL1OpticalFlow }
 
-	impl DualTVL1OpticalFlow {
-		/// Creates instance of cv::DualTVL1OpticalFlow
-		///
-		/// ## C++ default parameters
-		/// * tau: 0.25
-		/// * lambda: 0.15
-		/// * theta: 0.3
-		/// * nscales: 5
-		/// * warps: 5
-		/// * epsilon: 0.01
-		/// * innner_iterations: 30
-		/// * outer_iterations: 10
-		/// * scale_step: 0.8
-		/// * gamma: 0.0
-		/// * median_filtering: 5
-		/// * use_initial_flow: false
-		#[inline]
-		pub fn create(tau: f64, lambda: f64, theta: f64, nscales: i32, warps: i32, epsilon: f64, innner_iterations: i32, outer_iterations: i32, scale_step: f64, gamma: f64, median_filtering: i32, use_initial_flow: bool) -> Result<core::Ptr<crate::optflow::DualTVL1OpticalFlow>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_optflow_DualTVL1OpticalFlow_create_double_double_double_int_int_double_int_int_double_double_int_bool(tau, lambda, theta, nscales, warps, epsilon, innner_iterations, outer_iterations, scale_step, gamma, median_filtering, use_initial_flow, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::optflow::DualTVL1OpticalFlow>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Creates instance of cv::DualTVL1OpticalFlow
-		///
-		/// ## Note
-		/// This alternative version of [DualTVL1OpticalFlow::create] function uses the following default values for its arguments:
-		/// * tau: 0.25
-		/// * lambda: 0.15
-		/// * theta: 0.3
-		/// * nscales: 5
-		/// * warps: 5
-		/// * epsilon: 0.01
-		/// * innner_iterations: 30
-		/// * outer_iterations: 10
-		/// * scale_step: 0.8
-		/// * gamma: 0.0
-		/// * median_filtering: 5
-		/// * use_initial_flow: false
-		#[inline]
-		pub fn create_def() -> Result<core::Ptr<crate::optflow::DualTVL1OpticalFlow>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_optflow_DualTVL1OpticalFlow_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::optflow::DualTVL1OpticalFlow>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_base! { DualTVL1OpticalFlow, core::Algorithm, cv_optflow_DualTVL1OpticalFlow_to_Algorithm }
-
-	boxed_cast_base! { DualTVL1OpticalFlow, crate::video::DenseOpticalFlow, cv_optflow_DualTVL1OpticalFlow_to_DenseOpticalFlow }
-
-	impl std::fmt::Debug for DualTVL1OpticalFlow {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("DualTVL1OpticalFlow")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::optflow::GPCDetails]
-	pub trait GPCDetailsTraitConst {
-		fn as_raw_GPCDetails(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::optflow::GPCDetails]
-	pub trait GPCDetailsTrait: crate::optflow::GPCDetailsTraitConst {
-		fn as_raw_mut_GPCDetails(&mut self) -> *mut c_void;
-
-	}
-
 	pub struct GPCDetails {
 		ptr: *mut c_void,
 	}
@@ -1892,21 +1880,13 @@ pub mod optflow {
 
 	unsafe impl Send for GPCDetails {}
 
-	impl crate::optflow::GPCDetailsTraitConst for GPCDetails {
-		#[inline] fn as_raw_GPCDetails(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::optflow::GPCDetailsTrait for GPCDetails {
-		#[inline] fn as_raw_mut_GPCDetails(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { GPCDetails, crate::optflow::GPCDetailsTraitConst, as_raw_GPCDetails, crate::optflow::GPCDetailsTrait, as_raw_mut_GPCDetails }
-
 	impl GPCDetails {
 		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_optflow_GPCDetails_defaultNew_const()) }
+		pub fn default() -> crate::optflow::GPCDetails {
+			let ret = unsafe { sys::cv_optflow_GPCDetails_defaultNew_const() };
+			let ret = unsafe { crate::optflow::GPCDetails::opencv_from_extern(ret) };
+			ret
 		}
 
 		#[inline]
@@ -1938,12 +1918,16 @@ pub mod optflow {
 
 	}
 
-	impl std::fmt::Debug for GPCDetails {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("GPCDetails")
-				.finish()
-		}
+	/// Constant methods for [crate::optflow::GPCDetails]
+	pub trait GPCDetailsTraitConst {
+		fn as_raw_GPCDetails(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::optflow::GPCDetails]
+	pub trait GPCDetailsTrait: crate::optflow::GPCDetailsTraitConst {
+		fn as_raw_mut_GPCDetails(&mut self) -> *mut c_void;
+
 	}
 
 	impl Default for GPCDetails {
@@ -1953,6 +1937,24 @@ pub mod optflow {
 			Self::default()
 		}
 	}
+
+	impl std::fmt::Debug for GPCDetails {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GPCDetails")
+				.finish()
+		}
+	}
+
+	impl crate::optflow::GPCDetailsTraitConst for GPCDetails {
+		#[inline] fn as_raw_GPCDetails(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::optflow::GPCDetailsTrait for GPCDetails {
+		#[inline] fn as_raw_mut_GPCDetails(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { GPCDetails, crate::optflow::GPCDetailsTraitConst, as_raw_GPCDetails, crate::optflow::GPCDetailsTrait, as_raw_mut_GPCDetails }
 
 	/// Class encapsulating matching parameters.
 	#[repr(C)]
@@ -1995,6 +1997,34 @@ pub mod optflow {
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
+		}
+
+	}
+
+	pub struct GPCPatchDescriptor {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { GPCPatchDescriptor }
+
+	impl Drop for GPCPatchDescriptor {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_optflow_GPCPatchDescriptor_delete(self.as_raw_mut_GPCPatchDescriptor()) };
+		}
+	}
+
+	unsafe impl Send for GPCPatchDescriptor {}
+
+	impl GPCPatchDescriptor {
+		/// number of features in a patch descriptor
+		pub const nFeatures: u32 = 18;
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::optflow::GPCPatchDescriptor {
+			let ret = unsafe { sys::cv_optflow_GPCPatchDescriptor_defaultNew_const() };
+			let ret = unsafe { crate::optflow::GPCPatchDescriptor::opencv_from_extern(ret) };
+			ret
 		}
 
 	}
@@ -2052,40 +2082,12 @@ pub mod optflow {
 
 	}
 
-	pub struct GPCPatchDescriptor {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GPCPatchDescriptor }
-
-	impl Drop for GPCPatchDescriptor {
+	impl Default for GPCPatchDescriptor {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_optflow_GPCPatchDescriptor_delete(self.as_raw_mut_GPCPatchDescriptor()) };
-		}
-	}
-
-	unsafe impl Send for GPCPatchDescriptor {}
-
-	impl crate::optflow::GPCPatchDescriptorTraitConst for GPCPatchDescriptor {
-		#[inline] fn as_raw_GPCPatchDescriptor(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::optflow::GPCPatchDescriptorTrait for GPCPatchDescriptor {
-		#[inline] fn as_raw_mut_GPCPatchDescriptor(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { GPCPatchDescriptor, crate::optflow::GPCPatchDescriptorTraitConst, as_raw_GPCPatchDescriptor, crate::optflow::GPCPatchDescriptorTrait, as_raw_mut_GPCPatchDescriptor }
-
-	impl GPCPatchDescriptor {
-		/// number of features in a patch descriptor
-		pub const nFeatures: u32 = 18;
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
+		/// Forwards to infallible Self::default()
 		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_optflow_GPCPatchDescriptor_defaultNew_const()) }
+			Self::default()
 		}
-
 	}
 
 	impl std::fmt::Debug for GPCPatchDescriptor {
@@ -2097,12 +2099,40 @@ pub mod optflow {
 		}
 	}
 
-	impl Default for GPCPatchDescriptor {
+	impl crate::optflow::GPCPatchDescriptorTraitConst for GPCPatchDescriptor {
+		#[inline] fn as_raw_GPCPatchDescriptor(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::optflow::GPCPatchDescriptorTrait for GPCPatchDescriptor {
+		#[inline] fn as_raw_mut_GPCPatchDescriptor(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { GPCPatchDescriptor, crate::optflow::GPCPatchDescriptorTraitConst, as_raw_GPCPatchDescriptor, crate::optflow::GPCPatchDescriptorTrait, as_raw_mut_GPCPatchDescriptor }
+
+	pub struct GPCPatchSample {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { GPCPatchSample }
+
+	impl Drop for GPCPatchSample {
 		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
+		fn drop(&mut self) {
+			unsafe { sys::cv_optflow_GPCPatchSample_delete(self.as_raw_mut_GPCPatchSample()) };
 		}
+	}
+
+	unsafe impl Send for GPCPatchSample {}
+
+	impl GPCPatchSample {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::optflow::GPCPatchSample {
+			let ret = unsafe { sys::cv_optflow_GPCPatchSample_defaultNew_const() };
+			let ret = unsafe { crate::optflow::GPCPatchSample::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::optflow::GPCPatchSample]
@@ -2165,38 +2195,12 @@ pub mod optflow {
 
 	}
 
-	pub struct GPCPatchSample {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GPCPatchSample }
-
-	impl Drop for GPCPatchSample {
+	impl Default for GPCPatchSample {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_optflow_GPCPatchSample_delete(self.as_raw_mut_GPCPatchSample()) };
-		}
-	}
-
-	unsafe impl Send for GPCPatchSample {}
-
-	impl crate::optflow::GPCPatchSampleTraitConst for GPCPatchSample {
-		#[inline] fn as_raw_GPCPatchSample(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::optflow::GPCPatchSampleTrait for GPCPatchSample {
-		#[inline] fn as_raw_mut_GPCPatchSample(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { GPCPatchSample, crate::optflow::GPCPatchSampleTraitConst, as_raw_GPCPatchSample, crate::optflow::GPCPatchSampleTrait, as_raw_mut_GPCPatchSample }
-
-	impl GPCPatchSample {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
+		/// Forwards to infallible Self::default()
 		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_optflow_GPCPatchSample_defaultNew_const()) }
+			Self::default()
 		}
-
 	}
 
 	impl std::fmt::Debug for GPCPatchSample {
@@ -2210,13 +2214,15 @@ pub mod optflow {
 		}
 	}
 
-	impl Default for GPCPatchSample {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
+	impl crate::optflow::GPCPatchSampleTraitConst for GPCPatchSample {
+		#[inline] fn as_raw_GPCPatchSample(&self) -> *const c_void { self.as_raw() }
 	}
+
+	impl crate::optflow::GPCPatchSampleTrait for GPCPatchSample {
+		#[inline] fn as_raw_mut_GPCPatchSample(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { GPCPatchSample, crate::optflow::GPCPatchSampleTraitConst, as_raw_GPCPatchSample, crate::optflow::GPCPatchSampleTrait, as_raw_mut_GPCPatchSample }
 
 	/// Class encapsulating training parameters.
 	#[repr(C)]
@@ -2275,6 +2281,58 @@ pub mod optflow {
 
 	}
 
+	/// Class encapsulating training samples.
+	pub struct GPCTrainingSamples {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { GPCTrainingSamples }
+
+	impl Drop for GPCTrainingSamples {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_optflow_GPCTrainingSamples_delete(self.as_raw_mut_GPCTrainingSamples()) };
+		}
+	}
+
+	unsafe impl Send for GPCTrainingSamples {}
+
+	impl GPCTrainingSamples {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::optflow::GPCTrainingSamples {
+			let ret = unsafe { sys::cv_optflow_GPCTrainingSamples_defaultNew_const() };
+			let ret = unsafe { crate::optflow::GPCTrainingSamples::opencv_from_extern(ret) };
+			ret
+		}
+
+		/// This function can be used to extract samples from a pair of images and a ground truth flow.
+		/// Sizes of all the provided vectors must be equal.
+		#[inline]
+		pub fn create(images_from: &core::Vector<String>, images_to: &core::Vector<String>, gt: &core::Vector<String>, descriptor_type: i32) -> Result<core::Ptr<crate::optflow::GPCTrainingSamples>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_optflow_GPCTrainingSamples_create_const_vectorLStringGR_const_vectorLStringGR_const_vectorLStringGR_int(images_from.as_raw_VectorOfString(), images_to.as_raw_VectorOfString(), gt.as_raw_VectorOfString(), descriptor_type, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::optflow::GPCTrainingSamples>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn create_1(images_from: &impl ToInputArray, images_to: &impl ToInputArray, gt: &impl ToInputArray, descriptor_type: i32) -> Result<core::Ptr<crate::optflow::GPCTrainingSamples>> {
+			input_array_arg!(images_from);
+			input_array_arg!(images_to);
+			input_array_arg!(gt);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_optflow_GPCTrainingSamples_create_const__InputArrayR_const__InputArrayR_const__InputArrayR_int(images_from.as_raw__InputArray(), images_to.as_raw__InputArray(), gt.as_raw__InputArray(), descriptor_type, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::optflow::GPCTrainingSamples>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
 	/// Constant methods for [crate::optflow::GPCTrainingSamples]
 	pub trait GPCTrainingSamplesTraitConst {
 		fn as_raw_GPCTrainingSamples(&self) -> *const c_void;
@@ -2305,21 +2363,21 @@ pub mod optflow {
 
 	}
 
-	/// Class encapsulating training samples.
-	pub struct GPCTrainingSamples {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GPCTrainingSamples }
-
-	impl Drop for GPCTrainingSamples {
+	impl Default for GPCTrainingSamples {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_optflow_GPCTrainingSamples_delete(self.as_raw_mut_GPCTrainingSamples()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for GPCTrainingSamples {}
+	impl std::fmt::Debug for GPCTrainingSamples {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GPCTrainingSamples")
+				.finish()
+		}
+	}
 
 	impl crate::optflow::GPCTrainingSamplesTraitConst for GPCTrainingSamples {
 		#[inline] fn as_raw_GPCTrainingSamples(&self) -> *const c_void { self.as_raw() }
@@ -2331,54 +2389,41 @@ pub mod optflow {
 
 	boxed_ref! { GPCTrainingSamples, crate::optflow::GPCTrainingSamplesTraitConst, as_raw_GPCTrainingSamples, crate::optflow::GPCTrainingSamplesTrait, as_raw_mut_GPCTrainingSamples }
 
-	impl GPCTrainingSamples {
+	/// Class for individual tree.
+	pub struct GPCTree {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { GPCTree }
+
+	impl Drop for GPCTree {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_optflow_GPCTree_delete(self.as_raw_mut_GPCTree()) };
+		}
+	}
+
+	unsafe impl Send for GPCTree {}
+
+	impl GPCTree {
 		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_optflow_GPCTrainingSamples_defaultNew_const()) }
+		pub fn default() -> crate::optflow::GPCTree {
+			let ret = unsafe { sys::cv_optflow_GPCTree_defaultNew_const() };
+			let ret = unsafe { crate::optflow::GPCTree::opencv_from_extern(ret) };
+			ret
 		}
 
-		/// This function can be used to extract samples from a pair of images and a ground truth flow.
-		/// Sizes of all the provided vectors must be equal.
 		#[inline]
-		pub fn create(images_from: &core::Vector<String>, images_to: &core::Vector<String>, gt: &core::Vector<String>, descriptor_type: i32) -> Result<core::Ptr<crate::optflow::GPCTrainingSamples>> {
+		pub fn create() -> Result<core::Ptr<crate::optflow::GPCTree>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_optflow_GPCTrainingSamples_create_const_vectorLStringGR_const_vectorLStringGR_const_vectorLStringGR_int(images_from.as_raw_VectorOfString(), images_to.as_raw_VectorOfString(), gt.as_raw_VectorOfString(), descriptor_type, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_optflow_GPCTree_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::optflow::GPCTrainingSamples>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::optflow::GPCTree>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-		#[inline]
-		pub fn create_1(images_from: &impl ToInputArray, images_to: &impl ToInputArray, gt: &impl ToInputArray, descriptor_type: i32) -> Result<core::Ptr<crate::optflow::GPCTrainingSamples>> {
-			input_array_arg!(images_from);
-			input_array_arg!(images_to);
-			input_array_arg!(gt);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_optflow_GPCTrainingSamples_create_const__InputArrayR_const__InputArrayR_const__InputArrayR_int(images_from.as_raw__InputArray(), images_to.as_raw__InputArray(), gt.as_raw__InputArray(), descriptor_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::optflow::GPCTrainingSamples>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	impl std::fmt::Debug for GPCTrainingSamples {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("GPCTrainingSamples")
-				.finish()
-		}
-	}
-
-	impl Default for GPCTrainingSamples {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
 	}
 
 	/// Constant methods for [crate::optflow::GPCTree]
@@ -2461,21 +2506,23 @@ pub mod optflow {
 
 	}
 
-	/// Class for individual tree.
-	pub struct GPCTree {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GPCTree }
-
-	impl Drop for GPCTree {
+	impl Default for GPCTree {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_optflow_GPCTree_delete(self.as_raw_mut_GPCTree()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for GPCTree {}
+	impl std::fmt::Debug for GPCTree {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GPCTree")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { GPCTree, core::Algorithm, cv_optflow_GPCTree_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for GPCTree {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -2496,43 +2543,6 @@ pub mod optflow {
 	}
 
 	boxed_ref! { GPCTree, crate::optflow::GPCTreeTraitConst, as_raw_GPCTree, crate::optflow::GPCTreeTrait, as_raw_mut_GPCTree }
-
-	impl GPCTree {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_optflow_GPCTree_defaultNew_const()) }
-		}
-
-		#[inline]
-		pub fn create() -> Result<core::Ptr<crate::optflow::GPCTree>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_optflow_GPCTree_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::optflow::GPCTree>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_base! { GPCTree, core::Algorithm, cv_optflow_GPCTree_to_Algorithm }
-
-	impl std::fmt::Debug for GPCTree {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("GPCTree")
-				.finish()
-		}
-	}
-
-	impl Default for GPCTree {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
-	}
 
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq)]
@@ -2559,39 +2569,6 @@ pub mod optflow {
 
 	}
 
-	/// Constant methods for [crate::optflow::OpticalFlowPCAFlow]
-	pub trait OpticalFlowPCAFlowTraitConst: crate::video::DenseOpticalFlowTraitConst {
-		fn as_raw_OpticalFlowPCAFlow(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::optflow::OpticalFlowPCAFlow]
-	pub trait OpticalFlowPCAFlowTrait: crate::optflow::OpticalFlowPCAFlowTraitConst + crate::video::DenseOpticalFlowTrait {
-		fn as_raw_mut_OpticalFlowPCAFlow(&mut self) -> *mut c_void;
-
-		#[inline]
-		fn calc(&mut self, i0: &impl ToInputArray, i1: &impl ToInputArray, flow: &mut impl ToInputOutputArray) -> Result<()> {
-			input_array_arg!(i0);
-			input_array_arg!(i1);
-			input_output_array_arg!(flow);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_optflow_OpticalFlowPCAFlow_calc_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR(self.as_raw_mut_OpticalFlowPCAFlow(), i0.as_raw__InputArray(), i1.as_raw__InputArray(), flow.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn collect_garbage(&mut self) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_optflow_OpticalFlowPCAFlow_collectGarbage(self.as_raw_mut_OpticalFlowPCAFlow(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
-
 	/// PCAFlow algorithm.
 	pub struct OpticalFlowPCAFlow {
 		ptr: *mut c_void,
@@ -2607,36 +2584,6 @@ pub mod optflow {
 	}
 
 	unsafe impl Send for OpticalFlowPCAFlow {}
-
-	impl core::AlgorithmTraitConst for OpticalFlowPCAFlow {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::AlgorithmTrait for OpticalFlowPCAFlow {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { OpticalFlowPCAFlow, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-
-	impl crate::video::DenseOpticalFlowTraitConst for OpticalFlowPCAFlow {
-		#[inline] fn as_raw_DenseOpticalFlow(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::video::DenseOpticalFlowTrait for OpticalFlowPCAFlow {
-		#[inline] fn as_raw_mut_DenseOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { OpticalFlowPCAFlow, crate::video::DenseOpticalFlowTraitConst, as_raw_DenseOpticalFlow, crate::video::DenseOpticalFlowTrait, as_raw_mut_DenseOpticalFlow }
-
-	impl crate::optflow::OpticalFlowPCAFlowTraitConst for OpticalFlowPCAFlow {
-		#[inline] fn as_raw_OpticalFlowPCAFlow(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::optflow::OpticalFlowPCAFlowTrait for OpticalFlowPCAFlow {
-		#[inline] fn as_raw_mut_OpticalFlowPCAFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { OpticalFlowPCAFlow, crate::optflow::OpticalFlowPCAFlowTraitConst, as_raw_OpticalFlowPCAFlow, crate::optflow::OpticalFlowPCAFlowTrait, as_raw_mut_OpticalFlowPCAFlow }
 
 	impl OpticalFlowPCAFlow {
 		/// Creates an instance of PCAFlow algorithm.
@@ -2698,9 +2645,38 @@ pub mod optflow {
 
 	}
 
-	boxed_cast_base! { OpticalFlowPCAFlow, core::Algorithm, cv_optflow_OpticalFlowPCAFlow_to_Algorithm }
+	/// Constant methods for [crate::optflow::OpticalFlowPCAFlow]
+	pub trait OpticalFlowPCAFlowTraitConst: crate::video::DenseOpticalFlowTraitConst {
+		fn as_raw_OpticalFlowPCAFlow(&self) -> *const c_void;
 
-	boxed_cast_base! { OpticalFlowPCAFlow, crate::video::DenseOpticalFlow, cv_optflow_OpticalFlowPCAFlow_to_DenseOpticalFlow }
+	}
+
+	/// Mutable methods for [crate::optflow::OpticalFlowPCAFlow]
+	pub trait OpticalFlowPCAFlowTrait: crate::optflow::OpticalFlowPCAFlowTraitConst + crate::video::DenseOpticalFlowTrait {
+		fn as_raw_mut_OpticalFlowPCAFlow(&mut self) -> *mut c_void;
+
+		#[inline]
+		fn calc(&mut self, i0: &impl ToInputArray, i1: &impl ToInputArray, flow: &mut impl ToInputOutputArray) -> Result<()> {
+			input_array_arg!(i0);
+			input_array_arg!(i1);
+			input_output_array_arg!(flow);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_optflow_OpticalFlowPCAFlow_calc_const__InputArrayR_const__InputArrayR_const__InputOutputArrayR(self.as_raw_mut_OpticalFlowPCAFlow(), i0.as_raw__InputArray(), i1.as_raw__InputArray(), flow.as_raw__InputOutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn collect_garbage(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_optflow_OpticalFlowPCAFlow_collectGarbage(self.as_raw_mut_OpticalFlowPCAFlow(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
 
 	impl std::fmt::Debug for OpticalFlowPCAFlow {
 		#[inline]
@@ -2708,6 +2684,73 @@ pub mod optflow {
 			f.debug_struct("OpticalFlowPCAFlow")
 				.finish()
 		}
+	}
+
+	boxed_cast_base! { OpticalFlowPCAFlow, core::Algorithm, cv_optflow_OpticalFlowPCAFlow_to_Algorithm }
+
+	boxed_cast_base! { OpticalFlowPCAFlow, crate::video::DenseOpticalFlow, cv_optflow_OpticalFlowPCAFlow_to_DenseOpticalFlow }
+
+	impl core::AlgorithmTraitConst for OpticalFlowPCAFlow {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::AlgorithmTrait for OpticalFlowPCAFlow {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { OpticalFlowPCAFlow, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+
+	impl crate::video::DenseOpticalFlowTraitConst for OpticalFlowPCAFlow {
+		#[inline] fn as_raw_DenseOpticalFlow(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::video::DenseOpticalFlowTrait for OpticalFlowPCAFlow {
+		#[inline] fn as_raw_mut_DenseOpticalFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { OpticalFlowPCAFlow, crate::video::DenseOpticalFlowTraitConst, as_raw_DenseOpticalFlow, crate::video::DenseOpticalFlowTrait, as_raw_mut_DenseOpticalFlow }
+
+	impl crate::optflow::OpticalFlowPCAFlowTraitConst for OpticalFlowPCAFlow {
+		#[inline] fn as_raw_OpticalFlowPCAFlow(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::optflow::OpticalFlowPCAFlowTrait for OpticalFlowPCAFlow {
+		#[inline] fn as_raw_mut_OpticalFlowPCAFlow(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { OpticalFlowPCAFlow, crate::optflow::OpticalFlowPCAFlowTraitConst, as_raw_OpticalFlowPCAFlow, crate::optflow::OpticalFlowPCAFlowTrait, as_raw_mut_OpticalFlowPCAFlow }
+
+	///
+	/// This class can be used for imposing a learned prior on the resulting optical flow.
+	/// Solution will be regularized according to this prior.
+	/// You need to generate appropriate prior file with "learn_prior.py" script beforehand.
+	pub struct PCAPrior {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { PCAPrior }
+
+	impl Drop for PCAPrior {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_optflow_PCAPrior_delete(self.as_raw_mut_PCAPrior()) };
+		}
+	}
+
+	unsafe impl Send for PCAPrior {}
+
+	impl PCAPrior {
+		#[inline]
+		pub fn new(path_to_prior: &str) -> Result<crate::optflow::PCAPrior> {
+			extern_container_arg!(path_to_prior);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_optflow_PCAPrior_PCAPrior_const_charX(path_to_prior.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::optflow::PCAPrior::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::optflow::PCAPrior]
@@ -2749,24 +2792,13 @@ pub mod optflow {
 
 	}
 
-	///
-	/// This class can be used for imposing a learned prior on the resulting optical flow.
-	/// Solution will be regularized according to this prior.
-	/// You need to generate appropriate prior file with "learn_prior.py" script beforehand.
-	pub struct PCAPrior {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { PCAPrior }
-
-	impl Drop for PCAPrior {
+	impl std::fmt::Debug for PCAPrior {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_optflow_PCAPrior_delete(self.as_raw_mut_PCAPrior()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PCAPrior")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for PCAPrior {}
 
 	impl crate::optflow::PCAPriorTraitConst for PCAPrior {
 		#[inline] fn as_raw_PCAPrior(&self) -> *const c_void { self.as_raw() }
@@ -2778,26 +2810,69 @@ pub mod optflow {
 
 	boxed_ref! { PCAPrior, crate::optflow::PCAPriorTraitConst, as_raw_PCAPrior, crate::optflow::PCAPriorTrait, as_raw_mut_PCAPrior }
 
-	impl PCAPrior {
+	/// This is used store and set up the parameters of the robust local optical flow (RLOF) algoritm.
+	///
+	/// The RLOF is a fast local optical flow approach described in [Senst2012](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2012) [Senst2013](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2013) [Senst2014](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2014)
+	/// and [Senst2016](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2016) similar to the pyramidal iterative Lucas-Kanade method as
+	/// proposed by [Bouguet00](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Bouguet00). More details and experiments can be found in the following thesis [Senst2019](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2019).
+	/// The implementation is derived from optflow::calcOpticalFlowPyrLK().
+	/// This RLOF implementation can be seen as an improved pyramidal iterative Lucas-Kanade and includes
+	/// a set of improving modules. The main improvements in respect to the pyramidal iterative Lucas-Kanade
+	/// are:
+	///  - A more robust redecending M-estimator framework (see [Senst2012](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2012)) to improve the accuracy at
+	///    motion boundaries and appearing and disappearing pixels.
+	///  - an adaptive support region strategies to improve the accuracy at motion boundaries to reduce the
+	///    corona effect, i.e oversmoothing of the PLK at motion/object boundaries. The cross-based segementation
+	///    strategy (SR_CROSS) proposed in [Senst2014](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2014) uses a simple segmenation approach to obtain the optimal
+	///    shape of the support region.
+	///  - To deal with illumination changes (outdoor sequences and shadow) the intensity constancy assumption
+	///    based optical flow equation has been adopt with the Gennert and Negahdaripour illumination model
+	///    (see [Senst2016](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2016)). This model can be switched on/off with the useIlluminationModel variable.
+	///  - By using a global motion prior initialization (see [Senst2016](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2016)) of the iterative refinement
+	///    the accuracy could be significantly improved for large displacements. This initialization can be
+	///    switched on and of with useGlobalMotionPrior variable.
+	///
+	/// The RLOF can be computed with the SparseOpticalFlow class or function interface to track a set of features
+	/// or with the DenseOpticalFlow class or function interface to compute dense optical flow.
+	/// ## See also
+	/// optflow::DenseRLOFOpticalFlow, optflow::calcOpticalFlowDenseRLOF(), optflow::SparseRLOFOpticalFlow, optflow::calcOpticalFlowSparseRLOF()
+	pub struct RLOFOpticalFlowParameter {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { RLOFOpticalFlowParameter }
+
+	impl Drop for RLOFOpticalFlowParameter {
 		#[inline]
-		pub fn new(path_to_prior: &str) -> Result<crate::optflow::PCAPrior> {
-			extern_container_arg!(path_to_prior);
+		fn drop(&mut self) {
+			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_delete(self.as_raw_mut_RLOFOpticalFlowParameter()) };
+		}
+	}
+
+	unsafe impl Send for RLOFOpticalFlowParameter {}
+
+	impl RLOFOpticalFlowParameter {
+		#[inline]
+		pub fn default() -> Result<crate::optflow::RLOFOpticalFlowParameter> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_optflow_PCAPrior_PCAPrior_const_charX(path_to_prior.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_RLOFOpticalFlowParameter(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::optflow::PCAPrior::opencv_from_extern(ret) };
+			let ret = unsafe { crate::optflow::RLOFOpticalFlowParameter::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	impl std::fmt::Debug for PCAPrior {
+		/// Creates instance of optflow::RLOFOpticalFlowParameter
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("PCAPrior")
-				.finish()
+		pub fn create() -> Result<core::Ptr<crate::optflow::RLOFOpticalFlowParameter>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::optflow::RLOFOpticalFlowParameter>::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
 	}
 
 	/// Constant methods for [crate::optflow::RLOFOpticalFlowParameter]
@@ -3251,81 +3326,6 @@ pub mod optflow {
 
 	}
 
-	/// This is used store and set up the parameters of the robust local optical flow (RLOF) algoritm.
-	///
-	/// The RLOF is a fast local optical flow approach described in [Senst2012](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2012) [Senst2013](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2013) [Senst2014](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2014)
-	/// and [Senst2016](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2016) similar to the pyramidal iterative Lucas-Kanade method as
-	/// proposed by [Bouguet00](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Bouguet00). More details and experiments can be found in the following thesis [Senst2019](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2019).
-	/// The implementation is derived from optflow::calcOpticalFlowPyrLK().
-	/// This RLOF implementation can be seen as an improved pyramidal iterative Lucas-Kanade and includes
-	/// a set of improving modules. The main improvements in respect to the pyramidal iterative Lucas-Kanade
-	/// are:
-	///  - A more robust redecending M-estimator framework (see [Senst2012](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2012)) to improve the accuracy at
-	///    motion boundaries and appearing and disappearing pixels.
-	///  - an adaptive support region strategies to improve the accuracy at motion boundaries to reduce the
-	///    corona effect, i.e oversmoothing of the PLK at motion/object boundaries. The cross-based segementation
-	///    strategy (SR_CROSS) proposed in [Senst2014](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2014) uses a simple segmenation approach to obtain the optimal
-	///    shape of the support region.
-	///  - To deal with illumination changes (outdoor sequences and shadow) the intensity constancy assumption
-	///    based optical flow equation has been adopt with the Gennert and Negahdaripour illumination model
-	///    (see [Senst2016](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2016)). This model can be switched on/off with the useIlluminationModel variable.
-	///  - By using a global motion prior initialization (see [Senst2016](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2016)) of the iterative refinement
-	///    the accuracy could be significantly improved for large displacements. This initialization can be
-	///    switched on and of with useGlobalMotionPrior variable.
-	///
-	/// The RLOF can be computed with the SparseOpticalFlow class or function interface to track a set of features
-	/// or with the DenseOpticalFlow class or function interface to compute dense optical flow.
-	/// ## See also
-	/// optflow::DenseRLOFOpticalFlow, optflow::calcOpticalFlowDenseRLOF(), optflow::SparseRLOFOpticalFlow, optflow::calcOpticalFlowSparseRLOF()
-	pub struct RLOFOpticalFlowParameter {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { RLOFOpticalFlowParameter }
-
-	impl Drop for RLOFOpticalFlowParameter {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_delete(self.as_raw_mut_RLOFOpticalFlowParameter()) };
-		}
-	}
-
-	unsafe impl Send for RLOFOpticalFlowParameter {}
-
-	impl crate::optflow::RLOFOpticalFlowParameterTraitConst for RLOFOpticalFlowParameter {
-		#[inline] fn as_raw_RLOFOpticalFlowParameter(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::optflow::RLOFOpticalFlowParameterTrait for RLOFOpticalFlowParameter {
-		#[inline] fn as_raw_mut_RLOFOpticalFlowParameter(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { RLOFOpticalFlowParameter, crate::optflow::RLOFOpticalFlowParameterTraitConst, as_raw_RLOFOpticalFlowParameter, crate::optflow::RLOFOpticalFlowParameterTrait, as_raw_mut_RLOFOpticalFlowParameter }
-
-	impl RLOFOpticalFlowParameter {
-		#[inline]
-		pub fn default() -> Result<crate::optflow::RLOFOpticalFlowParameter> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_RLOFOpticalFlowParameter(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::optflow::RLOFOpticalFlowParameter::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Creates instance of optflow::RLOFOpticalFlowParameter
-		#[inline]
-		pub fn create() -> Result<core::Ptr<crate::optflow::RLOFOpticalFlowParameter>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_optflow_RLOFOpticalFlowParameter_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::optflow::RLOFOpticalFlowParameter>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
 	impl std::fmt::Debug for RLOFOpticalFlowParameter {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -3346,6 +3346,87 @@ pub mod optflow {
 				.field("global_motion_ransac_threshold", &crate::optflow::RLOFOpticalFlowParameterTraitConst::global_motion_ransac_threshold(self))
 				.finish()
 		}
+	}
+
+	impl crate::optflow::RLOFOpticalFlowParameterTraitConst for RLOFOpticalFlowParameter {
+		#[inline] fn as_raw_RLOFOpticalFlowParameter(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::optflow::RLOFOpticalFlowParameterTrait for RLOFOpticalFlowParameter {
+		#[inline] fn as_raw_mut_RLOFOpticalFlowParameter(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { RLOFOpticalFlowParameter, crate::optflow::RLOFOpticalFlowParameterTraitConst, as_raw_RLOFOpticalFlowParameter, crate::optflow::RLOFOpticalFlowParameterTrait, as_raw_mut_RLOFOpticalFlowParameter }
+
+	/// Class used for calculation sparse optical flow and feature tracking with robust local optical flow (RLOF) algorithms.
+	///
+	/// The RLOF is a fast local optical flow approach described in [Senst2012](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2012) [Senst2013](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2013) [Senst2014](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2014)
+	/// and [Senst2016](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2016) similar to the pyramidal iterative Lucas-Kanade method as
+	/// proposed by [Bouguet00](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Bouguet00). More details and experiments can be found in the following thesis [Senst2019](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2019).
+	/// The implementation is derived from optflow::calcOpticalFlowPyrLK().
+	///
+	/// For the RLOF configuration see optflow::RLOFOpticalFlowParameter for further details.
+	/// Parameters have been described in [Senst2012](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2012), [Senst2013](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2013), [Senst2014](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2014) and [Senst2016](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2016).
+	///
+	///
+	/// Note: SIMD parallelization is only available when compiling with SSE4.1.
+	/// ## See also
+	/// optflow::calcOpticalFlowSparseRLOF(), optflow::RLOFOpticalFlowParameter
+	pub struct SparseRLOFOpticalFlow {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { SparseRLOFOpticalFlow }
+
+	impl Drop for SparseRLOFOpticalFlow {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_optflow_SparseRLOFOpticalFlow_delete(self.as_raw_mut_SparseRLOFOpticalFlow()) };
+		}
+	}
+
+	unsafe impl Send for SparseRLOFOpticalFlow {}
+
+	impl SparseRLOFOpticalFlow {
+		/// Creates instance of SparseRLOFOpticalFlow
+		///
+		/// ## Parameters
+		/// * rlofParam: see setRLOFOpticalFlowParameter
+		/// * forwardBackwardThreshold: see setForwardBackward
+		///
+		/// ## C++ default parameters
+		/// * rlof_param: Ptr<RLOFOpticalFlowParameter>()
+		/// * forward_backward_threshold: 1.f
+		#[inline]
+		pub fn create(mut rlof_param: core::Ptr<crate::optflow::RLOFOpticalFlowParameter>, forward_backward_threshold: f32) -> Result<core::Ptr<crate::optflow::SparseRLOFOpticalFlow>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_optflow_SparseRLOFOpticalFlow_create_PtrLRLOFOpticalFlowParameterG_float(rlof_param.as_raw_mut_PtrOfRLOFOpticalFlowParameter(), forward_backward_threshold, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::optflow::SparseRLOFOpticalFlow>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Creates instance of SparseRLOFOpticalFlow
+		///
+		/// ## Parameters
+		/// * rlofParam: see setRLOFOpticalFlowParameter
+		/// * forwardBackwardThreshold: see setForwardBackward
+		///
+		/// ## Note
+		/// This alternative version of [SparseRLOFOpticalFlow::create] function uses the following default values for its arguments:
+		/// * rlof_param: Ptr<RLOFOpticalFlowParameter>()
+		/// * forward_backward_threshold: 1.f
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::optflow::SparseRLOFOpticalFlow>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_optflow_SparseRLOFOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::optflow::SparseRLOFOpticalFlow>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::optflow::SparseRLOFOpticalFlow]
@@ -3417,34 +3498,17 @@ pub mod optflow {
 
 	}
 
-	/// Class used for calculation sparse optical flow and feature tracking with robust local optical flow (RLOF) algorithms.
-	///
-	/// The RLOF is a fast local optical flow approach described in [Senst2012](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2012) [Senst2013](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2013) [Senst2014](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2014)
-	/// and [Senst2016](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2016) similar to the pyramidal iterative Lucas-Kanade method as
-	/// proposed by [Bouguet00](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Bouguet00). More details and experiments can be found in the following thesis [Senst2019](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2019).
-	/// The implementation is derived from optflow::calcOpticalFlowPyrLK().
-	///
-	/// For the RLOF configuration see optflow::RLOFOpticalFlowParameter for further details.
-	/// Parameters have been described in [Senst2012](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2012), [Senst2013](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2013), [Senst2014](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2014) and [Senst2016](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Senst2016).
-	///
-	///
-	/// Note: SIMD parallelization is only available when compiling with SSE4.1.
-	/// ## See also
-	/// optflow::calcOpticalFlowSparseRLOF(), optflow::RLOFOpticalFlowParameter
-	pub struct SparseRLOFOpticalFlow {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { SparseRLOFOpticalFlow }
-
-	impl Drop for SparseRLOFOpticalFlow {
+	impl std::fmt::Debug for SparseRLOFOpticalFlow {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_optflow_SparseRLOFOpticalFlow_delete(self.as_raw_mut_SparseRLOFOpticalFlow()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SparseRLOFOpticalFlow")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for SparseRLOFOpticalFlow {}
+	boxed_cast_base! { SparseRLOFOpticalFlow, core::Algorithm, cv_optflow_SparseRLOFOpticalFlow_to_Algorithm }
+
+	boxed_cast_base! { SparseRLOFOpticalFlow, crate::video::SparseOpticalFlow, cv_optflow_SparseRLOFOpticalFlow_to_SparseOpticalFlow }
 
 	impl core::AlgorithmTraitConst for SparseRLOFOpticalFlow {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -3476,57 +3540,4 @@ pub mod optflow {
 
 	boxed_ref! { SparseRLOFOpticalFlow, crate::optflow::SparseRLOFOpticalFlowTraitConst, as_raw_SparseRLOFOpticalFlow, crate::optflow::SparseRLOFOpticalFlowTrait, as_raw_mut_SparseRLOFOpticalFlow }
 
-	impl SparseRLOFOpticalFlow {
-		/// Creates instance of SparseRLOFOpticalFlow
-		///
-		/// ## Parameters
-		/// * rlofParam: see setRLOFOpticalFlowParameter
-		/// * forwardBackwardThreshold: see setForwardBackward
-		///
-		/// ## C++ default parameters
-		/// * rlof_param: Ptr<RLOFOpticalFlowParameter>()
-		/// * forward_backward_threshold: 1.f
-		#[inline]
-		pub fn create(mut rlof_param: core::Ptr<crate::optflow::RLOFOpticalFlowParameter>, forward_backward_threshold: f32) -> Result<core::Ptr<crate::optflow::SparseRLOFOpticalFlow>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_optflow_SparseRLOFOpticalFlow_create_PtrLRLOFOpticalFlowParameterG_float(rlof_param.as_raw_mut_PtrOfRLOFOpticalFlowParameter(), forward_backward_threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::optflow::SparseRLOFOpticalFlow>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Creates instance of SparseRLOFOpticalFlow
-		///
-		/// ## Parameters
-		/// * rlofParam: see setRLOFOpticalFlowParameter
-		/// * forwardBackwardThreshold: see setForwardBackward
-		///
-		/// ## Note
-		/// This alternative version of [SparseRLOFOpticalFlow::create] function uses the following default values for its arguments:
-		/// * rlof_param: Ptr<RLOFOpticalFlowParameter>()
-		/// * forward_backward_threshold: 1.f
-		#[inline]
-		pub fn create_def() -> Result<core::Ptr<crate::optflow::SparseRLOFOpticalFlow>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_optflow_SparseRLOFOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::optflow::SparseRLOFOpticalFlow>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_base! { SparseRLOFOpticalFlow, core::Algorithm, cv_optflow_SparseRLOFOpticalFlow_to_Algorithm }
-
-	boxed_cast_base! { SparseRLOFOpticalFlow, crate::video::SparseOpticalFlow, cv_optflow_SparseRLOFOpticalFlow_to_SparseOpticalFlow }
-
-	impl std::fmt::Debug for SparseRLOFOpticalFlow {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("SparseRLOFOpticalFlow")
-				.finish()
-		}
-	}
 }

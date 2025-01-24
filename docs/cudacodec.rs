@@ -953,8 +953,23 @@ pub mod cudacodec {
 
 	opencv_type_simple! { crate::cudacodec::CUDA_EncodeQp }
 
-	impl CUDA_EncodeQp {
+	/// Interface for encoder callbacks.
+	///
+	/// User can implement own multiplexing by implementing this interface.
+	pub struct CUDA_EncoderCallback {
+		ptr: *mut c_void,
 	}
+
+	opencv_type_boxed! { CUDA_EncoderCallback }
+
+	impl Drop for CUDA_EncoderCallback {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_cudacodec_EncoderCallback_delete(self.as_raw_mut_CUDA_EncoderCallback()) };
+		}
+	}
+
+	unsafe impl Send for CUDA_EncoderCallback {}
 
 	/// Constant methods for [crate::cudacodec::CUDA_EncoderCallback]
 	pub trait CUDA_EncoderCallbackTraitConst {
@@ -1005,23 +1020,13 @@ pub mod cudacodec {
 
 	}
 
-	/// Interface for encoder callbacks.
-	///
-	/// User can implement own multiplexing by implementing this interface.
-	pub struct CUDA_EncoderCallback {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CUDA_EncoderCallback }
-
-	impl Drop for CUDA_EncoderCallback {
+	impl std::fmt::Debug for CUDA_EncoderCallback {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cudacodec_EncoderCallback_delete(self.as_raw_mut_CUDA_EncoderCallback()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_EncoderCallback")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for CUDA_EncoderCallback {}
 
 	impl crate::cudacodec::CUDA_EncoderCallbackTraitConst for CUDA_EncoderCallback {
 		#[inline] fn as_raw_CUDA_EncoderCallback(&self) -> *const c_void { self.as_raw() }
@@ -1032,17 +1037,6 @@ pub mod cudacodec {
 	}
 
 	boxed_ref! { CUDA_EncoderCallback, crate::cudacodec::CUDA_EncoderCallbackTraitConst, as_raw_CUDA_EncoderCallback, crate::cudacodec::CUDA_EncoderCallbackTrait, as_raw_mut_CUDA_EncoderCallback }
-
-	impl CUDA_EncoderCallback {
-	}
-
-	impl std::fmt::Debug for CUDA_EncoderCallback {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CUDA_EncoderCallback")
-				.finish()
-		}
-	}
 
 	/// Different parameters for CUDA video encoder.
 	#[repr(C)]
@@ -1140,6 +1134,22 @@ pub mod cudacodec {
 
 	}
 
+	/// Class for converting the raw YUV Surface output from VideoReader if output color format is set to ColorFormat::NV_YUV_SURFACE_FORMAT (VideoReader::set(ColorFormat::NV_YUV_SURFACE_FORMAT)) to the requested [ColorFormat].
+	pub struct CUDA_NVSurfaceToColorConverter {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { CUDA_NVSurfaceToColorConverter }
+
+	impl Drop for CUDA_NVSurfaceToColorConverter {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_cudacodec_NVSurfaceToColorConverter_delete(self.as_raw_mut_CUDA_NVSurfaceToColorConverter()) };
+		}
+	}
+
+	unsafe impl Send for CUDA_NVSurfaceToColorConverter {}
+
 	/// Constant methods for [crate::cudacodec::CUDA_NVSurfaceToColorConverter]
 	pub trait CUDA_NVSurfaceToColorConverterTraitConst {
 		fn as_raw_CUDA_NVSurfaceToColorConverter(&self) -> *const c_void;
@@ -1207,21 +1217,13 @@ pub mod cudacodec {
 
 	}
 
-	/// Class for converting the raw YUV Surface output from VideoReader if output color format is set to ColorFormat::NV_YUV_SURFACE_FORMAT (VideoReader::set(ColorFormat::NV_YUV_SURFACE_FORMAT)) to the requested [ColorFormat].
-	pub struct CUDA_NVSurfaceToColorConverter {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CUDA_NVSurfaceToColorConverter }
-
-	impl Drop for CUDA_NVSurfaceToColorConverter {
+	impl std::fmt::Debug for CUDA_NVSurfaceToColorConverter {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cudacodec_NVSurfaceToColorConverter_delete(self.as_raw_mut_CUDA_NVSurfaceToColorConverter()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_NVSurfaceToColorConverter")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for CUDA_NVSurfaceToColorConverter {}
 
 	impl crate::cudacodec::CUDA_NVSurfaceToColorConverterTraitConst for CUDA_NVSurfaceToColorConverter {
 		#[inline] fn as_raw_CUDA_NVSurfaceToColorConverter(&self) -> *const c_void { self.as_raw() }
@@ -1233,16 +1235,23 @@ pub mod cudacodec {
 
 	boxed_ref! { CUDA_NVSurfaceToColorConverter, crate::cudacodec::CUDA_NVSurfaceToColorConverterTraitConst, as_raw_CUDA_NVSurfaceToColorConverter, crate::cudacodec::CUDA_NVSurfaceToColorConverterTrait, as_raw_mut_CUDA_NVSurfaceToColorConverter }
 
-	impl CUDA_NVSurfaceToColorConverter {
+	/// Interface for video demultiplexing. :
+	///
+	/// User can implement own demultiplexing by implementing this interface.
+	pub struct CUDA_RawVideoSource {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for CUDA_NVSurfaceToColorConverter {
+	opencv_type_boxed! { CUDA_RawVideoSource }
+
+	impl Drop for CUDA_RawVideoSource {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CUDA_NVSurfaceToColorConverter")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_cudacodec_RawVideoSource_delete(self.as_raw_mut_CUDA_RawVideoSource()) };
 		}
 	}
+
+	unsafe impl Send for CUDA_RawVideoSource {}
 
 	/// Constant methods for [crate::cudacodec::CUDA_RawVideoSource]
 	pub trait CUDA_RawVideoSourceTraitConst {
@@ -1347,23 +1356,13 @@ pub mod cudacodec {
 
 	}
 
-	/// Interface for video demultiplexing. :
-	///
-	/// User can implement own demultiplexing by implementing this interface.
-	pub struct CUDA_RawVideoSource {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CUDA_RawVideoSource }
-
-	impl Drop for CUDA_RawVideoSource {
+	impl std::fmt::Debug for CUDA_RawVideoSource {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cudacodec_RawVideoSource_delete(self.as_raw_mut_CUDA_RawVideoSource()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_RawVideoSource")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for CUDA_RawVideoSource {}
 
 	impl crate::cudacodec::CUDA_RawVideoSourceTraitConst for CUDA_RawVideoSource {
 		#[inline] fn as_raw_CUDA_RawVideoSource(&self) -> *const c_void { self.as_raw() }
@@ -1375,16 +1374,30 @@ pub mod cudacodec {
 
 	boxed_ref! { CUDA_RawVideoSource, crate::cudacodec::CUDA_RawVideoSourceTraitConst, as_raw_CUDA_RawVideoSource, crate::cudacodec::CUDA_RawVideoSourceTrait, as_raw_mut_CUDA_RawVideoSource }
 
-	impl CUDA_RawVideoSource {
+	/// Video reader interface, see createVideoReader().
+	///
+	/// Available if Nvidia's Video Codec SDK is installed.
+	///
+	/// Decoding support is dependent on the GPU, refer to the Nvidia Video Codec SDK Video Encode and Decode GPU Support Matrix for details.
+	///
+	///
+	/// Note:
+	///    *   An example on how to use the VideoReader interface can be found at
+	///        opencv_source_code/samples/gpu/video_reader.cpp
+	pub struct CUDA_VideoReader {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for CUDA_RawVideoSource {
+	opencv_type_boxed! { CUDA_VideoReader }
+
+	impl Drop for CUDA_VideoReader {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CUDA_RawVideoSource")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_cudacodec_VideoReader_delete(self.as_raw_mut_CUDA_VideoReader()) };
 		}
 	}
+
+	unsafe impl Send for CUDA_VideoReader {}
 
 	/// Constant methods for [crate::cudacodec::CUDA_VideoReader]
 	pub trait CUDA_VideoReaderTraitConst {
@@ -1776,30 +1789,13 @@ pub mod cudacodec {
 
 	}
 
-	/// Video reader interface, see createVideoReader().
-	///
-	/// Available if Nvidia's Video Codec SDK is installed.
-	///
-	/// Decoding support is dependent on the GPU, refer to the Nvidia Video Codec SDK Video Encode and Decode GPU Support Matrix for details.
-	///
-	///
-	/// Note:
-	///    *   An example on how to use the VideoReader interface can be found at
-	///        opencv_source_code/samples/gpu/video_reader.cpp
-	pub struct CUDA_VideoReader {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CUDA_VideoReader }
-
-	impl Drop for CUDA_VideoReader {
+	impl std::fmt::Debug for CUDA_VideoReader {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cudacodec_VideoReader_delete(self.as_raw_mut_CUDA_VideoReader()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_VideoReader")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for CUDA_VideoReader {}
 
 	impl crate::cudacodec::CUDA_VideoReaderTraitConst for CUDA_VideoReader {
 		#[inline] fn as_raw_CUDA_VideoReader(&self) -> *const c_void { self.as_raw() }
@@ -1810,17 +1806,6 @@ pub mod cudacodec {
 	}
 
 	boxed_ref! { CUDA_VideoReader, crate::cudacodec::CUDA_VideoReaderTraitConst, as_raw_CUDA_VideoReader, crate::cudacodec::CUDA_VideoReaderTrait, as_raw_mut_CUDA_VideoReader }
-
-	impl CUDA_VideoReader {
-	}
-
-	impl std::fmt::Debug for CUDA_VideoReader {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CUDA_VideoReader")
-				.finish()
-		}
-	}
 
 	/// VideoReader initialization parameters
 	/// ## Parameters
@@ -1866,6 +1851,31 @@ pub mod cudacodec {
 		}
 
 	}
+
+	/// Video writer interface, see createVideoWriter().
+	///
+	/// Available if Nvidia's Video Codec SDK is installed.
+	///
+	/// Only Codec::H264 and Codec::HEVC are supported with encoding support dependent on the GPU, refer to the Nvidia Video Codec SDK Video Encode and Decode GPU Support Matrix for details.
+	///
+	///
+	/// Note:
+	///    *   An example on how to use the VideoWriter class can be found at
+	///        opencv_source_code/samples/gpu/video_writer.cpp
+	pub struct CUDA_VideoWriter {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { CUDA_VideoWriter }
+
+	impl Drop for CUDA_VideoWriter {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_cudacodec_VideoWriter_delete(self.as_raw_mut_CUDA_VideoWriter()) };
+		}
+	}
+
+	unsafe impl Send for CUDA_VideoWriter {}
 
 	/// Constant methods for [crate::cudacodec::CUDA_VideoWriter]
 	pub trait CUDA_VideoWriterTraitConst {
@@ -1916,30 +1926,13 @@ pub mod cudacodec {
 
 	}
 
-	/// Video writer interface, see createVideoWriter().
-	///
-	/// Available if Nvidia's Video Codec SDK is installed.
-	///
-	/// Only Codec::H264 and Codec::HEVC are supported with encoding support dependent on the GPU, refer to the Nvidia Video Codec SDK Video Encode and Decode GPU Support Matrix for details.
-	///
-	///
-	/// Note:
-	///    *   An example on how to use the VideoWriter class can be found at
-	///        opencv_source_code/samples/gpu/video_writer.cpp
-	pub struct CUDA_VideoWriter {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CUDA_VideoWriter }
-
-	impl Drop for CUDA_VideoWriter {
+	impl std::fmt::Debug for CUDA_VideoWriter {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cudacodec_VideoWriter_delete(self.as_raw_mut_CUDA_VideoWriter()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_VideoWriter")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for CUDA_VideoWriter {}
 
 	impl crate::cudacodec::CUDA_VideoWriterTraitConst for CUDA_VideoWriter {
 		#[inline] fn as_raw_CUDA_VideoWriter(&self) -> *const c_void { self.as_raw() }
@@ -1951,14 +1944,4 @@ pub mod cudacodec {
 
 	boxed_ref! { CUDA_VideoWriter, crate::cudacodec::CUDA_VideoWriterTraitConst, as_raw_CUDA_VideoWriter, crate::cudacodec::CUDA_VideoWriterTrait, as_raw_mut_CUDA_VideoWriter }
 
-	impl CUDA_VideoWriter {
-	}
-
-	impl std::fmt::Debug for CUDA_VideoWriter {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CUDA_VideoWriter")
-				.finish()
-		}
-	}
 }

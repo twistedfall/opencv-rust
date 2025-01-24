@@ -27,6 +27,80 @@ pub mod structured_light {
 	pub const FAPS: i32 = 2;
 	pub const FTP: i32 = 0;
 	pub const PSP: i32 = 1;
+	/// Class implementing the Gray-code pattern, based on [UNDERWORLD](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_UNDERWORLD).
+	///
+	/// The generation of the pattern images is performed with Gray encoding using the traditional white and black colors.
+	///
+	/// The information about the two image axes x, y is encoded separately into two different pattern sequences.
+	/// A projector P with resolution (P_res_x, P_res_y) will result in Ncols = log 2 (P_res_x) encoded pattern images representing the columns, and
+	/// in Nrows = log 2 (P_res_y) encoded pattern images representing the rows.
+	/// For example a projector with resolution 1024x768 will result in Ncols = 10 and Nrows = 10.
+	///
+	/// However, the generated pattern sequence consists of both regular color and color-inverted images: inverted pattern images are images
+	/// with the same structure as the original but with inverted colors.
+	/// This provides an effective method for easily determining the intensity value of each pixel when it is lit (highest value) and
+	/// when it is not lit (lowest value). So for a a projector with resolution 1024x768, the number of pattern images will be Ncols * 2 + Nrows * 2 = 40.
+	pub struct GrayCodePattern {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { GrayCodePattern }
+
+	impl Drop for GrayCodePattern {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_structured_light_GrayCodePattern_delete(self.as_raw_mut_GrayCodePattern()) };
+		}
+	}
+
+	unsafe impl Send for GrayCodePattern {}
+
+	impl GrayCodePattern {
+		/// Constructor
+		/// ## Parameters
+		/// * parameters: GrayCodePattern parameters GrayCodePattern::Params: the width and the height of the projector.
+		///
+		/// ## C++ default parameters
+		/// * parameters: GrayCodePattern::Params()
+		#[inline]
+		pub fn create(parameters: &impl crate::structured_light::GrayCodePattern_ParamsTraitConst) -> Result<core::Ptr<crate::structured_light::GrayCodePattern>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_structured_light_GrayCodePattern_create_const_ParamsR(parameters.as_raw_GrayCodePattern_Params(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::structured_light::GrayCodePattern>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Constructor
+		/// ## Parameters
+		/// * parameters: GrayCodePattern parameters GrayCodePattern::Params: the width and the height of the projector.
+		///
+		/// ## Note
+		/// This alternative version of [GrayCodePattern::create] function uses the following default values for its arguments:
+		/// * parameters: GrayCodePattern::Params()
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::structured_light::GrayCodePattern>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_structured_light_GrayCodePattern_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::structured_light::GrayCodePattern>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn create_1(width: i32, height: i32) -> Result<core::Ptr<crate::structured_light::GrayCodePattern>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_structured_light_GrayCodePattern_create_int_int(width, height, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::structured_light::GrayCodePattern>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
 	/// Constant methods for [crate::structured_light::GrayCodePattern]
 	pub trait GrayCodePatternTraitConst: crate::structured_light::StructuredLightPatternTraitConst {
 		fn as_raw_GrayCodePattern(&self) -> *const c_void;
@@ -122,33 +196,17 @@ pub mod structured_light {
 
 	}
 
-	/// Class implementing the Gray-code pattern, based on [UNDERWORLD](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_UNDERWORLD).
-	///
-	/// The generation of the pattern images is performed with Gray encoding using the traditional white and black colors.
-	///
-	/// The information about the two image axes x, y is encoded separately into two different pattern sequences.
-	/// A projector P with resolution (P_res_x, P_res_y) will result in Ncols = log 2 (P_res_x) encoded pattern images representing the columns, and
-	/// in Nrows = log 2 (P_res_y) encoded pattern images representing the rows.
-	/// For example a projector with resolution 1024x768 will result in Ncols = 10 and Nrows = 10.
-	///
-	/// However, the generated pattern sequence consists of both regular color and color-inverted images: inverted pattern images are images
-	/// with the same structure as the original but with inverted colors.
-	/// This provides an effective method for easily determining the intensity value of each pixel when it is lit (highest value) and
-	/// when it is not lit (lowest value). So for a a projector with resolution 1024x768, the number of pattern images will be Ncols * 2 + Nrows * 2 = 40.
-	pub struct GrayCodePattern {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GrayCodePattern }
-
-	impl Drop for GrayCodePattern {
+	impl std::fmt::Debug for GrayCodePattern {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_structured_light_GrayCodePattern_delete(self.as_raw_mut_GrayCodePattern()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GrayCodePattern")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for GrayCodePattern {}
+	boxed_cast_base! { GrayCodePattern, core::Algorithm, cv_structured_light_GrayCodePattern_to_Algorithm }
+
+	boxed_cast_base! { GrayCodePattern, crate::structured_light::StructuredLightPattern, cv_structured_light_GrayCodePattern_to_StructuredLightPattern }
 
 	impl core::AlgorithmTraitConst for GrayCodePattern {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -180,62 +238,36 @@ pub mod structured_light {
 
 	boxed_ref! { GrayCodePattern, crate::structured_light::GrayCodePatternTraitConst, as_raw_GrayCodePattern, crate::structured_light::GrayCodePatternTrait, as_raw_mut_GrayCodePattern }
 
-	impl GrayCodePattern {
-		/// Constructor
-		/// ## Parameters
-		/// * parameters: GrayCodePattern parameters GrayCodePattern::Params: the width and the height of the projector.
-		///
-		/// ## C++ default parameters
-		/// * parameters: GrayCodePattern::Params()
-		#[inline]
-		pub fn create(parameters: &impl crate::structured_light::GrayCodePattern_ParamsTraitConst) -> Result<core::Ptr<crate::structured_light::GrayCodePattern>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_structured_light_GrayCodePattern_create_const_ParamsR(parameters.as_raw_GrayCodePattern_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::structured_light::GrayCodePattern>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Constructor
-		/// ## Parameters
-		/// * parameters: GrayCodePattern parameters GrayCodePattern::Params: the width and the height of the projector.
-		///
-		/// ## Note
-		/// This alternative version of [GrayCodePattern::create] function uses the following default values for its arguments:
-		/// * parameters: GrayCodePattern::Params()
-		#[inline]
-		pub fn create_def() -> Result<core::Ptr<crate::structured_light::GrayCodePattern>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_structured_light_GrayCodePattern_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::structured_light::GrayCodePattern>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn create_1(width: i32, height: i32) -> Result<core::Ptr<crate::structured_light::GrayCodePattern>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_structured_light_GrayCodePattern_create_int_int(width, height, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::structured_light::GrayCodePattern>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// Parameters of StructuredLightPattern constructor.
+	/// ## Parameters
+	/// * width: Projector's width. Default value is 1024.
+	/// * height: Projector's height. Default value is 768.
+	pub struct GrayCodePattern_Params {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { GrayCodePattern, core::Algorithm, cv_structured_light_GrayCodePattern_to_Algorithm }
+	opencv_type_boxed! { GrayCodePattern_Params }
 
-	boxed_cast_base! { GrayCodePattern, crate::structured_light::StructuredLightPattern, cv_structured_light_GrayCodePattern_to_StructuredLightPattern }
-
-	impl std::fmt::Debug for GrayCodePattern {
+	impl Drop for GrayCodePattern_Params {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("GrayCodePattern")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_structured_light_GrayCodePattern_Params_delete(self.as_raw_mut_GrayCodePattern_Params()) };
 		}
+	}
+
+	unsafe impl Send for GrayCodePattern_Params {}
+
+	impl GrayCodePattern_Params {
+		#[inline]
+		pub fn default() -> Result<crate::structured_light::GrayCodePattern_Params> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_structured_light_GrayCodePattern_Params_Params(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::structured_light::GrayCodePattern_Params::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::structured_light::GrayCodePattern_Params]
@@ -274,24 +306,15 @@ pub mod structured_light {
 
 	}
 
-	/// Parameters of StructuredLightPattern constructor.
-	/// ## Parameters
-	/// * width: Projector's width. Default value is 1024.
-	/// * height: Projector's height. Default value is 768.
-	pub struct GrayCodePattern_Params {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GrayCodePattern_Params }
-
-	impl Drop for GrayCodePattern_Params {
+	impl std::fmt::Debug for GrayCodePattern_Params {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_structured_light_GrayCodePattern_Params_delete(self.as_raw_mut_GrayCodePattern_Params()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GrayCodePattern_Params")
+				.field("width", &crate::structured_light::GrayCodePattern_ParamsTraitConst::width(self))
+				.field("height", &crate::structured_light::GrayCodePattern_ParamsTraitConst::height(self))
+				.finish()
 		}
 	}
-
-	unsafe impl Send for GrayCodePattern_Params {}
 
 	impl crate::structured_light::GrayCodePattern_ParamsTraitConst for GrayCodePattern_Params {
 		#[inline] fn as_raw_GrayCodePattern_Params(&self) -> *const c_void { self.as_raw() }
@@ -303,27 +326,59 @@ pub mod structured_light {
 
 	boxed_ref! { GrayCodePattern_Params, crate::structured_light::GrayCodePattern_ParamsTraitConst, as_raw_GrayCodePattern_Params, crate::structured_light::GrayCodePattern_ParamsTrait, as_raw_mut_GrayCodePattern_Params }
 
-	impl GrayCodePattern_Params {
+	/// Class implementing Fourier transform profilometry (FTP) , phase-shifting profilometry (PSP)
+	/// and Fourier-assisted phase-shifting profilometry (FAPS) based on [faps](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_faps).
+	///
+	/// This class generates sinusoidal patterns that can be used with FTP, PSP and FAPS.
+	pub struct SinusoidalPattern {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { SinusoidalPattern }
+
+	impl Drop for SinusoidalPattern {
 		#[inline]
-		pub fn default() -> Result<crate::structured_light::GrayCodePattern_Params> {
+		fn drop(&mut self) {
+			unsafe { sys::cv_structured_light_SinusoidalPattern_delete(self.as_raw_mut_SinusoidalPattern()) };
+		}
+	}
+
+	unsafe impl Send for SinusoidalPattern {}
+
+	impl SinusoidalPattern {
+		/// Constructor.
+		/// ## Parameters
+		/// * parameters: SinusoidalPattern parameters SinusoidalPattern::Params: width, height of the projector and patterns parameters.
+		///
+		/// ## C++ default parameters
+		/// * parameters: makePtr<SinusoidalPattern::Params>()
+		#[inline]
+		pub fn create(mut parameters: core::Ptr<crate::structured_light::SinusoidalPattern_Params>) -> Result<core::Ptr<crate::structured_light::SinusoidalPattern>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_structured_light_GrayCodePattern_Params_Params(ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_structured_light_SinusoidalPattern_create_PtrLParamsG(parameters.as_raw_mut_PtrOfSinusoidalPattern_Params(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::structured_light::GrayCodePattern_Params::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::structured_light::SinusoidalPattern>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	impl std::fmt::Debug for GrayCodePattern_Params {
+		/// Constructor.
+		/// ## Parameters
+		/// * parameters: SinusoidalPattern parameters SinusoidalPattern::Params: width, height of the projector and patterns parameters.
+		///
+		/// ## Note
+		/// This alternative version of [SinusoidalPattern::create] function uses the following default values for its arguments:
+		/// * parameters: makePtr<SinusoidalPattern::Params>()
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("GrayCodePattern_Params")
-				.field("width", &crate::structured_light::GrayCodePattern_ParamsTraitConst::width(self))
-				.field("height", &crate::structured_light::GrayCodePattern_ParamsTraitConst::height(self))
-				.finish()
+		pub fn create_def() -> Result<core::Ptr<crate::structured_light::SinusoidalPattern>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_structured_light_SinusoidalPattern_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::structured_light::SinusoidalPattern>::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
 	}
 
 	/// Constant methods for [crate::structured_light::SinusoidalPattern]
@@ -459,24 +514,17 @@ pub mod structured_light {
 
 	}
 
-	/// Class implementing Fourier transform profilometry (FTP) , phase-shifting profilometry (PSP)
-	/// and Fourier-assisted phase-shifting profilometry (FAPS) based on [faps](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_faps).
-	///
-	/// This class generates sinusoidal patterns that can be used with FTP, PSP and FAPS.
-	pub struct SinusoidalPattern {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { SinusoidalPattern }
-
-	impl Drop for SinusoidalPattern {
+	impl std::fmt::Debug for SinusoidalPattern {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_structured_light_SinusoidalPattern_delete(self.as_raw_mut_SinusoidalPattern()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SinusoidalPattern")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for SinusoidalPattern {}
+	boxed_cast_base! { SinusoidalPattern, core::Algorithm, cv_structured_light_SinusoidalPattern_to_Algorithm }
+
+	boxed_cast_base! { SinusoidalPattern, crate::structured_light::StructuredLightPattern, cv_structured_light_SinusoidalPattern_to_StructuredLightPattern }
 
 	impl core::AlgorithmTraitConst for SinusoidalPattern {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -508,52 +556,42 @@ pub mod structured_light {
 
 	boxed_ref! { SinusoidalPattern, crate::structured_light::SinusoidalPatternTraitConst, as_raw_SinusoidalPattern, crate::structured_light::SinusoidalPatternTrait, as_raw_mut_SinusoidalPattern }
 
-	impl SinusoidalPattern {
-		/// Constructor.
-		/// ## Parameters
-		/// * parameters: SinusoidalPattern parameters SinusoidalPattern::Params: width, height of the projector and patterns parameters.
-		///
-		/// ## C++ default parameters
-		/// * parameters: makePtr<SinusoidalPattern::Params>()
-		#[inline]
-		pub fn create(mut parameters: core::Ptr<crate::structured_light::SinusoidalPattern_Params>) -> Result<core::Ptr<crate::structured_light::SinusoidalPattern>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_structured_light_SinusoidalPattern_create_PtrLParamsG(parameters.as_raw_mut_PtrOfSinusoidalPattern_Params(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::structured_light::SinusoidalPattern>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Constructor.
-		/// ## Parameters
-		/// * parameters: SinusoidalPattern parameters SinusoidalPattern::Params: width, height of the projector and patterns parameters.
-		///
-		/// ## Note
-		/// This alternative version of [SinusoidalPattern::create] function uses the following default values for its arguments:
-		/// * parameters: makePtr<SinusoidalPattern::Params>()
-		#[inline]
-		pub fn create_def() -> Result<core::Ptr<crate::structured_light::SinusoidalPattern>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_structured_light_SinusoidalPattern_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::structured_light::SinusoidalPattern>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// Parameters of SinusoidalPattern constructor
+	/// ## Parameters
+	/// * width: Projector's width.
+	/// * height: Projector's height.
+	/// * nbrOfPeriods: Number of period along the patterns direction.
+	/// * shiftValue: Phase shift between two consecutive patterns.
+	/// * methodId: Allow to choose between FTP, PSP and FAPS.
+	/// * nbrOfPixelsBetweenMarkers: Number of pixels between two consecutive markers on the same row.
+	/// * setMarkers: Allow to set markers on the patterns.
+	/// * markersLocation: vector used to store markers location on the patterns.
+	pub struct SinusoidalPattern_Params {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { SinusoidalPattern, core::Algorithm, cv_structured_light_SinusoidalPattern_to_Algorithm }
+	opencv_type_boxed! { SinusoidalPattern_Params }
 
-	boxed_cast_base! { SinusoidalPattern, crate::structured_light::StructuredLightPattern, cv_structured_light_SinusoidalPattern_to_StructuredLightPattern }
-
-	impl std::fmt::Debug for SinusoidalPattern {
+	impl Drop for SinusoidalPattern_Params {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("SinusoidalPattern")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_structured_light_SinusoidalPattern_Params_delete(self.as_raw_mut_SinusoidalPattern_Params()) };
 		}
+	}
+
+	unsafe impl Send for SinusoidalPattern_Params {}
+
+	impl SinusoidalPattern_Params {
+		#[inline]
+		pub fn default() -> Result<crate::structured_light::SinusoidalPattern_Params> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_structured_light_SinusoidalPattern_Params_Params(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::structured_light::SinusoidalPattern_Params::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::structured_light::SinusoidalPattern_Params]
@@ -677,54 +715,6 @@ pub mod structured_light {
 
 	}
 
-	/// Parameters of SinusoidalPattern constructor
-	/// ## Parameters
-	/// * width: Projector's width.
-	/// * height: Projector's height.
-	/// * nbrOfPeriods: Number of period along the patterns direction.
-	/// * shiftValue: Phase shift between two consecutive patterns.
-	/// * methodId: Allow to choose between FTP, PSP and FAPS.
-	/// * nbrOfPixelsBetweenMarkers: Number of pixels between two consecutive markers on the same row.
-	/// * setMarkers: Allow to set markers on the patterns.
-	/// * markersLocation: vector used to store markers location on the patterns.
-	pub struct SinusoidalPattern_Params {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { SinusoidalPattern_Params }
-
-	impl Drop for SinusoidalPattern_Params {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_structured_light_SinusoidalPattern_Params_delete(self.as_raw_mut_SinusoidalPattern_Params()) };
-		}
-	}
-
-	unsafe impl Send for SinusoidalPattern_Params {}
-
-	impl crate::structured_light::SinusoidalPattern_ParamsTraitConst for SinusoidalPattern_Params {
-		#[inline] fn as_raw_SinusoidalPattern_Params(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::structured_light::SinusoidalPattern_ParamsTrait for SinusoidalPattern_Params {
-		#[inline] fn as_raw_mut_SinusoidalPattern_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { SinusoidalPattern_Params, crate::structured_light::SinusoidalPattern_ParamsTraitConst, as_raw_SinusoidalPattern_Params, crate::structured_light::SinusoidalPattern_ParamsTrait, as_raw_mut_SinusoidalPattern_Params }
-
-	impl SinusoidalPattern_Params {
-		#[inline]
-		pub fn default() -> Result<crate::structured_light::SinusoidalPattern_Params> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_structured_light_SinusoidalPattern_Params_Params(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::structured_light::SinusoidalPattern_Params::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
 	impl std::fmt::Debug for SinusoidalPattern_Params {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -741,6 +731,32 @@ pub mod structured_light {
 				.finish()
 		}
 	}
+
+	impl crate::structured_light::SinusoidalPattern_ParamsTraitConst for SinusoidalPattern_Params {
+		#[inline] fn as_raw_SinusoidalPattern_Params(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::structured_light::SinusoidalPattern_ParamsTrait for SinusoidalPattern_Params {
+		#[inline] fn as_raw_mut_SinusoidalPattern_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { SinusoidalPattern_Params, crate::structured_light::SinusoidalPattern_ParamsTraitConst, as_raw_SinusoidalPattern_Params, crate::structured_light::SinusoidalPattern_ParamsTrait, as_raw_mut_SinusoidalPattern_Params }
+
+	/// Abstract base class for generating and decoding structured light patterns.
+	pub struct StructuredLightPattern {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { StructuredLightPattern }
+
+	impl Drop for StructuredLightPattern {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_structured_light_StructuredLightPattern_delete(self.as_raw_mut_StructuredLightPattern()) };
+		}
+	}
+
+	unsafe impl Send for StructuredLightPattern {}
 
 	/// Constant methods for [crate::structured_light::StructuredLightPattern]
 	pub trait StructuredLightPatternTraitConst: core::AlgorithmTraitConst {
@@ -821,21 +837,19 @@ pub mod structured_light {
 
 	}
 
-	/// Abstract base class for generating and decoding structured light patterns.
-	pub struct StructuredLightPattern {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { StructuredLightPattern }
-
-	impl Drop for StructuredLightPattern {
+	impl std::fmt::Debug for StructuredLightPattern {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_structured_light_StructuredLightPattern_delete(self.as_raw_mut_StructuredLightPattern()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("StructuredLightPattern")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for StructuredLightPattern {}
+	boxed_cast_base! { StructuredLightPattern, core::Algorithm, cv_structured_light_StructuredLightPattern_to_Algorithm }
+
+	boxed_cast_descendant! { StructuredLightPattern, crate::structured_light::GrayCodePattern, cv_structured_light_StructuredLightPattern_to_GrayCodePattern }
+
+	boxed_cast_descendant! { StructuredLightPattern, crate::structured_light::SinusoidalPattern, cv_structured_light_StructuredLightPattern_to_SinusoidalPattern }
 
 	impl core::AlgorithmTraitConst for StructuredLightPattern {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -857,20 +871,4 @@ pub mod structured_light {
 
 	boxed_ref! { StructuredLightPattern, crate::structured_light::StructuredLightPatternTraitConst, as_raw_StructuredLightPattern, crate::structured_light::StructuredLightPatternTrait, as_raw_mut_StructuredLightPattern }
 
-	impl StructuredLightPattern {
-	}
-
-	boxed_cast_descendant! { StructuredLightPattern, crate::structured_light::GrayCodePattern, cv_structured_light_StructuredLightPattern_to_GrayCodePattern }
-
-	boxed_cast_descendant! { StructuredLightPattern, crate::structured_light::SinusoidalPattern, cv_structured_light_StructuredLightPattern_to_SinusoidalPattern }
-
-	boxed_cast_base! { StructuredLightPattern, core::Algorithm, cv_structured_light_StructuredLightPattern_to_Algorithm }
-
-	impl std::fmt::Debug for StructuredLightPattern {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("StructuredLightPattern")
-				.finish()
-		}
-	}
 }

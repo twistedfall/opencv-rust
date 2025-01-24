@@ -1834,6 +1834,22 @@ pub mod photo {
 		Ok(ret)
 	}
 
+	/// The base class for algorithms that align images of the same scene with different exposures
+	pub struct AlignExposures {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { AlignExposures }
+
+	impl Drop for AlignExposures {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_AlignExposures_delete(self.as_raw_mut_AlignExposures()) };
+		}
+	}
+
+	unsafe impl Send for AlignExposures {}
+
 	/// Constant methods for [crate::photo::AlignExposures]
 	pub trait AlignExposuresTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_AlignExposures(&self) -> *const c_void;
@@ -1866,21 +1882,17 @@ pub mod photo {
 
 	}
 
-	/// The base class for algorithms that align images of the same scene with different exposures
-	pub struct AlignExposures {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { AlignExposures }
-
-	impl Drop for AlignExposures {
+	impl std::fmt::Debug for AlignExposures {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_AlignExposures_delete(self.as_raw_mut_AlignExposures()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("AlignExposures")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for AlignExposures {}
+	boxed_cast_base! { AlignExposures, core::Algorithm, cv_AlignExposures_to_Algorithm }
+
+	boxed_cast_descendant! { AlignExposures, crate::photo::AlignMTB, cv_AlignExposures_to_AlignMTB }
 
 	impl core::AlgorithmTraitConst for AlignExposures {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -1902,20 +1914,28 @@ pub mod photo {
 
 	boxed_ref! { AlignExposures, crate::photo::AlignExposuresTraitConst, as_raw_AlignExposures, crate::photo::AlignExposuresTrait, as_raw_mut_AlignExposures }
 
-	impl AlignExposures {
+	/// This algorithm converts images to median threshold bitmaps (1 for pixels brighter than median
+	/// luminance and 0 otherwise) and than aligns the resulting bitmaps using bit operations.
+	///
+	/// It is invariant to exposure, so exposure values and camera response are not necessary.
+	///
+	/// In this implementation new image regions are filled with zeros.
+	///
+	/// For more information see [GW03](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_GW03) .
+	pub struct AlignMTB {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { AlignExposures, crate::photo::AlignMTB, cv_AlignExposures_to_AlignMTB }
+	opencv_type_boxed! { AlignMTB }
 
-	boxed_cast_base! { AlignExposures, core::Algorithm, cv_AlignExposures_to_Algorithm }
-
-	impl std::fmt::Debug for AlignExposures {
+	impl Drop for AlignMTB {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("AlignExposures")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_AlignMTB_delete(self.as_raw_mut_AlignMTB()) };
 		}
 	}
+
+	unsafe impl Send for AlignMTB {}
 
 	/// Constant methods for [crate::photo::AlignMTB]
 	pub trait AlignMTBTraitConst: crate::photo::AlignExposuresTraitConst {
@@ -2062,28 +2082,17 @@ pub mod photo {
 
 	}
 
-	/// This algorithm converts images to median threshold bitmaps (1 for pixels brighter than median
-	/// luminance and 0 otherwise) and than aligns the resulting bitmaps using bit operations.
-	///
-	/// It is invariant to exposure, so exposure values and camera response are not necessary.
-	///
-	/// In this implementation new image regions are filled with zeros.
-	///
-	/// For more information see [GW03](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_GW03) .
-	pub struct AlignMTB {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { AlignMTB }
-
-	impl Drop for AlignMTB {
+	impl std::fmt::Debug for AlignMTB {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_AlignMTB_delete(self.as_raw_mut_AlignMTB()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("AlignMTB")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for AlignMTB {}
+	boxed_cast_base! { AlignMTB, core::Algorithm, cv_AlignMTB_to_Algorithm }
+
+	boxed_cast_base! { AlignMTB, crate::photo::AlignExposures, cv_AlignMTB_to_AlignExposures }
 
 	impl core::AlgorithmTraitConst for AlignMTB {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -2115,20 +2124,21 @@ pub mod photo {
 
 	boxed_ref! { AlignMTB, crate::photo::AlignMTBTraitConst, as_raw_AlignMTB, crate::photo::AlignMTBTrait, as_raw_mut_AlignMTB }
 
-	impl AlignMTB {
+	/// The base class for camera response calibration algorithms.
+	pub struct CalibrateCRF {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { AlignMTB, core::Algorithm, cv_AlignMTB_to_Algorithm }
+	opencv_type_boxed! { CalibrateCRF }
 
-	boxed_cast_base! { AlignMTB, crate::photo::AlignExposures, cv_AlignMTB_to_AlignExposures }
-
-	impl std::fmt::Debug for AlignMTB {
+	impl Drop for CalibrateCRF {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("AlignMTB")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_CalibrateCRF_delete(self.as_raw_mut_CalibrateCRF()) };
 		}
 	}
+
+	unsafe impl Send for CalibrateCRF {}
 
 	/// Constant methods for [crate::photo::CalibrateCRF]
 	pub trait CalibrateCRFTraitConst: core::AlgorithmTraitConst {
@@ -2160,21 +2170,19 @@ pub mod photo {
 
 	}
 
-	/// The base class for camera response calibration algorithms.
-	pub struct CalibrateCRF {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CalibrateCRF }
-
-	impl Drop for CalibrateCRF {
+	impl std::fmt::Debug for CalibrateCRF {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_CalibrateCRF_delete(self.as_raw_mut_CalibrateCRF()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CalibrateCRF")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for CalibrateCRF {}
+	boxed_cast_base! { CalibrateCRF, core::Algorithm, cv_CalibrateCRF_to_Algorithm }
+
+	boxed_cast_descendant! { CalibrateCRF, crate::photo::CalibrateDebevec, cv_CalibrateCRF_to_CalibrateDebevec }
+
+	boxed_cast_descendant! { CalibrateCRF, crate::photo::CalibrateRobertson, cv_CalibrateCRF_to_CalibrateRobertson }
 
 	impl core::AlgorithmTraitConst for CalibrateCRF {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -2196,22 +2204,25 @@ pub mod photo {
 
 	boxed_ref! { CalibrateCRF, crate::photo::CalibrateCRFTraitConst, as_raw_CalibrateCRF, crate::photo::CalibrateCRFTrait, as_raw_mut_CalibrateCRF }
 
-	impl CalibrateCRF {
+	/// Inverse camera response function is extracted for each brightness value by minimizing an objective
+	/// function as linear system. Objective function is constructed using pixel values on the same position
+	/// in all images, extra term is added to make the result smoother.
+	///
+	/// For more information see [DM97](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_DM97) .
+	pub struct CalibrateDebevec {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { CalibrateCRF, crate::photo::CalibrateDebevec, cv_CalibrateCRF_to_CalibrateDebevec }
+	opencv_type_boxed! { CalibrateDebevec }
 
-	boxed_cast_descendant! { CalibrateCRF, crate::photo::CalibrateRobertson, cv_CalibrateCRF_to_CalibrateRobertson }
-
-	boxed_cast_base! { CalibrateCRF, core::Algorithm, cv_CalibrateCRF_to_Algorithm }
-
-	impl std::fmt::Debug for CalibrateCRF {
+	impl Drop for CalibrateDebevec {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CalibrateCRF")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_CalibrateDebevec_delete(self.as_raw_mut_CalibrateDebevec()) };
 		}
 	}
+
+	unsafe impl Send for CalibrateDebevec {}
 
 	/// Constant methods for [crate::photo::CalibrateDebevec]
 	pub trait CalibrateDebevecTraitConst: crate::photo::CalibrateCRFTraitConst {
@@ -2279,25 +2290,17 @@ pub mod photo {
 
 	}
 
-	/// Inverse camera response function is extracted for each brightness value by minimizing an objective
-	/// function as linear system. Objective function is constructed using pixel values on the same position
-	/// in all images, extra term is added to make the result smoother.
-	///
-	/// For more information see [DM97](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_DM97) .
-	pub struct CalibrateDebevec {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CalibrateDebevec }
-
-	impl Drop for CalibrateDebevec {
+	impl std::fmt::Debug for CalibrateDebevec {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_CalibrateDebevec_delete(self.as_raw_mut_CalibrateDebevec()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CalibrateDebevec")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for CalibrateDebevec {}
+	boxed_cast_base! { CalibrateDebevec, core::Algorithm, cv_CalibrateDebevec_to_Algorithm }
+
+	boxed_cast_base! { CalibrateDebevec, crate::photo::CalibrateCRF, cv_CalibrateDebevec_to_CalibrateCRF }
 
 	impl core::AlgorithmTraitConst for CalibrateDebevec {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -2329,20 +2332,24 @@ pub mod photo {
 
 	boxed_ref! { CalibrateDebevec, crate::photo::CalibrateDebevecTraitConst, as_raw_CalibrateDebevec, crate::photo::CalibrateDebevecTrait, as_raw_mut_CalibrateDebevec }
 
-	impl CalibrateDebevec {
+	/// Inverse camera response function is extracted for each brightness value by minimizing an objective
+	/// function as linear system. This algorithm uses all image pixels.
+	///
+	/// For more information see [RB99](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_RB99) .
+	pub struct CalibrateRobertson {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { CalibrateDebevec, core::Algorithm, cv_CalibrateDebevec_to_Algorithm }
+	opencv_type_boxed! { CalibrateRobertson }
 
-	boxed_cast_base! { CalibrateDebevec, crate::photo::CalibrateCRF, cv_CalibrateDebevec_to_CalibrateCRF }
-
-	impl std::fmt::Debug for CalibrateDebevec {
+	impl Drop for CalibrateRobertson {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CalibrateDebevec")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_CalibrateRobertson_delete(self.as_raw_mut_CalibrateRobertson()) };
 		}
 	}
+
+	unsafe impl Send for CalibrateRobertson {}
 
 	/// Constant methods for [crate::photo::CalibrateRobertson]
 	pub trait CalibrateRobertsonTraitConst: crate::photo::CalibrateCRFTraitConst {
@@ -2402,24 +2409,17 @@ pub mod photo {
 
 	}
 
-	/// Inverse camera response function is extracted for each brightness value by minimizing an objective
-	/// function as linear system. This algorithm uses all image pixels.
-	///
-	/// For more information see [RB99](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_RB99) .
-	pub struct CalibrateRobertson {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CalibrateRobertson }
-
-	impl Drop for CalibrateRobertson {
+	impl std::fmt::Debug for CalibrateRobertson {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_CalibrateRobertson_delete(self.as_raw_mut_CalibrateRobertson()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CalibrateRobertson")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for CalibrateRobertson {}
+	boxed_cast_base! { CalibrateRobertson, core::Algorithm, cv_CalibrateRobertson_to_Algorithm }
+
+	boxed_cast_base! { CalibrateRobertson, crate::photo::CalibrateCRF, cv_CalibrateRobertson_to_CalibrateCRF }
 
 	impl core::AlgorithmTraitConst for CalibrateRobertson {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -2451,20 +2451,24 @@ pub mod photo {
 
 	boxed_ref! { CalibrateRobertson, crate::photo::CalibrateRobertsonTraitConst, as_raw_CalibrateRobertson, crate::photo::CalibrateRobertsonTrait, as_raw_mut_CalibrateRobertson }
 
-	impl CalibrateRobertson {
+	/// The resulting HDR image is calculated as weighted average of the exposures considering exposure
+	/// values and camera response.
+	///
+	/// For more information see [DM97](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_DM97) .
+	pub struct MergeDebevec {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { CalibrateRobertson, core::Algorithm, cv_CalibrateRobertson_to_Algorithm }
+	opencv_type_boxed! { MergeDebevec }
 
-	boxed_cast_base! { CalibrateRobertson, crate::photo::CalibrateCRF, cv_CalibrateRobertson_to_CalibrateCRF }
-
-	impl std::fmt::Debug for CalibrateRobertson {
+	impl Drop for MergeDebevec {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CalibrateRobertson")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_MergeDebevec_delete(self.as_raw_mut_MergeDebevec()) };
 		}
 	}
+
+	unsafe impl Send for MergeDebevec {}
 
 	/// Constant methods for [crate::photo::MergeDebevec]
 	pub trait MergeDebevecTraitConst: crate::photo::MergeExposuresTraitConst {
@@ -2503,24 +2507,17 @@ pub mod photo {
 
 	}
 
-	/// The resulting HDR image is calculated as weighted average of the exposures considering exposure
-	/// values and camera response.
-	///
-	/// For more information see [DM97](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_DM97) .
-	pub struct MergeDebevec {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { MergeDebevec }
-
-	impl Drop for MergeDebevec {
+	impl std::fmt::Debug for MergeDebevec {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_MergeDebevec_delete(self.as_raw_mut_MergeDebevec()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MergeDebevec")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for MergeDebevec {}
+	boxed_cast_base! { MergeDebevec, core::Algorithm, cv_MergeDebevec_to_Algorithm }
+
+	boxed_cast_base! { MergeDebevec, crate::photo::MergeExposures, cv_MergeDebevec_to_MergeExposures }
 
 	impl core::AlgorithmTraitConst for MergeDebevec {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -2552,20 +2549,21 @@ pub mod photo {
 
 	boxed_ref! { MergeDebevec, crate::photo::MergeDebevecTraitConst, as_raw_MergeDebevec, crate::photo::MergeDebevecTrait, as_raw_mut_MergeDebevec }
 
-	impl MergeDebevec {
+	/// The base class algorithms that can merge exposure sequence to a single image.
+	pub struct MergeExposures {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { MergeDebevec, core::Algorithm, cv_MergeDebevec_to_Algorithm }
+	opencv_type_boxed! { MergeExposures }
 
-	boxed_cast_base! { MergeDebevec, crate::photo::MergeExposures, cv_MergeDebevec_to_MergeExposures }
-
-	impl std::fmt::Debug for MergeDebevec {
+	impl Drop for MergeExposures {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("MergeDebevec")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_MergeExposures_delete(self.as_raw_mut_MergeExposures()) };
 		}
 	}
+
+	unsafe impl Send for MergeExposures {}
 
 	/// Constant methods for [crate::photo::MergeExposures]
 	pub trait MergeExposuresTraitConst: core::AlgorithmTraitConst {
@@ -2600,21 +2598,21 @@ pub mod photo {
 
 	}
 
-	/// The base class algorithms that can merge exposure sequence to a single image.
-	pub struct MergeExposures {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { MergeExposures }
-
-	impl Drop for MergeExposures {
+	impl std::fmt::Debug for MergeExposures {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_MergeExposures_delete(self.as_raw_mut_MergeExposures()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MergeExposures")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for MergeExposures {}
+	boxed_cast_base! { MergeExposures, core::Algorithm, cv_MergeExposures_to_Algorithm }
+
+	boxed_cast_descendant! { MergeExposures, crate::photo::MergeDebevec, cv_MergeExposures_to_MergeDebevec }
+
+	boxed_cast_descendant! { MergeExposures, crate::photo::MergeMertens, cv_MergeExposures_to_MergeMertens }
+
+	boxed_cast_descendant! { MergeExposures, crate::photo::MergeRobertson, cv_MergeExposures_to_MergeRobertson }
 
 	impl core::AlgorithmTraitConst for MergeExposures {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -2636,24 +2634,30 @@ pub mod photo {
 
 	boxed_ref! { MergeExposures, crate::photo::MergeExposuresTraitConst, as_raw_MergeExposures, crate::photo::MergeExposuresTrait, as_raw_mut_MergeExposures }
 
-	impl MergeExposures {
+	/// Pixels are weighted using contrast, saturation and well-exposedness measures, than images are
+	/// combined using laplacian pyramids.
+	///
+	/// The resulting image weight is constructed as weighted average of contrast, saturation and
+	/// well-exposedness measures.
+	///
+	/// The resulting image doesn't require tonemapping and can be converted to 8-bit image by multiplying
+	/// by 255, but it's recommended to apply gamma correction and/or linear tonemapping.
+	///
+	/// For more information see [MK07](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_MK07) .
+	pub struct MergeMertens {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { MergeExposures, crate::photo::MergeDebevec, cv_MergeExposures_to_MergeDebevec }
+	opencv_type_boxed! { MergeMertens }
 
-	boxed_cast_descendant! { MergeExposures, crate::photo::MergeMertens, cv_MergeExposures_to_MergeMertens }
-
-	boxed_cast_descendant! { MergeExposures, crate::photo::MergeRobertson, cv_MergeExposures_to_MergeRobertson }
-
-	boxed_cast_base! { MergeExposures, core::Algorithm, cv_MergeExposures_to_Algorithm }
-
-	impl std::fmt::Debug for MergeExposures {
+	impl Drop for MergeMertens {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("MergeExposures")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_MergeMertens_delete(self.as_raw_mut_MergeMertens()) };
 		}
 	}
+
+	unsafe impl Send for MergeMertens {}
 
 	/// Constant methods for [crate::photo::MergeMertens]
 	pub trait MergeMertensTraitConst: crate::photo::MergeExposuresTraitConst {
@@ -2750,30 +2754,17 @@ pub mod photo {
 
 	}
 
-	/// Pixels are weighted using contrast, saturation and well-exposedness measures, than images are
-	/// combined using laplacian pyramids.
-	///
-	/// The resulting image weight is constructed as weighted average of contrast, saturation and
-	/// well-exposedness measures.
-	///
-	/// The resulting image doesn't require tonemapping and can be converted to 8-bit image by multiplying
-	/// by 255, but it's recommended to apply gamma correction and/or linear tonemapping.
-	///
-	/// For more information see [MK07](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_MK07) .
-	pub struct MergeMertens {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { MergeMertens }
-
-	impl Drop for MergeMertens {
+	impl std::fmt::Debug for MergeMertens {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_MergeMertens_delete(self.as_raw_mut_MergeMertens()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MergeMertens")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for MergeMertens {}
+	boxed_cast_base! { MergeMertens, core::Algorithm, cv_MergeMertens_to_Algorithm }
+
+	boxed_cast_base! { MergeMertens, crate::photo::MergeExposures, cv_MergeMertens_to_MergeExposures }
 
 	impl core::AlgorithmTraitConst for MergeMertens {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -2805,20 +2796,24 @@ pub mod photo {
 
 	boxed_ref! { MergeMertens, crate::photo::MergeMertensTraitConst, as_raw_MergeMertens, crate::photo::MergeMertensTrait, as_raw_mut_MergeMertens }
 
-	impl MergeMertens {
+	/// The resulting HDR image is calculated as weighted average of the exposures considering exposure
+	/// values and camera response.
+	///
+	/// For more information see [RB99](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_RB99) .
+	pub struct MergeRobertson {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { MergeMertens, core::Algorithm, cv_MergeMertens_to_Algorithm }
+	opencv_type_boxed! { MergeRobertson }
 
-	boxed_cast_base! { MergeMertens, crate::photo::MergeExposures, cv_MergeMertens_to_MergeExposures }
-
-	impl std::fmt::Debug for MergeMertens {
+	impl Drop for MergeRobertson {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("MergeMertens")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_MergeRobertson_delete(self.as_raw_mut_MergeRobertson()) };
 		}
 	}
+
+	unsafe impl Send for MergeRobertson {}
 
 	/// Constant methods for [crate::photo::MergeRobertson]
 	pub trait MergeRobertsonTraitConst: crate::photo::MergeExposuresTraitConst {
@@ -2857,24 +2852,17 @@ pub mod photo {
 
 	}
 
-	/// The resulting HDR image is calculated as weighted average of the exposures considering exposure
-	/// values and camera response.
-	///
-	/// For more information see [RB99](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_RB99) .
-	pub struct MergeRobertson {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { MergeRobertson }
-
-	impl Drop for MergeRobertson {
+	impl std::fmt::Debug for MergeRobertson {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_MergeRobertson_delete(self.as_raw_mut_MergeRobertson()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MergeRobertson")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for MergeRobertson {}
+	boxed_cast_base! { MergeRobertson, core::Algorithm, cv_MergeRobertson_to_Algorithm }
+
+	boxed_cast_base! { MergeRobertson, crate::photo::MergeExposures, cv_MergeRobertson_to_MergeExposures }
 
 	impl core::AlgorithmTraitConst for MergeRobertson {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -2906,20 +2894,21 @@ pub mod photo {
 
 	boxed_ref! { MergeRobertson, crate::photo::MergeRobertsonTraitConst, as_raw_MergeRobertson, crate::photo::MergeRobertsonTrait, as_raw_mut_MergeRobertson }
 
-	impl MergeRobertson {
+	/// Base class for tonemapping algorithms - tools that are used to map HDR image to 8-bit range.
+	pub struct Tonemap {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { MergeRobertson, core::Algorithm, cv_MergeRobertson_to_Algorithm }
+	opencv_type_boxed! { Tonemap }
 
-	boxed_cast_base! { MergeRobertson, crate::photo::MergeExposures, cv_MergeRobertson_to_MergeExposures }
-
-	impl std::fmt::Debug for MergeRobertson {
+	impl Drop for Tonemap {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("MergeRobertson")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_Tonemap_delete(self.as_raw_mut_Tonemap()) };
 		}
 	}
+
+	unsafe impl Send for Tonemap {}
 
 	/// Constant methods for [crate::photo::Tonemap]
 	pub trait TonemapTraitConst: core::AlgorithmTraitConst {
@@ -2967,21 +2956,21 @@ pub mod photo {
 
 	}
 
-	/// Base class for tonemapping algorithms - tools that are used to map HDR image to 8-bit range.
-	pub struct Tonemap {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Tonemap }
-
-	impl Drop for Tonemap {
+	impl std::fmt::Debug for Tonemap {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_Tonemap_delete(self.as_raw_mut_Tonemap()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Tonemap")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for Tonemap {}
+	boxed_cast_base! { Tonemap, core::Algorithm, cv_Tonemap_to_Algorithm }
+
+	boxed_cast_descendant! { Tonemap, crate::photo::TonemapDrago, cv_Tonemap_to_TonemapDrago }
+
+	boxed_cast_descendant! { Tonemap, crate::photo::TonemapMantiuk, cv_Tonemap_to_TonemapMantiuk }
+
+	boxed_cast_descendant! { Tonemap, crate::photo::TonemapReinhard, cv_Tonemap_to_TonemapReinhard }
 
 	impl core::AlgorithmTraitConst for Tonemap {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -3003,24 +2992,29 @@ pub mod photo {
 
 	boxed_ref! { Tonemap, crate::photo::TonemapTraitConst, as_raw_Tonemap, crate::photo::TonemapTrait, as_raw_mut_Tonemap }
 
-	impl Tonemap {
+	/// Adaptive logarithmic mapping is a fast global tonemapping algorithm that scales the image in
+	/// logarithmic domain.
+	///
+	/// Since it's a global operator the same function is applied to all the pixels, it is controlled by the
+	/// bias parameter.
+	///
+	/// Optional saturation enhancement is possible as described in [FL02](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_FL02) .
+	///
+	/// For more information see [DM03](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_DM03) .
+	pub struct TonemapDrago {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { Tonemap, crate::photo::TonemapDrago, cv_Tonemap_to_TonemapDrago }
+	opencv_type_boxed! { TonemapDrago }
 
-	boxed_cast_descendant! { Tonemap, crate::photo::TonemapMantiuk, cv_Tonemap_to_TonemapMantiuk }
-
-	boxed_cast_descendant! { Tonemap, crate::photo::TonemapReinhard, cv_Tonemap_to_TonemapReinhard }
-
-	boxed_cast_base! { Tonemap, core::Algorithm, cv_Tonemap_to_Algorithm }
-
-	impl std::fmt::Debug for Tonemap {
+	impl Drop for TonemapDrago {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Tonemap")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_TonemapDrago_delete(self.as_raw_mut_TonemapDrago()) };
 		}
 	}
+
+	unsafe impl Send for TonemapDrago {}
 
 	/// Constant methods for [crate::photo::TonemapDrago]
 	pub trait TonemapDragoTraitConst: crate::photo::TonemapTraitConst {
@@ -3070,29 +3064,17 @@ pub mod photo {
 
 	}
 
-	/// Adaptive logarithmic mapping is a fast global tonemapping algorithm that scales the image in
-	/// logarithmic domain.
-	///
-	/// Since it's a global operator the same function is applied to all the pixels, it is controlled by the
-	/// bias parameter.
-	///
-	/// Optional saturation enhancement is possible as described in [FL02](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_FL02) .
-	///
-	/// For more information see [DM03](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_DM03) .
-	pub struct TonemapDrago {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { TonemapDrago }
-
-	impl Drop for TonemapDrago {
+	impl std::fmt::Debug for TonemapDrago {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_TonemapDrago_delete(self.as_raw_mut_TonemapDrago()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TonemapDrago")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for TonemapDrago {}
+	boxed_cast_base! { TonemapDrago, core::Algorithm, cv_TonemapDrago_to_Algorithm }
+
+	boxed_cast_base! { TonemapDrago, crate::photo::Tonemap, cv_TonemapDrago_to_Tonemap }
 
 	impl core::AlgorithmTraitConst for TonemapDrago {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -3124,20 +3106,25 @@ pub mod photo {
 
 	boxed_ref! { TonemapDrago, crate::photo::TonemapDragoTraitConst, as_raw_TonemapDrago, crate::photo::TonemapDragoTrait, as_raw_mut_TonemapDrago }
 
-	impl TonemapDrago {
+	/// This algorithm transforms image to contrast using gradients on all levels of gaussian pyramid,
+	/// transforms contrast values to HVS response and scales the response. After this the image is
+	/// reconstructed from new contrast values.
+	///
+	/// For more information see [MM06](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_MM06) .
+	pub struct TonemapMantiuk {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { TonemapDrago, core::Algorithm, cv_TonemapDrago_to_Algorithm }
+	opencv_type_boxed! { TonemapMantiuk }
 
-	boxed_cast_base! { TonemapDrago, crate::photo::Tonemap, cv_TonemapDrago_to_Tonemap }
-
-	impl std::fmt::Debug for TonemapDrago {
+	impl Drop for TonemapMantiuk {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("TonemapDrago")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_TonemapMantiuk_delete(self.as_raw_mut_TonemapMantiuk()) };
 		}
 	}
+
+	unsafe impl Send for TonemapMantiuk {}
 
 	/// Constant methods for [crate::photo::TonemapMantiuk]
 	pub trait TonemapMantiukTraitConst: crate::photo::TonemapTraitConst {
@@ -3187,25 +3174,17 @@ pub mod photo {
 
 	}
 
-	/// This algorithm transforms image to contrast using gradients on all levels of gaussian pyramid,
-	/// transforms contrast values to HVS response and scales the response. After this the image is
-	/// reconstructed from new contrast values.
-	///
-	/// For more information see [MM06](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_MM06) .
-	pub struct TonemapMantiuk {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { TonemapMantiuk }
-
-	impl Drop for TonemapMantiuk {
+	impl std::fmt::Debug for TonemapMantiuk {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_TonemapMantiuk_delete(self.as_raw_mut_TonemapMantiuk()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TonemapMantiuk")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for TonemapMantiuk {}
+	boxed_cast_base! { TonemapMantiuk, core::Algorithm, cv_TonemapMantiuk_to_Algorithm }
+
+	boxed_cast_base! { TonemapMantiuk, crate::photo::Tonemap, cv_TonemapMantiuk_to_Tonemap }
 
 	impl core::AlgorithmTraitConst for TonemapMantiuk {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -3237,20 +3216,26 @@ pub mod photo {
 
 	boxed_ref! { TonemapMantiuk, crate::photo::TonemapMantiukTraitConst, as_raw_TonemapMantiuk, crate::photo::TonemapMantiukTrait, as_raw_mut_TonemapMantiuk }
 
-	impl TonemapMantiuk {
+	/// This is a global tonemapping operator that models human visual system.
+	///
+	/// Mapping function is controlled by adaptation parameter, that is computed using light adaptation and
+	/// color adaptation.
+	///
+	/// For more information see [RD05](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_RD05) .
+	pub struct TonemapReinhard {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { TonemapMantiuk, core::Algorithm, cv_TonemapMantiuk_to_Algorithm }
+	opencv_type_boxed! { TonemapReinhard }
 
-	boxed_cast_base! { TonemapMantiuk, crate::photo::Tonemap, cv_TonemapMantiuk_to_Tonemap }
-
-	impl std::fmt::Debug for TonemapMantiuk {
+	impl Drop for TonemapReinhard {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("TonemapMantiuk")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_TonemapReinhard_delete(self.as_raw_mut_TonemapReinhard()) };
 		}
 	}
+
+	unsafe impl Send for TonemapReinhard {}
 
 	/// Constant methods for [crate::photo::TonemapReinhard]
 	pub trait TonemapReinhardTraitConst: crate::photo::TonemapTraitConst {
@@ -3318,26 +3303,17 @@ pub mod photo {
 
 	}
 
-	/// This is a global tonemapping operator that models human visual system.
-	///
-	/// Mapping function is controlled by adaptation parameter, that is computed using light adaptation and
-	/// color adaptation.
-	///
-	/// For more information see [RD05](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_RD05) .
-	pub struct TonemapReinhard {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { TonemapReinhard }
-
-	impl Drop for TonemapReinhard {
+	impl std::fmt::Debug for TonemapReinhard {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_TonemapReinhard_delete(self.as_raw_mut_TonemapReinhard()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TonemapReinhard")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for TonemapReinhard {}
+	boxed_cast_base! { TonemapReinhard, core::Algorithm, cv_TonemapReinhard_to_Algorithm }
+
+	boxed_cast_base! { TonemapReinhard, crate::photo::Tonemap, cv_TonemapReinhard_to_Tonemap }
 
 	impl core::AlgorithmTraitConst for TonemapReinhard {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -3369,18 +3345,4 @@ pub mod photo {
 
 	boxed_ref! { TonemapReinhard, crate::photo::TonemapReinhardTraitConst, as_raw_TonemapReinhard, crate::photo::TonemapReinhardTrait, as_raw_mut_TonemapReinhard }
 
-	impl TonemapReinhard {
-	}
-
-	boxed_cast_base! { TonemapReinhard, core::Algorithm, cv_TonemapReinhard_to_Algorithm }
-
-	boxed_cast_base! { TonemapReinhard, crate::photo::Tonemap, cv_TonemapReinhard_to_Tonemap }
-
-	impl std::fmt::Debug for TonemapReinhard {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("TonemapReinhard")
-				.finish()
-		}
-	}
 }

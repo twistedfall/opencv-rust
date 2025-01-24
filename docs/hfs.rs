@@ -36,6 +36,85 @@ pub mod hfs {
 		pub use super::{HfsSegmentTrait, HfsSegmentTraitConst};
 	}
 
+	pub struct HfsSegment {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { HfsSegment }
+
+	impl Drop for HfsSegment {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_hfs_HfsSegment_delete(self.as_raw_mut_HfsSegment()) };
+		}
+	}
+
+	unsafe impl Send for HfsSegment {}
+
+	impl HfsSegment {
+		/// create a hfs object
+		/// ## Parameters
+		/// * height: : the height of the input image
+		/// * width: : the width of the input image
+		/// * segEgbThresholdI: : parameter segEgbThresholdI
+		/// * minRegionSizeI: : parameter minRegionSizeI
+		/// * segEgbThresholdII: : parameter segEgbThresholdII
+		/// * minRegionSizeII: : parameter minRegionSizeII
+		/// * spatialWeight: : parameter spatialWeight
+		/// * slicSpixelSize: : parameter slicSpixelSize
+		/// * numSlicIter: : parameter numSlicIter
+		///
+		/// ## C++ default parameters
+		/// * seg_egb_threshold_i: 0.08f
+		/// * min_region_size_i: 100
+		/// * seg_egb_threshold_ii: 0.28f
+		/// * min_region_size_ii: 200
+		/// * spatial_weight: 0.6f
+		/// * slic_spixel_size: 8
+		/// * num_slic_iter: 5
+		#[inline]
+		pub fn create(height: i32, width: i32, seg_egb_threshold_i: f32, min_region_size_i: i32, seg_egb_threshold_ii: f32, min_region_size_ii: i32, spatial_weight: f32, slic_spixel_size: i32, num_slic_iter: i32) -> Result<core::Ptr<crate::hfs::HfsSegment>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_hfs_HfsSegment_create_int_int_float_int_float_int_float_int_int(height, width, seg_egb_threshold_i, min_region_size_i, seg_egb_threshold_ii, min_region_size_ii, spatial_weight, slic_spixel_size, num_slic_iter, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::hfs::HfsSegment>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// create a hfs object
+		/// ## Parameters
+		/// * height: : the height of the input image
+		/// * width: : the width of the input image
+		/// * segEgbThresholdI: : parameter segEgbThresholdI
+		/// * minRegionSizeI: : parameter minRegionSizeI
+		/// * segEgbThresholdII: : parameter segEgbThresholdII
+		/// * minRegionSizeII: : parameter minRegionSizeII
+		/// * spatialWeight: : parameter spatialWeight
+		/// * slicSpixelSize: : parameter slicSpixelSize
+		/// * numSlicIter: : parameter numSlicIter
+		///
+		/// ## Note
+		/// This alternative version of [HfsSegment::create] function uses the following default values for its arguments:
+		/// * seg_egb_threshold_i: 0.08f
+		/// * min_region_size_i: 100
+		/// * seg_egb_threshold_ii: 0.28f
+		/// * min_region_size_ii: 200
+		/// * spatial_weight: 0.6f
+		/// * slic_spixel_size: 8
+		/// * num_slic_iter: 5
+		#[inline]
+		pub fn create_def(height: i32, width: i32) -> Result<core::Ptr<crate::hfs::HfsSegment>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_hfs_HfsSegment_create_int_int(height, width, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::hfs::HfsSegment>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
 	/// Constant methods for [crate::hfs::HfsSegment]
 	pub trait HfsSegmentTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_HfsSegment(&self) -> *const c_void;
@@ -290,20 +369,15 @@ pub mod hfs {
 
 	}
 
-	pub struct HfsSegment {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { HfsSegment }
-
-	impl Drop for HfsSegment {
+	impl std::fmt::Debug for HfsSegment {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_hfs_HfsSegment_delete(self.as_raw_mut_HfsSegment()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("HfsSegment")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for HfsSegment {}
+	boxed_cast_base! { HfsSegment, core::Algorithm, cv_hfs_HfsSegment_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for HfsSegment {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -325,77 +399,4 @@ pub mod hfs {
 
 	boxed_ref! { HfsSegment, crate::hfs::HfsSegmentTraitConst, as_raw_HfsSegment, crate::hfs::HfsSegmentTrait, as_raw_mut_HfsSegment }
 
-	impl HfsSegment {
-		/// create a hfs object
-		/// ## Parameters
-		/// * height: : the height of the input image
-		/// * width: : the width of the input image
-		/// * segEgbThresholdI: : parameter segEgbThresholdI
-		/// * minRegionSizeI: : parameter minRegionSizeI
-		/// * segEgbThresholdII: : parameter segEgbThresholdII
-		/// * minRegionSizeII: : parameter minRegionSizeII
-		/// * spatialWeight: : parameter spatialWeight
-		/// * slicSpixelSize: : parameter slicSpixelSize
-		/// * numSlicIter: : parameter numSlicIter
-		///
-		/// ## C++ default parameters
-		/// * seg_egb_threshold_i: 0.08f
-		/// * min_region_size_i: 100
-		/// * seg_egb_threshold_ii: 0.28f
-		/// * min_region_size_ii: 200
-		/// * spatial_weight: 0.6f
-		/// * slic_spixel_size: 8
-		/// * num_slic_iter: 5
-		#[inline]
-		pub fn create(height: i32, width: i32, seg_egb_threshold_i: f32, min_region_size_i: i32, seg_egb_threshold_ii: f32, min_region_size_ii: i32, spatial_weight: f32, slic_spixel_size: i32, num_slic_iter: i32) -> Result<core::Ptr<crate::hfs::HfsSegment>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_hfs_HfsSegment_create_int_int_float_int_float_int_float_int_int(height, width, seg_egb_threshold_i, min_region_size_i, seg_egb_threshold_ii, min_region_size_ii, spatial_weight, slic_spixel_size, num_slic_iter, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::hfs::HfsSegment>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// create a hfs object
-		/// ## Parameters
-		/// * height: : the height of the input image
-		/// * width: : the width of the input image
-		/// * segEgbThresholdI: : parameter segEgbThresholdI
-		/// * minRegionSizeI: : parameter minRegionSizeI
-		/// * segEgbThresholdII: : parameter segEgbThresholdII
-		/// * minRegionSizeII: : parameter minRegionSizeII
-		/// * spatialWeight: : parameter spatialWeight
-		/// * slicSpixelSize: : parameter slicSpixelSize
-		/// * numSlicIter: : parameter numSlicIter
-		///
-		/// ## Note
-		/// This alternative version of [HfsSegment::create] function uses the following default values for its arguments:
-		/// * seg_egb_threshold_i: 0.08f
-		/// * min_region_size_i: 100
-		/// * seg_egb_threshold_ii: 0.28f
-		/// * min_region_size_ii: 200
-		/// * spatial_weight: 0.6f
-		/// * slic_spixel_size: 8
-		/// * num_slic_iter: 5
-		#[inline]
-		pub fn create_def(height: i32, width: i32) -> Result<core::Ptr<crate::hfs::HfsSegment>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_hfs_HfsSegment_create_int_int(height, width, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::hfs::HfsSegment>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_base! { HfsSegment, core::Algorithm, cv_hfs_HfsSegment_to_Algorithm }
-
-	impl std::fmt::Debug for HfsSegment {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("HfsSegment")
-				.finish()
-		}
-	}
 }

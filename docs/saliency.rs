@@ -38,18 +38,6 @@ pub mod saliency {
 		pub use super::{MotionSaliencyBinWangApr2014Trait, MotionSaliencyBinWangApr2014TraitConst, MotionSaliencyTrait, MotionSaliencyTraitConst, ObjectnessBINGTrait, ObjectnessBINGTraitConst, ObjectnessTrait, ObjectnessTraitConst, SaliencyTrait, SaliencyTraitConst, StaticSaliencyFineGrainedTrait, StaticSaliencyFineGrainedTraitConst, StaticSaliencySpectralResidualTrait, StaticSaliencySpectralResidualTraitConst, StaticSaliencyTrait, StaticSaliencyTraitConst};
 	}
 
-	/// Constant methods for [crate::saliency::MotionSaliency]
-	pub trait MotionSaliencyTraitConst: crate::saliency::SaliencyTraitConst {
-		fn as_raw_MotionSaliency(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::saliency::MotionSaliency]
-	pub trait MotionSaliencyTrait: crate::saliency::MotionSaliencyTraitConst + crate::saliency::SaliencyTrait {
-		fn as_raw_mut_MotionSaliency(&mut self) -> *mut c_void;
-
-	}
-
 	/// ********************************* Motion Saliency Base Class ***********************************
 	pub struct MotionSaliency {
 		ptr: *mut c_void,
@@ -65,6 +53,32 @@ pub mod saliency {
 	}
 
 	unsafe impl Send for MotionSaliency {}
+
+	/// Constant methods for [crate::saliency::MotionSaliency]
+	pub trait MotionSaliencyTraitConst: crate::saliency::SaliencyTraitConst {
+		fn as_raw_MotionSaliency(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::saliency::MotionSaliency]
+	pub trait MotionSaliencyTrait: crate::saliency::MotionSaliencyTraitConst + crate::saliency::SaliencyTrait {
+		fn as_raw_mut_MotionSaliency(&mut self) -> *mut c_void;
+
+	}
+
+	impl std::fmt::Debug for MotionSaliency {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MotionSaliency")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { MotionSaliency, core::Algorithm, cv_saliency_MotionSaliency_to_Algorithm }
+
+	boxed_cast_base! { MotionSaliency, crate::saliency::Saliency, cv_saliency_MotionSaliency_to_Saliency }
+
+	boxed_cast_descendant! { MotionSaliency, crate::saliency::MotionSaliencyBinWangApr2014, cv_saliency_MotionSaliency_to_MotionSaliencyBinWangApr2014 }
 
 	impl core::AlgorithmTraitConst for MotionSaliency {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -96,21 +110,50 @@ pub mod saliency {
 
 	boxed_ref! { MotionSaliency, crate::saliency::MotionSaliencyTraitConst, as_raw_MotionSaliency, crate::saliency::MotionSaliencyTrait, as_raw_mut_MotionSaliency }
 
-	impl MotionSaliency {
+	/// !
+	///  * A Fast Self-tuning Background Subtraction Algorithm.
+	///  *
+	///  * This background subtraction algorithm is inspired to the work of B. Wang and P. Dudek [2]
+	///  * [2]  B. Wang and P. Dudek "A Fast Self-tuning Background Subtraction Algorithm", in proc of IEEE Workshop on Change Detection, 2014
+	///  *
+	///
+	/// the Fast Self-tuning Background Subtraction Algorithm from [BinWangApr2014](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_BinWangApr2014)
+	pub struct MotionSaliencyBinWangApr2014 {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { MotionSaliency, crate::saliency::MotionSaliencyBinWangApr2014, cv_saliency_MotionSaliency_to_MotionSaliencyBinWangApr2014 }
+	opencv_type_boxed! { MotionSaliencyBinWangApr2014 }
 
-	boxed_cast_base! { MotionSaliency, core::Algorithm, cv_saliency_MotionSaliency_to_Algorithm }
-
-	boxed_cast_base! { MotionSaliency, crate::saliency::Saliency, cv_saliency_MotionSaliency_to_Saliency }
-
-	impl std::fmt::Debug for MotionSaliency {
+	impl Drop for MotionSaliencyBinWangApr2014 {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("MotionSaliency")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_delete(self.as_raw_mut_MotionSaliencyBinWangApr2014()) };
 		}
+	}
+
+	unsafe impl Send for MotionSaliencyBinWangApr2014 {}
+
+	impl MotionSaliencyBinWangApr2014 {
+		#[inline]
+		pub fn default() -> Result<crate::saliency::MotionSaliencyBinWangApr2014> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_MotionSaliencyBinWangApr2014(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::saliency::MotionSaliencyBinWangApr2014::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn create() -> Result<core::Ptr<crate::saliency::MotionSaliencyBinWangApr2014>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::saliency::MotionSaliencyBinWangApr2014>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::saliency::MotionSaliencyBinWangApr2014]
@@ -197,28 +240,19 @@ pub mod saliency {
 
 	}
 
-	/// !
-	///  * A Fast Self-tuning Background Subtraction Algorithm.
-	///  *
-	///  * This background subtraction algorithm is inspired to the work of B. Wang and P. Dudek [2]
-	///  * [2]  B. Wang and P. Dudek "A Fast Self-tuning Background Subtraction Algorithm", in proc of IEEE Workshop on Change Detection, 2014
-	///  *
-	///
-	/// the Fast Self-tuning Background Subtraction Algorithm from [BinWangApr2014](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_BinWangApr2014)
-	pub struct MotionSaliencyBinWangApr2014 {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { MotionSaliencyBinWangApr2014 }
-
-	impl Drop for MotionSaliencyBinWangApr2014 {
+	impl std::fmt::Debug for MotionSaliencyBinWangApr2014 {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_delete(self.as_raw_mut_MotionSaliencyBinWangApr2014()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MotionSaliencyBinWangApr2014")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for MotionSaliencyBinWangApr2014 {}
+	boxed_cast_base! { MotionSaliencyBinWangApr2014, core::Algorithm, cv_saliency_MotionSaliencyBinWangApr2014_to_Algorithm }
+
+	boxed_cast_base! { MotionSaliencyBinWangApr2014, crate::saliency::MotionSaliency, cv_saliency_MotionSaliencyBinWangApr2014_to_MotionSaliency }
+
+	boxed_cast_base! { MotionSaliencyBinWangApr2014, crate::saliency::Saliency, cv_saliency_MotionSaliencyBinWangApr2014_to_Saliency }
 
 	impl core::AlgorithmTraitConst for MotionSaliencyBinWangApr2014 {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -260,55 +294,6 @@ pub mod saliency {
 
 	boxed_ref! { MotionSaliencyBinWangApr2014, crate::saliency::MotionSaliencyBinWangApr2014TraitConst, as_raw_MotionSaliencyBinWangApr2014, crate::saliency::MotionSaliencyBinWangApr2014Trait, as_raw_mut_MotionSaliencyBinWangApr2014 }
 
-	impl MotionSaliencyBinWangApr2014 {
-		#[inline]
-		pub fn default() -> Result<crate::saliency::MotionSaliencyBinWangApr2014> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_MotionSaliencyBinWangApr2014(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::saliency::MotionSaliencyBinWangApr2014::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn create() -> Result<core::Ptr<crate::saliency::MotionSaliencyBinWangApr2014>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_saliency_MotionSaliencyBinWangApr2014_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::saliency::MotionSaliencyBinWangApr2014>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_base! { MotionSaliencyBinWangApr2014, core::Algorithm, cv_saliency_MotionSaliencyBinWangApr2014_to_Algorithm }
-
-	boxed_cast_base! { MotionSaliencyBinWangApr2014, crate::saliency::MotionSaliency, cv_saliency_MotionSaliencyBinWangApr2014_to_MotionSaliency }
-
-	boxed_cast_base! { MotionSaliencyBinWangApr2014, crate::saliency::Saliency, cv_saliency_MotionSaliencyBinWangApr2014_to_Saliency }
-
-	impl std::fmt::Debug for MotionSaliencyBinWangApr2014 {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("MotionSaliencyBinWangApr2014")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::saliency::Objectness]
-	pub trait ObjectnessTraitConst: crate::saliency::SaliencyTraitConst {
-		fn as_raw_Objectness(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::saliency::Objectness]
-	pub trait ObjectnessTrait: crate::saliency::ObjectnessTraitConst + crate::saliency::SaliencyTrait {
-		fn as_raw_mut_Objectness(&mut self) -> *mut c_void;
-
-	}
-
 	/// ********************************* Objectness Base Class ***********************************
 	pub struct Objectness {
 		ptr: *mut c_void,
@@ -324,6 +309,32 @@ pub mod saliency {
 	}
 
 	unsafe impl Send for Objectness {}
+
+	/// Constant methods for [crate::saliency::Objectness]
+	pub trait ObjectnessTraitConst: crate::saliency::SaliencyTraitConst {
+		fn as_raw_Objectness(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::saliency::Objectness]
+	pub trait ObjectnessTrait: crate::saliency::ObjectnessTraitConst + crate::saliency::SaliencyTrait {
+		fn as_raw_mut_Objectness(&mut self) -> *mut c_void;
+
+	}
+
+	impl std::fmt::Debug for Objectness {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Objectness")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Objectness, core::Algorithm, cv_saliency_Objectness_to_Algorithm }
+
+	boxed_cast_base! { Objectness, crate::saliency::Saliency, cv_saliency_Objectness_to_Saliency }
+
+	boxed_cast_descendant! { Objectness, crate::saliency::ObjectnessBING, cv_saliency_Objectness_to_ObjectnessBING }
 
 	impl core::AlgorithmTraitConst for Objectness {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -355,21 +366,43 @@ pub mod saliency {
 
 	boxed_ref! { Objectness, crate::saliency::ObjectnessTraitConst, as_raw_Objectness, crate::saliency::ObjectnessTrait, as_raw_mut_Objectness }
 
-	impl Objectness {
+	/// the Binarized normed gradients algorithm from [BING](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_BING)
+	pub struct ObjectnessBING {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { Objectness, crate::saliency::ObjectnessBING, cv_saliency_Objectness_to_ObjectnessBING }
+	opencv_type_boxed! { ObjectnessBING }
 
-	boxed_cast_base! { Objectness, core::Algorithm, cv_saliency_Objectness_to_Algorithm }
-
-	boxed_cast_base! { Objectness, crate::saliency::Saliency, cv_saliency_Objectness_to_Saliency }
-
-	impl std::fmt::Debug for Objectness {
+	impl Drop for ObjectnessBING {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Objectness")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_saliency_ObjectnessBING_delete(self.as_raw_mut_ObjectnessBING()) };
 		}
+	}
+
+	unsafe impl Send for ObjectnessBING {}
+
+	impl ObjectnessBING {
+		#[inline]
+		pub fn default() -> Result<crate::saliency::ObjectnessBING> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_saliency_ObjectnessBING_ObjectnessBING(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::saliency::ObjectnessBING::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn create() -> Result<core::Ptr<crate::saliency::ObjectnessBING>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_saliency_ObjectnessBING_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::saliency::ObjectnessBING>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::saliency::ObjectnessBING]
@@ -513,21 +546,19 @@ pub mod saliency {
 
 	}
 
-	/// the Binarized normed gradients algorithm from [BING](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_BING)
-	pub struct ObjectnessBING {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { ObjectnessBING }
-
-	impl Drop for ObjectnessBING {
+	impl std::fmt::Debug for ObjectnessBING {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_saliency_ObjectnessBING_delete(self.as_raw_mut_ObjectnessBING()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ObjectnessBING")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for ObjectnessBING {}
+	boxed_cast_base! { ObjectnessBING, core::Algorithm, cv_saliency_ObjectnessBING_to_Algorithm }
+
+	boxed_cast_base! { ObjectnessBING, crate::saliency::Objectness, cv_saliency_ObjectnessBING_to_Objectness }
+
+	boxed_cast_base! { ObjectnessBING, crate::saliency::Saliency, cv_saliency_ObjectnessBING_to_Saliency }
 
 	impl core::AlgorithmTraitConst for ObjectnessBING {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -569,42 +600,21 @@ pub mod saliency {
 
 	boxed_ref! { ObjectnessBING, crate::saliency::ObjectnessBINGTraitConst, as_raw_ObjectnessBING, crate::saliency::ObjectnessBINGTrait, as_raw_mut_ObjectnessBING }
 
-	impl ObjectnessBING {
-		#[inline]
-		pub fn default() -> Result<crate::saliency::ObjectnessBING> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_saliency_ObjectnessBING_ObjectnessBING(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::saliency::ObjectnessBING::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn create() -> Result<core::Ptr<crate::saliency::ObjectnessBING>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_saliency_ObjectnessBING_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::saliency::ObjectnessBING>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// ********************************* Saliency Base Class ***********************************
+	pub struct Saliency {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { ObjectnessBING, core::Algorithm, cv_saliency_ObjectnessBING_to_Algorithm }
+	opencv_type_boxed! { Saliency }
 
-	boxed_cast_base! { ObjectnessBING, crate::saliency::Objectness, cv_saliency_ObjectnessBING_to_Objectness }
-
-	boxed_cast_base! { ObjectnessBING, crate::saliency::Saliency, cv_saliency_ObjectnessBING_to_Saliency }
-
-	impl std::fmt::Debug for ObjectnessBING {
+	impl Drop for Saliency {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("ObjectnessBING")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_saliency_Saliency_delete(self.as_raw_mut_Saliency()) };
 		}
 	}
+
+	unsafe impl Send for Saliency {}
 
 	/// Constant methods for [crate::saliency::Saliency]
 	pub trait SaliencyTraitConst: core::AlgorithmTraitConst {
@@ -633,21 +643,29 @@ pub mod saliency {
 
 	}
 
-	/// ********************************* Saliency Base Class ***********************************
-	pub struct Saliency {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Saliency }
-
-	impl Drop for Saliency {
+	impl std::fmt::Debug for Saliency {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_saliency_Saliency_delete(self.as_raw_mut_Saliency()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Saliency")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for Saliency {}
+	boxed_cast_base! { Saliency, core::Algorithm, cv_saliency_Saliency_to_Algorithm }
+
+	boxed_cast_descendant! { Saliency, crate::saliency::MotionSaliency, cv_saliency_Saliency_to_MotionSaliency }
+
+	boxed_cast_descendant! { Saliency, crate::saliency::MotionSaliencyBinWangApr2014, cv_saliency_Saliency_to_MotionSaliencyBinWangApr2014 }
+
+	boxed_cast_descendant! { Saliency, crate::saliency::Objectness, cv_saliency_Saliency_to_Objectness }
+
+	boxed_cast_descendant! { Saliency, crate::saliency::ObjectnessBING, cv_saliency_Saliency_to_ObjectnessBING }
+
+	boxed_cast_descendant! { Saliency, crate::saliency::StaticSaliency, cv_saliency_Saliency_to_StaticSaliency }
+
+	boxed_cast_descendant! { Saliency, crate::saliency::StaticSaliencyFineGrained, cv_saliency_Saliency_to_StaticSaliencyFineGrained }
+
+	boxed_cast_descendant! { Saliency, crate::saliency::StaticSaliencySpectralResidual, cv_saliency_Saliency_to_StaticSaliencySpectralResidual }
 
 	impl core::AlgorithmTraitConst for Saliency {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -669,32 +687,21 @@ pub mod saliency {
 
 	boxed_ref! { Saliency, crate::saliency::SaliencyTraitConst, as_raw_Saliency, crate::saliency::SaliencyTrait, as_raw_mut_Saliency }
 
-	impl Saliency {
+	/// ********************************* Static Saliency Base Class ***********************************
+	pub struct StaticSaliency {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { Saliency, crate::saliency::MotionSaliency, cv_saliency_Saliency_to_MotionSaliency }
+	opencv_type_boxed! { StaticSaliency }
 
-	boxed_cast_descendant! { Saliency, crate::saliency::MotionSaliencyBinWangApr2014, cv_saliency_Saliency_to_MotionSaliencyBinWangApr2014 }
-
-	boxed_cast_descendant! { Saliency, crate::saliency::Objectness, cv_saliency_Saliency_to_Objectness }
-
-	boxed_cast_descendant! { Saliency, crate::saliency::ObjectnessBING, cv_saliency_Saliency_to_ObjectnessBING }
-
-	boxed_cast_descendant! { Saliency, crate::saliency::StaticSaliency, cv_saliency_Saliency_to_StaticSaliency }
-
-	boxed_cast_descendant! { Saliency, crate::saliency::StaticSaliencyFineGrained, cv_saliency_Saliency_to_StaticSaliencyFineGrained }
-
-	boxed_cast_descendant! { Saliency, crate::saliency::StaticSaliencySpectralResidual, cv_saliency_Saliency_to_StaticSaliencySpectralResidual }
-
-	boxed_cast_base! { Saliency, core::Algorithm, cv_saliency_Saliency_to_Algorithm }
-
-	impl std::fmt::Debug for Saliency {
+	impl Drop for StaticSaliency {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Saliency")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_saliency_StaticSaliency_delete(self.as_raw_mut_StaticSaliency()) };
 		}
 	}
+
+	unsafe impl Send for StaticSaliency {}
 
 	/// Constant methods for [crate::saliency::StaticSaliency]
 	pub trait StaticSaliencyTraitConst: crate::saliency::SaliencyTraitConst {
@@ -734,21 +741,21 @@ pub mod saliency {
 
 	}
 
-	/// ********************************* Static Saliency Base Class ***********************************
-	pub struct StaticSaliency {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { StaticSaliency }
-
-	impl Drop for StaticSaliency {
+	impl std::fmt::Debug for StaticSaliency {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_saliency_StaticSaliency_delete(self.as_raw_mut_StaticSaliency()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("StaticSaliency")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for StaticSaliency {}
+	boxed_cast_base! { StaticSaliency, core::Algorithm, cv_saliency_StaticSaliency_to_Algorithm }
+
+	boxed_cast_base! { StaticSaliency, crate::saliency::Saliency, cv_saliency_StaticSaliency_to_Saliency }
+
+	boxed_cast_descendant! { StaticSaliency, crate::saliency::StaticSaliencyFineGrained, cv_saliency_StaticSaliency_to_StaticSaliencyFineGrained }
+
+	boxed_cast_descendant! { StaticSaliency, crate::saliency::StaticSaliencySpectralResidual, cv_saliency_StaticSaliency_to_StaticSaliencySpectralResidual }
 
 	impl core::AlgorithmTraitConst for StaticSaliency {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -780,23 +787,46 @@ pub mod saliency {
 
 	boxed_ref! { StaticSaliency, crate::saliency::StaticSaliencyTraitConst, as_raw_StaticSaliency, crate::saliency::StaticSaliencyTrait, as_raw_mut_StaticSaliency }
 
-	impl StaticSaliency {
+	/// the Fine Grained Saliency approach from [FGS](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_FGS)
+	///
+	/// This method calculates saliency based on center-surround differences.
+	/// High resolution saliency maps are generated in real time by using integral images.
+	pub struct StaticSaliencyFineGrained {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { StaticSaliency, crate::saliency::StaticSaliencyFineGrained, cv_saliency_StaticSaliency_to_StaticSaliencyFineGrained }
+	opencv_type_boxed! { StaticSaliencyFineGrained }
 
-	boxed_cast_descendant! { StaticSaliency, crate::saliency::StaticSaliencySpectralResidual, cv_saliency_StaticSaliency_to_StaticSaliencySpectralResidual }
-
-	boxed_cast_base! { StaticSaliency, core::Algorithm, cv_saliency_StaticSaliency_to_Algorithm }
-
-	boxed_cast_base! { StaticSaliency, crate::saliency::Saliency, cv_saliency_StaticSaliency_to_Saliency }
-
-	impl std::fmt::Debug for StaticSaliency {
+	impl Drop for StaticSaliencyFineGrained {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("StaticSaliency")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_saliency_StaticSaliencyFineGrained_delete(self.as_raw_mut_StaticSaliencyFineGrained()) };
 		}
+	}
+
+	unsafe impl Send for StaticSaliencyFineGrained {}
+
+	impl StaticSaliencyFineGrained {
+		#[inline]
+		pub fn default() -> Result<crate::saliency::StaticSaliencyFineGrained> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_saliency_StaticSaliencyFineGrained_StaticSaliencyFineGrained(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::saliency::StaticSaliencyFineGrained::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn create() -> Result<core::Ptr<crate::saliency::StaticSaliencyFineGrained>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_saliency_StaticSaliencyFineGrained_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::saliency::StaticSaliencyFineGrained>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::saliency::StaticSaliencyFineGrained]
@@ -822,24 +852,19 @@ pub mod saliency {
 
 	}
 
-	/// the Fine Grained Saliency approach from [FGS](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_FGS)
-	///
-	/// This method calculates saliency based on center-surround differences.
-	/// High resolution saliency maps are generated in real time by using integral images.
-	pub struct StaticSaliencyFineGrained {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { StaticSaliencyFineGrained }
-
-	impl Drop for StaticSaliencyFineGrained {
+	impl std::fmt::Debug for StaticSaliencyFineGrained {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_saliency_StaticSaliencyFineGrained_delete(self.as_raw_mut_StaticSaliencyFineGrained()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("StaticSaliencyFineGrained")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for StaticSaliencyFineGrained {}
+	boxed_cast_base! { StaticSaliencyFineGrained, core::Algorithm, cv_saliency_StaticSaliencyFineGrained_to_Algorithm }
+
+	boxed_cast_base! { StaticSaliencyFineGrained, crate::saliency::Saliency, cv_saliency_StaticSaliencyFineGrained_to_Saliency }
+
+	boxed_cast_base! { StaticSaliencyFineGrained, crate::saliency::StaticSaliency, cv_saliency_StaticSaliencyFineGrained_to_StaticSaliency }
 
 	impl core::AlgorithmTraitConst for StaticSaliencyFineGrained {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -881,41 +906,48 @@ pub mod saliency {
 
 	boxed_ref! { StaticSaliencyFineGrained, crate::saliency::StaticSaliencyFineGrainedTraitConst, as_raw_StaticSaliencyFineGrained, crate::saliency::StaticSaliencyFineGrainedTrait, as_raw_mut_StaticSaliencyFineGrained }
 
-	impl StaticSaliencyFineGrained {
-		#[inline]
-		pub fn default() -> Result<crate::saliency::StaticSaliencyFineGrained> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_saliency_StaticSaliencyFineGrained_StaticSaliencyFineGrained(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::saliency::StaticSaliencyFineGrained::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn create() -> Result<core::Ptr<crate::saliency::StaticSaliencyFineGrained>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_saliency_StaticSaliencyFineGrained_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::saliency::StaticSaliencyFineGrained>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// the Spectral Residual approach from  [SR](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_SR)
+	///
+	/// Starting from the principle of natural image statistics, this method simulate the behavior of
+	/// pre-attentive visual search. The algorithm analyze the log spectrum of each image and obtain the
+	/// spectral residual. Then transform the spectral residual to spatial domain to obtain the saliency
+	/// map, which suggests the positions of proto-objects.
+	pub struct StaticSaliencySpectralResidual {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { StaticSaliencyFineGrained, core::Algorithm, cv_saliency_StaticSaliencyFineGrained_to_Algorithm }
+	opencv_type_boxed! { StaticSaliencySpectralResidual }
 
-	boxed_cast_base! { StaticSaliencyFineGrained, crate::saliency::Saliency, cv_saliency_StaticSaliencyFineGrained_to_Saliency }
-
-	boxed_cast_base! { StaticSaliencyFineGrained, crate::saliency::StaticSaliency, cv_saliency_StaticSaliencyFineGrained_to_StaticSaliency }
-
-	impl std::fmt::Debug for StaticSaliencyFineGrained {
+	impl Drop for StaticSaliencySpectralResidual {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("StaticSaliencyFineGrained")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_delete(self.as_raw_mut_StaticSaliencySpectralResidual()) };
 		}
+	}
+
+	unsafe impl Send for StaticSaliencySpectralResidual {}
+
+	impl StaticSaliencySpectralResidual {
+		#[inline]
+		pub fn default() -> Result<crate::saliency::StaticSaliencySpectralResidual> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_StaticSaliencySpectralResidual(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::saliency::StaticSaliencySpectralResidual::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn create() -> Result<core::Ptr<crate::saliency::StaticSaliencySpectralResidual>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::saliency::StaticSaliencySpectralResidual>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::saliency::StaticSaliencySpectralResidual]
@@ -995,26 +1027,19 @@ pub mod saliency {
 
 	}
 
-	/// the Spectral Residual approach from  [SR](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_SR)
-	///
-	/// Starting from the principle of natural image statistics, this method simulate the behavior of
-	/// pre-attentive visual search. The algorithm analyze the log spectrum of each image and obtain the
-	/// spectral residual. Then transform the spectral residual to spatial domain to obtain the saliency
-	/// map, which suggests the positions of proto-objects.
-	pub struct StaticSaliencySpectralResidual {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { StaticSaliencySpectralResidual }
-
-	impl Drop for StaticSaliencySpectralResidual {
+	impl std::fmt::Debug for StaticSaliencySpectralResidual {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_delete(self.as_raw_mut_StaticSaliencySpectralResidual()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("StaticSaliencySpectralResidual")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for StaticSaliencySpectralResidual {}
+	boxed_cast_base! { StaticSaliencySpectralResidual, core::Algorithm, cv_saliency_StaticSaliencySpectralResidual_to_Algorithm }
+
+	boxed_cast_base! { StaticSaliencySpectralResidual, crate::saliency::Saliency, cv_saliency_StaticSaliencySpectralResidual_to_Saliency }
+
+	boxed_cast_base! { StaticSaliencySpectralResidual, crate::saliency::StaticSaliency, cv_saliency_StaticSaliencySpectralResidual_to_StaticSaliency }
 
 	impl core::AlgorithmTraitConst for StaticSaliencySpectralResidual {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -1056,40 +1081,4 @@ pub mod saliency {
 
 	boxed_ref! { StaticSaliencySpectralResidual, crate::saliency::StaticSaliencySpectralResidualTraitConst, as_raw_StaticSaliencySpectralResidual, crate::saliency::StaticSaliencySpectralResidualTrait, as_raw_mut_StaticSaliencySpectralResidual }
 
-	impl StaticSaliencySpectralResidual {
-		#[inline]
-		pub fn default() -> Result<crate::saliency::StaticSaliencySpectralResidual> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_StaticSaliencySpectralResidual(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::saliency::StaticSaliencySpectralResidual::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn create() -> Result<core::Ptr<crate::saliency::StaticSaliencySpectralResidual>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_saliency_StaticSaliencySpectralResidual_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::saliency::StaticSaliencySpectralResidual>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_base! { StaticSaliencySpectralResidual, core::Algorithm, cv_saliency_StaticSaliencySpectralResidual_to_Algorithm }
-
-	boxed_cast_base! { StaticSaliencySpectralResidual, crate::saliency::Saliency, cv_saliency_StaticSaliencySpectralResidual_to_Saliency }
-
-	boxed_cast_base! { StaticSaliencySpectralResidual, crate::saliency::StaticSaliency, cv_saliency_StaticSaliencySpectralResidual_to_StaticSaliency }
-
-	impl std::fmt::Debug for StaticSaliencySpectralResidual {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("StaticSaliencySpectralResidual")
-				.finish()
-		}
-	}
 }

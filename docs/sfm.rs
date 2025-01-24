@@ -974,6 +974,22 @@ pub mod sfm {
 		Ok(ret)
 	}
 
+	/// base class BaseSFM declares a common API that would be used in a typical scene reconstruction scenario
+	pub struct BaseSFM {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { BaseSFM }
+
+	impl Drop for BaseSFM {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_sfm_BaseSFM_delete(self.as_raw_mut_BaseSFM()) };
+		}
+	}
+
+	unsafe impl Send for BaseSFM {}
+
 	/// Constant methods for [crate::sfm::BaseSFM]
 	pub trait BaseSFMTraitConst {
 		fn as_raw_BaseSFM(&self) -> *const c_void;
@@ -1090,21 +1106,15 @@ pub mod sfm {
 
 	}
 
-	/// base class BaseSFM declares a common API that would be used in a typical scene reconstruction scenario
-	pub struct BaseSFM {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { BaseSFM }
-
-	impl Drop for BaseSFM {
+	impl std::fmt::Debug for BaseSFM {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_sfm_BaseSFM_delete(self.as_raw_mut_BaseSFM()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BaseSFM")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for BaseSFM {}
+	boxed_cast_descendant! { BaseSFM, crate::sfm::SFMLibmvEuclideanReconstruction, cv_sfm_BaseSFM_to_SFMLibmvEuclideanReconstruction }
 
 	impl crate::sfm::BaseSFMTraitConst for BaseSFM {
 		#[inline] fn as_raw_BaseSFM(&self) -> *const c_void { self.as_raw() }
@@ -1116,17 +1126,54 @@ pub mod sfm {
 
 	boxed_ref! { BaseSFM, crate::sfm::BaseSFMTraitConst, as_raw_BaseSFM, crate::sfm::BaseSFMTrait, as_raw_mut_BaseSFM }
 
-	impl BaseSFM {
+	/// SFMLibmvEuclideanReconstruction class provides an interface with the Libmv Structure From Motion pipeline.
+	pub struct SFMLibmvEuclideanReconstruction {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { BaseSFM, crate::sfm::SFMLibmvEuclideanReconstruction, cv_sfm_BaseSFM_to_SFMLibmvEuclideanReconstruction }
+	opencv_type_boxed! { SFMLibmvEuclideanReconstruction }
 
-	impl std::fmt::Debug for BaseSFM {
+	impl Drop for SFMLibmvEuclideanReconstruction {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("BaseSFM")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_delete(self.as_raw_mut_SFMLibmvEuclideanReconstruction()) };
 		}
+	}
+
+	unsafe impl Send for SFMLibmvEuclideanReconstruction {}
+
+	impl SFMLibmvEuclideanReconstruction {
+		/// Creates an instance of the SFMLibmvEuclideanReconstruction class. Initializes Libmv.
+		///
+		/// ## C++ default parameters
+		/// * camera_instrinsic_options: libmv_CameraIntrinsicsOptions()
+		/// * reconstruction_options: libmv_ReconstructionOptions()
+		#[inline]
+		pub fn create(camera_instrinsic_options: crate::sfm::libmv_CameraIntrinsicsOptions, reconstruction_options: crate::sfm::libmv_ReconstructionOptions) -> Result<core::Ptr<crate::sfm::SFMLibmvEuclideanReconstruction>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_create_const_libmv_CameraIntrinsicsOptionsR_const_libmv_ReconstructionOptionsR(&camera_instrinsic_options, &reconstruction_options, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::sfm::SFMLibmvEuclideanReconstruction>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Creates an instance of the SFMLibmvEuclideanReconstruction class. Initializes Libmv.
+		///
+		/// ## Note
+		/// This alternative version of [SFMLibmvEuclideanReconstruction::create] function uses the following default values for its arguments:
+		/// * camera_instrinsic_options: libmv_CameraIntrinsicsOptions()
+		/// * reconstruction_options: libmv_ReconstructionOptions()
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::sfm::SFMLibmvEuclideanReconstruction>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::sfm::SFMLibmvEuclideanReconstruction>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::sfm::SFMLibmvEuclideanReconstruction]
@@ -1300,21 +1347,15 @@ pub mod sfm {
 
 	}
 
-	/// SFMLibmvEuclideanReconstruction class provides an interface with the Libmv Structure From Motion pipeline.
-	pub struct SFMLibmvEuclideanReconstruction {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { SFMLibmvEuclideanReconstruction }
-
-	impl Drop for SFMLibmvEuclideanReconstruction {
+	impl std::fmt::Debug for SFMLibmvEuclideanReconstruction {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_delete(self.as_raw_mut_SFMLibmvEuclideanReconstruction()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SFMLibmvEuclideanReconstruction")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for SFMLibmvEuclideanReconstruction {}
+	boxed_cast_base! { SFMLibmvEuclideanReconstruction, crate::sfm::BaseSFM, cv_sfm_SFMLibmvEuclideanReconstruction_to_BaseSFM }
 
 	impl crate::sfm::BaseSFMTraitConst for SFMLibmvEuclideanReconstruction {
 		#[inline] fn as_raw_BaseSFM(&self) -> *const c_void { self.as_raw() }
@@ -1335,50 +1376,6 @@ pub mod sfm {
 	}
 
 	boxed_ref! { SFMLibmvEuclideanReconstruction, crate::sfm::SFMLibmvEuclideanReconstructionTraitConst, as_raw_SFMLibmvEuclideanReconstruction, crate::sfm::SFMLibmvEuclideanReconstructionTrait, as_raw_mut_SFMLibmvEuclideanReconstruction }
-
-	impl SFMLibmvEuclideanReconstruction {
-		/// Creates an instance of the SFMLibmvEuclideanReconstruction class. Initializes Libmv.
-		///
-		/// ## C++ default parameters
-		/// * camera_instrinsic_options: libmv_CameraIntrinsicsOptions()
-		/// * reconstruction_options: libmv_ReconstructionOptions()
-		#[inline]
-		pub fn create(camera_instrinsic_options: crate::sfm::libmv_CameraIntrinsicsOptions, reconstruction_options: crate::sfm::libmv_ReconstructionOptions) -> Result<core::Ptr<crate::sfm::SFMLibmvEuclideanReconstruction>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_create_const_libmv_CameraIntrinsicsOptionsR_const_libmv_ReconstructionOptionsR(&camera_instrinsic_options, &reconstruction_options, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::sfm::SFMLibmvEuclideanReconstruction>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Creates an instance of the SFMLibmvEuclideanReconstruction class. Initializes Libmv.
-		///
-		/// ## Note
-		/// This alternative version of [SFMLibmvEuclideanReconstruction::create] function uses the following default values for its arguments:
-		/// * camera_instrinsic_options: libmv_CameraIntrinsicsOptions()
-		/// * reconstruction_options: libmv_ReconstructionOptions()
-		#[inline]
-		pub fn create_def() -> Result<core::Ptr<crate::sfm::SFMLibmvEuclideanReconstruction>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::sfm::SFMLibmvEuclideanReconstruction>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_base! { SFMLibmvEuclideanReconstruction, crate::sfm::BaseSFM, cv_sfm_SFMLibmvEuclideanReconstruction_to_BaseSFM }
-
-	impl std::fmt::Debug for SFMLibmvEuclideanReconstruction {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("SFMLibmvEuclideanReconstruction")
-				.finish()
-		}
-	}
 
 	/// Data structure describing the camera model and its parameters.
 	/// ## Parameters
@@ -1514,4 +1511,5 @@ pub mod sfm {
 		}
 
 	}
+
 }

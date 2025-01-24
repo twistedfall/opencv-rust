@@ -9074,6 +9074,55 @@ pub mod calib3d {
 
 	}
 
+	/// Levenberg-Marquardt solver. Starting with the specified vector of parameters it
+	/// optimizes the target vector criteria "err"
+	/// (finds local minima of each target vector component absolute value).
+	///
+	/// When needed, it calls user-provided callback.
+	pub struct LMSolver {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { LMSolver }
+
+	impl Drop for LMSolver {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_LMSolver_delete(self.as_raw_mut_LMSolver()) };
+		}
+	}
+
+	unsafe impl Send for LMSolver {}
+
+	impl LMSolver {
+		/// Creates Levenberg-Marquard solver
+		///
+		/// ## Parameters
+		/// * cb: callback
+		/// * maxIters: maximum number of iterations that can be further
+		///   modified using setMaxIters() method.
+		#[inline]
+		pub fn create(cb: &core::Ptr<crate::calib3d::LMSolver_Callback>, max_iters: i32) -> Result<core::Ptr<crate::calib3d::LMSolver>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_LMSolver_create_const_PtrLCallbackGR_int(cb.as_raw_PtrOfLMSolver_Callback(), max_iters, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::calib3d::LMSolver>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn create_ext(cb: &core::Ptr<crate::calib3d::LMSolver_Callback>, max_iters: i32, eps: f64) -> Result<core::Ptr<crate::calib3d::LMSolver>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_LMSolver_create_const_PtrLCallbackGR_int_double(cb.as_raw_PtrOfLMSolver_Callback(), max_iters, eps, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::calib3d::LMSolver>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
 	/// Constant methods for [crate::calib3d::LMSolver]
 	pub trait LMSolverTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_LMSolver(&self) -> *const c_void;
@@ -9129,25 +9178,15 @@ pub mod calib3d {
 
 	}
 
-	/// Levenberg-Marquardt solver. Starting with the specified vector of parameters it
-	/// optimizes the target vector criteria "err"
-	/// (finds local minima of each target vector component absolute value).
-	///
-	/// When needed, it calls user-provided callback.
-	pub struct LMSolver {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { LMSolver }
-
-	impl Drop for LMSolver {
+	impl std::fmt::Debug for LMSolver {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_LMSolver_delete(self.as_raw_mut_LMSolver()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("LMSolver")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for LMSolver {}
+	boxed_cast_base! { LMSolver, core::Algorithm, cv_LMSolver_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for LMSolver {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -9169,44 +9208,20 @@ pub mod calib3d {
 
 	boxed_ref! { LMSolver, crate::calib3d::LMSolverTraitConst, as_raw_LMSolver, crate::calib3d::LMSolverTrait, as_raw_mut_LMSolver }
 
-	impl LMSolver {
-		/// Creates Levenberg-Marquard solver
-		///
-		/// ## Parameters
-		/// * cb: callback
-		/// * maxIters: maximum number of iterations that can be further
-		///   modified using setMaxIters() method.
-		#[inline]
-		pub fn create(cb: &core::Ptr<crate::calib3d::LMSolver_Callback>, max_iters: i32) -> Result<core::Ptr<crate::calib3d::LMSolver>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_LMSolver_create_const_PtrLCallbackGR_int(cb.as_raw_PtrOfLMSolver_Callback(), max_iters, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::calib3d::LMSolver>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn create_ext(cb: &core::Ptr<crate::calib3d::LMSolver_Callback>, max_iters: i32, eps: f64) -> Result<core::Ptr<crate::calib3d::LMSolver>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_LMSolver_create_const_PtrLCallbackGR_int_double(cb.as_raw_PtrOfLMSolver_Callback(), max_iters, eps, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::calib3d::LMSolver>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	pub struct LMSolver_Callback {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { LMSolver, core::Algorithm, cv_LMSolver_to_Algorithm }
+	opencv_type_boxed! { LMSolver_Callback }
 
-	impl std::fmt::Debug for LMSolver {
+	impl Drop for LMSolver_Callback {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("LMSolver")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_LMSolver_Callback_delete(self.as_raw_mut_LMSolver_Callback()) };
 		}
 	}
+
+	unsafe impl Send for LMSolver_Callback {}
 
 	/// Constant methods for [crate::calib3d::LMSolver_Callback]
 	pub trait LMSolver_CallbackTraitConst {
@@ -9243,20 +9258,13 @@ pub mod calib3d {
 
 	}
 
-	pub struct LMSolver_Callback {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { LMSolver_Callback }
-
-	impl Drop for LMSolver_Callback {
+	impl std::fmt::Debug for LMSolver_Callback {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_LMSolver_Callback_delete(self.as_raw_mut_LMSolver_Callback()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("LMSolver_Callback")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for LMSolver_Callback {}
 
 	impl crate::calib3d::LMSolver_CallbackTraitConst for LMSolver_Callback {
 		#[inline] fn as_raw_LMSolver_Callback(&self) -> *const c_void { self.as_raw() }
@@ -9268,15 +9276,79 @@ pub mod calib3d {
 
 	boxed_ref! { LMSolver_Callback, crate::calib3d::LMSolver_CallbackTraitConst, as_raw_LMSolver_Callback, crate::calib3d::LMSolver_CallbackTrait, as_raw_mut_LMSolver_Callback }
 
-	impl LMSolver_Callback {
+	/// Class for computing stereo correspondence using the block matching algorithm, introduced and
+	/// contributed to OpenCV by K. Konolige.
+	pub struct StereoBM {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for LMSolver_Callback {
+	opencv_type_boxed! { StereoBM }
+
+	impl Drop for StereoBM {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("LMSolver_Callback")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_StereoBM_delete(self.as_raw_mut_StereoBM()) };
 		}
+	}
+
+	unsafe impl Send for StereoBM {}
+
+	impl StereoBM {
+		/// Creates StereoBM object
+		///
+		/// ## Parameters
+		/// * numDisparities: the disparity search range. For each pixel algorithm will find the best
+		/// disparity from 0 (default minimum disparity) to numDisparities. The search range can then be
+		/// shifted by changing the minimum disparity.
+		/// * blockSize: the linear size of the blocks compared by the algorithm. The size should be odd
+		/// (as the block is centered at the current pixel). Larger block size implies smoother, though less
+		/// accurate disparity map. Smaller block size gives more detailed disparity map, but there is higher
+		/// chance for algorithm to find a wrong correspondence.
+		///
+		/// The function create StereoBM object. You can then call StereoBM::compute() to compute disparity for
+		/// a specific stereo pair.
+		///
+		/// ## C++ default parameters
+		/// * num_disparities: 0
+		/// * block_size: 21
+		#[inline]
+		pub fn create(num_disparities: i32, block_size: i32) -> Result<core::Ptr<crate::calib3d::StereoBM>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_StereoBM_create_int_int(num_disparities, block_size, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::calib3d::StereoBM>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Creates StereoBM object
+		///
+		/// ## Parameters
+		/// * numDisparities: the disparity search range. For each pixel algorithm will find the best
+		/// disparity from 0 (default minimum disparity) to numDisparities. The search range can then be
+		/// shifted by changing the minimum disparity.
+		/// * blockSize: the linear size of the blocks compared by the algorithm. The size should be odd
+		/// (as the block is centered at the current pixel). Larger block size implies smoother, though less
+		/// accurate disparity map. Smaller block size gives more detailed disparity map, but there is higher
+		/// chance for algorithm to find a wrong correspondence.
+		///
+		/// The function create StereoBM object. You can then call StereoBM::compute() to compute disparity for
+		/// a specific stereo pair.
+		///
+		/// ## Note
+		/// This alternative version of [StereoBM::create] function uses the following default values for its arguments:
+		/// * num_disparities: 0
+		/// * block_size: 21
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::calib3d::StereoBM>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_StereoBM_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::calib3d::StereoBM>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::calib3d::StereoBM]
@@ -9435,22 +9507,17 @@ pub mod calib3d {
 
 	}
 
-	/// Class for computing stereo correspondence using the block matching algorithm, introduced and
-	/// contributed to OpenCV by K. Konolige.
-	pub struct StereoBM {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { StereoBM }
-
-	impl Drop for StereoBM {
+	impl std::fmt::Debug for StereoBM {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_StereoBM_delete(self.as_raw_mut_StereoBM()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("StereoBM")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for StereoBM {}
+	boxed_cast_base! { StereoBM, core::Algorithm, cv_StereoBM_to_Algorithm }
+
+	boxed_cast_base! { StereoBM, crate::calib3d::StereoMatcher, cv_StereoBM_to_StereoMatcher }
 
 	impl core::AlgorithmTraitConst for StereoBM {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -9482,75 +9549,21 @@ pub mod calib3d {
 
 	boxed_ref! { StereoBM, crate::calib3d::StereoBMTraitConst, as_raw_StereoBM, crate::calib3d::StereoBMTrait, as_raw_mut_StereoBM }
 
-	impl StereoBM {
-		/// Creates StereoBM object
-		///
-		/// ## Parameters
-		/// * numDisparities: the disparity search range. For each pixel algorithm will find the best
-		/// disparity from 0 (default minimum disparity) to numDisparities. The search range can then be
-		/// shifted by changing the minimum disparity.
-		/// * blockSize: the linear size of the blocks compared by the algorithm. The size should be odd
-		/// (as the block is centered at the current pixel). Larger block size implies smoother, though less
-		/// accurate disparity map. Smaller block size gives more detailed disparity map, but there is higher
-		/// chance for algorithm to find a wrong correspondence.
-		///
-		/// The function create StereoBM object. You can then call StereoBM::compute() to compute disparity for
-		/// a specific stereo pair.
-		///
-		/// ## C++ default parameters
-		/// * num_disparities: 0
-		/// * block_size: 21
-		#[inline]
-		pub fn create(num_disparities: i32, block_size: i32) -> Result<core::Ptr<crate::calib3d::StereoBM>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_StereoBM_create_int_int(num_disparities, block_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::calib3d::StereoBM>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Creates StereoBM object
-		///
-		/// ## Parameters
-		/// * numDisparities: the disparity search range. For each pixel algorithm will find the best
-		/// disparity from 0 (default minimum disparity) to numDisparities. The search range can then be
-		/// shifted by changing the minimum disparity.
-		/// * blockSize: the linear size of the blocks compared by the algorithm. The size should be odd
-		/// (as the block is centered at the current pixel). Larger block size implies smoother, though less
-		/// accurate disparity map. Smaller block size gives more detailed disparity map, but there is higher
-		/// chance for algorithm to find a wrong correspondence.
-		///
-		/// The function create StereoBM object. You can then call StereoBM::compute() to compute disparity for
-		/// a specific stereo pair.
-		///
-		/// ## Note
-		/// This alternative version of [StereoBM::create] function uses the following default values for its arguments:
-		/// * num_disparities: 0
-		/// * block_size: 21
-		#[inline]
-		pub fn create_def() -> Result<core::Ptr<crate::calib3d::StereoBM>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_StereoBM_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::calib3d::StereoBM>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// The base class for stereo correspondence algorithms.
+	pub struct StereoMatcher {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { StereoBM, core::Algorithm, cv_StereoBM_to_Algorithm }
+	opencv_type_boxed! { StereoMatcher }
 
-	boxed_cast_base! { StereoBM, crate::calib3d::StereoMatcher, cv_StereoBM_to_StereoMatcher }
-
-	impl std::fmt::Debug for StereoBM {
+	impl Drop for StereoMatcher {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("StereoBM")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_StereoMatcher_delete(self.as_raw_mut_StereoMatcher()) };
 		}
 	}
+
+	unsafe impl Send for StereoMatcher {}
 
 	/// Constant methods for [crate::calib3d::StereoMatcher]
 	pub trait StereoMatcherTraitConst: core::AlgorithmTraitConst {
@@ -9692,21 +9705,19 @@ pub mod calib3d {
 
 	}
 
-	/// The base class for stereo correspondence algorithms.
-	pub struct StereoMatcher {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { StereoMatcher }
-
-	impl Drop for StereoMatcher {
+	impl std::fmt::Debug for StereoMatcher {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_StereoMatcher_delete(self.as_raw_mut_StereoMatcher()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("StereoMatcher")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for StereoMatcher {}
+	boxed_cast_base! { StereoMatcher, core::Algorithm, cv_StereoMatcher_to_Algorithm }
+
+	boxed_cast_descendant! { StereoMatcher, crate::calib3d::StereoBM, cv_StereoMatcher_to_StereoBM }
+
+	boxed_cast_descendant! { StereoMatcher, crate::calib3d::StereoSGBM, cv_StereoMatcher_to_StereoSGBM }
 
 	impl core::AlgorithmTraitConst for StereoMatcher {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -9727,125 +9738,6 @@ pub mod calib3d {
 	}
 
 	boxed_ref! { StereoMatcher, crate::calib3d::StereoMatcherTraitConst, as_raw_StereoMatcher, crate::calib3d::StereoMatcherTrait, as_raw_mut_StereoMatcher }
-
-	impl StereoMatcher {
-	}
-
-	boxed_cast_descendant! { StereoMatcher, crate::calib3d::StereoBM, cv_StereoMatcher_to_StereoBM }
-
-	boxed_cast_descendant! { StereoMatcher, crate::calib3d::StereoSGBM, cv_StereoMatcher_to_StereoSGBM }
-
-	boxed_cast_base! { StereoMatcher, core::Algorithm, cv_StereoMatcher_to_Algorithm }
-
-	impl std::fmt::Debug for StereoMatcher {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("StereoMatcher")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::calib3d::StereoSGBM]
-	pub trait StereoSGBMTraitConst: crate::calib3d::StereoMatcherTraitConst {
-		fn as_raw_StereoSGBM(&self) -> *const c_void;
-
-		#[inline]
-		fn get_pre_filter_cap(&self) -> Result<i32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_StereoSGBM_getPreFilterCap_const(self.as_raw_StereoSGBM(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn get_uniqueness_ratio(&self) -> Result<i32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_StereoSGBM_getUniquenessRatio_const(self.as_raw_StereoSGBM(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn get_p1(&self) -> Result<i32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_StereoSGBM_getP1_const(self.as_raw_StereoSGBM(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn get_p2(&self) -> Result<i32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_StereoSGBM_getP2_const(self.as_raw_StereoSGBM(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn get_mode(&self) -> Result<i32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_StereoSGBM_getMode_const(self.as_raw_StereoSGBM(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
-
-	/// Mutable methods for [crate::calib3d::StereoSGBM]
-	pub trait StereoSGBMTrait: crate::calib3d::StereoMatcherTrait + crate::calib3d::StereoSGBMTraitConst {
-		fn as_raw_mut_StereoSGBM(&mut self) -> *mut c_void;
-
-		#[inline]
-		fn set_pre_filter_cap(&mut self, pre_filter_cap: i32) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_StereoSGBM_setPreFilterCap_int(self.as_raw_mut_StereoSGBM(), pre_filter_cap, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn set_uniqueness_ratio(&mut self, uniqueness_ratio: i32) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_StereoSGBM_setUniquenessRatio_int(self.as_raw_mut_StereoSGBM(), uniqueness_ratio, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn set_p1(&mut self, p1: i32) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_StereoSGBM_setP1_int(self.as_raw_mut_StereoSGBM(), p1, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn set_p2(&mut self, p2: i32) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_StereoSGBM_setP2_int(self.as_raw_mut_StereoSGBM(), p2, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn set_mode(&mut self, mode: i32) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_StereoSGBM_setMode_int(self.as_raw_mut_StereoSGBM(), mode, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
 
 	/// The class implements the modified H. Hirschmuller algorithm [HH08](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_HH08) that differs from the original
 	/// one as follows:
@@ -9879,36 +9771,6 @@ pub mod calib3d {
 	}
 
 	unsafe impl Send for StereoSGBM {}
-
-	impl core::AlgorithmTraitConst for StereoSGBM {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::AlgorithmTrait for StereoSGBM {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { StereoSGBM, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-
-	impl crate::calib3d::StereoMatcherTraitConst for StereoSGBM {
-		#[inline] fn as_raw_StereoMatcher(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::calib3d::StereoMatcherTrait for StereoSGBM {
-		#[inline] fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { StereoSGBM, crate::calib3d::StereoMatcherTraitConst, as_raw_StereoMatcher, crate::calib3d::StereoMatcherTrait, as_raw_mut_StereoMatcher }
-
-	impl crate::calib3d::StereoSGBMTraitConst for StereoSGBM {
-		#[inline] fn as_raw_StereoSGBM(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::calib3d::StereoSGBMTrait for StereoSGBM {
-		#[inline] fn as_raw_mut_StereoSGBM(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { StereoSGBM, crate::calib3d::StereoSGBMTraitConst, as_raw_StereoSGBM, crate::calib3d::StereoSGBMTrait, as_raw_mut_StereoSGBM }
 
 	impl StereoSGBM {
 		/// Creates StereoSGBM object
@@ -10034,9 +9896,107 @@ pub mod calib3d {
 
 	}
 
-	boxed_cast_base! { StereoSGBM, core::Algorithm, cv_StereoSGBM_to_Algorithm }
+	/// Constant methods for [crate::calib3d::StereoSGBM]
+	pub trait StereoSGBMTraitConst: crate::calib3d::StereoMatcherTraitConst {
+		fn as_raw_StereoSGBM(&self) -> *const c_void;
 
-	boxed_cast_base! { StereoSGBM, crate::calib3d::StereoMatcher, cv_StereoSGBM_to_StereoMatcher }
+		#[inline]
+		fn get_pre_filter_cap(&self) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_StereoSGBM_getPreFilterCap_const(self.as_raw_StereoSGBM(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_uniqueness_ratio(&self) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_StereoSGBM_getUniquenessRatio_const(self.as_raw_StereoSGBM(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_p1(&self) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_StereoSGBM_getP1_const(self.as_raw_StereoSGBM(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_p2(&self) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_StereoSGBM_getP2_const(self.as_raw_StereoSGBM(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_mode(&self) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_StereoSGBM_getMode_const(self.as_raw_StereoSGBM(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [crate::calib3d::StereoSGBM]
+	pub trait StereoSGBMTrait: crate::calib3d::StereoMatcherTrait + crate::calib3d::StereoSGBMTraitConst {
+		fn as_raw_mut_StereoSGBM(&mut self) -> *mut c_void;
+
+		#[inline]
+		fn set_pre_filter_cap(&mut self, pre_filter_cap: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_StereoSGBM_setPreFilterCap_int(self.as_raw_mut_StereoSGBM(), pre_filter_cap, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn set_uniqueness_ratio(&mut self, uniqueness_ratio: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_StereoSGBM_setUniquenessRatio_int(self.as_raw_mut_StereoSGBM(), uniqueness_ratio, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn set_p1(&mut self, p1: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_StereoSGBM_setP1_int(self.as_raw_mut_StereoSGBM(), p1, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn set_p2(&mut self, p2: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_StereoSGBM_setP2_int(self.as_raw_mut_StereoSGBM(), p2, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn set_mode(&mut self, mode: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_StereoSGBM_setMode_int(self.as_raw_mut_StereoSGBM(), mode, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
 
 	impl std::fmt::Debug for StereoSGBM {
 		#[inline]
@@ -10045,6 +10005,40 @@ pub mod calib3d {
 				.finish()
 		}
 	}
+
+	boxed_cast_base! { StereoSGBM, core::Algorithm, cv_StereoSGBM_to_Algorithm }
+
+	boxed_cast_base! { StereoSGBM, crate::calib3d::StereoMatcher, cv_StereoSGBM_to_StereoMatcher }
+
+	impl core::AlgorithmTraitConst for StereoSGBM {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::AlgorithmTrait for StereoSGBM {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { StereoSGBM, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+
+	impl crate::calib3d::StereoMatcherTraitConst for StereoSGBM {
+		#[inline] fn as_raw_StereoMatcher(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::calib3d::StereoMatcherTrait for StereoSGBM {
+		#[inline] fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { StereoSGBM, crate::calib3d::StereoMatcherTraitConst, as_raw_StereoMatcher, crate::calib3d::StereoMatcherTrait, as_raw_mut_StereoMatcher }
+
+	impl crate::calib3d::StereoSGBMTraitConst for StereoSGBM {
+		#[inline] fn as_raw_StereoSGBM(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::calib3d::StereoSGBMTrait for StereoSGBM {
+		#[inline] fn as_raw_mut_StereoSGBM(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { StereoSGBM, crate::calib3d::StereoSGBMTraitConst, as_raw_StereoSGBM, crate::calib3d::StereoSGBMTrait, as_raw_mut_StereoSGBM }
 
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq)]
@@ -10077,4 +10071,5 @@ pub mod calib3d {
 		}
 
 	}
+
 }

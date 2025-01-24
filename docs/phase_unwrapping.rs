@@ -20,32 +20,6 @@ pub mod phase_unwrapping {
 		pub use super::{HistogramPhaseUnwrappingTrait, HistogramPhaseUnwrappingTraitConst, PhaseUnwrappingTrait, PhaseUnwrappingTraitConst};
 	}
 
-	/// Constant methods for [crate::phase_unwrapping::HistogramPhaseUnwrapping]
-	pub trait HistogramPhaseUnwrappingTraitConst: crate::phase_unwrapping::PhaseUnwrappingTraitConst {
-		fn as_raw_HistogramPhaseUnwrapping(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::phase_unwrapping::HistogramPhaseUnwrapping]
-	pub trait HistogramPhaseUnwrappingTrait: crate::phase_unwrapping::HistogramPhaseUnwrappingTraitConst + crate::phase_unwrapping::PhaseUnwrappingTrait {
-		fn as_raw_mut_HistogramPhaseUnwrapping(&mut self) -> *mut c_void;
-
-		/// Get the reliability map computed from the wrapped phase map.
-		///
-		/// ## Parameters
-		/// * reliabilityMap: Image where the reliability map is stored.
-		#[inline]
-		fn get_inverse_reliability_map(&mut self, reliability_map: &mut impl ToOutputArray) -> Result<()> {
-			output_array_arg!(reliability_map);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_getInverseReliabilityMap_const__OutputArrayR(self.as_raw_mut_HistogramPhaseUnwrapping(), reliability_map.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
-
 	/// Class implementing two-dimensional phase unwrapping based on [histogramUnwrapping](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_histogramUnwrapping)
 	/// This algorithm belongs to the quality-guided phase unwrapping methods.
 	/// First, it computes a reliability map from second differences between a pixel and its eight neighbours.
@@ -70,36 +44,6 @@ pub mod phase_unwrapping {
 	}
 
 	unsafe impl Send for HistogramPhaseUnwrapping {}
-
-	impl core::AlgorithmTraitConst for HistogramPhaseUnwrapping {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::AlgorithmTrait for HistogramPhaseUnwrapping {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { HistogramPhaseUnwrapping, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-
-	impl crate::phase_unwrapping::PhaseUnwrappingTraitConst for HistogramPhaseUnwrapping {
-		#[inline] fn as_raw_PhaseUnwrapping(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::phase_unwrapping::PhaseUnwrappingTrait for HistogramPhaseUnwrapping {
-		#[inline] fn as_raw_mut_PhaseUnwrapping(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { HistogramPhaseUnwrapping, crate::phase_unwrapping::PhaseUnwrappingTraitConst, as_raw_PhaseUnwrapping, crate::phase_unwrapping::PhaseUnwrappingTrait, as_raw_mut_PhaseUnwrapping }
-
-	impl crate::phase_unwrapping::HistogramPhaseUnwrappingTraitConst for HistogramPhaseUnwrapping {
-		#[inline] fn as_raw_HistogramPhaseUnwrapping(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::phase_unwrapping::HistogramPhaseUnwrappingTrait for HistogramPhaseUnwrapping {
-		#[inline] fn as_raw_mut_HistogramPhaseUnwrapping(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { HistogramPhaseUnwrapping, crate::phase_unwrapping::HistogramPhaseUnwrappingTraitConst, as_raw_HistogramPhaseUnwrapping, crate::phase_unwrapping::HistogramPhaseUnwrappingTrait, as_raw_mut_HistogramPhaseUnwrapping }
 
 	impl HistogramPhaseUnwrapping {
 		/// Constructor
@@ -139,9 +83,31 @@ pub mod phase_unwrapping {
 
 	}
 
-	boxed_cast_base! { HistogramPhaseUnwrapping, core::Algorithm, cv_phase_unwrapping_HistogramPhaseUnwrapping_to_Algorithm }
+	/// Constant methods for [crate::phase_unwrapping::HistogramPhaseUnwrapping]
+	pub trait HistogramPhaseUnwrappingTraitConst: crate::phase_unwrapping::PhaseUnwrappingTraitConst {
+		fn as_raw_HistogramPhaseUnwrapping(&self) -> *const c_void;
 
-	boxed_cast_base! { HistogramPhaseUnwrapping, crate::phase_unwrapping::PhaseUnwrapping, cv_phase_unwrapping_HistogramPhaseUnwrapping_to_PhaseUnwrapping }
+	}
+
+	/// Mutable methods for [crate::phase_unwrapping::HistogramPhaseUnwrapping]
+	pub trait HistogramPhaseUnwrappingTrait: crate::phase_unwrapping::HistogramPhaseUnwrappingTraitConst + crate::phase_unwrapping::PhaseUnwrappingTrait {
+		fn as_raw_mut_HistogramPhaseUnwrapping(&mut self) -> *mut c_void;
+
+		/// Get the reliability map computed from the wrapped phase map.
+		///
+		/// ## Parameters
+		/// * reliabilityMap: Image where the reliability map is stored.
+		#[inline]
+		fn get_inverse_reliability_map(&mut self, reliability_map: &mut impl ToOutputArray) -> Result<()> {
+			output_array_arg!(reliability_map);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_getInverseReliabilityMap_const__OutputArrayR(self.as_raw_mut_HistogramPhaseUnwrapping(), reliability_map.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
 
 	impl std::fmt::Debug for HistogramPhaseUnwrapping {
 		#[inline]
@@ -150,6 +116,40 @@ pub mod phase_unwrapping {
 				.finish()
 		}
 	}
+
+	boxed_cast_base! { HistogramPhaseUnwrapping, core::Algorithm, cv_phase_unwrapping_HistogramPhaseUnwrapping_to_Algorithm }
+
+	boxed_cast_base! { HistogramPhaseUnwrapping, crate::phase_unwrapping::PhaseUnwrapping, cv_phase_unwrapping_HistogramPhaseUnwrapping_to_PhaseUnwrapping }
+
+	impl core::AlgorithmTraitConst for HistogramPhaseUnwrapping {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::AlgorithmTrait for HistogramPhaseUnwrapping {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { HistogramPhaseUnwrapping, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+
+	impl crate::phase_unwrapping::PhaseUnwrappingTraitConst for HistogramPhaseUnwrapping {
+		#[inline] fn as_raw_PhaseUnwrapping(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::phase_unwrapping::PhaseUnwrappingTrait for HistogramPhaseUnwrapping {
+		#[inline] fn as_raw_mut_PhaseUnwrapping(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { HistogramPhaseUnwrapping, crate::phase_unwrapping::PhaseUnwrappingTraitConst, as_raw_PhaseUnwrapping, crate::phase_unwrapping::PhaseUnwrappingTrait, as_raw_mut_PhaseUnwrapping }
+
+	impl crate::phase_unwrapping::HistogramPhaseUnwrappingTraitConst for HistogramPhaseUnwrapping {
+		#[inline] fn as_raw_HistogramPhaseUnwrapping(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::phase_unwrapping::HistogramPhaseUnwrappingTrait for HistogramPhaseUnwrapping {
+		#[inline] fn as_raw_mut_HistogramPhaseUnwrapping(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { HistogramPhaseUnwrapping, crate::phase_unwrapping::HistogramPhaseUnwrappingTraitConst, as_raw_HistogramPhaseUnwrapping, crate::phase_unwrapping::HistogramPhaseUnwrappingTrait, as_raw_mut_HistogramPhaseUnwrapping }
 
 	/// Parameters of phaseUnwrapping constructor.
 	///
@@ -182,6 +182,22 @@ pub mod phase_unwrapping {
 		}
 
 	}
+
+	/// Abstract base class for phase unwrapping.
+	pub struct PhaseUnwrapping {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { PhaseUnwrapping }
+
+	impl Drop for PhaseUnwrapping {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_phase_unwrapping_PhaseUnwrapping_delete(self.as_raw_mut_PhaseUnwrapping()) };
+		}
+	}
+
+	unsafe impl Send for PhaseUnwrapping {}
 
 	/// Constant methods for [crate::phase_unwrapping::PhaseUnwrapping]
 	pub trait PhaseUnwrappingTraitConst: core::AlgorithmTraitConst {
@@ -237,21 +253,17 @@ pub mod phase_unwrapping {
 
 	}
 
-	/// Abstract base class for phase unwrapping.
-	pub struct PhaseUnwrapping {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { PhaseUnwrapping }
-
-	impl Drop for PhaseUnwrapping {
+	impl std::fmt::Debug for PhaseUnwrapping {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_phase_unwrapping_PhaseUnwrapping_delete(self.as_raw_mut_PhaseUnwrapping()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PhaseUnwrapping")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for PhaseUnwrapping {}
+	boxed_cast_base! { PhaseUnwrapping, core::Algorithm, cv_phase_unwrapping_PhaseUnwrapping_to_Algorithm }
+
+	boxed_cast_descendant! { PhaseUnwrapping, crate::phase_unwrapping::HistogramPhaseUnwrapping, cv_phase_unwrapping_PhaseUnwrapping_to_HistogramPhaseUnwrapping }
 
 	impl core::AlgorithmTraitConst for PhaseUnwrapping {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -273,18 +285,4 @@ pub mod phase_unwrapping {
 
 	boxed_ref! { PhaseUnwrapping, crate::phase_unwrapping::PhaseUnwrappingTraitConst, as_raw_PhaseUnwrapping, crate::phase_unwrapping::PhaseUnwrappingTrait, as_raw_mut_PhaseUnwrapping }
 
-	impl PhaseUnwrapping {
-	}
-
-	boxed_cast_descendant! { PhaseUnwrapping, crate::phase_unwrapping::HistogramPhaseUnwrapping, cv_phase_unwrapping_PhaseUnwrapping_to_HistogramPhaseUnwrapping }
-
-	boxed_cast_base! { PhaseUnwrapping, core::Algorithm, cv_phase_unwrapping_PhaseUnwrapping_to_Algorithm }
-
-	impl std::fmt::Debug for PhaseUnwrapping {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("PhaseUnwrapping")
-				.finish()
-		}
-	}
 }

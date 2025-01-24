@@ -465,6 +465,35 @@ pub mod stitching {
 		Ok(ret)
 	}
 
+	/// Affine warper factory class.
+	/// ## See also
+	/// detail::AffineWarper
+	pub struct AffineWarper {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { AffineWarper }
+
+	impl Drop for AffineWarper {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_AffineWarper_delete(self.as_raw_mut_AffineWarper()) };
+		}
+	}
+
+	unsafe impl Send for AffineWarper {}
+
+	impl AffineWarper {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::stitching::AffineWarper {
+			let ret = unsafe { sys::cv_AffineWarper_defaultNew_const() };
+			let ret = unsafe { crate::stitching::AffineWarper::opencv_from_extern(ret) };
+			ret
+		}
+
+	}
+
 	/// Constant methods for [crate::stitching::AffineWarper]
 	pub trait AffineWarperTraitConst: crate::stitching::WarperCreatorTraitConst {
 		fn as_raw_AffineWarper(&self) -> *const c_void;
@@ -487,23 +516,23 @@ pub mod stitching {
 
 	}
 
-	/// Affine warper factory class.
-	/// ## See also
-	/// detail::AffineWarper
-	pub struct AffineWarper {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { AffineWarper }
-
-	impl Drop for AffineWarper {
+	impl Default for AffineWarper {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_AffineWarper_delete(self.as_raw_mut_AffineWarper()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for AffineWarper {}
+	impl std::fmt::Debug for AffineWarper {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("AffineWarper")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { AffineWarper, crate::stitching::WarperCreator, cv_AffineWarper_to_WarperCreator }
 
 	impl crate::stitching::WarperCreatorTraitConst for AffineWarper {
 		#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
@@ -525,55 +554,6 @@ pub mod stitching {
 
 	boxed_ref! { AffineWarper, crate::stitching::AffineWarperTraitConst, as_raw_AffineWarper, crate::stitching::AffineWarperTrait, as_raw_mut_AffineWarper }
 
-	impl AffineWarper {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_AffineWarper_defaultNew_const()) }
-		}
-
-	}
-
-	boxed_cast_base! { AffineWarper, crate::stitching::WarperCreator, cv_AffineWarper_to_WarperCreator }
-
-	impl std::fmt::Debug for AffineWarper {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("AffineWarper")
-				.finish()
-		}
-	}
-
-	impl Default for AffineWarper {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
-	}
-
-	/// Constant methods for [crate::stitching::CompressedRectilinearPortraitWarper]
-	pub trait CompressedRectilinearPortraitWarperTraitConst: crate::stitching::WarperCreatorTraitConst {
-		fn as_raw_CompressedRectilinearPortraitWarper(&self) -> *const c_void;
-
-		#[inline]
-		fn create(&self, scale: f32) -> Result<core::Ptr<crate::stitching::Detail_RotationWarper>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_CompressedRectilinearPortraitWarper_create_const_float(self.as_raw_CompressedRectilinearPortraitWarper(), scale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::stitching::Detail_RotationWarper>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	/// Mutable methods for [crate::stitching::CompressedRectilinearPortraitWarper]
-	pub trait CompressedRectilinearPortraitWarperTrait: crate::stitching::CompressedRectilinearPortraitWarperTraitConst + crate::stitching::WarperCreatorTrait {
-		fn as_raw_mut_CompressedRectilinearPortraitWarper(&mut self) -> *mut c_void;
-
-	}
-
 	pub struct CompressedRectilinearPortraitWarper {
 		ptr: *mut c_void,
 	}
@@ -588,26 +568,6 @@ pub mod stitching {
 	}
 
 	unsafe impl Send for CompressedRectilinearPortraitWarper {}
-
-	impl crate::stitching::WarperCreatorTraitConst for CompressedRectilinearPortraitWarper {
-		#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::WarperCreatorTrait for CompressedRectilinearPortraitWarper {
-		#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { CompressedRectilinearPortraitWarper, crate::stitching::WarperCreatorTraitConst, as_raw_WarperCreator, crate::stitching::WarperCreatorTrait, as_raw_mut_WarperCreator }
-
-	impl crate::stitching::CompressedRectilinearPortraitWarperTraitConst for CompressedRectilinearPortraitWarper {
-		#[inline] fn as_raw_CompressedRectilinearPortraitWarper(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::CompressedRectilinearPortraitWarperTrait for CompressedRectilinearPortraitWarper {
-		#[inline] fn as_raw_mut_CompressedRectilinearPortraitWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { CompressedRectilinearPortraitWarper, crate::stitching::CompressedRectilinearPortraitWarperTraitConst, as_raw_CompressedRectilinearPortraitWarper, crate::stitching::CompressedRectilinearPortraitWarperTrait, as_raw_mut_CompressedRectilinearPortraitWarper }
 
 	impl CompressedRectilinearPortraitWarper {
 		/// ## C++ default parameters
@@ -639,7 +599,27 @@ pub mod stitching {
 
 	}
 
-	boxed_cast_base! { CompressedRectilinearPortraitWarper, crate::stitching::WarperCreator, cv_CompressedRectilinearPortraitWarper_to_WarperCreator }
+	/// Constant methods for [crate::stitching::CompressedRectilinearPortraitWarper]
+	pub trait CompressedRectilinearPortraitWarperTraitConst: crate::stitching::WarperCreatorTraitConst {
+		fn as_raw_CompressedRectilinearPortraitWarper(&self) -> *const c_void;
+
+		#[inline]
+		fn create(&self, scale: f32) -> Result<core::Ptr<crate::stitching::Detail_RotationWarper>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_CompressedRectilinearPortraitWarper_create_const_float(self.as_raw_CompressedRectilinearPortraitWarper(), scale, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::stitching::Detail_RotationWarper>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [crate::stitching::CompressedRectilinearPortraitWarper]
+	pub trait CompressedRectilinearPortraitWarperTrait: crate::stitching::CompressedRectilinearPortraitWarperTraitConst + crate::stitching::WarperCreatorTrait {
+		fn as_raw_mut_CompressedRectilinearPortraitWarper(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for CompressedRectilinearPortraitWarper {
 		#[inline]
@@ -649,27 +629,27 @@ pub mod stitching {
 		}
 	}
 
-	/// Constant methods for [crate::stitching::CompressedRectilinearWarper]
-	pub trait CompressedRectilinearWarperTraitConst: crate::stitching::WarperCreatorTraitConst {
-		fn as_raw_CompressedRectilinearWarper(&self) -> *const c_void;
+	boxed_cast_base! { CompressedRectilinearPortraitWarper, crate::stitching::WarperCreator, cv_CompressedRectilinearPortraitWarper_to_WarperCreator }
 
-		#[inline]
-		fn create(&self, scale: f32) -> Result<core::Ptr<crate::stitching::Detail_RotationWarper>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_CompressedRectilinearWarper_create_const_float(self.as_raw_CompressedRectilinearWarper(), scale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::stitching::Detail_RotationWarper>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	impl crate::stitching::WarperCreatorTraitConst for CompressedRectilinearPortraitWarper {
+		#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [crate::stitching::CompressedRectilinearWarper]
-	pub trait CompressedRectilinearWarperTrait: crate::stitching::CompressedRectilinearWarperTraitConst + crate::stitching::WarperCreatorTrait {
-		fn as_raw_mut_CompressedRectilinearWarper(&mut self) -> *mut c_void;
-
+	impl crate::stitching::WarperCreatorTrait for CompressedRectilinearPortraitWarper {
+		#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { CompressedRectilinearPortraitWarper, crate::stitching::WarperCreatorTraitConst, as_raw_WarperCreator, crate::stitching::WarperCreatorTrait, as_raw_mut_WarperCreator }
+
+	impl crate::stitching::CompressedRectilinearPortraitWarperTraitConst for CompressedRectilinearPortraitWarper {
+		#[inline] fn as_raw_CompressedRectilinearPortraitWarper(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::CompressedRectilinearPortraitWarperTrait for CompressedRectilinearPortraitWarper {
+		#[inline] fn as_raw_mut_CompressedRectilinearPortraitWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { CompressedRectilinearPortraitWarper, crate::stitching::CompressedRectilinearPortraitWarperTraitConst, as_raw_CompressedRectilinearPortraitWarper, crate::stitching::CompressedRectilinearPortraitWarperTrait, as_raw_mut_CompressedRectilinearPortraitWarper }
 
 	pub struct CompressedRectilinearWarper {
 		ptr: *mut c_void,
@@ -685,26 +665,6 @@ pub mod stitching {
 	}
 
 	unsafe impl Send for CompressedRectilinearWarper {}
-
-	impl crate::stitching::WarperCreatorTraitConst for CompressedRectilinearWarper {
-		#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::WarperCreatorTrait for CompressedRectilinearWarper {
-		#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { CompressedRectilinearWarper, crate::stitching::WarperCreatorTraitConst, as_raw_WarperCreator, crate::stitching::WarperCreatorTrait, as_raw_mut_WarperCreator }
-
-	impl crate::stitching::CompressedRectilinearWarperTraitConst for CompressedRectilinearWarper {
-		#[inline] fn as_raw_CompressedRectilinearWarper(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::CompressedRectilinearWarperTrait for CompressedRectilinearWarper {
-		#[inline] fn as_raw_mut_CompressedRectilinearWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { CompressedRectilinearWarper, crate::stitching::CompressedRectilinearWarperTraitConst, as_raw_CompressedRectilinearWarper, crate::stitching::CompressedRectilinearWarperTrait, as_raw_mut_CompressedRectilinearWarper }
 
 	impl CompressedRectilinearWarper {
 		/// ## C++ default parameters
@@ -736,7 +696,27 @@ pub mod stitching {
 
 	}
 
-	boxed_cast_base! { CompressedRectilinearWarper, crate::stitching::WarperCreator, cv_CompressedRectilinearWarper_to_WarperCreator }
+	/// Constant methods for [crate::stitching::CompressedRectilinearWarper]
+	pub trait CompressedRectilinearWarperTraitConst: crate::stitching::WarperCreatorTraitConst {
+		fn as_raw_CompressedRectilinearWarper(&self) -> *const c_void;
+
+		#[inline]
+		fn create(&self, scale: f32) -> Result<core::Ptr<crate::stitching::Detail_RotationWarper>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_CompressedRectilinearWarper_create_const_float(self.as_raw_CompressedRectilinearWarper(), scale, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::stitching::Detail_RotationWarper>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [crate::stitching::CompressedRectilinearWarper]
+	pub trait CompressedRectilinearWarperTrait: crate::stitching::CompressedRectilinearWarperTraitConst + crate::stitching::WarperCreatorTrait {
+		fn as_raw_mut_CompressedRectilinearWarper(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for CompressedRectilinearWarper {
 		#[inline]
@@ -744,6 +724,57 @@ pub mod stitching {
 			f.debug_struct("CompressedRectilinearWarper")
 				.finish()
 		}
+	}
+
+	boxed_cast_base! { CompressedRectilinearWarper, crate::stitching::WarperCreator, cv_CompressedRectilinearWarper_to_WarperCreator }
+
+	impl crate::stitching::WarperCreatorTraitConst for CompressedRectilinearWarper {
+		#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::WarperCreatorTrait for CompressedRectilinearWarper {
+		#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { CompressedRectilinearWarper, crate::stitching::WarperCreatorTraitConst, as_raw_WarperCreator, crate::stitching::WarperCreatorTrait, as_raw_mut_WarperCreator }
+
+	impl crate::stitching::CompressedRectilinearWarperTraitConst for CompressedRectilinearWarper {
+		#[inline] fn as_raw_CompressedRectilinearWarper(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::CompressedRectilinearWarperTrait for CompressedRectilinearWarper {
+		#[inline] fn as_raw_mut_CompressedRectilinearWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { CompressedRectilinearWarper, crate::stitching::CompressedRectilinearWarperTraitConst, as_raw_CompressedRectilinearWarper, crate::stitching::CompressedRectilinearWarperTrait, as_raw_mut_CompressedRectilinearWarper }
+
+	/// Cylindrical warper factory class.
+	/// ## See also
+	/// detail::CylindricalWarper
+	pub struct CylindricalWarper {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { CylindricalWarper }
+
+	impl Drop for CylindricalWarper {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_CylindricalWarper_delete(self.as_raw_mut_CylindricalWarper()) };
+		}
+	}
+
+	unsafe impl Send for CylindricalWarper {}
+
+	impl CylindricalWarper {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::stitching::CylindricalWarper {
+			let ret = unsafe { sys::cv_CylindricalWarper_defaultNew_const() };
+			let ret = unsafe { crate::stitching::CylindricalWarper::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::stitching::CylindricalWarper]
@@ -768,23 +799,23 @@ pub mod stitching {
 
 	}
 
-	/// Cylindrical warper factory class.
-	/// ## See also
-	/// detail::CylindricalWarper
-	pub struct CylindricalWarper {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CylindricalWarper }
-
-	impl Drop for CylindricalWarper {
+	impl Default for CylindricalWarper {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_CylindricalWarper_delete(self.as_raw_mut_CylindricalWarper()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for CylindricalWarper {}
+	impl std::fmt::Debug for CylindricalWarper {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CylindricalWarper")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { CylindricalWarper, crate::stitching::WarperCreator, cv_CylindricalWarper_to_WarperCreator }
 
 	impl crate::stitching::WarperCreatorTraitConst for CylindricalWarper {
 		#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
@@ -806,31 +837,30 @@ pub mod stitching {
 
 	boxed_ref! { CylindricalWarper, crate::stitching::CylindricalWarperTraitConst, as_raw_CylindricalWarper, crate::stitching::CylindricalWarperTrait, as_raw_mut_CylindricalWarper }
 
-	impl CylindricalWarper {
+	pub struct CylindricalWarperGpu {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { CylindricalWarperGpu }
+
+	impl Drop for CylindricalWarperGpu {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_CylindricalWarperGpu_delete(self.as_raw_mut_CylindricalWarperGpu()) };
+		}
+	}
+
+	unsafe impl Send for CylindricalWarperGpu {}
+
+	impl CylindricalWarperGpu {
 		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_CylindricalWarper_defaultNew_const()) }
+		pub fn default() -> crate::stitching::CylindricalWarperGpu {
+			let ret = unsafe { sys::cv_CylindricalWarperGpu_defaultNew_const() };
+			let ret = unsafe { crate::stitching::CylindricalWarperGpu::opencv_from_extern(ret) };
+			ret
 		}
 
-	}
-
-	boxed_cast_base! { CylindricalWarper, crate::stitching::WarperCreator, cv_CylindricalWarper_to_WarperCreator }
-
-	impl std::fmt::Debug for CylindricalWarper {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CylindricalWarper")
-				.finish()
-		}
-	}
-
-	impl Default for CylindricalWarper {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
 	}
 
 	/// Constant methods for [crate::stitching::CylindricalWarperGpu]
@@ -855,20 +885,23 @@ pub mod stitching {
 
 	}
 
-	pub struct CylindricalWarperGpu {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CylindricalWarperGpu }
-
-	impl Drop for CylindricalWarperGpu {
+	impl Default for CylindricalWarperGpu {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_CylindricalWarperGpu_delete(self.as_raw_mut_CylindricalWarperGpu()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for CylindricalWarperGpu {}
+	impl std::fmt::Debug for CylindricalWarperGpu {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CylindricalWarperGpu")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { CylindricalWarperGpu, crate::stitching::WarperCreator, cv_CylindricalWarperGpu_to_WarperCreator }
 
 	impl crate::stitching::WarperCreatorTraitConst for CylindricalWarperGpu {
 		#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
@@ -890,31 +923,30 @@ pub mod stitching {
 
 	boxed_ref! { CylindricalWarperGpu, crate::stitching::CylindricalWarperGpuTraitConst, as_raw_CylindricalWarperGpu, crate::stitching::CylindricalWarperGpuTrait, as_raw_mut_CylindricalWarperGpu }
 
-	impl CylindricalWarperGpu {
+	pub struct FisheyeWarper {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { FisheyeWarper }
+
+	impl Drop for FisheyeWarper {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_FisheyeWarper_delete(self.as_raw_mut_FisheyeWarper()) };
+		}
+	}
+
+	unsafe impl Send for FisheyeWarper {}
+
+	impl FisheyeWarper {
 		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_CylindricalWarperGpu_defaultNew_const()) }
+		pub fn default() -> crate::stitching::FisheyeWarper {
+			let ret = unsafe { sys::cv_FisheyeWarper_defaultNew_const() };
+			let ret = unsafe { crate::stitching::FisheyeWarper::opencv_from_extern(ret) };
+			ret
 		}
 
-	}
-
-	boxed_cast_base! { CylindricalWarperGpu, crate::stitching::WarperCreator, cv_CylindricalWarperGpu_to_WarperCreator }
-
-	impl std::fmt::Debug for CylindricalWarperGpu {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CylindricalWarperGpu")
-				.finish()
-		}
-	}
-
-	impl Default for CylindricalWarperGpu {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
 	}
 
 	/// Constant methods for [crate::stitching::FisheyeWarper]
@@ -939,20 +971,23 @@ pub mod stitching {
 
 	}
 
-	pub struct FisheyeWarper {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { FisheyeWarper }
-
-	impl Drop for FisheyeWarper {
+	impl Default for FisheyeWarper {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_FisheyeWarper_delete(self.as_raw_mut_FisheyeWarper()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for FisheyeWarper {}
+	impl std::fmt::Debug for FisheyeWarper {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FisheyeWarper")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { FisheyeWarper, crate::stitching::WarperCreator, cv_FisheyeWarper_to_WarperCreator }
 
 	impl crate::stitching::WarperCreatorTraitConst for FisheyeWarper {
 		#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
@@ -974,31 +1009,30 @@ pub mod stitching {
 
 	boxed_ref! { FisheyeWarper, crate::stitching::FisheyeWarperTraitConst, as_raw_FisheyeWarper, crate::stitching::FisheyeWarperTrait, as_raw_mut_FisheyeWarper }
 
-	impl FisheyeWarper {
+	pub struct MercatorWarper {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { MercatorWarper }
+
+	impl Drop for MercatorWarper {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_MercatorWarper_delete(self.as_raw_mut_MercatorWarper()) };
+		}
+	}
+
+	unsafe impl Send for MercatorWarper {}
+
+	impl MercatorWarper {
 		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_FisheyeWarper_defaultNew_const()) }
+		pub fn default() -> crate::stitching::MercatorWarper {
+			let ret = unsafe { sys::cv_MercatorWarper_defaultNew_const() };
+			let ret = unsafe { crate::stitching::MercatorWarper::opencv_from_extern(ret) };
+			ret
 		}
 
-	}
-
-	boxed_cast_base! { FisheyeWarper, crate::stitching::WarperCreator, cv_FisheyeWarper_to_WarperCreator }
-
-	impl std::fmt::Debug for FisheyeWarper {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("FisheyeWarper")
-				.finish()
-		}
-	}
-
-	impl Default for FisheyeWarper {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
 	}
 
 	/// Constant methods for [crate::stitching::MercatorWarper]
@@ -1023,20 +1057,23 @@ pub mod stitching {
 
 	}
 
-	pub struct MercatorWarper {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { MercatorWarper }
-
-	impl Drop for MercatorWarper {
+	impl Default for MercatorWarper {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_MercatorWarper_delete(self.as_raw_mut_MercatorWarper()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for MercatorWarper {}
+	impl std::fmt::Debug for MercatorWarper {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MercatorWarper")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { MercatorWarper, crate::stitching::WarperCreator, cv_MercatorWarper_to_WarperCreator }
 
 	impl crate::stitching::WarperCreatorTraitConst for MercatorWarper {
 		#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
@@ -1058,55 +1095,6 @@ pub mod stitching {
 
 	boxed_ref! { MercatorWarper, crate::stitching::MercatorWarperTraitConst, as_raw_MercatorWarper, crate::stitching::MercatorWarperTrait, as_raw_mut_MercatorWarper }
 
-	impl MercatorWarper {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_MercatorWarper_defaultNew_const()) }
-		}
-
-	}
-
-	boxed_cast_base! { MercatorWarper, crate::stitching::WarperCreator, cv_MercatorWarper_to_WarperCreator }
-
-	impl std::fmt::Debug for MercatorWarper {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("MercatorWarper")
-				.finish()
-		}
-	}
-
-	impl Default for MercatorWarper {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
-	}
-
-	/// Constant methods for [crate::stitching::PaniniPortraitWarper]
-	pub trait PaniniPortraitWarperTraitConst: crate::stitching::WarperCreatorTraitConst {
-		fn as_raw_PaniniPortraitWarper(&self) -> *const c_void;
-
-		#[inline]
-		fn create(&self, scale: f32) -> Result<core::Ptr<crate::stitching::Detail_RotationWarper>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_PaniniPortraitWarper_create_const_float(self.as_raw_PaniniPortraitWarper(), scale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::stitching::Detail_RotationWarper>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	/// Mutable methods for [crate::stitching::PaniniPortraitWarper]
-	pub trait PaniniPortraitWarperTrait: crate::stitching::PaniniPortraitWarperTraitConst + crate::stitching::WarperCreatorTrait {
-		fn as_raw_mut_PaniniPortraitWarper(&mut self) -> *mut c_void;
-
-	}
-
 	pub struct PaniniPortraitWarper {
 		ptr: *mut c_void,
 	}
@@ -1121,26 +1109,6 @@ pub mod stitching {
 	}
 
 	unsafe impl Send for PaniniPortraitWarper {}
-
-	impl crate::stitching::WarperCreatorTraitConst for PaniniPortraitWarper {
-		#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::WarperCreatorTrait for PaniniPortraitWarper {
-		#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { PaniniPortraitWarper, crate::stitching::WarperCreatorTraitConst, as_raw_WarperCreator, crate::stitching::WarperCreatorTrait, as_raw_mut_WarperCreator }
-
-	impl crate::stitching::PaniniPortraitWarperTraitConst for PaniniPortraitWarper {
-		#[inline] fn as_raw_PaniniPortraitWarper(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::PaniniPortraitWarperTrait for PaniniPortraitWarper {
-		#[inline] fn as_raw_mut_PaniniPortraitWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { PaniniPortraitWarper, crate::stitching::PaniniPortraitWarperTraitConst, as_raw_PaniniPortraitWarper, crate::stitching::PaniniPortraitWarperTrait, as_raw_mut_PaniniPortraitWarper }
 
 	impl PaniniPortraitWarper {
 		/// ## C++ default parameters
@@ -1172,7 +1140,27 @@ pub mod stitching {
 
 	}
 
-	boxed_cast_base! { PaniniPortraitWarper, crate::stitching::WarperCreator, cv_PaniniPortraitWarper_to_WarperCreator }
+	/// Constant methods for [crate::stitching::PaniniPortraitWarper]
+	pub trait PaniniPortraitWarperTraitConst: crate::stitching::WarperCreatorTraitConst {
+		fn as_raw_PaniniPortraitWarper(&self) -> *const c_void;
+
+		#[inline]
+		fn create(&self, scale: f32) -> Result<core::Ptr<crate::stitching::Detail_RotationWarper>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_PaniniPortraitWarper_create_const_float(self.as_raw_PaniniPortraitWarper(), scale, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::stitching::Detail_RotationWarper>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [crate::stitching::PaniniPortraitWarper]
+	pub trait PaniniPortraitWarperTrait: crate::stitching::PaniniPortraitWarperTraitConst + crate::stitching::WarperCreatorTrait {
+		fn as_raw_mut_PaniniPortraitWarper(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for PaniniPortraitWarper {
 		#[inline]
@@ -1182,27 +1170,27 @@ pub mod stitching {
 		}
 	}
 
-	/// Constant methods for [crate::stitching::PaniniWarper]
-	pub trait PaniniWarperTraitConst: crate::stitching::WarperCreatorTraitConst {
-		fn as_raw_PaniniWarper(&self) -> *const c_void;
+	boxed_cast_base! { PaniniPortraitWarper, crate::stitching::WarperCreator, cv_PaniniPortraitWarper_to_WarperCreator }
 
-		#[inline]
-		fn create(&self, scale: f32) -> Result<core::Ptr<crate::stitching::Detail_RotationWarper>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_PaniniWarper_create_const_float(self.as_raw_PaniniWarper(), scale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::stitching::Detail_RotationWarper>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	impl crate::stitching::WarperCreatorTraitConst for PaniniPortraitWarper {
+		#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [crate::stitching::PaniniWarper]
-	pub trait PaniniWarperTrait: crate::stitching::PaniniWarperTraitConst + crate::stitching::WarperCreatorTrait {
-		fn as_raw_mut_PaniniWarper(&mut self) -> *mut c_void;
-
+	impl crate::stitching::WarperCreatorTrait for PaniniPortraitWarper {
+		#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { PaniniPortraitWarper, crate::stitching::WarperCreatorTraitConst, as_raw_WarperCreator, crate::stitching::WarperCreatorTrait, as_raw_mut_WarperCreator }
+
+	impl crate::stitching::PaniniPortraitWarperTraitConst for PaniniPortraitWarper {
+		#[inline] fn as_raw_PaniniPortraitWarper(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::PaniniPortraitWarperTrait for PaniniPortraitWarper {
+		#[inline] fn as_raw_mut_PaniniPortraitWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { PaniniPortraitWarper, crate::stitching::PaniniPortraitWarperTraitConst, as_raw_PaniniPortraitWarper, crate::stitching::PaniniPortraitWarperTrait, as_raw_mut_PaniniPortraitWarper }
 
 	pub struct PaniniWarper {
 		ptr: *mut c_void,
@@ -1218,26 +1206,6 @@ pub mod stitching {
 	}
 
 	unsafe impl Send for PaniniWarper {}
-
-	impl crate::stitching::WarperCreatorTraitConst for PaniniWarper {
-		#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::WarperCreatorTrait for PaniniWarper {
-		#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { PaniniWarper, crate::stitching::WarperCreatorTraitConst, as_raw_WarperCreator, crate::stitching::WarperCreatorTrait, as_raw_mut_WarperCreator }
-
-	impl crate::stitching::PaniniWarperTraitConst for PaniniWarper {
-		#[inline] fn as_raw_PaniniWarper(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::PaniniWarperTrait for PaniniWarper {
-		#[inline] fn as_raw_mut_PaniniWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { PaniniWarper, crate::stitching::PaniniWarperTraitConst, as_raw_PaniniWarper, crate::stitching::PaniniWarperTrait, as_raw_mut_PaniniWarper }
 
 	impl PaniniWarper {
 		/// ## C++ default parameters
@@ -1269,7 +1237,27 @@ pub mod stitching {
 
 	}
 
-	boxed_cast_base! { PaniniWarper, crate::stitching::WarperCreator, cv_PaniniWarper_to_WarperCreator }
+	/// Constant methods for [crate::stitching::PaniniWarper]
+	pub trait PaniniWarperTraitConst: crate::stitching::WarperCreatorTraitConst {
+		fn as_raw_PaniniWarper(&self) -> *const c_void;
+
+		#[inline]
+		fn create(&self, scale: f32) -> Result<core::Ptr<crate::stitching::Detail_RotationWarper>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_PaniniWarper_create_const_float(self.as_raw_PaniniWarper(), scale, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::stitching::Detail_RotationWarper>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [crate::stitching::PaniniWarper]
+	pub trait PaniniWarperTrait: crate::stitching::PaniniWarperTraitConst + crate::stitching::WarperCreatorTrait {
+		fn as_raw_mut_PaniniWarper(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for PaniniWarper {
 		#[inline]
@@ -1277,6 +1265,57 @@ pub mod stitching {
 			f.debug_struct("PaniniWarper")
 				.finish()
 		}
+	}
+
+	boxed_cast_base! { PaniniWarper, crate::stitching::WarperCreator, cv_PaniniWarper_to_WarperCreator }
+
+	impl crate::stitching::WarperCreatorTraitConst for PaniniWarper {
+		#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::WarperCreatorTrait for PaniniWarper {
+		#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { PaniniWarper, crate::stitching::WarperCreatorTraitConst, as_raw_WarperCreator, crate::stitching::WarperCreatorTrait, as_raw_mut_WarperCreator }
+
+	impl crate::stitching::PaniniWarperTraitConst for PaniniWarper {
+		#[inline] fn as_raw_PaniniWarper(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::PaniniWarperTrait for PaniniWarper {
+		#[inline] fn as_raw_mut_PaniniWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { PaniniWarper, crate::stitching::PaniniWarperTraitConst, as_raw_PaniniWarper, crate::stitching::PaniniWarperTrait, as_raw_mut_PaniniWarper }
+
+	/// Plane warper factory class.
+	/// ## See also
+	/// detail::PlaneWarper
+	pub struct PlaneWarper {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { PlaneWarper }
+
+	impl Drop for PlaneWarper {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_PlaneWarper_delete(self.as_raw_mut_PlaneWarper()) };
+		}
+	}
+
+	unsafe impl Send for PlaneWarper {}
+
+	impl PlaneWarper {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::stitching::PlaneWarper {
+			let ret = unsafe { sys::cv_PlaneWarper_defaultNew_const() };
+			let ret = unsafe { crate::stitching::PlaneWarper::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::stitching::PlaneWarper]
@@ -1301,23 +1340,23 @@ pub mod stitching {
 
 	}
 
-	/// Plane warper factory class.
-	/// ## See also
-	/// detail::PlaneWarper
-	pub struct PlaneWarper {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { PlaneWarper }
-
-	impl Drop for PlaneWarper {
+	impl Default for PlaneWarper {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_PlaneWarper_delete(self.as_raw_mut_PlaneWarper()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for PlaneWarper {}
+	impl std::fmt::Debug for PlaneWarper {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PlaneWarper")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { PlaneWarper, crate::stitching::WarperCreator, cv_PlaneWarper_to_WarperCreator }
 
 	impl crate::stitching::WarperCreatorTraitConst for PlaneWarper {
 		#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
@@ -1339,31 +1378,30 @@ pub mod stitching {
 
 	boxed_ref! { PlaneWarper, crate::stitching::PlaneWarperTraitConst, as_raw_PlaneWarper, crate::stitching::PlaneWarperTrait, as_raw_mut_PlaneWarper }
 
-	impl PlaneWarper {
+	pub struct PlaneWarperGpu {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { PlaneWarperGpu }
+
+	impl Drop for PlaneWarperGpu {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_PlaneWarperGpu_delete(self.as_raw_mut_PlaneWarperGpu()) };
+		}
+	}
+
+	unsafe impl Send for PlaneWarperGpu {}
+
+	impl PlaneWarperGpu {
 		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_PlaneWarper_defaultNew_const()) }
+		pub fn default() -> crate::stitching::PlaneWarperGpu {
+			let ret = unsafe { sys::cv_PlaneWarperGpu_defaultNew_const() };
+			let ret = unsafe { crate::stitching::PlaneWarperGpu::opencv_from_extern(ret) };
+			ret
 		}
 
-	}
-
-	boxed_cast_base! { PlaneWarper, crate::stitching::WarperCreator, cv_PlaneWarper_to_WarperCreator }
-
-	impl std::fmt::Debug for PlaneWarper {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("PlaneWarper")
-				.finish()
-		}
-	}
-
-	impl Default for PlaneWarper {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
 	}
 
 	/// Constant methods for [crate::stitching::PlaneWarperGpu]
@@ -1388,20 +1426,23 @@ pub mod stitching {
 
 	}
 
-	pub struct PlaneWarperGpu {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { PlaneWarperGpu }
-
-	impl Drop for PlaneWarperGpu {
+	impl Default for PlaneWarperGpu {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_PlaneWarperGpu_delete(self.as_raw_mut_PlaneWarperGpu()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for PlaneWarperGpu {}
+	impl std::fmt::Debug for PlaneWarperGpu {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PlaneWarperGpu")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { PlaneWarperGpu, crate::stitching::WarperCreator, cv_PlaneWarperGpu_to_WarperCreator }
 
 	impl crate::stitching::WarperCreatorTraitConst for PlaneWarperGpu {
 		#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
@@ -1423,31 +1464,43 @@ pub mod stitching {
 
 	boxed_ref! { PlaneWarperGpu, crate::stitching::PlaneWarperGpuTraitConst, as_raw_PlaneWarperGpu, crate::stitching::PlaneWarperGpuTrait, as_raw_mut_PlaneWarperGpu }
 
-	impl PlaneWarperGpu {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_PlaneWarperGpu_defaultNew_const()) }
-		}
-
+	pub struct PyRotationWarper {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { PlaneWarperGpu, crate::stitching::WarperCreator, cv_PlaneWarperGpu_to_WarperCreator }
+	opencv_type_boxed! { PyRotationWarper }
 
-	impl std::fmt::Debug for PlaneWarperGpu {
+	impl Drop for PyRotationWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("PlaneWarperGpu")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_PyRotationWarper_delete(self.as_raw_mut_PyRotationWarper()) };
 		}
 	}
 
-	impl Default for PlaneWarperGpu {
+	unsafe impl Send for PyRotationWarper {}
+
+	impl PyRotationWarper {
 		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
+		pub fn new(typ: &str, scale: f32) -> Result<crate::stitching::PyRotationWarper> {
+			extern_container_arg!(typ);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_PyRotationWarper_PyRotationWarper_String_float(typ.opencv_as_extern(), scale, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::PyRotationWarper::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
+		#[inline]
+		pub fn default() -> Result<crate::stitching::PyRotationWarper> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_PyRotationWarper_PyRotationWarper(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::PyRotationWarper::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::stitching::PyRotationWarper]
@@ -1597,20 +1650,13 @@ pub mod stitching {
 
 	}
 
-	pub struct PyRotationWarper {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { PyRotationWarper }
-
-	impl Drop for PyRotationWarper {
+	impl std::fmt::Debug for PyRotationWarper {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_PyRotationWarper_delete(self.as_raw_mut_PyRotationWarper()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PyRotationWarper")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for PyRotationWarper {}
 
 	impl crate::stitching::PyRotationWarperTraitConst for PyRotationWarper {
 		#[inline] fn as_raw_PyRotationWarper(&self) -> *const c_void { self.as_raw() }
@@ -1622,36 +1668,31 @@ pub mod stitching {
 
 	boxed_ref! { PyRotationWarper, crate::stitching::PyRotationWarperTraitConst, as_raw_PyRotationWarper, crate::stitching::PyRotationWarperTrait, as_raw_mut_PyRotationWarper }
 
-	impl PyRotationWarper {
-		#[inline]
-		pub fn new(typ: &str, scale: f32) -> Result<crate::stitching::PyRotationWarper> {
-			extern_container_arg!(typ);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_PyRotationWarper_PyRotationWarper_String_float(typ.opencv_as_extern(), scale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::PyRotationWarper::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn default() -> Result<crate::stitching::PyRotationWarper> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_PyRotationWarper_PyRotationWarper(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::PyRotationWarper::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// Spherical warper factory class
+	pub struct SphericalWarper {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for PyRotationWarper {
+	opencv_type_boxed! { SphericalWarper }
+
+	impl Drop for SphericalWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("PyRotationWarper")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_SphericalWarper_delete(self.as_raw_mut_SphericalWarper()) };
 		}
+	}
+
+	unsafe impl Send for SphericalWarper {}
+
+	impl SphericalWarper {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::stitching::SphericalWarper {
+			let ret = unsafe { sys::cv_SphericalWarper_defaultNew_const() };
+			let ret = unsafe { crate::stitching::SphericalWarper::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::stitching::SphericalWarper]
@@ -1676,21 +1717,23 @@ pub mod stitching {
 
 	}
 
-	/// Spherical warper factory class
-	pub struct SphericalWarper {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { SphericalWarper }
-
-	impl Drop for SphericalWarper {
+	impl Default for SphericalWarper {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_SphericalWarper_delete(self.as_raw_mut_SphericalWarper()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for SphericalWarper {}
+	impl std::fmt::Debug for SphericalWarper {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SphericalWarper")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { SphericalWarper, crate::stitching::WarperCreator, cv_SphericalWarper_to_WarperCreator }
 
 	impl crate::stitching::WarperCreatorTraitConst for SphericalWarper {
 		#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
@@ -1712,31 +1755,30 @@ pub mod stitching {
 
 	boxed_ref! { SphericalWarper, crate::stitching::SphericalWarperTraitConst, as_raw_SphericalWarper, crate::stitching::SphericalWarperTrait, as_raw_mut_SphericalWarper }
 
-	impl SphericalWarper {
+	pub struct SphericalWarperGpu {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { SphericalWarperGpu }
+
+	impl Drop for SphericalWarperGpu {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_SphericalWarperGpu_delete(self.as_raw_mut_SphericalWarperGpu()) };
+		}
+	}
+
+	unsafe impl Send for SphericalWarperGpu {}
+
+	impl SphericalWarperGpu {
 		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_SphericalWarper_defaultNew_const()) }
+		pub fn default() -> crate::stitching::SphericalWarperGpu {
+			let ret = unsafe { sys::cv_SphericalWarperGpu_defaultNew_const() };
+			let ret = unsafe { crate::stitching::SphericalWarperGpu::opencv_from_extern(ret) };
+			ret
 		}
 
-	}
-
-	boxed_cast_base! { SphericalWarper, crate::stitching::WarperCreator, cv_SphericalWarper_to_WarperCreator }
-
-	impl std::fmt::Debug for SphericalWarper {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("SphericalWarper")
-				.finish()
-		}
-	}
-
-	impl Default for SphericalWarper {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
 	}
 
 	/// Constant methods for [crate::stitching::SphericalWarperGpu]
@@ -1761,20 +1803,23 @@ pub mod stitching {
 
 	}
 
-	pub struct SphericalWarperGpu {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { SphericalWarperGpu }
-
-	impl Drop for SphericalWarperGpu {
+	impl Default for SphericalWarperGpu {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_SphericalWarperGpu_delete(self.as_raw_mut_SphericalWarperGpu()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for SphericalWarperGpu {}
+	impl std::fmt::Debug for SphericalWarperGpu {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SphericalWarperGpu")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { SphericalWarperGpu, crate::stitching::WarperCreator, cv_SphericalWarperGpu_to_WarperCreator }
 
 	impl crate::stitching::WarperCreatorTraitConst for SphericalWarperGpu {
 		#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
@@ -1796,31 +1841,30 @@ pub mod stitching {
 
 	boxed_ref! { SphericalWarperGpu, crate::stitching::SphericalWarperGpuTraitConst, as_raw_SphericalWarperGpu, crate::stitching::SphericalWarperGpuTrait, as_raw_mut_SphericalWarperGpu }
 
-	impl SphericalWarperGpu {
+	pub struct StereographicWarper {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { StereographicWarper }
+
+	impl Drop for StereographicWarper {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_StereographicWarper_delete(self.as_raw_mut_StereographicWarper()) };
+		}
+	}
+
+	unsafe impl Send for StereographicWarper {}
+
+	impl StereographicWarper {
 		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_SphericalWarperGpu_defaultNew_const()) }
+		pub fn default() -> crate::stitching::StereographicWarper {
+			let ret = unsafe { sys::cv_StereographicWarper_defaultNew_const() };
+			let ret = unsafe { crate::stitching::StereographicWarper::opencv_from_extern(ret) };
+			ret
 		}
 
-	}
-
-	boxed_cast_base! { SphericalWarperGpu, crate::stitching::WarperCreator, cv_SphericalWarperGpu_to_WarperCreator }
-
-	impl std::fmt::Debug for SphericalWarperGpu {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("SphericalWarperGpu")
-				.finish()
-		}
-	}
-
-	impl Default for SphericalWarperGpu {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
 	}
 
 	/// Constant methods for [crate::stitching::StereographicWarper]
@@ -1845,20 +1889,23 @@ pub mod stitching {
 
 	}
 
-	pub struct StereographicWarper {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { StereographicWarper }
-
-	impl Drop for StereographicWarper {
+	impl Default for StereographicWarper {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_StereographicWarper_delete(self.as_raw_mut_StereographicWarper()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for StereographicWarper {}
+	impl std::fmt::Debug for StereographicWarper {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("StereographicWarper")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { StereographicWarper, crate::stitching::WarperCreator, cv_StereographicWarper_to_WarperCreator }
 
 	impl crate::stitching::WarperCreatorTraitConst for StereographicWarper {
 		#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
@@ -1880,31 +1927,88 @@ pub mod stitching {
 
 	boxed_ref! { StereographicWarper, crate::stitching::StereographicWarperTraitConst, as_raw_StereographicWarper, crate::stitching::StereographicWarperTrait, as_raw_mut_StereographicWarper }
 
-	impl StereographicWarper {
+	/// High level image stitcher.
+	///
+	/// It's possible to use this class without being aware of the entire stitching pipeline. However, to
+	/// be able to achieve higher stitching stability and quality of the final images at least being
+	/// familiar with the theory is recommended.
+	///
+	///
+	/// Note:
+	/// *   A basic example on image stitching can be found at
+	///    opencv_source_code/samples/cpp/stitching.cpp
+	/// *   A basic example on image stitching in Python can be found at
+	///    opencv_source_code/samples/python/stitching.py
+	/// *   A detailed example on image stitching can be found at
+	///    opencv_source_code/samples/cpp/stitching_detailed.cpp
+	pub struct Stitcher {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Stitcher }
+
+	impl Drop for Stitcher {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_Stitcher_delete(self.as_raw_mut_Stitcher()) };
+		}
+	}
+
+	unsafe impl Send for Stitcher {}
+
+	impl Stitcher {
+		pub const ORIG_RESOL: f64 = -1.;
 		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_StereographicWarper_defaultNew_const()) }
+		pub fn default() -> crate::stitching::Stitcher {
+			let ret = unsafe { sys::cv_Stitcher_defaultNew_const() };
+			let ret = unsafe { crate::stitching::Stitcher::opencv_from_extern(ret) };
+			ret
 		}
 
-	}
-
-	boxed_cast_base! { StereographicWarper, crate::stitching::WarperCreator, cv_StereographicWarper_to_WarperCreator }
-
-	impl std::fmt::Debug for StereographicWarper {
+		/// Creates a Stitcher configured in one of the stitching modes.
+		///
+		/// ## Parameters
+		/// * mode: Scenario for stitcher operation. This is usually determined by source of images
+		/// to stitch and their transformation. Default parameters will be chosen for operation in given
+		/// scenario.
+		/// ## Returns
+		/// Stitcher class instance.
+		///
+		/// ## C++ default parameters
+		/// * mode: Stitcher::PANORAMA
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("StereographicWarper")
-				.finish()
+		pub fn create(mode: crate::stitching::Stitcher_Mode) -> Result<core::Ptr<crate::stitching::Stitcher>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Stitcher_create_Mode(mode, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::stitching::Stitcher>::opencv_from_extern(ret) };
+			Ok(ret)
 		}
-	}
 
-	impl Default for StereographicWarper {
+		/// Creates a Stitcher configured in one of the stitching modes.
+		///
+		/// ## Parameters
+		/// * mode: Scenario for stitcher operation. This is usually determined by source of images
+		/// to stitch and their transformation. Default parameters will be chosen for operation in given
+		/// scenario.
+		/// ## Returns
+		/// Stitcher class instance.
+		///
+		/// ## Note
+		/// This alternative version of [Stitcher::create] function uses the following default values for its arguments:
+		/// * mode: Stitcher::PANORAMA
 		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
+		pub fn create_def() -> Result<core::Ptr<crate::stitching::Stitcher>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Stitcher_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::stitching::Stitcher>::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Stitcher]
@@ -2524,34 +2628,21 @@ pub mod stitching {
 
 	}
 
-	/// High level image stitcher.
-	///
-	/// It's possible to use this class without being aware of the entire stitching pipeline. However, to
-	/// be able to achieve higher stitching stability and quality of the final images at least being
-	/// familiar with the theory is recommended.
-	///
-	///
-	/// Note:
-	/// *   A basic example on image stitching can be found at
-	///    opencv_source_code/samples/cpp/stitching.cpp
-	/// *   A basic example on image stitching in Python can be found at
-	///    opencv_source_code/samples/python/stitching.py
-	/// *   A detailed example on image stitching can be found at
-	///    opencv_source_code/samples/cpp/stitching_detailed.cpp
-	pub struct Stitcher {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Stitcher }
-
-	impl Drop for Stitcher {
+	impl Default for Stitcher {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_Stitcher_delete(self.as_raw_mut_Stitcher()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for Stitcher {}
+	impl std::fmt::Debug for Stitcher {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Stitcher")
+				.finish()
+		}
+	}
 
 	impl crate::stitching::StitcherTraitConst for Stitcher {
 		#[inline] fn as_raw_Stitcher(&self) -> *const c_void { self.as_raw() }
@@ -2563,73 +2654,30 @@ pub mod stitching {
 
 	boxed_ref! { Stitcher, crate::stitching::StitcherTraitConst, as_raw_Stitcher, crate::stitching::StitcherTrait, as_raw_mut_Stitcher }
 
-	impl Stitcher {
-		pub const ORIG_RESOL: f64 = -1.;
+	pub struct TransverseMercatorWarper {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { TransverseMercatorWarper }
+
+	impl Drop for TransverseMercatorWarper {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_TransverseMercatorWarper_delete(self.as_raw_mut_TransverseMercatorWarper()) };
+		}
+	}
+
+	unsafe impl Send for TransverseMercatorWarper {}
+
+	impl TransverseMercatorWarper {
 		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_Stitcher_defaultNew_const()) }
+		pub fn default() -> crate::stitching::TransverseMercatorWarper {
+			let ret = unsafe { sys::cv_TransverseMercatorWarper_defaultNew_const() };
+			let ret = unsafe { crate::stitching::TransverseMercatorWarper::opencv_from_extern(ret) };
+			ret
 		}
 
-		/// Creates a Stitcher configured in one of the stitching modes.
-		///
-		/// ## Parameters
-		/// * mode: Scenario for stitcher operation. This is usually determined by source of images
-		/// to stitch and their transformation. Default parameters will be chosen for operation in given
-		/// scenario.
-		/// ## Returns
-		/// Stitcher class instance.
-		///
-		/// ## C++ default parameters
-		/// * mode: Stitcher::PANORAMA
-		#[inline]
-		pub fn create(mode: crate::stitching::Stitcher_Mode) -> Result<core::Ptr<crate::stitching::Stitcher>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Stitcher_create_Mode(mode, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::stitching::Stitcher>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Creates a Stitcher configured in one of the stitching modes.
-		///
-		/// ## Parameters
-		/// * mode: Scenario for stitcher operation. This is usually determined by source of images
-		/// to stitch and their transformation. Default parameters will be chosen for operation in given
-		/// scenario.
-		/// ## Returns
-		/// Stitcher class instance.
-		///
-		/// ## Note
-		/// This alternative version of [Stitcher::create] function uses the following default values for its arguments:
-		/// * mode: Stitcher::PANORAMA
-		#[inline]
-		pub fn create_def() -> Result<core::Ptr<crate::stitching::Stitcher>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Stitcher_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::stitching::Stitcher>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	impl std::fmt::Debug for Stitcher {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Stitcher")
-				.finish()
-		}
-	}
-
-	impl Default for Stitcher {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
 	}
 
 	/// Constant methods for [crate::stitching::TransverseMercatorWarper]
@@ -2654,20 +2702,23 @@ pub mod stitching {
 
 	}
 
-	pub struct TransverseMercatorWarper {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { TransverseMercatorWarper }
-
-	impl Drop for TransverseMercatorWarper {
+	impl Default for TransverseMercatorWarper {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_TransverseMercatorWarper_delete(self.as_raw_mut_TransverseMercatorWarper()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for TransverseMercatorWarper {}
+	impl std::fmt::Debug for TransverseMercatorWarper {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TransverseMercatorWarper")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { TransverseMercatorWarper, crate::stitching::WarperCreator, cv_TransverseMercatorWarper_to_WarperCreator }
 
 	impl crate::stitching::WarperCreatorTraitConst for TransverseMercatorWarper {
 		#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
@@ -2689,32 +2740,21 @@ pub mod stitching {
 
 	boxed_ref! { TransverseMercatorWarper, crate::stitching::TransverseMercatorWarperTraitConst, as_raw_TransverseMercatorWarper, crate::stitching::TransverseMercatorWarperTrait, as_raw_mut_TransverseMercatorWarper }
 
-	impl TransverseMercatorWarper {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_TransverseMercatorWarper_defaultNew_const()) }
-		}
-
+	/// Image warper factories base class.
+	pub struct WarperCreator {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { TransverseMercatorWarper, crate::stitching::WarperCreator, cv_TransverseMercatorWarper_to_WarperCreator }
+	opencv_type_boxed! { WarperCreator }
 
-	impl std::fmt::Debug for TransverseMercatorWarper {
+	impl Drop for WarperCreator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("TransverseMercatorWarper")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_WarperCreator_delete(self.as_raw_mut_WarperCreator()) };
 		}
 	}
 
-	impl Default for TransverseMercatorWarper {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
-	}
+	unsafe impl Send for WarperCreator {}
 
 	/// Constant methods for [crate::stitching::WarperCreator]
 	pub trait WarperCreatorTraitConst {
@@ -2738,33 +2778,12 @@ pub mod stitching {
 
 	}
 
-	/// Image warper factories base class.
-	pub struct WarperCreator {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { WarperCreator }
-
-	impl Drop for WarperCreator {
+	impl std::fmt::Debug for WarperCreator {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_WarperCreator_delete(self.as_raw_mut_WarperCreator()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WarperCreator")
+				.finish()
 		}
-	}
-
-	unsafe impl Send for WarperCreator {}
-
-	impl crate::stitching::WarperCreatorTraitConst for WarperCreator {
-		#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::WarperCreatorTrait for WarperCreator {
-		#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WarperCreator, crate::stitching::WarperCreatorTraitConst, as_raw_WarperCreator, crate::stitching::WarperCreatorTrait, as_raw_mut_WarperCreator }
-
-	impl WarperCreator {
 	}
 
 	boxed_cast_descendant! { WarperCreator, crate::stitching::AffineWarper, cv_WarperCreator_to_AffineWarper }
@@ -2797,25 +2816,15 @@ pub mod stitching {
 
 	boxed_cast_descendant! { WarperCreator, crate::stitching::TransverseMercatorWarper, cv_WarperCreator_to_TransverseMercatorWarper }
 
-	impl std::fmt::Debug for WarperCreator {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("WarperCreator")
-				.finish()
-		}
+	impl crate::stitching::WarperCreatorTraitConst for WarperCreator {
+		#[inline] fn as_raw_WarperCreator(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Constant methods for [crate::stitching::Detail_AffineBasedEstimator]
-	pub trait Detail_AffineBasedEstimatorTraitConst: crate::stitching::Detail_EstimatorTraitConst {
-		fn as_raw_Detail_AffineBasedEstimator(&self) -> *const c_void;
-
+	impl crate::stitching::WarperCreatorTrait for WarperCreator {
+		#[inline] fn as_raw_mut_WarperCreator(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 
-	/// Mutable methods for [crate::stitching::Detail_AffineBasedEstimator]
-	pub trait Detail_AffineBasedEstimatorTrait: crate::stitching::Detail_AffineBasedEstimatorTraitConst + crate::stitching::Detail_EstimatorTrait {
-		fn as_raw_mut_Detail_AffineBasedEstimator(&mut self) -> *mut c_void;
-
-	}
+	boxed_ref! { WarperCreator, crate::stitching::WarperCreatorTraitConst, as_raw_WarperCreator, crate::stitching::WarperCreatorTrait, as_raw_mut_WarperCreator }
 
 	/// Affine transformation based estimator.
 	///
@@ -2838,6 +2847,41 @@ pub mod stitching {
 
 	unsafe impl Send for Detail_AffineBasedEstimator {}
 
+	impl Detail_AffineBasedEstimator {
+		#[inline]
+		pub fn default() -> Result<crate::stitching::Detail_AffineBasedEstimator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_AffineBasedEstimator_AffineBasedEstimator(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_AffineBasedEstimator::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [crate::stitching::Detail_AffineBasedEstimator]
+	pub trait Detail_AffineBasedEstimatorTraitConst: crate::stitching::Detail_EstimatorTraitConst {
+		fn as_raw_Detail_AffineBasedEstimator(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::stitching::Detail_AffineBasedEstimator]
+	pub trait Detail_AffineBasedEstimatorTrait: crate::stitching::Detail_AffineBasedEstimatorTraitConst + crate::stitching::Detail_EstimatorTrait {
+		fn as_raw_mut_Detail_AffineBasedEstimator(&mut self) -> *mut c_void;
+
+	}
+
+	impl std::fmt::Debug for Detail_AffineBasedEstimator {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_AffineBasedEstimator")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Detail_AffineBasedEstimator, crate::stitching::Detail_Estimator, cv_detail_AffineBasedEstimator_to_Detail_Estimator }
+
 	impl crate::stitching::Detail_EstimatorTraitConst for Detail_AffineBasedEstimator {
 		#[inline] fn as_raw_Detail_Estimator(&self) -> *const c_void { self.as_raw() }
 	}
@@ -2857,41 +2901,6 @@ pub mod stitching {
 	}
 
 	boxed_ref! { Detail_AffineBasedEstimator, crate::stitching::Detail_AffineBasedEstimatorTraitConst, as_raw_Detail_AffineBasedEstimator, crate::stitching::Detail_AffineBasedEstimatorTrait, as_raw_mut_Detail_AffineBasedEstimator }
-
-	impl Detail_AffineBasedEstimator {
-		#[inline]
-		pub fn default() -> Result<crate::stitching::Detail_AffineBasedEstimator> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_AffineBasedEstimator_AffineBasedEstimator(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_AffineBasedEstimator::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_base! { Detail_AffineBasedEstimator, crate::stitching::Detail_Estimator, cv_detail_AffineBasedEstimator_to_Detail_Estimator }
-
-	impl std::fmt::Debug for Detail_AffineBasedEstimator {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_AffineBasedEstimator")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::stitching::Detail_AffineBestOf2NearestMatcher]
-	pub trait Detail_AffineBestOf2NearestMatcherTraitConst: crate::stitching::Detail_BestOf2NearestMatcherTraitConst {
-		fn as_raw_Detail_AffineBestOf2NearestMatcher(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::stitching::Detail_AffineBestOf2NearestMatcher]
-	pub trait Detail_AffineBestOf2NearestMatcherTrait: crate::stitching::Detail_AffineBestOf2NearestMatcherTraitConst + crate::stitching::Detail_BestOf2NearestMatcherTrait {
-		fn as_raw_mut_Detail_AffineBestOf2NearestMatcher(&mut self) -> *mut c_void;
-
-	}
 
 	/// Features matcher similar to cv::detail::BestOf2NearestMatcher which
 	/// finds two best matches for each feature and leaves the best one only if the
@@ -2915,36 +2924,6 @@ pub mod stitching {
 	}
 
 	unsafe impl Send for Detail_AffineBestOf2NearestMatcher {}
-
-	impl crate::stitching::Detail_BestOf2NearestMatcherTraitConst for Detail_AffineBestOf2NearestMatcher {
-		#[inline] fn as_raw_Detail_BestOf2NearestMatcher(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::Detail_BestOf2NearestMatcherTrait for Detail_AffineBestOf2NearestMatcher {
-		#[inline] fn as_raw_mut_Detail_BestOf2NearestMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_AffineBestOf2NearestMatcher, crate::stitching::Detail_BestOf2NearestMatcherTraitConst, as_raw_Detail_BestOf2NearestMatcher, crate::stitching::Detail_BestOf2NearestMatcherTrait, as_raw_mut_Detail_BestOf2NearestMatcher }
-
-	impl crate::stitching::Detail_FeaturesMatcherTraitConst for Detail_AffineBestOf2NearestMatcher {
-		#[inline] fn as_raw_Detail_FeaturesMatcher(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::Detail_FeaturesMatcherTrait for Detail_AffineBestOf2NearestMatcher {
-		#[inline] fn as_raw_mut_Detail_FeaturesMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_AffineBestOf2NearestMatcher, crate::stitching::Detail_FeaturesMatcherTraitConst, as_raw_Detail_FeaturesMatcher, crate::stitching::Detail_FeaturesMatcherTrait, as_raw_mut_Detail_FeaturesMatcher }
-
-	impl crate::stitching::Detail_AffineBestOf2NearestMatcherTraitConst for Detail_AffineBestOf2NearestMatcher {
-		#[inline] fn as_raw_Detail_AffineBestOf2NearestMatcher(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::Detail_AffineBestOf2NearestMatcherTrait for Detail_AffineBestOf2NearestMatcher {
-		#[inline] fn as_raw_mut_Detail_AffineBestOf2NearestMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_AffineBestOf2NearestMatcher, crate::stitching::Detail_AffineBestOf2NearestMatcherTraitConst, as_raw_Detail_AffineBestOf2NearestMatcher, crate::stitching::Detail_AffineBestOf2NearestMatcherTrait, as_raw_mut_Detail_AffineBestOf2NearestMatcher }
 
 	impl Detail_AffineBestOf2NearestMatcher {
 		/// Constructs a "best of 2 nearest" matcher that expects affine transformation
@@ -3006,9 +2985,17 @@ pub mod stitching {
 
 	}
 
-	boxed_cast_base! { Detail_AffineBestOf2NearestMatcher, crate::stitching::Detail_BestOf2NearestMatcher, cv_detail_AffineBestOf2NearestMatcher_to_Detail_BestOf2NearestMatcher }
+	/// Constant methods for [crate::stitching::Detail_AffineBestOf2NearestMatcher]
+	pub trait Detail_AffineBestOf2NearestMatcherTraitConst: crate::stitching::Detail_BestOf2NearestMatcherTraitConst {
+		fn as_raw_Detail_AffineBestOf2NearestMatcher(&self) -> *const c_void;
 
-	boxed_cast_base! { Detail_AffineBestOf2NearestMatcher, crate::stitching::Detail_FeaturesMatcher, cv_detail_AffineBestOf2NearestMatcher_to_Detail_FeaturesMatcher }
+	}
+
+	/// Mutable methods for [crate::stitching::Detail_AffineBestOf2NearestMatcher]
+	pub trait Detail_AffineBestOf2NearestMatcherTrait: crate::stitching::Detail_AffineBestOf2NearestMatcherTraitConst + crate::stitching::Detail_BestOf2NearestMatcherTrait {
+		fn as_raw_mut_Detail_AffineBestOf2NearestMatcher(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for Detail_AffineBestOf2NearestMatcher {
 		#[inline]
@@ -3016,6 +3003,97 @@ pub mod stitching {
 			f.debug_struct("Detail_AffineBestOf2NearestMatcher")
 				.finish()
 		}
+	}
+
+	boxed_cast_base! { Detail_AffineBestOf2NearestMatcher, crate::stitching::Detail_BestOf2NearestMatcher, cv_detail_AffineBestOf2NearestMatcher_to_Detail_BestOf2NearestMatcher }
+
+	boxed_cast_base! { Detail_AffineBestOf2NearestMatcher, crate::stitching::Detail_FeaturesMatcher, cv_detail_AffineBestOf2NearestMatcher_to_Detail_FeaturesMatcher }
+
+	impl crate::stitching::Detail_BestOf2NearestMatcherTraitConst for Detail_AffineBestOf2NearestMatcher {
+		#[inline] fn as_raw_Detail_BestOf2NearestMatcher(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::Detail_BestOf2NearestMatcherTrait for Detail_AffineBestOf2NearestMatcher {
+		#[inline] fn as_raw_mut_Detail_BestOf2NearestMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_AffineBestOf2NearestMatcher, crate::stitching::Detail_BestOf2NearestMatcherTraitConst, as_raw_Detail_BestOf2NearestMatcher, crate::stitching::Detail_BestOf2NearestMatcherTrait, as_raw_mut_Detail_BestOf2NearestMatcher }
+
+	impl crate::stitching::Detail_FeaturesMatcherTraitConst for Detail_AffineBestOf2NearestMatcher {
+		#[inline] fn as_raw_Detail_FeaturesMatcher(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::Detail_FeaturesMatcherTrait for Detail_AffineBestOf2NearestMatcher {
+		#[inline] fn as_raw_mut_Detail_FeaturesMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_AffineBestOf2NearestMatcher, crate::stitching::Detail_FeaturesMatcherTraitConst, as_raw_Detail_FeaturesMatcher, crate::stitching::Detail_FeaturesMatcherTrait, as_raw_mut_Detail_FeaturesMatcher }
+
+	impl crate::stitching::Detail_AffineBestOf2NearestMatcherTraitConst for Detail_AffineBestOf2NearestMatcher {
+		#[inline] fn as_raw_Detail_AffineBestOf2NearestMatcher(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::Detail_AffineBestOf2NearestMatcherTrait for Detail_AffineBestOf2NearestMatcher {
+		#[inline] fn as_raw_mut_Detail_AffineBestOf2NearestMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_AffineBestOf2NearestMatcher, crate::stitching::Detail_AffineBestOf2NearestMatcherTraitConst, as_raw_Detail_AffineBestOf2NearestMatcher, crate::stitching::Detail_AffineBestOf2NearestMatcherTrait, as_raw_mut_Detail_AffineBestOf2NearestMatcher }
+
+	/// Affine warper that uses rotations and translations
+	///
+	/// Uses affine transformation in homogeneous coordinates to represent both rotation and
+	/// translation in camera rotation matrix.
+	pub struct Detail_AffineWarper {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_AffineWarper }
+
+	impl Drop for Detail_AffineWarper {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_AffineWarper_delete(self.as_raw_mut_Detail_AffineWarper()) };
+		}
+	}
+
+	unsafe impl Send for Detail_AffineWarper {}
+
+	impl Detail_AffineWarper {
+		/// Construct an instance of the affine warper class.
+		///
+		/// ## Parameters
+		/// * scale: Projected image scale multiplier
+		///
+		/// ## C++ default parameters
+		/// * scale: 1.f
+		#[inline]
+		pub fn new(scale: f32) -> Result<crate::stitching::Detail_AffineWarper> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_AffineWarper_AffineWarper_float(scale, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_AffineWarper::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Construct an instance of the affine warper class.
+		///
+		/// ## Parameters
+		/// * scale: Projected image scale multiplier
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * scale: 1.f
+		#[inline]
+		pub fn new_def() -> Result<crate::stitching::Detail_AffineWarper> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_AffineWarper_AffineWarper(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_AffineWarper::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_AffineWarper]
@@ -3132,24 +3210,17 @@ pub mod stitching {
 
 	}
 
-	/// Affine warper that uses rotations and translations
-	///
-	/// Uses affine transformation in homogeneous coordinates to represent both rotation and
-	/// translation in camera rotation matrix.
-	pub struct Detail_AffineWarper {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_AffineWarper }
-
-	impl Drop for Detail_AffineWarper {
+	impl std::fmt::Debug for Detail_AffineWarper {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_AffineWarper_delete(self.as_raw_mut_Detail_AffineWarper()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_AffineWarper")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for Detail_AffineWarper {}
+	boxed_cast_base! { Detail_AffineWarper, crate::stitching::Detail_PlaneWarper, cv_detail_AffineWarper_to_Detail_PlaneWarper }
+
+	boxed_cast_base! { Detail_AffineWarper, crate::stitching::Detail_RotationWarper, cv_detail_AffineWarper_to_Detail_RotationWarper }
 
 	impl crate::stitching::Detail_PlaneWarperTraitConst for Detail_AffineWarper {
 		#[inline] fn as_raw_Detail_PlaneWarper(&self) -> *const c_void { self.as_raw() }
@@ -3181,77 +3252,6 @@ pub mod stitching {
 
 	boxed_ref! { Detail_AffineWarper, crate::stitching::Detail_AffineWarperTraitConst, as_raw_Detail_AffineWarper, crate::stitching::Detail_AffineWarperTrait, as_raw_mut_Detail_AffineWarper }
 
-	impl Detail_AffineWarper {
-		/// Construct an instance of the affine warper class.
-		///
-		/// ## Parameters
-		/// * scale: Projected image scale multiplier
-		///
-		/// ## C++ default parameters
-		/// * scale: 1.f
-		#[inline]
-		pub fn new(scale: f32) -> Result<crate::stitching::Detail_AffineWarper> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_AffineWarper_AffineWarper_float(scale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_AffineWarper::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Construct an instance of the affine warper class.
-		///
-		/// ## Parameters
-		/// * scale: Projected image scale multiplier
-		///
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * scale: 1.f
-		#[inline]
-		pub fn new_def() -> Result<crate::stitching::Detail_AffineWarper> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_AffineWarper_AffineWarper(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_AffineWarper::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_base! { Detail_AffineWarper, crate::stitching::Detail_PlaneWarper, cv_detail_AffineWarper_to_Detail_PlaneWarper }
-
-	boxed_cast_base! { Detail_AffineWarper, crate::stitching::Detail_RotationWarper, cv_detail_AffineWarper_to_Detail_RotationWarper }
-
-	impl std::fmt::Debug for Detail_AffineWarper {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_AffineWarper")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::stitching::Detail_BestOf2NearestMatcher]
-	pub trait Detail_BestOf2NearestMatcherTraitConst: crate::stitching::Detail_FeaturesMatcherTraitConst {
-		fn as_raw_Detail_BestOf2NearestMatcher(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::stitching::Detail_BestOf2NearestMatcher]
-	pub trait Detail_BestOf2NearestMatcherTrait: crate::stitching::Detail_BestOf2NearestMatcherTraitConst + crate::stitching::Detail_FeaturesMatcherTrait {
-		fn as_raw_mut_Detail_BestOf2NearestMatcher(&mut self) -> *mut c_void;
-
-		#[inline]
-		fn collect_garbage(&mut self) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_BestOf2NearestMatcher_collectGarbage(self.as_raw_mut_Detail_BestOf2NearestMatcher(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
-
 	/// Features matcher which finds two best matches for each feature and leaves the best one only if the
 	/// ratio between descriptor distances is greater than the threshold match_conf
 	/// ## See also
@@ -3270,26 +3270,6 @@ pub mod stitching {
 	}
 
 	unsafe impl Send for Detail_BestOf2NearestMatcher {}
-
-	impl crate::stitching::Detail_FeaturesMatcherTraitConst for Detail_BestOf2NearestMatcher {
-		#[inline] fn as_raw_Detail_FeaturesMatcher(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::Detail_FeaturesMatcherTrait for Detail_BestOf2NearestMatcher {
-		#[inline] fn as_raw_mut_Detail_FeaturesMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_BestOf2NearestMatcher, crate::stitching::Detail_FeaturesMatcherTraitConst, as_raw_Detail_FeaturesMatcher, crate::stitching::Detail_FeaturesMatcherTrait, as_raw_mut_Detail_FeaturesMatcher }
-
-	impl crate::stitching::Detail_BestOf2NearestMatcherTraitConst for Detail_BestOf2NearestMatcher {
-		#[inline] fn as_raw_Detail_BestOf2NearestMatcher(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::Detail_BestOf2NearestMatcherTrait for Detail_BestOf2NearestMatcher {
-		#[inline] fn as_raw_mut_Detail_BestOf2NearestMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_BestOf2NearestMatcher, crate::stitching::Detail_BestOf2NearestMatcherTraitConst, as_raw_Detail_BestOf2NearestMatcher, crate::stitching::Detail_BestOf2NearestMatcherTrait, as_raw_mut_Detail_BestOf2NearestMatcher }
 
 	impl Detail_BestOf2NearestMatcher {
 		/// Constructs a "best of 2 nearest" matcher.
@@ -3384,11 +3364,26 @@ pub mod stitching {
 
 	}
 
-	boxed_cast_descendant! { Detail_BestOf2NearestMatcher, crate::stitching::Detail_AffineBestOf2NearestMatcher, cv_detail_BestOf2NearestMatcher_to_Detail_AffineBestOf2NearestMatcher }
+	/// Constant methods for [crate::stitching::Detail_BestOf2NearestMatcher]
+	pub trait Detail_BestOf2NearestMatcherTraitConst: crate::stitching::Detail_FeaturesMatcherTraitConst {
+		fn as_raw_Detail_BestOf2NearestMatcher(&self) -> *const c_void;
 
-	boxed_cast_descendant! { Detail_BestOf2NearestMatcher, crate::stitching::Detail_BestOf2NearestRangeMatcher, cv_detail_BestOf2NearestMatcher_to_Detail_BestOf2NearestRangeMatcher }
+	}
 
-	boxed_cast_base! { Detail_BestOf2NearestMatcher, crate::stitching::Detail_FeaturesMatcher, cv_detail_BestOf2NearestMatcher_to_Detail_FeaturesMatcher }
+	/// Mutable methods for [crate::stitching::Detail_BestOf2NearestMatcher]
+	pub trait Detail_BestOf2NearestMatcherTrait: crate::stitching::Detail_BestOf2NearestMatcherTraitConst + crate::stitching::Detail_FeaturesMatcherTrait {
+		fn as_raw_mut_Detail_BestOf2NearestMatcher(&mut self) -> *mut c_void;
+
+		#[inline]
+		fn collect_garbage(&mut self) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_BestOf2NearestMatcher_collectGarbage(self.as_raw_mut_Detail_BestOf2NearestMatcher(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
 
 	impl std::fmt::Debug for Detail_BestOf2NearestMatcher {
 		#[inline]
@@ -3398,17 +3393,31 @@ pub mod stitching {
 		}
 	}
 
-	/// Constant methods for [crate::stitching::Detail_BestOf2NearestRangeMatcher]
-	pub trait Detail_BestOf2NearestRangeMatcherTraitConst: crate::stitching::Detail_BestOf2NearestMatcherTraitConst {
-		fn as_raw_Detail_BestOf2NearestRangeMatcher(&self) -> *const c_void;
+	boxed_cast_base! { Detail_BestOf2NearestMatcher, crate::stitching::Detail_FeaturesMatcher, cv_detail_BestOf2NearestMatcher_to_Detail_FeaturesMatcher }
 
+	boxed_cast_descendant! { Detail_BestOf2NearestMatcher, crate::stitching::Detail_AffineBestOf2NearestMatcher, cv_detail_BestOf2NearestMatcher_to_Detail_AffineBestOf2NearestMatcher }
+
+	boxed_cast_descendant! { Detail_BestOf2NearestMatcher, crate::stitching::Detail_BestOf2NearestRangeMatcher, cv_detail_BestOf2NearestMatcher_to_Detail_BestOf2NearestRangeMatcher }
+
+	impl crate::stitching::Detail_FeaturesMatcherTraitConst for Detail_BestOf2NearestMatcher {
+		#[inline] fn as_raw_Detail_FeaturesMatcher(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [crate::stitching::Detail_BestOf2NearestRangeMatcher]
-	pub trait Detail_BestOf2NearestRangeMatcherTrait: crate::stitching::Detail_BestOf2NearestMatcherTrait + crate::stitching::Detail_BestOf2NearestRangeMatcherTraitConst {
-		fn as_raw_mut_Detail_BestOf2NearestRangeMatcher(&mut self) -> *mut c_void;
-
+	impl crate::stitching::Detail_FeaturesMatcherTrait for Detail_BestOf2NearestMatcher {
+		#[inline] fn as_raw_mut_Detail_FeaturesMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { Detail_BestOf2NearestMatcher, crate::stitching::Detail_FeaturesMatcherTraitConst, as_raw_Detail_FeaturesMatcher, crate::stitching::Detail_FeaturesMatcherTrait, as_raw_mut_Detail_FeaturesMatcher }
+
+	impl crate::stitching::Detail_BestOf2NearestMatcherTraitConst for Detail_BestOf2NearestMatcher {
+		#[inline] fn as_raw_Detail_BestOf2NearestMatcher(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::Detail_BestOf2NearestMatcherTrait for Detail_BestOf2NearestMatcher {
+		#[inline] fn as_raw_mut_Detail_BestOf2NearestMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_BestOf2NearestMatcher, crate::stitching::Detail_BestOf2NearestMatcherTraitConst, as_raw_Detail_BestOf2NearestMatcher, crate::stitching::Detail_BestOf2NearestMatcherTrait, as_raw_mut_Detail_BestOf2NearestMatcher }
 
 	pub struct Detail_BestOf2NearestRangeMatcher {
 		ptr: *mut c_void,
@@ -3424,36 +3433,6 @@ pub mod stitching {
 	}
 
 	unsafe impl Send for Detail_BestOf2NearestRangeMatcher {}
-
-	impl crate::stitching::Detail_BestOf2NearestMatcherTraitConst for Detail_BestOf2NearestRangeMatcher {
-		#[inline] fn as_raw_Detail_BestOf2NearestMatcher(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::Detail_BestOf2NearestMatcherTrait for Detail_BestOf2NearestRangeMatcher {
-		#[inline] fn as_raw_mut_Detail_BestOf2NearestMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_BestOf2NearestRangeMatcher, crate::stitching::Detail_BestOf2NearestMatcherTraitConst, as_raw_Detail_BestOf2NearestMatcher, crate::stitching::Detail_BestOf2NearestMatcherTrait, as_raw_mut_Detail_BestOf2NearestMatcher }
-
-	impl crate::stitching::Detail_FeaturesMatcherTraitConst for Detail_BestOf2NearestRangeMatcher {
-		#[inline] fn as_raw_Detail_FeaturesMatcher(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::Detail_FeaturesMatcherTrait for Detail_BestOf2NearestRangeMatcher {
-		#[inline] fn as_raw_mut_Detail_FeaturesMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_BestOf2NearestRangeMatcher, crate::stitching::Detail_FeaturesMatcherTraitConst, as_raw_Detail_FeaturesMatcher, crate::stitching::Detail_FeaturesMatcherTrait, as_raw_mut_Detail_FeaturesMatcher }
-
-	impl crate::stitching::Detail_BestOf2NearestRangeMatcherTraitConst for Detail_BestOf2NearestRangeMatcher {
-		#[inline] fn as_raw_Detail_BestOf2NearestRangeMatcher(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::Detail_BestOf2NearestRangeMatcherTrait for Detail_BestOf2NearestRangeMatcher {
-		#[inline] fn as_raw_mut_Detail_BestOf2NearestRangeMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_BestOf2NearestRangeMatcher, crate::stitching::Detail_BestOf2NearestRangeMatcherTraitConst, as_raw_Detail_BestOf2NearestRangeMatcher, crate::stitching::Detail_BestOf2NearestRangeMatcherTrait, as_raw_mut_Detail_BestOf2NearestRangeMatcher }
 
 	impl Detail_BestOf2NearestRangeMatcher {
 		/// ## C++ default parameters
@@ -3491,9 +3470,17 @@ pub mod stitching {
 
 	}
 
-	boxed_cast_base! { Detail_BestOf2NearestRangeMatcher, crate::stitching::Detail_BestOf2NearestMatcher, cv_detail_BestOf2NearestRangeMatcher_to_Detail_BestOf2NearestMatcher }
+	/// Constant methods for [crate::stitching::Detail_BestOf2NearestRangeMatcher]
+	pub trait Detail_BestOf2NearestRangeMatcherTraitConst: crate::stitching::Detail_BestOf2NearestMatcherTraitConst {
+		fn as_raw_Detail_BestOf2NearestRangeMatcher(&self) -> *const c_void;
 
-	boxed_cast_base! { Detail_BestOf2NearestRangeMatcher, crate::stitching::Detail_FeaturesMatcher, cv_detail_BestOf2NearestRangeMatcher_to_Detail_FeaturesMatcher }
+	}
+
+	/// Mutable methods for [crate::stitching::Detail_BestOf2NearestRangeMatcher]
+	pub trait Detail_BestOf2NearestRangeMatcherTrait: crate::stitching::Detail_BestOf2NearestMatcherTrait + crate::stitching::Detail_BestOf2NearestRangeMatcherTraitConst {
+		fn as_raw_mut_Detail_BestOf2NearestRangeMatcher(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for Detail_BestOf2NearestRangeMatcher {
 		#[inline]
@@ -3501,6 +3488,94 @@ pub mod stitching {
 			f.debug_struct("Detail_BestOf2NearestRangeMatcher")
 				.finish()
 		}
+	}
+
+	boxed_cast_base! { Detail_BestOf2NearestRangeMatcher, crate::stitching::Detail_BestOf2NearestMatcher, cv_detail_BestOf2NearestRangeMatcher_to_Detail_BestOf2NearestMatcher }
+
+	boxed_cast_base! { Detail_BestOf2NearestRangeMatcher, crate::stitching::Detail_FeaturesMatcher, cv_detail_BestOf2NearestRangeMatcher_to_Detail_FeaturesMatcher }
+
+	impl crate::stitching::Detail_BestOf2NearestMatcherTraitConst for Detail_BestOf2NearestRangeMatcher {
+		#[inline] fn as_raw_Detail_BestOf2NearestMatcher(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::Detail_BestOf2NearestMatcherTrait for Detail_BestOf2NearestRangeMatcher {
+		#[inline] fn as_raw_mut_Detail_BestOf2NearestMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_BestOf2NearestRangeMatcher, crate::stitching::Detail_BestOf2NearestMatcherTraitConst, as_raw_Detail_BestOf2NearestMatcher, crate::stitching::Detail_BestOf2NearestMatcherTrait, as_raw_mut_Detail_BestOf2NearestMatcher }
+
+	impl crate::stitching::Detail_FeaturesMatcherTraitConst for Detail_BestOf2NearestRangeMatcher {
+		#[inline] fn as_raw_Detail_FeaturesMatcher(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::Detail_FeaturesMatcherTrait for Detail_BestOf2NearestRangeMatcher {
+		#[inline] fn as_raw_mut_Detail_FeaturesMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_BestOf2NearestRangeMatcher, crate::stitching::Detail_FeaturesMatcherTraitConst, as_raw_Detail_FeaturesMatcher, crate::stitching::Detail_FeaturesMatcherTrait, as_raw_mut_Detail_FeaturesMatcher }
+
+	impl crate::stitching::Detail_BestOf2NearestRangeMatcherTraitConst for Detail_BestOf2NearestRangeMatcher {
+		#[inline] fn as_raw_Detail_BestOf2NearestRangeMatcher(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::Detail_BestOf2NearestRangeMatcherTrait for Detail_BestOf2NearestRangeMatcher {
+		#[inline] fn as_raw_mut_Detail_BestOf2NearestRangeMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_BestOf2NearestRangeMatcher, crate::stitching::Detail_BestOf2NearestRangeMatcherTraitConst, as_raw_Detail_BestOf2NearestRangeMatcher, crate::stitching::Detail_BestOf2NearestRangeMatcherTrait, as_raw_mut_Detail_BestOf2NearestRangeMatcher }
+
+	/// Base class for all blenders.
+	///
+	/// Simple blender which puts one image over another
+	pub struct Detail_Blender {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_Blender }
+
+	impl Drop for Detail_Blender {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_Blender_delete(self.as_raw_mut_Detail_Blender()) };
+		}
+	}
+
+	unsafe impl Send for Detail_Blender {}
+
+	impl Detail_Blender {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::stitching::Detail_Blender {
+			let ret = unsafe { sys::cv_detail_Blender_defaultNew_const() };
+			let ret = unsafe { crate::stitching::Detail_Blender::opencv_from_extern(ret) };
+			ret
+		}
+
+		/// ## C++ default parameters
+		/// * try_gpu: false
+		#[inline]
+		pub fn create_default(typ: i32, try_gpu: bool) -> Result<core::Ptr<crate::stitching::Detail_Blender>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_Blender_createDefault_int_bool(typ, try_gpu, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::stitching::Detail_Blender>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [Detail_Blender::create_default] function uses the following default values for its arguments:
+		/// * try_gpu: false
+		#[inline]
+		pub fn create_default_def(typ: i32) -> Result<core::Ptr<crate::stitching::Detail_Blender>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_Blender_createDefault_int(typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::stitching::Detail_Blender>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_Blender]
@@ -3578,23 +3653,25 @@ pub mod stitching {
 
 	}
 
-	/// Base class for all blenders.
-	///
-	/// Simple blender which puts one image over another
-	pub struct Detail_Blender {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_Blender }
-
-	impl Drop for Detail_Blender {
+	impl Default for Detail_Blender {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_Blender_delete(self.as_raw_mut_Detail_Blender()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for Detail_Blender {}
+	impl std::fmt::Debug for Detail_Blender {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_Blender")
+				.finish()
+		}
+	}
+
+	boxed_cast_descendant! { Detail_Blender, crate::stitching::Detail_FeatherBlender, cv_detail_Blender_to_Detail_FeatherBlender }
+
+	boxed_cast_descendant! { Detail_Blender, crate::stitching::Detail_MultiBandBlender, cv_detail_Blender_to_Detail_MultiBandBlender }
 
 	impl crate::stitching::Detail_BlenderTraitConst for Detail_Blender {
 		#[inline] fn as_raw_Detail_Blender(&self) -> *const c_void { self.as_raw() }
@@ -3605,81 +3682,6 @@ pub mod stitching {
 	}
 
 	boxed_ref! { Detail_Blender, crate::stitching::Detail_BlenderTraitConst, as_raw_Detail_Blender, crate::stitching::Detail_BlenderTrait, as_raw_mut_Detail_Blender }
-
-	impl Detail_Blender {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_detail_Blender_defaultNew_const()) }
-		}
-
-		/// ## C++ default parameters
-		/// * try_gpu: false
-		#[inline]
-		pub fn create_default(typ: i32, try_gpu: bool) -> Result<core::Ptr<crate::stitching::Detail_Blender>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_Blender_createDefault_int_bool(typ, try_gpu, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::stitching::Detail_Blender>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [Detail_Blender::create_default] function uses the following default values for its arguments:
-		/// * try_gpu: false
-		#[inline]
-		pub fn create_default_def(typ: i32) -> Result<core::Ptr<crate::stitching::Detail_Blender>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_Blender_createDefault_int(typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::stitching::Detail_Blender>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_descendant! { Detail_Blender, crate::stitching::Detail_FeatherBlender, cv_detail_Blender_to_Detail_FeatherBlender }
-
-	boxed_cast_descendant! { Detail_Blender, crate::stitching::Detail_MultiBandBlender, cv_detail_Blender_to_Detail_MultiBandBlender }
-
-	impl std::fmt::Debug for Detail_Blender {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_Blender")
-				.finish()
-		}
-	}
-
-	impl Default for Detail_Blender {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
-	}
-
-	/// Constant methods for [crate::stitching::Detail_BlocksChannelsCompensator]
-	pub trait Detail_BlocksChannelsCompensatorTraitConst: crate::stitching::Detail_BlocksCompensatorTraitConst {
-		fn as_raw_Detail_BlocksChannelsCompensator(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::stitching::Detail_BlocksChannelsCompensator]
-	pub trait Detail_BlocksChannelsCompensatorTrait: crate::stitching::Detail_BlocksChannelsCompensatorTraitConst + crate::stitching::Detail_BlocksCompensatorTrait {
-		fn as_raw_mut_Detail_BlocksChannelsCompensator(&mut self) -> *mut c_void;
-
-		#[inline]
-		fn feed(&mut self, corners: &core::Vector<core::Point>, images: &core::Vector<core::UMat>, masks: &core::Vector<core::Tuple<(core::UMat, u8)>>) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_BlocksChannelsCompensator_feed_const_vectorLPointGR_const_vectorLUMatGR_const_vectorLpairLcv_UMat__unsigned_charGGR(self.as_raw_mut_Detail_BlocksChannelsCompensator(), corners.as_raw_VectorOfPoint(), images.as_raw_VectorOfUMat(), masks.as_raw_VectorOfTupleOfUMat_u8(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
 
 	/// Exposure compensator which tries to remove exposure related artifacts by adjusting image block
 	/// on each channel.
@@ -3697,36 +3699,6 @@ pub mod stitching {
 	}
 
 	unsafe impl Send for Detail_BlocksChannelsCompensator {}
-
-	impl crate::stitching::Detail_BlocksCompensatorTraitConst for Detail_BlocksChannelsCompensator {
-		#[inline] fn as_raw_Detail_BlocksCompensator(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::Detail_BlocksCompensatorTrait for Detail_BlocksChannelsCompensator {
-		#[inline] fn as_raw_mut_Detail_BlocksCompensator(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_BlocksChannelsCompensator, crate::stitching::Detail_BlocksCompensatorTraitConst, as_raw_Detail_BlocksCompensator, crate::stitching::Detail_BlocksCompensatorTrait, as_raw_mut_Detail_BlocksCompensator }
-
-	impl crate::stitching::Detail_ExposureCompensatorTraitConst for Detail_BlocksChannelsCompensator {
-		#[inline] fn as_raw_Detail_ExposureCompensator(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::Detail_ExposureCompensatorTrait for Detail_BlocksChannelsCompensator {
-		#[inline] fn as_raw_mut_Detail_ExposureCompensator(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_BlocksChannelsCompensator, crate::stitching::Detail_ExposureCompensatorTraitConst, as_raw_Detail_ExposureCompensator, crate::stitching::Detail_ExposureCompensatorTrait, as_raw_mut_Detail_ExposureCompensator }
-
-	impl crate::stitching::Detail_BlocksChannelsCompensatorTraitConst for Detail_BlocksChannelsCompensator {
-		#[inline] fn as_raw_Detail_BlocksChannelsCompensator(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::Detail_BlocksChannelsCompensatorTrait for Detail_BlocksChannelsCompensator {
-		#[inline] fn as_raw_mut_Detail_BlocksChannelsCompensator(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_BlocksChannelsCompensator, crate::stitching::Detail_BlocksChannelsCompensatorTraitConst, as_raw_Detail_BlocksChannelsCompensator, crate::stitching::Detail_BlocksChannelsCompensatorTrait, as_raw_mut_Detail_BlocksChannelsCompensator }
 
 	impl Detail_BlocksChannelsCompensator {
 		/// ## C++ default parameters
@@ -3760,9 +3732,26 @@ pub mod stitching {
 
 	}
 
-	boxed_cast_base! { Detail_BlocksChannelsCompensator, crate::stitching::Detail_BlocksCompensator, cv_detail_BlocksChannelsCompensator_to_Detail_BlocksCompensator }
+	/// Constant methods for [crate::stitching::Detail_BlocksChannelsCompensator]
+	pub trait Detail_BlocksChannelsCompensatorTraitConst: crate::stitching::Detail_BlocksCompensatorTraitConst {
+		fn as_raw_Detail_BlocksChannelsCompensator(&self) -> *const c_void;
 
-	boxed_cast_base! { Detail_BlocksChannelsCompensator, crate::stitching::Detail_ExposureCompensator, cv_detail_BlocksChannelsCompensator_to_Detail_ExposureCompensator }
+	}
+
+	/// Mutable methods for [crate::stitching::Detail_BlocksChannelsCompensator]
+	pub trait Detail_BlocksChannelsCompensatorTrait: crate::stitching::Detail_BlocksChannelsCompensatorTraitConst + crate::stitching::Detail_BlocksCompensatorTrait {
+		fn as_raw_mut_Detail_BlocksChannelsCompensator(&mut self) -> *mut c_void;
+
+		#[inline]
+		fn feed(&mut self, corners: &core::Vector<core::Point>, images: &core::Vector<core::UMat>, masks: &core::Vector<core::Tuple<(core::UMat, u8)>>) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_BlocksChannelsCompensator_feed_const_vectorLPointGR_const_vectorLUMatGR_const_vectorLpairLcv_UMat__unsigned_charGGR(self.as_raw_mut_Detail_BlocksChannelsCompensator(), corners.as_raw_VectorOfPoint(), images.as_raw_VectorOfUMat(), masks.as_raw_VectorOfTupleOfUMat_u8(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
 
 	impl std::fmt::Debug for Detail_BlocksChannelsCompensator {
 		#[inline]
@@ -3771,6 +3760,56 @@ pub mod stitching {
 				.finish()
 		}
 	}
+
+	boxed_cast_base! { Detail_BlocksChannelsCompensator, crate::stitching::Detail_BlocksCompensator, cv_detail_BlocksChannelsCompensator_to_Detail_BlocksCompensator }
+
+	boxed_cast_base! { Detail_BlocksChannelsCompensator, crate::stitching::Detail_ExposureCompensator, cv_detail_BlocksChannelsCompensator_to_Detail_ExposureCompensator }
+
+	impl crate::stitching::Detail_BlocksCompensatorTraitConst for Detail_BlocksChannelsCompensator {
+		#[inline] fn as_raw_Detail_BlocksCompensator(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::Detail_BlocksCompensatorTrait for Detail_BlocksChannelsCompensator {
+		#[inline] fn as_raw_mut_Detail_BlocksCompensator(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_BlocksChannelsCompensator, crate::stitching::Detail_BlocksCompensatorTraitConst, as_raw_Detail_BlocksCompensator, crate::stitching::Detail_BlocksCompensatorTrait, as_raw_mut_Detail_BlocksCompensator }
+
+	impl crate::stitching::Detail_ExposureCompensatorTraitConst for Detail_BlocksChannelsCompensator {
+		#[inline] fn as_raw_Detail_ExposureCompensator(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::Detail_ExposureCompensatorTrait for Detail_BlocksChannelsCompensator {
+		#[inline] fn as_raw_mut_Detail_ExposureCompensator(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_BlocksChannelsCompensator, crate::stitching::Detail_ExposureCompensatorTraitConst, as_raw_Detail_ExposureCompensator, crate::stitching::Detail_ExposureCompensatorTrait, as_raw_mut_Detail_ExposureCompensator }
+
+	impl crate::stitching::Detail_BlocksChannelsCompensatorTraitConst for Detail_BlocksChannelsCompensator {
+		#[inline] fn as_raw_Detail_BlocksChannelsCompensator(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::Detail_BlocksChannelsCompensatorTrait for Detail_BlocksChannelsCompensator {
+		#[inline] fn as_raw_mut_Detail_BlocksChannelsCompensator(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_BlocksChannelsCompensator, crate::stitching::Detail_BlocksChannelsCompensatorTraitConst, as_raw_Detail_BlocksChannelsCompensator, crate::stitching::Detail_BlocksChannelsCompensatorTrait, as_raw_mut_Detail_BlocksChannelsCompensator }
+
+	/// Exposure compensator which tries to remove exposure related artifacts by adjusting image blocks.
+	pub struct Detail_BlocksCompensator {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_BlocksCompensator }
+
+	impl Drop for Detail_BlocksCompensator {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_BlocksCompensator_delete(self.as_raw_mut_Detail_BlocksCompensator()) };
+		}
+	}
+
+	unsafe impl Send for Detail_BlocksCompensator {}
 
 	/// Constant methods for [crate::stitching::Detail_BlocksCompensator]
 	pub trait Detail_BlocksCompensatorTraitConst: crate::stitching::Detail_ExposureCompensatorTraitConst {
@@ -3894,21 +3933,19 @@ pub mod stitching {
 
 	}
 
-	/// Exposure compensator which tries to remove exposure related artifacts by adjusting image blocks.
-	pub struct Detail_BlocksCompensator {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_BlocksCompensator }
-
-	impl Drop for Detail_BlocksCompensator {
+	impl std::fmt::Debug for Detail_BlocksCompensator {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_BlocksCompensator_delete(self.as_raw_mut_Detail_BlocksCompensator()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_BlocksCompensator")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for Detail_BlocksCompensator {}
+	boxed_cast_base! { Detail_BlocksCompensator, crate::stitching::Detail_ExposureCompensator, cv_detail_BlocksCompensator_to_Detail_ExposureCompensator }
+
+	boxed_cast_descendant! { Detail_BlocksCompensator, crate::stitching::Detail_BlocksChannelsCompensator, cv_detail_BlocksCompensator_to_Detail_BlocksChannelsCompensator }
+
+	boxed_cast_descendant! { Detail_BlocksCompensator, crate::stitching::Detail_BlocksGainCompensator, cv_detail_BlocksCompensator_to_Detail_BlocksGainCompensator }
 
 	impl crate::stitching::Detail_ExposureCompensatorTraitConst for Detail_BlocksCompensator {
 		#[inline] fn as_raw_Detail_ExposureCompensator(&self) -> *const c_void { self.as_raw() }
@@ -3930,21 +3967,61 @@ pub mod stitching {
 
 	boxed_ref! { Detail_BlocksCompensator, crate::stitching::Detail_BlocksCompensatorTraitConst, as_raw_Detail_BlocksCompensator, crate::stitching::Detail_BlocksCompensatorTrait, as_raw_mut_Detail_BlocksCompensator }
 
-	impl Detail_BlocksCompensator {
+	/// Exposure compensator which tries to remove exposure related artifacts by adjusting image block
+	/// intensities, see [UES01](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_UES01) for details.
+	pub struct Detail_BlocksGainCompensator {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { Detail_BlocksCompensator, crate::stitching::Detail_BlocksChannelsCompensator, cv_detail_BlocksCompensator_to_Detail_BlocksChannelsCompensator }
+	opencv_type_boxed! { Detail_BlocksGainCompensator }
 
-	boxed_cast_descendant! { Detail_BlocksCompensator, crate::stitching::Detail_BlocksGainCompensator, cv_detail_BlocksCompensator_to_Detail_BlocksGainCompensator }
-
-	boxed_cast_base! { Detail_BlocksCompensator, crate::stitching::Detail_ExposureCompensator, cv_detail_BlocksCompensator_to_Detail_ExposureCompensator }
-
-	impl std::fmt::Debug for Detail_BlocksCompensator {
+	impl Drop for Detail_BlocksGainCompensator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_BlocksCompensator")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_BlocksGainCompensator_delete(self.as_raw_mut_Detail_BlocksGainCompensator()) };
 		}
+	}
+
+	unsafe impl Send for Detail_BlocksGainCompensator {}
+
+	impl Detail_BlocksGainCompensator {
+		/// ## C++ default parameters
+		/// * bl_width: 32
+		/// * bl_height: 32
+		#[inline]
+		pub fn new(bl_width: i32, bl_height: i32) -> Result<crate::stitching::Detail_BlocksGainCompensator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_BlocksGainCompensator_BlocksGainCompensator_int_int(bl_width, bl_height, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_BlocksGainCompensator::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * bl_width: 32
+		/// * bl_height: 32
+		#[inline]
+		pub fn new_def() -> Result<crate::stitching::Detail_BlocksGainCompensator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_BlocksGainCompensator_BlocksGainCompensator(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_BlocksGainCompensator::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn new_1(bl_width: i32, bl_height: i32, nr_feeds: i32) -> Result<crate::stitching::Detail_BlocksGainCompensator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_BlocksGainCompensator_BlocksGainCompensator_int_int_int(bl_width, bl_height, nr_feeds, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_BlocksGainCompensator::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_BlocksGainCompensator]
@@ -3997,22 +4074,17 @@ pub mod stitching {
 
 	}
 
-	/// Exposure compensator which tries to remove exposure related artifacts by adjusting image block
-	/// intensities, see [UES01](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_UES01) for details.
-	pub struct Detail_BlocksGainCompensator {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_BlocksGainCompensator }
-
-	impl Drop for Detail_BlocksGainCompensator {
+	impl std::fmt::Debug for Detail_BlocksGainCompensator {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_BlocksGainCompensator_delete(self.as_raw_mut_Detail_BlocksGainCompensator()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_BlocksGainCompensator")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for Detail_BlocksGainCompensator {}
+	boxed_cast_base! { Detail_BlocksGainCompensator, crate::stitching::Detail_BlocksCompensator, cv_detail_BlocksGainCompensator_to_Detail_BlocksCompensator }
+
+	boxed_cast_base! { Detail_BlocksGainCompensator, crate::stitching::Detail_ExposureCompensator, cv_detail_BlocksGainCompensator_to_Detail_ExposureCompensator }
 
 	impl crate::stitching::Detail_BlocksCompensatorTraitConst for Detail_BlocksGainCompensator {
 		#[inline] fn as_raw_Detail_BlocksCompensator(&self) -> *const c_void { self.as_raw() }
@@ -4044,70 +4116,6 @@ pub mod stitching {
 
 	boxed_ref! { Detail_BlocksGainCompensator, crate::stitching::Detail_BlocksGainCompensatorTraitConst, as_raw_Detail_BlocksGainCompensator, crate::stitching::Detail_BlocksGainCompensatorTrait, as_raw_mut_Detail_BlocksGainCompensator }
 
-	impl Detail_BlocksGainCompensator {
-		/// ## C++ default parameters
-		/// * bl_width: 32
-		/// * bl_height: 32
-		#[inline]
-		pub fn new(bl_width: i32, bl_height: i32) -> Result<crate::stitching::Detail_BlocksGainCompensator> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_BlocksGainCompensator_BlocksGainCompensator_int_int(bl_width, bl_height, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_BlocksGainCompensator::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * bl_width: 32
-		/// * bl_height: 32
-		#[inline]
-		pub fn new_def() -> Result<crate::stitching::Detail_BlocksGainCompensator> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_BlocksGainCompensator_BlocksGainCompensator(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_BlocksGainCompensator::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn new_1(bl_width: i32, bl_height: i32, nr_feeds: i32) -> Result<crate::stitching::Detail_BlocksGainCompensator> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_BlocksGainCompensator_BlocksGainCompensator_int_int_int(bl_width, bl_height, nr_feeds, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_BlocksGainCompensator::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_base! { Detail_BlocksGainCompensator, crate::stitching::Detail_BlocksCompensator, cv_detail_BlocksGainCompensator_to_Detail_BlocksCompensator }
-
-	boxed_cast_base! { Detail_BlocksGainCompensator, crate::stitching::Detail_ExposureCompensator, cv_detail_BlocksGainCompensator_to_Detail_ExposureCompensator }
-
-	impl std::fmt::Debug for Detail_BlocksGainCompensator {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_BlocksGainCompensator")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::stitching::Detail_BundleAdjusterAffine]
-	pub trait Detail_BundleAdjusterAffineTraitConst: crate::stitching::Detail_BundleAdjusterBaseTraitConst {
-		fn as_raw_Detail_BundleAdjusterAffine(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::stitching::Detail_BundleAdjusterAffine]
-	pub trait Detail_BundleAdjusterAffineTrait: crate::stitching::Detail_BundleAdjusterAffineTraitConst + crate::stitching::Detail_BundleAdjusterBaseTrait {
-		fn as_raw_mut_Detail_BundleAdjusterAffine(&mut self) -> *mut c_void;
-
-	}
-
 	/// Bundle adjuster that expects affine transformation
 	/// represented in homogeneous coordinates in R for each camera param. Implements
 	/// camera parameters refinement algorithm which minimizes sum of the reprojection
@@ -4130,6 +4138,43 @@ pub mod stitching {
 	}
 
 	unsafe impl Send for Detail_BundleAdjusterAffine {}
+
+	impl Detail_BundleAdjusterAffine {
+		#[inline]
+		pub fn default() -> Result<crate::stitching::Detail_BundleAdjusterAffine> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_BundleAdjusterAffine_BundleAdjusterAffine(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_BundleAdjusterAffine::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [crate::stitching::Detail_BundleAdjusterAffine]
+	pub trait Detail_BundleAdjusterAffineTraitConst: crate::stitching::Detail_BundleAdjusterBaseTraitConst {
+		fn as_raw_Detail_BundleAdjusterAffine(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::stitching::Detail_BundleAdjusterAffine]
+	pub trait Detail_BundleAdjusterAffineTrait: crate::stitching::Detail_BundleAdjusterAffineTraitConst + crate::stitching::Detail_BundleAdjusterBaseTrait {
+		fn as_raw_mut_Detail_BundleAdjusterAffine(&mut self) -> *mut c_void;
+
+	}
+
+	impl std::fmt::Debug for Detail_BundleAdjusterAffine {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_BundleAdjusterAffine")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Detail_BundleAdjusterAffine, crate::stitching::Detail_BundleAdjusterBase, cv_detail_BundleAdjusterAffine_to_Detail_BundleAdjusterBase }
+
+	boxed_cast_base! { Detail_BundleAdjusterAffine, crate::stitching::Detail_Estimator, cv_detail_BundleAdjusterAffine_to_Detail_Estimator }
 
 	impl crate::stitching::Detail_BundleAdjusterBaseTraitConst for Detail_BundleAdjusterAffine {
 		#[inline] fn as_raw_Detail_BundleAdjusterBase(&self) -> *const c_void { self.as_raw() }
@@ -4161,43 +4206,6 @@ pub mod stitching {
 
 	boxed_ref! { Detail_BundleAdjusterAffine, crate::stitching::Detail_BundleAdjusterAffineTraitConst, as_raw_Detail_BundleAdjusterAffine, crate::stitching::Detail_BundleAdjusterAffineTrait, as_raw_mut_Detail_BundleAdjusterAffine }
 
-	impl Detail_BundleAdjusterAffine {
-		#[inline]
-		pub fn default() -> Result<crate::stitching::Detail_BundleAdjusterAffine> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_BundleAdjusterAffine_BundleAdjusterAffine(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_BundleAdjusterAffine::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_base! { Detail_BundleAdjusterAffine, crate::stitching::Detail_BundleAdjusterBase, cv_detail_BundleAdjusterAffine_to_Detail_BundleAdjusterBase }
-
-	boxed_cast_base! { Detail_BundleAdjusterAffine, crate::stitching::Detail_Estimator, cv_detail_BundleAdjusterAffine_to_Detail_Estimator }
-
-	impl std::fmt::Debug for Detail_BundleAdjusterAffine {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_BundleAdjusterAffine")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::stitching::Detail_BundleAdjusterAffinePartial]
-	pub trait Detail_BundleAdjusterAffinePartialTraitConst: crate::stitching::Detail_BundleAdjusterBaseTraitConst {
-		fn as_raw_Detail_BundleAdjusterAffinePartial(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::stitching::Detail_BundleAdjusterAffinePartial]
-	pub trait Detail_BundleAdjusterAffinePartialTrait: crate::stitching::Detail_BundleAdjusterAffinePartialTraitConst + crate::stitching::Detail_BundleAdjusterBaseTrait {
-		fn as_raw_mut_Detail_BundleAdjusterAffinePartial(&mut self) -> *mut c_void;
-
-	}
-
 	/// Bundle adjuster that expects affine transformation with 4 DOF
 	/// represented in homogeneous coordinates in R for each camera param. Implements
 	/// camera parameters refinement algorithm which minimizes sum of the reprojection
@@ -4220,6 +4228,43 @@ pub mod stitching {
 	}
 
 	unsafe impl Send for Detail_BundleAdjusterAffinePartial {}
+
+	impl Detail_BundleAdjusterAffinePartial {
+		#[inline]
+		pub fn default() -> Result<crate::stitching::Detail_BundleAdjusterAffinePartial> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_BundleAdjusterAffinePartial_BundleAdjusterAffinePartial(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_BundleAdjusterAffinePartial::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [crate::stitching::Detail_BundleAdjusterAffinePartial]
+	pub trait Detail_BundleAdjusterAffinePartialTraitConst: crate::stitching::Detail_BundleAdjusterBaseTraitConst {
+		fn as_raw_Detail_BundleAdjusterAffinePartial(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::stitching::Detail_BundleAdjusterAffinePartial]
+	pub trait Detail_BundleAdjusterAffinePartialTrait: crate::stitching::Detail_BundleAdjusterAffinePartialTraitConst + crate::stitching::Detail_BundleAdjusterBaseTrait {
+		fn as_raw_mut_Detail_BundleAdjusterAffinePartial(&mut self) -> *mut c_void;
+
+	}
+
+	impl std::fmt::Debug for Detail_BundleAdjusterAffinePartial {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_BundleAdjusterAffinePartial")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Detail_BundleAdjusterAffinePartial, crate::stitching::Detail_BundleAdjusterBase, cv_detail_BundleAdjusterAffinePartial_to_Detail_BundleAdjusterBase }
+
+	boxed_cast_base! { Detail_BundleAdjusterAffinePartial, crate::stitching::Detail_Estimator, cv_detail_BundleAdjusterAffinePartial_to_Detail_Estimator }
 
 	impl crate::stitching::Detail_BundleAdjusterBaseTraitConst for Detail_BundleAdjusterAffinePartial {
 		#[inline] fn as_raw_Detail_BundleAdjusterBase(&self) -> *const c_void { self.as_raw() }
@@ -4251,30 +4296,21 @@ pub mod stitching {
 
 	boxed_ref! { Detail_BundleAdjusterAffinePartial, crate::stitching::Detail_BundleAdjusterAffinePartialTraitConst, as_raw_Detail_BundleAdjusterAffinePartial, crate::stitching::Detail_BundleAdjusterAffinePartialTrait, as_raw_mut_Detail_BundleAdjusterAffinePartial }
 
-	impl Detail_BundleAdjusterAffinePartial {
-		#[inline]
-		pub fn default() -> Result<crate::stitching::Detail_BundleAdjusterAffinePartial> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_BundleAdjusterAffinePartial_BundleAdjusterAffinePartial(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_BundleAdjusterAffinePartial::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// Base class for all camera parameters refinement methods.
+	pub struct Detail_BundleAdjusterBase {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { Detail_BundleAdjusterAffinePartial, crate::stitching::Detail_BundleAdjusterBase, cv_detail_BundleAdjusterAffinePartial_to_Detail_BundleAdjusterBase }
+	opencv_type_boxed! { Detail_BundleAdjusterBase }
 
-	boxed_cast_base! { Detail_BundleAdjusterAffinePartial, crate::stitching::Detail_Estimator, cv_detail_BundleAdjusterAffinePartial_to_Detail_Estimator }
-
-	impl std::fmt::Debug for Detail_BundleAdjusterAffinePartial {
+	impl Drop for Detail_BundleAdjusterBase {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_BundleAdjusterAffinePartial")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_BundleAdjusterBase_delete(self.as_raw_mut_Detail_BundleAdjusterBase()) };
 		}
 	}
+
+	unsafe impl Send for Detail_BundleAdjusterBase {}
 
 	/// Constant methods for [crate::stitching::Detail_BundleAdjusterBase]
 	pub trait Detail_BundleAdjusterBaseTraitConst: crate::stitching::Detail_EstimatorTraitConst {
@@ -4343,21 +4379,25 @@ pub mod stitching {
 
 	}
 
-	/// Base class for all camera parameters refinement methods.
-	pub struct Detail_BundleAdjusterBase {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_BundleAdjusterBase }
-
-	impl Drop for Detail_BundleAdjusterBase {
+	impl std::fmt::Debug for Detail_BundleAdjusterBase {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_BundleAdjusterBase_delete(self.as_raw_mut_Detail_BundleAdjusterBase()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_BundleAdjusterBase")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for Detail_BundleAdjusterBase {}
+	boxed_cast_base! { Detail_BundleAdjusterBase, crate::stitching::Detail_Estimator, cv_detail_BundleAdjusterBase_to_Detail_Estimator }
+
+	boxed_cast_descendant! { Detail_BundleAdjusterBase, crate::stitching::Detail_BundleAdjusterAffine, cv_detail_BundleAdjusterBase_to_Detail_BundleAdjusterAffine }
+
+	boxed_cast_descendant! { Detail_BundleAdjusterBase, crate::stitching::Detail_BundleAdjusterAffinePartial, cv_detail_BundleAdjusterBase_to_Detail_BundleAdjusterAffinePartial }
+
+	boxed_cast_descendant! { Detail_BundleAdjusterBase, crate::stitching::Detail_BundleAdjusterRay, cv_detail_BundleAdjusterBase_to_Detail_BundleAdjusterRay }
+
+	boxed_cast_descendant! { Detail_BundleAdjusterBase, crate::stitching::Detail_BundleAdjusterReproj, cv_detail_BundleAdjusterBase_to_Detail_BundleAdjusterReproj }
+
+	boxed_cast_descendant! { Detail_BundleAdjusterBase, crate::stitching::Detail_NoBundleAdjuster, cv_detail_BundleAdjusterBase_to_Detail_NoBundleAdjuster }
 
 	impl crate::stitching::Detail_EstimatorTraitConst for Detail_BundleAdjusterBase {
 		#[inline] fn as_raw_Detail_Estimator(&self) -> *const c_void { self.as_raw() }
@@ -4379,41 +4419,6 @@ pub mod stitching {
 
 	boxed_ref! { Detail_BundleAdjusterBase, crate::stitching::Detail_BundleAdjusterBaseTraitConst, as_raw_Detail_BundleAdjusterBase, crate::stitching::Detail_BundleAdjusterBaseTrait, as_raw_mut_Detail_BundleAdjusterBase }
 
-	impl Detail_BundleAdjusterBase {
-	}
-
-	boxed_cast_descendant! { Detail_BundleAdjusterBase, crate::stitching::Detail_BundleAdjusterAffine, cv_detail_BundleAdjusterBase_to_Detail_BundleAdjusterAffine }
-
-	boxed_cast_descendant! { Detail_BundleAdjusterBase, crate::stitching::Detail_BundleAdjusterAffinePartial, cv_detail_BundleAdjusterBase_to_Detail_BundleAdjusterAffinePartial }
-
-	boxed_cast_descendant! { Detail_BundleAdjusterBase, crate::stitching::Detail_BundleAdjusterRay, cv_detail_BundleAdjusterBase_to_Detail_BundleAdjusterRay }
-
-	boxed_cast_descendant! { Detail_BundleAdjusterBase, crate::stitching::Detail_BundleAdjusterReproj, cv_detail_BundleAdjusterBase_to_Detail_BundleAdjusterReproj }
-
-	boxed_cast_descendant! { Detail_BundleAdjusterBase, crate::stitching::Detail_NoBundleAdjuster, cv_detail_BundleAdjusterBase_to_Detail_NoBundleAdjuster }
-
-	boxed_cast_base! { Detail_BundleAdjusterBase, crate::stitching::Detail_Estimator, cv_detail_BundleAdjusterBase_to_Detail_Estimator }
-
-	impl std::fmt::Debug for Detail_BundleAdjusterBase {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_BundleAdjusterBase")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::stitching::Detail_BundleAdjusterRay]
-	pub trait Detail_BundleAdjusterRayTraitConst: crate::stitching::Detail_BundleAdjusterBaseTraitConst {
-		fn as_raw_Detail_BundleAdjusterRay(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::stitching::Detail_BundleAdjusterRay]
-	pub trait Detail_BundleAdjusterRayTrait: crate::stitching::Detail_BundleAdjusterBaseTrait + crate::stitching::Detail_BundleAdjusterRayTraitConst {
-		fn as_raw_mut_Detail_BundleAdjusterRay(&mut self) -> *mut c_void;
-
-	}
-
 	/// Implementation of the camera parameters refinement algorithm which minimizes sum of the distances
 	/// between the rays passing through the camera center and a feature. :
 	///
@@ -4432,6 +4437,43 @@ pub mod stitching {
 	}
 
 	unsafe impl Send for Detail_BundleAdjusterRay {}
+
+	impl Detail_BundleAdjusterRay {
+		#[inline]
+		pub fn default() -> Result<crate::stitching::Detail_BundleAdjusterRay> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_BundleAdjusterRay_BundleAdjusterRay(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_BundleAdjusterRay::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [crate::stitching::Detail_BundleAdjusterRay]
+	pub trait Detail_BundleAdjusterRayTraitConst: crate::stitching::Detail_BundleAdjusterBaseTraitConst {
+		fn as_raw_Detail_BundleAdjusterRay(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::stitching::Detail_BundleAdjusterRay]
+	pub trait Detail_BundleAdjusterRayTrait: crate::stitching::Detail_BundleAdjusterBaseTrait + crate::stitching::Detail_BundleAdjusterRayTraitConst {
+		fn as_raw_mut_Detail_BundleAdjusterRay(&mut self) -> *mut c_void;
+
+	}
+
+	impl std::fmt::Debug for Detail_BundleAdjusterRay {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_BundleAdjusterRay")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Detail_BundleAdjusterRay, crate::stitching::Detail_BundleAdjusterBase, cv_detail_BundleAdjusterRay_to_Detail_BundleAdjusterBase }
+
+	boxed_cast_base! { Detail_BundleAdjusterRay, crate::stitching::Detail_Estimator, cv_detail_BundleAdjusterRay_to_Detail_Estimator }
 
 	impl crate::stitching::Detail_BundleAdjusterBaseTraitConst for Detail_BundleAdjusterRay {
 		#[inline] fn as_raw_Detail_BundleAdjusterBase(&self) -> *const c_void { self.as_raw() }
@@ -4463,43 +4505,6 @@ pub mod stitching {
 
 	boxed_ref! { Detail_BundleAdjusterRay, crate::stitching::Detail_BundleAdjusterRayTraitConst, as_raw_Detail_BundleAdjusterRay, crate::stitching::Detail_BundleAdjusterRayTrait, as_raw_mut_Detail_BundleAdjusterRay }
 
-	impl Detail_BundleAdjusterRay {
-		#[inline]
-		pub fn default() -> Result<crate::stitching::Detail_BundleAdjusterRay> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_BundleAdjusterRay_BundleAdjusterRay(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_BundleAdjusterRay::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_base! { Detail_BundleAdjusterRay, crate::stitching::Detail_BundleAdjusterBase, cv_detail_BundleAdjusterRay_to_Detail_BundleAdjusterBase }
-
-	boxed_cast_base! { Detail_BundleAdjusterRay, crate::stitching::Detail_Estimator, cv_detail_BundleAdjusterRay_to_Detail_Estimator }
-
-	impl std::fmt::Debug for Detail_BundleAdjusterRay {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_BundleAdjusterRay")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::stitching::Detail_BundleAdjusterReproj]
-	pub trait Detail_BundleAdjusterReprojTraitConst: crate::stitching::Detail_BundleAdjusterBaseTraitConst {
-		fn as_raw_Detail_BundleAdjusterReproj(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::stitching::Detail_BundleAdjusterReproj]
-	pub trait Detail_BundleAdjusterReprojTrait: crate::stitching::Detail_BundleAdjusterBaseTrait + crate::stitching::Detail_BundleAdjusterReprojTraitConst {
-		fn as_raw_mut_Detail_BundleAdjusterReproj(&mut self) -> *mut c_void;
-
-	}
-
 	/// Implementation of the camera parameters refinement algorithm which minimizes sum of the reprojection
 	/// error squares
 	///
@@ -4519,6 +4524,43 @@ pub mod stitching {
 	}
 
 	unsafe impl Send for Detail_BundleAdjusterReproj {}
+
+	impl Detail_BundleAdjusterReproj {
+		#[inline]
+		pub fn default() -> Result<crate::stitching::Detail_BundleAdjusterReproj> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_BundleAdjusterReproj_BundleAdjusterReproj(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_BundleAdjusterReproj::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [crate::stitching::Detail_BundleAdjusterReproj]
+	pub trait Detail_BundleAdjusterReprojTraitConst: crate::stitching::Detail_BundleAdjusterBaseTraitConst {
+		fn as_raw_Detail_BundleAdjusterReproj(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::stitching::Detail_BundleAdjusterReproj]
+	pub trait Detail_BundleAdjusterReprojTrait: crate::stitching::Detail_BundleAdjusterBaseTrait + crate::stitching::Detail_BundleAdjusterReprojTraitConst {
+		fn as_raw_mut_Detail_BundleAdjusterReproj(&mut self) -> *mut c_void;
+
+	}
+
+	impl std::fmt::Debug for Detail_BundleAdjusterReproj {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_BundleAdjusterReproj")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Detail_BundleAdjusterReproj, crate::stitching::Detail_BundleAdjusterBase, cv_detail_BundleAdjusterReproj_to_Detail_BundleAdjusterBase }
+
+	boxed_cast_base! { Detail_BundleAdjusterReproj, crate::stitching::Detail_Estimator, cv_detail_BundleAdjusterReproj_to_Detail_Estimator }
 
 	impl crate::stitching::Detail_BundleAdjusterBaseTraitConst for Detail_BundleAdjusterReproj {
 		#[inline] fn as_raw_Detail_BundleAdjusterBase(&self) -> *const c_void { self.as_raw() }
@@ -4550,29 +4592,46 @@ pub mod stitching {
 
 	boxed_ref! { Detail_BundleAdjusterReproj, crate::stitching::Detail_BundleAdjusterReprojTraitConst, as_raw_Detail_BundleAdjusterReproj, crate::stitching::Detail_BundleAdjusterReprojTrait, as_raw_mut_Detail_BundleAdjusterReproj }
 
-	impl Detail_BundleAdjusterReproj {
+	/// Describes camera parameters.
+	///
+	///
+	/// Note: Translation is assumed to be zero during the whole stitching pipeline. :
+	pub struct Detail_CameraParams {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_CameraParams }
+
+	impl Drop for Detail_CameraParams {
 		#[inline]
-		pub fn default() -> Result<crate::stitching::Detail_BundleAdjusterReproj> {
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_CameraParams_delete(self.as_raw_mut_Detail_CameraParams()) };
+		}
+	}
+
+	unsafe impl Send for Detail_CameraParams {}
+
+	impl Detail_CameraParams {
+		#[inline]
+		pub fn default() -> Result<crate::stitching::Detail_CameraParams> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_BundleAdjusterReproj_BundleAdjusterReproj(ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_detail_CameraParams_CameraParams(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_BundleAdjusterReproj::opencv_from_extern(ret) };
+			let ret = unsafe { crate::stitching::Detail_CameraParams::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	boxed_cast_base! { Detail_BundleAdjusterReproj, crate::stitching::Detail_BundleAdjusterBase, cv_detail_BundleAdjusterReproj_to_Detail_BundleAdjusterBase }
-
-	boxed_cast_base! { Detail_BundleAdjusterReproj, crate::stitching::Detail_Estimator, cv_detail_BundleAdjusterReproj_to_Detail_Estimator }
-
-	impl std::fmt::Debug for Detail_BundleAdjusterReproj {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_BundleAdjusterReproj")
-				.finish()
+		pub fn copy(other: &impl crate::stitching::Detail_CameraParamsTraitConst) -> Result<crate::stitching::Detail_CameraParams> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_CameraParams_CameraParams_const_CameraParamsR(other.as_raw_Detail_CameraParams(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_CameraParams::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_CameraParams]
@@ -4680,58 +4739,6 @@ pub mod stitching {
 
 	}
 
-	/// Describes camera parameters.
-	///
-	///
-	/// Note: Translation is assumed to be zero during the whole stitching pipeline. :
-	pub struct Detail_CameraParams {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_CameraParams }
-
-	impl Drop for Detail_CameraParams {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_CameraParams_delete(self.as_raw_mut_Detail_CameraParams()) };
-		}
-	}
-
-	unsafe impl Send for Detail_CameraParams {}
-
-	impl crate::stitching::Detail_CameraParamsTraitConst for Detail_CameraParams {
-		#[inline] fn as_raw_Detail_CameraParams(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::Detail_CameraParamsTrait for Detail_CameraParams {
-		#[inline] fn as_raw_mut_Detail_CameraParams(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_CameraParams, crate::stitching::Detail_CameraParamsTraitConst, as_raw_Detail_CameraParams, crate::stitching::Detail_CameraParamsTrait, as_raw_mut_Detail_CameraParams }
-
-	impl Detail_CameraParams {
-		#[inline]
-		pub fn default() -> Result<crate::stitching::Detail_CameraParams> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_CameraParams_CameraParams(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_CameraParams::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn copy(other: &impl crate::stitching::Detail_CameraParamsTraitConst) -> Result<crate::stitching::Detail_CameraParams> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_CameraParams_CameraParams_const_CameraParamsR(other.as_raw_Detail_CameraParams(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_CameraParams::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
 	impl Clone for Detail_CameraParams {
 		#[inline]
 		fn clone(&self) -> Self {
@@ -4751,6 +4758,61 @@ pub mod stitching {
 				.field("t", &crate::stitching::Detail_CameraParamsTraitConst::t(self))
 				.finish()
 		}
+	}
+
+	impl crate::stitching::Detail_CameraParamsTraitConst for Detail_CameraParams {
+		#[inline] fn as_raw_Detail_CameraParams(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::Detail_CameraParamsTrait for Detail_CameraParams {
+		#[inline] fn as_raw_mut_Detail_CameraParams(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_CameraParams, crate::stitching::Detail_CameraParamsTraitConst, as_raw_Detail_CameraParams, crate::stitching::Detail_CameraParamsTrait, as_raw_mut_Detail_CameraParams }
+
+	/// Exposure compensator which tries to remove exposure related artifacts by adjusting image
+	/// intensities on each channel independently.
+	pub struct Detail_ChannelsCompensator {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_ChannelsCompensator }
+
+	impl Drop for Detail_ChannelsCompensator {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_ChannelsCompensator_delete(self.as_raw_mut_Detail_ChannelsCompensator()) };
+		}
+	}
+
+	unsafe impl Send for Detail_ChannelsCompensator {}
+
+	impl Detail_ChannelsCompensator {
+		/// ## C++ default parameters
+		/// * nr_feeds: 1
+		#[inline]
+		pub fn new(nr_feeds: i32) -> Result<crate::stitching::Detail_ChannelsCompensator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_ChannelsCompensator_ChannelsCompensator_int(nr_feeds, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_ChannelsCompensator::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * nr_feeds: 1
+		#[inline]
+		pub fn new_def() -> Result<crate::stitching::Detail_ChannelsCompensator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_ChannelsCompensator_ChannelsCompensator(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_ChannelsCompensator::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_ChannelsCompensator]
@@ -4849,22 +4911,15 @@ pub mod stitching {
 
 	}
 
-	/// Exposure compensator which tries to remove exposure related artifacts by adjusting image
-	/// intensities on each channel independently.
-	pub struct Detail_ChannelsCompensator {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_ChannelsCompensator }
-
-	impl Drop for Detail_ChannelsCompensator {
+	impl std::fmt::Debug for Detail_ChannelsCompensator {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_ChannelsCompensator_delete(self.as_raw_mut_Detail_ChannelsCompensator()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_ChannelsCompensator")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for Detail_ChannelsCompensator {}
+	boxed_cast_base! { Detail_ChannelsCompensator, crate::stitching::Detail_ExposureCompensator, cv_detail_ChannelsCompensator_to_Detail_ExposureCompensator }
 
 	impl crate::stitching::Detail_ExposureCompensatorTraitConst for Detail_ChannelsCompensator {
 		#[inline] fn as_raw_Detail_ExposureCompensator(&self) -> *const c_void { self.as_raw() }
@@ -4886,42 +4941,30 @@ pub mod stitching {
 
 	boxed_ref! { Detail_ChannelsCompensator, crate::stitching::Detail_ChannelsCompensatorTraitConst, as_raw_Detail_ChannelsCompensator, crate::stitching::Detail_ChannelsCompensatorTrait, as_raw_mut_Detail_ChannelsCompensator }
 
-	impl Detail_ChannelsCompensator {
-		/// ## C++ default parameters
-		/// * nr_feeds: 1
-		#[inline]
-		pub fn new(nr_feeds: i32) -> Result<crate::stitching::Detail_ChannelsCompensator> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_ChannelsCompensator_ChannelsCompensator_int(nr_feeds, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_ChannelsCompensator::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * nr_feeds: 1
-		#[inline]
-		pub fn new_def() -> Result<crate::stitching::Detail_ChannelsCompensator> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_ChannelsCompensator_ChannelsCompensator(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_ChannelsCompensator::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	pub struct Detail_CompressedRectilinearPortraitProjector {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { Detail_ChannelsCompensator, crate::stitching::Detail_ExposureCompensator, cv_detail_ChannelsCompensator_to_Detail_ExposureCompensator }
+	opencv_type_boxed! { Detail_CompressedRectilinearPortraitProjector }
 
-	impl std::fmt::Debug for Detail_ChannelsCompensator {
+	impl Drop for Detail_CompressedRectilinearPortraitProjector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_ChannelsCompensator")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_CompressedRectilinearPortraitProjector_delete(self.as_raw_mut_Detail_CompressedRectilinearPortraitProjector()) };
 		}
+	}
+
+	unsafe impl Send for Detail_CompressedRectilinearPortraitProjector {}
+
+	impl Detail_CompressedRectilinearPortraitProjector {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::stitching::Detail_CompressedRectilinearPortraitProjector {
+			let ret = unsafe { sys::cv_detail_CompressedRectilinearPortraitProjector_defaultNew_const() };
+			let ret = unsafe { crate::stitching::Detail_CompressedRectilinearPortraitProjector::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_CompressedRectilinearPortraitProjector]
@@ -4978,20 +5021,31 @@ pub mod stitching {
 
 	}
 
-	pub struct Detail_CompressedRectilinearPortraitProjector {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_CompressedRectilinearPortraitProjector }
-
-	impl Drop for Detail_CompressedRectilinearPortraitProjector {
+	impl Default for Detail_CompressedRectilinearPortraitProjector {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_CompressedRectilinearPortraitProjector_delete(self.as_raw_mut_Detail_CompressedRectilinearPortraitProjector()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for Detail_CompressedRectilinearPortraitProjector {}
+	impl std::fmt::Debug for Detail_CompressedRectilinearPortraitProjector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_CompressedRectilinearPortraitProjector")
+				.field("a", &crate::stitching::Detail_CompressedRectilinearPortraitProjectorTraitConst::a(self))
+				.field("b", &crate::stitching::Detail_CompressedRectilinearPortraitProjectorTraitConst::b(self))
+				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
+				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
+				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
+				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
+				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
+				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Detail_CompressedRectilinearPortraitProjector, crate::stitching::Detail_ProjectorBase, cv_detail_CompressedRectilinearPortraitProjector_to_Detail_ProjectorBase }
 
 	impl crate::stitching::Detail_ProjectorBaseTraitConst for Detail_CompressedRectilinearPortraitProjector {
 		#[inline] fn as_raw_Detail_ProjectorBase(&self) -> *const c_void { self.as_raw() }
@@ -5013,53 +5067,6 @@ pub mod stitching {
 
 	boxed_ref! { Detail_CompressedRectilinearPortraitProjector, crate::stitching::Detail_CompressedRectilinearPortraitProjectorTraitConst, as_raw_Detail_CompressedRectilinearPortraitProjector, crate::stitching::Detail_CompressedRectilinearPortraitProjectorTrait, as_raw_mut_Detail_CompressedRectilinearPortraitProjector }
 
-	impl Detail_CompressedRectilinearPortraitProjector {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_detail_CompressedRectilinearPortraitProjector_defaultNew_const()) }
-		}
-
-	}
-
-	boxed_cast_base! { Detail_CompressedRectilinearPortraitProjector, crate::stitching::Detail_ProjectorBase, cv_detail_CompressedRectilinearPortraitProjector_to_Detail_ProjectorBase }
-
-	impl std::fmt::Debug for Detail_CompressedRectilinearPortraitProjector {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_CompressedRectilinearPortraitProjector")
-				.field("a", &crate::stitching::Detail_CompressedRectilinearPortraitProjectorTraitConst::a(self))
-				.field("b", &crate::stitching::Detail_CompressedRectilinearPortraitProjectorTraitConst::b(self))
-				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
-				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
-				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
-				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
-				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
-				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
-				.finish()
-		}
-	}
-
-	impl Default for Detail_CompressedRectilinearPortraitProjector {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
-	}
-
-	/// Constant methods for [crate::stitching::Detail_CompressedRectilinearPortraitWarper]
-	pub trait Detail_CompressedRectilinearPortraitWarperTraitConst {
-		fn as_raw_Detail_CompressedRectilinearPortraitWarper(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::stitching::Detail_CompressedRectilinearPortraitWarper]
-	pub trait Detail_CompressedRectilinearPortraitWarperTrait: crate::stitching::Detail_CompressedRectilinearPortraitWarperTraitConst {
-		fn as_raw_mut_Detail_CompressedRectilinearPortraitWarper(&mut self) -> *mut c_void;
-
-	}
-
 	pub struct Detail_CompressedRectilinearPortraitWarper {
 		ptr: *mut c_void,
 	}
@@ -5074,26 +5081,6 @@ pub mod stitching {
 	}
 
 	unsafe impl Send for Detail_CompressedRectilinearPortraitWarper {}
-
-	impl crate::stitching::Detail_RotationWarperTraitConst for Detail_CompressedRectilinearPortraitWarper {
-		#[inline] fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::Detail_RotationWarperTrait for Detail_CompressedRectilinearPortraitWarper {
-		#[inline] fn as_raw_mut_Detail_RotationWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_CompressedRectilinearPortraitWarper, crate::stitching::Detail_RotationWarperTraitConst, as_raw_Detail_RotationWarper, crate::stitching::Detail_RotationWarperTrait, as_raw_mut_Detail_RotationWarper }
-
-	impl crate::stitching::Detail_CompressedRectilinearPortraitWarperTraitConst for Detail_CompressedRectilinearPortraitWarper {
-		#[inline] fn as_raw_Detail_CompressedRectilinearPortraitWarper(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::Detail_CompressedRectilinearPortraitWarperTrait for Detail_CompressedRectilinearPortraitWarper {
-		#[inline] fn as_raw_mut_Detail_CompressedRectilinearPortraitWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_CompressedRectilinearPortraitWarper, crate::stitching::Detail_CompressedRectilinearPortraitWarperTraitConst, as_raw_Detail_CompressedRectilinearPortraitWarper, crate::stitching::Detail_CompressedRectilinearPortraitWarperTrait, as_raw_mut_Detail_CompressedRectilinearPortraitWarper }
 
 	impl Detail_CompressedRectilinearPortraitWarper {
 		/// ## C++ default parameters
@@ -5125,7 +5112,17 @@ pub mod stitching {
 
 	}
 
-	boxed_cast_base! { Detail_CompressedRectilinearPortraitWarper, crate::stitching::Detail_RotationWarper, cv_detail_CompressedRectilinearPortraitWarper_to_Detail_RotationWarper }
+	/// Constant methods for [crate::stitching::Detail_CompressedRectilinearPortraitWarper]
+	pub trait Detail_CompressedRectilinearPortraitWarperTraitConst {
+		fn as_raw_Detail_CompressedRectilinearPortraitWarper(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::stitching::Detail_CompressedRectilinearPortraitWarper]
+	pub trait Detail_CompressedRectilinearPortraitWarperTrait: crate::stitching::Detail_CompressedRectilinearPortraitWarperTraitConst {
+		fn as_raw_mut_Detail_CompressedRectilinearPortraitWarper(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for Detail_CompressedRectilinearPortraitWarper {
 		#[inline]
@@ -5133,6 +5130,54 @@ pub mod stitching {
 			f.debug_struct("Detail_CompressedRectilinearPortraitWarper")
 				.finish()
 		}
+	}
+
+	boxed_cast_base! { Detail_CompressedRectilinearPortraitWarper, crate::stitching::Detail_RotationWarper, cv_detail_CompressedRectilinearPortraitWarper_to_Detail_RotationWarper }
+
+	impl crate::stitching::Detail_RotationWarperTraitConst for Detail_CompressedRectilinearPortraitWarper {
+		#[inline] fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::Detail_RotationWarperTrait for Detail_CompressedRectilinearPortraitWarper {
+		#[inline] fn as_raw_mut_Detail_RotationWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_CompressedRectilinearPortraitWarper, crate::stitching::Detail_RotationWarperTraitConst, as_raw_Detail_RotationWarper, crate::stitching::Detail_RotationWarperTrait, as_raw_mut_Detail_RotationWarper }
+
+	impl crate::stitching::Detail_CompressedRectilinearPortraitWarperTraitConst for Detail_CompressedRectilinearPortraitWarper {
+		#[inline] fn as_raw_Detail_CompressedRectilinearPortraitWarper(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::Detail_CompressedRectilinearPortraitWarperTrait for Detail_CompressedRectilinearPortraitWarper {
+		#[inline] fn as_raw_mut_Detail_CompressedRectilinearPortraitWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_CompressedRectilinearPortraitWarper, crate::stitching::Detail_CompressedRectilinearPortraitWarperTraitConst, as_raw_Detail_CompressedRectilinearPortraitWarper, crate::stitching::Detail_CompressedRectilinearPortraitWarperTrait, as_raw_mut_Detail_CompressedRectilinearPortraitWarper }
+
+	pub struct Detail_CompressedRectilinearProjector {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_CompressedRectilinearProjector }
+
+	impl Drop for Detail_CompressedRectilinearProjector {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_CompressedRectilinearProjector_delete(self.as_raw_mut_Detail_CompressedRectilinearProjector()) };
+		}
+	}
+
+	unsafe impl Send for Detail_CompressedRectilinearProjector {}
+
+	impl Detail_CompressedRectilinearProjector {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::stitching::Detail_CompressedRectilinearProjector {
+			let ret = unsafe { sys::cv_detail_CompressedRectilinearProjector_defaultNew_const() };
+			let ret = unsafe { crate::stitching::Detail_CompressedRectilinearProjector::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_CompressedRectilinearProjector]
@@ -5189,20 +5234,31 @@ pub mod stitching {
 
 	}
 
-	pub struct Detail_CompressedRectilinearProjector {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_CompressedRectilinearProjector }
-
-	impl Drop for Detail_CompressedRectilinearProjector {
+	impl Default for Detail_CompressedRectilinearProjector {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_CompressedRectilinearProjector_delete(self.as_raw_mut_Detail_CompressedRectilinearProjector()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for Detail_CompressedRectilinearProjector {}
+	impl std::fmt::Debug for Detail_CompressedRectilinearProjector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_CompressedRectilinearProjector")
+				.field("a", &crate::stitching::Detail_CompressedRectilinearProjectorTraitConst::a(self))
+				.field("b", &crate::stitching::Detail_CompressedRectilinearProjectorTraitConst::b(self))
+				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
+				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
+				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
+				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
+				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
+				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Detail_CompressedRectilinearProjector, crate::stitching::Detail_ProjectorBase, cv_detail_CompressedRectilinearProjector_to_Detail_ProjectorBase }
 
 	impl crate::stitching::Detail_ProjectorBaseTraitConst for Detail_CompressedRectilinearProjector {
 		#[inline] fn as_raw_Detail_ProjectorBase(&self) -> *const c_void { self.as_raw() }
@@ -5224,53 +5280,6 @@ pub mod stitching {
 
 	boxed_ref! { Detail_CompressedRectilinearProjector, crate::stitching::Detail_CompressedRectilinearProjectorTraitConst, as_raw_Detail_CompressedRectilinearProjector, crate::stitching::Detail_CompressedRectilinearProjectorTrait, as_raw_mut_Detail_CompressedRectilinearProjector }
 
-	impl Detail_CompressedRectilinearProjector {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_detail_CompressedRectilinearProjector_defaultNew_const()) }
-		}
-
-	}
-
-	boxed_cast_base! { Detail_CompressedRectilinearProjector, crate::stitching::Detail_ProjectorBase, cv_detail_CompressedRectilinearProjector_to_Detail_ProjectorBase }
-
-	impl std::fmt::Debug for Detail_CompressedRectilinearProjector {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_CompressedRectilinearProjector")
-				.field("a", &crate::stitching::Detail_CompressedRectilinearProjectorTraitConst::a(self))
-				.field("b", &crate::stitching::Detail_CompressedRectilinearProjectorTraitConst::b(self))
-				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
-				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
-				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
-				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
-				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
-				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
-				.finish()
-		}
-	}
-
-	impl Default for Detail_CompressedRectilinearProjector {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
-	}
-
-	/// Constant methods for [crate::stitching::Detail_CompressedRectilinearWarper]
-	pub trait Detail_CompressedRectilinearWarperTraitConst {
-		fn as_raw_Detail_CompressedRectilinearWarper(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::stitching::Detail_CompressedRectilinearWarper]
-	pub trait Detail_CompressedRectilinearWarperTrait: crate::stitching::Detail_CompressedRectilinearWarperTraitConst {
-		fn as_raw_mut_Detail_CompressedRectilinearWarper(&mut self) -> *mut c_void;
-
-	}
-
 	pub struct Detail_CompressedRectilinearWarper {
 		ptr: *mut c_void,
 	}
@@ -5285,26 +5294,6 @@ pub mod stitching {
 	}
 
 	unsafe impl Send for Detail_CompressedRectilinearWarper {}
-
-	impl crate::stitching::Detail_RotationWarperTraitConst for Detail_CompressedRectilinearWarper {
-		#[inline] fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::Detail_RotationWarperTrait for Detail_CompressedRectilinearWarper {
-		#[inline] fn as_raw_mut_Detail_RotationWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_CompressedRectilinearWarper, crate::stitching::Detail_RotationWarperTraitConst, as_raw_Detail_RotationWarper, crate::stitching::Detail_RotationWarperTrait, as_raw_mut_Detail_RotationWarper }
-
-	impl crate::stitching::Detail_CompressedRectilinearWarperTraitConst for Detail_CompressedRectilinearWarper {
-		#[inline] fn as_raw_Detail_CompressedRectilinearWarper(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::Detail_CompressedRectilinearWarperTrait for Detail_CompressedRectilinearWarper {
-		#[inline] fn as_raw_mut_Detail_CompressedRectilinearWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_CompressedRectilinearWarper, crate::stitching::Detail_CompressedRectilinearWarperTraitConst, as_raw_Detail_CompressedRectilinearWarper, crate::stitching::Detail_CompressedRectilinearWarperTrait, as_raw_mut_Detail_CompressedRectilinearWarper }
 
 	impl Detail_CompressedRectilinearWarper {
 		/// ## C++ default parameters
@@ -5336,7 +5325,17 @@ pub mod stitching {
 
 	}
 
-	boxed_cast_base! { Detail_CompressedRectilinearWarper, crate::stitching::Detail_RotationWarper, cv_detail_CompressedRectilinearWarper_to_Detail_RotationWarper }
+	/// Constant methods for [crate::stitching::Detail_CompressedRectilinearWarper]
+	pub trait Detail_CompressedRectilinearWarperTraitConst {
+		fn as_raw_Detail_CompressedRectilinearWarper(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::stitching::Detail_CompressedRectilinearWarper]
+	pub trait Detail_CompressedRectilinearWarperTrait: crate::stitching::Detail_CompressedRectilinearWarperTraitConst {
+		fn as_raw_mut_Detail_CompressedRectilinearWarper(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for Detail_CompressedRectilinearWarper {
 		#[inline]
@@ -5344,6 +5343,54 @@ pub mod stitching {
 			f.debug_struct("Detail_CompressedRectilinearWarper")
 				.finish()
 		}
+	}
+
+	boxed_cast_base! { Detail_CompressedRectilinearWarper, crate::stitching::Detail_RotationWarper, cv_detail_CompressedRectilinearWarper_to_Detail_RotationWarper }
+
+	impl crate::stitching::Detail_RotationWarperTraitConst for Detail_CompressedRectilinearWarper {
+		#[inline] fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::Detail_RotationWarperTrait for Detail_CompressedRectilinearWarper {
+		#[inline] fn as_raw_mut_Detail_RotationWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_CompressedRectilinearWarper, crate::stitching::Detail_RotationWarperTraitConst, as_raw_Detail_RotationWarper, crate::stitching::Detail_RotationWarperTrait, as_raw_mut_Detail_RotationWarper }
+
+	impl crate::stitching::Detail_CompressedRectilinearWarperTraitConst for Detail_CompressedRectilinearWarper {
+		#[inline] fn as_raw_Detail_CompressedRectilinearWarper(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::Detail_CompressedRectilinearWarperTrait for Detail_CompressedRectilinearWarper {
+		#[inline] fn as_raw_mut_Detail_CompressedRectilinearWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_CompressedRectilinearWarper, crate::stitching::Detail_CompressedRectilinearWarperTraitConst, as_raw_Detail_CompressedRectilinearWarper, crate::stitching::Detail_CompressedRectilinearWarperTrait, as_raw_mut_Detail_CompressedRectilinearWarper }
+
+	pub struct Detail_CylindricalPortraitProjector {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_CylindricalPortraitProjector }
+
+	impl Drop for Detail_CylindricalPortraitProjector {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_CylindricalPortraitProjector_delete(self.as_raw_mut_Detail_CylindricalPortraitProjector()) };
+		}
+	}
+
+	unsafe impl Send for Detail_CylindricalPortraitProjector {}
+
+	impl Detail_CylindricalPortraitProjector {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::stitching::Detail_CylindricalPortraitProjector {
+			let ret = unsafe { sys::cv_detail_CylindricalPortraitProjector_defaultNew_const() };
+			let ret = unsafe { crate::stitching::Detail_CylindricalPortraitProjector::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_CylindricalPortraitProjector]
@@ -5376,20 +5423,29 @@ pub mod stitching {
 
 	}
 
-	pub struct Detail_CylindricalPortraitProjector {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_CylindricalPortraitProjector }
-
-	impl Drop for Detail_CylindricalPortraitProjector {
+	impl Default for Detail_CylindricalPortraitProjector {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_CylindricalPortraitProjector_delete(self.as_raw_mut_Detail_CylindricalPortraitProjector()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for Detail_CylindricalPortraitProjector {}
+	impl std::fmt::Debug for Detail_CylindricalPortraitProjector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_CylindricalPortraitProjector")
+				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
+				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
+				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
+				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
+				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
+				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Detail_CylindricalPortraitProjector, crate::stitching::Detail_ProjectorBase, cv_detail_CylindricalPortraitProjector_to_Detail_ProjectorBase }
 
 	impl crate::stitching::Detail_ProjectorBaseTraitConst for Detail_CylindricalPortraitProjector {
 		#[inline] fn as_raw_Detail_ProjectorBase(&self) -> *const c_void { self.as_raw() }
@@ -5411,51 +5467,6 @@ pub mod stitching {
 
 	boxed_ref! { Detail_CylindricalPortraitProjector, crate::stitching::Detail_CylindricalPortraitProjectorTraitConst, as_raw_Detail_CylindricalPortraitProjector, crate::stitching::Detail_CylindricalPortraitProjectorTrait, as_raw_mut_Detail_CylindricalPortraitProjector }
 
-	impl Detail_CylindricalPortraitProjector {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_detail_CylindricalPortraitProjector_defaultNew_const()) }
-		}
-
-	}
-
-	boxed_cast_base! { Detail_CylindricalPortraitProjector, crate::stitching::Detail_ProjectorBase, cv_detail_CylindricalPortraitProjector_to_Detail_ProjectorBase }
-
-	impl std::fmt::Debug for Detail_CylindricalPortraitProjector {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_CylindricalPortraitProjector")
-				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
-				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
-				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
-				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
-				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
-				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
-				.finish()
-		}
-	}
-
-	impl Default for Detail_CylindricalPortraitProjector {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
-	}
-
-	/// Constant methods for [crate::stitching::Detail_CylindricalPortraitWarper]
-	pub trait Detail_CylindricalPortraitWarperTraitConst {
-		fn as_raw_Detail_CylindricalPortraitWarper(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::stitching::Detail_CylindricalPortraitWarper]
-	pub trait Detail_CylindricalPortraitWarperTrait: crate::stitching::Detail_CylindricalPortraitWarperTraitConst {
-		fn as_raw_mut_Detail_CylindricalPortraitWarper(&mut self) -> *mut c_void;
-
-	}
-
 	pub struct Detail_CylindricalPortraitWarper {
 		ptr: *mut c_void,
 	}
@@ -5470,6 +5481,41 @@ pub mod stitching {
 	}
 
 	unsafe impl Send for Detail_CylindricalPortraitWarper {}
+
+	impl Detail_CylindricalPortraitWarper {
+		#[inline]
+		pub fn new(scale: f32) -> Result<crate::stitching::Detail_CylindricalPortraitWarper> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_CylindricalPortraitWarper_CylindricalPortraitWarper_float(scale, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_CylindricalPortraitWarper::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [crate::stitching::Detail_CylindricalPortraitWarper]
+	pub trait Detail_CylindricalPortraitWarperTraitConst {
+		fn as_raw_Detail_CylindricalPortraitWarper(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::stitching::Detail_CylindricalPortraitWarper]
+	pub trait Detail_CylindricalPortraitWarperTrait: crate::stitching::Detail_CylindricalPortraitWarperTraitConst {
+		fn as_raw_mut_Detail_CylindricalPortraitWarper(&mut self) -> *mut c_void;
+
+	}
+
+	impl std::fmt::Debug for Detail_CylindricalPortraitWarper {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_CylindricalPortraitWarper")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Detail_CylindricalPortraitWarper, crate::stitching::Detail_RotationWarper, cv_detail_CylindricalPortraitWarper_to_Detail_RotationWarper }
 
 	impl crate::stitching::Detail_RotationWarperTraitConst for Detail_CylindricalPortraitWarper {
 		#[inline] fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.as_raw() }
@@ -5491,27 +5537,30 @@ pub mod stitching {
 
 	boxed_ref! { Detail_CylindricalPortraitWarper, crate::stitching::Detail_CylindricalPortraitWarperTraitConst, as_raw_Detail_CylindricalPortraitWarper, crate::stitching::Detail_CylindricalPortraitWarperTrait, as_raw_mut_Detail_CylindricalPortraitWarper }
 
-	impl Detail_CylindricalPortraitWarper {
-		#[inline]
-		pub fn new(scale: f32) -> Result<crate::stitching::Detail_CylindricalPortraitWarper> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_CylindricalPortraitWarper_CylindricalPortraitWarper_float(scale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_CylindricalPortraitWarper::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	pub struct Detail_CylindricalProjector {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { Detail_CylindricalPortraitWarper, crate::stitching::Detail_RotationWarper, cv_detail_CylindricalPortraitWarper_to_Detail_RotationWarper }
+	opencv_type_boxed! { Detail_CylindricalProjector }
 
-	impl std::fmt::Debug for Detail_CylindricalPortraitWarper {
+	impl Drop for Detail_CylindricalProjector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_CylindricalPortraitWarper")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_CylindricalProjector_delete(self.as_raw_mut_Detail_CylindricalProjector()) };
 		}
+	}
+
+	unsafe impl Send for Detail_CylindricalProjector {}
+
+	impl Detail_CylindricalProjector {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::stitching::Detail_CylindricalProjector {
+			let ret = unsafe { sys::cv_detail_CylindricalProjector_defaultNew_const() };
+			let ret = unsafe { crate::stitching::Detail_CylindricalProjector::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_CylindricalProjector]
@@ -5544,20 +5593,29 @@ pub mod stitching {
 
 	}
 
-	pub struct Detail_CylindricalProjector {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_CylindricalProjector }
-
-	impl Drop for Detail_CylindricalProjector {
+	impl Default for Detail_CylindricalProjector {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_CylindricalProjector_delete(self.as_raw_mut_Detail_CylindricalProjector()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for Detail_CylindricalProjector {}
+	impl std::fmt::Debug for Detail_CylindricalProjector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_CylindricalProjector")
+				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
+				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
+				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
+				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
+				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
+				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Detail_CylindricalProjector, crate::stitching::Detail_ProjectorBase, cv_detail_CylindricalProjector_to_Detail_ProjectorBase }
 
 	impl crate::stitching::Detail_ProjectorBaseTraitConst for Detail_CylindricalProjector {
 		#[inline] fn as_raw_Detail_ProjectorBase(&self) -> *const c_void { self.as_raw() }
@@ -5579,37 +5637,37 @@ pub mod stitching {
 
 	boxed_ref! { Detail_CylindricalProjector, crate::stitching::Detail_CylindricalProjectorTraitConst, as_raw_Detail_CylindricalProjector, crate::stitching::Detail_CylindricalProjectorTrait, as_raw_mut_Detail_CylindricalProjector }
 
-	impl Detail_CylindricalProjector {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_detail_CylindricalProjector_defaultNew_const()) }
-		}
-
+	/// Warper that maps an image onto the x\*x + z\*z = 1 cylinder.
+	pub struct Detail_CylindricalWarper {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { Detail_CylindricalProjector, crate::stitching::Detail_ProjectorBase, cv_detail_CylindricalProjector_to_Detail_ProjectorBase }
+	opencv_type_boxed! { Detail_CylindricalWarper }
 
-	impl std::fmt::Debug for Detail_CylindricalProjector {
+	impl Drop for Detail_CylindricalWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_CylindricalProjector")
-				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
-				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
-				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
-				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
-				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
-				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_CylindricalWarper_delete(self.as_raw_mut_Detail_CylindricalWarper()) };
 		}
 	}
 
-	impl Default for Detail_CylindricalProjector {
+	unsafe impl Send for Detail_CylindricalWarper {}
+
+	impl Detail_CylindricalWarper {
+		/// Construct an instance of the cylindrical warper class.
+		///
+		/// ## Parameters
+		/// * scale: Projected image scale multiplier
 		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
+		pub fn new(scale: f32) -> Result<crate::stitching::Detail_CylindricalWarper> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_CylindricalWarper_CylindricalWarper_float(scale, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_CylindricalWarper::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_CylindricalWarper]
@@ -5650,21 +5708,17 @@ pub mod stitching {
 
 	}
 
-	/// Warper that maps an image onto the x\*x + z\*z = 1 cylinder.
-	pub struct Detail_CylindricalWarper {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_CylindricalWarper }
-
-	impl Drop for Detail_CylindricalWarper {
+	impl std::fmt::Debug for Detail_CylindricalWarper {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_CylindricalWarper_delete(self.as_raw_mut_Detail_CylindricalWarper()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_CylindricalWarper")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for Detail_CylindricalWarper {}
+	boxed_cast_base! { Detail_CylindricalWarper, crate::stitching::Detail_RotationWarper, cv_detail_CylindricalWarper_to_Detail_RotationWarper }
+
+	boxed_cast_descendant! { Detail_CylindricalWarper, crate::stitching::Detail_CylindricalWarperGpu, cv_detail_CylindricalWarper_to_Detail_CylindricalWarperGpu }
 
 	impl crate::stitching::Detail_RotationWarperTraitConst for Detail_CylindricalWarper {
 		#[inline] fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.as_raw() }
@@ -5686,33 +5740,32 @@ pub mod stitching {
 
 	boxed_ref! { Detail_CylindricalWarper, crate::stitching::Detail_CylindricalWarperTraitConst, as_raw_Detail_CylindricalWarper, crate::stitching::Detail_CylindricalWarperTrait, as_raw_mut_Detail_CylindricalWarper }
 
-	impl Detail_CylindricalWarper {
-		/// Construct an instance of the cylindrical warper class.
-		///
-		/// ## Parameters
-		/// * scale: Projected image scale multiplier
+	pub struct Detail_CylindricalWarperGpu {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_CylindricalWarperGpu }
+
+	impl Drop for Detail_CylindricalWarperGpu {
 		#[inline]
-		pub fn new(scale: f32) -> Result<crate::stitching::Detail_CylindricalWarper> {
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_CylindricalWarperGpu_delete(self.as_raw_mut_Detail_CylindricalWarperGpu()) };
+		}
+	}
+
+	unsafe impl Send for Detail_CylindricalWarperGpu {}
+
+	impl Detail_CylindricalWarperGpu {
+		#[inline]
+		pub fn new(scale: f32) -> Result<crate::stitching::Detail_CylindricalWarperGpu> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_CylindricalWarper_CylindricalWarper_float(scale, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_detail_CylindricalWarperGpu_CylindricalWarperGpu_float(scale, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_CylindricalWarper::opencv_from_extern(ret) };
+			let ret = unsafe { crate::stitching::Detail_CylindricalWarperGpu::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	boxed_cast_descendant! { Detail_CylindricalWarper, crate::stitching::Detail_CylindricalWarperGpu, cv_detail_CylindricalWarper_to_Detail_CylindricalWarperGpu }
-
-	boxed_cast_base! { Detail_CylindricalWarper, crate::stitching::Detail_RotationWarper, cv_detail_CylindricalWarper_to_Detail_RotationWarper }
-
-	impl std::fmt::Debug for Detail_CylindricalWarper {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_CylindricalWarper")
-				.finish()
-		}
 	}
 
 	/// Constant methods for [crate::stitching::Detail_CylindricalWarperGpu]
@@ -5775,20 +5828,17 @@ pub mod stitching {
 
 	}
 
-	pub struct Detail_CylindricalWarperGpu {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_CylindricalWarperGpu }
-
-	impl Drop for Detail_CylindricalWarperGpu {
+	impl std::fmt::Debug for Detail_CylindricalWarperGpu {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_CylindricalWarperGpu_delete(self.as_raw_mut_Detail_CylindricalWarperGpu()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_CylindricalWarperGpu")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for Detail_CylindricalWarperGpu {}
+	boxed_cast_base! { Detail_CylindricalWarperGpu, crate::stitching::Detail_CylindricalWarper, cv_detail_CylindricalWarperGpu_to_Detail_CylindricalWarper }
+
+	boxed_cast_base! { Detail_CylindricalWarperGpu, crate::stitching::Detail_RotationWarper, cv_detail_CylindricalWarperGpu_to_Detail_RotationWarper }
 
 	impl crate::stitching::Detail_CylindricalWarperTraitConst for Detail_CylindricalWarperGpu {
 		#[inline] fn as_raw_Detail_CylindricalWarper(&self) -> *const c_void { self.as_raw() }
@@ -5820,29 +5870,47 @@ pub mod stitching {
 
 	boxed_ref! { Detail_CylindricalWarperGpu, crate::stitching::Detail_CylindricalWarperGpuTraitConst, as_raw_Detail_CylindricalWarperGpu, crate::stitching::Detail_CylindricalWarperGpuTrait, as_raw_mut_Detail_CylindricalWarperGpu }
 
-	impl Detail_CylindricalWarperGpu {
+	pub struct Detail_DisjointSets {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_DisjointSets }
+
+	impl Drop for Detail_DisjointSets {
 		#[inline]
-		pub fn new(scale: f32) -> Result<crate::stitching::Detail_CylindricalWarperGpu> {
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_DisjointSets_delete(self.as_raw_mut_Detail_DisjointSets()) };
+		}
+	}
+
+	unsafe impl Send for Detail_DisjointSets {}
+
+	impl Detail_DisjointSets {
+		/// ## C++ default parameters
+		/// * elem_count: 0
+		#[inline]
+		pub fn new(elem_count: i32) -> Result<crate::stitching::Detail_DisjointSets> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_CylindricalWarperGpu_CylindricalWarperGpu_float(scale, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_detail_DisjointSets_DisjointSets_int(elem_count, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_CylindricalWarperGpu::opencv_from_extern(ret) };
+			let ret = unsafe { crate::stitching::Detail_DisjointSets::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	boxed_cast_base! { Detail_CylindricalWarperGpu, crate::stitching::Detail_CylindricalWarper, cv_detail_CylindricalWarperGpu_to_Detail_CylindricalWarper }
-
-	boxed_cast_base! { Detail_CylindricalWarperGpu, crate::stitching::Detail_RotationWarper, cv_detail_CylindricalWarperGpu_to_Detail_RotationWarper }
-
-	impl std::fmt::Debug for Detail_CylindricalWarperGpu {
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * elem_count: 0
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_CylindricalWarperGpu")
-				.finish()
+		pub fn new_def() -> Result<crate::stitching::Detail_DisjointSets> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_DisjointSets_DisjointSets(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_DisjointSets::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_DisjointSets]
@@ -5910,20 +5978,15 @@ pub mod stitching {
 
 	}
 
-	pub struct Detail_DisjointSets {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_DisjointSets }
-
-	impl Drop for Detail_DisjointSets {
+	impl std::fmt::Debug for Detail_DisjointSets {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_DisjointSets_delete(self.as_raw_mut_Detail_DisjointSets()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_DisjointSets")
+				.field("parent", &crate::stitching::Detail_DisjointSetsTraitConst::parent(self))
+				.field("size", &crate::stitching::Detail_DisjointSetsTraitConst::size(self))
+				.finish()
 		}
 	}
-
-	unsafe impl Send for Detail_DisjointSets {}
 
 	impl crate::stitching::Detail_DisjointSetsTraitConst for Detail_DisjointSets {
 		#[inline] fn as_raw_Detail_DisjointSets(&self) -> *const c_void { self.as_raw() }
@@ -5935,42 +5998,58 @@ pub mod stitching {
 
 	boxed_ref! { Detail_DisjointSets, crate::stitching::Detail_DisjointSetsTraitConst, as_raw_Detail_DisjointSets, crate::stitching::Detail_DisjointSetsTrait, as_raw_mut_Detail_DisjointSets }
 
-	impl Detail_DisjointSets {
-		/// ## C++ default parameters
-		/// * elem_count: 0
+	pub struct Detail_DpSeamFinder {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_DpSeamFinder }
+
+	impl Drop for Detail_DpSeamFinder {
 		#[inline]
-		pub fn new(elem_count: i32) -> Result<crate::stitching::Detail_DisjointSets> {
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_DpSeamFinder_delete(self.as_raw_mut_Detail_DpSeamFinder()) };
+		}
+	}
+
+	unsafe impl Send for Detail_DpSeamFinder {}
+
+	impl Detail_DpSeamFinder {
+		/// ## C++ default parameters
+		/// * cost_func: COLOR
+		#[inline]
+		pub fn new(cost_func: crate::stitching::Detail_DpSeamFinder_CostFunction) -> Result<crate::stitching::Detail_DpSeamFinder> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_DisjointSets_DisjointSets_int(elem_count, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_detail_DpSeamFinder_DpSeamFinder_CostFunction(cost_func, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_DisjointSets::opencv_from_extern(ret) };
+			let ret = unsafe { crate::stitching::Detail_DpSeamFinder::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
 		/// ## Note
 		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * elem_count: 0
+		/// * cost_func: COLOR
 		#[inline]
-		pub fn new_def() -> Result<crate::stitching::Detail_DisjointSets> {
+		pub fn new_def() -> Result<crate::stitching::Detail_DpSeamFinder> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_DisjointSets_DisjointSets(ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_detail_DpSeamFinder_DpSeamFinder(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_DisjointSets::opencv_from_extern(ret) };
+			let ret = unsafe { crate::stitching::Detail_DpSeamFinder::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	impl std::fmt::Debug for Detail_DisjointSets {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_DisjointSets")
-				.field("parent", &crate::stitching::Detail_DisjointSetsTraitConst::parent(self))
-				.field("size", &crate::stitching::Detail_DisjointSetsTraitConst::size(self))
-				.finish()
+		pub fn new_1(cost_func: &str) -> Result<crate::stitching::Detail_DpSeamFinder> {
+			extern_container_arg!(cost_func);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_DpSeamFinder_DpSeamFinder_String(cost_func.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_DpSeamFinder::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_DpSeamFinder]
@@ -6022,20 +6101,15 @@ pub mod stitching {
 
 	}
 
-	pub struct Detail_DpSeamFinder {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_DpSeamFinder }
-
-	impl Drop for Detail_DpSeamFinder {
+	impl std::fmt::Debug for Detail_DpSeamFinder {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_DpSeamFinder_delete(self.as_raw_mut_Detail_DpSeamFinder()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_DpSeamFinder")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for Detail_DpSeamFinder {}
+	boxed_cast_base! { Detail_DpSeamFinder, crate::stitching::Detail_SeamFinder, cv_detail_DpSeamFinder_to_Detail_SeamFinder }
 
 	impl crate::stitching::Detail_SeamFinderTraitConst for Detail_DpSeamFinder {
 		#[inline] fn as_raw_Detail_SeamFinder(&self) -> *const c_void { self.as_raw() }
@@ -6057,54 +6131,28 @@ pub mod stitching {
 
 	boxed_ref! { Detail_DpSeamFinder, crate::stitching::Detail_DpSeamFinderTraitConst, as_raw_Detail_DpSeamFinder, crate::stitching::Detail_DpSeamFinderTrait, as_raw_mut_Detail_DpSeamFinder }
 
-	impl Detail_DpSeamFinder {
-		/// ## C++ default parameters
-		/// * cost_func: COLOR
-		#[inline]
-		pub fn new(cost_func: crate::stitching::Detail_DpSeamFinder_CostFunction) -> Result<crate::stitching::Detail_DpSeamFinder> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_DpSeamFinder_DpSeamFinder_CostFunction(cost_func, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_DpSeamFinder::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * cost_func: COLOR
-		#[inline]
-		pub fn new_def() -> Result<crate::stitching::Detail_DpSeamFinder> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_DpSeamFinder_DpSeamFinder(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_DpSeamFinder::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn new_1(cost_func: &str) -> Result<crate::stitching::Detail_DpSeamFinder> {
-			extern_container_arg!(cost_func);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_DpSeamFinder_DpSeamFinder_String(cost_func.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_DpSeamFinder::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// Rotation estimator base class.
+	///
+	/// It takes features of all images, pairwise matches between all images and estimates rotations of all
+	/// cameras.
+	///
+	///
+	/// Note: The coordinate system origin is implementation-dependent, but you can always normalize the
+	/// rotations in respect to the first camera, for instance. :
+	pub struct Detail_Estimator {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { Detail_DpSeamFinder, crate::stitching::Detail_SeamFinder, cv_detail_DpSeamFinder_to_Detail_SeamFinder }
+	opencv_type_boxed! { Detail_Estimator }
 
-	impl std::fmt::Debug for Detail_DpSeamFinder {
+	impl Drop for Detail_Estimator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_DpSeamFinder")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_Estimator_delete(self.as_raw_mut_Detail_Estimator()) };
 		}
 	}
+
+	unsafe impl Send for Detail_Estimator {}
 
 	/// Constant methods for [crate::stitching::Detail_Estimator]
 	pub trait Detail_EstimatorTraitConst {
@@ -6135,40 +6183,12 @@ pub mod stitching {
 
 	}
 
-	/// Rotation estimator base class.
-	///
-	/// It takes features of all images, pairwise matches between all images and estimates rotations of all
-	/// cameras.
-	///
-	///
-	/// Note: The coordinate system origin is implementation-dependent, but you can always normalize the
-	/// rotations in respect to the first camera, for instance. :
-	pub struct Detail_Estimator {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_Estimator }
-
-	impl Drop for Detail_Estimator {
+	impl std::fmt::Debug for Detail_Estimator {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_Estimator_delete(self.as_raw_mut_Detail_Estimator()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_Estimator")
+				.finish()
 		}
-	}
-
-	unsafe impl Send for Detail_Estimator {}
-
-	impl crate::stitching::Detail_EstimatorTraitConst for Detail_Estimator {
-		#[inline] fn as_raw_Detail_Estimator(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::Detail_EstimatorTrait for Detail_Estimator {
-		#[inline] fn as_raw_mut_Detail_Estimator(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_Estimator, crate::stitching::Detail_EstimatorTraitConst, as_raw_Detail_Estimator, crate::stitching::Detail_EstimatorTrait, as_raw_mut_Detail_Estimator }
-
-	impl Detail_Estimator {
 	}
 
 	boxed_cast_descendant! { Detail_Estimator, crate::stitching::Detail_AffineBasedEstimator, cv_detail_Estimator_to_Detail_AffineBasedEstimator }
@@ -6187,12 +6207,43 @@ pub mod stitching {
 
 	boxed_cast_descendant! { Detail_Estimator, crate::stitching::Detail_NoBundleAdjuster, cv_detail_Estimator_to_Detail_NoBundleAdjuster }
 
-	impl std::fmt::Debug for Detail_Estimator {
+	impl crate::stitching::Detail_EstimatorTraitConst for Detail_Estimator {
+		#[inline] fn as_raw_Detail_Estimator(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::Detail_EstimatorTrait for Detail_Estimator {
+		#[inline] fn as_raw_mut_Detail_Estimator(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_Estimator, crate::stitching::Detail_EstimatorTraitConst, as_raw_Detail_Estimator, crate::stitching::Detail_EstimatorTrait, as_raw_mut_Detail_Estimator }
+
+	/// Base class for all exposure compensators.
+	pub struct Detail_ExposureCompensator {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_ExposureCompensator }
+
+	impl Drop for Detail_ExposureCompensator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_Estimator")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_ExposureCompensator_delete(self.as_raw_mut_Detail_ExposureCompensator()) };
 		}
+	}
+
+	unsafe impl Send for Detail_ExposureCompensator {}
+
+	impl Detail_ExposureCompensator {
+		#[inline]
+		pub fn create_default(typ: i32) -> Result<core::Ptr<crate::stitching::Detail_ExposureCompensator>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_ExposureCompensator_createDefault_int(typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::stitching::Detail_ExposureCompensator>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_ExposureCompensator]
@@ -6291,43 +6342,12 @@ pub mod stitching {
 
 	}
 
-	/// Base class for all exposure compensators.
-	pub struct Detail_ExposureCompensator {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_ExposureCompensator }
-
-	impl Drop for Detail_ExposureCompensator {
+	impl std::fmt::Debug for Detail_ExposureCompensator {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_ExposureCompensator_delete(self.as_raw_mut_Detail_ExposureCompensator()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_ExposureCompensator")
+				.finish()
 		}
-	}
-
-	unsafe impl Send for Detail_ExposureCompensator {}
-
-	impl crate::stitching::Detail_ExposureCompensatorTraitConst for Detail_ExposureCompensator {
-		#[inline] fn as_raw_Detail_ExposureCompensator(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::Detail_ExposureCompensatorTrait for Detail_ExposureCompensator {
-		#[inline] fn as_raw_mut_Detail_ExposureCompensator(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_ExposureCompensator, crate::stitching::Detail_ExposureCompensatorTraitConst, as_raw_Detail_ExposureCompensator, crate::stitching::Detail_ExposureCompensatorTrait, as_raw_mut_Detail_ExposureCompensator }
-
-	impl Detail_ExposureCompensator {
-		#[inline]
-		pub fn create_default(typ: i32) -> Result<core::Ptr<crate::stitching::Detail_ExposureCompensator>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_ExposureCompensator_createDefault_int(typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::stitching::Detail_ExposureCompensator>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
 	}
 
 	boxed_cast_descendant! { Detail_ExposureCompensator, crate::stitching::Detail_BlocksChannelsCompensator, cv_detail_ExposureCompensator_to_Detail_BlocksChannelsCompensator }
@@ -6342,12 +6362,58 @@ pub mod stitching {
 
 	boxed_cast_descendant! { Detail_ExposureCompensator, crate::stitching::Detail_NoExposureCompensator, cv_detail_ExposureCompensator_to_Detail_NoExposureCompensator }
 
-	impl std::fmt::Debug for Detail_ExposureCompensator {
+	impl crate::stitching::Detail_ExposureCompensatorTraitConst for Detail_ExposureCompensator {
+		#[inline] fn as_raw_Detail_ExposureCompensator(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::Detail_ExposureCompensatorTrait for Detail_ExposureCompensator {
+		#[inline] fn as_raw_mut_Detail_ExposureCompensator(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_ExposureCompensator, crate::stitching::Detail_ExposureCompensatorTraitConst, as_raw_Detail_ExposureCompensator, crate::stitching::Detail_ExposureCompensatorTrait, as_raw_mut_Detail_ExposureCompensator }
+
+	/// Simple blender which mixes images at its borders.
+	pub struct Detail_FeatherBlender {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_FeatherBlender }
+
+	impl Drop for Detail_FeatherBlender {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_ExposureCompensator")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_FeatherBlender_delete(self.as_raw_mut_Detail_FeatherBlender()) };
 		}
+	}
+
+	unsafe impl Send for Detail_FeatherBlender {}
+
+	impl Detail_FeatherBlender {
+		/// ## C++ default parameters
+		/// * sharpness: 0.02f
+		#[inline]
+		pub fn new(sharpness: f32) -> Result<crate::stitching::Detail_FeatherBlender> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_FeatherBlender_FeatherBlender_float(sharpness, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_FeatherBlender::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * sharpness: 0.02f
+		#[inline]
+		pub fn new_def() -> Result<crate::stitching::Detail_FeatherBlender> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_FeatherBlender_FeatherBlender(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_FeatherBlender::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_FeatherBlender]
@@ -6422,21 +6488,15 @@ pub mod stitching {
 
 	}
 
-	/// Simple blender which mixes images at its borders.
-	pub struct Detail_FeatherBlender {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_FeatherBlender }
-
-	impl Drop for Detail_FeatherBlender {
+	impl std::fmt::Debug for Detail_FeatherBlender {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_FeatherBlender_delete(self.as_raw_mut_Detail_FeatherBlender()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_FeatherBlender")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for Detail_FeatherBlender {}
+	boxed_cast_base! { Detail_FeatherBlender, crate::stitching::Detail_Blender, cv_detail_FeatherBlender_to_Detail_Blender }
 
 	impl crate::stitching::Detail_BlenderTraitConst for Detail_FeatherBlender {
 		#[inline] fn as_raw_Detail_Blender(&self) -> *const c_void { self.as_raw() }
@@ -6458,43 +6518,21 @@ pub mod stitching {
 
 	boxed_ref! { Detail_FeatherBlender, crate::stitching::Detail_FeatherBlenderTraitConst, as_raw_Detail_FeatherBlender, crate::stitching::Detail_FeatherBlenderTrait, as_raw_mut_Detail_FeatherBlender }
 
-	impl Detail_FeatherBlender {
-		/// ## C++ default parameters
-		/// * sharpness: 0.02f
-		#[inline]
-		pub fn new(sharpness: f32) -> Result<crate::stitching::Detail_FeatherBlender> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_FeatherBlender_FeatherBlender_float(sharpness, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_FeatherBlender::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * sharpness: 0.02f
-		#[inline]
-		pub fn new_def() -> Result<crate::stitching::Detail_FeatherBlender> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_FeatherBlender_FeatherBlender(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_FeatherBlender::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// Feature matchers base class.
+	pub struct Detail_FeaturesMatcher {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { Detail_FeatherBlender, crate::stitching::Detail_Blender, cv_detail_FeatherBlender_to_Detail_Blender }
+	opencv_type_boxed! { Detail_FeaturesMatcher }
 
-	impl std::fmt::Debug for Detail_FeatherBlender {
+	impl Drop for Detail_FeaturesMatcher {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_FeatherBlender")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_FeaturesMatcher_delete(self.as_raw_mut_Detail_FeaturesMatcher()) };
 		}
 	}
+
+	unsafe impl Send for Detail_FeaturesMatcher {}
 
 	/// Constant methods for [crate::stitching::Detail_FeaturesMatcher]
 	pub trait Detail_FeaturesMatcherTraitConst {
@@ -6599,21 +6637,19 @@ pub mod stitching {
 
 	}
 
-	/// Feature matchers base class.
-	pub struct Detail_FeaturesMatcher {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_FeaturesMatcher }
-
-	impl Drop for Detail_FeaturesMatcher {
+	impl std::fmt::Debug for Detail_FeaturesMatcher {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_FeaturesMatcher_delete(self.as_raw_mut_Detail_FeaturesMatcher()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_FeaturesMatcher")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for Detail_FeaturesMatcher {}
+	boxed_cast_descendant! { Detail_FeaturesMatcher, crate::stitching::Detail_AffineBestOf2NearestMatcher, cv_detail_FeaturesMatcher_to_Detail_AffineBestOf2NearestMatcher }
+
+	boxed_cast_descendant! { Detail_FeaturesMatcher, crate::stitching::Detail_BestOf2NearestMatcher, cv_detail_FeaturesMatcher_to_Detail_BestOf2NearestMatcher }
+
+	boxed_cast_descendant! { Detail_FeaturesMatcher, crate::stitching::Detail_BestOf2NearestRangeMatcher, cv_detail_FeaturesMatcher_to_Detail_BestOf2NearestRangeMatcher }
 
 	impl crate::stitching::Detail_FeaturesMatcherTraitConst for Detail_FeaturesMatcher {
 		#[inline] fn as_raw_Detail_FeaturesMatcher(&self) -> *const c_void { self.as_raw() }
@@ -6625,21 +6661,30 @@ pub mod stitching {
 
 	boxed_ref! { Detail_FeaturesMatcher, crate::stitching::Detail_FeaturesMatcherTraitConst, as_raw_Detail_FeaturesMatcher, crate::stitching::Detail_FeaturesMatcherTrait, as_raw_mut_Detail_FeaturesMatcher }
 
-	impl Detail_FeaturesMatcher {
+	pub struct Detail_FisheyeProjector {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { Detail_FeaturesMatcher, crate::stitching::Detail_AffineBestOf2NearestMatcher, cv_detail_FeaturesMatcher_to_Detail_AffineBestOf2NearestMatcher }
+	opencv_type_boxed! { Detail_FisheyeProjector }
 
-	boxed_cast_descendant! { Detail_FeaturesMatcher, crate::stitching::Detail_BestOf2NearestMatcher, cv_detail_FeaturesMatcher_to_Detail_BestOf2NearestMatcher }
-
-	boxed_cast_descendant! { Detail_FeaturesMatcher, crate::stitching::Detail_BestOf2NearestRangeMatcher, cv_detail_FeaturesMatcher_to_Detail_BestOf2NearestRangeMatcher }
-
-	impl std::fmt::Debug for Detail_FeaturesMatcher {
+	impl Drop for Detail_FisheyeProjector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_FeaturesMatcher")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_FisheyeProjector_delete(self.as_raw_mut_Detail_FisheyeProjector()) };
 		}
+	}
+
+	unsafe impl Send for Detail_FisheyeProjector {}
+
+	impl Detail_FisheyeProjector {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::stitching::Detail_FisheyeProjector {
+			let ret = unsafe { sys::cv_detail_FisheyeProjector_defaultNew_const() };
+			let ret = unsafe { crate::stitching::Detail_FisheyeProjector::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_FisheyeProjector]
@@ -6672,20 +6717,29 @@ pub mod stitching {
 
 	}
 
-	pub struct Detail_FisheyeProjector {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_FisheyeProjector }
-
-	impl Drop for Detail_FisheyeProjector {
+	impl Default for Detail_FisheyeProjector {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_FisheyeProjector_delete(self.as_raw_mut_Detail_FisheyeProjector()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for Detail_FisheyeProjector {}
+	impl std::fmt::Debug for Detail_FisheyeProjector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_FisheyeProjector")
+				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
+				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
+				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
+				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
+				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
+				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Detail_FisheyeProjector, crate::stitching::Detail_ProjectorBase, cv_detail_FisheyeProjector_to_Detail_ProjectorBase }
 
 	impl crate::stitching::Detail_ProjectorBaseTraitConst for Detail_FisheyeProjector {
 		#[inline] fn as_raw_Detail_ProjectorBase(&self) -> *const c_void { self.as_raw() }
@@ -6707,51 +6761,6 @@ pub mod stitching {
 
 	boxed_ref! { Detail_FisheyeProjector, crate::stitching::Detail_FisheyeProjectorTraitConst, as_raw_Detail_FisheyeProjector, crate::stitching::Detail_FisheyeProjectorTrait, as_raw_mut_Detail_FisheyeProjector }
 
-	impl Detail_FisheyeProjector {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_detail_FisheyeProjector_defaultNew_const()) }
-		}
-
-	}
-
-	boxed_cast_base! { Detail_FisheyeProjector, crate::stitching::Detail_ProjectorBase, cv_detail_FisheyeProjector_to_Detail_ProjectorBase }
-
-	impl std::fmt::Debug for Detail_FisheyeProjector {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_FisheyeProjector")
-				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
-				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
-				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
-				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
-				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
-				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
-				.finish()
-		}
-	}
-
-	impl Default for Detail_FisheyeProjector {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
-	}
-
-	/// Constant methods for [crate::stitching::Detail_FisheyeWarper]
-	pub trait Detail_FisheyeWarperTraitConst {
-		fn as_raw_Detail_FisheyeWarper(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::stitching::Detail_FisheyeWarper]
-	pub trait Detail_FisheyeWarperTrait: crate::stitching::Detail_FisheyeWarperTraitConst {
-		fn as_raw_mut_Detail_FisheyeWarper(&mut self) -> *mut c_void;
-
-	}
-
 	pub struct Detail_FisheyeWarper {
 		ptr: *mut c_void,
 	}
@@ -6766,6 +6775,41 @@ pub mod stitching {
 	}
 
 	unsafe impl Send for Detail_FisheyeWarper {}
+
+	impl Detail_FisheyeWarper {
+		#[inline]
+		pub fn new(scale: f32) -> Result<crate::stitching::Detail_FisheyeWarper> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_FisheyeWarper_FisheyeWarper_float(scale, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_FisheyeWarper::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [crate::stitching::Detail_FisheyeWarper]
+	pub trait Detail_FisheyeWarperTraitConst {
+		fn as_raw_Detail_FisheyeWarper(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::stitching::Detail_FisheyeWarper]
+	pub trait Detail_FisheyeWarperTrait: crate::stitching::Detail_FisheyeWarperTraitConst {
+		fn as_raw_mut_Detail_FisheyeWarper(&mut self) -> *mut c_void;
+
+	}
+
+	impl std::fmt::Debug for Detail_FisheyeWarper {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_FisheyeWarper")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Detail_FisheyeWarper, crate::stitching::Detail_RotationWarper, cv_detail_FisheyeWarper_to_Detail_RotationWarper }
 
 	impl crate::stitching::Detail_RotationWarperTraitConst for Detail_FisheyeWarper {
 		#[inline] fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.as_raw() }
@@ -6787,27 +6831,44 @@ pub mod stitching {
 
 	boxed_ref! { Detail_FisheyeWarper, crate::stitching::Detail_FisheyeWarperTraitConst, as_raw_Detail_FisheyeWarper, crate::stitching::Detail_FisheyeWarperTrait, as_raw_mut_Detail_FisheyeWarper }
 
-	impl Detail_FisheyeWarper {
+	/// Exposure compensator which tries to remove exposure related artifacts by adjusting image
+	/// intensities, see [BL07](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_BL07) and [WJ10](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_WJ10) for details.
+	pub struct Detail_GainCompensator {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_GainCompensator }
+
+	impl Drop for Detail_GainCompensator {
 		#[inline]
-		pub fn new(scale: f32) -> Result<crate::stitching::Detail_FisheyeWarper> {
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_GainCompensator_delete(self.as_raw_mut_Detail_GainCompensator()) };
+		}
+	}
+
+	unsafe impl Send for Detail_GainCompensator {}
+
+	impl Detail_GainCompensator {
+		#[inline]
+		pub fn default() -> Result<crate::stitching::Detail_GainCompensator> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_FisheyeWarper_FisheyeWarper_float(scale, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_detail_GainCompensator_GainCompensator(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_FisheyeWarper::opencv_from_extern(ret) };
+			let ret = unsafe { crate::stitching::Detail_GainCompensator::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	boxed_cast_base! { Detail_FisheyeWarper, crate::stitching::Detail_RotationWarper, cv_detail_FisheyeWarper_to_Detail_RotationWarper }
-
-	impl std::fmt::Debug for Detail_FisheyeWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_FisheyeWarper")
-				.finish()
+		pub fn new(nr_feeds: i32) -> Result<crate::stitching::Detail_GainCompensator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_GainCompensator_GainCompensator_int(nr_feeds, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_GainCompensator::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_GainCompensator]
@@ -6924,22 +6985,15 @@ pub mod stitching {
 
 	}
 
-	/// Exposure compensator which tries to remove exposure related artifacts by adjusting image
-	/// intensities, see [BL07](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_BL07) and [WJ10](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_WJ10) for details.
-	pub struct Detail_GainCompensator {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_GainCompensator }
-
-	impl Drop for Detail_GainCompensator {
+	impl std::fmt::Debug for Detail_GainCompensator {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_GainCompensator_delete(self.as_raw_mut_Detail_GainCompensator()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_GainCompensator")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for Detail_GainCompensator {}
+	boxed_cast_base! { Detail_GainCompensator, crate::stitching::Detail_ExposureCompensator, cv_detail_GainCompensator_to_Detail_ExposureCompensator }
 
 	impl crate::stitching::Detail_ExposureCompensatorTraitConst for Detail_GainCompensator {
 		#[inline] fn as_raw_Detail_ExposureCompensator(&self) -> *const c_void { self.as_raw() }
@@ -6961,37 +7015,47 @@ pub mod stitching {
 
 	boxed_ref! { Detail_GainCompensator, crate::stitching::Detail_GainCompensatorTraitConst, as_raw_Detail_GainCompensator, crate::stitching::Detail_GainCompensatorTrait, as_raw_mut_Detail_GainCompensator }
 
-	impl Detail_GainCompensator {
-		#[inline]
-		pub fn default() -> Result<crate::stitching::Detail_GainCompensator> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_GainCompensator_GainCompensator(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_GainCompensator::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn new(nr_feeds: i32) -> Result<crate::stitching::Detail_GainCompensator> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_GainCompensator_GainCompensator_int(nr_feeds, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_GainCompensator::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	pub struct Detail_Graph {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { Detail_GainCompensator, crate::stitching::Detail_ExposureCompensator, cv_detail_GainCompensator_to_Detail_ExposureCompensator }
+	opencv_type_boxed! { Detail_Graph }
 
-	impl std::fmt::Debug for Detail_GainCompensator {
+	impl Drop for Detail_Graph {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_GainCompensator")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_Graph_delete(self.as_raw_mut_Detail_Graph()) };
 		}
+	}
+
+	unsafe impl Send for Detail_Graph {}
+
+	impl Detail_Graph {
+		/// ## C++ default parameters
+		/// * num_vertices: 0
+		#[inline]
+		pub fn new(num_vertices: i32) -> Result<crate::stitching::Detail_Graph> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_Graph_Graph_int(num_vertices, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_Graph::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * num_vertices: 0
+		#[inline]
+		pub fn new_def() -> Result<crate::stitching::Detail_Graph> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_Graph_Graph(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_Graph::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_Graph]
@@ -7033,20 +7097,13 @@ pub mod stitching {
 
 	}
 
-	pub struct Detail_Graph {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_Graph }
-
-	impl Drop for Detail_Graph {
+	impl std::fmt::Debug for Detail_Graph {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_Graph_delete(self.as_raw_mut_Detail_Graph()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_Graph")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for Detail_Graph {}
 
 	impl crate::stitching::Detail_GraphTraitConst for Detail_Graph {
 		#[inline] fn as_raw_Detail_Graph(&self) -> *const c_void { self.as_raw() }
@@ -7057,63 +7114,6 @@ pub mod stitching {
 	}
 
 	boxed_ref! { Detail_Graph, crate::stitching::Detail_GraphTraitConst, as_raw_Detail_Graph, crate::stitching::Detail_GraphTrait, as_raw_mut_Detail_Graph }
-
-	impl Detail_Graph {
-		/// ## C++ default parameters
-		/// * num_vertices: 0
-		#[inline]
-		pub fn new(num_vertices: i32) -> Result<crate::stitching::Detail_Graph> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_Graph_Graph_int(num_vertices, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_Graph::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * num_vertices: 0
-		#[inline]
-		pub fn new_def() -> Result<crate::stitching::Detail_Graph> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_Graph_Graph(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_Graph::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	impl std::fmt::Debug for Detail_Graph {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_Graph")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::stitching::Detail_GraphCutSeamFinder]
-	pub trait Detail_GraphCutSeamFinderTraitConst: crate::stitching::Detail_GraphCutSeamFinderBaseTraitConst + crate::stitching::Detail_SeamFinderTraitConst {
-		fn as_raw_Detail_GraphCutSeamFinder(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::stitching::Detail_GraphCutSeamFinder]
-	pub trait Detail_GraphCutSeamFinderTrait: crate::stitching::Detail_GraphCutSeamFinderBaseTrait + crate::stitching::Detail_GraphCutSeamFinderTraitConst + crate::stitching::Detail_SeamFinderTrait {
-		fn as_raw_mut_Detail_GraphCutSeamFinder(&mut self) -> *mut c_void;
-
-		#[inline]
-		fn find(&mut self, src: &core::Vector<core::UMat>, corners: &core::Vector<core::Point>, masks: &mut core::Vector<core::UMat>) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_GraphCutSeamFinder_find_const_vectorLUMatGR_const_vectorLPointGR_vectorLUMatGR(self.as_raw_mut_Detail_GraphCutSeamFinder(), src.as_raw_VectorOfUMat(), corners.as_raw_VectorOfPoint(), masks.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
 
 	/// Minimum graph cut-based seam estimator. See details in [V03](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_V03) .
 	pub struct Detail_GraphCutSeamFinder {
@@ -7130,36 +7130,6 @@ pub mod stitching {
 	}
 
 	unsafe impl Send for Detail_GraphCutSeamFinder {}
-
-	impl crate::stitching::Detail_GraphCutSeamFinderBaseTraitConst for Detail_GraphCutSeamFinder {
-		#[inline] fn as_raw_Detail_GraphCutSeamFinderBase(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::Detail_GraphCutSeamFinderBaseTrait for Detail_GraphCutSeamFinder {
-		#[inline] fn as_raw_mut_Detail_GraphCutSeamFinderBase(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_GraphCutSeamFinder, crate::stitching::Detail_GraphCutSeamFinderBaseTraitConst, as_raw_Detail_GraphCutSeamFinderBase, crate::stitching::Detail_GraphCutSeamFinderBaseTrait, as_raw_mut_Detail_GraphCutSeamFinderBase }
-
-	impl crate::stitching::Detail_SeamFinderTraitConst for Detail_GraphCutSeamFinder {
-		#[inline] fn as_raw_Detail_SeamFinder(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::Detail_SeamFinderTrait for Detail_GraphCutSeamFinder {
-		#[inline] fn as_raw_mut_Detail_SeamFinder(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_GraphCutSeamFinder, crate::stitching::Detail_SeamFinderTraitConst, as_raw_Detail_SeamFinder, crate::stitching::Detail_SeamFinderTrait, as_raw_mut_Detail_SeamFinder }
-
-	impl crate::stitching::Detail_GraphCutSeamFinderTraitConst for Detail_GraphCutSeamFinder {
-		#[inline] fn as_raw_Detail_GraphCutSeamFinder(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::Detail_GraphCutSeamFinderTrait for Detail_GraphCutSeamFinder {
-		#[inline] fn as_raw_mut_Detail_GraphCutSeamFinder(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_GraphCutSeamFinder, crate::stitching::Detail_GraphCutSeamFinderTraitConst, as_raw_Detail_GraphCutSeamFinder, crate::stitching::Detail_GraphCutSeamFinderTrait, as_raw_mut_Detail_GraphCutSeamFinder }
 
 	impl Detail_GraphCutSeamFinder {
 		/// ## C++ default parameters
@@ -7222,9 +7192,26 @@ pub mod stitching {
 
 	}
 
-	boxed_cast_base! { Detail_GraphCutSeamFinder, crate::stitching::Detail_GraphCutSeamFinderBase, cv_detail_GraphCutSeamFinder_to_Detail_GraphCutSeamFinderBase }
+	/// Constant methods for [crate::stitching::Detail_GraphCutSeamFinder]
+	pub trait Detail_GraphCutSeamFinderTraitConst: crate::stitching::Detail_GraphCutSeamFinderBaseTraitConst + crate::stitching::Detail_SeamFinderTraitConst {
+		fn as_raw_Detail_GraphCutSeamFinder(&self) -> *const c_void;
 
-	boxed_cast_base! { Detail_GraphCutSeamFinder, crate::stitching::Detail_SeamFinder, cv_detail_GraphCutSeamFinder_to_Detail_SeamFinder }
+	}
+
+	/// Mutable methods for [crate::stitching::Detail_GraphCutSeamFinder]
+	pub trait Detail_GraphCutSeamFinderTrait: crate::stitching::Detail_GraphCutSeamFinderBaseTrait + crate::stitching::Detail_GraphCutSeamFinderTraitConst + crate::stitching::Detail_SeamFinderTrait {
+		fn as_raw_mut_Detail_GraphCutSeamFinder(&mut self) -> *mut c_void;
+
+		#[inline]
+		fn find(&mut self, src: &core::Vector<core::UMat>, corners: &core::Vector<core::Point>, masks: &mut core::Vector<core::UMat>) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_GraphCutSeamFinder_find_const_vectorLUMatGR_const_vectorLPointGR_vectorLUMatGR(self.as_raw_mut_Detail_GraphCutSeamFinder(), src.as_raw_VectorOfUMat(), corners.as_raw_VectorOfPoint(), masks.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
 
 	impl std::fmt::Debug for Detail_GraphCutSeamFinder {
 		#[inline]
@@ -7234,17 +7221,39 @@ pub mod stitching {
 		}
 	}
 
-	/// Constant methods for [crate::stitching::Detail_GraphCutSeamFinderBase]
-	pub trait Detail_GraphCutSeamFinderBaseTraitConst {
-		fn as_raw_Detail_GraphCutSeamFinderBase(&self) -> *const c_void;
+	boxed_cast_base! { Detail_GraphCutSeamFinder, crate::stitching::Detail_GraphCutSeamFinderBase, cv_detail_GraphCutSeamFinder_to_Detail_GraphCutSeamFinderBase }
 
+	boxed_cast_base! { Detail_GraphCutSeamFinder, crate::stitching::Detail_SeamFinder, cv_detail_GraphCutSeamFinder_to_Detail_SeamFinder }
+
+	impl crate::stitching::Detail_GraphCutSeamFinderBaseTraitConst for Detail_GraphCutSeamFinder {
+		#[inline] fn as_raw_Detail_GraphCutSeamFinderBase(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [crate::stitching::Detail_GraphCutSeamFinderBase]
-	pub trait Detail_GraphCutSeamFinderBaseTrait: crate::stitching::Detail_GraphCutSeamFinderBaseTraitConst {
-		fn as_raw_mut_Detail_GraphCutSeamFinderBase(&mut self) -> *mut c_void;
-
+	impl crate::stitching::Detail_GraphCutSeamFinderBaseTrait for Detail_GraphCutSeamFinder {
+		#[inline] fn as_raw_mut_Detail_GraphCutSeamFinderBase(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { Detail_GraphCutSeamFinder, crate::stitching::Detail_GraphCutSeamFinderBaseTraitConst, as_raw_Detail_GraphCutSeamFinderBase, crate::stitching::Detail_GraphCutSeamFinderBaseTrait, as_raw_mut_Detail_GraphCutSeamFinderBase }
+
+	impl crate::stitching::Detail_SeamFinderTraitConst for Detail_GraphCutSeamFinder {
+		#[inline] fn as_raw_Detail_SeamFinder(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::Detail_SeamFinderTrait for Detail_GraphCutSeamFinder {
+		#[inline] fn as_raw_mut_Detail_SeamFinder(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_GraphCutSeamFinder, crate::stitching::Detail_SeamFinderTraitConst, as_raw_Detail_SeamFinder, crate::stitching::Detail_SeamFinderTrait, as_raw_mut_Detail_SeamFinder }
+
+	impl crate::stitching::Detail_GraphCutSeamFinderTraitConst for Detail_GraphCutSeamFinder {
+		#[inline] fn as_raw_Detail_GraphCutSeamFinder(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::Detail_GraphCutSeamFinderTrait for Detail_GraphCutSeamFinder {
+		#[inline] fn as_raw_mut_Detail_GraphCutSeamFinder(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_GraphCutSeamFinder, crate::stitching::Detail_GraphCutSeamFinderTraitConst, as_raw_Detail_GraphCutSeamFinder, crate::stitching::Detail_GraphCutSeamFinderTrait, as_raw_mut_Detail_GraphCutSeamFinder }
 
 	/// Base class for all minimum graph-cut-based seam estimators.
 	pub struct Detail_GraphCutSeamFinderBase {
@@ -7262,23 +7271,35 @@ pub mod stitching {
 
 	unsafe impl Send for Detail_GraphCutSeamFinderBase {}
 
-	impl crate::stitching::Detail_GraphCutSeamFinderBaseTraitConst for Detail_GraphCutSeamFinderBase {
-		#[inline] fn as_raw_Detail_GraphCutSeamFinderBase(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::Detail_GraphCutSeamFinderBaseTrait for Detail_GraphCutSeamFinderBase {
-		#[inline] fn as_raw_mut_Detail_GraphCutSeamFinderBase(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_GraphCutSeamFinderBase, crate::stitching::Detail_GraphCutSeamFinderBaseTraitConst, as_raw_Detail_GraphCutSeamFinderBase, crate::stitching::Detail_GraphCutSeamFinderBaseTrait, as_raw_mut_Detail_GraphCutSeamFinderBase }
-
 	impl Detail_GraphCutSeamFinderBase {
 		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_detail_GraphCutSeamFinderBase_defaultNew_const()) }
+		pub fn default() -> crate::stitching::Detail_GraphCutSeamFinderBase {
+			let ret = unsafe { sys::cv_detail_GraphCutSeamFinderBase_defaultNew_const() };
+			let ret = unsafe { crate::stitching::Detail_GraphCutSeamFinderBase::opencv_from_extern(ret) };
+			ret
 		}
 
+	}
+
+	/// Constant methods for [crate::stitching::Detail_GraphCutSeamFinderBase]
+	pub trait Detail_GraphCutSeamFinderBaseTraitConst {
+		fn as_raw_Detail_GraphCutSeamFinderBase(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::stitching::Detail_GraphCutSeamFinderBase]
+	pub trait Detail_GraphCutSeamFinderBaseTrait: crate::stitching::Detail_GraphCutSeamFinderBaseTraitConst {
+		fn as_raw_mut_Detail_GraphCutSeamFinderBase(&mut self) -> *mut c_void;
+
+	}
+
+	impl Default for Detail_GraphCutSeamFinderBase {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
+		}
 	}
 
 	impl std::fmt::Debug for Detail_GraphCutSeamFinderBase {
@@ -7289,12 +7310,61 @@ pub mod stitching {
 		}
 	}
 
-	impl Default for Detail_GraphCutSeamFinderBase {
+	impl crate::stitching::Detail_GraphCutSeamFinderBaseTraitConst for Detail_GraphCutSeamFinderBase {
+		#[inline] fn as_raw_Detail_GraphCutSeamFinderBase(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::Detail_GraphCutSeamFinderBaseTrait for Detail_GraphCutSeamFinderBase {
+		#[inline] fn as_raw_mut_Detail_GraphCutSeamFinderBase(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_GraphCutSeamFinderBase, crate::stitching::Detail_GraphCutSeamFinderBaseTraitConst, as_raw_Detail_GraphCutSeamFinderBase, crate::stitching::Detail_GraphCutSeamFinderBaseTrait, as_raw_mut_Detail_GraphCutSeamFinderBase }
+
+	pub struct Detail_GraphCutSeamFinderGpu {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_GraphCutSeamFinderGpu }
+
+	impl Drop for Detail_GraphCutSeamFinderGpu {
 		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_GraphCutSeamFinderGpu_delete(self.as_raw_mut_Detail_GraphCutSeamFinderGpu()) };
 		}
+	}
+
+	unsafe impl Send for Detail_GraphCutSeamFinderGpu {}
+
+	impl Detail_GraphCutSeamFinderGpu {
+		/// ## C++ default parameters
+		/// * cost_type: COST_COLOR_GRAD
+		/// * terminal_cost: 10000.f
+		/// * bad_region_penalty: 1000.f
+		#[inline]
+		pub fn new(cost_type: i32, terminal_cost: f32, bad_region_penalty: f32) -> Result<crate::stitching::Detail_GraphCutSeamFinderGpu> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_GraphCutSeamFinderGpu_GraphCutSeamFinderGpu_int_float_float(cost_type, terminal_cost, bad_region_penalty, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_GraphCutSeamFinderGpu::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * cost_type: COST_COLOR_GRAD
+		/// * terminal_cost: 10000.f
+		/// * bad_region_penalty: 1000.f
+		#[inline]
+		pub fn new_def() -> Result<crate::stitching::Detail_GraphCutSeamFinderGpu> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_GraphCutSeamFinderGpu_GraphCutSeamFinderGpu(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_GraphCutSeamFinderGpu::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_GraphCutSeamFinderGpu]
@@ -7327,20 +7397,19 @@ pub mod stitching {
 
 	}
 
-	pub struct Detail_GraphCutSeamFinderGpu {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_GraphCutSeamFinderGpu }
-
-	impl Drop for Detail_GraphCutSeamFinderGpu {
+	impl std::fmt::Debug for Detail_GraphCutSeamFinderGpu {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_GraphCutSeamFinderGpu_delete(self.as_raw_mut_Detail_GraphCutSeamFinderGpu()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_GraphCutSeamFinderGpu")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for Detail_GraphCutSeamFinderGpu {}
+	boxed_cast_base! { Detail_GraphCutSeamFinderGpu, crate::stitching::Detail_GraphCutSeamFinderBase, cv_detail_GraphCutSeamFinderGpu_to_Detail_GraphCutSeamFinderBase }
+
+	boxed_cast_base! { Detail_GraphCutSeamFinderGpu, crate::stitching::Detail_PairwiseSeamFinder, cv_detail_GraphCutSeamFinderGpu_to_Detail_PairwiseSeamFinder }
+
+	boxed_cast_base! { Detail_GraphCutSeamFinderGpu, crate::stitching::Detail_SeamFinder, cv_detail_GraphCutSeamFinderGpu_to_Detail_SeamFinder }
 
 	impl crate::stitching::Detail_GraphCutSeamFinderBaseTraitConst for Detail_GraphCutSeamFinderGpu {
 		#[inline] fn as_raw_Detail_GraphCutSeamFinderBase(&self) -> *const c_void { self.as_raw() }
@@ -7382,50 +7451,32 @@ pub mod stitching {
 
 	boxed_ref! { Detail_GraphCutSeamFinderGpu, crate::stitching::Detail_GraphCutSeamFinderGpuTraitConst, as_raw_Detail_GraphCutSeamFinderGpu, crate::stitching::Detail_GraphCutSeamFinderGpuTrait, as_raw_mut_Detail_GraphCutSeamFinderGpu }
 
-	impl Detail_GraphCutSeamFinderGpu {
-		/// ## C++ default parameters
-		/// * cost_type: COST_COLOR_GRAD
-		/// * terminal_cost: 10000.f
-		/// * bad_region_penalty: 1000.f
-		#[inline]
-		pub fn new(cost_type: i32, terminal_cost: f32, bad_region_penalty: f32) -> Result<crate::stitching::Detail_GraphCutSeamFinderGpu> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_GraphCutSeamFinderGpu_GraphCutSeamFinderGpu_int_float_float(cost_type, terminal_cost, bad_region_penalty, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_GraphCutSeamFinderGpu::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * cost_type: COST_COLOR_GRAD
-		/// * terminal_cost: 10000.f
-		/// * bad_region_penalty: 1000.f
-		#[inline]
-		pub fn new_def() -> Result<crate::stitching::Detail_GraphCutSeamFinderGpu> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_GraphCutSeamFinderGpu_GraphCutSeamFinderGpu(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_GraphCutSeamFinderGpu::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	pub struct Detail_GraphEdge {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { Detail_GraphCutSeamFinderGpu, crate::stitching::Detail_GraphCutSeamFinderBase, cv_detail_GraphCutSeamFinderGpu_to_Detail_GraphCutSeamFinderBase }
+	opencv_type_boxed! { Detail_GraphEdge }
 
-	boxed_cast_base! { Detail_GraphCutSeamFinderGpu, crate::stitching::Detail_PairwiseSeamFinder, cv_detail_GraphCutSeamFinderGpu_to_Detail_PairwiseSeamFinder }
-
-	boxed_cast_base! { Detail_GraphCutSeamFinderGpu, crate::stitching::Detail_SeamFinder, cv_detail_GraphCutSeamFinderGpu_to_Detail_SeamFinder }
-
-	impl std::fmt::Debug for Detail_GraphCutSeamFinderGpu {
+	impl Drop for Detail_GraphEdge {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_GraphCutSeamFinderGpu")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_GraphEdge_delete(self.as_raw_mut_Detail_GraphEdge()) };
 		}
+	}
+
+	unsafe impl Send for Detail_GraphEdge {}
+
+	impl Detail_GraphEdge {
+		#[inline]
+		pub fn new(from: i32, to: i32, weight: f32) -> Result<crate::stitching::Detail_GraphEdge> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_GraphEdge_GraphEdge_int_int_float(from, to, weight, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_GraphEdge::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_GraphEdge]
@@ -7494,44 +7545,6 @@ pub mod stitching {
 
 	}
 
-	pub struct Detail_GraphEdge {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_GraphEdge }
-
-	impl Drop for Detail_GraphEdge {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_GraphEdge_delete(self.as_raw_mut_Detail_GraphEdge()) };
-		}
-	}
-
-	unsafe impl Send for Detail_GraphEdge {}
-
-	impl crate::stitching::Detail_GraphEdgeTraitConst for Detail_GraphEdge {
-		#[inline] fn as_raw_Detail_GraphEdge(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::Detail_GraphEdgeTrait for Detail_GraphEdge {
-		#[inline] fn as_raw_mut_Detail_GraphEdge(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_GraphEdge, crate::stitching::Detail_GraphEdgeTraitConst, as_raw_Detail_GraphEdge, crate::stitching::Detail_GraphEdgeTrait, as_raw_mut_Detail_GraphEdge }
-
-	impl Detail_GraphEdge {
-		#[inline]
-		pub fn new(from: i32, to: i32, weight: f32) -> Result<crate::stitching::Detail_GraphEdge> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_GraphEdge_GraphEdge_int_int_float(from, to, weight, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_GraphEdge::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
 	impl std::fmt::Debug for Detail_GraphEdge {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -7543,17 +7556,15 @@ pub mod stitching {
 		}
 	}
 
-	/// Constant methods for [crate::stitching::Detail_HomographyBasedEstimator]
-	pub trait Detail_HomographyBasedEstimatorTraitConst: crate::stitching::Detail_EstimatorTraitConst {
-		fn as_raw_Detail_HomographyBasedEstimator(&self) -> *const c_void;
-
+	impl crate::stitching::Detail_GraphEdgeTraitConst for Detail_GraphEdge {
+		#[inline] fn as_raw_Detail_GraphEdge(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [crate::stitching::Detail_HomographyBasedEstimator]
-	pub trait Detail_HomographyBasedEstimatorTrait: crate::stitching::Detail_EstimatorTrait + crate::stitching::Detail_HomographyBasedEstimatorTraitConst {
-		fn as_raw_mut_Detail_HomographyBasedEstimator(&mut self) -> *mut c_void;
-
+	impl crate::stitching::Detail_GraphEdgeTrait for Detail_GraphEdge {
+		#[inline] fn as_raw_mut_Detail_GraphEdge(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { Detail_GraphEdge, crate::stitching::Detail_GraphEdgeTraitConst, as_raw_Detail_GraphEdge, crate::stitching::Detail_GraphEdgeTrait, as_raw_mut_Detail_GraphEdge }
 
 	/// Homography based rotation estimator.
 	pub struct Detail_HomographyBasedEstimator {
@@ -7570,26 +7581,6 @@ pub mod stitching {
 	}
 
 	unsafe impl Send for Detail_HomographyBasedEstimator {}
-
-	impl crate::stitching::Detail_EstimatorTraitConst for Detail_HomographyBasedEstimator {
-		#[inline] fn as_raw_Detail_Estimator(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::Detail_EstimatorTrait for Detail_HomographyBasedEstimator {
-		#[inline] fn as_raw_mut_Detail_Estimator(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_HomographyBasedEstimator, crate::stitching::Detail_EstimatorTraitConst, as_raw_Detail_Estimator, crate::stitching::Detail_EstimatorTrait, as_raw_mut_Detail_Estimator }
-
-	impl crate::stitching::Detail_HomographyBasedEstimatorTraitConst for Detail_HomographyBasedEstimator {
-		#[inline] fn as_raw_Detail_HomographyBasedEstimator(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::Detail_HomographyBasedEstimatorTrait for Detail_HomographyBasedEstimator {
-		#[inline] fn as_raw_mut_Detail_HomographyBasedEstimator(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_HomographyBasedEstimator, crate::stitching::Detail_HomographyBasedEstimatorTraitConst, as_raw_Detail_HomographyBasedEstimator, crate::stitching::Detail_HomographyBasedEstimatorTrait, as_raw_mut_Detail_HomographyBasedEstimator }
 
 	impl Detail_HomographyBasedEstimator {
 		/// ## C++ default parameters
@@ -7619,7 +7610,17 @@ pub mod stitching {
 
 	}
 
-	boxed_cast_base! { Detail_HomographyBasedEstimator, crate::stitching::Detail_Estimator, cv_detail_HomographyBasedEstimator_to_Detail_Estimator }
+	/// Constant methods for [crate::stitching::Detail_HomographyBasedEstimator]
+	pub trait Detail_HomographyBasedEstimatorTraitConst: crate::stitching::Detail_EstimatorTraitConst {
+		fn as_raw_Detail_HomographyBasedEstimator(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::stitching::Detail_HomographyBasedEstimator]
+	pub trait Detail_HomographyBasedEstimatorTrait: crate::stitching::Detail_EstimatorTrait + crate::stitching::Detail_HomographyBasedEstimatorTraitConst {
+		fn as_raw_mut_Detail_HomographyBasedEstimator(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for Detail_HomographyBasedEstimator {
 		#[inline]
@@ -7627,6 +7628,55 @@ pub mod stitching {
 			f.debug_struct("Detail_HomographyBasedEstimator")
 				.finish()
 		}
+	}
+
+	boxed_cast_base! { Detail_HomographyBasedEstimator, crate::stitching::Detail_Estimator, cv_detail_HomographyBasedEstimator_to_Detail_Estimator }
+
+	impl crate::stitching::Detail_EstimatorTraitConst for Detail_HomographyBasedEstimator {
+		#[inline] fn as_raw_Detail_Estimator(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::Detail_EstimatorTrait for Detail_HomographyBasedEstimator {
+		#[inline] fn as_raw_mut_Detail_Estimator(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_HomographyBasedEstimator, crate::stitching::Detail_EstimatorTraitConst, as_raw_Detail_Estimator, crate::stitching::Detail_EstimatorTrait, as_raw_mut_Detail_Estimator }
+
+	impl crate::stitching::Detail_HomographyBasedEstimatorTraitConst for Detail_HomographyBasedEstimator {
+		#[inline] fn as_raw_Detail_HomographyBasedEstimator(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::Detail_HomographyBasedEstimatorTrait for Detail_HomographyBasedEstimator {
+		#[inline] fn as_raw_mut_Detail_HomographyBasedEstimator(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_HomographyBasedEstimator, crate::stitching::Detail_HomographyBasedEstimatorTraitConst, as_raw_Detail_HomographyBasedEstimator, crate::stitching::Detail_HomographyBasedEstimatorTrait, as_raw_mut_Detail_HomographyBasedEstimator }
+
+	/// Structure containing image keypoints and descriptors.
+	pub struct Detail_ImageFeatures {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_ImageFeatures }
+
+	impl Drop for Detail_ImageFeatures {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_ImageFeatures_delete(self.as_raw_mut_Detail_ImageFeatures()) };
+		}
+	}
+
+	unsafe impl Send for Detail_ImageFeatures {}
+
+	impl Detail_ImageFeatures {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::stitching::Detail_ImageFeatures {
+			let ret = unsafe { sys::cv_detail_ImageFeatures_defaultNew_const() };
+			let ret = unsafe { crate::stitching::Detail_ImageFeatures::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_ImageFeatures]
@@ -7703,39 +7753,12 @@ pub mod stitching {
 
 	}
 
-	/// Structure containing image keypoints and descriptors.
-	pub struct Detail_ImageFeatures {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_ImageFeatures }
-
-	impl Drop for Detail_ImageFeatures {
+	impl Default for Detail_ImageFeatures {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_ImageFeatures_delete(self.as_raw_mut_Detail_ImageFeatures()) };
-		}
-	}
-
-	unsafe impl Send for Detail_ImageFeatures {}
-
-	impl crate::stitching::Detail_ImageFeaturesTraitConst for Detail_ImageFeatures {
-		#[inline] fn as_raw_Detail_ImageFeatures(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::Detail_ImageFeaturesTrait for Detail_ImageFeatures {
-		#[inline] fn as_raw_mut_Detail_ImageFeatures(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_ImageFeatures, crate::stitching::Detail_ImageFeaturesTraitConst, as_raw_Detail_ImageFeatures, crate::stitching::Detail_ImageFeaturesTrait, as_raw_mut_Detail_ImageFeatures }
-
-	impl Detail_ImageFeatures {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
+		/// Forwards to infallible Self::default()
 		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_detail_ImageFeatures_defaultNew_const()) }
+			Self::default()
 		}
-
 	}
 
 	impl Clone for Detail_ImageFeatures {
@@ -7757,12 +7780,58 @@ pub mod stitching {
 		}
 	}
 
-	impl Default for Detail_ImageFeatures {
+	impl crate::stitching::Detail_ImageFeaturesTraitConst for Detail_ImageFeatures {
+		#[inline] fn as_raw_Detail_ImageFeatures(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::Detail_ImageFeaturesTrait for Detail_ImageFeatures {
+		#[inline] fn as_raw_mut_Detail_ImageFeatures(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_ImageFeatures, crate::stitching::Detail_ImageFeaturesTraitConst, as_raw_Detail_ImageFeatures, crate::stitching::Detail_ImageFeaturesTrait, as_raw_mut_Detail_ImageFeatures }
+
+	/// Structure containing information about matches between two images.
+	///
+	/// It's assumed that there is a transformation between those images. Transformation may be
+	/// homography or affine transformation based on selected matcher.
+	/// ## See also
+	/// detail::FeaturesMatcher
+	pub struct Detail_MatchesInfo {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_MatchesInfo }
+
+	impl Drop for Detail_MatchesInfo {
 		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_MatchesInfo_delete(self.as_raw_mut_Detail_MatchesInfo()) };
 		}
+	}
+
+	unsafe impl Send for Detail_MatchesInfo {}
+
+	impl Detail_MatchesInfo {
+		#[inline]
+		pub fn default() -> Result<crate::stitching::Detail_MatchesInfo> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_MatchesInfo_MatchesInfo(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_MatchesInfo::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn copy(other: &impl crate::stitching::Detail_MatchesInfoTraitConst) -> Result<crate::stitching::Detail_MatchesInfo> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_MatchesInfo_MatchesInfo_const_MatchesInfoR(other.as_raw_Detail_MatchesInfo(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_MatchesInfo::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_MatchesInfo]
@@ -7903,60 +7972,6 @@ pub mod stitching {
 
 	}
 
-	/// Structure containing information about matches between two images.
-	///
-	/// It's assumed that there is a transformation between those images. Transformation may be
-	/// homography or affine transformation based on selected matcher.
-	/// ## See also
-	/// detail::FeaturesMatcher
-	pub struct Detail_MatchesInfo {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_MatchesInfo }
-
-	impl Drop for Detail_MatchesInfo {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_MatchesInfo_delete(self.as_raw_mut_Detail_MatchesInfo()) };
-		}
-	}
-
-	unsafe impl Send for Detail_MatchesInfo {}
-
-	impl crate::stitching::Detail_MatchesInfoTraitConst for Detail_MatchesInfo {
-		#[inline] fn as_raw_Detail_MatchesInfo(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::Detail_MatchesInfoTrait for Detail_MatchesInfo {
-		#[inline] fn as_raw_mut_Detail_MatchesInfo(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_MatchesInfo, crate::stitching::Detail_MatchesInfoTraitConst, as_raw_Detail_MatchesInfo, crate::stitching::Detail_MatchesInfoTrait, as_raw_mut_Detail_MatchesInfo }
-
-	impl Detail_MatchesInfo {
-		#[inline]
-		pub fn default() -> Result<crate::stitching::Detail_MatchesInfo> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_MatchesInfo_MatchesInfo(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_MatchesInfo::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn copy(other: &impl crate::stitching::Detail_MatchesInfoTraitConst) -> Result<crate::stitching::Detail_MatchesInfo> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_MatchesInfo_MatchesInfo_const_MatchesInfoR(other.as_raw_Detail_MatchesInfo(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_MatchesInfo::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
 	impl Clone for Detail_MatchesInfo {
 		#[inline]
 		fn clone(&self) -> Self {
@@ -7977,6 +7992,42 @@ pub mod stitching {
 				.field("confidence", &crate::stitching::Detail_MatchesInfoTraitConst::confidence(self))
 				.finish()
 		}
+	}
+
+	impl crate::stitching::Detail_MatchesInfoTraitConst for Detail_MatchesInfo {
+		#[inline] fn as_raw_Detail_MatchesInfo(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::Detail_MatchesInfoTrait for Detail_MatchesInfo {
+		#[inline] fn as_raw_mut_Detail_MatchesInfo(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_MatchesInfo, crate::stitching::Detail_MatchesInfoTraitConst, as_raw_Detail_MatchesInfo, crate::stitching::Detail_MatchesInfoTrait, as_raw_mut_Detail_MatchesInfo }
+
+	pub struct Detail_MercatorProjector {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_MercatorProjector }
+
+	impl Drop for Detail_MercatorProjector {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_MercatorProjector_delete(self.as_raw_mut_Detail_MercatorProjector()) };
+		}
+	}
+
+	unsafe impl Send for Detail_MercatorProjector {}
+
+	impl Detail_MercatorProjector {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::stitching::Detail_MercatorProjector {
+			let ret = unsafe { sys::cv_detail_MercatorProjector_defaultNew_const() };
+			let ret = unsafe { crate::stitching::Detail_MercatorProjector::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_MercatorProjector]
@@ -8009,20 +8060,29 @@ pub mod stitching {
 
 	}
 
-	pub struct Detail_MercatorProjector {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_MercatorProjector }
-
-	impl Drop for Detail_MercatorProjector {
+	impl Default for Detail_MercatorProjector {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_MercatorProjector_delete(self.as_raw_mut_Detail_MercatorProjector()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for Detail_MercatorProjector {}
+	impl std::fmt::Debug for Detail_MercatorProjector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_MercatorProjector")
+				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
+				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
+				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
+				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
+				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
+				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Detail_MercatorProjector, crate::stitching::Detail_ProjectorBase, cv_detail_MercatorProjector_to_Detail_ProjectorBase }
 
 	impl crate::stitching::Detail_ProjectorBaseTraitConst for Detail_MercatorProjector {
 		#[inline] fn as_raw_Detail_ProjectorBase(&self) -> *const c_void { self.as_raw() }
@@ -8044,51 +8104,6 @@ pub mod stitching {
 
 	boxed_ref! { Detail_MercatorProjector, crate::stitching::Detail_MercatorProjectorTraitConst, as_raw_Detail_MercatorProjector, crate::stitching::Detail_MercatorProjectorTrait, as_raw_mut_Detail_MercatorProjector }
 
-	impl Detail_MercatorProjector {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_detail_MercatorProjector_defaultNew_const()) }
-		}
-
-	}
-
-	boxed_cast_base! { Detail_MercatorProjector, crate::stitching::Detail_ProjectorBase, cv_detail_MercatorProjector_to_Detail_ProjectorBase }
-
-	impl std::fmt::Debug for Detail_MercatorProjector {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_MercatorProjector")
-				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
-				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
-				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
-				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
-				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
-				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
-				.finish()
-		}
-	}
-
-	impl Default for Detail_MercatorProjector {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
-	}
-
-	/// Constant methods for [crate::stitching::Detail_MercatorWarper]
-	pub trait Detail_MercatorWarperTraitConst {
-		fn as_raw_Detail_MercatorWarper(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::stitching::Detail_MercatorWarper]
-	pub trait Detail_MercatorWarperTrait: crate::stitching::Detail_MercatorWarperTraitConst {
-		fn as_raw_mut_Detail_MercatorWarper(&mut self) -> *mut c_void;
-
-	}
-
 	pub struct Detail_MercatorWarper {
 		ptr: *mut c_void,
 	}
@@ -8103,6 +8118,41 @@ pub mod stitching {
 	}
 
 	unsafe impl Send for Detail_MercatorWarper {}
+
+	impl Detail_MercatorWarper {
+		#[inline]
+		pub fn new(scale: f32) -> Result<crate::stitching::Detail_MercatorWarper> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_MercatorWarper_MercatorWarper_float(scale, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_MercatorWarper::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [crate::stitching::Detail_MercatorWarper]
+	pub trait Detail_MercatorWarperTraitConst {
+		fn as_raw_Detail_MercatorWarper(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::stitching::Detail_MercatorWarper]
+	pub trait Detail_MercatorWarperTrait: crate::stitching::Detail_MercatorWarperTraitConst {
+		fn as_raw_mut_Detail_MercatorWarper(&mut self) -> *mut c_void;
+
+	}
+
+	impl std::fmt::Debug for Detail_MercatorWarper {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_MercatorWarper")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Detail_MercatorWarper, crate::stitching::Detail_RotationWarper, cv_detail_MercatorWarper_to_Detail_RotationWarper }
 
 	impl crate::stitching::Detail_RotationWarperTraitConst for Detail_MercatorWarper {
 		#[inline] fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.as_raw() }
@@ -8124,27 +8174,52 @@ pub mod stitching {
 
 	boxed_ref! { Detail_MercatorWarper, crate::stitching::Detail_MercatorWarperTraitConst, as_raw_Detail_MercatorWarper, crate::stitching::Detail_MercatorWarperTrait, as_raw_mut_Detail_MercatorWarper }
 
-	impl Detail_MercatorWarper {
+	/// Blender which uses multi-band blending algorithm (see [BA83](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_BA83)).
+	pub struct Detail_MultiBandBlender {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_MultiBandBlender }
+
+	impl Drop for Detail_MultiBandBlender {
 		#[inline]
-		pub fn new(scale: f32) -> Result<crate::stitching::Detail_MercatorWarper> {
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_MultiBandBlender_delete(self.as_raw_mut_Detail_MultiBandBlender()) };
+		}
+	}
+
+	unsafe impl Send for Detail_MultiBandBlender {}
+
+	impl Detail_MultiBandBlender {
+		/// ## C++ default parameters
+		/// * try_gpu: false
+		/// * num_bands: 5
+		/// * weight_type: CV_32F
+		#[inline]
+		pub fn new(try_gpu: i32, num_bands: i32, weight_type: i32) -> Result<crate::stitching::Detail_MultiBandBlender> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_MercatorWarper_MercatorWarper_float(scale, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_detail_MultiBandBlender_MultiBandBlender_int_int_int(try_gpu, num_bands, weight_type, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_MercatorWarper::opencv_from_extern(ret) };
+			let ret = unsafe { crate::stitching::Detail_MultiBandBlender::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	boxed_cast_base! { Detail_MercatorWarper, crate::stitching::Detail_RotationWarper, cv_detail_MercatorWarper_to_Detail_RotationWarper }
-
-	impl std::fmt::Debug for Detail_MercatorWarper {
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * try_gpu: false
+		/// * num_bands: 5
+		/// * weight_type: CV_32F
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_MercatorWarper")
-				.finish()
+		pub fn new_def() -> Result<crate::stitching::Detail_MultiBandBlender> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_MultiBandBlender_MultiBandBlender(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_MultiBandBlender::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_MultiBandBlender]
@@ -8208,21 +8283,15 @@ pub mod stitching {
 
 	}
 
-	/// Blender which uses multi-band blending algorithm (see [BA83](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_BA83)).
-	pub struct Detail_MultiBandBlender {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_MultiBandBlender }
-
-	impl Drop for Detail_MultiBandBlender {
+	impl std::fmt::Debug for Detail_MultiBandBlender {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_MultiBandBlender_delete(self.as_raw_mut_Detail_MultiBandBlender()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_MultiBandBlender")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for Detail_MultiBandBlender {}
+	boxed_cast_base! { Detail_MultiBandBlender, crate::stitching::Detail_Blender, cv_detail_MultiBandBlender_to_Detail_Blender }
 
 	impl crate::stitching::Detail_BlenderTraitConst for Detail_MultiBandBlender {
 		#[inline] fn as_raw_Detail_Blender(&self) -> *const c_void { self.as_raw() }
@@ -8244,60 +8313,6 @@ pub mod stitching {
 
 	boxed_ref! { Detail_MultiBandBlender, crate::stitching::Detail_MultiBandBlenderTraitConst, as_raw_Detail_MultiBandBlender, crate::stitching::Detail_MultiBandBlenderTrait, as_raw_mut_Detail_MultiBandBlender }
 
-	impl Detail_MultiBandBlender {
-		/// ## C++ default parameters
-		/// * try_gpu: false
-		/// * num_bands: 5
-		/// * weight_type: CV_32F
-		#[inline]
-		pub fn new(try_gpu: i32, num_bands: i32, weight_type: i32) -> Result<crate::stitching::Detail_MultiBandBlender> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_MultiBandBlender_MultiBandBlender_int_int_int(try_gpu, num_bands, weight_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_MultiBandBlender::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * try_gpu: false
-		/// * num_bands: 5
-		/// * weight_type: CV_32F
-		#[inline]
-		pub fn new_def() -> Result<crate::stitching::Detail_MultiBandBlender> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_MultiBandBlender_MultiBandBlender(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_MultiBandBlender::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_base! { Detail_MultiBandBlender, crate::stitching::Detail_Blender, cv_detail_MultiBandBlender_to_Detail_Blender }
-
-	impl std::fmt::Debug for Detail_MultiBandBlender {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_MultiBandBlender")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::stitching::Detail_NoBundleAdjuster]
-	pub trait Detail_NoBundleAdjusterTraitConst: crate::stitching::Detail_BundleAdjusterBaseTraitConst {
-		fn as_raw_Detail_NoBundleAdjuster(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::stitching::Detail_NoBundleAdjuster]
-	pub trait Detail_NoBundleAdjusterTrait: crate::stitching::Detail_BundleAdjusterBaseTrait + crate::stitching::Detail_NoBundleAdjusterTraitConst {
-		fn as_raw_mut_Detail_NoBundleAdjuster(&mut self) -> *mut c_void;
-
-	}
-
 	/// Stub bundle adjuster that does nothing.
 	pub struct Detail_NoBundleAdjuster {
 		ptr: *mut c_void,
@@ -8313,6 +8328,43 @@ pub mod stitching {
 	}
 
 	unsafe impl Send for Detail_NoBundleAdjuster {}
+
+	impl Detail_NoBundleAdjuster {
+		#[inline]
+		pub fn default() -> Result<crate::stitching::Detail_NoBundleAdjuster> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_NoBundleAdjuster_NoBundleAdjuster(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_NoBundleAdjuster::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [crate::stitching::Detail_NoBundleAdjuster]
+	pub trait Detail_NoBundleAdjusterTraitConst: crate::stitching::Detail_BundleAdjusterBaseTraitConst {
+		fn as_raw_Detail_NoBundleAdjuster(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::stitching::Detail_NoBundleAdjuster]
+	pub trait Detail_NoBundleAdjusterTrait: crate::stitching::Detail_BundleAdjusterBaseTrait + crate::stitching::Detail_NoBundleAdjusterTraitConst {
+		fn as_raw_mut_Detail_NoBundleAdjuster(&mut self) -> *mut c_void;
+
+	}
+
+	impl std::fmt::Debug for Detail_NoBundleAdjuster {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_NoBundleAdjuster")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Detail_NoBundleAdjuster, crate::stitching::Detail_BundleAdjusterBase, cv_detail_NoBundleAdjuster_to_Detail_BundleAdjusterBase }
+
+	boxed_cast_base! { Detail_NoBundleAdjuster, crate::stitching::Detail_Estimator, cv_detail_NoBundleAdjuster_to_Detail_Estimator }
 
 	impl crate::stitching::Detail_BundleAdjusterBaseTraitConst for Detail_NoBundleAdjuster {
 		#[inline] fn as_raw_Detail_BundleAdjusterBase(&self) -> *const c_void { self.as_raw() }
@@ -8344,29 +8396,31 @@ pub mod stitching {
 
 	boxed_ref! { Detail_NoBundleAdjuster, crate::stitching::Detail_NoBundleAdjusterTraitConst, as_raw_Detail_NoBundleAdjuster, crate::stitching::Detail_NoBundleAdjusterTrait, as_raw_mut_Detail_NoBundleAdjuster }
 
-	impl Detail_NoBundleAdjuster {
-		#[inline]
-		pub fn default() -> Result<crate::stitching::Detail_NoBundleAdjuster> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_NoBundleAdjuster_NoBundleAdjuster(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_NoBundleAdjuster::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// Stub exposure compensator which does nothing.
+	pub struct Detail_NoExposureCompensator {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { Detail_NoBundleAdjuster, crate::stitching::Detail_BundleAdjusterBase, cv_detail_NoBundleAdjuster_to_Detail_BundleAdjusterBase }
+	opencv_type_boxed! { Detail_NoExposureCompensator }
 
-	boxed_cast_base! { Detail_NoBundleAdjuster, crate::stitching::Detail_Estimator, cv_detail_NoBundleAdjuster_to_Detail_Estimator }
-
-	impl std::fmt::Debug for Detail_NoBundleAdjuster {
+	impl Drop for Detail_NoExposureCompensator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_NoBundleAdjuster")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_NoExposureCompensator_delete(self.as_raw_mut_Detail_NoExposureCompensator()) };
 		}
+	}
+
+	unsafe impl Send for Detail_NoExposureCompensator {}
+
+	impl Detail_NoExposureCompensator {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::stitching::Detail_NoExposureCompensator {
+			let ret = unsafe { sys::cv_detail_NoExposureCompensator_defaultNew_const() };
+			let ret = unsafe { crate::stitching::Detail_NoExposureCompensator::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_NoExposureCompensator]
@@ -8419,21 +8473,23 @@ pub mod stitching {
 
 	}
 
-	/// Stub exposure compensator which does nothing.
-	pub struct Detail_NoExposureCompensator {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_NoExposureCompensator }
-
-	impl Drop for Detail_NoExposureCompensator {
+	impl Default for Detail_NoExposureCompensator {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_NoExposureCompensator_delete(self.as_raw_mut_Detail_NoExposureCompensator()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for Detail_NoExposureCompensator {}
+	impl std::fmt::Debug for Detail_NoExposureCompensator {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_NoExposureCompensator")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Detail_NoExposureCompensator, crate::stitching::Detail_ExposureCompensator, cv_detail_NoExposureCompensator_to_Detail_ExposureCompensator }
 
 	impl crate::stitching::Detail_ExposureCompensatorTraitConst for Detail_NoExposureCompensator {
 		#[inline] fn as_raw_Detail_ExposureCompensator(&self) -> *const c_void { self.as_raw() }
@@ -8455,31 +8511,31 @@ pub mod stitching {
 
 	boxed_ref! { Detail_NoExposureCompensator, crate::stitching::Detail_NoExposureCompensatorTraitConst, as_raw_Detail_NoExposureCompensator, crate::stitching::Detail_NoExposureCompensatorTrait, as_raw_mut_Detail_NoExposureCompensator }
 
-	impl Detail_NoExposureCompensator {
+	/// Stub seam estimator which does nothing.
+	pub struct Detail_NoSeamFinder {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_NoSeamFinder }
+
+	impl Drop for Detail_NoSeamFinder {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_NoSeamFinder_delete(self.as_raw_mut_Detail_NoSeamFinder()) };
+		}
+	}
+
+	unsafe impl Send for Detail_NoSeamFinder {}
+
+	impl Detail_NoSeamFinder {
 		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_detail_NoExposureCompensator_defaultNew_const()) }
+		pub fn default() -> crate::stitching::Detail_NoSeamFinder {
+			let ret = unsafe { sys::cv_detail_NoSeamFinder_defaultNew_const() };
+			let ret = unsafe { crate::stitching::Detail_NoSeamFinder::opencv_from_extern(ret) };
+			ret
 		}
 
-	}
-
-	boxed_cast_base! { Detail_NoExposureCompensator, crate::stitching::Detail_ExposureCompensator, cv_detail_NoExposureCompensator_to_Detail_ExposureCompensator }
-
-	impl std::fmt::Debug for Detail_NoExposureCompensator {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_NoExposureCompensator")
-				.finish()
-		}
-	}
-
-	impl Default for Detail_NoExposureCompensator {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
 	}
 
 	/// Constant methods for [crate::stitching::Detail_NoSeamFinder]
@@ -8503,21 +8559,23 @@ pub mod stitching {
 
 	}
 
-	/// Stub seam estimator which does nothing.
-	pub struct Detail_NoSeamFinder {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_NoSeamFinder }
-
-	impl Drop for Detail_NoSeamFinder {
+	impl Default for Detail_NoSeamFinder {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_NoSeamFinder_delete(self.as_raw_mut_Detail_NoSeamFinder()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for Detail_NoSeamFinder {}
+	impl std::fmt::Debug for Detail_NoSeamFinder {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_NoSeamFinder")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Detail_NoSeamFinder, crate::stitching::Detail_SeamFinder, cv_detail_NoSeamFinder_to_Detail_SeamFinder }
 
 	impl crate::stitching::Detail_SeamFinderTraitConst for Detail_NoSeamFinder {
 		#[inline] fn as_raw_Detail_SeamFinder(&self) -> *const c_void { self.as_raw() }
@@ -8539,32 +8597,21 @@ pub mod stitching {
 
 	boxed_ref! { Detail_NoSeamFinder, crate::stitching::Detail_NoSeamFinderTraitConst, as_raw_Detail_NoSeamFinder, crate::stitching::Detail_NoSeamFinderTrait, as_raw_mut_Detail_NoSeamFinder }
 
-	impl Detail_NoSeamFinder {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_detail_NoSeamFinder_defaultNew_const()) }
-		}
-
+	/// Base class for all pairwise seam estimators.
+	pub struct Detail_PairwiseSeamFinder {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { Detail_NoSeamFinder, crate::stitching::Detail_SeamFinder, cv_detail_NoSeamFinder_to_Detail_SeamFinder }
+	opencv_type_boxed! { Detail_PairwiseSeamFinder }
 
-	impl std::fmt::Debug for Detail_NoSeamFinder {
+	impl Drop for Detail_PairwiseSeamFinder {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_NoSeamFinder")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_PairwiseSeamFinder_delete(self.as_raw_mut_Detail_PairwiseSeamFinder()) };
 		}
 	}
 
-	impl Default for Detail_NoSeamFinder {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
-	}
+	unsafe impl Send for Detail_PairwiseSeamFinder {}
 
 	/// Constant methods for [crate::stitching::Detail_PairwiseSeamFinder]
 	pub trait Detail_PairwiseSeamFinderTraitConst: crate::stitching::Detail_SeamFinderTraitConst {
@@ -8587,21 +8634,19 @@ pub mod stitching {
 
 	}
 
-	/// Base class for all pairwise seam estimators.
-	pub struct Detail_PairwiseSeamFinder {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_PairwiseSeamFinder }
-
-	impl Drop for Detail_PairwiseSeamFinder {
+	impl std::fmt::Debug for Detail_PairwiseSeamFinder {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_PairwiseSeamFinder_delete(self.as_raw_mut_Detail_PairwiseSeamFinder()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_PairwiseSeamFinder")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for Detail_PairwiseSeamFinder {}
+	boxed_cast_base! { Detail_PairwiseSeamFinder, crate::stitching::Detail_SeamFinder, cv_detail_PairwiseSeamFinder_to_Detail_SeamFinder }
+
+	boxed_cast_descendant! { Detail_PairwiseSeamFinder, crate::stitching::Detail_GraphCutSeamFinderGpu, cv_detail_PairwiseSeamFinder_to_Detail_GraphCutSeamFinderGpu }
+
+	boxed_cast_descendant! { Detail_PairwiseSeamFinder, crate::stitching::Detail_VoronoiSeamFinder, cv_detail_PairwiseSeamFinder_to_Detail_VoronoiSeamFinder }
 
 	impl crate::stitching::Detail_SeamFinderTraitConst for Detail_PairwiseSeamFinder {
 		#[inline] fn as_raw_Detail_SeamFinder(&self) -> *const c_void { self.as_raw() }
@@ -8623,21 +8668,30 @@ pub mod stitching {
 
 	boxed_ref! { Detail_PairwiseSeamFinder, crate::stitching::Detail_PairwiseSeamFinderTraitConst, as_raw_Detail_PairwiseSeamFinder, crate::stitching::Detail_PairwiseSeamFinderTrait, as_raw_mut_Detail_PairwiseSeamFinder }
 
-	impl Detail_PairwiseSeamFinder {
+	pub struct Detail_PaniniPortraitProjector {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { Detail_PairwiseSeamFinder, crate::stitching::Detail_GraphCutSeamFinderGpu, cv_detail_PairwiseSeamFinder_to_Detail_GraphCutSeamFinderGpu }
+	opencv_type_boxed! { Detail_PaniniPortraitProjector }
 
-	boxed_cast_descendant! { Detail_PairwiseSeamFinder, crate::stitching::Detail_VoronoiSeamFinder, cv_detail_PairwiseSeamFinder_to_Detail_VoronoiSeamFinder }
-
-	boxed_cast_base! { Detail_PairwiseSeamFinder, crate::stitching::Detail_SeamFinder, cv_detail_PairwiseSeamFinder_to_Detail_SeamFinder }
-
-	impl std::fmt::Debug for Detail_PairwiseSeamFinder {
+	impl Drop for Detail_PaniniPortraitProjector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_PairwiseSeamFinder")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_PaniniPortraitProjector_delete(self.as_raw_mut_Detail_PaniniPortraitProjector()) };
 		}
+	}
+
+	unsafe impl Send for Detail_PaniniPortraitProjector {}
+
+	impl Detail_PaniniPortraitProjector {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::stitching::Detail_PaniniPortraitProjector {
+			let ret = unsafe { sys::cv_detail_PaniniPortraitProjector_defaultNew_const() };
+			let ret = unsafe { crate::stitching::Detail_PaniniPortraitProjector::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_PaniniPortraitProjector]
@@ -8694,20 +8748,31 @@ pub mod stitching {
 
 	}
 
-	pub struct Detail_PaniniPortraitProjector {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_PaniniPortraitProjector }
-
-	impl Drop for Detail_PaniniPortraitProjector {
+	impl Default for Detail_PaniniPortraitProjector {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_PaniniPortraitProjector_delete(self.as_raw_mut_Detail_PaniniPortraitProjector()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for Detail_PaniniPortraitProjector {}
+	impl std::fmt::Debug for Detail_PaniniPortraitProjector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_PaniniPortraitProjector")
+				.field("a", &crate::stitching::Detail_PaniniPortraitProjectorTraitConst::a(self))
+				.field("b", &crate::stitching::Detail_PaniniPortraitProjectorTraitConst::b(self))
+				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
+				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
+				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
+				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
+				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
+				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Detail_PaniniPortraitProjector, crate::stitching::Detail_ProjectorBase, cv_detail_PaniniPortraitProjector_to_Detail_ProjectorBase }
 
 	impl crate::stitching::Detail_ProjectorBaseTraitConst for Detail_PaniniPortraitProjector {
 		#[inline] fn as_raw_Detail_ProjectorBase(&self) -> *const c_void { self.as_raw() }
@@ -8729,53 +8794,6 @@ pub mod stitching {
 
 	boxed_ref! { Detail_PaniniPortraitProjector, crate::stitching::Detail_PaniniPortraitProjectorTraitConst, as_raw_Detail_PaniniPortraitProjector, crate::stitching::Detail_PaniniPortraitProjectorTrait, as_raw_mut_Detail_PaniniPortraitProjector }
 
-	impl Detail_PaniniPortraitProjector {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_detail_PaniniPortraitProjector_defaultNew_const()) }
-		}
-
-	}
-
-	boxed_cast_base! { Detail_PaniniPortraitProjector, crate::stitching::Detail_ProjectorBase, cv_detail_PaniniPortraitProjector_to_Detail_ProjectorBase }
-
-	impl std::fmt::Debug for Detail_PaniniPortraitProjector {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_PaniniPortraitProjector")
-				.field("a", &crate::stitching::Detail_PaniniPortraitProjectorTraitConst::a(self))
-				.field("b", &crate::stitching::Detail_PaniniPortraitProjectorTraitConst::b(self))
-				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
-				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
-				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
-				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
-				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
-				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
-				.finish()
-		}
-	}
-
-	impl Default for Detail_PaniniPortraitProjector {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
-	}
-
-	/// Constant methods for [crate::stitching::Detail_PaniniPortraitWarper]
-	pub trait Detail_PaniniPortraitWarperTraitConst {
-		fn as_raw_Detail_PaniniPortraitWarper(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::stitching::Detail_PaniniPortraitWarper]
-	pub trait Detail_PaniniPortraitWarperTrait: crate::stitching::Detail_PaniniPortraitWarperTraitConst {
-		fn as_raw_mut_Detail_PaniniPortraitWarper(&mut self) -> *mut c_void;
-
-	}
-
 	pub struct Detail_PaniniPortraitWarper {
 		ptr: *mut c_void,
 	}
@@ -8790,26 +8808,6 @@ pub mod stitching {
 	}
 
 	unsafe impl Send for Detail_PaniniPortraitWarper {}
-
-	impl crate::stitching::Detail_RotationWarperTraitConst for Detail_PaniniPortraitWarper {
-		#[inline] fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::Detail_RotationWarperTrait for Detail_PaniniPortraitWarper {
-		#[inline] fn as_raw_mut_Detail_RotationWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_PaniniPortraitWarper, crate::stitching::Detail_RotationWarperTraitConst, as_raw_Detail_RotationWarper, crate::stitching::Detail_RotationWarperTrait, as_raw_mut_Detail_RotationWarper }
-
-	impl crate::stitching::Detail_PaniniPortraitWarperTraitConst for Detail_PaniniPortraitWarper {
-		#[inline] fn as_raw_Detail_PaniniPortraitWarper(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::Detail_PaniniPortraitWarperTrait for Detail_PaniniPortraitWarper {
-		#[inline] fn as_raw_mut_Detail_PaniniPortraitWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_PaniniPortraitWarper, crate::stitching::Detail_PaniniPortraitWarperTraitConst, as_raw_Detail_PaniniPortraitWarper, crate::stitching::Detail_PaniniPortraitWarperTrait, as_raw_mut_Detail_PaniniPortraitWarper }
 
 	impl Detail_PaniniPortraitWarper {
 		/// ## C++ default parameters
@@ -8841,7 +8839,17 @@ pub mod stitching {
 
 	}
 
-	boxed_cast_base! { Detail_PaniniPortraitWarper, crate::stitching::Detail_RotationWarper, cv_detail_PaniniPortraitWarper_to_Detail_RotationWarper }
+	/// Constant methods for [crate::stitching::Detail_PaniniPortraitWarper]
+	pub trait Detail_PaniniPortraitWarperTraitConst {
+		fn as_raw_Detail_PaniniPortraitWarper(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::stitching::Detail_PaniniPortraitWarper]
+	pub trait Detail_PaniniPortraitWarperTrait: crate::stitching::Detail_PaniniPortraitWarperTraitConst {
+		fn as_raw_mut_Detail_PaniniPortraitWarper(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for Detail_PaniniPortraitWarper {
 		#[inline]
@@ -8849,6 +8857,54 @@ pub mod stitching {
 			f.debug_struct("Detail_PaniniPortraitWarper")
 				.finish()
 		}
+	}
+
+	boxed_cast_base! { Detail_PaniniPortraitWarper, crate::stitching::Detail_RotationWarper, cv_detail_PaniniPortraitWarper_to_Detail_RotationWarper }
+
+	impl crate::stitching::Detail_RotationWarperTraitConst for Detail_PaniniPortraitWarper {
+		#[inline] fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::Detail_RotationWarperTrait for Detail_PaniniPortraitWarper {
+		#[inline] fn as_raw_mut_Detail_RotationWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_PaniniPortraitWarper, crate::stitching::Detail_RotationWarperTraitConst, as_raw_Detail_RotationWarper, crate::stitching::Detail_RotationWarperTrait, as_raw_mut_Detail_RotationWarper }
+
+	impl crate::stitching::Detail_PaniniPortraitWarperTraitConst for Detail_PaniniPortraitWarper {
+		#[inline] fn as_raw_Detail_PaniniPortraitWarper(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::Detail_PaniniPortraitWarperTrait for Detail_PaniniPortraitWarper {
+		#[inline] fn as_raw_mut_Detail_PaniniPortraitWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_PaniniPortraitWarper, crate::stitching::Detail_PaniniPortraitWarperTraitConst, as_raw_Detail_PaniniPortraitWarper, crate::stitching::Detail_PaniniPortraitWarperTrait, as_raw_mut_Detail_PaniniPortraitWarper }
+
+	pub struct Detail_PaniniProjector {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_PaniniProjector }
+
+	impl Drop for Detail_PaniniProjector {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_PaniniProjector_delete(self.as_raw_mut_Detail_PaniniProjector()) };
+		}
+	}
+
+	unsafe impl Send for Detail_PaniniProjector {}
+
+	impl Detail_PaniniProjector {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::stitching::Detail_PaniniProjector {
+			let ret = unsafe { sys::cv_detail_PaniniProjector_defaultNew_const() };
+			let ret = unsafe { crate::stitching::Detail_PaniniProjector::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_PaniniProjector]
@@ -8905,20 +8961,31 @@ pub mod stitching {
 
 	}
 
-	pub struct Detail_PaniniProjector {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_PaniniProjector }
-
-	impl Drop for Detail_PaniniProjector {
+	impl Default for Detail_PaniniProjector {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_PaniniProjector_delete(self.as_raw_mut_Detail_PaniniProjector()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for Detail_PaniniProjector {}
+	impl std::fmt::Debug for Detail_PaniniProjector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_PaniniProjector")
+				.field("a", &crate::stitching::Detail_PaniniProjectorTraitConst::a(self))
+				.field("b", &crate::stitching::Detail_PaniniProjectorTraitConst::b(self))
+				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
+				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
+				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
+				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
+				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
+				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Detail_PaniniProjector, crate::stitching::Detail_ProjectorBase, cv_detail_PaniniProjector_to_Detail_ProjectorBase }
 
 	impl crate::stitching::Detail_ProjectorBaseTraitConst for Detail_PaniniProjector {
 		#[inline] fn as_raw_Detail_ProjectorBase(&self) -> *const c_void { self.as_raw() }
@@ -8940,53 +9007,6 @@ pub mod stitching {
 
 	boxed_ref! { Detail_PaniniProjector, crate::stitching::Detail_PaniniProjectorTraitConst, as_raw_Detail_PaniniProjector, crate::stitching::Detail_PaniniProjectorTrait, as_raw_mut_Detail_PaniniProjector }
 
-	impl Detail_PaniniProjector {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_detail_PaniniProjector_defaultNew_const()) }
-		}
-
-	}
-
-	boxed_cast_base! { Detail_PaniniProjector, crate::stitching::Detail_ProjectorBase, cv_detail_PaniniProjector_to_Detail_ProjectorBase }
-
-	impl std::fmt::Debug for Detail_PaniniProjector {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_PaniniProjector")
-				.field("a", &crate::stitching::Detail_PaniniProjectorTraitConst::a(self))
-				.field("b", &crate::stitching::Detail_PaniniProjectorTraitConst::b(self))
-				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
-				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
-				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
-				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
-				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
-				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
-				.finish()
-		}
-	}
-
-	impl Default for Detail_PaniniProjector {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
-	}
-
-	/// Constant methods for [crate::stitching::Detail_PaniniWarper]
-	pub trait Detail_PaniniWarperTraitConst {
-		fn as_raw_Detail_PaniniWarper(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::stitching::Detail_PaniniWarper]
-	pub trait Detail_PaniniWarperTrait: crate::stitching::Detail_PaniniWarperTraitConst {
-		fn as_raw_mut_Detail_PaniniWarper(&mut self) -> *mut c_void;
-
-	}
-
 	pub struct Detail_PaniniWarper {
 		ptr: *mut c_void,
 	}
@@ -9001,26 +9021,6 @@ pub mod stitching {
 	}
 
 	unsafe impl Send for Detail_PaniniWarper {}
-
-	impl crate::stitching::Detail_RotationWarperTraitConst for Detail_PaniniWarper {
-		#[inline] fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::Detail_RotationWarperTrait for Detail_PaniniWarper {
-		#[inline] fn as_raw_mut_Detail_RotationWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_PaniniWarper, crate::stitching::Detail_RotationWarperTraitConst, as_raw_Detail_RotationWarper, crate::stitching::Detail_RotationWarperTrait, as_raw_mut_Detail_RotationWarper }
-
-	impl crate::stitching::Detail_PaniniWarperTraitConst for Detail_PaniniWarper {
-		#[inline] fn as_raw_Detail_PaniniWarper(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::Detail_PaniniWarperTrait for Detail_PaniniWarper {
-		#[inline] fn as_raw_mut_Detail_PaniniWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_PaniniWarper, crate::stitching::Detail_PaniniWarperTraitConst, as_raw_Detail_PaniniWarper, crate::stitching::Detail_PaniniWarperTrait, as_raw_mut_Detail_PaniniWarper }
 
 	impl Detail_PaniniWarper {
 		/// ## C++ default parameters
@@ -9052,7 +9052,17 @@ pub mod stitching {
 
 	}
 
-	boxed_cast_base! { Detail_PaniniWarper, crate::stitching::Detail_RotationWarper, cv_detail_PaniniWarper_to_Detail_RotationWarper }
+	/// Constant methods for [crate::stitching::Detail_PaniniWarper]
+	pub trait Detail_PaniniWarperTraitConst {
+		fn as_raw_Detail_PaniniWarper(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::stitching::Detail_PaniniWarper]
+	pub trait Detail_PaniniWarperTrait: crate::stitching::Detail_PaniniWarperTraitConst {
+		fn as_raw_mut_Detail_PaniniWarper(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for Detail_PaniniWarper {
 		#[inline]
@@ -9060,6 +9070,54 @@ pub mod stitching {
 			f.debug_struct("Detail_PaniniWarper")
 				.finish()
 		}
+	}
+
+	boxed_cast_base! { Detail_PaniniWarper, crate::stitching::Detail_RotationWarper, cv_detail_PaniniWarper_to_Detail_RotationWarper }
+
+	impl crate::stitching::Detail_RotationWarperTraitConst for Detail_PaniniWarper {
+		#[inline] fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::Detail_RotationWarperTrait for Detail_PaniniWarper {
+		#[inline] fn as_raw_mut_Detail_RotationWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_PaniniWarper, crate::stitching::Detail_RotationWarperTraitConst, as_raw_Detail_RotationWarper, crate::stitching::Detail_RotationWarperTrait, as_raw_mut_Detail_RotationWarper }
+
+	impl crate::stitching::Detail_PaniniWarperTraitConst for Detail_PaniniWarper {
+		#[inline] fn as_raw_Detail_PaniniWarper(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::Detail_PaniniWarperTrait for Detail_PaniniWarper {
+		#[inline] fn as_raw_mut_Detail_PaniniWarper(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_PaniniWarper, crate::stitching::Detail_PaniniWarperTraitConst, as_raw_Detail_PaniniWarper, crate::stitching::Detail_PaniniWarperTrait, as_raw_mut_Detail_PaniniWarper }
+
+	pub struct Detail_PlanePortraitProjector {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_PlanePortraitProjector }
+
+	impl Drop for Detail_PlanePortraitProjector {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_PlanePortraitProjector_delete(self.as_raw_mut_Detail_PlanePortraitProjector()) };
+		}
+	}
+
+	unsafe impl Send for Detail_PlanePortraitProjector {}
+
+	impl Detail_PlanePortraitProjector {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::stitching::Detail_PlanePortraitProjector {
+			let ret = unsafe { sys::cv_detail_PlanePortraitProjector_defaultNew_const() };
+			let ret = unsafe { crate::stitching::Detail_PlanePortraitProjector::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_PlanePortraitProjector]
@@ -9092,20 +9150,29 @@ pub mod stitching {
 
 	}
 
-	pub struct Detail_PlanePortraitProjector {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_PlanePortraitProjector }
-
-	impl Drop for Detail_PlanePortraitProjector {
+	impl Default for Detail_PlanePortraitProjector {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_PlanePortraitProjector_delete(self.as_raw_mut_Detail_PlanePortraitProjector()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for Detail_PlanePortraitProjector {}
+	impl std::fmt::Debug for Detail_PlanePortraitProjector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_PlanePortraitProjector")
+				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
+				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
+				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
+				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
+				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
+				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Detail_PlanePortraitProjector, crate::stitching::Detail_ProjectorBase, cv_detail_PlanePortraitProjector_to_Detail_ProjectorBase }
 
 	impl crate::stitching::Detail_ProjectorBaseTraitConst for Detail_PlanePortraitProjector {
 		#[inline] fn as_raw_Detail_ProjectorBase(&self) -> *const c_void { self.as_raw() }
@@ -9127,51 +9194,6 @@ pub mod stitching {
 
 	boxed_ref! { Detail_PlanePortraitProjector, crate::stitching::Detail_PlanePortraitProjectorTraitConst, as_raw_Detail_PlanePortraitProjector, crate::stitching::Detail_PlanePortraitProjectorTrait, as_raw_mut_Detail_PlanePortraitProjector }
 
-	impl Detail_PlanePortraitProjector {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_detail_PlanePortraitProjector_defaultNew_const()) }
-		}
-
-	}
-
-	boxed_cast_base! { Detail_PlanePortraitProjector, crate::stitching::Detail_ProjectorBase, cv_detail_PlanePortraitProjector_to_Detail_ProjectorBase }
-
-	impl std::fmt::Debug for Detail_PlanePortraitProjector {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_PlanePortraitProjector")
-				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
-				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
-				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
-				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
-				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
-				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
-				.finish()
-		}
-	}
-
-	impl Default for Detail_PlanePortraitProjector {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
-	}
-
-	/// Constant methods for [crate::stitching::Detail_PlanePortraitWarper]
-	pub trait Detail_PlanePortraitWarperTraitConst {
-		fn as_raw_Detail_PlanePortraitWarper(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::stitching::Detail_PlanePortraitWarper]
-	pub trait Detail_PlanePortraitWarperTrait: crate::stitching::Detail_PlanePortraitWarperTraitConst {
-		fn as_raw_mut_Detail_PlanePortraitWarper(&mut self) -> *mut c_void;
-
-	}
-
 	pub struct Detail_PlanePortraitWarper {
 		ptr: *mut c_void,
 	}
@@ -9186,6 +9208,41 @@ pub mod stitching {
 	}
 
 	unsafe impl Send for Detail_PlanePortraitWarper {}
+
+	impl Detail_PlanePortraitWarper {
+		#[inline]
+		pub fn new(scale: f32) -> Result<crate::stitching::Detail_PlanePortraitWarper> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_PlanePortraitWarper_PlanePortraitWarper_float(scale, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_PlanePortraitWarper::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [crate::stitching::Detail_PlanePortraitWarper]
+	pub trait Detail_PlanePortraitWarperTraitConst {
+		fn as_raw_Detail_PlanePortraitWarper(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::stitching::Detail_PlanePortraitWarper]
+	pub trait Detail_PlanePortraitWarperTrait: crate::stitching::Detail_PlanePortraitWarperTraitConst {
+		fn as_raw_mut_Detail_PlanePortraitWarper(&mut self) -> *mut c_void;
+
+	}
+
+	impl std::fmt::Debug for Detail_PlanePortraitWarper {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_PlanePortraitWarper")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Detail_PlanePortraitWarper, crate::stitching::Detail_RotationWarper, cv_detail_PlanePortraitWarper_to_Detail_RotationWarper }
 
 	impl crate::stitching::Detail_RotationWarperTraitConst for Detail_PlanePortraitWarper {
 		#[inline] fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.as_raw() }
@@ -9207,27 +9264,30 @@ pub mod stitching {
 
 	boxed_ref! { Detail_PlanePortraitWarper, crate::stitching::Detail_PlanePortraitWarperTraitConst, as_raw_Detail_PlanePortraitWarper, crate::stitching::Detail_PlanePortraitWarperTrait, as_raw_mut_Detail_PlanePortraitWarper }
 
-	impl Detail_PlanePortraitWarper {
-		#[inline]
-		pub fn new(scale: f32) -> Result<crate::stitching::Detail_PlanePortraitWarper> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_PlanePortraitWarper_PlanePortraitWarper_float(scale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_PlanePortraitWarper::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	pub struct Detail_PlaneProjector {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { Detail_PlanePortraitWarper, crate::stitching::Detail_RotationWarper, cv_detail_PlanePortraitWarper_to_Detail_RotationWarper }
+	opencv_type_boxed! { Detail_PlaneProjector }
 
-	impl std::fmt::Debug for Detail_PlanePortraitWarper {
+	impl Drop for Detail_PlaneProjector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_PlanePortraitWarper")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_PlaneProjector_delete(self.as_raw_mut_Detail_PlaneProjector()) };
 		}
+	}
+
+	unsafe impl Send for Detail_PlaneProjector {}
+
+	impl Detail_PlaneProjector {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::stitching::Detail_PlaneProjector {
+			let ret = unsafe { sys::cv_detail_PlaneProjector_defaultNew_const() };
+			let ret = unsafe { crate::stitching::Detail_PlaneProjector::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_PlaneProjector]
@@ -9260,20 +9320,29 @@ pub mod stitching {
 
 	}
 
-	pub struct Detail_PlaneProjector {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_PlaneProjector }
-
-	impl Drop for Detail_PlaneProjector {
+	impl Default for Detail_PlaneProjector {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_PlaneProjector_delete(self.as_raw_mut_Detail_PlaneProjector()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for Detail_PlaneProjector {}
+	impl std::fmt::Debug for Detail_PlaneProjector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_PlaneProjector")
+				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
+				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
+				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
+				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
+				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
+				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Detail_PlaneProjector, crate::stitching::Detail_ProjectorBase, cv_detail_PlaneProjector_to_Detail_ProjectorBase }
 
 	impl crate::stitching::Detail_ProjectorBaseTraitConst for Detail_PlaneProjector {
 		#[inline] fn as_raw_Detail_ProjectorBase(&self) -> *const c_void { self.as_raw() }
@@ -9295,37 +9364,58 @@ pub mod stitching {
 
 	boxed_ref! { Detail_PlaneProjector, crate::stitching::Detail_PlaneProjectorTraitConst, as_raw_Detail_PlaneProjector, crate::stitching::Detail_PlaneProjectorTrait, as_raw_mut_Detail_PlaneProjector }
 
-	impl Detail_PlaneProjector {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_detail_PlaneProjector_defaultNew_const()) }
-		}
-
+	/// Warper that maps an image onto the z = 1 plane.
+	pub struct Detail_PlaneWarper {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { Detail_PlaneProjector, crate::stitching::Detail_ProjectorBase, cv_detail_PlaneProjector_to_Detail_ProjectorBase }
+	opencv_type_boxed! { Detail_PlaneWarper }
 
-	impl std::fmt::Debug for Detail_PlaneProjector {
+	impl Drop for Detail_PlaneWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_PlaneProjector")
-				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
-				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
-				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
-				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
-				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
-				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_PlaneWarper_delete(self.as_raw_mut_Detail_PlaneWarper()) };
 		}
 	}
 
-	impl Default for Detail_PlaneProjector {
+	unsafe impl Send for Detail_PlaneWarper {}
+
+	impl Detail_PlaneWarper {
+		/// Construct an instance of the plane warper class.
+		///
+		/// ## Parameters
+		/// * scale: Projected image scale multiplier
+		///
+		/// ## C++ default parameters
+		/// * scale: 1.f
 		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
+		pub fn new(scale: f32) -> Result<crate::stitching::Detail_PlaneWarper> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_PlaneWarper_PlaneWarper_float(scale, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_PlaneWarper::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
+		/// Construct an instance of the plane warper class.
+		///
+		/// ## Parameters
+		/// * scale: Projected image scale multiplier
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * scale: 1.f
+		#[inline]
+		pub fn new_def() -> Result<crate::stitching::Detail_PlaneWarper> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_PlaneWarper_PlaneWarper(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_PlaneWarper::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_PlaneWarper]
@@ -9463,21 +9553,19 @@ pub mod stitching {
 
 	}
 
-	/// Warper that maps an image onto the z = 1 plane.
-	pub struct Detail_PlaneWarper {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_PlaneWarper }
-
-	impl Drop for Detail_PlaneWarper {
+	impl std::fmt::Debug for Detail_PlaneWarper {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_PlaneWarper_delete(self.as_raw_mut_Detail_PlaneWarper()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_PlaneWarper")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for Detail_PlaneWarper {}
+	boxed_cast_base! { Detail_PlaneWarper, crate::stitching::Detail_RotationWarper, cv_detail_PlaneWarper_to_Detail_RotationWarper }
+
+	boxed_cast_descendant! { Detail_PlaneWarper, crate::stitching::Detail_AffineWarper, cv_detail_PlaneWarper_to_Detail_AffineWarper }
+
+	boxed_cast_descendant! { Detail_PlaneWarper, crate::stitching::Detail_PlaneWarperGpu, cv_detail_PlaneWarper_to_Detail_PlaneWarperGpu }
 
 	impl crate::stitching::Detail_RotationWarperTraitConst for Detail_PlaneWarper {
 		#[inline] fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.as_raw() }
@@ -9499,56 +9587,47 @@ pub mod stitching {
 
 	boxed_ref! { Detail_PlaneWarper, crate::stitching::Detail_PlaneWarperTraitConst, as_raw_Detail_PlaneWarper, crate::stitching::Detail_PlaneWarperTrait, as_raw_mut_Detail_PlaneWarper }
 
-	impl Detail_PlaneWarper {
-		/// Construct an instance of the plane warper class.
-		///
-		/// ## Parameters
-		/// * scale: Projected image scale multiplier
-		///
+	pub struct Detail_PlaneWarperGpu {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_PlaneWarperGpu }
+
+	impl Drop for Detail_PlaneWarperGpu {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_PlaneWarperGpu_delete(self.as_raw_mut_Detail_PlaneWarperGpu()) };
+		}
+	}
+
+	unsafe impl Send for Detail_PlaneWarperGpu {}
+
+	impl Detail_PlaneWarperGpu {
 		/// ## C++ default parameters
 		/// * scale: 1.f
 		#[inline]
-		pub fn new(scale: f32) -> Result<crate::stitching::Detail_PlaneWarper> {
+		pub fn new(scale: f32) -> Result<crate::stitching::Detail_PlaneWarperGpu> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_PlaneWarper_PlaneWarper_float(scale, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_detail_PlaneWarperGpu_PlaneWarperGpu_float(scale, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_PlaneWarper::opencv_from_extern(ret) };
+			let ret = unsafe { crate::stitching::Detail_PlaneWarperGpu::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-		/// Construct an instance of the plane warper class.
-		///
-		/// ## Parameters
-		/// * scale: Projected image scale multiplier
-		///
 		/// ## Note
 		/// This alternative version of [new] function uses the following default values for its arguments:
 		/// * scale: 1.f
 		#[inline]
-		pub fn new_def() -> Result<crate::stitching::Detail_PlaneWarper> {
+		pub fn new_def() -> Result<crate::stitching::Detail_PlaneWarperGpu> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_PlaneWarper_PlaneWarper(ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_detail_PlaneWarperGpu_PlaneWarperGpu(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_PlaneWarper::opencv_from_extern(ret) };
+			let ret = unsafe { crate::stitching::Detail_PlaneWarperGpu::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	boxed_cast_descendant! { Detail_PlaneWarper, crate::stitching::Detail_AffineWarper, cv_detail_PlaneWarper_to_Detail_AffineWarper }
-
-	boxed_cast_descendant! { Detail_PlaneWarper, crate::stitching::Detail_PlaneWarperGpu, cv_detail_PlaneWarper_to_Detail_PlaneWarperGpu }
-
-	boxed_cast_base! { Detail_PlaneWarper, crate::stitching::Detail_RotationWarper, cv_detail_PlaneWarper_to_Detail_RotationWarper }
-
-	impl std::fmt::Debug for Detail_PlaneWarper {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_PlaneWarper")
-				.finish()
-		}
 	}
 
 	/// Constant methods for [crate::stitching::Detail_PlaneWarperGpu]
@@ -9663,20 +9742,17 @@ pub mod stitching {
 
 	}
 
-	pub struct Detail_PlaneWarperGpu {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_PlaneWarperGpu }
-
-	impl Drop for Detail_PlaneWarperGpu {
+	impl std::fmt::Debug for Detail_PlaneWarperGpu {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_PlaneWarperGpu_delete(self.as_raw_mut_Detail_PlaneWarperGpu()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_PlaneWarperGpu")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for Detail_PlaneWarperGpu {}
+	boxed_cast_base! { Detail_PlaneWarperGpu, crate::stitching::Detail_PlaneWarper, cv_detail_PlaneWarperGpu_to_Detail_PlaneWarper }
+
+	boxed_cast_base! { Detail_PlaneWarperGpu, crate::stitching::Detail_RotationWarper, cv_detail_PlaneWarperGpu_to_Detail_RotationWarper }
 
 	impl crate::stitching::Detail_PlaneWarperTraitConst for Detail_PlaneWarperGpu {
 		#[inline] fn as_raw_Detail_PlaneWarper(&self) -> *const c_void { self.as_raw() }
@@ -9708,44 +9784,31 @@ pub mod stitching {
 
 	boxed_ref! { Detail_PlaneWarperGpu, crate::stitching::Detail_PlaneWarperGpuTraitConst, as_raw_Detail_PlaneWarperGpu, crate::stitching::Detail_PlaneWarperGpuTrait, as_raw_mut_Detail_PlaneWarperGpu }
 
-	impl Detail_PlaneWarperGpu {
-		/// ## C++ default parameters
-		/// * scale: 1.f
-		#[inline]
-		pub fn new(scale: f32) -> Result<crate::stitching::Detail_PlaneWarperGpu> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_PlaneWarperGpu_PlaneWarperGpu_float(scale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_PlaneWarperGpu::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * scale: 1.f
-		#[inline]
-		pub fn new_def() -> Result<crate::stitching::Detail_PlaneWarperGpu> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_PlaneWarperGpu_PlaneWarperGpu(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_PlaneWarperGpu::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// Base class for warping logic implementation.
+	pub struct Detail_ProjectorBase {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { Detail_PlaneWarperGpu, crate::stitching::Detail_PlaneWarper, cv_detail_PlaneWarperGpu_to_Detail_PlaneWarper }
+	opencv_type_boxed! { Detail_ProjectorBase }
 
-	boxed_cast_base! { Detail_PlaneWarperGpu, crate::stitching::Detail_RotationWarper, cv_detail_PlaneWarperGpu_to_Detail_RotationWarper }
-
-	impl std::fmt::Debug for Detail_PlaneWarperGpu {
+	impl Drop for Detail_ProjectorBase {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_PlaneWarperGpu")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_ProjectorBase_delete(self.as_raw_mut_Detail_ProjectorBase()) };
 		}
+	}
+
+	unsafe impl Send for Detail_ProjectorBase {}
+
+	impl Detail_ProjectorBase {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::stitching::Detail_ProjectorBase {
+			let ret = unsafe { sys::cv_detail_ProjectorBase_defaultNew_const() };
+			let ret = unsafe { crate::stitching::Detail_ProjectorBase::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_ProjectorBase]
@@ -9872,39 +9935,12 @@ pub mod stitching {
 
 	}
 
-	/// Base class for warping logic implementation.
-	pub struct Detail_ProjectorBase {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_ProjectorBase }
-
-	impl Drop for Detail_ProjectorBase {
+	impl Default for Detail_ProjectorBase {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_ProjectorBase_delete(self.as_raw_mut_Detail_ProjectorBase()) };
-		}
-	}
-
-	unsafe impl Send for Detail_ProjectorBase {}
-
-	impl crate::stitching::Detail_ProjectorBaseTraitConst for Detail_ProjectorBase {
-		#[inline] fn as_raw_Detail_ProjectorBase(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::Detail_ProjectorBaseTrait for Detail_ProjectorBase {
-		#[inline] fn as_raw_mut_Detail_ProjectorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_ProjectorBase, crate::stitching::Detail_ProjectorBaseTraitConst, as_raw_Detail_ProjectorBase, crate::stitching::Detail_ProjectorBaseTrait, as_raw_mut_Detail_ProjectorBase }
-
-	impl Detail_ProjectorBase {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
+		/// Forwards to infallible Self::default()
 		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_detail_ProjectorBase_defaultNew_const()) }
+			Self::default()
 		}
-
 	}
 
 	impl Clone for Detail_ProjectorBase {
@@ -9928,13 +9964,31 @@ pub mod stitching {
 		}
 	}
 
-	impl Default for Detail_ProjectorBase {
+	impl crate::stitching::Detail_ProjectorBaseTraitConst for Detail_ProjectorBase {
+		#[inline] fn as_raw_Detail_ProjectorBase(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::Detail_ProjectorBaseTrait for Detail_ProjectorBase {
+		#[inline] fn as_raw_mut_Detail_ProjectorBase(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_ProjectorBase, crate::stitching::Detail_ProjectorBaseTraitConst, as_raw_Detail_ProjectorBase, crate::stitching::Detail_ProjectorBaseTrait, as_raw_mut_Detail_ProjectorBase }
+
+	/// Rotation-only model image warper interface.
+	pub struct Detail_RotationWarper {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_RotationWarper }
+
+	impl Drop for Detail_RotationWarper {
 		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_RotationWarper_delete(self.as_raw_mut_Detail_RotationWarper()) };
 		}
 	}
+
+	unsafe impl Send for Detail_RotationWarper {}
 
 	/// Constant methods for [crate::stitching::Detail_RotationWarper]
 	pub trait Detail_RotationWarperTraitConst {
@@ -10083,21 +10137,13 @@ pub mod stitching {
 
 	}
 
-	/// Rotation-only model image warper interface.
-	pub struct Detail_RotationWarper {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_RotationWarper }
-
-	impl Drop for Detail_RotationWarper {
+	impl std::fmt::Debug for Detail_RotationWarper {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_RotationWarper_delete(self.as_raw_mut_Detail_RotationWarper()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_RotationWarper")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for Detail_RotationWarper {}
 
 	impl crate::stitching::Detail_RotationWarperTraitConst for Detail_RotationWarper {
 		#[inline] fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.as_raw() }
@@ -10109,15 +10155,33 @@ pub mod stitching {
 
 	boxed_ref! { Detail_RotationWarper, crate::stitching::Detail_RotationWarperTraitConst, as_raw_Detail_RotationWarper, crate::stitching::Detail_RotationWarperTrait, as_raw_mut_Detail_RotationWarper }
 
-	impl Detail_RotationWarper {
+	/// Base class for a seam estimator.
+	pub struct Detail_SeamFinder {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for Detail_RotationWarper {
+	opencv_type_boxed! { Detail_SeamFinder }
+
+	impl Drop for Detail_SeamFinder {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_RotationWarper")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_SeamFinder_delete(self.as_raw_mut_Detail_SeamFinder()) };
 		}
+	}
+
+	unsafe impl Send for Detail_SeamFinder {}
+
+	impl Detail_SeamFinder {
+		#[inline]
+		pub fn create_default(typ: i32) -> Result<core::Ptr<crate::stitching::Detail_SeamFinder>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_SeamFinder_createDefault_int(typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::stitching::Detail_SeamFinder>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_SeamFinder]
@@ -10147,43 +10211,12 @@ pub mod stitching {
 
 	}
 
-	/// Base class for a seam estimator.
-	pub struct Detail_SeamFinder {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_SeamFinder }
-
-	impl Drop for Detail_SeamFinder {
+	impl std::fmt::Debug for Detail_SeamFinder {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_SeamFinder_delete(self.as_raw_mut_Detail_SeamFinder()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_SeamFinder")
+				.finish()
 		}
-	}
-
-	unsafe impl Send for Detail_SeamFinder {}
-
-	impl crate::stitching::Detail_SeamFinderTraitConst for Detail_SeamFinder {
-		#[inline] fn as_raw_Detail_SeamFinder(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::stitching::Detail_SeamFinderTrait for Detail_SeamFinder {
-		#[inline] fn as_raw_mut_Detail_SeamFinder(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_SeamFinder, crate::stitching::Detail_SeamFinderTraitConst, as_raw_Detail_SeamFinder, crate::stitching::Detail_SeamFinderTrait, as_raw_mut_Detail_SeamFinder }
-
-	impl Detail_SeamFinder {
-		#[inline]
-		pub fn create_default(typ: i32) -> Result<core::Ptr<crate::stitching::Detail_SeamFinder>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_SeamFinder_createDefault_int(typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::stitching::Detail_SeamFinder>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
 	}
 
 	boxed_cast_descendant! { Detail_SeamFinder, crate::stitching::Detail_DpSeamFinder, cv_detail_SeamFinder_to_Detail_DpSeamFinder }
@@ -10198,12 +10231,40 @@ pub mod stitching {
 
 	boxed_cast_descendant! { Detail_SeamFinder, crate::stitching::Detail_VoronoiSeamFinder, cv_detail_SeamFinder_to_Detail_VoronoiSeamFinder }
 
-	impl std::fmt::Debug for Detail_SeamFinder {
+	impl crate::stitching::Detail_SeamFinderTraitConst for Detail_SeamFinder {
+		#[inline] fn as_raw_Detail_SeamFinder(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::stitching::Detail_SeamFinderTrait for Detail_SeamFinder {
+		#[inline] fn as_raw_mut_Detail_SeamFinder(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_SeamFinder, crate::stitching::Detail_SeamFinderTraitConst, as_raw_Detail_SeamFinder, crate::stitching::Detail_SeamFinderTrait, as_raw_mut_Detail_SeamFinder }
+
+	pub struct Detail_SphericalPortraitProjector {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_SphericalPortraitProjector }
+
+	impl Drop for Detail_SphericalPortraitProjector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_SeamFinder")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_SphericalPortraitProjector_delete(self.as_raw_mut_Detail_SphericalPortraitProjector()) };
 		}
+	}
+
+	unsafe impl Send for Detail_SphericalPortraitProjector {}
+
+	impl Detail_SphericalPortraitProjector {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::stitching::Detail_SphericalPortraitProjector {
+			let ret = unsafe { sys::cv_detail_SphericalPortraitProjector_defaultNew_const() };
+			let ret = unsafe { crate::stitching::Detail_SphericalPortraitProjector::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_SphericalPortraitProjector]
@@ -10236,20 +10297,29 @@ pub mod stitching {
 
 	}
 
-	pub struct Detail_SphericalPortraitProjector {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_SphericalPortraitProjector }
-
-	impl Drop for Detail_SphericalPortraitProjector {
+	impl Default for Detail_SphericalPortraitProjector {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_SphericalPortraitProjector_delete(self.as_raw_mut_Detail_SphericalPortraitProjector()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for Detail_SphericalPortraitProjector {}
+	impl std::fmt::Debug for Detail_SphericalPortraitProjector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_SphericalPortraitProjector")
+				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
+				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
+				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
+				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
+				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
+				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Detail_SphericalPortraitProjector, crate::stitching::Detail_ProjectorBase, cv_detail_SphericalPortraitProjector_to_Detail_ProjectorBase }
 
 	impl crate::stitching::Detail_ProjectorBaseTraitConst for Detail_SphericalPortraitProjector {
 		#[inline] fn as_raw_Detail_ProjectorBase(&self) -> *const c_void { self.as_raw() }
@@ -10271,51 +10341,6 @@ pub mod stitching {
 
 	boxed_ref! { Detail_SphericalPortraitProjector, crate::stitching::Detail_SphericalPortraitProjectorTraitConst, as_raw_Detail_SphericalPortraitProjector, crate::stitching::Detail_SphericalPortraitProjectorTrait, as_raw_mut_Detail_SphericalPortraitProjector }
 
-	impl Detail_SphericalPortraitProjector {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_detail_SphericalPortraitProjector_defaultNew_const()) }
-		}
-
-	}
-
-	boxed_cast_base! { Detail_SphericalPortraitProjector, crate::stitching::Detail_ProjectorBase, cv_detail_SphericalPortraitProjector_to_Detail_ProjectorBase }
-
-	impl std::fmt::Debug for Detail_SphericalPortraitProjector {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_SphericalPortraitProjector")
-				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
-				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
-				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
-				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
-				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
-				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
-				.finish()
-		}
-	}
-
-	impl Default for Detail_SphericalPortraitProjector {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
-	}
-
-	/// Constant methods for [crate::stitching::Detail_SphericalPortraitWarper]
-	pub trait Detail_SphericalPortraitWarperTraitConst {
-		fn as_raw_Detail_SphericalPortraitWarper(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::stitching::Detail_SphericalPortraitWarper]
-	pub trait Detail_SphericalPortraitWarperTrait: crate::stitching::Detail_SphericalPortraitWarperTraitConst {
-		fn as_raw_mut_Detail_SphericalPortraitWarper(&mut self) -> *mut c_void;
-
-	}
-
 	pub struct Detail_SphericalPortraitWarper {
 		ptr: *mut c_void,
 	}
@@ -10330,6 +10355,41 @@ pub mod stitching {
 	}
 
 	unsafe impl Send for Detail_SphericalPortraitWarper {}
+
+	impl Detail_SphericalPortraitWarper {
+		#[inline]
+		pub fn new(scale: f32) -> Result<crate::stitching::Detail_SphericalPortraitWarper> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_SphericalPortraitWarper_SphericalPortraitWarper_float(scale, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_SphericalPortraitWarper::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [crate::stitching::Detail_SphericalPortraitWarper]
+	pub trait Detail_SphericalPortraitWarperTraitConst {
+		fn as_raw_Detail_SphericalPortraitWarper(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::stitching::Detail_SphericalPortraitWarper]
+	pub trait Detail_SphericalPortraitWarperTrait: crate::stitching::Detail_SphericalPortraitWarperTraitConst {
+		fn as_raw_mut_Detail_SphericalPortraitWarper(&mut self) -> *mut c_void;
+
+	}
+
+	impl std::fmt::Debug for Detail_SphericalPortraitWarper {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_SphericalPortraitWarper")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Detail_SphericalPortraitWarper, crate::stitching::Detail_RotationWarper, cv_detail_SphericalPortraitWarper_to_Detail_RotationWarper }
 
 	impl crate::stitching::Detail_RotationWarperTraitConst for Detail_SphericalPortraitWarper {
 		#[inline] fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.as_raw() }
@@ -10351,27 +10411,30 @@ pub mod stitching {
 
 	boxed_ref! { Detail_SphericalPortraitWarper, crate::stitching::Detail_SphericalPortraitWarperTraitConst, as_raw_Detail_SphericalPortraitWarper, crate::stitching::Detail_SphericalPortraitWarperTrait, as_raw_mut_Detail_SphericalPortraitWarper }
 
-	impl Detail_SphericalPortraitWarper {
-		#[inline]
-		pub fn new(scale: f32) -> Result<crate::stitching::Detail_SphericalPortraitWarper> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_SphericalPortraitWarper_SphericalPortraitWarper_float(scale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_SphericalPortraitWarper::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	pub struct Detail_SphericalProjector {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { Detail_SphericalPortraitWarper, crate::stitching::Detail_RotationWarper, cv_detail_SphericalPortraitWarper_to_Detail_RotationWarper }
+	opencv_type_boxed! { Detail_SphericalProjector }
 
-	impl std::fmt::Debug for Detail_SphericalPortraitWarper {
+	impl Drop for Detail_SphericalProjector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_SphericalPortraitWarper")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_SphericalProjector_delete(self.as_raw_mut_Detail_SphericalProjector()) };
 		}
+	}
+
+	unsafe impl Send for Detail_SphericalProjector {}
+
+	impl Detail_SphericalProjector {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::stitching::Detail_SphericalProjector {
+			let ret = unsafe { sys::cv_detail_SphericalProjector_defaultNew_const() };
+			let ret = unsafe { crate::stitching::Detail_SphericalProjector::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_SphericalProjector]
@@ -10404,20 +10467,36 @@ pub mod stitching {
 
 	}
 
-	pub struct Detail_SphericalProjector {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_SphericalProjector }
-
-	impl Drop for Detail_SphericalProjector {
+	impl Default for Detail_SphericalProjector {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_SphericalProjector_delete(self.as_raw_mut_Detail_SphericalProjector()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for Detail_SphericalProjector {}
+	impl Clone for Detail_SphericalProjector {
+		#[inline]
+		fn clone(&self) -> Self {
+			unsafe { Self::from_raw(sys::cv_detail_SphericalProjector_implicitClone_const(self.as_raw_Detail_SphericalProjector())) }
+		}
+	}
+
+	impl std::fmt::Debug for Detail_SphericalProjector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_SphericalProjector")
+				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
+				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
+				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
+				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
+				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
+				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Detail_SphericalProjector, crate::stitching::Detail_ProjectorBase, cv_detail_SphericalProjector_to_Detail_ProjectorBase }
 
 	impl crate::stitching::Detail_ProjectorBaseTraitConst for Detail_SphericalProjector {
 		#[inline] fn as_raw_Detail_ProjectorBase(&self) -> *const c_void { self.as_raw() }
@@ -10439,44 +10518,42 @@ pub mod stitching {
 
 	boxed_ref! { Detail_SphericalProjector, crate::stitching::Detail_SphericalProjectorTraitConst, as_raw_Detail_SphericalProjector, crate::stitching::Detail_SphericalProjectorTrait, as_raw_mut_Detail_SphericalProjector }
 
-	impl Detail_SphericalProjector {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_detail_SphericalProjector_defaultNew_const()) }
-		}
-
+	/// Warper that maps an image onto the unit sphere located at the origin.
+	///
+	/// Projects image onto unit sphere with origin at (0, 0, 0) and radius scale, measured in pixels.
+	/// A 360 panorama would therefore have a resulting width of 2 * scale * PI pixels.
+	/// Poles are located at (0, -1, 0) and (0, 1, 0) points.
+	pub struct Detail_SphericalWarper {
+		ptr: *mut c_void,
 	}
 
-	impl Clone for Detail_SphericalProjector {
-		#[inline]
-		fn clone(&self) -> Self {
-			unsafe { Self::from_raw(sys::cv_detail_SphericalProjector_implicitClone_const(self.as_raw_Detail_SphericalProjector())) }
-		}
-	}
+	opencv_type_boxed! { Detail_SphericalWarper }
 
-	boxed_cast_base! { Detail_SphericalProjector, crate::stitching::Detail_ProjectorBase, cv_detail_SphericalProjector_to_Detail_ProjectorBase }
-
-	impl std::fmt::Debug for Detail_SphericalProjector {
+	impl Drop for Detail_SphericalWarper {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_SphericalProjector")
-				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
-				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
-				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
-				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
-				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
-				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_SphericalWarper_delete(self.as_raw_mut_Detail_SphericalWarper()) };
 		}
 	}
 
-	impl Default for Detail_SphericalProjector {
+	unsafe impl Send for Detail_SphericalWarper {}
+
+	impl Detail_SphericalWarper {
+		/// Construct an instance of the spherical warper class.
+		///
+		/// ## Parameters
+		/// * scale: Radius of the projected sphere, in pixels. An image spanning the
+		///              whole sphere will have a width of 2 * scale * PI pixels.
 		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
+		pub fn new(scale: f32) -> Result<crate::stitching::Detail_SphericalWarper> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_SphericalWarper_SphericalWarper_float(scale, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_SphericalWarper::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_SphericalWarper]
@@ -10517,25 +10594,17 @@ pub mod stitching {
 
 	}
 
-	/// Warper that maps an image onto the unit sphere located at the origin.
-	///
-	/// Projects image onto unit sphere with origin at (0, 0, 0) and radius scale, measured in pixels.
-	/// A 360 panorama would therefore have a resulting width of 2 * scale * PI pixels.
-	/// Poles are located at (0, -1, 0) and (0, 1, 0) points.
-	pub struct Detail_SphericalWarper {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_SphericalWarper }
-
-	impl Drop for Detail_SphericalWarper {
+	impl std::fmt::Debug for Detail_SphericalWarper {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_SphericalWarper_delete(self.as_raw_mut_Detail_SphericalWarper()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_SphericalWarper")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for Detail_SphericalWarper {}
+	boxed_cast_base! { Detail_SphericalWarper, crate::stitching::Detail_RotationWarper, cv_detail_SphericalWarper_to_Detail_RotationWarper }
+
+	boxed_cast_descendant! { Detail_SphericalWarper, crate::stitching::Detail_SphericalWarperGpu, cv_detail_SphericalWarper_to_Detail_SphericalWarperGpu }
 
 	impl crate::stitching::Detail_RotationWarperTraitConst for Detail_SphericalWarper {
 		#[inline] fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.as_raw() }
@@ -10557,34 +10626,32 @@ pub mod stitching {
 
 	boxed_ref! { Detail_SphericalWarper, crate::stitching::Detail_SphericalWarperTraitConst, as_raw_Detail_SphericalWarper, crate::stitching::Detail_SphericalWarperTrait, as_raw_mut_Detail_SphericalWarper }
 
-	impl Detail_SphericalWarper {
-		/// Construct an instance of the spherical warper class.
-		///
-		/// ## Parameters
-		/// * scale: Radius of the projected sphere, in pixels. An image spanning the
-		///              whole sphere will have a width of 2 * scale * PI pixels.
+	pub struct Detail_SphericalWarperGpu {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_SphericalWarperGpu }
+
+	impl Drop for Detail_SphericalWarperGpu {
 		#[inline]
-		pub fn new(scale: f32) -> Result<crate::stitching::Detail_SphericalWarper> {
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_SphericalWarperGpu_delete(self.as_raw_mut_Detail_SphericalWarperGpu()) };
+		}
+	}
+
+	unsafe impl Send for Detail_SphericalWarperGpu {}
+
+	impl Detail_SphericalWarperGpu {
+		#[inline]
+		pub fn new(scale: f32) -> Result<crate::stitching::Detail_SphericalWarperGpu> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_SphericalWarper_SphericalWarper_float(scale, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_detail_SphericalWarperGpu_SphericalWarperGpu_float(scale, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_SphericalWarper::opencv_from_extern(ret) };
+			let ret = unsafe { crate::stitching::Detail_SphericalWarperGpu::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	boxed_cast_descendant! { Detail_SphericalWarper, crate::stitching::Detail_SphericalWarperGpu, cv_detail_SphericalWarper_to_Detail_SphericalWarperGpu }
-
-	boxed_cast_base! { Detail_SphericalWarper, crate::stitching::Detail_RotationWarper, cv_detail_SphericalWarper_to_Detail_RotationWarper }
-
-	impl std::fmt::Debug for Detail_SphericalWarper {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_SphericalWarper")
-				.finish()
-		}
 	}
 
 	/// Constant methods for [crate::stitching::Detail_SphericalWarperGpu]
@@ -10647,20 +10714,17 @@ pub mod stitching {
 
 	}
 
-	pub struct Detail_SphericalWarperGpu {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_SphericalWarperGpu }
-
-	impl Drop for Detail_SphericalWarperGpu {
+	impl std::fmt::Debug for Detail_SphericalWarperGpu {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_SphericalWarperGpu_delete(self.as_raw_mut_Detail_SphericalWarperGpu()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_SphericalWarperGpu")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for Detail_SphericalWarperGpu {}
+	boxed_cast_base! { Detail_SphericalWarperGpu, crate::stitching::Detail_RotationWarper, cv_detail_SphericalWarperGpu_to_Detail_RotationWarper }
+
+	boxed_cast_base! { Detail_SphericalWarperGpu, crate::stitching::Detail_SphericalWarper, cv_detail_SphericalWarperGpu_to_Detail_SphericalWarper }
 
 	impl crate::stitching::Detail_RotationWarperTraitConst for Detail_SphericalWarperGpu {
 		#[inline] fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.as_raw() }
@@ -10692,29 +10756,30 @@ pub mod stitching {
 
 	boxed_ref! { Detail_SphericalWarperGpu, crate::stitching::Detail_SphericalWarperGpuTraitConst, as_raw_Detail_SphericalWarperGpu, crate::stitching::Detail_SphericalWarperGpuTrait, as_raw_mut_Detail_SphericalWarperGpu }
 
-	impl Detail_SphericalWarperGpu {
-		#[inline]
-		pub fn new(scale: f32) -> Result<crate::stitching::Detail_SphericalWarperGpu> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_SphericalWarperGpu_SphericalWarperGpu_float(scale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_SphericalWarperGpu::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	pub struct Detail_StereographicProjector {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { Detail_SphericalWarperGpu, crate::stitching::Detail_RotationWarper, cv_detail_SphericalWarperGpu_to_Detail_RotationWarper }
+	opencv_type_boxed! { Detail_StereographicProjector }
 
-	boxed_cast_base! { Detail_SphericalWarperGpu, crate::stitching::Detail_SphericalWarper, cv_detail_SphericalWarperGpu_to_Detail_SphericalWarper }
-
-	impl std::fmt::Debug for Detail_SphericalWarperGpu {
+	impl Drop for Detail_StereographicProjector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_SphericalWarperGpu")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_StereographicProjector_delete(self.as_raw_mut_Detail_StereographicProjector()) };
 		}
+	}
+
+	unsafe impl Send for Detail_StereographicProjector {}
+
+	impl Detail_StereographicProjector {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::stitching::Detail_StereographicProjector {
+			let ret = unsafe { sys::cv_detail_StereographicProjector_defaultNew_const() };
+			let ret = unsafe { crate::stitching::Detail_StereographicProjector::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_StereographicProjector]
@@ -10747,20 +10812,29 @@ pub mod stitching {
 
 	}
 
-	pub struct Detail_StereographicProjector {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_StereographicProjector }
-
-	impl Drop for Detail_StereographicProjector {
+	impl Default for Detail_StereographicProjector {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_StereographicProjector_delete(self.as_raw_mut_Detail_StereographicProjector()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for Detail_StereographicProjector {}
+	impl std::fmt::Debug for Detail_StereographicProjector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_StereographicProjector")
+				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
+				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
+				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
+				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
+				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
+				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Detail_StereographicProjector, crate::stitching::Detail_ProjectorBase, cv_detail_StereographicProjector_to_Detail_ProjectorBase }
 
 	impl crate::stitching::Detail_ProjectorBaseTraitConst for Detail_StereographicProjector {
 		#[inline] fn as_raw_Detail_ProjectorBase(&self) -> *const c_void { self.as_raw() }
@@ -10782,51 +10856,6 @@ pub mod stitching {
 
 	boxed_ref! { Detail_StereographicProjector, crate::stitching::Detail_StereographicProjectorTraitConst, as_raw_Detail_StereographicProjector, crate::stitching::Detail_StereographicProjectorTrait, as_raw_mut_Detail_StereographicProjector }
 
-	impl Detail_StereographicProjector {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_detail_StereographicProjector_defaultNew_const()) }
-		}
-
-	}
-
-	boxed_cast_base! { Detail_StereographicProjector, crate::stitching::Detail_ProjectorBase, cv_detail_StereographicProjector_to_Detail_ProjectorBase }
-
-	impl std::fmt::Debug for Detail_StereographicProjector {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_StereographicProjector")
-				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
-				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
-				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
-				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
-				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
-				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
-				.finish()
-		}
-	}
-
-	impl Default for Detail_StereographicProjector {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
-	}
-
-	/// Constant methods for [crate::stitching::Detail_StereographicWarper]
-	pub trait Detail_StereographicWarperTraitConst {
-		fn as_raw_Detail_StereographicWarper(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::stitching::Detail_StereographicWarper]
-	pub trait Detail_StereographicWarperTrait: crate::stitching::Detail_StereographicWarperTraitConst {
-		fn as_raw_mut_Detail_StereographicWarper(&mut self) -> *mut c_void;
-
-	}
-
 	pub struct Detail_StereographicWarper {
 		ptr: *mut c_void,
 	}
@@ -10841,6 +10870,41 @@ pub mod stitching {
 	}
 
 	unsafe impl Send for Detail_StereographicWarper {}
+
+	impl Detail_StereographicWarper {
+		#[inline]
+		pub fn new(scale: f32) -> Result<crate::stitching::Detail_StereographicWarper> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_StereographicWarper_StereographicWarper_float(scale, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_StereographicWarper::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [crate::stitching::Detail_StereographicWarper]
+	pub trait Detail_StereographicWarperTraitConst {
+		fn as_raw_Detail_StereographicWarper(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::stitching::Detail_StereographicWarper]
+	pub trait Detail_StereographicWarperTrait: crate::stitching::Detail_StereographicWarperTraitConst {
+		fn as_raw_mut_Detail_StereographicWarper(&mut self) -> *mut c_void;
+
+	}
+
+	impl std::fmt::Debug for Detail_StereographicWarper {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_StereographicWarper")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Detail_StereographicWarper, crate::stitching::Detail_RotationWarper, cv_detail_StereographicWarper_to_Detail_RotationWarper }
 
 	impl crate::stitching::Detail_RotationWarperTraitConst for Detail_StereographicWarper {
 		#[inline] fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.as_raw() }
@@ -10862,27 +10926,30 @@ pub mod stitching {
 
 	boxed_ref! { Detail_StereographicWarper, crate::stitching::Detail_StereographicWarperTraitConst, as_raw_Detail_StereographicWarper, crate::stitching::Detail_StereographicWarperTrait, as_raw_mut_Detail_StereographicWarper }
 
-	impl Detail_StereographicWarper {
-		#[inline]
-		pub fn new(scale: f32) -> Result<crate::stitching::Detail_StereographicWarper> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_StereographicWarper_StereographicWarper_float(scale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_StereographicWarper::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	pub struct Detail_TransverseMercatorProjector {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { Detail_StereographicWarper, crate::stitching::Detail_RotationWarper, cv_detail_StereographicWarper_to_Detail_RotationWarper }
+	opencv_type_boxed! { Detail_TransverseMercatorProjector }
 
-	impl std::fmt::Debug for Detail_StereographicWarper {
+	impl Drop for Detail_TransverseMercatorProjector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_StereographicWarper")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_TransverseMercatorProjector_delete(self.as_raw_mut_Detail_TransverseMercatorProjector()) };
 		}
+	}
+
+	unsafe impl Send for Detail_TransverseMercatorProjector {}
+
+	impl Detail_TransverseMercatorProjector {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::stitching::Detail_TransverseMercatorProjector {
+			let ret = unsafe { sys::cv_detail_TransverseMercatorProjector_defaultNew_const() };
+			let ret = unsafe { crate::stitching::Detail_TransverseMercatorProjector::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_TransverseMercatorProjector]
@@ -10915,20 +10982,29 @@ pub mod stitching {
 
 	}
 
-	pub struct Detail_TransverseMercatorProjector {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_TransverseMercatorProjector }
-
-	impl Drop for Detail_TransverseMercatorProjector {
+	impl Default for Detail_TransverseMercatorProjector {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_TransverseMercatorProjector_delete(self.as_raw_mut_Detail_TransverseMercatorProjector()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for Detail_TransverseMercatorProjector {}
+	impl std::fmt::Debug for Detail_TransverseMercatorProjector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_TransverseMercatorProjector")
+				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
+				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
+				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
+				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
+				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
+				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Detail_TransverseMercatorProjector, crate::stitching::Detail_ProjectorBase, cv_detail_TransverseMercatorProjector_to_Detail_ProjectorBase }
 
 	impl crate::stitching::Detail_ProjectorBaseTraitConst for Detail_TransverseMercatorProjector {
 		#[inline] fn as_raw_Detail_ProjectorBase(&self) -> *const c_void { self.as_raw() }
@@ -10950,51 +11026,6 @@ pub mod stitching {
 
 	boxed_ref! { Detail_TransverseMercatorProjector, crate::stitching::Detail_TransverseMercatorProjectorTraitConst, as_raw_Detail_TransverseMercatorProjector, crate::stitching::Detail_TransverseMercatorProjectorTrait, as_raw_mut_Detail_TransverseMercatorProjector }
 
-	impl Detail_TransverseMercatorProjector {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_detail_TransverseMercatorProjector_defaultNew_const()) }
-		}
-
-	}
-
-	boxed_cast_base! { Detail_TransverseMercatorProjector, crate::stitching::Detail_ProjectorBase, cv_detail_TransverseMercatorProjector_to_Detail_ProjectorBase }
-
-	impl std::fmt::Debug for Detail_TransverseMercatorProjector {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_TransverseMercatorProjector")
-				.field("scale", &crate::stitching::Detail_ProjectorBaseTraitConst::scale(self))
-				.field("k", &crate::stitching::Detail_ProjectorBaseTraitConst::k(self))
-				.field("rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::rinv(self))
-				.field("r_kinv", &crate::stitching::Detail_ProjectorBaseTraitConst::r_kinv(self))
-				.field("k_rinv", &crate::stitching::Detail_ProjectorBaseTraitConst::k_rinv(self))
-				.field("t", &crate::stitching::Detail_ProjectorBaseTraitConst::t(self))
-				.finish()
-		}
-	}
-
-	impl Default for Detail_TransverseMercatorProjector {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
-	}
-
-	/// Constant methods for [crate::stitching::Detail_TransverseMercatorWarper]
-	pub trait Detail_TransverseMercatorWarperTraitConst {
-		fn as_raw_Detail_TransverseMercatorWarper(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::stitching::Detail_TransverseMercatorWarper]
-	pub trait Detail_TransverseMercatorWarperTrait: crate::stitching::Detail_TransverseMercatorWarperTraitConst {
-		fn as_raw_mut_Detail_TransverseMercatorWarper(&mut self) -> *mut c_void;
-
-	}
-
 	pub struct Detail_TransverseMercatorWarper {
 		ptr: *mut c_void,
 	}
@@ -11009,6 +11040,41 @@ pub mod stitching {
 	}
 
 	unsafe impl Send for Detail_TransverseMercatorWarper {}
+
+	impl Detail_TransverseMercatorWarper {
+		#[inline]
+		pub fn new(scale: f32) -> Result<crate::stitching::Detail_TransverseMercatorWarper> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_detail_TransverseMercatorWarper_TransverseMercatorWarper_float(scale, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::stitching::Detail_TransverseMercatorWarper::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [crate::stitching::Detail_TransverseMercatorWarper]
+	pub trait Detail_TransverseMercatorWarperTraitConst {
+		fn as_raw_Detail_TransverseMercatorWarper(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::stitching::Detail_TransverseMercatorWarper]
+	pub trait Detail_TransverseMercatorWarperTrait: crate::stitching::Detail_TransverseMercatorWarperTraitConst {
+		fn as_raw_mut_Detail_TransverseMercatorWarper(&mut self) -> *mut c_void;
+
+	}
+
+	impl std::fmt::Debug for Detail_TransverseMercatorWarper {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_TransverseMercatorWarper")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Detail_TransverseMercatorWarper, crate::stitching::Detail_RotationWarper, cv_detail_TransverseMercatorWarper_to_Detail_RotationWarper }
 
 	impl crate::stitching::Detail_RotationWarperTraitConst for Detail_TransverseMercatorWarper {
 		#[inline] fn as_raw_Detail_RotationWarper(&self) -> *const c_void { self.as_raw() }
@@ -11030,27 +11096,31 @@ pub mod stitching {
 
 	boxed_ref! { Detail_TransverseMercatorWarper, crate::stitching::Detail_TransverseMercatorWarperTraitConst, as_raw_Detail_TransverseMercatorWarper, crate::stitching::Detail_TransverseMercatorWarperTrait, as_raw_mut_Detail_TransverseMercatorWarper }
 
-	impl Detail_TransverseMercatorWarper {
-		#[inline]
-		pub fn new(scale: f32) -> Result<crate::stitching::Detail_TransverseMercatorWarper> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_detail_TransverseMercatorWarper_TransverseMercatorWarper_float(scale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::stitching::Detail_TransverseMercatorWarper::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// Voronoi diagram-based seam estimator.
+	pub struct Detail_VoronoiSeamFinder {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { Detail_TransverseMercatorWarper, crate::stitching::Detail_RotationWarper, cv_detail_TransverseMercatorWarper_to_Detail_RotationWarper }
+	opencv_type_boxed! { Detail_VoronoiSeamFinder }
 
-	impl std::fmt::Debug for Detail_TransverseMercatorWarper {
+	impl Drop for Detail_VoronoiSeamFinder {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_TransverseMercatorWarper")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_VoronoiSeamFinder_delete(self.as_raw_mut_Detail_VoronoiSeamFinder()) };
 		}
+	}
+
+	unsafe impl Send for Detail_VoronoiSeamFinder {}
+
+	impl Detail_VoronoiSeamFinder {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::stitching::Detail_VoronoiSeamFinder {
+			let ret = unsafe { sys::cv_detail_VoronoiSeamFinder_defaultNew_const() };
+			let ret = unsafe { crate::stitching::Detail_VoronoiSeamFinder::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::stitching::Detail_VoronoiSeamFinder]
@@ -11083,21 +11153,25 @@ pub mod stitching {
 
 	}
 
-	/// Voronoi diagram-based seam estimator.
-	pub struct Detail_VoronoiSeamFinder {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_VoronoiSeamFinder }
-
-	impl Drop for Detail_VoronoiSeamFinder {
+	impl Default for Detail_VoronoiSeamFinder {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_VoronoiSeamFinder_delete(self.as_raw_mut_Detail_VoronoiSeamFinder()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for Detail_VoronoiSeamFinder {}
+	impl std::fmt::Debug for Detail_VoronoiSeamFinder {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_VoronoiSeamFinder")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Detail_VoronoiSeamFinder, crate::stitching::Detail_PairwiseSeamFinder, cv_detail_VoronoiSeamFinder_to_Detail_PairwiseSeamFinder }
+
+	boxed_cast_base! { Detail_VoronoiSeamFinder, crate::stitching::Detail_SeamFinder, cv_detail_VoronoiSeamFinder_to_Detail_SeamFinder }
 
 	impl crate::stitching::Detail_PairwiseSeamFinderTraitConst for Detail_VoronoiSeamFinder {
 		#[inline] fn as_raw_Detail_PairwiseSeamFinder(&self) -> *const c_void { self.as_raw() }
@@ -11129,32 +11203,4 @@ pub mod stitching {
 
 	boxed_ref! { Detail_VoronoiSeamFinder, crate::stitching::Detail_VoronoiSeamFinderTraitConst, as_raw_Detail_VoronoiSeamFinder, crate::stitching::Detail_VoronoiSeamFinderTrait, as_raw_mut_Detail_VoronoiSeamFinder }
 
-	impl Detail_VoronoiSeamFinder {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_detail_VoronoiSeamFinder_defaultNew_const()) }
-		}
-
-	}
-
-	boxed_cast_base! { Detail_VoronoiSeamFinder, crate::stitching::Detail_PairwiseSeamFinder, cv_detail_VoronoiSeamFinder_to_Detail_PairwiseSeamFinder }
-
-	boxed_cast_base! { Detail_VoronoiSeamFinder, crate::stitching::Detail_SeamFinder, cv_detail_VoronoiSeamFinder_to_Detail_SeamFinder }
-
-	impl std::fmt::Debug for Detail_VoronoiSeamFinder {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_VoronoiSeamFinder")
-				.finish()
-		}
-	}
-
-	impl Default for Detail_VoronoiSeamFinder {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
-	}
 }

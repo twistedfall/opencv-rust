@@ -1644,6 +1644,80 @@ pub mod imgcodecs {
 		Ok(ret)
 	}
 
+	/// Represents an animation with multiple frames.
+	/// The `Animation` struct is designed to store and manage data for animated sequences such as those from animated formats (e.g., GIF, AVIF, APNG, WebP).
+	/// It provides support for looping, background color settings, frame timing, and frame storage.
+	pub struct Animation {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Animation }
+
+	impl Drop for Animation {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_Animation_delete(self.as_raw_mut_Animation()) };
+		}
+	}
+
+	unsafe impl Send for Animation {}
+
+	impl Animation {
+		/// Constructs an Animation object with optional loop count and background color.
+		///
+		/// ## Parameters
+		/// * loopCount: An integer representing the number of times the animation should loop:
+		/// - `0` (default) indicates infinite looping, meaning the animation will replay continuously.
+		/// - Positive values denote finite repeat counts, allowing the animation to play a limited number of times.
+		/// - If a negative value or a value beyond the maximum of `0xffff` (65535) is provided, it is reset to `0`
+		/// (infinite looping) to maintain valid bounds.
+		///
+		/// * bgColor: A `Scalar` object representing the background color in BGRA format:
+		/// - Defaults to `Scalar()`, indicating an empty color (usually transparent if supported).
+		/// - This background color provides a solid fill behind frames that have transparency, ensuring a consistent display appearance.
+		///
+		/// ## C++ default parameters
+		/// * loop_count: 0
+		/// * bg_color: Scalar()
+		#[inline]
+		pub fn new(loop_count: i32, bg_color: core::Scalar) -> Result<crate::imgcodecs::Animation> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Animation_Animation_int_Scalar(loop_count, &bg_color, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::imgcodecs::Animation::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Constructs an Animation object with optional loop count and background color.
+		///
+		/// ## Parameters
+		/// * loopCount: An integer representing the number of times the animation should loop:
+		/// - `0` (default) indicates infinite looping, meaning the animation will replay continuously.
+		/// - Positive values denote finite repeat counts, allowing the animation to play a limited number of times.
+		/// - If a negative value or a value beyond the maximum of `0xffff` (65535) is provided, it is reset to `0`
+		/// (infinite looping) to maintain valid bounds.
+		///
+		/// * bgColor: A `Scalar` object representing the background color in BGRA format:
+		/// - Defaults to `Scalar()`, indicating an empty color (usually transparent if supported).
+		/// - This background color provides a solid fill behind frames that have transparency, ensuring a consistent display appearance.
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * loop_count: 0
+		/// * bg_color: Scalar()
+		#[inline]
+		pub fn new_def() -> Result<crate::imgcodecs::Animation> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Animation_Animation(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::imgcodecs::Animation::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
 	/// Constant methods for [crate::imgcodecs::Animation]
 	pub trait AnimationTraitConst {
 		fn as_raw_Animation(&self) -> *const c_void;
@@ -1716,90 +1790,6 @@ pub mod imgcodecs {
 
 	}
 
-	/// Represents an animation with multiple frames.
-	/// The `Animation` struct is designed to store and manage data for animated sequences such as those from animated formats (e.g., GIF, AVIF, APNG, WebP).
-	/// It provides support for looping, background color settings, frame timing, and frame storage.
-	pub struct Animation {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Animation }
-
-	impl Drop for Animation {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_Animation_delete(self.as_raw_mut_Animation()) };
-		}
-	}
-
-	unsafe impl Send for Animation {}
-
-	impl crate::imgcodecs::AnimationTraitConst for Animation {
-		#[inline] fn as_raw_Animation(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::imgcodecs::AnimationTrait for Animation {
-		#[inline] fn as_raw_mut_Animation(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Animation, crate::imgcodecs::AnimationTraitConst, as_raw_Animation, crate::imgcodecs::AnimationTrait, as_raw_mut_Animation }
-
-	impl Animation {
-		/// Constructs an Animation object with optional loop count and background color.
-		///
-		/// ## Parameters
-		/// * loopCount: An integer representing the number of times the animation should loop:
-		/// - `0` (default) indicates infinite looping, meaning the animation will replay continuously.
-		/// - Positive values denote finite repeat counts, allowing the animation to play a limited number of times.
-		/// - If a negative value or a value beyond the maximum of `0xffff` (65535) is provided, it is reset to `0`
-		/// (infinite looping) to maintain valid bounds.
-		///
-		/// * bgColor: A `Scalar` object representing the background color in BGRA format:
-		/// - Defaults to `Scalar()`, indicating an empty color (usually transparent if supported).
-		/// - This background color provides a solid fill behind frames that have transparency, ensuring a consistent display appearance.
-		///
-		/// ## C++ default parameters
-		/// * loop_count: 0
-		/// * bg_color: Scalar()
-		#[inline]
-		pub fn new(loop_count: i32, bg_color: core::Scalar) -> Result<crate::imgcodecs::Animation> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Animation_Animation_int_Scalar(loop_count, &bg_color, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::imgcodecs::Animation::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Constructs an Animation object with optional loop count and background color.
-		///
-		/// ## Parameters
-		/// * loopCount: An integer representing the number of times the animation should loop:
-		/// - `0` (default) indicates infinite looping, meaning the animation will replay continuously.
-		/// - Positive values denote finite repeat counts, allowing the animation to play a limited number of times.
-		/// - If a negative value or a value beyond the maximum of `0xffff` (65535) is provided, it is reset to `0`
-		/// (infinite looping) to maintain valid bounds.
-		///
-		/// * bgColor: A `Scalar` object representing the background color in BGRA format:
-		/// - Defaults to `Scalar()`, indicating an empty color (usually transparent if supported).
-		/// - This background color provides a solid fill behind frames that have transparency, ensuring a consistent display appearance.
-		///
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * loop_count: 0
-		/// * bg_color: Scalar()
-		#[inline]
-		pub fn new_def() -> Result<crate::imgcodecs::Animation> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Animation_Animation(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::imgcodecs::Animation::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
 	impl Clone for Animation {
 		#[inline]
 		fn clone(&self) -> Self {
@@ -1817,6 +1807,67 @@ pub mod imgcodecs {
 				.field("frames", &crate::imgcodecs::AnimationTraitConst::frames(self))
 				.finish()
 		}
+	}
+
+	impl crate::imgcodecs::AnimationTraitConst for Animation {
+		#[inline] fn as_raw_Animation(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::imgcodecs::AnimationTrait for Animation {
+		#[inline] fn as_raw_mut_Animation(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Animation, crate::imgcodecs::AnimationTraitConst, as_raw_Animation, crate::imgcodecs::AnimationTrait, as_raw_mut_Animation }
+
+	/// To read multi-page images on demand
+	///
+	/// The ImageCollection class provides iterator API to read multi-page images on demand. Create iterator
+	/// to the collection of the images and iterate over the collection. Decode the necessary page with operator*.
+	///
+	/// The performance of page decoding is O(1) if collection is increment sequentially. If the user wants to access random page,
+	/// then the time Complexity is O(n) because the collection has to be reinitialized every time in order to go to the correct page.
+	/// However, the intermediate pages are not decoded during the process, so typically it's quite fast.
+	/// This is required because multi-page codecs does not support going backwards.
+	/// After decoding the one page, it is stored inside the collection cache. Hence, trying to get Mat object from already decoded page is O(1).
+	/// If you need memory, you can use .releaseCache() method to release cached index.
+	/// The space complexity is O(n) if all pages are decoded into memory. The user is able to decode and release images on demand.
+	pub struct ImageCollection {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { ImageCollection }
+
+	impl Drop for ImageCollection {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_ImageCollection_delete(self.as_raw_mut_ImageCollection()) };
+		}
+	}
+
+	unsafe impl Send for ImageCollection {}
+
+	impl ImageCollection {
+		#[inline]
+		pub fn default() -> Result<crate::imgcodecs::ImageCollection> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ImageCollection_ImageCollection(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::imgcodecs::ImageCollection::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn new(filename: &str, flags: i32) -> Result<crate::imgcodecs::ImageCollection> {
+			extern_container_arg!(filename);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ImageCollection_ImageCollection_const_StringR_int(filename.opencv_as_extern(), flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::imgcodecs::ImageCollection::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::imgcodecs::ImageCollection]
@@ -1899,32 +1950,13 @@ pub mod imgcodecs {
 
 	}
 
-	/// To read multi-page images on demand
-	///
-	/// The ImageCollection class provides iterator API to read multi-page images on demand. Create iterator
-	/// to the collection of the images and iterate over the collection. Decode the necessary page with operator*.
-	///
-	/// The performance of page decoding is O(1) if collection is increment sequentially. If the user wants to access random page,
-	/// then the time Complexity is O(n) because the collection has to be reinitialized every time in order to go to the correct page.
-	/// However, the intermediate pages are not decoded during the process, so typically it's quite fast.
-	/// This is required because multi-page codecs does not support going backwards.
-	/// After decoding the one page, it is stored inside the collection cache. Hence, trying to get Mat object from already decoded page is O(1).
-	/// If you need memory, you can use .releaseCache() method to release cached index.
-	/// The space complexity is O(n) if all pages are decoded into memory. The user is able to decode and release images on demand.
-	pub struct ImageCollection {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { ImageCollection }
-
-	impl Drop for ImageCollection {
+	impl std::fmt::Debug for ImageCollection {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ImageCollection_delete(self.as_raw_mut_ImageCollection()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ImageCollection")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for ImageCollection {}
 
 	impl crate::imgcodecs::ImageCollectionTraitConst for ImageCollection {
 		#[inline] fn as_raw_ImageCollection(&self) -> *const c_void { self.as_raw() }
@@ -1936,36 +1968,42 @@ pub mod imgcodecs {
 
 	boxed_ref! { ImageCollection, crate::imgcodecs::ImageCollectionTraitConst, as_raw_ImageCollection, crate::imgcodecs::ImageCollectionTrait, as_raw_mut_ImageCollection }
 
-	impl ImageCollection {
-		#[inline]
-		pub fn default() -> Result<crate::imgcodecs::ImageCollection> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ImageCollection_ImageCollection(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::imgcodecs::ImageCollection::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn new(filename: &str, flags: i32) -> Result<crate::imgcodecs::ImageCollection> {
-			extern_container_arg!(filename);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ImageCollection_ImageCollection_const_StringR_int(filename.opencv_as_extern(), flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::imgcodecs::ImageCollection::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	pub struct ImageCollection_iterator {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for ImageCollection {
+	opencv_type_boxed! { ImageCollection_iterator }
+
+	impl Drop for ImageCollection_iterator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("ImageCollection")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_ImageCollection_iterator_delete(self.as_raw_mut_ImageCollection_iterator()) };
 		}
+	}
+
+	unsafe impl Send for ImageCollection_iterator {}
+
+	impl ImageCollection_iterator {
+		#[inline]
+		pub fn new(col: &mut impl crate::imgcodecs::ImageCollectionTrait) -> Result<crate::imgcodecs::ImageCollection_iterator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ImageCollection_iterator_iterator_ImageCollectionX(col.as_raw_mut_ImageCollection(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::imgcodecs::ImageCollection_iterator::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn new_1(col: &mut impl crate::imgcodecs::ImageCollectionTrait, end: i32) -> Result<crate::imgcodecs::ImageCollection_iterator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ImageCollection_iterator_iterator_ImageCollectionX_int(col.as_raw_mut_ImageCollection(), end, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::imgcodecs::ImageCollection_iterator::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::imgcodecs::ImageCollection_iterator]
@@ -2000,20 +2038,13 @@ pub mod imgcodecs {
 
 	}
 
-	pub struct ImageCollection_iterator {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { ImageCollection_iterator }
-
-	impl Drop for ImageCollection_iterator {
+	impl std::fmt::Debug for ImageCollection_iterator {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ImageCollection_iterator_delete(self.as_raw_mut_ImageCollection_iterator()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ImageCollection_iterator")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for ImageCollection_iterator {}
 
 	impl crate::imgcodecs::ImageCollection_iteratorTraitConst for ImageCollection_iterator {
 		#[inline] fn as_raw_ImageCollection_iterator(&self) -> *const c_void { self.as_raw() }
@@ -2025,34 +2056,4 @@ pub mod imgcodecs {
 
 	boxed_ref! { ImageCollection_iterator, crate::imgcodecs::ImageCollection_iteratorTraitConst, as_raw_ImageCollection_iterator, crate::imgcodecs::ImageCollection_iteratorTrait, as_raw_mut_ImageCollection_iterator }
 
-	impl ImageCollection_iterator {
-		#[inline]
-		pub fn new(col: &mut impl crate::imgcodecs::ImageCollectionTrait) -> Result<crate::imgcodecs::ImageCollection_iterator> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ImageCollection_iterator_iterator_ImageCollectionX(col.as_raw_mut_ImageCollection(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::imgcodecs::ImageCollection_iterator::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn new_1(col: &mut impl crate::imgcodecs::ImageCollectionTrait, end: i32) -> Result<crate::imgcodecs::ImageCollection_iterator> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ImageCollection_iterator_iterator_ImageCollectionX_int(col.as_raw_mut_ImageCollection(), end, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::imgcodecs::ImageCollection_iterator::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	impl std::fmt::Debug for ImageCollection_iterator {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("ImageCollection_iterator")
-				.finish()
-		}
-	}
 }

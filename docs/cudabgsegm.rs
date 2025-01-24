@@ -104,6 +104,33 @@ pub mod cudabgsegm {
 		Ok(ret)
 	}
 
+	/// Gaussian Mixture-based Background/Foreground Segmentation Algorithm.
+	///
+	/// The class discriminates between foreground and background pixels by building and maintaining a model
+	/// of the background. Any pixel which does not fit this model is then deemed to be foreground. The
+	/// class implements algorithm described in [MOG2001](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_MOG2001) .
+	/// ## See also
+	/// BackgroundSubtractorMOG
+	///
+	///
+	/// Note:
+	///    *   An example on gaussian mixture based background/foreground segmantation can be found at
+	///        opencv_source_code/samples/gpu/bgfg_segm.cpp
+	pub struct CUDA_BackgroundSubtractorMOG {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { CUDA_BackgroundSubtractorMOG }
+
+	impl Drop for CUDA_BackgroundSubtractorMOG {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_BackgroundSubtractorMOG_delete(self.as_raw_mut_CUDA_BackgroundSubtractorMOG()) };
+		}
+	}
+
+	unsafe impl Send for CUDA_BackgroundSubtractorMOG {}
+
 	/// Constant methods for [crate::cudabgsegm::CUDA_BackgroundSubtractorMOG]
 	pub trait CUDA_BackgroundSubtractorMOGTraitConst: crate::video::BackgroundSubtractorTraitConst {
 		fn as_raw_CUDA_BackgroundSubtractorMOG(&self) -> *const c_void;
@@ -218,32 +245,17 @@ pub mod cudabgsegm {
 
 	}
 
-	/// Gaussian Mixture-based Background/Foreground Segmentation Algorithm.
-	///
-	/// The class discriminates between foreground and background pixels by building and maintaining a model
-	/// of the background. Any pixel which does not fit this model is then deemed to be foreground. The
-	/// class implements algorithm described in [MOG2001](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_MOG2001) .
-	/// ## See also
-	/// BackgroundSubtractorMOG
-	///
-	///
-	/// Note:
-	///    *   An example on gaussian mixture based background/foreground segmantation can be found at
-	///        opencv_source_code/samples/gpu/bgfg_segm.cpp
-	pub struct CUDA_BackgroundSubtractorMOG {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CUDA_BackgroundSubtractorMOG }
-
-	impl Drop for CUDA_BackgroundSubtractorMOG {
+	impl std::fmt::Debug for CUDA_BackgroundSubtractorMOG {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_BackgroundSubtractorMOG_delete(self.as_raw_mut_CUDA_BackgroundSubtractorMOG()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_BackgroundSubtractorMOG")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for CUDA_BackgroundSubtractorMOG {}
+	boxed_cast_base! { CUDA_BackgroundSubtractorMOG, core::Algorithm, cv_cuda_BackgroundSubtractorMOG_to_Algorithm }
+
+	boxed_cast_base! { CUDA_BackgroundSubtractorMOG, crate::video::BackgroundSubtractor, cv_cuda_BackgroundSubtractorMOG_to_BackgroundSubtractor }
 
 	impl core::AlgorithmTraitConst for CUDA_BackgroundSubtractorMOG {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -275,20 +287,27 @@ pub mod cudabgsegm {
 
 	boxed_ref! { CUDA_BackgroundSubtractorMOG, crate::cudabgsegm::CUDA_BackgroundSubtractorMOGTraitConst, as_raw_CUDA_BackgroundSubtractorMOG, crate::cudabgsegm::CUDA_BackgroundSubtractorMOGTrait, as_raw_mut_CUDA_BackgroundSubtractorMOG }
 
-	impl CUDA_BackgroundSubtractorMOG {
+	/// Gaussian Mixture-based Background/Foreground Segmentation Algorithm.
+	///
+	/// The class discriminates between foreground and background pixels by building and maintaining a model
+	/// of the background. Any pixel which does not fit this model is then deemed to be foreground. The
+	/// class implements algorithm described in [Zivkovic2004](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Zivkovic2004) .
+	/// ## See also
+	/// BackgroundSubtractorMOG2
+	pub struct CUDA_BackgroundSubtractorMOG2 {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { CUDA_BackgroundSubtractorMOG, core::Algorithm, cv_cuda_BackgroundSubtractorMOG_to_Algorithm }
+	opencv_type_boxed! { CUDA_BackgroundSubtractorMOG2 }
 
-	boxed_cast_base! { CUDA_BackgroundSubtractorMOG, crate::video::BackgroundSubtractor, cv_cuda_BackgroundSubtractorMOG_to_BackgroundSubtractor }
-
-	impl std::fmt::Debug for CUDA_BackgroundSubtractorMOG {
+	impl Drop for CUDA_BackgroundSubtractorMOG2 {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CUDA_BackgroundSubtractorMOG")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_BackgroundSubtractorMOG2_delete(self.as_raw_mut_CUDA_BackgroundSubtractorMOG2()) };
 		}
 	}
+
+	unsafe impl Send for CUDA_BackgroundSubtractorMOG2 {}
 
 	/// Constant methods for [crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2]
 	pub trait CUDA_BackgroundSubtractorMOG2TraitConst: crate::video::BackgroundSubtractorMOG2TraitConst {
@@ -332,27 +351,19 @@ pub mod cudabgsegm {
 
 	}
 
-	/// Gaussian Mixture-based Background/Foreground Segmentation Algorithm.
-	///
-	/// The class discriminates between foreground and background pixels by building and maintaining a model
-	/// of the background. Any pixel which does not fit this model is then deemed to be foreground. The
-	/// class implements algorithm described in [Zivkovic2004](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Zivkovic2004) .
-	/// ## See also
-	/// BackgroundSubtractorMOG2
-	pub struct CUDA_BackgroundSubtractorMOG2 {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CUDA_BackgroundSubtractorMOG2 }
-
-	impl Drop for CUDA_BackgroundSubtractorMOG2 {
+	impl std::fmt::Debug for CUDA_BackgroundSubtractorMOG2 {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_BackgroundSubtractorMOG2_delete(self.as_raw_mut_CUDA_BackgroundSubtractorMOG2()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_BackgroundSubtractorMOG2")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for CUDA_BackgroundSubtractorMOG2 {}
+	boxed_cast_base! { CUDA_BackgroundSubtractorMOG2, core::Algorithm, cv_cuda_BackgroundSubtractorMOG2_to_Algorithm }
+
+	boxed_cast_base! { CUDA_BackgroundSubtractorMOG2, crate::video::BackgroundSubtractor, cv_cuda_BackgroundSubtractorMOG2_to_BackgroundSubtractor }
+
+	boxed_cast_base! { CUDA_BackgroundSubtractorMOG2, crate::video::BackgroundSubtractorMOG2, cv_cuda_BackgroundSubtractorMOG2_to_BackgroundSubtractorMOG2 }
 
 	impl core::AlgorithmTraitConst for CUDA_BackgroundSubtractorMOG2 {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -394,20 +405,4 @@ pub mod cudabgsegm {
 
 	boxed_ref! { CUDA_BackgroundSubtractorMOG2, crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2TraitConst, as_raw_CUDA_BackgroundSubtractorMOG2, crate::cudabgsegm::CUDA_BackgroundSubtractorMOG2Trait, as_raw_mut_CUDA_BackgroundSubtractorMOG2 }
 
-	impl CUDA_BackgroundSubtractorMOG2 {
-	}
-
-	boxed_cast_base! { CUDA_BackgroundSubtractorMOG2, core::Algorithm, cv_cuda_BackgroundSubtractorMOG2_to_Algorithm }
-
-	boxed_cast_base! { CUDA_BackgroundSubtractorMOG2, crate::video::BackgroundSubtractor, cv_cuda_BackgroundSubtractorMOG2_to_BackgroundSubtractor }
-
-	boxed_cast_base! { CUDA_BackgroundSubtractorMOG2, crate::video::BackgroundSubtractorMOG2, cv_cuda_BackgroundSubtractorMOG2_to_BackgroundSubtractorMOG2 }
-
-	impl std::fmt::Debug for CUDA_BackgroundSubtractorMOG2 {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CUDA_BackgroundSubtractorMOG2")
-				.finish()
-		}
-	}
 }

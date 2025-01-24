@@ -706,6 +706,112 @@ pub mod features2d {
 		Ok(ret)
 	}
 
+	/// Class implementing the AKAZE keypoint detector and descriptor extractor, described in [ANB13](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_ANB13).
+	///
+	/// @details AKAZE descriptors can only be used with KAZE or AKAZE keypoints. This class is thread-safe.
+	///
+	///
+	/// Note: When you need descriptors use Feature2D::detectAndCompute, which
+	/// provides better performance. When using Feature2D::detect followed by
+	/// Feature2D::compute scale space pyramid is computed twice.
+	///
+	///
+	/// Note: AKAZE implements T-API. When image is passed as UMat some parts of the algorithm
+	/// will use OpenCL.
+	///
+	///
+	/// Note: [ANB13] Fast Explicit Diffusion for Accelerated Features in Nonlinear
+	/// Scale Spaces. Pablo F. Alcantarilla, Jesús Nuevo and Adrien Bartoli. In
+	/// British Machine Vision Conference (BMVC), Bristol, UK, September 2013.
+	pub struct AKAZE {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { AKAZE }
+
+	impl Drop for AKAZE {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_AKAZE_delete(self.as_raw_mut_AKAZE()) };
+		}
+	}
+
+	unsafe impl Send for AKAZE {}
+
+	impl AKAZE {
+		/// The AKAZE constructor
+		///
+		/// ## Parameters
+		/// * descriptor_type: Type of the extracted descriptor: DESCRIPTOR_KAZE,
+		/// DESCRIPTOR_KAZE_UPRIGHT, DESCRIPTOR_MLDB or DESCRIPTOR_MLDB_UPRIGHT.
+		/// * descriptor_size: Size of the descriptor in bits. 0 -\> Full size
+		/// * descriptor_channels: Number of channels in the descriptor (1, 2, 3)
+		/// * threshold: Detector response threshold to accept point
+		/// * nOctaves: Maximum octave evolution of the image
+		/// * nOctaveLayers: Default number of sublevels per scale level
+		/// * diffusivity: Diffusivity type. DIFF_PM_G1, DIFF_PM_G2, DIFF_WEICKERT or
+		/// DIFF_CHARBONNIER
+		/// * max_points: Maximum amount of returned points. In case if image contains
+		/// more features, then the features with highest response are returned.
+		/// Negative value means no limitation.
+		///
+		/// ## C++ default parameters
+		/// * descriptor_type: AKAZE::DESCRIPTOR_MLDB
+		/// * descriptor_size: 0
+		/// * descriptor_channels: 3
+		/// * threshold: 0.001f
+		/// * n_octaves: 4
+		/// * n_octave_layers: 4
+		/// * diffusivity: KAZE::DIFF_PM_G2
+		/// * max_points: -1
+		#[inline]
+		pub fn create(descriptor_type: crate::features2d::AKAZE_DescriptorType, descriptor_size: i32, descriptor_channels: i32, threshold: f32, n_octaves: i32, n_octave_layers: i32, diffusivity: crate::features2d::KAZE_DiffusivityType, max_points: i32) -> Result<core::Ptr<crate::features2d::AKAZE>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_AKAZE_create_DescriptorType_int_int_float_int_int_DiffusivityType_int(descriptor_type, descriptor_size, descriptor_channels, threshold, n_octaves, n_octave_layers, diffusivity, max_points, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::AKAZE>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// The AKAZE constructor
+		///
+		/// ## Parameters
+		/// * descriptor_type: Type of the extracted descriptor: DESCRIPTOR_KAZE,
+		/// DESCRIPTOR_KAZE_UPRIGHT, DESCRIPTOR_MLDB or DESCRIPTOR_MLDB_UPRIGHT.
+		/// * descriptor_size: Size of the descriptor in bits. 0 -\> Full size
+		/// * descriptor_channels: Number of channels in the descriptor (1, 2, 3)
+		/// * threshold: Detector response threshold to accept point
+		/// * nOctaves: Maximum octave evolution of the image
+		/// * nOctaveLayers: Default number of sublevels per scale level
+		/// * diffusivity: Diffusivity type. DIFF_PM_G1, DIFF_PM_G2, DIFF_WEICKERT or
+		/// DIFF_CHARBONNIER
+		/// * max_points: Maximum amount of returned points. In case if image contains
+		/// more features, then the features with highest response are returned.
+		/// Negative value means no limitation.
+		///
+		/// ## Note
+		/// This alternative version of [AKAZE::create] function uses the following default values for its arguments:
+		/// * descriptor_type: AKAZE::DESCRIPTOR_MLDB
+		/// * descriptor_size: 0
+		/// * descriptor_channels: 3
+		/// * threshold: 0.001f
+		/// * n_octaves: 4
+		/// * n_octave_layers: 4
+		/// * diffusivity: KAZE::DIFF_PM_G2
+		/// * max_points: -1
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::features2d::AKAZE>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_AKAZE_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::AKAZE>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
 	/// Constant methods for [crate::features2d::AKAZE]
 	pub trait AKAZETraitConst: crate::features2d::Feature2DTraitConst {
 		fn as_raw_AKAZE(&self) -> *const c_void;
@@ -872,37 +978,17 @@ pub mod features2d {
 
 	}
 
-	/// Class implementing the AKAZE keypoint detector and descriptor extractor, described in [ANB13](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_ANB13).
-	///
-	/// @details AKAZE descriptors can only be used with KAZE or AKAZE keypoints. This class is thread-safe.
-	///
-	///
-	/// Note: When you need descriptors use Feature2D::detectAndCompute, which
-	/// provides better performance. When using Feature2D::detect followed by
-	/// Feature2D::compute scale space pyramid is computed twice.
-	///
-	///
-	/// Note: AKAZE implements T-API. When image is passed as UMat some parts of the algorithm
-	/// will use OpenCL.
-	///
-	///
-	/// Note: [ANB13] Fast Explicit Diffusion for Accelerated Features in Nonlinear
-	/// Scale Spaces. Pablo F. Alcantarilla, Jesús Nuevo and Adrien Bartoli. In
-	/// British Machine Vision Conference (BMVC), Bristol, UK, September 2013.
-	pub struct AKAZE {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { AKAZE }
-
-	impl Drop for AKAZE {
+	impl std::fmt::Debug for AKAZE {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_AKAZE_delete(self.as_raw_mut_AKAZE()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("AKAZE")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for AKAZE {}
+	boxed_cast_base! { AKAZE, core::Algorithm, cv_AKAZE_to_Algorithm }
+
+	boxed_cast_base! { AKAZE, crate::features2d::Feature2D, cv_AKAZE_to_Feature2D }
 
 	impl core::AlgorithmTraitConst for AKAZE {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -934,132 +1020,6 @@ pub mod features2d {
 
 	boxed_ref! { AKAZE, crate::features2d::AKAZETraitConst, as_raw_AKAZE, crate::features2d::AKAZETrait, as_raw_mut_AKAZE }
 
-	impl AKAZE {
-		/// The AKAZE constructor
-		///
-		/// ## Parameters
-		/// * descriptor_type: Type of the extracted descriptor: DESCRIPTOR_KAZE,
-		/// DESCRIPTOR_KAZE_UPRIGHT, DESCRIPTOR_MLDB or DESCRIPTOR_MLDB_UPRIGHT.
-		/// * descriptor_size: Size of the descriptor in bits. 0 -\> Full size
-		/// * descriptor_channels: Number of channels in the descriptor (1, 2, 3)
-		/// * threshold: Detector response threshold to accept point
-		/// * nOctaves: Maximum octave evolution of the image
-		/// * nOctaveLayers: Default number of sublevels per scale level
-		/// * diffusivity: Diffusivity type. DIFF_PM_G1, DIFF_PM_G2, DIFF_WEICKERT or
-		/// DIFF_CHARBONNIER
-		/// * max_points: Maximum amount of returned points. In case if image contains
-		/// more features, then the features with highest response are returned.
-		/// Negative value means no limitation.
-		///
-		/// ## C++ default parameters
-		/// * descriptor_type: AKAZE::DESCRIPTOR_MLDB
-		/// * descriptor_size: 0
-		/// * descriptor_channels: 3
-		/// * threshold: 0.001f
-		/// * n_octaves: 4
-		/// * n_octave_layers: 4
-		/// * diffusivity: KAZE::DIFF_PM_G2
-		/// * max_points: -1
-		#[inline]
-		pub fn create(descriptor_type: crate::features2d::AKAZE_DescriptorType, descriptor_size: i32, descriptor_channels: i32, threshold: f32, n_octaves: i32, n_octave_layers: i32, diffusivity: crate::features2d::KAZE_DiffusivityType, max_points: i32) -> Result<core::Ptr<crate::features2d::AKAZE>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_AKAZE_create_DescriptorType_int_int_float_int_int_DiffusivityType_int(descriptor_type, descriptor_size, descriptor_channels, threshold, n_octaves, n_octave_layers, diffusivity, max_points, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::features2d::AKAZE>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// The AKAZE constructor
-		///
-		/// ## Parameters
-		/// * descriptor_type: Type of the extracted descriptor: DESCRIPTOR_KAZE,
-		/// DESCRIPTOR_KAZE_UPRIGHT, DESCRIPTOR_MLDB or DESCRIPTOR_MLDB_UPRIGHT.
-		/// * descriptor_size: Size of the descriptor in bits. 0 -\> Full size
-		/// * descriptor_channels: Number of channels in the descriptor (1, 2, 3)
-		/// * threshold: Detector response threshold to accept point
-		/// * nOctaves: Maximum octave evolution of the image
-		/// * nOctaveLayers: Default number of sublevels per scale level
-		/// * diffusivity: Diffusivity type. DIFF_PM_G1, DIFF_PM_G2, DIFF_WEICKERT or
-		/// DIFF_CHARBONNIER
-		/// * max_points: Maximum amount of returned points. In case if image contains
-		/// more features, then the features with highest response are returned.
-		/// Negative value means no limitation.
-		///
-		/// ## Note
-		/// This alternative version of [AKAZE::create] function uses the following default values for its arguments:
-		/// * descriptor_type: AKAZE::DESCRIPTOR_MLDB
-		/// * descriptor_size: 0
-		/// * descriptor_channels: 3
-		/// * threshold: 0.001f
-		/// * n_octaves: 4
-		/// * n_octave_layers: 4
-		/// * diffusivity: KAZE::DIFF_PM_G2
-		/// * max_points: -1
-		#[inline]
-		pub fn create_def() -> Result<core::Ptr<crate::features2d::AKAZE>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_AKAZE_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::features2d::AKAZE>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_base! { AKAZE, core::Algorithm, cv_AKAZE_to_Algorithm }
-
-	boxed_cast_base! { AKAZE, crate::features2d::Feature2D, cv_AKAZE_to_Feature2D }
-
-	impl std::fmt::Debug for AKAZE {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("AKAZE")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::features2d::AffineFeature]
-	pub trait AffineFeatureTraitConst: crate::features2d::Feature2DTraitConst {
-		fn as_raw_AffineFeature(&self) -> *const c_void;
-
-		#[inline]
-		fn get_view_params(&self, tilts: &mut core::Vector<f32>, rolls: &mut core::Vector<f32>) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_AffineFeature_getViewParams_const_vectorLfloatGR_vectorLfloatGR(self.as_raw_AffineFeature(), tilts.as_raw_mut_VectorOff32(), rolls.as_raw_mut_VectorOff32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn get_default_name(&self) -> Result<String> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_AffineFeature_getDefaultName_const(self.as_raw_AffineFeature(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { String::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	/// Mutable methods for [crate::features2d::AffineFeature]
-	pub trait AffineFeatureTrait: crate::features2d::AffineFeatureTraitConst + crate::features2d::Feature2DTrait {
-		fn as_raw_mut_AffineFeature(&mut self) -> *mut c_void;
-
-		#[inline]
-		fn set_view_params(&mut self, tilts: &core::Vector<f32>, rolls: &core::Vector<f32>) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_AffineFeature_setViewParams_const_vectorLfloatGR_const_vectorLfloatGR(self.as_raw_mut_AffineFeature(), tilts.as_raw_VectorOff32(), rolls.as_raw_VectorOff32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
-
 	/// Class for implementing the wrapper which makes detectors and extractors to be affine invariant,
 	/// described as ASIFT in [YM11](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_YM11) .
 	pub struct AffineFeature {
@@ -1076,36 +1036,6 @@ pub mod features2d {
 	}
 
 	unsafe impl Send for AffineFeature {}
-
-	impl core::AlgorithmTraitConst for AffineFeature {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::AlgorithmTrait for AffineFeature {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { AffineFeature, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-
-	impl crate::features2d::Feature2DTraitConst for AffineFeature {
-		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::features2d::Feature2DTrait for AffineFeature {
-		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { AffineFeature, crate::features2d::Feature2DTraitConst, as_raw_Feature2D, crate::features2d::Feature2DTrait, as_raw_mut_Feature2D }
-
-	impl crate::features2d::AffineFeatureTraitConst for AffineFeature {
-		#[inline] fn as_raw_AffineFeature(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::features2d::AffineFeatureTrait for AffineFeature {
-		#[inline] fn as_raw_mut_AffineFeature(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { AffineFeature, crate::features2d::AffineFeatureTraitConst, as_raw_AffineFeature, crate::features2d::AffineFeatureTrait, as_raw_mut_AffineFeature }
 
 	impl AffineFeature {
 		/// ## Parameters
@@ -1155,9 +1085,45 @@ pub mod features2d {
 
 	}
 
-	boxed_cast_base! { AffineFeature, core::Algorithm, cv_AffineFeature_to_Algorithm }
+	/// Constant methods for [crate::features2d::AffineFeature]
+	pub trait AffineFeatureTraitConst: crate::features2d::Feature2DTraitConst {
+		fn as_raw_AffineFeature(&self) -> *const c_void;
 
-	boxed_cast_base! { AffineFeature, crate::features2d::Feature2D, cv_AffineFeature_to_Feature2D }
+		#[inline]
+		fn get_view_params(&self, tilts: &mut core::Vector<f32>, rolls: &mut core::Vector<f32>) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_AffineFeature_getViewParams_const_vectorLfloatGR_vectorLfloatGR(self.as_raw_AffineFeature(), tilts.as_raw_mut_VectorOff32(), rolls.as_raw_mut_VectorOff32(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_default_name(&self) -> Result<String> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_AffineFeature_getDefaultName_const(self.as_raw_AffineFeature(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { String::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [crate::features2d::AffineFeature]
+	pub trait AffineFeatureTrait: crate::features2d::AffineFeatureTraitConst + crate::features2d::Feature2DTrait {
+		fn as_raw_mut_AffineFeature(&mut self) -> *mut c_void;
+
+		#[inline]
+		fn set_view_params(&mut self, tilts: &core::Vector<f32>, rolls: &core::Vector<f32>) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_AffineFeature_setViewParams_const_vectorLfloatGR_const_vectorLfloatGR(self.as_raw_mut_AffineFeature(), tilts.as_raw_VectorOff32(), rolls.as_raw_VectorOff32(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
 
 	impl std::fmt::Debug for AffineFeature {
 		#[inline]
@@ -1165,6 +1131,88 @@ pub mod features2d {
 			f.debug_struct("AffineFeature")
 				.finish()
 		}
+	}
+
+	boxed_cast_base! { AffineFeature, core::Algorithm, cv_AffineFeature_to_Algorithm }
+
+	boxed_cast_base! { AffineFeature, crate::features2d::Feature2D, cv_AffineFeature_to_Feature2D }
+
+	impl core::AlgorithmTraitConst for AffineFeature {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::AlgorithmTrait for AffineFeature {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { AffineFeature, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+
+	impl crate::features2d::Feature2DTraitConst for AffineFeature {
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::features2d::Feature2DTrait for AffineFeature {
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { AffineFeature, crate::features2d::Feature2DTraitConst, as_raw_Feature2D, crate::features2d::Feature2DTrait, as_raw_mut_Feature2D }
+
+	impl crate::features2d::AffineFeatureTraitConst for AffineFeature {
+		#[inline] fn as_raw_AffineFeature(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::features2d::AffineFeatureTrait for AffineFeature {
+		#[inline] fn as_raw_mut_AffineFeature(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { AffineFeature, crate::features2d::AffineFeatureTraitConst, as_raw_AffineFeature, crate::features2d::AffineFeatureTrait, as_raw_mut_AffineFeature }
+
+	/// Wrapping class for feature detection using the AGAST method. :
+	pub struct AgastFeatureDetector {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { AgastFeatureDetector }
+
+	impl Drop for AgastFeatureDetector {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_AgastFeatureDetector_delete(self.as_raw_mut_AgastFeatureDetector()) };
+		}
+	}
+
+	unsafe impl Send for AgastFeatureDetector {}
+
+	impl AgastFeatureDetector {
+		/// ## C++ default parameters
+		/// * threshold: 10
+		/// * nonmax_suppression: true
+		/// * typ: AgastFeatureDetector::OAST_9_16
+		#[inline]
+		pub fn create(threshold: i32, nonmax_suppression: bool, typ: crate::features2d::AgastFeatureDetector_DetectorType) -> Result<core::Ptr<crate::features2d::AgastFeatureDetector>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_AgastFeatureDetector_create_int_bool_DetectorType(threshold, nonmax_suppression, typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::AgastFeatureDetector>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [AgastFeatureDetector::create] function uses the following default values for its arguments:
+		/// * threshold: 10
+		/// * nonmax_suppression: true
+		/// * typ: AgastFeatureDetector::OAST_9_16
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::features2d::AgastFeatureDetector>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_AgastFeatureDetector_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::AgastFeatureDetector>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::features2d::AgastFeatureDetector]
@@ -1243,21 +1291,17 @@ pub mod features2d {
 
 	}
 
-	/// Wrapping class for feature detection using the AGAST method. :
-	pub struct AgastFeatureDetector {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { AgastFeatureDetector }
-
-	impl Drop for AgastFeatureDetector {
+	impl std::fmt::Debug for AgastFeatureDetector {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_AgastFeatureDetector_delete(self.as_raw_mut_AgastFeatureDetector()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("AgastFeatureDetector")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for AgastFeatureDetector {}
+	boxed_cast_base! { AgastFeatureDetector, core::Algorithm, cv_AgastFeatureDetector_to_Algorithm }
+
+	boxed_cast_base! { AgastFeatureDetector, crate::features2d::Feature2D, cv_AgastFeatureDetector_to_Feature2D }
 
 	impl core::AlgorithmTraitConst for AgastFeatureDetector {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -1289,97 +1333,6 @@ pub mod features2d {
 
 	boxed_ref! { AgastFeatureDetector, crate::features2d::AgastFeatureDetectorTraitConst, as_raw_AgastFeatureDetector, crate::features2d::AgastFeatureDetectorTrait, as_raw_mut_AgastFeatureDetector }
 
-	impl AgastFeatureDetector {
-		/// ## C++ default parameters
-		/// * threshold: 10
-		/// * nonmax_suppression: true
-		/// * typ: AgastFeatureDetector::OAST_9_16
-		#[inline]
-		pub fn create(threshold: i32, nonmax_suppression: bool, typ: crate::features2d::AgastFeatureDetector_DetectorType) -> Result<core::Ptr<crate::features2d::AgastFeatureDetector>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_AgastFeatureDetector_create_int_bool_DetectorType(threshold, nonmax_suppression, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::features2d::AgastFeatureDetector>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [AgastFeatureDetector::create] function uses the following default values for its arguments:
-		/// * threshold: 10
-		/// * nonmax_suppression: true
-		/// * typ: AgastFeatureDetector::OAST_9_16
-		#[inline]
-		pub fn create_def() -> Result<core::Ptr<crate::features2d::AgastFeatureDetector>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_AgastFeatureDetector_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::features2d::AgastFeatureDetector>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_base! { AgastFeatureDetector, core::Algorithm, cv_AgastFeatureDetector_to_Algorithm }
-
-	boxed_cast_base! { AgastFeatureDetector, crate::features2d::Feature2D, cv_AgastFeatureDetector_to_Feature2D }
-
-	impl std::fmt::Debug for AgastFeatureDetector {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("AgastFeatureDetector")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::features2d::BFMatcher]
-	pub trait BFMatcherTraitConst: crate::features2d::DescriptorMatcherTraitConst {
-		fn as_raw_BFMatcher(&self) -> *const c_void;
-
-		#[inline]
-		fn is_mask_supported(&self) -> Result<bool> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_BFMatcher_isMaskSupported_const(self.as_raw_BFMatcher(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// ## C++ default parameters
-		/// * empty_train_data: false
-		#[inline]
-		#[must_use]
-		fn clone(&self, empty_train_data: bool) -> Result<core::Ptr<crate::features2d::DescriptorMatcher>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_BFMatcher_clone_const_bool(self.as_raw_BFMatcher(), empty_train_data, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::features2d::DescriptorMatcher>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [BFMatcherTraitConst::clone] function uses the following default values for its arguments:
-		/// * empty_train_data: false
-		#[inline]
-		fn clone_def(&self) -> Result<core::Ptr<crate::features2d::DescriptorMatcher>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_BFMatcher_clone_const(self.as_raw_BFMatcher(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::features2d::DescriptorMatcher>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	/// Mutable methods for [crate::features2d::BFMatcher]
-	pub trait BFMatcherTrait: crate::features2d::BFMatcherTraitConst + crate::features2d::DescriptorMatcherTrait {
-		fn as_raw_mut_BFMatcher(&mut self) -> *mut c_void;
-
-	}
-
 	/// Brute-force descriptor matcher.
 	///
 	/// For each descriptor in the first set, this matcher finds the closest descriptor in the second set
@@ -1399,36 +1352,6 @@ pub mod features2d {
 	}
 
 	unsafe impl Send for BFMatcher {}
-
-	impl core::AlgorithmTraitConst for BFMatcher {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::AlgorithmTrait for BFMatcher {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { BFMatcher, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-
-	impl crate::features2d::DescriptorMatcherTraitConst for BFMatcher {
-		#[inline] fn as_raw_DescriptorMatcher(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::features2d::DescriptorMatcherTrait for BFMatcher {
-		#[inline] fn as_raw_mut_DescriptorMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { BFMatcher, crate::features2d::DescriptorMatcherTraitConst, as_raw_DescriptorMatcher, crate::features2d::DescriptorMatcherTrait, as_raw_mut_DescriptorMatcher }
-
-	impl crate::features2d::BFMatcherTraitConst for BFMatcher {
-		#[inline] fn as_raw_BFMatcher(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::features2d::BFMatcherTrait for BFMatcher {
-		#[inline] fn as_raw_mut_BFMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { BFMatcher, crate::features2d::BFMatcherTraitConst, as_raw_BFMatcher, crate::features2d::BFMatcherTrait, as_raw_mut_BFMatcher }
 
 	impl BFMatcher {
 		/// Brute-force matcher constructor (obsolete). Please use BFMatcher.create()
@@ -1517,9 +1440,52 @@ pub mod features2d {
 
 	}
 
-	boxed_cast_base! { BFMatcher, core::Algorithm, cv_BFMatcher_to_Algorithm }
+	/// Constant methods for [crate::features2d::BFMatcher]
+	pub trait BFMatcherTraitConst: crate::features2d::DescriptorMatcherTraitConst {
+		fn as_raw_BFMatcher(&self) -> *const c_void;
 
-	boxed_cast_base! { BFMatcher, crate::features2d::DescriptorMatcher, cv_BFMatcher_to_DescriptorMatcher }
+		#[inline]
+		fn is_mask_supported(&self) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_BFMatcher_isMaskSupported_const(self.as_raw_BFMatcher(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// ## C++ default parameters
+		/// * empty_train_data: false
+		#[inline]
+		#[must_use]
+		fn clone(&self, empty_train_data: bool) -> Result<core::Ptr<crate::features2d::DescriptorMatcher>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_BFMatcher_clone_const_bool(self.as_raw_BFMatcher(), empty_train_data, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::DescriptorMatcher>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [BFMatcherTraitConst::clone] function uses the following default values for its arguments:
+		/// * empty_train_data: false
+		#[inline]
+		fn clone_def(&self) -> Result<core::Ptr<crate::features2d::DescriptorMatcher>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_BFMatcher_clone_const(self.as_raw_BFMatcher(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::DescriptorMatcher>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [crate::features2d::BFMatcher]
+	pub trait BFMatcherTrait: crate::features2d::BFMatcherTraitConst + crate::features2d::DescriptorMatcherTrait {
+		fn as_raw_mut_BFMatcher(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for BFMatcher {
 		#[inline]
@@ -1527,6 +1493,103 @@ pub mod features2d {
 			f.debug_struct("BFMatcher")
 				.finish()
 		}
+	}
+
+	boxed_cast_base! { BFMatcher, core::Algorithm, cv_BFMatcher_to_Algorithm }
+
+	boxed_cast_base! { BFMatcher, crate::features2d::DescriptorMatcher, cv_BFMatcher_to_DescriptorMatcher }
+
+	impl core::AlgorithmTraitConst for BFMatcher {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::AlgorithmTrait for BFMatcher {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { BFMatcher, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+
+	impl crate::features2d::DescriptorMatcherTraitConst for BFMatcher {
+		#[inline] fn as_raw_DescriptorMatcher(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::features2d::DescriptorMatcherTrait for BFMatcher {
+		#[inline] fn as_raw_mut_DescriptorMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { BFMatcher, crate::features2d::DescriptorMatcherTraitConst, as_raw_DescriptorMatcher, crate::features2d::DescriptorMatcherTrait, as_raw_mut_DescriptorMatcher }
+
+	impl crate::features2d::BFMatcherTraitConst for BFMatcher {
+		#[inline] fn as_raw_BFMatcher(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::features2d::BFMatcherTrait for BFMatcher {
+		#[inline] fn as_raw_mut_BFMatcher(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { BFMatcher, crate::features2d::BFMatcherTraitConst, as_raw_BFMatcher, crate::features2d::BFMatcherTrait, as_raw_mut_BFMatcher }
+
+	/// Class to compute an image descriptor using the *bag of visual words*.
+	///
+	/// Such a computation consists of the following steps:
+	///
+	/// 1.  Compute descriptors for a given image and its keypoints set.
+	/// 2.  Find the nearest visual words from the vocabulary for each keypoint descriptor.
+	/// 3.  Compute the bag-of-words image descriptor as is a normalized histogram of vocabulary words
+	/// encountered in the image. The i-th bin of the histogram is a frequency of i-th word of the
+	/// vocabulary in the given image.
+	pub struct BOWImgDescriptorExtractor {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { BOWImgDescriptorExtractor }
+
+	impl Drop for BOWImgDescriptorExtractor {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_BOWImgDescriptorExtractor_delete(self.as_raw_mut_BOWImgDescriptorExtractor()) };
+		}
+	}
+
+	unsafe impl Send for BOWImgDescriptorExtractor {}
+
+	impl BOWImgDescriptorExtractor {
+		/// The constructor.
+		///
+		/// ## Parameters
+		/// * dextractor: Descriptor extractor that is used to compute descriptors for an input image and
+		/// its keypoints.
+		/// * dmatcher: Descriptor matcher that is used to find the nearest word of the trained vocabulary
+		/// for each keypoint descriptor of the image.
+		#[inline]
+		pub fn new_with_extractor(dextractor: &core::Ptr<crate::features2d::Feature2D>, dmatcher: &core::Ptr<crate::features2d::DescriptorMatcher>) -> Result<crate::features2d::BOWImgDescriptorExtractor> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_const_PtrLFeature2DGR_const_PtrLDescriptorMatcherGR(dextractor.as_raw_PtrOfFeature2D(), dmatcher.as_raw_PtrOfDescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::features2d::BOWImgDescriptorExtractor::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// The constructor.
+		///
+		/// ## Parameters
+		/// * dextractor: Descriptor extractor that is used to compute descriptors for an input image and
+		/// its keypoints.
+		/// * dmatcher: Descriptor matcher that is used to find the nearest word of the trained vocabulary
+		/// for each keypoint descriptor of the image.
+		///
+		/// ## Overloaded parameters
+		#[inline]
+		pub fn new(dmatcher: &core::Ptr<crate::features2d::DescriptorMatcher>) -> Result<crate::features2d::BOWImgDescriptorExtractor> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_const_PtrLDescriptorMatcherGR(dmatcher.as_raw_PtrOfDescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::features2d::BOWImgDescriptorExtractor::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::features2d::BOWImgDescriptorExtractor]
@@ -1700,29 +1763,13 @@ pub mod features2d {
 
 	}
 
-	/// Class to compute an image descriptor using the *bag of visual words*.
-	///
-	/// Such a computation consists of the following steps:
-	///
-	/// 1.  Compute descriptors for a given image and its keypoints set.
-	/// 2.  Find the nearest visual words from the vocabulary for each keypoint descriptor.
-	/// 3.  Compute the bag-of-words image descriptor as is a normalized histogram of vocabulary words
-	/// encountered in the image. The i-th bin of the histogram is a frequency of i-th word of the
-	/// vocabulary in the given image.
-	pub struct BOWImgDescriptorExtractor {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { BOWImgDescriptorExtractor }
-
-	impl Drop for BOWImgDescriptorExtractor {
+	impl std::fmt::Debug for BOWImgDescriptorExtractor {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_BOWImgDescriptorExtractor_delete(self.as_raw_mut_BOWImgDescriptorExtractor()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BOWImgDescriptorExtractor")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for BOWImgDescriptorExtractor {}
 
 	impl crate::features2d::BOWImgDescriptorExtractorTraitConst for BOWImgDescriptorExtractor {
 		#[inline] fn as_raw_BOWImgDescriptorExtractor(&self) -> *const c_void { self.as_raw() }
@@ -1733,85 +1780,6 @@ pub mod features2d {
 	}
 
 	boxed_ref! { BOWImgDescriptorExtractor, crate::features2d::BOWImgDescriptorExtractorTraitConst, as_raw_BOWImgDescriptorExtractor, crate::features2d::BOWImgDescriptorExtractorTrait, as_raw_mut_BOWImgDescriptorExtractor }
-
-	impl BOWImgDescriptorExtractor {
-		/// The constructor.
-		///
-		/// ## Parameters
-		/// * dextractor: Descriptor extractor that is used to compute descriptors for an input image and
-		/// its keypoints.
-		/// * dmatcher: Descriptor matcher that is used to find the nearest word of the trained vocabulary
-		/// for each keypoint descriptor of the image.
-		#[inline]
-		pub fn new_with_extractor(dextractor: &core::Ptr<crate::features2d::Feature2D>, dmatcher: &core::Ptr<crate::features2d::DescriptorMatcher>) -> Result<crate::features2d::BOWImgDescriptorExtractor> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_const_PtrLFeature2DGR_const_PtrLDescriptorMatcherGR(dextractor.as_raw_PtrOfFeature2D(), dmatcher.as_raw_PtrOfDescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::features2d::BOWImgDescriptorExtractor::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// The constructor.
-		///
-		/// ## Parameters
-		/// * dextractor: Descriptor extractor that is used to compute descriptors for an input image and
-		/// its keypoints.
-		/// * dmatcher: Descriptor matcher that is used to find the nearest word of the trained vocabulary
-		/// for each keypoint descriptor of the image.
-		///
-		/// ## Overloaded parameters
-		#[inline]
-		pub fn new(dmatcher: &core::Ptr<crate::features2d::DescriptorMatcher>) -> Result<crate::features2d::BOWImgDescriptorExtractor> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_const_PtrLDescriptorMatcherGR(dmatcher.as_raw_PtrOfDescriptorMatcher(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::features2d::BOWImgDescriptorExtractor::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	impl std::fmt::Debug for BOWImgDescriptorExtractor {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("BOWImgDescriptorExtractor")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::features2d::BOWKMeansTrainer]
-	pub trait BOWKMeansTrainerTraitConst: crate::features2d::BOWTrainerTraitConst {
-		fn as_raw_BOWKMeansTrainer(&self) -> *const c_void;
-
-		#[inline]
-		fn cluster(&self) -> Result<core::Mat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_BOWKMeansTrainer_cluster_const(self.as_raw_BOWKMeansTrainer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		fn cluster_with_descriptor(&self, descriptors: &impl core::MatTraitConst) -> Result<core::Mat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_BOWKMeansTrainer_cluster_const_const_MatR(self.as_raw_BOWKMeansTrainer(), descriptors.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	/// Mutable methods for [crate::features2d::BOWKMeansTrainer]
-	pub trait BOWKMeansTrainerTrait: crate::features2d::BOWKMeansTrainerTraitConst + crate::features2d::BOWTrainerTrait {
-		fn as_raw_mut_BOWKMeansTrainer(&mut self) -> *mut c_void;
-
-	}
 
 	/// kmeans -based class to train visual vocabulary using the *bag of visual words* approach. :
 	pub struct BOWKMeansTrainer {
@@ -1828,26 +1796,6 @@ pub mod features2d {
 	}
 
 	unsafe impl Send for BOWKMeansTrainer {}
-
-	impl crate::features2d::BOWTrainerTraitConst for BOWKMeansTrainer {
-		#[inline] fn as_raw_BOWTrainer(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::features2d::BOWTrainerTrait for BOWKMeansTrainer {
-		#[inline] fn as_raw_mut_BOWTrainer(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { BOWKMeansTrainer, crate::features2d::BOWTrainerTraitConst, as_raw_BOWTrainer, crate::features2d::BOWTrainerTrait, as_raw_mut_BOWTrainer }
-
-	impl crate::features2d::BOWKMeansTrainerTraitConst for BOWKMeansTrainer {
-		#[inline] fn as_raw_BOWKMeansTrainer(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::features2d::BOWKMeansTrainerTrait for BOWKMeansTrainer {
-		#[inline] fn as_raw_mut_BOWKMeansTrainer(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { BOWKMeansTrainer, crate::features2d::BOWKMeansTrainerTraitConst, as_raw_BOWKMeansTrainer, crate::features2d::BOWKMeansTrainerTrait, as_raw_mut_BOWKMeansTrainer }
 
 	impl BOWKMeansTrainer {
 		/// The constructor.
@@ -1889,7 +1837,37 @@ pub mod features2d {
 
 	}
 
-	boxed_cast_base! { BOWKMeansTrainer, crate::features2d::BOWTrainer, cv_BOWKMeansTrainer_to_BOWTrainer }
+	/// Constant methods for [crate::features2d::BOWKMeansTrainer]
+	pub trait BOWKMeansTrainerTraitConst: crate::features2d::BOWTrainerTraitConst {
+		fn as_raw_BOWKMeansTrainer(&self) -> *const c_void;
+
+		#[inline]
+		fn cluster(&self) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_BOWKMeansTrainer_cluster_const(self.as_raw_BOWKMeansTrainer(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		fn cluster_with_descriptor(&self, descriptors: &impl core::MatTraitConst) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_BOWKMeansTrainer_cluster_const_const_MatR(self.as_raw_BOWKMeansTrainer(), descriptors.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [crate::features2d::BOWKMeansTrainer]
+	pub trait BOWKMeansTrainerTrait: crate::features2d::BOWKMeansTrainerTraitConst + crate::features2d::BOWTrainerTrait {
+		fn as_raw_mut_BOWKMeansTrainer(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for BOWKMeansTrainer {
 		#[inline]
@@ -1898,6 +1876,47 @@ pub mod features2d {
 				.finish()
 		}
 	}
+
+	boxed_cast_base! { BOWKMeansTrainer, crate::features2d::BOWTrainer, cv_BOWKMeansTrainer_to_BOWTrainer }
+
+	impl crate::features2d::BOWTrainerTraitConst for BOWKMeansTrainer {
+		#[inline] fn as_raw_BOWTrainer(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::features2d::BOWTrainerTrait for BOWKMeansTrainer {
+		#[inline] fn as_raw_mut_BOWTrainer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { BOWKMeansTrainer, crate::features2d::BOWTrainerTraitConst, as_raw_BOWTrainer, crate::features2d::BOWTrainerTrait, as_raw_mut_BOWTrainer }
+
+	impl crate::features2d::BOWKMeansTrainerTraitConst for BOWKMeansTrainer {
+		#[inline] fn as_raw_BOWKMeansTrainer(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::features2d::BOWKMeansTrainerTrait for BOWKMeansTrainer {
+		#[inline] fn as_raw_mut_BOWKMeansTrainer(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { BOWKMeansTrainer, crate::features2d::BOWKMeansTrainerTraitConst, as_raw_BOWKMeansTrainer, crate::features2d::BOWKMeansTrainerTrait, as_raw_mut_BOWKMeansTrainer }
+
+	/// Abstract base class for training the *bag of visual words* vocabulary from a set of descriptors.
+	///
+	/// For details, see, for example, *Visual Categorization with Bags of Keypoints* by Gabriella Csurka,
+	/// Christopher R. Dance, Lixin Fan, Jutta Willamowski, Cedric Bray, 2004. :
+	pub struct BOWTrainer {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { BOWTrainer }
+
+	impl Drop for BOWTrainer {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_BOWTrainer_delete(self.as_raw_mut_BOWTrainer()) };
+		}
+	}
+
+	unsafe impl Send for BOWTrainer {}
 
 	/// Constant methods for [crate::features2d::BOWTrainer]
 	pub trait BOWTrainerTraitConst {
@@ -1997,24 +2016,15 @@ pub mod features2d {
 
 	}
 
-	/// Abstract base class for training the *bag of visual words* vocabulary from a set of descriptors.
-	///
-	/// For details, see, for example, *Visual Categorization with Bags of Keypoints* by Gabriella Csurka,
-	/// Christopher R. Dance, Lixin Fan, Jutta Willamowski, Cedric Bray, 2004. :
-	pub struct BOWTrainer {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { BOWTrainer }
-
-	impl Drop for BOWTrainer {
+	impl std::fmt::Debug for BOWTrainer {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_BOWTrainer_delete(self.as_raw_mut_BOWTrainer()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BOWTrainer")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for BOWTrainer {}
+	boxed_cast_descendant! { BOWTrainer, crate::features2d::BOWKMeansTrainer, cv_BOWTrainer_to_BOWKMeansTrainer }
 
 	impl crate::features2d::BOWTrainerTraitConst for BOWTrainer {
 		#[inline] fn as_raw_BOWTrainer(&self) -> *const c_void { self.as_raw() }
@@ -2025,105 +2035,6 @@ pub mod features2d {
 	}
 
 	boxed_ref! { BOWTrainer, crate::features2d::BOWTrainerTraitConst, as_raw_BOWTrainer, crate::features2d::BOWTrainerTrait, as_raw_mut_BOWTrainer }
-
-	impl BOWTrainer {
-	}
-
-	boxed_cast_descendant! { BOWTrainer, crate::features2d::BOWKMeansTrainer, cv_BOWTrainer_to_BOWKMeansTrainer }
-
-	impl std::fmt::Debug for BOWTrainer {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("BOWTrainer")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::features2d::BRISK]
-	pub trait BRISKTraitConst: crate::features2d::Feature2DTraitConst {
-		fn as_raw_BRISK(&self) -> *const c_void;
-
-		#[inline]
-		fn get_default_name(&self) -> Result<String> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_BRISK_getDefaultName_const(self.as_raw_BRISK(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { String::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		fn get_threshold(&self) -> Result<i32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_BRISK_getThreshold_const(self.as_raw_BRISK(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn get_octaves(&self) -> Result<i32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_BRISK_getOctaves_const(self.as_raw_BRISK(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn get_pattern_scale(&self) -> Result<f32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_BRISK_getPatternScale_const(self.as_raw_BRISK(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
-
-	/// Mutable methods for [crate::features2d::BRISK]
-	pub trait BRISKTrait: crate::features2d::BRISKTraitConst + crate::features2d::Feature2DTrait {
-		fn as_raw_mut_BRISK(&mut self) -> *mut c_void;
-
-		/// Set detection threshold.
-		/// ## Parameters
-		/// * threshold: AGAST detection threshold score.
-		#[inline]
-		fn set_threshold(&mut self, threshold: i32) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_BRISK_setThreshold_int(self.as_raw_mut_BRISK(), threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Set detection octaves.
-		/// ## Parameters
-		/// * octaves: detection octaves. Use 0 to do single scale.
-		#[inline]
-		fn set_octaves(&mut self, octaves: i32) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_BRISK_setOctaves_int(self.as_raw_mut_BRISK(), octaves, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Set detection patternScale.
-		/// ## Parameters
-		/// * patternScale: apply this scale to the pattern used for sampling the neighbourhood of a
-		/// keypoint.
-		#[inline]
-		fn set_pattern_scale(&mut self, pattern_scale: f32) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_BRISK_setPatternScale_float(self.as_raw_mut_BRISK(), pattern_scale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
 
 	/// Class implementing the BRISK keypoint detector and descriptor extractor, described in [LCS11](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_LCS11) .
 	pub struct BRISK {
@@ -2140,36 +2051,6 @@ pub mod features2d {
 	}
 
 	unsafe impl Send for BRISK {}
-
-	impl core::AlgorithmTraitConst for BRISK {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::AlgorithmTrait for BRISK {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { BRISK, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-
-	impl crate::features2d::Feature2DTraitConst for BRISK {
-		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::features2d::Feature2DTrait for BRISK {
-		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { BRISK, crate::features2d::Feature2DTraitConst, as_raw_Feature2D, crate::features2d::Feature2DTrait, as_raw_mut_Feature2D }
-
-	impl crate::features2d::BRISKTraitConst for BRISK {
-		#[inline] fn as_raw_BRISK(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::features2d::BRISKTrait for BRISK {
-		#[inline] fn as_raw_mut_BRISK(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { BRISK, crate::features2d::BRISKTraitConst, as_raw_BRISK, crate::features2d::BRISKTrait, as_raw_mut_BRISK }
 
 	impl BRISK {
 		/// The BRISK constructor
@@ -2333,9 +2214,91 @@ pub mod features2d {
 
 	}
 
-	boxed_cast_base! { BRISK, core::Algorithm, cv_BRISK_to_Algorithm }
+	/// Constant methods for [crate::features2d::BRISK]
+	pub trait BRISKTraitConst: crate::features2d::Feature2DTraitConst {
+		fn as_raw_BRISK(&self) -> *const c_void;
 
-	boxed_cast_base! { BRISK, crate::features2d::Feature2D, cv_BRISK_to_Feature2D }
+		#[inline]
+		fn get_default_name(&self) -> Result<String> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_BRISK_getDefaultName_const(self.as_raw_BRISK(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { String::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_threshold(&self) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_BRISK_getThreshold_const(self.as_raw_BRISK(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_octaves(&self) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_BRISK_getOctaves_const(self.as_raw_BRISK(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_pattern_scale(&self) -> Result<f32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_BRISK_getPatternScale_const(self.as_raw_BRISK(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [crate::features2d::BRISK]
+	pub trait BRISKTrait: crate::features2d::BRISKTraitConst + crate::features2d::Feature2DTrait {
+		fn as_raw_mut_BRISK(&mut self) -> *mut c_void;
+
+		/// Set detection threshold.
+		/// ## Parameters
+		/// * threshold: AGAST detection threshold score.
+		#[inline]
+		fn set_threshold(&mut self, threshold: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_BRISK_setThreshold_int(self.as_raw_mut_BRISK(), threshold, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Set detection octaves.
+		/// ## Parameters
+		/// * octaves: detection octaves. Use 0 to do single scale.
+		#[inline]
+		fn set_octaves(&mut self, octaves: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_BRISK_setOctaves_int(self.as_raw_mut_BRISK(), octaves, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Set detection patternScale.
+		/// ## Parameters
+		/// * patternScale: apply this scale to the pattern used for sampling the neighbourhood of a
+		/// keypoint.
+		#[inline]
+		fn set_pattern_scale(&mut self, pattern_scale: f32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_BRISK_setPatternScale_float(self.as_raw_mut_BRISK(), pattern_scale, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
 
 	impl std::fmt::Debug for BRISK {
 		#[inline]
@@ -2343,6 +2306,94 @@ pub mod features2d {
 			f.debug_struct("BRISK")
 				.finish()
 		}
+	}
+
+	boxed_cast_base! { BRISK, core::Algorithm, cv_BRISK_to_Algorithm }
+
+	boxed_cast_base! { BRISK, crate::features2d::Feature2D, cv_BRISK_to_Feature2D }
+
+	impl core::AlgorithmTraitConst for BRISK {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::AlgorithmTrait for BRISK {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { BRISK, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+
+	impl crate::features2d::Feature2DTraitConst for BRISK {
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::features2d::Feature2DTrait for BRISK {
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { BRISK, crate::features2d::Feature2DTraitConst, as_raw_Feature2D, crate::features2d::Feature2DTrait, as_raw_mut_Feature2D }
+
+	impl crate::features2d::BRISKTraitConst for BRISK {
+		#[inline] fn as_raw_BRISK(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::features2d::BRISKTrait for BRISK {
+		#[inline] fn as_raw_mut_BRISK(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { BRISK, crate::features2d::BRISKTraitConst, as_raw_BRISK, crate::features2d::BRISKTrait, as_raw_mut_BRISK }
+
+	/// Abstract base class for matching keypoint descriptors.
+	///
+	/// It has two groups of match methods: for matching descriptors of an image with another image or with
+	/// an image set.
+	pub struct DescriptorMatcher {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { DescriptorMatcher }
+
+	impl Drop for DescriptorMatcher {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_DescriptorMatcher_delete(self.as_raw_mut_DescriptorMatcher()) };
+		}
+	}
+
+	unsafe impl Send for DescriptorMatcher {}
+
+	impl DescriptorMatcher {
+		/// Creates a descriptor matcher of a given type with the default parameters (using default
+		/// constructor).
+		///
+		/// ## Parameters
+		/// * descriptorMatcherType: Descriptor matcher type. Now the following matcher types are
+		/// supported:
+		/// *   `BruteForce` (it uses L2 )
+		/// *   `BruteForce-L1`
+		/// *   `BruteForce-Hamming`
+		/// *   `BruteForce-Hamming(2)`
+		/// *   `FlannBased`
+		#[inline]
+		pub fn create(descriptor_matcher_type: &str) -> Result<core::Ptr<crate::features2d::DescriptorMatcher>> {
+			extern_container_arg!(descriptor_matcher_type);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_DescriptorMatcher_create_const_StringR(descriptor_matcher_type.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::DescriptorMatcher>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn create_with_matcher_type(matcher_type: crate::features2d::DescriptorMatcher_MatcherType) -> Result<core::Ptr<crate::features2d::DescriptorMatcher>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_DescriptorMatcher_create_const_MatcherTypeR(matcher_type, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::DescriptorMatcher>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::features2d::DescriptorMatcher]
@@ -2933,24 +2984,19 @@ pub mod features2d {
 
 	}
 
-	/// Abstract base class for matching keypoint descriptors.
-	///
-	/// It has two groups of match methods: for matching descriptors of an image with another image or with
-	/// an image set.
-	pub struct DescriptorMatcher {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { DescriptorMatcher }
-
-	impl Drop for DescriptorMatcher {
+	impl std::fmt::Debug for DescriptorMatcher {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_DescriptorMatcher_delete(self.as_raw_mut_DescriptorMatcher()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DescriptorMatcher")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for DescriptorMatcher {}
+	boxed_cast_base! { DescriptorMatcher, core::Algorithm, cv_DescriptorMatcher_to_Algorithm }
+
+	boxed_cast_descendant! { DescriptorMatcher, crate::features2d::BFMatcher, cv_DescriptorMatcher_to_BFMatcher }
+
+	boxed_cast_descendant! { DescriptorMatcher, crate::features2d::FlannBasedMatcher, cv_DescriptorMatcher_to_FlannBasedMatcher }
 
 	impl core::AlgorithmTraitConst for DescriptorMatcher {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -2972,53 +3018,52 @@ pub mod features2d {
 
 	boxed_ref! { DescriptorMatcher, crate::features2d::DescriptorMatcherTraitConst, as_raw_DescriptorMatcher, crate::features2d::DescriptorMatcherTrait, as_raw_mut_DescriptorMatcher }
 
-	impl DescriptorMatcher {
-		/// Creates a descriptor matcher of a given type with the default parameters (using default
-		/// constructor).
-		///
-		/// ## Parameters
-		/// * descriptorMatcherType: Descriptor matcher type. Now the following matcher types are
-		/// supported:
-		/// *   `BruteForce` (it uses L2 )
-		/// *   `BruteForce-L1`
-		/// *   `BruteForce-Hamming`
-		/// *   `BruteForce-Hamming(2)`
-		/// *   `FlannBased`
-		#[inline]
-		pub fn create(descriptor_matcher_type: &str) -> Result<core::Ptr<crate::features2d::DescriptorMatcher>> {
-			extern_container_arg!(descriptor_matcher_type);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_DescriptorMatcher_create_const_StringR(descriptor_matcher_type.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::features2d::DescriptorMatcher>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn create_with_matcher_type(matcher_type: crate::features2d::DescriptorMatcher_MatcherType) -> Result<core::Ptr<crate::features2d::DescriptorMatcher>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_DescriptorMatcher_create_const_MatcherTypeR(matcher_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::features2d::DescriptorMatcher>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// Wrapping class for feature detection using the FAST method. :
+	pub struct FastFeatureDetector {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { DescriptorMatcher, crate::features2d::BFMatcher, cv_DescriptorMatcher_to_BFMatcher }
+	opencv_type_boxed! { FastFeatureDetector }
 
-	boxed_cast_descendant! { DescriptorMatcher, crate::features2d::FlannBasedMatcher, cv_DescriptorMatcher_to_FlannBasedMatcher }
-
-	boxed_cast_base! { DescriptorMatcher, core::Algorithm, cv_DescriptorMatcher_to_Algorithm }
-
-	impl std::fmt::Debug for DescriptorMatcher {
+	impl Drop for FastFeatureDetector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("DescriptorMatcher")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_FastFeatureDetector_delete(self.as_raw_mut_FastFeatureDetector()) };
 		}
+	}
+
+	unsafe impl Send for FastFeatureDetector {}
+
+	impl FastFeatureDetector {
+		/// ## C++ default parameters
+		/// * threshold: 10
+		/// * nonmax_suppression: true
+		/// * typ: FastFeatureDetector::TYPE_9_16
+		#[inline]
+		pub fn create(threshold: i32, nonmax_suppression: bool, typ: crate::features2d::FastFeatureDetector_DetectorType) -> Result<core::Ptr<crate::features2d::FastFeatureDetector>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FastFeatureDetector_create_int_bool_DetectorType(threshold, nonmax_suppression, typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::FastFeatureDetector>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [FastFeatureDetector::create] function uses the following default values for its arguments:
+		/// * threshold: 10
+		/// * nonmax_suppression: true
+		/// * typ: FastFeatureDetector::TYPE_9_16
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::features2d::FastFeatureDetector>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FastFeatureDetector_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::FastFeatureDetector>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::features2d::FastFeatureDetector]
@@ -3097,21 +3142,17 @@ pub mod features2d {
 
 	}
 
-	/// Wrapping class for feature detection using the FAST method. :
-	pub struct FastFeatureDetector {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { FastFeatureDetector }
-
-	impl Drop for FastFeatureDetector {
+	impl std::fmt::Debug for FastFeatureDetector {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_FastFeatureDetector_delete(self.as_raw_mut_FastFeatureDetector()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FastFeatureDetector")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for FastFeatureDetector {}
+	boxed_cast_base! { FastFeatureDetector, core::Algorithm, cv_FastFeatureDetector_to_Algorithm }
+
+	boxed_cast_base! { FastFeatureDetector, crate::features2d::Feature2D, cv_FastFeatureDetector_to_Feature2D }
 
 	impl core::AlgorithmTraitConst for FastFeatureDetector {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -3143,48 +3184,30 @@ pub mod features2d {
 
 	boxed_ref! { FastFeatureDetector, crate::features2d::FastFeatureDetectorTraitConst, as_raw_FastFeatureDetector, crate::features2d::FastFeatureDetectorTrait, as_raw_mut_FastFeatureDetector }
 
-	impl FastFeatureDetector {
-		/// ## C++ default parameters
-		/// * threshold: 10
-		/// * nonmax_suppression: true
-		/// * typ: FastFeatureDetector::TYPE_9_16
-		#[inline]
-		pub fn create(threshold: i32, nonmax_suppression: bool, typ: crate::features2d::FastFeatureDetector_DetectorType) -> Result<core::Ptr<crate::features2d::FastFeatureDetector>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_FastFeatureDetector_create_int_bool_DetectorType(threshold, nonmax_suppression, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::features2d::FastFeatureDetector>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [FastFeatureDetector::create] function uses the following default values for its arguments:
-		/// * threshold: 10
-		/// * nonmax_suppression: true
-		/// * typ: FastFeatureDetector::TYPE_9_16
-		#[inline]
-		pub fn create_def() -> Result<core::Ptr<crate::features2d::FastFeatureDetector>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_FastFeatureDetector_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::features2d::FastFeatureDetector>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	pub struct Feature2D {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { FastFeatureDetector, core::Algorithm, cv_FastFeatureDetector_to_Algorithm }
+	opencv_type_boxed! { Feature2D }
 
-	boxed_cast_base! { FastFeatureDetector, crate::features2d::Feature2D, cv_FastFeatureDetector_to_Feature2D }
-
-	impl std::fmt::Debug for FastFeatureDetector {
+	impl Drop for Feature2D {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("FastFeatureDetector")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_Feature2D_delete(self.as_raw_mut_Feature2D()) };
 		}
+	}
+
+	unsafe impl Send for Feature2D {}
+
+	impl Feature2D {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::features2d::Feature2D {
+			let ret = unsafe { sys::cv_Feature2D_defaultNew_const() };
+			let ret = unsafe { crate::features2d::Feature2D::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::features2d::Feature2D]
@@ -3487,49 +3510,23 @@ pub mod features2d {
 
 	}
 
-	pub struct Feature2D {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Feature2D }
-
-	impl Drop for Feature2D {
+	impl Default for Feature2D {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_Feature2D_delete(self.as_raw_mut_Feature2D()) };
-		}
-	}
-
-	unsafe impl Send for Feature2D {}
-
-	impl core::AlgorithmTraitConst for Feature2D {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::AlgorithmTrait for Feature2D {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Feature2D, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-
-	impl crate::features2d::Feature2DTraitConst for Feature2D {
-		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::features2d::Feature2DTrait for Feature2D {
-		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Feature2D, crate::features2d::Feature2DTraitConst, as_raw_Feature2D, crate::features2d::Feature2DTrait, as_raw_mut_Feature2D }
-
-	impl Feature2D {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
+		/// Forwards to infallible Self::default()
 		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_Feature2D_defaultNew_const()) }
+			Self::default()
 		}
-
 	}
+
+	impl std::fmt::Debug for Feature2D {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Feature2D")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Feature2D, core::Algorithm, cv_Feature2D_to_Algorithm }
 
 	boxed_cast_descendant! { Feature2D, crate::features2d::AKAZE, cv_Feature2D_to_AKAZE }
 
@@ -3553,22 +3550,85 @@ pub mod features2d {
 
 	boxed_cast_descendant! { Feature2D, crate::features2d::SimpleBlobDetector, cv_Feature2D_to_SimpleBlobDetector }
 
-	boxed_cast_base! { Feature2D, core::Algorithm, cv_Feature2D_to_Algorithm }
+	impl core::AlgorithmTraitConst for Feature2D {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
 
-	impl std::fmt::Debug for Feature2D {
+	impl core::AlgorithmTrait for Feature2D {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Feature2D, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+
+	impl crate::features2d::Feature2DTraitConst for Feature2D {
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::features2d::Feature2DTrait for Feature2D {
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Feature2D, crate::features2d::Feature2DTraitConst, as_raw_Feature2D, crate::features2d::Feature2DTrait, as_raw_mut_Feature2D }
+
+	/// Flann-based descriptor matcher.
+	///
+	/// This matcher trains cv::flann::Index on a train descriptor collection and calls its nearest search
+	/// methods to find the best matches. So, this matcher may be faster when matching a large train
+	/// collection than the brute force matcher. FlannBasedMatcher does not support masking permissible
+	/// matches of descriptor sets because flann::Index does not support this. :
+	pub struct FlannBasedMatcher {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { FlannBasedMatcher }
+
+	impl Drop for FlannBasedMatcher {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Feature2D")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_FlannBasedMatcher_delete(self.as_raw_mut_FlannBasedMatcher()) };
 		}
 	}
 
-	impl Default for Feature2D {
+	unsafe impl Send for FlannBasedMatcher {}
+
+	impl FlannBasedMatcher {
+		/// ## C++ default parameters
+		/// * index_params: makePtr<flann::KDTreeIndexParams>()
+		/// * search_params: makePtr<flann::SearchParams>()
 		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
+		pub fn new(index_params: &core::Ptr<crate::flann::IndexParams>, search_params: &core::Ptr<crate::flann::SearchParams>) -> Result<crate::features2d::FlannBasedMatcher> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FlannBasedMatcher_FlannBasedMatcher_const_PtrLIndexParamsGR_const_PtrLSearchParamsGR(index_params.as_raw_PtrOfIndexParams(), search_params.as_raw_PtrOfSearchParams(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::features2d::FlannBasedMatcher::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * index_params: makePtr<flann::KDTreeIndexParams>()
+		/// * search_params: makePtr<flann::SearchParams>()
+		#[inline]
+		pub fn new_def() -> Result<crate::features2d::FlannBasedMatcher> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FlannBasedMatcher_FlannBasedMatcher(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::features2d::FlannBasedMatcher::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn create() -> Result<core::Ptr<crate::features2d::FlannBasedMatcher>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FlannBasedMatcher_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::FlannBasedMatcher>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::features2d::FlannBasedMatcher]
@@ -3664,26 +3724,17 @@ pub mod features2d {
 
 	}
 
-	/// Flann-based descriptor matcher.
-	///
-	/// This matcher trains cv::flann::Index on a train descriptor collection and calls its nearest search
-	/// methods to find the best matches. So, this matcher may be faster when matching a large train
-	/// collection than the brute force matcher. FlannBasedMatcher does not support masking permissible
-	/// matches of descriptor sets because flann::Index does not support this. :
-	pub struct FlannBasedMatcher {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { FlannBasedMatcher }
-
-	impl Drop for FlannBasedMatcher {
+	impl std::fmt::Debug for FlannBasedMatcher {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_FlannBasedMatcher_delete(self.as_raw_mut_FlannBasedMatcher()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FlannBasedMatcher")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for FlannBasedMatcher {}
+	boxed_cast_base! { FlannBasedMatcher, core::Algorithm, cv_FlannBasedMatcher_to_Algorithm }
+
+	boxed_cast_base! { FlannBasedMatcher, crate::features2d::DescriptorMatcher, cv_FlannBasedMatcher_to_DescriptorMatcher }
 
 	impl core::AlgorithmTraitConst for FlannBasedMatcher {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -3715,56 +3766,85 @@ pub mod features2d {
 
 	boxed_ref! { FlannBasedMatcher, crate::features2d::FlannBasedMatcherTraitConst, as_raw_FlannBasedMatcher, crate::features2d::FlannBasedMatcherTrait, as_raw_mut_FlannBasedMatcher }
 
-	impl FlannBasedMatcher {
-		/// ## C++ default parameters
-		/// * index_params: makePtr<flann::KDTreeIndexParams>()
-		/// * search_params: makePtr<flann::SearchParams>()
+	/// Wrapping class for feature detection using the goodFeaturesToTrack function. :
+	pub struct GFTTDetector {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { GFTTDetector }
+
+	impl Drop for GFTTDetector {
 		#[inline]
-		pub fn new(index_params: &core::Ptr<crate::flann::IndexParams>, search_params: &core::Ptr<crate::flann::SearchParams>) -> Result<crate::features2d::FlannBasedMatcher> {
+		fn drop(&mut self) {
+			unsafe { sys::cv_GFTTDetector_delete(self.as_raw_mut_GFTTDetector()) };
+		}
+	}
+
+	unsafe impl Send for GFTTDetector {}
+
+	impl GFTTDetector {
+		/// ## C++ default parameters
+		/// * max_corners: 1000
+		/// * quality_level: 0.01
+		/// * min_distance: 1
+		/// * block_size: 3
+		/// * use_harris_detector: false
+		/// * k: 0.04
+		#[inline]
+		pub fn create(max_corners: i32, quality_level: f64, min_distance: f64, block_size: i32, use_harris_detector: bool, k: f64) -> Result<core::Ptr<crate::features2d::GFTTDetector>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_FlannBasedMatcher_FlannBasedMatcher_const_PtrLIndexParamsGR_const_PtrLSearchParamsGR(index_params.as_raw_PtrOfIndexParams(), search_params.as_raw_PtrOfSearchParams(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_GFTTDetector_create_int_double_double_int_bool_double(max_corners, quality_level, min_distance, block_size, use_harris_detector, k, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::features2d::FlannBasedMatcher::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::features2d::GFTTDetector>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
 		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * index_params: makePtr<flann::KDTreeIndexParams>()
-		/// * search_params: makePtr<flann::SearchParams>()
+		/// This alternative version of [GFTTDetector::create] function uses the following default values for its arguments:
+		/// * max_corners: 1000
+		/// * quality_level: 0.01
+		/// * min_distance: 1
+		/// * block_size: 3
+		/// * use_harris_detector: false
+		/// * k: 0.04
 		#[inline]
-		pub fn new_def() -> Result<crate::features2d::FlannBasedMatcher> {
+		pub fn create_def() -> Result<core::Ptr<crate::features2d::GFTTDetector>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_FlannBasedMatcher_FlannBasedMatcher(ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_GFTTDetector_create(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::features2d::FlannBasedMatcher::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::features2d::GFTTDetector>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
+		/// ## C++ default parameters
+		/// * use_harris_detector: false
+		/// * k: 0.04
 		#[inline]
-		pub fn create() -> Result<core::Ptr<crate::features2d::FlannBasedMatcher>> {
+		pub fn create_with_gradient(max_corners: i32, quality_level: f64, min_distance: f64, block_size: i32, gradiant_size: i32, use_harris_detector: bool, k: f64) -> Result<core::Ptr<crate::features2d::GFTTDetector>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_FlannBasedMatcher_create(ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_GFTTDetector_create_int_double_double_int_int_bool_double(max_corners, quality_level, min_distance, block_size, gradiant_size, use_harris_detector, k, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::features2d::FlannBasedMatcher>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::features2d::GFTTDetector>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	boxed_cast_base! { FlannBasedMatcher, core::Algorithm, cv_FlannBasedMatcher_to_Algorithm }
-
-	boxed_cast_base! { FlannBasedMatcher, crate::features2d::DescriptorMatcher, cv_FlannBasedMatcher_to_DescriptorMatcher }
-
-	impl std::fmt::Debug for FlannBasedMatcher {
+		/// ## Note
+		/// This alternative version of [GFTTDetector::create_with_gradient] function uses the following default values for its arguments:
+		/// * use_harris_detector: false
+		/// * k: 0.04
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("FlannBasedMatcher")
-				.finish()
+		pub fn create_with_gradient_def(max_corners: i32, quality_level: f64, min_distance: f64, block_size: i32, gradiant_size: i32) -> Result<core::Ptr<crate::features2d::GFTTDetector>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GFTTDetector_create_int_double_double_int_int(max_corners, quality_level, min_distance, block_size, gradiant_size, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::GFTTDetector>::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
 	}
 
 	/// Constant methods for [crate::features2d::GFTTDetector]
@@ -3915,21 +3995,17 @@ pub mod features2d {
 
 	}
 
-	/// Wrapping class for feature detection using the goodFeaturesToTrack function. :
-	pub struct GFTTDetector {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GFTTDetector }
-
-	impl Drop for GFTTDetector {
+	impl std::fmt::Debug for GFTTDetector {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_GFTTDetector_delete(self.as_raw_mut_GFTTDetector()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GFTTDetector")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for GFTTDetector {}
+	boxed_cast_base! { GFTTDetector, core::Algorithm, cv_GFTTDetector_to_Algorithm }
+
+	boxed_cast_base! { GFTTDetector, crate::features2d::Feature2D, cv_GFTTDetector_to_Feature2D }
 
 	impl core::AlgorithmTraitConst for GFTTDetector {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -3961,81 +4037,85 @@ pub mod features2d {
 
 	boxed_ref! { GFTTDetector, crate::features2d::GFTTDetectorTraitConst, as_raw_GFTTDetector, crate::features2d::GFTTDetectorTrait, as_raw_mut_GFTTDetector }
 
-	impl GFTTDetector {
-		/// ## C++ default parameters
-		/// * max_corners: 1000
-		/// * quality_level: 0.01
-		/// * min_distance: 1
-		/// * block_size: 3
-		/// * use_harris_detector: false
-		/// * k: 0.04
-		#[inline]
-		pub fn create(max_corners: i32, quality_level: f64, min_distance: f64, block_size: i32, use_harris_detector: bool, k: f64) -> Result<core::Ptr<crate::features2d::GFTTDetector>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_GFTTDetector_create_int_double_double_int_bool_double(max_corners, quality_level, min_distance, block_size, use_harris_detector, k, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::features2d::GFTTDetector>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [GFTTDetector::create] function uses the following default values for its arguments:
-		/// * max_corners: 1000
-		/// * quality_level: 0.01
-		/// * min_distance: 1
-		/// * block_size: 3
-		/// * use_harris_detector: false
-		/// * k: 0.04
-		#[inline]
-		pub fn create_def() -> Result<core::Ptr<crate::features2d::GFTTDetector>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_GFTTDetector_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::features2d::GFTTDetector>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## C++ default parameters
-		/// * use_harris_detector: false
-		/// * k: 0.04
-		#[inline]
-		pub fn create_with_gradient(max_corners: i32, quality_level: f64, min_distance: f64, block_size: i32, gradiant_size: i32, use_harris_detector: bool, k: f64) -> Result<core::Ptr<crate::features2d::GFTTDetector>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_GFTTDetector_create_int_double_double_int_int_bool_double(max_corners, quality_level, min_distance, block_size, gradiant_size, use_harris_detector, k, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::features2d::GFTTDetector>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [GFTTDetector::create_with_gradient] function uses the following default values for its arguments:
-		/// * use_harris_detector: false
-		/// * k: 0.04
-		#[inline]
-		pub fn create_with_gradient_def(max_corners: i32, quality_level: f64, min_distance: f64, block_size: i32, gradiant_size: i32) -> Result<core::Ptr<crate::features2d::GFTTDetector>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_GFTTDetector_create_int_double_double_int_int(max_corners, quality_level, min_distance, block_size, gradiant_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::features2d::GFTTDetector>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// Class implementing the KAZE keypoint detector and descriptor extractor, described in [ABD12](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_ABD12) .
+	///
+	///
+	/// Note: AKAZE descriptor can only be used with KAZE or AKAZE keypoints .. [ABD12] KAZE Features. Pablo
+	/// F. Alcantarilla, Adrien Bartoli and Andrew J. Davison. In European Conference on Computer Vision
+	/// (ECCV), Fiorenze, Italy, October 2012.
+	pub struct KAZE {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { GFTTDetector, core::Algorithm, cv_GFTTDetector_to_Algorithm }
+	opencv_type_boxed! { KAZE }
 
-	boxed_cast_base! { GFTTDetector, crate::features2d::Feature2D, cv_GFTTDetector_to_Feature2D }
-
-	impl std::fmt::Debug for GFTTDetector {
+	impl Drop for KAZE {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("GFTTDetector")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_KAZE_delete(self.as_raw_mut_KAZE()) };
 		}
+	}
+
+	unsafe impl Send for KAZE {}
+
+	impl KAZE {
+		/// The KAZE constructor
+		///
+		/// ## Parameters
+		/// * extended: Set to enable extraction of extended (128-byte) descriptor.
+		/// * upright: Set to enable use of upright descriptors (non rotation-invariant).
+		/// * threshold: Detector response threshold to accept point
+		/// * nOctaves: Maximum octave evolution of the image
+		/// * nOctaveLayers: Default number of sublevels per scale level
+		/// * diffusivity: Diffusivity type. DIFF_PM_G1, DIFF_PM_G2, DIFF_WEICKERT or
+		/// DIFF_CHARBONNIER
+		///
+		/// ## C++ default parameters
+		/// * extended: false
+		/// * upright: false
+		/// * threshold: 0.001f
+		/// * n_octaves: 4
+		/// * n_octave_layers: 4
+		/// * diffusivity: KAZE::DIFF_PM_G2
+		#[inline]
+		pub fn create(extended: bool, upright: bool, threshold: f32, n_octaves: i32, n_octave_layers: i32, diffusivity: crate::features2d::KAZE_DiffusivityType) -> Result<core::Ptr<crate::features2d::KAZE>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_KAZE_create_bool_bool_float_int_int_DiffusivityType(extended, upright, threshold, n_octaves, n_octave_layers, diffusivity, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::KAZE>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// The KAZE constructor
+		///
+		/// ## Parameters
+		/// * extended: Set to enable extraction of extended (128-byte) descriptor.
+		/// * upright: Set to enable use of upright descriptors (non rotation-invariant).
+		/// * threshold: Detector response threshold to accept point
+		/// * nOctaves: Maximum octave evolution of the image
+		/// * nOctaveLayers: Default number of sublevels per scale level
+		/// * diffusivity: Diffusivity type. DIFF_PM_G1, DIFF_PM_G2, DIFF_WEICKERT or
+		/// DIFF_CHARBONNIER
+		///
+		/// ## Note
+		/// This alternative version of [KAZE::create] function uses the following default values for its arguments:
+		/// * extended: false
+		/// * upright: false
+		/// * threshold: 0.001f
+		/// * n_octaves: 4
+		/// * n_octave_layers: 4
+		/// * diffusivity: KAZE::DIFF_PM_G2
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::features2d::KAZE>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_KAZE_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::KAZE>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::features2d::KAZE]
@@ -4168,26 +4248,17 @@ pub mod features2d {
 
 	}
 
-	/// Class implementing the KAZE keypoint detector and descriptor extractor, described in [ABD12](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_ABD12) .
-	///
-	///
-	/// Note: AKAZE descriptor can only be used with KAZE or AKAZE keypoints .. [ABD12] KAZE Features. Pablo
-	/// F. Alcantarilla, Adrien Bartoli and Andrew J. Davison. In European Conference on Computer Vision
-	/// (ECCV), Fiorenze, Italy, October 2012.
-	pub struct KAZE {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { KAZE }
-
-	impl Drop for KAZE {
+	impl std::fmt::Debug for KAZE {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_KAZE_delete(self.as_raw_mut_KAZE()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("KAZE")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for KAZE {}
+	boxed_cast_base! { KAZE, core::Algorithm, cv_KAZE_to_Algorithm }
+
+	boxed_cast_base! { KAZE, crate::features2d::Feature2D, cv_KAZE_to_Feature2D }
 
 	impl core::AlgorithmTraitConst for KAZE {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -4219,90 +4290,6 @@ pub mod features2d {
 
 	boxed_ref! { KAZE, crate::features2d::KAZETraitConst, as_raw_KAZE, crate::features2d::KAZETrait, as_raw_mut_KAZE }
 
-	impl KAZE {
-		/// The KAZE constructor
-		///
-		/// ## Parameters
-		/// * extended: Set to enable extraction of extended (128-byte) descriptor.
-		/// * upright: Set to enable use of upright descriptors (non rotation-invariant).
-		/// * threshold: Detector response threshold to accept point
-		/// * nOctaves: Maximum octave evolution of the image
-		/// * nOctaveLayers: Default number of sublevels per scale level
-		/// * diffusivity: Diffusivity type. DIFF_PM_G1, DIFF_PM_G2, DIFF_WEICKERT or
-		/// DIFF_CHARBONNIER
-		///
-		/// ## C++ default parameters
-		/// * extended: false
-		/// * upright: false
-		/// * threshold: 0.001f
-		/// * n_octaves: 4
-		/// * n_octave_layers: 4
-		/// * diffusivity: KAZE::DIFF_PM_G2
-		#[inline]
-		pub fn create(extended: bool, upright: bool, threshold: f32, n_octaves: i32, n_octave_layers: i32, diffusivity: crate::features2d::KAZE_DiffusivityType) -> Result<core::Ptr<crate::features2d::KAZE>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_KAZE_create_bool_bool_float_int_int_DiffusivityType(extended, upright, threshold, n_octaves, n_octave_layers, diffusivity, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::features2d::KAZE>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// The KAZE constructor
-		///
-		/// ## Parameters
-		/// * extended: Set to enable extraction of extended (128-byte) descriptor.
-		/// * upright: Set to enable use of upright descriptors (non rotation-invariant).
-		/// * threshold: Detector response threshold to accept point
-		/// * nOctaves: Maximum octave evolution of the image
-		/// * nOctaveLayers: Default number of sublevels per scale level
-		/// * diffusivity: Diffusivity type. DIFF_PM_G1, DIFF_PM_G2, DIFF_WEICKERT or
-		/// DIFF_CHARBONNIER
-		///
-		/// ## Note
-		/// This alternative version of [KAZE::create] function uses the following default values for its arguments:
-		/// * extended: false
-		/// * upright: false
-		/// * threshold: 0.001f
-		/// * n_octaves: 4
-		/// * n_octave_layers: 4
-		/// * diffusivity: KAZE::DIFF_PM_G2
-		#[inline]
-		pub fn create_def() -> Result<core::Ptr<crate::features2d::KAZE>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_KAZE_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::features2d::KAZE>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_base! { KAZE, core::Algorithm, cv_KAZE_to_Algorithm }
-
-	boxed_cast_base! { KAZE, crate::features2d::Feature2D, cv_KAZE_to_Feature2D }
-
-	impl std::fmt::Debug for KAZE {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("KAZE")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::features2d::KeyPointsFilter]
-	pub trait KeyPointsFilterTraitConst {
-		fn as_raw_KeyPointsFilter(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::features2d::KeyPointsFilter]
-	pub trait KeyPointsFilterTrait: crate::features2d::KeyPointsFilterTraitConst {
-		fn as_raw_mut_KeyPointsFilter(&mut self) -> *mut c_void;
-
-	}
-
 	/// A class filters a vector of keypoints.
 	///
 	/// Because now it is difficult to provide a convenient interface for all usage scenarios of the
@@ -4321,16 +4308,6 @@ pub mod features2d {
 	}
 
 	unsafe impl Send for KeyPointsFilter {}
-
-	impl crate::features2d::KeyPointsFilterTraitConst for KeyPointsFilter {
-		#[inline] fn as_raw_KeyPointsFilter(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::features2d::KeyPointsFilterTrait for KeyPointsFilter {
-		#[inline] fn as_raw_mut_KeyPointsFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { KeyPointsFilter, crate::features2d::KeyPointsFilterTraitConst, as_raw_KeyPointsFilter, crate::features2d::KeyPointsFilterTrait, as_raw_mut_KeyPointsFilter }
 
 	impl KeyPointsFilter {
 		#[inline]
@@ -4422,12 +4399,133 @@ pub mod features2d {
 
 	}
 
+	/// Constant methods for [crate::features2d::KeyPointsFilter]
+	pub trait KeyPointsFilterTraitConst {
+		fn as_raw_KeyPointsFilter(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::features2d::KeyPointsFilter]
+	pub trait KeyPointsFilterTrait: crate::features2d::KeyPointsFilterTraitConst {
+		fn as_raw_mut_KeyPointsFilter(&mut self) -> *mut c_void;
+
+	}
+
 	impl std::fmt::Debug for KeyPointsFilter {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("KeyPointsFilter")
 				.finish()
 		}
+	}
+
+	impl crate::features2d::KeyPointsFilterTraitConst for KeyPointsFilter {
+		#[inline] fn as_raw_KeyPointsFilter(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::features2d::KeyPointsFilterTrait for KeyPointsFilter {
+		#[inline] fn as_raw_mut_KeyPointsFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { KeyPointsFilter, crate::features2d::KeyPointsFilterTraitConst, as_raw_KeyPointsFilter, crate::features2d::KeyPointsFilterTrait, as_raw_mut_KeyPointsFilter }
+
+	/// Maximally stable extremal region extractor
+	///
+	/// The class encapsulates all the parameters of the %MSER extraction algorithm (see [wiki
+	/// article](http://en.wikipedia.org/wiki/Maximally_stable_extremal_regions)).
+	///
+	/// - there are two different implementation of %MSER: one for grey image, one for color image
+	///
+	/// - the grey image algorithm is taken from: [nister2008linear](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_nister2008linear) ;  the paper claims to be faster
+	/// than union-find method; it actually get 1.5~2m/s on my centrino L7200 1.2GHz laptop.
+	///
+	/// - the color image algorithm is taken from: [forssen2007maximally](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_forssen2007maximally) ; it should be much slower
+	/// than grey image method ( 3~4 times )
+	///
+	/// - (Python) A complete example showing the use of the %MSER detector can be found at samples/python/mser.py
+	pub struct MSER {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { MSER }
+
+	impl Drop for MSER {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_MSER_delete(self.as_raw_mut_MSER()) };
+		}
+	}
+
+	unsafe impl Send for MSER {}
+
+	impl MSER {
+		/// Full constructor for %MSER detector
+		///
+		/// ## Parameters
+		/// * delta: it compares ![inline formula](https://latex.codecogs.com/png.latex?%28size%5F%7Bi%7D%2Dsize%5F%7Bi%2Ddelta%7D%29%2Fsize%5F%7Bi%2Ddelta%7D)
+		/// * min_area: prune the area which smaller than minArea
+		/// * max_area: prune the area which bigger than maxArea
+		/// * max_variation: prune the area have similar size to its children
+		/// * min_diversity: for color image, trace back to cut off mser with diversity less than min_diversity
+		/// * max_evolution: for color image, the evolution steps
+		/// * area_threshold: for color image, the area threshold to cause re-initialize
+		/// * min_margin: for color image, ignore too small margin
+		/// * edge_blur_size: for color image, the aperture size for edge blur
+		///
+		/// ## C++ default parameters
+		/// * delta: 5
+		/// * min_area: 60
+		/// * max_area: 14400
+		/// * max_variation: 0.25
+		/// * min_diversity: .2
+		/// * max_evolution: 200
+		/// * area_threshold: 1.01
+		/// * min_margin: 0.003
+		/// * edge_blur_size: 5
+		#[inline]
+		pub fn create(delta: i32, min_area: i32, max_area: i32, max_variation: f64, min_diversity: f64, max_evolution: i32, area_threshold: f64, min_margin: f64, edge_blur_size: i32) -> Result<core::Ptr<crate::features2d::MSER>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_MSER_create_int_int_int_double_double_int_double_double_int(delta, min_area, max_area, max_variation, min_diversity, max_evolution, area_threshold, min_margin, edge_blur_size, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::MSER>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Full constructor for %MSER detector
+		///
+		/// ## Parameters
+		/// * delta: it compares ![inline formula](https://latex.codecogs.com/png.latex?%28size%5F%7Bi%7D%2Dsize%5F%7Bi%2Ddelta%7D%29%2Fsize%5F%7Bi%2Ddelta%7D)
+		/// * min_area: prune the area which smaller than minArea
+		/// * max_area: prune the area which bigger than maxArea
+		/// * max_variation: prune the area have similar size to its children
+		/// * min_diversity: for color image, trace back to cut off mser with diversity less than min_diversity
+		/// * max_evolution: for color image, the evolution steps
+		/// * area_threshold: for color image, the area threshold to cause re-initialize
+		/// * min_margin: for color image, ignore too small margin
+		/// * edge_blur_size: for color image, the aperture size for edge blur
+		///
+		/// ## Note
+		/// This alternative version of [MSER::create] function uses the following default values for its arguments:
+		/// * delta: 5
+		/// * min_area: 60
+		/// * max_area: 14400
+		/// * max_variation: 0.25
+		/// * min_diversity: .2
+		/// * max_evolution: 200
+		/// * area_threshold: 1.01
+		/// * min_margin: 0.003
+		/// * edge_blur_size: 5
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::features2d::MSER>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_MSER_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::MSER>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::features2d::MSER]
@@ -4648,34 +4746,17 @@ pub mod features2d {
 
 	}
 
-	/// Maximally stable extremal region extractor
-	///
-	/// The class encapsulates all the parameters of the %MSER extraction algorithm (see [wiki
-	/// article](http://en.wikipedia.org/wiki/Maximally_stable_extremal_regions)).
-	///
-	/// - there are two different implementation of %MSER: one for grey image, one for color image
-	///
-	/// - the grey image algorithm is taken from: [nister2008linear](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_nister2008linear) ;  the paper claims to be faster
-	/// than union-find method; it actually get 1.5~2m/s on my centrino L7200 1.2GHz laptop.
-	///
-	/// - the color image algorithm is taken from: [forssen2007maximally](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_forssen2007maximally) ; it should be much slower
-	/// than grey image method ( 3~4 times )
-	///
-	/// - (Python) A complete example showing the use of the %MSER detector can be found at samples/python/mser.py
-	pub struct MSER {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { MSER }
-
-	impl Drop for MSER {
+	impl std::fmt::Debug for MSER {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_MSER_delete(self.as_raw_mut_MSER()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MSER")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for MSER {}
+	boxed_cast_base! { MSER, core::Algorithm, cv_MSER_to_Algorithm }
+
+	boxed_cast_base! { MSER, crate::features2d::Feature2D, cv_MSER_to_Feature2D }
 
 	impl core::AlgorithmTraitConst for MSER {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -4707,86 +4788,134 @@ pub mod features2d {
 
 	boxed_ref! { MSER, crate::features2d::MSERTraitConst, as_raw_MSER, crate::features2d::MSERTrait, as_raw_mut_MSER }
 
-	impl MSER {
-		/// Full constructor for %MSER detector
-		///
-		/// ## Parameters
-		/// * delta: it compares ![inline formula](https://latex.codecogs.com/png.latex?%28size%5F%7Bi%7D%2Dsize%5F%7Bi%2Ddelta%7D%29%2Fsize%5F%7Bi%2Ddelta%7D)
-		/// * min_area: prune the area which smaller than minArea
-		/// * max_area: prune the area which bigger than maxArea
-		/// * max_variation: prune the area have similar size to its children
-		/// * min_diversity: for color image, trace back to cut off mser with diversity less than min_diversity
-		/// * max_evolution: for color image, the evolution steps
-		/// * area_threshold: for color image, the area threshold to cause re-initialize
-		/// * min_margin: for color image, ignore too small margin
-		/// * edge_blur_size: for color image, the aperture size for edge blur
-		///
-		/// ## C++ default parameters
-		/// * delta: 5
-		/// * min_area: 60
-		/// * max_area: 14400
-		/// * max_variation: 0.25
-		/// * min_diversity: .2
-		/// * max_evolution: 200
-		/// * area_threshold: 1.01
-		/// * min_margin: 0.003
-		/// * edge_blur_size: 5
-		#[inline]
-		pub fn create(delta: i32, min_area: i32, max_area: i32, max_variation: f64, min_diversity: f64, max_evolution: i32, area_threshold: f64, min_margin: f64, edge_blur_size: i32) -> Result<core::Ptr<crate::features2d::MSER>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_MSER_create_int_int_int_double_double_int_double_double_int(delta, min_area, max_area, max_variation, min_diversity, max_evolution, area_threshold, min_margin, edge_blur_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::features2d::MSER>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Full constructor for %MSER detector
-		///
-		/// ## Parameters
-		/// * delta: it compares ![inline formula](https://latex.codecogs.com/png.latex?%28size%5F%7Bi%7D%2Dsize%5F%7Bi%2Ddelta%7D%29%2Fsize%5F%7Bi%2Ddelta%7D)
-		/// * min_area: prune the area which smaller than minArea
-		/// * max_area: prune the area which bigger than maxArea
-		/// * max_variation: prune the area have similar size to its children
-		/// * min_diversity: for color image, trace back to cut off mser with diversity less than min_diversity
-		/// * max_evolution: for color image, the evolution steps
-		/// * area_threshold: for color image, the area threshold to cause re-initialize
-		/// * min_margin: for color image, ignore too small margin
-		/// * edge_blur_size: for color image, the aperture size for edge blur
-		///
-		/// ## Note
-		/// This alternative version of [MSER::create] function uses the following default values for its arguments:
-		/// * delta: 5
-		/// * min_area: 60
-		/// * max_area: 14400
-		/// * max_variation: 0.25
-		/// * min_diversity: .2
-		/// * max_evolution: 200
-		/// * area_threshold: 1.01
-		/// * min_margin: 0.003
-		/// * edge_blur_size: 5
-		#[inline]
-		pub fn create_def() -> Result<core::Ptr<crate::features2d::MSER>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_MSER_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::features2d::MSER>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// Class implementing the ORB (*oriented BRIEF*) keypoint detector and descriptor extractor
+	///
+	/// described in [RRKB11](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_RRKB11) . The algorithm uses FAST in pyramids to detect stable keypoints, selects
+	/// the strongest features using FAST or Harris response, finds their orientation using first-order
+	/// moments and computes the descriptors using BRIEF (where the coordinates of random point pairs (or
+	/// k-tuples) are rotated according to the measured orientation).
+	pub struct ORB {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { MSER, core::Algorithm, cv_MSER_to_Algorithm }
+	opencv_type_boxed! { ORB }
 
-	boxed_cast_base! { MSER, crate::features2d::Feature2D, cv_MSER_to_Feature2D }
-
-	impl std::fmt::Debug for MSER {
+	impl Drop for ORB {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("MSER")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_ORB_delete(self.as_raw_mut_ORB()) };
 		}
+	}
+
+	unsafe impl Send for ORB {}
+
+	impl ORB {
+		pub const kBytes: i32 = 32;
+		/// The ORB constructor
+		///
+		/// ## Parameters
+		/// * nfeatures: The maximum number of features to retain.
+		/// * scaleFactor: Pyramid decimation ratio, greater than 1. scaleFactor==2 means the classical
+		/// pyramid, where each next level has 4x less pixels than the previous, but such a big scale factor
+		/// will degrade feature matching scores dramatically. On the other hand, too close to 1 scale factor
+		/// will mean that to cover certain scale range you will need more pyramid levels and so the speed
+		/// will suffer.
+		/// * nlevels: The number of pyramid levels. The smallest level will have linear size equal to
+		/// input_image_linear_size/pow(scaleFactor, nlevels - firstLevel).
+		/// * edgeThreshold: This is size of the border where the features are not detected. It should
+		/// roughly match the patchSize parameter.
+		/// * firstLevel: The level of pyramid to put source image to. Previous layers are filled
+		/// with upscaled source image.
+		/// * WTA_K: The number of points that produce each element of the oriented BRIEF descriptor. The
+		/// default value 2 means the BRIEF where we take a random point pair and compare their brightnesses,
+		/// so we get 0/1 response. Other possible values are 3 and 4. For example, 3 means that we take 3
+		/// random points (of course, those point coordinates are random, but they are generated from the
+		/// pre-defined seed, so each element of BRIEF descriptor is computed deterministically from the pixel
+		/// rectangle), find point of maximum brightness and output index of the winner (0, 1 or 2). Such
+		/// output will occupy 2 bits, and therefore it will need a special variant of Hamming distance,
+		/// denoted as NORM_HAMMING2 (2 bits per bin). When WTA_K=4, we take 4 random points to compute each
+		/// bin (that will also occupy 2 bits with possible values 0, 1, 2 or 3).
+		/// * scoreType: The default HARRIS_SCORE means that Harris algorithm is used to rank features
+		/// (the score is written to KeyPoint::score and is used to retain best nfeatures features);
+		/// FAST_SCORE is alternative value of the parameter that produces slightly less stable keypoints,
+		/// but it is a little faster to compute.
+		/// * patchSize: size of the patch used by the oriented BRIEF descriptor. Of course, on smaller
+		/// pyramid layers the perceived image area covered by a feature will be larger.
+		/// * fastThreshold: the fast threshold
+		///
+		/// ## C++ default parameters
+		/// * nfeatures: 500
+		/// * scale_factor: 1.2f
+		/// * nlevels: 8
+		/// * edge_threshold: 31
+		/// * first_level: 0
+		/// * wta_k: 2
+		/// * score_type: ORB::HARRIS_SCORE
+		/// * patch_size: 31
+		/// * fast_threshold: 20
+		#[inline]
+		pub fn create(nfeatures: i32, scale_factor: f32, nlevels: i32, edge_threshold: i32, first_level: i32, wta_k: i32, score_type: crate::features2d::ORB_ScoreType, patch_size: i32, fast_threshold: i32) -> Result<core::Ptr<crate::features2d::ORB>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ORB_create_int_float_int_int_int_int_ScoreType_int_int(nfeatures, scale_factor, nlevels, edge_threshold, first_level, wta_k, score_type, patch_size, fast_threshold, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::ORB>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// The ORB constructor
+		///
+		/// ## Parameters
+		/// * nfeatures: The maximum number of features to retain.
+		/// * scaleFactor: Pyramid decimation ratio, greater than 1. scaleFactor==2 means the classical
+		/// pyramid, where each next level has 4x less pixels than the previous, but such a big scale factor
+		/// will degrade feature matching scores dramatically. On the other hand, too close to 1 scale factor
+		/// will mean that to cover certain scale range you will need more pyramid levels and so the speed
+		/// will suffer.
+		/// * nlevels: The number of pyramid levels. The smallest level will have linear size equal to
+		/// input_image_linear_size/pow(scaleFactor, nlevels - firstLevel).
+		/// * edgeThreshold: This is size of the border where the features are not detected. It should
+		/// roughly match the patchSize parameter.
+		/// * firstLevel: The level of pyramid to put source image to. Previous layers are filled
+		/// with upscaled source image.
+		/// * WTA_K: The number of points that produce each element of the oriented BRIEF descriptor. The
+		/// default value 2 means the BRIEF where we take a random point pair and compare their brightnesses,
+		/// so we get 0/1 response. Other possible values are 3 and 4. For example, 3 means that we take 3
+		/// random points (of course, those point coordinates are random, but they are generated from the
+		/// pre-defined seed, so each element of BRIEF descriptor is computed deterministically from the pixel
+		/// rectangle), find point of maximum brightness and output index of the winner (0, 1 or 2). Such
+		/// output will occupy 2 bits, and therefore it will need a special variant of Hamming distance,
+		/// denoted as NORM_HAMMING2 (2 bits per bin). When WTA_K=4, we take 4 random points to compute each
+		/// bin (that will also occupy 2 bits with possible values 0, 1, 2 or 3).
+		/// * scoreType: The default HARRIS_SCORE means that Harris algorithm is used to rank features
+		/// (the score is written to KeyPoint::score and is used to retain best nfeatures features);
+		/// FAST_SCORE is alternative value of the parameter that produces slightly less stable keypoints,
+		/// but it is a little faster to compute.
+		/// * patchSize: size of the patch used by the oriented BRIEF descriptor. Of course, on smaller
+		/// pyramid layers the perceived image area covered by a feature will be larger.
+		/// * fastThreshold: the fast threshold
+		///
+		/// ## Note
+		/// This alternative version of [ORB::create] function uses the following default values for its arguments:
+		/// * nfeatures: 500
+		/// * scale_factor: 1.2f
+		/// * nlevels: 8
+		/// * edge_threshold: 31
+		/// * first_level: 0
+		/// * wta_k: 2
+		/// * score_type: ORB::HARRIS_SCORE
+		/// * patch_size: 31
+		/// * fast_threshold: 20
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::features2d::ORB>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ORB_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::ORB>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::features2d::ORB]
@@ -4973,26 +5102,17 @@ pub mod features2d {
 
 	}
 
-	/// Class implementing the ORB (*oriented BRIEF*) keypoint detector and descriptor extractor
-	///
-	/// described in [RRKB11](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_RRKB11) . The algorithm uses FAST in pyramids to detect stable keypoints, selects
-	/// the strongest features using FAST or Harris response, finds their orientation using first-order
-	/// moments and computes the descriptors using BRIEF (where the coordinates of random point pairs (or
-	/// k-tuples) are rotated according to the measured orientation).
-	pub struct ORB {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { ORB }
-
-	impl Drop for ORB {
+	impl std::fmt::Debug for ORB {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ORB_delete(self.as_raw_mut_ORB()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ORB")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for ORB {}
+	boxed_cast_base! { ORB, core::Algorithm, cv_ORB_to_Algorithm }
+
+	boxed_cast_base! { ORB, crate::features2d::Feature2D, cv_ORB_to_Feature2D }
 
 	impl core::AlgorithmTraitConst for ORB {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -5024,239 +5144,6 @@ pub mod features2d {
 
 	boxed_ref! { ORB, crate::features2d::ORBTraitConst, as_raw_ORB, crate::features2d::ORBTrait, as_raw_mut_ORB }
 
-	impl ORB {
-		pub const kBytes: i32 = 32;
-		/// The ORB constructor
-		///
-		/// ## Parameters
-		/// * nfeatures: The maximum number of features to retain.
-		/// * scaleFactor: Pyramid decimation ratio, greater than 1. scaleFactor==2 means the classical
-		/// pyramid, where each next level has 4x less pixels than the previous, but such a big scale factor
-		/// will degrade feature matching scores dramatically. On the other hand, too close to 1 scale factor
-		/// will mean that to cover certain scale range you will need more pyramid levels and so the speed
-		/// will suffer.
-		/// * nlevels: The number of pyramid levels. The smallest level will have linear size equal to
-		/// input_image_linear_size/pow(scaleFactor, nlevels - firstLevel).
-		/// * edgeThreshold: This is size of the border where the features are not detected. It should
-		/// roughly match the patchSize parameter.
-		/// * firstLevel: The level of pyramid to put source image to. Previous layers are filled
-		/// with upscaled source image.
-		/// * WTA_K: The number of points that produce each element of the oriented BRIEF descriptor. The
-		/// default value 2 means the BRIEF where we take a random point pair and compare their brightnesses,
-		/// so we get 0/1 response. Other possible values are 3 and 4. For example, 3 means that we take 3
-		/// random points (of course, those point coordinates are random, but they are generated from the
-		/// pre-defined seed, so each element of BRIEF descriptor is computed deterministically from the pixel
-		/// rectangle), find point of maximum brightness and output index of the winner (0, 1 or 2). Such
-		/// output will occupy 2 bits, and therefore it will need a special variant of Hamming distance,
-		/// denoted as NORM_HAMMING2 (2 bits per bin). When WTA_K=4, we take 4 random points to compute each
-		/// bin (that will also occupy 2 bits with possible values 0, 1, 2 or 3).
-		/// * scoreType: The default HARRIS_SCORE means that Harris algorithm is used to rank features
-		/// (the score is written to KeyPoint::score and is used to retain best nfeatures features);
-		/// FAST_SCORE is alternative value of the parameter that produces slightly less stable keypoints,
-		/// but it is a little faster to compute.
-		/// * patchSize: size of the patch used by the oriented BRIEF descriptor. Of course, on smaller
-		/// pyramid layers the perceived image area covered by a feature will be larger.
-		/// * fastThreshold: the fast threshold
-		///
-		/// ## C++ default parameters
-		/// * nfeatures: 500
-		/// * scale_factor: 1.2f
-		/// * nlevels: 8
-		/// * edge_threshold: 31
-		/// * first_level: 0
-		/// * wta_k: 2
-		/// * score_type: ORB::HARRIS_SCORE
-		/// * patch_size: 31
-		/// * fast_threshold: 20
-		#[inline]
-		pub fn create(nfeatures: i32, scale_factor: f32, nlevels: i32, edge_threshold: i32, first_level: i32, wta_k: i32, score_type: crate::features2d::ORB_ScoreType, patch_size: i32, fast_threshold: i32) -> Result<core::Ptr<crate::features2d::ORB>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ORB_create_int_float_int_int_int_int_ScoreType_int_int(nfeatures, scale_factor, nlevels, edge_threshold, first_level, wta_k, score_type, patch_size, fast_threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::features2d::ORB>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// The ORB constructor
-		///
-		/// ## Parameters
-		/// * nfeatures: The maximum number of features to retain.
-		/// * scaleFactor: Pyramid decimation ratio, greater than 1. scaleFactor==2 means the classical
-		/// pyramid, where each next level has 4x less pixels than the previous, but such a big scale factor
-		/// will degrade feature matching scores dramatically. On the other hand, too close to 1 scale factor
-		/// will mean that to cover certain scale range you will need more pyramid levels and so the speed
-		/// will suffer.
-		/// * nlevels: The number of pyramid levels. The smallest level will have linear size equal to
-		/// input_image_linear_size/pow(scaleFactor, nlevels - firstLevel).
-		/// * edgeThreshold: This is size of the border where the features are not detected. It should
-		/// roughly match the patchSize parameter.
-		/// * firstLevel: The level of pyramid to put source image to. Previous layers are filled
-		/// with upscaled source image.
-		/// * WTA_K: The number of points that produce each element of the oriented BRIEF descriptor. The
-		/// default value 2 means the BRIEF where we take a random point pair and compare their brightnesses,
-		/// so we get 0/1 response. Other possible values are 3 and 4. For example, 3 means that we take 3
-		/// random points (of course, those point coordinates are random, but they are generated from the
-		/// pre-defined seed, so each element of BRIEF descriptor is computed deterministically from the pixel
-		/// rectangle), find point of maximum brightness and output index of the winner (0, 1 or 2). Such
-		/// output will occupy 2 bits, and therefore it will need a special variant of Hamming distance,
-		/// denoted as NORM_HAMMING2 (2 bits per bin). When WTA_K=4, we take 4 random points to compute each
-		/// bin (that will also occupy 2 bits with possible values 0, 1, 2 or 3).
-		/// * scoreType: The default HARRIS_SCORE means that Harris algorithm is used to rank features
-		/// (the score is written to KeyPoint::score and is used to retain best nfeatures features);
-		/// FAST_SCORE is alternative value of the parameter that produces slightly less stable keypoints,
-		/// but it is a little faster to compute.
-		/// * patchSize: size of the patch used by the oriented BRIEF descriptor. Of course, on smaller
-		/// pyramid layers the perceived image area covered by a feature will be larger.
-		/// * fastThreshold: the fast threshold
-		///
-		/// ## Note
-		/// This alternative version of [ORB::create] function uses the following default values for its arguments:
-		/// * nfeatures: 500
-		/// * scale_factor: 1.2f
-		/// * nlevels: 8
-		/// * edge_threshold: 31
-		/// * first_level: 0
-		/// * wta_k: 2
-		/// * score_type: ORB::HARRIS_SCORE
-		/// * patch_size: 31
-		/// * fast_threshold: 20
-		#[inline]
-		pub fn create_def() -> Result<core::Ptr<crate::features2d::ORB>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ORB_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::features2d::ORB>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_base! { ORB, core::Algorithm, cv_ORB_to_Algorithm }
-
-	boxed_cast_base! { ORB, crate::features2d::Feature2D, cv_ORB_to_Feature2D }
-
-	impl std::fmt::Debug for ORB {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("ORB")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::features2d::SIFT]
-	pub trait SIFTTraitConst: crate::features2d::Feature2DTraitConst {
-		fn as_raw_SIFT(&self) -> *const c_void;
-
-		#[inline]
-		fn get_default_name(&self) -> Result<String> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SIFT_getDefaultName_const(self.as_raw_SIFT(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { String::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		fn get_n_features(&self) -> Result<i32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SIFT_getNFeatures_const(self.as_raw_SIFT(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn get_n_octave_layers(&self) -> Result<i32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SIFT_getNOctaveLayers_const(self.as_raw_SIFT(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn get_contrast_threshold(&self) -> Result<f64> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SIFT_getContrastThreshold_const(self.as_raw_SIFT(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn get_edge_threshold(&self) -> Result<f64> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SIFT_getEdgeThreshold_const(self.as_raw_SIFT(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn get_sigma(&self) -> Result<f64> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SIFT_getSigma_const(self.as_raw_SIFT(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
-
-	/// Mutable methods for [crate::features2d::SIFT]
-	pub trait SIFTTrait: crate::features2d::Feature2DTrait + crate::features2d::SIFTTraitConst {
-		fn as_raw_mut_SIFT(&mut self) -> *mut c_void;
-
-		#[inline]
-		fn set_n_features(&mut self, max_features: i32) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SIFT_setNFeatures_int(self.as_raw_mut_SIFT(), max_features, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn set_n_octave_layers(&mut self, n_octave_layers: i32) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SIFT_setNOctaveLayers_int(self.as_raw_mut_SIFT(), n_octave_layers, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn set_contrast_threshold(&mut self, contrast_threshold: f64) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SIFT_setContrastThreshold_double(self.as_raw_mut_SIFT(), contrast_threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn set_edge_threshold(&mut self, edge_threshold: f64) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SIFT_setEdgeThreshold_double(self.as_raw_mut_SIFT(), edge_threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn set_sigma(&mut self, sigma: f64) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SIFT_setSigma_double(self.as_raw_mut_SIFT(), sigma, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
-
 	/// Class for extracting keypoints and computing descriptors using the Scale Invariant Feature Transform
 	/// (SIFT) algorithm by D. Lowe [Lowe04](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Lowe04) .
 	pub struct SIFT {
@@ -5273,36 +5160,6 @@ pub mod features2d {
 	}
 
 	unsafe impl Send for SIFT {}
-
-	impl core::AlgorithmTraitConst for SIFT {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::AlgorithmTrait for SIFT {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { SIFT, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-
-	impl crate::features2d::Feature2DTraitConst for SIFT {
-		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::features2d::Feature2DTrait for SIFT {
-		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { SIFT, crate::features2d::Feature2DTraitConst, as_raw_Feature2D, crate::features2d::Feature2DTrait, as_raw_mut_Feature2D }
-
-	impl crate::features2d::SIFTTraitConst for SIFT {
-		#[inline] fn as_raw_SIFT(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::features2d::SIFTTrait for SIFT {
-		#[inline] fn as_raw_mut_SIFT(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { SIFT, crate::features2d::SIFTTraitConst, as_raw_SIFT, crate::features2d::SIFTTrait, as_raw_mut_SIFT }
 
 	impl SIFT {
 		/// ## Parameters
@@ -5477,9 +5334,117 @@ pub mod features2d {
 
 	}
 
-	boxed_cast_base! { SIFT, core::Algorithm, cv_SIFT_to_Algorithm }
+	/// Constant methods for [crate::features2d::SIFT]
+	pub trait SIFTTraitConst: crate::features2d::Feature2DTraitConst {
+		fn as_raw_SIFT(&self) -> *const c_void;
 
-	boxed_cast_base! { SIFT, crate::features2d::Feature2D, cv_SIFT_to_Feature2D }
+		#[inline]
+		fn get_default_name(&self) -> Result<String> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SIFT_getDefaultName_const(self.as_raw_SIFT(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { String::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_n_features(&self) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SIFT_getNFeatures_const(self.as_raw_SIFT(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_n_octave_layers(&self) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SIFT_getNOctaveLayers_const(self.as_raw_SIFT(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_contrast_threshold(&self) -> Result<f64> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SIFT_getContrastThreshold_const(self.as_raw_SIFT(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_edge_threshold(&self) -> Result<f64> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SIFT_getEdgeThreshold_const(self.as_raw_SIFT(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_sigma(&self) -> Result<f64> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SIFT_getSigma_const(self.as_raw_SIFT(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [crate::features2d::SIFT]
+	pub trait SIFTTrait: crate::features2d::Feature2DTrait + crate::features2d::SIFTTraitConst {
+		fn as_raw_mut_SIFT(&mut self) -> *mut c_void;
+
+		#[inline]
+		fn set_n_features(&mut self, max_features: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SIFT_setNFeatures_int(self.as_raw_mut_SIFT(), max_features, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn set_n_octave_layers(&mut self, n_octave_layers: i32) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SIFT_setNOctaveLayers_int(self.as_raw_mut_SIFT(), n_octave_layers, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn set_contrast_threshold(&mut self, contrast_threshold: f64) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SIFT_setContrastThreshold_double(self.as_raw_mut_SIFT(), contrast_threshold, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn set_edge_threshold(&mut self, edge_threshold: f64) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SIFT_setEdgeThreshold_double(self.as_raw_mut_SIFT(), edge_threshold, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn set_sigma(&mut self, sigma: f64) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SIFT_setSigma_double(self.as_raw_mut_SIFT(), sigma, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
 
 	impl std::fmt::Debug for SIFT {
 		#[inline]
@@ -5487,6 +5452,113 @@ pub mod features2d {
 			f.debug_struct("SIFT")
 				.finish()
 		}
+	}
+
+	boxed_cast_base! { SIFT, core::Algorithm, cv_SIFT_to_Algorithm }
+
+	boxed_cast_base! { SIFT, crate::features2d::Feature2D, cv_SIFT_to_Feature2D }
+
+	impl core::AlgorithmTraitConst for SIFT {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::AlgorithmTrait for SIFT {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { SIFT, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+
+	impl crate::features2d::Feature2DTraitConst for SIFT {
+		#[inline] fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::features2d::Feature2DTrait for SIFT {
+		#[inline] fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { SIFT, crate::features2d::Feature2DTraitConst, as_raw_Feature2D, crate::features2d::Feature2DTrait, as_raw_mut_Feature2D }
+
+	impl crate::features2d::SIFTTraitConst for SIFT {
+		#[inline] fn as_raw_SIFT(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::features2d::SIFTTrait for SIFT {
+		#[inline] fn as_raw_mut_SIFT(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { SIFT, crate::features2d::SIFTTraitConst, as_raw_SIFT, crate::features2d::SIFTTrait, as_raw_mut_SIFT }
+
+	/// Class for extracting blobs from an image. :
+	///
+	/// The class implements a simple algorithm for extracting blobs from an image:
+	///
+	/// 1.  Convert the source image to binary images by applying thresholding with several thresholds from
+	///    minThreshold (inclusive) to maxThreshold (exclusive) with distance thresholdStep between
+	///    neighboring thresholds.
+	/// 2.  Extract connected components from every binary image by findContours and calculate their
+	///    centers.
+	/// 3.  Group centers from several binary images by their coordinates. Close centers form one group that
+	///    corresponds to one blob, which is controlled by the minDistBetweenBlobs parameter.
+	/// 4.  From the groups, estimate final centers of blobs and their radiuses and return as locations and
+	///    sizes of keypoints.
+	///
+	/// This class performs several filtrations of returned blobs. You should set filterBy\* to true/false
+	/// to turn on/off corresponding filtration. Available filtrations:
+	///
+	/// *   **By color**. This filter compares the intensity of a binary image at the center of a blob to
+	/// blobColor. If they differ, the blob is filtered out. Use blobColor = 0 to extract dark blobs
+	/// and blobColor = 255 to extract light blobs.
+	/// *   **By area**. Extracted blobs have an area between minArea (inclusive) and maxArea (exclusive).
+	/// *   **By circularity**. Extracted blobs have circularity
+	/// (![inline formula](https://latex.codecogs.com/png.latex?%5Cfrac%7B4%2A%5Cpi%2AArea%7D%7Bperimeter%20%2A%20perimeter%7D)) between minCircularity (inclusive) and
+	/// maxCircularity (exclusive).
+	/// *   **By ratio of the minimum inertia to maximum inertia**. Extracted blobs have this ratio
+	/// between minInertiaRatio (inclusive) and maxInertiaRatio (exclusive).
+	/// *   **By convexity**. Extracted blobs have convexity (area / area of blob convex hull) between
+	/// minConvexity (inclusive) and maxConvexity (exclusive).
+	///
+	/// Default values of parameters are tuned to extract dark circular blobs.
+	pub struct SimpleBlobDetector {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { SimpleBlobDetector }
+
+	impl Drop for SimpleBlobDetector {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_SimpleBlobDetector_delete(self.as_raw_mut_SimpleBlobDetector()) };
+		}
+	}
+
+	unsafe impl Send for SimpleBlobDetector {}
+
+	impl SimpleBlobDetector {
+		/// ## C++ default parameters
+		/// * parameters: SimpleBlobDetector::Params()
+		#[inline]
+		pub fn create(parameters: crate::features2d::SimpleBlobDetector_Params) -> Result<core::Ptr<crate::features2d::SimpleBlobDetector>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SimpleBlobDetector_create_const_ParamsR(&parameters, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::SimpleBlobDetector>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [SimpleBlobDetector::create] function uses the following default values for its arguments:
+		/// * parameters: SimpleBlobDetector::Params()
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::features2d::SimpleBlobDetector>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SimpleBlobDetector_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::features2d::SimpleBlobDetector>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::features2d::SimpleBlobDetector]
@@ -5539,50 +5611,17 @@ pub mod features2d {
 
 	}
 
-	/// Class for extracting blobs from an image. :
-	///
-	/// The class implements a simple algorithm for extracting blobs from an image:
-	///
-	/// 1.  Convert the source image to binary images by applying thresholding with several thresholds from
-	///    minThreshold (inclusive) to maxThreshold (exclusive) with distance thresholdStep between
-	///    neighboring thresholds.
-	/// 2.  Extract connected components from every binary image by findContours and calculate their
-	///    centers.
-	/// 3.  Group centers from several binary images by their coordinates. Close centers form one group that
-	///    corresponds to one blob, which is controlled by the minDistBetweenBlobs parameter.
-	/// 4.  From the groups, estimate final centers of blobs and their radiuses and return as locations and
-	///    sizes of keypoints.
-	///
-	/// This class performs several filtrations of returned blobs. You should set filterBy\* to true/false
-	/// to turn on/off corresponding filtration. Available filtrations:
-	///
-	/// *   **By color**. This filter compares the intensity of a binary image at the center of a blob to
-	/// blobColor. If they differ, the blob is filtered out. Use blobColor = 0 to extract dark blobs
-	/// and blobColor = 255 to extract light blobs.
-	/// *   **By area**. Extracted blobs have an area between minArea (inclusive) and maxArea (exclusive).
-	/// *   **By circularity**. Extracted blobs have circularity
-	/// (![inline formula](https://latex.codecogs.com/png.latex?%5Cfrac%7B4%2A%5Cpi%2AArea%7D%7Bperimeter%20%2A%20perimeter%7D)) between minCircularity (inclusive) and
-	/// maxCircularity (exclusive).
-	/// *   **By ratio of the minimum inertia to maximum inertia**. Extracted blobs have this ratio
-	/// between minInertiaRatio (inclusive) and maxInertiaRatio (exclusive).
-	/// *   **By convexity**. Extracted blobs have convexity (area / area of blob convex hull) between
-	/// minConvexity (inclusive) and maxConvexity (exclusive).
-	///
-	/// Default values of parameters are tuned to extract dark circular blobs.
-	pub struct SimpleBlobDetector {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { SimpleBlobDetector }
-
-	impl Drop for SimpleBlobDetector {
+	impl std::fmt::Debug for SimpleBlobDetector {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_SimpleBlobDetector_delete(self.as_raw_mut_SimpleBlobDetector()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SimpleBlobDetector")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for SimpleBlobDetector {}
+	boxed_cast_base! { SimpleBlobDetector, core::Algorithm, cv_SimpleBlobDetector_to_Algorithm }
+
+	boxed_cast_base! { SimpleBlobDetector, crate::features2d::Feature2D, cv_SimpleBlobDetector_to_Feature2D }
 
 	impl core::AlgorithmTraitConst for SimpleBlobDetector {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -5613,46 +5652,6 @@ pub mod features2d {
 	}
 
 	boxed_ref! { SimpleBlobDetector, crate::features2d::SimpleBlobDetectorTraitConst, as_raw_SimpleBlobDetector, crate::features2d::SimpleBlobDetectorTrait, as_raw_mut_SimpleBlobDetector }
-
-	impl SimpleBlobDetector {
-		/// ## C++ default parameters
-		/// * parameters: SimpleBlobDetector::Params()
-		#[inline]
-		pub fn create(parameters: crate::features2d::SimpleBlobDetector_Params) -> Result<core::Ptr<crate::features2d::SimpleBlobDetector>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SimpleBlobDetector_create_const_ParamsR(&parameters, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::features2d::SimpleBlobDetector>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [SimpleBlobDetector::create] function uses the following default values for its arguments:
-		/// * parameters: SimpleBlobDetector::Params()
-		#[inline]
-		pub fn create_def() -> Result<core::Ptr<crate::features2d::SimpleBlobDetector>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SimpleBlobDetector_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::features2d::SimpleBlobDetector>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_base! { SimpleBlobDetector, core::Algorithm, cv_SimpleBlobDetector_to_Algorithm }
-
-	boxed_cast_base! { SimpleBlobDetector, crate::features2d::Feature2D, cv_SimpleBlobDetector_to_Feature2D }
-
-	impl std::fmt::Debug for SimpleBlobDetector {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("SimpleBlobDetector")
-				.finish()
-		}
-	}
 
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq)]
@@ -5710,4 +5709,5 @@ pub mod features2d {
 		}
 
 	}
+
 }

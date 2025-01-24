@@ -6106,6 +6106,34 @@ pub mod gapi {
 		Ok(ret)
 	}
 
+	pub struct GArg {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { GArg }
+
+	impl Drop for GArg {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_GArg_delete(self.as_raw_mut_GArg()) };
+		}
+	}
+
+	unsafe impl Send for GArg {}
+
+	impl GArg {
+		#[inline]
+		pub fn default() -> Result<crate::gapi::GArg> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GArg_GArg(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::GArg::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
 	/// Constant methods for [crate::gapi::GArg]
 	pub trait GArgTraitConst {
 		fn as_raw_GArg(&self) -> *const c_void;
@@ -6150,20 +6178,15 @@ pub mod gapi {
 
 	}
 
-	pub struct GArg {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GArg }
-
-	impl Drop for GArg {
+	impl std::fmt::Debug for GArg {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_GArg_delete(self.as_raw_mut_GArg()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GArg")
+				.field("kind", &crate::gapi::GArgTraitConst::kind(self))
+				.field("opaque_kind", &crate::gapi::GArgTraitConst::opaque_kind(self))
+				.finish()
 		}
 	}
-
-	unsafe impl Send for GArg {}
 
 	impl crate::gapi::GArgTraitConst for GArg {
 		#[inline] fn as_raw_GArg(&self) -> *const c_void { self.as_raw() }
@@ -6175,27 +6198,31 @@ pub mod gapi {
 
 	boxed_ref! { GArg, crate::gapi::GArgTraitConst, as_raw_GArg, crate::gapi::GArgTrait, as_raw_mut_GArg }
 
-	impl GArg {
-		#[inline]
-		pub fn default() -> Result<crate::gapi::GArg> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_GArg_GArg(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::gapi::GArg::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// \addtogroup gapi_meta_args
+	pub struct GArrayDesc {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for GArg {
+	opencv_type_boxed! { GArrayDesc }
+
+	impl Drop for GArrayDesc {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("GArg")
-				.field("kind", &crate::gapi::GArgTraitConst::kind(self))
-				.field("opaque_kind", &crate::gapi::GArgTraitConst::opaque_kind(self))
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_GArrayDesc_delete(self.as_raw_mut_GArrayDesc()) };
 		}
+	}
+
+	unsafe impl Send for GArrayDesc {}
+
+	impl GArrayDesc {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::gapi::GArrayDesc {
+			let ret = unsafe { sys::cv_GArrayDesc_defaultNew_const() };
+			let ret = unsafe { crate::gapi::GArrayDesc::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::gapi::GArrayDesc]
@@ -6219,39 +6246,12 @@ pub mod gapi {
 
 	}
 
-	/// \addtogroup gapi_meta_args
-	pub struct GArrayDesc {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GArrayDesc }
-
-	impl Drop for GArrayDesc {
+	impl Default for GArrayDesc {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_GArrayDesc_delete(self.as_raw_mut_GArrayDesc()) };
-		}
-	}
-
-	unsafe impl Send for GArrayDesc {}
-
-	impl crate::gapi::GArrayDescTraitConst for GArrayDesc {
-		#[inline] fn as_raw_GArrayDesc(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::gapi::GArrayDescTrait for GArrayDesc {
-		#[inline] fn as_raw_mut_GArrayDesc(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { GArrayDesc, crate::gapi::GArrayDescTraitConst, as_raw_GArrayDesc, crate::gapi::GArrayDescTrait, as_raw_mut_GArrayDesc }
-
-	impl GArrayDesc {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
+		/// Forwards to infallible Self::default()
 		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_GArrayDesc_defaultNew_const()) }
+			Self::default()
 		}
-
 	}
 
 	impl Clone for GArrayDesc {
@@ -6269,12 +6269,42 @@ pub mod gapi {
 		}
 	}
 
-	impl Default for GArrayDesc {
+	impl crate::gapi::GArrayDescTraitConst for GArrayDesc {
+		#[inline] fn as_raw_GArrayDesc(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::gapi::GArrayDescTrait for GArrayDesc {
+		#[inline] fn as_raw_mut_GArrayDesc(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { GArrayDesc, crate::gapi::GArrayDescTraitConst, as_raw_GArrayDesc, crate::gapi::GArrayDescTrait, as_raw_mut_GArrayDesc }
+
+	pub struct GCall {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { GCall }
+
+	impl Drop for GCall {
 		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
+		fn drop(&mut self) {
+			unsafe { sys::cv_GCall_delete(self.as_raw_mut_GCall()) };
 		}
+	}
+
+	unsafe impl Send for GCall {}
+
+	impl GCall {
+		#[inline]
+		pub fn new(k: &impl crate::gapi::GKernelTraitConst) -> Result<crate::gapi::GCall> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GCall_GCall_const_GKernelR(k.as_raw_GKernel(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::GCall::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::gapi::GCall]
@@ -6418,20 +6448,13 @@ pub mod gapi {
 
 	}
 
-	pub struct GCall {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GCall }
-
-	impl Drop for GCall {
+	impl std::fmt::Debug for GCall {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_GCall_delete(self.as_raw_mut_GCall()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GCall")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for GCall {}
 
 	impl crate::gapi::GCallTraitConst for GCall {
 		#[inline] fn as_raw_GCall(&self) -> *const c_void { self.as_raw() }
@@ -6443,25 +6466,38 @@ pub mod gapi {
 
 	boxed_ref! { GCall, crate::gapi::GCallTraitConst, as_raw_GCall, crate::gapi::GCallTrait, as_raw_mut_GCall }
 
-	impl GCall {
-		#[inline]
-		pub fn new(k: &impl crate::gapi::GKernelTraitConst) -> Result<crate::gapi::GCall> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_GCall_GCall_const_GKernelR(k.as_raw_GKernel(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::gapi::GCall::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// Represents an arbitrary compilation argument.
+	///
+	/// Any value can be wrapped into cv::GCompileArg, but only known ones
+	/// (to G-API or its backends) can be interpreted correctly.
+	///
+	/// Normally objects of this class shouldn't be created manually, use
+	/// cv::compile_args() function which automatically wraps everything
+	/// passed in (a variadic template parameter pack) into a vector of
+	/// cv::GCompileArg objects.
+	pub struct GCompileArg {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for GCall {
+	opencv_type_boxed! { GCompileArg }
+
+	impl Drop for GCompileArg {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("GCall")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_GCompileArg_delete(self.as_raw_mut_GCompileArg()) };
 		}
+	}
+
+	unsafe impl Send for GCompileArg {}
+
+	impl GCompileArg {
+		#[inline]
+		pub fn default() -> crate::gapi::GCompileArg {
+			let ret = unsafe { sys::cv_GCompileArg_GCompileArg() };
+			let ret = unsafe { crate::gapi::GCompileArg::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::gapi::GCompileArg]
@@ -6490,48 +6526,12 @@ pub mod gapi {
 
 	}
 
-	/// Represents an arbitrary compilation argument.
-	///
-	/// Any value can be wrapped into cv::GCompileArg, but only known ones
-	/// (to G-API or its backends) can be interpreted correctly.
-	///
-	/// Normally objects of this class shouldn't be created manually, use
-	/// cv::compile_args() function which automatically wraps everything
-	/// passed in (a variadic template parameter pack) into a vector of
-	/// cv::GCompileArg objects.
-	pub struct GCompileArg {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GCompileArg }
-
-	impl Drop for GCompileArg {
+	impl Default for GCompileArg {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_GCompileArg_delete(self.as_raw_mut_GCompileArg()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
-	}
-
-	unsafe impl Send for GCompileArg {}
-
-	impl crate::gapi::GCompileArgTraitConst for GCompileArg {
-		#[inline] fn as_raw_GCompileArg(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::gapi::GCompileArgTrait for GCompileArg {
-		#[inline] fn as_raw_mut_GCompileArg(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { GCompileArg, crate::gapi::GCompileArgTraitConst, as_raw_GCompileArg, crate::gapi::GCompileArgTrait, as_raw_mut_GCompileArg }
-
-	impl GCompileArg {
-		#[inline]
-		pub fn default() -> crate::gapi::GCompileArg {
-			let ret = unsafe { sys::cv_GCompileArg_GCompileArg() };
-			let ret = unsafe { crate::gapi::GCompileArg::opencv_from_extern(ret) };
-			ret
-		}
-
 	}
 
 	impl std::fmt::Debug for GCompileArg {
@@ -6543,12 +6543,74 @@ pub mod gapi {
 		}
 	}
 
-	impl Default for GCompileArg {
+	impl crate::gapi::GCompileArgTraitConst for GCompileArg {
+		#[inline] fn as_raw_GCompileArg(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::gapi::GCompileArgTrait for GCompileArg {
+		#[inline] fn as_raw_mut_GCompileArg(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { GCompileArg, crate::gapi::GCompileArgTraitConst, as_raw_GCompileArg, crate::gapi::GCompileArgTrait, as_raw_mut_GCompileArg }
+
+	/// \addtogroup gapi_main_classes
+	/// /
+	///
+	///  Represents a compiled computation (graph). Can only be used
+	///  with image / data formats & resolutions it was compiled for, with
+	///  some exceptions.
+	///
+	///  This class represents a product of graph compilation (calling
+	///  cv::GComputation::compile()). Objects of this class actually do
+	///  data processing, and graph execution is incapsulated into objects
+	///  of this class. Execution model itself depends on kernels and
+	///  backends which were using during the compilation, see [gapi_compile_args] for details.
+	///
+	///  In a general case, GCompiled objects can be applied to data only in
+	///  that formats/resolutions they were compiled for (see [gapi_meta_args]). However, if the underlying backends allow, a
+	///  compiled object can be _reshaped_ to handle data (images) of
+	///  different resolution, though formats and types must remain the same.
+	///
+	///  GCompiled is very similar to `std::function<>` in its semantics --
+	///  running it looks like a function call in the user code.
+	///
+	///  At the moment, GCompiled objects are not reentrant -- generally,
+	///  the objects are stateful since graph execution itself is a stateful
+	///  process and this state is now maintained in GCompiled's own memory
+	///  (not on the process stack).
+	///
+	///  At the same time, two different GCompiled objects produced from the
+	///  single cv::GComputation are completely independent and can be used
+	///  concurrently.
+	/// ## See also
+	/// GStreamingCompiled
+	pub struct GCompiled {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { GCompiled }
+
+	impl Drop for GCompiled {
 		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
+		fn drop(&mut self) {
+			unsafe { sys::cv_GCompiled_delete(self.as_raw_mut_GCompiled()) };
 		}
+	}
+
+	unsafe impl Send for GCompiled {}
+
+	impl GCompiled {
+		/// Constructs an empty object
+		#[inline]
+		pub fn default() -> Result<crate::gapi::GCompiled> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GCompiled_GCompiled(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::GCompiled::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::gapi::GCompiled]
@@ -6794,51 +6856,13 @@ pub mod gapi {
 
 	}
 
-	/// \addtogroup gapi_main_classes
-	/// /
-	///
-	///  Represents a compiled computation (graph). Can only be used
-	///  with image / data formats & resolutions it was compiled for, with
-	///  some exceptions.
-	///
-	///  This class represents a product of graph compilation (calling
-	///  cv::GComputation::compile()). Objects of this class actually do
-	///  data processing, and graph execution is incapsulated into objects
-	///  of this class. Execution model itself depends on kernels and
-	///  backends which were using during the compilation, see [gapi_compile_args] for details.
-	///
-	///  In a general case, GCompiled objects can be applied to data only in
-	///  that formats/resolutions they were compiled for (see [gapi_meta_args]). However, if the underlying backends allow, a
-	///  compiled object can be _reshaped_ to handle data (images) of
-	///  different resolution, though formats and types must remain the same.
-	///
-	///  GCompiled is very similar to `std::function<>` in its semantics --
-	///  running it looks like a function call in the user code.
-	///
-	///  At the moment, GCompiled objects are not reentrant -- generally,
-	///  the objects are stateful since graph execution itself is a stateful
-	///  process and this state is now maintained in GCompiled's own memory
-	///  (not on the process stack).
-	///
-	///  At the same time, two different GCompiled objects produced from the
-	///  single cv::GComputation are completely independent and can be used
-	///  concurrently.
-	/// ## See also
-	/// GStreamingCompiled
-	pub struct GCompiled {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GCompiled }
-
-	impl Drop for GCompiled {
+	impl std::fmt::Debug for GCompiled {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_GCompiled_delete(self.as_raw_mut_GCompiled()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GCompiled")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for GCompiled {}
 
 	impl crate::gapi::GCompiledTraitConst for GCompiled {
 		#[inline] fn as_raw_GCompiled(&self) -> *const c_void { self.as_raw() }
@@ -6850,26 +6874,258 @@ pub mod gapi {
 
 	boxed_ref! { GCompiled, crate::gapi::GCompiledTraitConst, as_raw_GCompiled, crate::gapi::GCompiledTrait, as_raw_mut_GCompiled }
 
-	impl GCompiled {
-		/// Constructs an empty object
+	/// GComputation class represents a captured computation
+	/// graph. GComputation objects form boundaries for expression code
+	/// user writes with G-API, allowing to compile and execute it.
+	///
+	/// G-API computations are defined with input/output data
+	/// objects. G-API will track automatically which operations connect
+	/// specified outputs to the inputs, forming up a call graph to be
+	/// executed. The below example expresses calculation of Sobel operator
+	/// for edge detection (![inline formula](https://latex.codecogs.com/png.latex?G%20%3D%20%5Csqrt%7BG%5Fx%5E2%20%2B%20G%5Fy%5E2%7D)):
+	///
+	/// [graph_def](https://github.com/opencv/opencv_contrib/blob/4.11.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+	///
+	/// Full pipeline can be now captured with this object declaration:
+	///
+	/// [graph_cap_full](https://github.com/opencv/opencv_contrib/blob/4.11.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+	///
+	/// Input/output data objects on which a call graph should be
+	/// reconstructed are passed using special wrappers cv::GIn and
+	/// cv::GOut. G-API will track automatically which operations form a
+	/// path from inputs to outputs and build the execution graph appropriately.
+	///
+	/// Note that cv::GComputation doesn't take ownership on data objects
+	/// it is defined. Moreover, multiple GComputation objects may be
+	/// defined on the same expressions, e.g. a smaller pipeline which
+	/// expects that image gradients are already pre-calculated may be
+	/// defined like this:
+	///
+	/// [graph_cap_sub](https://github.com/opencv/opencv_contrib/blob/4.11.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
+	///
+	/// The resulting graph would expect two inputs and produce one
+	/// output. In this case, it doesn't matter if gx/gy data objects are
+	/// results of cv::gapi::Sobel operators -- G-API will stop unrolling
+	/// expressions and building the underlying graph one reaching this
+	/// data objects.
+	///
+	/// The way how GComputation is defined is important as its definition
+	/// specifies graph _protocol_ -- the way how the graph should be
+	/// used. Protocol is defined by number of inputs, number of outputs,
+	/// and shapes of inputs and outputs.
+	///
+	/// In the above example, sobelEdge expects one Mat on input and
+	/// produces one Mat; while sobelEdgeSub expects two Mats on input and
+	/// produces one Mat. GComputation's protocol defines how other
+	/// computation methods should be used -- cv::GComputation::compile() and
+	/// cv::GComputation::apply(). For example, if a graph is defined on
+	/// two GMat inputs, two cv::Mat objects have to be passed to apply()
+	/// for execution. GComputation checks protocol correctness in runtime
+	/// so passing a different number of objects in apply() or passing
+	/// cv::Scalar instead of cv::Mat there would compile well as a C++
+	/// source but raise an exception in run-time. G-API also comes with a
+	/// typed wrapper cv::GComputationT<> which introduces this type-checking in
+	/// compile-time.
+	///
+	/// cv::GComputation itself is a thin object which just captures what
+	/// the graph is. The compiled graph (which actually process data) is
+	/// represented by class GCompiled. Use compile() method to generate a
+	/// compiled graph with given compile options. cv::GComputation can
+	/// also be used to process data with implicit graph compilation
+	/// on-the-fly, see apply() for details.
+	///
+	/// GComputation is a reference-counted object -- once defined, all its
+	/// copies will refer to the same instance.
+	/// ## See also
+	/// GCompiled
+	pub struct GComputation {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { GComputation }
+
+	impl Drop for GComputation {
 		#[inline]
-		pub fn default() -> Result<crate::gapi::GCompiled> {
+		fn drop(&mut self) {
+			unsafe { sys::cv_GComputation_delete(self.as_raw_mut_GComputation()) };
+		}
+	}
+
+	unsafe impl Send for GComputation {}
+
+	impl GComputation {
+		/// Defines an unary (one input -- one output) computation
+		///
+		/// Generic GComputation constructor.
+		///
+		/// Constructs a new graph with a given protocol, specified as a
+		/// flow of operations connecting input/output objects. Throws if
+		/// the passed boundaries are invalid, e.g. if there's no
+		/// functional dependency (path) between given outputs and inputs.
+		///
+		/// ## Parameters
+		/// * ins: Input data vector.
+		/// * outs: Output data vector.
+		///
+		///
+		/// Note: Don't construct GProtoInputArgs/GProtoOutputArgs objects
+		/// directly, use cv::GIn()/cv::GOut() wrapper functions instead.
+		/// ## See also
+		/// [gapi_data_objects]
+		///
+		/// ## Overloaded parameters
+		///
+		/// * in: input GMat of the defined unary computation
+		/// * out: output GMat of the defined unary computation
+		#[inline]
+		pub fn new(mut in_: impl crate::gapi::GMatTrait, mut out: impl crate::gapi::GMatTrait) -> Result<crate::gapi::GComputation> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_GCompiled_GCompiled(ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_GComputation_GComputation_GMat_GMat(in_.as_raw_mut_GMat(), out.as_raw_mut_GMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::gapi::GCompiled::opencv_from_extern(ret) };
+			let ret = unsafe { crate::gapi::GComputation::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	impl std::fmt::Debug for GCompiled {
+		/// Defines an unary (one input -- one output) computation
+		///
+		/// Generic GComputation constructor.
+		///
+		/// Constructs a new graph with a given protocol, specified as a
+		/// flow of operations connecting input/output objects. Throws if
+		/// the passed boundaries are invalid, e.g. if there's no
+		/// functional dependency (path) between given outputs and inputs.
+		///
+		/// ## Parameters
+		/// * ins: Input data vector.
+		/// * outs: Output data vector.
+		///
+		///
+		/// Note: Don't construct GProtoInputArgs/GProtoOutputArgs objects
+		/// directly, use cv::GIn()/cv::GOut() wrapper functions instead.
+		/// ## See also
+		/// [gapi_data_objects]
+		///
+		/// ## Overloaded parameters
+		///
+		/// * in: input GMat of the defined unary computation
+		/// * out: output GScalar of the defined unary computation
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("GCompiled")
-				.finish()
+		pub fn new_1(mut in_: impl crate::gapi::GMatTrait, mut out: impl crate::gapi::GScalarTrait) -> Result<crate::gapi::GComputation> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GComputation_GComputation_GMat_GScalar(in_.as_raw_mut_GMat(), out.as_raw_mut_GScalar(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::GComputation::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
+		/// Defines a binary (two inputs -- one output) computation
+		///
+		/// Generic GComputation constructor.
+		///
+		/// Constructs a new graph with a given protocol, specified as a
+		/// flow of operations connecting input/output objects. Throws if
+		/// the passed boundaries are invalid, e.g. if there's no
+		/// functional dependency (path) between given outputs and inputs.
+		///
+		/// ## Parameters
+		/// * ins: Input data vector.
+		/// * outs: Output data vector.
+		///
+		///
+		/// Note: Don't construct GProtoInputArgs/GProtoOutputArgs objects
+		/// directly, use cv::GIn()/cv::GOut() wrapper functions instead.
+		/// ## See also
+		/// [gapi_data_objects]
+		///
+		/// ## Overloaded parameters
+		///
+		/// * in1: first input GMat of the defined binary computation
+		/// * in2: second input GMat of the defined binary computation
+		/// * out: output GMat of the defined binary computation
+		#[inline]
+		pub fn new_2(mut in1: impl crate::gapi::GMatTrait, mut in2: impl crate::gapi::GMatTrait, mut out: impl crate::gapi::GMatTrait) -> Result<crate::gapi::GComputation> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GComputation_GComputation_GMat_GMat_GMat(in1.as_raw_mut_GMat(), in2.as_raw_mut_GMat(), out.as_raw_mut_GMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::GComputation::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Defines a binary (two inputs -- one output) computation
+		///
+		/// Generic GComputation constructor.
+		///
+		/// Constructs a new graph with a given protocol, specified as a
+		/// flow of operations connecting input/output objects. Throws if
+		/// the passed boundaries are invalid, e.g. if there's no
+		/// functional dependency (path) between given outputs and inputs.
+		///
+		/// ## Parameters
+		/// * ins: Input data vector.
+		/// * outs: Output data vector.
+		///
+		///
+		/// Note: Don't construct GProtoInputArgs/GProtoOutputArgs objects
+		/// directly, use cv::GIn()/cv::GOut() wrapper functions instead.
+		/// ## See also
+		/// [gapi_data_objects]
+		///
+		/// ## Overloaded parameters
+		///
+		/// * in1: first input GMat of the defined binary computation
+		/// * in2: second input GMat of the defined binary computation
+		/// * out: output GScalar of the defined binary computation
+		#[inline]
+		pub fn new_3(mut in1: impl crate::gapi::GMatTrait, mut in2: impl crate::gapi::GMatTrait, mut out: impl crate::gapi::GScalarTrait) -> Result<crate::gapi::GComputation> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GComputation_GComputation_GMat_GMat_GScalar(in1.as_raw_mut_GMat(), in2.as_raw_mut_GMat(), out.as_raw_mut_GScalar(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::GComputation::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Defines a computation with arbitrary input/output number.
+		///
+		/// Generic GComputation constructor.
+		///
+		/// Constructs a new graph with a given protocol, specified as a
+		/// flow of operations connecting input/output objects. Throws if
+		/// the passed boundaries are invalid, e.g. if there's no
+		/// functional dependency (path) between given outputs and inputs.
+		///
+		/// ## Parameters
+		/// * ins: Input data vector.
+		/// * outs: Output data vector.
+		///
+		///
+		/// Note: Don't construct GProtoInputArgs/GProtoOutputArgs objects
+		/// directly, use cv::GIn()/cv::GOut() wrapper functions instead.
+		/// ## See also
+		/// [gapi_data_objects]
+		///
+		/// ## Overloaded parameters
+		///
+		/// * ins: vector of inputs GMats for this computation
+		/// * outs: vector of outputs GMats for this computation
+		///
+		/// Use this overload for cases when number of computation
+		/// inputs/outputs is not known in compile-time -- e.g. when graph
+		/// is programmatically generated to build an image pyramid with
+		/// the given number of levels, etc.
+		#[inline]
+		pub fn new_4(ins: &core::Vector<crate::gapi::GMat>, outs: &core::Vector<crate::gapi::GMat>) -> Result<crate::gapi::GComputation> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GComputation_GComputation_const_vectorLGMatGR_const_vectorLGMatGR(ins.as_raw_VectorOfGMat(), outs.as_raw_VectorOfGMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::GComputation::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::gapi::GComputation]
@@ -7270,84 +7526,13 @@ pub mod gapi {
 
 	}
 
-	/// GComputation class represents a captured computation
-	/// graph. GComputation objects form boundaries for expression code
-	/// user writes with G-API, allowing to compile and execute it.
-	///
-	/// G-API computations are defined with input/output data
-	/// objects. G-API will track automatically which operations connect
-	/// specified outputs to the inputs, forming up a call graph to be
-	/// executed. The below example expresses calculation of Sobel operator
-	/// for edge detection (![inline formula](https://latex.codecogs.com/png.latex?G%20%3D%20%5Csqrt%7BG%5Fx%5E2%20%2B%20G%5Fy%5E2%7D)):
-	///
-	/// [graph_def](https://github.com/opencv/opencv_contrib/blob/4.11.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
-	///
-	/// Full pipeline can be now captured with this object declaration:
-	///
-	/// [graph_cap_full](https://github.com/opencv/opencv_contrib/blob/4.11.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
-	///
-	/// Input/output data objects on which a call graph should be
-	/// reconstructed are passed using special wrappers cv::GIn and
-	/// cv::GOut. G-API will track automatically which operations form a
-	/// path from inputs to outputs and build the execution graph appropriately.
-	///
-	/// Note that cv::GComputation doesn't take ownership on data objects
-	/// it is defined. Moreover, multiple GComputation objects may be
-	/// defined on the same expressions, e.g. a smaller pipeline which
-	/// expects that image gradients are already pre-calculated may be
-	/// defined like this:
-	///
-	/// [graph_cap_sub](https://github.com/opencv/opencv_contrib/blob/4.11.0/modules/hdf/samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp#L1)
-	///
-	/// The resulting graph would expect two inputs and produce one
-	/// output. In this case, it doesn't matter if gx/gy data objects are
-	/// results of cv::gapi::Sobel operators -- G-API will stop unrolling
-	/// expressions and building the underlying graph one reaching this
-	/// data objects.
-	///
-	/// The way how GComputation is defined is important as its definition
-	/// specifies graph _protocol_ -- the way how the graph should be
-	/// used. Protocol is defined by number of inputs, number of outputs,
-	/// and shapes of inputs and outputs.
-	///
-	/// In the above example, sobelEdge expects one Mat on input and
-	/// produces one Mat; while sobelEdgeSub expects two Mats on input and
-	/// produces one Mat. GComputation's protocol defines how other
-	/// computation methods should be used -- cv::GComputation::compile() and
-	/// cv::GComputation::apply(). For example, if a graph is defined on
-	/// two GMat inputs, two cv::Mat objects have to be passed to apply()
-	/// for execution. GComputation checks protocol correctness in runtime
-	/// so passing a different number of objects in apply() or passing
-	/// cv::Scalar instead of cv::Mat there would compile well as a C++
-	/// source but raise an exception in run-time. G-API also comes with a
-	/// typed wrapper cv::GComputationT<> which introduces this type-checking in
-	/// compile-time.
-	///
-	/// cv::GComputation itself is a thin object which just captures what
-	/// the graph is. The compiled graph (which actually process data) is
-	/// represented by class GCompiled. Use compile() method to generate a
-	/// compiled graph with given compile options. cv::GComputation can
-	/// also be used to process data with implicit graph compilation
-	/// on-the-fly, see apply() for details.
-	///
-	/// GComputation is a reference-counted object -- once defined, all its
-	/// copies will refer to the same instance.
-	/// ## See also
-	/// GCompiled
-	pub struct GComputation {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GComputation }
-
-	impl Drop for GComputation {
+	impl std::fmt::Debug for GComputation {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_GComputation_delete(self.as_raw_mut_GComputation()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GComputation")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for GComputation {}
 
 	impl crate::gapi::GComputationTraitConst for GComputation {
 		#[inline] fn as_raw_GComputation(&self) -> *const c_void { self.as_raw() }
@@ -7358,201 +7543,6 @@ pub mod gapi {
 	}
 
 	boxed_ref! { GComputation, crate::gapi::GComputationTraitConst, as_raw_GComputation, crate::gapi::GComputationTrait, as_raw_mut_GComputation }
-
-	impl GComputation {
-		/// Defines an unary (one input -- one output) computation
-		///
-		/// Generic GComputation constructor.
-		///
-		/// Constructs a new graph with a given protocol, specified as a
-		/// flow of operations connecting input/output objects. Throws if
-		/// the passed boundaries are invalid, e.g. if there's no
-		/// functional dependency (path) between given outputs and inputs.
-		///
-		/// ## Parameters
-		/// * ins: Input data vector.
-		/// * outs: Output data vector.
-		///
-		///
-		/// Note: Don't construct GProtoInputArgs/GProtoOutputArgs objects
-		/// directly, use cv::GIn()/cv::GOut() wrapper functions instead.
-		/// ## See also
-		/// [gapi_data_objects]
-		///
-		/// ## Overloaded parameters
-		///
-		/// * in: input GMat of the defined unary computation
-		/// * out: output GMat of the defined unary computation
-		#[inline]
-		pub fn new(mut in_: impl crate::gapi::GMatTrait, mut out: impl crate::gapi::GMatTrait) -> Result<crate::gapi::GComputation> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_GComputation_GComputation_GMat_GMat(in_.as_raw_mut_GMat(), out.as_raw_mut_GMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::gapi::GComputation::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Defines an unary (one input -- one output) computation
-		///
-		/// Generic GComputation constructor.
-		///
-		/// Constructs a new graph with a given protocol, specified as a
-		/// flow of operations connecting input/output objects. Throws if
-		/// the passed boundaries are invalid, e.g. if there's no
-		/// functional dependency (path) between given outputs and inputs.
-		///
-		/// ## Parameters
-		/// * ins: Input data vector.
-		/// * outs: Output data vector.
-		///
-		///
-		/// Note: Don't construct GProtoInputArgs/GProtoOutputArgs objects
-		/// directly, use cv::GIn()/cv::GOut() wrapper functions instead.
-		/// ## See also
-		/// [gapi_data_objects]
-		///
-		/// ## Overloaded parameters
-		///
-		/// * in: input GMat of the defined unary computation
-		/// * out: output GScalar of the defined unary computation
-		#[inline]
-		pub fn new_1(mut in_: impl crate::gapi::GMatTrait, mut out: impl crate::gapi::GScalarTrait) -> Result<crate::gapi::GComputation> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_GComputation_GComputation_GMat_GScalar(in_.as_raw_mut_GMat(), out.as_raw_mut_GScalar(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::gapi::GComputation::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Defines a binary (two inputs -- one output) computation
-		///
-		/// Generic GComputation constructor.
-		///
-		/// Constructs a new graph with a given protocol, specified as a
-		/// flow of operations connecting input/output objects. Throws if
-		/// the passed boundaries are invalid, e.g. if there's no
-		/// functional dependency (path) between given outputs and inputs.
-		///
-		/// ## Parameters
-		/// * ins: Input data vector.
-		/// * outs: Output data vector.
-		///
-		///
-		/// Note: Don't construct GProtoInputArgs/GProtoOutputArgs objects
-		/// directly, use cv::GIn()/cv::GOut() wrapper functions instead.
-		/// ## See also
-		/// [gapi_data_objects]
-		///
-		/// ## Overloaded parameters
-		///
-		/// * in1: first input GMat of the defined binary computation
-		/// * in2: second input GMat of the defined binary computation
-		/// * out: output GMat of the defined binary computation
-		#[inline]
-		pub fn new_2(mut in1: impl crate::gapi::GMatTrait, mut in2: impl crate::gapi::GMatTrait, mut out: impl crate::gapi::GMatTrait) -> Result<crate::gapi::GComputation> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_GComputation_GComputation_GMat_GMat_GMat(in1.as_raw_mut_GMat(), in2.as_raw_mut_GMat(), out.as_raw_mut_GMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::gapi::GComputation::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Defines a binary (two inputs -- one output) computation
-		///
-		/// Generic GComputation constructor.
-		///
-		/// Constructs a new graph with a given protocol, specified as a
-		/// flow of operations connecting input/output objects. Throws if
-		/// the passed boundaries are invalid, e.g. if there's no
-		/// functional dependency (path) between given outputs and inputs.
-		///
-		/// ## Parameters
-		/// * ins: Input data vector.
-		/// * outs: Output data vector.
-		///
-		///
-		/// Note: Don't construct GProtoInputArgs/GProtoOutputArgs objects
-		/// directly, use cv::GIn()/cv::GOut() wrapper functions instead.
-		/// ## See also
-		/// [gapi_data_objects]
-		///
-		/// ## Overloaded parameters
-		///
-		/// * in1: first input GMat of the defined binary computation
-		/// * in2: second input GMat of the defined binary computation
-		/// * out: output GScalar of the defined binary computation
-		#[inline]
-		pub fn new_3(mut in1: impl crate::gapi::GMatTrait, mut in2: impl crate::gapi::GMatTrait, mut out: impl crate::gapi::GScalarTrait) -> Result<crate::gapi::GComputation> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_GComputation_GComputation_GMat_GMat_GScalar(in1.as_raw_mut_GMat(), in2.as_raw_mut_GMat(), out.as_raw_mut_GScalar(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::gapi::GComputation::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Defines a computation with arbitrary input/output number.
-		///
-		/// Generic GComputation constructor.
-		///
-		/// Constructs a new graph with a given protocol, specified as a
-		/// flow of operations connecting input/output objects. Throws if
-		/// the passed boundaries are invalid, e.g. if there's no
-		/// functional dependency (path) between given outputs and inputs.
-		///
-		/// ## Parameters
-		/// * ins: Input data vector.
-		/// * outs: Output data vector.
-		///
-		///
-		/// Note: Don't construct GProtoInputArgs/GProtoOutputArgs objects
-		/// directly, use cv::GIn()/cv::GOut() wrapper functions instead.
-		/// ## See also
-		/// [gapi_data_objects]
-		///
-		/// ## Overloaded parameters
-		///
-		/// * ins: vector of inputs GMats for this computation
-		/// * outs: vector of outputs GMats for this computation
-		///
-		/// Use this overload for cases when number of computation
-		/// inputs/outputs is not known in compile-time -- e.g. when graph
-		/// is programmatically generated to build an image pyramid with
-		/// the given number of levels, etc.
-		#[inline]
-		pub fn new_4(ins: &core::Vector<crate::gapi::GMat>, outs: &core::Vector<crate::gapi::GMat>) -> Result<crate::gapi::GComputation> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_GComputation_GComputation_const_vectorLGMatGR_const_vectorLGMatGR(ins.as_raw_VectorOfGMat(), outs.as_raw_VectorOfGMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::gapi::GComputation::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	impl std::fmt::Debug for GComputation {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("GComputation")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::gapi::GFrame]
-	pub trait GFrameTraitConst {
-		fn as_raw_GFrame(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::gapi::GFrame]
-	pub trait GFrameTrait: crate::gapi::GFrameTraitConst {
-		fn as_raw_mut_GFrame(&mut self) -> *mut c_void;
-
-	}
 
 	/// \addtogroup gapi_data_objects
 	/// /
@@ -7599,16 +7589,6 @@ pub mod gapi {
 
 	unsafe impl Send for GFrame {}
 
-	impl crate::gapi::GFrameTraitConst for GFrame {
-		#[inline] fn as_raw_GFrame(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::gapi::GFrameTrait for GFrame {
-		#[inline] fn as_raw_mut_GFrame(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { GFrame, crate::gapi::GFrameTraitConst, as_raw_GFrame, crate::gapi::GFrameTrait, as_raw_mut_GFrame }
-
 	impl GFrame {
 		/// Constructs an empty GFrame
 		///
@@ -7628,6 +7608,18 @@ pub mod gapi {
 
 	}
 
+	/// Constant methods for [crate::gapi::GFrame]
+	pub trait GFrameTraitConst {
+		fn as_raw_GFrame(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::gapi::GFrame]
+	pub trait GFrameTrait: crate::gapi::GFrameTraitConst {
+		fn as_raw_mut_GFrame(&mut self) -> *mut c_void;
+
+	}
+
 	impl Clone for GFrame {
 		#[inline]
 		fn clone(&self) -> Self {
@@ -7641,6 +7633,43 @@ pub mod gapi {
 			f.debug_struct("GFrame")
 				.finish()
 		}
+	}
+
+	impl crate::gapi::GFrameTraitConst for GFrame {
+		#[inline] fn as_raw_GFrame(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::gapi::GFrameTrait for GFrame {
+		#[inline] fn as_raw_mut_GFrame(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { GFrame, crate::gapi::GFrameTraitConst, as_raw_GFrame, crate::gapi::GFrameTrait, as_raw_mut_GFrame }
+
+	/// \addtogroup gapi_meta_args
+	pub struct GFrameDesc {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { GFrameDesc }
+
+	impl Drop for GFrameDesc {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_GFrameDesc_delete(self.as_raw_mut_GFrameDesc()) };
+		}
+	}
+
+	unsafe impl Send for GFrameDesc {}
+
+	impl GFrameDesc {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::gapi::GFrameDesc {
+			let ret = unsafe { sys::cv_GFrameDesc_defaultNew_const() };
+			let ret = unsafe { crate::gapi::GFrameDesc::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::gapi::GFrameDesc]
@@ -7692,39 +7721,12 @@ pub mod gapi {
 
 	}
 
-	/// \addtogroup gapi_meta_args
-	pub struct GFrameDesc {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GFrameDesc }
-
-	impl Drop for GFrameDesc {
+	impl Default for GFrameDesc {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_GFrameDesc_delete(self.as_raw_mut_GFrameDesc()) };
-		}
-	}
-
-	unsafe impl Send for GFrameDesc {}
-
-	impl crate::gapi::GFrameDescTraitConst for GFrameDesc {
-		#[inline] fn as_raw_GFrameDesc(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::gapi::GFrameDescTrait for GFrameDesc {
-		#[inline] fn as_raw_mut_GFrameDesc(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { GFrameDesc, crate::gapi::GFrameDescTraitConst, as_raw_GFrameDesc, crate::gapi::GFrameDescTrait, as_raw_mut_GFrameDesc }
-
-	impl GFrameDesc {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
+		/// Forwards to infallible Self::default()
 		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_GFrameDesc_defaultNew_const()) }
+			Self::default()
 		}
-
 	}
 
 	impl std::fmt::Debug for GFrameDesc {
@@ -7737,12 +7739,40 @@ pub mod gapi {
 		}
 	}
 
-	impl Default for GFrameDesc {
+	impl crate::gapi::GFrameDescTraitConst for GFrameDesc {
+		#[inline] fn as_raw_GFrameDesc(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::gapi::GFrameDescTrait for GFrameDesc {
+		#[inline] fn as_raw_mut_GFrameDesc(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { GFrameDesc, crate::gapi::GFrameDescTraitConst, as_raw_GFrameDesc, crate::gapi::GFrameDescTrait, as_raw_mut_GFrameDesc }
+
+	pub struct GKernel {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { GKernel }
+
+	impl Drop for GKernel {
 		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
+		fn drop(&mut self) {
+			unsafe { sys::cv_GKernel_delete(self.as_raw_mut_GKernel()) };
 		}
+	}
+
+	unsafe impl Send for GKernel {}
+
+	impl GKernel {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::gapi::GKernel {
+			let ret = unsafe { sys::cv_GKernel_defaultNew_const() };
+			let ret = unsafe { crate::gapi::GKernel::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::gapi::GKernel]
@@ -7824,38 +7854,12 @@ pub mod gapi {
 
 	}
 
-	pub struct GKernel {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GKernel }
-
-	impl Drop for GKernel {
+	impl Default for GKernel {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_GKernel_delete(self.as_raw_mut_GKernel()) };
-		}
-	}
-
-	unsafe impl Send for GKernel {}
-
-	impl crate::gapi::GKernelTraitConst for GKernel {
-		#[inline] fn as_raw_GKernel(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::gapi::GKernelTrait for GKernel {
-		#[inline] fn as_raw_mut_GKernel(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { GKernel, crate::gapi::GKernelTraitConst, as_raw_GKernel, crate::gapi::GKernelTrait, as_raw_mut_GKernel }
-
-	impl GKernel {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
+		/// Forwards to infallible Self::default()
 		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_GKernel_defaultNew_const()) }
+			Self::default()
 		}
-
 	}
 
 	impl std::fmt::Debug for GKernel {
@@ -7871,12 +7875,40 @@ pub mod gapi {
 		}
 	}
 
-	impl Default for GKernel {
+	impl crate::gapi::GKernelTraitConst for GKernel {
+		#[inline] fn as_raw_GKernel(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::gapi::GKernelTrait for GKernel {
+		#[inline] fn as_raw_mut_GKernel(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { GKernel, crate::gapi::GKernelTraitConst, as_raw_GKernel, crate::gapi::GKernelTrait, as_raw_mut_GKernel }
+
+	pub struct GKernelImpl {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { GKernelImpl }
+
+	impl Drop for GKernelImpl {
 		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
+		fn drop(&mut self) {
+			unsafe { sys::cv_GKernelImpl_delete(self.as_raw_mut_GKernelImpl()) };
 		}
+	}
+
+	unsafe impl Send for GKernelImpl {}
+
+	impl GKernelImpl {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::gapi::GKernelImpl {
+			let ret = unsafe { sys::cv_GKernelImpl_defaultNew_const() };
+			let ret = unsafe { crate::gapi::GKernelImpl::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::gapi::GKernelImpl]
@@ -7904,38 +7936,12 @@ pub mod gapi {
 
 	}
 
-	pub struct GKernelImpl {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GKernelImpl }
-
-	impl Drop for GKernelImpl {
+	impl Default for GKernelImpl {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_GKernelImpl_delete(self.as_raw_mut_GKernelImpl()) };
-		}
-	}
-
-	unsafe impl Send for GKernelImpl {}
-
-	impl crate::gapi::GKernelImplTraitConst for GKernelImpl {
-		#[inline] fn as_raw_GKernelImpl(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::gapi::GKernelImplTrait for GKernelImpl {
-		#[inline] fn as_raw_mut_GKernelImpl(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { GKernelImpl, crate::gapi::GKernelImplTraitConst, as_raw_GKernelImpl, crate::gapi::GKernelImplTrait, as_raw_mut_GKernelImpl }
-
-	impl GKernelImpl {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
+		/// Forwards to infallible Self::default()
 		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_GKernelImpl_defaultNew_const()) }
+			Self::default()
 		}
-
 	}
 
 	impl std::fmt::Debug for GKernelImpl {
@@ -7947,12 +7953,64 @@ pub mod gapi {
 		}
 	}
 
-	impl Default for GKernelImpl {
+	impl crate::gapi::GKernelImplTraitConst for GKernelImpl {
+		#[inline] fn as_raw_GKernelImpl(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::gapi::GKernelImplTrait for GKernelImpl {
+		#[inline] fn as_raw_mut_GKernelImpl(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { GKernelImpl, crate::gapi::GKernelImplTraitConst, as_raw_GKernelImpl, crate::gapi::GKernelImplTrait, as_raw_mut_GKernelImpl }
+
+	/// A container class for heterogeneous kernel
+	/// implementation collections and graph transformations.
+	///
+	/// GKernelPackage is a special container class which stores kernel
+	/// _implementations_ and graph _transformations_. Objects of this class
+	/// are created and passed to cv::GComputation::compile() to specify
+	/// which kernels to use and which transformations to apply in the
+	/// compiled graph. GKernelPackage may contain kernels of
+	/// different backends, e.g. be heterogeneous.
+	///
+	/// The most easy way to create a kernel package is to use function
+	/// cv::gapi::kernels(). This template functions takes kernel
+	/// implementations in form of type list (variadic template) and
+	/// generates a kernel package atop of that.
+	///
+	/// Kernel packages can be also generated programmatically, starting
+	/// with an empty package (created with the default constructor)
+	/// and then by populating it with kernels via call to
+	/// GKernelPackage::include(). Note this method is also a template
+	/// one since G-API kernel and transformation implementations are _types_,
+	/// not objects.
+	///
+	/// Finally, two kernel packages can be combined into a new one
+	/// with function cv::gapi::combine().
+	pub struct GKernelPackage {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { GKernelPackage }
+
+	impl Drop for GKernelPackage {
 		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
+		fn drop(&mut self) {
+			unsafe { sys::cv_GKernelPackage_delete(self.as_raw_mut_GKernelPackage()) };
 		}
+	}
+
+	unsafe impl Send for GKernelPackage {}
+
+	impl GKernelPackage {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::gapi::GKernelPackage {
+			let ret = unsafe { sys::cv_GKernelPackage_defaultNew_const() };
+			let ret = unsafe { crate::gapi::GKernelPackage::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::gapi::GKernelPackage]
@@ -8072,62 +8130,12 @@ pub mod gapi {
 
 	}
 
-	/// A container class for heterogeneous kernel
-	/// implementation collections and graph transformations.
-	///
-	/// GKernelPackage is a special container class which stores kernel
-	/// _implementations_ and graph _transformations_. Objects of this class
-	/// are created and passed to cv::GComputation::compile() to specify
-	/// which kernels to use and which transformations to apply in the
-	/// compiled graph. GKernelPackage may contain kernels of
-	/// different backends, e.g. be heterogeneous.
-	///
-	/// The most easy way to create a kernel package is to use function
-	/// cv::gapi::kernels(). This template functions takes kernel
-	/// implementations in form of type list (variadic template) and
-	/// generates a kernel package atop of that.
-	///
-	/// Kernel packages can be also generated programmatically, starting
-	/// with an empty package (created with the default constructor)
-	/// and then by populating it with kernels via call to
-	/// GKernelPackage::include(). Note this method is also a template
-	/// one since G-API kernel and transformation implementations are _types_,
-	/// not objects.
-	///
-	/// Finally, two kernel packages can be combined into a new one
-	/// with function cv::gapi::combine().
-	pub struct GKernelPackage {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GKernelPackage }
-
-	impl Drop for GKernelPackage {
+	impl Default for GKernelPackage {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_GKernelPackage_delete(self.as_raw_mut_GKernelPackage()) };
-		}
-	}
-
-	unsafe impl Send for GKernelPackage {}
-
-	impl crate::gapi::GKernelPackageTraitConst for GKernelPackage {
-		#[inline] fn as_raw_GKernelPackage(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::gapi::GKernelPackageTrait for GKernelPackage {
-		#[inline] fn as_raw_mut_GKernelPackage(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { GKernelPackage, crate::gapi::GKernelPackageTraitConst, as_raw_GKernelPackage, crate::gapi::GKernelPackageTrait, as_raw_mut_GKernelPackage }
-
-	impl GKernelPackage {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
+		/// Forwards to infallible Self::default()
 		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_GKernelPackage_defaultNew_const()) }
+			Self::default()
 		}
-
 	}
 
 	impl Clone for GKernelPackage {
@@ -8145,25 +8153,15 @@ pub mod gapi {
 		}
 	}
 
-	impl Default for GKernelPackage {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
+	impl crate::gapi::GKernelPackageTraitConst for GKernelPackage {
+		#[inline] fn as_raw_GKernelPackage(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Constant methods for [crate::gapi::GMat]
-	pub trait GMatTraitConst {
-		fn as_raw_GMat(&self) -> *const c_void;
-
+	impl crate::gapi::GKernelPackageTrait for GKernelPackage {
+		#[inline] fn as_raw_mut_GKernelPackage(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 
-	/// Mutable methods for [crate::gapi::GMat]
-	pub trait GMatTrait: crate::gapi::GMatTraitConst {
-		fn as_raw_mut_GMat(&mut self) -> *mut c_void;
-
-	}
+	boxed_ref! { GKernelPackage, crate::gapi::GKernelPackageTraitConst, as_raw_GKernelPackage, crate::gapi::GKernelPackageTrait, as_raw_mut_GKernelPackage }
 
 	/// GMat class represents image or tensor data in the
 	/// graph.
@@ -8192,16 +8190,6 @@ pub mod gapi {
 	}
 
 	unsafe impl Send for GMat {}
-
-	impl crate::gapi::GMatTraitConst for GMat {
-		#[inline] fn as_raw_GMat(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::gapi::GMatTrait for GMat {
-		#[inline] fn as_raw_mut_GMat(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { GMat, crate::gapi::GMatTraitConst, as_raw_GMat, crate::gapi::GMatTrait, as_raw_mut_GMat }
 
 	impl GMat {
 		/// Constructs an empty GMat
@@ -8241,6 +8229,18 @@ pub mod gapi {
 
 	}
 
+	/// Constant methods for [crate::gapi::GMat]
+	pub trait GMatTraitConst {
+		fn as_raw_GMat(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::gapi::GMat]
+	pub trait GMatTrait: crate::gapi::GMatTraitConst {
+		fn as_raw_mut_GMat(&mut self) -> *mut c_void;
+
+	}
+
 	impl Clone for GMat {
 		#[inline]
 		fn clone(&self) -> Self {
@@ -8254,6 +8254,90 @@ pub mod gapi {
 			f.debug_struct("GMat")
 				.finish()
 		}
+	}
+
+	impl crate::gapi::GMatTraitConst for GMat {
+		#[inline] fn as_raw_GMat(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::gapi::GMatTrait for GMat {
+		#[inline] fn as_raw_mut_GMat(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { GMat, crate::gapi::GMatTraitConst, as_raw_GMat, crate::gapi::GMatTrait, as_raw_mut_GMat }
+
+	/// \addtogroup gapi_meta_args
+	pub struct GMatDesc {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { GMatDesc }
+
+	impl Drop for GMatDesc {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_GMatDesc_delete(self.as_raw_mut_GMatDesc()) };
+		}
+	}
+
+	unsafe impl Send for GMatDesc {}
+
+	impl GMatDesc {
+		/// ## C++ default parameters
+		/// * p: false
+		#[inline]
+		pub fn new(d: i32, c: i32, s: core::Size, p: bool) -> Result<crate::gapi::GMatDesc> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GMatDesc_GMatDesc_int_int_Size_bool(d, c, &s, p, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::GMatDesc::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * p: false
+		#[inline]
+		pub fn new_def(d: i32, c: i32, s: core::Size) -> Result<crate::gapi::GMatDesc> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GMatDesc_GMatDesc_int_int_Size(d, c, &s, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::GMatDesc::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn new_1(d: i32, dd: &core::Vector<i32>) -> Result<crate::gapi::GMatDesc> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GMatDesc_GMatDesc_int_const_vectorLintGR(d, dd.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::GMatDesc::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn new_2(d: i32, mut dd: core::Vector<i32>) -> Result<crate::gapi::GMatDesc> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GMatDesc_GMatDesc_int_vectorLintGRR(d, dd.as_raw_mut_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::GMatDesc::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn default() -> Result<crate::gapi::GMatDesc> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GMatDesc_GMatDesc(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::GMatDesc::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::gapi::GMatDesc]
@@ -8456,90 +8540,6 @@ pub mod gapi {
 
 	}
 
-	/// \addtogroup gapi_meta_args
-	pub struct GMatDesc {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GMatDesc }
-
-	impl Drop for GMatDesc {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_GMatDesc_delete(self.as_raw_mut_GMatDesc()) };
-		}
-	}
-
-	unsafe impl Send for GMatDesc {}
-
-	impl crate::gapi::GMatDescTraitConst for GMatDesc {
-		#[inline] fn as_raw_GMatDesc(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::gapi::GMatDescTrait for GMatDesc {
-		#[inline] fn as_raw_mut_GMatDesc(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { GMatDesc, crate::gapi::GMatDescTraitConst, as_raw_GMatDesc, crate::gapi::GMatDescTrait, as_raw_mut_GMatDesc }
-
-	impl GMatDesc {
-		/// ## C++ default parameters
-		/// * p: false
-		#[inline]
-		pub fn new(d: i32, c: i32, s: core::Size, p: bool) -> Result<crate::gapi::GMatDesc> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_GMatDesc_GMatDesc_int_int_Size_bool(d, c, &s, p, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::gapi::GMatDesc::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * p: false
-		#[inline]
-		pub fn new_def(d: i32, c: i32, s: core::Size) -> Result<crate::gapi::GMatDesc> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_GMatDesc_GMatDesc_int_int_Size(d, c, &s, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::gapi::GMatDesc::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn new_1(d: i32, dd: &core::Vector<i32>) -> Result<crate::gapi::GMatDesc> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_GMatDesc_GMatDesc_int_const_vectorLintGR(d, dd.as_raw_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::gapi::GMatDesc::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn new_2(d: i32, mut dd: core::Vector<i32>) -> Result<crate::gapi::GMatDesc> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_GMatDesc_GMatDesc_int_vectorLintGRR(d, dd.as_raw_mut_VectorOfi32(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::gapi::GMatDesc::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn default() -> Result<crate::gapi::GMatDesc> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_GMatDesc_GMatDesc(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::gapi::GMatDesc::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
 	impl Clone for GMatDesc {
 		#[inline]
 		fn clone(&self) -> Self {
@@ -8560,17 +8560,15 @@ pub mod gapi {
 		}
 	}
 
-	/// Constant methods for [crate::gapi::GMatP]
-	pub trait GMatPTraitConst: crate::gapi::GMatTraitConst {
-		fn as_raw_GMatP(&self) -> *const c_void;
-
+	impl crate::gapi::GMatDescTraitConst for GMatDesc {
+		#[inline] fn as_raw_GMatDesc(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [crate::gapi::GMatP]
-	pub trait GMatPTrait: crate::gapi::GMatPTraitConst + crate::gapi::GMatTrait {
-		fn as_raw_mut_GMatP(&mut self) -> *mut c_void;
-
+	impl crate::gapi::GMatDescTrait for GMatDesc {
+		#[inline] fn as_raw_mut_GMatDesc(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { GMatDesc, crate::gapi::GMatDescTraitConst, as_raw_GMatDesc, crate::gapi::GMatDescTrait, as_raw_mut_GMatDesc }
 
 	pub struct GMatP {
 		ptr: *mut c_void,
@@ -8586,6 +8584,47 @@ pub mod gapi {
 	}
 
 	unsafe impl Send for GMatP {}
+
+	impl GMatP {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::gapi::GMatP {
+			let ret = unsafe { sys::cv_GMatP_defaultNew_const() };
+			let ret = unsafe { crate::gapi::GMatP::opencv_from_extern(ret) };
+			ret
+		}
+
+	}
+
+	/// Constant methods for [crate::gapi::GMatP]
+	pub trait GMatPTraitConst: crate::gapi::GMatTraitConst {
+		fn as_raw_GMatP(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::gapi::GMatP]
+	pub trait GMatPTrait: crate::gapi::GMatPTraitConst + crate::gapi::GMatTrait {
+		fn as_raw_mut_GMatP(&mut self) -> *mut c_void;
+
+	}
+
+	impl Default for GMatP {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
+		}
+	}
+
+	impl std::fmt::Debug for GMatP {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GMatP")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { GMatP, crate::gapi::GMat, cv_GMatP_to_GMat }
 
 	impl crate::gapi::GMatTraitConst for GMatP {
 		#[inline] fn as_raw_GMat(&self) -> *const c_void { self.as_raw() }
@@ -8607,31 +8646,31 @@ pub mod gapi {
 
 	boxed_ref! { GMatP, crate::gapi::GMatPTraitConst, as_raw_GMatP, crate::gapi::GMatPTrait, as_raw_mut_GMatP }
 
-	impl GMatP {
+	/// \addtogroup gapi_meta_args
+	pub struct GOpaqueDesc {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { GOpaqueDesc }
+
+	impl Drop for GOpaqueDesc {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_GOpaqueDesc_delete(self.as_raw_mut_GOpaqueDesc()) };
+		}
+	}
+
+	unsafe impl Send for GOpaqueDesc {}
+
+	impl GOpaqueDesc {
 		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_GMatP_defaultNew_const()) }
+		pub fn default() -> crate::gapi::GOpaqueDesc {
+			let ret = unsafe { sys::cv_GOpaqueDesc_defaultNew_const() };
+			let ret = unsafe { crate::gapi::GOpaqueDesc::opencv_from_extern(ret) };
+			ret
 		}
 
-	}
-
-	boxed_cast_base! { GMatP, crate::gapi::GMat, cv_GMatP_to_GMat }
-
-	impl std::fmt::Debug for GMatP {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("GMatP")
-				.finish()
-		}
-	}
-
-	impl Default for GMatP {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
 	}
 
 	/// Constant methods for [crate::gapi::GOpaqueDesc]
@@ -8655,39 +8694,12 @@ pub mod gapi {
 
 	}
 
-	/// \addtogroup gapi_meta_args
-	pub struct GOpaqueDesc {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GOpaqueDesc }
-
-	impl Drop for GOpaqueDesc {
+	impl Default for GOpaqueDesc {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_GOpaqueDesc_delete(self.as_raw_mut_GOpaqueDesc()) };
-		}
-	}
-
-	unsafe impl Send for GOpaqueDesc {}
-
-	impl crate::gapi::GOpaqueDescTraitConst for GOpaqueDesc {
-		#[inline] fn as_raw_GOpaqueDesc(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::gapi::GOpaqueDescTrait for GOpaqueDesc {
-		#[inline] fn as_raw_mut_GOpaqueDesc(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { GOpaqueDesc, crate::gapi::GOpaqueDescTraitConst, as_raw_GOpaqueDesc, crate::gapi::GOpaqueDescTrait, as_raw_mut_GOpaqueDesc }
-
-	impl GOpaqueDesc {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
+		/// Forwards to infallible Self::default()
 		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_GOpaqueDesc_defaultNew_const()) }
+			Self::default()
 		}
-
 	}
 
 	impl Clone for GOpaqueDesc {
@@ -8705,43 +8717,15 @@ pub mod gapi {
 		}
 	}
 
-	impl Default for GOpaqueDesc {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
+	impl crate::gapi::GOpaqueDescTraitConst for GOpaqueDesc {
+		#[inline] fn as_raw_GOpaqueDesc(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Constant methods for [crate::gapi::GRunArg]
-	pub trait GRunArgTraitConst {
-		fn as_raw_GRunArg(&self) -> *const c_void;
-
+	impl crate::gapi::GOpaqueDescTrait for GOpaqueDesc {
+		#[inline] fn as_raw_mut_GOpaqueDesc(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 
-	/// Mutable methods for [crate::gapi::GRunArg]
-	pub trait GRunArgTrait: crate::gapi::GRunArgTraitConst {
-		fn as_raw_mut_GRunArg(&mut self) -> *mut c_void;
-
-		#[inline]
-		fn set(&mut self, arg: &impl crate::gapi::GRunArgTraitConst) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_GRunArg_operatorST_const_GRunArgR(self.as_raw_mut_GRunArg(), arg.as_raw_GRunArg(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn set_1(&mut self, mut arg: crate::gapi::GRunArg) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_GRunArg_operatorST_GRunArgRR(self.as_raw_mut_GRunArg(), arg.as_raw_mut_GRunArg(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
+	boxed_ref! { GOpaqueDesc, crate::gapi::GOpaqueDescTraitConst, as_raw_GOpaqueDesc, crate::gapi::GOpaqueDescTrait, as_raw_mut_GOpaqueDesc }
 
 	pub struct GRunArg {
 		ptr: *mut c_void,
@@ -8757,16 +8741,6 @@ pub mod gapi {
 	}
 
 	unsafe impl Send for GRunArg {}
-
-	impl crate::gapi::GRunArgTraitConst for GRunArg {
-		#[inline] fn as_raw_GRunArg(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::gapi::GRunArgTrait for GRunArg {
-		#[inline] fn as_raw_mut_GRunArg(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { GRunArg, crate::gapi::GRunArgTraitConst, as_raw_GRunArg, crate::gapi::GRunArgTrait, as_raw_mut_GRunArg }
 
 	impl GRunArg {
 		#[inline]
@@ -8801,6 +8775,36 @@ pub mod gapi {
 
 	}
 
+	/// Constant methods for [crate::gapi::GRunArg]
+	pub trait GRunArgTraitConst {
+		fn as_raw_GRunArg(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::gapi::GRunArg]
+	pub trait GRunArgTrait: crate::gapi::GRunArgTraitConst {
+		fn as_raw_mut_GRunArg(&mut self) -> *mut c_void;
+
+		#[inline]
+		fn set(&mut self, arg: &impl crate::gapi::GRunArgTraitConst) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GRunArg_operatorST_const_GRunArgR(self.as_raw_mut_GRunArg(), arg.as_raw_GRunArg(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn set_1(&mut self, mut arg: crate::gapi::GRunArg) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GRunArg_operatorST_GRunArgRR(self.as_raw_mut_GRunArg(), arg.as_raw_mut_GRunArg(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
 	impl std::fmt::Debug for GRunArg {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -8809,17 +8813,15 @@ pub mod gapi {
 		}
 	}
 
-	/// Constant methods for [crate::gapi::GScalar]
-	pub trait GScalarTraitConst {
-		fn as_raw_GScalar(&self) -> *const c_void;
-
+	impl crate::gapi::GRunArgTraitConst for GRunArg {
+		#[inline] fn as_raw_GRunArg(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [crate::gapi::GScalar]
-	pub trait GScalarTrait: crate::gapi::GScalarTraitConst {
-		fn as_raw_mut_GScalar(&mut self) -> *mut c_void;
-
+	impl crate::gapi::GRunArgTrait for GRunArg {
+		#[inline] fn as_raw_mut_GRunArg(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { GRunArg, crate::gapi::GRunArgTraitConst, as_raw_GRunArg, crate::gapi::GRunArgTrait, as_raw_mut_GRunArg }
 
 	/// \addtogroup gapi_data_objects
 	/// /
@@ -8849,16 +8851,6 @@ pub mod gapi {
 	}
 
 	unsafe impl Send for GScalar {}
-
-	impl crate::gapi::GScalarTraitConst for GScalar {
-		#[inline] fn as_raw_GScalar(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::gapi::GScalarTrait for GScalar {
-		#[inline] fn as_raw_mut_GScalar(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { GScalar, crate::gapi::GScalarTraitConst, as_raw_GScalar, crate::gapi::GScalarTrait, as_raw_mut_GScalar }
 
 	impl GScalar {
 		/// Constructs an empty GScalar
@@ -8978,6 +8970,18 @@ pub mod gapi {
 
 	}
 
+	/// Constant methods for [crate::gapi::GScalar]
+	pub trait GScalarTraitConst {
+		fn as_raw_GScalar(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::gapi::GScalar]
+	pub trait GScalarTrait: crate::gapi::GScalarTraitConst {
+		fn as_raw_mut_GScalar(&mut self) -> *mut c_void;
+
+	}
+
 	impl Clone for GScalar {
 		#[inline]
 		fn clone(&self) -> Self {
@@ -8991,6 +8995,43 @@ pub mod gapi {
 			f.debug_struct("GScalar")
 				.finish()
 		}
+	}
+
+	impl crate::gapi::GScalarTraitConst for GScalar {
+		#[inline] fn as_raw_GScalar(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::gapi::GScalarTrait for GScalar {
+		#[inline] fn as_raw_mut_GScalar(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { GScalar, crate::gapi::GScalarTraitConst, as_raw_GScalar, crate::gapi::GScalarTrait, as_raw_mut_GScalar }
+
+	/// \addtogroup gapi_meta_args
+	pub struct GScalarDesc {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { GScalarDesc }
+
+	impl Drop for GScalarDesc {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_GScalarDesc_delete(self.as_raw_mut_GScalarDesc()) };
+		}
+	}
+
+	unsafe impl Send for GScalarDesc {}
+
+	impl GScalarDesc {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::gapi::GScalarDesc {
+			let ret = unsafe { sys::cv_GScalarDesc_defaultNew_const() };
+			let ret = unsafe { crate::gapi::GScalarDesc::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::gapi::GScalarDesc]
@@ -9023,39 +9064,12 @@ pub mod gapi {
 
 	}
 
-	/// \addtogroup gapi_meta_args
-	pub struct GScalarDesc {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GScalarDesc }
-
-	impl Drop for GScalarDesc {
+	impl Default for GScalarDesc {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_GScalarDesc_delete(self.as_raw_mut_GScalarDesc()) };
-		}
-	}
-
-	unsafe impl Send for GScalarDesc {}
-
-	impl crate::gapi::GScalarDescTraitConst for GScalarDesc {
-		#[inline] fn as_raw_GScalarDesc(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::gapi::GScalarDescTrait for GScalarDesc {
-		#[inline] fn as_raw_mut_GScalarDesc(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { GScalarDesc, crate::gapi::GScalarDescTraitConst, as_raw_GScalarDesc, crate::gapi::GScalarDescTrait, as_raw_mut_GScalarDesc }
-
-	impl GScalarDesc {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
+		/// Forwards to infallible Self::default()
 		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_GScalarDesc_defaultNew_const()) }
+			Self::default()
 		}
-
 	}
 
 	impl Clone for GScalarDesc {
@@ -9073,12 +9087,71 @@ pub mod gapi {
 		}
 	}
 
-	impl Default for GScalarDesc {
+	impl crate::gapi::GScalarDescTraitConst for GScalarDesc {
+		#[inline] fn as_raw_GScalarDesc(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::gapi::GScalarDescTrait for GScalarDesc {
+		#[inline] fn as_raw_mut_GScalarDesc(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { GScalarDesc, crate::gapi::GScalarDescTraitConst, as_raw_GScalarDesc, crate::gapi::GScalarDescTrait, as_raw_mut_GScalarDesc }
+
+	/// \addtogroup gapi_main_classes
+	/// /
+	///
+	///  Represents a computation (graph) compiled for streaming.
+	///
+	///  This class represents a product of graph compilation (calling
+	///  cv::GComputation::compileStreaming()). Objects of this class
+	///  actually do stream processing, and the whole pipeline execution
+	///  complexity is incapsulated into objects of this class. Execution
+	///  model has two levels: at the very top, the execution of a
+	///  heterogeneous graph is aggressively pipelined; at the very bottom
+	///  the execution of every internal block is determined by its
+	///  associated backend. Backends are selected based on kernel packages
+	///  passed via compilation arguments ( see [gapi_compile_args],
+	///  GNetworkPackage, GKernelPackage for details).
+	///
+	///  GStreamingCompiled objects have a "player" semantics -- there are
+	///  methods like start() and stop(). GStreamingCompiled has a full
+	///  control over a videostream and so is stateful. You need to specify the
+	///  input stream data using setSource() and then call start() to
+	///  actually start processing. After that, use pull() or try_pull() to
+	///  obtain next processed data frame from the graph in a blocking or
+	///  non-blocking way, respectively.
+	///
+	///  Currently a single GStreamingCompiled can process only one video
+	///  streat at time. Produce multiple GStreamingCompiled objects to run the
+	///  same graph on multiple video streams.
+	/// ## See also
+	/// GCompiled
+	pub struct GStreamingCompiled {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { GStreamingCompiled }
+
+	impl Drop for GStreamingCompiled {
 		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
+		fn drop(&mut self) {
+			unsafe { sys::cv_GStreamingCompiled_delete(self.as_raw_mut_GStreamingCompiled()) };
 		}
+	}
+
+	unsafe impl Send for GStreamingCompiled {}
+
+	impl GStreamingCompiled {
+		#[inline]
+		pub fn default() -> Result<crate::gapi::GStreamingCompiled> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_GStreamingCompiled_GStreamingCompiled(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::GStreamingCompiled::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::gapi::GStreamingCompiled]
@@ -9223,73 +9296,6 @@ pub mod gapi {
 
 	}
 
-	/// \addtogroup gapi_main_classes
-	/// /
-	///
-	///  Represents a computation (graph) compiled for streaming.
-	///
-	///  This class represents a product of graph compilation (calling
-	///  cv::GComputation::compileStreaming()). Objects of this class
-	///  actually do stream processing, and the whole pipeline execution
-	///  complexity is incapsulated into objects of this class. Execution
-	///  model has two levels: at the very top, the execution of a
-	///  heterogeneous graph is aggressively pipelined; at the very bottom
-	///  the execution of every internal block is determined by its
-	///  associated backend. Backends are selected based on kernel packages
-	///  passed via compilation arguments ( see [gapi_compile_args],
-	///  GNetworkPackage, GKernelPackage for details).
-	///
-	///  GStreamingCompiled objects have a "player" semantics -- there are
-	///  methods like start() and stop(). GStreamingCompiled has a full
-	///  control over a videostream and so is stateful. You need to specify the
-	///  input stream data using setSource() and then call start() to
-	///  actually start processing. After that, use pull() or try_pull() to
-	///  obtain next processed data frame from the graph in a blocking or
-	///  non-blocking way, respectively.
-	///
-	///  Currently a single GStreamingCompiled can process only one video
-	///  streat at time. Produce multiple GStreamingCompiled objects to run the
-	///  same graph on multiple video streams.
-	/// ## See also
-	/// GCompiled
-	pub struct GStreamingCompiled {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GStreamingCompiled }
-
-	impl Drop for GStreamingCompiled {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_GStreamingCompiled_delete(self.as_raw_mut_GStreamingCompiled()) };
-		}
-	}
-
-	unsafe impl Send for GStreamingCompiled {}
-
-	impl crate::gapi::GStreamingCompiledTraitConst for GStreamingCompiled {
-		#[inline] fn as_raw_GStreamingCompiled(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::gapi::GStreamingCompiledTrait for GStreamingCompiled {
-		#[inline] fn as_raw_mut_GStreamingCompiled(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { GStreamingCompiled, crate::gapi::GStreamingCompiledTraitConst, as_raw_GStreamingCompiled, crate::gapi::GStreamingCompiledTrait, as_raw_mut_GStreamingCompiled }
-
-	impl GStreamingCompiled {
-		#[inline]
-		pub fn default() -> Result<crate::gapi::GStreamingCompiled> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_GStreamingCompiled_GStreamingCompiled(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::gapi::GStreamingCompiled::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
 	impl Clone for GStreamingCompiled {
 		#[inline]
 		fn clone(&self) -> Self {
@@ -9304,6 +9310,31 @@ pub mod gapi {
 				.finish()
 		}
 	}
+
+	impl crate::gapi::GStreamingCompiledTraitConst for GStreamingCompiled {
+		#[inline] fn as_raw_GStreamingCompiled(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::gapi::GStreamingCompiledTrait for GStreamingCompiled {
+		#[inline] fn as_raw_mut_GStreamingCompiled(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { GStreamingCompiled, crate::gapi::GStreamingCompiledTraitConst, as_raw_GStreamingCompiled, crate::gapi::GStreamingCompiledTrait, as_raw_mut_GStreamingCompiled }
+
+	pub struct GTransform {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { GTransform }
+
+	impl Drop for GTransform {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_GTransform_delete(self.as_raw_mut_GTransform()) };
+		}
+	}
+
+	unsafe impl Send for GTransform {}
 
 	/// Constant methods for [crate::gapi::GTransform]
 	pub trait GTransformTraitConst {
@@ -9331,20 +9362,14 @@ pub mod gapi {
 
 	}
 
-	pub struct GTransform {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GTransform }
-
-	impl Drop for GTransform {
+	impl std::fmt::Debug for GTransform {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_GTransform_delete(self.as_raw_mut_GTransform()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GTransform")
+				.field("description", &crate::gapi::GTransformTraitConst::description(self))
+				.finish()
 		}
 	}
-
-	unsafe impl Send for GTransform {}
 
 	impl crate::gapi::GTransformTraitConst for GTransform {
 		#[inline] fn as_raw_GTransform(&self) -> *const c_void { self.as_raw() }
@@ -9356,16 +9381,30 @@ pub mod gapi {
 
 	boxed_ref! { GTransform, crate::gapi::GTransformTraitConst, as_raw_GTransform, crate::gapi::GTransformTrait, as_raw_mut_GTransform }
 
-	impl GTransform {
+	pub struct GTypeInfo {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for GTransform {
+	opencv_type_boxed! { GTypeInfo }
+
+	impl Drop for GTypeInfo {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("GTransform")
-				.field("description", &crate::gapi::GTransformTraitConst::description(self))
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_GTypeInfo_delete(self.as_raw_mut_GTypeInfo()) };
 		}
+	}
+
+	unsafe impl Send for GTypeInfo {}
+
+	impl GTypeInfo {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::gapi::GTypeInfo {
+			let ret = unsafe { sys::cv_GTypeInfo_defaultNew_const() };
+			let ret = unsafe { crate::gapi::GTypeInfo::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::gapi::GTypeInfo]
@@ -9408,38 +9447,12 @@ pub mod gapi {
 
 	}
 
-	pub struct GTypeInfo {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GTypeInfo }
-
-	impl Drop for GTypeInfo {
+	impl Default for GTypeInfo {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_GTypeInfo_delete(self.as_raw_mut_GTypeInfo()) };
-		}
-	}
-
-	unsafe impl Send for GTypeInfo {}
-
-	impl crate::gapi::GTypeInfoTraitConst for GTypeInfo {
-		#[inline] fn as_raw_GTypeInfo(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::gapi::GTypeInfoTrait for GTypeInfo {
-		#[inline] fn as_raw_mut_GTypeInfo(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { GTypeInfo, crate::gapi::GTypeInfoTraitConst, as_raw_GTypeInfo, crate::gapi::GTypeInfoTrait, as_raw_mut_GTypeInfo }
-
-	impl GTypeInfo {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
+		/// Forwards to infallible Self::default()
 		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_GTypeInfo_defaultNew_const()) }
+			Self::default()
 		}
-
 	}
 
 	impl Clone for GTypeInfo {
@@ -9459,12 +9472,59 @@ pub mod gapi {
 		}
 	}
 
-	impl Default for GTypeInfo {
+	impl crate::gapi::GTypeInfoTraitConst for GTypeInfo {
+		#[inline] fn as_raw_GTypeInfo(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::gapi::GTypeInfoTrait for GTypeInfo {
+		#[inline] fn as_raw_mut_GTypeInfo(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { GTypeInfo, crate::gapi::GTypeInfoTraitConst, as_raw_GTypeInfo, crate::gapi::GTypeInfoTrait, as_raw_mut_GTypeInfo }
+
+	/// cv::MediaFrame class represents an image/media frame
+	/// obtained from an external source.
+	///
+	/// cv::MediaFrame represents image data as specified in
+	/// cv::MediaFormat. cv::MediaFrame is designed to be a thin wrapper over some
+	/// external memory of buffer; the class itself provides an uniform
+	/// interface over such types of memory. cv::MediaFrame wraps data from
+	/// a camera driver or from a media codec and provides an abstraction
+	/// layer over this memory to G-API. MediaFrame defines a compact interface
+	/// to access and manage the underlying data; the implementation is
+	/// fully defined by the associated Adapter (which is usually
+	/// user-defined).
+	/// ## See also
+	/// cv::RMat
+	pub struct MediaFrame {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { MediaFrame }
+
+	impl Drop for MediaFrame {
 		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
+		fn drop(&mut self) {
+			unsafe { sys::cv_MediaFrame_delete(self.as_raw_mut_MediaFrame()) };
 		}
+	}
+
+	unsafe impl Send for MediaFrame {}
+
+	impl MediaFrame {
+		/// Constructs an empty MediaFrame
+		///
+		/// The constructed object has no any data associated with it.
+		#[inline]
+		pub fn default() -> Result<crate::gapi::MediaFrame> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_MediaFrame_MediaFrame(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::MediaFrame::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::gapi::MediaFrame]
@@ -9504,34 +9564,13 @@ pub mod gapi {
 
 	}
 
-	/// cv::MediaFrame class represents an image/media frame
-	/// obtained from an external source.
-	///
-	/// cv::MediaFrame represents image data as specified in
-	/// cv::MediaFormat. cv::MediaFrame is designed to be a thin wrapper over some
-	/// external memory of buffer; the class itself provides an uniform
-	/// interface over such types of memory. cv::MediaFrame wraps data from
-	/// a camera driver or from a media codec and provides an abstraction
-	/// layer over this memory to G-API. MediaFrame defines a compact interface
-	/// to access and manage the underlying data; the implementation is
-	/// fully defined by the associated Adapter (which is usually
-	/// user-defined).
-	/// ## See also
-	/// cv::RMat
-	pub struct MediaFrame {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { MediaFrame }
-
-	impl Drop for MediaFrame {
+	impl std::fmt::Debug for MediaFrame {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_MediaFrame_delete(self.as_raw_mut_MediaFrame()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MediaFrame")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for MediaFrame {}
 
 	impl crate::gapi::MediaFrameTraitConst for MediaFrame {
 		#[inline] fn as_raw_MediaFrame(&self) -> *const c_void { self.as_raw() }
@@ -9543,29 +9582,29 @@ pub mod gapi {
 
 	boxed_ref! { MediaFrame, crate::gapi::MediaFrameTraitConst, as_raw_MediaFrame, crate::gapi::MediaFrameTrait, as_raw_mut_MediaFrame }
 
-	impl MediaFrame {
-		/// Constructs an empty MediaFrame
-		///
-		/// The constructed object has no any data associated with it.
-		#[inline]
-		pub fn default() -> Result<crate::gapi::MediaFrame> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_MediaFrame_MediaFrame(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::gapi::MediaFrame::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// An interface class for MediaFrame data adapters.
+	///
+	/// Implement this interface to wrap media data in the MediaFrame. It
+	/// makes sense to implement this class if there is a custom
+	/// cv::gapi::wip::IStreamSource defined -- in this case, a stream
+	/// source can produce MediaFrame objects with this adapter and the
+	/// media data may be passed to graph without any copy. For example, a
+	/// GStreamer-based stream source can implement an adapter over
+	/// `GstBuffer` and G-API will transparently use it in the graph.
+	pub struct MediaFrame_IAdapter {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for MediaFrame {
+	opencv_type_boxed! { MediaFrame_IAdapter }
+
+	impl Drop for MediaFrame_IAdapter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("MediaFrame")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_MediaFrame_IAdapter_delete(self.as_raw_mut_MediaFrame_IAdapter()) };
 		}
 	}
+
+	unsafe impl Send for MediaFrame_IAdapter {}
 
 	/// Constant methods for [crate::gapi::MediaFrame_IAdapter]
 	pub trait MediaFrame_IAdapterTraitConst {
@@ -9599,29 +9638,13 @@ pub mod gapi {
 
 	}
 
-	/// An interface class for MediaFrame data adapters.
-	///
-	/// Implement this interface to wrap media data in the MediaFrame. It
-	/// makes sense to implement this class if there is a custom
-	/// cv::gapi::wip::IStreamSource defined -- in this case, a stream
-	/// source can produce MediaFrame objects with this adapter and the
-	/// media data may be passed to graph without any copy. For example, a
-	/// GStreamer-based stream source can implement an adapter over
-	/// `GstBuffer` and G-API will transparently use it in the graph.
-	pub struct MediaFrame_IAdapter {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { MediaFrame_IAdapter }
-
-	impl Drop for MediaFrame_IAdapter {
+	impl std::fmt::Debug for MediaFrame_IAdapter {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_MediaFrame_IAdapter_delete(self.as_raw_mut_MediaFrame_IAdapter()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MediaFrame_IAdapter")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for MediaFrame_IAdapter {}
 
 	impl crate::gapi::MediaFrame_IAdapterTraitConst for MediaFrame_IAdapter {
 		#[inline] fn as_raw_MediaFrame_IAdapter(&self) -> *const c_void { self.as_raw() }
@@ -9632,29 +9655,6 @@ pub mod gapi {
 	}
 
 	boxed_ref! { MediaFrame_IAdapter, crate::gapi::MediaFrame_IAdapterTraitConst, as_raw_MediaFrame_IAdapter, crate::gapi::MediaFrame_IAdapterTrait, as_raw_mut_MediaFrame_IAdapter }
-
-	impl MediaFrame_IAdapter {
-	}
-
-	impl std::fmt::Debug for MediaFrame_IAdapter {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("MediaFrame_IAdapter")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::gapi::MediaFrame_View]
-	pub trait MediaFrame_ViewTraitConst {
-		fn as_raw_MediaFrame_View(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::gapi::MediaFrame_View]
-	pub trait MediaFrame_ViewTrait: crate::gapi::MediaFrame_ViewTraitConst {
-		fn as_raw_mut_MediaFrame_View(&mut self) -> *mut c_void;
-
-	}
 
 	/// Provides access to the MediaFrame's underlying data.
 	///
@@ -9706,16 +9706,6 @@ pub mod gapi {
 
 	unsafe impl Send for MediaFrame_View {}
 
-	impl crate::gapi::MediaFrame_ViewTraitConst for MediaFrame_View {
-		#[inline] fn as_raw_MediaFrame_View(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::gapi::MediaFrame_ViewTrait for MediaFrame_View {
-		#[inline] fn as_raw_mut_MediaFrame_View(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { MediaFrame_View, crate::gapi::MediaFrame_ViewTraitConst, as_raw_MediaFrame_View, crate::gapi::MediaFrame_ViewTrait, as_raw_mut_MediaFrame_View }
-
 	impl MediaFrame_View {
 		pub const MAX_PLANES: u32 = 4;
 		/// @private
@@ -9728,12 +9718,60 @@ pub mod gapi {
 
 	}
 
+	/// Constant methods for [crate::gapi::MediaFrame_View]
+	pub trait MediaFrame_ViewTraitConst {
+		fn as_raw_MediaFrame_View(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::gapi::MediaFrame_View]
+	pub trait MediaFrame_ViewTrait: crate::gapi::MediaFrame_ViewTraitConst {
+		fn as_raw_mut_MediaFrame_View(&mut self) -> *mut c_void;
+
+	}
+
 	impl std::fmt::Debug for MediaFrame_View {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("MediaFrame_View")
 				.finish()
 		}
+	}
+
+	impl crate::gapi::MediaFrame_ViewTraitConst for MediaFrame_View {
+		#[inline] fn as_raw_MediaFrame_View(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::gapi::MediaFrame_ViewTrait for MediaFrame_View {
+		#[inline] fn as_raw_mut_MediaFrame_View(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { MediaFrame_View, crate::gapi::MediaFrame_ViewTraitConst, as_raw_MediaFrame_View, crate::gapi::MediaFrame_ViewTrait, as_raw_mut_MediaFrame_View }
+
+	/// \addtogroup gapi_data_structures
+	pub struct RMat {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { RMat }
+
+	impl Drop for RMat {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_RMat_delete(self.as_raw_mut_RMat()) };
+		}
+	}
+
+	unsafe impl Send for RMat {}
+
+	impl RMat {
+		#[inline]
+		pub fn default() -> crate::gapi::RMat {
+			let ret = unsafe { sys::cv_RMat_RMat() };
+			let ret = unsafe { crate::gapi::RMat::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::gapi::RMat]
@@ -9758,21 +9796,21 @@ pub mod gapi {
 
 	}
 
-	/// \addtogroup gapi_data_structures
-	pub struct RMat {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { RMat }
-
-	impl Drop for RMat {
+	impl Default for RMat {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_RMat_delete(self.as_raw_mut_RMat()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for RMat {}
+	impl std::fmt::Debug for RMat {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("RMat")
+				.finish()
+		}
+	}
 
 	impl crate::gapi::RMatTraitConst for RMat {
 		#[inline] fn as_raw_RMat(&self) -> *const c_void { self.as_raw() }
@@ -9784,31 +9822,20 @@ pub mod gapi {
 
 	boxed_ref! { RMat, crate::gapi::RMatTraitConst, as_raw_RMat, crate::gapi::RMatTrait, as_raw_mut_RMat }
 
-	impl RMat {
-		#[inline]
-		pub fn default() -> crate::gapi::RMat {
-			let ret = unsafe { sys::cv_RMat_RMat() };
-			let ret = unsafe { crate::gapi::RMat::opencv_from_extern(ret) };
-			ret
-		}
-
+	pub struct RMat_IAdapter {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for RMat {
+	opencv_type_boxed! { RMat_IAdapter }
+
+	impl Drop for RMat_IAdapter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("RMat")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_RMat_IAdapter_delete(self.as_raw_mut_RMat_IAdapter()) };
 		}
 	}
 
-	impl Default for RMat {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
-	}
+	unsafe impl Send for RMat_IAdapter {}
 
 	/// Constant methods for [crate::gapi::RMat_IAdapter]
 	pub trait RMat_IAdapterTraitConst {
@@ -9832,20 +9859,13 @@ pub mod gapi {
 
 	}
 
-	pub struct RMat_IAdapter {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { RMat_IAdapter }
-
-	impl Drop for RMat_IAdapter {
+	impl std::fmt::Debug for RMat_IAdapter {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_RMat_IAdapter_delete(self.as_raw_mut_RMat_IAdapter()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("RMat_IAdapter")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for RMat_IAdapter {}
 
 	impl crate::gapi::RMat_IAdapterTraitConst for RMat_IAdapter {
 		#[inline] fn as_raw_RMat_IAdapter(&self) -> *const c_void { self.as_raw() }
@@ -9857,15 +9877,36 @@ pub mod gapi {
 
 	boxed_ref! { RMat_IAdapter, crate::gapi::RMat_IAdapterTraitConst, as_raw_RMat_IAdapter, crate::gapi::RMat_IAdapterTrait, as_raw_mut_RMat_IAdapter }
 
-	impl RMat_IAdapter {
+	pub struct RMat_View {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for RMat_IAdapter {
+	opencv_type_boxed! { RMat_View }
+
+	impl Drop for RMat_View {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("RMat_IAdapter")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_RMat_View_delete(self.as_raw_mut_RMat_View()) };
 		}
+	}
+
+	unsafe impl Send for RMat_View {}
+
+	impl RMat_View {
+		#[inline]
+		pub fn default() -> crate::gapi::RMat_View {
+			let ret = unsafe { sys::cv_RMat_View_View() };
+			let ret = unsafe { crate::gapi::RMat_View::opencv_from_extern(ret) };
+			ret
+		}
+
+		#[inline]
+		pub fn copy_mut(mut unnamed: crate::gapi::RMat_View) -> crate::gapi::RMat_View {
+			let ret = unsafe { sys::cv_RMat_View_View_ViewRR(unnamed.as_raw_mut_RMat_View()) };
+			let ret = unsafe { crate::gapi::RMat_View::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::gapi::RMat_View]
@@ -9995,20 +10036,21 @@ pub mod gapi {
 
 	}
 
-	pub struct RMat_View {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { RMat_View }
-
-	impl Drop for RMat_View {
+	impl Default for RMat_View {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_RMat_View_delete(self.as_raw_mut_RMat_View()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for RMat_View {}
+	impl std::fmt::Debug for RMat_View {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("RMat_View")
+				.finish()
+		}
+	}
 
 	impl crate::gapi::RMat_ViewTraitConst for RMat_View {
 		#[inline] fn as_raw_RMat_View(&self) -> *const c_void { self.as_raw() }
@@ -10020,37 +10062,30 @@ pub mod gapi {
 
 	boxed_ref! { RMat_View, crate::gapi::RMat_ViewTraitConst, as_raw_RMat_View, crate::gapi::RMat_ViewTrait, as_raw_mut_RMat_View }
 
-	impl RMat_View {
-		#[inline]
-		pub fn default() -> crate::gapi::RMat_View {
-			let ret = unsafe { sys::cv_RMat_View_View() };
-			let ret = unsafe { crate::gapi::RMat_View::opencv_from_extern(ret) };
-			ret
-		}
-
-		#[inline]
-		pub fn copy_mut(mut unnamed: crate::gapi::RMat_View) -> crate::gapi::RMat_View {
-			let ret = unsafe { sys::cv_RMat_View_View_ViewRR(unnamed.as_raw_mut_RMat_View()) };
-			let ret = unsafe { crate::gapi::RMat_View::opencv_from_extern(ret) };
-			ret
-		}
-
+	pub struct Detail_ExtractArgsCallback {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for RMat_View {
+	opencv_type_boxed! { Detail_ExtractArgsCallback }
+
+	impl Drop for Detail_ExtractArgsCallback {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("RMat_View")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_ExtractArgsCallback_delete(self.as_raw_mut_Detail_ExtractArgsCallback()) };
 		}
 	}
 
-	impl Default for RMat_View {
+	unsafe impl Send for Detail_ExtractArgsCallback {}
+
+	impl Detail_ExtractArgsCallback {
+		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
+		pub fn default() -> crate::gapi::Detail_ExtractArgsCallback {
+			let ret = unsafe { sys::cv_detail_ExtractArgsCallback_defaultNew_const() };
+			let ret = unsafe { crate::gapi::Detail_ExtractArgsCallback::opencv_from_extern(ret) };
+			ret
 		}
+
 	}
 
 	/// Constant methods for [crate::gapi::Detail_ExtractArgsCallback]
@@ -10075,38 +10110,12 @@ pub mod gapi {
 
 	}
 
-	pub struct Detail_ExtractArgsCallback {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_ExtractArgsCallback }
-
-	impl Drop for Detail_ExtractArgsCallback {
+	impl Default for Detail_ExtractArgsCallback {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_ExtractArgsCallback_delete(self.as_raw_mut_Detail_ExtractArgsCallback()) };
-		}
-	}
-
-	unsafe impl Send for Detail_ExtractArgsCallback {}
-
-	impl crate::gapi::Detail_ExtractArgsCallbackTraitConst for Detail_ExtractArgsCallback {
-		#[inline] fn as_raw_Detail_ExtractArgsCallback(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::gapi::Detail_ExtractArgsCallbackTrait for Detail_ExtractArgsCallback {
-		#[inline] fn as_raw_mut_Detail_ExtractArgsCallback(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_ExtractArgsCallback, crate::gapi::Detail_ExtractArgsCallbackTraitConst, as_raw_Detail_ExtractArgsCallback, crate::gapi::Detail_ExtractArgsCallbackTrait, as_raw_mut_Detail_ExtractArgsCallback }
-
-	impl Detail_ExtractArgsCallback {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
+		/// Forwards to infallible Self::default()
 		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_detail_ExtractArgsCallback_defaultNew_const()) }
+			Self::default()
 		}
-
 	}
 
 	impl std::fmt::Debug for Detail_ExtractArgsCallback {
@@ -10117,25 +10126,15 @@ pub mod gapi {
 		}
 	}
 
-	impl Default for Detail_ExtractArgsCallback {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
+	impl crate::gapi::Detail_ExtractArgsCallbackTraitConst for Detail_ExtractArgsCallback {
+		#[inline] fn as_raw_Detail_ExtractArgsCallback(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Constant methods for [crate::gapi::Detail_ExtractMetaCallback]
-	pub trait Detail_ExtractMetaCallbackTraitConst {
-		fn as_raw_Detail_ExtractMetaCallback(&self) -> *const c_void;
-
+	impl crate::gapi::Detail_ExtractArgsCallbackTrait for Detail_ExtractArgsCallback {
+		#[inline] fn as_raw_mut_Detail_ExtractArgsCallback(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 
-	/// Mutable methods for [crate::gapi::Detail_ExtractMetaCallback]
-	pub trait Detail_ExtractMetaCallbackTrait: crate::gapi::Detail_ExtractMetaCallbackTraitConst {
-		fn as_raw_mut_Detail_ExtractMetaCallback(&mut self) -> *mut c_void;
-
-	}
+	boxed_ref! { Detail_ExtractArgsCallback, crate::gapi::Detail_ExtractArgsCallbackTraitConst, as_raw_Detail_ExtractArgsCallback, crate::gapi::Detail_ExtractArgsCallbackTrait, as_raw_mut_Detail_ExtractArgsCallback }
 
 	pub struct Detail_ExtractMetaCallback {
 		ptr: *mut c_void,
@@ -10152,31 +10151,27 @@ pub mod gapi {
 
 	unsafe impl Send for Detail_ExtractMetaCallback {}
 
-	impl crate::gapi::Detail_ExtractMetaCallbackTraitConst for Detail_ExtractMetaCallback {
-		#[inline] fn as_raw_Detail_ExtractMetaCallback(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::gapi::Detail_ExtractMetaCallbackTrait for Detail_ExtractMetaCallback {
-		#[inline] fn as_raw_mut_Detail_ExtractMetaCallback(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_ExtractMetaCallback, crate::gapi::Detail_ExtractMetaCallbackTraitConst, as_raw_Detail_ExtractMetaCallback, crate::gapi::Detail_ExtractMetaCallbackTrait, as_raw_mut_Detail_ExtractMetaCallback }
-
 	impl Detail_ExtractMetaCallback {
 		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_detail_ExtractMetaCallback_defaultNew_const()) }
+		pub fn default() -> crate::gapi::Detail_ExtractMetaCallback {
+			let ret = unsafe { sys::cv_detail_ExtractMetaCallback_defaultNew_const() };
+			let ret = unsafe { crate::gapi::Detail_ExtractMetaCallback::opencv_from_extern(ret) };
+			ret
 		}
 
 	}
 
-	impl std::fmt::Debug for Detail_ExtractMetaCallback {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_ExtractMetaCallback")
-				.finish()
-		}
+	/// Constant methods for [crate::gapi::Detail_ExtractMetaCallback]
+	pub trait Detail_ExtractMetaCallbackTraitConst {
+		fn as_raw_Detail_ExtractMetaCallback(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::gapi::Detail_ExtractMetaCallback]
+	pub trait Detail_ExtractMetaCallbackTrait: crate::gapi::Detail_ExtractMetaCallbackTraitConst {
+		fn as_raw_mut_Detail_ExtractMetaCallback(&mut self) -> *mut c_void;
+
 	}
 
 	impl Default for Detail_ExtractMetaCallback {
@@ -10187,17 +10182,23 @@ pub mod gapi {
 		}
 	}
 
-	/// Constant methods for [crate::gapi::Detail_GArrayU]
-	pub trait Detail_GArrayUTraitConst {
-		fn as_raw_Detail_GArrayU(&self) -> *const c_void;
-
+	impl std::fmt::Debug for Detail_ExtractMetaCallback {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_ExtractMetaCallback")
+				.finish()
+		}
 	}
 
-	/// Mutable methods for [crate::gapi::Detail_GArrayU]
-	pub trait Detail_GArrayUTrait: crate::gapi::Detail_GArrayUTraitConst {
-		fn as_raw_mut_Detail_GArrayU(&mut self) -> *mut c_void;
-
+	impl crate::gapi::Detail_ExtractMetaCallbackTraitConst for Detail_ExtractMetaCallback {
+		#[inline] fn as_raw_Detail_ExtractMetaCallback(&self) -> *const c_void { self.as_raw() }
 	}
+
+	impl crate::gapi::Detail_ExtractMetaCallbackTrait for Detail_ExtractMetaCallback {
+		#[inline] fn as_raw_mut_Detail_ExtractMetaCallback(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_ExtractMetaCallback, crate::gapi::Detail_ExtractMetaCallbackTraitConst, as_raw_Detail_ExtractMetaCallback, crate::gapi::Detail_ExtractMetaCallbackTrait, as_raw_mut_Detail_ExtractMetaCallback }
 
 	pub struct Detail_GArrayU {
 		ptr: *mut c_void,
@@ -10214,17 +10215,16 @@ pub mod gapi {
 
 	unsafe impl Send for Detail_GArrayU {}
 
-	impl crate::gapi::Detail_GArrayUTraitConst for Detail_GArrayU {
-		#[inline] fn as_raw_Detail_GArrayU(&self) -> *const c_void { self.as_raw() }
+	/// Constant methods for [crate::gapi::Detail_GArrayU]
+	pub trait Detail_GArrayUTraitConst {
+		fn as_raw_Detail_GArrayU(&self) -> *const c_void;
+
 	}
 
-	impl crate::gapi::Detail_GArrayUTrait for Detail_GArrayU {
-		#[inline] fn as_raw_mut_Detail_GArrayU(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
+	/// Mutable methods for [crate::gapi::Detail_GArrayU]
+	pub trait Detail_GArrayUTrait: crate::gapi::Detail_GArrayUTraitConst {
+		fn as_raw_mut_Detail_GArrayU(&mut self) -> *mut c_void;
 
-	boxed_ref! { Detail_GArrayU, crate::gapi::Detail_GArrayUTraitConst, as_raw_Detail_GArrayU, crate::gapi::Detail_GArrayUTrait, as_raw_mut_Detail_GArrayU }
-
-	impl Detail_GArrayU {
 	}
 
 	impl std::fmt::Debug for Detail_GArrayU {
@@ -10235,17 +10235,15 @@ pub mod gapi {
 		}
 	}
 
-	/// Constant methods for [crate::gapi::Detail_GOpaqueU]
-	pub trait Detail_GOpaqueUTraitConst {
-		fn as_raw_Detail_GOpaqueU(&self) -> *const c_void;
-
+	impl crate::gapi::Detail_GArrayUTraitConst for Detail_GArrayU {
+		#[inline] fn as_raw_Detail_GArrayU(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [crate::gapi::Detail_GOpaqueU]
-	pub trait Detail_GOpaqueUTrait: crate::gapi::Detail_GOpaqueUTraitConst {
-		fn as_raw_mut_Detail_GOpaqueU(&mut self) -> *mut c_void;
-
+	impl crate::gapi::Detail_GArrayUTrait for Detail_GArrayU {
+		#[inline] fn as_raw_mut_Detail_GArrayU(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { Detail_GArrayU, crate::gapi::Detail_GArrayUTraitConst, as_raw_Detail_GArrayU, crate::gapi::Detail_GArrayUTrait, as_raw_mut_Detail_GArrayU }
 
 	pub struct Detail_GOpaqueU {
 		ptr: *mut c_void,
@@ -10262,6 +10260,26 @@ pub mod gapi {
 
 	unsafe impl Send for Detail_GOpaqueU {}
 
+	/// Constant methods for [crate::gapi::Detail_GOpaqueU]
+	pub trait Detail_GOpaqueUTraitConst {
+		fn as_raw_Detail_GOpaqueU(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::gapi::Detail_GOpaqueU]
+	pub trait Detail_GOpaqueUTrait: crate::gapi::Detail_GOpaqueUTraitConst {
+		fn as_raw_mut_Detail_GOpaqueU(&mut self) -> *mut c_void;
+
+	}
+
+	impl std::fmt::Debug for Detail_GOpaqueU {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Detail_GOpaqueU")
+				.finish()
+		}
+	}
+
 	impl crate::gapi::Detail_GOpaqueUTraitConst for Detail_GOpaqueU {
 		#[inline] fn as_raw_Detail_GOpaqueU(&self) -> *const c_void { self.as_raw() }
 	}
@@ -10272,15 +10290,33 @@ pub mod gapi {
 
 	boxed_ref! { Detail_GOpaqueU, crate::gapi::Detail_GOpaqueUTraitConst, as_raw_Detail_GOpaqueU, crate::gapi::Detail_GOpaqueUTrait, as_raw_mut_Detail_GOpaqueU }
 
-	impl Detail_GOpaqueU {
+	/// @private
+	pub struct GBackend {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for Detail_GOpaqueU {
+	opencv_type_boxed! { GBackend }
+
+	impl Drop for GBackend {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Detail_GOpaqueU")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_gapi_GBackend_delete(self.as_raw_mut_GBackend()) };
 		}
+	}
+
+	unsafe impl Send for GBackend {}
+
+	impl GBackend {
+		#[inline]
+		pub fn default() -> Result<crate::gapi::GBackend> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_gapi_GBackend_GBackend(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::GBackend::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::gapi::GBackend]
@@ -10304,21 +10340,13 @@ pub mod gapi {
 
 	}
 
-	/// @private
-	pub struct GBackend {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GBackend }
-
-	impl Drop for GBackend {
+	impl std::fmt::Debug for GBackend {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_gapi_GBackend_delete(self.as_raw_mut_GBackend()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GBackend")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for GBackend {}
 
 	impl crate::gapi::GBackendTraitConst for GBackend {
 		#[inline] fn as_raw_GBackend(&self) -> *const c_void { self.as_raw() }
@@ -10330,26 +10358,21 @@ pub mod gapi {
 
 	boxed_ref! { GBackend, crate::gapi::GBackendTraitConst, as_raw_GBackend, crate::gapi::GBackendTrait, as_raw_mut_GBackend }
 
-	impl GBackend {
-		#[inline]
-		pub fn default() -> Result<crate::gapi::GBackend> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_gapi_GBackend_GBackend(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::gapi::GBackend::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// @private
+	pub struct GFunctor {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for GBackend {
+	opencv_type_boxed! { GFunctor }
+
+	impl Drop for GFunctor {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("GBackend")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_gapi_GFunctor_delete(self.as_raw_mut_GFunctor()) };
 		}
 	}
+
+	unsafe impl Send for GFunctor {}
 
 	/// Constant methods for [crate::gapi::GFunctor]
 	pub trait GFunctorTraitConst {
@@ -10393,21 +10416,13 @@ pub mod gapi {
 
 	}
 
-	/// @private
-	pub struct GFunctor {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GFunctor }
-
-	impl Drop for GFunctor {
+	impl std::fmt::Debug for GFunctor {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_gapi_GFunctor_delete(self.as_raw_mut_GFunctor()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GFunctor")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for GFunctor {}
 
 	impl crate::gapi::GFunctorTraitConst for GFunctor {
 		#[inline] fn as_raw_GFunctor(&self) -> *const c_void { self.as_raw() }
@@ -10418,61 +10433,6 @@ pub mod gapi {
 	}
 
 	boxed_ref! { GFunctor, crate::gapi::GFunctorTraitConst, as_raw_GFunctor, crate::gapi::GFunctorTrait, as_raw_mut_GFunctor }
-
-	impl GFunctor {
-	}
-
-	impl std::fmt::Debug for GFunctor {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("GFunctor")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::gapi::Scalar]
-	pub trait ScalarTraitConst {
-		fn as_raw_Scalar(&self) -> *const c_void;
-
-		#[inline]
-		fn val(&self) -> &[f64; 4] {
-			let ret = unsafe { sys::cv_gapi_own_Scalar_propVal_const(self.as_raw_Scalar()) };
-			let ret = unsafe { ret.as_ref() }.expect("Function returned null pointer");
-			ret
-		}
-
-		#[inline]
-		fn get(&self, i: i32) -> Result<f64> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_gapi_own_Scalar_operator___const_int(self.as_raw_Scalar(), i, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
-
-	/// Mutable methods for [crate::gapi::Scalar]
-	pub trait ScalarTrait: crate::gapi::ScalarTraitConst {
-		fn as_raw_mut_Scalar(&mut self) -> *mut c_void;
-
-		#[inline]
-		fn val_mut(&mut self) -> &mut [f64; 4] {
-			let ret = unsafe { sys::cv_gapi_own_Scalar_propVal(self.as_raw_mut_Scalar()) };
-			let ret = unsafe { ret.as_mut() }.expect("Function returned null pointer");
-			ret
-		}
-
-		#[inline]
-		fn get_mut(&mut self, i: i32) -> Result<f64> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_gapi_own_Scalar_operator___int(self.as_raw_mut_Scalar(), i, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
 
 	pub struct Scalar {
 		ptr: *mut c_void,
@@ -10488,16 +10448,6 @@ pub mod gapi {
 	}
 
 	unsafe impl Send for Scalar {}
-
-	impl crate::gapi::ScalarTraitConst for Scalar {
-		#[inline] fn as_raw_Scalar(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::gapi::ScalarTrait for Scalar {
-		#[inline] fn as_raw_mut_Scalar(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Scalar, crate::gapi::ScalarTraitConst, as_raw_Scalar, crate::gapi::ScalarTrait, as_raw_mut_Scalar }
 
 	impl Scalar {
 		#[inline]
@@ -10556,13 +10506,48 @@ pub mod gapi {
 
 	}
 
-	impl std::fmt::Debug for Scalar {
+	/// Constant methods for [crate::gapi::Scalar]
+	pub trait ScalarTraitConst {
+		fn as_raw_Scalar(&self) -> *const c_void;
+
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Scalar")
-				.field("val", &crate::gapi::ScalarTraitConst::val(self))
-				.finish()
+		fn val(&self) -> &[f64; 4] {
+			let ret = unsafe { sys::cv_gapi_own_Scalar_propVal_const(self.as_raw_Scalar()) };
+			let ret = unsafe { ret.as_ref() }.expect("Function returned null pointer");
+			ret
 		}
+
+		#[inline]
+		fn get(&self, i: i32) -> Result<f64> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_gapi_own_Scalar_operator___const_int(self.as_raw_Scalar(), i, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [crate::gapi::Scalar]
+	pub trait ScalarTrait: crate::gapi::ScalarTraitConst {
+		fn as_raw_mut_Scalar(&mut self) -> *mut c_void;
+
+		#[inline]
+		fn val_mut(&mut self) -> &mut [f64; 4] {
+			let ret = unsafe { sys::cv_gapi_own_Scalar_propVal(self.as_raw_mut_Scalar()) };
+			let ret = unsafe { ret.as_mut() }.expect("Function returned null pointer");
+			ret
+		}
+
+		#[inline]
+		fn get_mut(&mut self, i: i32) -> Result<f64> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_gapi_own_Scalar_operator___int(self.as_raw_mut_Scalar(), i, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
 	}
 
 	impl Default for Scalar {
@@ -10572,6 +10557,25 @@ pub mod gapi {
 			Self::default()
 		}
 	}
+
+	impl std::fmt::Debug for Scalar {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Scalar")
+				.field("val", &crate::gapi::ScalarTraitConst::val(self))
+				.finish()
+		}
+	}
+
+	impl crate::gapi::ScalarTraitConst for Scalar {
+		#[inline] fn as_raw_Scalar(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::gapi::ScalarTrait for Scalar {
+		#[inline] fn as_raw_mut_Scalar(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Scalar, crate::gapi::ScalarTraitConst, as_raw_Scalar, crate::gapi::ScalarTrait, as_raw_mut_Scalar }
 
 	/// Specify queue capacity for streaming execution.
 	///
@@ -10611,6 +10615,38 @@ pub mod gapi {
 
 	}
 
+	/// \addtogroup gapi_compile_args
+	/// /
+	///
+	///  cv::gapi::use_only() is a special combinator which hints G-API to use only
+	///  kernels specified in cv::GComputation::compile() (and not to extend kernels available by
+	///  default with that package).
+	pub struct use_only {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { use_only }
+
+	impl Drop for use_only {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_gapi_use_only_delete(self.as_raw_mut_use_only()) };
+		}
+	}
+
+	unsafe impl Send for use_only {}
+
+	impl use_only {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::gapi::use_only {
+			let ret = unsafe { sys::cv_gapi_use_only_defaultNew_const() };
+			let ret = unsafe { crate::gapi::use_only::opencv_from_extern(ret) };
+			ret
+		}
+
+	}
+
 	/// Constant methods for [crate::gapi::use_only]
 	pub trait use_onlyTraitConst {
 		fn as_raw_use_only(&self) -> *const c_void;
@@ -10636,44 +10672,12 @@ pub mod gapi {
 
 	}
 
-	/// \addtogroup gapi_compile_args
-	/// /
-	///
-	///  cv::gapi::use_only() is a special combinator which hints G-API to use only
-	///  kernels specified in cv::GComputation::compile() (and not to extend kernels available by
-	///  default with that package).
-	pub struct use_only {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { use_only }
-
-	impl Drop for use_only {
+	impl Default for use_only {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_gapi_use_only_delete(self.as_raw_mut_use_only()) };
-		}
-	}
-
-	unsafe impl Send for use_only {}
-
-	impl crate::gapi::use_onlyTraitConst for use_only {
-		#[inline] fn as_raw_use_only(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::gapi::use_onlyTrait for use_only {
-		#[inline] fn as_raw_mut_use_only(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { use_only, crate::gapi::use_onlyTraitConst, as_raw_use_only, crate::gapi::use_onlyTrait, as_raw_mut_use_only }
-
-	impl use_only {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
+		/// Forwards to infallible Self::default()
 		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_gapi_use_only_defaultNew_const()) }
+			Self::default()
 		}
-
 	}
 
 	impl std::fmt::Debug for use_only {
@@ -10685,25 +10689,15 @@ pub mod gapi {
 		}
 	}
 
-	impl Default for use_only {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
+	impl crate::gapi::use_onlyTraitConst for use_only {
+		#[inline] fn as_raw_use_only(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Constant methods for [crate::gapi::Data]
-	pub trait DataTraitConst: crate::gapi::GRunArgTraitConst {
-		fn as_raw_Data(&self) -> *const c_void;
-
+	impl crate::gapi::use_onlyTrait for use_only {
+		#[inline] fn as_raw_mut_use_only(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 
-	/// Mutable methods for [crate::gapi::Data]
-	pub trait DataTrait: crate::gapi::DataTraitConst + crate::gapi::GRunArgTrait {
-		fn as_raw_mut_Data(&mut self) -> *mut c_void;
-
-	}
+	boxed_ref! { use_only, crate::gapi::use_onlyTraitConst, as_raw_use_only, crate::gapi::use_onlyTrait, as_raw_mut_use_only }
 
 	/// This aggregate type represents all types which G-API can
 	/// handle (via variant).
@@ -10725,6 +10719,47 @@ pub mod gapi {
 
 	unsafe impl Send for Data {}
 
+	impl Data {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::gapi::Data {
+			let ret = unsafe { sys::cv_gapi_wip_Data_defaultNew_const() };
+			let ret = unsafe { crate::gapi::Data::opencv_from_extern(ret) };
+			ret
+		}
+
+	}
+
+	/// Constant methods for [crate::gapi::Data]
+	pub trait DataTraitConst: crate::gapi::GRunArgTraitConst {
+		fn as_raw_Data(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::gapi::Data]
+	pub trait DataTrait: crate::gapi::DataTraitConst + crate::gapi::GRunArgTrait {
+		fn as_raw_mut_Data(&mut self) -> *mut c_void;
+
+	}
+
+	impl Default for Data {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
+		}
+	}
+
+	impl std::fmt::Debug for Data {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Data")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { Data, crate::gapi::GRunArg, cv_gapi_wip_Data_to_GRunArg }
+
 	impl crate::gapi::GRunArgTraitConst for Data {
 		#[inline] fn as_raw_GRunArg(&self) -> *const c_void { self.as_raw() }
 	}
@@ -10744,33 +10779,6 @@ pub mod gapi {
 	}
 
 	boxed_ref! { Data, crate::gapi::DataTraitConst, as_raw_Data, crate::gapi::DataTrait, as_raw_mut_Data }
-
-	impl Data {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_gapi_wip_Data_defaultNew_const()) }
-		}
-
-	}
-
-	boxed_cast_base! { Data, crate::gapi::GRunArg, cv_gapi_wip_Data_to_GRunArg }
-
-	impl std::fmt::Debug for Data {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Data")
-				.finish()
-		}
-	}
-
-	impl Default for Data {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
-	}
 
 	/// This structure represents a circle to draw.
 	///
@@ -10860,6 +10868,50 @@ pub mod gapi {
 		}
 	}
 
+	/// This structure represents an image to draw.
+	///
+	/// Image is blended on a frame using the specified mask.
+	pub struct Image {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Image }
+
+	impl Drop for Image {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_gapi_wip_draw_Image_delete(self.as_raw_mut_Image()) };
+		}
+	}
+
+	unsafe impl Send for Image {}
+
+	impl Image {
+		/// Mosaic constructor
+		///
+		/// ## Parameters
+		/// * org_: The bottom-left corner of the image
+		/// * img_: Image to draw
+		/// * alpha_: Alpha channel for image to draw (same size and number of channels)
+		#[inline]
+		pub fn new(org_: core::Point, img_: &impl core::MatTraitConst, alpha_: &impl core::MatTraitConst) -> Result<crate::gapi::Image> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_gapi_wip_draw_Image_Image_const_PointR_const_MatR_const_MatR(&org_, img_.as_raw_Mat(), alpha_.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::Image::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn default() -> crate::gapi::Image {
+			let ret = unsafe { sys::cv_gapi_wip_draw_Image_Image() };
+			let ret = unsafe { crate::gapi::Image::opencv_from_extern(ret) };
+			ret
+		}
+
+	}
+
 	/// Constant methods for [crate::gapi::Image]
 	pub trait ImageTraitConst {
 		fn as_raw_Image(&self) -> *const c_void;
@@ -10918,58 +10970,12 @@ pub mod gapi {
 
 	}
 
-	/// This structure represents an image to draw.
-	///
-	/// Image is blended on a frame using the specified mask.
-	pub struct Image {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Image }
-
-	impl Drop for Image {
+	impl Default for Image {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_gapi_wip_draw_Image_delete(self.as_raw_mut_Image()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
-	}
-
-	unsafe impl Send for Image {}
-
-	impl crate::gapi::ImageTraitConst for Image {
-		#[inline] fn as_raw_Image(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::gapi::ImageTrait for Image {
-		#[inline] fn as_raw_mut_Image(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Image, crate::gapi::ImageTraitConst, as_raw_Image, crate::gapi::ImageTrait, as_raw_mut_Image }
-
-	impl Image {
-		/// Mosaic constructor
-		///
-		/// ## Parameters
-		/// * org_: The bottom-left corner of the image
-		/// * img_: Image to draw
-		/// * alpha_: Alpha channel for image to draw (same size and number of channels)
-		#[inline]
-		pub fn new(org_: core::Point, img_: &impl core::MatTraitConst, alpha_: &impl core::MatTraitConst) -> Result<crate::gapi::Image> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_gapi_wip_draw_Image_Image_const_PointR_const_MatR_const_MatR(&org_, img_.as_raw_Mat(), alpha_.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::gapi::Image::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn default() -> crate::gapi::Image {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Image_Image() };
-			let ret = unsafe { crate::gapi::Image::opencv_from_extern(ret) };
-			ret
-		}
-
 	}
 
 	impl Clone for Image {
@@ -10990,13 +10996,15 @@ pub mod gapi {
 		}
 	}
 
-	impl Default for Image {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
+	impl crate::gapi::ImageTraitConst for Image {
+		#[inline] fn as_raw_Image(&self) -> *const c_void { self.as_raw() }
 	}
+
+	impl crate::gapi::ImageTrait for Image {
+		#[inline] fn as_raw_mut_Image(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Image, crate::gapi::ImageTraitConst, as_raw_Image, crate::gapi::ImageTrait, as_raw_mut_Image }
 
 	/// This structure represents a line to draw.
 	///
@@ -11129,6 +11137,79 @@ pub mod gapi {
 
 	}
 
+	/// This structure represents a polygon to draw.
+	pub struct Poly {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Poly }
+
+	impl Drop for Poly {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_gapi_wip_draw_Poly_delete(self.as_raw_mut_Poly()) };
+		}
+	}
+
+	unsafe impl Send for Poly {}
+
+	impl Poly {
+		/// Mosaic constructor
+		///
+		/// ## Parameters
+		/// * points_: Points to connect
+		/// * color_: The line color
+		/// * thick_: The thickness of line
+		/// * lt_: The Type of the line. See [line_types]
+		/// * shift_: The number of fractional bits in the point coordinate
+		///
+		/// ## C++ default parameters
+		/// * thick_: 1
+		/// * lt_: 8
+		/// * shift_: 0
+		#[inline]
+		pub fn new(points_: &core::Vector<core::Point>, color_: core::Scalar, thick_: i32, lt_: i32, shift_: i32) -> Result<crate::gapi::Poly> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_gapi_wip_draw_Poly_Poly_const_vectorLPointGR_const_ScalarR_int_int_int(points_.as_raw_VectorOfPoint(), &color_, thick_, lt_, shift_, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::Poly::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Mosaic constructor
+		///
+		/// ## Parameters
+		/// * points_: Points to connect
+		/// * color_: The line color
+		/// * thick_: The thickness of line
+		/// * lt_: The Type of the line. See [line_types]
+		/// * shift_: The number of fractional bits in the point coordinate
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * thick_: 1
+		/// * lt_: 8
+		/// * shift_: 0
+		#[inline]
+		pub fn new_def(points_: &core::Vector<core::Point>, color_: core::Scalar) -> Result<crate::gapi::Poly> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_gapi_wip_draw_Poly_Poly_const_vectorLPointGR_const_ScalarR(points_.as_raw_VectorOfPoint(), &color_, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::Poly::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn default() -> crate::gapi::Poly {
+			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_Poly() };
+			let ret = unsafe { crate::gapi::Poly::opencv_from_extern(ret) };
+			ret
+		}
+
+	}
+
 	/// Constant methods for [crate::gapi::Poly]
 	pub trait PolyTraitConst {
 		fn as_raw_Poly(&self) -> *const c_void;
@@ -11214,87 +11295,12 @@ pub mod gapi {
 
 	}
 
-	/// This structure represents a polygon to draw.
-	pub struct Poly {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Poly }
-
-	impl Drop for Poly {
+	impl Default for Poly {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_gapi_wip_draw_Poly_delete(self.as_raw_mut_Poly()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
-	}
-
-	unsafe impl Send for Poly {}
-
-	impl crate::gapi::PolyTraitConst for Poly {
-		#[inline] fn as_raw_Poly(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::gapi::PolyTrait for Poly {
-		#[inline] fn as_raw_mut_Poly(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Poly, crate::gapi::PolyTraitConst, as_raw_Poly, crate::gapi::PolyTrait, as_raw_mut_Poly }
-
-	impl Poly {
-		/// Mosaic constructor
-		///
-		/// ## Parameters
-		/// * points_: Points to connect
-		/// * color_: The line color
-		/// * thick_: The thickness of line
-		/// * lt_: The Type of the line. See [line_types]
-		/// * shift_: The number of fractional bits in the point coordinate
-		///
-		/// ## C++ default parameters
-		/// * thick_: 1
-		/// * lt_: 8
-		/// * shift_: 0
-		#[inline]
-		pub fn new(points_: &core::Vector<core::Point>, color_: core::Scalar, thick_: i32, lt_: i32, shift_: i32) -> Result<crate::gapi::Poly> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_gapi_wip_draw_Poly_Poly_const_vectorLPointGR_const_ScalarR_int_int_int(points_.as_raw_VectorOfPoint(), &color_, thick_, lt_, shift_, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::gapi::Poly::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Mosaic constructor
-		///
-		/// ## Parameters
-		/// * points_: Points to connect
-		/// * color_: The line color
-		/// * thick_: The thickness of line
-		/// * lt_: The Type of the line. See [line_types]
-		/// * shift_: The number of fractional bits in the point coordinate
-		///
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * thick_: 1
-		/// * lt_: 8
-		/// * shift_: 0
-		#[inline]
-		pub fn new_def(points_: &core::Vector<core::Point>, color_: core::Scalar) -> Result<crate::gapi::Poly> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_gapi_wip_draw_Poly_Poly_const_vectorLPointGR_const_ScalarR(points_.as_raw_VectorOfPoint(), &color_, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::gapi::Poly::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn default() -> crate::gapi::Poly {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Poly_Poly() };
-			let ret = unsafe { crate::gapi::Poly::opencv_from_extern(ret) };
-			ret
-		}
-
 	}
 
 	impl Clone for Poly {
@@ -11317,13 +11323,15 @@ pub mod gapi {
 		}
 	}
 
-	impl Default for Poly {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
+	impl crate::gapi::PolyTraitConst for Poly {
+		#[inline] fn as_raw_Poly(&self) -> *const c_void { self.as_raw() }
 	}
+
+	impl crate::gapi::PolyTrait for Poly {
+		#[inline] fn as_raw_mut_Poly(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Poly, crate::gapi::PolyTraitConst, as_raw_Poly, crate::gapi::PolyTrait, as_raw_mut_Poly }
 
 	/// This structure represents a rectangle to draw.
 	///
@@ -11407,6 +11415,89 @@ pub mod gapi {
 		fn default() -> Self {
 			Self::default()
 		}
+	}
+
+	/// * This structure represents a text string to draw.
+	/// *
+	/// * Parameters match cv::putText().
+	pub struct Text {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Text }
+
+	impl Drop for Text {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_gapi_wip_draw_Text_delete(self.as_raw_mut_Text()) };
+		}
+	}
+
+	unsafe impl Send for Text {}
+
+	impl Text {
+		/// Text constructor
+		///
+		/// ## Parameters
+		/// * text_: The text string to be drawn
+		/// * org_: The bottom-left corner of the text string in the image
+		/// * ff_: The font type, see [hershey_fonts]
+		/// * fs_: The font scale factor that is multiplied by the font-specific base size
+		/// * color_: The text color
+		/// * thick_: The thickness of the lines used to draw a text
+		/// * lt_: The line type. See [line_types]
+		/// * bottom_left_origin_: When true, the image data origin is at the bottom-left corner. Otherwise, it is at the top-left corner
+		///
+		/// ## C++ default parameters
+		/// * thick_: 1
+		/// * lt_: 8
+		/// * bottom_left_origin_: false
+		#[inline]
+		pub fn new(text_: &str, org_: core::Point, ff_: i32, fs_: f64, color_: core::Scalar, thick_: i32, lt_: i32, bottom_left_origin_: bool) -> Result<crate::gapi::Text> {
+			extern_container_arg!(text_);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_gapi_wip_draw_Text_Text_const_stringR_const_PointR_int_double_const_ScalarR_int_int_bool(text_.opencv_as_extern(), &org_, ff_, fs_, &color_, thick_, lt_, bottom_left_origin_, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::Text::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Text constructor
+		///
+		/// ## Parameters
+		/// * text_: The text string to be drawn
+		/// * org_: The bottom-left corner of the text string in the image
+		/// * ff_: The font type, see [hershey_fonts]
+		/// * fs_: The font scale factor that is multiplied by the font-specific base size
+		/// * color_: The text color
+		/// * thick_: The thickness of the lines used to draw a text
+		/// * lt_: The line type. See [line_types]
+		/// * bottom_left_origin_: When true, the image data origin is at the bottom-left corner. Otherwise, it is at the top-left corner
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * thick_: 1
+		/// * lt_: 8
+		/// * bottom_left_origin_: false
+		#[inline]
+		pub fn new_def(text_: &str, org_: core::Point, ff_: i32, fs_: f64, color_: core::Scalar) -> Result<crate::gapi::Text> {
+			extern_container_arg!(text_);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_gapi_wip_draw_Text_Text_const_stringR_const_PointR_int_double_const_ScalarR(text_.opencv_as_extern(), &org_, ff_, fs_, &color_, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::Text::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn default() -> crate::gapi::Text {
+			let ret = unsafe { sys::cv_gapi_wip_draw_Text_Text() };
+			let ret = unsafe { crate::gapi::Text::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::gapi::Text]
@@ -11539,97 +11630,12 @@ pub mod gapi {
 
 	}
 
-	/// * This structure represents a text string to draw.
-	/// *
-	/// * Parameters match cv::putText().
-	pub struct Text {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Text }
-
-	impl Drop for Text {
+	impl Default for Text {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_gapi_wip_draw_Text_delete(self.as_raw_mut_Text()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
-	}
-
-	unsafe impl Send for Text {}
-
-	impl crate::gapi::TextTraitConst for Text {
-		#[inline] fn as_raw_Text(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::gapi::TextTrait for Text {
-		#[inline] fn as_raw_mut_Text(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Text, crate::gapi::TextTraitConst, as_raw_Text, crate::gapi::TextTrait, as_raw_mut_Text }
-
-	impl Text {
-		/// Text constructor
-		///
-		/// ## Parameters
-		/// * text_: The text string to be drawn
-		/// * org_: The bottom-left corner of the text string in the image
-		/// * ff_: The font type, see [hershey_fonts]
-		/// * fs_: The font scale factor that is multiplied by the font-specific base size
-		/// * color_: The text color
-		/// * thick_: The thickness of the lines used to draw a text
-		/// * lt_: The line type. See [line_types]
-		/// * bottom_left_origin_: When true, the image data origin is at the bottom-left corner. Otherwise, it is at the top-left corner
-		///
-		/// ## C++ default parameters
-		/// * thick_: 1
-		/// * lt_: 8
-		/// * bottom_left_origin_: false
-		#[inline]
-		pub fn new(text_: &str, org_: core::Point, ff_: i32, fs_: f64, color_: core::Scalar, thick_: i32, lt_: i32, bottom_left_origin_: bool) -> Result<crate::gapi::Text> {
-			extern_container_arg!(text_);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_gapi_wip_draw_Text_Text_const_stringR_const_PointR_int_double_const_ScalarR_int_int_bool(text_.opencv_as_extern(), &org_, ff_, fs_, &color_, thick_, lt_, bottom_left_origin_, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::gapi::Text::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Text constructor
-		///
-		/// ## Parameters
-		/// * text_: The text string to be drawn
-		/// * org_: The bottom-left corner of the text string in the image
-		/// * ff_: The font type, see [hershey_fonts]
-		/// * fs_: The font scale factor that is multiplied by the font-specific base size
-		/// * color_: The text color
-		/// * thick_: The thickness of the lines used to draw a text
-		/// * lt_: The line type. See [line_types]
-		/// * bottom_left_origin_: When true, the image data origin is at the bottom-left corner. Otherwise, it is at the top-left corner
-		///
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * thick_: 1
-		/// * lt_: 8
-		/// * bottom_left_origin_: false
-		#[inline]
-		pub fn new_def(text_: &str, org_: core::Point, ff_: i32, fs_: f64, color_: core::Scalar) -> Result<crate::gapi::Text> {
-			extern_container_arg!(text_);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_gapi_wip_draw_Text_Text_const_stringR_const_PointR_int_double_const_ScalarR(text_.opencv_as_extern(), &org_, ff_, fs_, &color_, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::gapi::Text::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn default() -> crate::gapi::Text {
-			let ret = unsafe { sys::cv_gapi_wip_draw_Text_Text() };
-			let ret = unsafe { crate::gapi::Text::opencv_from_extern(ret) };
-			ret
-		}
-
 	}
 
 	impl Clone for Text {
@@ -11655,12 +11661,56 @@ pub mod gapi {
 		}
 	}
 
-	impl Default for Text {
+	impl crate::gapi::TextTraitConst for Text {
+		#[inline] fn as_raw_Text(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::gapi::TextTrait for Text {
+		#[inline] fn as_raw_mut_Text(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Text, crate::gapi::TextTraitConst, as_raw_Text, crate::gapi::TextTrait, as_raw_mut_Text }
+
+	/// Ask G-API to use threaded executor when cv::GComputation
+	/// is compiled via cv::GComputation::compile method.
+	///
+	/// Specifies a number of threads that should be used by executor.
+	pub struct use_threaded_executor {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { use_threaded_executor }
+
+	impl Drop for use_threaded_executor {
 		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
+		fn drop(&mut self) {
+			unsafe { sys::cv_use_threaded_executor_delete(self.as_raw_mut_use_threaded_executor()) };
 		}
+	}
+
+	unsafe impl Send for use_threaded_executor {}
+
+	impl use_threaded_executor {
+		#[inline]
+		pub fn default() -> Result<crate::gapi::use_threaded_executor> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_use_threaded_executor_use_threaded_executor(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::use_threaded_executor::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn new(nthreads: u32) -> Result<crate::gapi::use_threaded_executor> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_use_threaded_executor_use_threaded_executor_const_uint32_t(nthreads, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::gapi::use_threaded_executor::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::gapi::use_threaded_executor]
@@ -11687,24 +11737,14 @@ pub mod gapi {
 
 	}
 
-	/// Ask G-API to use threaded executor when cv::GComputation
-	/// is compiled via cv::GComputation::compile method.
-	///
-	/// Specifies a number of threads that should be used by executor.
-	pub struct use_threaded_executor {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { use_threaded_executor }
-
-	impl Drop for use_threaded_executor {
+	impl std::fmt::Debug for use_threaded_executor {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_use_threaded_executor_delete(self.as_raw_mut_use_threaded_executor()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("use_threaded_executor")
+				.field("num_threads", &crate::gapi::use_threaded_executorTraitConst::num_threads(self))
+				.finish()
 		}
 	}
-
-	unsafe impl Send for use_threaded_executor {}
 
 	impl crate::gapi::use_threaded_executorTraitConst for use_threaded_executor {
 		#[inline] fn as_raw_use_threaded_executor(&self) -> *const c_void { self.as_raw() }
@@ -11715,65 +11755,6 @@ pub mod gapi {
 	}
 
 	boxed_ref! { use_threaded_executor, crate::gapi::use_threaded_executorTraitConst, as_raw_use_threaded_executor, crate::gapi::use_threaded_executorTrait, as_raw_mut_use_threaded_executor }
-
-	impl use_threaded_executor {
-		#[inline]
-		pub fn default() -> Result<crate::gapi::use_threaded_executor> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_use_threaded_executor_use_threaded_executor(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::gapi::use_threaded_executor::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn new(nthreads: u32) -> Result<crate::gapi::use_threaded_executor> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_use_threaded_executor_use_threaded_executor_const_uint32_t(nthreads, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::gapi::use_threaded_executor::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	impl std::fmt::Debug for use_threaded_executor {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("use_threaded_executor")
-				.field("num_threads", &crate::gapi::use_threaded_executorTraitConst::num_threads(self))
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::gapi::any]
-	pub trait anyTraitConst {
-		fn as_raw_any(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::gapi::any]
-	pub trait anyTrait: crate::gapi::anyTraitConst {
-		fn as_raw_mut_any(&mut self) -> *mut c_void;
-
-		#[inline]
-		fn set(&mut self, mut unnamed: crate::gapi::any) {
-			let ret = unsafe { sys::cv_util_any_operatorST_anyRR(self.as_raw_mut_any(), unnamed.as_raw_mut_any()) };
-			ret
-		}
-
-		#[inline]
-		fn set_1(&mut self, src: &impl crate::gapi::anyTraitConst) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_util_any_operatorST_const_anyR(self.as_raw_mut_any(), src.as_raw_any(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
 
 	pub struct any {
 		ptr: *mut c_void,
@@ -11789,16 +11770,6 @@ pub mod gapi {
 	}
 
 	unsafe impl Send for any {}
-
-	impl crate::gapi::anyTraitConst for any {
-		#[inline] fn as_raw_any(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::gapi::anyTrait for any {
-		#[inline] fn as_raw_mut_any(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { any, crate::gapi::anyTraitConst, as_raw_any, crate::gapi::anyTrait, as_raw_mut_any }
 
 	impl any {
 		#[inline]
@@ -11837,12 +11808,31 @@ pub mod gapi {
 
 	}
 
-	impl std::fmt::Debug for any {
+	/// Constant methods for [crate::gapi::any]
+	pub trait anyTraitConst {
+		fn as_raw_any(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::gapi::any]
+	pub trait anyTrait: crate::gapi::anyTraitConst {
+		fn as_raw_mut_any(&mut self) -> *mut c_void;
+
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("any")
-				.finish()
+		fn set(&mut self, mut unnamed: crate::gapi::any) {
+			let ret = unsafe { sys::cv_util_any_operatorST_anyRR(self.as_raw_mut_any(), unnamed.as_raw_mut_any()) };
+			ret
 		}
+
+		#[inline]
+		fn set_1(&mut self, src: &impl crate::gapi::anyTraitConst) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_util_any_operatorST_const_anyR(self.as_raw_mut_any(), src.as_raw_any(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
 	}
 
 	impl Default for any {
@@ -11852,4 +11842,23 @@ pub mod gapi {
 			Self::default()
 		}
 	}
+
+	impl std::fmt::Debug for any {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("any")
+				.finish()
+		}
+	}
+
+	impl crate::gapi::anyTraitConst for any {
+		#[inline] fn as_raw_any(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::gapi::anyTrait for any {
+		#[inline] fn as_raw_mut_any(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { any, crate::gapi::anyTraitConst, as_raw_any, crate::gapi::anyTrait, as_raw_mut_any }
+
 }

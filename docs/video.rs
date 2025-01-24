@@ -712,6 +712,25 @@ pub mod video {
 		Ok(ret)
 	}
 
+	/// Base class for background/foreground segmentation. :
+	///
+	/// The class is only used to define the common interface for the whole family of background/foreground
+	/// segmentation algorithms.
+	pub struct BackgroundSubtractor {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { BackgroundSubtractor }
+
+	impl Drop for BackgroundSubtractor {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_BackgroundSubtractor_delete(self.as_raw_mut_BackgroundSubtractor()) };
+		}
+	}
+
+	unsafe impl Send for BackgroundSubtractor {}
+
 	/// Constant methods for [crate::video::BackgroundSubtractor]
 	pub trait BackgroundSubtractorTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_BackgroundSubtractor(&self) -> *const c_void;
@@ -789,24 +808,19 @@ pub mod video {
 
 	}
 
-	/// Base class for background/foreground segmentation. :
-	///
-	/// The class is only used to define the common interface for the whole family of background/foreground
-	/// segmentation algorithms.
-	pub struct BackgroundSubtractor {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { BackgroundSubtractor }
-
-	impl Drop for BackgroundSubtractor {
+	impl std::fmt::Debug for BackgroundSubtractor {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_BackgroundSubtractor_delete(self.as_raw_mut_BackgroundSubtractor()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BackgroundSubtractor")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for BackgroundSubtractor {}
+	boxed_cast_base! { BackgroundSubtractor, core::Algorithm, cv_BackgroundSubtractor_to_Algorithm }
+
+	boxed_cast_descendant! { BackgroundSubtractor, crate::video::BackgroundSubtractorKNN, cv_BackgroundSubtractor_to_BackgroundSubtractorKNN }
+
+	boxed_cast_descendant! { BackgroundSubtractor, crate::video::BackgroundSubtractorMOG2, cv_BackgroundSubtractor_to_BackgroundSubtractorMOG2 }
 
 	impl core::AlgorithmTraitConst for BackgroundSubtractor {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -828,22 +842,24 @@ pub mod video {
 
 	boxed_ref! { BackgroundSubtractor, crate::video::BackgroundSubtractorTraitConst, as_raw_BackgroundSubtractor, crate::video::BackgroundSubtractorTrait, as_raw_mut_BackgroundSubtractor }
 
-	impl BackgroundSubtractor {
+	/// K-nearest neighbours - based Background/Foreground Segmentation Algorithm.
+	///
+	/// The class implements the K-nearest neighbours background subtraction described in [Zivkovic2006](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
+	/// Very efficient if number of foreground pixels is low.
+	pub struct BackgroundSubtractorKNN {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { BackgroundSubtractor, crate::video::BackgroundSubtractorKNN, cv_BackgroundSubtractor_to_BackgroundSubtractorKNN }
+	opencv_type_boxed! { BackgroundSubtractorKNN }
 
-	boxed_cast_descendant! { BackgroundSubtractor, crate::video::BackgroundSubtractorMOG2, cv_BackgroundSubtractor_to_BackgroundSubtractorMOG2 }
-
-	boxed_cast_base! { BackgroundSubtractor, core::Algorithm, cv_BackgroundSubtractor_to_Algorithm }
-
-	impl std::fmt::Debug for BackgroundSubtractor {
+	impl Drop for BackgroundSubtractorKNN {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("BackgroundSubtractor")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_BackgroundSubtractorKNN_delete(self.as_raw_mut_BackgroundSubtractorKNN()) };
 		}
 	}
+
+	unsafe impl Send for BackgroundSubtractorKNN {}
 
 	/// Constant methods for [crate::video::BackgroundSubtractorKNN]
 	pub trait BackgroundSubtractorKNNTraitConst: crate::video::BackgroundSubtractorTraitConst {
@@ -1016,24 +1032,17 @@ pub mod video {
 
 	}
 
-	/// K-nearest neighbours - based Background/Foreground Segmentation Algorithm.
-	///
-	/// The class implements the K-nearest neighbours background subtraction described in [Zivkovic2006](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
-	/// Very efficient if number of foreground pixels is low.
-	pub struct BackgroundSubtractorKNN {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { BackgroundSubtractorKNN }
-
-	impl Drop for BackgroundSubtractorKNN {
+	impl std::fmt::Debug for BackgroundSubtractorKNN {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_BackgroundSubtractorKNN_delete(self.as_raw_mut_BackgroundSubtractorKNN()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BackgroundSubtractorKNN")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for BackgroundSubtractorKNN {}
+	boxed_cast_base! { BackgroundSubtractorKNN, core::Algorithm, cv_BackgroundSubtractorKNN_to_Algorithm }
+
+	boxed_cast_base! { BackgroundSubtractorKNN, crate::video::BackgroundSubtractor, cv_BackgroundSubtractorKNN_to_BackgroundSubtractor }
 
 	impl core::AlgorithmTraitConst for BackgroundSubtractorKNN {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -1065,20 +1074,24 @@ pub mod video {
 
 	boxed_ref! { BackgroundSubtractorKNN, crate::video::BackgroundSubtractorKNNTraitConst, as_raw_BackgroundSubtractorKNN, crate::video::BackgroundSubtractorKNNTrait, as_raw_mut_BackgroundSubtractorKNN }
 
-	impl BackgroundSubtractorKNN {
+	/// Gaussian Mixture-based Background/Foreground Segmentation Algorithm.
+	///
+	/// The class implements the Gaussian mixture model background subtraction described in [Zivkovic2004](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Zivkovic2004)
+	/// and [Zivkovic2006](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
+	pub struct BackgroundSubtractorMOG2 {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { BackgroundSubtractorKNN, core::Algorithm, cv_BackgroundSubtractorKNN_to_Algorithm }
+	opencv_type_boxed! { BackgroundSubtractorMOG2 }
 
-	boxed_cast_base! { BackgroundSubtractorKNN, crate::video::BackgroundSubtractor, cv_BackgroundSubtractorKNN_to_BackgroundSubtractor }
-
-	impl std::fmt::Debug for BackgroundSubtractorKNN {
+	impl Drop for BackgroundSubtractorMOG2 {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("BackgroundSubtractorKNN")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_BackgroundSubtractorMOG2_delete(self.as_raw_mut_BackgroundSubtractorMOG2()) };
 		}
 	}
+
+	unsafe impl Send for BackgroundSubtractorMOG2 {}
 
 	/// Constant methods for [crate::video::BackgroundSubtractorMOG2]
 	pub trait BackgroundSubtractorMOG2TraitConst: crate::video::BackgroundSubtractorTraitConst {
@@ -1405,24 +1418,17 @@ pub mod video {
 
 	}
 
-	/// Gaussian Mixture-based Background/Foreground Segmentation Algorithm.
-	///
-	/// The class implements the Gaussian mixture model background subtraction described in [Zivkovic2004](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Zivkovic2004)
-	/// and [Zivkovic2006](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
-	pub struct BackgroundSubtractorMOG2 {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { BackgroundSubtractorMOG2 }
-
-	impl Drop for BackgroundSubtractorMOG2 {
+	impl std::fmt::Debug for BackgroundSubtractorMOG2 {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_BackgroundSubtractorMOG2_delete(self.as_raw_mut_BackgroundSubtractorMOG2()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BackgroundSubtractorMOG2")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for BackgroundSubtractorMOG2 {}
+	boxed_cast_base! { BackgroundSubtractorMOG2, core::Algorithm, cv_BackgroundSubtractorMOG2_to_Algorithm }
+
+	boxed_cast_base! { BackgroundSubtractorMOG2, crate::video::BackgroundSubtractor, cv_BackgroundSubtractorMOG2_to_BackgroundSubtractor }
 
 	impl core::AlgorithmTraitConst for BackgroundSubtractorMOG2 {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -1454,19 +1460,68 @@ pub mod video {
 
 	boxed_ref! { BackgroundSubtractorMOG2, crate::video::BackgroundSubtractorMOG2TraitConst, as_raw_BackgroundSubtractorMOG2, crate::video::BackgroundSubtractorMOG2Trait, as_raw_mut_BackgroundSubtractorMOG2 }
 
-	impl BackgroundSubtractorMOG2 {
+	/// DIS optical flow algorithm.
+	///
+	/// This class implements the Dense Inverse Search (DIS) optical flow algorithm. More
+	/// details about the algorithm can be found at [Kroeger2016](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Kroeger2016) . Includes three presets with preselected
+	/// parameters to provide reasonable trade-off between speed and quality. However, even the slowest preset is
+	/// still relatively fast, use DeepFlow if you need better quality and don't care about speed.
+	///
+	/// This implementation includes several additional features compared to the algorithm described in the paper,
+	/// including spatial propagation of flow vectors ([getUseSpatialPropagation]), as well as an option to
+	/// utilize an initial flow approximation passed to [calc] (which is, essentially, temporal propagation,
+	/// if the previous frame's flow field is passed).
+	pub struct DISOpticalFlow {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { BackgroundSubtractorMOG2, core::Algorithm, cv_BackgroundSubtractorMOG2_to_Algorithm }
+	opencv_type_boxed! { DISOpticalFlow }
 
-	boxed_cast_base! { BackgroundSubtractorMOG2, crate::video::BackgroundSubtractor, cv_BackgroundSubtractorMOG2_to_BackgroundSubtractor }
-
-	impl std::fmt::Debug for BackgroundSubtractorMOG2 {
+	impl Drop for DISOpticalFlow {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("BackgroundSubtractorMOG2")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_DISOpticalFlow_delete(self.as_raw_mut_DISOpticalFlow()) };
 		}
+	}
+
+	unsafe impl Send for DISOpticalFlow {}
+
+	impl DISOpticalFlow {
+		/// Creates an instance of DISOpticalFlow
+		///
+		/// ## Parameters
+		/// * preset: one of PRESET_ULTRAFAST, PRESET_FAST and PRESET_MEDIUM
+		///
+		/// ## C++ default parameters
+		/// * preset: DISOpticalFlow::PRESET_FAST
+		#[inline]
+		pub fn create(preset: i32) -> Result<core::Ptr<crate::video::DISOpticalFlow>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_DISOpticalFlow_create_int(preset, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::video::DISOpticalFlow>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Creates an instance of DISOpticalFlow
+		///
+		/// ## Parameters
+		/// * preset: one of PRESET_ULTRAFAST, PRESET_FAST and PRESET_MEDIUM
+		///
+		/// ## Note
+		/// This alternative version of [DISOpticalFlow::create] function uses the following default values for its arguments:
+		/// * preset: DISOpticalFlow::PRESET_FAST
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::video::DISOpticalFlow>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_DISOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::video::DISOpticalFlow>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::video::DISOpticalFlow]
@@ -1768,31 +1823,17 @@ pub mod video {
 
 	}
 
-	/// DIS optical flow algorithm.
-	///
-	/// This class implements the Dense Inverse Search (DIS) optical flow algorithm. More
-	/// details about the algorithm can be found at [Kroeger2016](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Kroeger2016) . Includes three presets with preselected
-	/// parameters to provide reasonable trade-off between speed and quality. However, even the slowest preset is
-	/// still relatively fast, use DeepFlow if you need better quality and don't care about speed.
-	///
-	/// This implementation includes several additional features compared to the algorithm described in the paper,
-	/// including spatial propagation of flow vectors ([getUseSpatialPropagation]), as well as an option to
-	/// utilize an initial flow approximation passed to [calc] (which is, essentially, temporal propagation,
-	/// if the previous frame's flow field is passed).
-	pub struct DISOpticalFlow {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { DISOpticalFlow }
-
-	impl Drop for DISOpticalFlow {
+	impl std::fmt::Debug for DISOpticalFlow {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_DISOpticalFlow_delete(self.as_raw_mut_DISOpticalFlow()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DISOpticalFlow")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for DISOpticalFlow {}
+	boxed_cast_base! { DISOpticalFlow, core::Algorithm, cv_DISOpticalFlow_to_Algorithm }
+
+	boxed_cast_base! { DISOpticalFlow, crate::video::DenseOpticalFlow, cv_DISOpticalFlow_to_DenseOpticalFlow }
 
 	impl core::AlgorithmTraitConst for DISOpticalFlow {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -1824,55 +1865,21 @@ pub mod video {
 
 	boxed_ref! { DISOpticalFlow, crate::video::DISOpticalFlowTraitConst, as_raw_DISOpticalFlow, crate::video::DISOpticalFlowTrait, as_raw_mut_DISOpticalFlow }
 
-	impl DISOpticalFlow {
-		/// Creates an instance of DISOpticalFlow
-		///
-		/// ## Parameters
-		/// * preset: one of PRESET_ULTRAFAST, PRESET_FAST and PRESET_MEDIUM
-		///
-		/// ## C++ default parameters
-		/// * preset: DISOpticalFlow::PRESET_FAST
-		#[inline]
-		pub fn create(preset: i32) -> Result<core::Ptr<crate::video::DISOpticalFlow>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_DISOpticalFlow_create_int(preset, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::video::DISOpticalFlow>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Creates an instance of DISOpticalFlow
-		///
-		/// ## Parameters
-		/// * preset: one of PRESET_ULTRAFAST, PRESET_FAST and PRESET_MEDIUM
-		///
-		/// ## Note
-		/// This alternative version of [DISOpticalFlow::create] function uses the following default values for its arguments:
-		/// * preset: DISOpticalFlow::PRESET_FAST
-		#[inline]
-		pub fn create_def() -> Result<core::Ptr<crate::video::DISOpticalFlow>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_DISOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::video::DISOpticalFlow>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// Base class for dense optical flow algorithms
+	pub struct DenseOpticalFlow {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { DISOpticalFlow, core::Algorithm, cv_DISOpticalFlow_to_Algorithm }
+	opencv_type_boxed! { DenseOpticalFlow }
 
-	boxed_cast_base! { DISOpticalFlow, crate::video::DenseOpticalFlow, cv_DISOpticalFlow_to_DenseOpticalFlow }
-
-	impl std::fmt::Debug for DISOpticalFlow {
+	impl Drop for DenseOpticalFlow {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("DISOpticalFlow")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_DenseOpticalFlow_delete(self.as_raw_mut_DenseOpticalFlow()) };
 		}
 	}
+
+	unsafe impl Send for DenseOpticalFlow {}
 
 	/// Constant methods for [crate::video::DenseOpticalFlow]
 	pub trait DenseOpticalFlowTraitConst: core::AlgorithmTraitConst {
@@ -1914,21 +1921,21 @@ pub mod video {
 
 	}
 
-	/// Base class for dense optical flow algorithms
-	pub struct DenseOpticalFlow {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { DenseOpticalFlow }
-
-	impl Drop for DenseOpticalFlow {
+	impl std::fmt::Debug for DenseOpticalFlow {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_DenseOpticalFlow_delete(self.as_raw_mut_DenseOpticalFlow()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DenseOpticalFlow")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for DenseOpticalFlow {}
+	boxed_cast_base! { DenseOpticalFlow, core::Algorithm, cv_DenseOpticalFlow_to_Algorithm }
+
+	boxed_cast_descendant! { DenseOpticalFlow, crate::video::DISOpticalFlow, cv_DenseOpticalFlow_to_DISOpticalFlow }
+
+	boxed_cast_descendant! { DenseOpticalFlow, crate::video::FarnebackOpticalFlow, cv_DenseOpticalFlow_to_FarnebackOpticalFlow }
+
+	boxed_cast_descendant! { DenseOpticalFlow, crate::video::VariationalRefinement, cv_DenseOpticalFlow_to_VariationalRefinement }
 
 	impl core::AlgorithmTraitConst for DenseOpticalFlow {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -1950,23 +1957,62 @@ pub mod video {
 
 	boxed_ref! { DenseOpticalFlow, crate::video::DenseOpticalFlowTraitConst, as_raw_DenseOpticalFlow, crate::video::DenseOpticalFlowTrait, as_raw_mut_DenseOpticalFlow }
 
-	impl DenseOpticalFlow {
+	/// Class computing a dense optical flow using the Gunnar Farneback's algorithm.
+	pub struct FarnebackOpticalFlow {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { DenseOpticalFlow, crate::video::DISOpticalFlow, cv_DenseOpticalFlow_to_DISOpticalFlow }
+	opencv_type_boxed! { FarnebackOpticalFlow }
 
-	boxed_cast_descendant! { DenseOpticalFlow, crate::video::FarnebackOpticalFlow, cv_DenseOpticalFlow_to_FarnebackOpticalFlow }
-
-	boxed_cast_descendant! { DenseOpticalFlow, crate::video::VariationalRefinement, cv_DenseOpticalFlow_to_VariationalRefinement }
-
-	boxed_cast_base! { DenseOpticalFlow, core::Algorithm, cv_DenseOpticalFlow_to_Algorithm }
-
-	impl std::fmt::Debug for DenseOpticalFlow {
+	impl Drop for FarnebackOpticalFlow {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("DenseOpticalFlow")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_FarnebackOpticalFlow_delete(self.as_raw_mut_FarnebackOpticalFlow()) };
 		}
+	}
+
+	unsafe impl Send for FarnebackOpticalFlow {}
+
+	impl FarnebackOpticalFlow {
+		/// ## C++ default parameters
+		/// * num_levels: 5
+		/// * pyr_scale: 0.5
+		/// * fast_pyramids: false
+		/// * win_size: 13
+		/// * num_iters: 10
+		/// * poly_n: 5
+		/// * poly_sigma: 1.1
+		/// * flags: 0
+		#[inline]
+		pub fn create(num_levels: i32, pyr_scale: f64, fast_pyramids: bool, win_size: i32, num_iters: i32, poly_n: i32, poly_sigma: f64, flags: i32) -> Result<core::Ptr<crate::video::FarnebackOpticalFlow>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FarnebackOpticalFlow_create_int_double_bool_int_int_int_double_int(num_levels, pyr_scale, fast_pyramids, win_size, num_iters, poly_n, poly_sigma, flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::video::FarnebackOpticalFlow>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [FarnebackOpticalFlow::create] function uses the following default values for its arguments:
+		/// * num_levels: 5
+		/// * pyr_scale: 0.5
+		/// * fast_pyramids: false
+		/// * win_size: 13
+		/// * num_iters: 10
+		/// * poly_n: 5
+		/// * poly_sigma: 1.1
+		/// * flags: 0
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::video::FarnebackOpticalFlow>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FarnebackOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::video::FarnebackOpticalFlow>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::video::FarnebackOpticalFlow]
@@ -2125,21 +2171,17 @@ pub mod video {
 
 	}
 
-	/// Class computing a dense optical flow using the Gunnar Farneback's algorithm.
-	pub struct FarnebackOpticalFlow {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { FarnebackOpticalFlow }
-
-	impl Drop for FarnebackOpticalFlow {
+	impl std::fmt::Debug for FarnebackOpticalFlow {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_FarnebackOpticalFlow_delete(self.as_raw_mut_FarnebackOpticalFlow()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FarnebackOpticalFlow")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for FarnebackOpticalFlow {}
+	boxed_cast_base! { FarnebackOpticalFlow, core::Algorithm, cv_FarnebackOpticalFlow_to_Algorithm }
+
+	boxed_cast_base! { FarnebackOpticalFlow, crate::video::DenseOpticalFlow, cv_FarnebackOpticalFlow_to_DenseOpticalFlow }
 
 	impl core::AlgorithmTraitConst for FarnebackOpticalFlow {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -2171,58 +2213,81 @@ pub mod video {
 
 	boxed_ref! { FarnebackOpticalFlow, crate::video::FarnebackOpticalFlowTraitConst, as_raw_FarnebackOpticalFlow, crate::video::FarnebackOpticalFlowTrait, as_raw_mut_FarnebackOpticalFlow }
 
-	impl FarnebackOpticalFlow {
-		/// ## C++ default parameters
-		/// * num_levels: 5
-		/// * pyr_scale: 0.5
-		/// * fast_pyramids: false
-		/// * win_size: 13
-		/// * num_iters: 10
-		/// * poly_n: 5
-		/// * poly_sigma: 1.1
-		/// * flags: 0
-		#[inline]
-		pub fn create(num_levels: i32, pyr_scale: f64, fast_pyramids: bool, win_size: i32, num_iters: i32, poly_n: i32, poly_sigma: f64, flags: i32) -> Result<core::Ptr<crate::video::FarnebackOpticalFlow>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_FarnebackOpticalFlow_create_int_double_bool_int_int_int_double_int(num_levels, pyr_scale, fast_pyramids, win_size, num_iters, poly_n, poly_sigma, flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::video::FarnebackOpticalFlow>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [FarnebackOpticalFlow::create] function uses the following default values for its arguments:
-		/// * num_levels: 5
-		/// * pyr_scale: 0.5
-		/// * fast_pyramids: false
-		/// * win_size: 13
-		/// * num_iters: 10
-		/// * poly_n: 5
-		/// * poly_sigma: 1.1
-		/// * flags: 0
-		#[inline]
-		pub fn create_def() -> Result<core::Ptr<crate::video::FarnebackOpticalFlow>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_FarnebackOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::video::FarnebackOpticalFlow>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// Kalman filter class.
+	///
+	/// The class implements a standard Kalman filter <http://en.wikipedia.org/wiki/Kalman_filter>,
+	/// [Welch95](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Welch95) . However, you can modify transitionMatrix, controlMatrix, and measurementMatrix to get
+	/// an extended Kalman filter functionality.
+	///
+	/// Note: In C API when CvKalman\* kalmanFilter structure is not needed anymore, it should be released
+	/// with cvReleaseKalman(&kalmanFilter)
+	pub struct KalmanFilter {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { FarnebackOpticalFlow, core::Algorithm, cv_FarnebackOpticalFlow_to_Algorithm }
+	opencv_type_boxed! { KalmanFilter }
 
-	boxed_cast_base! { FarnebackOpticalFlow, crate::video::DenseOpticalFlow, cv_FarnebackOpticalFlow_to_DenseOpticalFlow }
-
-	impl std::fmt::Debug for FarnebackOpticalFlow {
+	impl Drop for KalmanFilter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("FarnebackOpticalFlow")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_KalmanFilter_delete(self.as_raw_mut_KalmanFilter()) };
 		}
+	}
+
+	unsafe impl Send for KalmanFilter {}
+
+	impl KalmanFilter {
+		#[inline]
+		pub fn default() -> Result<crate::video::KalmanFilter> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_KalmanFilter_KalmanFilter(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::video::KalmanFilter::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
+		/// ## Parameters
+		/// * dynamParams: Dimensionality of the state.
+		/// * measureParams: Dimensionality of the measurement.
+		/// * controlParams: Dimensionality of the control vector.
+		/// * type: Type of the created matrices that should be CV_32F or CV_64F.
+		///
+		/// ## C++ default parameters
+		/// * control_params: 0
+		/// * typ: CV_32F
+		#[inline]
+		pub fn new(dynam_params: i32, measure_params: i32, control_params: i32, typ: i32) -> Result<crate::video::KalmanFilter> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_KalmanFilter_KalmanFilter_int_int_int_int(dynam_params, measure_params, control_params, typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::video::KalmanFilter::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// @overload
+		/// ## Parameters
+		/// * dynamParams: Dimensionality of the state.
+		/// * measureParams: Dimensionality of the measurement.
+		/// * controlParams: Dimensionality of the control vector.
+		/// * type: Type of the created matrices that should be CV_32F or CV_64F.
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * control_params: 0
+		/// * typ: CV_32F
+		#[inline]
+		pub fn new_def(dynam_params: i32, measure_params: i32) -> Result<crate::video::KalmanFilter> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_KalmanFilter_KalmanFilter_int_int(dynam_params, measure_params, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::video::KalmanFilter::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::video::KalmanFilter]
@@ -2542,93 +2607,6 @@ pub mod video {
 
 	}
 
-	/// Kalman filter class.
-	///
-	/// The class implements a standard Kalman filter <http://en.wikipedia.org/wiki/Kalman_filter>,
-	/// [Welch95](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Welch95) . However, you can modify transitionMatrix, controlMatrix, and measurementMatrix to get
-	/// an extended Kalman filter functionality.
-	///
-	/// Note: In C API when CvKalman\* kalmanFilter structure is not needed anymore, it should be released
-	/// with cvReleaseKalman(&kalmanFilter)
-	pub struct KalmanFilter {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { KalmanFilter }
-
-	impl Drop for KalmanFilter {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_KalmanFilter_delete(self.as_raw_mut_KalmanFilter()) };
-		}
-	}
-
-	unsafe impl Send for KalmanFilter {}
-
-	impl crate::video::KalmanFilterTraitConst for KalmanFilter {
-		#[inline] fn as_raw_KalmanFilter(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::video::KalmanFilterTrait for KalmanFilter {
-		#[inline] fn as_raw_mut_KalmanFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { KalmanFilter, crate::video::KalmanFilterTraitConst, as_raw_KalmanFilter, crate::video::KalmanFilterTrait, as_raw_mut_KalmanFilter }
-
-	impl KalmanFilter {
-		#[inline]
-		pub fn default() -> Result<crate::video::KalmanFilter> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_KalmanFilter_KalmanFilter(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::video::KalmanFilter::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// This is an overloaded member function, provided for convenience. It differs from the above function only in what argument(s) it accepts.
-		/// ## Parameters
-		/// * dynamParams: Dimensionality of the state.
-		/// * measureParams: Dimensionality of the measurement.
-		/// * controlParams: Dimensionality of the control vector.
-		/// * type: Type of the created matrices that should be CV_32F or CV_64F.
-		///
-		/// ## C++ default parameters
-		/// * control_params: 0
-		/// * typ: CV_32F
-		#[inline]
-		pub fn new(dynam_params: i32, measure_params: i32, control_params: i32, typ: i32) -> Result<crate::video::KalmanFilter> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_KalmanFilter_KalmanFilter_int_int_int_int(dynam_params, measure_params, control_params, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::video::KalmanFilter::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// @overload
-		/// ## Parameters
-		/// * dynamParams: Dimensionality of the state.
-		/// * measureParams: Dimensionality of the measurement.
-		/// * controlParams: Dimensionality of the control vector.
-		/// * type: Type of the created matrices that should be CV_32F or CV_64F.
-		///
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * control_params: 0
-		/// * typ: CV_32F
-		#[inline]
-		pub fn new_def(dynam_params: i32, measure_params: i32) -> Result<crate::video::KalmanFilter> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_KalmanFilter_KalmanFilter_int_int(dynam_params, measure_params, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::video::KalmanFilter::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
 	impl std::fmt::Debug for KalmanFilter {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -2651,6 +2629,32 @@ pub mod video {
 				.finish()
 		}
 	}
+
+	impl crate::video::KalmanFilterTraitConst for KalmanFilter {
+		#[inline] fn as_raw_KalmanFilter(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::video::KalmanFilterTrait for KalmanFilter {
+		#[inline] fn as_raw_mut_KalmanFilter(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { KalmanFilter, crate::video::KalmanFilterTraitConst, as_raw_KalmanFilter, crate::video::KalmanFilterTrait, as_raw_mut_KalmanFilter }
+
+	/// Base interface for sparse optical flow algorithms.
+	pub struct SparseOpticalFlow {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { SparseOpticalFlow }
+
+	impl Drop for SparseOpticalFlow {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_SparseOpticalFlow_delete(self.as_raw_mut_SparseOpticalFlow()) };
+		}
+	}
+
+	unsafe impl Send for SparseOpticalFlow {}
 
 	/// Constant methods for [crate::video::SparseOpticalFlow]
 	pub trait SparseOpticalFlowTraitConst: core::AlgorithmTraitConst {
@@ -2720,21 +2724,17 @@ pub mod video {
 
 	}
 
-	/// Base interface for sparse optical flow algorithms.
-	pub struct SparseOpticalFlow {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { SparseOpticalFlow }
-
-	impl Drop for SparseOpticalFlow {
+	impl std::fmt::Debug for SparseOpticalFlow {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_SparseOpticalFlow_delete(self.as_raw_mut_SparseOpticalFlow()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SparseOpticalFlow")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for SparseOpticalFlow {}
+	boxed_cast_base! { SparseOpticalFlow, core::Algorithm, cv_SparseOpticalFlow_to_Algorithm }
+
+	boxed_cast_descendant! { SparseOpticalFlow, crate::video::SparsePyrLKOpticalFlow, cv_SparseOpticalFlow_to_SparsePyrLKOpticalFlow }
 
 	impl core::AlgorithmTraitConst for SparseOpticalFlow {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -2756,19 +2756,61 @@ pub mod video {
 
 	boxed_ref! { SparseOpticalFlow, crate::video::SparseOpticalFlowTraitConst, as_raw_SparseOpticalFlow, crate::video::SparseOpticalFlowTrait, as_raw_mut_SparseOpticalFlow }
 
-	impl SparseOpticalFlow {
+	/// Class used for calculating a sparse optical flow.
+	///
+	/// The class can calculate an optical flow for a sparse feature set using the
+	/// iterative Lucas-Kanade method with pyramids.
+	/// ## See also
+	/// calcOpticalFlowPyrLK
+	pub struct SparsePyrLKOpticalFlow {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { SparseOpticalFlow, crate::video::SparsePyrLKOpticalFlow, cv_SparseOpticalFlow_to_SparsePyrLKOpticalFlow }
+	opencv_type_boxed! { SparsePyrLKOpticalFlow }
 
-	boxed_cast_base! { SparseOpticalFlow, core::Algorithm, cv_SparseOpticalFlow_to_Algorithm }
-
-	impl std::fmt::Debug for SparseOpticalFlow {
+	impl Drop for SparsePyrLKOpticalFlow {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("SparseOpticalFlow")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_SparsePyrLKOpticalFlow_delete(self.as_raw_mut_SparsePyrLKOpticalFlow()) };
 		}
+	}
+
+	unsafe impl Send for SparsePyrLKOpticalFlow {}
+
+	impl SparsePyrLKOpticalFlow {
+		/// ## C++ default parameters
+		/// * win_size: Size(21,21)
+		/// * max_level: 3
+		/// * crit: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,0.01)
+		/// * flags: 0
+		/// * min_eig_threshold: 1e-4
+		#[inline]
+		pub fn create(win_size: core::Size, max_level: i32, crit: core::TermCriteria, flags: i32, min_eig_threshold: f64) -> Result<core::Ptr<crate::video::SparsePyrLKOpticalFlow>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SparsePyrLKOpticalFlow_create_Size_int_TermCriteria_int_double(&win_size, max_level, &crit, flags, min_eig_threshold, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::video::SparsePyrLKOpticalFlow>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [SparsePyrLKOpticalFlow::create] function uses the following default values for its arguments:
+		/// * win_size: Size(21,21)
+		/// * max_level: 3
+		/// * crit: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,0.01)
+		/// * flags: 0
+		/// * min_eig_threshold: 1e-4
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::video::SparsePyrLKOpticalFlow>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SparsePyrLKOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::video::SparsePyrLKOpticalFlow>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::video::SparsePyrLKOpticalFlow]
@@ -2873,26 +2915,17 @@ pub mod video {
 
 	}
 
-	/// Class used for calculating a sparse optical flow.
-	///
-	/// The class can calculate an optical flow for a sparse feature set using the
-	/// iterative Lucas-Kanade method with pyramids.
-	/// ## See also
-	/// calcOpticalFlowPyrLK
-	pub struct SparsePyrLKOpticalFlow {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { SparsePyrLKOpticalFlow }
-
-	impl Drop for SparsePyrLKOpticalFlow {
+	impl std::fmt::Debug for SparsePyrLKOpticalFlow {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_SparsePyrLKOpticalFlow_delete(self.as_raw_mut_SparsePyrLKOpticalFlow()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SparsePyrLKOpticalFlow")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for SparsePyrLKOpticalFlow {}
+	boxed_cast_base! { SparsePyrLKOpticalFlow, core::Algorithm, cv_SparsePyrLKOpticalFlow_to_Algorithm }
+
+	boxed_cast_base! { SparsePyrLKOpticalFlow, crate::video::SparseOpticalFlow, cv_SparsePyrLKOpticalFlow_to_SparseOpticalFlow }
 
 	impl core::AlgorithmTraitConst for SparsePyrLKOpticalFlow {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -2924,53 +2957,21 @@ pub mod video {
 
 	boxed_ref! { SparsePyrLKOpticalFlow, crate::video::SparsePyrLKOpticalFlowTraitConst, as_raw_SparsePyrLKOpticalFlow, crate::video::SparsePyrLKOpticalFlowTrait, as_raw_mut_SparsePyrLKOpticalFlow }
 
-	impl SparsePyrLKOpticalFlow {
-		/// ## C++ default parameters
-		/// * win_size: Size(21,21)
-		/// * max_level: 3
-		/// * crit: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,0.01)
-		/// * flags: 0
-		/// * min_eig_threshold: 1e-4
-		#[inline]
-		pub fn create(win_size: core::Size, max_level: i32, crit: core::TermCriteria, flags: i32, min_eig_threshold: f64) -> Result<core::Ptr<crate::video::SparsePyrLKOpticalFlow>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SparsePyrLKOpticalFlow_create_Size_int_TermCriteria_int_double(&win_size, max_level, &crit, flags, min_eig_threshold, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::video::SparsePyrLKOpticalFlow>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [SparsePyrLKOpticalFlow::create] function uses the following default values for its arguments:
-		/// * win_size: Size(21,21)
-		/// * max_level: 3
-		/// * crit: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,0.01)
-		/// * flags: 0
-		/// * min_eig_threshold: 1e-4
-		#[inline]
-		pub fn create_def() -> Result<core::Ptr<crate::video::SparsePyrLKOpticalFlow>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SparsePyrLKOpticalFlow_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::video::SparsePyrLKOpticalFlow>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// Base abstract class for the long-term tracker
+	pub struct Tracker {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { SparsePyrLKOpticalFlow, core::Algorithm, cv_SparsePyrLKOpticalFlow_to_Algorithm }
+	opencv_type_boxed! { Tracker }
 
-	boxed_cast_base! { SparsePyrLKOpticalFlow, crate::video::SparseOpticalFlow, cv_SparsePyrLKOpticalFlow_to_SparseOpticalFlow }
-
-	impl std::fmt::Debug for SparsePyrLKOpticalFlow {
+	impl Drop for Tracker {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("SparsePyrLKOpticalFlow")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_Tracker_delete(self.as_raw_mut_Tracker()) };
 		}
 	}
+
+	unsafe impl Send for Tracker {}
 
 	/// Constant methods for [crate::video::Tracker]
 	pub trait TrackerTraitConst {
@@ -3018,33 +3019,12 @@ pub mod video {
 
 	}
 
-	/// Base abstract class for the long-term tracker
-	pub struct Tracker {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Tracker }
-
-	impl Drop for Tracker {
+	impl std::fmt::Debug for Tracker {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_Tracker_delete(self.as_raw_mut_Tracker()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Tracker")
+				.finish()
 		}
-	}
-
-	unsafe impl Send for Tracker {}
-
-	impl crate::video::TrackerTraitConst for Tracker {
-		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::video::TrackerTrait for Tracker {
-		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Tracker, crate::video::TrackerTraitConst, as_raw_Tracker, crate::video::TrackerTrait, as_raw_mut_Tracker }
-
-	impl Tracker {
 	}
 
 	boxed_cast_descendant! { Tracker, crate::video::TrackerDaSiamRPN, cv_Tracker_to_TrackerDaSiamRPN }
@@ -3057,35 +3037,15 @@ pub mod video {
 
 	boxed_cast_descendant! { Tracker, crate::video::TrackerVit, cv_Tracker_to_TrackerVit }
 
-	impl std::fmt::Debug for Tracker {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Tracker")
-				.finish()
-		}
+	impl crate::video::TrackerTraitConst for Tracker {
+		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Constant methods for [crate::video::TrackerDaSiamRPN]
-	pub trait TrackerDaSiamRPNTraitConst: crate::video::TrackerTraitConst {
-		fn as_raw_TrackerDaSiamRPN(&self) -> *const c_void;
-
+	impl crate::video::TrackerTrait for Tracker {
+		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 
-	/// Mutable methods for [crate::video::TrackerDaSiamRPN]
-	pub trait TrackerDaSiamRPNTrait: crate::video::TrackerDaSiamRPNTraitConst + crate::video::TrackerTrait {
-		fn as_raw_mut_TrackerDaSiamRPN(&mut self) -> *mut c_void;
-
-		/// Return tracking score
-		#[inline]
-		fn get_tracking_score(&mut self) -> Result<f32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_TrackerDaSiamRPN_getTrackingScore(self.as_raw_mut_TrackerDaSiamRPN(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
+	boxed_ref! { Tracker, crate::video::TrackerTraitConst, as_raw_Tracker, crate::video::TrackerTrait, as_raw_mut_Tracker }
 
 	pub struct TrackerDaSiamRPN {
 		ptr: *mut c_void,
@@ -3101,26 +3061,6 @@ pub mod video {
 	}
 
 	unsafe impl Send for TrackerDaSiamRPN {}
-
-	impl crate::video::TrackerTraitConst for TrackerDaSiamRPN {
-		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::video::TrackerTrait for TrackerDaSiamRPN {
-		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { TrackerDaSiamRPN, crate::video::TrackerTraitConst, as_raw_Tracker, crate::video::TrackerTrait, as_raw_mut_Tracker }
-
-	impl crate::video::TrackerDaSiamRPNTraitConst for TrackerDaSiamRPN {
-		#[inline] fn as_raw_TrackerDaSiamRPN(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::video::TrackerDaSiamRPNTrait for TrackerDaSiamRPN {
-		#[inline] fn as_raw_mut_TrackerDaSiamRPN(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { TrackerDaSiamRPN, crate::video::TrackerDaSiamRPNTraitConst, as_raw_TrackerDaSiamRPN, crate::video::TrackerDaSiamRPNTrait, as_raw_mut_TrackerDaSiamRPN }
 
 	impl TrackerDaSiamRPN {
 		/// Constructor
@@ -3158,7 +3098,27 @@ pub mod video {
 
 	}
 
-	boxed_cast_base! { TrackerDaSiamRPN, crate::video::Tracker, cv_TrackerDaSiamRPN_to_Tracker }
+	/// Constant methods for [crate::video::TrackerDaSiamRPN]
+	pub trait TrackerDaSiamRPNTraitConst: crate::video::TrackerTraitConst {
+		fn as_raw_TrackerDaSiamRPN(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::video::TrackerDaSiamRPN]
+	pub trait TrackerDaSiamRPNTrait: crate::video::TrackerDaSiamRPNTraitConst + crate::video::TrackerTrait {
+		fn as_raw_mut_TrackerDaSiamRPN(&mut self) -> *mut c_void;
+
+		/// Return tracking score
+		#[inline]
+		fn get_tracking_score(&mut self) -> Result<f32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_TrackerDaSiamRPN_getTrackingScore(self.as_raw_mut_TrackerDaSiamRPN(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
 
 	impl std::fmt::Debug for TrackerDaSiamRPN {
 		#[inline]
@@ -3166,6 +3126,56 @@ pub mod video {
 			f.debug_struct("TrackerDaSiamRPN")
 				.finish()
 		}
+	}
+
+	boxed_cast_base! { TrackerDaSiamRPN, crate::video::Tracker, cv_TrackerDaSiamRPN_to_Tracker }
+
+	impl crate::video::TrackerTraitConst for TrackerDaSiamRPN {
+		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::video::TrackerTrait for TrackerDaSiamRPN {
+		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { TrackerDaSiamRPN, crate::video::TrackerTraitConst, as_raw_Tracker, crate::video::TrackerTrait, as_raw_mut_Tracker }
+
+	impl crate::video::TrackerDaSiamRPNTraitConst for TrackerDaSiamRPN {
+		#[inline] fn as_raw_TrackerDaSiamRPN(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::video::TrackerDaSiamRPNTrait for TrackerDaSiamRPN {
+		#[inline] fn as_raw_mut_TrackerDaSiamRPN(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { TrackerDaSiamRPN, crate::video::TrackerDaSiamRPNTraitConst, as_raw_TrackerDaSiamRPN, crate::video::TrackerDaSiamRPNTrait, as_raw_mut_TrackerDaSiamRPN }
+
+	pub struct TrackerDaSiamRPN_Params {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { TrackerDaSiamRPN_Params }
+
+	impl Drop for TrackerDaSiamRPN_Params {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_TrackerDaSiamRPN_Params_delete(self.as_raw_mut_TrackerDaSiamRPN_Params()) };
+		}
+	}
+
+	unsafe impl Send for TrackerDaSiamRPN_Params {}
+
+	impl TrackerDaSiamRPN_Params {
+		#[inline]
+		pub fn default() -> Result<crate::video::TrackerDaSiamRPN_Params> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_TrackerDaSiamRPN_Params_Params(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::video::TrackerDaSiamRPN_Params::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::video::TrackerDaSiamRPN_Params]
@@ -3246,44 +3256,6 @@ pub mod video {
 
 	}
 
-	pub struct TrackerDaSiamRPN_Params {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { TrackerDaSiamRPN_Params }
-
-	impl Drop for TrackerDaSiamRPN_Params {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_TrackerDaSiamRPN_Params_delete(self.as_raw_mut_TrackerDaSiamRPN_Params()) };
-		}
-	}
-
-	unsafe impl Send for TrackerDaSiamRPN_Params {}
-
-	impl crate::video::TrackerDaSiamRPN_ParamsTraitConst for TrackerDaSiamRPN_Params {
-		#[inline] fn as_raw_TrackerDaSiamRPN_Params(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::video::TrackerDaSiamRPN_ParamsTrait for TrackerDaSiamRPN_Params {
-		#[inline] fn as_raw_mut_TrackerDaSiamRPN_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { TrackerDaSiamRPN_Params, crate::video::TrackerDaSiamRPN_ParamsTraitConst, as_raw_TrackerDaSiamRPN_Params, crate::video::TrackerDaSiamRPN_ParamsTrait, as_raw_mut_TrackerDaSiamRPN_Params }
-
-	impl TrackerDaSiamRPN_Params {
-		#[inline]
-		pub fn default() -> Result<crate::video::TrackerDaSiamRPN_Params> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_TrackerDaSiamRPN_Params_Params(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::video::TrackerDaSiamRPN_Params::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
 	impl Clone for TrackerDaSiamRPN_Params {
 		#[inline]
 		fn clone(&self) -> Self {
@@ -3304,17 +3276,15 @@ pub mod video {
 		}
 	}
 
-	/// Constant methods for [crate::video::TrackerGOTURN]
-	pub trait TrackerGOTURNTraitConst: crate::video::TrackerTraitConst {
-		fn as_raw_TrackerGOTURN(&self) -> *const c_void;
-
+	impl crate::video::TrackerDaSiamRPN_ParamsTraitConst for TrackerDaSiamRPN_Params {
+		#[inline] fn as_raw_TrackerDaSiamRPN_Params(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [crate::video::TrackerGOTURN]
-	pub trait TrackerGOTURNTrait: crate::video::TrackerGOTURNTraitConst + crate::video::TrackerTrait {
-		fn as_raw_mut_TrackerGOTURN(&mut self) -> *mut c_void;
-
+	impl crate::video::TrackerDaSiamRPN_ParamsTrait for TrackerDaSiamRPN_Params {
+		#[inline] fn as_raw_mut_TrackerDaSiamRPN_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { TrackerDaSiamRPN_Params, crate::video::TrackerDaSiamRPN_ParamsTraitConst, as_raw_TrackerDaSiamRPN_Params, crate::video::TrackerDaSiamRPN_ParamsTrait, as_raw_mut_TrackerDaSiamRPN_Params }
 
 	/// the GOTURN (Generic Object Tracking Using Regression Networks) tracker
 	///
@@ -3344,26 +3314,6 @@ pub mod video {
 	}
 
 	unsafe impl Send for TrackerGOTURN {}
-
-	impl crate::video::TrackerTraitConst for TrackerGOTURN {
-		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::video::TrackerTrait for TrackerGOTURN {
-		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { TrackerGOTURN, crate::video::TrackerTraitConst, as_raw_Tracker, crate::video::TrackerTrait, as_raw_mut_Tracker }
-
-	impl crate::video::TrackerGOTURNTraitConst for TrackerGOTURN {
-		#[inline] fn as_raw_TrackerGOTURN(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::video::TrackerGOTURNTrait for TrackerGOTURN {
-		#[inline] fn as_raw_mut_TrackerGOTURN(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { TrackerGOTURN, crate::video::TrackerGOTURNTraitConst, as_raw_TrackerGOTURN, crate::video::TrackerGOTURNTrait, as_raw_mut_TrackerGOTURN }
 
 	impl TrackerGOTURN {
 		/// Constructor
@@ -3401,7 +3351,17 @@ pub mod video {
 
 	}
 
-	boxed_cast_base! { TrackerGOTURN, crate::video::Tracker, cv_TrackerGOTURN_to_Tracker }
+	/// Constant methods for [crate::video::TrackerGOTURN]
+	pub trait TrackerGOTURNTraitConst: crate::video::TrackerTraitConst {
+		fn as_raw_TrackerGOTURN(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::video::TrackerGOTURN]
+	pub trait TrackerGOTURNTrait: crate::video::TrackerGOTURNTraitConst + crate::video::TrackerTrait {
+		fn as_raw_mut_TrackerGOTURN(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for TrackerGOTURN {
 		#[inline]
@@ -3409,6 +3369,56 @@ pub mod video {
 			f.debug_struct("TrackerGOTURN")
 				.finish()
 		}
+	}
+
+	boxed_cast_base! { TrackerGOTURN, crate::video::Tracker, cv_TrackerGOTURN_to_Tracker }
+
+	impl crate::video::TrackerTraitConst for TrackerGOTURN {
+		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::video::TrackerTrait for TrackerGOTURN {
+		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { TrackerGOTURN, crate::video::TrackerTraitConst, as_raw_Tracker, crate::video::TrackerTrait, as_raw_mut_Tracker }
+
+	impl crate::video::TrackerGOTURNTraitConst for TrackerGOTURN {
+		#[inline] fn as_raw_TrackerGOTURN(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::video::TrackerGOTURNTrait for TrackerGOTURN {
+		#[inline] fn as_raw_mut_TrackerGOTURN(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { TrackerGOTURN, crate::video::TrackerGOTURNTraitConst, as_raw_TrackerGOTURN, crate::video::TrackerGOTURNTrait, as_raw_mut_TrackerGOTURN }
+
+	pub struct TrackerGOTURN_Params {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { TrackerGOTURN_Params }
+
+	impl Drop for TrackerGOTURN_Params {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_TrackerGOTURN_Params_delete(self.as_raw_mut_TrackerGOTURN_Params()) };
+		}
+	}
+
+	unsafe impl Send for TrackerGOTURN_Params {}
+
+	impl TrackerGOTURN_Params {
+		#[inline]
+		pub fn default() -> Result<crate::video::TrackerGOTURN_Params> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_TrackerGOTURN_Params_Params(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::video::TrackerGOTURN_Params::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::video::TrackerGOTURN_Params]
@@ -3451,44 +3461,6 @@ pub mod video {
 
 	}
 
-	pub struct TrackerGOTURN_Params {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { TrackerGOTURN_Params }
-
-	impl Drop for TrackerGOTURN_Params {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_TrackerGOTURN_Params_delete(self.as_raw_mut_TrackerGOTURN_Params()) };
-		}
-	}
-
-	unsafe impl Send for TrackerGOTURN_Params {}
-
-	impl crate::video::TrackerGOTURN_ParamsTraitConst for TrackerGOTURN_Params {
-		#[inline] fn as_raw_TrackerGOTURN_Params(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::video::TrackerGOTURN_ParamsTrait for TrackerGOTURN_Params {
-		#[inline] fn as_raw_mut_TrackerGOTURN_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { TrackerGOTURN_Params, crate::video::TrackerGOTURN_ParamsTraitConst, as_raw_TrackerGOTURN_Params, crate::video::TrackerGOTURN_ParamsTrait, as_raw_mut_TrackerGOTURN_Params }
-
-	impl TrackerGOTURN_Params {
-		#[inline]
-		pub fn default() -> Result<crate::video::TrackerGOTURN_Params> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_TrackerGOTURN_Params_Params(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::video::TrackerGOTURN_Params::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
 	impl Clone for TrackerGOTURN_Params {
 		#[inline]
 		fn clone(&self) -> Self {
@@ -3506,17 +3478,15 @@ pub mod video {
 		}
 	}
 
-	/// Constant methods for [crate::video::TrackerMIL]
-	pub trait TrackerMILTraitConst: crate::video::TrackerTraitConst {
-		fn as_raw_TrackerMIL(&self) -> *const c_void;
-
+	impl crate::video::TrackerGOTURN_ParamsTraitConst for TrackerGOTURN_Params {
+		#[inline] fn as_raw_TrackerGOTURN_Params(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [crate::video::TrackerMIL]
-	pub trait TrackerMILTrait: crate::video::TrackerMILTraitConst + crate::video::TrackerTrait {
-		fn as_raw_mut_TrackerMIL(&mut self) -> *mut c_void;
-
+	impl crate::video::TrackerGOTURN_ParamsTrait for TrackerGOTURN_Params {
+		#[inline] fn as_raw_mut_TrackerGOTURN_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { TrackerGOTURN_Params, crate::video::TrackerGOTURN_ParamsTraitConst, as_raw_TrackerGOTURN_Params, crate::video::TrackerGOTURN_ParamsTrait, as_raw_mut_TrackerGOTURN_Params }
 
 	/// The MIL algorithm trains a classifier in an online manner to separate the object from the
 	/// background.
@@ -3539,26 +3509,6 @@ pub mod video {
 	}
 
 	unsafe impl Send for TrackerMIL {}
-
-	impl crate::video::TrackerTraitConst for TrackerMIL {
-		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::video::TrackerTrait for TrackerMIL {
-		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { TrackerMIL, crate::video::TrackerTraitConst, as_raw_Tracker, crate::video::TrackerTrait, as_raw_mut_Tracker }
-
-	impl crate::video::TrackerMILTraitConst for TrackerMIL {
-		#[inline] fn as_raw_TrackerMIL(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::video::TrackerMILTrait for TrackerMIL {
-		#[inline] fn as_raw_mut_TrackerMIL(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { TrackerMIL, crate::video::TrackerMILTraitConst, as_raw_TrackerMIL, crate::video::TrackerMILTrait, as_raw_mut_TrackerMIL }
 
 	impl TrackerMIL {
 		/// Create MIL tracker instance
@@ -3596,7 +3546,17 @@ pub mod video {
 
 	}
 
-	boxed_cast_base! { TrackerMIL, crate::video::Tracker, cv_TrackerMIL_to_Tracker }
+	/// Constant methods for [crate::video::TrackerMIL]
+	pub trait TrackerMILTraitConst: crate::video::TrackerTraitConst {
+		fn as_raw_TrackerMIL(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::video::TrackerMIL]
+	pub trait TrackerMILTrait: crate::video::TrackerMILTraitConst + crate::video::TrackerTrait {
+		fn as_raw_mut_TrackerMIL(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for TrackerMIL {
 		#[inline]
@@ -3605,6 +3565,28 @@ pub mod video {
 				.finish()
 		}
 	}
+
+	boxed_cast_base! { TrackerMIL, crate::video::Tracker, cv_TrackerMIL_to_Tracker }
+
+	impl crate::video::TrackerTraitConst for TrackerMIL {
+		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::video::TrackerTrait for TrackerMIL {
+		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { TrackerMIL, crate::video::TrackerTraitConst, as_raw_Tracker, crate::video::TrackerTrait, as_raw_mut_Tracker }
+
+	impl crate::video::TrackerMILTraitConst for TrackerMIL {
+		#[inline] fn as_raw_TrackerMIL(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::video::TrackerMILTrait for TrackerMIL {
+		#[inline] fn as_raw_mut_TrackerMIL(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { TrackerMIL, crate::video::TrackerMILTraitConst, as_raw_TrackerMIL, crate::video::TrackerMILTrait, as_raw_mut_TrackerMIL }
 
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq)]
@@ -3639,28 +3621,6 @@ pub mod video {
 
 	}
 
-	/// Constant methods for [crate::video::TrackerNano]
-	pub trait TrackerNanoTraitConst: crate::video::TrackerTraitConst {
-		fn as_raw_TrackerNano(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::video::TrackerNano]
-	pub trait TrackerNanoTrait: crate::video::TrackerNanoTraitConst + crate::video::TrackerTrait {
-		fn as_raw_mut_TrackerNano(&mut self) -> *mut c_void;
-
-		/// Return tracking score
-		#[inline]
-		fn get_tracking_score(&mut self) -> Result<f32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_TrackerNano_getTrackingScore(self.as_raw_mut_TrackerNano(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
-
 	/// the Nano tracker is a super lightweight dnn-based general object tracking.
 	///
 	/// Nano tracker is much faster and extremely lightweight due to special model structure, the whole model size is about 1.9 MB.
@@ -3682,26 +3642,6 @@ pub mod video {
 	}
 
 	unsafe impl Send for TrackerNano {}
-
-	impl crate::video::TrackerTraitConst for TrackerNano {
-		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::video::TrackerTrait for TrackerNano {
-		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { TrackerNano, crate::video::TrackerTraitConst, as_raw_Tracker, crate::video::TrackerTrait, as_raw_mut_Tracker }
-
-	impl crate::video::TrackerNanoTraitConst for TrackerNano {
-		#[inline] fn as_raw_TrackerNano(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::video::TrackerNanoTrait for TrackerNano {
-		#[inline] fn as_raw_mut_TrackerNano(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { TrackerNano, crate::video::TrackerNanoTraitConst, as_raw_TrackerNano, crate::video::TrackerNanoTrait, as_raw_mut_TrackerNano }
 
 	impl TrackerNano {
 		/// Constructor
@@ -3739,7 +3679,27 @@ pub mod video {
 
 	}
 
-	boxed_cast_base! { TrackerNano, crate::video::Tracker, cv_TrackerNano_to_Tracker }
+	/// Constant methods for [crate::video::TrackerNano]
+	pub trait TrackerNanoTraitConst: crate::video::TrackerTraitConst {
+		fn as_raw_TrackerNano(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::video::TrackerNano]
+	pub trait TrackerNanoTrait: crate::video::TrackerNanoTraitConst + crate::video::TrackerTrait {
+		fn as_raw_mut_TrackerNano(&mut self) -> *mut c_void;
+
+		/// Return tracking score
+		#[inline]
+		fn get_tracking_score(&mut self) -> Result<f32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_TrackerNano_getTrackingScore(self.as_raw_mut_TrackerNano(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
 
 	impl std::fmt::Debug for TrackerNano {
 		#[inline]
@@ -3747,6 +3707,56 @@ pub mod video {
 			f.debug_struct("TrackerNano")
 				.finish()
 		}
+	}
+
+	boxed_cast_base! { TrackerNano, crate::video::Tracker, cv_TrackerNano_to_Tracker }
+
+	impl crate::video::TrackerTraitConst for TrackerNano {
+		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::video::TrackerTrait for TrackerNano {
+		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { TrackerNano, crate::video::TrackerTraitConst, as_raw_Tracker, crate::video::TrackerTrait, as_raw_mut_Tracker }
+
+	impl crate::video::TrackerNanoTraitConst for TrackerNano {
+		#[inline] fn as_raw_TrackerNano(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::video::TrackerNanoTrait for TrackerNano {
+		#[inline] fn as_raw_mut_TrackerNano(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { TrackerNano, crate::video::TrackerNanoTraitConst, as_raw_TrackerNano, crate::video::TrackerNanoTrait, as_raw_mut_TrackerNano }
+
+	pub struct TrackerNano_Params {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { TrackerNano_Params }
+
+	impl Drop for TrackerNano_Params {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_TrackerNano_Params_delete(self.as_raw_mut_TrackerNano_Params()) };
+		}
+	}
+
+	unsafe impl Send for TrackerNano_Params {}
+
+	impl TrackerNano_Params {
+		#[inline]
+		pub fn default() -> Result<crate::video::TrackerNano_Params> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_TrackerNano_Params_Params(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::video::TrackerNano_Params::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::video::TrackerNano_Params]
@@ -3813,44 +3823,6 @@ pub mod video {
 
 	}
 
-	pub struct TrackerNano_Params {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { TrackerNano_Params }
-
-	impl Drop for TrackerNano_Params {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_TrackerNano_Params_delete(self.as_raw_mut_TrackerNano_Params()) };
-		}
-	}
-
-	unsafe impl Send for TrackerNano_Params {}
-
-	impl crate::video::TrackerNano_ParamsTraitConst for TrackerNano_Params {
-		#[inline] fn as_raw_TrackerNano_Params(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::video::TrackerNano_ParamsTrait for TrackerNano_Params {
-		#[inline] fn as_raw_mut_TrackerNano_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { TrackerNano_Params, crate::video::TrackerNano_ParamsTraitConst, as_raw_TrackerNano_Params, crate::video::TrackerNano_ParamsTrait, as_raw_mut_TrackerNano_Params }
-
-	impl TrackerNano_Params {
-		#[inline]
-		pub fn default() -> Result<crate::video::TrackerNano_Params> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_TrackerNano_Params_Params(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::video::TrackerNano_Params::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
 	impl Clone for TrackerNano_Params {
 		#[inline]
 		fn clone(&self) -> Self {
@@ -3870,27 +3842,15 @@ pub mod video {
 		}
 	}
 
-	/// Constant methods for [crate::video::TrackerVit]
-	pub trait TrackerVitTraitConst: crate::video::TrackerTraitConst {
-		fn as_raw_TrackerVit(&self) -> *const c_void;
-
+	impl crate::video::TrackerNano_ParamsTraitConst for TrackerNano_Params {
+		#[inline] fn as_raw_TrackerNano_Params(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [crate::video::TrackerVit]
-	pub trait TrackerVitTrait: crate::video::TrackerTrait + crate::video::TrackerVitTraitConst {
-		fn as_raw_mut_TrackerVit(&mut self) -> *mut c_void;
-
-		/// Return tracking score
-		#[inline]
-		fn get_tracking_score(&mut self) -> Result<f32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_TrackerVit_getTrackingScore(self.as_raw_mut_TrackerVit(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
+	impl crate::video::TrackerNano_ParamsTrait for TrackerNano_Params {
+		#[inline] fn as_raw_mut_TrackerNano_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { TrackerNano_Params, crate::video::TrackerNano_ParamsTraitConst, as_raw_TrackerNano_Params, crate::video::TrackerNano_ParamsTrait, as_raw_mut_TrackerNano_Params }
 
 	/// the VIT tracker is a super lightweight dnn-based general object tracking.
 	///
@@ -3911,26 +3871,6 @@ pub mod video {
 	}
 
 	unsafe impl Send for TrackerVit {}
-
-	impl crate::video::TrackerTraitConst for TrackerVit {
-		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::video::TrackerTrait for TrackerVit {
-		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { TrackerVit, crate::video::TrackerTraitConst, as_raw_Tracker, crate::video::TrackerTrait, as_raw_mut_Tracker }
-
-	impl crate::video::TrackerVitTraitConst for TrackerVit {
-		#[inline] fn as_raw_TrackerVit(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::video::TrackerVitTrait for TrackerVit {
-		#[inline] fn as_raw_mut_TrackerVit(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { TrackerVit, crate::video::TrackerVitTraitConst, as_raw_TrackerVit, crate::video::TrackerVitTrait, as_raw_mut_TrackerVit }
 
 	impl TrackerVit {
 		/// Constructor
@@ -3968,7 +3908,27 @@ pub mod video {
 
 	}
 
-	boxed_cast_base! { TrackerVit, crate::video::Tracker, cv_TrackerVit_to_Tracker }
+	/// Constant methods for [crate::video::TrackerVit]
+	pub trait TrackerVitTraitConst: crate::video::TrackerTraitConst {
+		fn as_raw_TrackerVit(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::video::TrackerVit]
+	pub trait TrackerVitTrait: crate::video::TrackerTrait + crate::video::TrackerVitTraitConst {
+		fn as_raw_mut_TrackerVit(&mut self) -> *mut c_void;
+
+		/// Return tracking score
+		#[inline]
+		fn get_tracking_score(&mut self) -> Result<f32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_TrackerVit_getTrackingScore(self.as_raw_mut_TrackerVit(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
 
 	impl std::fmt::Debug for TrackerVit {
 		#[inline]
@@ -3976,6 +3936,56 @@ pub mod video {
 			f.debug_struct("TrackerVit")
 				.finish()
 		}
+	}
+
+	boxed_cast_base! { TrackerVit, crate::video::Tracker, cv_TrackerVit_to_Tracker }
+
+	impl crate::video::TrackerTraitConst for TrackerVit {
+		#[inline] fn as_raw_Tracker(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::video::TrackerTrait for TrackerVit {
+		#[inline] fn as_raw_mut_Tracker(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { TrackerVit, crate::video::TrackerTraitConst, as_raw_Tracker, crate::video::TrackerTrait, as_raw_mut_Tracker }
+
+	impl crate::video::TrackerVitTraitConst for TrackerVit {
+		#[inline] fn as_raw_TrackerVit(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::video::TrackerVitTrait for TrackerVit {
+		#[inline] fn as_raw_mut_TrackerVit(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { TrackerVit, crate::video::TrackerVitTraitConst, as_raw_TrackerVit, crate::video::TrackerVitTrait, as_raw_mut_TrackerVit }
+
+	pub struct TrackerVit_Params {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { TrackerVit_Params }
+
+	impl Drop for TrackerVit_Params {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_TrackerVit_Params_delete(self.as_raw_mut_TrackerVit_Params()) };
+		}
+	}
+
+	unsafe impl Send for TrackerVit_Params {}
+
+	impl TrackerVit_Params {
+		#[inline]
+		pub fn default() -> Result<crate::video::TrackerVit_Params> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_TrackerVit_Params_Params(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::video::TrackerVit_Params::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::video::TrackerVit_Params]
@@ -4068,44 +4078,6 @@ pub mod video {
 
 	}
 
-	pub struct TrackerVit_Params {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { TrackerVit_Params }
-
-	impl Drop for TrackerVit_Params {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_TrackerVit_Params_delete(self.as_raw_mut_TrackerVit_Params()) };
-		}
-	}
-
-	unsafe impl Send for TrackerVit_Params {}
-
-	impl crate::video::TrackerVit_ParamsTraitConst for TrackerVit_Params {
-		#[inline] fn as_raw_TrackerVit_Params(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::video::TrackerVit_ParamsTrait for TrackerVit_Params {
-		#[inline] fn as_raw_mut_TrackerVit_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { TrackerVit_Params, crate::video::TrackerVit_ParamsTraitConst, as_raw_TrackerVit_Params, crate::video::TrackerVit_ParamsTrait, as_raw_mut_TrackerVit_Params }
-
-	impl TrackerVit_Params {
-		#[inline]
-		pub fn default() -> Result<crate::video::TrackerVit_Params> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_TrackerVit_Params_Params(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::video::TrackerVit_Params::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
 	impl Clone for TrackerVit_Params {
 		#[inline]
 		fn clone(&self) -> Self {
@@ -4125,6 +4097,54 @@ pub mod video {
 				.field("tracking_score_threshold", &crate::video::TrackerVit_ParamsTraitConst::tracking_score_threshold(self))
 				.finish()
 		}
+	}
+
+	impl crate::video::TrackerVit_ParamsTraitConst for TrackerVit_Params {
+		#[inline] fn as_raw_TrackerVit_Params(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::video::TrackerVit_ParamsTrait for TrackerVit_Params {
+		#[inline] fn as_raw_mut_TrackerVit_Params(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { TrackerVit_Params, crate::video::TrackerVit_ParamsTraitConst, as_raw_TrackerVit_Params, crate::video::TrackerVit_ParamsTrait, as_raw_mut_TrackerVit_Params }
+
+	/// Variational optical flow refinement
+	///
+	/// This class implements variational refinement of the input flow field, i.e.
+	/// it uses input flow to initialize the minimization of the following functional:
+	/// ![inline formula](https://latex.codecogs.com/png.latex?E%28U%29%20%3D%20%5Cint%5F%7B%5COmega%7D%20%5Cdelta%20%5CPsi%28E%5FI%29%20%2B%20%5Cgamma%20%5CPsi%28E%5FG%29%20%2B%20%5Calpha%20%5CPsi%28E%5FS%29%20),
+	/// where ![inline formula](https://latex.codecogs.com/png.latex?E%5FI%2CE%5FG%2CE%5FS) are color constancy, gradient constancy and smoothness terms
+	/// respectively. ![inline formula](https://latex.codecogs.com/png.latex?%5CPsi%28s%5E2%29%3D%5Csqrt%7Bs%5E2%2B%5Cepsilon%5E2%7D) is a robust penalizer to limit the
+	/// influence of outliers. A complete formulation and a description of the minimization
+	/// procedure can be found in [Brox2004](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Brox2004)
+	pub struct VariationalRefinement {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { VariationalRefinement }
+
+	impl Drop for VariationalRefinement {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_VariationalRefinement_delete(self.as_raw_mut_VariationalRefinement()) };
+		}
+	}
+
+	unsafe impl Send for VariationalRefinement {}
+
+	impl VariationalRefinement {
+		/// Creates an instance of VariationalRefinement
+		#[inline]
+		pub fn create() -> Result<core::Ptr<crate::video::VariationalRefinement>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_VariationalRefinement_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::video::VariationalRefinement>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::video::VariationalRefinement]
@@ -4324,29 +4344,17 @@ pub mod video {
 
 	}
 
-	/// Variational optical flow refinement
-	///
-	/// This class implements variational refinement of the input flow field, i.e.
-	/// it uses input flow to initialize the minimization of the following functional:
-	/// ![inline formula](https://latex.codecogs.com/png.latex?E%28U%29%20%3D%20%5Cint%5F%7B%5COmega%7D%20%5Cdelta%20%5CPsi%28E%5FI%29%20%2B%20%5Cgamma%20%5CPsi%28E%5FG%29%20%2B%20%5Calpha%20%5CPsi%28E%5FS%29%20),
-	/// where ![inline formula](https://latex.codecogs.com/png.latex?E%5FI%2CE%5FG%2CE%5FS) are color constancy, gradient constancy and smoothness terms
-	/// respectively. ![inline formula](https://latex.codecogs.com/png.latex?%5CPsi%28s%5E2%29%3D%5Csqrt%7Bs%5E2%2B%5Cepsilon%5E2%7D) is a robust penalizer to limit the
-	/// influence of outliers. A complete formulation and a description of the minimization
-	/// procedure can be found in [Brox2004](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Brox2004)
-	pub struct VariationalRefinement {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { VariationalRefinement }
-
-	impl Drop for VariationalRefinement {
+	impl std::fmt::Debug for VariationalRefinement {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_VariationalRefinement_delete(self.as_raw_mut_VariationalRefinement()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("VariationalRefinement")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for VariationalRefinement {}
+	boxed_cast_base! { VariationalRefinement, core::Algorithm, cv_VariationalRefinement_to_Algorithm }
+
+	boxed_cast_base! { VariationalRefinement, crate::video::DenseOpticalFlow, cv_VariationalRefinement_to_DenseOpticalFlow }
 
 	impl core::AlgorithmTraitConst for VariationalRefinement {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -4378,29 +4386,4 @@ pub mod video {
 
 	boxed_ref! { VariationalRefinement, crate::video::VariationalRefinementTraitConst, as_raw_VariationalRefinement, crate::video::VariationalRefinementTrait, as_raw_mut_VariationalRefinement }
 
-	impl VariationalRefinement {
-		/// Creates an instance of VariationalRefinement
-		#[inline]
-		pub fn create() -> Result<core::Ptr<crate::video::VariationalRefinement>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_VariationalRefinement_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::video::VariationalRefinement>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_base! { VariationalRefinement, core::Algorithm, cv_VariationalRefinement_to_Algorithm }
-
-	boxed_cast_base! { VariationalRefinement, crate::video::DenseOpticalFlow, cv_VariationalRefinement_to_DenseOpticalFlow }
-
-	impl std::fmt::Debug for VariationalRefinement {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("VariationalRefinement")
-				.finish()
-		}
-	}
 }

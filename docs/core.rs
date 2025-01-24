@@ -12456,6 +12456,44 @@ pub mod core {
 		Ok(ret)
 	}
 
+	/// This is a base class for all more or less complex algorithms in OpenCV
+	///
+	/// especially for classes of algorithms, for which there can be multiple implementations. The examples
+	/// are stereo correspondence (for which there are algorithms like block matching, semi-global block
+	/// matching, graph-cut etc.), background subtraction (which can be done using mixture-of-gaussians
+	/// models, codebook-based algorithm etc.), optical flow (block matching, Lucas-Kanade, Horn-Schunck
+	/// etc.).
+	///
+	/// Here is example of SimpleBlobDetector use in your application via Algorithm interface:
+	/// [Algorithm](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+	pub struct Algorithm {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Algorithm }
+
+	impl Drop for Algorithm {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_Algorithm_delete(self.as_raw_mut_Algorithm()) };
+		}
+	}
+
+	unsafe impl Send for Algorithm {}
+
+	impl Algorithm {
+		#[inline]
+		pub fn default() -> Result<core::Algorithm> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Algorithm_Algorithm(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Algorithm::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
 	/// Constant methods for [core::Algorithm]
 	pub trait AlgorithmTraitConst {
 		fn as_raw_Algorithm(&self) -> *const c_void;
@@ -12573,30 +12611,19 @@ pub mod core {
 
 	}
 
-	/// This is a base class for all more or less complex algorithms in OpenCV
-	///
-	/// especially for classes of algorithms, for which there can be multiple implementations. The examples
-	/// are stereo correspondence (for which there are algorithms like block matching, semi-global block
-	/// matching, graph-cut etc.), background subtraction (which can be done using mixture-of-gaussians
-	/// models, codebook-based algorithm etc.), optical flow (block matching, Lucas-Kanade, Horn-Schunck
-	/// etc.).
-	///
-	/// Here is example of SimpleBlobDetector use in your application via Algorithm interface:
-	/// [Algorithm](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
-	pub struct Algorithm {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Algorithm }
-
-	impl Drop for Algorithm {
+	impl std::fmt::Debug for Algorithm {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_Algorithm_delete(self.as_raw_mut_Algorithm()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Algorithm")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for Algorithm {}
+	boxed_cast_descendant! { Algorithm, core::ConjGradSolver, cv_Algorithm_to_ConjGradSolver }
+
+	boxed_cast_descendant! { Algorithm, core::DownhillSolver, cv_Algorithm_to_DownhillSolver }
+
+	boxed_cast_descendant! { Algorithm, core::MinProblemSolver, cv_Algorithm_to_MinProblemSolver }
 
 	impl core::AlgorithmTraitConst for Algorithm {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -12608,31 +12635,52 @@ pub mod core {
 
 	boxed_ref! { Algorithm, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
 
-	impl Algorithm {
+	/// Returns result of asynchronous operations
+	///
+	/// Object has attached asynchronous state.
+	/// Assignment operator doesn't clone asynchronous state (it is shared between all instances).
+	///
+	/// Result can be fetched via get() method only once.
+	pub struct AsyncArray {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { AsyncArray }
+
+	impl Drop for AsyncArray {
 		#[inline]
-		pub fn default() -> Result<core::Algorithm> {
+		fn drop(&mut self) {
+			unsafe { sys::cv_AsyncArray_delete(self.as_raw_mut_AsyncArray()) };
+		}
+	}
+
+	unsafe impl Send for AsyncArray {}
+
+	impl AsyncArray {
+		#[inline]
+		pub fn default() -> core::AsyncArray {
+			let ret = unsafe { sys::cv_AsyncArray_AsyncArray() };
+			let ret = unsafe { core::AsyncArray::opencv_from_extern(ret) };
+			ret
+		}
+
+		#[inline]
+		pub fn copy(o: &impl core::AsyncArrayTraitConst) -> core::AsyncArray {
+			let ret = unsafe { sys::cv_AsyncArray_AsyncArray_const_AsyncArrayR(o.as_raw_AsyncArray()) };
+			let ret = unsafe { core::AsyncArray::opencv_from_extern(ret) };
+			ret
+		}
+
+		#[inline]
+		pub fn copy_mut(mut o: core::AsyncArray) -> Result<core::AsyncArray> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Algorithm_Algorithm(ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_AsyncArray_AsyncArray_AsyncArrayRR(o.as_raw_mut_AsyncArray(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Algorithm::opencv_from_extern(ret) };
+			let ret = unsafe { core::AsyncArray::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	boxed_cast_descendant! { Algorithm, core::ConjGradSolver, cv_Algorithm_to_ConjGradSolver }
-
-	boxed_cast_descendant! { Algorithm, core::DownhillSolver, cv_Algorithm_to_DownhillSolver }
-
-	boxed_cast_descendant! { Algorithm, core::MinProblemSolver, cv_Algorithm_to_MinProblemSolver }
-
-	impl std::fmt::Debug for Algorithm {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Algorithm")
-				.finish()
-		}
 	}
 
 	/// Constant methods for [core::AsyncArray]
@@ -12740,26 +12788,21 @@ pub mod core {
 
 	}
 
-	/// Returns result of asynchronous operations
-	///
-	/// Object has attached asynchronous state.
-	/// Assignment operator doesn't clone asynchronous state (it is shared between all instances).
-	///
-	/// Result can be fetched via get() method only once.
-	pub struct AsyncArray {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { AsyncArray }
-
-	impl Drop for AsyncArray {
+	impl Default for AsyncArray {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_AsyncArray_delete(self.as_raw_mut_AsyncArray()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for AsyncArray {}
+	impl std::fmt::Debug for AsyncArray {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("AsyncArray")
+				.finish()
+		}
+	}
 
 	impl core::AsyncArrayTraitConst for AsyncArray {
 		#[inline] fn as_raw_AsyncArray(&self) -> *const c_void { self.as_raw() }
@@ -12771,47 +12814,47 @@ pub mod core {
 
 	boxed_ref! { AsyncArray, core::AsyncArrayTraitConst, as_raw_AsyncArray, core::AsyncArrayTrait, as_raw_mut_AsyncArray }
 
-	impl AsyncArray {
+	/// Provides result of asynchronous operations
+	pub struct AsyncPromise {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { AsyncPromise }
+
+	impl Drop for AsyncPromise {
 		#[inline]
-		pub fn default() -> core::AsyncArray {
-			let ret = unsafe { sys::cv_AsyncArray_AsyncArray() };
-			let ret = unsafe { core::AsyncArray::opencv_from_extern(ret) };
+		fn drop(&mut self) {
+			unsafe { sys::cv_AsyncPromise_delete(self.as_raw_mut_AsyncPromise()) };
+		}
+	}
+
+	unsafe impl Send for AsyncPromise {}
+
+	impl AsyncPromise {
+		#[inline]
+		pub fn default() -> core::AsyncPromise {
+			let ret = unsafe { sys::cv_AsyncPromise_AsyncPromise() };
+			let ret = unsafe { core::AsyncPromise::opencv_from_extern(ret) };
 			ret
 		}
 
 		#[inline]
-		pub fn copy(o: &impl core::AsyncArrayTraitConst) -> core::AsyncArray {
-			let ret = unsafe { sys::cv_AsyncArray_AsyncArray_const_AsyncArrayR(o.as_raw_AsyncArray()) };
-			let ret = unsafe { core::AsyncArray::opencv_from_extern(ret) };
+		pub fn copy(o: &impl core::AsyncPromiseTraitConst) -> core::AsyncPromise {
+			let ret = unsafe { sys::cv_AsyncPromise_AsyncPromise_const_AsyncPromiseR(o.as_raw_AsyncPromise()) };
+			let ret = unsafe { core::AsyncPromise::opencv_from_extern(ret) };
 			ret
 		}
 
 		#[inline]
-		pub fn copy_mut(mut o: core::AsyncArray) -> Result<core::AsyncArray> {
+		pub fn copy_mut(mut o: core::AsyncPromise) -> Result<core::AsyncPromise> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_AsyncArray_AsyncArray_AsyncArrayRR(o.as_raw_mut_AsyncArray(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_AsyncPromise_AsyncPromise_AsyncPromiseRR(o.as_raw_mut_AsyncPromise(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::AsyncArray::opencv_from_extern(ret) };
+			let ret = unsafe { core::AsyncPromise::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	impl std::fmt::Debug for AsyncArray {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("AsyncArray")
-				.finish()
-		}
-	}
-
-	impl Default for AsyncArray {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
 	}
 
 	/// Constant methods for [core::AsyncPromise]
@@ -12888,21 +12931,21 @@ pub mod core {
 
 	}
 
-	/// Provides result of asynchronous operations
-	pub struct AsyncPromise {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { AsyncPromise }
-
-	impl Drop for AsyncPromise {
+	impl Default for AsyncPromise {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_AsyncPromise_delete(self.as_raw_mut_AsyncPromise()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for AsyncPromise {}
+	impl std::fmt::Debug for AsyncPromise {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("AsyncPromise")
+				.finish()
+		}
+	}
 
 	impl core::AsyncPromiseTraitConst for AsyncPromise {
 		#[inline] fn as_raw_AsyncPromise(&self) -> *const c_void { self.as_raw() }
@@ -12914,47 +12957,134 @@ pub mod core {
 
 	boxed_ref! { AsyncPromise, core::AsyncPromiseTraitConst, as_raw_AsyncPromise, core::AsyncPromiseTrait, as_raw_mut_AsyncPromise }
 
-	impl AsyncPromise {
-		#[inline]
-		pub fn default() -> core::AsyncPromise {
-			let ret = unsafe { sys::cv_AsyncPromise_AsyncPromise() };
-			let ret = unsafe { core::AsyncPromise::opencv_from_extern(ret) };
-			ret
-		}
+	/// Designed for command line parsing
+	///
+	/// The sample below demonstrates how to use CommandLineParser:
+	/// ```C++
+	///    CommandLineParser parser(argc, argv, keys);
+	///    parser.about("Application name v1.0.0");
+	///
+	///    if (parser.has("help"))
+	///    {
+	///        parser.printMessage();
+	///        return 0;
+	///    }
+	///
+	///    int N = parser.get<int>("N");
+	///    double fps = parser.get<double>("fps");
+	///    String path = parser.get<String>("path");
+	///
+	///    use_time_stamp = parser.has("timestamp");
+	///
+	///    String img1 = parser.get<String>(0);
+	///    String img2 = parser.get<String>(1);
+	///
+	///    int repeat = parser.get<int>(2);
+	///
+	///    if (!parser.check())
+	///    {
+	///        parser.printErrors();
+	///        return 0;
+	///    }
+	/// ```
+	///
+	///
+	/// ### Keys syntax
+	///
+	/// The keys parameter is a string containing several blocks, each one is enclosed in curly braces and
+	/// describes one argument. Each argument contains three parts separated by the `|` symbol:
+	///
+	/// -# argument names is a list of option synonyms separated by standard space characters ' ' (to mark argument as positional, prefix it with the `@` symbol)
+	/// -# default value will be used if the argument was not provided (can be empty)
+	/// -# help message (can be empty)
+	///
+	/// For example:
+	///
+	/// ```C++
+	///    const String keys =
+	///        "{help h usage ? |      | print this message   }"
+	///        "{@image1        |      | image1 for compare   }"
+	///        "{@image2        |<none>| image2 for compare   }"
+	///        "{@repeat        |1     | number               }"
+	///        "{path           |.     | path to file         }"
+	///        "{fps            | -1.0 | fps for output video }"
+	///        "{N count        |100   | count of objects     }"
+	///        "{ts timestamp   |      | use time stamp       }"
+	///        ;
+	/// }
+	/// ```
+	///
+	///
+	/// Note that there are no default values for `help` and `timestamp` so we can check their presence using the `has()` method.
+	/// Arguments with default values are considered to be always present. Use the `get()` method in these cases to check their
+	/// actual value instead.
+	/// Note that whitespace characters other than standard spaces are considered part of the string.
+	/// Additionally, leading and trailing standard spaces around the help messages are ignored.
+	///
+	/// String keys like `get<String>("@image1")` return the empty string `""` by default - even with an empty default value.
+	/// Use the special `<none>` default value to enforce that the returned string must not be empty. (like in `get<String>("@image2")`)
+	///
+	/// ### Usage
+	///
+	/// For the described keys:
+	///
+	/// ```C++
+	///    # Good call (3 positional parameters: image1, image2 and repeat; N is 200, ts is true)
+	///    $ ./app -N=200 1.png 2.jpg 19 -ts
+	///
+	///    # Bad call
+	///    $ ./app -fps=aaa
+	///    ERRORS:
+	///    Parameter "fps": can not convert: [aaa] to [double]
+	/// ```
+	///
+	pub struct CommandLineParser {
+		ptr: *mut c_void,
+	}
 
-		#[inline]
-		pub fn copy(o: &impl core::AsyncPromiseTraitConst) -> core::AsyncPromise {
-			let ret = unsafe { sys::cv_AsyncPromise_AsyncPromise_const_AsyncPromiseR(o.as_raw_AsyncPromise()) };
-			let ret = unsafe { core::AsyncPromise::opencv_from_extern(ret) };
-			ret
-		}
+	opencv_type_boxed! { CommandLineParser }
 
+	impl Drop for CommandLineParser {
 		#[inline]
-		pub fn copy_mut(mut o: core::AsyncPromise) -> Result<core::AsyncPromise> {
+		fn drop(&mut self) {
+			unsafe { sys::cv_CommandLineParser_delete(self.as_raw_mut_CommandLineParser()) };
+		}
+	}
+
+	unsafe impl Send for CommandLineParser {}
+
+	impl CommandLineParser {
+		/// Constructor
+		///
+		/// Initializes command line parser object
+		///
+		/// ## Parameters
+		/// * argc: number of command line arguments (from main())
+		/// * argv: array of command line arguments (from main())
+		/// * keys: string describing acceptable command line parameters (see class description for syntax)
+		#[inline]
+		pub fn new(argv: &[&str], keys: &str) -> Result<core::CommandLineParser> {
+			string_array_arg!(argv);
+			extern_container_arg!(keys);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_AsyncPromise_AsyncPromise_AsyncPromiseRR(o.as_raw_mut_AsyncPromise(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_CommandLineParser_CommandLineParser_int_const_charXX_const_StringR(argv.len().try_into()?, argv.as_ptr(), keys.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::AsyncPromise::opencv_from_extern(ret) };
+			let ret = unsafe { core::CommandLineParser::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	impl std::fmt::Debug for AsyncPromise {
+		/// Copy constructor
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("AsyncPromise")
-				.finish()
+		pub fn copy(parser: &impl core::CommandLineParserTraitConst) -> Result<core::CommandLineParser> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_CommandLineParser_CommandLineParser_const_CommandLineParserR(parser.as_raw_CommandLineParser(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::CommandLineParser::opencv_from_extern(ret) };
+			Ok(ret)
 		}
-	}
 
-	impl Default for AsyncPromise {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
 	}
 
 	/// Constant methods for [core::CommandLineParser]
@@ -13959,101 +14089,13 @@ pub mod core {
 
 	}
 
-	/// Designed for command line parsing
-	///
-	/// The sample below demonstrates how to use CommandLineParser:
-	/// ```C++
-	///    CommandLineParser parser(argc, argv, keys);
-	///    parser.about("Application name v1.0.0");
-	///
-	///    if (parser.has("help"))
-	///    {
-	///        parser.printMessage();
-	///        return 0;
-	///    }
-	///
-	///    int N = parser.get<int>("N");
-	///    double fps = parser.get<double>("fps");
-	///    String path = parser.get<String>("path");
-	///
-	///    use_time_stamp = parser.has("timestamp");
-	///
-	///    String img1 = parser.get<String>(0);
-	///    String img2 = parser.get<String>(1);
-	///
-	///    int repeat = parser.get<int>(2);
-	///
-	///    if (!parser.check())
-	///    {
-	///        parser.printErrors();
-	///        return 0;
-	///    }
-	/// ```
-	///
-	///
-	/// ### Keys syntax
-	///
-	/// The keys parameter is a string containing several blocks, each one is enclosed in curly braces and
-	/// describes one argument. Each argument contains three parts separated by the `|` symbol:
-	///
-	/// -# argument names is a list of option synonyms separated by standard space characters ' ' (to mark argument as positional, prefix it with the `@` symbol)
-	/// -# default value will be used if the argument was not provided (can be empty)
-	/// -# help message (can be empty)
-	///
-	/// For example:
-	///
-	/// ```C++
-	///    const String keys =
-	///        "{help h usage ? |      | print this message   }"
-	///        "{@image1        |      | image1 for compare   }"
-	///        "{@image2        |<none>| image2 for compare   }"
-	///        "{@repeat        |1     | number               }"
-	///        "{path           |.     | path to file         }"
-	///        "{fps            | -1.0 | fps for output video }"
-	///        "{N count        |100   | count of objects     }"
-	///        "{ts timestamp   |      | use time stamp       }"
-	///        ;
-	/// }
-	/// ```
-	///
-	///
-	/// Note that there are no default values for `help` and `timestamp` so we can check their presence using the `has()` method.
-	/// Arguments with default values are considered to be always present. Use the `get()` method in these cases to check their
-	/// actual value instead.
-	/// Note that whitespace characters other than standard spaces are considered part of the string.
-	/// Additionally, leading and trailing standard spaces around the help messages are ignored.
-	///
-	/// String keys like `get<String>("@image1")` return the empty string `""` by default - even with an empty default value.
-	/// Use the special `<none>` default value to enforce that the returned string must not be empty. (like in `get<String>("@image2")`)
-	///
-	/// ### Usage
-	///
-	/// For the described keys:
-	///
-	/// ```C++
-	///    # Good call (3 positional parameters: image1, image2 and repeat; N is 200, ts is true)
-	///    $ ./app -N=200 1.png 2.jpg 19 -ts
-	///
-	///    # Bad call
-	///    $ ./app -fps=aaa
-	///    ERRORS:
-	///    Parameter "fps": can not convert: [aaa] to [double]
-	/// ```
-	///
-	pub struct CommandLineParser {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CommandLineParser }
-
-	impl Drop for CommandLineParser {
+	impl std::fmt::Debug for CommandLineParser {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_CommandLineParser_delete(self.as_raw_mut_CommandLineParser()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CommandLineParser")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for CommandLineParser {}
 
 	impl core::CommandLineParserTraitConst for CommandLineParser {
 		#[inline] fn as_raw_CommandLineParser(&self) -> *const c_void { self.as_raw() }
@@ -14064,60 +14106,6 @@ pub mod core {
 	}
 
 	boxed_ref! { CommandLineParser, core::CommandLineParserTraitConst, as_raw_CommandLineParser, core::CommandLineParserTrait, as_raw_mut_CommandLineParser }
-
-	impl CommandLineParser {
-		/// Constructor
-		///
-		/// Initializes command line parser object
-		///
-		/// ## Parameters
-		/// * argc: number of command line arguments (from main())
-		/// * argv: array of command line arguments (from main())
-		/// * keys: string describing acceptable command line parameters (see class description for syntax)
-		#[inline]
-		pub fn new(argv: &[&str], keys: &str) -> Result<core::CommandLineParser> {
-			string_array_arg!(argv);
-			extern_container_arg!(keys);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_CommandLineParser_CommandLineParser_int_const_charXX_const_StringR(argv.len().try_into()?, argv.as_ptr(), keys.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::CommandLineParser::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Copy constructor
-		#[inline]
-		pub fn copy(parser: &impl core::CommandLineParserTraitConst) -> Result<core::CommandLineParser> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_CommandLineParser_CommandLineParser_const_CommandLineParserR(parser.as_raw_CommandLineParser(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::CommandLineParser::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	impl std::fmt::Debug for CommandLineParser {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CommandLineParser")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [core::ConjGradSolver]
-	pub trait ConjGradSolverTraitConst: core::MinProblemSolverTraitConst {
-		fn as_raw_ConjGradSolver(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [core::ConjGradSolver]
-	pub trait ConjGradSolverTrait: core::ConjGradSolverTraitConst + core::MinProblemSolverTrait {
-		fn as_raw_mut_ConjGradSolver(&mut self) -> *mut c_void;
-
-	}
 
 	/// This class is used to perform the non-linear non-constrained minimization of a function
 	/// with known gradient,
@@ -14168,36 +14156,6 @@ pub mod core {
 	}
 
 	unsafe impl Send for ConjGradSolver {}
-
-	impl core::AlgorithmTraitConst for ConjGradSolver {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::AlgorithmTrait for ConjGradSolver {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { ConjGradSolver, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-
-	impl core::MinProblemSolverTraitConst for ConjGradSolver {
-		#[inline] fn as_raw_MinProblemSolver(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::MinProblemSolverTrait for ConjGradSolver {
-		#[inline] fn as_raw_mut_MinProblemSolver(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { ConjGradSolver, core::MinProblemSolverTraitConst, as_raw_MinProblemSolver, core::MinProblemSolverTrait, as_raw_mut_MinProblemSolver }
-
-	impl core::ConjGradSolverTraitConst for ConjGradSolver {
-		#[inline] fn as_raw_ConjGradSolver(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::ConjGradSolverTrait for ConjGradSolver {
-		#[inline] fn as_raw_mut_ConjGradSolver(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { ConjGradSolver, core::ConjGradSolverTraitConst, as_raw_ConjGradSolver, core::ConjGradSolverTrait, as_raw_mut_ConjGradSolver }
 
 	impl ConjGradSolver {
 		/// This function returns the reference to the ready-to-use ConjGradSolver object.
@@ -14257,9 +14215,17 @@ pub mod core {
 
 	}
 
-	boxed_cast_base! { ConjGradSolver, core::Algorithm, cv_ConjGradSolver_to_Algorithm }
+	/// Constant methods for [core::ConjGradSolver]
+	pub trait ConjGradSolverTraitConst: core::MinProblemSolverTraitConst {
+		fn as_raw_ConjGradSolver(&self) -> *const c_void;
 
-	boxed_cast_base! { ConjGradSolver, core::MinProblemSolver, cv_ConjGradSolver_to_MinProblemSolver }
+	}
+
+	/// Mutable methods for [core::ConjGradSolver]
+	pub trait ConjGradSolverTrait: core::ConjGradSolverTraitConst + core::MinProblemSolverTrait {
+		fn as_raw_mut_ConjGradSolver(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for ConjGradSolver {
 		#[inline]
@@ -14268,6 +14234,40 @@ pub mod core {
 				.finish()
 		}
 	}
+
+	boxed_cast_base! { ConjGradSolver, core::Algorithm, cv_ConjGradSolver_to_Algorithm }
+
+	boxed_cast_base! { ConjGradSolver, core::MinProblemSolver, cv_ConjGradSolver_to_MinProblemSolver }
+
+	impl core::AlgorithmTraitConst for ConjGradSolver {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::AlgorithmTrait for ConjGradSolver {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { ConjGradSolver, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+
+	impl core::MinProblemSolverTraitConst for ConjGradSolver {
+		#[inline] fn as_raw_MinProblemSolver(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::MinProblemSolverTrait for ConjGradSolver {
+		#[inline] fn as_raw_mut_MinProblemSolver(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { ConjGradSolver, core::MinProblemSolverTraitConst, as_raw_MinProblemSolver, core::MinProblemSolverTrait, as_raw_mut_MinProblemSolver }
+
+	impl core::ConjGradSolverTraitConst for ConjGradSolver {
+		#[inline] fn as_raw_ConjGradSolver(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::ConjGradSolverTrait for ConjGradSolver {
+		#[inline] fn as_raw_mut_ConjGradSolver(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { ConjGradSolver, core::ConjGradSolverTraitConst, as_raw_ConjGradSolver, core::ConjGradSolverTrait, as_raw_mut_ConjGradSolver }
 
 	/// Class for matching keypoint descriptors
 	///
@@ -14327,59 +14327,6 @@ pub mod core {
 
 	}
 
-	/// Constant methods for [core::DownhillSolver]
-	pub trait DownhillSolverTraitConst: core::MinProblemSolverTraitConst {
-		fn as_raw_DownhillSolver(&self) -> *const c_void;
-
-		/// Returns the initial step that will be used in downhill simplex algorithm.
-		///
-		/// ## Parameters
-		/// * step: Initial step that will be used in algorithm. Note, that although corresponding setter
-		/// accepts column-vectors as well as row-vectors, this method will return a row-vector.
-		/// ## See also
-		/// DownhillSolver::setInitStep
-		#[inline]
-		fn get_init_step(&self, step: &mut impl ToOutputArray) -> Result<()> {
-			output_array_arg!(step);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_DownhillSolver_getInitStep_const_const__OutputArrayR(self.as_raw_DownhillSolver(), step.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
-
-	/// Mutable methods for [core::DownhillSolver]
-	pub trait DownhillSolverTrait: core::DownhillSolverTraitConst + core::MinProblemSolverTrait {
-		fn as_raw_mut_DownhillSolver(&mut self) -> *mut c_void;
-
-		/// Sets the initial step that will be used in downhill simplex algorithm.
-		///
-		/// Step, together with initial point (given in DownhillSolver::minimize) are two `n`-dimensional
-		/// vectors that are used to determine the shape of initial simplex. Roughly said, initial point
-		/// determines the position of a simplex (it will become simplex's centroid), while step determines the
-		/// spread (size in each dimension) of a simplex. To be more precise, if ![inline formula](https://latex.codecogs.com/png.latex?s%2Cx%5F0%5Cin%5Cmathbb%7BR%7D%5En) are
-		/// the initial step and initial point respectively, the vertices of a simplex will be:
-		/// ![inline formula](https://latex.codecogs.com/png.latex?v%5F0%3A%3Dx%5F0%2D%5Cfrac%7B1%7D%7B2%7D%20s) and ![inline formula](https://latex.codecogs.com/png.latex?v%5Fi%3A%3Dx%5F0%2Bs%5Fi) for ![inline formula](https://latex.codecogs.com/png.latex?i%3D1%2C2%2C%5Cdots%2Cn) where ![inline formula](https://latex.codecogs.com/png.latex?s%5Fi) denotes
-		/// projections of the initial step of *n*-th coordinate (the result of projection is treated to be
-		/// vector given by ![inline formula](https://latex.codecogs.com/png.latex?s%5Fi%3A%3De%5Fi%5Ccdot%5Cleft%3Ce%5Fi%5Ccdot%20s%5Cright%3E), where ![inline formula](https://latex.codecogs.com/png.latex?e%5Fi) form canonical basis)
-		///
-		/// ## Parameters
-		/// * step: Initial step that will be used in algorithm. Roughly said, it determines the spread
-		/// (size in each dimension) of an initial simplex.
-		#[inline]
-		fn set_init_step(&mut self, step: &impl ToInputArray) -> Result<()> {
-			input_array_arg!(step);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_DownhillSolver_setInitStep_const__InputArrayR(self.as_raw_mut_DownhillSolver(), step.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
-
 	/// This class is used to perform the non-linear non-constrained minimization of a function,
 	///
 	/// defined on an `n`-dimensional Euclidean space, using the **Nelder-Mead method**, also known as
@@ -14426,36 +14373,6 @@ pub mod core {
 	}
 
 	unsafe impl Send for DownhillSolver {}
-
-	impl core::AlgorithmTraitConst for DownhillSolver {
-		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::AlgorithmTrait for DownhillSolver {
-		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { DownhillSolver, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
-
-	impl core::MinProblemSolverTraitConst for DownhillSolver {
-		#[inline] fn as_raw_MinProblemSolver(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::MinProblemSolverTrait for DownhillSolver {
-		#[inline] fn as_raw_mut_MinProblemSolver(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { DownhillSolver, core::MinProblemSolverTraitConst, as_raw_MinProblemSolver, core::MinProblemSolverTrait, as_raw_mut_MinProblemSolver }
-
-	impl core::DownhillSolverTraitConst for DownhillSolver {
-		#[inline] fn as_raw_DownhillSolver(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::DownhillSolverTrait for DownhillSolver {
-		#[inline] fn as_raw_mut_DownhillSolver(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { DownhillSolver, core::DownhillSolverTraitConst, as_raw_DownhillSolver, core::DownhillSolverTrait, as_raw_mut_DownhillSolver }
 
 	impl DownhillSolver {
 		/// This function returns the reference to the ready-to-use DownhillSolver object.
@@ -14524,9 +14441,58 @@ pub mod core {
 
 	}
 
-	boxed_cast_base! { DownhillSolver, core::Algorithm, cv_DownhillSolver_to_Algorithm }
+	/// Constant methods for [core::DownhillSolver]
+	pub trait DownhillSolverTraitConst: core::MinProblemSolverTraitConst {
+		fn as_raw_DownhillSolver(&self) -> *const c_void;
 
-	boxed_cast_base! { DownhillSolver, core::MinProblemSolver, cv_DownhillSolver_to_MinProblemSolver }
+		/// Returns the initial step that will be used in downhill simplex algorithm.
+		///
+		/// ## Parameters
+		/// * step: Initial step that will be used in algorithm. Note, that although corresponding setter
+		/// accepts column-vectors as well as row-vectors, this method will return a row-vector.
+		/// ## See also
+		/// DownhillSolver::setInitStep
+		#[inline]
+		fn get_init_step(&self, step: &mut impl ToOutputArray) -> Result<()> {
+			output_array_arg!(step);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_DownhillSolver_getInitStep_const_const__OutputArrayR(self.as_raw_DownhillSolver(), step.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [core::DownhillSolver]
+	pub trait DownhillSolverTrait: core::DownhillSolverTraitConst + core::MinProblemSolverTrait {
+		fn as_raw_mut_DownhillSolver(&mut self) -> *mut c_void;
+
+		/// Sets the initial step that will be used in downhill simplex algorithm.
+		///
+		/// Step, together with initial point (given in DownhillSolver::minimize) are two `n`-dimensional
+		/// vectors that are used to determine the shape of initial simplex. Roughly said, initial point
+		/// determines the position of a simplex (it will become simplex's centroid), while step determines the
+		/// spread (size in each dimension) of a simplex. To be more precise, if ![inline formula](https://latex.codecogs.com/png.latex?s%2Cx%5F0%5Cin%5Cmathbb%7BR%7D%5En) are
+		/// the initial step and initial point respectively, the vertices of a simplex will be:
+		/// ![inline formula](https://latex.codecogs.com/png.latex?v%5F0%3A%3Dx%5F0%2D%5Cfrac%7B1%7D%7B2%7D%20s) and ![inline formula](https://latex.codecogs.com/png.latex?v%5Fi%3A%3Dx%5F0%2Bs%5Fi) for ![inline formula](https://latex.codecogs.com/png.latex?i%3D1%2C2%2C%5Cdots%2Cn) where ![inline formula](https://latex.codecogs.com/png.latex?s%5Fi) denotes
+		/// projections of the initial step of *n*-th coordinate (the result of projection is treated to be
+		/// vector given by ![inline formula](https://latex.codecogs.com/png.latex?s%5Fi%3A%3De%5Fi%5Ccdot%5Cleft%3Ce%5Fi%5Ccdot%20s%5Cright%3E), where ![inline formula](https://latex.codecogs.com/png.latex?e%5Fi) form canonical basis)
+		///
+		/// ## Parameters
+		/// * step: Initial step that will be used in algorithm. Roughly said, it determines the spread
+		/// (size in each dimension) of an initial simplex.
+		#[inline]
+		fn set_init_step(&mut self, step: &impl ToInputArray) -> Result<()> {
+			input_array_arg!(step);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_DownhillSolver_setInitStep_const__InputArrayR(self.as_raw_mut_DownhillSolver(), step.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
 
 	impl std::fmt::Debug for DownhillSolver {
 		#[inline]
@@ -14534,6 +14500,93 @@ pub mod core {
 			f.debug_struct("DownhillSolver")
 				.finish()
 		}
+	}
+
+	boxed_cast_base! { DownhillSolver, core::Algorithm, cv_DownhillSolver_to_Algorithm }
+
+	boxed_cast_base! { DownhillSolver, core::MinProblemSolver, cv_DownhillSolver_to_MinProblemSolver }
+
+	impl core::AlgorithmTraitConst for DownhillSolver {
+		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::AlgorithmTrait for DownhillSolver {
+		#[inline] fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { DownhillSolver, core::AlgorithmTraitConst, as_raw_Algorithm, core::AlgorithmTrait, as_raw_mut_Algorithm }
+
+	impl core::MinProblemSolverTraitConst for DownhillSolver {
+		#[inline] fn as_raw_MinProblemSolver(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::MinProblemSolverTrait for DownhillSolver {
+		#[inline] fn as_raw_mut_MinProblemSolver(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { DownhillSolver, core::MinProblemSolverTraitConst, as_raw_MinProblemSolver, core::MinProblemSolverTrait, as_raw_mut_MinProblemSolver }
+
+	impl core::DownhillSolverTraitConst for DownhillSolver {
+		#[inline] fn as_raw_DownhillSolver(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::DownhillSolverTrait for DownhillSolver {
+		#[inline] fn as_raw_mut_DownhillSolver(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { DownhillSolver, core::DownhillSolverTraitConst, as_raw_DownhillSolver, core::DownhillSolverTrait, as_raw_mut_DownhillSolver }
+
+	/// ! Class passed to an error.
+	///
+	/// This class encapsulates all or almost all necessary
+	/// information about the error happened in the program. The exception is
+	/// usually constructed and thrown implicitly via CV_Error and CV_Error_ macros.
+	/// ## See also
+	/// error
+	pub struct Exception {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Exception }
+
+	impl Drop for Exception {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_Exception_delete(self.as_raw_mut_Exception()) };
+		}
+	}
+
+	unsafe impl Send for Exception {}
+
+	impl Exception {
+		/// !
+		/// Default constructor
+		#[inline]
+		pub fn default() -> Result<core::Exception> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Exception_Exception(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Exception::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// !
+		/// Full constructor. Normally the constructor is not called explicitly.
+		/// Instead, the macros CV_Error(), CV_Error_() and CV_Assert() are used.
+		#[inline]
+		pub fn new(_code: i32, _err: &str, _func: &str, _file: &str, _line: i32) -> Result<core::Exception> {
+			extern_container_arg!(_err);
+			extern_container_arg!(_func);
+			extern_container_arg!(_file);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Exception_Exception_int_const_StringR_const_StringR_const_StringR_int(_code, _err.opencv_as_extern(), _func.opencv_as_extern(), _file.opencv_as_extern(), _line, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Exception::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [core::Exception]
@@ -14658,69 +14711,6 @@ pub mod core {
 
 	}
 
-	/// ! Class passed to an error.
-	///
-	/// This class encapsulates all or almost all necessary
-	/// information about the error happened in the program. The exception is
-	/// usually constructed and thrown implicitly via CV_Error and CV_Error_ macros.
-	/// ## See also
-	/// error
-	pub struct Exception {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Exception }
-
-	impl Drop for Exception {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_Exception_delete(self.as_raw_mut_Exception()) };
-		}
-	}
-
-	unsafe impl Send for Exception {}
-
-	impl core::ExceptionTraitConst for Exception {
-		#[inline] fn as_raw_Exception(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::ExceptionTrait for Exception {
-		#[inline] fn as_raw_mut_Exception(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Exception, core::ExceptionTraitConst, as_raw_Exception, core::ExceptionTrait, as_raw_mut_Exception }
-
-	impl Exception {
-		/// !
-		/// Default constructor
-		#[inline]
-		pub fn default() -> Result<core::Exception> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Exception_Exception(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Exception::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// !
-		/// Full constructor. Normally the constructor is not called explicitly.
-		/// Instead, the macros CV_Error(), CV_Error_() and CV_Assert() are used.
-		#[inline]
-		pub fn new(_code: i32, _err: &str, _func: &str, _file: &str, _line: i32) -> Result<core::Exception> {
-			extern_container_arg!(_err);
-			extern_container_arg!(_func);
-			extern_container_arg!(_file);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Exception_Exception_int_const_StringR_const_StringR_const_StringR_int(_code, _err.opencv_as_extern(), _func.opencv_as_extern(), _file.opencv_as_extern(), _line, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Exception::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
 	impl std::fmt::Debug for Exception {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -14733,6 +14723,146 @@ pub mod core {
 				.field("line", &core::ExceptionTraitConst::line(self))
 				.finish()
 		}
+	}
+
+	impl core::ExceptionTraitConst for Exception {
+		#[inline] fn as_raw_Exception(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::ExceptionTrait for Exception {
+		#[inline] fn as_raw_mut_Exception(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Exception, core::ExceptionTraitConst, as_raw_Exception, core::ExceptionTrait, as_raw_mut_Exception }
+
+	/// File Storage Node class.
+	///
+	/// The node is used to store each and every element of the file storage opened for reading. When
+	/// XML/YAML file is read, it is first parsed and stored in the memory as a hierarchical collection of
+	/// nodes. Each node can be a "leaf" that is contain a single number or a string, or be a collection of
+	/// other nodes. There can be named collections (mappings) where each element has a name and it is
+	/// accessed by a name, and ordered collections (sequences) where elements do not have names but rather
+	/// accessed by index. Type of the file node can be determined using FileNode::type method.
+	///
+	/// Note that file nodes are only used for navigating file storages opened for reading. When a file
+	/// storage is opened for writing, no data is stored in memory after it is written.
+	pub struct FileNode {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { FileNode }
+
+	impl Drop for FileNode {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_FileNode_delete(self.as_raw_mut_FileNode()) };
+		}
+	}
+
+	unsafe impl Send for FileNode {}
+
+	impl FileNode {
+		/// The constructors.
+		///
+		/// These constructors are used to create a default file node, construct it from obsolete structures or
+		/// from the another file node.
+		#[inline]
+		pub fn default() -> Result<core::FileNode> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FileNode_FileNode(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::FileNode::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// The constructors.
+		///
+		/// These constructors are used to create a default file node, construct it from obsolete structures or
+		/// from the another file node.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * fs: Pointer to the file storage structure.
+		/// * blockIdx: Index of the memory block where the file node is stored
+		/// * ofs: Offset in bytes from the beginning of the serialized storage
+		///
+		/// @deprecated
+		#[inline]
+		pub fn new(fs: &impl core::FileStorageTraitConst, block_idx: size_t, ofs: size_t) -> Result<core::FileNode> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FileNode_FileNode_const_FileStorageX_size_t_size_t(fs.as_raw_FileStorage(), block_idx, ofs, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::FileNode::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// The constructors.
+		///
+		/// These constructors are used to create a default file node, construct it from obsolete structures or
+		/// from the another file node.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * node: File node to be used as initialization for the created file node.
+		#[inline]
+		pub fn copy(node: &impl core::FileNodeTraitConst) -> Result<core::FileNode> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FileNode_FileNode_const_FileNodeR(node.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::FileNode::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn is_map(flags: i32) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FileNode_isMap_int(flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn is_seq(flags: i32) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FileNode_isSeq_int(flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn is_collection(flags: i32) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FileNode_isCollection_int(flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn is_empty_collection(flags: i32) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FileNode_isEmptyCollection_int(flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn is_flow(flags: i32) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FileNode_isFlow_int(flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [core::FileNode]
@@ -15123,146 +15253,6 @@ pub mod core {
 
 	}
 
-	/// File Storage Node class.
-	///
-	/// The node is used to store each and every element of the file storage opened for reading. When
-	/// XML/YAML file is read, it is first parsed and stored in the memory as a hierarchical collection of
-	/// nodes. Each node can be a "leaf" that is contain a single number or a string, or be a collection of
-	/// other nodes. There can be named collections (mappings) where each element has a name and it is
-	/// accessed by a name, and ordered collections (sequences) where elements do not have names but rather
-	/// accessed by index. Type of the file node can be determined using FileNode::type method.
-	///
-	/// Note that file nodes are only used for navigating file storages opened for reading. When a file
-	/// storage is opened for writing, no data is stored in memory after it is written.
-	pub struct FileNode {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { FileNode }
-
-	impl Drop for FileNode {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_FileNode_delete(self.as_raw_mut_FileNode()) };
-		}
-	}
-
-	unsafe impl Send for FileNode {}
-
-	impl core::FileNodeTraitConst for FileNode {
-		#[inline] fn as_raw_FileNode(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::FileNodeTrait for FileNode {
-		#[inline] fn as_raw_mut_FileNode(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { FileNode, core::FileNodeTraitConst, as_raw_FileNode, core::FileNodeTrait, as_raw_mut_FileNode }
-
-	impl FileNode {
-		/// The constructors.
-		///
-		/// These constructors are used to create a default file node, construct it from obsolete structures or
-		/// from the another file node.
-		#[inline]
-		pub fn default() -> Result<core::FileNode> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_FileNode_FileNode(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::FileNode::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// The constructors.
-		///
-		/// These constructors are used to create a default file node, construct it from obsolete structures or
-		/// from the another file node.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * fs: Pointer to the file storage structure.
-		/// * blockIdx: Index of the memory block where the file node is stored
-		/// * ofs: Offset in bytes from the beginning of the serialized storage
-		///
-		/// @deprecated
-		#[inline]
-		pub fn new(fs: &impl core::FileStorageTraitConst, block_idx: size_t, ofs: size_t) -> Result<core::FileNode> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_FileNode_FileNode_const_FileStorageX_size_t_size_t(fs.as_raw_FileStorage(), block_idx, ofs, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::FileNode::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// The constructors.
-		///
-		/// These constructors are used to create a default file node, construct it from obsolete structures or
-		/// from the another file node.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * node: File node to be used as initialization for the created file node.
-		#[inline]
-		pub fn copy(node: &impl core::FileNodeTraitConst) -> Result<core::FileNode> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_FileNode_FileNode_const_FileNodeR(node.as_raw_FileNode(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::FileNode::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn is_map(flags: i32) -> Result<bool> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_FileNode_isMap_int(flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn is_seq(flags: i32) -> Result<bool> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_FileNode_isSeq_int(flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn is_collection(flags: i32) -> Result<bool> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_FileNode_isCollection_int(flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn is_empty_collection(flags: i32) -> Result<bool> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_FileNode_isEmptyCollection_int(flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn is_flow(flags: i32) -> Result<bool> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_FileNode_isFlow_int(flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
-
 	impl Clone for FileNode {
 		#[inline]
 		fn clone(&self) -> Self {
@@ -15278,6 +15268,95 @@ pub mod core {
 				.field("ofs", &core::FileNodeTraitConst::ofs(self))
 				.finish()
 		}
+	}
+
+	impl core::FileNodeTraitConst for FileNode {
+		#[inline] fn as_raw_FileNode(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::FileNodeTrait for FileNode {
+		#[inline] fn as_raw_mut_FileNode(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { FileNode, core::FileNodeTraitConst, as_raw_FileNode, core::FileNodeTrait, as_raw_mut_FileNode }
+
+	/// used to iterate through sequences and mappings.
+	///
+	/// A standard STL notation, with node.begin(), node.end() denoting the beginning and the end of a
+	/// sequence, stored in node. See the data reading sample in the beginning of the section.
+	pub struct FileNodeIterator {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { FileNodeIterator }
+
+	impl Drop for FileNodeIterator {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_FileNodeIterator_delete(self.as_raw_mut_FileNodeIterator()) };
+		}
+	}
+
+	unsafe impl Send for FileNodeIterator {}
+
+	impl FileNodeIterator {
+		/// The constructors.
+		///
+		/// These constructors are used to create a default iterator, set it to specific element in a file node
+		/// or construct it from another iterator.
+		#[inline]
+		pub fn default() -> Result<core::FileNodeIterator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FileNodeIterator_FileNodeIterator(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::FileNodeIterator::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// The constructors.
+		///
+		/// These constructors are used to create a default iterator, set it to specific element in a file node
+		/// or construct it from another iterator.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * node: File node - the collection to iterate over;
+		///    it can be a scalar (equivalent to 1-element collection) or "none" (equivalent to empty collection).
+		/// * seekEnd: - true if iterator needs to be set after the last element of the node;
+		///    that is:
+		///        * node.begin() => FileNodeIterator(node, false)
+		///        * node.end() => FileNodeIterator(node, true)
+		#[inline]
+		pub fn new(node: &impl core::FileNodeTraitConst, seek_end: bool) -> Result<core::FileNodeIterator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FileNodeIterator_FileNodeIterator_const_FileNodeR_bool(node.as_raw_FileNode(), seek_end, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::FileNodeIterator::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// The constructors.
+		///
+		/// These constructors are used to create a default iterator, set it to specific element in a file node
+		/// or construct it from another iterator.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * it: Iterator to be used as initialization for the created iterator.
+		#[inline]
+		pub fn copy(it: &impl core::FileNodeIteratorTraitConst) -> Result<core::FileNodeIterator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FileNodeIterator_FileNodeIterator_const_FileNodeIteratorR(it.as_raw_FileNodeIterator(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::FileNodeIterator::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [core::FileNodeIterator]
@@ -15361,24 +15440,13 @@ pub mod core {
 
 	}
 
-	/// used to iterate through sequences and mappings.
-	///
-	/// A standard STL notation, with node.begin(), node.end() denoting the beginning and the end of a
-	/// sequence, stored in node. See the data reading sample in the beginning of the section.
-	pub struct FileNodeIterator {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { FileNodeIterator }
-
-	impl Drop for FileNodeIterator {
+	impl std::fmt::Debug for FileNodeIterator {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_FileNodeIterator_delete(self.as_raw_mut_FileNodeIterator()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FileNodeIterator")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for FileNodeIterator {}
 
 	impl core::FileNodeIteratorTraitConst for FileNodeIterator {
 		#[inline] fn as_raw_FileNodeIterator(&self) -> *const c_void { self.as_raw() }
@@ -15390,72 +15458,94 @@ pub mod core {
 
 	boxed_ref! { FileNodeIterator, core::FileNodeIteratorTraitConst, as_raw_FileNodeIterator, core::FileNodeIteratorTrait, as_raw_mut_FileNodeIterator }
 
-	impl FileNodeIterator {
-		/// The constructors.
-		///
-		/// These constructors are used to create a default iterator, set it to specific element in a file node
-		/// or construct it from another iterator.
-		#[inline]
-		pub fn default() -> Result<core::FileNodeIterator> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_FileNodeIterator_FileNodeIterator(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::FileNodeIterator::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// The constructors.
-		///
-		/// These constructors are used to create a default iterator, set it to specific element in a file node
-		/// or construct it from another iterator.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * node: File node - the collection to iterate over;
-		///    it can be a scalar (equivalent to 1-element collection) or "none" (equivalent to empty collection).
-		/// * seekEnd: - true if iterator needs to be set after the last element of the node;
-		///    that is:
-		///        * node.begin() => FileNodeIterator(node, false)
-		///        * node.end() => FileNodeIterator(node, true)
-		#[inline]
-		pub fn new(node: &impl core::FileNodeTraitConst, seek_end: bool) -> Result<core::FileNodeIterator> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_FileNodeIterator_FileNodeIterator_const_FileNodeR_bool(node.as_raw_FileNode(), seek_end, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::FileNodeIterator::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// The constructors.
-		///
-		/// These constructors are used to create a default iterator, set it to specific element in a file node
-		/// or construct it from another iterator.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * it: Iterator to be used as initialization for the created iterator.
-		#[inline]
-		pub fn copy(it: &impl core::FileNodeIteratorTraitConst) -> Result<core::FileNodeIterator> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_FileNodeIterator_FileNodeIterator_const_FileNodeIteratorR(it.as_raw_FileNodeIterator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::FileNodeIterator::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// XML/YAML/JSON file storage class that encapsulates all the information necessary for writing or
+	/// reading data to/from a file.
+	pub struct FileStorage {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for FileNodeIterator {
+	opencv_type_boxed! { FileStorage }
+
+	impl Drop for FileStorage {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("FileNodeIterator")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_FileStorage_delete(self.as_raw_mut_FileStorage()) };
 		}
+	}
+
+	unsafe impl Send for FileStorage {}
+
+	impl FileStorage {
+		/// The constructors.
+		///
+		/// The full constructor opens the file. Alternatively you can use the default constructor and then
+		/// call FileStorage::open.
+		#[inline]
+		pub fn default() -> Result<core::FileStorage> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FileStorage_FileStorage(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::FileStorage::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// The constructors.
+		///
+		/// The full constructor opens the file. Alternatively you can use the default constructor and then
+		/// call FileStorage::open.
+		///
+		/// ## Overloaded parameters
+		///
+		/// @copydoc open()
+		///
+		/// ## C++ default parameters
+		/// * encoding: String()
+		#[inline]
+		pub fn new(filename: &str, flags: i32, encoding: &str) -> Result<core::FileStorage> {
+			extern_container_arg!(filename);
+			extern_container_arg!(encoding);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FileStorage_FileStorage_const_StringR_int_const_StringR(filename.opencv_as_extern(), flags, encoding.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::FileStorage::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// @overload
+		/// @copydoc open()
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * encoding: String()
+		#[inline]
+		pub fn new_def(filename: &str, flags: i32) -> Result<core::FileStorage> {
+			extern_container_arg!(filename);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FileStorage_FileStorage_const_StringR_int(filename.opencv_as_extern(), flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::FileStorage::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Returns the normalized object name for the specified name of a file.
+		/// ## Parameters
+		/// * filename: Name of a file
+		/// ## Returns
+		/// The normalized object name.
+		#[inline]
+		pub fn get_default_object_name(filename: &str) -> Result<String> {
+			extern_container_arg!(filename);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_FileStorage_getDefaultObjectName_const_StringR(filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { String::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [core::FileStorage]
@@ -15898,22 +15988,15 @@ pub mod core {
 
 	}
 
-	/// XML/YAML/JSON file storage class that encapsulates all the information necessary for writing or
-	/// reading data to/from a file.
-	pub struct FileStorage {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { FileStorage }
-
-	impl Drop for FileStorage {
+	impl std::fmt::Debug for FileStorage {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_FileStorage_delete(self.as_raw_mut_FileStorage()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FileStorage")
+				.field("state", &core::FileStorageTraitConst::state(self))
+				.field("elname", &core::FileStorageTraitConst::elname(self))
+				.finish()
 		}
 	}
-
-	unsafe impl Send for FileStorage {}
 
 	impl core::FileStorageTraitConst for FileStorage {
 		#[inline] fn as_raw_FileStorage(&self) -> *const c_void { self.as_raw() }
@@ -15925,88 +16008,21 @@ pub mod core {
 
 	boxed_ref! { FileStorage, core::FileStorageTraitConst, as_raw_FileStorage, core::FileStorageTrait, as_raw_mut_FileStorage }
 
-	impl FileStorage {
-		/// The constructors.
-		///
-		/// The full constructor opens the file. Alternatively you can use the default constructor and then
-		/// call FileStorage::open.
-		#[inline]
-		pub fn default() -> Result<core::FileStorage> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_FileStorage_FileStorage(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::FileStorage::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// The constructors.
-		///
-		/// The full constructor opens the file. Alternatively you can use the default constructor and then
-		/// call FileStorage::open.
-		///
-		/// ## Overloaded parameters
-		///
-		/// @copydoc open()
-		///
-		/// ## C++ default parameters
-		/// * encoding: String()
-		#[inline]
-		pub fn new(filename: &str, flags: i32, encoding: &str) -> Result<core::FileStorage> {
-			extern_container_arg!(filename);
-			extern_container_arg!(encoding);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_FileStorage_FileStorage_const_StringR_int_const_StringR(filename.opencv_as_extern(), flags, encoding.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::FileStorage::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// @overload
-		/// @copydoc open()
-		///
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * encoding: String()
-		#[inline]
-		pub fn new_def(filename: &str, flags: i32) -> Result<core::FileStorage> {
-			extern_container_arg!(filename);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_FileStorage_FileStorage_const_StringR_int(filename.opencv_as_extern(), flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::FileStorage::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Returns the normalized object name for the specified name of a file.
-		/// ## Parameters
-		/// * filename: Name of a file
-		/// ## Returns
-		/// The normalized object name.
-		#[inline]
-		pub fn get_default_object_name(filename: &str) -> Result<String> {
-			extern_container_arg!(filename);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_FileStorage_getDefaultObjectName_const_StringR(filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { String::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// @todo document
+	pub struct Formatted {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for FileStorage {
+	opencv_type_boxed! { Formatted }
+
+	impl Drop for Formatted {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("FileStorage")
-				.field("state", &core::FileStorageTraitConst::state(self))
-				.field("elname", &core::FileStorageTraitConst::elname(self))
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_Formatted_delete(self.as_raw_mut_Formatted()) };
 		}
 	}
+
+	unsafe impl Send for Formatted {}
 
 	/// Constant methods for [core::Formatted]
 	pub trait FormattedTraitConst {
@@ -16039,21 +16055,13 @@ pub mod core {
 
 	}
 
-	/// @todo document
-	pub struct Formatted {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Formatted }
-
-	impl Drop for Formatted {
+	impl std::fmt::Debug for Formatted {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_Formatted_delete(self.as_raw_mut_Formatted()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Formatted")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for Formatted {}
 
 	impl core::FormattedTraitConst for Formatted {
 		#[inline] fn as_raw_Formatted(&self) -> *const c_void { self.as_raw() }
@@ -16065,15 +16073,48 @@ pub mod core {
 
 	boxed_ref! { Formatted, core::FormattedTraitConst, as_raw_Formatted, core::FormattedTrait, as_raw_mut_Formatted }
 
-	impl Formatted {
+	/// @todo document
+	pub struct Formatter {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for Formatted {
+	opencv_type_boxed! { Formatter }
+
+	impl Drop for Formatter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Formatted")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_Formatter_delete(self.as_raw_mut_Formatter()) };
 		}
+	}
+
+	unsafe impl Send for Formatter {}
+
+	impl Formatter {
+		/// ## C++ default parameters
+		/// * fmt: FMT_DEFAULT
+		#[inline]
+		pub fn get(fmt: core::Formatter_FormatType) -> Result<core::Ptr<core::Formatter>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Formatter_get_FormatType(fmt, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<core::Formatter>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [Formatter::get] function uses the following default values for its arguments:
+		/// * fmt: FMT_DEFAULT
+		#[inline]
+		pub fn get_def() -> Result<core::Ptr<core::Formatter>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Formatter_get(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<core::Formatter>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [core::Formatter]
@@ -16190,21 +16231,13 @@ pub mod core {
 
 	}
 
-	/// @todo document
-	pub struct Formatter {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Formatter }
-
-	impl Drop for Formatter {
+	impl std::fmt::Debug for Formatter {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_Formatter_delete(self.as_raw_mut_Formatter()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Formatter")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for Formatter {}
 
 	impl core::FormatterTraitConst for Formatter {
 		#[inline] fn as_raw_Formatter(&self) -> *const c_void { self.as_raw() }
@@ -16216,40 +16249,31 @@ pub mod core {
 
 	boxed_ref! { Formatter, core::FormatterTraitConst, as_raw_Formatter, core::FormatterTrait, as_raw_mut_Formatter }
 
-	impl Formatter {
-		/// ## C++ default parameters
-		/// * fmt: FMT_DEFAULT
-		#[inline]
-		pub fn get(fmt: core::Formatter_FormatType) -> Result<core::Ptr<core::Formatter>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Formatter_get_FormatType(fmt, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<core::Formatter>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [Formatter::get] function uses the following default values for its arguments:
-		/// * fmt: FMT_DEFAULT
-		#[inline]
-		pub fn get_def() -> Result<core::Ptr<core::Formatter>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Formatter_get(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<core::Formatter>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	pub struct Hamming {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for Formatter {
+	opencv_type_boxed! { Hamming }
+
+	impl Drop for Hamming {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Formatter")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_Hamming_delete(self.as_raw_mut_Hamming()) };
 		}
+	}
+
+	unsafe impl Send for Hamming {}
+
+	impl Hamming {
+		pub const normType: u32 = 6;
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> core::Hamming {
+			let ret = unsafe { sys::cv_Hamming_defaultNew_const() };
+			let ret = unsafe { core::Hamming::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [core::Hamming]
@@ -16274,39 +16298,12 @@ pub mod core {
 
 	}
 
-	pub struct Hamming {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Hamming }
-
-	impl Drop for Hamming {
+	impl Default for Hamming {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_Hamming_delete(self.as_raw_mut_Hamming()) };
-		}
-	}
-
-	unsafe impl Send for Hamming {}
-
-	impl core::HammingTraitConst for Hamming {
-		#[inline] fn as_raw_Hamming(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::HammingTrait for Hamming {
-		#[inline] fn as_raw_mut_Hamming(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Hamming, core::HammingTraitConst, as_raw_Hamming, core::HammingTrait, as_raw_mut_Hamming }
-
-	impl Hamming {
-		pub const normType: u32 = 6;
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
+		/// Forwards to infallible Self::default()
 		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_Hamming_defaultNew_const()) }
+			Self::default()
 		}
-
 	}
 
 	impl std::fmt::Debug for Hamming {
@@ -16317,124 +16314,15 @@ pub mod core {
 		}
 	}
 
-	impl Default for Hamming {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
+	impl core::HammingTraitConst for Hamming {
+		#[inline] fn as_raw_Hamming(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Constant methods for [core::KeyPoint]
-	pub trait KeyPointTraitConst {
-		fn as_raw_KeyPoint(&self) -> *const c_void;
-
-		/// coordinates of the keypoints
-		#[inline]
-		fn pt(&self) -> core::Point2f {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_KeyPoint_propPt_const(self.as_raw_KeyPoint(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			ret
-		}
-
-		/// diameter of the meaningful keypoint neighborhood
-		#[inline]
-		fn size(&self) -> f32 {
-			let ret = unsafe { sys::cv_KeyPoint_propSize_const(self.as_raw_KeyPoint()) };
-			ret
-		}
-
-		/// computed orientation of the keypoint (-1 if not applicable);
-		/// it's in [0,360) degrees and measured relative to
-		/// image coordinate system, ie in clockwise.
-		#[inline]
-		fn angle(&self) -> f32 {
-			let ret = unsafe { sys::cv_KeyPoint_propAngle_const(self.as_raw_KeyPoint()) };
-			ret
-		}
-
-		/// the response by which the most strong keypoints have been selected. Can be used for the further sorting or subsampling
-		#[inline]
-		fn response(&self) -> f32 {
-			let ret = unsafe { sys::cv_KeyPoint_propResponse_const(self.as_raw_KeyPoint()) };
-			ret
-		}
-
-		/// octave (pyramid layer) from which the keypoint has been extracted
-		#[inline]
-		fn octave(&self) -> i32 {
-			let ret = unsafe { sys::cv_KeyPoint_propOctave_const(self.as_raw_KeyPoint()) };
-			ret
-		}
-
-		/// object class (if the keypoints need to be clustered by an object they belong to)
-		#[inline]
-		fn class_id(&self) -> i32 {
-			let ret = unsafe { sys::cv_KeyPoint_propClass_id_const(self.as_raw_KeyPoint()) };
-			ret
-		}
-
-		#[inline]
-		fn hash(&self) -> Result<size_t> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_KeyPoint_hash_const(self.as_raw_KeyPoint(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
+	impl core::HammingTrait for Hamming {
+		#[inline] fn as_raw_mut_Hamming(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 
-	/// Mutable methods for [core::KeyPoint]
-	pub trait KeyPointTrait: core::KeyPointTraitConst {
-		fn as_raw_mut_KeyPoint(&mut self) -> *mut c_void;
-
-		/// coordinates of the keypoints
-		#[inline]
-		fn set_pt(&mut self, val: core::Point2f) {
-			let ret = unsafe { sys::cv_KeyPoint_propPt_const_Point2f(self.as_raw_mut_KeyPoint(), &val) };
-			ret
-		}
-
-		/// diameter of the meaningful keypoint neighborhood
-		#[inline]
-		fn set_size(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_KeyPoint_propSize_const_float(self.as_raw_mut_KeyPoint(), val) };
-			ret
-		}
-
-		/// computed orientation of the keypoint (-1 if not applicable);
-		/// it's in [0,360) degrees and measured relative to
-		/// image coordinate system, ie in clockwise.
-		#[inline]
-		fn set_angle(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_KeyPoint_propAngle_const_float(self.as_raw_mut_KeyPoint(), val) };
-			ret
-		}
-
-		/// the response by which the most strong keypoints have been selected. Can be used for the further sorting or subsampling
-		#[inline]
-		fn set_response(&mut self, val: f32) {
-			let ret = unsafe { sys::cv_KeyPoint_propResponse_const_float(self.as_raw_mut_KeyPoint(), val) };
-			ret
-		}
-
-		/// octave (pyramid layer) from which the keypoint has been extracted
-		#[inline]
-		fn set_octave(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_KeyPoint_propOctave_const_int(self.as_raw_mut_KeyPoint(), val) };
-			ret
-		}
-
-		/// object class (if the keypoints need to be clustered by an object they belong to)
-		#[inline]
-		fn set_class_id(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_KeyPoint_propClass_id_const_int(self.as_raw_mut_KeyPoint(), val) };
-			ret
-		}
-
-	}
+	boxed_ref! { Hamming, core::HammingTraitConst, as_raw_Hamming, core::HammingTrait, as_raw_mut_Hamming }
 
 	/// Data structure for salient point detectors.
 	///
@@ -16460,16 +16348,6 @@ pub mod core {
 	}
 
 	unsafe impl Send for KeyPoint {}
-
-	impl core::KeyPointTraitConst for KeyPoint {
-		#[inline] fn as_raw_KeyPoint(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::KeyPointTrait for KeyPoint {
-		#[inline] fn as_raw_mut_KeyPoint(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { KeyPoint, core::KeyPointTraitConst, as_raw_KeyPoint, core::KeyPointTrait, as_raw_mut_KeyPoint }
 
 	impl KeyPoint {
 		/// the default constructor
@@ -16693,6 +16571,117 @@ pub mod core {
 
 	}
 
+	/// Constant methods for [core::KeyPoint]
+	pub trait KeyPointTraitConst {
+		fn as_raw_KeyPoint(&self) -> *const c_void;
+
+		/// coordinates of the keypoints
+		#[inline]
+		fn pt(&self) -> core::Point2f {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_KeyPoint_propPt_const(self.as_raw_KeyPoint(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			ret
+		}
+
+		/// diameter of the meaningful keypoint neighborhood
+		#[inline]
+		fn size(&self) -> f32 {
+			let ret = unsafe { sys::cv_KeyPoint_propSize_const(self.as_raw_KeyPoint()) };
+			ret
+		}
+
+		/// computed orientation of the keypoint (-1 if not applicable);
+		/// it's in [0,360) degrees and measured relative to
+		/// image coordinate system, ie in clockwise.
+		#[inline]
+		fn angle(&self) -> f32 {
+			let ret = unsafe { sys::cv_KeyPoint_propAngle_const(self.as_raw_KeyPoint()) };
+			ret
+		}
+
+		/// the response by which the most strong keypoints have been selected. Can be used for the further sorting or subsampling
+		#[inline]
+		fn response(&self) -> f32 {
+			let ret = unsafe { sys::cv_KeyPoint_propResponse_const(self.as_raw_KeyPoint()) };
+			ret
+		}
+
+		/// octave (pyramid layer) from which the keypoint has been extracted
+		#[inline]
+		fn octave(&self) -> i32 {
+			let ret = unsafe { sys::cv_KeyPoint_propOctave_const(self.as_raw_KeyPoint()) };
+			ret
+		}
+
+		/// object class (if the keypoints need to be clustered by an object they belong to)
+		#[inline]
+		fn class_id(&self) -> i32 {
+			let ret = unsafe { sys::cv_KeyPoint_propClass_id_const(self.as_raw_KeyPoint()) };
+			ret
+		}
+
+		#[inline]
+		fn hash(&self) -> Result<size_t> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_KeyPoint_hash_const(self.as_raw_KeyPoint(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [core::KeyPoint]
+	pub trait KeyPointTrait: core::KeyPointTraitConst {
+		fn as_raw_mut_KeyPoint(&mut self) -> *mut c_void;
+
+		/// coordinates of the keypoints
+		#[inline]
+		fn set_pt(&mut self, val: core::Point2f) {
+			let ret = unsafe { sys::cv_KeyPoint_propPt_const_Point2f(self.as_raw_mut_KeyPoint(), &val) };
+			ret
+		}
+
+		/// diameter of the meaningful keypoint neighborhood
+		#[inline]
+		fn set_size(&mut self, val: f32) {
+			let ret = unsafe { sys::cv_KeyPoint_propSize_const_float(self.as_raw_mut_KeyPoint(), val) };
+			ret
+		}
+
+		/// computed orientation of the keypoint (-1 if not applicable);
+		/// it's in [0,360) degrees and measured relative to
+		/// image coordinate system, ie in clockwise.
+		#[inline]
+		fn set_angle(&mut self, val: f32) {
+			let ret = unsafe { sys::cv_KeyPoint_propAngle_const_float(self.as_raw_mut_KeyPoint(), val) };
+			ret
+		}
+
+		/// the response by which the most strong keypoints have been selected. Can be used for the further sorting or subsampling
+		#[inline]
+		fn set_response(&mut self, val: f32) {
+			let ret = unsafe { sys::cv_KeyPoint_propResponse_const_float(self.as_raw_mut_KeyPoint(), val) };
+			ret
+		}
+
+		/// octave (pyramid layer) from which the keypoint has been extracted
+		#[inline]
+		fn set_octave(&mut self, val: i32) {
+			let ret = unsafe { sys::cv_KeyPoint_propOctave_const_int(self.as_raw_mut_KeyPoint(), val) };
+			ret
+		}
+
+		/// object class (if the keypoints need to be clustered by an object they belong to)
+		#[inline]
+		fn set_class_id(&mut self, val: i32) {
+			let ret = unsafe { sys::cv_KeyPoint_propClass_id_const_int(self.as_raw_mut_KeyPoint(), val) };
+			ret
+		}
+
+	}
+
 	impl Clone for KeyPoint {
 		#[inline]
 		fn clone(&self) -> Self {
@@ -16712,6 +16701,132 @@ pub mod core {
 				.field("class_id", &core::KeyPointTraitConst::class_id(self))
 				.finish()
 		}
+	}
+
+	impl core::KeyPointTraitConst for KeyPoint {
+		#[inline] fn as_raw_KeyPoint(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::KeyPointTrait for KeyPoint {
+		#[inline] fn as_raw_mut_KeyPoint(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { KeyPoint, core::KeyPointTraitConst, as_raw_KeyPoint, core::KeyPointTrait, as_raw_mut_KeyPoint }
+
+	/// Linear Discriminant Analysis
+	/// @todo document this class
+	pub struct LDA {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { LDA }
+
+	impl Drop for LDA {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_LDA_delete(self.as_raw_mut_LDA()) };
+		}
+	}
+
+	unsafe impl Send for LDA {}
+
+	impl LDA {
+		/// constructor
+		/// Initializes a LDA with num_components (default 0).
+		///
+		/// ## C++ default parameters
+		/// * num_components: 0
+		#[inline]
+		pub fn new(num_components: i32) -> Result<core::LDA> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_LDA_LDA_int(num_components, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::LDA::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// constructor
+		/// Initializes a LDA with num_components (default 0).
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * num_components: 0
+		#[inline]
+		pub fn new_def() -> Result<core::LDA> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_LDA_LDA(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::LDA::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Initializes and performs a Discriminant Analysis with Fisher's
+		/// Optimization Criterion on given data in src and corresponding labels
+		/// in labels. If 0 (or less) number of components are given, they are
+		/// automatically determined for given data in computation.
+		///
+		/// ## C++ default parameters
+		/// * num_components: 0
+		#[inline]
+		pub fn new_with_data(src: &impl ToInputArray, labels: &impl ToInputArray, num_components: i32) -> Result<core::LDA> {
+			input_array_arg!(src);
+			input_array_arg!(labels);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_LDA_LDA_const__InputArrayR_const__InputArrayR_int(src.as_raw__InputArray(), labels.as_raw__InputArray(), num_components, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::LDA::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Initializes and performs a Discriminant Analysis with Fisher's
+		/// Optimization Criterion on given data in src and corresponding labels
+		/// in labels. If 0 (or less) number of components are given, they are
+		/// automatically determined for given data in computation.
+		///
+		/// ## Note
+		/// This alternative version of [new_with_data] function uses the following default values for its arguments:
+		/// * num_components: 0
+		#[inline]
+		pub fn new_with_data_def(src: &impl ToInputArray, labels: &impl ToInputArray) -> Result<core::LDA> {
+			input_array_arg!(src);
+			input_array_arg!(labels);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_LDA_LDA_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), labels.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::LDA::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn subspace_project(w: &impl ToInputArray, mean: &impl ToInputArray, src: &impl ToInputArray) -> Result<core::Mat> {
+			input_array_arg!(w);
+			input_array_arg!(mean);
+			input_array_arg!(src);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_LDA_subspaceProject_const__InputArrayR_const__InputArrayR_const__InputArrayR(w.as_raw__InputArray(), mean.as_raw__InputArray(), src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn subspace_reconstruct(w: &impl ToInputArray, mean: &impl ToInputArray, src: &impl ToInputArray) -> Result<core::Mat> {
+			input_array_arg!(w);
+			input_array_arg!(mean);
+			input_array_arg!(src);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_LDA_subspaceReconstruct_const__InputArrayR_const__InputArrayR_const__InputArrayR(w.as_raw__InputArray(), mean.as_raw__InputArray(), src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [core::LDA]
@@ -16828,22 +16943,13 @@ pub mod core {
 
 	}
 
-	/// Linear Discriminant Analysis
-	/// @todo document this class
-	pub struct LDA {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { LDA }
-
-	impl Drop for LDA {
+	impl std::fmt::Debug for LDA {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_LDA_delete(self.as_raw_mut_LDA()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("LDA")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for LDA {}
 
 	impl core::LDATraitConst for LDA {
 		#[inline] fn as_raw_LDA(&self) -> *const c_void { self.as_raw() }
@@ -16855,111 +16961,1157 @@ pub mod core {
 
 	boxed_ref! { LDA, core::LDATraitConst, as_raw_LDA, core::LDATrait, as_raw_mut_LDA }
 
-	impl LDA {
-		/// constructor
-		/// Initializes a LDA with num_components (default 0).
-		///
-		/// ## C++ default parameters
-		/// * num_components: 0
-		#[inline]
-		pub fn new(num_components: i32) -> Result<core::LDA> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_LDA_LDA_int(num_components, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::LDA::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// constructor
-		/// Initializes a LDA with num_components (default 0).
-		///
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * num_components: 0
-		#[inline]
-		pub fn new_def() -> Result<core::LDA> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_LDA_LDA(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::LDA::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Initializes and performs a Discriminant Analysis with Fisher's
-		/// Optimization Criterion on given data in src and corresponding labels
-		/// in labels. If 0 (or less) number of components are given, they are
-		/// automatically determined for given data in computation.
-		///
-		/// ## C++ default parameters
-		/// * num_components: 0
-		#[inline]
-		pub fn new_with_data(src: &impl ToInputArray, labels: &impl ToInputArray, num_components: i32) -> Result<core::LDA> {
-			input_array_arg!(src);
-			input_array_arg!(labels);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_LDA_LDA_const__InputArrayR_const__InputArrayR_int(src.as_raw__InputArray(), labels.as_raw__InputArray(), num_components, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::LDA::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Initializes and performs a Discriminant Analysis with Fisher's
-		/// Optimization Criterion on given data in src and corresponding labels
-		/// in labels. If 0 (or less) number of components are given, they are
-		/// automatically determined for given data in computation.
-		///
-		/// ## Note
-		/// This alternative version of [new_with_data] function uses the following default values for its arguments:
-		/// * num_components: 0
-		#[inline]
-		pub fn new_with_data_def(src: &impl ToInputArray, labels: &impl ToInputArray) -> Result<core::LDA> {
-			input_array_arg!(src);
-			input_array_arg!(labels);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_LDA_LDA_const__InputArrayR_const__InputArrayR(src.as_raw__InputArray(), labels.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::LDA::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn subspace_project(w: &impl ToInputArray, mean: &impl ToInputArray, src: &impl ToInputArray) -> Result<core::Mat> {
-			input_array_arg!(w);
-			input_array_arg!(mean);
-			input_array_arg!(src);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_LDA_subspaceProject_const__InputArrayR_const__InputArrayR_const__InputArrayR(w.as_raw__InputArray(), mean.as_raw__InputArray(), src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn subspace_reconstruct(w: &impl ToInputArray, mean: &impl ToInputArray, src: &impl ToInputArray) -> Result<core::Mat> {
-			input_array_arg!(w);
-			input_array_arg!(mean);
-			input_array_arg!(src);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_LDA_subspaceReconstruct_const__InputArrayR_const__InputArrayR_const__InputArrayR(w.as_raw__InputArray(), mean.as_raw__InputArray(), src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// n-dimensional dense array class \anchor CVMat_Details
+	///
+	/// The class Mat represents an n-dimensional dense numerical single-channel or multi-channel array. It
+	/// can be used to store real or complex-valued vectors and matrices, grayscale or color images, voxel
+	/// volumes, vector fields, point clouds, tensors, histograms (though, very high-dimensional histograms
+	/// may be better stored in a SparseMat ). The data layout of the array `M` is defined by the array
+	/// `M.step[]`, so that the address of element ![inline formula](https://latex.codecogs.com/png.latex?%28i%5F0%2C%2E%2E%2E%2Ci%5F%7BM%2Edims%2D1%7D%29), where ![inline formula](https://latex.codecogs.com/png.latex?0%5Cleq%20i%5Fk%3CM%2Esize%5Bk%5D), is
+	/// computed as:
+	/// ![block formula](https://latex.codecogs.com/png.latex?addr%28M%5F%7Bi%5F0%2C%2E%2E%2E%2Ci%5F%7BM%2Edims%2D1%7D%7D%29%20%3D%20M%2Edata%20%2B%20M%2Estep%5B0%5D%2Ai%5F0%20%2B%20M%2Estep%5B1%5D%2Ai%5F1%20%2B%20%2E%2E%2E%20%2B%20M%2Estep%5BM%2Edims%2D1%5D%2Ai%5F%7BM%2Edims%2D1%7D)
+	/// In case of a 2-dimensional array, the above formula is reduced to:
+	/// ![block formula](https://latex.codecogs.com/png.latex?addr%28M%5F%7Bi%2Cj%7D%29%20%3D%20M%2Edata%20%2B%20M%2Estep%5B0%5D%2Ai%20%2B%20M%2Estep%5B1%5D%2Aj)
+	/// Note that `M.step[i] >= M.step[i+1]` (in fact, `M.step[i] >= M.step[i+1]*M.size[i+1]` ). This means
+	/// that 2-dimensional matrices are stored row-by-row, 3-dimensional matrices are stored plane-by-plane,
+	/// and so on. M.step[M.dims-1] is minimal and always equal to the element size M.elemSize() .
+	///
+	/// So, the data layout in Mat is compatible with the majority of dense array types from the standard
+	/// toolkits and SDKs, such as Numpy (ndarray), Win32 (independent device bitmaps), and others,
+	/// that is, with any array that uses *steps* (or *strides*) to compute the position of a pixel.
+	/// Due to this compatibility, it is possible to make a Mat header for user-allocated data and process
+	/// it in-place using OpenCV functions.
+	///
+	/// There are many different ways to create a Mat object. The most popular options are listed below:
+	///
+	/// - Use the create(nrows, ncols, type) method or the similar Mat(nrows, ncols, type[, fillValue])
+	/// constructor. A new array of the specified size and type is allocated. type has the same meaning as
+	/// in the cvCreateMat method. For example, CV_8UC1 means a 8-bit single-channel array, CV_32FC2
+	/// means a 2-channel (complex) floating-point array, and so on.
+	/// ```C++
+	///    // make a 7x7 complex matrix filled with 1+3j.
+	///    Mat M(7,7,CV_32FC2,Scalar(1,3));
+	///    // and now turn M to a 100x60 15-channel 8-bit matrix.
+	///    // The old content will be deallocated
+	///    M.create(100,60,CV_8UC(15));
+	/// ```
+	///
+	/// As noted in the introduction to this chapter, create() allocates only a new array when the shape
+	/// or type of the current array are different from the specified ones.
+	///
+	/// - Create a multi-dimensional array:
+	/// ```C++
+	///    // create a 100x100x100 8-bit array
+	///    int sz[] = {100, 100, 100};
+	///    Mat bigCube(3, sz, CV_8U, Scalar::all(0));
+	/// ```
+	///
+	/// It passes the number of dimensions =1 to the Mat constructor but the created array will be
+	/// 2-dimensional with the number of columns set to 1. So, Mat::dims is always \>= 2 (can also be 0
+	/// when the array is empty).
+	///
+	/// - Use a copy constructor or assignment operator where there can be an array or expression on the
+	/// right side (see below). As noted in the introduction, the array assignment is an O(1) operation
+	/// because it only copies the header and increases the reference counter. The Mat::clone() method can
+	/// be used to get a full (deep) copy of the array when you need it.
+	///
+	/// - Construct a header for a part of another array. It can be a single row, single column, several
+	/// rows, several columns, rectangular region in the array (called a *minor* in algebra) or a
+	/// diagonal. Such operations are also O(1) because the new header references the same data. You can
+	/// actually modify a part of the array using this feature, for example:
+	/// ```C++
+	///    // add the 5-th row, multiplied by 3 to the 3rd row
+	///    M.row(3) = M.row(3) + M.row(5)*3;
+	///    // now copy the 7-th column to the 1-st column
+	///    // M.col(1) = M.col(7); // this will not work
+	///    Mat M1 = M.col(1);
+	///    M.col(7).copyTo(M1);
+	///    // create a new 320x240 image
+	///    Mat img(Size(320,240),CV_8UC3);
+	///    // select a ROI
+	///    Mat roi(img, Rect(10,10,100,100));
+	///    // fill the ROI with (0,255,0) (which is green in RGB space);
+	///    // the original 320x240 image will be modified
+	///    roi = Scalar(0,255,0);
+	/// ```
+	///
+	/// Due to the additional datastart and dataend members, it is possible to compute a relative
+	/// sub-array position in the main *container* array using locateROI():
+	/// ```C++
+	///    Mat A = Mat::eye(10, 10, CV_32S);
+	///    // extracts A columns, 1 (inclusive) to 3 (exclusive).
+	///    Mat B = A(Range::all(), Range(1, 3));
+	///    // extracts B rows, 5 (inclusive) to 9 (exclusive).
+	///    // that is, C \~ A(Range(5, 9), Range(1, 3))
+	///    Mat C = B(Range(5, 9), Range::all());
+	///    Size size; Point ofs;
+	///    C.locateROI(size, ofs);
+	///    // size will be (width=10,height=10) and the ofs will be (x=1, y=5)
+	/// ```
+	///
+	/// As in case of whole matrices, if you need a deep copy, use the `clone()` method of the extracted
+	/// sub-matrices.
+	///
+	/// - Make a header for user-allocated data. It can be useful to do the following:
+	///    -# Process "foreign" data using OpenCV (for example, when you implement a DirectShow\* filter or
+	///    a processing module for gstreamer, and so on). For example:
+	///    ```C++
+	///        Mat process_video_frame(const unsigned char* pixels,
+	///                                 int width, int height, int step)
+	///        {
+	///            // wrap input buffer
+	///            Mat img(height, width, CV_8UC3, (unsigned char*)pixels, step);
+	///
+	///            Mat result;
+	///            GaussianBlur(img, result, Size(7, 7), 1.5, 1.5);
+	///
+	///            return result;
+	///        }
+	///    ```
+	///
+	///    -# Quickly initialize small matrices and/or get a super-fast element access.
+	///    ```C++
+	///        double m[3][3] = {{a, b, c}, {d, e, f}, {g, h, i}};
+	///        Mat M = Mat(3, 3, CV_64F, m).inv();
+	///    ```
+	///
+	///    .
+	///
+	/// - Use MATLAB-style array initializers, zeros(), ones(), eye(), for example:
+	/// ```C++
+	///    // create a double-precision identity matrix and add it to M.
+	///    M += Mat::eye(M.rows, M.cols, CV_64F);
+	/// ```
+	///
+	///
+	/// - Use a comma-separated initializer:
+	/// ```C++
+	///    // create a 3x3 double-precision identity matrix
+	///    Mat M = (Mat_<double>(3,3) << 1, 0, 0, 0, 1, 0, 0, 0, 1);
+	/// ```
+	///
+	/// With this approach, you first call a constructor of the Mat class with the proper parameters, and
+	/// then you just put `<< operator` followed by comma-separated values that can be constants,
+	/// variables, expressions, and so on. Also, note the extra parentheses required to avoid compilation
+	/// errors.
+	///
+	/// Once the array is created, it is automatically managed via a reference-counting mechanism. If the
+	/// array header is built on top of user-allocated data, you should handle the data by yourself. The
+	/// array data is deallocated when no one points to it. If you want to release the data pointed by a
+	/// array header before the array destructor is called, use Mat::release().
+	///
+	/// The next important thing to learn about the array class is element access. This manual already
+	/// described how to compute an address of each array element. Normally, you are not required to use the
+	/// formula directly in the code. If you know the array element type (which can be retrieved using the
+	/// method Mat::type() ), you can access the element ![inline formula](https://latex.codecogs.com/png.latex?M%5F%7Bij%7D) of a 2-dimensional array as:
+	/// ```C++
+	///    M.at<double>(i,j) += 1.f;
+	/// ```
+	///
+	/// assuming that `M` is a double-precision floating-point array. There are several variants of the method
+	/// at for a different number of dimensions.
+	///
+	/// If you need to process a whole row of a 2D array, the most efficient way is to get the pointer to
+	/// the row first, and then just use the plain C operator [] :
+	/// ```C++
+	///    // compute sum of positive matrix elements
+	///    // (assuming that M is a double-precision matrix)
+	///    double sum=0;
+	///    for(int i = 0; i < M.rows; i++)
+	///    {
+	///        const double* Mi = M.ptr<double>(i);
+	///        for(int j = 0; j < M.cols; j++)
+	///            sum += std::max(Mi[j], 0.);
+	///    }
+	/// ```
+	///
+	/// Some operations, like the one above, do not actually depend on the array shape. They just process
+	/// elements of an array one by one (or elements from multiple arrays that have the same coordinates,
+	/// for example, array addition). Such operations are called *element-wise*. It makes sense to check
+	/// whether all the input/output arrays are continuous, namely, have no gaps at the end of each row. If
+	/// yes, process them as a long single row:
+	/// ```C++
+	///    // compute the sum of positive matrix elements, optimized variant
+	///    double sum=0;
+	///    int cols = M.cols, rows = M.rows;
+	///    if(M.isContinuous())
+	///    {
+	///        cols *= rows;
+	///        rows = 1;
+	///    }
+	///    for(int i = 0; i < rows; i++)
+	///    {
+	///        const double* Mi = M.ptr<double>(i);
+	///        for(int j = 0; j < cols; j++)
+	///            sum += std::max(Mi[j], 0.);
+	///    }
+	/// ```
+	///
+	/// In case of the continuous matrix, the outer loop body is executed just once. So, the overhead is
+	/// smaller, which is especially noticeable in case of small matrices.
+	///
+	/// Finally, there are STL-style iterators that are smart enough to skip gaps between successive rows:
+	/// ```C++
+	///    // compute sum of positive matrix elements, iterator-based variant
+	///    double sum=0;
+	///    MatConstIterator_<double> it = M.begin<double>(), it_end = M.end<double>();
+	///    for(; it != it_end; ++it)
+	///        sum += std::max(*it, 0.);
+	/// ```
+	///
+	/// The matrix iterators are random-access iterators, so they can be passed to any STL algorithm,
+	/// including std::sort().
+	///
+	///
+	/// Note: Matrix Expressions and arithmetic see MatExpr
+	pub struct Mat {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for LDA {
+	opencv_type_boxed! { Mat }
+
+	impl Drop for Mat {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("LDA")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_Mat_delete(self.as_raw_mut_Mat()) };
 		}
+	}
+
+	unsafe impl Send for Mat {}
+
+	impl Mat {
+		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
+		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
+		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
+		/// allocated with Mat::create . In the former case, the old content is de-referenced.
+		#[inline]
+		pub fn default() -> core::Mat {
+			let ret = unsafe { sys::cv_Mat_Mat() };
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			ret
+		}
+
+		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
+		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
+		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
+		/// allocated with Mat::create . In the former case, the old content is de-referenced.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * rows: Number of rows in a 2D array.
+		/// * cols: Number of columns in a 2D array.
+		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		#[inline]
+		pub unsafe fn new_rows_cols(rows: i32, cols: i32, typ: i32) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_Mat_Mat_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
+		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
+		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
+		/// allocated with Mat::create . In the former case, the old content is de-referenced.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * size: 2D array size: Size(cols, rows) . In the Size() constructor, the number of rows and the
+		/// number of columns go in the reverse order.
+		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		#[inline]
+		pub unsafe fn new_size(size: core::Size, typ: i32) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_Mat_Mat_Size_int(&size, typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
+		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
+		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
+		/// allocated with Mat::create . In the former case, the old content is de-referenced.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * rows: Number of rows in a 2D array.
+		/// * cols: Number of columns in a 2D array.
+		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		/// * s: An optional value to initialize each matrix element with. To set all the matrix elements to
+		/// the particular value after the construction, use the assignment operator
+		/// Mat::operator=(const Scalar& value) .
+		#[inline]
+		pub fn new_rows_cols_with_default(rows: i32, cols: i32, typ: i32, s: core::Scalar) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_Mat_int_int_int_const_ScalarR(rows, cols, typ, &s, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
+		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
+		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
+		/// allocated with Mat::create . In the former case, the old content is de-referenced.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * size: 2D array size: Size(cols, rows) . In the Size() constructor, the number of rows and the
+		/// number of columns go in the reverse order.
+		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		/// * s: An optional value to initialize each matrix element with. To set all the matrix elements to
+		/// the particular value after the construction, use the assignment operator
+		/// Mat::operator=(const Scalar& value) .
+		#[inline]
+		pub fn new_size_with_default(size: core::Size, typ: i32, s: core::Scalar) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_Mat_Size_int_const_ScalarR(&size, typ, &s, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
+		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
+		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
+		/// allocated with Mat::create . In the former case, the old content is de-referenced.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * ndims: Array dimensionality.
+		/// * sizes: Array of integers specifying an n-dimensional array shape.
+		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		#[inline]
+		pub unsafe fn new_nd(sizes: &[i32], typ: i32) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_Mat_Mat_int_const_intX_int(sizes.len().try_into()?, sizes.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
+		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
+		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
+		/// allocated with Mat::create . In the former case, the old content is de-referenced.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * sizes: Array of integers specifying an n-dimensional array shape.
+		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		#[inline]
+		pub unsafe fn new_nd_vec(sizes: &core::Vector<i32>, typ: i32) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_Mat_Mat_const_vectorLintGR_int(sizes.as_raw_VectorOfi32(), typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
+		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
+		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
+		/// allocated with Mat::create . In the former case, the old content is de-referenced.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * ndims: Array dimensionality.
+		/// * sizes: Array of integers specifying an n-dimensional array shape.
+		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		/// * s: An optional value to initialize each matrix element with. To set all the matrix elements to
+		/// the particular value after the construction, use the assignment operator
+		/// Mat::operator=(const Scalar& value) .
+		#[inline]
+		pub fn new_nd_with_default(sizes: &[i32], typ: i32, s: core::Scalar) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_Mat_int_const_intX_int_const_ScalarR(sizes.len().try_into()?, sizes.as_ptr(), typ, &s, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
+		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
+		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
+		/// allocated with Mat::create . In the former case, the old content is de-referenced.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * sizes: Array of integers specifying an n-dimensional array shape.
+		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		/// * s: An optional value to initialize each matrix element with. To set all the matrix elements to
+		/// the particular value after the construction, use the assignment operator
+		/// Mat::operator=(const Scalar& value) .
+		#[inline]
+		pub fn new_nd_vec_with_default(sizes: &core::Vector<i32>, typ: i32, s: core::Scalar) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_Mat_const_vectorLintGR_int_const_ScalarR(sizes.as_raw_VectorOfi32(), typ, &s, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
+		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
+		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
+		/// allocated with Mat::create . In the former case, the old content is de-referenced.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
+		/// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
+		/// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
+		/// formed using such a constructor, you also modify the corresponding elements of m . If you want to
+		/// have an independent copy of the sub-array, use Mat::clone() .
+		#[inline]
+		pub fn copy(m: &impl core::MatTraitConst) -> Result<BoxedRef<core::Mat>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_Mat_const_MatR(m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<core::Mat>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// @overload
+		/// ## Parameters
+		/// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
+		/// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
+		/// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
+		/// formed using such a constructor, you also modify the corresponding elements of m . If you want to
+		/// have an independent copy of the sub-array, use Mat::clone() .
+		#[inline]
+		pub fn copy_mut(m: &mut impl core::MatTrait) -> Result<BoxedRefMut<core::Mat>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_Mat_MatR(m.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRefMut::<core::Mat>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
+		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
+		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
+		/// allocated with Mat::create . In the former case, the old content is de-referenced.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * rows: Number of rows in a 2D array.
+		/// * cols: Number of columns in a 2D array.
+		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		/// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
+		/// allocate matrix data. Instead, they just initialize the matrix header that points to the specified
+		/// data, which means that no data is copied. This operation is very efficient and can be used to
+		/// process external data using OpenCV functions. The external data is not automatically deallocated, so
+		/// you should take care of it.
+		/// * step: Number of bytes each matrix row occupies. The value should include the padding bytes at
+		/// the end of each row, if any. If the parameter is missing (set to AUTO_STEP ), no padding is assumed
+		/// and the actual step is calculated as cols*elemSize(). See Mat::elemSize.
+		///
+		/// ## C++ default parameters
+		/// * step: AUTO_STEP
+		#[inline]
+		pub unsafe fn new_rows_cols_with_data_unsafe(rows: i32, cols: i32, typ: i32, data: *mut c_void, step: size_t) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_Mat_Mat_int_int_int_voidX_size_t(rows, cols, typ, data, step, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// @overload
+		/// ## Parameters
+		/// * rows: Number of rows in a 2D array.
+		/// * cols: Number of columns in a 2D array.
+		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		/// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
+		/// allocate matrix data. Instead, they just initialize the matrix header that points to the specified
+		/// data, which means that no data is copied. This operation is very efficient and can be used to
+		/// process external data using OpenCV functions. The external data is not automatically deallocated, so
+		/// you should take care of it.
+		/// * step: Number of bytes each matrix row occupies. The value should include the padding bytes at
+		/// the end of each row, if any. If the parameter is missing (set to AUTO_STEP ), no padding is assumed
+		/// and the actual step is calculated as cols*elemSize(). See Mat::elemSize.
+		///
+		/// ## Note
+		/// This alternative version of [new_rows_cols_with_data_unsafe] function uses the following default values for its arguments:
+		/// * step: AUTO_STEP
+		#[inline]
+		pub unsafe fn new_rows_cols_with_data_unsafe_def(rows: i32, cols: i32, typ: i32, data: *mut c_void) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_Mat_Mat_int_int_int_voidX(rows, cols, typ, data, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
+		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
+		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
+		/// allocated with Mat::create . In the former case, the old content is de-referenced.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * size: 2D array size: Size(cols, rows) . In the Size() constructor, the number of rows and the
+		/// number of columns go in the reverse order.
+		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		/// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
+		/// allocate matrix data. Instead, they just initialize the matrix header that points to the specified
+		/// data, which means that no data is copied. This operation is very efficient and can be used to
+		/// process external data using OpenCV functions. The external data is not automatically deallocated, so
+		/// you should take care of it.
+		/// * step: Number of bytes each matrix row occupies. The value should include the padding bytes at
+		/// the end of each row, if any. If the parameter is missing (set to AUTO_STEP ), no padding is assumed
+		/// and the actual step is calculated as cols*elemSize(). See Mat::elemSize.
+		///
+		/// ## C++ default parameters
+		/// * step: AUTO_STEP
+		#[inline]
+		pub unsafe fn new_size_with_data_unsafe(size: core::Size, typ: i32, data: *mut c_void, step: size_t) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_Mat_Mat_Size_int_voidX_size_t(&size, typ, data, step, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// @overload
+		/// ## Parameters
+		/// * size: 2D array size: Size(cols, rows) . In the Size() constructor, the number of rows and the
+		/// number of columns go in the reverse order.
+		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		/// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
+		/// allocate matrix data. Instead, they just initialize the matrix header that points to the specified
+		/// data, which means that no data is copied. This operation is very efficient and can be used to
+		/// process external data using OpenCV functions. The external data is not automatically deallocated, so
+		/// you should take care of it.
+		/// * step: Number of bytes each matrix row occupies. The value should include the padding bytes at
+		/// the end of each row, if any. If the parameter is missing (set to AUTO_STEP ), no padding is assumed
+		/// and the actual step is calculated as cols*elemSize(). See Mat::elemSize.
+		///
+		/// ## Note
+		/// This alternative version of [new_size_with_data_unsafe] function uses the following default values for its arguments:
+		/// * step: AUTO_STEP
+		#[inline]
+		pub unsafe fn new_size_with_data_unsafe_def(size: core::Size, typ: i32, data: *mut c_void) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_Mat_Mat_Size_int_voidX(&size, typ, data, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
+		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
+		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
+		/// allocated with Mat::create . In the former case, the old content is de-referenced.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * ndims: Array dimensionality.
+		/// * sizes: Array of integers specifying an n-dimensional array shape.
+		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		/// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
+		/// allocate matrix data. Instead, they just initialize the matrix header that points to the specified
+		/// data, which means that no data is copied. This operation is very efficient and can be used to
+		/// process external data using OpenCV functions. The external data is not automatically deallocated, so
+		/// you should take care of it.
+		/// * steps: Array of ndims-1 steps in case of a multi-dimensional array (the last step is always
+		/// set to the element size). If not specified, the matrix is assumed to be continuous.
+		///
+		/// ## C++ default parameters
+		/// * steps: 0
+		#[inline]
+		pub unsafe fn new_nd_with_data_unsafe(sizes: &[i32], typ: i32, data: *mut c_void, steps: Option<&[size_t]>) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_Mat_Mat_int_const_intX_int_voidX_const_size_tX(sizes.len().try_into()?, sizes.as_ptr(), typ, data, steps.map_or(::core::ptr::null(), |steps| steps.as_ptr()), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// @overload
+		/// ## Parameters
+		/// * ndims: Array dimensionality.
+		/// * sizes: Array of integers specifying an n-dimensional array shape.
+		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		/// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
+		/// allocate matrix data. Instead, they just initialize the matrix header that points to the specified
+		/// data, which means that no data is copied. This operation is very efficient and can be used to
+		/// process external data using OpenCV functions. The external data is not automatically deallocated, so
+		/// you should take care of it.
+		/// * steps: Array of ndims-1 steps in case of a multi-dimensional array (the last step is always
+		/// set to the element size). If not specified, the matrix is assumed to be continuous.
+		///
+		/// ## Note
+		/// This alternative version of [new_nd_with_data_unsafe] function uses the following default values for its arguments:
+		/// * steps: 0
+		#[inline]
+		pub unsafe fn new_nd_with_data_unsafe_def(sizes: &[i32], typ: i32, data: *mut c_void) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_Mat_Mat_int_const_intX_int_voidX(sizes.len().try_into()?, sizes.as_ptr(), typ, data, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
+		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
+		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
+		/// allocated with Mat::create . In the former case, the old content is de-referenced.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * sizes: Array of integers specifying an n-dimensional array shape.
+		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		/// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
+		/// allocate matrix data. Instead, they just initialize the matrix header that points to the specified
+		/// data, which means that no data is copied. This operation is very efficient and can be used to
+		/// process external data using OpenCV functions. The external data is not automatically deallocated, so
+		/// you should take care of it.
+		/// * steps: Array of ndims-1 steps in case of a multi-dimensional array (the last step is always
+		/// set to the element size). If not specified, the matrix is assumed to be continuous.
+		///
+		/// ## C++ default parameters
+		/// * steps: 0
+		#[inline]
+		pub unsafe fn new_nd_vec_with_data_unsafe(sizes: &core::Vector<i32>, typ: i32, data: *mut c_void, steps: Option<&[size_t]>) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_Mat_Mat_const_vectorLintGR_int_voidX_const_size_tX(sizes.as_raw_VectorOfi32(), typ, data, steps.map_or(::core::ptr::null(), |steps| steps.as_ptr()), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// @overload
+		/// ## Parameters
+		/// * sizes: Array of integers specifying an n-dimensional array shape.
+		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		/// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
+		/// allocate matrix data. Instead, they just initialize the matrix header that points to the specified
+		/// data, which means that no data is copied. This operation is very efficient and can be used to
+		/// process external data using OpenCV functions. The external data is not automatically deallocated, so
+		/// you should take care of it.
+		/// * steps: Array of ndims-1 steps in case of a multi-dimensional array (the last step is always
+		/// set to the element size). If not specified, the matrix is assumed to be continuous.
+		///
+		/// ## Note
+		/// This alternative version of [new_nd_vec_with_data_unsafe] function uses the following default values for its arguments:
+		/// * steps: 0
+		#[inline]
+		pub unsafe fn new_nd_vec_with_data_unsafe_def(sizes: &core::Vector<i32>, typ: i32, data: *mut c_void) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_Mat_Mat_const_vectorLintGR_int_voidX(sizes.as_raw_VectorOfi32(), typ, data, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
+		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
+		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
+		/// allocated with Mat::create . In the former case, the old content is de-referenced.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
+		/// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
+		/// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
+		/// formed using such a constructor, you also modify the corresponding elements of m . If you want to
+		/// have an independent copy of the sub-array, use Mat::clone() .
+		/// * rowRange: Range of the m rows to take. As usual, the range start is inclusive and the range
+		/// end is exclusive. Use Range::all() to take all the rows.
+		/// * colRange: Range of the m columns to take. Use Range::all() to take all the columns.
+		///
+		/// ## C++ default parameters
+		/// * col_range: Range::all()
+		#[inline]
+		pub fn rowscols<'boxed>(m: &'boxed impl core::MatTraitConst, row_range: &impl core::RangeTraitConst, col_range: &impl core::RangeTraitConst) -> Result<BoxedRef<'boxed, core::Mat>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_Mat_const_MatR_const_RangeR_const_RangeR(m.as_raw_Mat(), row_range.as_raw_Range(), col_range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<'boxed, core::Mat>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// @overload
+		/// ## Parameters
+		/// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
+		/// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
+		/// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
+		/// formed using such a constructor, you also modify the corresponding elements of m . If you want to
+		/// have an independent copy of the sub-array, use Mat::clone() .
+		/// * rowRange: Range of the m rows to take. As usual, the range start is inclusive and the range
+		/// end is exclusive. Use Range::all() to take all the rows.
+		/// * colRange: Range of the m columns to take. Use Range::all() to take all the columns.
+		///
+		/// ## Note
+		/// This alternative version of [rowscols] function uses the following default values for its arguments:
+		/// * col_range: Range::all()
+		#[inline]
+		pub fn rowscols_def_mut<'boxed>(m: &'boxed mut impl core::MatTrait, row_range: &impl core::RangeTraitConst) -> Result<BoxedRefMut<'boxed, core::Mat>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_Mat_MatR_const_RangeR(m.as_raw_mut_Mat(), row_range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRefMut::<'boxed, core::Mat>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// @overload
+		/// ## Parameters
+		/// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
+		/// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
+		/// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
+		/// formed using such a constructor, you also modify the corresponding elements of m . If you want to
+		/// have an independent copy of the sub-array, use Mat::clone() .
+		/// * rowRange: Range of the m rows to take. As usual, the range start is inclusive and the range
+		/// end is exclusive. Use Range::all() to take all the rows.
+		/// * colRange: Range of the m columns to take. Use Range::all() to take all the columns.
+		///
+		/// ## Note
+		/// This alternative version of [rowscols] function uses the following default values for its arguments:
+		/// * col_range: Range::all()
+		#[inline]
+		pub fn rowscols_def<'boxed>(m: &'boxed impl core::MatTraitConst, row_range: &impl core::RangeTraitConst) -> Result<BoxedRef<'boxed, core::Mat>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_Mat_const_MatR_const_RangeR(m.as_raw_Mat(), row_range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<'boxed, core::Mat>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// @overload
+		/// ## Parameters
+		/// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
+		/// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
+		/// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
+		/// formed using such a constructor, you also modify the corresponding elements of m . If you want to
+		/// have an independent copy of the sub-array, use Mat::clone() .
+		/// * rowRange: Range of the m rows to take. As usual, the range start is inclusive and the range
+		/// end is exclusive. Use Range::all() to take all the rows.
+		/// * colRange: Range of the m columns to take. Use Range::all() to take all the columns.
+		///
+		/// ## C++ default parameters
+		/// * col_range: Range::all()
+		#[inline]
+		pub fn rowscols_mut<'boxed>(m: &'boxed mut impl core::MatTrait, row_range: &impl core::RangeTraitConst, col_range: &impl core::RangeTraitConst) -> Result<BoxedRefMut<'boxed, core::Mat>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_Mat_MatR_const_RangeR_const_RangeR(m.as_raw_mut_Mat(), row_range.as_raw_Range(), col_range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRefMut::<'boxed, core::Mat>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
+		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
+		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
+		/// allocated with Mat::create . In the former case, the old content is de-referenced.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
+		/// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
+		/// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
+		/// formed using such a constructor, you also modify the corresponding elements of m . If you want to
+		/// have an independent copy of the sub-array, use Mat::clone() .
+		/// * roi: Region of interest.
+		#[inline]
+		pub fn roi(m: &impl core::MatTraitConst, roi: core::Rect) -> Result<BoxedRef<core::Mat>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_Mat_const_MatR_const_RectR(m.as_raw_Mat(), &roi, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<core::Mat>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// @overload
+		/// ## Parameters
+		/// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
+		/// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
+		/// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
+		/// formed using such a constructor, you also modify the corresponding elements of m . If you want to
+		/// have an independent copy of the sub-array, use Mat::clone() .
+		/// * roi: Region of interest.
+		#[inline]
+		pub fn roi_mut(m: &mut impl core::MatTrait, roi: core::Rect) -> Result<BoxedRefMut<core::Mat>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_Mat_MatR_const_RectR(m.as_raw_mut_Mat(), &roi, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRefMut::<core::Mat>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
+		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
+		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
+		/// allocated with Mat::create . In the former case, the old content is de-referenced.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
+		/// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
+		/// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
+		/// formed using such a constructor, you also modify the corresponding elements of m . If you want to
+		/// have an independent copy of the sub-array, use Mat::clone() .
+		/// * ranges: Array of selected ranges of m along each dimensionality.
+		#[inline]
+		pub fn ranges<'boxed>(m: &'boxed impl core::MatTraitConst, ranges: &core::Vector<core::Range>) -> Result<BoxedRef<'boxed, core::Mat>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_Mat_const_MatR_const_vectorLRangeGR(m.as_raw_Mat(), ranges.as_raw_VectorOfRange(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<'boxed, core::Mat>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// @overload
+		/// ## Parameters
+		/// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
+		/// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
+		/// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
+		/// formed using such a constructor, you also modify the corresponding elements of m . If you want to
+		/// have an independent copy of the sub-array, use Mat::clone() .
+		/// * ranges: Array of selected ranges of m along each dimensionality.
+		#[inline]
+		pub fn ranges_mut<'boxed>(m: &'boxed mut impl core::MatTrait, ranges: &core::Vector<core::Range>) -> Result<BoxedRefMut<'boxed, core::Mat>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_Mat_MatR_const_vectorLRangeGR(m.as_raw_mut_Mat(), ranges.as_raw_VectorOfRange(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRefMut::<'boxed, core::Mat>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// download data from GpuMat
+		#[inline]
+		pub fn from_gpumat(m: &impl core::GpuMatTraitConst) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_Mat_const_GpuMatR(m.as_raw_GpuMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// creates a diagonal matrix
+		///
+		/// The method creates a square diagonal matrix from specified main diagonal.
+		/// ## Parameters
+		/// * d: One-dimensional matrix that represents the main diagonal.
+		#[inline]
+		#[must_use]
+		pub fn diag_mat(d: &impl core::MatTraitConst) -> Result<core::Mat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_diag_const_MatR(d.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Returns a zero array of the specified size and type.
+		///
+		/// The method returns a Matlab-style zero array initializer. It can be used to quickly form a constant
+		/// array as a function parameter, part of a matrix expression, or as a matrix initializer:
+		/// ```C++
+		///    Mat A;
+		///    A = Mat::zeros(3, 3, CV_32F);
+		/// ```
+		///
+		/// In the example above, a new matrix is allocated only if A is not a 3x3 floating-point matrix.
+		/// Otherwise, the existing matrix A is filled with zeros.
+		/// ## Parameters
+		/// * rows: Number of rows.
+		/// * cols: Number of columns.
+		/// * type: Created matrix type.
+		#[inline]
+		#[must_use]
+		pub fn zeros(rows: i32, cols: i32, typ: i32) -> Result<core::MatExpr> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_zeros_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Returns a zero array of the specified size and type.
+		///
+		/// The method returns a Matlab-style zero array initializer. It can be used to quickly form a constant
+		/// array as a function parameter, part of a matrix expression, or as a matrix initializer:
+		/// ```C++
+		///    Mat A;
+		///    A = Mat::zeros(3, 3, CV_32F);
+		/// ```
+		///
+		/// In the example above, a new matrix is allocated only if A is not a 3x3 floating-point matrix.
+		/// Otherwise, the existing matrix A is filled with zeros.
+		/// ## Parameters
+		/// * rows: Number of rows.
+		/// * cols: Number of columns.
+		/// * type: Created matrix type.
+		///
+		/// ## Overloaded parameters
+		///
+		/// * size: Alternative to the matrix size specification Size(cols, rows) .
+		/// * type: Created matrix type.
+		#[inline]
+		#[must_use]
+		pub fn zeros_size(size: core::Size, typ: i32) -> Result<core::MatExpr> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_zeros_Size_int(&size, typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Returns a zero array of the specified size and type.
+		///
+		/// The method returns a Matlab-style zero array initializer. It can be used to quickly form a constant
+		/// array as a function parameter, part of a matrix expression, or as a matrix initializer:
+		/// ```C++
+		///    Mat A;
+		///    A = Mat::zeros(3, 3, CV_32F);
+		/// ```
+		///
+		/// In the example above, a new matrix is allocated only if A is not a 3x3 floating-point matrix.
+		/// Otherwise, the existing matrix A is filled with zeros.
+		/// ## Parameters
+		/// * rows: Number of rows.
+		/// * cols: Number of columns.
+		/// * type: Created matrix type.
+		///
+		/// ## Overloaded parameters
+		///
+		/// * ndims: Array dimensionality.
+		/// * sz: Array of integers specifying the array shape.
+		/// * type: Created matrix type.
+		#[inline]
+		#[must_use]
+		pub fn zeros_nd(sz: &[i32], typ: i32) -> Result<core::MatExpr> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_zeros_int_const_intX_int(sz.len().try_into()?, sz.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Returns an array of all 1's of the specified size and type.
+		///
+		/// The method returns a Matlab-style 1's array initializer, similarly to Mat::zeros. Note that using
+		/// this method you can initialize an array with an arbitrary value, using the following Matlab idiom:
+		/// ```C++
+		///    Mat A = Mat::ones(100, 100, CV_8U)*3; // make 100x100 matrix filled with 3.
+		/// ```
+		///
+		/// The above operation does not form a 100x100 matrix of 1's and then multiply it by 3. Instead, it
+		/// just remembers the scale factor (3 in this case) and use it when actually invoking the matrix
+		/// initializer.
+		///
+		/// Note: In case of multi-channels type, only the first channel will be initialized with 1's, the
+		/// others will be set to 0's.
+		/// ## Parameters
+		/// * rows: Number of rows.
+		/// * cols: Number of columns.
+		/// * type: Created matrix type.
+		#[inline]
+		#[must_use]
+		pub fn ones(rows: i32, cols: i32, typ: i32) -> Result<core::MatExpr> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_ones_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Returns an array of all 1's of the specified size and type.
+		///
+		/// The method returns a Matlab-style 1's array initializer, similarly to Mat::zeros. Note that using
+		/// this method you can initialize an array with an arbitrary value, using the following Matlab idiom:
+		/// ```C++
+		///    Mat A = Mat::ones(100, 100, CV_8U)*3; // make 100x100 matrix filled with 3.
+		/// ```
+		///
+		/// The above operation does not form a 100x100 matrix of 1's and then multiply it by 3. Instead, it
+		/// just remembers the scale factor (3 in this case) and use it when actually invoking the matrix
+		/// initializer.
+		///
+		/// Note: In case of multi-channels type, only the first channel will be initialized with 1's, the
+		/// others will be set to 0's.
+		/// ## Parameters
+		/// * rows: Number of rows.
+		/// * cols: Number of columns.
+		/// * type: Created matrix type.
+		///
+		/// ## Overloaded parameters
+		///
+		/// * size: Alternative to the matrix size specification Size(cols, rows) .
+		/// * type: Created matrix type.
+		#[inline]
+		#[must_use]
+		pub fn ones_size(size: core::Size, typ: i32) -> Result<core::MatExpr> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_ones_Size_int(&size, typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Returns an array of all 1's of the specified size and type.
+		///
+		/// The method returns a Matlab-style 1's array initializer, similarly to Mat::zeros. Note that using
+		/// this method you can initialize an array with an arbitrary value, using the following Matlab idiom:
+		/// ```C++
+		///    Mat A = Mat::ones(100, 100, CV_8U)*3; // make 100x100 matrix filled with 3.
+		/// ```
+		///
+		/// The above operation does not form a 100x100 matrix of 1's and then multiply it by 3. Instead, it
+		/// just remembers the scale factor (3 in this case) and use it when actually invoking the matrix
+		/// initializer.
+		///
+		/// Note: In case of multi-channels type, only the first channel will be initialized with 1's, the
+		/// others will be set to 0's.
+		/// ## Parameters
+		/// * rows: Number of rows.
+		/// * cols: Number of columns.
+		/// * type: Created matrix type.
+		///
+		/// ## Overloaded parameters
+		///
+		/// * ndims: Array dimensionality.
+		/// * sz: Array of integers specifying the array shape.
+		/// * type: Created matrix type.
+		#[inline]
+		#[must_use]
+		pub fn ones_nd(sz: &[i32], typ: i32) -> Result<core::MatExpr> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_ones_int_const_intX_int(sz.len().try_into()?, sz.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Returns an identity matrix of the specified size and type.
+		///
+		/// The method returns a Matlab-style identity matrix initializer, similarly to Mat::zeros. Similarly to
+		/// Mat::ones, you can use a scale operation to create a scaled identity matrix efficiently:
+		/// ```C++
+		///    // make a 4x4 diagonal matrix with 0.1's on the diagonal.
+		///    Mat A = Mat::eye(4, 4, CV_32F)*0.1;
+		/// ```
+		///
+		///
+		/// Note: In case of multi-channels type, identity matrix will be initialized only for the first channel,
+		/// the others will be set to 0's
+		/// ## Parameters
+		/// * rows: Number of rows.
+		/// * cols: Number of columns.
+		/// * type: Created matrix type.
+		#[inline]
+		#[must_use]
+		pub fn eye(rows: i32, cols: i32, typ: i32) -> Result<core::MatExpr> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_eye_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Returns an identity matrix of the specified size and type.
+		///
+		/// The method returns a Matlab-style identity matrix initializer, similarly to Mat::zeros. Similarly to
+		/// Mat::ones, you can use a scale operation to create a scaled identity matrix efficiently:
+		/// ```C++
+		///    // make a 4x4 diagonal matrix with 0.1's on the diagonal.
+		///    Mat A = Mat::eye(4, 4, CV_32F)*0.1;
+		/// ```
+		///
+		///
+		/// Note: In case of multi-channels type, identity matrix will be initialized only for the first channel,
+		/// the others will be set to 0's
+		/// ## Parameters
+		/// * rows: Number of rows.
+		/// * cols: Number of columns.
+		/// * type: Created matrix type.
+		///
+		/// ## Overloaded parameters
+		///
+		/// * size: Alternative matrix size specification as Size(cols, rows) .
+		/// * type: Created matrix type.
+		#[inline]
+		#[must_use]
+		pub fn eye_size(size: core::Size, typ: i32) -> Result<core::MatExpr> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Mat_eye_Size_int(&size, typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [core::Mat]
@@ -19911,223 +21063,21 @@ pub mod core {
 
 	}
 
-	/// n-dimensional dense array class \anchor CVMat_Details
-	///
-	/// The class Mat represents an n-dimensional dense numerical single-channel or multi-channel array. It
-	/// can be used to store real or complex-valued vectors and matrices, grayscale or color images, voxel
-	/// volumes, vector fields, point clouds, tensors, histograms (though, very high-dimensional histograms
-	/// may be better stored in a SparseMat ). The data layout of the array `M` is defined by the array
-	/// `M.step[]`, so that the address of element ![inline formula](https://latex.codecogs.com/png.latex?%28i%5F0%2C%2E%2E%2E%2Ci%5F%7BM%2Edims%2D1%7D%29), where ![inline formula](https://latex.codecogs.com/png.latex?0%5Cleq%20i%5Fk%3CM%2Esize%5Bk%5D), is
-	/// computed as:
-	/// ![block formula](https://latex.codecogs.com/png.latex?addr%28M%5F%7Bi%5F0%2C%2E%2E%2E%2Ci%5F%7BM%2Edims%2D1%7D%7D%29%20%3D%20M%2Edata%20%2B%20M%2Estep%5B0%5D%2Ai%5F0%20%2B%20M%2Estep%5B1%5D%2Ai%5F1%20%2B%20%2E%2E%2E%20%2B%20M%2Estep%5BM%2Edims%2D1%5D%2Ai%5F%7BM%2Edims%2D1%7D)
-	/// In case of a 2-dimensional array, the above formula is reduced to:
-	/// ![block formula](https://latex.codecogs.com/png.latex?addr%28M%5F%7Bi%2Cj%7D%29%20%3D%20M%2Edata%20%2B%20M%2Estep%5B0%5D%2Ai%20%2B%20M%2Estep%5B1%5D%2Aj)
-	/// Note that `M.step[i] >= M.step[i+1]` (in fact, `M.step[i] >= M.step[i+1]*M.size[i+1]` ). This means
-	/// that 2-dimensional matrices are stored row-by-row, 3-dimensional matrices are stored plane-by-plane,
-	/// and so on. M.step[M.dims-1] is minimal and always equal to the element size M.elemSize() .
-	///
-	/// So, the data layout in Mat is compatible with the majority of dense array types from the standard
-	/// toolkits and SDKs, such as Numpy (ndarray), Win32 (independent device bitmaps), and others,
-	/// that is, with any array that uses *steps* (or *strides*) to compute the position of a pixel.
-	/// Due to this compatibility, it is possible to make a Mat header for user-allocated data and process
-	/// it in-place using OpenCV functions.
-	///
-	/// There are many different ways to create a Mat object. The most popular options are listed below:
-	///
-	/// - Use the create(nrows, ncols, type) method or the similar Mat(nrows, ncols, type[, fillValue])
-	/// constructor. A new array of the specified size and type is allocated. type has the same meaning as
-	/// in the cvCreateMat method. For example, CV_8UC1 means a 8-bit single-channel array, CV_32FC2
-	/// means a 2-channel (complex) floating-point array, and so on.
-	/// ```C++
-	///    // make a 7x7 complex matrix filled with 1+3j.
-	///    Mat M(7,7,CV_32FC2,Scalar(1,3));
-	///    // and now turn M to a 100x60 15-channel 8-bit matrix.
-	///    // The old content will be deallocated
-	///    M.create(100,60,CV_8UC(15));
-	/// ```
-	///
-	/// As noted in the introduction to this chapter, create() allocates only a new array when the shape
-	/// or type of the current array are different from the specified ones.
-	///
-	/// - Create a multi-dimensional array:
-	/// ```C++
-	///    // create a 100x100x100 8-bit array
-	///    int sz[] = {100, 100, 100};
-	///    Mat bigCube(3, sz, CV_8U, Scalar::all(0));
-	/// ```
-	///
-	/// It passes the number of dimensions =1 to the Mat constructor but the created array will be
-	/// 2-dimensional with the number of columns set to 1. So, Mat::dims is always \>= 2 (can also be 0
-	/// when the array is empty).
-	///
-	/// - Use a copy constructor or assignment operator where there can be an array or expression on the
-	/// right side (see below). As noted in the introduction, the array assignment is an O(1) operation
-	/// because it only copies the header and increases the reference counter. The Mat::clone() method can
-	/// be used to get a full (deep) copy of the array when you need it.
-	///
-	/// - Construct a header for a part of another array. It can be a single row, single column, several
-	/// rows, several columns, rectangular region in the array (called a *minor* in algebra) or a
-	/// diagonal. Such operations are also O(1) because the new header references the same data. You can
-	/// actually modify a part of the array using this feature, for example:
-	/// ```C++
-	///    // add the 5-th row, multiplied by 3 to the 3rd row
-	///    M.row(3) = M.row(3) + M.row(5)*3;
-	///    // now copy the 7-th column to the 1-st column
-	///    // M.col(1) = M.col(7); // this will not work
-	///    Mat M1 = M.col(1);
-	///    M.col(7).copyTo(M1);
-	///    // create a new 320x240 image
-	///    Mat img(Size(320,240),CV_8UC3);
-	///    // select a ROI
-	///    Mat roi(img, Rect(10,10,100,100));
-	///    // fill the ROI with (0,255,0) (which is green in RGB space);
-	///    // the original 320x240 image will be modified
-	///    roi = Scalar(0,255,0);
-	/// ```
-	///
-	/// Due to the additional datastart and dataend members, it is possible to compute a relative
-	/// sub-array position in the main *container* array using locateROI():
-	/// ```C++
-	///    Mat A = Mat::eye(10, 10, CV_32S);
-	///    // extracts A columns, 1 (inclusive) to 3 (exclusive).
-	///    Mat B = A(Range::all(), Range(1, 3));
-	///    // extracts B rows, 5 (inclusive) to 9 (exclusive).
-	///    // that is, C \~ A(Range(5, 9), Range(1, 3))
-	///    Mat C = B(Range(5, 9), Range::all());
-	///    Size size; Point ofs;
-	///    C.locateROI(size, ofs);
-	///    // size will be (width=10,height=10) and the ofs will be (x=1, y=5)
-	/// ```
-	///
-	/// As in case of whole matrices, if you need a deep copy, use the `clone()` method of the extracted
-	/// sub-matrices.
-	///
-	/// - Make a header for user-allocated data. It can be useful to do the following:
-	///    -# Process "foreign" data using OpenCV (for example, when you implement a DirectShow\* filter or
-	///    a processing module for gstreamer, and so on). For example:
-	///    ```C++
-	///        Mat process_video_frame(const unsigned char* pixels,
-	///                                 int width, int height, int step)
-	///        {
-	///            // wrap input buffer
-	///            Mat img(height, width, CV_8UC3, (unsigned char*)pixels, step);
-	///
-	///            Mat result;
-	///            GaussianBlur(img, result, Size(7, 7), 1.5, 1.5);
-	///
-	///            return result;
-	///        }
-	///    ```
-	///
-	///    -# Quickly initialize small matrices and/or get a super-fast element access.
-	///    ```C++
-	///        double m[3][3] = {{a, b, c}, {d, e, f}, {g, h, i}};
-	///        Mat M = Mat(3, 3, CV_64F, m).inv();
-	///    ```
-	///
-	///    .
-	///
-	/// - Use MATLAB-style array initializers, zeros(), ones(), eye(), for example:
-	/// ```C++
-	///    // create a double-precision identity matrix and add it to M.
-	///    M += Mat::eye(M.rows, M.cols, CV_64F);
-	/// ```
-	///
-	///
-	/// - Use a comma-separated initializer:
-	/// ```C++
-	///    // create a 3x3 double-precision identity matrix
-	///    Mat M = (Mat_<double>(3,3) << 1, 0, 0, 0, 1, 0, 0, 0, 1);
-	/// ```
-	///
-	/// With this approach, you first call a constructor of the Mat class with the proper parameters, and
-	/// then you just put `<< operator` followed by comma-separated values that can be constants,
-	/// variables, expressions, and so on. Also, note the extra parentheses required to avoid compilation
-	/// errors.
-	///
-	/// Once the array is created, it is automatically managed via a reference-counting mechanism. If the
-	/// array header is built on top of user-allocated data, you should handle the data by yourself. The
-	/// array data is deallocated when no one points to it. If you want to release the data pointed by a
-	/// array header before the array destructor is called, use Mat::release().
-	///
-	/// The next important thing to learn about the array class is element access. This manual already
-	/// described how to compute an address of each array element. Normally, you are not required to use the
-	/// formula directly in the code. If you know the array element type (which can be retrieved using the
-	/// method Mat::type() ), you can access the element ![inline formula](https://latex.codecogs.com/png.latex?M%5F%7Bij%7D) of a 2-dimensional array as:
-	/// ```C++
-	///    M.at<double>(i,j) += 1.f;
-	/// ```
-	///
-	/// assuming that `M` is a double-precision floating-point array. There are several variants of the method
-	/// at for a different number of dimensions.
-	///
-	/// If you need to process a whole row of a 2D array, the most efficient way is to get the pointer to
-	/// the row first, and then just use the plain C operator [] :
-	/// ```C++
-	///    // compute sum of positive matrix elements
-	///    // (assuming that M is a double-precision matrix)
-	///    double sum=0;
-	///    for(int i = 0; i < M.rows; i++)
-	///    {
-	///        const double* Mi = M.ptr<double>(i);
-	///        for(int j = 0; j < M.cols; j++)
-	///            sum += std::max(Mi[j], 0.);
-	///    }
-	/// ```
-	///
-	/// Some operations, like the one above, do not actually depend on the array shape. They just process
-	/// elements of an array one by one (or elements from multiple arrays that have the same coordinates,
-	/// for example, array addition). Such operations are called *element-wise*. It makes sense to check
-	/// whether all the input/output arrays are continuous, namely, have no gaps at the end of each row. If
-	/// yes, process them as a long single row:
-	/// ```C++
-	///    // compute the sum of positive matrix elements, optimized variant
-	///    double sum=0;
-	///    int cols = M.cols, rows = M.rows;
-	///    if(M.isContinuous())
-	///    {
-	///        cols *= rows;
-	///        rows = 1;
-	///    }
-	///    for(int i = 0; i < rows; i++)
-	///    {
-	///        const double* Mi = M.ptr<double>(i);
-	///        for(int j = 0; j < cols; j++)
-	///            sum += std::max(Mi[j], 0.);
-	///    }
-	/// ```
-	///
-	/// In case of the continuous matrix, the outer loop body is executed just once. So, the overhead is
-	/// smaller, which is especially noticeable in case of small matrices.
-	///
-	/// Finally, there are STL-style iterators that are smart enough to skip gaps between successive rows:
-	/// ```C++
-	///    // compute sum of positive matrix elements, iterator-based variant
-	///    double sum=0;
-	///    MatConstIterator_<double> it = M.begin<double>(), it_end = M.end<double>();
-	///    for(; it != it_end; ++it)
-	///        sum += std::max(*it, 0.);
-	/// ```
-	///
-	/// The matrix iterators are random-access iterators, so they can be passed to any STL algorithm,
-	/// including std::sort().
-	///
-	///
-	/// Note: Matrix Expressions and arithmetic see MatExpr
-	pub struct Mat {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Mat }
-
-	impl Drop for Mat {
+	impl Default for Mat {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_Mat_delete(self.as_raw_mut_Mat()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for Mat {}
+	impl Clone for Mat {
+		#[inline]
+		/// Calls try_clone() and panics if that fails
+		fn clone(&self) -> Self {
+			self.try_clone().expect("Cannot clone Mat")
+		}
+	}
 
 	impl core::MatTraitConst for Mat {
 		#[inline] fn as_raw_Mat(&self) -> *const c_void { self.as_raw() }
@@ -20139,955 +21089,96 @@ pub mod core {
 
 	boxed_ref! { Mat, core::MatTraitConst, as_raw_Mat, core::MatTrait, as_raw_mut_Mat }
 
-	impl Mat {
-		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
-		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
-		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
-		/// allocated with Mat::create . In the former case, the old content is de-referenced.
-		#[inline]
-		pub fn default() -> core::Mat {
-			let ret = unsafe { sys::cv_Mat_Mat() };
-			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
-			ret
-		}
-
-		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
-		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
-		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
-		/// allocated with Mat::create . In the former case, the old content is de-referenced.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * rows: Number of rows in a 2D array.
-		/// * cols: Number of columns in a 2D array.
-		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
-		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
-		#[inline]
-		pub unsafe fn new_rows_cols(rows: i32, cols: i32, typ: i32) -> Result<core::Mat> {
-			return_send!(via ocvrs_return);
-			{ sys::cv_Mat_Mat_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::Mat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
-		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
-		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
-		/// allocated with Mat::create . In the former case, the old content is de-referenced.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * size: 2D array size: Size(cols, rows) . In the Size() constructor, the number of rows and the
-		/// number of columns go in the reverse order.
-		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
-		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
-		#[inline]
-		pub unsafe fn new_size(size: core::Size, typ: i32) -> Result<core::Mat> {
-			return_send!(via ocvrs_return);
-			{ sys::cv_Mat_Mat_Size_int(&size, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::Mat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
-		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
-		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
-		/// allocated with Mat::create . In the former case, the old content is de-referenced.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * rows: Number of rows in a 2D array.
-		/// * cols: Number of columns in a 2D array.
-		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
-		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
-		/// * s: An optional value to initialize each matrix element with. To set all the matrix elements to
-		/// the particular value after the construction, use the assignment operator
-		/// Mat::operator=(const Scalar& value) .
-		#[inline]
-		pub fn new_rows_cols_with_default(rows: i32, cols: i32, typ: i32, s: core::Scalar) -> Result<core::Mat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Mat_Mat_int_int_int_const_ScalarR(rows, cols, typ, &s, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
-		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
-		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
-		/// allocated with Mat::create . In the former case, the old content is de-referenced.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * size: 2D array size: Size(cols, rows) . In the Size() constructor, the number of rows and the
-		/// number of columns go in the reverse order.
-		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
-		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
-		/// * s: An optional value to initialize each matrix element with. To set all the matrix elements to
-		/// the particular value after the construction, use the assignment operator
-		/// Mat::operator=(const Scalar& value) .
-		#[inline]
-		pub fn new_size_with_default(size: core::Size, typ: i32, s: core::Scalar) -> Result<core::Mat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Mat_Mat_Size_int_const_ScalarR(&size, typ, &s, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
-		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
-		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
-		/// allocated with Mat::create . In the former case, the old content is de-referenced.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * ndims: Array dimensionality.
-		/// * sizes: Array of integers specifying an n-dimensional array shape.
-		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
-		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
-		#[inline]
-		pub unsafe fn new_nd(sizes: &[i32], typ: i32) -> Result<core::Mat> {
-			return_send!(via ocvrs_return);
-			{ sys::cv_Mat_Mat_int_const_intX_int(sizes.len().try_into()?, sizes.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::Mat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
-		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
-		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
-		/// allocated with Mat::create . In the former case, the old content is de-referenced.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * sizes: Array of integers specifying an n-dimensional array shape.
-		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
-		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
-		#[inline]
-		pub unsafe fn new_nd_vec(sizes: &core::Vector<i32>, typ: i32) -> Result<core::Mat> {
-			return_send!(via ocvrs_return);
-			{ sys::cv_Mat_Mat_const_vectorLintGR_int(sizes.as_raw_VectorOfi32(), typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::Mat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
-		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
-		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
-		/// allocated with Mat::create . In the former case, the old content is de-referenced.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * ndims: Array dimensionality.
-		/// * sizes: Array of integers specifying an n-dimensional array shape.
-		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
-		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
-		/// * s: An optional value to initialize each matrix element with. To set all the matrix elements to
-		/// the particular value after the construction, use the assignment operator
-		/// Mat::operator=(const Scalar& value) .
-		#[inline]
-		pub fn new_nd_with_default(sizes: &[i32], typ: i32, s: core::Scalar) -> Result<core::Mat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Mat_Mat_int_const_intX_int_const_ScalarR(sizes.len().try_into()?, sizes.as_ptr(), typ, &s, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
-		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
-		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
-		/// allocated with Mat::create . In the former case, the old content is de-referenced.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * sizes: Array of integers specifying an n-dimensional array shape.
-		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
-		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
-		/// * s: An optional value to initialize each matrix element with. To set all the matrix elements to
-		/// the particular value after the construction, use the assignment operator
-		/// Mat::operator=(const Scalar& value) .
-		#[inline]
-		pub fn new_nd_vec_with_default(sizes: &core::Vector<i32>, typ: i32, s: core::Scalar) -> Result<core::Mat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Mat_Mat_const_vectorLintGR_int_const_ScalarR(sizes.as_raw_VectorOfi32(), typ, &s, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
-		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
-		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
-		/// allocated with Mat::create . In the former case, the old content is de-referenced.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
-		/// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
-		/// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
-		/// formed using such a constructor, you also modify the corresponding elements of m . If you want to
-		/// have an independent copy of the sub-array, use Mat::clone() .
-		#[inline]
-		pub fn copy(m: &impl core::MatTraitConst) -> Result<BoxedRef<core::Mat>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Mat_Mat_const_MatR(m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRef::<core::Mat>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// @overload
-		/// ## Parameters
-		/// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
-		/// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
-		/// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
-		/// formed using such a constructor, you also modify the corresponding elements of m . If you want to
-		/// have an independent copy of the sub-array, use Mat::clone() .
-		#[inline]
-		pub fn copy_mut(m: &mut impl core::MatTrait) -> Result<BoxedRefMut<core::Mat>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Mat_Mat_MatR(m.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRefMut::<core::Mat>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
-		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
-		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
-		/// allocated with Mat::create . In the former case, the old content is de-referenced.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * rows: Number of rows in a 2D array.
-		/// * cols: Number of columns in a 2D array.
-		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
-		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
-		/// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
-		/// allocate matrix data. Instead, they just initialize the matrix header that points to the specified
-		/// data, which means that no data is copied. This operation is very efficient and can be used to
-		/// process external data using OpenCV functions. The external data is not automatically deallocated, so
-		/// you should take care of it.
-		/// * step: Number of bytes each matrix row occupies. The value should include the padding bytes at
-		/// the end of each row, if any. If the parameter is missing (set to AUTO_STEP ), no padding is assumed
-		/// and the actual step is calculated as cols*elemSize(). See Mat::elemSize.
-		///
-		/// ## C++ default parameters
-		/// * step: AUTO_STEP
-		#[inline]
-		pub unsafe fn new_rows_cols_with_data_unsafe(rows: i32, cols: i32, typ: i32, data: *mut c_void, step: size_t) -> Result<core::Mat> {
-			return_send!(via ocvrs_return);
-			{ sys::cv_Mat_Mat_int_int_int_voidX_size_t(rows, cols, typ, data, step, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::Mat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// @overload
-		/// ## Parameters
-		/// * rows: Number of rows in a 2D array.
-		/// * cols: Number of columns in a 2D array.
-		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
-		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
-		/// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
-		/// allocate matrix data. Instead, they just initialize the matrix header that points to the specified
-		/// data, which means that no data is copied. This operation is very efficient and can be used to
-		/// process external data using OpenCV functions. The external data is not automatically deallocated, so
-		/// you should take care of it.
-		/// * step: Number of bytes each matrix row occupies. The value should include the padding bytes at
-		/// the end of each row, if any. If the parameter is missing (set to AUTO_STEP ), no padding is assumed
-		/// and the actual step is calculated as cols*elemSize(). See Mat::elemSize.
-		///
-		/// ## Note
-		/// This alternative version of [new_rows_cols_with_data_unsafe] function uses the following default values for its arguments:
-		/// * step: AUTO_STEP
-		#[inline]
-		pub unsafe fn new_rows_cols_with_data_unsafe_def(rows: i32, cols: i32, typ: i32, data: *mut c_void) -> Result<core::Mat> {
-			return_send!(via ocvrs_return);
-			{ sys::cv_Mat_Mat_int_int_int_voidX(rows, cols, typ, data, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::Mat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
-		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
-		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
-		/// allocated with Mat::create . In the former case, the old content is de-referenced.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * size: 2D array size: Size(cols, rows) . In the Size() constructor, the number of rows and the
-		/// number of columns go in the reverse order.
-		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
-		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
-		/// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
-		/// allocate matrix data. Instead, they just initialize the matrix header that points to the specified
-		/// data, which means that no data is copied. This operation is very efficient and can be used to
-		/// process external data using OpenCV functions. The external data is not automatically deallocated, so
-		/// you should take care of it.
-		/// * step: Number of bytes each matrix row occupies. The value should include the padding bytes at
-		/// the end of each row, if any. If the parameter is missing (set to AUTO_STEP ), no padding is assumed
-		/// and the actual step is calculated as cols*elemSize(). See Mat::elemSize.
-		///
-		/// ## C++ default parameters
-		/// * step: AUTO_STEP
-		#[inline]
-		pub unsafe fn new_size_with_data_unsafe(size: core::Size, typ: i32, data: *mut c_void, step: size_t) -> Result<core::Mat> {
-			return_send!(via ocvrs_return);
-			{ sys::cv_Mat_Mat_Size_int_voidX_size_t(&size, typ, data, step, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::Mat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// @overload
-		/// ## Parameters
-		/// * size: 2D array size: Size(cols, rows) . In the Size() constructor, the number of rows and the
-		/// number of columns go in the reverse order.
-		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
-		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
-		/// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
-		/// allocate matrix data. Instead, they just initialize the matrix header that points to the specified
-		/// data, which means that no data is copied. This operation is very efficient and can be used to
-		/// process external data using OpenCV functions. The external data is not automatically deallocated, so
-		/// you should take care of it.
-		/// * step: Number of bytes each matrix row occupies. The value should include the padding bytes at
-		/// the end of each row, if any. If the parameter is missing (set to AUTO_STEP ), no padding is assumed
-		/// and the actual step is calculated as cols*elemSize(). See Mat::elemSize.
-		///
-		/// ## Note
-		/// This alternative version of [new_size_with_data_unsafe] function uses the following default values for its arguments:
-		/// * step: AUTO_STEP
-		#[inline]
-		pub unsafe fn new_size_with_data_unsafe_def(size: core::Size, typ: i32, data: *mut c_void) -> Result<core::Mat> {
-			return_send!(via ocvrs_return);
-			{ sys::cv_Mat_Mat_Size_int_voidX(&size, typ, data, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::Mat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
-		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
-		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
-		/// allocated with Mat::create . In the former case, the old content is de-referenced.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * ndims: Array dimensionality.
-		/// * sizes: Array of integers specifying an n-dimensional array shape.
-		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
-		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
-		/// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
-		/// allocate matrix data. Instead, they just initialize the matrix header that points to the specified
-		/// data, which means that no data is copied. This operation is very efficient and can be used to
-		/// process external data using OpenCV functions. The external data is not automatically deallocated, so
-		/// you should take care of it.
-		/// * steps: Array of ndims-1 steps in case of a multi-dimensional array (the last step is always
-		/// set to the element size). If not specified, the matrix is assumed to be continuous.
-		///
-		/// ## C++ default parameters
-		/// * steps: 0
-		#[inline]
-		pub unsafe fn new_nd_with_data_unsafe(sizes: &[i32], typ: i32, data: *mut c_void, steps: Option<&[size_t]>) -> Result<core::Mat> {
-			return_send!(via ocvrs_return);
-			{ sys::cv_Mat_Mat_int_const_intX_int_voidX_const_size_tX(sizes.len().try_into()?, sizes.as_ptr(), typ, data, steps.map_or(::core::ptr::null(), |steps| steps.as_ptr()), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::Mat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// @overload
-		/// ## Parameters
-		/// * ndims: Array dimensionality.
-		/// * sizes: Array of integers specifying an n-dimensional array shape.
-		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
-		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
-		/// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
-		/// allocate matrix data. Instead, they just initialize the matrix header that points to the specified
-		/// data, which means that no data is copied. This operation is very efficient and can be used to
-		/// process external data using OpenCV functions. The external data is not automatically deallocated, so
-		/// you should take care of it.
-		/// * steps: Array of ndims-1 steps in case of a multi-dimensional array (the last step is always
-		/// set to the element size). If not specified, the matrix is assumed to be continuous.
-		///
-		/// ## Note
-		/// This alternative version of [new_nd_with_data_unsafe] function uses the following default values for its arguments:
-		/// * steps: 0
-		#[inline]
-		pub unsafe fn new_nd_with_data_unsafe_def(sizes: &[i32], typ: i32, data: *mut c_void) -> Result<core::Mat> {
-			return_send!(via ocvrs_return);
-			{ sys::cv_Mat_Mat_int_const_intX_int_voidX(sizes.len().try_into()?, sizes.as_ptr(), typ, data, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::Mat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
-		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
-		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
-		/// allocated with Mat::create . In the former case, the old content is de-referenced.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * sizes: Array of integers specifying an n-dimensional array shape.
-		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
-		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
-		/// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
-		/// allocate matrix data. Instead, they just initialize the matrix header that points to the specified
-		/// data, which means that no data is copied. This operation is very efficient and can be used to
-		/// process external data using OpenCV functions. The external data is not automatically deallocated, so
-		/// you should take care of it.
-		/// * steps: Array of ndims-1 steps in case of a multi-dimensional array (the last step is always
-		/// set to the element size). If not specified, the matrix is assumed to be continuous.
-		///
-		/// ## C++ default parameters
-		/// * steps: 0
-		#[inline]
-		pub unsafe fn new_nd_vec_with_data_unsafe(sizes: &core::Vector<i32>, typ: i32, data: *mut c_void, steps: Option<&[size_t]>) -> Result<core::Mat> {
-			return_send!(via ocvrs_return);
-			{ sys::cv_Mat_Mat_const_vectorLintGR_int_voidX_const_size_tX(sizes.as_raw_VectorOfi32(), typ, data, steps.map_or(::core::ptr::null(), |steps| steps.as_ptr()), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::Mat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// @overload
-		/// ## Parameters
-		/// * sizes: Array of integers specifying an n-dimensional array shape.
-		/// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
-		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
-		/// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
-		/// allocate matrix data. Instead, they just initialize the matrix header that points to the specified
-		/// data, which means that no data is copied. This operation is very efficient and can be used to
-		/// process external data using OpenCV functions. The external data is not automatically deallocated, so
-		/// you should take care of it.
-		/// * steps: Array of ndims-1 steps in case of a multi-dimensional array (the last step is always
-		/// set to the element size). If not specified, the matrix is assumed to be continuous.
-		///
-		/// ## Note
-		/// This alternative version of [new_nd_vec_with_data_unsafe] function uses the following default values for its arguments:
-		/// * steps: 0
-		#[inline]
-		pub unsafe fn new_nd_vec_with_data_unsafe_def(sizes: &core::Vector<i32>, typ: i32, data: *mut c_void) -> Result<core::Mat> {
-			return_send!(via ocvrs_return);
-			{ sys::cv_Mat_Mat_const_vectorLintGR_int_voidX(sizes.as_raw_VectorOfi32(), typ, data, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::Mat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
-		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
-		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
-		/// allocated with Mat::create . In the former case, the old content is de-referenced.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
-		/// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
-		/// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
-		/// formed using such a constructor, you also modify the corresponding elements of m . If you want to
-		/// have an independent copy of the sub-array, use Mat::clone() .
-		/// * rowRange: Range of the m rows to take. As usual, the range start is inclusive and the range
-		/// end is exclusive. Use Range::all() to take all the rows.
-		/// * colRange: Range of the m columns to take. Use Range::all() to take all the columns.
-		///
-		/// ## C++ default parameters
-		/// * col_range: Range::all()
-		#[inline]
-		pub fn rowscols<'boxed>(m: &'boxed impl core::MatTraitConst, row_range: &impl core::RangeTraitConst, col_range: &impl core::RangeTraitConst) -> Result<BoxedRef<'boxed, core::Mat>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Mat_Mat_const_MatR_const_RangeR_const_RangeR(m.as_raw_Mat(), row_range.as_raw_Range(), col_range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRef::<'boxed, core::Mat>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// @overload
-		/// ## Parameters
-		/// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
-		/// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
-		/// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
-		/// formed using such a constructor, you also modify the corresponding elements of m . If you want to
-		/// have an independent copy of the sub-array, use Mat::clone() .
-		/// * rowRange: Range of the m rows to take. As usual, the range start is inclusive and the range
-		/// end is exclusive. Use Range::all() to take all the rows.
-		/// * colRange: Range of the m columns to take. Use Range::all() to take all the columns.
-		///
-		/// ## Note
-		/// This alternative version of [rowscols] function uses the following default values for its arguments:
-		/// * col_range: Range::all()
-		#[inline]
-		pub fn rowscols_def_mut<'boxed>(m: &'boxed mut impl core::MatTrait, row_range: &impl core::RangeTraitConst) -> Result<BoxedRefMut<'boxed, core::Mat>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Mat_Mat_MatR_const_RangeR(m.as_raw_mut_Mat(), row_range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRefMut::<'boxed, core::Mat>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// @overload
-		/// ## Parameters
-		/// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
-		/// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
-		/// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
-		/// formed using such a constructor, you also modify the corresponding elements of m . If you want to
-		/// have an independent copy of the sub-array, use Mat::clone() .
-		/// * rowRange: Range of the m rows to take. As usual, the range start is inclusive and the range
-		/// end is exclusive. Use Range::all() to take all the rows.
-		/// * colRange: Range of the m columns to take. Use Range::all() to take all the columns.
-		///
-		/// ## Note
-		/// This alternative version of [rowscols] function uses the following default values for its arguments:
-		/// * col_range: Range::all()
-		#[inline]
-		pub fn rowscols_def<'boxed>(m: &'boxed impl core::MatTraitConst, row_range: &impl core::RangeTraitConst) -> Result<BoxedRef<'boxed, core::Mat>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Mat_Mat_const_MatR_const_RangeR(m.as_raw_Mat(), row_range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRef::<'boxed, core::Mat>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// @overload
-		/// ## Parameters
-		/// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
-		/// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
-		/// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
-		/// formed using such a constructor, you also modify the corresponding elements of m . If you want to
-		/// have an independent copy of the sub-array, use Mat::clone() .
-		/// * rowRange: Range of the m rows to take. As usual, the range start is inclusive and the range
-		/// end is exclusive. Use Range::all() to take all the rows.
-		/// * colRange: Range of the m columns to take. Use Range::all() to take all the columns.
-		///
-		/// ## C++ default parameters
-		/// * col_range: Range::all()
-		#[inline]
-		pub fn rowscols_mut<'boxed>(m: &'boxed mut impl core::MatTrait, row_range: &impl core::RangeTraitConst, col_range: &impl core::RangeTraitConst) -> Result<BoxedRefMut<'boxed, core::Mat>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Mat_Mat_MatR_const_RangeR_const_RangeR(m.as_raw_mut_Mat(), row_range.as_raw_Range(), col_range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRefMut::<'boxed, core::Mat>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
-		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
-		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
-		/// allocated with Mat::create . In the former case, the old content is de-referenced.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
-		/// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
-		/// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
-		/// formed using such a constructor, you also modify the corresponding elements of m . If you want to
-		/// have an independent copy of the sub-array, use Mat::clone() .
-		/// * roi: Region of interest.
-		#[inline]
-		pub fn roi(m: &impl core::MatTraitConst, roi: core::Rect) -> Result<BoxedRef<core::Mat>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Mat_Mat_const_MatR_const_RectR(m.as_raw_Mat(), &roi, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRef::<core::Mat>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// @overload
-		/// ## Parameters
-		/// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
-		/// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
-		/// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
-		/// formed using such a constructor, you also modify the corresponding elements of m . If you want to
-		/// have an independent copy of the sub-array, use Mat::clone() .
-		/// * roi: Region of interest.
-		#[inline]
-		pub fn roi_mut(m: &mut impl core::MatTrait, roi: core::Rect) -> Result<BoxedRefMut<core::Mat>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Mat_Mat_MatR_const_RectR(m.as_raw_mut_Mat(), &roi, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRefMut::<core::Mat>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
-		/// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
-		/// The constructed matrix can further be assigned to another matrix or matrix expression or can be
-		/// allocated with Mat::create . In the former case, the old content is de-referenced.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
-		/// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
-		/// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
-		/// formed using such a constructor, you also modify the corresponding elements of m . If you want to
-		/// have an independent copy of the sub-array, use Mat::clone() .
-		/// * ranges: Array of selected ranges of m along each dimensionality.
-		#[inline]
-		pub fn ranges<'boxed>(m: &'boxed impl core::MatTraitConst, ranges: &core::Vector<core::Range>) -> Result<BoxedRef<'boxed, core::Mat>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Mat_Mat_const_MatR_const_vectorLRangeGR(m.as_raw_Mat(), ranges.as_raw_VectorOfRange(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRef::<'boxed, core::Mat>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// @overload
-		/// ## Parameters
-		/// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
-		/// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
-		/// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
-		/// formed using such a constructor, you also modify the corresponding elements of m . If you want to
-		/// have an independent copy of the sub-array, use Mat::clone() .
-		/// * ranges: Array of selected ranges of m along each dimensionality.
-		#[inline]
-		pub fn ranges_mut<'boxed>(m: &'boxed mut impl core::MatTrait, ranges: &core::Vector<core::Range>) -> Result<BoxedRefMut<'boxed, core::Mat>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Mat_Mat_MatR_const_vectorLRangeGR(m.as_raw_mut_Mat(), ranges.as_raw_VectorOfRange(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRefMut::<'boxed, core::Mat>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// download data from GpuMat
-		#[inline]
-		pub fn from_gpumat(m: &impl core::GpuMatTraitConst) -> Result<core::Mat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Mat_Mat_const_GpuMatR(m.as_raw_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// creates a diagonal matrix
-		///
-		/// The method creates a square diagonal matrix from specified main diagonal.
-		/// ## Parameters
-		/// * d: One-dimensional matrix that represents the main diagonal.
-		#[inline]
-		#[must_use]
-		pub fn diag_mat(d: &impl core::MatTraitConst) -> Result<core::Mat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Mat_diag_const_MatR(d.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Returns a zero array of the specified size and type.
-		///
-		/// The method returns a Matlab-style zero array initializer. It can be used to quickly form a constant
-		/// array as a function parameter, part of a matrix expression, or as a matrix initializer:
-		/// ```C++
-		///    Mat A;
-		///    A = Mat::zeros(3, 3, CV_32F);
-		/// ```
-		///
-		/// In the example above, a new matrix is allocated only if A is not a 3x3 floating-point matrix.
-		/// Otherwise, the existing matrix A is filled with zeros.
-		/// ## Parameters
-		/// * rows: Number of rows.
-		/// * cols: Number of columns.
-		/// * type: Created matrix type.
-		#[inline]
-		#[must_use]
-		pub fn zeros(rows: i32, cols: i32, typ: i32) -> Result<core::MatExpr> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Mat_zeros_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Returns a zero array of the specified size and type.
-		///
-		/// The method returns a Matlab-style zero array initializer. It can be used to quickly form a constant
-		/// array as a function parameter, part of a matrix expression, or as a matrix initializer:
-		/// ```C++
-		///    Mat A;
-		///    A = Mat::zeros(3, 3, CV_32F);
-		/// ```
-		///
-		/// In the example above, a new matrix is allocated only if A is not a 3x3 floating-point matrix.
-		/// Otherwise, the existing matrix A is filled with zeros.
-		/// ## Parameters
-		/// * rows: Number of rows.
-		/// * cols: Number of columns.
-		/// * type: Created matrix type.
-		///
-		/// ## Overloaded parameters
-		///
-		/// * size: Alternative to the matrix size specification Size(cols, rows) .
-		/// * type: Created matrix type.
-		#[inline]
-		#[must_use]
-		pub fn zeros_size(size: core::Size, typ: i32) -> Result<core::MatExpr> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Mat_zeros_Size_int(&size, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Returns a zero array of the specified size and type.
-		///
-		/// The method returns a Matlab-style zero array initializer. It can be used to quickly form a constant
-		/// array as a function parameter, part of a matrix expression, or as a matrix initializer:
-		/// ```C++
-		///    Mat A;
-		///    A = Mat::zeros(3, 3, CV_32F);
-		/// ```
-		///
-		/// In the example above, a new matrix is allocated only if A is not a 3x3 floating-point matrix.
-		/// Otherwise, the existing matrix A is filled with zeros.
-		/// ## Parameters
-		/// * rows: Number of rows.
-		/// * cols: Number of columns.
-		/// * type: Created matrix type.
-		///
-		/// ## Overloaded parameters
-		///
-		/// * ndims: Array dimensionality.
-		/// * sz: Array of integers specifying the array shape.
-		/// * type: Created matrix type.
-		#[inline]
-		#[must_use]
-		pub fn zeros_nd(sz: &[i32], typ: i32) -> Result<core::MatExpr> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Mat_zeros_int_const_intX_int(sz.len().try_into()?, sz.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Returns an array of all 1's of the specified size and type.
-		///
-		/// The method returns a Matlab-style 1's array initializer, similarly to Mat::zeros. Note that using
-		/// this method you can initialize an array with an arbitrary value, using the following Matlab idiom:
-		/// ```C++
-		///    Mat A = Mat::ones(100, 100, CV_8U)*3; // make 100x100 matrix filled with 3.
-		/// ```
-		///
-		/// The above operation does not form a 100x100 matrix of 1's and then multiply it by 3. Instead, it
-		/// just remembers the scale factor (3 in this case) and use it when actually invoking the matrix
-		/// initializer.
-		///
-		/// Note: In case of multi-channels type, only the first channel will be initialized with 1's, the
-		/// others will be set to 0's.
-		/// ## Parameters
-		/// * rows: Number of rows.
-		/// * cols: Number of columns.
-		/// * type: Created matrix type.
-		#[inline]
-		#[must_use]
-		pub fn ones(rows: i32, cols: i32, typ: i32) -> Result<core::MatExpr> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Mat_ones_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Returns an array of all 1's of the specified size and type.
-		///
-		/// The method returns a Matlab-style 1's array initializer, similarly to Mat::zeros. Note that using
-		/// this method you can initialize an array with an arbitrary value, using the following Matlab idiom:
-		/// ```C++
-		///    Mat A = Mat::ones(100, 100, CV_8U)*3; // make 100x100 matrix filled with 3.
-		/// ```
-		///
-		/// The above operation does not form a 100x100 matrix of 1's and then multiply it by 3. Instead, it
-		/// just remembers the scale factor (3 in this case) and use it when actually invoking the matrix
-		/// initializer.
-		///
-		/// Note: In case of multi-channels type, only the first channel will be initialized with 1's, the
-		/// others will be set to 0's.
-		/// ## Parameters
-		/// * rows: Number of rows.
-		/// * cols: Number of columns.
-		/// * type: Created matrix type.
-		///
-		/// ## Overloaded parameters
-		///
-		/// * size: Alternative to the matrix size specification Size(cols, rows) .
-		/// * type: Created matrix type.
-		#[inline]
-		#[must_use]
-		pub fn ones_size(size: core::Size, typ: i32) -> Result<core::MatExpr> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Mat_ones_Size_int(&size, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Returns an array of all 1's of the specified size and type.
-		///
-		/// The method returns a Matlab-style 1's array initializer, similarly to Mat::zeros. Note that using
-		/// this method you can initialize an array with an arbitrary value, using the following Matlab idiom:
-		/// ```C++
-		///    Mat A = Mat::ones(100, 100, CV_8U)*3; // make 100x100 matrix filled with 3.
-		/// ```
-		///
-		/// The above operation does not form a 100x100 matrix of 1's and then multiply it by 3. Instead, it
-		/// just remembers the scale factor (3 in this case) and use it when actually invoking the matrix
-		/// initializer.
-		///
-		/// Note: In case of multi-channels type, only the first channel will be initialized with 1's, the
-		/// others will be set to 0's.
-		/// ## Parameters
-		/// * rows: Number of rows.
-		/// * cols: Number of columns.
-		/// * type: Created matrix type.
-		///
-		/// ## Overloaded parameters
-		///
-		/// * ndims: Array dimensionality.
-		/// * sz: Array of integers specifying the array shape.
-		/// * type: Created matrix type.
-		#[inline]
-		#[must_use]
-		pub fn ones_nd(sz: &[i32], typ: i32) -> Result<core::MatExpr> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Mat_ones_int_const_intX_int(sz.len().try_into()?, sz.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Returns an identity matrix of the specified size and type.
-		///
-		/// The method returns a Matlab-style identity matrix initializer, similarly to Mat::zeros. Similarly to
-		/// Mat::ones, you can use a scale operation to create a scaled identity matrix efficiently:
-		/// ```C++
-		///    // make a 4x4 diagonal matrix with 0.1's on the diagonal.
-		///    Mat A = Mat::eye(4, 4, CV_32F)*0.1;
-		/// ```
-		///
-		///
-		/// Note: In case of multi-channels type, identity matrix will be initialized only for the first channel,
-		/// the others will be set to 0's
-		/// ## Parameters
-		/// * rows: Number of rows.
-		/// * cols: Number of columns.
-		/// * type: Created matrix type.
-		#[inline]
-		#[must_use]
-		pub fn eye(rows: i32, cols: i32, typ: i32) -> Result<core::MatExpr> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Mat_eye_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Returns an identity matrix of the specified size and type.
-		///
-		/// The method returns a Matlab-style identity matrix initializer, similarly to Mat::zeros. Similarly to
-		/// Mat::ones, you can use a scale operation to create a scaled identity matrix efficiently:
-		/// ```C++
-		///    // make a 4x4 diagonal matrix with 0.1's on the diagonal.
-		///    Mat A = Mat::eye(4, 4, CV_32F)*0.1;
-		/// ```
-		///
-		///
-		/// Note: In case of multi-channels type, identity matrix will be initialized only for the first channel,
-		/// the others will be set to 0's
-		/// ## Parameters
-		/// * rows: Number of rows.
-		/// * cols: Number of columns.
-		/// * type: Created matrix type.
-		///
-		/// ## Overloaded parameters
-		///
-		/// * size: Alternative matrix size specification as Size(cols, rows) .
-		/// * type: Created matrix type.
-		#[inline]
-		#[must_use]
-		pub fn eye_size(size: core::Size, typ: i32) -> Result<core::MatExpr> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Mat_eye_Size_int(&size, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// /////////////////////////////// MatConstIterator //////////////////////////////////
+	pub struct MatConstIterator {
+		ptr: *mut c_void,
 	}
 
-	impl Clone for Mat {
+	opencv_type_boxed! { MatConstIterator }
+
+	impl Drop for MatConstIterator {
 		#[inline]
-		/// Calls try_clone() and panics if that fails
-		fn clone(&self) -> Self {
-			self.try_clone().expect("Cannot clone Mat")
+		fn drop(&mut self) {
+			unsafe { sys::cv_MatConstIterator_delete(self.as_raw_mut_MatConstIterator()) };
 		}
 	}
 
-	impl Default for Mat {
+	unsafe impl Send for MatConstIterator {}
+
+	impl MatConstIterator {
+		/// default constructor
 		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
+		pub fn default() -> Result<core::MatConstIterator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_MatConstIterator_MatConstIterator(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::MatConstIterator::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
+		/// constructor that sets the iterator to the beginning of the matrix
+		#[inline]
+		pub fn over(_m: &impl core::MatTraitConst) -> Result<core::MatConstIterator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_MatConstIterator_MatConstIterator_const_MatX(_m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::MatConstIterator::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// constructor that sets the iterator to the specified element of the matrix
+		///
+		/// ## C++ default parameters
+		/// * _col: 0
+		#[inline]
+		pub fn with_rows_cols(_m: &impl core::MatTraitConst, _row: i32, _col: i32) -> Result<core::MatConstIterator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_MatConstIterator_MatConstIterator_const_MatX_int_int(_m.as_raw_Mat(), _row, _col, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::MatConstIterator::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// constructor that sets the iterator to the specified element of the matrix
+		///
+		/// ## Note
+		/// This alternative version of [with_rows_cols] function uses the following default values for its arguments:
+		/// * _col: 0
+		#[inline]
+		pub fn with_rows_cols_def(_m: &impl core::MatTraitConst, _row: i32) -> Result<core::MatConstIterator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_MatConstIterator_MatConstIterator_const_MatX_int(_m.as_raw_Mat(), _row, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::MatConstIterator::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// constructor that sets the iterator to the specified element of the matrix
+		#[inline]
+		pub fn with_start(_m: &impl core::MatTraitConst, _pt: core::Point) -> Result<core::MatConstIterator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_MatConstIterator_MatConstIterator_const_MatX_Point(_m.as_raw_Mat(), &_pt, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::MatConstIterator::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// copy constructor
+		#[inline]
+		pub fn copy(it: &impl core::MatConstIteratorTraitConst) -> Result<core::MatConstIterator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_MatConstIterator_MatConstIterator_const_MatConstIteratorR(it.as_raw_MatConstIterator(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::MatConstIterator::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [core::MatConstIterator]
@@ -21272,108 +21363,6 @@ pub mod core {
 
 	}
 
-	/// /////////////////////////////// MatConstIterator //////////////////////////////////
-	pub struct MatConstIterator {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { MatConstIterator }
-
-	impl Drop for MatConstIterator {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_MatConstIterator_delete(self.as_raw_mut_MatConstIterator()) };
-		}
-	}
-
-	unsafe impl Send for MatConstIterator {}
-
-	impl core::MatConstIteratorTraitConst for MatConstIterator {
-		#[inline] fn as_raw_MatConstIterator(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::MatConstIteratorTrait for MatConstIterator {
-		#[inline] fn as_raw_mut_MatConstIterator(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { MatConstIterator, core::MatConstIteratorTraitConst, as_raw_MatConstIterator, core::MatConstIteratorTrait, as_raw_mut_MatConstIterator }
-
-	impl MatConstIterator {
-		/// default constructor
-		#[inline]
-		pub fn default() -> Result<core::MatConstIterator> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_MatConstIterator_MatConstIterator(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::MatConstIterator::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// constructor that sets the iterator to the beginning of the matrix
-		#[inline]
-		pub fn over(_m: &impl core::MatTraitConst) -> Result<core::MatConstIterator> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_MatConstIterator_MatConstIterator_const_MatX(_m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::MatConstIterator::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// constructor that sets the iterator to the specified element of the matrix
-		///
-		/// ## C++ default parameters
-		/// * _col: 0
-		#[inline]
-		pub fn with_rows_cols(_m: &impl core::MatTraitConst, _row: i32, _col: i32) -> Result<core::MatConstIterator> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_MatConstIterator_MatConstIterator_const_MatX_int_int(_m.as_raw_Mat(), _row, _col, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::MatConstIterator::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// constructor that sets the iterator to the specified element of the matrix
-		///
-		/// ## Note
-		/// This alternative version of [with_rows_cols] function uses the following default values for its arguments:
-		/// * _col: 0
-		#[inline]
-		pub fn with_rows_cols_def(_m: &impl core::MatTraitConst, _row: i32) -> Result<core::MatConstIterator> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_MatConstIterator_MatConstIterator_const_MatX_int(_m.as_raw_Mat(), _row, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::MatConstIterator::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// constructor that sets the iterator to the specified element of the matrix
-		#[inline]
-		pub fn with_start(_m: &impl core::MatTraitConst, _pt: core::Point) -> Result<core::MatConstIterator> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_MatConstIterator_MatConstIterator_const_MatX_Point(_m.as_raw_Mat(), &_pt, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::MatConstIterator::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// copy constructor
-		#[inline]
-		pub fn copy(it: &impl core::MatConstIteratorTraitConst) -> Result<core::MatConstIterator> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_MatConstIterator_MatConstIterator_const_MatConstIteratorR(it.as_raw_MatConstIterator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::MatConstIterator::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
 	impl std::fmt::Debug for MatConstIterator {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -21385,6 +21374,136 @@ pub mod core {
 				.field("slice_end", &core::MatConstIteratorTraitConst::slice_end(self))
 				.finish()
 		}
+	}
+
+	impl core::MatConstIteratorTraitConst for MatConstIterator {
+		#[inline] fn as_raw_MatConstIterator(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::MatConstIteratorTrait for MatConstIterator {
+		#[inline] fn as_raw_mut_MatConstIterator(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { MatConstIterator, core::MatConstIteratorTraitConst, as_raw_MatConstIterator, core::MatConstIteratorTrait, as_raw_mut_MatConstIterator }
+
+	/// Matrix expression representation
+	/// @anchor MatrixExpressions
+	/// This is a list of implemented matrix operations that can be combined in arbitrary complex
+	/// expressions (here A, B stand for matrices ( Mat ), s for a scalar ( Scalar ), alpha for a
+	/// real-valued scalar ( double )):
+	/// *   Addition, subtraction, negation: `A+B`, `A-B`, `A+s`, `A-s`, `s+A`, `s-A`, `-A`
+	/// *   Scaling: `A*alpha`
+	/// *   Per-element multiplication and division: `A.mul(B)`, `A/B`, `alpha/A`
+	/// *   Matrix multiplication: `A*B`
+	/// *   Transposition: `A.t()` (means A<sup>T</sup>)
+	/// *   Matrix inversion and pseudo-inversion, solving linear systems and least-squares problems:
+	///    `A.inv([method]) (~ A<sup>-1</sup>)`,   `A.inv([method])*B (~ X: AX=B)`
+	/// *   Comparison: `A cmpop B`, `A cmpop alpha`, `alpha cmpop A`, where *cmpop* is one of
+	///   `>`, `>=`, `==`, `!=`, `<=`, `<`. The result of comparison is an 8-bit single channel mask whose
+	///    elements are set to 255 (if the particular element or pair of elements satisfy the condition) or
+	///    0.
+	/// *   Bitwise logical operations: `A logicop B`, `A logicop s`, `s logicop A`, `~A`, where *logicop* is one of
+	///   `&`, `|`, `^`.
+	/// *   Element-wise minimum and maximum: `min(A, B)`, `min(A, alpha)`, `max(A, B)`, `max(A, alpha)`
+	/// *   Element-wise absolute value: `abs(A)`
+	/// *   Cross-product, dot-product: `A.cross(B)`, `A.dot(B)`
+	/// *   Any function of matrix or matrices and scalars that returns a matrix or a scalar, such as norm,
+	///    mean, sum, countNonZero, trace, determinant, repeat, and others.
+	/// *   Matrix initializers ( Mat::eye(), Mat::zeros(), Mat::ones() ), matrix comma-separated
+	///    initializers, matrix constructors and operators that extract sub-matrices (see Mat description).
+	/// *   Mat_<destination_type>() constructors to cast the result to the proper type.
+	///
+	/// Note: Comma-separated initializers and probably some other operations may require additional
+	/// explicit Mat() or Mat_<T>() constructor calls to resolve a possible ambiguity.
+	///
+	/// Here are examples of matrix expressions:
+	/// ```C++
+	///    // compute pseudo-inverse of A, equivalent to A.inv(DECOMP_SVD)
+	///    SVD svd(A);
+	///    Mat pinvA = svd.vt.t()*Mat::diag(1./svd.w)*svd.u.t();
+	///
+	///    // compute the new vector of parameters in the Levenberg-Marquardt algorithm
+	///    x -= (A.t()*A + lambda*Mat::eye(A.cols,A.cols,A.type())).inv(DECOMP_CHOLESKY)*(A.t()*err);
+	///
+	///    // sharpen image using "unsharp mask" algorithm
+	///    Mat blurred; double sigma = 1, threshold = 5, amount = 1;
+	///    GaussianBlur(img, blurred, Size(), sigma, sigma);
+	///    Mat lowContrastMask = abs(img - blurred) < threshold;
+	///    Mat sharpened = img*(1+amount) + blurred*(-amount);
+	///    img.copyTo(sharpened, lowContrastMask);
+	/// ```
+	///
+	pub struct MatExpr {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { MatExpr }
+
+	impl Drop for MatExpr {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_MatExpr_delete(self.as_raw_mut_MatExpr()) };
+		}
+	}
+
+	unsafe impl Send for MatExpr {}
+
+	impl MatExpr {
+		#[inline]
+		pub fn default() -> Result<core::MatExpr> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_MatExpr_MatExpr(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn from_mat(m: &impl core::MatTraitConst) -> Result<core::MatExpr> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_MatExpr_MatExpr_const_MatR(m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## C++ default parameters
+		/// * _a: Mat()
+		/// * _b: Mat()
+		/// * _c: Mat()
+		/// * _alpha: 1
+		/// * _beta: 1
+		/// * _s: Scalar()
+		#[inline]
+		pub fn new(_op: &impl core::MatOpTraitConst, _flags: i32, _a: &impl core::MatTraitConst, _b: &impl core::MatTraitConst, _c: &impl core::MatTraitConst, _alpha: f64, _beta: f64, _s: core::Scalar) -> Result<core::MatExpr> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_MatExpr_MatExpr_const_MatOpX_int_const_MatR_const_MatR_const_MatR_double_double_const_ScalarR(_op.as_raw_MatOp(), _flags, _a.as_raw_Mat(), _b.as_raw_Mat(), _c.as_raw_Mat(), _alpha, _beta, &_s, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * _a: Mat()
+		/// * _b: Mat()
+		/// * _c: Mat()
+		/// * _alpha: 1
+		/// * _beta: 1
+		/// * _s: Scalar()
+		#[inline]
+		pub fn new_def(_op: &impl core::MatOpTraitConst, _flags: i32) -> Result<core::MatExpr> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_MatExpr_MatExpr_const_MatOpX_int(_op.as_raw_MatOp(), _flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [core::MatExpr]
@@ -21694,136 +21813,6 @@ pub mod core {
 
 	}
 
-	/// Matrix expression representation
-	/// @anchor MatrixExpressions
-	/// This is a list of implemented matrix operations that can be combined in arbitrary complex
-	/// expressions (here A, B stand for matrices ( Mat ), s for a scalar ( Scalar ), alpha for a
-	/// real-valued scalar ( double )):
-	/// *   Addition, subtraction, negation: `A+B`, `A-B`, `A+s`, `A-s`, `s+A`, `s-A`, `-A`
-	/// *   Scaling: `A*alpha`
-	/// *   Per-element multiplication and division: `A.mul(B)`, `A/B`, `alpha/A`
-	/// *   Matrix multiplication: `A*B`
-	/// *   Transposition: `A.t()` (means A<sup>T</sup>)
-	/// *   Matrix inversion and pseudo-inversion, solving linear systems and least-squares problems:
-	///    `A.inv([method]) (~ A<sup>-1</sup>)`,   `A.inv([method])*B (~ X: AX=B)`
-	/// *   Comparison: `A cmpop B`, `A cmpop alpha`, `alpha cmpop A`, where *cmpop* is one of
-	///   `>`, `>=`, `==`, `!=`, `<=`, `<`. The result of comparison is an 8-bit single channel mask whose
-	///    elements are set to 255 (if the particular element or pair of elements satisfy the condition) or
-	///    0.
-	/// *   Bitwise logical operations: `A logicop B`, `A logicop s`, `s logicop A`, `~A`, where *logicop* is one of
-	///   `&`, `|`, `^`.
-	/// *   Element-wise minimum and maximum: `min(A, B)`, `min(A, alpha)`, `max(A, B)`, `max(A, alpha)`
-	/// *   Element-wise absolute value: `abs(A)`
-	/// *   Cross-product, dot-product: `A.cross(B)`, `A.dot(B)`
-	/// *   Any function of matrix or matrices and scalars that returns a matrix or a scalar, such as norm,
-	///    mean, sum, countNonZero, trace, determinant, repeat, and others.
-	/// *   Matrix initializers ( Mat::eye(), Mat::zeros(), Mat::ones() ), matrix comma-separated
-	///    initializers, matrix constructors and operators that extract sub-matrices (see Mat description).
-	/// *   Mat_<destination_type>() constructors to cast the result to the proper type.
-	///
-	/// Note: Comma-separated initializers and probably some other operations may require additional
-	/// explicit Mat() or Mat_<T>() constructor calls to resolve a possible ambiguity.
-	///
-	/// Here are examples of matrix expressions:
-	/// ```C++
-	///    // compute pseudo-inverse of A, equivalent to A.inv(DECOMP_SVD)
-	///    SVD svd(A);
-	///    Mat pinvA = svd.vt.t()*Mat::diag(1./svd.w)*svd.u.t();
-	///
-	///    // compute the new vector of parameters in the Levenberg-Marquardt algorithm
-	///    x -= (A.t()*A + lambda*Mat::eye(A.cols,A.cols,A.type())).inv(DECOMP_CHOLESKY)*(A.t()*err);
-	///
-	///    // sharpen image using "unsharp mask" algorithm
-	///    Mat blurred; double sigma = 1, threshold = 5, amount = 1;
-	///    GaussianBlur(img, blurred, Size(), sigma, sigma);
-	///    Mat lowContrastMask = abs(img - blurred) < threshold;
-	///    Mat sharpened = img*(1+amount) + blurred*(-amount);
-	///    img.copyTo(sharpened, lowContrastMask);
-	/// ```
-	///
-	pub struct MatExpr {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { MatExpr }
-
-	impl Drop for MatExpr {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_MatExpr_delete(self.as_raw_mut_MatExpr()) };
-		}
-	}
-
-	unsafe impl Send for MatExpr {}
-
-	impl core::MatExprTraitConst for MatExpr {
-		#[inline] fn as_raw_MatExpr(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::MatExprTrait for MatExpr {
-		#[inline] fn as_raw_mut_MatExpr(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { MatExpr, core::MatExprTraitConst, as_raw_MatExpr, core::MatExprTrait, as_raw_mut_MatExpr }
-
-	impl MatExpr {
-		#[inline]
-		pub fn default() -> Result<core::MatExpr> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_MatExpr_MatExpr(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn from_mat(m: &impl core::MatTraitConst) -> Result<core::MatExpr> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_MatExpr_MatExpr_const_MatR(m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## C++ default parameters
-		/// * _a: Mat()
-		/// * _b: Mat()
-		/// * _c: Mat()
-		/// * _alpha: 1
-		/// * _beta: 1
-		/// * _s: Scalar()
-		#[inline]
-		pub fn new(_op: &impl core::MatOpTraitConst, _flags: i32, _a: &impl core::MatTraitConst, _b: &impl core::MatTraitConst, _c: &impl core::MatTraitConst, _alpha: f64, _beta: f64, _s: core::Scalar) -> Result<core::MatExpr> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_MatExpr_MatExpr_const_MatOpX_int_const_MatR_const_MatR_const_MatR_double_double_const_ScalarR(_op.as_raw_MatOp(), _flags, _a.as_raw_Mat(), _b.as_raw_Mat(), _c.as_raw_Mat(), _alpha, _beta, &_s, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * _a: Mat()
-		/// * _b: Mat()
-		/// * _c: Mat()
-		/// * _alpha: 1
-		/// * _beta: 1
-		/// * _s: Scalar()
-		#[inline]
-		pub fn new_def(_op: &impl core::MatOpTraitConst, _flags: i32) -> Result<core::MatExpr> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_MatExpr_MatExpr_const_MatOpX_int(_op.as_raw_MatOp(), _flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::MatExpr::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
 	impl std::fmt::Debug for MatExpr {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -21838,6 +21827,32 @@ pub mod core {
 				.finish()
 		}
 	}
+
+	impl core::MatExprTraitConst for MatExpr {
+		#[inline] fn as_raw_MatExpr(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::MatExprTrait for MatExpr {
+		#[inline] fn as_raw_mut_MatExpr(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { MatExpr, core::MatExprTraitConst, as_raw_MatExpr, core::MatExprTrait, as_raw_mut_MatExpr }
+
+	/// ////////////////////////////// Matrix Expressions /////////////////////////////////
+	pub struct MatOp {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { MatOp }
+
+	impl Drop for MatOp {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_MatOp_delete(self.as_raw_mut_MatOp()) };
+		}
+	}
+
+	unsafe impl Send for MatOp {}
 
 	/// Constant methods for [core::MatOp]
 	pub trait MatOpTraitConst {
@@ -22118,21 +22133,13 @@ pub mod core {
 
 	}
 
-	/// ////////////////////////////// Matrix Expressions /////////////////////////////////
-	pub struct MatOp {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { MatOp }
-
-	impl Drop for MatOp {
+	impl std::fmt::Debug for MatOp {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_MatOp_delete(self.as_raw_mut_MatOp()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MatOp")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for MatOp {}
 
 	impl core::MatOpTraitConst for MatOp {
 		#[inline] fn as_raw_MatOp(&self) -> *const c_void { self.as_raw() }
@@ -22144,15 +22151,30 @@ pub mod core {
 
 	boxed_ref! { MatOp, core::MatOpTraitConst, as_raw_MatOp, core::MatOpTrait, as_raw_mut_MatOp }
 
-	impl MatOp {
+	pub struct MatSize {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for MatOp {
+	opencv_type_boxed! { MatSize }
+
+	impl Drop for MatSize {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("MatOp")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_MatSize_delete(self.as_raw_mut_MatSize()) };
 		}
+	}
+
+	unsafe impl Send for MatSize {}
+
+	impl MatSize {
+		/// ////////////////////////// MatSize ////////////////////////////
+		#[inline]
+		pub unsafe fn new(_p: *mut i32) -> core::MatSize {
+			let ret = { sys::cv_MatSize_MatSize_intX(_p) };
+			let ret = { core::MatSize::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [core::MatSize]
@@ -22236,21 +22258,6 @@ pub mod core {
 
 	}
 
-	pub struct MatSize {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { MatSize }
-
-	impl Drop for MatSize {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_MatSize_delete(self.as_raw_mut_MatSize()) };
-		}
-	}
-
-	unsafe impl Send for MatSize {}
-
 	impl core::MatSizeTraitConst for MatSize {
 		#[inline] fn as_raw_MatSize(&self) -> *const c_void { self.as_raw() }
 	}
@@ -22261,12 +22268,34 @@ pub mod core {
 
 	boxed_ref! { MatSize, core::MatSizeTraitConst, as_raw_MatSize, core::MatSizeTrait, as_raw_mut_MatSize }
 
-	impl MatSize {
-		/// ////////////////////////// MatSize ////////////////////////////
+	pub struct MatStep {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { MatStep }
+
+	impl Drop for MatStep {
 		#[inline]
-		pub unsafe fn new(_p: *mut i32) -> core::MatSize {
-			let ret = { sys::cv_MatSize_MatSize_intX(_p) };
-			let ret = { core::MatSize::opencv_from_extern(ret) };
+		fn drop(&mut self) {
+			unsafe { sys::cv_MatStep_delete(self.as_raw_mut_MatStep()) };
+		}
+	}
+
+	unsafe impl Send for MatStep {}
+
+	impl MatStep {
+		/// ////////////////////////// MatStep ////////////////////////////
+		#[inline]
+		pub fn default() -> core::MatStep {
+			let ret = unsafe { sys::cv_MatStep_MatStep() };
+			let ret = unsafe { core::MatStep::opencv_from_extern(ret) };
+			ret
+		}
+
+		#[inline]
+		pub fn new(s: size_t) -> core::MatStep {
+			let ret = unsafe { sys::cv_MatStep_MatStep_size_t(s) };
+			let ret = unsafe { core::MatStep::opencv_from_extern(ret) };
 			ret
 		}
 
@@ -22346,47 +22375,12 @@ pub mod core {
 
 	}
 
-	pub struct MatStep {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { MatStep }
-
-	impl Drop for MatStep {
+	impl Default for MatStep {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_MatStep_delete(self.as_raw_mut_MatStep()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
-	}
-
-	unsafe impl Send for MatStep {}
-
-	impl core::MatStepTraitConst for MatStep {
-		#[inline] fn as_raw_MatStep(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::MatStepTrait for MatStep {
-		#[inline] fn as_raw_mut_MatStep(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { MatStep, core::MatStepTraitConst, as_raw_MatStep, core::MatStepTrait, as_raw_mut_MatStep }
-
-	impl MatStep {
-		/// ////////////////////////// MatStep ////////////////////////////
-		#[inline]
-		pub fn default() -> core::MatStep {
-			let ret = unsafe { sys::cv_MatStep_MatStep() };
-			let ret = unsafe { core::MatStep::opencv_from_extern(ret) };
-			ret
-		}
-
-		#[inline]
-		pub fn new(s: size_t) -> core::MatStep {
-			let ret = unsafe { sys::cv_MatStep_MatStep_size_t(s) };
-			let ret = unsafe { core::MatStep::opencv_from_extern(ret) };
-			ret
-		}
-
 	}
 
 	impl std::fmt::Debug for MatStep {
@@ -22399,25 +22393,15 @@ pub mod core {
 		}
 	}
 
-	impl Default for MatStep {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
+	impl core::MatStepTraitConst for MatStep {
+		#[inline] fn as_raw_MatStep(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Constant methods for [core::Matx_AddOp]
-	pub trait Matx_AddOpTraitConst {
-		fn as_raw_Matx_AddOp(&self) -> *const c_void;
-
+	impl core::MatStepTrait for MatStep {
+		#[inline] fn as_raw_mut_MatStep(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 
-	/// Mutable methods for [core::Matx_AddOp]
-	pub trait Matx_AddOpTrait: core::Matx_AddOpTraitConst {
-		fn as_raw_mut_Matx_AddOp(&mut self) -> *mut c_void;
-
-	}
+	boxed_ref! { MatStep, core::MatStepTraitConst, as_raw_MatStep, core::MatStepTrait, as_raw_mut_MatStep }
 
 	/// @cond IGNORED
 	pub struct Matx_AddOp {
@@ -22434,16 +22418,6 @@ pub mod core {
 	}
 
 	unsafe impl Send for Matx_AddOp {}
-
-	impl core::Matx_AddOpTraitConst for Matx_AddOp {
-		#[inline] fn as_raw_Matx_AddOp(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::Matx_AddOpTrait for Matx_AddOp {
-		#[inline] fn as_raw_mut_Matx_AddOp(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Matx_AddOp, core::Matx_AddOpTraitConst, as_raw_Matx_AddOp, core::Matx_AddOpTrait, as_raw_mut_Matx_AddOp }
 
 	impl Matx_AddOp {
 		#[inline]
@@ -22468,6 +22442,18 @@ pub mod core {
 
 	}
 
+	/// Constant methods for [core::Matx_AddOp]
+	pub trait Matx_AddOpTraitConst {
+		fn as_raw_Matx_AddOp(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [core::Matx_AddOp]
+	pub trait Matx_AddOpTrait: core::Matx_AddOpTraitConst {
+		fn as_raw_mut_Matx_AddOp(&mut self) -> *mut c_void;
+
+	}
+
 	impl std::fmt::Debug for Matx_AddOp {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -22476,17 +22462,15 @@ pub mod core {
 		}
 	}
 
-	/// Constant methods for [core::Matx_DivOp]
-	pub trait Matx_DivOpTraitConst {
-		fn as_raw_Matx_DivOp(&self) -> *const c_void;
-
+	impl core::Matx_AddOpTraitConst for Matx_AddOp {
+		#[inline] fn as_raw_Matx_AddOp(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [core::Matx_DivOp]
-	pub trait Matx_DivOpTrait: core::Matx_DivOpTraitConst {
-		fn as_raw_mut_Matx_DivOp(&mut self) -> *mut c_void;
-
+	impl core::Matx_AddOpTrait for Matx_AddOp {
+		#[inline] fn as_raw_mut_Matx_AddOp(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { Matx_AddOp, core::Matx_AddOpTraitConst, as_raw_Matx_AddOp, core::Matx_AddOpTrait, as_raw_mut_Matx_AddOp }
 
 	pub struct Matx_DivOp {
 		ptr: *mut c_void,
@@ -22502,16 +22486,6 @@ pub mod core {
 	}
 
 	unsafe impl Send for Matx_DivOp {}
-
-	impl core::Matx_DivOpTraitConst for Matx_DivOp {
-		#[inline] fn as_raw_Matx_DivOp(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::Matx_DivOpTrait for Matx_DivOp {
-		#[inline] fn as_raw_mut_Matx_DivOp(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Matx_DivOp, core::Matx_DivOpTraitConst, as_raw_Matx_DivOp, core::Matx_DivOpTrait, as_raw_mut_Matx_DivOp }
 
 	impl Matx_DivOp {
 		#[inline]
@@ -22536,6 +22510,18 @@ pub mod core {
 
 	}
 
+	/// Constant methods for [core::Matx_DivOp]
+	pub trait Matx_DivOpTraitConst {
+		fn as_raw_Matx_DivOp(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [core::Matx_DivOp]
+	pub trait Matx_DivOpTrait: core::Matx_DivOpTraitConst {
+		fn as_raw_mut_Matx_DivOp(&mut self) -> *mut c_void;
+
+	}
+
 	impl std::fmt::Debug for Matx_DivOp {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -22544,17 +22530,15 @@ pub mod core {
 		}
 	}
 
-	/// Constant methods for [core::Matx_MatMulOp]
-	pub trait Matx_MatMulOpTraitConst {
-		fn as_raw_Matx_MatMulOp(&self) -> *const c_void;
-
+	impl core::Matx_DivOpTraitConst for Matx_DivOp {
+		#[inline] fn as_raw_Matx_DivOp(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [core::Matx_MatMulOp]
-	pub trait Matx_MatMulOpTrait: core::Matx_MatMulOpTraitConst {
-		fn as_raw_mut_Matx_MatMulOp(&mut self) -> *mut c_void;
-
+	impl core::Matx_DivOpTrait for Matx_DivOp {
+		#[inline] fn as_raw_mut_Matx_DivOp(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { Matx_DivOp, core::Matx_DivOpTraitConst, as_raw_Matx_DivOp, core::Matx_DivOpTrait, as_raw_mut_Matx_DivOp }
 
 	pub struct Matx_MatMulOp {
 		ptr: *mut c_void,
@@ -22570,16 +22554,6 @@ pub mod core {
 	}
 
 	unsafe impl Send for Matx_MatMulOp {}
-
-	impl core::Matx_MatMulOpTraitConst for Matx_MatMulOp {
-		#[inline] fn as_raw_Matx_MatMulOp(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::Matx_MatMulOpTrait for Matx_MatMulOp {
-		#[inline] fn as_raw_mut_Matx_MatMulOp(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Matx_MatMulOp, core::Matx_MatMulOpTraitConst, as_raw_Matx_MatMulOp, core::Matx_MatMulOpTrait, as_raw_mut_Matx_MatMulOp }
 
 	impl Matx_MatMulOp {
 		#[inline]
@@ -22604,6 +22578,18 @@ pub mod core {
 
 	}
 
+	/// Constant methods for [core::Matx_MatMulOp]
+	pub trait Matx_MatMulOpTraitConst {
+		fn as_raw_Matx_MatMulOp(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [core::Matx_MatMulOp]
+	pub trait Matx_MatMulOpTrait: core::Matx_MatMulOpTraitConst {
+		fn as_raw_mut_Matx_MatMulOp(&mut self) -> *mut c_void;
+
+	}
+
 	impl std::fmt::Debug for Matx_MatMulOp {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -22612,17 +22598,15 @@ pub mod core {
 		}
 	}
 
-	/// Constant methods for [core::Matx_MulOp]
-	pub trait Matx_MulOpTraitConst {
-		fn as_raw_Matx_MulOp(&self) -> *const c_void;
-
+	impl core::Matx_MatMulOpTraitConst for Matx_MatMulOp {
+		#[inline] fn as_raw_Matx_MatMulOp(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [core::Matx_MulOp]
-	pub trait Matx_MulOpTrait: core::Matx_MulOpTraitConst {
-		fn as_raw_mut_Matx_MulOp(&mut self) -> *mut c_void;
-
+	impl core::Matx_MatMulOpTrait for Matx_MatMulOp {
+		#[inline] fn as_raw_mut_Matx_MatMulOp(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { Matx_MatMulOp, core::Matx_MatMulOpTraitConst, as_raw_Matx_MatMulOp, core::Matx_MatMulOpTrait, as_raw_mut_Matx_MatMulOp }
 
 	pub struct Matx_MulOp {
 		ptr: *mut c_void,
@@ -22638,16 +22622,6 @@ pub mod core {
 	}
 
 	unsafe impl Send for Matx_MulOp {}
-
-	impl core::Matx_MulOpTraitConst for Matx_MulOp {
-		#[inline] fn as_raw_Matx_MulOp(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::Matx_MulOpTrait for Matx_MulOp {
-		#[inline] fn as_raw_mut_Matx_MulOp(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Matx_MulOp, core::Matx_MulOpTraitConst, as_raw_Matx_MulOp, core::Matx_MulOpTrait, as_raw_mut_Matx_MulOp }
 
 	impl Matx_MulOp {
 		#[inline]
@@ -22672,6 +22646,18 @@ pub mod core {
 
 	}
 
+	/// Constant methods for [core::Matx_MulOp]
+	pub trait Matx_MulOpTraitConst {
+		fn as_raw_Matx_MulOp(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [core::Matx_MulOp]
+	pub trait Matx_MulOpTrait: core::Matx_MulOpTraitConst {
+		fn as_raw_mut_Matx_MulOp(&mut self) -> *mut c_void;
+
+	}
+
 	impl std::fmt::Debug for Matx_MulOp {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -22680,17 +22666,15 @@ pub mod core {
 		}
 	}
 
-	/// Constant methods for [core::Matx_ScaleOp]
-	pub trait Matx_ScaleOpTraitConst {
-		fn as_raw_Matx_ScaleOp(&self) -> *const c_void;
-
+	impl core::Matx_MulOpTraitConst for Matx_MulOp {
+		#[inline] fn as_raw_Matx_MulOp(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [core::Matx_ScaleOp]
-	pub trait Matx_ScaleOpTrait: core::Matx_ScaleOpTraitConst {
-		fn as_raw_mut_Matx_ScaleOp(&mut self) -> *mut c_void;
-
+	impl core::Matx_MulOpTrait for Matx_MulOp {
+		#[inline] fn as_raw_mut_Matx_MulOp(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { Matx_MulOp, core::Matx_MulOpTraitConst, as_raw_Matx_MulOp, core::Matx_MulOpTrait, as_raw_mut_Matx_MulOp }
 
 	pub struct Matx_ScaleOp {
 		ptr: *mut c_void,
@@ -22706,16 +22690,6 @@ pub mod core {
 	}
 
 	unsafe impl Send for Matx_ScaleOp {}
-
-	impl core::Matx_ScaleOpTraitConst for Matx_ScaleOp {
-		#[inline] fn as_raw_Matx_ScaleOp(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::Matx_ScaleOpTrait for Matx_ScaleOp {
-		#[inline] fn as_raw_mut_Matx_ScaleOp(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Matx_ScaleOp, core::Matx_ScaleOpTraitConst, as_raw_Matx_ScaleOp, core::Matx_ScaleOpTrait, as_raw_mut_Matx_ScaleOp }
 
 	impl Matx_ScaleOp {
 		#[inline]
@@ -22740,6 +22714,18 @@ pub mod core {
 
 	}
 
+	/// Constant methods for [core::Matx_ScaleOp]
+	pub trait Matx_ScaleOpTraitConst {
+		fn as_raw_Matx_ScaleOp(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [core::Matx_ScaleOp]
+	pub trait Matx_ScaleOpTrait: core::Matx_ScaleOpTraitConst {
+		fn as_raw_mut_Matx_ScaleOp(&mut self) -> *mut c_void;
+
+	}
+
 	impl std::fmt::Debug for Matx_ScaleOp {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -22748,17 +22734,15 @@ pub mod core {
 		}
 	}
 
-	/// Constant methods for [core::Matx_SubOp]
-	pub trait Matx_SubOpTraitConst {
-		fn as_raw_Matx_SubOp(&self) -> *const c_void;
-
+	impl core::Matx_ScaleOpTraitConst for Matx_ScaleOp {
+		#[inline] fn as_raw_Matx_ScaleOp(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [core::Matx_SubOp]
-	pub trait Matx_SubOpTrait: core::Matx_SubOpTraitConst {
-		fn as_raw_mut_Matx_SubOp(&mut self) -> *mut c_void;
-
+	impl core::Matx_ScaleOpTrait for Matx_ScaleOp {
+		#[inline] fn as_raw_mut_Matx_ScaleOp(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { Matx_ScaleOp, core::Matx_ScaleOpTraitConst, as_raw_Matx_ScaleOp, core::Matx_ScaleOpTrait, as_raw_mut_Matx_ScaleOp }
 
 	pub struct Matx_SubOp {
 		ptr: *mut c_void,
@@ -22774,16 +22758,6 @@ pub mod core {
 	}
 
 	unsafe impl Send for Matx_SubOp {}
-
-	impl core::Matx_SubOpTraitConst for Matx_SubOp {
-		#[inline] fn as_raw_Matx_SubOp(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::Matx_SubOpTrait for Matx_SubOp {
-		#[inline] fn as_raw_mut_Matx_SubOp(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Matx_SubOp, core::Matx_SubOpTraitConst, as_raw_Matx_SubOp, core::Matx_SubOpTrait, as_raw_mut_Matx_SubOp }
 
 	impl Matx_SubOp {
 		#[inline]
@@ -22808,6 +22782,18 @@ pub mod core {
 
 	}
 
+	/// Constant methods for [core::Matx_SubOp]
+	pub trait Matx_SubOpTraitConst {
+		fn as_raw_Matx_SubOp(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [core::Matx_SubOp]
+	pub trait Matx_SubOpTrait: core::Matx_SubOpTraitConst {
+		fn as_raw_mut_Matx_SubOp(&mut self) -> *mut c_void;
+
+	}
+
 	impl std::fmt::Debug for Matx_SubOp {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -22816,17 +22802,15 @@ pub mod core {
 		}
 	}
 
-	/// Constant methods for [core::Matx_TOp]
-	pub trait Matx_TOpTraitConst {
-		fn as_raw_Matx_TOp(&self) -> *const c_void;
-
+	impl core::Matx_SubOpTraitConst for Matx_SubOp {
+		#[inline] fn as_raw_Matx_SubOp(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [core::Matx_TOp]
-	pub trait Matx_TOpTrait: core::Matx_TOpTraitConst {
-		fn as_raw_mut_Matx_TOp(&mut self) -> *mut c_void;
-
+	impl core::Matx_SubOpTrait for Matx_SubOp {
+		#[inline] fn as_raw_mut_Matx_SubOp(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { Matx_SubOp, core::Matx_SubOpTraitConst, as_raw_Matx_SubOp, core::Matx_SubOpTrait, as_raw_mut_Matx_SubOp }
 
 	pub struct Matx_TOp {
 		ptr: *mut c_void,
@@ -22842,16 +22826,6 @@ pub mod core {
 	}
 
 	unsafe impl Send for Matx_TOp {}
-
-	impl core::Matx_TOpTraitConst for Matx_TOp {
-		#[inline] fn as_raw_Matx_TOp(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::Matx_TOpTrait for Matx_TOp {
-		#[inline] fn as_raw_mut_Matx_TOp(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Matx_TOp, core::Matx_TOpTraitConst, as_raw_Matx_TOp, core::Matx_TOpTrait, as_raw_mut_Matx_TOp }
 
 	impl Matx_TOp {
 		#[inline]
@@ -22876,6 +22850,18 @@ pub mod core {
 
 	}
 
+	/// Constant methods for [core::Matx_TOp]
+	pub trait Matx_TOpTraitConst {
+		fn as_raw_Matx_TOp(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [core::Matx_TOp]
+	pub trait Matx_TOpTrait: core::Matx_TOpTraitConst {
+		fn as_raw_mut_Matx_TOp(&mut self) -> *mut c_void;
+
+	}
+
 	impl std::fmt::Debug for Matx_TOp {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -22883,6 +22869,32 @@ pub mod core {
 				.finish()
 		}
 	}
+
+	impl core::Matx_TOpTraitConst for Matx_TOp {
+		#[inline] fn as_raw_Matx_TOp(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::Matx_TOpTrait for Matx_TOp {
+		#[inline] fn as_raw_mut_Matx_TOp(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Matx_TOp, core::Matx_TOpTraitConst, as_raw_Matx_TOp, core::Matx_TOpTrait, as_raw_mut_Matx_TOp }
+
+	/// Basic interface for all solvers
+	pub struct MinProblemSolver {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { MinProblemSolver }
+
+	impl Drop for MinProblemSolver {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_MinProblemSolver_delete(self.as_raw_mut_MinProblemSolver()) };
+		}
+	}
+
+	unsafe impl Send for MinProblemSolver {}
 
 	/// Constant methods for [core::MinProblemSolver]
 	pub trait MinProblemSolverTraitConst: core::AlgorithmTraitConst {
@@ -22985,21 +22997,19 @@ pub mod core {
 
 	}
 
-	/// Basic interface for all solvers
-	pub struct MinProblemSolver {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { MinProblemSolver }
-
-	impl Drop for MinProblemSolver {
+	impl std::fmt::Debug for MinProblemSolver {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_MinProblemSolver_delete(self.as_raw_mut_MinProblemSolver()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MinProblemSolver")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for MinProblemSolver {}
+	boxed_cast_base! { MinProblemSolver, core::Algorithm, cv_MinProblemSolver_to_Algorithm }
+
+	boxed_cast_descendant! { MinProblemSolver, core::ConjGradSolver, cv_MinProblemSolver_to_ConjGradSolver }
+
+	boxed_cast_descendant! { MinProblemSolver, core::DownhillSolver, cv_MinProblemSolver_to_DownhillSolver }
 
 	impl core::AlgorithmTraitConst for MinProblemSolver {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -23021,22 +23031,21 @@ pub mod core {
 
 	boxed_ref! { MinProblemSolver, core::MinProblemSolverTraitConst, as_raw_MinProblemSolver, core::MinProblemSolverTrait, as_raw_mut_MinProblemSolver }
 
-	impl MinProblemSolver {
+	/// Represents function being optimized
+	pub struct MinProblemSolver_Function {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { MinProblemSolver, core::ConjGradSolver, cv_MinProblemSolver_to_ConjGradSolver }
+	opencv_type_boxed! { MinProblemSolver_Function }
 
-	boxed_cast_descendant! { MinProblemSolver, core::DownhillSolver, cv_MinProblemSolver_to_DownhillSolver }
-
-	boxed_cast_base! { MinProblemSolver, core::Algorithm, cv_MinProblemSolver_to_Algorithm }
-
-	impl std::fmt::Debug for MinProblemSolver {
+	impl Drop for MinProblemSolver_Function {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("MinProblemSolver")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_MinProblemSolver_Function_delete(self.as_raw_mut_MinProblemSolver_Function()) };
 		}
 	}
+
+	unsafe impl Send for MinProblemSolver_Function {}
 
 	/// Constant methods for [core::MinProblemSolver_Function]
 	pub trait MinProblemSolver_FunctionTraitConst {
@@ -23086,21 +23095,13 @@ pub mod core {
 
 	}
 
-	/// Represents function being optimized
-	pub struct MinProblemSolver_Function {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { MinProblemSolver_Function }
-
-	impl Drop for MinProblemSolver_Function {
+	impl std::fmt::Debug for MinProblemSolver_Function {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_MinProblemSolver_Function_delete(self.as_raw_mut_MinProblemSolver_Function()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MinProblemSolver_Function")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for MinProblemSolver_Function {}
 
 	impl core::MinProblemSolver_FunctionTraitConst for MinProblemSolver_Function {
 		#[inline] fn as_raw_MinProblemSolver_Function(&self) -> *const c_void { self.as_raw() }
@@ -23111,17 +23112,6 @@ pub mod core {
 	}
 
 	boxed_ref! { MinProblemSolver_Function, core::MinProblemSolver_FunctionTraitConst, as_raw_MinProblemSolver_Function, core::MinProblemSolver_FunctionTrait, as_raw_mut_MinProblemSolver_Function }
-
-	impl MinProblemSolver_Function {
-	}
-
-	impl std::fmt::Debug for MinProblemSolver_Function {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("MinProblemSolver_Function")
-				.finish()
-		}
-	}
 
 	/// struct returned by cv::moments
 	///
@@ -23229,6 +23219,186 @@ pub mod core {
 			unsafe { sys::cv_Moments_Moments_double_double_double_double_double_double_double_double_double_double(m00, m10, m01, m20, m11, m02, m30, m21, m12, m03, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	/// Principal Component Analysis
+	///
+	/// The class is used to calculate a special basis for a set of vectors. The
+	/// basis will consist of eigenvectors of the covariance matrix calculated
+	/// from the input set of vectors. The class %PCA can also transform
+	/// vectors to/from the new coordinate space defined by the basis. Usually,
+	/// in this new coordinate system, each vector from the original set (and
+	/// any linear combination of such vectors) can be quite accurately
+	/// approximated by taking its first few components, corresponding to the
+	/// eigenvectors of the largest eigenvalues of the covariance matrix.
+	/// Geometrically it means that you calculate a projection of the vector to
+	/// a subspace formed by a few eigenvectors corresponding to the dominant
+	/// eigenvalues of the covariance matrix. And usually such a projection is
+	/// very close to the original vector. So, you can represent the original
+	/// vector from a high-dimensional space with a much shorter vector
+	/// consisting of the projected vector's coordinates in the subspace. Such a
+	/// transformation is also known as Karhunen-Loeve Transform, or KLT.
+	/// See <http://en.wikipedia.org/wiki/Principal_component_analysis>
+	///
+	/// The sample below is the function that takes two matrices. The first
+	/// function stores a set of vectors (a row per vector) that is used to
+	/// calculate PCA. The second function stores another "test" set of vectors
+	/// (a row per vector). First, these vectors are compressed with PCA, then
+	/// reconstructed back, and then the reconstruction error norm is computed
+	/// and printed for each vector. :
+	///
+	/// ```C++
+	/// using namespace cv;
+	///
+	/// PCA compressPCA(const Mat& pcaset, int maxComponents,
+	///                const Mat& testset, Mat& compressed)
+	/// {
+	///    PCA pca(pcaset, // pass the data
+	///            Mat(), // we do not have a pre-computed mean vector,
+	///                    // so let the PCA engine to compute it
+	///            PCA::DATA_AS_ROW, // indicate that the vectors
+	///                                 // are stored as matrix rows
+	///                                 // (use PCA::DATA_AS_COL if the vectors are
+	///                                 // the matrix columns)
+	///            maxComponents // specify, how many principal components to retain
+	///            );
+	///    // if there is no test data, just return the computed basis, ready-to-use
+	///    if( !testset.data )
+	///        return pca;
+	///    CV_Assert( testset.cols == pcaset.cols );
+	///
+	///    compressed.create(testset.rows, maxComponents, testset.type());
+	///
+	///    Mat reconstructed;
+	///    for( int i = 0; i < testset.rows; i++ )
+	///    {
+	///        Mat vec = testset.row(i), coeffs = compressed.row(i), reconstructed;
+	///        // compress the vector, the result will be stored
+	///        // in the i-th row of the output matrix
+	///        pca.project(vec, coeffs);
+	///        // and then reconstruct it
+	///        pca.backProject(coeffs, reconstructed);
+	///        // and measure the error
+	///        printf("%d. diff = %g\n", i, norm(vec, reconstructed, NORM_L2));
+	///    }
+	///    return pca;
+	/// }
+	/// ```
+	/// ## See also
+	/// calcCovarMatrix, mulTransposed, SVD, dft, dct
+	pub struct PCA {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { PCA }
+
+	impl Drop for PCA {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_PCA_delete(self.as_raw_mut_PCA()) };
+		}
+	}
+
+	unsafe impl Send for PCA {}
+
+	impl PCA {
+		/// default constructor
+		///
+		/// The default constructor initializes an empty %PCA structure. The other
+		/// constructors initialize the structure and call PCA::operator()().
+		#[inline]
+		pub fn default() -> Result<core::PCA> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_PCA_PCA(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::PCA::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// default constructor
+		///
+		/// The default constructor initializes an empty %PCA structure. The other
+		/// constructors initialize the structure and call PCA::operator()().
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * data: input samples stored as matrix rows or matrix columns.
+		/// * mean: optional mean value; if the matrix is empty (@c noArray()),
+		/// the mean is computed from the data.
+		/// * flags: operation flags; currently the parameter is only used to
+		/// specify the data layout (PCA::Flags)
+		/// * maxComponents: maximum number of components that %PCA should
+		/// retain; by default, all the components are retained.
+		///
+		/// ## C++ default parameters
+		/// * max_components: 0
+		#[inline]
+		pub fn new(data: &impl ToInputArray, mean: &impl ToInputArray, flags: i32, max_components: i32) -> Result<core::PCA> {
+			input_array_arg!(data);
+			input_array_arg!(mean);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_PCA_PCA_const__InputArrayR_const__InputArrayR_int_int(data.as_raw__InputArray(), mean.as_raw__InputArray(), flags, max_components, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::PCA::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// @overload
+		/// ## Parameters
+		/// * data: input samples stored as matrix rows or matrix columns.
+		/// * mean: optional mean value; if the matrix is empty (@c noArray()),
+		/// the mean is computed from the data.
+		/// * flags: operation flags; currently the parameter is only used to
+		/// specify the data layout (PCA::Flags)
+		/// * maxComponents: maximum number of components that %PCA should
+		/// retain; by default, all the components are retained.
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * max_components: 0
+		#[inline]
+		pub fn new_def(data: &impl ToInputArray, mean: &impl ToInputArray, flags: i32) -> Result<core::PCA> {
+			input_array_arg!(data);
+			input_array_arg!(mean);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_PCA_PCA_const__InputArrayR_const__InputArrayR_int(data.as_raw__InputArray(), mean.as_raw__InputArray(), flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::PCA::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// default constructor
+		///
+		/// The default constructor initializes an empty %PCA structure. The other
+		/// constructors initialize the structure and call PCA::operator()().
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * data: input samples stored as matrix rows or matrix columns.
+		/// * mean: optional mean value; if the matrix is empty (noArray()),
+		/// the mean is computed from the data.
+		/// * flags: operation flags; currently the parameter is only used to
+		/// specify the data layout (PCA::Flags)
+		/// * retainedVariance: Percentage of variance that PCA should retain.
+		/// Using this parameter will let the PCA decided how many components to
+		/// retain but it will always keep at least 2.
+		#[inline]
+		pub fn new_with_variance(data: &impl ToInputArray, mean: &impl ToInputArray, flags: i32, retained_variance: f64) -> Result<core::PCA> {
+			input_array_arg!(data);
+			input_array_arg!(mean);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_PCA_PCA_const__InputArrayR_const__InputArrayR_int_double(data.as_raw__InputArray(), mean.as_raw__InputArray(), flags, retained_variance, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::PCA::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -23546,85 +23716,16 @@ pub mod core {
 
 	}
 
-	/// Principal Component Analysis
-	///
-	/// The class is used to calculate a special basis for a set of vectors. The
-	/// basis will consist of eigenvectors of the covariance matrix calculated
-	/// from the input set of vectors. The class %PCA can also transform
-	/// vectors to/from the new coordinate space defined by the basis. Usually,
-	/// in this new coordinate system, each vector from the original set (and
-	/// any linear combination of such vectors) can be quite accurately
-	/// approximated by taking its first few components, corresponding to the
-	/// eigenvectors of the largest eigenvalues of the covariance matrix.
-	/// Geometrically it means that you calculate a projection of the vector to
-	/// a subspace formed by a few eigenvectors corresponding to the dominant
-	/// eigenvalues of the covariance matrix. And usually such a projection is
-	/// very close to the original vector. So, you can represent the original
-	/// vector from a high-dimensional space with a much shorter vector
-	/// consisting of the projected vector's coordinates in the subspace. Such a
-	/// transformation is also known as Karhunen-Loeve Transform, or KLT.
-	/// See <http://en.wikipedia.org/wiki/Principal_component_analysis>
-	///
-	/// The sample below is the function that takes two matrices. The first
-	/// function stores a set of vectors (a row per vector) that is used to
-	/// calculate PCA. The second function stores another "test" set of vectors
-	/// (a row per vector). First, these vectors are compressed with PCA, then
-	/// reconstructed back, and then the reconstruction error norm is computed
-	/// and printed for each vector. :
-	///
-	/// ```C++
-	/// using namespace cv;
-	///
-	/// PCA compressPCA(const Mat& pcaset, int maxComponents,
-	///                const Mat& testset, Mat& compressed)
-	/// {
-	///    PCA pca(pcaset, // pass the data
-	///            Mat(), // we do not have a pre-computed mean vector,
-	///                    // so let the PCA engine to compute it
-	///            PCA::DATA_AS_ROW, // indicate that the vectors
-	///                                 // are stored as matrix rows
-	///                                 // (use PCA::DATA_AS_COL if the vectors are
-	///                                 // the matrix columns)
-	///            maxComponents // specify, how many principal components to retain
-	///            );
-	///    // if there is no test data, just return the computed basis, ready-to-use
-	///    if( !testset.data )
-	///        return pca;
-	///    CV_Assert( testset.cols == pcaset.cols );
-	///
-	///    compressed.create(testset.rows, maxComponents, testset.type());
-	///
-	///    Mat reconstructed;
-	///    for( int i = 0; i < testset.rows; i++ )
-	///    {
-	///        Mat vec = testset.row(i), coeffs = compressed.row(i), reconstructed;
-	///        // compress the vector, the result will be stored
-	///        // in the i-th row of the output matrix
-	///        pca.project(vec, coeffs);
-	///        // and then reconstruct it
-	///        pca.backProject(coeffs, reconstructed);
-	///        // and measure the error
-	///        printf("%d. diff = %g\n", i, norm(vec, reconstructed, NORM_L2));
-	///    }
-	///    return pca;
-	/// }
-	/// ```
-	/// ## See also
-	/// calcCovarMatrix, mulTransposed, SVD, dft, dct
-	pub struct PCA {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { PCA }
-
-	impl Drop for PCA {
+	impl std::fmt::Debug for PCA {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_PCA_delete(self.as_raw_mut_PCA()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PCA")
+				.field("eigenvectors", &core::PCATraitConst::eigenvectors(self))
+				.field("eigenvalues", &core::PCATraitConst::eigenvalues(self))
+				.field("mean", &core::PCATraitConst::mean(self))
+				.finish()
 		}
 	}
-
-	unsafe impl Send for PCA {}
 
 	impl core::PCATraitConst for PCA {
 		#[inline] fn as_raw_PCA(&self) -> *const c_void { self.as_raw() }
@@ -23636,116 +23737,23 @@ pub mod core {
 
 	boxed_ref! { PCA, core::PCATraitConst, as_raw_PCA, core::PCATrait, as_raw_mut_PCA }
 
-	impl PCA {
-		/// default constructor
-		///
-		/// The default constructor initializes an empty %PCA structure. The other
-		/// constructors initialize the structure and call PCA::operator()().
-		#[inline]
-		pub fn default() -> Result<core::PCA> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_PCA_PCA(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::PCA::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// default constructor
-		///
-		/// The default constructor initializes an empty %PCA structure. The other
-		/// constructors initialize the structure and call PCA::operator()().
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * data: input samples stored as matrix rows or matrix columns.
-		/// * mean: optional mean value; if the matrix is empty (@c noArray()),
-		/// the mean is computed from the data.
-		/// * flags: operation flags; currently the parameter is only used to
-		/// specify the data layout (PCA::Flags)
-		/// * maxComponents: maximum number of components that %PCA should
-		/// retain; by default, all the components are retained.
-		///
-		/// ## C++ default parameters
-		/// * max_components: 0
-		#[inline]
-		pub fn new(data: &impl ToInputArray, mean: &impl ToInputArray, flags: i32, max_components: i32) -> Result<core::PCA> {
-			input_array_arg!(data);
-			input_array_arg!(mean);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_PCA_PCA_const__InputArrayR_const__InputArrayR_int_int(data.as_raw__InputArray(), mean.as_raw__InputArray(), flags, max_components, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::PCA::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// @overload
-		/// ## Parameters
-		/// * data: input samples stored as matrix rows or matrix columns.
-		/// * mean: optional mean value; if the matrix is empty (@c noArray()),
-		/// the mean is computed from the data.
-		/// * flags: operation flags; currently the parameter is only used to
-		/// specify the data layout (PCA::Flags)
-		/// * maxComponents: maximum number of components that %PCA should
-		/// retain; by default, all the components are retained.
-		///
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * max_components: 0
-		#[inline]
-		pub fn new_def(data: &impl ToInputArray, mean: &impl ToInputArray, flags: i32) -> Result<core::PCA> {
-			input_array_arg!(data);
-			input_array_arg!(mean);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_PCA_PCA_const__InputArrayR_const__InputArrayR_int(data.as_raw__InputArray(), mean.as_raw__InputArray(), flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::PCA::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// default constructor
-		///
-		/// The default constructor initializes an empty %PCA structure. The other
-		/// constructors initialize the structure and call PCA::operator()().
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * data: input samples stored as matrix rows or matrix columns.
-		/// * mean: optional mean value; if the matrix is empty (noArray()),
-		/// the mean is computed from the data.
-		/// * flags: operation flags; currently the parameter is only used to
-		/// specify the data layout (PCA::Flags)
-		/// * retainedVariance: Percentage of variance that PCA should retain.
-		/// Using this parameter will let the PCA decided how many components to
-		/// retain but it will always keep at least 2.
-		#[inline]
-		pub fn new_with_variance(data: &impl ToInputArray, mean: &impl ToInputArray, flags: i32, retained_variance: f64) -> Result<core::PCA> {
-			input_array_arg!(data);
-			input_array_arg!(mean);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_PCA_PCA_const__InputArrayR_const__InputArrayR_int_double(data.as_raw__InputArray(), mean.as_raw__InputArray(), flags, retained_variance, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::PCA::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// Base class for parallel data processors
+	///
+	/// @ingroup core_parallel
+	pub struct ParallelLoopBody {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for PCA {
+	opencv_type_boxed! { ParallelLoopBody }
+
+	impl Drop for ParallelLoopBody {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("PCA")
-				.field("eigenvectors", &core::PCATraitConst::eigenvectors(self))
-				.field("eigenvalues", &core::PCATraitConst::eigenvalues(self))
-				.field("mean", &core::PCATraitConst::mean(self))
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_ParallelLoopBody_delete(self.as_raw_mut_ParallelLoopBody()) };
 		}
 	}
+
+	unsafe impl Send for ParallelLoopBody {}
 
 	/// Constant methods for [core::ParallelLoopBody]
 	pub trait ParallelLoopBodyTraitConst {
@@ -23768,23 +23776,13 @@ pub mod core {
 
 	}
 
-	/// Base class for parallel data processors
-	///
-	/// @ingroup core_parallel
-	pub struct ParallelLoopBody {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { ParallelLoopBody }
-
-	impl Drop for ParallelLoopBody {
+	impl std::fmt::Debug for ParallelLoopBody {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ParallelLoopBody_delete(self.as_raw_mut_ParallelLoopBody()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ParallelLoopBody")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for ParallelLoopBody {}
 
 	impl core::ParallelLoopBodyTraitConst for ParallelLoopBody {
 		#[inline] fn as_raw_ParallelLoopBody(&self) -> *const c_void { self.as_raw() }
@@ -23796,15 +23794,72 @@ pub mod core {
 
 	boxed_ref! { ParallelLoopBody, core::ParallelLoopBodyTraitConst, as_raw_ParallelLoopBody, core::ParallelLoopBodyTrait, as_raw_mut_ParallelLoopBody }
 
-	impl ParallelLoopBody {
+	/// Random Number Generator
+	///
+	/// Random number generator. It encapsulates the state (currently, a 64-bit
+	/// integer) and has methods to return scalar random values and to fill
+	/// arrays with random values. Currently it supports uniform and Gaussian
+	/// (normal) distributions. The generator uses Multiply-With-Carry
+	/// algorithm, introduced by G. Marsaglia (
+	/// <http://en.wikipedia.org/wiki/Multiply-with-carry> ).
+	/// Gaussian-distribution random numbers are generated using the Ziggurat
+	/// algorithm ( <http://en.wikipedia.org/wiki/Ziggurat_algorithm> ),
+	/// introduced by G. Marsaglia and W. W. Tsang.
+	pub struct RNG {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for ParallelLoopBody {
+	opencv_type_boxed! { RNG }
+
+	impl Drop for RNG {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("ParallelLoopBody")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_RNG_delete(self.as_raw_mut_RNG()) };
 		}
+	}
+
+	unsafe impl Send for RNG {}
+
+	impl RNG {
+		/// constructor
+		///
+		/// These are the RNG constructors. The first form sets the state to some
+		/// pre-defined value, equal to 2\*\*32-1 in the current implementation. The
+		/// second form sets the state to the specified value. If you passed state=0
+		/// , the constructor uses the above default value instead to avoid the
+		/// singular random number sequence, consisting of all zeros.
+		#[inline]
+		pub fn default() -> Result<core::RNG> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_RNG_RNG(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::RNG::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// constructor
+		///
+		/// These are the RNG constructors. The first form sets the state to some
+		/// pre-defined value, equal to 2\*\*32-1 in the current implementation. The
+		/// second form sets the state to the specified value. If you passed state=0
+		/// , the constructor uses the above default value instead to avoid the
+		/// singular random number sequence, consisting of all zeros.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * state: 64-bit value used to initialize the RNG.
+		#[inline]
+		pub fn new(state: u64) -> Result<core::RNG> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_RNG_RNG_uint64_t(state, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::RNG::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [core::RNG]
@@ -24228,31 +24283,14 @@ pub mod core {
 
 	}
 
-	/// Random Number Generator
-	///
-	/// Random number generator. It encapsulates the state (currently, a 64-bit
-	/// integer) and has methods to return scalar random values and to fill
-	/// arrays with random values. Currently it supports uniform and Gaussian
-	/// (normal) distributions. The generator uses Multiply-With-Carry
-	/// algorithm, introduced by G. Marsaglia (
-	/// <http://en.wikipedia.org/wiki/Multiply-with-carry> ).
-	/// Gaussian-distribution random numbers are generated using the Ziggurat
-	/// algorithm ( <http://en.wikipedia.org/wiki/Ziggurat_algorithm> ),
-	/// introduced by G. Marsaglia and W. W. Tsang.
-	pub struct RNG {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { RNG }
-
-	impl Drop for RNG {
+	impl std::fmt::Debug for RNG {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_RNG_delete(self.as_raw_mut_RNG()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("RNG")
+				.field("state", &core::RNGTraitConst::state(self))
+				.finish()
 		}
 	}
-
-	unsafe impl Send for RNG {}
 
 	impl core::RNGTraitConst for RNG {
 		#[inline] fn as_raw_RNG(&self) -> *const c_void { self.as_raw() }
@@ -24264,55 +24302,46 @@ pub mod core {
 
 	boxed_ref! { RNG, core::RNGTraitConst, as_raw_RNG, core::RNGTrait, as_raw_mut_RNG }
 
-	impl RNG {
-		/// constructor
-		///
-		/// These are the RNG constructors. The first form sets the state to some
-		/// pre-defined value, equal to 2\*\*32-1 in the current implementation. The
-		/// second form sets the state to the specified value. If you passed state=0
-		/// , the constructor uses the above default value instead to avoid the
-		/// singular random number sequence, consisting of all zeros.
-		#[inline]
-		pub fn default() -> Result<core::RNG> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_RNG_RNG(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::RNG::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// constructor
-		///
-		/// These are the RNG constructors. The first form sets the state to some
-		/// pre-defined value, equal to 2\*\*32-1 in the current implementation. The
-		/// second form sets the state to the specified value. If you passed state=0
-		/// , the constructor uses the above default value instead to avoid the
-		/// singular random number sequence, consisting of all zeros.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * state: 64-bit value used to initialize the RNG.
-		#[inline]
-		pub fn new(state: u64) -> Result<core::RNG> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_RNG_RNG_uint64_t(state, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::RNG::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// Mersenne Twister random number generator
+	///
+	/// Inspired by <http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/MT2002/CODES/mt19937ar.c>
+	/// @todo document
+	pub struct RNG_MT19937 {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for RNG {
+	opencv_type_boxed! { RNG_MT19937 }
+
+	impl Drop for RNG_MT19937 {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("RNG")
-				.field("state", &core::RNGTraitConst::state(self))
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_RNG_MT19937_delete(self.as_raw_mut_RNG_MT19937()) };
 		}
+	}
+
+	unsafe impl Send for RNG_MT19937 {}
+
+	impl RNG_MT19937 {
+		#[inline]
+		pub fn default() -> Result<core::RNG_MT19937> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_RNG_MT19937_RNG_MT19937(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::RNG_MT19937::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn new(s: u32) -> Result<core::RNG_MT19937> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_RNG_MT19937_RNG_MT19937_unsigned_int(s, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::RNG_MT19937::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [core::RNG_MT19937]
@@ -24420,24 +24449,13 @@ pub mod core {
 
 	}
 
-	/// Mersenne Twister random number generator
-	///
-	/// Inspired by <http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/MT2002/CODES/mt19937ar.c>
-	/// @todo document
-	pub struct RNG_MT19937 {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { RNG_MT19937 }
-
-	impl Drop for RNG_MT19937 {
+	impl std::fmt::Debug for RNG_MT19937 {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_RNG_MT19937_delete(self.as_raw_mut_RNG_MT19937()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("RNG_MT19937")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for RNG_MT19937 {}
 
 	impl core::RNG_MT19937TraitConst for RNG_MT19937 {
 		#[inline] fn as_raw_RNG_MT19937(&self) -> *const c_void { self.as_raw() }
@@ -24449,35 +24467,76 @@ pub mod core {
 
 	boxed_ref! { RNG_MT19937, core::RNG_MT19937TraitConst, as_raw_RNG_MT19937, core::RNG_MT19937Trait, as_raw_mut_RNG_MT19937 }
 
-	impl RNG_MT19937 {
-		#[inline]
-		pub fn default() -> Result<core::RNG_MT19937> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_RNG_MT19937_RNG_MT19937(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::RNG_MT19937::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn new(s: u32) -> Result<core::RNG_MT19937> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_RNG_MT19937_RNG_MT19937_unsigned_int(s, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::RNG_MT19937::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// Template class specifying a continuous subsequence (slice) of a sequence.
+	///
+	/// The class is used to specify a row or a column span in a matrix ( Mat ) and for many other purposes.
+	/// Range(a,b) is basically the same as a:b in Matlab or a..b in Python. As in Python, start is an
+	/// inclusive left boundary of the range and end is an exclusive right boundary of the range. Such a
+	/// half-opened interval is usually denoted as ![inline formula](https://latex.codecogs.com/png.latex?%5Bstart%2Cend%29) .
+	///
+	/// The static method Range::all() returns a special variable that means "the whole sequence" or "the
+	/// whole range", just like " : " in Matlab or " ... " in Python. All the methods and functions in
+	/// OpenCV that take Range support this special Range::all() value. But, of course, in case of your own
+	/// custom processing, you will probably have to check and handle it explicitly:
+	/// ```C++
+	///    void my_function(..., const Range& r, ....)
+	///    {
+	///        if(r == Range::all()) {
+	///            // process all the data
+	///        }
+	///        else {
+	///            // process [r.start, r.end)
+	///        }
+	///    }
+	/// ```
+	///
+	pub struct Range {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for RNG_MT19937 {
+	opencv_type_boxed! { Range }
+
+	impl Drop for Range {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("RNG_MT19937")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_Range_delete(self.as_raw_mut_Range()) };
 		}
+	}
+
+	unsafe impl Send for Range {}
+
+	impl Range {
+		/// ////////////////////////////// Range /////////////////////////////////
+		#[inline]
+		pub fn default() -> Result<core::Range> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Range_Range(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Range::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn new(_start: i32, _end: i32) -> Result<core::Range> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Range_Range_int_int(_start, _end, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Range::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn all() -> Result<core::Range> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_Range_all(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Range::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [core::Range]
@@ -24534,43 +24593,15 @@ pub mod core {
 
 	}
 
-	/// Template class specifying a continuous subsequence (slice) of a sequence.
-	///
-	/// The class is used to specify a row or a column span in a matrix ( Mat ) and for many other purposes.
-	/// Range(a,b) is basically the same as a:b in Matlab or a..b in Python. As in Python, start is an
-	/// inclusive left boundary of the range and end is an exclusive right boundary of the range. Such a
-	/// half-opened interval is usually denoted as ![inline formula](https://latex.codecogs.com/png.latex?%5Bstart%2Cend%29) .
-	///
-	/// The static method Range::all() returns a special variable that means "the whole sequence" or "the
-	/// whole range", just like " : " in Matlab or " ... " in Python. All the methods and functions in
-	/// OpenCV that take Range support this special Range::all() value. But, of course, in case of your own
-	/// custom processing, you will probably have to check and handle it explicitly:
-	/// ```C++
-	///    void my_function(..., const Range& r, ....)
-	///    {
-	///        if(r == Range::all()) {
-	///            // process all the data
-	///        }
-	///        else {
-	///            // process [r.start, r.end)
-	///        }
-	///    }
-	/// ```
-	///
-	pub struct Range {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Range }
-
-	impl Drop for Range {
+	impl std::fmt::Debug for Range {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_Range_delete(self.as_raw_mut_Range()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Range")
+				.field("start", &core::RangeTraitConst::start(self))
+				.field("end", &core::RangeTraitConst::end(self))
+				.finish()
 		}
 	}
-
-	unsafe impl Send for Range {}
 
 	impl core::RangeTraitConst for Range {
 		#[inline] fn as_raw_Range(&self) -> *const c_void { self.as_raw() }
@@ -24581,50 +24612,6 @@ pub mod core {
 	}
 
 	boxed_ref! { Range, core::RangeTraitConst, as_raw_Range, core::RangeTrait, as_raw_mut_Range }
-
-	impl Range {
-		/// ////////////////////////////// Range /////////////////////////////////
-		#[inline]
-		pub fn default() -> Result<core::Range> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Range_Range(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Range::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn new(_start: i32, _end: i32) -> Result<core::Range> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Range_Range_int_int(_start, _end, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Range::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn all() -> Result<core::Range> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_Range_all(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Range::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	impl std::fmt::Debug for Range {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Range")
-				.field("start", &core::RangeTraitConst::start(self))
-				.field("end", &core::RangeTraitConst::end(self))
-				.finish()
-		}
-	}
 
 	/// The class represents rotated (i.e. not up-right) rectangles on a plane.
 	///
@@ -24733,142 +24720,6 @@ pub mod core {
 
 	}
 
-	/// Constant methods for [core::SVD]
-	pub trait SVDTraitConst {
-		fn as_raw_SVD(&self) -> *const c_void;
-
-		#[inline]
-		fn u(&self) -> core::Mat {
-			let ret = unsafe { sys::cv_SVD_propU_const(self.as_raw_SVD()) };
-			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
-			ret
-		}
-
-		#[inline]
-		fn w(&self) -> core::Mat {
-			let ret = unsafe { sys::cv_SVD_propW_const(self.as_raw_SVD()) };
-			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
-			ret
-		}
-
-		#[inline]
-		fn vt(&self) -> core::Mat {
-			let ret = unsafe { sys::cv_SVD_propVt_const(self.as_raw_SVD()) };
-			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
-			ret
-		}
-
-		/// performs a singular value back substitution.
-		///
-		/// The method calculates a back substitution for the specified right-hand
-		/// side:
-		///
-		/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bx%7D%20%3D%20%20%5Ctexttt%7Bvt%7D%20%5ET%20%20%5Ccdot%20diag%28%20%5Ctexttt%7Bw%7D%20%29%5E%7B%2D1%7D%20%20%5Ccdot%20%5Ctexttt%7Bu%7D%20%5ET%20%20%5Ccdot%20%5Ctexttt%7Brhs%7D%20%5Csim%20%5Ctexttt%7BA%7D%20%5E%7B%2D1%7D%20%20%5Ccdot%20%5Ctexttt%7Brhs%7D)
-		///
-		/// Using this technique you can either get a very accurate solution of the
-		/// convenient linear system, or the best (in the least-squares terms)
-		/// pseudo-solution of an overdetermined linear system.
-		///
-		/// ## Parameters
-		/// * rhs: right-hand side of a linear system (u\*w\*v')\*dst = rhs to
-		/// be solved, where A has been previously decomposed.
-		///
-		/// * dst: found solution of the system.
-		///
-		///
-		/// Note: Explicit SVD with the further back substitution only makes sense
-		/// if you need to solve many linear systems with the same left-hand side
-		/// (for example, src ). If all you need is to solve a single system
-		/// (possibly with multiple rhs immediately available), simply call solve
-		/// add pass [DECOMP_SVD] there. It does absolutely the same thing.
-		#[inline]
-		fn back_subst(&self, rhs: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
-			input_array_arg!(rhs);
-			output_array_arg!(dst);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SVD_backSubst_const_const__InputArrayR_const__OutputArrayR(self.as_raw_SVD(), rhs.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
-
-	/// Mutable methods for [core::SVD]
-	pub trait SVDTrait: core::SVDTraitConst {
-		fn as_raw_mut_SVD(&mut self) -> *mut c_void;
-
-		#[inline]
-		fn set_u(&mut self, val: core::Mat) {
-			let ret = unsafe { sys::cv_SVD_propU_const_Mat(self.as_raw_mut_SVD(), val.as_raw_Mat()) };
-			ret
-		}
-
-		#[inline]
-		fn set_w(&mut self, val: core::Mat) {
-			let ret = unsafe { sys::cv_SVD_propW_const_Mat(self.as_raw_mut_SVD(), val.as_raw_Mat()) };
-			ret
-		}
-
-		#[inline]
-		fn set_vt(&mut self, val: core::Mat) {
-			let ret = unsafe { sys::cv_SVD_propVt_const_Mat(self.as_raw_mut_SVD(), val.as_raw_Mat()) };
-			ret
-		}
-
-		/// the operator that performs SVD. The previously allocated u, w and vt are released.
-		///
-		/// The operator performs the singular value decomposition of the supplied
-		/// matrix. The u,`vt` , and the vector of singular values w are stored in
-		/// the structure. The same SVD structure can be reused many times with
-		/// different matrices. Each time, if needed, the previous u,`vt` , and w
-		/// are reclaimed and the new matrices are created, which is all handled by
-		/// Mat::create.
-		/// ## Parameters
-		/// * src: decomposed matrix. The depth has to be CV_32F or CV_64F.
-		/// * flags: operation flags (SVD::Flags)
-		///
-		/// ## C++ default parameters
-		/// * flags: 0
-		#[inline]
-		fn apply(&mut self, src: &impl ToInputArray, flags: i32) -> Result<core::SVD> {
-			input_array_arg!(src);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SVD_operator___const__InputArrayR_int(self.as_raw_mut_SVD(), src.as_raw__InputArray(), flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::SVD::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// the operator that performs SVD. The previously allocated u, w and vt are released.
-		///
-		/// The operator performs the singular value decomposition of the supplied
-		/// matrix. The u,`vt` , and the vector of singular values w are stored in
-		/// the structure. The same SVD structure can be reused many times with
-		/// different matrices. Each time, if needed, the previous u,`vt` , and w
-		/// are reclaimed and the new matrices are created, which is all handled by
-		/// Mat::create.
-		/// ## Parameters
-		/// * src: decomposed matrix. The depth has to be CV_32F or CV_64F.
-		/// * flags: operation flags (SVD::Flags)
-		///
-		/// ## Note
-		/// This alternative version of [SVDTrait::apply] function uses the following default values for its arguments:
-		/// * flags: 0
-		#[inline]
-		fn apply_def(&mut self, src: &impl ToInputArray) -> Result<core::SVD> {
-			input_array_arg!(src);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SVD_operator___const__InputArrayR(self.as_raw_mut_SVD(), src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::SVD::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
 	/// Singular Value Decomposition
 	///
 	/// Class for computing Singular Value Decomposition of a floating-point
@@ -24896,16 +24747,6 @@ pub mod core {
 	}
 
 	unsafe impl Send for SVD {}
-
-	impl core::SVDTraitConst for SVD {
-		#[inline] fn as_raw_SVD(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::SVDTrait for SVD {
-		#[inline] fn as_raw_mut_SVD(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { SVD, core::SVDTraitConst, as_raw_SVD, core::SVDTrait, as_raw_mut_SVD }
 
 	impl SVD {
 		/// the default constructor
@@ -25132,6 +24973,142 @@ pub mod core {
 
 	}
 
+	/// Constant methods for [core::SVD]
+	pub trait SVDTraitConst {
+		fn as_raw_SVD(&self) -> *const c_void;
+
+		#[inline]
+		fn u(&self) -> core::Mat {
+			let ret = unsafe { sys::cv_SVD_propU_const(self.as_raw_SVD()) };
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			ret
+		}
+
+		#[inline]
+		fn w(&self) -> core::Mat {
+			let ret = unsafe { sys::cv_SVD_propW_const(self.as_raw_SVD()) };
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			ret
+		}
+
+		#[inline]
+		fn vt(&self) -> core::Mat {
+			let ret = unsafe { sys::cv_SVD_propVt_const(self.as_raw_SVD()) };
+			let ret = unsafe { core::Mat::opencv_from_extern(ret) };
+			ret
+		}
+
+		/// performs a singular value back substitution.
+		///
+		/// The method calculates a back substitution for the specified right-hand
+		/// side:
+		///
+		/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bx%7D%20%3D%20%20%5Ctexttt%7Bvt%7D%20%5ET%20%20%5Ccdot%20diag%28%20%5Ctexttt%7Bw%7D%20%29%5E%7B%2D1%7D%20%20%5Ccdot%20%5Ctexttt%7Bu%7D%20%5ET%20%20%5Ccdot%20%5Ctexttt%7Brhs%7D%20%5Csim%20%5Ctexttt%7BA%7D%20%5E%7B%2D1%7D%20%20%5Ccdot%20%5Ctexttt%7Brhs%7D)
+		///
+		/// Using this technique you can either get a very accurate solution of the
+		/// convenient linear system, or the best (in the least-squares terms)
+		/// pseudo-solution of an overdetermined linear system.
+		///
+		/// ## Parameters
+		/// * rhs: right-hand side of a linear system (u\*w\*v')\*dst = rhs to
+		/// be solved, where A has been previously decomposed.
+		///
+		/// * dst: found solution of the system.
+		///
+		///
+		/// Note: Explicit SVD with the further back substitution only makes sense
+		/// if you need to solve many linear systems with the same left-hand side
+		/// (for example, src ). If all you need is to solve a single system
+		/// (possibly with multiple rhs immediately available), simply call solve
+		/// add pass [DECOMP_SVD] there. It does absolutely the same thing.
+		#[inline]
+		fn back_subst(&self, rhs: &impl ToInputArray, dst: &mut impl ToOutputArray) -> Result<()> {
+			input_array_arg!(rhs);
+			output_array_arg!(dst);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SVD_backSubst_const_const__InputArrayR_const__OutputArrayR(self.as_raw_SVD(), rhs.as_raw__InputArray(), dst.as_raw__OutputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [core::SVD]
+	pub trait SVDTrait: core::SVDTraitConst {
+		fn as_raw_mut_SVD(&mut self) -> *mut c_void;
+
+		#[inline]
+		fn set_u(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_SVD_propU_const_Mat(self.as_raw_mut_SVD(), val.as_raw_Mat()) };
+			ret
+		}
+
+		#[inline]
+		fn set_w(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_SVD_propW_const_Mat(self.as_raw_mut_SVD(), val.as_raw_Mat()) };
+			ret
+		}
+
+		#[inline]
+		fn set_vt(&mut self, val: core::Mat) {
+			let ret = unsafe { sys::cv_SVD_propVt_const_Mat(self.as_raw_mut_SVD(), val.as_raw_Mat()) };
+			ret
+		}
+
+		/// the operator that performs SVD. The previously allocated u, w and vt are released.
+		///
+		/// The operator performs the singular value decomposition of the supplied
+		/// matrix. The u,`vt` , and the vector of singular values w are stored in
+		/// the structure. The same SVD structure can be reused many times with
+		/// different matrices. Each time, if needed, the previous u,`vt` , and w
+		/// are reclaimed and the new matrices are created, which is all handled by
+		/// Mat::create.
+		/// ## Parameters
+		/// * src: decomposed matrix. The depth has to be CV_32F or CV_64F.
+		/// * flags: operation flags (SVD::Flags)
+		///
+		/// ## C++ default parameters
+		/// * flags: 0
+		#[inline]
+		fn apply(&mut self, src: &impl ToInputArray, flags: i32) -> Result<core::SVD> {
+			input_array_arg!(src);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SVD_operator___const__InputArrayR_int(self.as_raw_mut_SVD(), src.as_raw__InputArray(), flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::SVD::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// the operator that performs SVD. The previously allocated u, w and vt are released.
+		///
+		/// The operator performs the singular value decomposition of the supplied
+		/// matrix. The u,`vt` , and the vector of singular values w are stored in
+		/// the structure. The same SVD structure can be reused many times with
+		/// different matrices. Each time, if needed, the previous u,`vt` , and w
+		/// are reclaimed and the new matrices are created, which is all handled by
+		/// Mat::create.
+		/// ## Parameters
+		/// * src: decomposed matrix. The depth has to be CV_32F or CV_64F.
+		/// * flags: operation flags (SVD::Flags)
+		///
+		/// ## Note
+		/// This alternative version of [SVDTrait::apply] function uses the following default values for its arguments:
+		/// * flags: 0
+		#[inline]
+		fn apply_def(&mut self, src: &impl ToInputArray) -> Result<core::SVD> {
+			input_array_arg!(src);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SVD_operator___const__InputArrayR(self.as_raw_mut_SVD(), src.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::SVD::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
 	impl std::fmt::Debug for SVD {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -25141,6 +25118,178 @@ pub mod core {
 				.field("vt", &core::SVDTraitConst::vt(self))
 				.finish()
 		}
+	}
+
+	impl core::SVDTraitConst for SVD {
+		#[inline] fn as_raw_SVD(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::SVDTrait for SVD {
+		#[inline] fn as_raw_mut_SVD(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { SVD, core::SVDTraitConst, as_raw_SVD, core::SVDTrait, as_raw_mut_SVD }
+
+	/// The class SparseMat represents multi-dimensional sparse numerical arrays.
+	///
+	/// Such a sparse array can store elements of any type that Mat can store. *Sparse* means that only
+	/// non-zero elements are stored (though, as a result of operations on a sparse matrix, some of its
+	/// stored elements can actually become 0. It is up to you to detect such elements and delete them
+	/// using SparseMat::erase ). The non-zero elements are stored in a hash table that grows when it is
+	/// filled so that the search time is O(1) in average (regardless of whether element is there or not).
+	/// Elements can be accessed using the following methods:
+	/// *   Query operations (SparseMat::ptr and the higher-level SparseMat::ref, SparseMat::value and
+	///    SparseMat::find), for example:
+	///    ```C++
+	///        const int dims = 5;
+	///        int size[5] = {10, 10, 10, 10, 10};
+	///        SparseMat sparse_mat(dims, size, CV_32F);
+	///        for(int i = 0; i < 1000; i++)
+	///        {
+	///            int idx[dims];
+	///            for(int k = 0; k < dims; k++)
+	///                idx[k] = rand() % size[k];
+	///            sparse_mat.ref<float>(idx) += 1.f;
+	///        }
+	///        cout << "nnz = " << sparse_mat.nzcount() << endl;
+	///    ```
+	///
+	/// *   Sparse matrix iterators. They are similar to MatIterator but different from NAryMatIterator.
+	///    That is, the iteration loop is familiar to STL users:
+	///    ```C++
+	///        // prints elements of a sparse floating-point matrix
+	///        // and the sum of elements.
+	///        SparseMatConstIterator_<float>
+	///            it = sparse_mat.begin<float>(),
+	///            it_end = sparse_mat.end<float>();
+	///        double s = 0;
+	///        int dims = sparse_mat.dims();
+	///        for(; it != it_end; ++it)
+	///        {
+	///            // print element indices and the element value
+	///            const SparseMat::Node* n = it.node();
+	///            printf("(");
+	///            for(int i = 0; i < dims; i++)
+	///                printf("%d%s", n->idx[i], i < dims-1 ? ", " : ")");
+	///            printf(": %g\n", it.value<float>());
+	///            s += *it;
+	///        }
+	///        printf("Element sum is %g\n", s);
+	///    ```
+	///
+	///    If you run this loop, you will notice that elements are not enumerated in a logical order
+	///    (lexicographical, and so on). They come in the same order as they are stored in the hash table
+	///    (semi-randomly). You may collect pointers to the nodes and sort them to get the proper ordering.
+	///    Note, however, that pointers to the nodes may become invalid when you add more elements to the
+	///    matrix. This may happen due to possible buffer reallocation.
+	/// *   Combination of the above 2 methods when you need to process 2 or more sparse matrices
+	///    simultaneously. For example, this is how you can compute unnormalized cross-correlation of the 2
+	///    floating-point sparse matrices:
+	///    ```C++
+	///        double cross_corr(const SparseMat& a, const SparseMat& b)
+	///        {
+	///            const SparseMat *_a = &a, *_b = &b;
+	///            // if b contains less elements than a,
+	///            // it is faster to iterate through b
+	///            if(_a->nzcount() > _b->nzcount())
+	///                std::swap(_a, _b);
+	///            SparseMatConstIterator_<float> it = _a->begin<float>(),
+	///                                            it_end = _a->end<float>();
+	///            double ccorr = 0;
+	///            for(; it != it_end; ++it)
+	///            {
+	///                // take the next element from the first matrix
+	///                float avalue = *it;
+	///                const Node* anode = it.node();
+	///                // and try to find an element with the same index in the second matrix.
+	///                // since the hash value depends only on the element index,
+	///                // reuse the hash value stored in the node
+	///                float bvalue = _b->value<float>(anode->idx,&anode->hashval);
+	///                ccorr += avalue*bvalue;
+	///            }
+	///            return ccorr;
+	///        }
+	///    ```
+	///
+	pub struct SparseMat {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { SparseMat }
+
+	impl Drop for SparseMat {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_SparseMat_delete(self.as_raw_mut_SparseMat()) };
+		}
+	}
+
+	unsafe impl Send for SparseMat {}
+
+	impl SparseMat {
+		/// Various SparseMat constructors.
+		#[inline]
+		pub fn default() -> Result<core::SparseMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SparseMat_SparseMat(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::SparseMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Various SparseMat constructors.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * dims: Array dimensionality.
+		/// * _sizes: Sparce matrix size on all dementions.
+		/// * _type: Sparse matrix data type.
+		#[inline]
+		pub fn new(_sizes: &[i32], _type: i32) -> Result<core::SparseMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SparseMat_SparseMat_int_const_intX_int(_sizes.len().try_into()?, _sizes.as_ptr(), _type, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::SparseMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Various SparseMat constructors.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * m: Source matrix for copy constructor. If m is dense matrix (ocvMat) then it will be converted
+		/// to sparse representation.
+		#[inline]
+		pub fn copy(m: &impl core::SparseMatTraitConst) -> Result<core::SparseMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SparseMat_SparseMat_const_SparseMatR(m.as_raw_SparseMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::SparseMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Various SparseMat constructors.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * m: Source matrix for copy constructor. If m is dense matrix (ocvMat) then it will be converted
+		/// to sparse representation.
+		#[inline]
+		pub fn from_mat(m: &impl core::MatTraitConst) -> Result<core::SparseMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SparseMat_SparseMat_const_MatR(m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::SparseMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [core::SparseMat]
@@ -25790,178 +25939,6 @@ pub mod core {
 
 	}
 
-	/// The class SparseMat represents multi-dimensional sparse numerical arrays.
-	///
-	/// Such a sparse array can store elements of any type that Mat can store. *Sparse* means that only
-	/// non-zero elements are stored (though, as a result of operations on a sparse matrix, some of its
-	/// stored elements can actually become 0. It is up to you to detect such elements and delete them
-	/// using SparseMat::erase ). The non-zero elements are stored in a hash table that grows when it is
-	/// filled so that the search time is O(1) in average (regardless of whether element is there or not).
-	/// Elements can be accessed using the following methods:
-	/// *   Query operations (SparseMat::ptr and the higher-level SparseMat::ref, SparseMat::value and
-	///    SparseMat::find), for example:
-	///    ```C++
-	///        const int dims = 5;
-	///        int size[5] = {10, 10, 10, 10, 10};
-	///        SparseMat sparse_mat(dims, size, CV_32F);
-	///        for(int i = 0; i < 1000; i++)
-	///        {
-	///            int idx[dims];
-	///            for(int k = 0; k < dims; k++)
-	///                idx[k] = rand() % size[k];
-	///            sparse_mat.ref<float>(idx) += 1.f;
-	///        }
-	///        cout << "nnz = " << sparse_mat.nzcount() << endl;
-	///    ```
-	///
-	/// *   Sparse matrix iterators. They are similar to MatIterator but different from NAryMatIterator.
-	///    That is, the iteration loop is familiar to STL users:
-	///    ```C++
-	///        // prints elements of a sparse floating-point matrix
-	///        // and the sum of elements.
-	///        SparseMatConstIterator_<float>
-	///            it = sparse_mat.begin<float>(),
-	///            it_end = sparse_mat.end<float>();
-	///        double s = 0;
-	///        int dims = sparse_mat.dims();
-	///        for(; it != it_end; ++it)
-	///        {
-	///            // print element indices and the element value
-	///            const SparseMat::Node* n = it.node();
-	///            printf("(");
-	///            for(int i = 0; i < dims; i++)
-	///                printf("%d%s", n->idx[i], i < dims-1 ? ", " : ")");
-	///            printf(": %g\n", it.value<float>());
-	///            s += *it;
-	///        }
-	///        printf("Element sum is %g\n", s);
-	///    ```
-	///
-	///    If you run this loop, you will notice that elements are not enumerated in a logical order
-	///    (lexicographical, and so on). They come in the same order as they are stored in the hash table
-	///    (semi-randomly). You may collect pointers to the nodes and sort them to get the proper ordering.
-	///    Note, however, that pointers to the nodes may become invalid when you add more elements to the
-	///    matrix. This may happen due to possible buffer reallocation.
-	/// *   Combination of the above 2 methods when you need to process 2 or more sparse matrices
-	///    simultaneously. For example, this is how you can compute unnormalized cross-correlation of the 2
-	///    floating-point sparse matrices:
-	///    ```C++
-	///        double cross_corr(const SparseMat& a, const SparseMat& b)
-	///        {
-	///            const SparseMat *_a = &a, *_b = &b;
-	///            // if b contains less elements than a,
-	///            // it is faster to iterate through b
-	///            if(_a->nzcount() > _b->nzcount())
-	///                std::swap(_a, _b);
-	///            SparseMatConstIterator_<float> it = _a->begin<float>(),
-	///                                            it_end = _a->end<float>();
-	///            double ccorr = 0;
-	///            for(; it != it_end; ++it)
-	///            {
-	///                // take the next element from the first matrix
-	///                float avalue = *it;
-	///                const Node* anode = it.node();
-	///                // and try to find an element with the same index in the second matrix.
-	///                // since the hash value depends only on the element index,
-	///                // reuse the hash value stored in the node
-	///                float bvalue = _b->value<float>(anode->idx,&anode->hashval);
-	///                ccorr += avalue*bvalue;
-	///            }
-	///            return ccorr;
-	///        }
-	///    ```
-	///
-	pub struct SparseMat {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { SparseMat }
-
-	impl Drop for SparseMat {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_SparseMat_delete(self.as_raw_mut_SparseMat()) };
-		}
-	}
-
-	unsafe impl Send for SparseMat {}
-
-	impl core::SparseMatTraitConst for SparseMat {
-		#[inline] fn as_raw_SparseMat(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::SparseMatTrait for SparseMat {
-		#[inline] fn as_raw_mut_SparseMat(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { SparseMat, core::SparseMatTraitConst, as_raw_SparseMat, core::SparseMatTrait, as_raw_mut_SparseMat }
-
-	impl SparseMat {
-		/// Various SparseMat constructors.
-		#[inline]
-		pub fn default() -> Result<core::SparseMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SparseMat_SparseMat(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::SparseMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Various SparseMat constructors.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * dims: Array dimensionality.
-		/// * _sizes: Sparce matrix size on all dementions.
-		/// * _type: Sparse matrix data type.
-		#[inline]
-		pub fn new(_sizes: &[i32], _type: i32) -> Result<core::SparseMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SparseMat_SparseMat_int_const_intX_int(_sizes.len().try_into()?, _sizes.as_ptr(), _type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::SparseMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Various SparseMat constructors.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * m: Source matrix for copy constructor. If m is dense matrix (ocvMat) then it will be converted
-		/// to sparse representation.
-		#[inline]
-		pub fn copy(m: &impl core::SparseMatTraitConst) -> Result<core::SparseMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SparseMat_SparseMat_const_SparseMatR(m.as_raw_SparseMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::SparseMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Various SparseMat constructors.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * m: Source matrix for copy constructor. If m is dense matrix (ocvMat) then it will be converted
-		/// to sparse representation.
-		#[inline]
-		pub fn from_mat(m: &impl core::MatTraitConst) -> Result<core::SparseMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SparseMat_SparseMat_const_MatR(m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::SparseMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
 	impl Clone for SparseMat {
 		#[inline]
 		/// Calls try_clone() and panics if that fails
@@ -25977,6 +25954,45 @@ pub mod core {
 				.field("flags", &core::SparseMatTraitConst::flags(self))
 				.finish()
 		}
+	}
+
+	impl core::SparseMatTraitConst for SparseMat {
+		#[inline] fn as_raw_SparseMat(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::SparseMatTrait for SparseMat {
+		#[inline] fn as_raw_mut_SparseMat(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { SparseMat, core::SparseMatTraitConst, as_raw_SparseMat, core::SparseMatTrait, as_raw_mut_SparseMat }
+
+	/// the sparse matrix header
+	pub struct SparseMat_Hdr {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { SparseMat_Hdr }
+
+	impl Drop for SparseMat_Hdr {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_SparseMat_Hdr_delete(self.as_raw_mut_SparseMat_Hdr()) };
+		}
+	}
+
+	unsafe impl Send for SparseMat_Hdr {}
+
+	impl SparseMat_Hdr {
+		#[inline]
+		pub fn new(_sizes: &[i32], _type: i32) -> Result<core::SparseMat_Hdr> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SparseMat_Hdr_Hdr_int_const_intX_int(_sizes.len().try_into()?, _sizes.as_ptr(), _type, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::SparseMat_Hdr::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [core::SparseMat_Hdr]
@@ -26112,45 +26128,6 @@ pub mod core {
 
 	}
 
-	/// the sparse matrix header
-	pub struct SparseMat_Hdr {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { SparseMat_Hdr }
-
-	impl Drop for SparseMat_Hdr {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_SparseMat_Hdr_delete(self.as_raw_mut_SparseMat_Hdr()) };
-		}
-	}
-
-	unsafe impl Send for SparseMat_Hdr {}
-
-	impl core::SparseMat_HdrTraitConst for SparseMat_Hdr {
-		#[inline] fn as_raw_SparseMat_Hdr(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::SparseMat_HdrTrait for SparseMat_Hdr {
-		#[inline] fn as_raw_mut_SparseMat_Hdr(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { SparseMat_Hdr, core::SparseMat_HdrTraitConst, as_raw_SparseMat_Hdr, core::SparseMat_HdrTrait, as_raw_mut_SparseMat_Hdr }
-
-	impl SparseMat_Hdr {
-		#[inline]
-		pub fn new(_sizes: &[i32], _type: i32) -> Result<core::SparseMat_Hdr> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SparseMat_Hdr_Hdr_int_const_intX_int(_sizes.len().try_into()?, _sizes.as_ptr(), _type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::SparseMat_Hdr::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
 	impl std::fmt::Debug for SparseMat_Hdr {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -26166,6 +26143,43 @@ pub mod core {
 				.field("size", &core::SparseMat_HdrTraitConst::size(self))
 				.finish()
 		}
+	}
+
+	impl core::SparseMat_HdrTraitConst for SparseMat_Hdr {
+		#[inline] fn as_raw_SparseMat_Hdr(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::SparseMat_HdrTrait for SparseMat_Hdr {
+		#[inline] fn as_raw_mut_SparseMat_Hdr(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { SparseMat_Hdr, core::SparseMat_HdrTraitConst, as_raw_SparseMat_Hdr, core::SparseMat_HdrTrait, as_raw_mut_SparseMat_Hdr }
+
+	/// sparse matrix node - element of a hash table
+	pub struct SparseMat_Node {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { SparseMat_Node }
+
+	impl Drop for SparseMat_Node {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_SparseMat_Node_delete(self.as_raw_mut_SparseMat_Node()) };
+		}
+	}
+
+	unsafe impl Send for SparseMat_Node {}
+
+	impl SparseMat_Node {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> core::SparseMat_Node {
+			let ret = unsafe { sys::cv_SparseMat_Node_defaultNew_const() };
+			let ret = unsafe { core::SparseMat_Node::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [core::SparseMat_Node]
@@ -26224,39 +26238,12 @@ pub mod core {
 
 	}
 
-	/// sparse matrix node - element of a hash table
-	pub struct SparseMat_Node {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { SparseMat_Node }
-
-	impl Drop for SparseMat_Node {
+	impl Default for SparseMat_Node {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_SparseMat_Node_delete(self.as_raw_mut_SparseMat_Node()) };
-		}
-	}
-
-	unsafe impl Send for SparseMat_Node {}
-
-	impl core::SparseMat_NodeTraitConst for SparseMat_Node {
-		#[inline] fn as_raw_SparseMat_Node(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::SparseMat_NodeTrait for SparseMat_Node {
-		#[inline] fn as_raw_mut_SparseMat_Node(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { SparseMat_Node, core::SparseMat_NodeTraitConst, as_raw_SparseMat_Node, core::SparseMat_NodeTrait, as_raw_mut_SparseMat_Node }
-
-	impl SparseMat_Node {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
+		/// Forwards to infallible Self::default()
 		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_SparseMat_Node_defaultNew_const()) }
+			Self::default()
 		}
-
 	}
 
 	impl std::fmt::Debug for SparseMat_Node {
@@ -26270,12 +26257,76 @@ pub mod core {
 		}
 	}
 
-	impl Default for SparseMat_Node {
+	impl core::SparseMat_NodeTraitConst for SparseMat_Node {
+		#[inline] fn as_raw_SparseMat_Node(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::SparseMat_NodeTrait for SparseMat_Node {
+		#[inline] fn as_raw_mut_SparseMat_Node(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { SparseMat_Node, core::SparseMat_NodeTraitConst, as_raw_SparseMat_Node, core::SparseMat_NodeTrait, as_raw_mut_SparseMat_Node }
+
+	/// Read-Only Sparse Matrix Iterator.
+	///
+	/// Here is how to use the iterator to compute the sum of floating-point sparse matrix elements:
+	///
+	/// \code
+	/// SparseMatConstIterator it = m.begin(), it_end = m.end();
+	/// double s = 0;
+	/// CV_Assert( m.type() == CV_32F );
+	/// for( ; it != it_end; ++it )
+	///    s += it.value<float>();
+	/// \endcode
+	pub struct SparseMatConstIterator {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { SparseMatConstIterator }
+
+	impl Drop for SparseMatConstIterator {
 		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
+		fn drop(&mut self) {
+			unsafe { sys::cv_SparseMatConstIterator_delete(self.as_raw_mut_SparseMatConstIterator()) };
 		}
+	}
+
+	unsafe impl Send for SparseMatConstIterator {}
+
+	impl SparseMatConstIterator {
+		/// the default constructor
+		#[inline]
+		pub fn default() -> Result<core::SparseMatConstIterator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SparseMatConstIterator_SparseMatConstIterator(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::SparseMatConstIterator::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// the full constructor setting the iterator to the first sparse matrix element
+		#[inline]
+		pub fn new(_m: &impl core::SparseMatTraitConst) -> Result<core::SparseMatConstIterator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SparseMatConstIterator_SparseMatConstIterator_const_SparseMatX(_m.as_raw_SparseMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::SparseMatConstIterator::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// the copy constructor
+		#[inline]
+		pub fn copy(it: &impl core::SparseMatConstIteratorTraitConst) -> Result<core::SparseMatConstIterator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_SparseMatConstIterator_SparseMatConstIterator_const_SparseMatConstIteratorR(it.as_raw_SparseMatConstIterator(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::SparseMatConstIterator::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [core::SparseMatConstIterator]
@@ -26369,31 +26420,16 @@ pub mod core {
 
 	}
 
-	/// Read-Only Sparse Matrix Iterator.
-	///
-	/// Here is how to use the iterator to compute the sum of floating-point sparse matrix elements:
-	///
-	/// \code
-	/// SparseMatConstIterator it = m.begin(), it_end = m.end();
-	/// double s = 0;
-	/// CV_Assert( m.type() == CV_32F );
-	/// for( ; it != it_end; ++it )
-	///    s += it.value<float>();
-	/// \endcode
-	pub struct SparseMatConstIterator {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { SparseMatConstIterator }
-
-	impl Drop for SparseMatConstIterator {
+	impl std::fmt::Debug for SparseMatConstIterator {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_SparseMatConstIterator_delete(self.as_raw_mut_SparseMatConstIterator()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SparseMatConstIterator")
+				.field("m", &core::SparseMatConstIteratorTraitConst::m(self))
+				.field("hashidx", &core::SparseMatConstIteratorTraitConst::hashidx(self))
+				.field("ptr", &core::SparseMatConstIteratorTraitConst::ptr(self))
+				.finish()
 		}
 	}
-
-	unsafe impl Send for SparseMatConstIterator {}
 
 	impl core::SparseMatConstIteratorTraitConst for SparseMatConstIterator {
 		#[inline] fn as_raw_SparseMatConstIterator(&self) -> *const c_void { self.as_raw() }
@@ -26405,51 +26441,59 @@ pub mod core {
 
 	boxed_ref! { SparseMatConstIterator, core::SparseMatConstIteratorTraitConst, as_raw_SparseMatConstIterator, core::SparseMatConstIteratorTrait, as_raw_mut_SparseMatConstIterator }
 
-	impl SparseMatConstIterator {
+	/// Read-write Sparse Matrix Iterator
+	///
+	/// The class is similar to cv::SparseMatConstIterator,
+	/// but can be used for in-place modification of the matrix elements.
+	pub struct SparseMatIterator {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { SparseMatIterator }
+
+	impl Drop for SparseMatIterator {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_SparseMatIterator_delete(self.as_raw_mut_SparseMatIterator()) };
+		}
+	}
+
+	unsafe impl Send for SparseMatIterator {}
+
+	impl SparseMatIterator {
 		/// the default constructor
 		#[inline]
-		pub fn default() -> Result<core::SparseMatConstIterator> {
+		pub fn default() -> Result<core::SparseMatIterator> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SparseMatConstIterator_SparseMatConstIterator(ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_SparseMatIterator_SparseMatIterator(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::SparseMatConstIterator::opencv_from_extern(ret) };
+			let ret = unsafe { core::SparseMatIterator::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
 		/// the full constructor setting the iterator to the first sparse matrix element
 		#[inline]
-		pub fn new(_m: &impl core::SparseMatTraitConst) -> Result<core::SparseMatConstIterator> {
+		pub fn new(_m: &mut impl core::SparseMatTrait) -> Result<core::SparseMatIterator> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SparseMatConstIterator_SparseMatConstIterator_const_SparseMatX(_m.as_raw_SparseMat(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_SparseMatIterator_SparseMatIterator_SparseMatX(_m.as_raw_mut_SparseMat(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::SparseMatConstIterator::opencv_from_extern(ret) };
+			let ret = unsafe { core::SparseMatIterator::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
 		/// the copy constructor
 		#[inline]
-		pub fn copy(it: &impl core::SparseMatConstIteratorTraitConst) -> Result<core::SparseMatConstIterator> {
+		pub fn copy(it: &impl core::SparseMatIteratorTraitConst) -> Result<core::SparseMatIterator> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SparseMatConstIterator_SparseMatConstIterator_const_SparseMatConstIteratorR(it.as_raw_SparseMatConstIterator(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_SparseMatIterator_SparseMatIterator_const_SparseMatIteratorR(it.as_raw_SparseMatIterator(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::SparseMatConstIterator::opencv_from_extern(ret) };
+			let ret = unsafe { core::SparseMatIterator::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	impl std::fmt::Debug for SparseMatConstIterator {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("SparseMatConstIterator")
-				.field("m", &core::SparseMatConstIteratorTraitConst::m(self))
-				.field("hashidx", &core::SparseMatConstIteratorTraitConst::hashidx(self))
-				.field("ptr", &core::SparseMatConstIteratorTraitConst::ptr(self))
-				.finish()
-		}
 	}
 
 	/// Constant methods for [core::SparseMatIterator]
@@ -26496,24 +26540,18 @@ pub mod core {
 
 	}
 
-	/// Read-write Sparse Matrix Iterator
-	///
-	/// The class is similar to cv::SparseMatConstIterator,
-	/// but can be used for in-place modification of the matrix elements.
-	pub struct SparseMatIterator {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { SparseMatIterator }
-
-	impl Drop for SparseMatIterator {
+	impl std::fmt::Debug for SparseMatIterator {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_SparseMatIterator_delete(self.as_raw_mut_SparseMatIterator()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SparseMatIterator")
+				.field("m", &core::SparseMatConstIteratorTraitConst::m(self))
+				.field("hashidx", &core::SparseMatConstIteratorTraitConst::hashidx(self))
+				.field("ptr", &core::SparseMatConstIteratorTraitConst::ptr(self))
+				.finish()
 		}
 	}
 
-	unsafe impl Send for SparseMatIterator {}
+	boxed_cast_base! { SparseMatIterator, core::SparseMatConstIterator, cv_SparseMatIterator_to_SparseMatConstIterator }
 
 	impl core::SparseMatConstIteratorTraitConst for SparseMatIterator {
 		#[inline] fn as_raw_SparseMatConstIterator(&self) -> *const c_void { self.as_raw() }
@@ -26534,55 +26572,6 @@ pub mod core {
 	}
 
 	boxed_ref! { SparseMatIterator, core::SparseMatIteratorTraitConst, as_raw_SparseMatIterator, core::SparseMatIteratorTrait, as_raw_mut_SparseMatIterator }
-
-	impl SparseMatIterator {
-		/// the default constructor
-		#[inline]
-		pub fn default() -> Result<core::SparseMatIterator> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SparseMatIterator_SparseMatIterator(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::SparseMatIterator::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// the full constructor setting the iterator to the first sparse matrix element
-		#[inline]
-		pub fn new(_m: &mut impl core::SparseMatTrait) -> Result<core::SparseMatIterator> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SparseMatIterator_SparseMatIterator_SparseMatX(_m.as_raw_mut_SparseMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::SparseMatIterator::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// the copy constructor
-		#[inline]
-		pub fn copy(it: &impl core::SparseMatIteratorTraitConst) -> Result<core::SparseMatIterator> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_SparseMatIterator_SparseMatIterator_const_SparseMatIteratorR(it.as_raw_SparseMatIterator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::SparseMatIterator::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_base! { SparseMatIterator, core::SparseMatConstIterator, cv_SparseMatIterator_to_SparseMatConstIterator }
-
-	impl std::fmt::Debug for SparseMatIterator {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("SparseMatIterator")
-				.field("m", &core::SparseMatConstIteratorTraitConst::m(self))
-				.field("hashidx", &core::SparseMatConstIteratorTraitConst::hashidx(self))
-				.field("ptr", &core::SparseMatConstIteratorTraitConst::ptr(self))
-				.finish()
-		}
-	}
 
 	/// The class defining termination criteria for iterative algorithms.
 	///
@@ -26631,6 +26620,45 @@ pub mod core {
 			unsafe { sys::cv_TermCriteria_TermCriteria_int_int_double(typ, max_count, epsilon, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	/// a Class to measure passing time.
+	///
+	/// The class computes passing time by counting the number of ticks per second. That is, the following code computes the
+	/// execution time in seconds:
+	/// [TickMeter_total](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+	///
+	/// It is also possible to compute the average time over multiple runs:
+	/// [TickMeter_average](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+	/// ## See also
+	/// getTickCount, getTickFrequency
+	pub struct TickMeter {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { TickMeter }
+
+	impl Drop for TickMeter {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_TickMeter_delete(self.as_raw_mut_TickMeter()) };
+		}
+	}
+
+	unsafe impl Send for TickMeter {}
+
+	impl TickMeter {
+		/// the default constructor
+		#[inline]
+		pub fn default() -> Result<core::TickMeter> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_TickMeter_TickMeter(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::TickMeter::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -26798,30 +26826,13 @@ pub mod core {
 
 	}
 
-	/// a Class to measure passing time.
-	///
-	/// The class computes passing time by counting the number of ticks per second. That is, the following code computes the
-	/// execution time in seconds:
-	/// [TickMeter_total](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
-	///
-	/// It is also possible to compute the average time over multiple runs:
-	/// [TickMeter_average](https://github.com/opencv/opencv/blob/4.11.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
-	/// ## See also
-	/// getTickCount, getTickFrequency
-	pub struct TickMeter {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { TickMeter }
-
-	impl Drop for TickMeter {
+	impl std::fmt::Debug for TickMeter {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_TickMeter_delete(self.as_raw_mut_TickMeter()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TickMeter")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for TickMeter {}
 
 	impl core::TickMeterTraitConst for TickMeter {
 		#[inline] fn as_raw_TickMeter(&self) -> *const c_void { self.as_raw() }
@@ -26833,26 +26844,527 @@ pub mod core {
 
 	boxed_ref! { TickMeter, core::TickMeterTraitConst, as_raw_TickMeter, core::TickMeterTrait, as_raw_mut_TickMeter }
 
-	impl TickMeter {
-		/// the default constructor
+	/// @todo document
+	pub struct UMat {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { UMat }
+
+	impl Drop for UMat {
 		#[inline]
-		pub fn default() -> Result<core::TickMeter> {
+		fn drop(&mut self) {
+			unsafe { sys::cv_UMat_delete(self.as_raw_mut_UMat()) };
+		}
+	}
+
+	unsafe impl Send for UMat {}
+
+	impl UMat {
+		/// default constructor
+		///
+		/// ## C++ default parameters
+		/// * usage_flags: USAGE_DEFAULT
+		#[inline]
+		pub fn new(usage_flags: core::UMatUsageFlags) -> core::UMat {
+			let ret = unsafe { sys::cv_UMat_UMat_UMatUsageFlags(usage_flags) };
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			ret
+		}
+
+		/// default constructor
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * usage_flags: USAGE_DEFAULT
+		#[inline]
+		pub fn new_def() -> core::UMat {
+			let ret = unsafe { sys::cv_UMat_UMat() };
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			ret
+		}
+
+		/// constructs 2D matrix of the specified size and type
+		///
+		/// ## C++ default parameters
+		/// * usage_flags: USAGE_DEFAULT
+		#[inline]
+		pub unsafe fn new_rows_cols(rows: i32, cols: i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_TickMeter_TickMeter(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			{ sys::cv_UMat_UMat_int_int_int_UMatUsageFlags(rows, cols, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::TickMeter::opencv_from_extern(ret) };
+			let ret = { core::UMat::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	impl std::fmt::Debug for TickMeter {
+		/// constructs 2D matrix of the specified size and type
+		///
+		/// ## Note
+		/// This alternative version of [new_rows_cols] function uses the following default values for its arguments:
+		/// * usage_flags: USAGE_DEFAULT
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("TickMeter")
-				.finish()
+		pub fn new_rows_cols_def(rows: i32, cols: i32, typ: i32) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_UMat_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
+		/// ## C++ default parameters
+		/// * usage_flags: USAGE_DEFAULT
+		#[inline]
+		pub unsafe fn new_size(size: core::Size, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_UMat_UMat_Size_int_UMatUsageFlags(&size, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [new_size] function uses the following default values for its arguments:
+		/// * usage_flags: USAGE_DEFAULT
+		#[inline]
+		pub fn new_size_def(size: core::Size, typ: i32) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_UMat_Size_int(&size, typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// constructs 2D matrix and fills it with the specified value _s.
+		///
+		/// ## C++ default parameters
+		/// * usage_flags: USAGE_DEFAULT
+		#[inline]
+		pub fn new_rows_cols_with_default(rows: i32, cols: i32, typ: i32, s: core::Scalar, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_UMat_int_int_int_const_ScalarR_UMatUsageFlags(rows, cols, typ, &s, usage_flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// constructs 2D matrix and fills it with the specified value _s.
+		///
+		/// ## Note
+		/// This alternative version of [new_rows_cols_with_default] function uses the following default values for its arguments:
+		/// * usage_flags: USAGE_DEFAULT
+		#[inline]
+		pub fn new_rows_cols_with_default_def(rows: i32, cols: i32, typ: i32, s: core::Scalar) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_UMat_int_int_int_const_ScalarR(rows, cols, typ, &s, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## C++ default parameters
+		/// * usage_flags: USAGE_DEFAULT
+		#[inline]
+		pub fn new_size_with_default(size: core::Size, typ: i32, s: core::Scalar, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_UMat_Size_int_const_ScalarR_UMatUsageFlags(&size, typ, &s, usage_flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [new_size_with_default] function uses the following default values for its arguments:
+		/// * usage_flags: USAGE_DEFAULT
+		#[inline]
+		pub fn new_size_with_default_def(size: core::Size, typ: i32, s: core::Scalar) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_UMat_Size_int_const_ScalarR(&size, typ, &s, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// constructs n-dimensional matrix
+		///
+		/// ## C++ default parameters
+		/// * usage_flags: USAGE_DEFAULT
+		#[inline]
+		pub unsafe fn new_nd(sizes: &[i32], typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_UMat_UMat_int_const_intX_int_UMatUsageFlags(sizes.len().try_into()?, sizes.as_ptr(), typ, usage_flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// constructs n-dimensional matrix
+		///
+		/// ## Note
+		/// This alternative version of [new_nd] function uses the following default values for its arguments:
+		/// * usage_flags: USAGE_DEFAULT
+		#[inline]
+		pub fn new_nd_def(sizes: &[i32], typ: i32) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_UMat_int_const_intX_int(sizes.len().try_into()?, sizes.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## C++ default parameters
+		/// * usage_flags: USAGE_DEFAULT
+		#[inline]
+		pub fn new_nd_with_default(sizes: &[i32], typ: i32, s: core::Scalar, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_UMat_int_const_intX_int_const_ScalarR_UMatUsageFlags(sizes.len().try_into()?, sizes.as_ptr(), typ, &s, usage_flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [new_nd_with_default] function uses the following default values for its arguments:
+		/// * usage_flags: USAGE_DEFAULT
+		#[inline]
+		pub fn new_nd_with_default_def(sizes: &[i32], typ: i32, s: core::Scalar) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_UMat_int_const_intX_int_const_ScalarR(sizes.len().try_into()?, sizes.as_ptr(), typ, &s, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// copy constructor
+		#[inline]
+		pub fn copy(m: &impl core::UMatTraitConst) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_UMat_const_UMatR(m.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// creates a matrix header for a part of the bigger matrix
+		///
+		/// ## C++ default parameters
+		/// * col_range: Range::all()
+		#[inline]
+		pub fn rowscols<'boxed>(m: &'boxed impl core::UMatTraitConst, row_range: &impl core::RangeTraitConst, col_range: &impl core::RangeTraitConst) -> Result<BoxedRef<'boxed, core::UMat>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_UMat_const_UMatR_const_RangeR_const_RangeR(m.as_raw_UMat(), row_range.as_raw_Range(), col_range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<'boxed, core::UMat>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// creates a matrix header for a part of the bigger matrix
+		///
+		/// ## Note
+		/// This alternative version of [rowscols] function uses the following default values for its arguments:
+		/// * col_range: Range::all()
+		#[inline]
+		pub fn rowscols_def_mut<'boxed>(m: &'boxed mut impl core::UMatTrait, row_range: &impl core::RangeTraitConst) -> Result<BoxedRefMut<'boxed, core::UMat>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_UMat_UMatR_const_RangeR(m.as_raw_mut_UMat(), row_range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRefMut::<'boxed, core::UMat>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// creates a matrix header for a part of the bigger matrix
+		///
+		/// ## Note
+		/// This alternative version of [rowscols] function uses the following default values for its arguments:
+		/// * col_range: Range::all()
+		#[inline]
+		pub fn rowscols_def<'boxed>(m: &'boxed impl core::UMatTraitConst, row_range: &impl core::RangeTraitConst) -> Result<BoxedRef<'boxed, core::UMat>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_UMat_const_UMatR_const_RangeR(m.as_raw_UMat(), row_range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<'boxed, core::UMat>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// creates a matrix header for a part of the bigger matrix
+		///
+		/// ## C++ default parameters
+		/// * col_range: Range::all()
+		#[inline]
+		pub fn rowscols_mut<'boxed>(m: &'boxed mut impl core::UMatTrait, row_range: &impl core::RangeTraitConst, col_range: &impl core::RangeTraitConst) -> Result<BoxedRefMut<'boxed, core::UMat>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_UMat_UMatR_const_RangeR_const_RangeR(m.as_raw_mut_UMat(), row_range.as_raw_Range(), col_range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRefMut::<'boxed, core::UMat>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn roi(m: &impl core::UMatTraitConst, roi: core::Rect) -> Result<BoxedRef<core::UMat>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_UMat_const_UMatR_const_RectR(m.as_raw_UMat(), &roi, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<core::UMat>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn roi_mut(m: &mut impl core::UMatTrait, roi: core::Rect) -> Result<BoxedRefMut<core::UMat>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_UMat_UMatR_const_RectR(m.as_raw_mut_UMat(), &roi, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRefMut::<core::UMat>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn ranges<'boxed>(m: &'boxed impl core::UMatTraitConst, ranges: &core::Vector<core::Range>) -> Result<BoxedRef<'boxed, core::UMat>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_UMat_const_UMatR_const_vectorLRangeGR(m.as_raw_UMat(), ranges.as_raw_VectorOfRange(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<'boxed, core::UMat>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn ranges_mut<'boxed>(m: &'boxed mut impl core::UMatTrait, ranges: &core::Vector<core::Range>) -> Result<BoxedRefMut<'boxed, core::UMat>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_UMat_UMatR_const_vectorLRangeGR(m.as_raw_mut_UMat(), ranges.as_raw_VectorOfRange(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRefMut::<'boxed, core::UMat>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// constructs a square diagonal matrix which main diagonal is vector "d"
+		#[inline]
+		#[must_use]
+		pub fn diag_flags(d: &impl core::UMatTraitConst, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_diag_const_UMatR_UMatUsageFlags(d.as_raw_UMat(), usage_flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		#[must_use]
+		pub fn diag(d: &impl core::UMatTraitConst) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_diag_const_UMatR(d.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Matlab-style matrix initialization
+		#[inline]
+		#[must_use]
+		pub fn zeros_flags(rows: i32, cols: i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_zeros_int_int_int_UMatUsageFlags(rows, cols, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		#[must_use]
+		pub fn zeros_size_flags(size: core::Size, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_zeros_Size_int_UMatUsageFlags(&size, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		#[must_use]
+		pub fn zeros_nd_flags(sz: &[i32], typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_zeros_int_const_intX_int_UMatUsageFlags(sz.len().try_into()?, sz.as_ptr(), typ, usage_flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		#[must_use]
+		pub fn zeros(rows: i32, cols: i32, typ: i32) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_zeros_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		#[must_use]
+		pub fn zeros_size(size: core::Size, typ: i32) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_zeros_Size_int(&size, typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		#[must_use]
+		pub fn zeros_nd(sz: &[i32], typ: i32) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_zeros_int_const_intX_int(sz.len().try_into()?, sz.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		#[must_use]
+		pub fn ones_flags(rows: i32, cols: i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_ones_int_int_int_UMatUsageFlags(rows, cols, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		#[must_use]
+		pub fn ones_size_flags(size: core::Size, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_ones_Size_int_UMatUsageFlags(&size, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		#[must_use]
+		pub fn ones_nd_flags(sz: &[i32], typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_ones_int_const_intX_int_UMatUsageFlags(sz.len().try_into()?, sz.as_ptr(), typ, usage_flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		#[must_use]
+		pub fn ones(rows: i32, cols: i32, typ: i32) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_ones_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		#[must_use]
+		pub fn ones_size(size: core::Size, typ: i32) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_ones_Size_int(&size, typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		#[must_use]
+		pub fn ones_nd(sz: &[i32], typ: i32) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_ones_int_const_intX_int(sz.len().try_into()?, sz.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		#[must_use]
+		pub fn eye_flags(rows: i32, cols: i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_eye_int_int_int_UMatUsageFlags(rows, cols, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		#[must_use]
+		pub fn eye_size_flags(size: core::Size, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_eye_Size_int_UMatUsageFlags(&size, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		#[must_use]
+		pub fn eye(rows: i32, cols: i32, typ: i32) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_eye_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		#[must_use]
+		pub fn eye_size(size: core::Size, typ: i32) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_eye_Size_int(&size, typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn copy_mut(mut m: core::UMat) -> Result<core::UMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_UMat_UMat_UMatRR(m.as_raw_mut_UMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [core::UMat]
@@ -27888,539 +28400,6 @@ pub mod core {
 
 	}
 
-	/// @todo document
-	pub struct UMat {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { UMat }
-
-	impl Drop for UMat {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_UMat_delete(self.as_raw_mut_UMat()) };
-		}
-	}
-
-	unsafe impl Send for UMat {}
-
-	impl core::UMatTraitConst for UMat {
-		#[inline] fn as_raw_UMat(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::UMatTrait for UMat {
-		#[inline] fn as_raw_mut_UMat(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { UMat, core::UMatTraitConst, as_raw_UMat, core::UMatTrait, as_raw_mut_UMat }
-
-	impl UMat {
-		/// default constructor
-		///
-		/// ## C++ default parameters
-		/// * usage_flags: USAGE_DEFAULT
-		#[inline]
-		pub fn new(usage_flags: core::UMatUsageFlags) -> core::UMat {
-			let ret = unsafe { sys::cv_UMat_UMat_UMatUsageFlags(usage_flags) };
-			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
-			ret
-		}
-
-		/// default constructor
-		///
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * usage_flags: USAGE_DEFAULT
-		#[inline]
-		pub fn new_def() -> core::UMat {
-			let ret = unsafe { sys::cv_UMat_UMat() };
-			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
-			ret
-		}
-
-		/// constructs 2D matrix of the specified size and type
-		///
-		/// ## C++ default parameters
-		/// * usage_flags: USAGE_DEFAULT
-		#[inline]
-		pub unsafe fn new_rows_cols(rows: i32, cols: i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
-			return_send!(via ocvrs_return);
-			{ sys::cv_UMat_UMat_int_int_int_UMatUsageFlags(rows, cols, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::UMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// constructs 2D matrix of the specified size and type
-		///
-		/// ## Note
-		/// This alternative version of [new_rows_cols] function uses the following default values for its arguments:
-		/// * usage_flags: USAGE_DEFAULT
-		#[inline]
-		pub fn new_rows_cols_def(rows: i32, cols: i32, typ: i32) -> Result<core::UMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_UMat_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## C++ default parameters
-		/// * usage_flags: USAGE_DEFAULT
-		#[inline]
-		pub unsafe fn new_size(size: core::Size, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
-			return_send!(via ocvrs_return);
-			{ sys::cv_UMat_UMat_Size_int_UMatUsageFlags(&size, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::UMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [new_size] function uses the following default values for its arguments:
-		/// * usage_flags: USAGE_DEFAULT
-		#[inline]
-		pub fn new_size_def(size: core::Size, typ: i32) -> Result<core::UMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_UMat_Size_int(&size, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// constructs 2D matrix and fills it with the specified value _s.
-		///
-		/// ## C++ default parameters
-		/// * usage_flags: USAGE_DEFAULT
-		#[inline]
-		pub fn new_rows_cols_with_default(rows: i32, cols: i32, typ: i32, s: core::Scalar, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_UMat_int_int_int_const_ScalarR_UMatUsageFlags(rows, cols, typ, &s, usage_flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// constructs 2D matrix and fills it with the specified value _s.
-		///
-		/// ## Note
-		/// This alternative version of [new_rows_cols_with_default] function uses the following default values for its arguments:
-		/// * usage_flags: USAGE_DEFAULT
-		#[inline]
-		pub fn new_rows_cols_with_default_def(rows: i32, cols: i32, typ: i32, s: core::Scalar) -> Result<core::UMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_UMat_int_int_int_const_ScalarR(rows, cols, typ, &s, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## C++ default parameters
-		/// * usage_flags: USAGE_DEFAULT
-		#[inline]
-		pub fn new_size_with_default(size: core::Size, typ: i32, s: core::Scalar, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_UMat_Size_int_const_ScalarR_UMatUsageFlags(&size, typ, &s, usage_flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [new_size_with_default] function uses the following default values for its arguments:
-		/// * usage_flags: USAGE_DEFAULT
-		#[inline]
-		pub fn new_size_with_default_def(size: core::Size, typ: i32, s: core::Scalar) -> Result<core::UMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_UMat_Size_int_const_ScalarR(&size, typ, &s, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// constructs n-dimensional matrix
-		///
-		/// ## C++ default parameters
-		/// * usage_flags: USAGE_DEFAULT
-		#[inline]
-		pub unsafe fn new_nd(sizes: &[i32], typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
-			return_send!(via ocvrs_return);
-			{ sys::cv_UMat_UMat_int_const_intX_int_UMatUsageFlags(sizes.len().try_into()?, sizes.as_ptr(), typ, usage_flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::UMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// constructs n-dimensional matrix
-		///
-		/// ## Note
-		/// This alternative version of [new_nd] function uses the following default values for its arguments:
-		/// * usage_flags: USAGE_DEFAULT
-		#[inline]
-		pub fn new_nd_def(sizes: &[i32], typ: i32) -> Result<core::UMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_UMat_int_const_intX_int(sizes.len().try_into()?, sizes.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## C++ default parameters
-		/// * usage_flags: USAGE_DEFAULT
-		#[inline]
-		pub fn new_nd_with_default(sizes: &[i32], typ: i32, s: core::Scalar, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_UMat_int_const_intX_int_const_ScalarR_UMatUsageFlags(sizes.len().try_into()?, sizes.as_ptr(), typ, &s, usage_flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [new_nd_with_default] function uses the following default values for its arguments:
-		/// * usage_flags: USAGE_DEFAULT
-		#[inline]
-		pub fn new_nd_with_default_def(sizes: &[i32], typ: i32, s: core::Scalar) -> Result<core::UMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_UMat_int_const_intX_int_const_ScalarR(sizes.len().try_into()?, sizes.as_ptr(), typ, &s, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// copy constructor
-		#[inline]
-		pub fn copy(m: &impl core::UMatTraitConst) -> Result<core::UMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_UMat_const_UMatR(m.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// creates a matrix header for a part of the bigger matrix
-		///
-		/// ## C++ default parameters
-		/// * col_range: Range::all()
-		#[inline]
-		pub fn rowscols<'boxed>(m: &'boxed impl core::UMatTraitConst, row_range: &impl core::RangeTraitConst, col_range: &impl core::RangeTraitConst) -> Result<BoxedRef<'boxed, core::UMat>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_UMat_const_UMatR_const_RangeR_const_RangeR(m.as_raw_UMat(), row_range.as_raw_Range(), col_range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRef::<'boxed, core::UMat>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// creates a matrix header for a part of the bigger matrix
-		///
-		/// ## Note
-		/// This alternative version of [rowscols] function uses the following default values for its arguments:
-		/// * col_range: Range::all()
-		#[inline]
-		pub fn rowscols_def_mut<'boxed>(m: &'boxed mut impl core::UMatTrait, row_range: &impl core::RangeTraitConst) -> Result<BoxedRefMut<'boxed, core::UMat>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_UMat_UMatR_const_RangeR(m.as_raw_mut_UMat(), row_range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRefMut::<'boxed, core::UMat>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// creates a matrix header for a part of the bigger matrix
-		///
-		/// ## Note
-		/// This alternative version of [rowscols] function uses the following default values for its arguments:
-		/// * col_range: Range::all()
-		#[inline]
-		pub fn rowscols_def<'boxed>(m: &'boxed impl core::UMatTraitConst, row_range: &impl core::RangeTraitConst) -> Result<BoxedRef<'boxed, core::UMat>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_UMat_const_UMatR_const_RangeR(m.as_raw_UMat(), row_range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRef::<'boxed, core::UMat>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// creates a matrix header for a part of the bigger matrix
-		///
-		/// ## C++ default parameters
-		/// * col_range: Range::all()
-		#[inline]
-		pub fn rowscols_mut<'boxed>(m: &'boxed mut impl core::UMatTrait, row_range: &impl core::RangeTraitConst, col_range: &impl core::RangeTraitConst) -> Result<BoxedRefMut<'boxed, core::UMat>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_UMat_UMatR_const_RangeR_const_RangeR(m.as_raw_mut_UMat(), row_range.as_raw_Range(), col_range.as_raw_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRefMut::<'boxed, core::UMat>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn roi(m: &impl core::UMatTraitConst, roi: core::Rect) -> Result<BoxedRef<core::UMat>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_UMat_const_UMatR_const_RectR(m.as_raw_UMat(), &roi, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRef::<core::UMat>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn roi_mut(m: &mut impl core::UMatTrait, roi: core::Rect) -> Result<BoxedRefMut<core::UMat>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_UMat_UMatR_const_RectR(m.as_raw_mut_UMat(), &roi, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRefMut::<core::UMat>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn ranges<'boxed>(m: &'boxed impl core::UMatTraitConst, ranges: &core::Vector<core::Range>) -> Result<BoxedRef<'boxed, core::UMat>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_UMat_const_UMatR_const_vectorLRangeGR(m.as_raw_UMat(), ranges.as_raw_VectorOfRange(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRef::<'boxed, core::UMat>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn ranges_mut<'boxed>(m: &'boxed mut impl core::UMatTrait, ranges: &core::Vector<core::Range>) -> Result<BoxedRefMut<'boxed, core::UMat>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_UMat_UMatR_const_vectorLRangeGR(m.as_raw_mut_UMat(), ranges.as_raw_VectorOfRange(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRefMut::<'boxed, core::UMat>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// constructs a square diagonal matrix which main diagonal is vector "d"
-		#[inline]
-		#[must_use]
-		pub fn diag_flags(d: &impl core::UMatTraitConst, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_diag_const_UMatR_UMatUsageFlags(d.as_raw_UMat(), usage_flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		#[must_use]
-		pub fn diag(d: &impl core::UMatTraitConst) -> Result<core::UMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_diag_const_UMatR(d.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Matlab-style matrix initialization
-		#[inline]
-		#[must_use]
-		pub fn zeros_flags(rows: i32, cols: i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_zeros_int_int_int_UMatUsageFlags(rows, cols, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		#[must_use]
-		pub fn zeros_size_flags(size: core::Size, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_zeros_Size_int_UMatUsageFlags(&size, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		#[must_use]
-		pub fn zeros_nd_flags(sz: &[i32], typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_zeros_int_const_intX_int_UMatUsageFlags(sz.len().try_into()?, sz.as_ptr(), typ, usage_flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		#[must_use]
-		pub fn zeros(rows: i32, cols: i32, typ: i32) -> Result<core::UMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_zeros_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		#[must_use]
-		pub fn zeros_size(size: core::Size, typ: i32) -> Result<core::UMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_zeros_Size_int(&size, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		#[must_use]
-		pub fn zeros_nd(sz: &[i32], typ: i32) -> Result<core::UMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_zeros_int_const_intX_int(sz.len().try_into()?, sz.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		#[must_use]
-		pub fn ones_flags(rows: i32, cols: i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_ones_int_int_int_UMatUsageFlags(rows, cols, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		#[must_use]
-		pub fn ones_size_flags(size: core::Size, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_ones_Size_int_UMatUsageFlags(&size, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		#[must_use]
-		pub fn ones_nd_flags(sz: &[i32], typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_ones_int_const_intX_int_UMatUsageFlags(sz.len().try_into()?, sz.as_ptr(), typ, usage_flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		#[must_use]
-		pub fn ones(rows: i32, cols: i32, typ: i32) -> Result<core::UMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_ones_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		#[must_use]
-		pub fn ones_size(size: core::Size, typ: i32) -> Result<core::UMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_ones_Size_int(&size, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		#[must_use]
-		pub fn ones_nd(sz: &[i32], typ: i32) -> Result<core::UMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_ones_int_const_intX_int(sz.len().try_into()?, sz.as_ptr(), typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		#[must_use]
-		pub fn eye_flags(rows: i32, cols: i32, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_eye_int_int_int_UMatUsageFlags(rows, cols, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		#[must_use]
-		pub fn eye_size_flags(size: core::Size, typ: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_eye_Size_int_UMatUsageFlags(&size, typ, usage_flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		#[must_use]
-		pub fn eye(rows: i32, cols: i32, typ: i32) -> Result<core::UMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_eye_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		#[must_use]
-		pub fn eye_size(size: core::Size, typ: i32) -> Result<core::UMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_eye_Size_int(&size, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn copy_mut(mut m: core::UMat) -> Result<core::UMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_UMat_UMat_UMatRR(m.as_raw_mut_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
 	impl Clone for UMat {
 		#[inline]
 		/// Calls try_clone() and panics if that fails
@@ -28444,6 +28423,31 @@ pub mod core {
 				.finish()
 		}
 	}
+
+	impl core::UMatTraitConst for UMat {
+		#[inline] fn as_raw_UMat(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::UMatTrait for UMat {
+		#[inline] fn as_raw_mut_UMat(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { UMat, core::UMatTraitConst, as_raw_UMat, core::UMatTrait, as_raw_mut_UMat }
+
+	pub struct UMatData {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { UMatData }
+
+	impl Drop for UMatData {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_UMatData_delete(self.as_raw_mut_UMatData()) };
+		}
+	}
+
+	unsafe impl Send for UMatData {}
 
 	/// Constant methods for [core::UMatData]
 	pub trait UMatDataTraitConst {
@@ -28703,34 +28707,6 @@ pub mod core {
 
 	}
 
-	pub struct UMatData {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { UMatData }
-
-	impl Drop for UMatData {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_UMatData_delete(self.as_raw_mut_UMatData()) };
-		}
-	}
-
-	unsafe impl Send for UMatData {}
-
-	impl core::UMatDataTraitConst for UMatData {
-		#[inline] fn as_raw_UMatData(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::UMatDataTrait for UMatData {
-		#[inline] fn as_raw_mut_UMatData(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { UMatData, core::UMatDataTraitConst, as_raw_UMatData, core::UMatDataTrait, as_raw_mut_UMatData }
-
-	impl UMatData {
-	}
-
 	impl std::fmt::Debug for UMatData {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -28745,6 +28721,261 @@ pub mod core {
 				.field("mapcount", &core::UMatDataTraitConst::mapcount(self))
 				.finish()
 		}
+	}
+
+	impl core::UMatDataTraitConst for UMatData {
+		#[inline] fn as_raw_UMatData(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::UMatDataTrait for UMatData {
+		#[inline] fn as_raw_mut_UMatData(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { UMatData, core::UMatDataTraitConst, as_raw_UMatData, core::UMatDataTrait, as_raw_mut_UMatData }
+
+	/// This is the proxy class for passing read-only input arrays into OpenCV functions.
+	///
+	/// It is defined as:
+	/// ```C++
+	///    typedef const _InputArray& InputArray;
+	/// ```
+	///
+	/// where \ref cv::_InputArray is a class that can be constructed from \ref cv::Mat, \ref cv::Mat_<T>,
+	/// \ref cv::Matx<T, m, n>, std::vector<T>, std::vector<std::vector<T>>, std::vector<Mat>,
+	/// std::vector<Mat_<T>>, \ref cv::UMat, std::vector<UMat> or `double`. It can also be constructed from
+	/// a matrix expression.
+	///
+	/// Since this is mostly implementation-level class, and its interface may change in future versions, we
+	/// do not describe it in details. There are a few key things, though, that should be kept in mind:
+	///
+	/// *   When you see in the reference manual or in OpenCV source code a function that takes
+	///    InputArray, it means that you can actually pass `Mat`, `Matx`, `vector<T>` etc. (see above the
+	///    complete list).
+	/// *   Optional input arguments: If some of the input arrays may be empty, pass cv::noArray() (or
+	///    simply cv::Mat() as you probably did before).
+	/// *   The class is designed solely for passing parameters. That is, normally you *should not*
+	///    declare class members, local and global variables of this type.
+	/// *   If you want to design your own function or a class method that can operate of arrays of
+	///    multiple types, you can use InputArray (or OutputArray) for the respective parameters. Inside
+	///    a function you should use _InputArray::getMat() method to construct a matrix header for the
+	///    array (without copying data). _InputArray::kind() can be used to distinguish Mat from
+	///    `vector<>` etc., but normally it is not needed.
+	///
+	/// Here is how you can use a function that takes InputArray :
+	/// ```C++
+	///    std::vector<Point2f> vec;
+	///    // points or a circle
+	///    for( int i = 0; i < 30; i++ )
+	///        vec.push_back(Point2f((float)(100 + 30*cos(i*CV_PI*2/5)),
+	///                               (float)(100 - 30*sin(i*CV_PI*2/5))));
+	///    cv::transform(vec, vec, cv::Matx23f(0.707, -0.707, 10, 0.707, 0.707, 20));
+	/// ```
+	///
+	/// That is, we form an STL vector containing points, and apply in-place affine transformation to the
+	/// vector using the 2x3 matrix created inline as `Matx<float, 2, 3>` instance.
+	///
+	/// Here is how such a function can be implemented (for simplicity, we implement a very specific case of
+	/// it, according to the assertion statement inside) :
+	/// ```C++
+	///    void myAffineTransform(InputArray _src, OutputArray _dst, InputArray _m)
+	///    {
+	///        // get Mat headers for input arrays. This is O(1) operation,
+	///        // unless _src and/or _m are matrix expressions.
+	///        Mat src = _src.getMat(), m = _m.getMat();
+	///        CV_Assert( src.type() == CV_32FC2 && m.type() == CV_32F && m.size() == Size(3, 2) );
+	///
+	///        // [re]create the output array so that it has the proper size and type.
+	///        // In case of Mat it calls Mat::create, in case of STL vector it calls vector::resize.
+	///        _dst.create(src.size(), src.type());
+	///        Mat dst = _dst.getMat();
+	///
+	///        for( int i = 0; i < src.rows; i++ )
+	///            for( int j = 0; j < src.cols; j++ )
+	///            {
+	///                Point2f pt = src.at<Point2f>(i, j);
+	///                dst.at<Point2f>(i, j) = Point2f(m.at<float>(0, 0)*pt.x +
+	///                                                 m.at<float>(0, 1)*pt.y +
+	///                                                 m.at<float>(0, 2),
+	///                                                 m.at<float>(1, 0)*pt.x +
+	///                                                 m.at<float>(1, 1)*pt.y +
+	///                                                 m.at<float>(1, 2));
+	///            }
+	///    }
+	/// ```
+	///
+	/// There is another related type, InputArrayOfArrays, which is currently defined as a synonym for
+	/// InputArray:
+	/// ```C++
+	///    typedef InputArray InputArrayOfArrays;
+	/// ```
+	///
+	/// It denotes function arguments that are either vectors of vectors or vectors of matrices. A separate
+	/// synonym is needed to generate Python/Java etc. wrappers properly. At the function implementation
+	/// level their use is similar, but _InputArray::getMat(idx) should be used to get header for the
+	/// idx-th component of the outer vector and _InputArray::size().area() should be used to find the
+	/// number of components (vectors/matrices) of the outer vector.
+	///
+	/// In general, type support is limited to cv::Mat types. Other types are forbidden.
+	/// But in some cases we need to support passing of custom non-general Mat types, like arrays of cv::KeyPoint, cv::DMatch, etc.
+	/// This data is not intended to be interpreted as an image data, or processed somehow like regular cv::Mat.
+	/// To pass such custom type use rawIn() / rawOut() / rawInOut() wrappers.
+	/// Custom type is wrapped as Mat-compatible `CV_8UC<N>` values (N = sizeof(T), N <= CV_CN_MAX).
+	pub struct _InputArray {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { _InputArray }
+
+	impl Drop for _InputArray {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv__InputArray_delete(self.as_raw_mut__InputArray()) };
+		}
+	}
+
+	unsafe impl Send for _InputArray {}
+
+	impl _InputArray {
+		#[inline]
+		pub fn default() -> Result<core::_InputArray> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__InputArray__InputArray(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub unsafe fn new(_flags: i32, _obj: *mut c_void) -> Result<core::_InputArray> {
+			return_send!(via ocvrs_return);
+			{ sys::cv__InputArray__InputArray_int_voidX(_flags, _obj, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::_InputArray::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn from_mat(m: &impl core::MatTraitConst) -> Result<BoxedRef<core::_InputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__InputArray__InputArray_const_MatR(m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn from_matexpr(expr: &impl core::MatExprTraitConst) -> Result<BoxedRef<core::_InputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__InputArray__InputArray_const_MatExprR(expr.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn from_mat_vec(vec: &core::Vector<core::Mat>) -> Result<BoxedRef<core::_InputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__InputArray__InputArray_const_vectorLMatGR(vec.as_raw_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn from_bool_vec(vec: &core::Vector<bool>) -> Result<BoxedRef<core::_InputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__InputArray__InputArray_const_vectorLboolGR(vec.as_raw_VectorOfbool(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn from_f64(val: &f64) -> Result<BoxedRef<core::_InputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__InputArray__InputArray_const_doubleR(val, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn from_gpumat(d_mat: &impl core::GpuMatTraitConst) -> Result<BoxedRef<core::_InputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__InputArray__InputArray_const_GpuMatR(d_mat.as_raw_GpuMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn from_gpumat_vec(d_mat_array: &core::Vector<core::GpuMat>) -> Result<BoxedRef<core::_InputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__InputArray__InputArray_const_vectorLGpuMatGR(d_mat_array.as_raw_VectorOfGpuMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn from_opengl(buf: &impl core::BufferTraitConst) -> Result<BoxedRef<core::_InputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__InputArray__InputArray_const_BufferR(buf.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn from_hostmem(cuda_mem: &impl core::HostMemTraitConst) -> Result<BoxedRef<core::_InputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__InputArray__InputArray_const_HostMemR(cuda_mem.as_raw_HostMem(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn from_umat(um: &impl core::UMatTraitConst) -> Result<BoxedRef<core::_InputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__InputArray__InputArray_const_UMatR(um.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn from_umat_vec(umv: &core::Vector<core::UMat>) -> Result<BoxedRef<core::_InputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__InputArray__InputArray_const_vectorLUMatGR(umv.as_raw_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn from_byte_slice(vec: &[u8]) -> Result<BoxedRef<core::_InputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__InputArray__InputArray_const_unsigned_charX_int(vec.as_ptr(), vec.len().try_into()?, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [core::_InputArray]
@@ -29328,107 +29559,13 @@ pub mod core {
 
 	}
 
-	/// This is the proxy class for passing read-only input arrays into OpenCV functions.
-	///
-	/// It is defined as:
-	/// ```C++
-	///    typedef const _InputArray& InputArray;
-	/// ```
-	///
-	/// where \ref cv::_InputArray is a class that can be constructed from \ref cv::Mat, \ref cv::Mat_<T>,
-	/// \ref cv::Matx<T, m, n>, std::vector<T>, std::vector<std::vector<T>>, std::vector<Mat>,
-	/// std::vector<Mat_<T>>, \ref cv::UMat, std::vector<UMat> or `double`. It can also be constructed from
-	/// a matrix expression.
-	///
-	/// Since this is mostly implementation-level class, and its interface may change in future versions, we
-	/// do not describe it in details. There are a few key things, though, that should be kept in mind:
-	///
-	/// *   When you see in the reference manual or in OpenCV source code a function that takes
-	///    InputArray, it means that you can actually pass `Mat`, `Matx`, `vector<T>` etc. (see above the
-	///    complete list).
-	/// *   Optional input arguments: If some of the input arrays may be empty, pass cv::noArray() (or
-	///    simply cv::Mat() as you probably did before).
-	/// *   The class is designed solely for passing parameters. That is, normally you *should not*
-	///    declare class members, local and global variables of this type.
-	/// *   If you want to design your own function or a class method that can operate of arrays of
-	///    multiple types, you can use InputArray (or OutputArray) for the respective parameters. Inside
-	///    a function you should use _InputArray::getMat() method to construct a matrix header for the
-	///    array (without copying data). _InputArray::kind() can be used to distinguish Mat from
-	///    `vector<>` etc., but normally it is not needed.
-	///
-	/// Here is how you can use a function that takes InputArray :
-	/// ```C++
-	///    std::vector<Point2f> vec;
-	///    // points or a circle
-	///    for( int i = 0; i < 30; i++ )
-	///        vec.push_back(Point2f((float)(100 + 30*cos(i*CV_PI*2/5)),
-	///                               (float)(100 - 30*sin(i*CV_PI*2/5))));
-	///    cv::transform(vec, vec, cv::Matx23f(0.707, -0.707, 10, 0.707, 0.707, 20));
-	/// ```
-	///
-	/// That is, we form an STL vector containing points, and apply in-place affine transformation to the
-	/// vector using the 2x3 matrix created inline as `Matx<float, 2, 3>` instance.
-	///
-	/// Here is how such a function can be implemented (for simplicity, we implement a very specific case of
-	/// it, according to the assertion statement inside) :
-	/// ```C++
-	///    void myAffineTransform(InputArray _src, OutputArray _dst, InputArray _m)
-	///    {
-	///        // get Mat headers for input arrays. This is O(1) operation,
-	///        // unless _src and/or _m are matrix expressions.
-	///        Mat src = _src.getMat(), m = _m.getMat();
-	///        CV_Assert( src.type() == CV_32FC2 && m.type() == CV_32F && m.size() == Size(3, 2) );
-	///
-	///        // [re]create the output array so that it has the proper size and type.
-	///        // In case of Mat it calls Mat::create, in case of STL vector it calls vector::resize.
-	///        _dst.create(src.size(), src.type());
-	///        Mat dst = _dst.getMat();
-	///
-	///        for( int i = 0; i < src.rows; i++ )
-	///            for( int j = 0; j < src.cols; j++ )
-	///            {
-	///                Point2f pt = src.at<Point2f>(i, j);
-	///                dst.at<Point2f>(i, j) = Point2f(m.at<float>(0, 0)*pt.x +
-	///                                                 m.at<float>(0, 1)*pt.y +
-	///                                                 m.at<float>(0, 2),
-	///                                                 m.at<float>(1, 0)*pt.x +
-	///                                                 m.at<float>(1, 1)*pt.y +
-	///                                                 m.at<float>(1, 2));
-	///            }
-	///    }
-	/// ```
-	///
-	/// There is another related type, InputArrayOfArrays, which is currently defined as a synonym for
-	/// InputArray:
-	/// ```C++
-	///    typedef InputArray InputArrayOfArrays;
-	/// ```
-	///
-	/// It denotes function arguments that are either vectors of vectors or vectors of matrices. A separate
-	/// synonym is needed to generate Python/Java etc. wrappers properly. At the function implementation
-	/// level their use is similar, but _InputArray::getMat(idx) should be used to get header for the
-	/// idx-th component of the outer vector and _InputArray::size().area() should be used to find the
-	/// number of components (vectors/matrices) of the outer vector.
-	///
-	/// In general, type support is limited to cv::Mat types. Other types are forbidden.
-	/// But in some cases we need to support passing of custom non-general Mat types, like arrays of cv::KeyPoint, cv::DMatch, etc.
-	/// This data is not intended to be interpreted as an image data, or processed somehow like regular cv::Mat.
-	/// To pass such custom type use rawIn() / rawOut() / rawInOut() wrappers.
-	/// Custom type is wrapped as Mat-compatible `CV_8UC<N>` values (N = sizeof(T), N <= CV_CN_MAX).
-	pub struct _InputArray {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { _InputArray }
-
-	impl Drop for _InputArray {
+	impl std::fmt::Debug for _InputArray {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv__InputArray_delete(self.as_raw_mut__InputArray()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("_InputArray")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for _InputArray {}
 
 	impl core::_InputArrayTraitConst for _InputArray {
 		#[inline] fn as_raw__InputArray(&self) -> *const c_void { self.as_raw() }
@@ -29439,169 +29576,6 @@ pub mod core {
 	}
 
 	boxed_ref! { _InputArray, core::_InputArrayTraitConst, as_raw__InputArray, core::_InputArrayTrait, as_raw_mut__InputArray }
-
-	impl _InputArray {
-		#[inline]
-		pub fn default() -> Result<core::_InputArray> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv__InputArray__InputArray(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::_InputArray::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub unsafe fn new(_flags: i32, _obj: *mut c_void) -> Result<core::_InputArray> {
-			return_send!(via ocvrs_return);
-			{ sys::cv__InputArray__InputArray_int_voidX(_flags, _obj, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::_InputArray::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn from_mat(m: &impl core::MatTraitConst) -> Result<BoxedRef<core::_InputArray>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv__InputArray__InputArray_const_MatR(m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn from_matexpr(expr: &impl core::MatExprTraitConst) -> Result<BoxedRef<core::_InputArray>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv__InputArray__InputArray_const_MatExprR(expr.as_raw_MatExpr(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn from_mat_vec(vec: &core::Vector<core::Mat>) -> Result<BoxedRef<core::_InputArray>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv__InputArray__InputArray_const_vectorLMatGR(vec.as_raw_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn from_bool_vec(vec: &core::Vector<bool>) -> Result<BoxedRef<core::_InputArray>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv__InputArray__InputArray_const_vectorLboolGR(vec.as_raw_VectorOfbool(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn from_f64(val: &f64) -> Result<BoxedRef<core::_InputArray>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv__InputArray__InputArray_const_doubleR(val, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn from_gpumat(d_mat: &impl core::GpuMatTraitConst) -> Result<BoxedRef<core::_InputArray>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv__InputArray__InputArray_const_GpuMatR(d_mat.as_raw_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn from_gpumat_vec(d_mat_array: &core::Vector<core::GpuMat>) -> Result<BoxedRef<core::_InputArray>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv__InputArray__InputArray_const_vectorLGpuMatGR(d_mat_array.as_raw_VectorOfGpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn from_opengl(buf: &impl core::BufferTraitConst) -> Result<BoxedRef<core::_InputArray>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv__InputArray__InputArray_const_BufferR(buf.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn from_hostmem(cuda_mem: &impl core::HostMemTraitConst) -> Result<BoxedRef<core::_InputArray>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv__InputArray__InputArray_const_HostMemR(cuda_mem.as_raw_HostMem(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn from_umat(um: &impl core::UMatTraitConst) -> Result<BoxedRef<core::_InputArray>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv__InputArray__InputArray_const_UMatR(um.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn from_umat_vec(umv: &core::Vector<core::UMat>) -> Result<BoxedRef<core::_InputArray>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv__InputArray__InputArray_const_vectorLUMatGR(umv.as_raw_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn from_byte_slice(vec: &[u8]) -> Result<BoxedRef<core::_InputArray>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv__InputArray__InputArray_const_unsigned_charX_int(vec.as_ptr(), vec.len().try_into()?, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRef::<core::_InputArray>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	impl std::fmt::Debug for _InputArray {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("_InputArray")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [core::_InputOutputArray]
-	pub trait _InputOutputArrayTraitConst: core::_OutputArrayTraitConst {
-		fn as_raw__InputOutputArray(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [core::_InputOutputArray]
-	pub trait _InputOutputArrayTrait: core::_InputOutputArrayTraitConst + core::_OutputArrayTrait {
-		fn as_raw_mut__InputOutputArray(&mut self) -> *mut c_void;
-
-	}
 
 	pub struct _InputOutputArray {
 		ptr: *mut c_void,
@@ -29617,36 +29591,6 @@ pub mod core {
 	}
 
 	unsafe impl Send for _InputOutputArray {}
-
-	impl core::_InputArrayTraitConst for _InputOutputArray {
-		#[inline] fn as_raw__InputArray(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::_InputArrayTrait for _InputOutputArray {
-		#[inline] fn as_raw_mut__InputArray(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { _InputOutputArray, core::_InputArrayTraitConst, as_raw__InputArray, core::_InputArrayTrait, as_raw_mut__InputArray }
-
-	impl core::_OutputArrayTraitConst for _InputOutputArray {
-		#[inline] fn as_raw__OutputArray(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::_OutputArrayTrait for _InputOutputArray {
-		#[inline] fn as_raw_mut__OutputArray(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { _InputOutputArray, core::_OutputArrayTraitConst, as_raw__OutputArray, core::_OutputArrayTrait, as_raw_mut__OutputArray }
-
-	impl core::_InputOutputArrayTraitConst for _InputOutputArray {
-		#[inline] fn as_raw__InputOutputArray(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::_InputOutputArrayTrait for _InputOutputArray {
-		#[inline] fn as_raw_mut__InputOutputArray(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { _InputOutputArray, core::_InputOutputArrayTraitConst, as_raw__InputOutputArray, core::_InputOutputArrayTrait, as_raw_mut__InputOutputArray }
 
 	impl _InputOutputArray {
 		/// ////////////////////////////////////////////////////////////////////////////////////////
@@ -29822,9 +29766,17 @@ pub mod core {
 
 	}
 
-	boxed_cast_base! { _InputOutputArray, core::_InputArray, cv__InputOutputArray_to__InputArray }
+	/// Constant methods for [core::_InputOutputArray]
+	pub trait _InputOutputArrayTraitConst: core::_OutputArrayTraitConst {
+		fn as_raw__InputOutputArray(&self) -> *const c_void;
 
-	boxed_cast_base! { _InputOutputArray, core::_OutputArray, cv__InputOutputArray_to__OutputArray }
+	}
+
+	/// Mutable methods for [core::_InputOutputArray]
+	pub trait _InputOutputArrayTrait: core::_InputOutputArrayTraitConst + core::_OutputArrayTrait {
+		fn as_raw_mut__InputOutputArray(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for _InputOutputArray {
 		#[inline]
@@ -29832,6 +29784,254 @@ pub mod core {
 			f.debug_struct("_InputOutputArray")
 				.finish()
 		}
+	}
+
+	boxed_cast_base! { _InputOutputArray, core::_InputArray, cv__InputOutputArray_to__InputArray }
+
+	boxed_cast_base! { _InputOutputArray, core::_OutputArray, cv__InputOutputArray_to__OutputArray }
+
+	impl core::_InputArrayTraitConst for _InputOutputArray {
+		#[inline] fn as_raw__InputArray(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::_InputArrayTrait for _InputOutputArray {
+		#[inline] fn as_raw_mut__InputArray(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { _InputOutputArray, core::_InputArrayTraitConst, as_raw__InputArray, core::_InputArrayTrait, as_raw_mut__InputArray }
+
+	impl core::_OutputArrayTraitConst for _InputOutputArray {
+		#[inline] fn as_raw__OutputArray(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::_OutputArrayTrait for _InputOutputArray {
+		#[inline] fn as_raw_mut__OutputArray(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { _InputOutputArray, core::_OutputArrayTraitConst, as_raw__OutputArray, core::_OutputArrayTrait, as_raw_mut__OutputArray }
+
+	impl core::_InputOutputArrayTraitConst for _InputOutputArray {
+		#[inline] fn as_raw__InputOutputArray(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::_InputOutputArrayTrait for _InputOutputArray {
+		#[inline] fn as_raw_mut__InputOutputArray(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { _InputOutputArray, core::_InputOutputArrayTraitConst, as_raw__InputOutputArray, core::_InputOutputArrayTrait, as_raw_mut__InputOutputArray }
+
+	/// This type is very similar to InputArray except that it is used for input/output and output function
+	/// parameters.
+	///
+	/// Just like with InputArray, OpenCV users should not care about OutputArray, they just pass `Mat`,
+	/// `vector<T>` etc. to the functions. The same limitation as for `InputArray`: *Do not explicitly
+	/// create OutputArray instances* applies here too.
+	///
+	/// If you want to make your function polymorphic (i.e. accept different arrays as output parameters),
+	/// it is also not very difficult. Take the sample above as the reference. Note that
+	/// _OutputArray::create() needs to be called before _OutputArray::getMat(). This way you guarantee
+	/// that the output array is properly allocated.
+	///
+	/// Optional output parameters. If you do not need certain output array to be computed and returned to
+	/// you, pass cv::noArray(), just like you would in the case of optional input array. At the
+	/// implementation level, use _OutputArray::needed() to check if certain output array needs to be
+	/// computed or not.
+	///
+	/// There are several synonyms for OutputArray that are used to assist automatic Python/Java/... wrapper
+	/// generators:
+	/// ```C++
+	///    typedef OutputArray OutputArrayOfArrays;
+	///    typedef OutputArray InputOutputArray;
+	///    typedef OutputArray InputOutputArrayOfArrays;
+	/// ```
+	///
+	pub struct _OutputArray {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { _OutputArray }
+
+	impl Drop for _OutputArray {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv__OutputArray_delete(self.as_raw_mut__OutputArray()) };
+		}
+	}
+
+	unsafe impl Send for _OutputArray {}
+
+	impl _OutputArray {
+		/// /////////////////////////////////////////////////////////////////////////////////////
+		#[inline]
+		pub fn default() -> Result<core::_OutputArray> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__OutputArray__OutputArray(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub unsafe fn new(_flags: i32, _obj: *mut c_void) -> Result<core::_OutputArray> {
+			return_send!(via ocvrs_return);
+			{ sys::cv__OutputArray__OutputArray_int_voidX(_flags, _obj, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::_OutputArray::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn from_mat_mut(m: &mut impl core::MatTrait) -> Result<BoxedRefMut<core::_OutputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__OutputArray__OutputArray_MatR(m.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn from_mat_vec_mut(vec: &mut core::Vector<core::Mat>) -> Result<BoxedRefMut<core::_OutputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__OutputArray__OutputArray_vectorLMatGR(vec.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn from_gpumat_mut(d_mat: &mut impl core::GpuMatTrait) -> Result<BoxedRefMut<core::_OutputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__OutputArray__OutputArray_GpuMatR(d_mat.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn from_gpumat_vec_mut(d_mat: &mut core::Vector<core::GpuMat>) -> Result<BoxedRefMut<core::_OutputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__OutputArray__OutputArray_vectorLGpuMatGR(d_mat.as_raw_mut_VectorOfGpuMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn from_opengl_mut(buf: &mut impl core::BufferTrait) -> Result<BoxedRefMut<core::_OutputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__OutputArray__OutputArray_BufferR(buf.as_raw_mut_Buffer(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn from_hostmem_mut(cuda_mem: &mut impl core::HostMemTrait) -> Result<BoxedRefMut<core::_OutputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__OutputArray__OutputArray_HostMemR(cuda_mem.as_raw_mut_HostMem(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn from_umat_mut(m: &mut impl core::UMatTrait) -> Result<BoxedRefMut<core::_OutputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__OutputArray__OutputArray_UMatR(m.as_raw_mut_UMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn from_umat_vec_mut(vec: &mut core::Vector<core::UMat>) -> Result<BoxedRefMut<core::_OutputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__OutputArray__OutputArray_vectorLUMatGR(vec.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn from_mat(m: &impl core::MatTraitConst) -> Result<BoxedRef<core::_OutputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__OutputArray__OutputArray_const_MatR(m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<core::_OutputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn from_mat_vec(vec: &core::Vector<core::Mat>) -> Result<BoxedRef<core::_OutputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__OutputArray__OutputArray_const_vectorLMatGR(vec.as_raw_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<core::_OutputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn from_gpumat(d_mat: &impl core::GpuMatTraitConst) -> Result<BoxedRef<core::_OutputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__OutputArray__OutputArray_const_GpuMatR(d_mat.as_raw_GpuMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<core::_OutputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn from_opengl(buf: &impl core::BufferTraitConst) -> Result<BoxedRef<core::_OutputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__OutputArray__OutputArray_const_BufferR(buf.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<core::_OutputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn from_hostmem(cuda_mem: &impl core::HostMemTraitConst) -> Result<BoxedRef<core::_OutputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__OutputArray__OutputArray_const_HostMemR(cuda_mem.as_raw_HostMem(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<core::_OutputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn from_umat(m: &impl core::UMatTraitConst) -> Result<BoxedRef<core::_OutputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__OutputArray__OutputArray_const_UMatR(m.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<core::_OutputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn from_umat_vec(vec: &core::Vector<core::UMat>) -> Result<BoxedRef<core::_OutputArray>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv__OutputArray__OutputArray_const_vectorLUMatGR(vec.as_raw_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<core::_OutputArray>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [core::_OutputArray]
@@ -30152,45 +30352,15 @@ pub mod core {
 
 	}
 
-	/// This type is very similar to InputArray except that it is used for input/output and output function
-	/// parameters.
-	///
-	/// Just like with InputArray, OpenCV users should not care about OutputArray, they just pass `Mat`,
-	/// `vector<T>` etc. to the functions. The same limitation as for `InputArray`: *Do not explicitly
-	/// create OutputArray instances* applies here too.
-	///
-	/// If you want to make your function polymorphic (i.e. accept different arrays as output parameters),
-	/// it is also not very difficult. Take the sample above as the reference. Note that
-	/// _OutputArray::create() needs to be called before _OutputArray::getMat(). This way you guarantee
-	/// that the output array is properly allocated.
-	///
-	/// Optional output parameters. If you do not need certain output array to be computed and returned to
-	/// you, pass cv::noArray(), just like you would in the case of optional input array. At the
-	/// implementation level, use _OutputArray::needed() to check if certain output array needs to be
-	/// computed or not.
-	///
-	/// There are several synonyms for OutputArray that are used to assist automatic Python/Java/... wrapper
-	/// generators:
-	/// ```C++
-	///    typedef OutputArray OutputArrayOfArrays;
-	///    typedef OutputArray InputOutputArray;
-	///    typedef OutputArray InputOutputArrayOfArrays;
-	/// ```
-	///
-	pub struct _OutputArray {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { _OutputArray }
-
-	impl Drop for _OutputArray {
+	impl std::fmt::Debug for _OutputArray {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv__OutputArray_delete(self.as_raw_mut__OutputArray()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("_OutputArray")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for _OutputArray {}
+	boxed_cast_base! { _OutputArray, core::_InputArray, cv__OutputArray_to__InputArray }
 
 	impl core::_InputArrayTraitConst for _OutputArray {
 		#[inline] fn as_raw__InputArray(&self) -> *const c_void { self.as_raw() }
@@ -30211,235 +30381,6 @@ pub mod core {
 	}
 
 	boxed_ref! { _OutputArray, core::_OutputArrayTraitConst, as_raw__OutputArray, core::_OutputArrayTrait, as_raw_mut__OutputArray }
-
-	impl _OutputArray {
-		/// /////////////////////////////////////////////////////////////////////////////////////
-		#[inline]
-		pub fn default() -> Result<core::_OutputArray> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv__OutputArray__OutputArray(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::_OutputArray::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub unsafe fn new(_flags: i32, _obj: *mut c_void) -> Result<core::_OutputArray> {
-			return_send!(via ocvrs_return);
-			{ sys::cv__OutputArray__OutputArray_int_voidX(_flags, _obj, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::_OutputArray::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn from_mat_mut(m: &mut impl core::MatTrait) -> Result<BoxedRefMut<core::_OutputArray>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv__OutputArray__OutputArray_MatR(m.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn from_mat_vec_mut(vec: &mut core::Vector<core::Mat>) -> Result<BoxedRefMut<core::_OutputArray>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv__OutputArray__OutputArray_vectorLMatGR(vec.as_raw_mut_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn from_gpumat_mut(d_mat: &mut impl core::GpuMatTrait) -> Result<BoxedRefMut<core::_OutputArray>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv__OutputArray__OutputArray_GpuMatR(d_mat.as_raw_mut_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn from_gpumat_vec_mut(d_mat: &mut core::Vector<core::GpuMat>) -> Result<BoxedRefMut<core::_OutputArray>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv__OutputArray__OutputArray_vectorLGpuMatGR(d_mat.as_raw_mut_VectorOfGpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn from_opengl_mut(buf: &mut impl core::BufferTrait) -> Result<BoxedRefMut<core::_OutputArray>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv__OutputArray__OutputArray_BufferR(buf.as_raw_mut_Buffer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn from_hostmem_mut(cuda_mem: &mut impl core::HostMemTrait) -> Result<BoxedRefMut<core::_OutputArray>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv__OutputArray__OutputArray_HostMemR(cuda_mem.as_raw_mut_HostMem(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn from_umat_mut(m: &mut impl core::UMatTrait) -> Result<BoxedRefMut<core::_OutputArray>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv__OutputArray__OutputArray_UMatR(m.as_raw_mut_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn from_umat_vec_mut(vec: &mut core::Vector<core::UMat>) -> Result<BoxedRefMut<core::_OutputArray>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv__OutputArray__OutputArray_vectorLUMatGR(vec.as_raw_mut_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRefMut::<core::_OutputArray>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn from_mat(m: &impl core::MatTraitConst) -> Result<BoxedRef<core::_OutputArray>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv__OutputArray__OutputArray_const_MatR(m.as_raw_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRef::<core::_OutputArray>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn from_mat_vec(vec: &core::Vector<core::Mat>) -> Result<BoxedRef<core::_OutputArray>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv__OutputArray__OutputArray_const_vectorLMatGR(vec.as_raw_VectorOfMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRef::<core::_OutputArray>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn from_gpumat(d_mat: &impl core::GpuMatTraitConst) -> Result<BoxedRef<core::_OutputArray>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv__OutputArray__OutputArray_const_GpuMatR(d_mat.as_raw_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRef::<core::_OutputArray>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn from_opengl(buf: &impl core::BufferTraitConst) -> Result<BoxedRef<core::_OutputArray>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv__OutputArray__OutputArray_const_BufferR(buf.as_raw_Buffer(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRef::<core::_OutputArray>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn from_hostmem(cuda_mem: &impl core::HostMemTraitConst) -> Result<BoxedRef<core::_OutputArray>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv__OutputArray__OutputArray_const_HostMemR(cuda_mem.as_raw_HostMem(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRef::<core::_OutputArray>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn from_umat(m: &impl core::UMatTraitConst) -> Result<BoxedRef<core::_OutputArray>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv__OutputArray__OutputArray_const_UMatR(m.as_raw_UMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRef::<core::_OutputArray>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn from_umat_vec(vec: &core::Vector<core::UMat>) -> Result<BoxedRef<core::_OutputArray>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv__OutputArray__OutputArray_const_vectorLUMatGR(vec.as_raw_VectorOfUMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRef::<core::_OutputArray>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_base! { _OutputArray, core::_InputArray, cv__OutputArray_to__InputArray }
-
-	impl std::fmt::Debug for _OutputArray {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("_OutputArray")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [core::BufferPool]
-	pub trait BufferPoolTraitConst {
-		fn as_raw_BufferPool(&self) -> *const c_void;
-
-		/// Returns the allocator associated with the stream.
-		#[inline]
-		fn get_allocator(&self) -> Result<core::Ptr<core::GpuMat_Allocator>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_BufferPool_getAllocator_const(self.as_raw_BufferPool(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<core::GpuMat_Allocator>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	/// Mutable methods for [core::BufferPool]
-	pub trait BufferPoolTrait: core::BufferPoolTraitConst {
-		fn as_raw_mut_BufferPool(&mut self) -> *mut c_void;
-
-		/// Allocates a new GpuMat of given size and type.
-		#[inline]
-		fn get_buffer(&mut self, rows: i32, cols: i32, typ: i32) -> Result<core::GpuMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_BufferPool_getBuffer_int_int_int(self.as_raw_mut_BufferPool(), rows, cols, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Allocates a new GpuMat of given size and type.
-		#[inline]
-		fn get_buffer_1(&mut self, size: core::Size, typ: i32) -> Result<core::GpuMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_BufferPool_getBuffer_Size_int(self.as_raw_mut_BufferPool(), &size, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
 
 	/// BufferPool for use with CUDA streams
 	///
@@ -30579,16 +30520,6 @@ pub mod core {
 
 	unsafe impl Send for BufferPool {}
 
-	impl core::BufferPoolTraitConst for BufferPool {
-		#[inline] fn as_raw_BufferPool(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::BufferPoolTrait for BufferPool {
-		#[inline] fn as_raw_mut_BufferPool(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { BufferPool, core::BufferPoolTraitConst, as_raw_BufferPool, core::BufferPoolTrait, as_raw_mut_BufferPool }
-
 	impl BufferPool {
 		/// Gets the BufferPool for the given stream.
 		#[inline]
@@ -30603,12 +30534,114 @@ pub mod core {
 
 	}
 
+	/// Constant methods for [core::BufferPool]
+	pub trait BufferPoolTraitConst {
+		fn as_raw_BufferPool(&self) -> *const c_void;
+
+		/// Returns the allocator associated with the stream.
+		#[inline]
+		fn get_allocator(&self) -> Result<core::Ptr<core::GpuMat_Allocator>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_BufferPool_getAllocator_const(self.as_raw_BufferPool(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<core::GpuMat_Allocator>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [core::BufferPool]
+	pub trait BufferPoolTrait: core::BufferPoolTraitConst {
+		fn as_raw_mut_BufferPool(&mut self) -> *mut c_void;
+
+		/// Allocates a new GpuMat of given size and type.
+		#[inline]
+		fn get_buffer(&mut self, rows: i32, cols: i32, typ: i32) -> Result<core::GpuMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_BufferPool_getBuffer_int_int_int(self.as_raw_mut_BufferPool(), rows, cols, typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Allocates a new GpuMat of given size and type.
+		#[inline]
+		fn get_buffer_1(&mut self, size: core::Size, typ: i32) -> Result<core::GpuMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_BufferPool_getBuffer_Size_int(self.as_raw_mut_BufferPool(), &size, typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
 	impl std::fmt::Debug for BufferPool {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("BufferPool")
 				.finish()
 		}
+	}
+
+	impl core::BufferPoolTraitConst for BufferPool {
+		#[inline] fn as_raw_BufferPool(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::BufferPoolTrait for BufferPool {
+		#[inline] fn as_raw_mut_BufferPool(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { BufferPool, core::BufferPoolTraitConst, as_raw_BufferPool, core::BufferPoolTrait, as_raw_mut_BufferPool }
+
+	/// Class providing functionality for querying the specified GPU properties.
+	pub struct DeviceInfo {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { DeviceInfo }
+
+	impl Drop for DeviceInfo {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_DeviceInfo_delete(self.as_raw_mut_DeviceInfo()) };
+		}
+	}
+
+	unsafe impl Send for DeviceInfo {}
+
+	impl DeviceInfo {
+		/// creates DeviceInfo object for the current GPU
+		#[inline]
+		pub fn default() -> Result<core::DeviceInfo> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_DeviceInfo_DeviceInfo(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::DeviceInfo::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// The constructors.
+		///
+		/// ## Parameters
+		/// * device_id: System index of the CUDA device starting with 0.
+		///
+		/// Constructs the DeviceInfo object for the specified device. If device_id parameter is missed, it
+		/// constructs an object for the current device.
+		#[inline]
+		pub fn new(device_id: i32) -> Result<core::DeviceInfo> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_DeviceInfo_DeviceInfo_int(device_id, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::DeviceInfo::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [core::DeviceInfo]
@@ -31210,21 +31243,13 @@ pub mod core {
 
 	}
 
-	/// Class providing functionality for querying the specified GPU properties.
-	pub struct DeviceInfo {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { DeviceInfo }
-
-	impl Drop for DeviceInfo {
+	impl std::fmt::Debug for DeviceInfo {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_DeviceInfo_delete(self.as_raw_mut_DeviceInfo()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DeviceInfo")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for DeviceInfo {}
 
 	impl core::DeviceInfoTraitConst for DeviceInfo {
 		#[inline] fn as_raw_DeviceInfo(&self) -> *const c_void { self.as_raw() }
@@ -31236,43 +31261,57 @@ pub mod core {
 
 	boxed_ref! { DeviceInfo, core::DeviceInfoTraitConst, as_raw_DeviceInfo, core::DeviceInfoTrait, as_raw_mut_DeviceInfo }
 
-	impl DeviceInfo {
-		/// creates DeviceInfo object for the current GPU
-		#[inline]
-		pub fn default() -> Result<core::DeviceInfo> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_DeviceInfo_DeviceInfo(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::DeviceInfo::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// The constructors.
-		///
-		/// ## Parameters
-		/// * device_id: System index of the CUDA device starting with 0.
-		///
-		/// Constructs the DeviceInfo object for the specified device. If device_id parameter is missed, it
-		/// constructs an object for the current device.
-		#[inline]
-		pub fn new(device_id: i32) -> Result<core::DeviceInfo> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_DeviceInfo_DeviceInfo_int(device_id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::DeviceInfo::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	pub struct Event {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for DeviceInfo {
+	opencv_type_boxed! { Event }
+
+	impl Drop for Event {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("DeviceInfo")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_Event_delete(self.as_raw_mut_Event()) };
 		}
+	}
+
+	unsafe impl Send for Event {}
+
+	impl Event {
+		/// ## C++ default parameters
+		/// * flags: Event::CreateFlags::DEFAULT
+		#[inline]
+		pub fn new(flags: core::Event_CreateFlags) -> Result<core::Event> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_Event_Event_const_CreateFlags(flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Event::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * flags: Event::CreateFlags::DEFAULT
+		#[inline]
+		pub fn new_def() -> Result<core::Event> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_Event_Event(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Event::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// computes the elapsed time between events
+		#[inline]
+		pub fn elapsed_time(start: &impl core::EventTraitConst, end: &impl core::EventTraitConst) -> Result<f32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_Event_elapsedTime_const_EventR_const_EventR(start.as_raw_Event(), end.as_raw_Event(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [core::Event]
@@ -31334,20 +31373,13 @@ pub mod core {
 
 	}
 
-	pub struct Event {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Event }
-
-	impl Drop for Event {
+	impl std::fmt::Debug for Event {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_Event_delete(self.as_raw_mut_Event()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Event")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for Event {}
 
 	impl core::EventTraitConst for Event {
 		#[inline] fn as_raw_Event(&self) -> *const c_void { self.as_raw() }
@@ -31359,50 +31391,32 @@ pub mod core {
 
 	boxed_ref! { Event, core::EventTraitConst, as_raw_Event, core::EventTrait, as_raw_mut_Event }
 
-	impl Event {
-		/// ## C++ default parameters
-		/// * flags: Event::CreateFlags::DEFAULT
-		#[inline]
-		pub fn new(flags: core::Event_CreateFlags) -> Result<core::Event> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_Event_Event_const_CreateFlags(flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Event::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * flags: Event::CreateFlags::DEFAULT
-		#[inline]
-		pub fn new_def() -> Result<core::Event> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_Event_Event(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Event::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// computes the elapsed time between events
-		#[inline]
-		pub fn elapsed_time(start: &impl core::EventTraitConst, end: &impl core::EventTraitConst) -> Result<f32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_Event_elapsedTime_const_EventR_const_EventR(start.as_raw_Event(), end.as_raw_Event(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
+	pub struct GpuData {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for Event {
+	opencv_type_boxed! { GpuData }
+
+	impl Drop for GpuData {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Event")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_GpuData_delete(self.as_raw_mut_GpuData()) };
 		}
+	}
+
+	unsafe impl Send for GpuData {}
+
+	impl GpuData {
+		#[inline]
+		pub fn new(_size: size_t) -> Result<core::GpuData> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuData_GpuData_size_t(_size, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::GpuData::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [core::GpuData]
@@ -31447,20 +31461,15 @@ pub mod core {
 
 	}
 
-	pub struct GpuData {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GpuData }
-
-	impl Drop for GpuData {
+	impl std::fmt::Debug for GpuData {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_GpuData_delete(self.as_raw_mut_GpuData()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GpuData")
+				.field("data", &core::GpuDataTraitConst::data(self))
+				.field("size", &core::GpuDataTraitConst::size(self))
+				.finish()
 		}
 	}
-
-	unsafe impl Send for GpuData {}
 
 	impl core::GpuDataTraitConst for GpuData {
 		#[inline] fn as_raw_GpuData(&self) -> *const c_void { self.as_raw() }
@@ -31472,27 +31481,359 @@ pub mod core {
 
 	boxed_ref! { GpuData, core::GpuDataTraitConst, as_raw_GpuData, core::GpuDataTrait, as_raw_mut_GpuData }
 
-	impl GpuData {
+	/// Base storage class for GPU memory with reference counting.
+	///
+	/// Its interface matches the Mat interface with the following limitations:
+	///
+	/// *   no arbitrary dimensions support (only 2D)
+	/// *   no functions that return references to their data (because references on GPU are not valid for
+	///    CPU)
+	/// *   no expression templates technique support
+	///
+	/// Beware that the latter limitation may lead to overloaded matrix operators that cause memory
+	/// allocations. The GpuMat class is convertible to cuda::PtrStepSz and cuda::PtrStep so it can be
+	/// passed directly to the kernel.
+	///
+	///
+	/// Note: In contrast with Mat, in most cases GpuMat::isContinuous() == false . This means that rows are
+	/// aligned to a size depending on the hardware. Single-row GpuMat is always a continuous matrix.
+	///
+	///
+	/// Note: You are not recommended to leave static or global GpuMat variables allocated, that is, to rely
+	/// on its destructor. The destruction order of such variables and CUDA context is undefined. GPU memory
+	/// release function returns error if the CUDA context has been destroyed before.
+	///
+	/// Some member functions are described as a "Blocking Call" while some are described as a
+	/// "Non-Blocking Call". Blocking functions are synchronous to host. It is guaranteed that the GPU
+	/// operation is finished when the function returns. However, non-blocking functions are asynchronous to
+	/// host. Those functions may return even if the GPU operation is not finished.
+	///
+	/// Compared to their blocking counterpart, non-blocking functions accept Stream as an additional
+	/// argument. If a non-default stream is passed, the GPU operation may overlap with operations in other
+	/// streams.
+	/// ## See also
+	/// Mat
+	pub struct GpuMat {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { GpuMat }
+
+	impl Drop for GpuMat {
 		#[inline]
-		pub fn new(_size: size_t) -> Result<core::GpuData> {
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_GpuMat_delete(self.as_raw_mut_GpuMat()) };
+		}
+	}
+
+	unsafe impl Send for GpuMat {}
+
+	impl GpuMat {
+		/// default allocator
+		#[inline]
+		pub fn default_allocator() -> Result<types::AbstractRefMut<'static, core::GpuMat_Allocator>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_GpuData_GpuData_size_t(_size, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_cuda_GpuMat_defaultAllocator(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::GpuData::opencv_from_extern(ret) };
+			let ret = unsafe { types::AbstractRefMut::<'static, core::GpuMat_Allocator>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	impl std::fmt::Debug for GpuData {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("GpuData")
-				.field("data", &core::GpuDataTraitConst::data(self))
-				.field("size", &core::GpuDataTraitConst::size(self))
-				.finish()
+		pub fn set_default_allocator(allocator: &'static mut impl core::GpuMat_AllocatorTrait) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_setDefaultAllocator_AllocatorX(allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
 		}
+
+		#[inline]
+		pub fn get_std_allocator() -> Result<types::AbstractRefMut<'static, core::GpuMat_Allocator>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_getStdAllocator(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { types::AbstractRefMut::<'static, core::GpuMat_Allocator>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// default constructor
+		///
+		/// ## C++ default parameters
+		/// * allocator: GpuMat::defaultAllocator()
+		#[inline]
+		pub unsafe fn new(allocator: &mut impl core::GpuMat_AllocatorTrait) -> Result<core::GpuMat> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_cuda_GpuMat_GpuMat_AllocatorX(allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::GpuMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// default constructor
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * allocator: GpuMat::defaultAllocator()
+		#[inline]
+		pub fn new_def() -> Result<core::GpuMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_GpuMat(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// constructs GpuMat of the specified size and type
+		///
+		/// ## C++ default parameters
+		/// * allocator: GpuMat::defaultAllocator()
+		#[inline]
+		pub unsafe fn new_rows_cols(rows: i32, cols: i32, typ: i32, allocator: &mut impl core::GpuMat_AllocatorTrait) -> Result<core::GpuMat> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_cuda_GpuMat_GpuMat_int_int_int_AllocatorX(rows, cols, typ, allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::GpuMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// constructs GpuMat of the specified size and type
+		///
+		/// ## Note
+		/// This alternative version of [new_rows_cols] function uses the following default values for its arguments:
+		/// * allocator: GpuMat::defaultAllocator()
+		#[inline]
+		pub fn new_rows_cols_def(rows: i32, cols: i32, typ: i32) -> Result<core::GpuMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_GpuMat_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## C++ default parameters
+		/// * allocator: GpuMat::defaultAllocator()
+		#[inline]
+		pub unsafe fn new_size(size: core::Size, typ: i32, allocator: &mut impl core::GpuMat_AllocatorTrait) -> Result<core::GpuMat> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_cuda_GpuMat_GpuMat_Size_int_AllocatorX(&size, typ, allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::GpuMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [new_size] function uses the following default values for its arguments:
+		/// * allocator: GpuMat::defaultAllocator()
+		#[inline]
+		pub fn new_size_def(size: core::Size, typ: i32) -> Result<core::GpuMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_GpuMat_Size_int(&size, typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// constructs GpuMat and fills it with the specified value _s
+		///
+		/// ## C++ default parameters
+		/// * allocator: GpuMat::defaultAllocator()
+		#[inline]
+		pub unsafe fn new_rows_cols_with_default(rows: i32, cols: i32, typ: i32, s: core::Scalar, allocator: &mut impl core::GpuMat_AllocatorTrait) -> Result<core::GpuMat> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_cuda_GpuMat_GpuMat_int_int_int_Scalar_AllocatorX(rows, cols, typ, &s, allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::GpuMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// constructs GpuMat and fills it with the specified value _s
+		///
+		/// ## Note
+		/// This alternative version of [new_rows_cols_with_default] function uses the following default values for its arguments:
+		/// * allocator: GpuMat::defaultAllocator()
+		#[inline]
+		pub fn new_rows_cols_with_default_def(rows: i32, cols: i32, typ: i32, s: core::Scalar) -> Result<core::GpuMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_GpuMat_int_int_int_Scalar(rows, cols, typ, &s, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## C++ default parameters
+		/// * allocator: GpuMat::defaultAllocator()
+		#[inline]
+		pub unsafe fn new_size_with_default(size: core::Size, typ: i32, s: core::Scalar, allocator: &mut impl core::GpuMat_AllocatorTrait) -> Result<core::GpuMat> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_cuda_GpuMat_GpuMat_Size_int_Scalar_AllocatorX(&size, typ, &s, allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::GpuMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [new_size_with_default] function uses the following default values for its arguments:
+		/// * allocator: GpuMat::defaultAllocator()
+		#[inline]
+		pub fn new_size_with_default_def(size: core::Size, typ: i32, s: core::Scalar) -> Result<core::GpuMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_GpuMat_Size_int_Scalar(&size, typ, &s, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// copy constructor
+		#[inline]
+		pub fn copy(m: &impl core::GpuMatTraitConst) -> Result<core::GpuMat> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_GpuMat_const_GpuMatR(m.as_raw_GpuMat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// constructor for GpuMat headers pointing to user-allocated data
+		///
+		/// ## C++ default parameters
+		/// * step: Mat::AUTO_STEP
+		#[inline]
+		pub unsafe fn new_rows_cols_with_data(rows: i32, cols: i32, typ: i32, data: *mut c_void, step: size_t) -> Result<core::GpuMat> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_cuda_GpuMat_GpuMat_int_int_int_voidX_size_t(rows, cols, typ, data, step, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::GpuMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// constructor for GpuMat headers pointing to user-allocated data
+		///
+		/// ## Note
+		/// This alternative version of [new_rows_cols_with_data] function uses the following default values for its arguments:
+		/// * step: Mat::AUTO_STEP
+		#[inline]
+		pub unsafe fn new_rows_cols_with_data_def(rows: i32, cols: i32, typ: i32, data: *mut c_void) -> Result<core::GpuMat> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_cuda_GpuMat_GpuMat_int_int_int_voidX(rows, cols, typ, data, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::GpuMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## C++ default parameters
+		/// * step: Mat::AUTO_STEP
+		#[inline]
+		pub unsafe fn new_size_with_data(size: core::Size, typ: i32, data: *mut c_void, step: size_t) -> Result<core::GpuMat> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_cuda_GpuMat_GpuMat_Size_int_voidX_size_t(&size, typ, data, step, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::GpuMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [new_size_with_data] function uses the following default values for its arguments:
+		/// * step: Mat::AUTO_STEP
+		#[inline]
+		pub unsafe fn new_size_with_data_def(size: core::Size, typ: i32, data: *mut c_void) -> Result<core::GpuMat> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_cuda_GpuMat_GpuMat_Size_int_voidX(&size, typ, data, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::GpuMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// creates a GpuMat header for a part of the bigger matrix
+		#[inline]
+		pub fn rowscols(m: &impl core::GpuMatTraitConst, mut row_range: impl core::RangeTrait, mut col_range: impl core::RangeTrait) -> Result<BoxedRef<core::GpuMat>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_GpuMat_const_GpuMatR_Range_Range(m.as_raw_GpuMat(), row_range.as_raw_mut_Range(), col_range.as_raw_mut_Range(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<core::GpuMat>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// creates a GpuMat header for a part of the bigger matrix
+		#[inline]
+		pub fn rowscols_mut(m: &mut impl core::GpuMatTrait, mut row_range: impl core::RangeTrait, mut col_range: impl core::RangeTrait) -> Result<BoxedRefMut<core::GpuMat>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_GpuMat_GpuMatR_Range_Range(m.as_raw_mut_GpuMat(), row_range.as_raw_mut_Range(), col_range.as_raw_mut_Range(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRefMut::<core::GpuMat>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn roi(m: &impl core::GpuMatTraitConst, roi: core::Rect) -> Result<BoxedRef<core::GpuMat>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_GpuMat_const_GpuMatR_Rect(m.as_raw_GpuMat(), &roi, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRef::<core::GpuMat>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn roi_mut(m: &mut impl core::GpuMatTrait, roi: core::Rect) -> Result<BoxedRefMut<core::GpuMat>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_GpuMat_GpuMatR_Rect(m.as_raw_mut_GpuMat(), &roi, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { BoxedRefMut::<core::GpuMat>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// builds GpuMat from host memory (Blocking call)
+		///
+		/// ## C++ default parameters
+		/// * allocator: GpuMat::defaultAllocator()
+		#[inline]
+		pub unsafe fn from_hostmem(arr: &impl ToInputArray, allocator: &mut impl core::GpuMat_AllocatorTrait) -> Result<core::GpuMat> {
+			input_array_arg!(arr);
+			return_send!(via ocvrs_return);
+			{ sys::cv_cuda_GpuMat_GpuMat_const__InputArrayR_AllocatorX(arr.as_raw__InputArray(), allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::GpuMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// builds GpuMat from host memory (Blocking call)
+		///
+		/// ## Note
+		/// This alternative version of [from_hostmem] function uses the following default values for its arguments:
+		/// * allocator: GpuMat::defaultAllocator()
+		#[inline]
+		pub fn from_hostmem_def(arr: &impl ToInputArray) -> Result<core::GpuMat> {
+			input_array_arg!(arr);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMat_GpuMat_const__InputArrayR(arr.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [core::GpuMat]
@@ -32470,371 +32811,6 @@ pub mod core {
 
 	}
 
-	/// Base storage class for GPU memory with reference counting.
-	///
-	/// Its interface matches the Mat interface with the following limitations:
-	///
-	/// *   no arbitrary dimensions support (only 2D)
-	/// *   no functions that return references to their data (because references on GPU are not valid for
-	///    CPU)
-	/// *   no expression templates technique support
-	///
-	/// Beware that the latter limitation may lead to overloaded matrix operators that cause memory
-	/// allocations. The GpuMat class is convertible to cuda::PtrStepSz and cuda::PtrStep so it can be
-	/// passed directly to the kernel.
-	///
-	///
-	/// Note: In contrast with Mat, in most cases GpuMat::isContinuous() == false . This means that rows are
-	/// aligned to a size depending on the hardware. Single-row GpuMat is always a continuous matrix.
-	///
-	///
-	/// Note: You are not recommended to leave static or global GpuMat variables allocated, that is, to rely
-	/// on its destructor. The destruction order of such variables and CUDA context is undefined. GPU memory
-	/// release function returns error if the CUDA context has been destroyed before.
-	///
-	/// Some member functions are described as a "Blocking Call" while some are described as a
-	/// "Non-Blocking Call". Blocking functions are synchronous to host. It is guaranteed that the GPU
-	/// operation is finished when the function returns. However, non-blocking functions are asynchronous to
-	/// host. Those functions may return even if the GPU operation is not finished.
-	///
-	/// Compared to their blocking counterpart, non-blocking functions accept Stream as an additional
-	/// argument. If a non-default stream is passed, the GPU operation may overlap with operations in other
-	/// streams.
-	/// ## See also
-	/// Mat
-	pub struct GpuMat {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GpuMat }
-
-	impl Drop for GpuMat {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_GpuMat_delete(self.as_raw_mut_GpuMat()) };
-		}
-	}
-
-	unsafe impl Send for GpuMat {}
-
-	impl core::GpuMatTraitConst for GpuMat {
-		#[inline] fn as_raw_GpuMat(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::GpuMatTrait for GpuMat {
-		#[inline] fn as_raw_mut_GpuMat(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { GpuMat, core::GpuMatTraitConst, as_raw_GpuMat, core::GpuMatTrait, as_raw_mut_GpuMat }
-
-	impl GpuMat {
-		/// default allocator
-		#[inline]
-		pub fn default_allocator() -> Result<types::AbstractRefMut<'static, core::GpuMat_Allocator>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_GpuMat_defaultAllocator(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { types::AbstractRefMut::<'static, core::GpuMat_Allocator>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn set_default_allocator(allocator: &'static mut impl core::GpuMat_AllocatorTrait) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_GpuMat_setDefaultAllocator_AllocatorX(allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn get_std_allocator() -> Result<types::AbstractRefMut<'static, core::GpuMat_Allocator>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_GpuMat_getStdAllocator(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { types::AbstractRefMut::<'static, core::GpuMat_Allocator>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// default constructor
-		///
-		/// ## C++ default parameters
-		/// * allocator: GpuMat::defaultAllocator()
-		#[inline]
-		pub unsafe fn new(allocator: &mut impl core::GpuMat_AllocatorTrait) -> Result<core::GpuMat> {
-			return_send!(via ocvrs_return);
-			{ sys::cv_cuda_GpuMat_GpuMat_AllocatorX(allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::GpuMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// default constructor
-		///
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * allocator: GpuMat::defaultAllocator()
-		#[inline]
-		pub fn new_def() -> Result<core::GpuMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_GpuMat_GpuMat(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// constructs GpuMat of the specified size and type
-		///
-		/// ## C++ default parameters
-		/// * allocator: GpuMat::defaultAllocator()
-		#[inline]
-		pub unsafe fn new_rows_cols(rows: i32, cols: i32, typ: i32, allocator: &mut impl core::GpuMat_AllocatorTrait) -> Result<core::GpuMat> {
-			return_send!(via ocvrs_return);
-			{ sys::cv_cuda_GpuMat_GpuMat_int_int_int_AllocatorX(rows, cols, typ, allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::GpuMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// constructs GpuMat of the specified size and type
-		///
-		/// ## Note
-		/// This alternative version of [new_rows_cols] function uses the following default values for its arguments:
-		/// * allocator: GpuMat::defaultAllocator()
-		#[inline]
-		pub fn new_rows_cols_def(rows: i32, cols: i32, typ: i32) -> Result<core::GpuMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_GpuMat_GpuMat_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## C++ default parameters
-		/// * allocator: GpuMat::defaultAllocator()
-		#[inline]
-		pub unsafe fn new_size(size: core::Size, typ: i32, allocator: &mut impl core::GpuMat_AllocatorTrait) -> Result<core::GpuMat> {
-			return_send!(via ocvrs_return);
-			{ sys::cv_cuda_GpuMat_GpuMat_Size_int_AllocatorX(&size, typ, allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::GpuMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [new_size] function uses the following default values for its arguments:
-		/// * allocator: GpuMat::defaultAllocator()
-		#[inline]
-		pub fn new_size_def(size: core::Size, typ: i32) -> Result<core::GpuMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_GpuMat_GpuMat_Size_int(&size, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// constructs GpuMat and fills it with the specified value _s
-		///
-		/// ## C++ default parameters
-		/// * allocator: GpuMat::defaultAllocator()
-		#[inline]
-		pub unsafe fn new_rows_cols_with_default(rows: i32, cols: i32, typ: i32, s: core::Scalar, allocator: &mut impl core::GpuMat_AllocatorTrait) -> Result<core::GpuMat> {
-			return_send!(via ocvrs_return);
-			{ sys::cv_cuda_GpuMat_GpuMat_int_int_int_Scalar_AllocatorX(rows, cols, typ, &s, allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::GpuMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// constructs GpuMat and fills it with the specified value _s
-		///
-		/// ## Note
-		/// This alternative version of [new_rows_cols_with_default] function uses the following default values for its arguments:
-		/// * allocator: GpuMat::defaultAllocator()
-		#[inline]
-		pub fn new_rows_cols_with_default_def(rows: i32, cols: i32, typ: i32, s: core::Scalar) -> Result<core::GpuMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_GpuMat_GpuMat_int_int_int_Scalar(rows, cols, typ, &s, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## C++ default parameters
-		/// * allocator: GpuMat::defaultAllocator()
-		#[inline]
-		pub unsafe fn new_size_with_default(size: core::Size, typ: i32, s: core::Scalar, allocator: &mut impl core::GpuMat_AllocatorTrait) -> Result<core::GpuMat> {
-			return_send!(via ocvrs_return);
-			{ sys::cv_cuda_GpuMat_GpuMat_Size_int_Scalar_AllocatorX(&size, typ, &s, allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::GpuMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [new_size_with_default] function uses the following default values for its arguments:
-		/// * allocator: GpuMat::defaultAllocator()
-		#[inline]
-		pub fn new_size_with_default_def(size: core::Size, typ: i32, s: core::Scalar) -> Result<core::GpuMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_GpuMat_GpuMat_Size_int_Scalar(&size, typ, &s, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// copy constructor
-		#[inline]
-		pub fn copy(m: &impl core::GpuMatTraitConst) -> Result<core::GpuMat> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_GpuMat_GpuMat_const_GpuMatR(m.as_raw_GpuMat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// constructor for GpuMat headers pointing to user-allocated data
-		///
-		/// ## C++ default parameters
-		/// * step: Mat::AUTO_STEP
-		#[inline]
-		pub unsafe fn new_rows_cols_with_data(rows: i32, cols: i32, typ: i32, data: *mut c_void, step: size_t) -> Result<core::GpuMat> {
-			return_send!(via ocvrs_return);
-			{ sys::cv_cuda_GpuMat_GpuMat_int_int_int_voidX_size_t(rows, cols, typ, data, step, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::GpuMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// constructor for GpuMat headers pointing to user-allocated data
-		///
-		/// ## Note
-		/// This alternative version of [new_rows_cols_with_data] function uses the following default values for its arguments:
-		/// * step: Mat::AUTO_STEP
-		#[inline]
-		pub unsafe fn new_rows_cols_with_data_def(rows: i32, cols: i32, typ: i32, data: *mut c_void) -> Result<core::GpuMat> {
-			return_send!(via ocvrs_return);
-			{ sys::cv_cuda_GpuMat_GpuMat_int_int_int_voidX(rows, cols, typ, data, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::GpuMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## C++ default parameters
-		/// * step: Mat::AUTO_STEP
-		#[inline]
-		pub unsafe fn new_size_with_data(size: core::Size, typ: i32, data: *mut c_void, step: size_t) -> Result<core::GpuMat> {
-			return_send!(via ocvrs_return);
-			{ sys::cv_cuda_GpuMat_GpuMat_Size_int_voidX_size_t(&size, typ, data, step, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::GpuMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [new_size_with_data] function uses the following default values for its arguments:
-		/// * step: Mat::AUTO_STEP
-		#[inline]
-		pub unsafe fn new_size_with_data_def(size: core::Size, typ: i32, data: *mut c_void) -> Result<core::GpuMat> {
-			return_send!(via ocvrs_return);
-			{ sys::cv_cuda_GpuMat_GpuMat_Size_int_voidX(&size, typ, data, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::GpuMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// creates a GpuMat header for a part of the bigger matrix
-		#[inline]
-		pub fn rowscols(m: &impl core::GpuMatTraitConst, mut row_range: impl core::RangeTrait, mut col_range: impl core::RangeTrait) -> Result<BoxedRef<core::GpuMat>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_GpuMat_GpuMat_const_GpuMatR_Range_Range(m.as_raw_GpuMat(), row_range.as_raw_mut_Range(), col_range.as_raw_mut_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRef::<core::GpuMat>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// creates a GpuMat header for a part of the bigger matrix
-		#[inline]
-		pub fn rowscols_mut(m: &mut impl core::GpuMatTrait, mut row_range: impl core::RangeTrait, mut col_range: impl core::RangeTrait) -> Result<BoxedRefMut<core::GpuMat>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_GpuMat_GpuMat_GpuMatR_Range_Range(m.as_raw_mut_GpuMat(), row_range.as_raw_mut_Range(), col_range.as_raw_mut_Range(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRefMut::<core::GpuMat>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn roi(m: &impl core::GpuMatTraitConst, roi: core::Rect) -> Result<BoxedRef<core::GpuMat>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_GpuMat_GpuMat_const_GpuMatR_Rect(m.as_raw_GpuMat(), &roi, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRef::<core::GpuMat>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn roi_mut(m: &mut impl core::GpuMatTrait, roi: core::Rect) -> Result<BoxedRefMut<core::GpuMat>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_GpuMat_GpuMat_GpuMatR_Rect(m.as_raw_mut_GpuMat(), &roi, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { BoxedRefMut::<core::GpuMat>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// builds GpuMat from host memory (Blocking call)
-		///
-		/// ## C++ default parameters
-		/// * allocator: GpuMat::defaultAllocator()
-		#[inline]
-		pub unsafe fn from_hostmem(arr: &impl ToInputArray, allocator: &mut impl core::GpuMat_AllocatorTrait) -> Result<core::GpuMat> {
-			input_array_arg!(arr);
-			return_send!(via ocvrs_return);
-			{ sys::cv_cuda_GpuMat_GpuMat_const__InputArrayR_AllocatorX(arr.as_raw__InputArray(), allocator.as_raw_mut_GpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::GpuMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// builds GpuMat from host memory (Blocking call)
-		///
-		/// ## Note
-		/// This alternative version of [from_hostmem] function uses the following default values for its arguments:
-		/// * allocator: GpuMat::defaultAllocator()
-		#[inline]
-		pub fn from_hostmem_def(arr: &impl ToInputArray) -> Result<core::GpuMat> {
-			input_array_arg!(arr);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_GpuMat_GpuMat_const__InputArrayR(arr.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::GpuMat::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
 	impl Clone for GpuMat {
 		#[inline]
 		/// Calls try_clone() and panics if that fails
@@ -32858,6 +32834,31 @@ pub mod core {
 				.finish()
 		}
 	}
+
+	impl core::GpuMatTraitConst for GpuMat {
+		#[inline] fn as_raw_GpuMat(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::GpuMatTrait for GpuMat {
+		#[inline] fn as_raw_mut_GpuMat(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { GpuMat, core::GpuMatTraitConst, as_raw_GpuMat, core::GpuMatTrait, as_raw_mut_GpuMat }
+
+	pub struct GpuMat_Allocator {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { GpuMat_Allocator }
+
+	impl Drop for GpuMat_Allocator {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_GpuMat_Allocator_delete(self.as_raw_mut_GpuMat_Allocator()) };
+		}
+	}
+
+	unsafe impl Send for GpuMat_Allocator {}
 
 	/// Constant methods for [core::GpuMat_Allocator]
 	pub trait GpuMat_AllocatorTraitConst {
@@ -32889,20 +32890,13 @@ pub mod core {
 
 	}
 
-	pub struct GpuMat_Allocator {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GpuMat_Allocator }
-
-	impl Drop for GpuMat_Allocator {
+	impl std::fmt::Debug for GpuMat_Allocator {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_GpuMat_Allocator_delete(self.as_raw_mut_GpuMat_Allocator()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GpuMat_Allocator")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for GpuMat_Allocator {}
 
 	impl core::GpuMat_AllocatorTraitConst for GpuMat_Allocator {
 		#[inline] fn as_raw_GpuMat_Allocator(&self) -> *const c_void { self.as_raw() }
@@ -32914,15 +32908,121 @@ pub mod core {
 
 	boxed_ref! { GpuMat_Allocator, core::GpuMat_AllocatorTraitConst, as_raw_GpuMat_Allocator, core::GpuMat_AllocatorTrait, as_raw_mut_GpuMat_Allocator }
 
-	impl GpuMat_Allocator {
+	pub struct GpuMatND {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for GpuMat_Allocator {
+	opencv_type_boxed! { GpuMatND }
+
+	impl Drop for GpuMatND {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("GpuMat_Allocator")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_GpuMatND_delete(self.as_raw_mut_GpuMatND()) };
 		}
+	}
+
+	unsafe impl Send for GpuMatND {}
+
+	impl GpuMatND {
+		/// default constructor
+		#[inline]
+		pub fn default() -> Result<core::GpuMatND> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMatND_GpuMatND(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::GpuMatND::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// default constructor
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * size: Array of integers specifying an n-dimensional array shape.
+		/// * type: Array type. Use CV_8UC1, ..., CV_16FC4 to create 1-4 channel matrices, or
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		#[inline]
+		pub fn new(mut size: core::GpuMatND_SizeArray, typ: i32) -> Result<core::GpuMatND> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_GpuMatND_GpuMatND_SizeArray_int(size.as_raw_mut_VectorOfi32(), typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::GpuMatND::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// default constructor
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * size: Array of integers specifying an n-dimensional array shape.
+		/// * type: Array type. Use CV_8UC1, ..., CV_16FC4 to create 1-4 channel matrices, or
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		/// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
+		/// allocate matrix data. Instead, they just initialize the matrix header that points to the specified
+		/// data, which means that no data is copied. This operation is very efficient and can be used to
+		/// process external data using OpenCV functions. The external data is not automatically deallocated, so
+		/// you should take care of it.
+		/// * step: Array of _size.size() or _size.size()-1 steps in case of a multi-dimensional array
+		/// (if specified, the last step must be equal to the element size, otherwise it will be added as such).
+		/// If not specified, the matrix is assumed to be continuous.
+		///
+		/// ## C++ default parameters
+		/// * step: StepArray()
+		#[inline]
+		pub unsafe fn new_1(mut size: core::GpuMatND_SizeArray, typ: i32, data: *mut c_void, mut step: core::GpuMatND_StepArray) -> Result<core::GpuMatND> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_cuda_GpuMatND_GpuMatND_SizeArray_int_voidX_StepArray(size.as_raw_mut_VectorOfi32(), typ, data, step.as_raw_mut_VectorOfsize_t(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::GpuMatND::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// @overload
+		/// ## Parameters
+		/// * size: Array of integers specifying an n-dimensional array shape.
+		/// * type: Array type. Use CV_8UC1, ..., CV_16FC4 to create 1-4 channel matrices, or
+		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+		/// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
+		/// allocate matrix data. Instead, they just initialize the matrix header that points to the specified
+		/// data, which means that no data is copied. This operation is very efficient and can be used to
+		/// process external data using OpenCV functions. The external data is not automatically deallocated, so
+		/// you should take care of it.
+		/// * step: Array of _size.size() or _size.size()-1 steps in case of a multi-dimensional array
+		/// (if specified, the last step must be equal to the element size, otherwise it will be added as such).
+		/// If not specified, the matrix is assumed to be continuous.
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * step: StepArray()
+		#[inline]
+		pub unsafe fn new_def(mut size: core::GpuMatND_SizeArray, typ: i32, data: *mut c_void) -> Result<core::GpuMatND> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_cuda_GpuMatND_GpuMatND_SizeArray_int_voidX(size.as_raw_mut_VectorOfi32(), typ, data, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::GpuMatND::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn copy(unnamed: &impl core::GpuMatNDTraitConst) -> core::GpuMatND {
+			let ret = unsafe { sys::cv_cuda_GpuMatND_GpuMatND_const_GpuMatNDR(unnamed.as_raw_GpuMatND()) };
+			let ret = unsafe { core::GpuMatND::opencv_from_extern(ret) };
+			ret
+		}
+
+		#[inline]
+		pub fn copy_mut(mut unnamed: core::GpuMatND) -> core::GpuMatND {
+			let ret = unsafe { sys::cv_cuda_GpuMatND_GpuMatND_GpuMatNDRR(unnamed.as_raw_mut_GpuMatND()) };
+			let ret = unsafe { core::GpuMatND::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [core::GpuMatND]
@@ -33368,133 +33468,6 @@ pub mod core {
 
 	}
 
-	pub struct GpuMatND {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GpuMatND }
-
-	impl Drop for GpuMatND {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_GpuMatND_delete(self.as_raw_mut_GpuMatND()) };
-		}
-	}
-
-	unsafe impl Send for GpuMatND {}
-
-	impl core::GpuMatNDTraitConst for GpuMatND {
-		#[inline] fn as_raw_GpuMatND(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::GpuMatNDTrait for GpuMatND {
-		#[inline] fn as_raw_mut_GpuMatND(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { GpuMatND, core::GpuMatNDTraitConst, as_raw_GpuMatND, core::GpuMatNDTrait, as_raw_mut_GpuMatND }
-
-	impl GpuMatND {
-		/// default constructor
-		#[inline]
-		pub fn default() -> Result<core::GpuMatND> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_GpuMatND_GpuMatND(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::GpuMatND::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// default constructor
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * size: Array of integers specifying an n-dimensional array shape.
-		/// * type: Array type. Use CV_8UC1, ..., CV_16FC4 to create 1-4 channel matrices, or
-		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
-		#[inline]
-		pub fn new(mut size: core::GpuMatND_SizeArray, typ: i32) -> Result<core::GpuMatND> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_GpuMatND_GpuMatND_SizeArray_int(size.as_raw_mut_VectorOfi32(), typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::GpuMatND::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// default constructor
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * size: Array of integers specifying an n-dimensional array shape.
-		/// * type: Array type. Use CV_8UC1, ..., CV_16FC4 to create 1-4 channel matrices, or
-		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
-		/// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
-		/// allocate matrix data. Instead, they just initialize the matrix header that points to the specified
-		/// data, which means that no data is copied. This operation is very efficient and can be used to
-		/// process external data using OpenCV functions. The external data is not automatically deallocated, so
-		/// you should take care of it.
-		/// * step: Array of _size.size() or _size.size()-1 steps in case of a multi-dimensional array
-		/// (if specified, the last step must be equal to the element size, otherwise it will be added as such).
-		/// If not specified, the matrix is assumed to be continuous.
-		///
-		/// ## C++ default parameters
-		/// * step: StepArray()
-		#[inline]
-		pub unsafe fn new_1(mut size: core::GpuMatND_SizeArray, typ: i32, data: *mut c_void, mut step: core::GpuMatND_StepArray) -> Result<core::GpuMatND> {
-			return_send!(via ocvrs_return);
-			{ sys::cv_cuda_GpuMatND_GpuMatND_SizeArray_int_voidX_StepArray(size.as_raw_mut_VectorOfi32(), typ, data, step.as_raw_mut_VectorOfsize_t(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::GpuMatND::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// @overload
-		/// ## Parameters
-		/// * size: Array of integers specifying an n-dimensional array shape.
-		/// * type: Array type. Use CV_8UC1, ..., CV_16FC4 to create 1-4 channel matrices, or
-		/// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
-		/// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
-		/// allocate matrix data. Instead, they just initialize the matrix header that points to the specified
-		/// data, which means that no data is copied. This operation is very efficient and can be used to
-		/// process external data using OpenCV functions. The external data is not automatically deallocated, so
-		/// you should take care of it.
-		/// * step: Array of _size.size() or _size.size()-1 steps in case of a multi-dimensional array
-		/// (if specified, the last step must be equal to the element size, otherwise it will be added as such).
-		/// If not specified, the matrix is assumed to be continuous.
-		///
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * step: StepArray()
-		#[inline]
-		pub unsafe fn new_def(mut size: core::GpuMatND_SizeArray, typ: i32, data: *mut c_void) -> Result<core::GpuMatND> {
-			return_send!(via ocvrs_return);
-			{ sys::cv_cuda_GpuMatND_GpuMatND_SizeArray_int_voidX(size.as_raw_mut_VectorOfi32(), typ, data, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::GpuMatND::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn copy(unnamed: &impl core::GpuMatNDTraitConst) -> core::GpuMatND {
-			let ret = unsafe { sys::cv_cuda_GpuMatND_GpuMatND_const_GpuMatNDR(unnamed.as_raw_GpuMatND()) };
-			let ret = unsafe { core::GpuMatND::opencv_from_extern(ret) };
-			ret
-		}
-
-		#[inline]
-		pub fn copy_mut(mut unnamed: core::GpuMatND) -> core::GpuMatND {
-			let ret = unsafe { sys::cv_cuda_GpuMatND_GpuMatND_GpuMatNDRR(unnamed.as_raw_mut_GpuMatND()) };
-			let ret = unsafe { core::GpuMatND::opencv_from_extern(ret) };
-			ret
-		}
-
-	}
-
 	impl Clone for GpuMatND {
 		#[inline]
 		/// Calls try_clone() and panics if that fails
@@ -33513,6 +33486,165 @@ pub mod core {
 				.field("step", &core::GpuMatNDTraitConst::step(self))
 				.finish()
 		}
+	}
+
+	impl core::GpuMatNDTraitConst for GpuMatND {
+		#[inline] fn as_raw_GpuMatND(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::GpuMatNDTrait for GpuMatND {
+		#[inline] fn as_raw_mut_GpuMatND(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { GpuMatND, core::GpuMatNDTraitConst, as_raw_GpuMatND, core::GpuMatNDTrait, as_raw_mut_GpuMatND }
+
+	/// Class with reference counting wrapping special memory type allocation functions from CUDA.
+	///
+	/// Its interface is also Mat-like but with additional memory type parameters.
+	///
+	/// *   **PAGE_LOCKED** sets a page locked memory type used commonly for fast and asynchronous
+	///    uploading/downloading data from/to GPU.
+	/// *   **SHARED** specifies a zero copy memory allocation that enables mapping the host memory to GPU
+	///    address space, if supported.
+	/// *   **WRITE_COMBINED** sets the write combined buffer that is not cached by CPU. Such buffers are
+	///    used to supply GPU with data when GPU only reads it. The advantage is a better CPU cache
+	///    utilization.
+	///
+	///
+	/// Note: Allocation size of such memory types is usually limited. For more details, see *CUDA 2.2
+	/// Pinned Memory APIs* document or *CUDA C Programming Guide*.
+	pub struct HostMem {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { HostMem }
+
+	impl Drop for HostMem {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_HostMem_delete(self.as_raw_mut_HostMem()) };
+		}
+	}
+
+	unsafe impl Send for HostMem {}
+
+	impl HostMem {
+		/// ## C++ default parameters
+		/// * alloc_type: HostMem::AllocType::PAGE_LOCKED
+		#[inline]
+		pub fn new(alloc_type: core::HostMem_AllocType) -> Result<core::HostMem> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_HostMem_HostMem_AllocType(alloc_type, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * alloc_type: HostMem::AllocType::PAGE_LOCKED
+		#[inline]
+		pub fn new_def() -> Result<core::HostMem> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_HostMem_HostMem(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn copy(m: &impl core::HostMemTraitConst) -> Result<core::HostMem> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_HostMem_HostMem_const_HostMemR(m.as_raw_HostMem(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## C++ default parameters
+		/// * alloc_type: HostMem::AllocType::PAGE_LOCKED
+		#[inline]
+		pub fn new_1(rows: i32, cols: i32, typ: i32, alloc_type: core::HostMem_AllocType) -> Result<core::HostMem> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_HostMem_HostMem_int_int_int_AllocType(rows, cols, typ, alloc_type, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * alloc_type: HostMem::AllocType::PAGE_LOCKED
+		#[inline]
+		pub fn new_def_1(rows: i32, cols: i32, typ: i32) -> Result<core::HostMem> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_HostMem_HostMem_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## C++ default parameters
+		/// * alloc_type: HostMem::AllocType::PAGE_LOCKED
+		#[inline]
+		pub fn new_2(size: core::Size, typ: i32, alloc_type: core::HostMem_AllocType) -> Result<core::HostMem> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_HostMem_HostMem_Size_int_AllocType(&size, typ, alloc_type, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * alloc_type: HostMem::AllocType::PAGE_LOCKED
+		#[inline]
+		pub fn new_def_2(size: core::Size, typ: i32) -> Result<core::HostMem> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_HostMem_HostMem_Size_int(&size, typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// creates from host memory with coping data
+		///
+		/// ## C++ default parameters
+		/// * alloc_type: HostMem::AllocType::PAGE_LOCKED
+		#[inline]
+		pub fn new_3(arr: &impl ToInputArray, alloc_type: core::HostMem_AllocType) -> Result<core::HostMem> {
+			input_array_arg!(arr);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_HostMem_HostMem_const__InputArrayR_AllocType(arr.as_raw__InputArray(), alloc_type, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// creates from host memory with coping data
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * alloc_type: HostMem::AllocType::PAGE_LOCKED
+		#[inline]
+		pub fn new_def_3(arr: &impl ToInputArray) -> Result<core::HostMem> {
+			input_array_arg!(arr);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_HostMem_HostMem_const__InputArrayR(arr.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [core::HostMem]
@@ -33847,165 +33979,6 @@ pub mod core {
 
 	}
 
-	/// Class with reference counting wrapping special memory type allocation functions from CUDA.
-	///
-	/// Its interface is also Mat-like but with additional memory type parameters.
-	///
-	/// *   **PAGE_LOCKED** sets a page locked memory type used commonly for fast and asynchronous
-	///    uploading/downloading data from/to GPU.
-	/// *   **SHARED** specifies a zero copy memory allocation that enables mapping the host memory to GPU
-	///    address space, if supported.
-	/// *   **WRITE_COMBINED** sets the write combined buffer that is not cached by CPU. Such buffers are
-	///    used to supply GPU with data when GPU only reads it. The advantage is a better CPU cache
-	///    utilization.
-	///
-	///
-	/// Note: Allocation size of such memory types is usually limited. For more details, see *CUDA 2.2
-	/// Pinned Memory APIs* document or *CUDA C Programming Guide*.
-	pub struct HostMem {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { HostMem }
-
-	impl Drop for HostMem {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_HostMem_delete(self.as_raw_mut_HostMem()) };
-		}
-	}
-
-	unsafe impl Send for HostMem {}
-
-	impl core::HostMemTraitConst for HostMem {
-		#[inline] fn as_raw_HostMem(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::HostMemTrait for HostMem {
-		#[inline] fn as_raw_mut_HostMem(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { HostMem, core::HostMemTraitConst, as_raw_HostMem, core::HostMemTrait, as_raw_mut_HostMem }
-
-	impl HostMem {
-		/// ## C++ default parameters
-		/// * alloc_type: HostMem::AllocType::PAGE_LOCKED
-		#[inline]
-		pub fn new(alloc_type: core::HostMem_AllocType) -> Result<core::HostMem> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HostMem_HostMem_AllocType(alloc_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * alloc_type: HostMem::AllocType::PAGE_LOCKED
-		#[inline]
-		pub fn new_def() -> Result<core::HostMem> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HostMem_HostMem(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn copy(m: &impl core::HostMemTraitConst) -> Result<core::HostMem> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HostMem_HostMem_const_HostMemR(m.as_raw_HostMem(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## C++ default parameters
-		/// * alloc_type: HostMem::AllocType::PAGE_LOCKED
-		#[inline]
-		pub fn new_1(rows: i32, cols: i32, typ: i32, alloc_type: core::HostMem_AllocType) -> Result<core::HostMem> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HostMem_HostMem_int_int_int_AllocType(rows, cols, typ, alloc_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * alloc_type: HostMem::AllocType::PAGE_LOCKED
-		#[inline]
-		pub fn new_def_1(rows: i32, cols: i32, typ: i32) -> Result<core::HostMem> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HostMem_HostMem_int_int_int(rows, cols, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## C++ default parameters
-		/// * alloc_type: HostMem::AllocType::PAGE_LOCKED
-		#[inline]
-		pub fn new_2(size: core::Size, typ: i32, alloc_type: core::HostMem_AllocType) -> Result<core::HostMem> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HostMem_HostMem_Size_int_AllocType(&size, typ, alloc_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * alloc_type: HostMem::AllocType::PAGE_LOCKED
-		#[inline]
-		pub fn new_def_2(size: core::Size, typ: i32) -> Result<core::HostMem> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HostMem_HostMem_Size_int(&size, typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// creates from host memory with coping data
-		///
-		/// ## C++ default parameters
-		/// * alloc_type: HostMem::AllocType::PAGE_LOCKED
-		#[inline]
-		pub fn new_3(arr: &impl ToInputArray, alloc_type: core::HostMem_AllocType) -> Result<core::HostMem> {
-			input_array_arg!(arr);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HostMem_HostMem_const__InputArrayR_AllocType(arr.as_raw__InputArray(), alloc_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// creates from host memory with coping data
-		///
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * alloc_type: HostMem::AllocType::PAGE_LOCKED
-		#[inline]
-		pub fn new_def_3(arr: &impl ToInputArray) -> Result<core::HostMem> {
-			input_array_arg!(arr);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HostMem_HostMem_const__InputArrayR(arr.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::HostMem::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
 	impl Clone for HostMem {
 		#[inline]
 		/// Calls try_clone() and panics if that fails
@@ -34029,6 +34002,118 @@ pub mod core {
 				.field("alloc_type", &core::HostMemTraitConst::alloc_type(self))
 				.finish()
 		}
+	}
+
+	impl core::HostMemTraitConst for HostMem {
+		#[inline] fn as_raw_HostMem(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::HostMemTrait for HostMem {
+		#[inline] fn as_raw_mut_HostMem(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { HostMem, core::HostMemTraitConst, as_raw_HostMem, core::HostMemTrait, as_raw_mut_HostMem }
+
+	/// This class encapsulates a queue of asynchronous calls.
+	///
+	///
+	/// Note: Currently, you may face problems if an operation is enqueued twice with different data. Some
+	/// functions use the constant GPU memory, and next call may update the memory before the previous one
+	/// has been finished. But calling different operations asynchronously is safe because each operation
+	/// has its own constant buffer. Memory copy/upload/download/set operations to the buffers you hold are
+	/// also safe.
+	///
+	///
+	/// Note: The Stream class is not thread-safe. Please use different Stream objects for different CPU threads.
+	///
+	/// ```C++
+	/// void thread1()
+	/// {
+	///    cv::cuda::Stream stream1;
+	///    cv::cuda::func1(..., stream1);
+	/// }
+	///
+	/// void thread2()
+	/// {
+	///    cv::cuda::Stream stream2;
+	///    cv::cuda::func2(..., stream2);
+	/// }
+	/// ```
+	///
+	///
+	///
+	/// Note: By default all CUDA routines are launched in Stream::Null() object, if the stream is not specified by user.
+	/// In multi-threading environment the stream objects must be passed explicitly (see previous note).
+	pub struct Stream {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Stream }
+
+	impl Drop for Stream {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_Stream_delete(self.as_raw_mut_Stream()) };
+		}
+	}
+
+	unsafe impl Send for Stream {}
+
+	impl Stream {
+		/// creates a new asynchronous stream
+		#[inline]
+		pub fn default() -> Result<core::Stream> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_Stream_Stream(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Stream::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// creates a new asynchronous stream with custom allocator
+		#[inline]
+		pub fn new(allocator: &core::Ptr<core::GpuMat_Allocator>) -> Result<core::Stream> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_Stream_Stream_const_PtrLAllocatorGR(allocator.as_raw_PtrOfGpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Stream::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// creates a new Stream using the cudaFlags argument to determine the behaviors of the stream
+		///
+		///
+		/// Note: The cudaFlags parameter is passed to the underlying api cudaStreamCreateWithFlags() and
+		/// supports the same parameter values.
+		/// ```C++
+		///    // creates an OpenCV cuda::Stream that manages an asynchronous, non-blocking,
+		///    // non-default CUDA stream
+		///    cv::cuda::Stream cvStream(cudaStreamNonBlocking);
+		/// ```
+		///
+		#[inline]
+		pub fn new_1(cuda_flags: size_t) -> Result<core::Stream> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_Stream_Stream_const_size_t(cuda_flags, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Stream::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// return Stream object for default CUDA stream
+		#[inline]
+		pub fn null() -> Result<core::Stream> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_Stream_Null(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Stream::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [core::Stream]
@@ -34102,50 +34187,13 @@ pub mod core {
 
 	}
 
-	/// This class encapsulates a queue of asynchronous calls.
-	///
-	///
-	/// Note: Currently, you may face problems if an operation is enqueued twice with different data. Some
-	/// functions use the constant GPU memory, and next call may update the memory before the previous one
-	/// has been finished. But calling different operations asynchronously is safe because each operation
-	/// has its own constant buffer. Memory copy/upload/download/set operations to the buffers you hold are
-	/// also safe.
-	///
-	///
-	/// Note: The Stream class is not thread-safe. Please use different Stream objects for different CPU threads.
-	///
-	/// ```C++
-	/// void thread1()
-	/// {
-	///    cv::cuda::Stream stream1;
-	///    cv::cuda::func1(..., stream1);
-	/// }
-	///
-	/// void thread2()
-	/// {
-	///    cv::cuda::Stream stream2;
-	///    cv::cuda::func2(..., stream2);
-	/// }
-	/// ```
-	///
-	///
-	///
-	/// Note: By default all CUDA routines are launched in Stream::Null() object, if the stream is not specified by user.
-	/// In multi-threading environment the stream objects must be passed explicitly (see previous note).
-	pub struct Stream {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Stream }
-
-	impl Drop for Stream {
+	impl std::fmt::Debug for Stream {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_Stream_delete(self.as_raw_mut_Stream()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Stream")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for Stream {}
 
 	impl core::StreamTraitConst for Stream {
 		#[inline] fn as_raw_Stream(&self) -> *const c_void { self.as_raw() }
@@ -34156,83 +34204,6 @@ pub mod core {
 	}
 
 	boxed_ref! { Stream, core::StreamTraitConst, as_raw_Stream, core::StreamTrait, as_raw_mut_Stream }
-
-	impl Stream {
-		/// creates a new asynchronous stream
-		#[inline]
-		pub fn default() -> Result<core::Stream> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_Stream_Stream(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Stream::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// creates a new asynchronous stream with custom allocator
-		#[inline]
-		pub fn new(allocator: &core::Ptr<core::GpuMat_Allocator>) -> Result<core::Stream> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_Stream_Stream_const_PtrLAllocatorGR(allocator.as_raw_PtrOfGpuMat_Allocator(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Stream::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// creates a new Stream using the cudaFlags argument to determine the behaviors of the stream
-		///
-		///
-		/// Note: The cudaFlags parameter is passed to the underlying api cudaStreamCreateWithFlags() and
-		/// supports the same parameter values.
-		/// ```C++
-		///    // creates an OpenCV cuda::Stream that manages an asynchronous, non-blocking,
-		///    // non-default CUDA stream
-		///    cv::cuda::Stream cvStream(cudaStreamNonBlocking);
-		/// ```
-		///
-		#[inline]
-		pub fn new_1(cuda_flags: size_t) -> Result<core::Stream> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_Stream_Stream_const_size_t(cuda_flags, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Stream::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// return Stream object for default CUDA stream
-		#[inline]
-		pub fn null() -> Result<core::Stream> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_Stream_Null(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Stream::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	impl std::fmt::Debug for Stream {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Stream")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [core::TargetArchs]
-	pub trait TargetArchsTraitConst {
-		fn as_raw_TargetArchs(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [core::TargetArchs]
-	pub trait TargetArchsTrait: core::TargetArchsTraitConst {
-		fn as_raw_mut_TargetArchs(&mut self) -> *mut c_void;
-
-	}
 
 	/// Class providing a set of static methods to check what NVIDIA\* card architecture the CUDA module was
 	/// built for.
@@ -34254,21 +34225,13 @@ pub mod core {
 
 	unsafe impl Send for TargetArchs {}
 
-	impl core::TargetArchsTraitConst for TargetArchs {
-		#[inline] fn as_raw_TargetArchs(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::TargetArchsTrait for TargetArchs {
-		#[inline] fn as_raw_mut_TargetArchs(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { TargetArchs, core::TargetArchsTraitConst, as_raw_TargetArchs, core::TargetArchsTrait, as_raw_mut_TargetArchs }
-
 	impl TargetArchs {
 		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_cuda_TargetArchs_defaultNew_const()) }
+		pub fn default() -> core::TargetArchs {
+			let ret = unsafe { sys::cv_cuda_TargetArchs_defaultNew_const() };
+			let ret = unsafe { core::TargetArchs::opencv_from_extern(ret) };
+			ret
 		}
 
 		/// The following method checks whether the module was built with the support of the given feature:
@@ -34355,12 +34318,16 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for TargetArchs {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("TargetArchs")
-				.finish()
-		}
+	/// Constant methods for [core::TargetArchs]
+	pub trait TargetArchsTraitConst {
+		fn as_raw_TargetArchs(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [core::TargetArchs]
+	pub trait TargetArchsTrait: core::TargetArchsTraitConst {
+		fn as_raw_mut_TargetArchs(&mut self) -> *mut c_void;
+
 	}
 
 	impl Default for TargetArchs {
@@ -34369,6 +34336,50 @@ pub mod core {
 		fn default() -> Self {
 			Self::default()
 		}
+	}
+
+	impl std::fmt::Debug for TargetArchs {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TargetArchs")
+				.finish()
+		}
+	}
+
+	impl core::TargetArchsTraitConst for TargetArchs {
+		#[inline] fn as_raw_TargetArchs(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::TargetArchsTrait for TargetArchs {
+		#[inline] fn as_raw_mut_TargetArchs(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { TargetArchs, core::TargetArchsTraitConst, as_raw_TargetArchs, core::TargetArchsTrait, as_raw_mut_TargetArchs }
+
+	pub struct Detail_CheckContext {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Detail_CheckContext }
+
+	impl Drop for Detail_CheckContext {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_detail_CheckContext_delete(self.as_raw_mut_Detail_CheckContext()) };
+		}
+	}
+
+	unsafe impl Send for Detail_CheckContext {}
+
+	impl Detail_CheckContext {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> core::Detail_CheckContext {
+			let ret = unsafe { sys::cv_detail_CheckContext_defaultNew_const() };
+			let ret = unsafe { core::Detail_CheckContext::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [core::Detail_CheckContext]
@@ -34444,38 +34455,12 @@ pub mod core {
 
 	}
 
-	pub struct Detail_CheckContext {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Detail_CheckContext }
-
-	impl Drop for Detail_CheckContext {
+	impl Default for Detail_CheckContext {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_detail_CheckContext_delete(self.as_raw_mut_Detail_CheckContext()) };
-		}
-	}
-
-	unsafe impl Send for Detail_CheckContext {}
-
-	impl core::Detail_CheckContextTraitConst for Detail_CheckContext {
-		#[inline] fn as_raw_Detail_CheckContext(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::Detail_CheckContextTrait for Detail_CheckContext {
-		#[inline] fn as_raw_mut_Detail_CheckContext(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Detail_CheckContext, core::Detail_CheckContextTraitConst, as_raw_Detail_CheckContext, core::Detail_CheckContextTrait, as_raw_mut_Detail_CheckContext }
-
-	impl Detail_CheckContext {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
+		/// Forwards to infallible Self::default()
 		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_detail_CheckContext_defaultNew_const()) }
+			Self::default()
 		}
-
 	}
 
 	impl Clone for Detail_CheckContext {
@@ -34500,13 +34485,15 @@ pub mod core {
 		}
 	}
 
-	impl Default for Detail_CheckContext {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
+	impl core::Detail_CheckContextTraitConst for Detail_CheckContext {
+		#[inline] fn as_raw_Detail_CheckContext(&self) -> *const c_void { self.as_raw() }
 	}
+
+	impl core::Detail_CheckContextTrait for Detail_CheckContext {
+		#[inline] fn as_raw_mut_Detail_CheckContext(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Detail_CheckContext, core::Detail_CheckContextTraitConst, as_raw_Detail_CheckContext, core::Detail_CheckContextTrait, as_raw_mut_Detail_CheckContext }
 
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq)]
@@ -34541,6 +34528,73 @@ pub mod core {
 			unsafe { sys::cv_hfloat_hfloat_float(x, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	pub struct NodeData {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { NodeData }
+
+	impl Drop for NodeData {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_instr_NodeData_delete(self.as_raw_mut_NodeData()) };
+		}
+	}
+
+	unsafe impl Send for NodeData {}
+
+	impl NodeData {
+		/// ## C++ default parameters
+		/// * fun_name: 0
+		/// * file_name: NULL
+		/// * line_num: 0
+		/// * ret_address: NULL
+		/// * always_expand: false
+		/// * instr_type: TYPE_GENERAL
+		/// * impl_type: IMPL_PLAIN
+		#[inline]
+		pub unsafe fn new(fun_name: &str, file_name: &str, line_num: i32, ret_address: *mut c_void, always_expand: bool, instr_type: core::TYPE, impl_type: core::IMPL) -> Result<core::NodeData> {
+			extern_container_arg!(fun_name);
+			extern_container_arg!(file_name);
+			return_send!(via ocvrs_return);
+			{ sys::cv_instr_NodeData_NodeData_const_charX_const_charX_int_voidX_bool_TYPE_IMPL(fun_name.opencv_as_extern(), file_name.opencv_as_extern(), line_num, ret_address, always_expand, instr_type, impl_type, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::NodeData::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * fun_name: 0
+		/// * file_name: NULL
+		/// * line_num: 0
+		/// * ret_address: NULL
+		/// * always_expand: false
+		/// * instr_type: TYPE_GENERAL
+		/// * impl_type: IMPL_PLAIN
+		#[inline]
+		pub fn new_def() -> Result<core::NodeData> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_instr_NodeData_NodeData(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::NodeData::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn copy_mut(ref_: &mut impl core::NodeDataTrait) -> Result<core::NodeData> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_instr_NodeData_NodeData_NodeDataR(ref_.as_raw_mut_NodeData(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::NodeData::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -34718,83 +34772,6 @@ pub mod core {
 
 	}
 
-	pub struct NodeData {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { NodeData }
-
-	impl Drop for NodeData {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_instr_NodeData_delete(self.as_raw_mut_NodeData()) };
-		}
-	}
-
-	unsafe impl Send for NodeData {}
-
-	impl core::NodeDataTraitConst for NodeData {
-		#[inline] fn as_raw_NodeData(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::NodeDataTrait for NodeData {
-		#[inline] fn as_raw_mut_NodeData(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { NodeData, core::NodeDataTraitConst, as_raw_NodeData, core::NodeDataTrait, as_raw_mut_NodeData }
-
-	impl NodeData {
-		/// ## C++ default parameters
-		/// * fun_name: 0
-		/// * file_name: NULL
-		/// * line_num: 0
-		/// * ret_address: NULL
-		/// * always_expand: false
-		/// * instr_type: TYPE_GENERAL
-		/// * impl_type: IMPL_PLAIN
-		#[inline]
-		pub unsafe fn new(fun_name: &str, file_name: &str, line_num: i32, ret_address: *mut c_void, always_expand: bool, instr_type: core::TYPE, impl_type: core::IMPL) -> Result<core::NodeData> {
-			extern_container_arg!(fun_name);
-			extern_container_arg!(file_name);
-			return_send!(via ocvrs_return);
-			{ sys::cv_instr_NodeData_NodeData_const_charX_const_charX_int_voidX_bool_TYPE_IMPL(fun_name.opencv_as_extern(), file_name.opencv_as_extern(), line_num, ret_address, always_expand, instr_type, impl_type, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::NodeData::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * fun_name: 0
-		/// * file_name: NULL
-		/// * line_num: 0
-		/// * ret_address: NULL
-		/// * always_expand: false
-		/// * instr_type: TYPE_GENERAL
-		/// * impl_type: IMPL_PLAIN
-		#[inline]
-		pub fn new_def() -> Result<core::NodeData> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_instr_NodeData_NodeData(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::NodeData::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn copy_mut(ref_: &mut impl core::NodeDataTrait) -> Result<core::NodeData> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_instr_NodeData_NodeData_NodeDataR(ref_.as_raw_mut_NodeData(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::NodeData::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
 	impl std::fmt::Debug for NodeData {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -34813,17 +34790,15 @@ pub mod core {
 		}
 	}
 
-	/// Constant methods for [core::WriteStructContext]
-	pub trait WriteStructContextTraitConst {
-		fn as_raw_WriteStructContext(&self) -> *const c_void;
-
+	impl core::NodeDataTraitConst for NodeData {
+		#[inline] fn as_raw_NodeData(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [core::WriteStructContext]
-	pub trait WriteStructContextTrait: core::WriteStructContextTraitConst {
-		fn as_raw_mut_WriteStructContext(&mut self) -> *mut c_void;
-
+	impl core::NodeDataTrait for NodeData {
+		#[inline] fn as_raw_mut_NodeData(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { NodeData, core::NodeDataTraitConst, as_raw_NodeData, core::NodeDataTrait, as_raw_mut_NodeData }
 
 	pub struct WriteStructContext {
 		ptr: *mut c_void,
@@ -34839,16 +34814,6 @@ pub mod core {
 	}
 
 	unsafe impl Send for WriteStructContext {}
-
-	impl core::WriteStructContextTraitConst for WriteStructContext {
-		#[inline] fn as_raw_WriteStructContext(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::WriteStructContextTrait for WriteStructContext {
-		#[inline] fn as_raw_mut_WriteStructContext(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WriteStructContext, core::WriteStructContextTraitConst, as_raw_WriteStructContext, core::WriteStructContextTrait, as_raw_mut_WriteStructContext }
 
 	impl WriteStructContext {
 		/// ## C++ default parameters
@@ -34881,12 +34846,144 @@ pub mod core {
 
 	}
 
+	/// Constant methods for [core::WriteStructContext]
+	pub trait WriteStructContextTraitConst {
+		fn as_raw_WriteStructContext(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [core::WriteStructContext]
+	pub trait WriteStructContextTrait: core::WriteStructContextTraitConst {
+		fn as_raw_mut_WriteStructContext(&mut self) -> *mut c_void;
+
+	}
+
 	impl std::fmt::Debug for WriteStructContext {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("WriteStructContext")
 				.finish()
 		}
+	}
+
+	impl core::WriteStructContextTraitConst for WriteStructContext {
+		#[inline] fn as_raw_WriteStructContext(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::WriteStructContextTrait for WriteStructContext {
+		#[inline] fn as_raw_mut_WriteStructContext(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WriteStructContext, core::WriteStructContextTraitConst, as_raw_WriteStructContext, core::WriteStructContextTrait, as_raw_mut_WriteStructContext }
+
+	pub struct Context {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Context }
+
+	impl Drop for Context {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_ocl_Context_delete(self.as_raw_mut_Context()) };
+		}
+	}
+
+	unsafe impl Send for Context {}
+
+	impl Context {
+		#[inline]
+		pub fn default() -> core::Context {
+			let ret = unsafe { sys::cv_ocl_Context_Context() };
+			let ret = unsafe { core::Context::opencv_from_extern(ret) };
+			ret
+		}
+
+		#[inline]
+		pub fn new_with_type(dtype: i32) -> Result<core::Context> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Context_Context_int(dtype, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Context::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn copy(c: &impl core::ContextTraitConst) -> Result<core::Context> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Context_Context_const_ContextR(c.as_raw_Context(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Context::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn copy_mut(mut c: core::Context) -> core::Context {
+			let ret = unsafe { sys::cv_ocl_Context_Context_ContextRR(c.as_raw_mut_Context()) };
+			let ret = unsafe { core::Context::opencv_from_extern(ret) };
+			ret
+		}
+
+		/// ## C++ default parameters
+		/// * initialize: true
+		#[inline]
+		pub fn get_default(initialize: bool) -> Result<core::Context> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Context_getDefault_bool(initialize, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Context::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [Context::get_default] function uses the following default values for its arguments:
+		/// * initialize: true
+		#[inline]
+		pub fn get_default_def() -> Result<core::Context> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Context_getDefault(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Context::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Parameters
+		/// * context: OpenCL handle (cl_context). clRetainContext() is called on success
+		#[inline]
+		pub unsafe fn from_handle(context: *mut c_void) -> Result<core::Context> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_ocl_Context_fromHandle_voidX(context, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::Context::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn from_device(device: &impl core::DeviceTraitConst) -> Result<core::Context> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Context_fromDevice_const_DeviceR(device.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Context::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn create(configuration: &str) -> Result<core::Context> {
+			extern_container_arg!(configuration);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Context_create_const_stringR(configuration.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Context::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [core::Context]
@@ -35038,124 +35135,12 @@ pub mod core {
 
 	}
 
-	pub struct Context {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Context }
-
-	impl Drop for Context {
+	impl Default for Context {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ocl_Context_delete(self.as_raw_mut_Context()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
-	}
-
-	unsafe impl Send for Context {}
-
-	impl core::ContextTraitConst for Context {
-		#[inline] fn as_raw_Context(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::ContextTrait for Context {
-		#[inline] fn as_raw_mut_Context(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Context, core::ContextTraitConst, as_raw_Context, core::ContextTrait, as_raw_mut_Context }
-
-	impl Context {
-		#[inline]
-		pub fn default() -> core::Context {
-			let ret = unsafe { sys::cv_ocl_Context_Context() };
-			let ret = unsafe { core::Context::opencv_from_extern(ret) };
-			ret
-		}
-
-		#[inline]
-		pub fn new_with_type(dtype: i32) -> Result<core::Context> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_Context_Context_int(dtype, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Context::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn copy(c: &impl core::ContextTraitConst) -> Result<core::Context> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_Context_Context_const_ContextR(c.as_raw_Context(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Context::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn copy_mut(mut c: core::Context) -> core::Context {
-			let ret = unsafe { sys::cv_ocl_Context_Context_ContextRR(c.as_raw_mut_Context()) };
-			let ret = unsafe { core::Context::opencv_from_extern(ret) };
-			ret
-		}
-
-		/// ## C++ default parameters
-		/// * initialize: true
-		#[inline]
-		pub fn get_default(initialize: bool) -> Result<core::Context> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_Context_getDefault_bool(initialize, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Context::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [Context::get_default] function uses the following default values for its arguments:
-		/// * initialize: true
-		#[inline]
-		pub fn get_default_def() -> Result<core::Context> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_Context_getDefault(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Context::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Parameters
-		/// * context: OpenCL handle (cl_context). clRetainContext() is called on success
-		#[inline]
-		pub unsafe fn from_handle(context: *mut c_void) -> Result<core::Context> {
-			return_send!(via ocvrs_return);
-			{ sys::cv_ocl_Context_fromHandle_voidX(context, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::Context::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn from_device(device: &impl core::DeviceTraitConst) -> Result<core::Context> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_Context_fromDevice_const_DeviceR(device.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Context::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn create(configuration: &str) -> Result<core::Context> {
-			extern_container_arg!(configuration);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_Context_create_const_stringR(configuration.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Context::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
 	}
 
 	impl std::fmt::Debug for Context {
@@ -35166,25 +35151,15 @@ pub mod core {
 		}
 	}
 
-	impl Default for Context {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
+	impl core::ContextTraitConst for Context {
+		#[inline] fn as_raw_Context(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Constant methods for [core::Context_UserContext]
-	pub trait Context_UserContextTraitConst {
-		fn as_raw_Context_UserContext(&self) -> *const c_void;
-
+	impl core::ContextTrait for Context {
+		#[inline] fn as_raw_mut_Context(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 
-	/// Mutable methods for [core::Context_UserContext]
-	pub trait Context_UserContextTrait: core::Context_UserContextTraitConst {
-		fn as_raw_mut_Context_UserContext(&mut self) -> *mut c_void;
-
-	}
+	boxed_ref! { Context, core::ContextTraitConst, as_raw_Context, core::ContextTrait, as_raw_mut_Context }
 
 	pub struct Context_UserContext {
 		ptr: *mut c_void,
@@ -35201,23 +35176,35 @@ pub mod core {
 
 	unsafe impl Send for Context_UserContext {}
 
-	impl core::Context_UserContextTraitConst for Context_UserContext {
-		#[inline] fn as_raw_Context_UserContext(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::Context_UserContextTrait for Context_UserContext {
-		#[inline] fn as_raw_mut_Context_UserContext(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Context_UserContext, core::Context_UserContextTraitConst, as_raw_Context_UserContext, core::Context_UserContextTrait, as_raw_mut_Context_UserContext }
-
 	impl Context_UserContext {
 		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_ocl_Context_UserContext_defaultNew_const()) }
+		pub fn default() -> core::Context_UserContext {
+			let ret = unsafe { sys::cv_ocl_Context_UserContext_defaultNew_const() };
+			let ret = unsafe { core::Context_UserContext::opencv_from_extern(ret) };
+			ret
 		}
 
+	}
+
+	/// Constant methods for [core::Context_UserContext]
+	pub trait Context_UserContextTraitConst {
+		fn as_raw_Context_UserContext(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [core::Context_UserContext]
+	pub trait Context_UserContextTrait: core::Context_UserContextTraitConst {
+		fn as_raw_mut_Context_UserContext(&mut self) -> *mut c_void;
+
+	}
+
+	impl Default for Context_UserContext {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
+		}
 	}
 
 	impl std::fmt::Debug for Context_UserContext {
@@ -35228,12 +35215,93 @@ pub mod core {
 		}
 	}
 
-	impl Default for Context_UserContext {
+	impl core::Context_UserContextTraitConst for Context_UserContext {
+		#[inline] fn as_raw_Context_UserContext(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::Context_UserContextTrait for Context_UserContext {
+		#[inline] fn as_raw_mut_Context_UserContext(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Context_UserContext, core::Context_UserContextTraitConst, as_raw_Context_UserContext, core::Context_UserContextTrait, as_raw_mut_Context_UserContext }
+
+	pub struct Device {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Device }
+
+	impl Drop for Device {
 		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
+		fn drop(&mut self) {
+			unsafe { sys::cv_ocl_Device_delete(self.as_raw_mut_Device()) };
 		}
+	}
+
+	unsafe impl Send for Device {}
+
+	impl Device {
+		#[inline]
+		pub fn default() -> core::Device {
+			let ret = unsafe { sys::cv_ocl_Device_Device() };
+			let ret = unsafe { core::Device::opencv_from_extern(ret) };
+			ret
+		}
+
+		#[inline]
+		pub unsafe fn new(d: *mut c_void) -> Result<core::Device> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_ocl_Device_Device_voidX(d, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::Device::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn copy(d: &impl core::DeviceTraitConst) -> Result<core::Device> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Device_Device_const_DeviceR(d.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Device::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn copy_mut(mut d: core::Device) -> core::Device {
+			let ret = unsafe { sys::cv_ocl_Device_Device_DeviceRR(d.as_raw_mut_Device()) };
+			let ret = unsafe { core::Device::opencv_from_extern(ret) };
+			ret
+		}
+
+		#[inline]
+		pub fn get_default() -> Result<core::Device> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Device_getDefault(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Device::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Parameters
+		/// * d: OpenCL handle (cl_device_id). clRetainDevice() is called on success.
+		///
+		///
+		/// Note: Ownership of the passed device is passed to OpenCV on success.
+		/// The caller should additionally call `clRetainDevice` on it if it intends
+		/// to continue using the device.
+		#[inline]
+		pub unsafe fn from_handle(d: *mut c_void) -> Result<core::Device> {
+			return_send!(via ocvrs_return);
+			{ sys::cv_ocl_Device_fromHandle_voidX(d, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::Device::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [core::Device]
@@ -35976,93 +36044,12 @@ pub mod core {
 
 	}
 
-	pub struct Device {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Device }
-
-	impl Drop for Device {
+	impl Default for Device {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ocl_Device_delete(self.as_raw_mut_Device()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
-	}
-
-	unsafe impl Send for Device {}
-
-	impl core::DeviceTraitConst for Device {
-		#[inline] fn as_raw_Device(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::DeviceTrait for Device {
-		#[inline] fn as_raw_mut_Device(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Device, core::DeviceTraitConst, as_raw_Device, core::DeviceTrait, as_raw_mut_Device }
-
-	impl Device {
-		#[inline]
-		pub fn default() -> core::Device {
-			let ret = unsafe { sys::cv_ocl_Device_Device() };
-			let ret = unsafe { core::Device::opencv_from_extern(ret) };
-			ret
-		}
-
-		#[inline]
-		pub unsafe fn new(d: *mut c_void) -> Result<core::Device> {
-			return_send!(via ocvrs_return);
-			{ sys::cv_ocl_Device_Device_voidX(d, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::Device::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn copy(d: &impl core::DeviceTraitConst) -> Result<core::Device> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_Device_Device_const_DeviceR(d.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Device::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn copy_mut(mut d: core::Device) -> core::Device {
-			let ret = unsafe { sys::cv_ocl_Device_Device_DeviceRR(d.as_raw_mut_Device()) };
-			let ret = unsafe { core::Device::opencv_from_extern(ret) };
-			ret
-		}
-
-		#[inline]
-		pub fn get_default() -> Result<core::Device> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_Device_getDefault(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Device::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Parameters
-		/// * d: OpenCL handle (cl_device_id). clRetainDevice() is called on success.
-		///
-		///
-		/// Note: Ownership of the passed device is passed to OpenCV on success.
-		/// The caller should additionally call `clRetainDevice` on it if it intends
-		/// to continue using the device.
-		#[inline]
-		pub unsafe fn from_handle(d: *mut c_void) -> Result<core::Device> {
-			return_send!(via ocvrs_return);
-			{ sys::cv_ocl_Device_fromHandle_voidX(d, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::Device::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
 	}
 
 	impl Clone for Device {
@@ -36080,49 +36067,15 @@ pub mod core {
 		}
 	}
 
-	impl Default for Device {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
+	impl core::DeviceTraitConst for Device {
+		#[inline] fn as_raw_Device(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Constant methods for [core::Image2D]
-	pub trait Image2DTraitConst {
-		fn as_raw_Image2D(&self) -> *const c_void;
-
-		#[inline]
-		fn ptr(&self) -> Result<*mut c_void> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_Image2D_ptr_const(self.as_raw_Image2D(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
+	impl core::DeviceTrait for Device {
+		#[inline] fn as_raw_mut_Device(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 
-	/// Mutable methods for [core::Image2D]
-	pub trait Image2DTrait: core::Image2DTraitConst {
-		fn as_raw_mut_Image2D(&mut self) -> *mut c_void;
-
-		#[inline]
-		fn set(&mut self, i: &impl core::Image2DTraitConst) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_Image2D_operatorST_const_Image2DR(self.as_raw_mut_Image2D(), i.as_raw_Image2D(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn set_1(&mut self, mut unnamed: core::Image2D) {
-			let ret = unsafe { sys::cv_ocl_Image2D_operatorST_Image2DRR(self.as_raw_mut_Image2D(), unnamed.as_raw_mut_Image2D()) };
-			ret
-		}
-
-	}
+	boxed_ref! { Device, core::DeviceTraitConst, as_raw_Device, core::DeviceTrait, as_raw_mut_Device }
 
 	pub struct Image2D {
 		ptr: *mut c_void,
@@ -36138,16 +36091,6 @@ pub mod core {
 	}
 
 	unsafe impl Send for Image2D {}
-
-	impl core::Image2DTraitConst for Image2D {
-		#[inline] fn as_raw_Image2D(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::Image2DTrait for Image2D {
-		#[inline] fn as_raw_mut_Image2D(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Image2D, core::Image2DTraitConst, as_raw_Image2D, core::Image2DTrait, as_raw_mut_Image2D }
 
 	impl Image2D {
 		#[inline]
@@ -36236,12 +36179,40 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for Image2D {
+	/// Constant methods for [core::Image2D]
+	pub trait Image2DTraitConst {
+		fn as_raw_Image2D(&self) -> *const c_void;
+
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Image2D")
-				.finish()
+		fn ptr(&self) -> Result<*mut c_void> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Image2D_ptr_const(self.as_raw_Image2D(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
 		}
+
+	}
+
+	/// Mutable methods for [core::Image2D]
+	pub trait Image2DTrait: core::Image2DTraitConst {
+		fn as_raw_mut_Image2D(&mut self) -> *mut c_void;
+
+		#[inline]
+		fn set(&mut self, i: &impl core::Image2DTraitConst) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Image2D_operatorST_const_Image2DR(self.as_raw_mut_Image2D(), i.as_raw_Image2D(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn set_1(&mut self, mut unnamed: core::Image2D) {
+			let ret = unsafe { sys::cv_ocl_Image2D_operatorST_Image2DRR(self.as_raw_mut_Image2D(), unnamed.as_raw_mut_Image2D()) };
+			ret
+		}
+
 	}
 
 	impl Default for Image2D {
@@ -36250,6 +36221,109 @@ pub mod core {
 		fn default() -> Self {
 			Self::default()
 		}
+	}
+
+	impl std::fmt::Debug for Image2D {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Image2D")
+				.finish()
+		}
+	}
+
+	impl core::Image2DTraitConst for Image2D {
+		#[inline] fn as_raw_Image2D(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::Image2DTrait for Image2D {
+		#[inline] fn as_raw_mut_Image2D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Image2D, core::Image2DTraitConst, as_raw_Image2D, core::Image2DTrait, as_raw_mut_Image2D }
+
+	pub struct Kernel {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Kernel }
+
+	impl Drop for Kernel {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_ocl_Kernel_delete(self.as_raw_mut_Kernel()) };
+		}
+	}
+
+	unsafe impl Send for Kernel {}
+
+	impl Kernel {
+		#[inline]
+		pub fn default() -> core::Kernel {
+			let ret = unsafe { sys::cv_ocl_Kernel_Kernel() };
+			let ret = unsafe { core::Kernel::opencv_from_extern(ret) };
+			ret
+		}
+
+		#[inline]
+		pub fn new(kname: &str, prog: &impl core::ProgramTraitConst) -> Result<core::Kernel> {
+			extern_container_arg!(kname);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Kernel_Kernel_const_charX_const_ProgramR(kname.opencv_as_extern(), prog.as_raw_Program(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Kernel::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## C++ default parameters
+		/// * buildopts: String()
+		/// * errmsg: 0
+		#[inline]
+		pub fn new_1(kname: &str, prog: &impl core::ProgramSourceTraitConst, buildopts: &str, errmsg: &mut String) -> Result<core::Kernel> {
+			extern_container_arg!(kname);
+			extern_container_arg!(buildopts);
+			string_arg_output_send!(via errmsg_via);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Kernel_Kernel_const_charX_const_ProgramSourceR_const_StringR_StringX(kname.opencv_as_extern(), prog.as_raw_ProgramSource(), buildopts.opencv_as_extern(), &mut errmsg_via, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Kernel::opencv_from_extern(ret) };
+			string_arg_output_receive!(errmsg_via => errmsg);
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * buildopts: String()
+		/// * errmsg: 0
+		#[inline]
+		pub fn new_def(kname: &str, prog: &impl core::ProgramSourceTraitConst) -> Result<core::Kernel> {
+			extern_container_arg!(kname);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Kernel_Kernel_const_charX_const_ProgramSourceR(kname.opencv_as_extern(), prog.as_raw_ProgramSource(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Kernel::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn copy(k: &impl core::KernelTraitConst) -> Result<core::Kernel> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Kernel_Kernel_const_KernelR(k.as_raw_Kernel(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Kernel::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn copy_mut(mut k: core::Kernel) -> core::Kernel {
+			let ret = unsafe { sys::cv_ocl_Kernel_Kernel_KernelRR(k.as_raw_mut_Kernel()) };
+			let ret = unsafe { core::Kernel::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [core::Kernel]
@@ -36560,99 +36634,12 @@ pub mod core {
 
 	}
 
-	pub struct Kernel {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Kernel }
-
-	impl Drop for Kernel {
+	impl Default for Kernel {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ocl_Kernel_delete(self.as_raw_mut_Kernel()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
-	}
-
-	unsafe impl Send for Kernel {}
-
-	impl core::KernelTraitConst for Kernel {
-		#[inline] fn as_raw_Kernel(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::KernelTrait for Kernel {
-		#[inline] fn as_raw_mut_Kernel(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Kernel, core::KernelTraitConst, as_raw_Kernel, core::KernelTrait, as_raw_mut_Kernel }
-
-	impl Kernel {
-		#[inline]
-		pub fn default() -> core::Kernel {
-			let ret = unsafe { sys::cv_ocl_Kernel_Kernel() };
-			let ret = unsafe { core::Kernel::opencv_from_extern(ret) };
-			ret
-		}
-
-		#[inline]
-		pub fn new(kname: &str, prog: &impl core::ProgramTraitConst) -> Result<core::Kernel> {
-			extern_container_arg!(kname);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_Kernel_Kernel_const_charX_const_ProgramR(kname.opencv_as_extern(), prog.as_raw_Program(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Kernel::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## C++ default parameters
-		/// * buildopts: String()
-		/// * errmsg: 0
-		#[inline]
-		pub fn new_1(kname: &str, prog: &impl core::ProgramSourceTraitConst, buildopts: &str, errmsg: &mut String) -> Result<core::Kernel> {
-			extern_container_arg!(kname);
-			extern_container_arg!(buildopts);
-			string_arg_output_send!(via errmsg_via);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_Kernel_Kernel_const_charX_const_ProgramSourceR_const_StringR_StringX(kname.opencv_as_extern(), prog.as_raw_ProgramSource(), buildopts.opencv_as_extern(), &mut errmsg_via, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Kernel::opencv_from_extern(ret) };
-			string_arg_output_receive!(errmsg_via => errmsg);
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * buildopts: String()
-		/// * errmsg: 0
-		#[inline]
-		pub fn new_def(kname: &str, prog: &impl core::ProgramSourceTraitConst) -> Result<core::Kernel> {
-			extern_container_arg!(kname);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_Kernel_Kernel_const_charX_const_ProgramSourceR(kname.opencv_as_extern(), prog.as_raw_ProgramSource(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Kernel::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn copy(k: &impl core::KernelTraitConst) -> Result<core::Kernel> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_Kernel_Kernel_const_KernelR(k.as_raw_Kernel(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Kernel::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn copy_mut(mut k: core::Kernel) -> core::Kernel {
-			let ret = unsafe { sys::cv_ocl_Kernel_Kernel_KernelRR(k.as_raw_mut_Kernel()) };
-			let ret = unsafe { core::Kernel::opencv_from_extern(ret) };
-			ret
-		}
-
 	}
 
 	impl std::fmt::Debug for Kernel {
@@ -36663,92 +36650,15 @@ pub mod core {
 		}
 	}
 
-	impl Default for Kernel {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
+	impl core::KernelTraitConst for Kernel {
+		#[inline] fn as_raw_Kernel(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Constant methods for [core::KernelArg]
-	pub trait KernelArgTraitConst {
-		fn as_raw_KernelArg(&self) -> *const c_void;
-
-		#[inline]
-		fn flags(&self) -> i32 {
-			let ret = unsafe { sys::cv_ocl_KernelArg_propFlags_const(self.as_raw_KernelArg()) };
-			ret
-		}
-
-		#[inline]
-		fn obj(&self) -> *const c_void {
-			let ret = unsafe { sys::cv_ocl_KernelArg_propObj_const(self.as_raw_KernelArg()) };
-			ret
-		}
-
-		#[inline]
-		fn sz(&self) -> size_t {
-			let ret = unsafe { sys::cv_ocl_KernelArg_propSz_const(self.as_raw_KernelArg()) };
-			ret
-		}
-
-		#[inline]
-		fn wscale(&self) -> i32 {
-			let ret = unsafe { sys::cv_ocl_KernelArg_propWscale_const(self.as_raw_KernelArg()) };
-			ret
-		}
-
-		#[inline]
-		fn iwscale(&self) -> i32 {
-			let ret = unsafe { sys::cv_ocl_KernelArg_propIwscale_const(self.as_raw_KernelArg()) };
-			ret
-		}
-
+	impl core::KernelTrait for Kernel {
+		#[inline] fn as_raw_mut_Kernel(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 
-	/// Mutable methods for [core::KernelArg]
-	pub trait KernelArgTrait: core::KernelArgTraitConst {
-		fn as_raw_mut_KernelArg(&mut self) -> *mut c_void;
-
-		#[inline]
-		fn set_flags(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ocl_KernelArg_propFlags_const_int(self.as_raw_mut_KernelArg(), val) };
-			ret
-		}
-
-		#[inline]
-		fn m(&mut self) -> core::UMat {
-			let ret = unsafe { sys::cv_ocl_KernelArg_propM(self.as_raw_mut_KernelArg()) };
-			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
-			ret
-		}
-
-		#[inline]
-		fn set_m(&mut self, val: &impl core::UMatTraitConst) {
-			let ret = unsafe { sys::cv_ocl_KernelArg_propM_UMatX(self.as_raw_mut_KernelArg(), val.as_raw_UMat()) };
-			ret
-		}
-
-		#[inline]
-		fn set_sz(&mut self, val: size_t) {
-			let ret = unsafe { sys::cv_ocl_KernelArg_propSz_const_size_t(self.as_raw_mut_KernelArg(), val) };
-			ret
-		}
-
-		#[inline]
-		fn set_wscale(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ocl_KernelArg_propWscale_const_int(self.as_raw_mut_KernelArg(), val) };
-			ret
-		}
-
-		#[inline]
-		fn set_iwscale(&mut self, val: i32) {
-			let ret = unsafe { sys::cv_ocl_KernelArg_propIwscale_const_int(self.as_raw_mut_KernelArg(), val) };
-			ret
-		}
-
-	}
+	boxed_ref! { Kernel, core::KernelTraitConst, as_raw_Kernel, core::KernelTrait, as_raw_mut_Kernel }
 
 	pub struct KernelArg {
 		ptr: *mut c_void,
@@ -36764,16 +36674,6 @@ pub mod core {
 	}
 
 	unsafe impl Send for KernelArg {}
-
-	impl core::KernelArgTraitConst for KernelArg {
-		#[inline] fn as_raw_KernelArg(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::KernelArgTrait for KernelArg {
-		#[inline] fn as_raw_mut_KernelArg(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { KernelArg, core::KernelArgTraitConst, as_raw_KernelArg, core::KernelArgTrait, as_raw_mut_KernelArg }
 
 	impl KernelArg {
 		/// ## C++ default parameters
@@ -37028,6 +36928,93 @@ pub mod core {
 
 	}
 
+	/// Constant methods for [core::KernelArg]
+	pub trait KernelArgTraitConst {
+		fn as_raw_KernelArg(&self) -> *const c_void;
+
+		#[inline]
+		fn flags(&self) -> i32 {
+			let ret = unsafe { sys::cv_ocl_KernelArg_propFlags_const(self.as_raw_KernelArg()) };
+			ret
+		}
+
+		#[inline]
+		fn obj(&self) -> *const c_void {
+			let ret = unsafe { sys::cv_ocl_KernelArg_propObj_const(self.as_raw_KernelArg()) };
+			ret
+		}
+
+		#[inline]
+		fn sz(&self) -> size_t {
+			let ret = unsafe { sys::cv_ocl_KernelArg_propSz_const(self.as_raw_KernelArg()) };
+			ret
+		}
+
+		#[inline]
+		fn wscale(&self) -> i32 {
+			let ret = unsafe { sys::cv_ocl_KernelArg_propWscale_const(self.as_raw_KernelArg()) };
+			ret
+		}
+
+		#[inline]
+		fn iwscale(&self) -> i32 {
+			let ret = unsafe { sys::cv_ocl_KernelArg_propIwscale_const(self.as_raw_KernelArg()) };
+			ret
+		}
+
+	}
+
+	/// Mutable methods for [core::KernelArg]
+	pub trait KernelArgTrait: core::KernelArgTraitConst {
+		fn as_raw_mut_KernelArg(&mut self) -> *mut c_void;
+
+		#[inline]
+		fn set_flags(&mut self, val: i32) {
+			let ret = unsafe { sys::cv_ocl_KernelArg_propFlags_const_int(self.as_raw_mut_KernelArg(), val) };
+			ret
+		}
+
+		#[inline]
+		fn m(&mut self) -> core::UMat {
+			let ret = unsafe { sys::cv_ocl_KernelArg_propM(self.as_raw_mut_KernelArg()) };
+			let ret = unsafe { core::UMat::opencv_from_extern(ret) };
+			ret
+		}
+
+		#[inline]
+		fn set_m(&mut self, val: &impl core::UMatTraitConst) {
+			let ret = unsafe { sys::cv_ocl_KernelArg_propM_UMatX(self.as_raw_mut_KernelArg(), val.as_raw_UMat()) };
+			ret
+		}
+
+		#[inline]
+		fn set_sz(&mut self, val: size_t) {
+			let ret = unsafe { sys::cv_ocl_KernelArg_propSz_const_size_t(self.as_raw_mut_KernelArg(), val) };
+			ret
+		}
+
+		#[inline]
+		fn set_wscale(&mut self, val: i32) {
+			let ret = unsafe { sys::cv_ocl_KernelArg_propWscale_const_int(self.as_raw_mut_KernelArg(), val) };
+			ret
+		}
+
+		#[inline]
+		fn set_iwscale(&mut self, val: i32) {
+			let ret = unsafe { sys::cv_ocl_KernelArg_propIwscale_const_int(self.as_raw_mut_KernelArg(), val) };
+			ret
+		}
+
+	}
+
+	impl Default for KernelArg {
+		#[inline]
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
+		}
+	}
+
 	impl std::fmt::Debug for KernelArg {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -37041,12 +37028,139 @@ pub mod core {
 		}
 	}
 
-	impl Default for KernelArg {
+	impl core::KernelArgTraitConst for KernelArg {
+		#[inline] fn as_raw_KernelArg(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::KernelArgTrait for KernelArg {
+		#[inline] fn as_raw_mut_KernelArg(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { KernelArg, core::KernelArgTraitConst, as_raw_KernelArg, core::KernelArgTrait, as_raw_mut_KernelArg }
+
+	pub struct OpenCLExecutionContext {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { OpenCLExecutionContext }
+
+	impl Drop for OpenCLExecutionContext {
 		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
+		fn drop(&mut self) {
+			unsafe { sys::cv_ocl_OpenCLExecutionContext_delete(self.as_raw_mut_OpenCLExecutionContext()) };
 		}
+	}
+
+	unsafe impl Send for OpenCLExecutionContext {}
+
+	impl OpenCLExecutionContext {
+		#[inline]
+		pub fn default() -> core::OpenCLExecutionContext {
+			let ret = unsafe { sys::cv_ocl_OpenCLExecutionContext_OpenCLExecutionContext() };
+			let ret = unsafe { core::OpenCLExecutionContext::opencv_from_extern(ret) };
+			ret
+		}
+
+		#[inline]
+		pub fn copy(unnamed: &impl core::OpenCLExecutionContextTraitConst) -> core::OpenCLExecutionContext {
+			let ret = unsafe { sys::cv_ocl_OpenCLExecutionContext_OpenCLExecutionContext_const_OpenCLExecutionContextR(unnamed.as_raw_OpenCLExecutionContext()) };
+			let ret = unsafe { core::OpenCLExecutionContext::opencv_from_extern(ret) };
+			ret
+		}
+
+		#[inline]
+		pub fn copy_mut(mut unnamed: core::OpenCLExecutionContext) -> core::OpenCLExecutionContext {
+			let ret = unsafe { sys::cv_ocl_OpenCLExecutionContext_OpenCLExecutionContext_OpenCLExecutionContextRR(unnamed.as_raw_mut_OpenCLExecutionContext()) };
+			let ret = unsafe { core::OpenCLExecutionContext::opencv_from_extern(ret) };
+			ret
+		}
+
+		/// Get OpenCL execution context of current thread.
+		///
+		/// Initialize OpenCL execution context if it is empty
+		/// - create new
+		/// - reuse context of the main thread (threadID = 0)
+		#[inline]
+		pub fn get_current() -> Result<core::OpenCLExecutionContext> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_OpenCLExecutionContext_getCurrent(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::OpenCLExecutionContext::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Get OpenCL execution context of current thread (can be empty)
+		#[inline]
+		pub fn get_current_ref() -> Result<core::OpenCLExecutionContext> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_OpenCLExecutionContext_getCurrentRef(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::OpenCLExecutionContext::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Creates OpenCL execution context
+		/// OpenCV will check if available OpenCL platform has platformName name,
+		/// then assign context to OpenCV.
+		/// The deviceID device will be used as target device and a new command queue will be created.
+		///
+		///
+		/// Note: On success, ownership of one reference of the context and device is taken.
+		/// The caller should additionally call `clRetainContext` and/or `clRetainDevice`
+		/// to increase the reference count if it wishes to continue using them.
+		///
+		/// ## Parameters
+		/// * platformName: name of OpenCL platform to attach, this string is used to check if platform is available to OpenCV at runtime
+		/// * platformID: ID of platform attached context was created for (cl_platform_id)
+		/// * context: OpenCL context to be attached to OpenCV (cl_context)
+		/// * deviceID: OpenCL device (cl_device_id)
+		#[inline]
+		pub unsafe fn create(platform_name: &str, platform_id: *mut c_void, context: *mut c_void, device_id: *mut c_void) -> Result<core::OpenCLExecutionContext> {
+			extern_container_arg!(platform_name);
+			return_send!(via ocvrs_return);
+			{ sys::cv_ocl_OpenCLExecutionContext_create_const_stringR_voidX_voidX_voidX(platform_name.opencv_as_extern(), platform_id, context, device_id, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = { core::OpenCLExecutionContext::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Creates OpenCL execution context
+		///
+		/// ## Parameters
+		/// * context: non-empty OpenCL context
+		/// * device: non-empty OpenCL device (must be a part of context)
+		/// * queue: non-empty OpenCL queue for provided context and device
+		#[inline]
+		pub fn create_1(context: &impl core::ContextTraitConst, device: &impl core::DeviceTraitConst, queue: &impl core::QueueTraitConst) -> Result<core::OpenCLExecutionContext> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_OpenCLExecutionContext_create_const_ContextR_const_DeviceR_const_QueueR(context.as_raw_Context(), device.as_raw_Device(), queue.as_raw_Queue(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::OpenCLExecutionContext::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Creates OpenCL execution context
+		///
+		/// ## Parameters
+		/// * context: non-empty OpenCL context
+		/// * device: non-empty OpenCL device (must be a part of context)
+		/// * queue: non-empty OpenCL queue for provided context and device
+		///
+		/// ## Overloaded parameters
+		#[inline]
+		pub fn create_2(context: &impl core::ContextTraitConst, device: &impl core::DeviceTraitConst) -> Result<core::OpenCLExecutionContext> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_OpenCLExecutionContext_create_const_ContextR_const_DeviceR(context.as_raw_Context(), device.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::OpenCLExecutionContext::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [core::OpenCLExecutionContext]
@@ -37188,20 +37302,21 @@ pub mod core {
 
 	}
 
-	pub struct OpenCLExecutionContext {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { OpenCLExecutionContext }
-
-	impl Drop for OpenCLExecutionContext {
+	impl Default for OpenCLExecutionContext {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ocl_OpenCLExecutionContext_delete(self.as_raw_mut_OpenCLExecutionContext()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for OpenCLExecutionContext {}
+	impl std::fmt::Debug for OpenCLExecutionContext {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("OpenCLExecutionContext")
+				.finish()
+		}
+	}
 
 	impl core::OpenCLExecutionContextTraitConst for OpenCLExecutionContext {
 		#[inline] fn as_raw_OpenCLExecutionContext(&self) -> *const c_void { self.as_raw() }
@@ -37213,130 +37328,58 @@ pub mod core {
 
 	boxed_ref! { OpenCLExecutionContext, core::OpenCLExecutionContextTraitConst, as_raw_OpenCLExecutionContext, core::OpenCLExecutionContextTrait, as_raw_mut_OpenCLExecutionContext }
 
-	impl OpenCLExecutionContext {
-		#[inline]
-		pub fn default() -> core::OpenCLExecutionContext {
-			let ret = unsafe { sys::cv_ocl_OpenCLExecutionContext_OpenCLExecutionContext() };
-			let ret = unsafe { core::OpenCLExecutionContext::opencv_from_extern(ret) };
-			ret
-		}
-
-		#[inline]
-		pub fn copy(unnamed: &impl core::OpenCLExecutionContextTraitConst) -> core::OpenCLExecutionContext {
-			let ret = unsafe { sys::cv_ocl_OpenCLExecutionContext_OpenCLExecutionContext_const_OpenCLExecutionContextR(unnamed.as_raw_OpenCLExecutionContext()) };
-			let ret = unsafe { core::OpenCLExecutionContext::opencv_from_extern(ret) };
-			ret
-		}
-
-		#[inline]
-		pub fn copy_mut(mut unnamed: core::OpenCLExecutionContext) -> core::OpenCLExecutionContext {
-			let ret = unsafe { sys::cv_ocl_OpenCLExecutionContext_OpenCLExecutionContext_OpenCLExecutionContextRR(unnamed.as_raw_mut_OpenCLExecutionContext()) };
-			let ret = unsafe { core::OpenCLExecutionContext::opencv_from_extern(ret) };
-			ret
-		}
-
-		/// Get OpenCL execution context of current thread.
-		///
-		/// Initialize OpenCL execution context if it is empty
-		/// - create new
-		/// - reuse context of the main thread (threadID = 0)
-		#[inline]
-		pub fn get_current() -> Result<core::OpenCLExecutionContext> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_OpenCLExecutionContext_getCurrent(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::OpenCLExecutionContext::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Get OpenCL execution context of current thread (can be empty)
-		#[inline]
-		pub fn get_current_ref() -> Result<core::OpenCLExecutionContext> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_OpenCLExecutionContext_getCurrentRef(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::OpenCLExecutionContext::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Creates OpenCL execution context
-		/// OpenCV will check if available OpenCL platform has platformName name,
-		/// then assign context to OpenCV.
-		/// The deviceID device will be used as target device and a new command queue will be created.
-		///
-		///
-		/// Note: On success, ownership of one reference of the context and device is taken.
-		/// The caller should additionally call `clRetainContext` and/or `clRetainDevice`
-		/// to increase the reference count if it wishes to continue using them.
-		///
-		/// ## Parameters
-		/// * platformName: name of OpenCL platform to attach, this string is used to check if platform is available to OpenCV at runtime
-		/// * platformID: ID of platform attached context was created for (cl_platform_id)
-		/// * context: OpenCL context to be attached to OpenCV (cl_context)
-		/// * deviceID: OpenCL device (cl_device_id)
-		#[inline]
-		pub unsafe fn create(platform_name: &str, platform_id: *mut c_void, context: *mut c_void, device_id: *mut c_void) -> Result<core::OpenCLExecutionContext> {
-			extern_container_arg!(platform_name);
-			return_send!(via ocvrs_return);
-			{ sys::cv_ocl_OpenCLExecutionContext_create_const_stringR_voidX_voidX_voidX(platform_name.opencv_as_extern(), platform_id, context, device_id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::OpenCLExecutionContext::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Creates OpenCL execution context
-		///
-		/// ## Parameters
-		/// * context: non-empty OpenCL context
-		/// * device: non-empty OpenCL device (must be a part of context)
-		/// * queue: non-empty OpenCL queue for provided context and device
-		#[inline]
-		pub fn create_1(context: &impl core::ContextTraitConst, device: &impl core::DeviceTraitConst, queue: &impl core::QueueTraitConst) -> Result<core::OpenCLExecutionContext> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_OpenCLExecutionContext_create_const_ContextR_const_DeviceR_const_QueueR(context.as_raw_Context(), device.as_raw_Device(), queue.as_raw_Queue(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::OpenCLExecutionContext::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Creates OpenCL execution context
-		///
-		/// ## Parameters
-		/// * context: non-empty OpenCL context
-		/// * device: non-empty OpenCL device (must be a part of context)
-		/// * queue: non-empty OpenCL queue for provided context and device
-		///
-		/// ## Overloaded parameters
-		#[inline]
-		pub fn create_2(context: &impl core::ContextTraitConst, device: &impl core::DeviceTraitConst) -> Result<core::OpenCLExecutionContext> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_OpenCLExecutionContext_create_const_ContextR_const_DeviceR(context.as_raw_Context(), device.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::OpenCLExecutionContext::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// @deprecated
+	pub struct Platform {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for OpenCLExecutionContext {
+	opencv_type_boxed! { Platform }
+
+	impl Drop for Platform {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("OpenCLExecutionContext")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_ocl_Platform_delete(self.as_raw_mut_Platform()) };
 		}
 	}
 
-	impl Default for OpenCLExecutionContext {
+	unsafe impl Send for Platform {}
+
+	impl Platform {
 		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
+		pub fn default() -> core::Platform {
+			let ret = unsafe { sys::cv_ocl_Platform_Platform() };
+			let ret = unsafe { core::Platform::opencv_from_extern(ret) };
+			ret
 		}
+
+		#[inline]
+		pub fn copy(p: &impl core::PlatformTraitConst) -> Result<core::Platform> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Platform_Platform_const_PlatformR(p.as_raw_Platform(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Platform::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn copy_mut(mut p: core::Platform) -> core::Platform {
+			let ret = unsafe { sys::cv_ocl_Platform_Platform_PlatformRR(p.as_raw_mut_Platform()) };
+			let ret = unsafe { core::Platform::opencv_from_extern(ret) };
+			ret
+		}
+
+		/// @deprecated
+		#[inline]
+		pub fn get_default() -> Result<core::Platform> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Platform_getDefault(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Platform::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [core::Platform]
@@ -37384,21 +37427,21 @@ pub mod core {
 
 	}
 
-	/// @deprecated
-	pub struct Platform {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Platform }
-
-	impl Drop for Platform {
+	impl Default for Platform {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ocl_Platform_delete(self.as_raw_mut_Platform()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for Platform {}
+	impl std::fmt::Debug for Platform {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Platform")
+				.finish()
+		}
+	}
 
 	impl core::PlatformTraitConst for Platform {
 		#[inline] fn as_raw_Platform(&self) -> *const c_void { self.as_raw() }
@@ -37410,58 +37453,58 @@ pub mod core {
 
 	boxed_ref! { Platform, core::PlatformTraitConst, as_raw_Platform, core::PlatformTrait, as_raw_mut_Platform }
 
-	impl Platform {
+	pub struct PlatformInfo {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { PlatformInfo }
+
+	impl Drop for PlatformInfo {
 		#[inline]
-		pub fn default() -> core::Platform {
-			let ret = unsafe { sys::cv_ocl_Platform_Platform() };
-			let ret = unsafe { core::Platform::opencv_from_extern(ret) };
+		fn drop(&mut self) {
+			unsafe { sys::cv_ocl_PlatformInfo_delete(self.as_raw_mut_PlatformInfo()) };
+		}
+	}
+
+	unsafe impl Send for PlatformInfo {}
+
+	impl PlatformInfo {
+		#[inline]
+		pub fn default() -> core::PlatformInfo {
+			let ret = unsafe { sys::cv_ocl_PlatformInfo_PlatformInfo() };
+			let ret = unsafe { core::PlatformInfo::opencv_from_extern(ret) };
 			ret
 		}
 
+		/// ## Parameters
+		/// * id: pointer cl_platform_id (cl_platform_id*)
 		#[inline]
-		pub fn copy(p: &impl core::PlatformTraitConst) -> Result<core::Platform> {
+		pub unsafe fn new(id: *mut c_void) -> Result<core::PlatformInfo> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_Platform_Platform_const_PlatformR(p.as_raw_Platform(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
+			{ sys::cv_ocl_PlatformInfo_PlatformInfo_voidX(id, ocvrs_return.as_mut_ptr()) };
+			return_receive!(ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Platform::opencv_from_extern(ret) };
+			let ret = { core::PlatformInfo::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
 		#[inline]
-		pub fn copy_mut(mut p: core::Platform) -> core::Platform {
-			let ret = unsafe { sys::cv_ocl_Platform_Platform_PlatformRR(p.as_raw_mut_Platform()) };
-			let ret = unsafe { core::Platform::opencv_from_extern(ret) };
-			ret
-		}
-
-		/// @deprecated
-		#[inline]
-		pub fn get_default() -> Result<core::Platform> {
+		pub fn copy(i: &impl core::PlatformInfoTraitConst) -> Result<core::PlatformInfo> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_Platform_getDefault(ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ocl_PlatformInfo_PlatformInfo_const_PlatformInfoR(i.as_raw_PlatformInfo(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Platform::opencv_from_extern(ret) };
+			let ret = unsafe { core::PlatformInfo::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	impl std::fmt::Debug for Platform {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Platform")
-				.finish()
+		pub fn copy_mut(mut i: core::PlatformInfo) -> core::PlatformInfo {
+			let ret = unsafe { sys::cv_ocl_PlatformInfo_PlatformInfo_PlatformInfoRR(i.as_raw_mut_PlatformInfo()) };
+			let ret = unsafe { core::PlatformInfo::opencv_from_extern(ret) };
+			ret
 		}
-	}
 
-	impl Default for Platform {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
 	}
 
 	/// Constant methods for [core::PlatformInfo]
@@ -37567,20 +37610,21 @@ pub mod core {
 
 	}
 
-	pub struct PlatformInfo {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { PlatformInfo }
-
-	impl Drop for PlatformInfo {
+	impl Default for PlatformInfo {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ocl_PlatformInfo_delete(self.as_raw_mut_PlatformInfo()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for PlatformInfo {}
+	impl std::fmt::Debug for PlatformInfo {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PlatformInfo")
+				.finish()
+		}
+	}
 
 	impl core::PlatformInfoTraitConst for PlatformInfo {
 		#[inline] fn as_raw_PlatformInfo(&self) -> *const c_void { self.as_raw() }
@@ -37592,59 +37636,70 @@ pub mod core {
 
 	boxed_ref! { PlatformInfo, core::PlatformInfoTraitConst, as_raw_PlatformInfo, core::PlatformInfoTrait, as_raw_mut_PlatformInfo }
 
-	impl PlatformInfo {
+	pub struct Program {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Program }
+
+	impl Drop for Program {
 		#[inline]
-		pub fn default() -> core::PlatformInfo {
-			let ret = unsafe { sys::cv_ocl_PlatformInfo_PlatformInfo() };
-			let ret = unsafe { core::PlatformInfo::opencv_from_extern(ret) };
+		fn drop(&mut self) {
+			unsafe { sys::cv_ocl_Program_delete(self.as_raw_mut_Program()) };
+		}
+	}
+
+	unsafe impl Send for Program {}
+
+	impl Program {
+		#[inline]
+		pub fn default() -> core::Program {
+			let ret = unsafe { sys::cv_ocl_Program_Program() };
+			let ret = unsafe { core::Program::opencv_from_extern(ret) };
 			ret
 		}
 
-		/// ## Parameters
-		/// * id: pointer cl_platform_id (cl_platform_id*)
 		#[inline]
-		pub unsafe fn new(id: *mut c_void) -> Result<core::PlatformInfo> {
+		pub fn new(src: &impl core::ProgramSourceTraitConst, buildflags: &str, errmsg: &mut String) -> Result<core::Program> {
+			extern_container_arg!(buildflags);
+			string_arg_output_send!(via errmsg_via);
 			return_send!(via ocvrs_return);
-			{ sys::cv_ocl_PlatformInfo_PlatformInfo_voidX(id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = { core::PlatformInfo::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn copy(i: &impl core::PlatformInfoTraitConst) -> Result<core::PlatformInfo> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_PlatformInfo_PlatformInfo_const_PlatformInfoR(i.as_raw_PlatformInfo(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ocl_Program_Program_const_ProgramSourceR_const_StringR_StringR(src.as_raw_ProgramSource(), buildflags.opencv_as_extern(), &mut errmsg_via, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::PlatformInfo::opencv_from_extern(ret) };
+			let ret = unsafe { core::Program::opencv_from_extern(ret) };
+			string_arg_output_receive!(errmsg_via => errmsg);
 			Ok(ret)
 		}
 
 		#[inline]
-		pub fn copy_mut(mut i: core::PlatformInfo) -> core::PlatformInfo {
-			let ret = unsafe { sys::cv_ocl_PlatformInfo_PlatformInfo_PlatformInfoRR(i.as_raw_mut_PlatformInfo()) };
-			let ret = unsafe { core::PlatformInfo::opencv_from_extern(ret) };
+		pub fn copy(prog: &impl core::ProgramTraitConst) -> Result<core::Program> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Program_Program_const_ProgramR(prog.as_raw_Program(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Program::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn copy_mut(mut prog: core::Program) -> core::Program {
+			let ret = unsafe { sys::cv_ocl_Program_Program_ProgramRR(prog.as_raw_mut_Program()) };
+			let ret = unsafe { core::Program::opencv_from_extern(ret) };
 			ret
 		}
 
-	}
-
-	impl std::fmt::Debug for PlatformInfo {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("PlatformInfo")
-				.finish()
+		pub fn get_prefix_build_flags(buildflags: &str) -> Result<String> {
+			extern_container_arg!(buildflags);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Program_getPrefix_const_StringR(buildflags.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { String::opencv_from_extern(ret) };
+			Ok(ret)
 		}
-	}
 
-	impl Default for PlatformInfo {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
 	}
 
 	/// Constant methods for [core::Program]
@@ -37763,80 +37818,12 @@ pub mod core {
 
 	}
 
-	pub struct Program {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Program }
-
-	impl Drop for Program {
+	impl Default for Program {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ocl_Program_delete(self.as_raw_mut_Program()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
-	}
-
-	unsafe impl Send for Program {}
-
-	impl core::ProgramTraitConst for Program {
-		#[inline] fn as_raw_Program(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::ProgramTrait for Program {
-		#[inline] fn as_raw_mut_Program(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Program, core::ProgramTraitConst, as_raw_Program, core::ProgramTrait, as_raw_mut_Program }
-
-	impl Program {
-		#[inline]
-		pub fn default() -> core::Program {
-			let ret = unsafe { sys::cv_ocl_Program_Program() };
-			let ret = unsafe { core::Program::opencv_from_extern(ret) };
-			ret
-		}
-
-		#[inline]
-		pub fn new(src: &impl core::ProgramSourceTraitConst, buildflags: &str, errmsg: &mut String) -> Result<core::Program> {
-			extern_container_arg!(buildflags);
-			string_arg_output_send!(via errmsg_via);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_Program_Program_const_ProgramSourceR_const_StringR_StringR(src.as_raw_ProgramSource(), buildflags.opencv_as_extern(), &mut errmsg_via, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Program::opencv_from_extern(ret) };
-			string_arg_output_receive!(errmsg_via => errmsg);
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn copy(prog: &impl core::ProgramTraitConst) -> Result<core::Program> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_Program_Program_const_ProgramR(prog.as_raw_Program(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Program::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn copy_mut(mut prog: core::Program) -> core::Program {
-			let ret = unsafe { sys::cv_ocl_Program_Program_ProgramRR(prog.as_raw_mut_Program()) };
-			let ret = unsafe { core::Program::opencv_from_extern(ret) };
-			ret
-		}
-
-		#[inline]
-		pub fn get_prefix_build_flags(buildflags: &str) -> Result<String> {
-			extern_container_arg!(buildflags);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_Program_getPrefix_const_StringR(buildflags.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { String::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
 	}
 
 	impl std::fmt::Debug for Program {
@@ -37847,68 +37834,15 @@ pub mod core {
 		}
 	}
 
-	impl Default for Program {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
+	impl core::ProgramTraitConst for Program {
+		#[inline] fn as_raw_Program(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Constant methods for [core::ProgramSource]
-	pub trait ProgramSourceTraitConst {
-		fn as_raw_ProgramSource(&self) -> *const c_void;
-
-		#[inline]
-		fn source(&self) -> Result<String> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_ProgramSource_source_const(self.as_raw_ProgramSource(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { String::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		fn hash(&self) -> Result<core::ProgramSource_hash_t> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_ProgramSource_hash_const(self.as_raw_ProgramSource(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn empty(&self) -> Result<bool> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_ProgramSource_empty_const(self.as_raw_ProgramSource(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
+	impl core::ProgramTrait for Program {
+		#[inline] fn as_raw_mut_Program(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
 
-	/// Mutable methods for [core::ProgramSource]
-	pub trait ProgramSourceTrait: core::ProgramSourceTraitConst {
-		fn as_raw_mut_ProgramSource(&mut self) -> *mut c_void;
-
-		#[inline]
-		fn set(&mut self, prog: &impl core::ProgramSourceTraitConst) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_ProgramSource_operatorST_const_ProgramSourceR(self.as_raw_mut_ProgramSource(), prog.as_raw_ProgramSource(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn set_1(&mut self, mut prog: core::ProgramSource) {
-			let ret = unsafe { sys::cv_ocl_ProgramSource_operatorST_ProgramSourceRR(self.as_raw_mut_ProgramSource(), prog.as_raw_mut_ProgramSource()) };
-			ret
-		}
-
-	}
+	boxed_ref! { Program, core::ProgramTraitConst, as_raw_Program, core::ProgramTrait, as_raw_mut_Program }
 
 	pub struct ProgramSource {
 		ptr: *mut c_void,
@@ -37924,16 +37858,6 @@ pub mod core {
 	}
 
 	unsafe impl Send for ProgramSource {}
-
-	impl core::ProgramSourceTraitConst for ProgramSource {
-		#[inline] fn as_raw_ProgramSource(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::ProgramSourceTrait for ProgramSource {
-		#[inline] fn as_raw_mut_ProgramSource(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { ProgramSource, core::ProgramSourceTraitConst, as_raw_ProgramSource, core::ProgramSourceTrait, as_raw_mut_ProgramSource }
 
 	impl ProgramSource {
 		#[inline]
@@ -38125,12 +38049,59 @@ pub mod core {
 
 	}
 
-	impl std::fmt::Debug for ProgramSource {
+	/// Constant methods for [core::ProgramSource]
+	pub trait ProgramSourceTraitConst {
+		fn as_raw_ProgramSource(&self) -> *const c_void;
+
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("ProgramSource")
-				.finish()
+		fn source(&self) -> Result<String> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_ProgramSource_source_const(self.as_raw_ProgramSource(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { String::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
+		#[inline]
+		fn hash(&self) -> Result<core::ProgramSource_hash_t> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_ProgramSource_hash_const(self.as_raw_ProgramSource(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn empty(&self) -> Result<bool> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_ProgramSource_empty_const(self.as_raw_ProgramSource(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [core::ProgramSource]
+	pub trait ProgramSourceTrait: core::ProgramSourceTraitConst {
+		fn as_raw_mut_ProgramSource(&mut self) -> *mut c_void;
+
+		#[inline]
+		fn set(&mut self, prog: &impl core::ProgramSourceTraitConst) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_ProgramSource_operatorST_const_ProgramSourceR(self.as_raw_mut_ProgramSource(), prog.as_raw_ProgramSource(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn set_1(&mut self, mut prog: core::ProgramSource) {
+			let ret = unsafe { sys::cv_ocl_ProgramSource_operatorST_ProgramSourceRR(self.as_raw_mut_ProgramSource(), prog.as_raw_mut_ProgramSource()) };
+			ret
+		}
+
 	}
 
 	impl Default for ProgramSource {
@@ -38139,6 +38110,101 @@ pub mod core {
 		fn default() -> Self {
 			Self::default()
 		}
+	}
+
+	impl std::fmt::Debug for ProgramSource {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ProgramSource")
+				.finish()
+		}
+	}
+
+	impl core::ProgramSourceTraitConst for ProgramSource {
+		#[inline] fn as_raw_ProgramSource(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::ProgramSourceTrait for ProgramSource {
+		#[inline] fn as_raw_mut_ProgramSource(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { ProgramSource, core::ProgramSourceTraitConst, as_raw_ProgramSource, core::ProgramSourceTrait, as_raw_mut_ProgramSource }
+
+	pub struct Queue {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Queue }
+
+	impl Drop for Queue {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_ocl_Queue_delete(self.as_raw_mut_Queue()) };
+		}
+	}
+
+	unsafe impl Send for Queue {}
+
+	impl Queue {
+		#[inline]
+		pub fn default() -> core::Queue {
+			let ret = unsafe { sys::cv_ocl_Queue_Queue() };
+			let ret = unsafe { core::Queue::opencv_from_extern(ret) };
+			ret
+		}
+
+		/// ## C++ default parameters
+		/// * d: Device()
+		#[inline]
+		pub fn new(c: &impl core::ContextTraitConst, d: &impl core::DeviceTraitConst) -> Result<core::Queue> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Queue_Queue_const_ContextR_const_DeviceR(c.as_raw_Context(), d.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Queue::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * d: Device()
+		#[inline]
+		pub fn new_def(c: &impl core::ContextTraitConst) -> Result<core::Queue> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Queue_Queue_const_ContextR(c.as_raw_Context(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Queue::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn copy(q: &impl core::QueueTraitConst) -> Result<core::Queue> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Queue_Queue_const_QueueR(q.as_raw_Queue(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Queue::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		#[inline]
+		pub fn copy_mut(mut q: core::Queue) -> core::Queue {
+			let ret = unsafe { sys::cv_ocl_Queue_Queue_QueueRR(q.as_raw_mut_Queue()) };
+			let ret = unsafe { core::Queue::opencv_from_extern(ret) };
+			ret
+		}
+
+		#[inline]
+		pub fn get_default() -> Result<core::Queue> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Queue_getDefault(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Queue::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [core::Queue]
@@ -38231,20 +38297,21 @@ pub mod core {
 
 	}
 
-	pub struct Queue {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Queue }
-
-	impl Drop for Queue {
+	impl Default for Queue {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ocl_Queue_delete(self.as_raw_mut_Queue()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for Queue {}
+	impl std::fmt::Debug for Queue {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Queue")
+				.finish()
+		}
+	}
 
 	impl core::QueueTraitConst for Queue {
 		#[inline] fn as_raw_Queue(&self) -> *const c_void { self.as_raw() }
@@ -38256,82 +38323,32 @@ pub mod core {
 
 	boxed_ref! { Queue, core::QueueTraitConst, as_raw_Queue, core::QueueTrait, as_raw_mut_Queue }
 
-	impl Queue {
-		#[inline]
-		pub fn default() -> core::Queue {
-			let ret = unsafe { sys::cv_ocl_Queue_Queue() };
-			let ret = unsafe { core::Queue::opencv_from_extern(ret) };
-			ret
-		}
-
-		/// ## C++ default parameters
-		/// * d: Device()
-		#[inline]
-		pub fn new(c: &impl core::ContextTraitConst, d: &impl core::DeviceTraitConst) -> Result<core::Queue> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_Queue_Queue_const_ContextR_const_DeviceR(c.as_raw_Context(), d.as_raw_Device(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Queue::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * d: Device()
-		#[inline]
-		pub fn new_def(c: &impl core::ContextTraitConst) -> Result<core::Queue> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_Queue_Queue_const_ContextR(c.as_raw_Context(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Queue::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn copy(q: &impl core::QueueTraitConst) -> Result<core::Queue> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_Queue_Queue_const_QueueR(q.as_raw_Queue(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Queue::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn copy_mut(mut q: core::Queue) -> core::Queue {
-			let ret = unsafe { sys::cv_ocl_Queue_Queue_QueueRR(q.as_raw_mut_Queue()) };
-			let ret = unsafe { core::Queue::opencv_from_extern(ret) };
-			ret
-		}
-
-		#[inline]
-		pub fn get_default() -> Result<core::Queue> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_Queue_getDefault(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Queue::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	pub struct Timer {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for Queue {
+	opencv_type_boxed! { Timer }
+
+	impl Drop for Timer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Queue")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_ocl_Timer_delete(self.as_raw_mut_Timer()) };
 		}
 	}
 
-	impl Default for Queue {
+	unsafe impl Send for Timer {}
+
+	impl Timer {
 		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
+		pub fn new(q: &impl core::QueueTraitConst) -> Result<core::Timer> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ocl_Timer_Timer_const_QueueR(q.as_raw_Queue(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Timer::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
 	}
 
 	/// Constant methods for [core::Timer]
@@ -38373,20 +38390,13 @@ pub mod core {
 
 	}
 
-	pub struct Timer {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Timer }
-
-	impl Drop for Timer {
+	impl std::fmt::Debug for Timer {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ocl_Timer_delete(self.as_raw_mut_Timer()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Timer")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for Timer {}
 
 	impl core::TimerTraitConst for Timer {
 		#[inline] fn as_raw_Timer(&self) -> *const c_void { self.as_raw() }
@@ -38398,25 +38408,36 @@ pub mod core {
 
 	boxed_ref! { Timer, core::TimerTraitConst, as_raw_Timer, core::TimerTrait, as_raw_mut_Timer }
 
-	impl Timer {
+	/// Wrapper for OpenGL Client-Side Vertex arrays.
+	///
+	/// ogl::Arrays stores vertex data in ogl::Buffer objects.
+	pub struct Arrays {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Arrays }
+
+	impl Drop for Arrays {
 		#[inline]
-		pub fn new(q: &impl core::QueueTraitConst) -> Result<core::Timer> {
+		fn drop(&mut self) {
+			unsafe { sys::cv_ogl_Arrays_delete(self.as_raw_mut_Arrays()) };
+		}
+	}
+
+	unsafe impl Send for Arrays {}
+
+	impl Arrays {
+		/// Default constructor
+		#[inline]
+		pub fn default() -> Result<core::Arrays> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ocl_Timer_Timer_const_QueueR(q.as_raw_Queue(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Arrays_Arrays(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Timer::opencv_from_extern(ret) };
+			let ret = unsafe { core::Arrays::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	impl std::fmt::Debug for Timer {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Timer")
-				.finish()
-		}
 	}
 
 	/// Constant methods for [core::Arrays]
@@ -38574,23 +38595,13 @@ pub mod core {
 
 	}
 
-	/// Wrapper for OpenGL Client-Side Vertex arrays.
-	///
-	/// ogl::Arrays stores vertex data in ogl::Buffer objects.
-	pub struct Arrays {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Arrays }
-
-	impl Drop for Arrays {
+	impl std::fmt::Debug for Arrays {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ogl_Arrays_delete(self.as_raw_mut_Arrays()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Arrays")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for Arrays {}
 
 	impl core::ArraysTraitConst for Arrays {
 		#[inline] fn as_raw_Arrays(&self) -> *const c_void { self.as_raw() }
@@ -38602,26 +38613,293 @@ pub mod core {
 
 	boxed_ref! { Arrays, core::ArraysTraitConst, as_raw_Arrays, core::ArraysTrait, as_raw_mut_Arrays }
 
-	impl Arrays {
-		/// Default constructor
+	/// Smart pointer for OpenGL buffer object with reference counting.
+	///
+	/// Buffer Objects are OpenGL objects that store an array of unformatted memory allocated by the OpenGL
+	/// context. These can be used to store vertex data, pixel data retrieved from images or the
+	/// framebuffer, and a variety of other things.
+	///
+	/// ogl::Buffer has interface similar with Mat interface and represents 2D array memory.
+	///
+	/// ogl::Buffer supports memory transfers between host and device and also can be mapped to CUDA memory.
+	pub struct Buffer {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Buffer }
+
+	impl Drop for Buffer {
 		#[inline]
-		pub fn default() -> Result<core::Arrays> {
+		fn drop(&mut self) {
+			unsafe { sys::cv_ogl_Buffer_delete(self.as_raw_mut_Buffer()) };
+		}
+	}
+
+	unsafe impl Send for Buffer {}
+
+	impl Buffer {
+		/// The constructors.
+		///
+		/// Creates empty ogl::Buffer object, creates ogl::Buffer object from existed buffer ( abufId
+		/// parameter), allocates memory for ogl::Buffer object or copies from host/device memory.
+		#[inline]
+		pub fn default() -> Result<core::Buffer> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Arrays_Arrays(ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_ogl_Buffer_Buffer(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Arrays::opencv_from_extern(ret) };
+			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	impl std::fmt::Debug for Arrays {
+		/// The constructors.
+		///
+		/// Creates empty ogl::Buffer object, creates ogl::Buffer object from existed buffer ( abufId
+		/// parameter), allocates memory for ogl::Buffer object or copies from host/device memory.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * arows: Number of rows in a 2D array.
+		/// * acols: Number of columns in a 2D array.
+		/// * atype: Array type ( CV_8UC1, ..., CV_64FC4 ). See Mat for details.
+		/// * abufId: Buffer object name.
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		///
+		/// ## C++ default parameters
+		/// * auto_release: false
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Arrays")
-				.finish()
+		pub fn new(arows: i32, acols: i32, atype: i32, abuf_id: u32, auto_release: bool) -> Result<core::Buffer> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Buffer_Buffer_int_int_int_unsigned_int_bool(arows, acols, atype, abuf_id, auto_release, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
+		/// @overload
+		/// ## Parameters
+		/// * arows: Number of rows in a 2D array.
+		/// * acols: Number of columns in a 2D array.
+		/// * atype: Array type ( CV_8UC1, ..., CV_64FC4 ). See Mat for details.
+		/// * abufId: Buffer object name.
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * auto_release: false
+		#[inline]
+		pub fn new_def(arows: i32, acols: i32, atype: i32, abuf_id: u32) -> Result<core::Buffer> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Buffer_Buffer_int_int_int_unsigned_int(arows, acols, atype, abuf_id, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// The constructors.
+		///
+		/// Creates empty ogl::Buffer object, creates ogl::Buffer object from existed buffer ( abufId
+		/// parameter), allocates memory for ogl::Buffer object or copies from host/device memory.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * asize: 2D array size.
+		/// * atype: Array type ( CV_8UC1, ..., CV_64FC4 ). See Mat for details.
+		/// * abufId: Buffer object name.
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		///
+		/// ## C++ default parameters
+		/// * auto_release: false
+		#[inline]
+		pub fn new_1(asize: core::Size, atype: i32, abuf_id: u32, auto_release: bool) -> Result<core::Buffer> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Buffer_Buffer_Size_int_unsigned_int_bool(&asize, atype, abuf_id, auto_release, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// @overload
+		/// ## Parameters
+		/// * asize: 2D array size.
+		/// * atype: Array type ( CV_8UC1, ..., CV_64FC4 ). See Mat for details.
+		/// * abufId: Buffer object name.
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * auto_release: false
+		#[inline]
+		pub fn new_def_1(asize: core::Size, atype: i32, abuf_id: u32) -> Result<core::Buffer> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Buffer_Buffer_Size_int_unsigned_int(&asize, atype, abuf_id, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// The constructors.
+		///
+		/// Creates empty ogl::Buffer object, creates ogl::Buffer object from existed buffer ( abufId
+		/// parameter), allocates memory for ogl::Buffer object or copies from host/device memory.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * arows: Number of rows in a 2D array.
+		/// * acols: Number of columns in a 2D array.
+		/// * atype: Array type ( CV_8UC1, ..., CV_64FC4 ). See Mat for details.
+		/// * target: Buffer usage. See cv::ogl::Buffer::Target .
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		///
+		/// ## C++ default parameters
+		/// * target: ARRAY_BUFFER
+		/// * auto_release: false
+		#[inline]
+		pub fn new_2(arows: i32, acols: i32, atype: i32, target: core::Buffer_Target, auto_release: bool) -> Result<core::Buffer> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Buffer_Buffer_int_int_int_Target_bool(arows, acols, atype, target, auto_release, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// @overload
+		/// ## Parameters
+		/// * arows: Number of rows in a 2D array.
+		/// * acols: Number of columns in a 2D array.
+		/// * atype: Array type ( CV_8UC1, ..., CV_64FC4 ). See Mat for details.
+		/// * target: Buffer usage. See cv::ogl::Buffer::Target .
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * target: ARRAY_BUFFER
+		/// * auto_release: false
+		#[inline]
+		pub fn new_def_2(arows: i32, acols: i32, atype: i32) -> Result<core::Buffer> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Buffer_Buffer_int_int_int(arows, acols, atype, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// The constructors.
+		///
+		/// Creates empty ogl::Buffer object, creates ogl::Buffer object from existed buffer ( abufId
+		/// parameter), allocates memory for ogl::Buffer object or copies from host/device memory.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * asize: 2D array size.
+		/// * atype: Array type ( CV_8UC1, ..., CV_64FC4 ). See Mat for details.
+		/// * target: Buffer usage. See cv::ogl::Buffer::Target .
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		///
+		/// ## C++ default parameters
+		/// * target: ARRAY_BUFFER
+		/// * auto_release: false
+		#[inline]
+		pub fn new_3(asize: core::Size, atype: i32, target: core::Buffer_Target, auto_release: bool) -> Result<core::Buffer> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Buffer_Buffer_Size_int_Target_bool(&asize, atype, target, auto_release, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// @overload
+		/// ## Parameters
+		/// * asize: 2D array size.
+		/// * atype: Array type ( CV_8UC1, ..., CV_64FC4 ). See Mat for details.
+		/// * target: Buffer usage. See cv::ogl::Buffer::Target .
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * target: ARRAY_BUFFER
+		/// * auto_release: false
+		#[inline]
+		pub fn new_def_3(asize: core::Size, atype: i32) -> Result<core::Buffer> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Buffer_Buffer_Size_int(&asize, atype, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// The constructors.
+		///
+		/// Creates empty ogl::Buffer object, creates ogl::Buffer object from existed buffer ( abufId
+		/// parameter), allocates memory for ogl::Buffer object or copies from host/device memory.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * arr: Input array (host or device memory, it can be Mat , cuda::GpuMat or std::vector ).
+		/// * target: Buffer usage. See cv::ogl::Buffer::Target .
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		///
+		/// ## C++ default parameters
+		/// * target: ARRAY_BUFFER
+		/// * auto_release: false
+		#[inline]
+		pub fn new_4(arr: &impl ToInputArray, target: core::Buffer_Target, auto_release: bool) -> Result<core::Buffer> {
+			input_array_arg!(arr);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Buffer_Buffer_const__InputArrayR_Target_bool(arr.as_raw__InputArray(), target, auto_release, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// @overload
+		/// ## Parameters
+		/// * arr: Input array (host or device memory, it can be Mat , cuda::GpuMat or std::vector ).
+		/// * target: Buffer usage. See cv::ogl::Buffer::Target .
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * target: ARRAY_BUFFER
+		/// * auto_release: false
+		#[inline]
+		pub fn new_def_4(arr: &impl ToInputArray) -> Result<core::Buffer> {
+			input_array_arg!(arr);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Buffer_Buffer_const__InputArrayR(arr.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Unbind any buffers from the specified binding point.
+		///
+		/// ## Parameters
+		/// * target: Binding point. See cv::ogl::Buffer::Target .
+		#[inline]
+		pub fn unbind(target: core::Buffer_Target) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Buffer_unbind_Target(target, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [core::Buffer]
@@ -39088,29 +39366,13 @@ pub mod core {
 
 	}
 
-	/// Smart pointer for OpenGL buffer object with reference counting.
-	///
-	/// Buffer Objects are OpenGL objects that store an array of unformatted memory allocated by the OpenGL
-	/// context. These can be used to store vertex data, pixel data retrieved from images or the
-	/// framebuffer, and a variety of other things.
-	///
-	/// ogl::Buffer has interface similar with Mat interface and represents 2D array memory.
-	///
-	/// ogl::Buffer supports memory transfers between host and device and also can be mapped to CUDA memory.
-	pub struct Buffer {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Buffer }
-
-	impl Drop for Buffer {
+	impl std::fmt::Debug for Buffer {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ogl_Buffer_delete(self.as_raw_mut_Buffer()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Buffer")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for Buffer {}
 
 	impl core::BufferTraitConst for Buffer {
 		#[inline] fn as_raw_Buffer(&self) -> *const c_void { self.as_raw() }
@@ -39122,277 +39384,236 @@ pub mod core {
 
 	boxed_ref! { Buffer, core::BufferTraitConst, as_raw_Buffer, core::BufferTrait, as_raw_mut_Buffer }
 
-	impl Buffer {
-		/// The constructors.
-		///
-		/// Creates empty ogl::Buffer object, creates ogl::Buffer object from existed buffer ( abufId
-		/// parameter), allocates memory for ogl::Buffer object or copies from host/device memory.
-		#[inline]
-		pub fn default() -> Result<core::Buffer> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_Buffer(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// The constructors.
-		///
-		/// Creates empty ogl::Buffer object, creates ogl::Buffer object from existed buffer ( abufId
-		/// parameter), allocates memory for ogl::Buffer object or copies from host/device memory.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * arows: Number of rows in a 2D array.
-		/// * acols: Number of columns in a 2D array.
-		/// * atype: Array type ( CV_8UC1, ..., CV_64FC4 ). See Mat for details.
-		/// * abufId: Buffer object name.
-		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
-		///
-		/// ## C++ default parameters
-		/// * auto_release: false
-		#[inline]
-		pub fn new(arows: i32, acols: i32, atype: i32, abuf_id: u32, auto_release: bool) -> Result<core::Buffer> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_Buffer_int_int_int_unsigned_int_bool(arows, acols, atype, abuf_id, auto_release, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// @overload
-		/// ## Parameters
-		/// * arows: Number of rows in a 2D array.
-		/// * acols: Number of columns in a 2D array.
-		/// * atype: Array type ( CV_8UC1, ..., CV_64FC4 ). See Mat for details.
-		/// * abufId: Buffer object name.
-		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
-		///
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * auto_release: false
-		#[inline]
-		pub fn new_def(arows: i32, acols: i32, atype: i32, abuf_id: u32) -> Result<core::Buffer> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_Buffer_int_int_int_unsigned_int(arows, acols, atype, abuf_id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// The constructors.
-		///
-		/// Creates empty ogl::Buffer object, creates ogl::Buffer object from existed buffer ( abufId
-		/// parameter), allocates memory for ogl::Buffer object or copies from host/device memory.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * asize: 2D array size.
-		/// * atype: Array type ( CV_8UC1, ..., CV_64FC4 ). See Mat for details.
-		/// * abufId: Buffer object name.
-		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
-		///
-		/// ## C++ default parameters
-		/// * auto_release: false
-		#[inline]
-		pub fn new_1(asize: core::Size, atype: i32, abuf_id: u32, auto_release: bool) -> Result<core::Buffer> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_Buffer_Size_int_unsigned_int_bool(&asize, atype, abuf_id, auto_release, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// @overload
-		/// ## Parameters
-		/// * asize: 2D array size.
-		/// * atype: Array type ( CV_8UC1, ..., CV_64FC4 ). See Mat for details.
-		/// * abufId: Buffer object name.
-		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
-		///
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * auto_release: false
-		#[inline]
-		pub fn new_def_1(asize: core::Size, atype: i32, abuf_id: u32) -> Result<core::Buffer> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_Buffer_Size_int_unsigned_int(&asize, atype, abuf_id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// The constructors.
-		///
-		/// Creates empty ogl::Buffer object, creates ogl::Buffer object from existed buffer ( abufId
-		/// parameter), allocates memory for ogl::Buffer object or copies from host/device memory.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * arows: Number of rows in a 2D array.
-		/// * acols: Number of columns in a 2D array.
-		/// * atype: Array type ( CV_8UC1, ..., CV_64FC4 ). See Mat for details.
-		/// * target: Buffer usage. See cv::ogl::Buffer::Target .
-		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
-		///
-		/// ## C++ default parameters
-		/// * target: ARRAY_BUFFER
-		/// * auto_release: false
-		#[inline]
-		pub fn new_2(arows: i32, acols: i32, atype: i32, target: core::Buffer_Target, auto_release: bool) -> Result<core::Buffer> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_Buffer_int_int_int_Target_bool(arows, acols, atype, target, auto_release, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// @overload
-		/// ## Parameters
-		/// * arows: Number of rows in a 2D array.
-		/// * acols: Number of columns in a 2D array.
-		/// * atype: Array type ( CV_8UC1, ..., CV_64FC4 ). See Mat for details.
-		/// * target: Buffer usage. See cv::ogl::Buffer::Target .
-		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
-		///
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * target: ARRAY_BUFFER
-		/// * auto_release: false
-		#[inline]
-		pub fn new_def_2(arows: i32, acols: i32, atype: i32) -> Result<core::Buffer> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_Buffer_int_int_int(arows, acols, atype, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// The constructors.
-		///
-		/// Creates empty ogl::Buffer object, creates ogl::Buffer object from existed buffer ( abufId
-		/// parameter), allocates memory for ogl::Buffer object or copies from host/device memory.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * asize: 2D array size.
-		/// * atype: Array type ( CV_8UC1, ..., CV_64FC4 ). See Mat for details.
-		/// * target: Buffer usage. See cv::ogl::Buffer::Target .
-		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
-		///
-		/// ## C++ default parameters
-		/// * target: ARRAY_BUFFER
-		/// * auto_release: false
-		#[inline]
-		pub fn new_3(asize: core::Size, atype: i32, target: core::Buffer_Target, auto_release: bool) -> Result<core::Buffer> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_Buffer_Size_int_Target_bool(&asize, atype, target, auto_release, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// @overload
-		/// ## Parameters
-		/// * asize: 2D array size.
-		/// * atype: Array type ( CV_8UC1, ..., CV_64FC4 ). See Mat for details.
-		/// * target: Buffer usage. See cv::ogl::Buffer::Target .
-		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
-		///
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * target: ARRAY_BUFFER
-		/// * auto_release: false
-		#[inline]
-		pub fn new_def_3(asize: core::Size, atype: i32) -> Result<core::Buffer> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_Buffer_Size_int(&asize, atype, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// The constructors.
-		///
-		/// Creates empty ogl::Buffer object, creates ogl::Buffer object from existed buffer ( abufId
-		/// parameter), allocates memory for ogl::Buffer object or copies from host/device memory.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * arr: Input array (host or device memory, it can be Mat , cuda::GpuMat or std::vector ).
-		/// * target: Buffer usage. See cv::ogl::Buffer::Target .
-		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
-		///
-		/// ## C++ default parameters
-		/// * target: ARRAY_BUFFER
-		/// * auto_release: false
-		#[inline]
-		pub fn new_4(arr: &impl ToInputArray, target: core::Buffer_Target, auto_release: bool) -> Result<core::Buffer> {
-			input_array_arg!(arr);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_Buffer_const__InputArrayR_Target_bool(arr.as_raw__InputArray(), target, auto_release, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// @overload
-		/// ## Parameters
-		/// * arr: Input array (host or device memory, it can be Mat , cuda::GpuMat or std::vector ).
-		/// * target: Buffer usage. See cv::ogl::Buffer::Target .
-		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
-		///
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * target: ARRAY_BUFFER
-		/// * auto_release: false
-		#[inline]
-		pub fn new_def_4(arr: &impl ToInputArray) -> Result<core::Buffer> {
-			input_array_arg!(arr);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_Buffer_const__InputArrayR(arr.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Buffer::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Unbind any buffers from the specified binding point.
-		///
-		/// ## Parameters
-		/// * target: Binding point. See cv::ogl::Buffer::Target .
-		#[inline]
-		pub fn unbind(target: core::Buffer_Target) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Buffer_unbind_Target(target, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
+	/// Smart pointer for OpenGL 2D texture memory with reference counting.
+	pub struct Texture2D {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for Buffer {
+	opencv_type_boxed! { Texture2D }
+
+	impl Drop for Texture2D {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Buffer")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_ogl_Texture2D_delete(self.as_raw_mut_Texture2D()) };
 		}
+	}
+
+	unsafe impl Send for Texture2D {}
+
+	impl Texture2D {
+		/// The constructors.
+		///
+		/// Creates empty ogl::Texture2D object, allocates memory for ogl::Texture2D object or copies from
+		/// host/device memory.
+		#[inline]
+		pub fn default() -> Result<core::Texture2D> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Texture2D_Texture2D(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// The constructors.
+		///
+		/// Creates empty ogl::Texture2D object, allocates memory for ogl::Texture2D object or copies from
+		/// host/device memory.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## C++ default parameters
+		/// * auto_release: false
+		#[inline]
+		pub fn new(arows: i32, acols: i32, aformat: core::Texture2D_Format, atex_id: u32, auto_release: bool) -> Result<core::Texture2D> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Texture2D_Texture2D_int_int_Format_unsigned_int_bool(arows, acols, aformat, atex_id, auto_release, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// @overload
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * auto_release: false
+		#[inline]
+		pub fn new_def(arows: i32, acols: i32, aformat: core::Texture2D_Format, atex_id: u32) -> Result<core::Texture2D> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Texture2D_Texture2D_int_int_Format_unsigned_int(arows, acols, aformat, atex_id, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// The constructors.
+		///
+		/// Creates empty ogl::Texture2D object, allocates memory for ogl::Texture2D object or copies from
+		/// host/device memory.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## C++ default parameters
+		/// * auto_release: false
+		#[inline]
+		pub fn new_1(asize: core::Size, aformat: core::Texture2D_Format, atex_id: u32, auto_release: bool) -> Result<core::Texture2D> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Texture2D_Texture2D_Size_Format_unsigned_int_bool(&asize, aformat, atex_id, auto_release, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// @overload
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * auto_release: false
+		#[inline]
+		pub fn new_def_1(asize: core::Size, aformat: core::Texture2D_Format, atex_id: u32) -> Result<core::Texture2D> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Texture2D_Texture2D_Size_Format_unsigned_int(&asize, aformat, atex_id, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// The constructors.
+		///
+		/// Creates empty ogl::Texture2D object, allocates memory for ogl::Texture2D object or copies from
+		/// host/device memory.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * arows: Number of rows.
+		/// * acols: Number of columns.
+		/// * aformat: Image format. See cv::ogl::Texture2D::Format .
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		///
+		/// ## C++ default parameters
+		/// * auto_release: false
+		#[inline]
+		pub fn new_2(arows: i32, acols: i32, aformat: core::Texture2D_Format, auto_release: bool) -> Result<core::Texture2D> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Texture2D_Texture2D_int_int_Format_bool(arows, acols, aformat, auto_release, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// @overload
+		/// ## Parameters
+		/// * arows: Number of rows.
+		/// * acols: Number of columns.
+		/// * aformat: Image format. See cv::ogl::Texture2D::Format .
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * auto_release: false
+		#[inline]
+		pub fn new_def_2(arows: i32, acols: i32, aformat: core::Texture2D_Format) -> Result<core::Texture2D> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Texture2D_Texture2D_int_int_Format(arows, acols, aformat, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// The constructors.
+		///
+		/// Creates empty ogl::Texture2D object, allocates memory for ogl::Texture2D object or copies from
+		/// host/device memory.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * asize: 2D array size.
+		/// * aformat: Image format. See cv::ogl::Texture2D::Format .
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		///
+		/// ## C++ default parameters
+		/// * auto_release: false
+		#[inline]
+		pub fn new_3(asize: core::Size, aformat: core::Texture2D_Format, auto_release: bool) -> Result<core::Texture2D> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Texture2D_Texture2D_Size_Format_bool(&asize, aformat, auto_release, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// @overload
+		/// ## Parameters
+		/// * asize: 2D array size.
+		/// * aformat: Image format. See cv::ogl::Texture2D::Format .
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * auto_release: false
+		#[inline]
+		pub fn new_def_3(asize: core::Size, aformat: core::Texture2D_Format) -> Result<core::Texture2D> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Texture2D_Texture2D_Size_Format(&asize, aformat, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// The constructors.
+		///
+		/// Creates empty ogl::Texture2D object, allocates memory for ogl::Texture2D object or copies from
+		/// host/device memory.
+		///
+		/// ## Overloaded parameters
+		///
+		/// ## Parameters
+		/// * arr: Input array (host or device memory, it can be Mat , cuda::GpuMat or ogl::Buffer ).
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		///
+		/// ## C++ default parameters
+		/// * auto_release: false
+		#[inline]
+		pub fn new_4(arr: &impl ToInputArray, auto_release: bool) -> Result<core::Texture2D> {
+			input_array_arg!(arr);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Texture2D_Texture2D_const__InputArrayR_bool(arr.as_raw__InputArray(), auto_release, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// @overload
+		/// ## Parameters
+		/// * arr: Input array (host or device memory, it can be Mat , cuda::GpuMat or ogl::Buffer ).
+		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * auto_release: false
+		#[inline]
+		pub fn new_def_4(arr: &impl ToInputArray) -> Result<core::Texture2D> {
+			input_array_arg!(arr);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_ogl_Texture2D_Texture2D_const__InputArrayR(arr.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [core::Texture2D]
@@ -39665,21 +39886,13 @@ pub mod core {
 
 	}
 
-	/// Smart pointer for OpenGL 2D texture memory with reference counting.
-	pub struct Texture2D {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Texture2D }
-
-	impl Drop for Texture2D {
+	impl std::fmt::Debug for Texture2D {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_ogl_Texture2D_delete(self.as_raw_mut_Texture2D()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Texture2D")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for Texture2D {}
 
 	impl core::Texture2DTraitConst for Texture2D {
 		#[inline] fn as_raw_Texture2D(&self) -> *const c_void { self.as_raw() }
@@ -39690,230 +39903,6 @@ pub mod core {
 	}
 
 	boxed_ref! { Texture2D, core::Texture2DTraitConst, as_raw_Texture2D, core::Texture2DTrait, as_raw_mut_Texture2D }
-
-	impl Texture2D {
-		/// The constructors.
-		///
-		/// Creates empty ogl::Texture2D object, allocates memory for ogl::Texture2D object or copies from
-		/// host/device memory.
-		#[inline]
-		pub fn default() -> Result<core::Texture2D> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Texture2D_Texture2D(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// The constructors.
-		///
-		/// Creates empty ogl::Texture2D object, allocates memory for ogl::Texture2D object or copies from
-		/// host/device memory.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## C++ default parameters
-		/// * auto_release: false
-		#[inline]
-		pub fn new(arows: i32, acols: i32, aformat: core::Texture2D_Format, atex_id: u32, auto_release: bool) -> Result<core::Texture2D> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Texture2D_Texture2D_int_int_Format_unsigned_int_bool(arows, acols, aformat, atex_id, auto_release, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// @overload
-		///
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * auto_release: false
-		#[inline]
-		pub fn new_def(arows: i32, acols: i32, aformat: core::Texture2D_Format, atex_id: u32) -> Result<core::Texture2D> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Texture2D_Texture2D_int_int_Format_unsigned_int(arows, acols, aformat, atex_id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// The constructors.
-		///
-		/// Creates empty ogl::Texture2D object, allocates memory for ogl::Texture2D object or copies from
-		/// host/device memory.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## C++ default parameters
-		/// * auto_release: false
-		#[inline]
-		pub fn new_1(asize: core::Size, aformat: core::Texture2D_Format, atex_id: u32, auto_release: bool) -> Result<core::Texture2D> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Texture2D_Texture2D_Size_Format_unsigned_int_bool(&asize, aformat, atex_id, auto_release, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// @overload
-		///
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * auto_release: false
-		#[inline]
-		pub fn new_def_1(asize: core::Size, aformat: core::Texture2D_Format, atex_id: u32) -> Result<core::Texture2D> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Texture2D_Texture2D_Size_Format_unsigned_int(&asize, aformat, atex_id, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// The constructors.
-		///
-		/// Creates empty ogl::Texture2D object, allocates memory for ogl::Texture2D object or copies from
-		/// host/device memory.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * arows: Number of rows.
-		/// * acols: Number of columns.
-		/// * aformat: Image format. See cv::ogl::Texture2D::Format .
-		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
-		///
-		/// ## C++ default parameters
-		/// * auto_release: false
-		#[inline]
-		pub fn new_2(arows: i32, acols: i32, aformat: core::Texture2D_Format, auto_release: bool) -> Result<core::Texture2D> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Texture2D_Texture2D_int_int_Format_bool(arows, acols, aformat, auto_release, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// @overload
-		/// ## Parameters
-		/// * arows: Number of rows.
-		/// * acols: Number of columns.
-		/// * aformat: Image format. See cv::ogl::Texture2D::Format .
-		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
-		///
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * auto_release: false
-		#[inline]
-		pub fn new_def_2(arows: i32, acols: i32, aformat: core::Texture2D_Format) -> Result<core::Texture2D> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Texture2D_Texture2D_int_int_Format(arows, acols, aformat, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// The constructors.
-		///
-		/// Creates empty ogl::Texture2D object, allocates memory for ogl::Texture2D object or copies from
-		/// host/device memory.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * asize: 2D array size.
-		/// * aformat: Image format. See cv::ogl::Texture2D::Format .
-		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
-		///
-		/// ## C++ default parameters
-		/// * auto_release: false
-		#[inline]
-		pub fn new_3(asize: core::Size, aformat: core::Texture2D_Format, auto_release: bool) -> Result<core::Texture2D> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Texture2D_Texture2D_Size_Format_bool(&asize, aformat, auto_release, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// @overload
-		/// ## Parameters
-		/// * asize: 2D array size.
-		/// * aformat: Image format. See cv::ogl::Texture2D::Format .
-		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
-		///
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * auto_release: false
-		#[inline]
-		pub fn new_def_3(asize: core::Size, aformat: core::Texture2D_Format) -> Result<core::Texture2D> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Texture2D_Texture2D_Size_Format(&asize, aformat, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// The constructors.
-		///
-		/// Creates empty ogl::Texture2D object, allocates memory for ogl::Texture2D object or copies from
-		/// host/device memory.
-		///
-		/// ## Overloaded parameters
-		///
-		/// ## Parameters
-		/// * arr: Input array (host or device memory, it can be Mat , cuda::GpuMat or ogl::Buffer ).
-		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
-		///
-		/// ## C++ default parameters
-		/// * auto_release: false
-		#[inline]
-		pub fn new_4(arr: &impl ToInputArray, auto_release: bool) -> Result<core::Texture2D> {
-			input_array_arg!(arr);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Texture2D_Texture2D_const__InputArrayR_bool(arr.as_raw__InputArray(), auto_release, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// @overload
-		/// ## Parameters
-		/// * arr: Input array (host or device memory, it can be Mat , cuda::GpuMat or ogl::Buffer ).
-		/// * autoRelease: Auto release mode (if true, release will be called in object's destructor).
-		///
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * auto_release: false
-		#[inline]
-		pub fn new_def_4(arr: &impl ToInputArray) -> Result<core::Texture2D> {
-			input_array_arg!(arr);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_ogl_Texture2D_Texture2D_const__InputArrayR(arr.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Texture2D::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	impl std::fmt::Debug for Texture2D {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Texture2D")
-				.finish()
-		}
-	}
 
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq)]
@@ -39980,6 +39969,35 @@ pub mod core {
 
 	}
 
+	pub struct LogTag {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { LogTag }
+
+	impl Drop for LogTag {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_utils_logging_LogTag_delete(self.as_raw_mut_LogTag()) };
+		}
+	}
+
+	unsafe impl Send for LogTag {}
+
+	impl LogTag {
+		#[inline]
+		pub fn new(_name: &str, _level: core::LogLevel) -> Result<core::LogTag> {
+			extern_container_arg!(_name);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_utils_logging_LogTag_LogTag_const_charX_LogLevel(_name.opencv_as_extern(), _level, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::LogTag::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
 	/// Constant methods for [core::LogTag]
 	pub trait LogTagTraitConst {
 		fn as_raw_LogTag(&self) -> *const c_void;
@@ -40013,45 +40031,6 @@ pub mod core {
 
 	}
 
-	pub struct LogTag {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { LogTag }
-
-	impl Drop for LogTag {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_utils_logging_LogTag_delete(self.as_raw_mut_LogTag()) };
-		}
-	}
-
-	unsafe impl Send for LogTag {}
-
-	impl core::LogTagTraitConst for LogTag {
-		#[inline] fn as_raw_LogTag(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::LogTagTrait for LogTag {
-		#[inline] fn as_raw_mut_LogTag(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { LogTag, core::LogTagTraitConst, as_raw_LogTag, core::LogTagTrait, as_raw_mut_LogTag }
-
-	impl LogTag {
-		#[inline]
-		pub fn new(_name: &str, _level: core::LogLevel) -> Result<core::LogTag> {
-			extern_container_arg!(_name);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_utils_logging_LogTag_LogTag_const_charX_LogLevel(_name.opencv_as_extern(), _level, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::LogTag::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
 	impl std::fmt::Debug for LogTag {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -40062,35 +40041,15 @@ pub mod core {
 		}
 	}
 
-	/// Constant methods for [core::OriginalClassName]
-	pub trait OriginalClassNameTraitConst {
-		fn as_raw_OriginalClassName(&self) -> *const c_void;
-
-		#[inline]
-		fn get_int_param(&self) -> Result<i32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_utils_nested_OriginalClassName_getIntParam_const(self.as_raw_OriginalClassName(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn get_float_param(&self) -> Result<f32> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_utils_nested_OriginalClassName_getFloatParam_const(self.as_raw_OriginalClassName(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
+	impl core::LogTagTraitConst for LogTag {
+		#[inline] fn as_raw_LogTag(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [core::OriginalClassName]
-	pub trait OriginalClassNameTrait: core::OriginalClassNameTraitConst {
-		fn as_raw_mut_OriginalClassName(&mut self) -> *mut c_void;
-
+	impl core::LogTagTrait for LogTag {
+		#[inline] fn as_raw_mut_LogTag(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { LogTag, core::LogTagTraitConst, as_raw_LogTag, core::LogTagTrait, as_raw_mut_LogTag }
 
 	pub struct OriginalClassName {
 		ptr: *mut c_void,
@@ -40106,16 +40065,6 @@ pub mod core {
 	}
 
 	unsafe impl Send for OriginalClassName {}
-
-	impl core::OriginalClassNameTraitConst for OriginalClassName {
-		#[inline] fn as_raw_OriginalClassName(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl core::OriginalClassNameTrait for OriginalClassName {
-		#[inline] fn as_raw_mut_OriginalClassName(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { OriginalClassName, core::OriginalClassNameTraitConst, as_raw_OriginalClassName, core::OriginalClassNameTrait, as_raw_mut_OriginalClassName }
 
 	impl OriginalClassName {
 		/// ## C++ default parameters
@@ -40180,6 +40129,36 @@ pub mod core {
 
 	}
 
+	/// Constant methods for [core::OriginalClassName]
+	pub trait OriginalClassNameTraitConst {
+		fn as_raw_OriginalClassName(&self) -> *const c_void;
+
+		#[inline]
+		fn get_int_param(&self) -> Result<i32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_utils_nested_OriginalClassName_getIntParam_const(self.as_raw_OriginalClassName(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_float_param(&self) -> Result<f32> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_utils_nested_OriginalClassName_getFloatParam_const(self.as_raw_OriginalClassName(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [core::OriginalClassName]
+	pub trait OriginalClassNameTrait: core::OriginalClassNameTraitConst {
+		fn as_raw_mut_OriginalClassName(&mut self) -> *mut c_void;
+
+	}
+
 	impl std::fmt::Debug for OriginalClassName {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -40187,6 +40166,16 @@ pub mod core {
 				.finish()
 		}
 	}
+
+	impl core::OriginalClassNameTraitConst for OriginalClassName {
+		#[inline] fn as_raw_OriginalClassName(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl core::OriginalClassNameTrait for OriginalClassName {
+		#[inline] fn as_raw_mut_OriginalClassName(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { OriginalClassName, core::OriginalClassNameTraitConst, as_raw_OriginalClassName, core::OriginalClassNameTrait, as_raw_mut_OriginalClassName }
 
 	#[repr(C)]
 	#[derive(Copy, Clone, Debug, PartialEq)]
@@ -40224,5 +40213,6 @@ pub mod core {
 		}
 
 	}
+
 pub use crate::manual::core::*;
 }

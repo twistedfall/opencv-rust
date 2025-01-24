@@ -1762,6 +1762,33 @@ pub mod highgui {
 		Ok(ret)
 	}
 
+	/// QtFont available only for Qt. See cv::fontQt
+	pub struct QtFont {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { QtFont }
+
+	impl Drop for QtFont {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_QtFont_delete(self.as_raw_mut_QtFont()) };
+		}
+	}
+
+	unsafe impl Send for QtFont {}
+
+	impl QtFont {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::highgui::QtFont {
+			let ret = unsafe { sys::cv_QtFont_defaultNew_const() };
+			let ret = unsafe { crate::highgui::QtFont::opencv_from_extern(ret) };
+			ret
+		}
+
+	}
+
 	/// Constant methods for [crate::highgui::QtFont]
 	pub trait QtFontTraitConst {
 		fn as_raw_QtFont(&self) -> *const c_void;
@@ -1911,39 +1938,12 @@ pub mod highgui {
 
 	}
 
-	/// QtFont available only for Qt. See cv::fontQt
-	pub struct QtFont {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { QtFont }
-
-	impl Drop for QtFont {
+	impl Default for QtFont {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_QtFont_delete(self.as_raw_mut_QtFont()) };
-		}
-	}
-
-	unsafe impl Send for QtFont {}
-
-	impl crate::highgui::QtFontTraitConst for QtFont {
-		#[inline] fn as_raw_QtFont(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::highgui::QtFontTrait for QtFont {
-		#[inline] fn as_raw_mut_QtFont(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { QtFont, crate::highgui::QtFontTraitConst, as_raw_QtFont, crate::highgui::QtFontTrait, as_raw_mut_QtFont }
-
-	impl QtFont {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
+		/// Forwards to infallible Self::default()
 		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_QtFont_defaultNew_const()) }
+			Self::default()
 		}
-
 	}
 
 	impl std::fmt::Debug for QtFont {
@@ -1966,11 +1966,14 @@ pub mod highgui {
 		}
 	}
 
-	impl Default for QtFont {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
+	impl crate::highgui::QtFontTraitConst for QtFont {
+		#[inline] fn as_raw_QtFont(&self) -> *const c_void { self.as_raw() }
 	}
+
+	impl crate::highgui::QtFontTrait for QtFont {
+		#[inline] fn as_raw_mut_QtFont(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { QtFont, crate::highgui::QtFontTraitConst, as_raw_QtFont, crate::highgui::QtFontTrait, as_raw_mut_QtFont }
+
 }

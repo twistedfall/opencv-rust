@@ -4310,6 +4310,22 @@ pub mod cudaarithm {
 		Ok(ret)
 	}
 
+	/// Base class for convolution (or cross-correlation) operator. :
+	pub struct Convolution {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Convolution }
+
+	impl Drop for Convolution {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_Convolution_delete(self.as_raw_mut_Convolution()) };
+		}
+	}
+
+	unsafe impl Send for Convolution {}
+
 	/// Constant methods for [crate::cudaarithm::Convolution]
 	pub trait ConvolutionTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_Convolution(&self) -> *const c_void;
@@ -4375,21 +4391,15 @@ pub mod cudaarithm {
 
 	}
 
-	/// Base class for convolution (or cross-correlation) operator. :
-	pub struct Convolution {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Convolution }
-
-	impl Drop for Convolution {
+	impl std::fmt::Debug for Convolution {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_Convolution_delete(self.as_raw_mut_Convolution()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Convolution")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for Convolution {}
+	boxed_cast_base! { Convolution, core::Algorithm, cv_cuda_Convolution_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for Convolution {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -4411,18 +4421,21 @@ pub mod cudaarithm {
 
 	boxed_ref! { Convolution, crate::cudaarithm::ConvolutionTraitConst, as_raw_Convolution, crate::cudaarithm::ConvolutionTrait, as_raw_mut_Convolution }
 
-	impl Convolution {
+	/// Base class for DFT operator as a cv::Algorithm. :
+	pub struct DFT {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { Convolution, core::Algorithm, cv_cuda_Convolution_to_Algorithm }
+	opencv_type_boxed! { DFT }
 
-	impl std::fmt::Debug for Convolution {
+	impl Drop for DFT {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Convolution")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_DFT_delete(self.as_raw_mut_DFT()) };
 		}
 	}
+
+	unsafe impl Send for DFT {}
 
 	/// Constant methods for [crate::cudaarithm::DFT]
 	pub trait DFTTraitConst: core::AlgorithmTraitConst {
@@ -4477,21 +4490,15 @@ pub mod cudaarithm {
 
 	}
 
-	/// Base class for DFT operator as a cv::Algorithm. :
-	pub struct DFT {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { DFT }
-
-	impl Drop for DFT {
+	impl std::fmt::Debug for DFT {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_DFT_delete(self.as_raw_mut_DFT()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DFT")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for DFT {}
+	boxed_cast_base! { DFT, core::Algorithm, cv_cuda_DFT_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for DFT {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -4513,18 +4520,21 @@ pub mod cudaarithm {
 
 	boxed_ref! { DFT, crate::cudaarithm::DFTTraitConst, as_raw_DFT, crate::cudaarithm::DFTTrait, as_raw_mut_DFT }
 
-	impl DFT {
+	/// Base class for transform using lookup table.
+	pub struct LookUpTable {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { DFT, core::Algorithm, cv_cuda_DFT_to_Algorithm }
+	opencv_type_boxed! { LookUpTable }
 
-	impl std::fmt::Debug for DFT {
+	impl Drop for LookUpTable {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("DFT")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_LookUpTable_delete(self.as_raw_mut_LookUpTable()) };
 		}
 	}
+
+	unsafe impl Send for LookUpTable {}
 
 	/// Constant methods for [crate::cudaarithm::LookUpTable]
 	pub trait LookUpTableTraitConst: core::AlgorithmTraitConst {
@@ -4581,21 +4591,15 @@ pub mod cudaarithm {
 
 	}
 
-	/// Base class for transform using lookup table.
-	pub struct LookUpTable {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { LookUpTable }
-
-	impl Drop for LookUpTable {
+	impl std::fmt::Debug for LookUpTable {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_LookUpTable_delete(self.as_raw_mut_LookUpTable()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("LookUpTable")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for LookUpTable {}
+	boxed_cast_base! { LookUpTable, core::Algorithm, cv_cuda_LookUpTable_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for LookUpTable {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -4617,16 +4621,4 @@ pub mod cudaarithm {
 
 	boxed_ref! { LookUpTable, crate::cudaarithm::LookUpTableTraitConst, as_raw_LookUpTable, crate::cudaarithm::LookUpTableTrait, as_raw_mut_LookUpTable }
 
-	impl LookUpTable {
-	}
-
-	boxed_cast_base! { LookUpTable, core::Algorithm, cv_cuda_LookUpTable_to_Algorithm }
-
-	impl std::fmt::Debug for LookUpTable {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("LookUpTable")
-				.finish()
-		}
-	}
 }

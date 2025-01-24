@@ -6,6 +6,67 @@ pub mod cudaobjdetect {
 		pub use super::{CUDA_CascadeClassifierTrait, CUDA_CascadeClassifierTraitConst, CUDA_HOGTrait, CUDA_HOGTraitConst};
 	}
 
+	/// Cascade classifier class used for object detection. Supports HAAR and LBP cascades. :
+	///
+	///
+	/// Note:
+	///    *   A cascade classifier example can be found at
+	///        opencv_source_code/samples/gpu/cascadeclassifier.cpp
+	///    *   A Nvidea API specific cascade classifier example can be found at
+	///        opencv_source_code/samples/gpu/cascadeclassifier_nvidia_api.cpp
+	pub struct CUDA_CascadeClassifier {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { CUDA_CascadeClassifier }
+
+	impl Drop for CUDA_CascadeClassifier {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_CascadeClassifier_delete(self.as_raw_mut_CUDA_CascadeClassifier()) };
+		}
+	}
+
+	unsafe impl Send for CUDA_CascadeClassifier {}
+
+	impl CUDA_CascadeClassifier {
+		/// Loads the classifier from a file. Cascade type is detected automatically by constructor parameter.
+		///
+		/// ## Parameters
+		/// * filename: Name of the file from which the classifier is loaded. Only the old haar classifier
+		/// (trained by the haar training application) and NVIDIA's nvbin are supported for HAAR and only new
+		/// type of OpenCV XML cascade supported for LBP. The working haar models can be found at opencv_folder/data/haarcascades_cuda/
+		#[inline]
+		pub fn create(filename: &str) -> Result<core::Ptr<crate::cudaobjdetect::CUDA_CascadeClassifier>> {
+			extern_container_arg!(filename);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_CascadeClassifier_create_const_StringR(filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::cudaobjdetect::CUDA_CascadeClassifier>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Loads the classifier from a file. Cascade type is detected automatically by constructor parameter.
+		///
+		/// ## Parameters
+		/// * filename: Name of the file from which the classifier is loaded. Only the old haar classifier
+		/// (trained by the haar training application) and NVIDIA's nvbin are supported for HAAR and only new
+		/// type of OpenCV XML cascade supported for LBP. The working haar models can be found at opencv_folder/data/haarcascades_cuda/
+		///
+		/// ## Overloaded parameters
+		#[inline]
+		pub fn create_1(file: &impl core::FileStorageTraitConst) -> Result<core::Ptr<crate::cudaobjdetect::CUDA_CascadeClassifier>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_CascadeClassifier_create_const_FileStorageR(file.as_raw_FileStorage(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::cudaobjdetect::CUDA_CascadeClassifier>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
 	/// Constant methods for [crate::cudaobjdetect::CUDA_CascadeClassifier]
 	pub trait CUDA_CascadeClassifierTraitConst: core::AlgorithmTraitConst {
 		fn as_raw_CUDA_CascadeClassifier(&self) -> *const c_void;
@@ -241,28 +302,15 @@ pub mod cudaobjdetect {
 
 	}
 
-	/// Cascade classifier class used for object detection. Supports HAAR and LBP cascades. :
-	///
-	///
-	/// Note:
-	///    *   A cascade classifier example can be found at
-	///        opencv_source_code/samples/gpu/cascadeclassifier.cpp
-	///    *   A Nvidea API specific cascade classifier example can be found at
-	///        opencv_source_code/samples/gpu/cascadeclassifier_nvidia_api.cpp
-	pub struct CUDA_CascadeClassifier {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CUDA_CascadeClassifier }
-
-	impl Drop for CUDA_CascadeClassifier {
+	impl std::fmt::Debug for CUDA_CascadeClassifier {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_CascadeClassifier_delete(self.as_raw_mut_CUDA_CascadeClassifier()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_CascadeClassifier")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for CUDA_CascadeClassifier {}
+	boxed_cast_base! { CUDA_CascadeClassifier, core::Algorithm, cv_cuda_CascadeClassifier_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for CUDA_CascadeClassifier {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -284,52 +332,83 @@ pub mod cudaobjdetect {
 
 	boxed_ref! { CUDA_CascadeClassifier, crate::cudaobjdetect::CUDA_CascadeClassifierTraitConst, as_raw_CUDA_CascadeClassifier, crate::cudaobjdetect::CUDA_CascadeClassifierTrait, as_raw_mut_CUDA_CascadeClassifier }
 
-	impl CUDA_CascadeClassifier {
-		/// Loads the classifier from a file. Cascade type is detected automatically by constructor parameter.
-		///
-		/// ## Parameters
-		/// * filename: Name of the file from which the classifier is loaded. Only the old haar classifier
-		/// (trained by the haar training application) and NVIDIA's nvbin are supported for HAAR and only new
-		/// type of OpenCV XML cascade supported for LBP. The working haar models can be found at opencv_folder/data/haarcascades_cuda/
-		#[inline]
-		pub fn create(filename: &str) -> Result<core::Ptr<crate::cudaobjdetect::CUDA_CascadeClassifier>> {
-			extern_container_arg!(filename);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_CascadeClassifier_create_const_StringR(filename.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::cudaobjdetect::CUDA_CascadeClassifier>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Loads the classifier from a file. Cascade type is detected automatically by constructor parameter.
-		///
-		/// ## Parameters
-		/// * filename: Name of the file from which the classifier is loaded. Only the old haar classifier
-		/// (trained by the haar training application) and NVIDIA's nvbin are supported for HAAR and only new
-		/// type of OpenCV XML cascade supported for LBP. The working haar models can be found at opencv_folder/data/haarcascades_cuda/
-		///
-		/// ## Overloaded parameters
-		#[inline]
-		pub fn create_1(file: &impl core::FileStorageTraitConst) -> Result<core::Ptr<crate::cudaobjdetect::CUDA_CascadeClassifier>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_CascadeClassifier_create_const_FileStorageR(file.as_raw_FileStorage(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::cudaobjdetect::CUDA_CascadeClassifier>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// The class implements Histogram of Oriented Gradients ([Dalal2005](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Dalal2005)) object detector.
+	///
+	///
+	/// Note:
+	///    *   An example applying the HOG descriptor for people detection can be found at
+	///        opencv_source_code/samples/cpp/peopledetect.cpp
+	///    *   A CUDA example applying the HOG descriptor for people detection can be found at
+	///        opencv_source_code/samples/gpu/hog.cpp
+	///    *   (Python) An example applying the HOG descriptor for people detection can be found at
+	///        opencv_source_code/samples/python/peopledetect.py
+	pub struct CUDA_HOG {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { CUDA_CascadeClassifier, core::Algorithm, cv_cuda_CascadeClassifier_to_Algorithm }
+	opencv_type_boxed! { CUDA_HOG }
 
-	impl std::fmt::Debug for CUDA_CascadeClassifier {
+	impl Drop for CUDA_HOG {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CUDA_CascadeClassifier")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_cuda_HOG_delete(self.as_raw_mut_CUDA_HOG()) };
 		}
+	}
+
+	unsafe impl Send for CUDA_HOG {}
+
+	impl CUDA_HOG {
+		/// Creates the HOG descriptor and detector.
+		///
+		/// ## Parameters
+		/// * win_size: Detection window size. Align to block size and block stride.
+		/// * block_size: Block size in pixels. Align to cell size. Only (16,16) is supported for now.
+		/// * block_stride: Block stride. It must be a multiple of cell size.
+		/// * cell_size: Cell size. Only (8, 8) is supported for now.
+		/// * nbins: Number of bins. Only 9 bins per cell are supported for now.
+		///
+		/// ## C++ default parameters
+		/// * win_size: Size(64,128)
+		/// * block_size: Size(16,16)
+		/// * block_stride: Size(8,8)
+		/// * cell_size: Size(8,8)
+		/// * nbins: 9
+		#[inline]
+		pub fn create(win_size: core::Size, block_size: core::Size, block_stride: core::Size, cell_size: core::Size, nbins: i32) -> Result<core::Ptr<crate::cudaobjdetect::CUDA_HOG>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_HOG_create_Size_Size_Size_Size_int(&win_size, &block_size, &block_stride, &cell_size, nbins, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::cudaobjdetect::CUDA_HOG>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Creates the HOG descriptor and detector.
+		///
+		/// ## Parameters
+		/// * win_size: Detection window size. Align to block size and block stride.
+		/// * block_size: Block size in pixels. Align to cell size. Only (16,16) is supported for now.
+		/// * block_stride: Block stride. It must be a multiple of cell size.
+		/// * cell_size: Cell size. Only (8, 8) is supported for now.
+		/// * nbins: Number of bins. Only 9 bins per cell are supported for now.
+		///
+		/// ## Note
+		/// This alternative version of [CUDA_HOG::create] function uses the following default values for its arguments:
+		/// * win_size: Size(64,128)
+		/// * block_size: Size(16,16)
+		/// * block_stride: Size(8,8)
+		/// * cell_size: Size(8,8)
+		/// * nbins: 9
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::cudaobjdetect::CUDA_HOG>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_cuda_HOG_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::cudaobjdetect::CUDA_HOG>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::cudaobjdetect::CUDA_HOG]
@@ -733,30 +812,15 @@ pub mod cudaobjdetect {
 
 	}
 
-	/// The class implements Histogram of Oriented Gradients ([Dalal2005](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Dalal2005)) object detector.
-	///
-	///
-	/// Note:
-	///    *   An example applying the HOG descriptor for people detection can be found at
-	///        opencv_source_code/samples/cpp/peopledetect.cpp
-	///    *   A CUDA example applying the HOG descriptor for people detection can be found at
-	///        opencv_source_code/samples/gpu/hog.cpp
-	///    *   (Python) An example applying the HOG descriptor for people detection can be found at
-	///        opencv_source_code/samples/python/peopledetect.py
-	pub struct CUDA_HOG {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { CUDA_HOG }
-
-	impl Drop for CUDA_HOG {
+	impl std::fmt::Debug for CUDA_HOG {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_cuda_HOG_delete(self.as_raw_mut_CUDA_HOG()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("CUDA_HOG")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for CUDA_HOG {}
+	boxed_cast_base! { CUDA_HOG, core::Algorithm, cv_cuda_HOG_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for CUDA_HOG {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -778,67 +842,4 @@ pub mod cudaobjdetect {
 
 	boxed_ref! { CUDA_HOG, crate::cudaobjdetect::CUDA_HOGTraitConst, as_raw_CUDA_HOG, crate::cudaobjdetect::CUDA_HOGTrait, as_raw_mut_CUDA_HOG }
 
-	impl CUDA_HOG {
-		/// Creates the HOG descriptor and detector.
-		///
-		/// ## Parameters
-		/// * win_size: Detection window size. Align to block size and block stride.
-		/// * block_size: Block size in pixels. Align to cell size. Only (16,16) is supported for now.
-		/// * block_stride: Block stride. It must be a multiple of cell size.
-		/// * cell_size: Cell size. Only (8, 8) is supported for now.
-		/// * nbins: Number of bins. Only 9 bins per cell are supported for now.
-		///
-		/// ## C++ default parameters
-		/// * win_size: Size(64,128)
-		/// * block_size: Size(16,16)
-		/// * block_stride: Size(8,8)
-		/// * cell_size: Size(8,8)
-		/// * nbins: 9
-		#[inline]
-		pub fn create(win_size: core::Size, block_size: core::Size, block_stride: core::Size, cell_size: core::Size, nbins: i32) -> Result<core::Ptr<crate::cudaobjdetect::CUDA_HOG>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HOG_create_Size_Size_Size_Size_int(&win_size, &block_size, &block_stride, &cell_size, nbins, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::cudaobjdetect::CUDA_HOG>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Creates the HOG descriptor and detector.
-		///
-		/// ## Parameters
-		/// * win_size: Detection window size. Align to block size and block stride.
-		/// * block_size: Block size in pixels. Align to cell size. Only (16,16) is supported for now.
-		/// * block_stride: Block stride. It must be a multiple of cell size.
-		/// * cell_size: Cell size. Only (8, 8) is supported for now.
-		/// * nbins: Number of bins. Only 9 bins per cell are supported for now.
-		///
-		/// ## Note
-		/// This alternative version of [CUDA_HOG::create] function uses the following default values for its arguments:
-		/// * win_size: Size(64,128)
-		/// * block_size: Size(16,16)
-		/// * block_stride: Size(8,8)
-		/// * cell_size: Size(8,8)
-		/// * nbins: 9
-		#[inline]
-		pub fn create_def() -> Result<core::Ptr<crate::cudaobjdetect::CUDA_HOG>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_cuda_HOG_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::cudaobjdetect::CUDA_HOG>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_base! { CUDA_HOG, core::Algorithm, cv_cuda_HOG_to_Algorithm }
-
-	impl std::fmt::Debug for CUDA_HOG {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("CUDA_HOG")
-				.finish()
-		}
-	}
 }

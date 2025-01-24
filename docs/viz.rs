@@ -669,105 +669,6 @@ pub mod viz {
 		Ok(ret)
 	}
 
-	/// Constant methods for [crate::viz::Camera]
-	pub trait CameraTraitConst {
-		fn as_raw_Camera(&self) -> *const c_void;
-
-		#[inline]
-		fn get_clip(&self) -> Result<core::Vec2d> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_Camera_getClip_const(self.as_raw_Camera(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn get_window_size(&self) -> Result<core::Size> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_Camera_getWindowSize_const(self.as_raw_Camera(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn get_fov(&self) -> Result<core::Vec2d> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_Camera_getFov_const(self.as_raw_Camera(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn get_principal_point(&self) -> Result<core::Vec2d> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_Camera_getPrincipalPoint_const(self.as_raw_Camera(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn get_focal_length(&self) -> Result<core::Vec2d> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_Camera_getFocalLength_const(self.as_raw_Camera(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		/// Computes projection matrix using intrinsic parameters of the camera.
-		///
-		///
-		/// ## Parameters
-		/// * proj: Output projection matrix with the following form
-		/// ![block formula](https://latex.codecogs.com/png.latex?%0A%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20%5Cfrac%7B2n%7D%7Br%2Dl%7D%20%26%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%26%20%5Cfrac%7Br%2Bl%7D%7Br%2Dl%7D%20%20%26%200%5C%5C%0A%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%20%26%20%5Cfrac%7B2n%7D%7Bt%2Db%7D%20%26%20%5Cfrac%7Bt%2Bb%7D%7Bt%2Db%7D%20%20%26%200%5C%5C%0A%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%20%26%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%26%20%2D%5Cfrac%7Bf%2Bn%7D%7Bf%2Dn%7D%20%26%20%2D%5Cfrac%7B2fn%7D%7Bf%2Dn%7D%5C%5C%0A%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%20%26%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%26%20%2D1%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%26%200%5C%5C%0A%20%20%5Cend%7Bbmatrix%7D%0A)
-		#[inline]
-		fn compute_projection_matrix(&self, proj: &mut core::Matx44d) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_Camera_computeProjectionMatrix_const_Matx44dR(self.as_raw_Camera(), proj, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
-
-	/// Mutable methods for [crate::viz::Camera]
-	pub trait CameraTrait: crate::viz::CameraTraitConst {
-		fn as_raw_mut_Camera(&mut self) -> *mut c_void;
-
-		#[inline]
-		fn set_clip(&mut self, clip: core::Vec2d) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_Camera_setClip_const_Vec2dR(self.as_raw_mut_Camera(), &clip, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn set_window_size(&mut self, window_size: core::Size) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_Camera_setWindowSize_const_SizeR(self.as_raw_mut_Camera(), &window_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-		#[inline]
-		fn set_fov(&mut self, fov: core::Vec2d) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_Camera_setFov_const_Vec2dR(self.as_raw_mut_Camera(), &fov, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
-
 	/// This class wraps intrinsic parameters of a camera.
 	///
 	/// It provides several constructors that can extract the intrinsic parameters from field of
@@ -786,16 +687,6 @@ pub mod viz {
 	}
 
 	unsafe impl Send for Camera {}
-
-	impl crate::viz::CameraTraitConst for Camera {
-		#[inline] fn as_raw_Camera(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::CameraTrait for Camera {
-		#[inline] fn as_raw_mut_Camera(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Camera, crate::viz::CameraTraitConst, as_raw_Camera, crate::viz::CameraTrait, as_raw_mut_Camera }
 
 	impl Camera {
 		/// Constructs a Camera.
@@ -915,6 +806,105 @@ pub mod viz {
 
 	}
 
+	/// Constant methods for [crate::viz::Camera]
+	pub trait CameraTraitConst {
+		fn as_raw_Camera(&self) -> *const c_void;
+
+		#[inline]
+		fn get_clip(&self) -> Result<core::Vec2d> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_Camera_getClip_const(self.as_raw_Camera(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_window_size(&self) -> Result<core::Size> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_Camera_getWindowSize_const(self.as_raw_Camera(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_fov(&self) -> Result<core::Vec2d> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_Camera_getFov_const(self.as_raw_Camera(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_principal_point(&self) -> Result<core::Vec2d> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_Camera_getPrincipalPoint_const(self.as_raw_Camera(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn get_focal_length(&self) -> Result<core::Vec2d> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_Camera_getFocalLength_const(self.as_raw_Camera(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		/// Computes projection matrix using intrinsic parameters of the camera.
+		///
+		///
+		/// ## Parameters
+		/// * proj: Output projection matrix with the following form
+		/// ![block formula](https://latex.codecogs.com/png.latex?%0A%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20%5Cfrac%7B2n%7D%7Br%2Dl%7D%20%26%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%26%20%5Cfrac%7Br%2Bl%7D%7Br%2Dl%7D%20%20%26%200%5C%5C%0A%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%20%26%20%5Cfrac%7B2n%7D%7Bt%2Db%7D%20%26%20%5Cfrac%7Bt%2Bb%7D%7Bt%2Db%7D%20%20%26%200%5C%5C%0A%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%20%26%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%26%20%2D%5Cfrac%7Bf%2Bn%7D%7Bf%2Dn%7D%20%26%20%2D%5Cfrac%7B2fn%7D%7Bf%2Dn%7D%5C%5C%0A%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%20%26%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%26%20%2D1%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%26%200%5C%5C%0A%20%20%5Cend%7Bbmatrix%7D%0A)
+		#[inline]
+		fn compute_projection_matrix(&self, proj: &mut core::Matx44d) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_Camera_computeProjectionMatrix_const_Matx44dR(self.as_raw_Camera(), proj, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [crate::viz::Camera]
+	pub trait CameraTrait: crate::viz::CameraTraitConst {
+		fn as_raw_mut_Camera(&mut self) -> *mut c_void;
+
+		#[inline]
+		fn set_clip(&mut self, clip: core::Vec2d) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_Camera_setClip_const_Vec2dR(self.as_raw_mut_Camera(), &clip, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn set_window_size(&mut self, window_size: core::Size) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_Camera_setWindowSize_const_SizeR(self.as_raw_mut_Camera(), &window_size, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+		#[inline]
+		fn set_fov(&mut self, fov: core::Vec2d) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_Camera_setFov_const_Vec2dR(self.as_raw_mut_Camera(), &fov, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
 	impl std::fmt::Debug for Camera {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
@@ -923,26 +913,15 @@ pub mod viz {
 		}
 	}
 
-	/// Constant methods for [crate::viz::Color]
-	pub trait ColorTraitConst {
-		fn as_raw_Color(&self) -> *const c_void;
-
-		#[inline]
-		fn to_vec3b(&self) -> Result<core::Vec3b> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_Color_operator_cv_Vec3b_const(self.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
+	impl crate::viz::CameraTraitConst for Camera {
+		#[inline] fn as_raw_Camera(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [crate::viz::Color]
-	pub trait ColorTrait: crate::viz::ColorTraitConst {
-		fn as_raw_mut_Color(&mut self) -> *mut c_void;
-
+	impl crate::viz::CameraTrait for Camera {
+		#[inline] fn as_raw_mut_Camera(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { Camera, crate::viz::CameraTraitConst, as_raw_Camera, crate::viz::CameraTrait, as_raw_mut_Camera }
 
 	/// This class represents color in BGR order.
 	pub struct Color {
@@ -959,16 +938,6 @@ pub mod viz {
 	}
 
 	unsafe impl Send for Color {}
-
-	impl crate::viz::ColorTraitConst for Color {
-		#[inline] fn as_raw_Color(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::ColorTrait for Color {
-		#[inline] fn as_raw_mut_Color(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Color, crate::viz::ColorTraitConst, as_raw_Color, crate::viz::ColorTrait, as_raw_mut_Color }
 
 	impl Color {
 		/// ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1366,12 +1335,80 @@ pub mod viz {
 
 	}
 
+	/// Constant methods for [crate::viz::Color]
+	pub trait ColorTraitConst {
+		fn as_raw_Color(&self) -> *const c_void;
+
+		#[inline]
+		fn to_vec3b(&self) -> Result<core::Vec3b> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_Color_operator_cv_Vec3b_const(self.as_raw_Color(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [crate::viz::Color]
+	pub trait ColorTrait: crate::viz::ColorTraitConst {
+		fn as_raw_mut_Color(&mut self) -> *mut c_void;
+
+	}
+
 	impl std::fmt::Debug for Color {
 		#[inline]
 		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
 			f.debug_struct("Color")
 				.finish()
 		}
+	}
+
+	impl crate::viz::ColorTraitConst for Color {
+		#[inline] fn as_raw_Color(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::ColorTrait for Color {
+		#[inline] fn as_raw_mut_Color(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Color, crate::viz::ColorTraitConst, as_raw_Color, crate::viz::ColorTrait, as_raw_mut_Color }
+
+	/// This class represents a keyboard event.
+	pub struct KeyboardEvent {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { KeyboardEvent }
+
+	impl Drop for KeyboardEvent {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_viz_KeyboardEvent_delete(self.as_raw_mut_KeyboardEvent()) };
+		}
+	}
+
+	unsafe impl Send for KeyboardEvent {}
+
+	impl KeyboardEvent {
+		/// Constructs a KeyboardEvent.
+		///
+		/// ## Parameters
+		/// * action: Signals if key is pressed or released.
+		/// * symbol: Name of the key.
+		/// * code: Code of the key.
+		/// * modifiers: Signals if alt, ctrl or shift are pressed or their combination.
+		#[inline]
+		pub fn new(action: crate::viz::KeyboardEvent_Action, symbol: &str, code: u8, modifiers: i32) -> Result<crate::viz::KeyboardEvent> {
+			extern_container_arg!(symbol);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_KeyboardEvent_KeyboardEvent_Action_const_StringR_unsigned_char_int(action, symbol.opencv_as_extern(), code, modifiers, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::KeyboardEvent::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::viz::KeyboardEvent]
@@ -1438,21 +1475,17 @@ pub mod viz {
 
 	}
 
-	/// This class represents a keyboard event.
-	pub struct KeyboardEvent {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { KeyboardEvent }
-
-	impl Drop for KeyboardEvent {
+	impl std::fmt::Debug for KeyboardEvent {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_viz_KeyboardEvent_delete(self.as_raw_mut_KeyboardEvent()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("KeyboardEvent")
+				.field("action", &crate::viz::KeyboardEventTraitConst::action(self))
+				.field("symbol", &crate::viz::KeyboardEventTraitConst::symbol(self))
+				.field("code", &crate::viz::KeyboardEventTraitConst::code(self))
+				.field("modifiers", &crate::viz::KeyboardEventTraitConst::modifiers(self))
+				.finish()
 		}
 	}
-
-	unsafe impl Send for KeyboardEvent {}
 
 	impl crate::viz::KeyboardEventTraitConst for KeyboardEvent {
 		#[inline] fn as_raw_KeyboardEvent(&self) -> *const c_void { self.as_raw() }
@@ -1464,37 +1497,80 @@ pub mod viz {
 
 	boxed_ref! { KeyboardEvent, crate::viz::KeyboardEventTraitConst, as_raw_KeyboardEvent, crate::viz::KeyboardEventTrait, as_raw_mut_KeyboardEvent }
 
-	impl KeyboardEvent {
-		/// Constructs a KeyboardEvent.
-		///
-		/// ## Parameters
-		/// * action: Signals if key is pressed or released.
-		/// * symbol: Name of the key.
-		/// * code: Code of the key.
-		/// * modifiers: Signals if alt, ctrl or shift are pressed or their combination.
+	/// This class wraps mesh attributes, and it can load a mesh from a ply file. :
+	pub struct Mesh {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Mesh }
+
+	impl Drop for Mesh {
 		#[inline]
-		pub fn new(action: crate::viz::KeyboardEvent_Action, symbol: &str, code: u8, modifiers: i32) -> Result<crate::viz::KeyboardEvent> {
-			extern_container_arg!(symbol);
+		fn drop(&mut self) {
+			unsafe { sys::cv_viz_Mesh_delete(self.as_raw_mut_Mesh()) };
+		}
+	}
+
+	unsafe impl Send for Mesh {}
+
+	impl Mesh {
+		#[inline]
+		pub fn default() -> Result<crate::viz::Mesh> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_KeyboardEvent_KeyboardEvent_Action_const_StringR_unsigned_char_int(action, symbol.opencv_as_extern(), code, modifiers, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_viz_Mesh_Mesh(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::viz::KeyboardEvent::opencv_from_extern(ret) };
+			let ret = unsafe { crate::viz::Mesh::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	impl std::fmt::Debug for KeyboardEvent {
+		/// Loads a mesh from a ply or a obj file.
+		///
+		/// ## Parameters
+		/// * file: File name
+		/// * type: File type (for now only PLY and OBJ are supported)
+		///
+		/// **File type** can be one of the following:
+		/// *   **LOAD_PLY**
+		/// *   **LOAD_OBJ**
+		///
+		/// ## C++ default parameters
+		/// * typ: LOAD_PLY
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("KeyboardEvent")
-				.field("action", &crate::viz::KeyboardEventTraitConst::action(self))
-				.field("symbol", &crate::viz::KeyboardEventTraitConst::symbol(self))
-				.field("code", &crate::viz::KeyboardEventTraitConst::code(self))
-				.field("modifiers", &crate::viz::KeyboardEventTraitConst::modifiers(self))
-				.finish()
+		pub fn load(file: &str, typ: i32) -> Result<crate::viz::Mesh> {
+			extern_container_arg!(file);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_Mesh_load_const_StringR_int(file.opencv_as_extern(), typ, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::Mesh::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
+		/// Loads a mesh from a ply or a obj file.
+		///
+		/// ## Parameters
+		/// * file: File name
+		/// * type: File type (for now only PLY and OBJ are supported)
+		///
+		/// **File type** can be one of the following:
+		/// *   **LOAD_PLY**
+		/// *   **LOAD_OBJ**
+		///
+		/// ## Note
+		/// This alternative version of [Mesh::load] function uses the following default values for its arguments:
+		/// * typ: LOAD_PLY
+		#[inline]
+		pub fn load_def(file: &str) -> Result<crate::viz::Mesh> {
+			extern_container_arg!(file);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_Mesh_load_const_StringR(file.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::Mesh::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::viz::Mesh]
@@ -1597,92 +1673,6 @@ pub mod viz {
 
 	}
 
-	/// This class wraps mesh attributes, and it can load a mesh from a ply file. :
-	pub struct Mesh {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Mesh }
-
-	impl Drop for Mesh {
-		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_viz_Mesh_delete(self.as_raw_mut_Mesh()) };
-		}
-	}
-
-	unsafe impl Send for Mesh {}
-
-	impl crate::viz::MeshTraitConst for Mesh {
-		#[inline] fn as_raw_Mesh(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::MeshTrait for Mesh {
-		#[inline] fn as_raw_mut_Mesh(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { Mesh, crate::viz::MeshTraitConst, as_raw_Mesh, crate::viz::MeshTrait, as_raw_mut_Mesh }
-
-	impl Mesh {
-		#[inline]
-		pub fn default() -> Result<crate::viz::Mesh> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_Mesh_Mesh(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::viz::Mesh::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Loads a mesh from a ply or a obj file.
-		///
-		/// ## Parameters
-		/// * file: File name
-		/// * type: File type (for now only PLY and OBJ are supported)
-		///
-		/// **File type** can be one of the following:
-		/// *   **LOAD_PLY**
-		/// *   **LOAD_OBJ**
-		///
-		/// ## C++ default parameters
-		/// * typ: LOAD_PLY
-		#[inline]
-		pub fn load(file: &str, typ: i32) -> Result<crate::viz::Mesh> {
-			extern_container_arg!(file);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_Mesh_load_const_StringR_int(file.opencv_as_extern(), typ, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::viz::Mesh::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Loads a mesh from a ply or a obj file.
-		///
-		/// ## Parameters
-		/// * file: File name
-		/// * type: File type (for now only PLY and OBJ are supported)
-		///
-		/// **File type** can be one of the following:
-		/// *   **LOAD_PLY**
-		/// *   **LOAD_OBJ**
-		///
-		/// ## Note
-		/// This alternative version of [Mesh::load] function uses the following default values for its arguments:
-		/// * typ: LOAD_PLY
-		#[inline]
-		pub fn load_def(file: &str) -> Result<crate::viz::Mesh> {
-			extern_container_arg!(file);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_Mesh_load_const_StringR(file.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::viz::Mesh::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
 	impl Clone for Mesh {
 		#[inline]
 		fn clone(&self) -> Self {
@@ -1702,6 +1692,54 @@ pub mod viz {
 				.field("tcoords", &crate::viz::MeshTraitConst::tcoords(self))
 				.finish()
 		}
+	}
+
+	impl crate::viz::MeshTraitConst for Mesh {
+		#[inline] fn as_raw_Mesh(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::MeshTrait for Mesh {
+		#[inline] fn as_raw_mut_Mesh(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { Mesh, crate::viz::MeshTraitConst, as_raw_Mesh, crate::viz::MeshTrait, as_raw_mut_Mesh }
+
+	/// This class represents a mouse event.
+	pub struct MouseEvent {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { MouseEvent }
+
+	impl Drop for MouseEvent {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_viz_MouseEvent_delete(self.as_raw_mut_MouseEvent()) };
+		}
+	}
+
+	unsafe impl Send for MouseEvent {}
+
+	impl MouseEvent {
+		/// Constructs a MouseEvent.
+		///
+		/// ## Parameters
+		/// * type: Type of the event. This can be **MouseMove**, **MouseButtonPress**,
+		/// **MouseButtonRelease**, **MouseScrollDown**, **MouseScrollUp**, **MouseDblClick**.
+		/// * button: Mouse button. This can be **NoButton**, **LeftButton**, **MiddleButton**,
+		/// **RightButton**, **VScroll**.
+		/// * pointer: Position of the event.
+		/// * modifiers: Signals if alt, ctrl or shift are pressed or their combination.
+		#[inline]
+		pub fn new(typ: crate::viz::MouseEvent_Type, button: crate::viz::MouseEvent_MouseButton, pointer: core::Point, modifiers: i32) -> Result<crate::viz::MouseEvent> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_MouseEvent_MouseEvent_const_TypeR_const_MouseButtonR_const_PointR_int(typ, button, &pointer, modifiers, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::MouseEvent::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::viz::MouseEvent]
@@ -1770,21 +1808,17 @@ pub mod viz {
 
 	}
 
-	/// This class represents a mouse event.
-	pub struct MouseEvent {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { MouseEvent }
-
-	impl Drop for MouseEvent {
+	impl std::fmt::Debug for MouseEvent {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_viz_MouseEvent_delete(self.as_raw_mut_MouseEvent()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MouseEvent")
+				.field("typ", &crate::viz::MouseEventTraitConst::typ(self))
+				.field("button", &crate::viz::MouseEventTraitConst::button(self))
+				.field("pointer", &crate::viz::MouseEventTraitConst::pointer(self))
+				.field("modifiers", &crate::viz::MouseEventTraitConst::modifiers(self))
+				.finish()
 		}
 	}
-
-	unsafe impl Send for MouseEvent {}
 
 	impl crate::viz::MouseEventTraitConst for MouseEvent {
 		#[inline] fn as_raw_MouseEvent(&self) -> *const c_void { self.as_raw() }
@@ -1796,38 +1830,69 @@ pub mod viz {
 
 	boxed_ref! { MouseEvent, crate::viz::MouseEventTraitConst, as_raw_MouseEvent, crate::viz::MouseEventTrait, as_raw_mut_MouseEvent }
 
-	impl MouseEvent {
-		/// Constructs a MouseEvent.
+	/// The Viz3d class represents a 3D visualizer window. This class is implicitly shared.
+	pub struct Viz3d {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Viz3d }
+
+	impl Drop for Viz3d {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_viz_Viz3d_delete(self.as_raw_mut_Viz3d()) };
+		}
+	}
+
+	unsafe impl Send for Viz3d {}
+
+	impl Viz3d {
+		/// The constructors.
 		///
 		/// ## Parameters
-		/// * type: Type of the event. This can be **MouseMove**, **MouseButtonPress**,
-		/// **MouseButtonRelease**, **MouseScrollDown**, **MouseScrollUp**, **MouseDblClick**.
-		/// * button: Mouse button. This can be **NoButton**, **LeftButton**, **MiddleButton**,
-		/// **RightButton**, **VScroll**.
-		/// * pointer: Position of the event.
-		/// * modifiers: Signals if alt, ctrl or shift are pressed or their combination.
+		/// * window_name: Name of the window.
+		///
+		/// ## C++ default parameters
+		/// * window_name: String()
 		#[inline]
-		pub fn new(typ: crate::viz::MouseEvent_Type, button: crate::viz::MouseEvent_MouseButton, pointer: core::Point, modifiers: i32) -> Result<crate::viz::MouseEvent> {
+		pub fn new(window_name: &str) -> Result<crate::viz::Viz3d> {
+			extern_container_arg!(window_name);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_MouseEvent_MouseEvent_const_TypeR_const_MouseButtonR_const_PointR_int(typ, button, &pointer, modifiers, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_viz_Viz3d_Viz3d_const_StringR(window_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::viz::MouseEvent::opencv_from_extern(ret) };
+			let ret = unsafe { crate::viz::Viz3d::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	impl std::fmt::Debug for MouseEvent {
+		/// The constructors.
+		///
+		/// ## Parameters
+		/// * window_name: Name of the window.
+		///
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * window_name: String()
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("MouseEvent")
-				.field("typ", &crate::viz::MouseEventTraitConst::typ(self))
-				.field("button", &crate::viz::MouseEventTraitConst::button(self))
-				.field("pointer", &crate::viz::MouseEventTraitConst::pointer(self))
-				.field("modifiers", &crate::viz::MouseEventTraitConst::modifiers(self))
-				.finish()
+		pub fn new_def() -> Result<crate::viz::Viz3d> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_Viz3d_Viz3d(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::Viz3d::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
+		#[inline]
+		pub fn copy(unnamed: &impl crate::viz::Viz3dTraitConst) -> Result<crate::viz::Viz3d> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_Viz3d_Viz3d_const_Viz3dR(unnamed.as_raw_Viz3d(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::Viz3d::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::viz::Viz3d]
@@ -2557,21 +2622,13 @@ pub mod viz {
 
 	}
 
-	/// The Viz3d class represents a 3D visualizer window. This class is implicitly shared.
-	pub struct Viz3d {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Viz3d }
-
-	impl Drop for Viz3d {
+	impl std::fmt::Debug for Viz3d {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_viz_Viz3d_delete(self.as_raw_mut_Viz3d()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Viz3d")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for Viz3d {}
 
 	impl crate::viz::Viz3dTraitConst for Viz3d {
 		#[inline] fn as_raw_Viz3d(&self) -> *const c_void { self.as_raw() }
@@ -2582,75 +2639,6 @@ pub mod viz {
 	}
 
 	boxed_ref! { Viz3d, crate::viz::Viz3dTraitConst, as_raw_Viz3d, crate::viz::Viz3dTrait, as_raw_mut_Viz3d }
-
-	impl Viz3d {
-		/// The constructors.
-		///
-		/// ## Parameters
-		/// * window_name: Name of the window.
-		///
-		/// ## C++ default parameters
-		/// * window_name: String()
-		#[inline]
-		pub fn new(window_name: &str) -> Result<crate::viz::Viz3d> {
-			extern_container_arg!(window_name);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_Viz3d_Viz3d_const_StringR(window_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::viz::Viz3d::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// The constructors.
-		///
-		/// ## Parameters
-		/// * window_name: Name of the window.
-		///
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * window_name: String()
-		#[inline]
-		pub fn new_def() -> Result<crate::viz::Viz3d> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_Viz3d_Viz3d(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::viz::Viz3d::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn copy(unnamed: &impl crate::viz::Viz3dTraitConst) -> Result<crate::viz::Viz3d> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_Viz3d_Viz3d_const_Viz3dR(unnamed.as_raw_Viz3d(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::viz::Viz3d::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	impl std::fmt::Debug for Viz3d {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Viz3d")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::viz::WArrow]
-	pub trait WArrowTraitConst: crate::viz::Widget3DTraitConst {
-		fn as_raw_WArrow(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::viz::WArrow]
-	pub trait WArrowTrait: crate::viz::WArrowTraitConst + crate::viz::Widget3DTrait {
-		fn as_raw_mut_WArrow(&mut self) -> *mut c_void;
-
-	}
 
 	/// This 3D Widget defines an arrow.
 	pub struct WArrow {
@@ -2667,36 +2655,6 @@ pub mod viz {
 	}
 
 	unsafe impl Send for WArrow {}
-
-	impl crate::viz::WidgetTraitConst for WArrow {
-		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WidgetTrait for WArrow {
-		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WArrow, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
-
-	impl crate::viz::Widget3DTraitConst for WArrow {
-		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::Widget3DTrait for WArrow {
-		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WArrow, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
-
-	impl crate::viz::WArrowTraitConst for WArrow {
-		#[inline] fn as_raw_WArrow(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WArrowTrait for WArrow {
-		#[inline] fn as_raw_mut_WArrow(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WArrow, crate::viz::WArrowTraitConst, as_raw_WArrow, crate::viz::WArrowTrait, as_raw_mut_WArrow }
 
 	impl WArrow {
 		/// Constructs an WArrow.
@@ -2750,9 +2708,17 @@ pub mod viz {
 
 	}
 
-	boxed_cast_base! { WArrow, crate::viz::Widget, cv_viz_WArrow_to_Widget }
+	/// Constant methods for [crate::viz::WArrow]
+	pub trait WArrowTraitConst: crate::viz::Widget3DTraitConst {
+		fn as_raw_WArrow(&self) -> *const c_void;
 
-	boxed_cast_base! { WArrow, crate::viz::Widget3D, cv_viz_WArrow_to_Widget3D }
+	}
+
+	/// Mutable methods for [crate::viz::WArrow]
+	pub trait WArrowTrait: crate::viz::WArrowTraitConst + crate::viz::Widget3DTrait {
+		fn as_raw_mut_WArrow(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for WArrow {
 		#[inline]
@@ -2762,17 +2728,39 @@ pub mod viz {
 		}
 	}
 
-	/// Constant methods for [crate::viz::WCameraPosition]
-	pub trait WCameraPositionTraitConst: crate::viz::Widget3DTraitConst {
-		fn as_raw_WCameraPosition(&self) -> *const c_void;
+	boxed_cast_base! { WArrow, crate::viz::Widget, cv_viz_WArrow_to_Widget }
 
+	boxed_cast_base! { WArrow, crate::viz::Widget3D, cv_viz_WArrow_to_Widget3D }
+
+	impl crate::viz::WidgetTraitConst for WArrow {
+		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [crate::viz::WCameraPosition]
-	pub trait WCameraPositionTrait: crate::viz::WCameraPositionTraitConst + crate::viz::Widget3DTrait {
-		fn as_raw_mut_WCameraPosition(&mut self) -> *mut c_void;
-
+	impl crate::viz::WidgetTrait for WArrow {
+		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { WArrow, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+	impl crate::viz::Widget3DTraitConst for WArrow {
+		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::Widget3DTrait for WArrow {
+		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WArrow, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+	impl crate::viz::WArrowTraitConst for WArrow {
+		#[inline] fn as_raw_WArrow(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::WArrowTrait for WArrow {
+		#[inline] fn as_raw_mut_WArrow(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WArrow, crate::viz::WArrowTraitConst, as_raw_WArrow, crate::viz::WArrowTrait, as_raw_mut_WArrow }
 
 	/// This 3D Widget represents camera position in a scene by its axes or viewing frustum. :
 	pub struct WCameraPosition {
@@ -2789,36 +2777,6 @@ pub mod viz {
 	}
 
 	unsafe impl Send for WCameraPosition {}
-
-	impl crate::viz::WidgetTraitConst for WCameraPosition {
-		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WidgetTrait for WCameraPosition {
-		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WCameraPosition, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
-
-	impl crate::viz::Widget3DTraitConst for WCameraPosition {
-		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::Widget3DTrait for WCameraPosition {
-		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WCameraPosition, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
-
-	impl crate::viz::WCameraPositionTraitConst for WCameraPosition {
-		#[inline] fn as_raw_WCameraPosition(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WCameraPositionTrait for WCameraPosition {
-		#[inline] fn as_raw_mut_WCameraPosition(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WCameraPosition, crate::viz::WCameraPositionTraitConst, as_raw_WCameraPosition, crate::viz::WCameraPositionTrait, as_raw_mut_WCameraPosition }
 
 	impl WCameraPosition {
 		/// Creates camera coordinate frame at the origin.
@@ -3060,9 +3018,17 @@ pub mod viz {
 
 	}
 
-	boxed_cast_base! { WCameraPosition, crate::viz::Widget, cv_viz_WCameraPosition_to_Widget }
+	/// Constant methods for [crate::viz::WCameraPosition]
+	pub trait WCameraPositionTraitConst: crate::viz::Widget3DTraitConst {
+		fn as_raw_WCameraPosition(&self) -> *const c_void;
 
-	boxed_cast_base! { WCameraPosition, crate::viz::Widget3D, cv_viz_WCameraPosition_to_Widget3D }
+	}
+
+	/// Mutable methods for [crate::viz::WCameraPosition]
+	pub trait WCameraPositionTrait: crate::viz::WCameraPositionTraitConst + crate::viz::Widget3DTrait {
+		fn as_raw_mut_WCameraPosition(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for WCameraPosition {
 		#[inline]
@@ -3072,17 +3038,39 @@ pub mod viz {
 		}
 	}
 
-	/// Constant methods for [crate::viz::WCircle]
-	pub trait WCircleTraitConst: crate::viz::Widget3DTraitConst {
-		fn as_raw_WCircle(&self) -> *const c_void;
+	boxed_cast_base! { WCameraPosition, crate::viz::Widget, cv_viz_WCameraPosition_to_Widget }
 
+	boxed_cast_base! { WCameraPosition, crate::viz::Widget3D, cv_viz_WCameraPosition_to_Widget3D }
+
+	impl crate::viz::WidgetTraitConst for WCameraPosition {
+		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [crate::viz::WCircle]
-	pub trait WCircleTrait: crate::viz::WCircleTraitConst + crate::viz::Widget3DTrait {
-		fn as_raw_mut_WCircle(&mut self) -> *mut c_void;
-
+	impl crate::viz::WidgetTrait for WCameraPosition {
+		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { WCameraPosition, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+	impl crate::viz::Widget3DTraitConst for WCameraPosition {
+		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::Widget3DTrait for WCameraPosition {
+		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WCameraPosition, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+	impl crate::viz::WCameraPositionTraitConst for WCameraPosition {
+		#[inline] fn as_raw_WCameraPosition(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::WCameraPositionTrait for WCameraPosition {
+		#[inline] fn as_raw_mut_WCameraPosition(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WCameraPosition, crate::viz::WCameraPositionTraitConst, as_raw_WCameraPosition, crate::viz::WCameraPositionTrait, as_raw_mut_WCameraPosition }
 
 	/// This 3D Widget defines a circle.
 	pub struct WCircle {
@@ -3099,36 +3087,6 @@ pub mod viz {
 	}
 
 	unsafe impl Send for WCircle {}
-
-	impl crate::viz::WidgetTraitConst for WCircle {
-		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WidgetTrait for WCircle {
-		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WCircle, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
-
-	impl crate::viz::Widget3DTraitConst for WCircle {
-		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::Widget3DTrait for WCircle {
-		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WCircle, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
-
-	impl crate::viz::WCircleTraitConst for WCircle {
-		#[inline] fn as_raw_WCircle(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WCircleTrait for WCircle {
-		#[inline] fn as_raw_mut_WCircle(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WCircle, crate::viz::WCircleTraitConst, as_raw_WCircle, crate::viz::WCircleTrait, as_raw_mut_WCircle }
 
 	impl WCircle {
 		/// Constructs default planar circle centered at origin with plane normal along z-axis
@@ -3219,9 +3177,17 @@ pub mod viz {
 
 	}
 
-	boxed_cast_base! { WCircle, crate::viz::Widget, cv_viz_WCircle_to_Widget }
+	/// Constant methods for [crate::viz::WCircle]
+	pub trait WCircleTraitConst: crate::viz::Widget3DTraitConst {
+		fn as_raw_WCircle(&self) -> *const c_void;
 
-	boxed_cast_base! { WCircle, crate::viz::Widget3D, cv_viz_WCircle_to_Widget3D }
+	}
+
+	/// Mutable methods for [crate::viz::WCircle]
+	pub trait WCircleTrait: crate::viz::WCircleTraitConst + crate::viz::Widget3DTrait {
+		fn as_raw_mut_WCircle(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for WCircle {
 		#[inline]
@@ -3231,17 +3197,39 @@ pub mod viz {
 		}
 	}
 
-	/// Constant methods for [crate::viz::WCloud]
-	pub trait WCloudTraitConst: crate::viz::Widget3DTraitConst {
-		fn as_raw_WCloud(&self) -> *const c_void;
+	boxed_cast_base! { WCircle, crate::viz::Widget, cv_viz_WCircle_to_Widget }
 
+	boxed_cast_base! { WCircle, crate::viz::Widget3D, cv_viz_WCircle_to_Widget3D }
+
+	impl crate::viz::WidgetTraitConst for WCircle {
+		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [crate::viz::WCloud]
-	pub trait WCloudTrait: crate::viz::WCloudTraitConst + crate::viz::Widget3DTrait {
-		fn as_raw_mut_WCloud(&mut self) -> *mut c_void;
-
+	impl crate::viz::WidgetTrait for WCircle {
+		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { WCircle, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+	impl crate::viz::Widget3DTraitConst for WCircle {
+		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::Widget3DTrait for WCircle {
+		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WCircle, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+	impl crate::viz::WCircleTraitConst for WCircle {
+		#[inline] fn as_raw_WCircle(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::WCircleTrait for WCircle {
+		#[inline] fn as_raw_mut_WCircle(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WCircle, crate::viz::WCircleTraitConst, as_raw_WCircle, crate::viz::WCircleTrait, as_raw_mut_WCircle }
 
 	/// This 3D Widget defines a point cloud. :
 	///
@@ -3261,36 +3249,6 @@ pub mod viz {
 	}
 
 	unsafe impl Send for WCloud {}
-
-	impl crate::viz::WidgetTraitConst for WCloud {
-		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WidgetTrait for WCloud {
-		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WCloud, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
-
-	impl crate::viz::Widget3DTraitConst for WCloud {
-		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::Widget3DTrait for WCloud {
-		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WCloud, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
-
-	impl crate::viz::WCloudTraitConst for WCloud {
-		#[inline] fn as_raw_WCloud(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WCloudTrait for WCloud {
-		#[inline] fn as_raw_mut_WCloud(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WCloud, crate::viz::WCloudTraitConst, as_raw_WCloud, crate::viz::WCloudTrait, as_raw_mut_WCloud }
 
 	impl WCloud {
 		/// Constructs a WCloud.
@@ -3395,9 +3353,17 @@ pub mod viz {
 
 	}
 
-	boxed_cast_base! { WCloud, crate::viz::Widget, cv_viz_WCloud_to_Widget }
+	/// Constant methods for [crate::viz::WCloud]
+	pub trait WCloudTraitConst: crate::viz::Widget3DTraitConst {
+		fn as_raw_WCloud(&self) -> *const c_void;
 
-	boxed_cast_base! { WCloud, crate::viz::Widget3D, cv_viz_WCloud_to_Widget3D }
+	}
+
+	/// Mutable methods for [crate::viz::WCloud]
+	pub trait WCloudTrait: crate::viz::WCloudTraitConst + crate::viz::Widget3DTrait {
+		fn as_raw_mut_WCloud(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for WCloud {
 		#[inline]
@@ -3405,6 +3371,71 @@ pub mod viz {
 			f.debug_struct("WCloud")
 				.finish()
 		}
+	}
+
+	boxed_cast_base! { WCloud, crate::viz::Widget, cv_viz_WCloud_to_Widget }
+
+	boxed_cast_base! { WCloud, crate::viz::Widget3D, cv_viz_WCloud_to_Widget3D }
+
+	impl crate::viz::WidgetTraitConst for WCloud {
+		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::WidgetTrait for WCloud {
+		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WCloud, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+	impl crate::viz::Widget3DTraitConst for WCloud {
+		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::Widget3DTrait for WCloud {
+		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WCloud, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+	impl crate::viz::WCloudTraitConst for WCloud {
+		#[inline] fn as_raw_WCloud(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::WCloudTrait for WCloud {
+		#[inline] fn as_raw_mut_WCloud(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WCloud, crate::viz::WCloudTraitConst, as_raw_WCloud, crate::viz::WCloudTrait, as_raw_mut_WCloud }
+
+	/// This 3D Widget defines a collection of clouds. :
+	///
+	/// Note: In case there are four channels in the cloud, fourth channel is ignored.
+	pub struct WCloudCollection {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { WCloudCollection }
+
+	impl Drop for WCloudCollection {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_viz_WCloudCollection_delete(self.as_raw_mut_WCloudCollection()) };
+		}
+	}
+
+	unsafe impl Send for WCloudCollection {}
+
+	impl WCloudCollection {
+		#[inline]
+		pub fn default() -> Result<crate::viz::WCloudCollection> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WCloudCollection_WCloudCollection(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::WCloudCollection::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::viz::WCloudCollection]
@@ -3513,23 +3544,17 @@ pub mod viz {
 
 	}
 
-	/// This 3D Widget defines a collection of clouds. :
-	///
-	/// Note: In case there are four channels in the cloud, fourth channel is ignored.
-	pub struct WCloudCollection {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { WCloudCollection }
-
-	impl Drop for WCloudCollection {
+	impl std::fmt::Debug for WCloudCollection {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_viz_WCloudCollection_delete(self.as_raw_mut_WCloudCollection()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WCloudCollection")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for WCloudCollection {}
+	boxed_cast_base! { WCloudCollection, crate::viz::Widget, cv_viz_WCloudCollection_to_Widget }
+
+	boxed_cast_base! { WCloudCollection, crate::viz::Widget3D, cv_viz_WCloudCollection_to_Widget3D }
 
 	impl crate::viz::WidgetTraitConst for WCloudCollection {
 		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
@@ -3561,43 +3586,6 @@ pub mod viz {
 
 	boxed_ref! { WCloudCollection, crate::viz::WCloudCollectionTraitConst, as_raw_WCloudCollection, crate::viz::WCloudCollectionTrait, as_raw_mut_WCloudCollection }
 
-	impl WCloudCollection {
-		#[inline]
-		pub fn default() -> Result<crate::viz::WCloudCollection> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_WCloudCollection_WCloudCollection(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::viz::WCloudCollection::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_base! { WCloudCollection, crate::viz::Widget, cv_viz_WCloudCollection_to_Widget }
-
-	boxed_cast_base! { WCloudCollection, crate::viz::Widget3D, cv_viz_WCloudCollection_to_Widget3D }
-
-	impl std::fmt::Debug for WCloudCollection {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("WCloudCollection")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::viz::WCloudNormals]
-	pub trait WCloudNormalsTraitConst: crate::viz::Widget3DTraitConst {
-		fn as_raw_WCloudNormals(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::viz::WCloudNormals]
-	pub trait WCloudNormalsTrait: crate::viz::WCloudNormalsTraitConst + crate::viz::Widget3DTrait {
-		fn as_raw_mut_WCloudNormals(&mut self) -> *mut c_void;
-
-	}
-
 	/// This 3D Widget represents normals of a point cloud. :
 	pub struct WCloudNormals {
 		ptr: *mut c_void,
@@ -3613,36 +3601,6 @@ pub mod viz {
 	}
 
 	unsafe impl Send for WCloudNormals {}
-
-	impl crate::viz::WidgetTraitConst for WCloudNormals {
-		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WidgetTrait for WCloudNormals {
-		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WCloudNormals, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
-
-	impl crate::viz::Widget3DTraitConst for WCloudNormals {
-		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::Widget3DTrait for WCloudNormals {
-		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WCloudNormals, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
-
-	impl crate::viz::WCloudNormalsTraitConst for WCloudNormals {
-		#[inline] fn as_raw_WCloudNormals(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WCloudNormalsTrait for WCloudNormals {
-		#[inline] fn as_raw_mut_WCloudNormals(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WCloudNormals, crate::viz::WCloudNormalsTraitConst, as_raw_WCloudNormals, crate::viz::WCloudNormalsTrait, as_raw_mut_WCloudNormals }
 
 	impl WCloudNormals {
 		/// Constructs a WCloudNormals.
@@ -3704,9 +3662,17 @@ pub mod viz {
 
 	}
 
-	boxed_cast_base! { WCloudNormals, crate::viz::Widget, cv_viz_WCloudNormals_to_Widget }
+	/// Constant methods for [crate::viz::WCloudNormals]
+	pub trait WCloudNormalsTraitConst: crate::viz::Widget3DTraitConst {
+		fn as_raw_WCloudNormals(&self) -> *const c_void;
 
-	boxed_cast_base! { WCloudNormals, crate::viz::Widget3D, cv_viz_WCloudNormals_to_Widget3D }
+	}
+
+	/// Mutable methods for [crate::viz::WCloudNormals]
+	pub trait WCloudNormalsTrait: crate::viz::WCloudNormalsTraitConst + crate::viz::Widget3DTrait {
+		fn as_raw_mut_WCloudNormals(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for WCloudNormals {
 		#[inline]
@@ -3716,17 +3682,39 @@ pub mod viz {
 		}
 	}
 
-	/// Constant methods for [crate::viz::WCone]
-	pub trait WConeTraitConst: crate::viz::Widget3DTraitConst {
-		fn as_raw_WCone(&self) -> *const c_void;
+	boxed_cast_base! { WCloudNormals, crate::viz::Widget, cv_viz_WCloudNormals_to_Widget }
 
+	boxed_cast_base! { WCloudNormals, crate::viz::Widget3D, cv_viz_WCloudNormals_to_Widget3D }
+
+	impl crate::viz::WidgetTraitConst for WCloudNormals {
+		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [crate::viz::WCone]
-	pub trait WConeTrait: crate::viz::WConeTraitConst + crate::viz::Widget3DTrait {
-		fn as_raw_mut_WCone(&mut self) -> *mut c_void;
-
+	impl crate::viz::WidgetTrait for WCloudNormals {
+		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { WCloudNormals, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+	impl crate::viz::Widget3DTraitConst for WCloudNormals {
+		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::Widget3DTrait for WCloudNormals {
+		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WCloudNormals, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+	impl crate::viz::WCloudNormalsTraitConst for WCloudNormals {
+		#[inline] fn as_raw_WCloudNormals(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::WCloudNormalsTrait for WCloudNormals {
+		#[inline] fn as_raw_mut_WCloudNormals(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WCloudNormals, crate::viz::WCloudNormalsTraitConst, as_raw_WCloudNormals, crate::viz::WCloudNormalsTrait, as_raw_mut_WCloudNormals }
 
 	/// This 3D Widget defines a cone. :
 	pub struct WCone {
@@ -3743,36 +3731,6 @@ pub mod viz {
 	}
 
 	unsafe impl Send for WCone {}
-
-	impl crate::viz::WidgetTraitConst for WCone {
-		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WidgetTrait for WCone {
-		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WCone, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
-
-	impl crate::viz::Widget3DTraitConst for WCone {
-		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::Widget3DTrait for WCone {
-		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WCone, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
-
-	impl crate::viz::WConeTraitConst for WCone {
-		#[inline] fn as_raw_WCone(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WConeTrait for WCone {
-		#[inline] fn as_raw_mut_WCone(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WCone, crate::viz::WConeTraitConst, as_raw_WCone, crate::viz::WConeTrait, as_raw_mut_WCone }
 
 	impl WCone {
 		/// Constructs default cone oriented along x-axis with center of its base located at origin
@@ -3865,9 +3823,17 @@ pub mod viz {
 
 	}
 
-	boxed_cast_base! { WCone, crate::viz::Widget, cv_viz_WCone_to_Widget }
+	/// Constant methods for [crate::viz::WCone]
+	pub trait WConeTraitConst: crate::viz::Widget3DTraitConst {
+		fn as_raw_WCone(&self) -> *const c_void;
 
-	boxed_cast_base! { WCone, crate::viz::Widget3D, cv_viz_WCone_to_Widget3D }
+	}
+
+	/// Mutable methods for [crate::viz::WCone]
+	pub trait WConeTrait: crate::viz::WConeTraitConst + crate::viz::Widget3DTrait {
+		fn as_raw_mut_WCone(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for WCone {
 		#[inline]
@@ -3877,17 +3843,39 @@ pub mod viz {
 		}
 	}
 
-	/// Constant methods for [crate::viz::WCoordinateSystem]
-	pub trait WCoordinateSystemTraitConst: crate::viz::Widget3DTraitConst {
-		fn as_raw_WCoordinateSystem(&self) -> *const c_void;
+	boxed_cast_base! { WCone, crate::viz::Widget, cv_viz_WCone_to_Widget }
 
+	boxed_cast_base! { WCone, crate::viz::Widget3D, cv_viz_WCone_to_Widget3D }
+
+	impl crate::viz::WidgetTraitConst for WCone {
+		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [crate::viz::WCoordinateSystem]
-	pub trait WCoordinateSystemTrait: crate::viz::WCoordinateSystemTraitConst + crate::viz::Widget3DTrait {
-		fn as_raw_mut_WCoordinateSystem(&mut self) -> *mut c_void;
-
+	impl crate::viz::WidgetTrait for WCone {
+		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { WCone, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+	impl crate::viz::Widget3DTraitConst for WCone {
+		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::Widget3DTrait for WCone {
+		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WCone, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+	impl crate::viz::WConeTraitConst for WCone {
+		#[inline] fn as_raw_WCone(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::WConeTrait for WCone {
+		#[inline] fn as_raw_mut_WCone(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WCone, crate::viz::WConeTraitConst, as_raw_WCone, crate::viz::WConeTrait, as_raw_mut_WCone }
 
 	/// This 3D Widget represents a coordinate system. :
 	pub struct WCoordinateSystem {
@@ -3904,36 +3892,6 @@ pub mod viz {
 	}
 
 	unsafe impl Send for WCoordinateSystem {}
-
-	impl crate::viz::WidgetTraitConst for WCoordinateSystem {
-		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WidgetTrait for WCoordinateSystem {
-		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WCoordinateSystem, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
-
-	impl crate::viz::Widget3DTraitConst for WCoordinateSystem {
-		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::Widget3DTrait for WCoordinateSystem {
-		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WCoordinateSystem, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
-
-	impl crate::viz::WCoordinateSystemTraitConst for WCoordinateSystem {
-		#[inline] fn as_raw_WCoordinateSystem(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WCoordinateSystemTrait for WCoordinateSystem {
-		#[inline] fn as_raw_mut_WCoordinateSystem(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WCoordinateSystem, crate::viz::WCoordinateSystemTraitConst, as_raw_WCoordinateSystem, crate::viz::WCoordinateSystemTrait, as_raw_mut_WCoordinateSystem }
 
 	impl WCoordinateSystem {
 		/// Constructs a WCoordinateSystem.
@@ -3973,9 +3931,17 @@ pub mod viz {
 
 	}
 
-	boxed_cast_base! { WCoordinateSystem, crate::viz::Widget, cv_viz_WCoordinateSystem_to_Widget }
+	/// Constant methods for [crate::viz::WCoordinateSystem]
+	pub trait WCoordinateSystemTraitConst: crate::viz::Widget3DTraitConst {
+		fn as_raw_WCoordinateSystem(&self) -> *const c_void;
 
-	boxed_cast_base! { WCoordinateSystem, crate::viz::Widget3D, cv_viz_WCoordinateSystem_to_Widget3D }
+	}
+
+	/// Mutable methods for [crate::viz::WCoordinateSystem]
+	pub trait WCoordinateSystemTrait: crate::viz::WCoordinateSystemTraitConst + crate::viz::Widget3DTrait {
+		fn as_raw_mut_WCoordinateSystem(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for WCoordinateSystem {
 		#[inline]
@@ -3985,17 +3951,39 @@ pub mod viz {
 		}
 	}
 
-	/// Constant methods for [crate::viz::WCube]
-	pub trait WCubeTraitConst: crate::viz::Widget3DTraitConst {
-		fn as_raw_WCube(&self) -> *const c_void;
+	boxed_cast_base! { WCoordinateSystem, crate::viz::Widget, cv_viz_WCoordinateSystem_to_Widget }
 
+	boxed_cast_base! { WCoordinateSystem, crate::viz::Widget3D, cv_viz_WCoordinateSystem_to_Widget3D }
+
+	impl crate::viz::WidgetTraitConst for WCoordinateSystem {
+		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [crate::viz::WCube]
-	pub trait WCubeTrait: crate::viz::WCubeTraitConst + crate::viz::Widget3DTrait {
-		fn as_raw_mut_WCube(&mut self) -> *mut c_void;
-
+	impl crate::viz::WidgetTrait for WCoordinateSystem {
+		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { WCoordinateSystem, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+	impl crate::viz::Widget3DTraitConst for WCoordinateSystem {
+		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::Widget3DTrait for WCoordinateSystem {
+		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WCoordinateSystem, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+	impl crate::viz::WCoordinateSystemTraitConst for WCoordinateSystem {
+		#[inline] fn as_raw_WCoordinateSystem(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::WCoordinateSystemTrait for WCoordinateSystem {
+		#[inline] fn as_raw_mut_WCoordinateSystem(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WCoordinateSystem, crate::viz::WCoordinateSystemTraitConst, as_raw_WCoordinateSystem, crate::viz::WCoordinateSystemTrait, as_raw_mut_WCoordinateSystem }
 
 	/// This 3D Widget defines a cube.
 	pub struct WCube {
@@ -4012,36 +4000,6 @@ pub mod viz {
 	}
 
 	unsafe impl Send for WCube {}
-
-	impl crate::viz::WidgetTraitConst for WCube {
-		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WidgetTrait for WCube {
-		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WCube, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
-
-	impl crate::viz::Widget3DTraitConst for WCube {
-		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::Widget3DTrait for WCube {
-		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WCube, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
-
-	impl crate::viz::WCubeTraitConst for WCube {
-		#[inline] fn as_raw_WCube(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WCubeTrait for WCube {
-		#[inline] fn as_raw_mut_WCube(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WCube, crate::viz::WCubeTraitConst, as_raw_WCube, crate::viz::WCubeTrait, as_raw_mut_WCube }
 
 	impl WCube {
 		/// Constructs a WCube.
@@ -4097,9 +4055,17 @@ pub mod viz {
 
 	}
 
-	boxed_cast_base! { WCube, crate::viz::Widget, cv_viz_WCube_to_Widget }
+	/// Constant methods for [crate::viz::WCube]
+	pub trait WCubeTraitConst: crate::viz::Widget3DTraitConst {
+		fn as_raw_WCube(&self) -> *const c_void;
 
-	boxed_cast_base! { WCube, crate::viz::Widget3D, cv_viz_WCube_to_Widget3D }
+	}
+
+	/// Mutable methods for [crate::viz::WCube]
+	pub trait WCubeTrait: crate::viz::WCubeTraitConst + crate::viz::Widget3DTrait {
+		fn as_raw_mut_WCube(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for WCube {
 		#[inline]
@@ -4109,17 +4075,39 @@ pub mod viz {
 		}
 	}
 
-	/// Constant methods for [crate::viz::WCylinder]
-	pub trait WCylinderTraitConst: crate::viz::Widget3DTraitConst {
-		fn as_raw_WCylinder(&self) -> *const c_void;
+	boxed_cast_base! { WCube, crate::viz::Widget, cv_viz_WCube_to_Widget }
 
+	boxed_cast_base! { WCube, crate::viz::Widget3D, cv_viz_WCube_to_Widget3D }
+
+	impl crate::viz::WidgetTraitConst for WCube {
+		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [crate::viz::WCylinder]
-	pub trait WCylinderTrait: crate::viz::WCylinderTraitConst + crate::viz::Widget3DTrait {
-		fn as_raw_mut_WCylinder(&mut self) -> *mut c_void;
-
+	impl crate::viz::WidgetTrait for WCube {
+		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { WCube, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+	impl crate::viz::Widget3DTraitConst for WCube {
+		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::Widget3DTrait for WCube {
+		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WCube, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+	impl crate::viz::WCubeTraitConst for WCube {
+		#[inline] fn as_raw_WCube(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::WCubeTrait for WCube {
+		#[inline] fn as_raw_mut_WCube(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WCube, crate::viz::WCubeTraitConst, as_raw_WCube, crate::viz::WCubeTrait, as_raw_mut_WCube }
 
 	/// This 3D Widget defines a cylinder. :
 	pub struct WCylinder {
@@ -4136,36 +4124,6 @@ pub mod viz {
 	}
 
 	unsafe impl Send for WCylinder {}
-
-	impl crate::viz::WidgetTraitConst for WCylinder {
-		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WidgetTrait for WCylinder {
-		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WCylinder, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
-
-	impl crate::viz::Widget3DTraitConst for WCylinder {
-		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::Widget3DTrait for WCylinder {
-		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WCylinder, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
-
-	impl crate::viz::WCylinderTraitConst for WCylinder {
-		#[inline] fn as_raw_WCylinder(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WCylinderTrait for WCylinder {
-		#[inline] fn as_raw_mut_WCylinder(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WCylinder, crate::viz::WCylinderTraitConst, as_raw_WCylinder, crate::viz::WCylinderTrait, as_raw_mut_WCylinder }
 
 	impl WCylinder {
 		/// Constructs a WCylinder.
@@ -4215,9 +4173,17 @@ pub mod viz {
 
 	}
 
-	boxed_cast_base! { WCylinder, crate::viz::Widget, cv_viz_WCylinder_to_Widget }
+	/// Constant methods for [crate::viz::WCylinder]
+	pub trait WCylinderTraitConst: crate::viz::Widget3DTraitConst {
+		fn as_raw_WCylinder(&self) -> *const c_void;
 
-	boxed_cast_base! { WCylinder, crate::viz::Widget3D, cv_viz_WCylinder_to_Widget3D }
+	}
+
+	/// Mutable methods for [crate::viz::WCylinder]
+	pub trait WCylinderTrait: crate::viz::WCylinderTraitConst + crate::viz::Widget3DTrait {
+		fn as_raw_mut_WCylinder(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for WCylinder {
 		#[inline]
@@ -4227,17 +4193,39 @@ pub mod viz {
 		}
 	}
 
-	/// Constant methods for [crate::viz::WGrid]
-	pub trait WGridTraitConst: crate::viz::Widget3DTraitConst {
-		fn as_raw_WGrid(&self) -> *const c_void;
+	boxed_cast_base! { WCylinder, crate::viz::Widget, cv_viz_WCylinder_to_Widget }
 
+	boxed_cast_base! { WCylinder, crate::viz::Widget3D, cv_viz_WCylinder_to_Widget3D }
+
+	impl crate::viz::WidgetTraitConst for WCylinder {
+		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [crate::viz::WGrid]
-	pub trait WGridTrait: crate::viz::WGridTraitConst + crate::viz::Widget3DTrait {
-		fn as_raw_mut_WGrid(&mut self) -> *mut c_void;
-
+	impl crate::viz::WidgetTrait for WCylinder {
+		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { WCylinder, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+	impl crate::viz::Widget3DTraitConst for WCylinder {
+		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::Widget3DTrait for WCylinder {
+		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WCylinder, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+	impl crate::viz::WCylinderTraitConst for WCylinder {
+		#[inline] fn as_raw_WCylinder(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::WCylinderTrait for WCylinder {
+		#[inline] fn as_raw_mut_WCylinder(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WCylinder, crate::viz::WCylinderTraitConst, as_raw_WCylinder, crate::viz::WCylinderTrait, as_raw_mut_WCylinder }
 
 	/// This 3D Widget defines a grid. :
 	pub struct WGrid {
@@ -4254,36 +4242,6 @@ pub mod viz {
 	}
 
 	unsafe impl Send for WGrid {}
-
-	impl crate::viz::WidgetTraitConst for WGrid {
-		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WidgetTrait for WGrid {
-		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WGrid, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
-
-	impl crate::viz::Widget3DTraitConst for WGrid {
-		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::Widget3DTrait for WGrid {
-		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WGrid, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
-
-	impl crate::viz::WGridTraitConst for WGrid {
-		#[inline] fn as_raw_WGrid(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WGridTrait for WGrid {
-		#[inline] fn as_raw_mut_WGrid(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WGrid, crate::viz::WGridTraitConst, as_raw_WGrid, crate::viz::WGridTrait, as_raw_mut_WGrid }
 
 	impl WGrid {
 		/// Constructs a WGrid.
@@ -4364,9 +4322,17 @@ pub mod viz {
 
 	}
 
-	boxed_cast_base! { WGrid, crate::viz::Widget, cv_viz_WGrid_to_Widget }
+	/// Constant methods for [crate::viz::WGrid]
+	pub trait WGridTraitConst: crate::viz::Widget3DTraitConst {
+		fn as_raw_WGrid(&self) -> *const c_void;
 
-	boxed_cast_base! { WGrid, crate::viz::Widget3D, cv_viz_WGrid_to_Widget3D }
+	}
+
+	/// Mutable methods for [crate::viz::WGrid]
+	pub trait WGridTrait: crate::viz::WGridTraitConst + crate::viz::Widget3DTrait {
+		fn as_raw_mut_WGrid(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for WGrid {
 		#[inline]
@@ -4374,6 +4340,94 @@ pub mod viz {
 			f.debug_struct("WGrid")
 				.finish()
 		}
+	}
+
+	boxed_cast_base! { WGrid, crate::viz::Widget, cv_viz_WGrid_to_Widget }
+
+	boxed_cast_base! { WGrid, crate::viz::Widget3D, cv_viz_WGrid_to_Widget3D }
+
+	impl crate::viz::WidgetTraitConst for WGrid {
+		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::WidgetTrait for WGrid {
+		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WGrid, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+	impl crate::viz::Widget3DTraitConst for WGrid {
+		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::Widget3DTrait for WGrid {
+		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WGrid, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+	impl crate::viz::WGridTraitConst for WGrid {
+		#[inline] fn as_raw_WGrid(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::WGridTrait for WGrid {
+		#[inline] fn as_raw_mut_WGrid(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WGrid, crate::viz::WGridTraitConst, as_raw_WGrid, crate::viz::WGridTrait, as_raw_mut_WGrid }
+
+	/// This 3D Widget represents an image in 3D space. :
+	pub struct WImage3D {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { WImage3D }
+
+	impl Drop for WImage3D {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_viz_WImage3D_delete(self.as_raw_mut_WImage3D()) };
+		}
+	}
+
+	unsafe impl Send for WImage3D {}
+
+	impl WImage3D {
+		/// Constructs an WImage3D.
+		///
+		/// ## Parameters
+		/// * image: BGR or Gray-Scale image.
+		/// * size: Size of the image.
+		#[inline]
+		pub fn new(image: &impl ToInputArray, size: core::Size2d) -> Result<crate::viz::WImage3D> {
+			input_array_arg!(image);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WImage3D_WImage3D_const__InputArrayR_const_Size2dR(image.as_raw__InputArray(), &size, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::WImage3D::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// Constructs an WImage3D.
+		///
+		/// ## Parameters
+		/// * image: BGR or Gray-Scale image.
+		/// * size: Size of the image.
+		/// * center: Position of the image.
+		/// * normal: Normal of the plane that represents the image.
+		/// * up_vector: Determines orientation of the image.
+		#[inline]
+		pub fn new_1(image: &impl ToInputArray, size: core::Size2d, center: core::Vec3d, normal: core::Vec3d, up_vector: core::Vec3d) -> Result<crate::viz::WImage3D> {
+			input_array_arg!(image);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WImage3D_WImage3D_const__InputArrayR_const_Size2dR_const_Vec3dR_const_Vec3dR_const_Vec3dR(image.as_raw__InputArray(), &size, &center, &normal, &up_vector, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::WImage3D::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::viz::WImage3D]
@@ -4415,21 +4469,17 @@ pub mod viz {
 
 	}
 
-	/// This 3D Widget represents an image in 3D space. :
-	pub struct WImage3D {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { WImage3D }
-
-	impl Drop for WImage3D {
+	impl std::fmt::Debug for WImage3D {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_viz_WImage3D_delete(self.as_raw_mut_WImage3D()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WImage3D")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for WImage3D {}
+	boxed_cast_base! { WImage3D, crate::viz::Widget, cv_viz_WImage3D_to_Widget }
+
+	boxed_cast_base! { WImage3D, crate::viz::Widget3D, cv_viz_WImage3D_to_Widget3D }
 
 	impl crate::viz::WidgetTraitConst for WImage3D {
 		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
@@ -4461,54 +4511,39 @@ pub mod viz {
 
 	boxed_ref! { WImage3D, crate::viz::WImage3DTraitConst, as_raw_WImage3D, crate::viz::WImage3DTrait, as_raw_mut_WImage3D }
 
-	impl WImage3D {
-		/// Constructs an WImage3D.
-		///
-		/// ## Parameters
-		/// * image: BGR or Gray-Scale image.
-		/// * size: Size of the image.
-		#[inline]
-		pub fn new(image: &impl ToInputArray, size: core::Size2d) -> Result<crate::viz::WImage3D> {
-			input_array_arg!(image);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_WImage3D_WImage3D_const__InputArrayR_const_Size2dR(image.as_raw__InputArray(), &size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::viz::WImage3D::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Constructs an WImage3D.
-		///
-		/// ## Parameters
-		/// * image: BGR or Gray-Scale image.
-		/// * size: Size of the image.
-		/// * center: Position of the image.
-		/// * normal: Normal of the plane that represents the image.
-		/// * up_vector: Determines orientation of the image.
-		#[inline]
-		pub fn new_1(image: &impl ToInputArray, size: core::Size2d, center: core::Vec3d, normal: core::Vec3d, up_vector: core::Vec3d) -> Result<crate::viz::WImage3D> {
-			input_array_arg!(image);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_WImage3D_WImage3D_const__InputArrayR_const_Size2dR_const_Vec3dR_const_Vec3dR_const_Vec3dR(image.as_raw__InputArray(), &size, &center, &normal, &up_vector, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::viz::WImage3D::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// This 2D Widget represents an image overlay. :
+	pub struct WImageOverlay {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { WImage3D, crate::viz::Widget, cv_viz_WImage3D_to_Widget }
+	opencv_type_boxed! { WImageOverlay }
 
-	boxed_cast_base! { WImage3D, crate::viz::Widget3D, cv_viz_WImage3D_to_Widget3D }
-
-	impl std::fmt::Debug for WImage3D {
+	impl Drop for WImageOverlay {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("WImage3D")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_viz_WImageOverlay_delete(self.as_raw_mut_WImageOverlay()) };
 		}
+	}
+
+	unsafe impl Send for WImageOverlay {}
+
+	impl WImageOverlay {
+		/// Constructs an WImageOverlay.
+		///
+		/// ## Parameters
+		/// * image: BGR or Gray-Scale image.
+		/// * rect: Image is scaled and positioned based on rect.
+		#[inline]
+		pub fn new(image: &impl ToInputArray, rect: core::Rect) -> Result<crate::viz::WImageOverlay> {
+			input_array_arg!(image);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WImageOverlay_WImageOverlay_const__InputArrayR_const_RectR(image.as_raw__InputArray(), &rect, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::WImageOverlay::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::viz::WImageOverlay]
@@ -4537,21 +4572,17 @@ pub mod viz {
 
 	}
 
-	/// This 2D Widget represents an image overlay. :
-	pub struct WImageOverlay {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { WImageOverlay }
-
-	impl Drop for WImageOverlay {
+	impl std::fmt::Debug for WImageOverlay {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_viz_WImageOverlay_delete(self.as_raw_mut_WImageOverlay()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WImageOverlay")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for WImageOverlay {}
+	boxed_cast_base! { WImageOverlay, crate::viz::Widget, cv_viz_WImageOverlay_to_Widget }
+
+	boxed_cast_base! { WImageOverlay, crate::viz::Widget2D, cv_viz_WImageOverlay_to_Widget2D }
 
 	impl crate::viz::WidgetTraitConst for WImageOverlay {
 		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
@@ -4583,49 +4614,6 @@ pub mod viz {
 
 	boxed_ref! { WImageOverlay, crate::viz::WImageOverlayTraitConst, as_raw_WImageOverlay, crate::viz::WImageOverlayTrait, as_raw_mut_WImageOverlay }
 
-	impl WImageOverlay {
-		/// Constructs an WImageOverlay.
-		///
-		/// ## Parameters
-		/// * image: BGR or Gray-Scale image.
-		/// * rect: Image is scaled and positioned based on rect.
-		#[inline]
-		pub fn new(image: &impl ToInputArray, rect: core::Rect) -> Result<crate::viz::WImageOverlay> {
-			input_array_arg!(image);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_WImageOverlay_WImageOverlay_const__InputArrayR_const_RectR(image.as_raw__InputArray(), &rect, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::viz::WImageOverlay::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_base! { WImageOverlay, crate::viz::Widget, cv_viz_WImageOverlay_to_Widget }
-
-	boxed_cast_base! { WImageOverlay, crate::viz::Widget2D, cv_viz_WImageOverlay_to_Widget2D }
-
-	impl std::fmt::Debug for WImageOverlay {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("WImageOverlay")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::viz::WLine]
-	pub trait WLineTraitConst: crate::viz::Widget3DTraitConst {
-		fn as_raw_WLine(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::viz::WLine]
-	pub trait WLineTrait: crate::viz::WLineTraitConst + crate::viz::Widget3DTrait {
-		fn as_raw_mut_WLine(&mut self) -> *mut c_void;
-
-	}
-
 	/// This 3D Widget defines a finite line.
 	pub struct WLine {
 		ptr: *mut c_void,
@@ -4641,36 +4629,6 @@ pub mod viz {
 	}
 
 	unsafe impl Send for WLine {}
-
-	impl crate::viz::WidgetTraitConst for WLine {
-		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WidgetTrait for WLine {
-		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WLine, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
-
-	impl crate::viz::Widget3DTraitConst for WLine {
-		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::Widget3DTrait for WLine {
-		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WLine, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
-
-	impl crate::viz::WLineTraitConst for WLine {
-		#[inline] fn as_raw_WLine(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WLineTrait for WLine {
-		#[inline] fn as_raw_mut_WLine(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WLine, crate::viz::WLineTraitConst, as_raw_WLine, crate::viz::WLineTrait, as_raw_mut_WLine }
 
 	impl WLine {
 		/// Constructs a WLine.
@@ -4714,9 +4672,17 @@ pub mod viz {
 
 	}
 
-	boxed_cast_base! { WLine, crate::viz::Widget, cv_viz_WLine_to_Widget }
+	/// Constant methods for [crate::viz::WLine]
+	pub trait WLineTraitConst: crate::viz::Widget3DTraitConst {
+		fn as_raw_WLine(&self) -> *const c_void;
 
-	boxed_cast_base! { WLine, crate::viz::Widget3D, cv_viz_WLine_to_Widget3D }
+	}
+
+	/// Mutable methods for [crate::viz::WLine]
+	pub trait WLineTrait: crate::viz::WLineTraitConst + crate::viz::Widget3DTrait {
+		fn as_raw_mut_WLine(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for WLine {
 		#[inline]
@@ -4726,17 +4692,39 @@ pub mod viz {
 		}
 	}
 
-	/// Constant methods for [crate::viz::WMesh]
-	pub trait WMeshTraitConst: crate::viz::Widget3DTraitConst {
-		fn as_raw_WMesh(&self) -> *const c_void;
+	boxed_cast_base! { WLine, crate::viz::Widget, cv_viz_WLine_to_Widget }
 
+	boxed_cast_base! { WLine, crate::viz::Widget3D, cv_viz_WLine_to_Widget3D }
+
+	impl crate::viz::WidgetTraitConst for WLine {
+		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [crate::viz::WMesh]
-	pub trait WMeshTrait: crate::viz::WMeshTraitConst + crate::viz::Widget3DTrait {
-		fn as_raw_mut_WMesh(&mut self) -> *mut c_void;
-
+	impl crate::viz::WidgetTrait for WLine {
+		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { WLine, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+	impl crate::viz::Widget3DTraitConst for WLine {
+		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::Widget3DTrait for WLine {
+		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WLine, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+	impl crate::viz::WLineTraitConst for WLine {
+		#[inline] fn as_raw_WLine(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::WLineTrait for WLine {
+		#[inline] fn as_raw_mut_WLine(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WLine, crate::viz::WLineTraitConst, as_raw_WLine, crate::viz::WLineTrait, as_raw_mut_WLine }
 
 	/// Constructs a WMesh.
 	///
@@ -4760,36 +4748,6 @@ pub mod viz {
 	}
 
 	unsafe impl Send for WMesh {}
-
-	impl crate::viz::WidgetTraitConst for WMesh {
-		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WidgetTrait for WMesh {
-		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WMesh, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
-
-	impl crate::viz::Widget3DTraitConst for WMesh {
-		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::Widget3DTrait for WMesh {
-		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WMesh, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
-
-	impl crate::viz::WMeshTraitConst for WMesh {
-		#[inline] fn as_raw_WMesh(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WMeshTrait for WMesh {
-		#[inline] fn as_raw_mut_WMesh(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WMesh, crate::viz::WMeshTraitConst, as_raw_WMesh, crate::viz::WMeshTrait, as_raw_mut_WMesh }
 
 	impl WMesh {
 		#[inline]
@@ -4837,9 +4795,17 @@ pub mod viz {
 
 	}
 
-	boxed_cast_base! { WMesh, crate::viz::Widget, cv_viz_WMesh_to_Widget }
+	/// Constant methods for [crate::viz::WMesh]
+	pub trait WMeshTraitConst: crate::viz::Widget3DTraitConst {
+		fn as_raw_WMesh(&self) -> *const c_void;
 
-	boxed_cast_base! { WMesh, crate::viz::Widget3D, cv_viz_WMesh_to_Widget3D }
+	}
+
+	/// Mutable methods for [crate::viz::WMesh]
+	pub trait WMeshTrait: crate::viz::WMeshTraitConst + crate::viz::Widget3DTrait {
+		fn as_raw_mut_WMesh(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for WMesh {
 		#[inline]
@@ -4849,17 +4815,39 @@ pub mod viz {
 		}
 	}
 
-	/// Constant methods for [crate::viz::WPaintedCloud]
-	pub trait WPaintedCloudTraitConst: crate::viz::Widget3DTraitConst {
-		fn as_raw_WPaintedCloud(&self) -> *const c_void;
+	boxed_cast_base! { WMesh, crate::viz::Widget, cv_viz_WMesh_to_Widget }
 
+	boxed_cast_base! { WMesh, crate::viz::Widget3D, cv_viz_WMesh_to_Widget3D }
+
+	impl crate::viz::WidgetTraitConst for WMesh {
+		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [crate::viz::WPaintedCloud]
-	pub trait WPaintedCloudTrait: crate::viz::WPaintedCloudTraitConst + crate::viz::Widget3DTrait {
-		fn as_raw_mut_WPaintedCloud(&mut self) -> *mut c_void;
-
+	impl crate::viz::WidgetTrait for WMesh {
+		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { WMesh, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+	impl crate::viz::Widget3DTraitConst for WMesh {
+		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::Widget3DTrait for WMesh {
+		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WMesh, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+	impl crate::viz::WMeshTraitConst for WMesh {
+		#[inline] fn as_raw_WMesh(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::WMeshTrait for WMesh {
+		#[inline] fn as_raw_mut_WMesh(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WMesh, crate::viz::WMeshTraitConst, as_raw_WMesh, crate::viz::WMeshTrait, as_raw_mut_WMesh }
 
 	pub struct WPaintedCloud {
 		ptr: *mut c_void,
@@ -4875,36 +4863,6 @@ pub mod viz {
 	}
 
 	unsafe impl Send for WPaintedCloud {}
-
-	impl crate::viz::WidgetTraitConst for WPaintedCloud {
-		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WidgetTrait for WPaintedCloud {
-		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WPaintedCloud, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
-
-	impl crate::viz::Widget3DTraitConst for WPaintedCloud {
-		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::Widget3DTrait for WPaintedCloud {
-		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WPaintedCloud, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
-
-	impl crate::viz::WPaintedCloudTraitConst for WPaintedCloud {
-		#[inline] fn as_raw_WPaintedCloud(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WPaintedCloudTrait for WPaintedCloud {
-		#[inline] fn as_raw_mut_WPaintedCloud(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WPaintedCloud, crate::viz::WPaintedCloudTraitConst, as_raw_WPaintedCloud, crate::viz::WPaintedCloudTrait, as_raw_mut_WPaintedCloud }
 
 	impl WPaintedCloud {
 		/// Paint cloud with default gradient between cloud bounds points
@@ -4945,9 +4903,17 @@ pub mod viz {
 
 	}
 
-	boxed_cast_base! { WPaintedCloud, crate::viz::Widget, cv_viz_WPaintedCloud_to_Widget }
+	/// Constant methods for [crate::viz::WPaintedCloud]
+	pub trait WPaintedCloudTraitConst: crate::viz::Widget3DTraitConst {
+		fn as_raw_WPaintedCloud(&self) -> *const c_void;
 
-	boxed_cast_base! { WPaintedCloud, crate::viz::Widget3D, cv_viz_WPaintedCloud_to_Widget3D }
+	}
+
+	/// Mutable methods for [crate::viz::WPaintedCloud]
+	pub trait WPaintedCloudTrait: crate::viz::WPaintedCloudTraitConst + crate::viz::Widget3DTrait {
+		fn as_raw_mut_WPaintedCloud(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for WPaintedCloud {
 		#[inline]
@@ -4957,17 +4923,39 @@ pub mod viz {
 		}
 	}
 
-	/// Constant methods for [crate::viz::WPlane]
-	pub trait WPlaneTraitConst: crate::viz::Widget3DTraitConst {
-		fn as_raw_WPlane(&self) -> *const c_void;
+	boxed_cast_base! { WPaintedCloud, crate::viz::Widget, cv_viz_WPaintedCloud_to_Widget }
 
+	boxed_cast_base! { WPaintedCloud, crate::viz::Widget3D, cv_viz_WPaintedCloud_to_Widget3D }
+
+	impl crate::viz::WidgetTraitConst for WPaintedCloud {
+		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [crate::viz::WPlane]
-	pub trait WPlaneTrait: crate::viz::WPlaneTraitConst + crate::viz::Widget3DTrait {
-		fn as_raw_mut_WPlane(&mut self) -> *mut c_void;
-
+	impl crate::viz::WidgetTrait for WPaintedCloud {
+		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { WPaintedCloud, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+	impl crate::viz::Widget3DTraitConst for WPaintedCloud {
+		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::Widget3DTrait for WPaintedCloud {
+		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WPaintedCloud, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+	impl crate::viz::WPaintedCloudTraitConst for WPaintedCloud {
+		#[inline] fn as_raw_WPaintedCloud(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::WPaintedCloudTrait for WPaintedCloud {
+		#[inline] fn as_raw_mut_WPaintedCloud(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WPaintedCloud, crate::viz::WPaintedCloudTraitConst, as_raw_WPaintedCloud, crate::viz::WPaintedCloudTrait, as_raw_mut_WPaintedCloud }
 
 	/// This 3D Widget defines a finite plane.
 	pub struct WPlane {
@@ -4984,36 +4972,6 @@ pub mod viz {
 	}
 
 	unsafe impl Send for WPlane {}
-
-	impl crate::viz::WidgetTraitConst for WPlane {
-		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WidgetTrait for WPlane {
-		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WPlane, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
-
-	impl crate::viz::Widget3DTraitConst for WPlane {
-		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::Widget3DTrait for WPlane {
-		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WPlane, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
-
-	impl crate::viz::WPlaneTraitConst for WPlane {
-		#[inline] fn as_raw_WPlane(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WPlaneTrait for WPlane {
-		#[inline] fn as_raw_mut_WPlane(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WPlane, crate::viz::WPlaneTraitConst, as_raw_WPlane, crate::viz::WPlaneTrait, as_raw_mut_WPlane }
 
 	impl WPlane {
 		/// Constructs a default plane with center point at origin and normal oriented along z-axis.
@@ -5102,9 +5060,17 @@ pub mod viz {
 
 	}
 
-	boxed_cast_base! { WPlane, crate::viz::Widget, cv_viz_WPlane_to_Widget }
+	/// Constant methods for [crate::viz::WPlane]
+	pub trait WPlaneTraitConst: crate::viz::Widget3DTraitConst {
+		fn as_raw_WPlane(&self) -> *const c_void;
 
-	boxed_cast_base! { WPlane, crate::viz::Widget3D, cv_viz_WPlane_to_Widget3D }
+	}
+
+	/// Mutable methods for [crate::viz::WPlane]
+	pub trait WPlaneTrait: crate::viz::WPlaneTraitConst + crate::viz::Widget3DTrait {
+		fn as_raw_mut_WPlane(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for WPlane {
 		#[inline]
@@ -5114,17 +5080,39 @@ pub mod viz {
 		}
 	}
 
-	/// Constant methods for [crate::viz::WPolyLine]
-	pub trait WPolyLineTraitConst: crate::viz::Widget3DTraitConst {
-		fn as_raw_WPolyLine(&self) -> *const c_void;
+	boxed_cast_base! { WPlane, crate::viz::Widget, cv_viz_WPlane_to_Widget }
 
+	boxed_cast_base! { WPlane, crate::viz::Widget3D, cv_viz_WPlane_to_Widget3D }
+
+	impl crate::viz::WidgetTraitConst for WPlane {
+		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [crate::viz::WPolyLine]
-	pub trait WPolyLineTrait: crate::viz::WPolyLineTraitConst + crate::viz::Widget3DTrait {
-		fn as_raw_mut_WPolyLine(&mut self) -> *mut c_void;
-
+	impl crate::viz::WidgetTrait for WPlane {
+		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { WPlane, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+	impl crate::viz::Widget3DTraitConst for WPlane {
+		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::Widget3DTrait for WPlane {
+		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WPlane, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+	impl crate::viz::WPlaneTraitConst for WPlane {
+		#[inline] fn as_raw_WPlane(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::WPlaneTrait for WPlane {
+		#[inline] fn as_raw_mut_WPlane(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WPlane, crate::viz::WPlaneTraitConst, as_raw_WPlane, crate::viz::WPlaneTrait, as_raw_mut_WPlane }
 
 	/// This 3D Widget defines a poly line. :
 	pub struct WPolyLine {
@@ -5141,36 +5129,6 @@ pub mod viz {
 	}
 
 	unsafe impl Send for WPolyLine {}
-
-	impl crate::viz::WidgetTraitConst for WPolyLine {
-		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WidgetTrait for WPolyLine {
-		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WPolyLine, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
-
-	impl crate::viz::Widget3DTraitConst for WPolyLine {
-		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::Widget3DTrait for WPolyLine {
-		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WPolyLine, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
-
-	impl crate::viz::WPolyLineTraitConst for WPolyLine {
-		#[inline] fn as_raw_WPolyLine(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WPolyLineTrait for WPolyLine {
-		#[inline] fn as_raw_mut_WPolyLine(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WPolyLine, crate::viz::WPolyLineTraitConst, as_raw_WPolyLine, crate::viz::WPolyLineTrait, as_raw_mut_WPolyLine }
 
 	impl WPolyLine {
 		#[inline]
@@ -5226,9 +5184,17 @@ pub mod viz {
 
 	}
 
-	boxed_cast_base! { WPolyLine, crate::viz::Widget, cv_viz_WPolyLine_to_Widget }
+	/// Constant methods for [crate::viz::WPolyLine]
+	pub trait WPolyLineTraitConst: crate::viz::Widget3DTraitConst {
+		fn as_raw_WPolyLine(&self) -> *const c_void;
 
-	boxed_cast_base! { WPolyLine, crate::viz::Widget3D, cv_viz_WPolyLine_to_Widget3D }
+	}
+
+	/// Mutable methods for [crate::viz::WPolyLine]
+	pub trait WPolyLineTrait: crate::viz::WPolyLineTraitConst + crate::viz::Widget3DTrait {
+		fn as_raw_mut_WPolyLine(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for WPolyLine {
 		#[inline]
@@ -5238,17 +5204,39 @@ pub mod viz {
 		}
 	}
 
-	/// Constant methods for [crate::viz::WSphere]
-	pub trait WSphereTraitConst: crate::viz::Widget3DTraitConst {
-		fn as_raw_WSphere(&self) -> *const c_void;
+	boxed_cast_base! { WPolyLine, crate::viz::Widget, cv_viz_WPolyLine_to_Widget }
 
+	boxed_cast_base! { WPolyLine, crate::viz::Widget3D, cv_viz_WPolyLine_to_Widget3D }
+
+	impl crate::viz::WidgetTraitConst for WPolyLine {
+		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [crate::viz::WSphere]
-	pub trait WSphereTrait: crate::viz::WSphereTraitConst + crate::viz::Widget3DTrait {
-		fn as_raw_mut_WSphere(&mut self) -> *mut c_void;
-
+	impl crate::viz::WidgetTrait for WPolyLine {
+		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { WPolyLine, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+	impl crate::viz::Widget3DTraitConst for WPolyLine {
+		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::Widget3DTrait for WPolyLine {
+		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WPolyLine, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+	impl crate::viz::WPolyLineTraitConst for WPolyLine {
+		#[inline] fn as_raw_WPolyLine(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::WPolyLineTrait for WPolyLine {
+		#[inline] fn as_raw_mut_WPolyLine(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WPolyLine, crate::viz::WPolyLineTraitConst, as_raw_WPolyLine, crate::viz::WPolyLineTrait, as_raw_mut_WPolyLine }
 
 	/// This 3D Widget defines a sphere. :
 	pub struct WSphere {
@@ -5265,36 +5253,6 @@ pub mod viz {
 	}
 
 	unsafe impl Send for WSphere {}
-
-	impl crate::viz::WidgetTraitConst for WSphere {
-		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WidgetTrait for WSphere {
-		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WSphere, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
-
-	impl crate::viz::Widget3DTraitConst for WSphere {
-		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::Widget3DTrait for WSphere {
-		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WSphere, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
-
-	impl crate::viz::WSphereTraitConst for WSphere {
-		#[inline] fn as_raw_WSphere(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WSphereTrait for WSphere {
-		#[inline] fn as_raw_mut_WSphere(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WSphere, crate::viz::WSphereTraitConst, as_raw_WSphere, crate::viz::WSphereTrait, as_raw_mut_WSphere }
 
 	impl WSphere {
 		/// Constructs a WSphere.
@@ -5342,9 +5300,17 @@ pub mod viz {
 
 	}
 
-	boxed_cast_base! { WSphere, crate::viz::Widget, cv_viz_WSphere_to_Widget }
+	/// Constant methods for [crate::viz::WSphere]
+	pub trait WSphereTraitConst: crate::viz::Widget3DTraitConst {
+		fn as_raw_WSphere(&self) -> *const c_void;
 
-	boxed_cast_base! { WSphere, crate::viz::Widget3D, cv_viz_WSphere_to_Widget3D }
+	}
+
+	/// Mutable methods for [crate::viz::WSphere]
+	pub trait WSphereTrait: crate::viz::WSphereTraitConst + crate::viz::Widget3DTrait {
+		fn as_raw_mut_WSphere(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for WSphere {
 		#[inline]
@@ -5354,42 +5320,39 @@ pub mod viz {
 		}
 	}
 
-	/// Constant methods for [crate::viz::WText]
-	pub trait WTextTraitConst: crate::viz::Widget2DTraitConst {
-		fn as_raw_WText(&self) -> *const c_void;
+	boxed_cast_base! { WSphere, crate::viz::Widget, cv_viz_WSphere_to_Widget }
 
-		/// Returns the current text content of the widget.
-		#[inline]
-		fn get_text(&self) -> Result<String> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_WText_getText_const(self.as_raw_WText(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { String::opencv_from_extern(ret) };
-			Ok(ret)
-		}
+	boxed_cast_base! { WSphere, crate::viz::Widget3D, cv_viz_WSphere_to_Widget3D }
 
+	impl crate::viz::WidgetTraitConst for WSphere {
+		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [crate::viz::WText]
-	pub trait WTextTrait: crate::viz::WTextTraitConst + crate::viz::Widget2DTrait {
-		fn as_raw_mut_WText(&mut self) -> *mut c_void;
-
-		/// Sets the text content of the widget.
-		///
-		/// ## Parameters
-		/// * text: Text content of the widget.
-		#[inline]
-		fn set_text(&mut self, text: &str) -> Result<()> {
-			extern_container_arg!(text);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_WText_setText_const_StringR(self.as_raw_mut_WText(), text.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
+	impl crate::viz::WidgetTrait for WSphere {
+		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { WSphere, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+	impl crate::viz::Widget3DTraitConst for WSphere {
+		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::Widget3DTrait for WSphere {
+		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WSphere, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+	impl crate::viz::WSphereTraitConst for WSphere {
+		#[inline] fn as_raw_WSphere(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::WSphereTrait for WSphere {
+		#[inline] fn as_raw_mut_WSphere(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WSphere, crate::viz::WSphereTraitConst, as_raw_WSphere, crate::viz::WSphereTrait, as_raw_mut_WSphere }
 
 	/// This 2D Widget represents text overlay.
 	pub struct WText {
@@ -5406,36 +5369,6 @@ pub mod viz {
 	}
 
 	unsafe impl Send for WText {}
-
-	impl crate::viz::WidgetTraitConst for WText {
-		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WidgetTrait for WText {
-		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WText, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
-
-	impl crate::viz::Widget2DTraitConst for WText {
-		#[inline] fn as_raw_Widget2D(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::Widget2DTrait for WText {
-		#[inline] fn as_raw_mut_Widget2D(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WText, crate::viz::Widget2DTraitConst, as_raw_Widget2D, crate::viz::Widget2DTrait, as_raw_mut_Widget2D }
-
-	impl crate::viz::WTextTraitConst for WText {
-		#[inline] fn as_raw_WText(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WTextTrait for WText {
-		#[inline] fn as_raw_mut_WText(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WText, crate::viz::WTextTraitConst, as_raw_WText, crate::viz::WTextTrait, as_raw_mut_WText }
 
 	impl WText {
 		/// Constructs a WText.
@@ -5485,27 +5418,15 @@ pub mod viz {
 
 	}
 
-	boxed_cast_base! { WText, crate::viz::Widget, cv_viz_WText_to_Widget }
-
-	boxed_cast_base! { WText, crate::viz::Widget2D, cv_viz_WText_to_Widget2D }
-
-	impl std::fmt::Debug for WText {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("WText")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::viz::WText3D]
-	pub trait WText3DTraitConst: crate::viz::Widget3DTraitConst {
-		fn as_raw_WText3D(&self) -> *const c_void;
+	/// Constant methods for [crate::viz::WText]
+	pub trait WTextTraitConst: crate::viz::Widget2DTraitConst {
+		fn as_raw_WText(&self) -> *const c_void;
 
 		/// Returns the current text content of the widget.
 		#[inline]
 		fn get_text(&self) -> Result<String> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_WText3D_getText_const(self.as_raw_WText3D(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_viz_WText_getText_const(self.as_raw_WText(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			let ret = unsafe { String::opencv_from_extern(ret) };
@@ -5514,9 +5435,9 @@ pub mod viz {
 
 	}
 
-	/// Mutable methods for [crate::viz::WText3D]
-	pub trait WText3DTrait: crate::viz::WText3DTraitConst + crate::viz::Widget3DTrait {
-		fn as_raw_mut_WText3D(&mut self) -> *mut c_void;
+	/// Mutable methods for [crate::viz::WText]
+	pub trait WTextTrait: crate::viz::WTextTraitConst + crate::viz::Widget2DTrait {
+		fn as_raw_mut_WText(&mut self) -> *mut c_void;
 
 		/// Sets the text content of the widget.
 		///
@@ -5526,13 +5447,55 @@ pub mod viz {
 		fn set_text(&mut self, text: &str) -> Result<()> {
 			extern_container_arg!(text);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_WText3D_setText_const_StringR(self.as_raw_mut_WText3D(), text.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_viz_WText_setText_const_StringR(self.as_raw_mut_WText(), text.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
 			Ok(ret)
 		}
 
 	}
+
+	impl std::fmt::Debug for WText {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WText")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { WText, crate::viz::Widget, cv_viz_WText_to_Widget }
+
+	boxed_cast_base! { WText, crate::viz::Widget2D, cv_viz_WText_to_Widget2D }
+
+	impl crate::viz::WidgetTraitConst for WText {
+		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::WidgetTrait for WText {
+		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WText, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+	impl crate::viz::Widget2DTraitConst for WText {
+		#[inline] fn as_raw_Widget2D(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::Widget2DTrait for WText {
+		#[inline] fn as_raw_mut_Widget2D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WText, crate::viz::Widget2DTraitConst, as_raw_Widget2D, crate::viz::Widget2DTrait, as_raw_mut_Widget2D }
+
+	impl crate::viz::WTextTraitConst for WText {
+		#[inline] fn as_raw_WText(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::WTextTrait for WText {
+		#[inline] fn as_raw_mut_WText(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WText, crate::viz::WTextTraitConst, as_raw_WText, crate::viz::WTextTrait, as_raw_mut_WText }
 
 	/// This 3D Widget represents 3D text. The text always faces the camera.
 	pub struct WText3D {
@@ -5549,36 +5512,6 @@ pub mod viz {
 	}
 
 	unsafe impl Send for WText3D {}
-
-	impl crate::viz::WidgetTraitConst for WText3D {
-		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WidgetTrait for WText3D {
-		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WText3D, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
-
-	impl crate::viz::Widget3DTraitConst for WText3D {
-		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::Widget3DTrait for WText3D {
-		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WText3D, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
-
-	impl crate::viz::WText3DTraitConst for WText3D {
-		#[inline] fn as_raw_WText3D(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WText3DTrait for WText3D {
-		#[inline] fn as_raw_mut_WText3D(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WText3D, crate::viz::WText3DTraitConst, as_raw_WText3D, crate::viz::WText3DTrait, as_raw_mut_WText3D }
 
 	impl WText3D {
 		/// Constructs a WText3D.
@@ -5632,9 +5565,42 @@ pub mod viz {
 
 	}
 
-	boxed_cast_base! { WText3D, crate::viz::Widget, cv_viz_WText3D_to_Widget }
+	/// Constant methods for [crate::viz::WText3D]
+	pub trait WText3DTraitConst: crate::viz::Widget3DTraitConst {
+		fn as_raw_WText3D(&self) -> *const c_void;
 
-	boxed_cast_base! { WText3D, crate::viz::Widget3D, cv_viz_WText3D_to_Widget3D }
+		/// Returns the current text content of the widget.
+		#[inline]
+		fn get_text(&self) -> Result<String> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WText3D_getText_const(self.as_raw_WText3D(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { String::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Mutable methods for [crate::viz::WText3D]
+	pub trait WText3DTrait: crate::viz::WText3DTraitConst + crate::viz::Widget3DTrait {
+		fn as_raw_mut_WText3D(&mut self) -> *mut c_void;
+
+		/// Sets the text content of the widget.
+		///
+		/// ## Parameters
+		/// * text: Text content of the widget.
+		#[inline]
+		fn set_text(&mut self, text: &str) -> Result<()> {
+			extern_container_arg!(text);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WText3D_setText_const_StringR(self.as_raw_mut_WText3D(), text.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
 
 	impl std::fmt::Debug for WText3D {
 		#[inline]
@@ -5644,17 +5610,39 @@ pub mod viz {
 		}
 	}
 
-	/// Constant methods for [crate::viz::WTrajectory]
-	pub trait WTrajectoryTraitConst: crate::viz::Widget3DTraitConst {
-		fn as_raw_WTrajectory(&self) -> *const c_void;
+	boxed_cast_base! { WText3D, crate::viz::Widget, cv_viz_WText3D_to_Widget }
 
+	boxed_cast_base! { WText3D, crate::viz::Widget3D, cv_viz_WText3D_to_Widget3D }
+
+	impl crate::viz::WidgetTraitConst for WText3D {
+		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [crate::viz::WTrajectory]
-	pub trait WTrajectoryTrait: crate::viz::WTrajectoryTraitConst + crate::viz::Widget3DTrait {
-		fn as_raw_mut_WTrajectory(&mut self) -> *mut c_void;
-
+	impl crate::viz::WidgetTrait for WText3D {
+		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { WText3D, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+	impl crate::viz::Widget3DTraitConst for WText3D {
+		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::Widget3DTrait for WText3D {
+		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WText3D, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+	impl crate::viz::WText3DTraitConst for WText3D {
+		#[inline] fn as_raw_WText3D(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::WText3DTrait for WText3D {
+		#[inline] fn as_raw_mut_WText3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WText3D, crate::viz::WText3DTraitConst, as_raw_WText3D, crate::viz::WText3DTrait, as_raw_mut_WText3D }
 
 	/// This 3D Widget represents a trajectory. :
 	pub struct WTrajectory {
@@ -5671,36 +5659,6 @@ pub mod viz {
 	}
 
 	unsafe impl Send for WTrajectory {}
-
-	impl crate::viz::WidgetTraitConst for WTrajectory {
-		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WidgetTrait for WTrajectory {
-		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WTrajectory, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
-
-	impl crate::viz::Widget3DTraitConst for WTrajectory {
-		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::Widget3DTrait for WTrajectory {
-		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WTrajectory, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
-
-	impl crate::viz::WTrajectoryTraitConst for WTrajectory {
-		#[inline] fn as_raw_WTrajectory(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WTrajectoryTrait for WTrajectory {
-		#[inline] fn as_raw_mut_WTrajectory(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WTrajectory, crate::viz::WTrajectoryTraitConst, as_raw_WTrajectory, crate::viz::WTrajectoryTrait, as_raw_mut_WTrajectory }
 
 	impl WTrajectory {
 		/// Constructs a WTrajectory.
@@ -5764,9 +5722,17 @@ pub mod viz {
 
 	}
 
-	boxed_cast_base! { WTrajectory, crate::viz::Widget, cv_viz_WTrajectory_to_Widget }
+	/// Constant methods for [crate::viz::WTrajectory]
+	pub trait WTrajectoryTraitConst: crate::viz::Widget3DTraitConst {
+		fn as_raw_WTrajectory(&self) -> *const c_void;
 
-	boxed_cast_base! { WTrajectory, crate::viz::Widget3D, cv_viz_WTrajectory_to_Widget3D }
+	}
+
+	/// Mutable methods for [crate::viz::WTrajectory]
+	pub trait WTrajectoryTrait: crate::viz::WTrajectoryTraitConst + crate::viz::Widget3DTrait {
+		fn as_raw_mut_WTrajectory(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for WTrajectory {
 		#[inline]
@@ -5776,17 +5742,39 @@ pub mod viz {
 		}
 	}
 
-	/// Constant methods for [crate::viz::WTrajectoryFrustums]
-	pub trait WTrajectoryFrustumsTraitConst: crate::viz::Widget3DTraitConst {
-		fn as_raw_WTrajectoryFrustums(&self) -> *const c_void;
+	boxed_cast_base! { WTrajectory, crate::viz::Widget, cv_viz_WTrajectory_to_Widget }
 
+	boxed_cast_base! { WTrajectory, crate::viz::Widget3D, cv_viz_WTrajectory_to_Widget3D }
+
+	impl crate::viz::WidgetTraitConst for WTrajectory {
+		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [crate::viz::WTrajectoryFrustums]
-	pub trait WTrajectoryFrustumsTrait: crate::viz::WTrajectoryFrustumsTraitConst + crate::viz::Widget3DTrait {
-		fn as_raw_mut_WTrajectoryFrustums(&mut self) -> *mut c_void;
-
+	impl crate::viz::WidgetTrait for WTrajectory {
+		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { WTrajectory, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+	impl crate::viz::Widget3DTraitConst for WTrajectory {
+		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::Widget3DTrait for WTrajectory {
+		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WTrajectory, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+	impl crate::viz::WTrajectoryTraitConst for WTrajectory {
+		#[inline] fn as_raw_WTrajectory(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::WTrajectoryTrait for WTrajectory {
+		#[inline] fn as_raw_mut_WTrajectory(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WTrajectory, crate::viz::WTrajectoryTraitConst, as_raw_WTrajectory, crate::viz::WTrajectoryTrait, as_raw_mut_WTrajectory }
 
 	/// This 3D Widget represents a trajectory. :
 	pub struct WTrajectoryFrustums {
@@ -5803,36 +5791,6 @@ pub mod viz {
 	}
 
 	unsafe impl Send for WTrajectoryFrustums {}
-
-	impl crate::viz::WidgetTraitConst for WTrajectoryFrustums {
-		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WidgetTrait for WTrajectoryFrustums {
-		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WTrajectoryFrustums, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
-
-	impl crate::viz::Widget3DTraitConst for WTrajectoryFrustums {
-		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::Widget3DTrait for WTrajectoryFrustums {
-		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WTrajectoryFrustums, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
-
-	impl crate::viz::WTrajectoryFrustumsTraitConst for WTrajectoryFrustums {
-		#[inline] fn as_raw_WTrajectoryFrustums(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WTrajectoryFrustumsTrait for WTrajectoryFrustums {
-		#[inline] fn as_raw_mut_WTrajectoryFrustums(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WTrajectoryFrustums, crate::viz::WTrajectoryFrustumsTraitConst, as_raw_WTrajectoryFrustums, crate::viz::WTrajectoryFrustumsTrait, as_raw_mut_WTrajectoryFrustums }
 
 	impl WTrajectoryFrustums {
 		/// Constructs a WTrajectoryFrustums.
@@ -5935,9 +5893,17 @@ pub mod viz {
 
 	}
 
-	boxed_cast_base! { WTrajectoryFrustums, crate::viz::Widget, cv_viz_WTrajectoryFrustums_to_Widget }
+	/// Constant methods for [crate::viz::WTrajectoryFrustums]
+	pub trait WTrajectoryFrustumsTraitConst: crate::viz::Widget3DTraitConst {
+		fn as_raw_WTrajectoryFrustums(&self) -> *const c_void;
 
-	boxed_cast_base! { WTrajectoryFrustums, crate::viz::Widget3D, cv_viz_WTrajectoryFrustums_to_Widget3D }
+	}
+
+	/// Mutable methods for [crate::viz::WTrajectoryFrustums]
+	pub trait WTrajectoryFrustumsTrait: crate::viz::WTrajectoryFrustumsTraitConst + crate::viz::Widget3DTrait {
+		fn as_raw_mut_WTrajectoryFrustums(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for WTrajectoryFrustums {
 		#[inline]
@@ -5947,17 +5913,39 @@ pub mod viz {
 		}
 	}
 
-	/// Constant methods for [crate::viz::WTrajectorySpheres]
-	pub trait WTrajectorySpheresTraitConst: crate::viz::Widget3DTraitConst {
-		fn as_raw_WTrajectorySpheres(&self) -> *const c_void;
+	boxed_cast_base! { WTrajectoryFrustums, crate::viz::Widget, cv_viz_WTrajectoryFrustums_to_Widget }
 
+	boxed_cast_base! { WTrajectoryFrustums, crate::viz::Widget3D, cv_viz_WTrajectoryFrustums_to_Widget3D }
+
+	impl crate::viz::WidgetTraitConst for WTrajectoryFrustums {
+		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
 	}
 
-	/// Mutable methods for [crate::viz::WTrajectorySpheres]
-	pub trait WTrajectorySpheresTrait: crate::viz::WTrajectorySpheresTraitConst + crate::viz::Widget3DTrait {
-		fn as_raw_mut_WTrajectorySpheres(&mut self) -> *mut c_void;
-
+	impl crate::viz::WidgetTrait for WTrajectoryFrustums {
+		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
 	}
+
+	boxed_ref! { WTrajectoryFrustums, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+	impl crate::viz::Widget3DTraitConst for WTrajectoryFrustums {
+		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::Widget3DTrait for WTrajectoryFrustums {
+		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WTrajectoryFrustums, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+	impl crate::viz::WTrajectoryFrustumsTraitConst for WTrajectoryFrustums {
+		#[inline] fn as_raw_WTrajectoryFrustums(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::WTrajectoryFrustumsTrait for WTrajectoryFrustums {
+		#[inline] fn as_raw_mut_WTrajectoryFrustums(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WTrajectoryFrustums, crate::viz::WTrajectoryFrustumsTraitConst, as_raw_WTrajectoryFrustums, crate::viz::WTrajectoryFrustumsTrait, as_raw_mut_WTrajectoryFrustums }
 
 	/// This 3D Widget represents a trajectory using spheres and lines
 	///
@@ -5977,36 +5965,6 @@ pub mod viz {
 	}
 
 	unsafe impl Send for WTrajectorySpheres {}
-
-	impl crate::viz::WidgetTraitConst for WTrajectorySpheres {
-		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WidgetTrait for WTrajectorySpheres {
-		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WTrajectorySpheres, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
-
-	impl crate::viz::Widget3DTraitConst for WTrajectorySpheres {
-		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::Widget3DTrait for WTrajectorySpheres {
-		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WTrajectorySpheres, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
-
-	impl crate::viz::WTrajectorySpheresTraitConst for WTrajectorySpheres {
-		#[inline] fn as_raw_WTrajectorySpheres(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::viz::WTrajectorySpheresTrait for WTrajectorySpheres {
-		#[inline] fn as_raw_mut_WTrajectorySpheres(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { WTrajectorySpheres, crate::viz::WTrajectorySpheresTraitConst, as_raw_WTrajectorySpheres, crate::viz::WTrajectorySpheresTrait, as_raw_mut_WTrajectorySpheres }
 
 	impl WTrajectorySpheres {
 		/// Constructs a WTrajectorySpheres.
@@ -6062,9 +6020,17 @@ pub mod viz {
 
 	}
 
-	boxed_cast_base! { WTrajectorySpheres, crate::viz::Widget, cv_viz_WTrajectorySpheres_to_Widget }
+	/// Constant methods for [crate::viz::WTrajectorySpheres]
+	pub trait WTrajectorySpheresTraitConst: crate::viz::Widget3DTraitConst {
+		fn as_raw_WTrajectorySpheres(&self) -> *const c_void;
 
-	boxed_cast_base! { WTrajectorySpheres, crate::viz::Widget3D, cv_viz_WTrajectorySpheres_to_Widget3D }
+	}
+
+	/// Mutable methods for [crate::viz::WTrajectorySpheres]
+	pub trait WTrajectorySpheresTrait: crate::viz::WTrajectorySpheresTraitConst + crate::viz::Widget3DTrait {
+		fn as_raw_mut_WTrajectorySpheres(&mut self) -> *mut c_void;
+
+	}
 
 	impl std::fmt::Debug for WTrajectorySpheres {
 		#[inline]
@@ -6072,6 +6038,74 @@ pub mod viz {
 			f.debug_struct("WTrajectorySpheres")
 				.finish()
 		}
+	}
+
+	boxed_cast_base! { WTrajectorySpheres, crate::viz::Widget, cv_viz_WTrajectorySpheres_to_Widget }
+
+	boxed_cast_base! { WTrajectorySpheres, crate::viz::Widget3D, cv_viz_WTrajectorySpheres_to_Widget3D }
+
+	impl crate::viz::WidgetTraitConst for WTrajectorySpheres {
+		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::WidgetTrait for WTrajectorySpheres {
+		#[inline] fn as_raw_mut_Widget(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WTrajectorySpheres, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
+
+	impl crate::viz::Widget3DTraitConst for WTrajectorySpheres {
+		#[inline] fn as_raw_Widget3D(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::Widget3DTrait for WTrajectorySpheres {
+		#[inline] fn as_raw_mut_Widget3D(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WTrajectorySpheres, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
+
+	impl crate::viz::WTrajectorySpheresTraitConst for WTrajectorySpheres {
+		#[inline] fn as_raw_WTrajectorySpheres(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::viz::WTrajectorySpheresTrait for WTrajectorySpheres {
+		#[inline] fn as_raw_mut_WTrajectorySpheres(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { WTrajectorySpheres, crate::viz::WTrajectorySpheresTraitConst, as_raw_WTrajectorySpheres, crate::viz::WTrajectorySpheresTrait, as_raw_mut_WTrajectorySpheres }
+
+	/// This class allows to merge several widgets to single one.
+	///
+	/// It has quite limited functionality and can't merge widgets with different attributes. For
+	/// instance, if widgetA has color array and widgetB has only global color defined, then result
+	/// of merge won't have color at all. The class is suitable for merging large amount of similar
+	/// widgets. :
+	pub struct WWidgetMerger {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { WWidgetMerger }
+
+	impl Drop for WWidgetMerger {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_viz_WWidgetMerger_delete(self.as_raw_mut_WWidgetMerger()) };
+		}
+	}
+
+	unsafe impl Send for WWidgetMerger {}
+
+	impl WWidgetMerger {
+		#[inline]
+		pub fn default() -> Result<crate::viz::WWidgetMerger> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_WWidgetMerger_WWidgetMerger(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::WWidgetMerger::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::viz::WWidgetMerger]
@@ -6123,26 +6157,17 @@ pub mod viz {
 
 	}
 
-	/// This class allows to merge several widgets to single one.
-	///
-	/// It has quite limited functionality and can't merge widgets with different attributes. For
-	/// instance, if widgetA has color array and widgetB has only global color defined, then result
-	/// of merge won't have color at all. The class is suitable for merging large amount of similar
-	/// widgets. :
-	pub struct WWidgetMerger {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { WWidgetMerger }
-
-	impl Drop for WWidgetMerger {
+	impl std::fmt::Debug for WWidgetMerger {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_viz_WWidgetMerger_delete(self.as_raw_mut_WWidgetMerger()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WWidgetMerger")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for WWidgetMerger {}
+	boxed_cast_base! { WWidgetMerger, crate::viz::Widget, cv_viz_WWidgetMerger_to_Widget }
+
+	boxed_cast_base! { WWidgetMerger, crate::viz::Widget3D, cv_viz_WWidgetMerger_to_Widget3D }
 
 	impl crate::viz::WidgetTraitConst for WWidgetMerger {
 		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
@@ -6174,29 +6199,58 @@ pub mod viz {
 
 	boxed_ref! { WWidgetMerger, crate::viz::WWidgetMergerTraitConst, as_raw_WWidgetMerger, crate::viz::WWidgetMergerTrait, as_raw_mut_WWidgetMerger }
 
-	impl WWidgetMerger {
+	/// Base class of all widgets. Widget is implicitly shared.
+	pub struct Widget {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Widget }
+
+	impl Drop for Widget {
 		#[inline]
-		pub fn default() -> Result<crate::viz::WWidgetMerger> {
+		fn drop(&mut self) {
+			unsafe { sys::cv_viz_Widget_delete(self.as_raw_mut_Widget()) };
+		}
+	}
+
+	unsafe impl Send for Widget {}
+
+	impl Widget {
+		#[inline]
+		pub fn default() -> Result<crate::viz::Widget> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_WWidgetMerger_WWidgetMerger(ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_viz_Widget_Widget(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::viz::WWidgetMerger::opencv_from_extern(ret) };
+			let ret = unsafe { crate::viz::Widget::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	boxed_cast_base! { WWidgetMerger, crate::viz::Widget, cv_viz_WWidgetMerger_to_Widget }
-
-	boxed_cast_base! { WWidgetMerger, crate::viz::Widget3D, cv_viz_WWidgetMerger_to_Widget3D }
-
-	impl std::fmt::Debug for WWidgetMerger {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("WWidgetMerger")
-				.finish()
+		pub fn copy(other: &impl crate::viz::WidgetTraitConst) -> Result<crate::viz::Widget> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_Widget_Widget_const_WidgetR(other.as_raw_Widget(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::Widget::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
+		/// Creates a widget from ply file.
+		///
+		/// ## Parameters
+		/// * file_name: Ply file name.
+		#[inline]
+		pub fn from_ply_file(file_name: &str) -> Result<crate::viz::Widget> {
+			extern_container_arg!(file_name);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_Widget_fromPlyFile_const_StringR(file_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::Widget::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::viz::Widget]
@@ -6288,21 +6342,13 @@ pub mod viz {
 
 	}
 
-	/// Base class of all widgets. Widget is implicitly shared.
-	pub struct Widget {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Widget }
-
-	impl Drop for Widget {
+	impl std::fmt::Debug for Widget {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_viz_Widget_delete(self.as_raw_mut_Widget()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Widget")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for Widget {}
 
 	impl crate::viz::WidgetTraitConst for Widget {
 		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
@@ -6314,50 +6360,33 @@ pub mod viz {
 
 	boxed_ref! { Widget, crate::viz::WidgetTraitConst, as_raw_Widget, crate::viz::WidgetTrait, as_raw_mut_Widget }
 
-	impl Widget {
-		#[inline]
-		pub fn default() -> Result<crate::viz::Widget> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_Widget_Widget(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::viz::Widget::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		#[inline]
-		pub fn copy(other: &impl crate::viz::WidgetTraitConst) -> Result<crate::viz::Widget> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_Widget_Widget_const_WidgetR(other.as_raw_Widget(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::viz::Widget::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Creates a widget from ply file.
-		///
-		/// ## Parameters
-		/// * file_name: Ply file name.
-		#[inline]
-		pub fn from_ply_file(file_name: &str) -> Result<crate::viz::Widget> {
-			extern_container_arg!(file_name);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_Widget_fromPlyFile_const_StringR(file_name.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::viz::Widget::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// Base class of all 2D widgets.
+	pub struct Widget2D {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for Widget {
+	opencv_type_boxed! { Widget2D }
+
+	impl Drop for Widget2D {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Widget")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_viz_Widget2D_delete(self.as_raw_mut_Widget2D()) };
 		}
+	}
+
+	unsafe impl Send for Widget2D {}
+
+	impl Widget2D {
+		#[inline]
+		pub fn default() -> Result<crate::viz::Widget2D> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_viz_Widget2D_Widget2D(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::viz::Widget2D::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::viz::Widget2D]
@@ -6385,21 +6414,15 @@ pub mod viz {
 
 	}
 
-	/// Base class of all 2D widgets.
-	pub struct Widget2D {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Widget2D }
-
-	impl Drop for Widget2D {
+	impl std::fmt::Debug for Widget2D {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_viz_Widget2D_delete(self.as_raw_mut_Widget2D()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Widget2D")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for Widget2D {}
+	boxed_cast_base! { Widget2D, crate::viz::Widget, cv_viz_Widget2D_to_Widget }
 
 	impl crate::viz::WidgetTraitConst for Widget2D {
 		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
@@ -6421,27 +6444,33 @@ pub mod viz {
 
 	boxed_ref! { Widget2D, crate::viz::Widget2DTraitConst, as_raw_Widget2D, crate::viz::Widget2DTrait, as_raw_mut_Widget2D }
 
-	impl Widget2D {
+	/// Base class of all 3D widgets.
+	pub struct Widget3D {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { Widget3D }
+
+	impl Drop for Widget3D {
 		#[inline]
-		pub fn default() -> Result<crate::viz::Widget2D> {
+		fn drop(&mut self) {
+			unsafe { sys::cv_viz_Widget3D_delete(self.as_raw_mut_Widget3D()) };
+		}
+	}
+
+	unsafe impl Send for Widget3D {}
+
+	impl Widget3D {
+		#[inline]
+		pub fn default() -> Result<crate::viz::Widget3D> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_Widget2D_Widget2D(ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_viz_Widget3D_Widget3D(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::viz::Widget2D::opencv_from_extern(ret) };
+			let ret = unsafe { crate::viz::Widget3D::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	boxed_cast_base! { Widget2D, crate::viz::Widget, cv_viz_Widget2D_to_Widget }
-
-	impl std::fmt::Debug for Widget2D {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Widget2D")
-				.finish()
-		}
 	}
 
 	/// Constant methods for [crate::viz::Widget3D]
@@ -6518,21 +6547,15 @@ pub mod viz {
 
 	}
 
-	/// Base class of all 3D widgets.
-	pub struct Widget3D {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { Widget3D }
-
-	impl Drop for Widget3D {
+	impl std::fmt::Debug for Widget3D {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_viz_Widget3D_delete(self.as_raw_mut_Widget3D()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("Widget3D")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for Widget3D {}
+	boxed_cast_base! { Widget3D, crate::viz::Widget, cv_viz_Widget3D_to_Widget }
 
 	impl crate::viz::WidgetTraitConst for Widget3D {
 		#[inline] fn as_raw_Widget(&self) -> *const c_void { self.as_raw() }
@@ -6554,26 +6577,4 @@ pub mod viz {
 
 	boxed_ref! { Widget3D, crate::viz::Widget3DTraitConst, as_raw_Widget3D, crate::viz::Widget3DTrait, as_raw_mut_Widget3D }
 
-	impl Widget3D {
-		#[inline]
-		pub fn default() -> Result<crate::viz::Widget3D> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_viz_Widget3D_Widget3D(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::viz::Widget3D::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_base! { Widget3D, crate::viz::Widget, cv_viz_Widget3D_to_Widget }
-
-	impl std::fmt::Debug for Widget3D {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("Widget3D")
-				.finish()
-		}
-	}
 }

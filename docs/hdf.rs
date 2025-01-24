@@ -82,6 +82,24 @@ pub mod hdf {
 		Ok(ret)
 	}
 
+	/// Hierarchical Data Format version 5 interface.
+	///
+	/// Notice that this module is compiled only when hdf5 is correctly installed.
+	pub struct HDF5 {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { HDF5 }
+
+	impl Drop for HDF5 {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_hdf_HDF5_delete(self.as_raw_mut_HDF5()) };
+		}
+	}
+
+	unsafe impl Send for HDF5 {}
+
 	/// Constant methods for [crate::hdf::HDF5]
 	pub trait HDF5TraitConst {
 		fn as_raw_HDF5(&self) -> *const c_void;
@@ -1487,23 +1505,13 @@ pub mod hdf {
 
 	}
 
-	/// Hierarchical Data Format version 5 interface.
-	///
-	/// Notice that this module is compiled only when hdf5 is correctly installed.
-	pub struct HDF5 {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { HDF5 }
-
-	impl Drop for HDF5 {
+	impl std::fmt::Debug for HDF5 {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_hdf_HDF5_delete(self.as_raw_mut_HDF5()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("HDF5")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for HDF5 {}
 
 	impl crate::hdf::HDF5TraitConst for HDF5 {
 		#[inline] fn as_raw_HDF5(&self) -> *const c_void { self.as_raw() }
@@ -1515,14 +1523,4 @@ pub mod hdf {
 
 	boxed_ref! { HDF5, crate::hdf::HDF5TraitConst, as_raw_HDF5, crate::hdf::HDF5Trait, as_raw_mut_HDF5 }
 
-	impl HDF5 {
-	}
-
-	impl std::fmt::Debug for HDF5 {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("HDF5")
-				.finish()
-		}
-	}
 }

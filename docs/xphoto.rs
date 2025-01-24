@@ -620,6 +620,41 @@ pub mod xphoto {
 		Ok(ret)
 	}
 
+	/// Gray-world white balance algorithm
+	///
+	/// This algorithm scales the values of pixels based on a
+	/// gray-world assumption which states that the average of all channels
+	/// should result in a gray image.
+	///
+	/// It adds a modification which thresholds pixels based on their
+	/// saturation value and only uses pixels below the provided threshold in
+	/// finding average pixel values.
+	///
+	/// Saturation is calculated using the following for a 3-channel RGB image per
+	/// pixel I and is in the range [0, 1]:
+	///
+	/// ![block formula](https://latex.codecogs.com/png.latex?%20%5Ctexttt%7BSaturation%7D%20%5BI%5D%20%3D%20%5Cfrac%7B%5Ctextrm%7Bmax%7D%28R%2CG%2CB%29%20%2D%20%5Ctextrm%7Bmin%7D%28R%2CG%2CB%29%0A%7D%7B%5Ctextrm%7Bmax%7D%28R%2CG%2CB%29%7D%20)
+	///
+	/// A threshold of 1 means that all pixels are used to white-balance, while a
+	/// threshold of 0 means no pixels are used. Lower thresholds are useful in
+	/// white-balancing saturated images.
+	///
+	/// Currently supports images of type [CV_8UC3] and [CV_16UC3].
+	pub struct GrayworldWB {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { GrayworldWB }
+
+	impl Drop for GrayworldWB {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_xphoto_GrayworldWB_delete(self.as_raw_mut_GrayworldWB()) };
+		}
+	}
+
+	unsafe impl Send for GrayworldWB {}
+
 	/// Constant methods for [crate::xphoto::GrayworldWB]
 	pub trait GrayworldWBTraitConst: crate::xphoto::WhiteBalancerTraitConst {
 		fn as_raw_GrayworldWB(&self) -> *const c_void;
@@ -658,40 +693,17 @@ pub mod xphoto {
 
 	}
 
-	/// Gray-world white balance algorithm
-	///
-	/// This algorithm scales the values of pixels based on a
-	/// gray-world assumption which states that the average of all channels
-	/// should result in a gray image.
-	///
-	/// It adds a modification which thresholds pixels based on their
-	/// saturation value and only uses pixels below the provided threshold in
-	/// finding average pixel values.
-	///
-	/// Saturation is calculated using the following for a 3-channel RGB image per
-	/// pixel I and is in the range [0, 1]:
-	///
-	/// ![block formula](https://latex.codecogs.com/png.latex?%20%5Ctexttt%7BSaturation%7D%20%5BI%5D%20%3D%20%5Cfrac%7B%5Ctextrm%7Bmax%7D%28R%2CG%2CB%29%20%2D%20%5Ctextrm%7Bmin%7D%28R%2CG%2CB%29%0A%7D%7B%5Ctextrm%7Bmax%7D%28R%2CG%2CB%29%7D%20)
-	///
-	/// A threshold of 1 means that all pixels are used to white-balance, while a
-	/// threshold of 0 means no pixels are used. Lower thresholds are useful in
-	/// white-balancing saturated images.
-	///
-	/// Currently supports images of type [CV_8UC3] and [CV_16UC3].
-	pub struct GrayworldWB {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GrayworldWB }
-
-	impl Drop for GrayworldWB {
+	impl std::fmt::Debug for GrayworldWB {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_xphoto_GrayworldWB_delete(self.as_raw_mut_GrayworldWB()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GrayworldWB")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for GrayworldWB {}
+	boxed_cast_base! { GrayworldWB, core::Algorithm, cv_xphoto_GrayworldWB_to_Algorithm }
+
+	boxed_cast_base! { GrayworldWB, crate::xphoto::WhiteBalancer, cv_xphoto_GrayworldWB_to_WhiteBalancer }
 
 	impl core::AlgorithmTraitConst for GrayworldWB {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -723,20 +735,33 @@ pub mod xphoto {
 
 	boxed_ref! { GrayworldWB, crate::xphoto::GrayworldWBTraitConst, as_raw_GrayworldWB, crate::xphoto::GrayworldWBTrait, as_raw_mut_GrayworldWB }
 
-	impl GrayworldWB {
+	/// More sophisticated learning-based automatic white balance algorithm.
+	///
+	/// As [GrayworldWB], this algorithm works by applying different gains to the input
+	/// image channels, but their computation is a bit more involved compared to the
+	/// simple gray-world assumption. More details about the algorithm can be found in
+	/// [Cheng2015](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Cheng2015) .
+	///
+	/// To mask out saturated pixels this function uses only pixels that satisfy the
+	/// following condition:
+	///
+	/// ![block formula](https://latex.codecogs.com/png.latex?%20%5Cfrac%7B%5Ctextrm%7Bmax%7D%28R%2CG%2CB%29%7D%7B%5Ctexttt%7Brange%5Fmax%5Fval%7D%7D%20%3C%20%5Ctexttt%7Bsaturation%5Fthresh%7D%20)
+	///
+	/// Currently supports images of type [CV_8UC3] and [CV_16UC3].
+	pub struct LearningBasedWB {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { GrayworldWB, core::Algorithm, cv_xphoto_GrayworldWB_to_Algorithm }
+	opencv_type_boxed! { LearningBasedWB }
 
-	boxed_cast_base! { GrayworldWB, crate::xphoto::WhiteBalancer, cv_xphoto_GrayworldWB_to_WhiteBalancer }
-
-	impl std::fmt::Debug for GrayworldWB {
+	impl Drop for LearningBasedWB {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("GrayworldWB")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_xphoto_LearningBasedWB_delete(self.as_raw_mut_LearningBasedWB()) };
 		}
 	}
+
+	unsafe impl Send for LearningBasedWB {}
 
 	/// Constant methods for [crate::xphoto::LearningBasedWB]
 	pub trait LearningBasedWBTraitConst: crate::xphoto::WhiteBalancerTraitConst {
@@ -855,33 +880,17 @@ pub mod xphoto {
 
 	}
 
-	/// More sophisticated learning-based automatic white balance algorithm.
-	///
-	/// As [GrayworldWB], this algorithm works by applying different gains to the input
-	/// image channels, but their computation is a bit more involved compared to the
-	/// simple gray-world assumption. More details about the algorithm can be found in
-	/// [Cheng2015](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Cheng2015) .
-	///
-	/// To mask out saturated pixels this function uses only pixels that satisfy the
-	/// following condition:
-	///
-	/// ![block formula](https://latex.codecogs.com/png.latex?%20%5Cfrac%7B%5Ctextrm%7Bmax%7D%28R%2CG%2CB%29%7D%7B%5Ctexttt%7Brange%5Fmax%5Fval%7D%7D%20%3C%20%5Ctexttt%7Bsaturation%5Fthresh%7D%20)
-	///
-	/// Currently supports images of type [CV_8UC3] and [CV_16UC3].
-	pub struct LearningBasedWB {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { LearningBasedWB }
-
-	impl Drop for LearningBasedWB {
+	impl std::fmt::Debug for LearningBasedWB {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_xphoto_LearningBasedWB_delete(self.as_raw_mut_LearningBasedWB()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("LearningBasedWB")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for LearningBasedWB {}
+	boxed_cast_base! { LearningBasedWB, core::Algorithm, cv_xphoto_LearningBasedWB_to_Algorithm }
+
+	boxed_cast_base! { LearningBasedWB, crate::xphoto::WhiteBalancer, cv_xphoto_LearningBasedWB_to_WhiteBalancer }
 
 	impl core::AlgorithmTraitConst for LearningBasedWB {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -913,20 +922,23 @@ pub mod xphoto {
 
 	boxed_ref! { LearningBasedWB, crate::xphoto::LearningBasedWBTraitConst, as_raw_LearningBasedWB, crate::xphoto::LearningBasedWBTrait, as_raw_mut_LearningBasedWB }
 
-	impl LearningBasedWB {
+	/// A simple white balance algorithm that works by independently stretching
+	/// each of the input image channels to the specified range. For increased robustness
+	/// it ignores the top and bottom ![inline formula](https://latex.codecogs.com/png.latex?p%5C%25) of pixel values.
+	pub struct SimpleWB {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { LearningBasedWB, core::Algorithm, cv_xphoto_LearningBasedWB_to_Algorithm }
+	opencv_type_boxed! { SimpleWB }
 
-	boxed_cast_base! { LearningBasedWB, crate::xphoto::WhiteBalancer, cv_xphoto_LearningBasedWB_to_WhiteBalancer }
-
-	impl std::fmt::Debug for LearningBasedWB {
+	impl Drop for SimpleWB {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("LearningBasedWB")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_xphoto_SimpleWB_delete(self.as_raw_mut_SimpleWB()) };
 		}
 	}
+
+	unsafe impl Send for SimpleWB {}
 
 	/// Constant methods for [crate::xphoto::SimpleWB]
 	pub trait SimpleWBTraitConst: crate::xphoto::WhiteBalancerTraitConst {
@@ -1060,23 +1072,17 @@ pub mod xphoto {
 
 	}
 
-	/// A simple white balance algorithm that works by independently stretching
-	/// each of the input image channels to the specified range. For increased robustness
-	/// it ignores the top and bottom ![inline formula](https://latex.codecogs.com/png.latex?p%5C%25) of pixel values.
-	pub struct SimpleWB {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { SimpleWB }
-
-	impl Drop for SimpleWB {
+	impl std::fmt::Debug for SimpleWB {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_xphoto_SimpleWB_delete(self.as_raw_mut_SimpleWB()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SimpleWB")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for SimpleWB {}
+	boxed_cast_base! { SimpleWB, core::Algorithm, cv_xphoto_SimpleWB_to_Algorithm }
+
+	boxed_cast_base! { SimpleWB, crate::xphoto::WhiteBalancer, cv_xphoto_SimpleWB_to_WhiteBalancer }
 
 	impl core::AlgorithmTraitConst for SimpleWB {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -1108,20 +1114,28 @@ pub mod xphoto {
 
 	boxed_ref! { SimpleWB, crate::xphoto::SimpleWBTraitConst, as_raw_SimpleWB, crate::xphoto::SimpleWBTrait, as_raw_mut_SimpleWB }
 
-	impl SimpleWB {
+	/// This algorithm decomposes image into two layers: base layer and detail layer using bilateral filter
+	/// and compresses contrast of the base layer thus preserving all the details.
+	///
+	/// This implementation uses regular bilateral filter from OpenCV.
+	///
+	/// Saturation enhancement is possible as in cv::TonemapDrago.
+	///
+	/// For more information see [DD02](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_DD02) .
+	pub struct TonemapDurand {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { SimpleWB, core::Algorithm, cv_xphoto_SimpleWB_to_Algorithm }
+	opencv_type_boxed! { TonemapDurand }
 
-	boxed_cast_base! { SimpleWB, crate::xphoto::WhiteBalancer, cv_xphoto_SimpleWB_to_WhiteBalancer }
-
-	impl std::fmt::Debug for SimpleWB {
+	impl Drop for TonemapDurand {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("SimpleWB")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_xphoto_TonemapDurand_delete(self.as_raw_mut_TonemapDurand()) };
 		}
 	}
+
+	unsafe impl Send for TonemapDurand {}
 
 	/// Constant methods for [crate::xphoto::TonemapDurand]
 	pub trait TonemapDurandTraitConst: crate::photo::TonemapTraitConst {
@@ -1207,28 +1221,17 @@ pub mod xphoto {
 
 	}
 
-	/// This algorithm decomposes image into two layers: base layer and detail layer using bilateral filter
-	/// and compresses contrast of the base layer thus preserving all the details.
-	///
-	/// This implementation uses regular bilateral filter from OpenCV.
-	///
-	/// Saturation enhancement is possible as in cv::TonemapDrago.
-	///
-	/// For more information see [DD02](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_DD02) .
-	pub struct TonemapDurand {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { TonemapDurand }
-
-	impl Drop for TonemapDurand {
+	impl std::fmt::Debug for TonemapDurand {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_xphoto_TonemapDurand_delete(self.as_raw_mut_TonemapDurand()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TonemapDurand")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for TonemapDurand {}
+	boxed_cast_base! { TonemapDurand, core::Algorithm, cv_xphoto_TonemapDurand_to_Algorithm }
+
+	boxed_cast_base! { TonemapDurand, crate::photo::Tonemap, cv_xphoto_TonemapDurand_to_Tonemap }
 
 	impl core::AlgorithmTraitConst for TonemapDurand {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -1260,20 +1263,21 @@ pub mod xphoto {
 
 	boxed_ref! { TonemapDurand, crate::xphoto::TonemapDurandTraitConst, as_raw_TonemapDurand, crate::xphoto::TonemapDurandTrait, as_raw_mut_TonemapDurand }
 
-	impl TonemapDurand {
+	/// The base class for auto white balance algorithms.
+	pub struct WhiteBalancer {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { TonemapDurand, core::Algorithm, cv_xphoto_TonemapDurand_to_Algorithm }
+	opencv_type_boxed! { WhiteBalancer }
 
-	boxed_cast_base! { TonemapDurand, crate::photo::Tonemap, cv_xphoto_TonemapDurand_to_Tonemap }
-
-	impl std::fmt::Debug for TonemapDurand {
+	impl Drop for WhiteBalancer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("TonemapDurand")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_xphoto_WhiteBalancer_delete(self.as_raw_mut_WhiteBalancer()) };
 		}
 	}
+
+	unsafe impl Send for WhiteBalancer {}
 
 	/// Constant methods for [crate::xphoto::WhiteBalancer]
 	pub trait WhiteBalancerTraitConst: core::AlgorithmTraitConst {
@@ -1305,21 +1309,21 @@ pub mod xphoto {
 
 	}
 
-	/// The base class for auto white balance algorithms.
-	pub struct WhiteBalancer {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { WhiteBalancer }
-
-	impl Drop for WhiteBalancer {
+	impl std::fmt::Debug for WhiteBalancer {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_xphoto_WhiteBalancer_delete(self.as_raw_mut_WhiteBalancer()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WhiteBalancer")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for WhiteBalancer {}
+	boxed_cast_base! { WhiteBalancer, core::Algorithm, cv_xphoto_WhiteBalancer_to_Algorithm }
+
+	boxed_cast_descendant! { WhiteBalancer, crate::xphoto::GrayworldWB, cv_xphoto_WhiteBalancer_to_GrayworldWB }
+
+	boxed_cast_descendant! { WhiteBalancer, crate::xphoto::LearningBasedWB, cv_xphoto_WhiteBalancer_to_LearningBasedWB }
+
+	boxed_cast_descendant! { WhiteBalancer, crate::xphoto::SimpleWB, cv_xphoto_WhiteBalancer_to_SimpleWB }
 
 	impl core::AlgorithmTraitConst for WhiteBalancer {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -1341,22 +1345,4 @@ pub mod xphoto {
 
 	boxed_ref! { WhiteBalancer, crate::xphoto::WhiteBalancerTraitConst, as_raw_WhiteBalancer, crate::xphoto::WhiteBalancerTrait, as_raw_mut_WhiteBalancer }
 
-	impl WhiteBalancer {
-	}
-
-	boxed_cast_descendant! { WhiteBalancer, crate::xphoto::GrayworldWB, cv_xphoto_WhiteBalancer_to_GrayworldWB }
-
-	boxed_cast_descendant! { WhiteBalancer, crate::xphoto::LearningBasedWB, cv_xphoto_WhiteBalancer_to_LearningBasedWB }
-
-	boxed_cast_descendant! { WhiteBalancer, crate::xphoto::SimpleWB, cv_xphoto_WhiteBalancer_to_SimpleWB }
-
-	boxed_cast_base! { WhiteBalancer, core::Algorithm, cv_xphoto_WhiteBalancer_to_Algorithm }
-
-	impl std::fmt::Debug for WhiteBalancer {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("WhiteBalancer")
-				.finish()
-		}
-	}
 }

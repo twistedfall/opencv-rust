@@ -247,6 +247,32 @@ pub mod videostab {
 		Ok(ret)
 	}
 
+	pub struct ColorAverageInpainter {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { ColorAverageInpainter }
+
+	impl Drop for ColorAverageInpainter {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_ColorAverageInpainter_delete(self.as_raw_mut_ColorAverageInpainter()) };
+		}
+	}
+
+	unsafe impl Send for ColorAverageInpainter {}
+
+	impl ColorAverageInpainter {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::videostab::ColorAverageInpainter {
+			let ret = unsafe { sys::cv_videostab_ColorAverageInpainter_defaultNew_const() };
+			let ret = unsafe { crate::videostab::ColorAverageInpainter::opencv_from_extern(ret) };
+			ret
+		}
+
+	}
+
 	/// Constant methods for [crate::videostab::ColorAverageInpainter]
 	pub trait ColorAverageInpainterTraitConst: crate::videostab::InpainterBaseTraitConst {
 		fn as_raw_ColorAverageInpainter(&self) -> *const c_void;
@@ -268,20 +294,23 @@ pub mod videostab {
 
 	}
 
-	pub struct ColorAverageInpainter {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { ColorAverageInpainter }
-
-	impl Drop for ColorAverageInpainter {
+	impl Default for ColorAverageInpainter {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_ColorAverageInpainter_delete(self.as_raw_mut_ColorAverageInpainter()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for ColorAverageInpainter {}
+	impl std::fmt::Debug for ColorAverageInpainter {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ColorAverageInpainter")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { ColorAverageInpainter, crate::videostab::InpainterBase, cv_videostab_ColorAverageInpainter_to_InpainterBase }
 
 	impl crate::videostab::InpainterBaseTraitConst for ColorAverageInpainter {
 		#[inline] fn as_raw_InpainterBase(&self) -> *const c_void { self.as_raw() }
@@ -303,54 +332,6 @@ pub mod videostab {
 
 	boxed_ref! { ColorAverageInpainter, crate::videostab::ColorAverageInpainterTraitConst, as_raw_ColorAverageInpainter, crate::videostab::ColorAverageInpainterTrait, as_raw_mut_ColorAverageInpainter }
 
-	impl ColorAverageInpainter {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_videostab_ColorAverageInpainter_defaultNew_const()) }
-		}
-
-	}
-
-	boxed_cast_base! { ColorAverageInpainter, crate::videostab::InpainterBase, cv_videostab_ColorAverageInpainter_to_InpainterBase }
-
-	impl std::fmt::Debug for ColorAverageInpainter {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("ColorAverageInpainter")
-				.finish()
-		}
-	}
-
-	impl Default for ColorAverageInpainter {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
-	}
-
-	/// Constant methods for [crate::videostab::ColorInpainter]
-	pub trait ColorInpainterTraitConst: crate::videostab::InpainterBaseTraitConst {
-		fn as_raw_ColorInpainter(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::videostab::ColorInpainter]
-	pub trait ColorInpainterTrait: crate::videostab::ColorInpainterTraitConst + crate::videostab::InpainterBaseTrait {
-		fn as_raw_mut_ColorInpainter(&mut self) -> *mut c_void;
-
-		#[inline]
-		fn inpaint(&mut self, idx: i32, frame: &mut impl core::MatTrait, mask: &mut impl core::MatTrait) -> Result<()> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_ColorInpainter_inpaint_int_MatR_MatR(self.as_raw_mut_ColorInpainter(), idx, frame.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			Ok(ret)
-		}
-
-	}
-
 	pub struct ColorInpainter {
 		ptr: *mut c_void,
 	}
@@ -365,26 +346,6 @@ pub mod videostab {
 	}
 
 	unsafe impl Send for ColorInpainter {}
-
-	impl crate::videostab::InpainterBaseTraitConst for ColorInpainter {
-		#[inline] fn as_raw_InpainterBase(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::videostab::InpainterBaseTrait for ColorInpainter {
-		#[inline] fn as_raw_mut_InpainterBase(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { ColorInpainter, crate::videostab::InpainterBaseTraitConst, as_raw_InpainterBase, crate::videostab::InpainterBaseTrait, as_raw_mut_InpainterBase }
-
-	impl crate::videostab::ColorInpainterTraitConst for ColorInpainter {
-		#[inline] fn as_raw_ColorInpainter(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::videostab::ColorInpainterTrait for ColorInpainter {
-		#[inline] fn as_raw_mut_ColorInpainter(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { ColorInpainter, crate::videostab::ColorInpainterTraitConst, as_raw_ColorInpainter, crate::videostab::ColorInpainterTrait, as_raw_mut_ColorInpainter }
 
 	impl ColorInpainter {
 		/// ## C++ default parameters
@@ -416,7 +377,26 @@ pub mod videostab {
 
 	}
 
-	boxed_cast_base! { ColorInpainter, crate::videostab::InpainterBase, cv_videostab_ColorInpainter_to_InpainterBase }
+	/// Constant methods for [crate::videostab::ColorInpainter]
+	pub trait ColorInpainterTraitConst: crate::videostab::InpainterBaseTraitConst {
+		fn as_raw_ColorInpainter(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::videostab::ColorInpainter]
+	pub trait ColorInpainterTrait: crate::videostab::ColorInpainterTraitConst + crate::videostab::InpainterBaseTrait {
+		fn as_raw_mut_ColorInpainter(&mut self) -> *mut c_void;
+
+		#[inline]
+		fn inpaint(&mut self, idx: i32, frame: &mut impl core::MatTrait, mask: &mut impl core::MatTrait) -> Result<()> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_ColorInpainter_inpaint_int_MatR_MatR(self.as_raw_mut_ColorInpainter(), idx, frame.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			Ok(ret)
+		}
+
+	}
 
 	impl std::fmt::Debug for ColorInpainter {
 		#[inline]
@@ -424,6 +404,56 @@ pub mod videostab {
 			f.debug_struct("ColorInpainter")
 				.finish()
 		}
+	}
+
+	boxed_cast_base! { ColorInpainter, crate::videostab::InpainterBase, cv_videostab_ColorInpainter_to_InpainterBase }
+
+	impl crate::videostab::InpainterBaseTraitConst for ColorInpainter {
+		#[inline] fn as_raw_InpainterBase(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::videostab::InpainterBaseTrait for ColorInpainter {
+		#[inline] fn as_raw_mut_InpainterBase(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { ColorInpainter, crate::videostab::InpainterBaseTraitConst, as_raw_InpainterBase, crate::videostab::InpainterBaseTrait, as_raw_mut_InpainterBase }
+
+	impl crate::videostab::ColorInpainterTraitConst for ColorInpainter {
+		#[inline] fn as_raw_ColorInpainter(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::videostab::ColorInpainterTrait for ColorInpainter {
+		#[inline] fn as_raw_mut_ColorInpainter(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { ColorInpainter, crate::videostab::ColorInpainterTraitConst, as_raw_ColorInpainter, crate::videostab::ColorInpainterTrait, as_raw_mut_ColorInpainter }
+
+	pub struct ConsistentMosaicInpainter {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { ConsistentMosaicInpainter }
+
+	impl Drop for ConsistentMosaicInpainter {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_ConsistentMosaicInpainter_delete(self.as_raw_mut_ConsistentMosaicInpainter()) };
+		}
+	}
+
+	unsafe impl Send for ConsistentMosaicInpainter {}
+
+	impl ConsistentMosaicInpainter {
+		#[inline]
+		pub fn default() -> Result<crate::videostab::ConsistentMosaicInpainter> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_ConsistentMosaicInpainter_ConsistentMosaicInpainter(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::videostab::ConsistentMosaicInpainter::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::videostab::ConsistentMosaicInpainter]
@@ -465,20 +495,15 @@ pub mod videostab {
 
 	}
 
-	pub struct ConsistentMosaicInpainter {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { ConsistentMosaicInpainter }
-
-	impl Drop for ConsistentMosaicInpainter {
+	impl std::fmt::Debug for ConsistentMosaicInpainter {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_ConsistentMosaicInpainter_delete(self.as_raw_mut_ConsistentMosaicInpainter()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ConsistentMosaicInpainter")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for ConsistentMosaicInpainter {}
+	boxed_cast_base! { ConsistentMosaicInpainter, crate::videostab::InpainterBase, cv_videostab_ConsistentMosaicInpainter_to_InpainterBase }
 
 	impl crate::videostab::InpainterBaseTraitConst for ConsistentMosaicInpainter {
 		#[inline] fn as_raw_InpainterBase(&self) -> *const c_void { self.as_raw() }
@@ -500,28 +525,20 @@ pub mod videostab {
 
 	boxed_ref! { ConsistentMosaicInpainter, crate::videostab::ConsistentMosaicInpainterTraitConst, as_raw_ConsistentMosaicInpainter, crate::videostab::ConsistentMosaicInpainterTrait, as_raw_mut_ConsistentMosaicInpainter }
 
-	impl ConsistentMosaicInpainter {
-		#[inline]
-		pub fn default() -> Result<crate::videostab::ConsistentMosaicInpainter> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_ConsistentMosaicInpainter_ConsistentMosaicInpainter(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::videostab::ConsistentMosaicInpainter::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	pub struct DeblurerBase {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { ConsistentMosaicInpainter, crate::videostab::InpainterBase, cv_videostab_ConsistentMosaicInpainter_to_InpainterBase }
+	opencv_type_boxed! { DeblurerBase }
 
-	impl std::fmt::Debug for ConsistentMosaicInpainter {
+	impl Drop for DeblurerBase {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("ConsistentMosaicInpainter")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_DeblurerBase_delete(self.as_raw_mut_DeblurerBase()) };
 		}
 	}
+
+	unsafe impl Send for DeblurerBase {}
 
 	/// Constant methods for [crate::videostab::DeblurerBase]
 	pub trait DeblurerBaseTraitConst {
@@ -619,20 +636,17 @@ pub mod videostab {
 
 	}
 
-	pub struct DeblurerBase {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { DeblurerBase }
-
-	impl Drop for DeblurerBase {
+	impl std::fmt::Debug for DeblurerBase {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_DeblurerBase_delete(self.as_raw_mut_DeblurerBase()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DeblurerBase")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for DeblurerBase {}
+	boxed_cast_descendant! { DeblurerBase, crate::videostab::NullDeblurer, cv_videostab_DeblurerBase_to_NullDeblurer }
+
+	boxed_cast_descendant! { DeblurerBase, crate::videostab::WeightingDeblurer, cv_videostab_DeblurerBase_to_WeightingDeblurer }
 
 	impl crate::videostab::DeblurerBaseTraitConst for DeblurerBase {
 		#[inline] fn as_raw_DeblurerBase(&self) -> *const c_void { self.as_raw() }
@@ -644,19 +658,32 @@ pub mod videostab {
 
 	boxed_ref! { DeblurerBase, crate::videostab::DeblurerBaseTraitConst, as_raw_DeblurerBase, crate::videostab::DeblurerBaseTrait, as_raw_mut_DeblurerBase }
 
-	impl DeblurerBase {
+	pub struct DensePyrLkOptFlowEstimatorGpu {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { DeblurerBase, crate::videostab::NullDeblurer, cv_videostab_DeblurerBase_to_NullDeblurer }
+	opencv_type_boxed! { DensePyrLkOptFlowEstimatorGpu }
 
-	boxed_cast_descendant! { DeblurerBase, crate::videostab::WeightingDeblurer, cv_videostab_DeblurerBase_to_WeightingDeblurer }
-
-	impl std::fmt::Debug for DeblurerBase {
+	impl Drop for DensePyrLkOptFlowEstimatorGpu {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("DeblurerBase")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_DensePyrLkOptFlowEstimatorGpu_delete(self.as_raw_mut_DensePyrLkOptFlowEstimatorGpu()) };
 		}
+	}
+
+	unsafe impl Send for DensePyrLkOptFlowEstimatorGpu {}
+
+	impl DensePyrLkOptFlowEstimatorGpu {
+		#[inline]
+		pub fn default() -> Result<crate::videostab::DensePyrLkOptFlowEstimatorGpu> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_DensePyrLkOptFlowEstimatorGpu_DensePyrLkOptFlowEstimatorGpu(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::videostab::DensePyrLkOptFlowEstimatorGpu::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::videostab::DensePyrLkOptFlowEstimatorGpu]
@@ -685,20 +712,17 @@ pub mod videostab {
 
 	}
 
-	pub struct DensePyrLkOptFlowEstimatorGpu {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { DensePyrLkOptFlowEstimatorGpu }
-
-	impl Drop for DensePyrLkOptFlowEstimatorGpu {
+	impl std::fmt::Debug for DensePyrLkOptFlowEstimatorGpu {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_DensePyrLkOptFlowEstimatorGpu_delete(self.as_raw_mut_DensePyrLkOptFlowEstimatorGpu()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("DensePyrLkOptFlowEstimatorGpu")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for DensePyrLkOptFlowEstimatorGpu {}
+	boxed_cast_base! { DensePyrLkOptFlowEstimatorGpu, crate::videostab::IDenseOptFlowEstimator, cv_videostab_DensePyrLkOptFlowEstimatorGpu_to_IDenseOptFlowEstimator }
+
+	boxed_cast_base! { DensePyrLkOptFlowEstimatorGpu, crate::videostab::PyrLkOptFlowEstimatorBase, cv_videostab_DensePyrLkOptFlowEstimatorGpu_to_PyrLkOptFlowEstimatorBase }
 
 	impl crate::videostab::IDenseOptFlowEstimatorTraitConst for DensePyrLkOptFlowEstimatorGpu {
 		#[inline] fn as_raw_IDenseOptFlowEstimator(&self) -> *const c_void { self.as_raw() }
@@ -730,29 +754,35 @@ pub mod videostab {
 
 	boxed_ref! { DensePyrLkOptFlowEstimatorGpu, crate::videostab::DensePyrLkOptFlowEstimatorGpuTraitConst, as_raw_DensePyrLkOptFlowEstimatorGpu, crate::videostab::DensePyrLkOptFlowEstimatorGpuTrait, as_raw_mut_DensePyrLkOptFlowEstimatorGpu }
 
-	impl DensePyrLkOptFlowEstimatorGpu {
+	/// Describes the Fast Marching Method implementation.
+	///
+	/// See <http://iwi.eldoc.ub.rug.nl/FILES/root/2004/JGraphToolsTelea/2004JGraphToolsTelea.pdf>
+	pub struct FastMarchingMethod {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { FastMarchingMethod }
+
+	impl Drop for FastMarchingMethod {
 		#[inline]
-		pub fn default() -> Result<crate::videostab::DensePyrLkOptFlowEstimatorGpu> {
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_FastMarchingMethod_delete(self.as_raw_mut_FastMarchingMethod()) };
+		}
+	}
+
+	unsafe impl Send for FastMarchingMethod {}
+
+	impl FastMarchingMethod {
+		#[inline]
+		pub fn default() -> Result<crate::videostab::FastMarchingMethod> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_DensePyrLkOptFlowEstimatorGpu_DensePyrLkOptFlowEstimatorGpu(ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_videostab_FastMarchingMethod_FastMarchingMethod(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::videostab::DensePyrLkOptFlowEstimatorGpu::opencv_from_extern(ret) };
+			let ret = unsafe { crate::videostab::FastMarchingMethod::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	boxed_cast_base! { DensePyrLkOptFlowEstimatorGpu, crate::videostab::IDenseOptFlowEstimator, cv_videostab_DensePyrLkOptFlowEstimatorGpu_to_IDenseOptFlowEstimator }
-
-	boxed_cast_base! { DensePyrLkOptFlowEstimatorGpu, crate::videostab::PyrLkOptFlowEstimatorBase, cv_videostab_DensePyrLkOptFlowEstimatorGpu_to_PyrLkOptFlowEstimatorBase }
-
-	impl std::fmt::Debug for DensePyrLkOptFlowEstimatorGpu {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("DensePyrLkOptFlowEstimatorGpu")
-				.finish()
-		}
 	}
 
 	/// Constant methods for [crate::videostab::FastMarchingMethod]
@@ -779,23 +809,13 @@ pub mod videostab {
 
 	}
 
-	/// Describes the Fast Marching Method implementation.
-	///
-	/// See <http://iwi.eldoc.ub.rug.nl/FILES/root/2004/JGraphToolsTelea/2004JGraphToolsTelea.pdf>
-	pub struct FastMarchingMethod {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { FastMarchingMethod }
-
-	impl Drop for FastMarchingMethod {
+	impl std::fmt::Debug for FastMarchingMethod {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_FastMarchingMethod_delete(self.as_raw_mut_FastMarchingMethod()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FastMarchingMethod")
+				.finish()
 		}
 	}
-
-	unsafe impl Send for FastMarchingMethod {}
 
 	impl crate::videostab::FastMarchingMethodTraitConst for FastMarchingMethod {
 		#[inline] fn as_raw_FastMarchingMethod(&self) -> *const c_void { self.as_raw() }
@@ -807,25 +827,33 @@ pub mod videostab {
 
 	boxed_ref! { FastMarchingMethod, crate::videostab::FastMarchingMethodTraitConst, as_raw_FastMarchingMethod, crate::videostab::FastMarchingMethodTrait, as_raw_mut_FastMarchingMethod }
 
-	impl FastMarchingMethod {
+	pub struct FromFileMotionReader {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { FromFileMotionReader }
+
+	impl Drop for FromFileMotionReader {
 		#[inline]
-		pub fn default() -> Result<crate::videostab::FastMarchingMethod> {
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_FromFileMotionReader_delete(self.as_raw_mut_FromFileMotionReader()) };
+		}
+	}
+
+	unsafe impl Send for FromFileMotionReader {}
+
+	impl FromFileMotionReader {
+		#[inline]
+		pub fn new(path: &str) -> Result<crate::videostab::FromFileMotionReader> {
+			extern_container_arg!(path);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_FastMarchingMethod_FastMarchingMethod(ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_videostab_FromFileMotionReader_FromFileMotionReader_const_StringR(path.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::videostab::FastMarchingMethod::opencv_from_extern(ret) };
+			let ret = unsafe { crate::videostab::FromFileMotionReader::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	impl std::fmt::Debug for FastMarchingMethod {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("FastMarchingMethod")
-				.finish()
-		}
 	}
 
 	/// Constant methods for [crate::videostab::FromFileMotionReader]
@@ -865,20 +893,15 @@ pub mod videostab {
 
 	}
 
-	pub struct FromFileMotionReader {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { FromFileMotionReader }
-
-	impl Drop for FromFileMotionReader {
+	impl std::fmt::Debug for FromFileMotionReader {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_FromFileMotionReader_delete(self.as_raw_mut_FromFileMotionReader()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("FromFileMotionReader")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for FromFileMotionReader {}
+	boxed_cast_base! { FromFileMotionReader, crate::videostab::ImageMotionEstimatorBase, cv_videostab_FromFileMotionReader_to_ImageMotionEstimatorBase }
 
 	impl crate::videostab::ImageMotionEstimatorBaseTraitConst for FromFileMotionReader {
 		#[inline] fn as_raw_ImageMotionEstimatorBase(&self) -> *const c_void { self.as_raw() }
@@ -900,28 +923,49 @@ pub mod videostab {
 
 	boxed_ref! { FromFileMotionReader, crate::videostab::FromFileMotionReaderTraitConst, as_raw_FromFileMotionReader, crate::videostab::FromFileMotionReaderTrait, as_raw_mut_FromFileMotionReader }
 
-	impl FromFileMotionReader {
+	pub struct GaussianMotionFilter {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { GaussianMotionFilter }
+
+	impl Drop for GaussianMotionFilter {
 		#[inline]
-		pub fn new(path: &str) -> Result<crate::videostab::FromFileMotionReader> {
-			extern_container_arg!(path);
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_GaussianMotionFilter_delete(self.as_raw_mut_GaussianMotionFilter()) };
+		}
+	}
+
+	unsafe impl Send for GaussianMotionFilter {}
+
+	impl GaussianMotionFilter {
+		/// ## C++ default parameters
+		/// * radius: 15
+		/// * stdev: -1.f
+		#[inline]
+		pub fn new(radius: i32, stdev: f32) -> Result<crate::videostab::GaussianMotionFilter> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_FromFileMotionReader_FromFileMotionReader_const_StringR(path.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_videostab_GaussianMotionFilter_GaussianMotionFilter_int_float(radius, stdev, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::videostab::FromFileMotionReader::opencv_from_extern(ret) };
+			let ret = unsafe { crate::videostab::GaussianMotionFilter::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	boxed_cast_base! { FromFileMotionReader, crate::videostab::ImageMotionEstimatorBase, cv_videostab_FromFileMotionReader_to_ImageMotionEstimatorBase }
-
-	impl std::fmt::Debug for FromFileMotionReader {
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * radius: 15
+		/// * stdev: -1.f
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("FromFileMotionReader")
-				.finish()
+		pub fn new_def() -> Result<crate::videostab::GaussianMotionFilter> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_GaussianMotionFilter_GaussianMotionFilter(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::videostab::GaussianMotionFilter::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
 	}
 
 	/// Constant methods for [crate::videostab::GaussianMotionFilter]
@@ -987,20 +1031,17 @@ pub mod videostab {
 
 	}
 
-	pub struct GaussianMotionFilter {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { GaussianMotionFilter }
-
-	impl Drop for GaussianMotionFilter {
+	impl std::fmt::Debug for GaussianMotionFilter {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_GaussianMotionFilter_delete(self.as_raw_mut_GaussianMotionFilter()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("GaussianMotionFilter")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for GaussianMotionFilter {}
+	boxed_cast_base! { GaussianMotionFilter, crate::videostab::IMotionStabilizer, cv_videostab_GaussianMotionFilter_to_IMotionStabilizer }
+
+	boxed_cast_base! { GaussianMotionFilter, crate::videostab::MotionFilterBase, cv_videostab_GaussianMotionFilter_to_MotionFilterBase }
 
 	impl crate::videostab::IMotionStabilizerTraitConst for GaussianMotionFilter {
 		#[inline] fn as_raw_IMotionStabilizer(&self) -> *const c_void { self.as_raw() }
@@ -1032,47 +1073,20 @@ pub mod videostab {
 
 	boxed_ref! { GaussianMotionFilter, crate::videostab::GaussianMotionFilterTraitConst, as_raw_GaussianMotionFilter, crate::videostab::GaussianMotionFilterTrait, as_raw_mut_GaussianMotionFilter }
 
-	impl GaussianMotionFilter {
-		/// ## C++ default parameters
-		/// * radius: 15
-		/// * stdev: -1.f
-		#[inline]
-		pub fn new(radius: i32, stdev: f32) -> Result<crate::videostab::GaussianMotionFilter> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_GaussianMotionFilter_GaussianMotionFilter_int_float(radius, stdev, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::videostab::GaussianMotionFilter::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * radius: 15
-		/// * stdev: -1.f
-		#[inline]
-		pub fn new_def() -> Result<crate::videostab::GaussianMotionFilter> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_GaussianMotionFilter_GaussianMotionFilter(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::videostab::GaussianMotionFilter::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	pub struct IDenseOptFlowEstimator {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { GaussianMotionFilter, crate::videostab::IMotionStabilizer, cv_videostab_GaussianMotionFilter_to_IMotionStabilizer }
+	opencv_type_boxed! { IDenseOptFlowEstimator }
 
-	boxed_cast_base! { GaussianMotionFilter, crate::videostab::MotionFilterBase, cv_videostab_GaussianMotionFilter_to_MotionFilterBase }
-
-	impl std::fmt::Debug for GaussianMotionFilter {
+	impl Drop for IDenseOptFlowEstimator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("GaussianMotionFilter")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_IDenseOptFlowEstimator_delete(self.as_raw_mut_IDenseOptFlowEstimator()) };
 		}
 	}
+
+	unsafe impl Send for IDenseOptFlowEstimator {}
 
 	/// Constant methods for [crate::videostab::IDenseOptFlowEstimator]
 	pub trait IDenseOptFlowEstimatorTraitConst {
@@ -1100,20 +1114,15 @@ pub mod videostab {
 
 	}
 
-	pub struct IDenseOptFlowEstimator {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { IDenseOptFlowEstimator }
-
-	impl Drop for IDenseOptFlowEstimator {
+	impl std::fmt::Debug for IDenseOptFlowEstimator {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_IDenseOptFlowEstimator_delete(self.as_raw_mut_IDenseOptFlowEstimator()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("IDenseOptFlowEstimator")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for IDenseOptFlowEstimator {}
+	boxed_cast_descendant! { IDenseOptFlowEstimator, crate::videostab::DensePyrLkOptFlowEstimatorGpu, cv_videostab_IDenseOptFlowEstimator_to_DensePyrLkOptFlowEstimatorGpu }
 
 	impl crate::videostab::IDenseOptFlowEstimatorTraitConst for IDenseOptFlowEstimator {
 		#[inline] fn as_raw_IDenseOptFlowEstimator(&self) -> *const c_void { self.as_raw() }
@@ -1125,18 +1134,20 @@ pub mod videostab {
 
 	boxed_ref! { IDenseOptFlowEstimator, crate::videostab::IDenseOptFlowEstimatorTraitConst, as_raw_IDenseOptFlowEstimator, crate::videostab::IDenseOptFlowEstimatorTrait, as_raw_mut_IDenseOptFlowEstimator }
 
-	impl IDenseOptFlowEstimator {
+	pub struct IFrameSource {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { IDenseOptFlowEstimator, crate::videostab::DensePyrLkOptFlowEstimatorGpu, cv_videostab_IDenseOptFlowEstimator_to_DensePyrLkOptFlowEstimatorGpu }
+	opencv_type_boxed! { IFrameSource }
 
-	impl std::fmt::Debug for IDenseOptFlowEstimator {
+	impl Drop for IFrameSource {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("IDenseOptFlowEstimator")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_IFrameSource_delete(self.as_raw_mut_IFrameSource()) };
 		}
 	}
+
+	unsafe impl Send for IFrameSource {}
 
 	/// Constant methods for [crate::videostab::IFrameSource]
 	pub trait IFrameSourceTraitConst {
@@ -1169,32 +1180,12 @@ pub mod videostab {
 
 	}
 
-	pub struct IFrameSource {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { IFrameSource }
-
-	impl Drop for IFrameSource {
+	impl std::fmt::Debug for IFrameSource {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_IFrameSource_delete(self.as_raw_mut_IFrameSource()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("IFrameSource")
+				.finish()
 		}
-	}
-
-	unsafe impl Send for IFrameSource {}
-
-	impl crate::videostab::IFrameSourceTraitConst for IFrameSource {
-		#[inline] fn as_raw_IFrameSource(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::videostab::IFrameSourceTrait for IFrameSource {
-		#[inline] fn as_raw_mut_IFrameSource(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { IFrameSource, crate::videostab::IFrameSourceTraitConst, as_raw_IFrameSource, crate::videostab::IFrameSourceTrait, as_raw_mut_IFrameSource }
-
-	impl IFrameSource {
 	}
 
 	boxed_cast_descendant! { IFrameSource, crate::videostab::MaskFrameSource, cv_videostab_IFrameSource_to_MaskFrameSource }
@@ -1207,13 +1198,30 @@ pub mod videostab {
 
 	boxed_cast_descendant! { IFrameSource, crate::videostab::VideoFileSource, cv_videostab_IFrameSource_to_VideoFileSource }
 
-	impl std::fmt::Debug for IFrameSource {
+	impl crate::videostab::IFrameSourceTraitConst for IFrameSource {
+		#[inline] fn as_raw_IFrameSource(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::videostab::IFrameSourceTrait for IFrameSource {
+		#[inline] fn as_raw_mut_IFrameSource(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { IFrameSource, crate::videostab::IFrameSourceTraitConst, as_raw_IFrameSource, crate::videostab::IFrameSourceTrait, as_raw_mut_IFrameSource }
+
+	pub struct ILog {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { ILog }
+
+	impl Drop for ILog {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("IFrameSource")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_ILog_delete(self.as_raw_mut_ILog()) };
 		}
 	}
+
+	unsafe impl Send for ILog {}
 
 	/// Constant methods for [crate::videostab::ILog]
 	pub trait ILogTraitConst {
@@ -1237,20 +1245,17 @@ pub mod videostab {
 
 	}
 
-	pub struct ILog {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { ILog }
-
-	impl Drop for ILog {
+	impl std::fmt::Debug for ILog {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_ILog_delete(self.as_raw_mut_ILog()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ILog")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for ILog {}
+	boxed_cast_descendant! { ILog, crate::videostab::LogToStdout, cv_videostab_ILog_to_LogToStdout }
+
+	boxed_cast_descendant! { ILog, crate::videostab::NullLog, cv_videostab_ILog_to_NullLog }
 
 	impl crate::videostab::ILogTraitConst for ILog {
 		#[inline] fn as_raw_ILog(&self) -> *const c_void { self.as_raw() }
@@ -1262,20 +1267,20 @@ pub mod videostab {
 
 	boxed_ref! { ILog, crate::videostab::ILogTraitConst, as_raw_ILog, crate::videostab::ILogTrait, as_raw_mut_ILog }
 
-	impl ILog {
+	pub struct IMotionStabilizer {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { ILog, crate::videostab::LogToStdout, cv_videostab_ILog_to_LogToStdout }
+	opencv_type_boxed! { IMotionStabilizer }
 
-	boxed_cast_descendant! { ILog, crate::videostab::NullLog, cv_videostab_ILog_to_NullLog }
-
-	impl std::fmt::Debug for ILog {
+	impl Drop for IMotionStabilizer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("ILog")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_IMotionStabilizer_delete(self.as_raw_mut_IMotionStabilizer()) };
 		}
 	}
+
+	unsafe impl Send for IMotionStabilizer {}
 
 	/// Constant methods for [crate::videostab::IMotionStabilizer]
 	pub trait IMotionStabilizerTraitConst {
@@ -1299,20 +1304,21 @@ pub mod videostab {
 
 	}
 
-	pub struct IMotionStabilizer {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { IMotionStabilizer }
-
-	impl Drop for IMotionStabilizer {
+	impl std::fmt::Debug for IMotionStabilizer {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_IMotionStabilizer_delete(self.as_raw_mut_IMotionStabilizer()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("IMotionStabilizer")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for IMotionStabilizer {}
+	boxed_cast_descendant! { IMotionStabilizer, crate::videostab::GaussianMotionFilter, cv_videostab_IMotionStabilizer_to_GaussianMotionFilter }
+
+	boxed_cast_descendant! { IMotionStabilizer, crate::videostab::LpMotionStabilizer, cv_videostab_IMotionStabilizer_to_LpMotionStabilizer }
+
+	boxed_cast_descendant! { IMotionStabilizer, crate::videostab::MotionFilterBase, cv_videostab_IMotionStabilizer_to_MotionFilterBase }
+
+	boxed_cast_descendant! { IMotionStabilizer, crate::videostab::MotionStabilizationPipeline, cv_videostab_IMotionStabilizer_to_MotionStabilizationPipeline }
 
 	impl crate::videostab::IMotionStabilizerTraitConst for IMotionStabilizer {
 		#[inline] fn as_raw_IMotionStabilizer(&self) -> *const c_void { self.as_raw() }
@@ -1324,24 +1330,20 @@ pub mod videostab {
 
 	boxed_ref! { IMotionStabilizer, crate::videostab::IMotionStabilizerTraitConst, as_raw_IMotionStabilizer, crate::videostab::IMotionStabilizerTrait, as_raw_mut_IMotionStabilizer }
 
-	impl IMotionStabilizer {
+	pub struct IOutlierRejector {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { IMotionStabilizer, crate::videostab::GaussianMotionFilter, cv_videostab_IMotionStabilizer_to_GaussianMotionFilter }
+	opencv_type_boxed! { IOutlierRejector }
 
-	boxed_cast_descendant! { IMotionStabilizer, crate::videostab::LpMotionStabilizer, cv_videostab_IMotionStabilizer_to_LpMotionStabilizer }
-
-	boxed_cast_descendant! { IMotionStabilizer, crate::videostab::MotionFilterBase, cv_videostab_IMotionStabilizer_to_MotionFilterBase }
-
-	boxed_cast_descendant! { IMotionStabilizer, crate::videostab::MotionStabilizationPipeline, cv_videostab_IMotionStabilizer_to_MotionStabilizationPipeline }
-
-	impl std::fmt::Debug for IMotionStabilizer {
+	impl Drop for IOutlierRejector {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("IMotionStabilizer")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_IOutlierRejector_delete(self.as_raw_mut_IOutlierRejector()) };
 		}
 	}
+
+	unsafe impl Send for IOutlierRejector {}
 
 	/// Constant methods for [crate::videostab::IOutlierRejector]
 	pub trait IOutlierRejectorTraitConst {
@@ -1367,20 +1369,17 @@ pub mod videostab {
 
 	}
 
-	pub struct IOutlierRejector {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { IOutlierRejector }
-
-	impl Drop for IOutlierRejector {
+	impl std::fmt::Debug for IOutlierRejector {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_IOutlierRejector_delete(self.as_raw_mut_IOutlierRejector()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("IOutlierRejector")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for IOutlierRejector {}
+	boxed_cast_descendant! { IOutlierRejector, crate::videostab::NullOutlierRejector, cv_videostab_IOutlierRejector_to_NullOutlierRejector }
+
+	boxed_cast_descendant! { IOutlierRejector, crate::videostab::TranslationBasedLocalOutlierRejector, cv_videostab_IOutlierRejector_to_TranslationBasedLocalOutlierRejector }
 
 	impl crate::videostab::IOutlierRejectorTraitConst for IOutlierRejector {
 		#[inline] fn as_raw_IOutlierRejector(&self) -> *const c_void { self.as_raw() }
@@ -1392,20 +1391,20 @@ pub mod videostab {
 
 	boxed_ref! { IOutlierRejector, crate::videostab::IOutlierRejectorTraitConst, as_raw_IOutlierRejector, crate::videostab::IOutlierRejectorTrait, as_raw_mut_IOutlierRejector }
 
-	impl IOutlierRejector {
+	pub struct ISparseOptFlowEstimator {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { IOutlierRejector, crate::videostab::NullOutlierRejector, cv_videostab_IOutlierRejector_to_NullOutlierRejector }
+	opencv_type_boxed! { ISparseOptFlowEstimator }
 
-	boxed_cast_descendant! { IOutlierRejector, crate::videostab::TranslationBasedLocalOutlierRejector, cv_videostab_IOutlierRejector_to_TranslationBasedLocalOutlierRejector }
-
-	impl std::fmt::Debug for IOutlierRejector {
+	impl Drop for ISparseOptFlowEstimator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("IOutlierRejector")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_ISparseOptFlowEstimator_delete(self.as_raw_mut_ISparseOptFlowEstimator()) };
 		}
 	}
+
+	unsafe impl Send for ISparseOptFlowEstimator {}
 
 	/// Constant methods for [crate::videostab::ISparseOptFlowEstimator]
 	pub trait ISparseOptFlowEstimatorTraitConst {
@@ -1434,20 +1433,17 @@ pub mod videostab {
 
 	}
 
-	pub struct ISparseOptFlowEstimator {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { ISparseOptFlowEstimator }
-
-	impl Drop for ISparseOptFlowEstimator {
+	impl std::fmt::Debug for ISparseOptFlowEstimator {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_ISparseOptFlowEstimator_delete(self.as_raw_mut_ISparseOptFlowEstimator()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ISparseOptFlowEstimator")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for ISparseOptFlowEstimator {}
+	boxed_cast_descendant! { ISparseOptFlowEstimator, crate::videostab::SparsePyrLkOptFlowEstimator, cv_videostab_ISparseOptFlowEstimator_to_SparsePyrLkOptFlowEstimator }
+
+	boxed_cast_descendant! { ISparseOptFlowEstimator, crate::videostab::SparsePyrLkOptFlowEstimatorGpu, cv_videostab_ISparseOptFlowEstimator_to_SparsePyrLkOptFlowEstimatorGpu }
 
 	impl crate::videostab::ISparseOptFlowEstimatorTraitConst for ISparseOptFlowEstimator {
 		#[inline] fn as_raw_ISparseOptFlowEstimator(&self) -> *const c_void { self.as_raw() }
@@ -1459,20 +1455,21 @@ pub mod videostab {
 
 	boxed_ref! { ISparseOptFlowEstimator, crate::videostab::ISparseOptFlowEstimatorTraitConst, as_raw_ISparseOptFlowEstimator, crate::videostab::ISparseOptFlowEstimatorTrait, as_raw_mut_ISparseOptFlowEstimator }
 
-	impl ISparseOptFlowEstimator {
+	/// Base class for global 2D motion estimation methods which take frames as input.
+	pub struct ImageMotionEstimatorBase {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { ISparseOptFlowEstimator, crate::videostab::SparsePyrLkOptFlowEstimator, cv_videostab_ISparseOptFlowEstimator_to_SparsePyrLkOptFlowEstimator }
+	opencv_type_boxed! { ImageMotionEstimatorBase }
 
-	boxed_cast_descendant! { ISparseOptFlowEstimator, crate::videostab::SparsePyrLkOptFlowEstimatorGpu, cv_videostab_ISparseOptFlowEstimator_to_SparsePyrLkOptFlowEstimatorGpu }
-
-	impl std::fmt::Debug for ISparseOptFlowEstimator {
+	impl Drop for ImageMotionEstimatorBase {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("ISparseOptFlowEstimator")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_ImageMotionEstimatorBase_delete(self.as_raw_mut_ImageMotionEstimatorBase()) };
 		}
 	}
+
+	unsafe impl Send for ImageMotionEstimatorBase {}
 
 	/// Constant methods for [crate::videostab::ImageMotionEstimatorBase]
 	pub trait ImageMotionEstimatorBaseTraitConst {
@@ -1539,21 +1536,21 @@ pub mod videostab {
 
 	}
 
-	/// Base class for global 2D motion estimation methods which take frames as input.
-	pub struct ImageMotionEstimatorBase {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { ImageMotionEstimatorBase }
-
-	impl Drop for ImageMotionEstimatorBase {
+	impl std::fmt::Debug for ImageMotionEstimatorBase {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_ImageMotionEstimatorBase_delete(self.as_raw_mut_ImageMotionEstimatorBase()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ImageMotionEstimatorBase")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for ImageMotionEstimatorBase {}
+	boxed_cast_descendant! { ImageMotionEstimatorBase, crate::videostab::FromFileMotionReader, cv_videostab_ImageMotionEstimatorBase_to_FromFileMotionReader }
+
+	boxed_cast_descendant! { ImageMotionEstimatorBase, crate::videostab::KeypointBasedMotionEstimator, cv_videostab_ImageMotionEstimatorBase_to_KeypointBasedMotionEstimator }
+
+	boxed_cast_descendant! { ImageMotionEstimatorBase, crate::videostab::KeypointBasedMotionEstimatorGpu, cv_videostab_ImageMotionEstimatorBase_to_KeypointBasedMotionEstimatorGpu }
+
+	boxed_cast_descendant! { ImageMotionEstimatorBase, crate::videostab::ToFileMotionWriter, cv_videostab_ImageMotionEstimatorBase_to_ToFileMotionWriter }
 
 	impl crate::videostab::ImageMotionEstimatorBaseTraitConst for ImageMotionEstimatorBase {
 		#[inline] fn as_raw_ImageMotionEstimatorBase(&self) -> *const c_void { self.as_raw() }
@@ -1565,24 +1562,20 @@ pub mod videostab {
 
 	boxed_ref! { ImageMotionEstimatorBase, crate::videostab::ImageMotionEstimatorBaseTraitConst, as_raw_ImageMotionEstimatorBase, crate::videostab::ImageMotionEstimatorBaseTrait, as_raw_mut_ImageMotionEstimatorBase }
 
-	impl ImageMotionEstimatorBase {
+	pub struct InpainterBase {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { ImageMotionEstimatorBase, crate::videostab::FromFileMotionReader, cv_videostab_ImageMotionEstimatorBase_to_FromFileMotionReader }
+	opencv_type_boxed! { InpainterBase }
 
-	boxed_cast_descendant! { ImageMotionEstimatorBase, crate::videostab::KeypointBasedMotionEstimator, cv_videostab_ImageMotionEstimatorBase_to_KeypointBasedMotionEstimator }
-
-	boxed_cast_descendant! { ImageMotionEstimatorBase, crate::videostab::KeypointBasedMotionEstimatorGpu, cv_videostab_ImageMotionEstimatorBase_to_KeypointBasedMotionEstimatorGpu }
-
-	boxed_cast_descendant! { ImageMotionEstimatorBase, crate::videostab::ToFileMotionWriter, cv_videostab_ImageMotionEstimatorBase_to_ToFileMotionWriter }
-
-	impl std::fmt::Debug for ImageMotionEstimatorBase {
+	impl Drop for InpainterBase {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("ImageMotionEstimatorBase")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_InpainterBase_delete(self.as_raw_mut_InpainterBase()) };
 		}
 	}
+
+	unsafe impl Send for InpainterBase {}
 
 	/// Constant methods for [crate::videostab::InpainterBase]
 	pub trait InpainterBaseTraitConst {
@@ -1717,32 +1710,12 @@ pub mod videostab {
 
 	}
 
-	pub struct InpainterBase {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { InpainterBase }
-
-	impl Drop for InpainterBase {
+	impl std::fmt::Debug for InpainterBase {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_InpainterBase_delete(self.as_raw_mut_InpainterBase()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("InpainterBase")
+				.finish()
 		}
-	}
-
-	unsafe impl Send for InpainterBase {}
-
-	impl crate::videostab::InpainterBaseTraitConst for InpainterBase {
-		#[inline] fn as_raw_InpainterBase(&self) -> *const c_void { self.as_raw() }
-	}
-
-	impl crate::videostab::InpainterBaseTrait for InpainterBase {
-		#[inline] fn as_raw_mut_InpainterBase(&mut self) -> *mut c_void { self.as_raw_mut() }
-	}
-
-	boxed_ref! { InpainterBase, crate::videostab::InpainterBaseTraitConst, as_raw_InpainterBase, crate::videostab::InpainterBaseTrait, as_raw_mut_InpainterBase }
-
-	impl InpainterBase {
 	}
 
 	boxed_cast_descendant! { InpainterBase, crate::videostab::ColorAverageInpainter, cv_videostab_InpainterBase_to_ColorAverageInpainter }
@@ -1757,12 +1730,40 @@ pub mod videostab {
 
 	boxed_cast_descendant! { InpainterBase, crate::videostab::NullInpainter, cv_videostab_InpainterBase_to_NullInpainter }
 
-	impl std::fmt::Debug for InpainterBase {
+	impl crate::videostab::InpainterBaseTraitConst for InpainterBase {
+		#[inline] fn as_raw_InpainterBase(&self) -> *const c_void { self.as_raw() }
+	}
+
+	impl crate::videostab::InpainterBaseTrait for InpainterBase {
+		#[inline] fn as_raw_mut_InpainterBase(&mut self) -> *mut c_void { self.as_raw_mut() }
+	}
+
+	boxed_ref! { InpainterBase, crate::videostab::InpainterBaseTraitConst, as_raw_InpainterBase, crate::videostab::InpainterBaseTrait, as_raw_mut_InpainterBase }
+
+	pub struct InpaintingPipeline {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { InpaintingPipeline }
+
+	impl Drop for InpaintingPipeline {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("InpainterBase")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_InpaintingPipeline_delete(self.as_raw_mut_InpaintingPipeline()) };
 		}
+	}
+
+	unsafe impl Send for InpaintingPipeline {}
+
+	impl InpaintingPipeline {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::videostab::InpaintingPipeline {
+			let ret = unsafe { sys::cv_videostab_InpaintingPipeline_defaultNew_const() };
+			let ret = unsafe { crate::videostab::InpaintingPipeline::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::videostab::InpaintingPipeline]
@@ -1858,20 +1859,23 @@ pub mod videostab {
 
 	}
 
-	pub struct InpaintingPipeline {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { InpaintingPipeline }
-
-	impl Drop for InpaintingPipeline {
+	impl Default for InpaintingPipeline {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_InpaintingPipeline_delete(self.as_raw_mut_InpaintingPipeline()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for InpaintingPipeline {}
+	impl std::fmt::Debug for InpaintingPipeline {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("InpaintingPipeline")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { InpaintingPipeline, crate::videostab::InpainterBase, cv_videostab_InpaintingPipeline_to_InpainterBase }
 
 	impl crate::videostab::InpainterBaseTraitConst for InpaintingPipeline {
 		#[inline] fn as_raw_InpainterBase(&self) -> *const c_void { self.as_raw() }
@@ -1893,31 +1897,34 @@ pub mod videostab {
 
 	boxed_ref! { InpaintingPipeline, crate::videostab::InpaintingPipelineTraitConst, as_raw_InpaintingPipeline, crate::videostab::InpaintingPipelineTrait, as_raw_mut_InpaintingPipeline }
 
-	impl InpaintingPipeline {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_videostab_InpaintingPipeline_defaultNew_const()) }
-		}
-
+	/// Describes a global 2D motion estimation method which uses keypoints detection and optical flow for
+	/// matching.
+	pub struct KeypointBasedMotionEstimator {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { InpaintingPipeline, crate::videostab::InpainterBase, cv_videostab_InpaintingPipeline_to_InpainterBase }
+	opencv_type_boxed! { KeypointBasedMotionEstimator }
 
-	impl std::fmt::Debug for InpaintingPipeline {
+	impl Drop for KeypointBasedMotionEstimator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("InpaintingPipeline")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_delete(self.as_raw_mut_KeypointBasedMotionEstimator()) };
 		}
 	}
 
-	impl Default for InpaintingPipeline {
+	unsafe impl Send for KeypointBasedMotionEstimator {}
+
+	impl KeypointBasedMotionEstimator {
 		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
+		pub fn new(mut estimator: core::Ptr<crate::videostab::MotionEstimatorBase>) -> Result<crate::videostab::KeypointBasedMotionEstimator> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_KeypointBasedMotionEstimator_PtrLMotionEstimatorBaseG(estimator.as_raw_mut_PtrOfMotionEstimatorBase(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::videostab::KeypointBasedMotionEstimator::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
 	}
 
 	/// Constant methods for [crate::videostab::KeypointBasedMotionEstimator]
@@ -2071,22 +2078,15 @@ pub mod videostab {
 
 	}
 
-	/// Describes a global 2D motion estimation method which uses keypoints detection and optical flow for
-	/// matching.
-	pub struct KeypointBasedMotionEstimator {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { KeypointBasedMotionEstimator }
-
-	impl Drop for KeypointBasedMotionEstimator {
+	impl std::fmt::Debug for KeypointBasedMotionEstimator {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_delete(self.as_raw_mut_KeypointBasedMotionEstimator()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("KeypointBasedMotionEstimator")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for KeypointBasedMotionEstimator {}
+	boxed_cast_base! { KeypointBasedMotionEstimator, crate::videostab::ImageMotionEstimatorBase, cv_videostab_KeypointBasedMotionEstimator_to_ImageMotionEstimatorBase }
 
 	impl crate::videostab::ImageMotionEstimatorBaseTraitConst for KeypointBasedMotionEstimator {
 		#[inline] fn as_raw_ImageMotionEstimatorBase(&self) -> *const c_void { self.as_raw() }
@@ -2108,27 +2108,32 @@ pub mod videostab {
 
 	boxed_ref! { KeypointBasedMotionEstimator, crate::videostab::KeypointBasedMotionEstimatorTraitConst, as_raw_KeypointBasedMotionEstimator, crate::videostab::KeypointBasedMotionEstimatorTrait, as_raw_mut_KeypointBasedMotionEstimator }
 
-	impl KeypointBasedMotionEstimator {
+	pub struct KeypointBasedMotionEstimatorGpu {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { KeypointBasedMotionEstimatorGpu }
+
+	impl Drop for KeypointBasedMotionEstimatorGpu {
 		#[inline]
-		pub fn new(mut estimator: core::Ptr<crate::videostab::MotionEstimatorBase>) -> Result<crate::videostab::KeypointBasedMotionEstimator> {
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_KeypointBasedMotionEstimatorGpu_delete(self.as_raw_mut_KeypointBasedMotionEstimatorGpu()) };
+		}
+	}
+
+	unsafe impl Send for KeypointBasedMotionEstimatorGpu {}
+
+	impl KeypointBasedMotionEstimatorGpu {
+		#[inline]
+		pub fn new(mut estimator: core::Ptr<crate::videostab::MotionEstimatorBase>) -> Result<crate::videostab::KeypointBasedMotionEstimatorGpu> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_KeypointBasedMotionEstimator_PtrLMotionEstimatorBaseG(estimator.as_raw_mut_PtrOfMotionEstimatorBase(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_videostab_KeypointBasedMotionEstimatorGpu_KeypointBasedMotionEstimatorGpu_PtrLMotionEstimatorBaseG(estimator.as_raw_mut_PtrOfMotionEstimatorBase(), ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::videostab::KeypointBasedMotionEstimator::opencv_from_extern(ret) };
+			let ret = unsafe { crate::videostab::KeypointBasedMotionEstimatorGpu::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	boxed_cast_base! { KeypointBasedMotionEstimator, crate::videostab::ImageMotionEstimatorBase, cv_videostab_KeypointBasedMotionEstimator_to_ImageMotionEstimatorBase }
-
-	impl std::fmt::Debug for KeypointBasedMotionEstimator {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("KeypointBasedMotionEstimator")
-				.finish()
-		}
 	}
 
 	/// Constant methods for [crate::videostab::KeypointBasedMotionEstimatorGpu]
@@ -2230,20 +2235,15 @@ pub mod videostab {
 
 	}
 
-	pub struct KeypointBasedMotionEstimatorGpu {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { KeypointBasedMotionEstimatorGpu }
-
-	impl Drop for KeypointBasedMotionEstimatorGpu {
+	impl std::fmt::Debug for KeypointBasedMotionEstimatorGpu {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_KeypointBasedMotionEstimatorGpu_delete(self.as_raw_mut_KeypointBasedMotionEstimatorGpu()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("KeypointBasedMotionEstimatorGpu")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for KeypointBasedMotionEstimatorGpu {}
+	boxed_cast_base! { KeypointBasedMotionEstimatorGpu, crate::videostab::ImageMotionEstimatorBase, cv_videostab_KeypointBasedMotionEstimatorGpu_to_ImageMotionEstimatorBase }
 
 	impl crate::videostab::ImageMotionEstimatorBaseTraitConst for KeypointBasedMotionEstimatorGpu {
 		#[inline] fn as_raw_ImageMotionEstimatorBase(&self) -> *const c_void { self.as_raw() }
@@ -2265,27 +2265,30 @@ pub mod videostab {
 
 	boxed_ref! { KeypointBasedMotionEstimatorGpu, crate::videostab::KeypointBasedMotionEstimatorGpuTraitConst, as_raw_KeypointBasedMotionEstimatorGpu, crate::videostab::KeypointBasedMotionEstimatorGpuTrait, as_raw_mut_KeypointBasedMotionEstimatorGpu }
 
-	impl KeypointBasedMotionEstimatorGpu {
-		#[inline]
-		pub fn new(mut estimator: core::Ptr<crate::videostab::MotionEstimatorBase>) -> Result<crate::videostab::KeypointBasedMotionEstimatorGpu> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_KeypointBasedMotionEstimatorGpu_KeypointBasedMotionEstimatorGpu_PtrLMotionEstimatorBaseG(estimator.as_raw_mut_PtrOfMotionEstimatorBase(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::videostab::KeypointBasedMotionEstimatorGpu::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	pub struct LogToStdout {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { KeypointBasedMotionEstimatorGpu, crate::videostab::ImageMotionEstimatorBase, cv_videostab_KeypointBasedMotionEstimatorGpu_to_ImageMotionEstimatorBase }
+	opencv_type_boxed! { LogToStdout }
 
-	impl std::fmt::Debug for KeypointBasedMotionEstimatorGpu {
+	impl Drop for LogToStdout {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("KeypointBasedMotionEstimatorGpu")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_LogToStdout_delete(self.as_raw_mut_LogToStdout()) };
 		}
+	}
+
+	unsafe impl Send for LogToStdout {}
+
+	impl LogToStdout {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::videostab::LogToStdout {
+			let ret = unsafe { sys::cv_videostab_LogToStdout_defaultNew_const() };
+			let ret = unsafe { crate::videostab::LogToStdout::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::videostab::LogToStdout]
@@ -2310,20 +2313,23 @@ pub mod videostab {
 
 	}
 
-	pub struct LogToStdout {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { LogToStdout }
-
-	impl Drop for LogToStdout {
+	impl Default for LogToStdout {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_LogToStdout_delete(self.as_raw_mut_LogToStdout()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for LogToStdout {}
+	impl std::fmt::Debug for LogToStdout {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("LogToStdout")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { LogToStdout, crate::videostab::ILog, cv_videostab_LogToStdout_to_ILog }
 
 	impl crate::videostab::ILogTraitConst for LogToStdout {
 		#[inline] fn as_raw_ILog(&self) -> *const c_void { self.as_raw() }
@@ -2345,31 +2351,47 @@ pub mod videostab {
 
 	boxed_ref! { LogToStdout, crate::videostab::LogToStdoutTraitConst, as_raw_LogToStdout, crate::videostab::LogToStdoutTrait, as_raw_mut_LogToStdout }
 
-	impl LogToStdout {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_videostab_LogToStdout_defaultNew_const()) }
-		}
-
+	pub struct LpMotionStabilizer {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { LogToStdout, crate::videostab::ILog, cv_videostab_LogToStdout_to_ILog }
+	opencv_type_boxed! { LpMotionStabilizer }
 
-	impl std::fmt::Debug for LogToStdout {
+	impl Drop for LpMotionStabilizer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("LogToStdout")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_LpMotionStabilizer_delete(self.as_raw_mut_LpMotionStabilizer()) };
 		}
 	}
 
-	impl Default for LogToStdout {
+	unsafe impl Send for LpMotionStabilizer {}
+
+	impl LpMotionStabilizer {
+		/// ## C++ default parameters
+		/// * model: MM_SIMILARITY
 		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
+		pub fn new(model: crate::videostab::MotionModel) -> Result<crate::videostab::LpMotionStabilizer> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_LpMotionStabilizer_LpMotionStabilizer_MotionModel(model, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::videostab::LpMotionStabilizer::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * model: MM_SIMILARITY
+		#[inline]
+		pub fn new_def() -> Result<crate::videostab::LpMotionStabilizer> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_LpMotionStabilizer_LpMotionStabilizer(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::videostab::LpMotionStabilizer::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::videostab::LpMotionStabilizer]
@@ -2519,20 +2541,15 @@ pub mod videostab {
 
 	}
 
-	pub struct LpMotionStabilizer {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { LpMotionStabilizer }
-
-	impl Drop for LpMotionStabilizer {
+	impl std::fmt::Debug for LpMotionStabilizer {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_LpMotionStabilizer_delete(self.as_raw_mut_LpMotionStabilizer()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("LpMotionStabilizer")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for LpMotionStabilizer {}
+	boxed_cast_base! { LpMotionStabilizer, crate::videostab::IMotionStabilizer, cv_videostab_LpMotionStabilizer_to_IMotionStabilizer }
 
 	impl crate::videostab::IMotionStabilizerTraitConst for LpMotionStabilizer {
 		#[inline] fn as_raw_IMotionStabilizer(&self) -> *const c_void { self.as_raw() }
@@ -2554,42 +2571,32 @@ pub mod videostab {
 
 	boxed_ref! { LpMotionStabilizer, crate::videostab::LpMotionStabilizerTraitConst, as_raw_LpMotionStabilizer, crate::videostab::LpMotionStabilizerTrait, as_raw_mut_LpMotionStabilizer }
 
-	impl LpMotionStabilizer {
-		/// ## C++ default parameters
-		/// * model: MM_SIMILARITY
-		#[inline]
-		pub fn new(model: crate::videostab::MotionModel) -> Result<crate::videostab::LpMotionStabilizer> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_LpMotionStabilizer_LpMotionStabilizer_MotionModel(model, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::videostab::LpMotionStabilizer::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * model: MM_SIMILARITY
-		#[inline]
-		pub fn new_def() -> Result<crate::videostab::LpMotionStabilizer> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_LpMotionStabilizer_LpMotionStabilizer(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::videostab::LpMotionStabilizer::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	pub struct MaskFrameSource {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { LpMotionStabilizer, crate::videostab::IMotionStabilizer, cv_videostab_LpMotionStabilizer_to_IMotionStabilizer }
+	opencv_type_boxed! { MaskFrameSource }
 
-	impl std::fmt::Debug for LpMotionStabilizer {
+	impl Drop for MaskFrameSource {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("LpMotionStabilizer")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_MaskFrameSource_delete(self.as_raw_mut_MaskFrameSource()) };
 		}
+	}
+
+	unsafe impl Send for MaskFrameSource {}
+
+	impl MaskFrameSource {
+		#[inline]
+		pub fn from_base(source: &core::Ptr<crate::videostab::IFrameSource>) -> Result<crate::videostab::MaskFrameSource> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_MaskFrameSource_MaskFrameSource_const_PtrLIFrameSourceGR(source.as_raw_PtrOfIFrameSource(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::videostab::MaskFrameSource::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::videostab::MaskFrameSource]
@@ -2623,20 +2630,15 @@ pub mod videostab {
 
 	}
 
-	pub struct MaskFrameSource {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { MaskFrameSource }
-
-	impl Drop for MaskFrameSource {
+	impl std::fmt::Debug for MaskFrameSource {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_MaskFrameSource_delete(self.as_raw_mut_MaskFrameSource()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MaskFrameSource")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for MaskFrameSource {}
+	boxed_cast_base! { MaskFrameSource, crate::videostab::IFrameSource, cv_videostab_MaskFrameSource_to_IFrameSource }
 
 	impl crate::videostab::IFrameSourceTraitConst for MaskFrameSource {
 		#[inline] fn as_raw_IFrameSource(&self) -> *const c_void { self.as_raw() }
@@ -2658,27 +2660,30 @@ pub mod videostab {
 
 	boxed_ref! { MaskFrameSource, crate::videostab::MaskFrameSourceTraitConst, as_raw_MaskFrameSource, crate::videostab::MaskFrameSourceTrait, as_raw_mut_MaskFrameSource }
 
-	impl MaskFrameSource {
-		#[inline]
-		pub fn from_base(source: &core::Ptr<crate::videostab::IFrameSource>) -> Result<crate::videostab::MaskFrameSource> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_MaskFrameSource_MaskFrameSource_const_PtrLIFrameSourceGR(source.as_raw_PtrOfIFrameSource(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::videostab::MaskFrameSource::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	pub struct MoreAccurateMotionWobbleSuppressor {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { MaskFrameSource, crate::videostab::IFrameSource, cv_videostab_MaskFrameSource_to_IFrameSource }
+	opencv_type_boxed! { MoreAccurateMotionWobbleSuppressor }
 
-	impl std::fmt::Debug for MaskFrameSource {
+	impl Drop for MoreAccurateMotionWobbleSuppressor {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("MaskFrameSource")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_MoreAccurateMotionWobbleSuppressor_delete(self.as_raw_mut_MoreAccurateMotionWobbleSuppressor()) };
 		}
+	}
+
+	unsafe impl Send for MoreAccurateMotionWobbleSuppressor {}
+
+	impl MoreAccurateMotionWobbleSuppressor {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::videostab::MoreAccurateMotionWobbleSuppressor {
+			let ret = unsafe { sys::cv_videostab_MoreAccurateMotionWobbleSuppressor_defaultNew_const() };
+			let ret = unsafe { crate::videostab::MoreAccurateMotionWobbleSuppressor::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::videostab::MoreAccurateMotionWobbleSuppressor]
@@ -2702,20 +2707,25 @@ pub mod videostab {
 
 	}
 
-	pub struct MoreAccurateMotionWobbleSuppressor {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { MoreAccurateMotionWobbleSuppressor }
-
-	impl Drop for MoreAccurateMotionWobbleSuppressor {
+	impl Default for MoreAccurateMotionWobbleSuppressor {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_MoreAccurateMotionWobbleSuppressor_delete(self.as_raw_mut_MoreAccurateMotionWobbleSuppressor()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for MoreAccurateMotionWobbleSuppressor {}
+	impl std::fmt::Debug for MoreAccurateMotionWobbleSuppressor {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MoreAccurateMotionWobbleSuppressor")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { MoreAccurateMotionWobbleSuppressor, crate::videostab::MoreAccurateMotionWobbleSuppressorBase, cv_videostab_MoreAccurateMotionWobbleSuppressor_to_MoreAccurateMotionWobbleSuppressorBase }
+
+	boxed_cast_base! { MoreAccurateMotionWobbleSuppressor, crate::videostab::WobbleSuppressorBase, cv_videostab_MoreAccurateMotionWobbleSuppressor_to_WobbleSuppressorBase }
 
 	impl crate::videostab::MoreAccurateMotionWobbleSuppressorBaseTraitConst for MoreAccurateMotionWobbleSuppressor {
 		#[inline] fn as_raw_MoreAccurateMotionWobbleSuppressorBase(&self) -> *const c_void { self.as_raw() }
@@ -2747,34 +2757,20 @@ pub mod videostab {
 
 	boxed_ref! { MoreAccurateMotionWobbleSuppressor, crate::videostab::MoreAccurateMotionWobbleSuppressorTraitConst, as_raw_MoreAccurateMotionWobbleSuppressor, crate::videostab::MoreAccurateMotionWobbleSuppressorTrait, as_raw_mut_MoreAccurateMotionWobbleSuppressor }
 
-	impl MoreAccurateMotionWobbleSuppressor {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_videostab_MoreAccurateMotionWobbleSuppressor_defaultNew_const()) }
-		}
-
+	pub struct MoreAccurateMotionWobbleSuppressorBase {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { MoreAccurateMotionWobbleSuppressor, crate::videostab::MoreAccurateMotionWobbleSuppressorBase, cv_videostab_MoreAccurateMotionWobbleSuppressor_to_MoreAccurateMotionWobbleSuppressorBase }
+	opencv_type_boxed! { MoreAccurateMotionWobbleSuppressorBase }
 
-	boxed_cast_base! { MoreAccurateMotionWobbleSuppressor, crate::videostab::WobbleSuppressorBase, cv_videostab_MoreAccurateMotionWobbleSuppressor_to_WobbleSuppressorBase }
-
-	impl std::fmt::Debug for MoreAccurateMotionWobbleSuppressor {
+	impl Drop for MoreAccurateMotionWobbleSuppressorBase {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("MoreAccurateMotionWobbleSuppressor")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_MoreAccurateMotionWobbleSuppressorBase_delete(self.as_raw_mut_MoreAccurateMotionWobbleSuppressorBase()) };
 		}
 	}
 
-	impl Default for MoreAccurateMotionWobbleSuppressor {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
-	}
+	unsafe impl Send for MoreAccurateMotionWobbleSuppressorBase {}
 
 	/// Constant methods for [crate::videostab::MoreAccurateMotionWobbleSuppressorBase]
 	pub trait MoreAccurateMotionWobbleSuppressorBaseTraitConst: crate::videostab::WobbleSuppressorBaseTraitConst {
@@ -2806,20 +2802,19 @@ pub mod videostab {
 
 	}
 
-	pub struct MoreAccurateMotionWobbleSuppressorBase {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { MoreAccurateMotionWobbleSuppressorBase }
-
-	impl Drop for MoreAccurateMotionWobbleSuppressorBase {
+	impl std::fmt::Debug for MoreAccurateMotionWobbleSuppressorBase {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_MoreAccurateMotionWobbleSuppressorBase_delete(self.as_raw_mut_MoreAccurateMotionWobbleSuppressorBase()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MoreAccurateMotionWobbleSuppressorBase")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for MoreAccurateMotionWobbleSuppressorBase {}
+	boxed_cast_base! { MoreAccurateMotionWobbleSuppressorBase, crate::videostab::WobbleSuppressorBase, cv_videostab_MoreAccurateMotionWobbleSuppressorBase_to_WobbleSuppressorBase }
+
+	boxed_cast_descendant! { MoreAccurateMotionWobbleSuppressorBase, crate::videostab::MoreAccurateMotionWobbleSuppressor, cv_videostab_MoreAccurateMotionWobbleSuppressorBase_to_MoreAccurateMotionWobbleSuppressor }
+
+	boxed_cast_descendant! { MoreAccurateMotionWobbleSuppressorBase, crate::videostab::MoreAccurateMotionWobbleSuppressorGpu, cv_videostab_MoreAccurateMotionWobbleSuppressorBase_to_MoreAccurateMotionWobbleSuppressorGpu }
 
 	impl crate::videostab::WobbleSuppressorBaseTraitConst for MoreAccurateMotionWobbleSuppressorBase {
 		#[inline] fn as_raw_WobbleSuppressorBase(&self) -> *const c_void { self.as_raw() }
@@ -2841,21 +2836,30 @@ pub mod videostab {
 
 	boxed_ref! { MoreAccurateMotionWobbleSuppressorBase, crate::videostab::MoreAccurateMotionWobbleSuppressorBaseTraitConst, as_raw_MoreAccurateMotionWobbleSuppressorBase, crate::videostab::MoreAccurateMotionWobbleSuppressorBaseTrait, as_raw_mut_MoreAccurateMotionWobbleSuppressorBase }
 
-	impl MoreAccurateMotionWobbleSuppressorBase {
+	pub struct MoreAccurateMotionWobbleSuppressorGpu {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { MoreAccurateMotionWobbleSuppressorBase, crate::videostab::MoreAccurateMotionWobbleSuppressor, cv_videostab_MoreAccurateMotionWobbleSuppressorBase_to_MoreAccurateMotionWobbleSuppressor }
+	opencv_type_boxed! { MoreAccurateMotionWobbleSuppressorGpu }
 
-	boxed_cast_descendant! { MoreAccurateMotionWobbleSuppressorBase, crate::videostab::MoreAccurateMotionWobbleSuppressorGpu, cv_videostab_MoreAccurateMotionWobbleSuppressorBase_to_MoreAccurateMotionWobbleSuppressorGpu }
-
-	boxed_cast_base! { MoreAccurateMotionWobbleSuppressorBase, crate::videostab::WobbleSuppressorBase, cv_videostab_MoreAccurateMotionWobbleSuppressorBase_to_WobbleSuppressorBase }
-
-	impl std::fmt::Debug for MoreAccurateMotionWobbleSuppressorBase {
+	impl Drop for MoreAccurateMotionWobbleSuppressorGpu {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("MoreAccurateMotionWobbleSuppressorBase")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_MoreAccurateMotionWobbleSuppressorGpu_delete(self.as_raw_mut_MoreAccurateMotionWobbleSuppressorGpu()) };
 		}
+	}
+
+	unsafe impl Send for MoreAccurateMotionWobbleSuppressorGpu {}
+
+	impl MoreAccurateMotionWobbleSuppressorGpu {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::videostab::MoreAccurateMotionWobbleSuppressorGpu {
+			let ret = unsafe { sys::cv_videostab_MoreAccurateMotionWobbleSuppressorGpu_defaultNew_const() };
+			let ret = unsafe { crate::videostab::MoreAccurateMotionWobbleSuppressorGpu::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::videostab::MoreAccurateMotionWobbleSuppressorGpu]
@@ -2888,20 +2892,25 @@ pub mod videostab {
 
 	}
 
-	pub struct MoreAccurateMotionWobbleSuppressorGpu {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { MoreAccurateMotionWobbleSuppressorGpu }
-
-	impl Drop for MoreAccurateMotionWobbleSuppressorGpu {
+	impl Default for MoreAccurateMotionWobbleSuppressorGpu {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_MoreAccurateMotionWobbleSuppressorGpu_delete(self.as_raw_mut_MoreAccurateMotionWobbleSuppressorGpu()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for MoreAccurateMotionWobbleSuppressorGpu {}
+	impl std::fmt::Debug for MoreAccurateMotionWobbleSuppressorGpu {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MoreAccurateMotionWobbleSuppressorGpu")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { MoreAccurateMotionWobbleSuppressorGpu, crate::videostab::MoreAccurateMotionWobbleSuppressorBase, cv_videostab_MoreAccurateMotionWobbleSuppressorGpu_to_MoreAccurateMotionWobbleSuppressorBase }
+
+	boxed_cast_base! { MoreAccurateMotionWobbleSuppressorGpu, crate::videostab::WobbleSuppressorBase, cv_videostab_MoreAccurateMotionWobbleSuppressorGpu_to_WobbleSuppressorBase }
 
 	impl crate::videostab::MoreAccurateMotionWobbleSuppressorBaseTraitConst for MoreAccurateMotionWobbleSuppressorGpu {
 		#[inline] fn as_raw_MoreAccurateMotionWobbleSuppressorBase(&self) -> *const c_void { self.as_raw() }
@@ -2933,34 +2942,21 @@ pub mod videostab {
 
 	boxed_ref! { MoreAccurateMotionWobbleSuppressorGpu, crate::videostab::MoreAccurateMotionWobbleSuppressorGpuTraitConst, as_raw_MoreAccurateMotionWobbleSuppressorGpu, crate::videostab::MoreAccurateMotionWobbleSuppressorGpuTrait, as_raw_mut_MoreAccurateMotionWobbleSuppressorGpu }
 
-	impl MoreAccurateMotionWobbleSuppressorGpu {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_videostab_MoreAccurateMotionWobbleSuppressorGpu_defaultNew_const()) }
-		}
-
+	/// Base class for all global motion estimation methods.
+	pub struct MotionEstimatorBase {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { MoreAccurateMotionWobbleSuppressorGpu, crate::videostab::MoreAccurateMotionWobbleSuppressorBase, cv_videostab_MoreAccurateMotionWobbleSuppressorGpu_to_MoreAccurateMotionWobbleSuppressorBase }
+	opencv_type_boxed! { MotionEstimatorBase }
 
-	boxed_cast_base! { MoreAccurateMotionWobbleSuppressorGpu, crate::videostab::WobbleSuppressorBase, cv_videostab_MoreAccurateMotionWobbleSuppressorGpu_to_WobbleSuppressorBase }
-
-	impl std::fmt::Debug for MoreAccurateMotionWobbleSuppressorGpu {
+	impl Drop for MotionEstimatorBase {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("MoreAccurateMotionWobbleSuppressorGpu")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_MotionEstimatorBase_delete(self.as_raw_mut_MotionEstimatorBase()) };
 		}
 	}
 
-	impl Default for MoreAccurateMotionWobbleSuppressorGpu {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
-	}
+	unsafe impl Send for MotionEstimatorBase {}
 
 	/// Constant methods for [crate::videostab::MotionEstimatorBase]
 	pub trait MotionEstimatorBaseTraitConst {
@@ -3045,21 +3041,17 @@ pub mod videostab {
 
 	}
 
-	/// Base class for all global motion estimation methods.
-	pub struct MotionEstimatorBase {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { MotionEstimatorBase }
-
-	impl Drop for MotionEstimatorBase {
+	impl std::fmt::Debug for MotionEstimatorBase {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_MotionEstimatorBase_delete(self.as_raw_mut_MotionEstimatorBase()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MotionEstimatorBase")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for MotionEstimatorBase {}
+	boxed_cast_descendant! { MotionEstimatorBase, crate::videostab::MotionEstimatorL1, cv_videostab_MotionEstimatorBase_to_MotionEstimatorL1 }
+
+	boxed_cast_descendant! { MotionEstimatorBase, crate::videostab::MotionEstimatorRansacL2, cv_videostab_MotionEstimatorBase_to_MotionEstimatorRansacL2 }
 
 	impl crate::videostab::MotionEstimatorBaseTraitConst for MotionEstimatorBase {
 		#[inline] fn as_raw_MotionEstimatorBase(&self) -> *const c_void { self.as_raw() }
@@ -3071,19 +3063,51 @@ pub mod videostab {
 
 	boxed_ref! { MotionEstimatorBase, crate::videostab::MotionEstimatorBaseTraitConst, as_raw_MotionEstimatorBase, crate::videostab::MotionEstimatorBaseTrait, as_raw_mut_MotionEstimatorBase }
 
-	impl MotionEstimatorBase {
+	/// Describes a global 2D motion estimation method which minimizes L1 error.
+	///
+	///
+	/// Note: To be able to use this method you must build OpenCV with CLP library support. :
+	pub struct MotionEstimatorL1 {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { MotionEstimatorBase, crate::videostab::MotionEstimatorL1, cv_videostab_MotionEstimatorBase_to_MotionEstimatorL1 }
+	opencv_type_boxed! { MotionEstimatorL1 }
 
-	boxed_cast_descendant! { MotionEstimatorBase, crate::videostab::MotionEstimatorRansacL2, cv_videostab_MotionEstimatorBase_to_MotionEstimatorRansacL2 }
-
-	impl std::fmt::Debug for MotionEstimatorBase {
+	impl Drop for MotionEstimatorL1 {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("MotionEstimatorBase")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_MotionEstimatorL1_delete(self.as_raw_mut_MotionEstimatorL1()) };
 		}
+	}
+
+	unsafe impl Send for MotionEstimatorL1 {}
+
+	impl MotionEstimatorL1 {
+		/// ## C++ default parameters
+		/// * model: MM_AFFINE
+		#[inline]
+		pub fn new(model: crate::videostab::MotionModel) -> Result<crate::videostab::MotionEstimatorL1> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_MotionEstimatorL1_MotionEstimatorL1_MotionModel(model, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::videostab::MotionEstimatorL1::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * model: MM_AFFINE
+		#[inline]
+		pub fn new_def() -> Result<crate::videostab::MotionEstimatorL1> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_MotionEstimatorL1_MotionEstimatorL1(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::videostab::MotionEstimatorL1::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::videostab::MotionEstimatorL1]
@@ -3127,24 +3151,15 @@ pub mod videostab {
 
 	}
 
-	/// Describes a global 2D motion estimation method which minimizes L1 error.
-	///
-	///
-	/// Note: To be able to use this method you must build OpenCV with CLP library support. :
-	pub struct MotionEstimatorL1 {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { MotionEstimatorL1 }
-
-	impl Drop for MotionEstimatorL1 {
+	impl std::fmt::Debug for MotionEstimatorL1 {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_MotionEstimatorL1_delete(self.as_raw_mut_MotionEstimatorL1()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MotionEstimatorL1")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for MotionEstimatorL1 {}
+	boxed_cast_base! { MotionEstimatorL1, crate::videostab::MotionEstimatorBase, cv_videostab_MotionEstimatorL1_to_MotionEstimatorBase }
 
 	impl crate::videostab::MotionEstimatorBaseTraitConst for MotionEstimatorL1 {
 		#[inline] fn as_raw_MotionEstimatorBase(&self) -> *const c_void { self.as_raw() }
@@ -3166,16 +3181,32 @@ pub mod videostab {
 
 	boxed_ref! { MotionEstimatorL1, crate::videostab::MotionEstimatorL1TraitConst, as_raw_MotionEstimatorL1, crate::videostab::MotionEstimatorL1Trait, as_raw_mut_MotionEstimatorL1 }
 
-	impl MotionEstimatorL1 {
+	/// Describes a robust RANSAC-based global 2D motion estimation method which minimizes L2 error.
+	pub struct MotionEstimatorRansacL2 {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { MotionEstimatorRansacL2 }
+
+	impl Drop for MotionEstimatorRansacL2 {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_MotionEstimatorRansacL2_delete(self.as_raw_mut_MotionEstimatorRansacL2()) };
+		}
+	}
+
+	unsafe impl Send for MotionEstimatorRansacL2 {}
+
+	impl MotionEstimatorRansacL2 {
 		/// ## C++ default parameters
 		/// * model: MM_AFFINE
 		#[inline]
-		pub fn new(model: crate::videostab::MotionModel) -> Result<crate::videostab::MotionEstimatorL1> {
+		pub fn new(model: crate::videostab::MotionModel) -> Result<crate::videostab::MotionEstimatorRansacL2> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_MotionEstimatorL1_MotionEstimatorL1_MotionModel(model, ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_videostab_MotionEstimatorRansacL2_MotionEstimatorRansacL2_MotionModel(model, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::videostab::MotionEstimatorL1::opencv_from_extern(ret) };
+			let ret = unsafe { crate::videostab::MotionEstimatorRansacL2::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
@@ -3183,25 +3214,15 @@ pub mod videostab {
 		/// This alternative version of [new] function uses the following default values for its arguments:
 		/// * model: MM_AFFINE
 		#[inline]
-		pub fn new_def() -> Result<crate::videostab::MotionEstimatorL1> {
+		pub fn new_def() -> Result<crate::videostab::MotionEstimatorRansacL2> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_MotionEstimatorL1_MotionEstimatorL1(ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_videostab_MotionEstimatorRansacL2_MotionEstimatorRansacL2(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::videostab::MotionEstimatorL1::opencv_from_extern(ret) };
+			let ret = unsafe { crate::videostab::MotionEstimatorRansacL2::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	boxed_cast_base! { MotionEstimatorL1, crate::videostab::MotionEstimatorBase, cv_videostab_MotionEstimatorL1_to_MotionEstimatorBase }
-
-	impl std::fmt::Debug for MotionEstimatorL1 {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("MotionEstimatorL1")
-				.finish()
-		}
 	}
 
 	/// Constant methods for [crate::videostab::MotionEstimatorRansacL2]
@@ -3282,21 +3303,15 @@ pub mod videostab {
 
 	}
 
-	/// Describes a robust RANSAC-based global 2D motion estimation method which minimizes L2 error.
-	pub struct MotionEstimatorRansacL2 {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { MotionEstimatorRansacL2 }
-
-	impl Drop for MotionEstimatorRansacL2 {
+	impl std::fmt::Debug for MotionEstimatorRansacL2 {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_MotionEstimatorRansacL2_delete(self.as_raw_mut_MotionEstimatorRansacL2()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MotionEstimatorRansacL2")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for MotionEstimatorRansacL2 {}
+	boxed_cast_base! { MotionEstimatorRansacL2, crate::videostab::MotionEstimatorBase, cv_videostab_MotionEstimatorRansacL2_to_MotionEstimatorBase }
 
 	impl crate::videostab::MotionEstimatorBaseTraitConst for MotionEstimatorRansacL2 {
 		#[inline] fn as_raw_MotionEstimatorBase(&self) -> *const c_void { self.as_raw() }
@@ -3318,43 +3333,20 @@ pub mod videostab {
 
 	boxed_ref! { MotionEstimatorRansacL2, crate::videostab::MotionEstimatorRansacL2TraitConst, as_raw_MotionEstimatorRansacL2, crate::videostab::MotionEstimatorRansacL2Trait, as_raw_mut_MotionEstimatorRansacL2 }
 
-	impl MotionEstimatorRansacL2 {
-		/// ## C++ default parameters
-		/// * model: MM_AFFINE
-		#[inline]
-		pub fn new(model: crate::videostab::MotionModel) -> Result<crate::videostab::MotionEstimatorRansacL2> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_MotionEstimatorRansacL2_MotionEstimatorRansacL2_MotionModel(model, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::videostab::MotionEstimatorRansacL2::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * model: MM_AFFINE
-		#[inline]
-		pub fn new_def() -> Result<crate::videostab::MotionEstimatorRansacL2> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_MotionEstimatorRansacL2_MotionEstimatorRansacL2(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::videostab::MotionEstimatorRansacL2::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	pub struct MotionFilterBase {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { MotionEstimatorRansacL2, crate::videostab::MotionEstimatorBase, cv_videostab_MotionEstimatorRansacL2_to_MotionEstimatorBase }
+	opencv_type_boxed! { MotionFilterBase }
 
-	impl std::fmt::Debug for MotionEstimatorRansacL2 {
+	impl Drop for MotionFilterBase {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("MotionEstimatorRansacL2")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_MotionFilterBase_delete(self.as_raw_mut_MotionFilterBase()) };
 		}
 	}
+
+	unsafe impl Send for MotionFilterBase {}
 
 	/// Constant methods for [crate::videostab::MotionFilterBase]
 	pub trait MotionFilterBaseTraitConst: crate::videostab::IMotionStabilizerTraitConst {
@@ -3387,20 +3379,17 @@ pub mod videostab {
 
 	}
 
-	pub struct MotionFilterBase {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { MotionFilterBase }
-
-	impl Drop for MotionFilterBase {
+	impl std::fmt::Debug for MotionFilterBase {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_MotionFilterBase_delete(self.as_raw_mut_MotionFilterBase()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MotionFilterBase")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for MotionFilterBase {}
+	boxed_cast_base! { MotionFilterBase, crate::videostab::IMotionStabilizer, cv_videostab_MotionFilterBase_to_IMotionStabilizer }
+
+	boxed_cast_descendant! { MotionFilterBase, crate::videostab::GaussianMotionFilter, cv_videostab_MotionFilterBase_to_GaussianMotionFilter }
 
 	impl crate::videostab::IMotionStabilizerTraitConst for MotionFilterBase {
 		#[inline] fn as_raw_IMotionStabilizer(&self) -> *const c_void { self.as_raw() }
@@ -3422,19 +3411,32 @@ pub mod videostab {
 
 	boxed_ref! { MotionFilterBase, crate::videostab::MotionFilterBaseTraitConst, as_raw_MotionFilterBase, crate::videostab::MotionFilterBaseTrait, as_raw_mut_MotionFilterBase }
 
-	impl MotionFilterBase {
+	pub struct MotionInpainter {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { MotionFilterBase, crate::videostab::GaussianMotionFilter, cv_videostab_MotionFilterBase_to_GaussianMotionFilter }
+	opencv_type_boxed! { MotionInpainter }
 
-	boxed_cast_base! { MotionFilterBase, crate::videostab::IMotionStabilizer, cv_videostab_MotionFilterBase_to_IMotionStabilizer }
-
-	impl std::fmt::Debug for MotionFilterBase {
+	impl Drop for MotionInpainter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("MotionFilterBase")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_MotionInpainter_delete(self.as_raw_mut_MotionInpainter()) };
 		}
+	}
+
+	unsafe impl Send for MotionInpainter {}
+
+	impl MotionInpainter {
+		#[inline]
+		pub fn default() -> Result<crate::videostab::MotionInpainter> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_MotionInpainter_MotionInpainter(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::videostab::MotionInpainter::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::videostab::MotionInpainter]
@@ -3531,20 +3533,15 @@ pub mod videostab {
 
 	}
 
-	pub struct MotionInpainter {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { MotionInpainter }
-
-	impl Drop for MotionInpainter {
+	impl std::fmt::Debug for MotionInpainter {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_MotionInpainter_delete(self.as_raw_mut_MotionInpainter()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MotionInpainter")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for MotionInpainter {}
+	boxed_cast_base! { MotionInpainter, crate::videostab::InpainterBase, cv_videostab_MotionInpainter_to_InpainterBase }
 
 	impl crate::videostab::InpainterBaseTraitConst for MotionInpainter {
 		#[inline] fn as_raw_InpainterBase(&self) -> *const c_void { self.as_raw() }
@@ -3566,27 +3563,30 @@ pub mod videostab {
 
 	boxed_ref! { MotionInpainter, crate::videostab::MotionInpainterTraitConst, as_raw_MotionInpainter, crate::videostab::MotionInpainterTrait, as_raw_mut_MotionInpainter }
 
-	impl MotionInpainter {
-		#[inline]
-		pub fn default() -> Result<crate::videostab::MotionInpainter> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_MotionInpainter_MotionInpainter(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::videostab::MotionInpainter::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	pub struct MotionStabilizationPipeline {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { MotionInpainter, crate::videostab::InpainterBase, cv_videostab_MotionInpainter_to_InpainterBase }
+	opencv_type_boxed! { MotionStabilizationPipeline }
 
-	impl std::fmt::Debug for MotionInpainter {
+	impl Drop for MotionStabilizationPipeline {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("MotionInpainter")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_MotionStabilizationPipeline_delete(self.as_raw_mut_MotionStabilizationPipeline()) };
 		}
+	}
+
+	unsafe impl Send for MotionStabilizationPipeline {}
+
+	impl MotionStabilizationPipeline {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::videostab::MotionStabilizationPipeline {
+			let ret = unsafe { sys::cv_videostab_MotionStabilizationPipeline_defaultNew_const() };
+			let ret = unsafe { crate::videostab::MotionStabilizationPipeline::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::videostab::MotionStabilizationPipeline]
@@ -3628,20 +3628,23 @@ pub mod videostab {
 
 	}
 
-	pub struct MotionStabilizationPipeline {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { MotionStabilizationPipeline }
-
-	impl Drop for MotionStabilizationPipeline {
+	impl Default for MotionStabilizationPipeline {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_MotionStabilizationPipeline_delete(self.as_raw_mut_MotionStabilizationPipeline()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for MotionStabilizationPipeline {}
+	impl std::fmt::Debug for MotionStabilizationPipeline {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MotionStabilizationPipeline")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { MotionStabilizationPipeline, crate::videostab::IMotionStabilizer, cv_videostab_MotionStabilizationPipeline_to_IMotionStabilizer }
 
 	impl crate::videostab::IMotionStabilizerTraitConst for MotionStabilizationPipeline {
 		#[inline] fn as_raw_IMotionStabilizer(&self) -> *const c_void { self.as_raw() }
@@ -3663,31 +3666,30 @@ pub mod videostab {
 
 	boxed_ref! { MotionStabilizationPipeline, crate::videostab::MotionStabilizationPipelineTraitConst, as_raw_MotionStabilizationPipeline, crate::videostab::MotionStabilizationPipelineTrait, as_raw_mut_MotionStabilizationPipeline }
 
-	impl MotionStabilizationPipeline {
+	pub struct NullDeblurer {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { NullDeblurer }
+
+	impl Drop for NullDeblurer {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_NullDeblurer_delete(self.as_raw_mut_NullDeblurer()) };
+		}
+	}
+
+	unsafe impl Send for NullDeblurer {}
+
+	impl NullDeblurer {
 		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_videostab_MotionStabilizationPipeline_defaultNew_const()) }
+		pub fn default() -> crate::videostab::NullDeblurer {
+			let ret = unsafe { sys::cv_videostab_NullDeblurer_defaultNew_const() };
+			let ret = unsafe { crate::videostab::NullDeblurer::opencv_from_extern(ret) };
+			ret
 		}
 
-	}
-
-	boxed_cast_base! { MotionStabilizationPipeline, crate::videostab::IMotionStabilizer, cv_videostab_MotionStabilizationPipeline_to_IMotionStabilizer }
-
-	impl std::fmt::Debug for MotionStabilizationPipeline {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("MotionStabilizationPipeline")
-				.finish()
-		}
-	}
-
-	impl Default for MotionStabilizationPipeline {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
 	}
 
 	/// Constant methods for [crate::videostab::NullDeblurer]
@@ -3711,20 +3713,23 @@ pub mod videostab {
 
 	}
 
-	pub struct NullDeblurer {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { NullDeblurer }
-
-	impl Drop for NullDeblurer {
+	impl Default for NullDeblurer {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_NullDeblurer_delete(self.as_raw_mut_NullDeblurer()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for NullDeblurer {}
+	impl std::fmt::Debug for NullDeblurer {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("NullDeblurer")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { NullDeblurer, crate::videostab::DeblurerBase, cv_videostab_NullDeblurer_to_DeblurerBase }
 
 	impl crate::videostab::DeblurerBaseTraitConst for NullDeblurer {
 		#[inline] fn as_raw_DeblurerBase(&self) -> *const c_void { self.as_raw() }
@@ -3746,31 +3751,30 @@ pub mod videostab {
 
 	boxed_ref! { NullDeblurer, crate::videostab::NullDeblurerTraitConst, as_raw_NullDeblurer, crate::videostab::NullDeblurerTrait, as_raw_mut_NullDeblurer }
 
-	impl NullDeblurer {
+	pub struct NullFrameSource {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { NullFrameSource }
+
+	impl Drop for NullFrameSource {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_NullFrameSource_delete(self.as_raw_mut_NullFrameSource()) };
+		}
+	}
+
+	unsafe impl Send for NullFrameSource {}
+
+	impl NullFrameSource {
 		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_videostab_NullDeblurer_defaultNew_const()) }
+		pub fn default() -> crate::videostab::NullFrameSource {
+			let ret = unsafe { sys::cv_videostab_NullFrameSource_defaultNew_const() };
+			let ret = unsafe { crate::videostab::NullFrameSource::opencv_from_extern(ret) };
+			ret
 		}
 
-	}
-
-	boxed_cast_base! { NullDeblurer, crate::videostab::DeblurerBase, cv_videostab_NullDeblurer_to_DeblurerBase }
-
-	impl std::fmt::Debug for NullDeblurer {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("NullDeblurer")
-				.finish()
-		}
-	}
-
-	impl Default for NullDeblurer {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
 	}
 
 	/// Constant methods for [crate::videostab::NullFrameSource]
@@ -3804,20 +3808,23 @@ pub mod videostab {
 
 	}
 
-	pub struct NullFrameSource {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { NullFrameSource }
-
-	impl Drop for NullFrameSource {
+	impl Default for NullFrameSource {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_NullFrameSource_delete(self.as_raw_mut_NullFrameSource()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for NullFrameSource {}
+	impl std::fmt::Debug for NullFrameSource {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("NullFrameSource")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { NullFrameSource, crate::videostab::IFrameSource, cv_videostab_NullFrameSource_to_IFrameSource }
 
 	impl crate::videostab::IFrameSourceTraitConst for NullFrameSource {
 		#[inline] fn as_raw_IFrameSource(&self) -> *const c_void { self.as_raw() }
@@ -3839,31 +3846,30 @@ pub mod videostab {
 
 	boxed_ref! { NullFrameSource, crate::videostab::NullFrameSourceTraitConst, as_raw_NullFrameSource, crate::videostab::NullFrameSourceTrait, as_raw_mut_NullFrameSource }
 
-	impl NullFrameSource {
+	pub struct NullInpainter {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { NullInpainter }
+
+	impl Drop for NullInpainter {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_NullInpainter_delete(self.as_raw_mut_NullInpainter()) };
+		}
+	}
+
+	unsafe impl Send for NullInpainter {}
+
+	impl NullInpainter {
 		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_videostab_NullFrameSource_defaultNew_const()) }
+		pub fn default() -> crate::videostab::NullInpainter {
+			let ret = unsafe { sys::cv_videostab_NullInpainter_defaultNew_const() };
+			let ret = unsafe { crate::videostab::NullInpainter::opencv_from_extern(ret) };
+			ret
 		}
 
-	}
-
-	boxed_cast_base! { NullFrameSource, crate::videostab::IFrameSource, cv_videostab_NullFrameSource_to_IFrameSource }
-
-	impl std::fmt::Debug for NullFrameSource {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("NullFrameSource")
-				.finish()
-		}
-	}
-
-	impl Default for NullFrameSource {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
 	}
 
 	/// Constant methods for [crate::videostab::NullInpainter]
@@ -3887,20 +3893,23 @@ pub mod videostab {
 
 	}
 
-	pub struct NullInpainter {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { NullInpainter }
-
-	impl Drop for NullInpainter {
+	impl Default for NullInpainter {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_NullInpainter_delete(self.as_raw_mut_NullInpainter()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for NullInpainter {}
+	impl std::fmt::Debug for NullInpainter {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("NullInpainter")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { NullInpainter, crate::videostab::InpainterBase, cv_videostab_NullInpainter_to_InpainterBase }
 
 	impl crate::videostab::InpainterBaseTraitConst for NullInpainter {
 		#[inline] fn as_raw_InpainterBase(&self) -> *const c_void { self.as_raw() }
@@ -3922,31 +3931,30 @@ pub mod videostab {
 
 	boxed_ref! { NullInpainter, crate::videostab::NullInpainterTraitConst, as_raw_NullInpainter, crate::videostab::NullInpainterTrait, as_raw_mut_NullInpainter }
 
-	impl NullInpainter {
+	pub struct NullLog {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { NullLog }
+
+	impl Drop for NullLog {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_NullLog_delete(self.as_raw_mut_NullLog()) };
+		}
+	}
+
+	unsafe impl Send for NullLog {}
+
+	impl NullLog {
 		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_videostab_NullInpainter_defaultNew_const()) }
+		pub fn default() -> crate::videostab::NullLog {
+			let ret = unsafe { sys::cv_videostab_NullLog_defaultNew_const() };
+			let ret = unsafe { crate::videostab::NullLog::opencv_from_extern(ret) };
+			ret
 		}
 
-	}
-
-	boxed_cast_base! { NullInpainter, crate::videostab::InpainterBase, cv_videostab_NullInpainter_to_InpainterBase }
-
-	impl std::fmt::Debug for NullInpainter {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("NullInpainter")
-				.finish()
-		}
-	}
-
-	impl Default for NullInpainter {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
 	}
 
 	/// Constant methods for [crate::videostab::NullLog]
@@ -3971,20 +3979,23 @@ pub mod videostab {
 
 	}
 
-	pub struct NullLog {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { NullLog }
-
-	impl Drop for NullLog {
+	impl Default for NullLog {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_NullLog_delete(self.as_raw_mut_NullLog()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for NullLog {}
+	impl std::fmt::Debug for NullLog {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("NullLog")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { NullLog, crate::videostab::ILog, cv_videostab_NullLog_to_ILog }
 
 	impl crate::videostab::ILogTraitConst for NullLog {
 		#[inline] fn as_raw_ILog(&self) -> *const c_void { self.as_raw() }
@@ -4006,31 +4017,30 @@ pub mod videostab {
 
 	boxed_ref! { NullLog, crate::videostab::NullLogTraitConst, as_raw_NullLog, crate::videostab::NullLogTrait, as_raw_mut_NullLog }
 
-	impl NullLog {
+	pub struct NullOutlierRejector {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { NullOutlierRejector }
+
+	impl Drop for NullOutlierRejector {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_NullOutlierRejector_delete(self.as_raw_mut_NullOutlierRejector()) };
+		}
+	}
+
+	unsafe impl Send for NullOutlierRejector {}
+
+	impl NullOutlierRejector {
 		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_videostab_NullLog_defaultNew_const()) }
+		pub fn default() -> crate::videostab::NullOutlierRejector {
+			let ret = unsafe { sys::cv_videostab_NullOutlierRejector_defaultNew_const() };
+			let ret = unsafe { crate::videostab::NullOutlierRejector::opencv_from_extern(ret) };
+			ret
 		}
 
-	}
-
-	boxed_cast_base! { NullLog, crate::videostab::ILog, cv_videostab_NullLog_to_ILog }
-
-	impl std::fmt::Debug for NullLog {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("NullLog")
-				.finish()
-		}
-	}
-
-	impl Default for NullLog {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
 	}
 
 	/// Constant methods for [crate::videostab::NullOutlierRejector]
@@ -4057,20 +4067,23 @@ pub mod videostab {
 
 	}
 
-	pub struct NullOutlierRejector {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { NullOutlierRejector }
-
-	impl Drop for NullOutlierRejector {
+	impl Default for NullOutlierRejector {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_NullOutlierRejector_delete(self.as_raw_mut_NullOutlierRejector()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for NullOutlierRejector {}
+	impl std::fmt::Debug for NullOutlierRejector {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("NullOutlierRejector")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { NullOutlierRejector, crate::videostab::IOutlierRejector, cv_videostab_NullOutlierRejector_to_IOutlierRejector }
 
 	impl crate::videostab::IOutlierRejectorTraitConst for NullOutlierRejector {
 		#[inline] fn as_raw_IOutlierRejector(&self) -> *const c_void { self.as_raw() }
@@ -4092,31 +4105,30 @@ pub mod videostab {
 
 	boxed_ref! { NullOutlierRejector, crate::videostab::NullOutlierRejectorTraitConst, as_raw_NullOutlierRejector, crate::videostab::NullOutlierRejectorTrait, as_raw_mut_NullOutlierRejector }
 
-	impl NullOutlierRejector {
+	pub struct NullWobbleSuppressor {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { NullWobbleSuppressor }
+
+	impl Drop for NullWobbleSuppressor {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_NullWobbleSuppressor_delete(self.as_raw_mut_NullWobbleSuppressor()) };
+		}
+	}
+
+	unsafe impl Send for NullWobbleSuppressor {}
+
+	impl NullWobbleSuppressor {
 		/// Creates a default instance of the class by calling the default constructor
 		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_videostab_NullOutlierRejector_defaultNew_const()) }
+		pub fn default() -> crate::videostab::NullWobbleSuppressor {
+			let ret = unsafe { sys::cv_videostab_NullWobbleSuppressor_defaultNew_const() };
+			let ret = unsafe { crate::videostab::NullWobbleSuppressor::opencv_from_extern(ret) };
+			ret
 		}
 
-	}
-
-	boxed_cast_base! { NullOutlierRejector, crate::videostab::IOutlierRejector, cv_videostab_NullOutlierRejector_to_IOutlierRejector }
-
-	impl std::fmt::Debug for NullOutlierRejector {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("NullOutlierRejector")
-				.finish()
-		}
-	}
-
-	impl Default for NullOutlierRejector {
-		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
-		}
 	}
 
 	/// Constant methods for [crate::videostab::NullWobbleSuppressor]
@@ -4140,20 +4152,23 @@ pub mod videostab {
 
 	}
 
-	pub struct NullWobbleSuppressor {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { NullWobbleSuppressor }
-
-	impl Drop for NullWobbleSuppressor {
+	impl Default for NullWobbleSuppressor {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_NullWobbleSuppressor_delete(self.as_raw_mut_NullWobbleSuppressor()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for NullWobbleSuppressor {}
+	impl std::fmt::Debug for NullWobbleSuppressor {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("NullWobbleSuppressor")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { NullWobbleSuppressor, crate::videostab::WobbleSuppressorBase, cv_videostab_NullWobbleSuppressor_to_WobbleSuppressorBase }
 
 	impl crate::videostab::WobbleSuppressorBaseTraitConst for NullWobbleSuppressor {
 		#[inline] fn as_raw_WobbleSuppressorBase(&self) -> *const c_void { self.as_raw() }
@@ -4175,31 +4190,32 @@ pub mod videostab {
 
 	boxed_ref! { NullWobbleSuppressor, crate::videostab::NullWobbleSuppressorTraitConst, as_raw_NullWobbleSuppressor, crate::videostab::NullWobbleSuppressorTrait, as_raw_mut_NullWobbleSuppressor }
 
-	impl NullWobbleSuppressor {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_videostab_NullWobbleSuppressor_defaultNew_const()) }
-		}
-
+	pub struct OnePassStabilizer {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { NullWobbleSuppressor, crate::videostab::WobbleSuppressorBase, cv_videostab_NullWobbleSuppressor_to_WobbleSuppressorBase }
+	opencv_type_boxed! { OnePassStabilizer }
 
-	impl std::fmt::Debug for NullWobbleSuppressor {
+	impl Drop for OnePassStabilizer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("NullWobbleSuppressor")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_OnePassStabilizer_delete(self.as_raw_mut_OnePassStabilizer()) };
 		}
 	}
 
-	impl Default for NullWobbleSuppressor {
+	unsafe impl Send for OnePassStabilizer {}
+
+	impl OnePassStabilizer {
 		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
+		pub fn default() -> Result<crate::videostab::OnePassStabilizer> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_OnePassStabilizer_OnePassStabilizer(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::videostab::OnePassStabilizer::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
 	}
 
 	/// Constant methods for [crate::videostab::OnePassStabilizer]
@@ -4252,20 +4268,17 @@ pub mod videostab {
 
 	}
 
-	pub struct OnePassStabilizer {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { OnePassStabilizer }
-
-	impl Drop for OnePassStabilizer {
+	impl std::fmt::Debug for OnePassStabilizer {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_OnePassStabilizer_delete(self.as_raw_mut_OnePassStabilizer()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("OnePassStabilizer")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for OnePassStabilizer {}
+	boxed_cast_base! { OnePassStabilizer, crate::videostab::IFrameSource, cv_videostab_OnePassStabilizer_to_IFrameSource }
+
+	boxed_cast_base! { OnePassStabilizer, crate::videostab::StabilizerBase, cv_videostab_OnePassStabilizer_to_StabilizerBase }
 
 	impl crate::videostab::IFrameSourceTraitConst for OnePassStabilizer {
 		#[inline] fn as_raw_IFrameSource(&self) -> *const c_void { self.as_raw() }
@@ -4297,29 +4310,32 @@ pub mod videostab {
 
 	boxed_ref! { OnePassStabilizer, crate::videostab::OnePassStabilizerTraitConst, as_raw_OnePassStabilizer, crate::videostab::OnePassStabilizerTrait, as_raw_mut_OnePassStabilizer }
 
-	impl OnePassStabilizer {
+	pub struct PyrLkOptFlowEstimatorBase {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { PyrLkOptFlowEstimatorBase }
+
+	impl Drop for PyrLkOptFlowEstimatorBase {
 		#[inline]
-		pub fn default() -> Result<crate::videostab::OnePassStabilizer> {
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_PyrLkOptFlowEstimatorBase_delete(self.as_raw_mut_PyrLkOptFlowEstimatorBase()) };
+		}
+	}
+
+	unsafe impl Send for PyrLkOptFlowEstimatorBase {}
+
+	impl PyrLkOptFlowEstimatorBase {
+		#[inline]
+		pub fn default() -> Result<crate::videostab::PyrLkOptFlowEstimatorBase> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_OnePassStabilizer_OnePassStabilizer(ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_videostab_PyrLkOptFlowEstimatorBase_PyrLkOptFlowEstimatorBase(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::videostab::OnePassStabilizer::opencv_from_extern(ret) };
+			let ret = unsafe { crate::videostab::PyrLkOptFlowEstimatorBase::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	boxed_cast_base! { OnePassStabilizer, crate::videostab::IFrameSource, cv_videostab_OnePassStabilizer_to_IFrameSource }
-
-	boxed_cast_base! { OnePassStabilizer, crate::videostab::StabilizerBase, cv_videostab_OnePassStabilizer_to_StabilizerBase }
-
-	impl std::fmt::Debug for OnePassStabilizer {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("OnePassStabilizer")
-				.finish()
-		}
 	}
 
 	/// Constant methods for [crate::videostab::PyrLkOptFlowEstimatorBase]
@@ -4370,20 +4386,19 @@ pub mod videostab {
 
 	}
 
-	pub struct PyrLkOptFlowEstimatorBase {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { PyrLkOptFlowEstimatorBase }
-
-	impl Drop for PyrLkOptFlowEstimatorBase {
+	impl std::fmt::Debug for PyrLkOptFlowEstimatorBase {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_PyrLkOptFlowEstimatorBase_delete(self.as_raw_mut_PyrLkOptFlowEstimatorBase()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PyrLkOptFlowEstimatorBase")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for PyrLkOptFlowEstimatorBase {}
+	boxed_cast_descendant! { PyrLkOptFlowEstimatorBase, crate::videostab::DensePyrLkOptFlowEstimatorGpu, cv_videostab_PyrLkOptFlowEstimatorBase_to_DensePyrLkOptFlowEstimatorGpu }
+
+	boxed_cast_descendant! { PyrLkOptFlowEstimatorBase, crate::videostab::SparsePyrLkOptFlowEstimator, cv_videostab_PyrLkOptFlowEstimatorBase_to_SparsePyrLkOptFlowEstimator }
+
+	boxed_cast_descendant! { PyrLkOptFlowEstimatorBase, crate::videostab::SparsePyrLkOptFlowEstimatorGpu, cv_videostab_PyrLkOptFlowEstimatorBase_to_SparsePyrLkOptFlowEstimatorGpu }
 
 	impl crate::videostab::PyrLkOptFlowEstimatorBaseTraitConst for PyrLkOptFlowEstimatorBase {
 		#[inline] fn as_raw_PyrLkOptFlowEstimatorBase(&self) -> *const c_void { self.as_raw() }
@@ -4395,31 +4410,63 @@ pub mod videostab {
 
 	boxed_ref! { PyrLkOptFlowEstimatorBase, crate::videostab::PyrLkOptFlowEstimatorBaseTraitConst, as_raw_PyrLkOptFlowEstimatorBase, crate::videostab::PyrLkOptFlowEstimatorBaseTrait, as_raw_mut_PyrLkOptFlowEstimatorBase }
 
-	impl PyrLkOptFlowEstimatorBase {
+	/// Describes RANSAC method parameters.
+	pub struct RansacParams {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { RansacParams }
+
+	impl Drop for RansacParams {
 		#[inline]
-		pub fn default() -> Result<crate::videostab::PyrLkOptFlowEstimatorBase> {
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_RansacParams_delete(self.as_raw_mut_RansacParams()) };
+		}
+	}
+
+	unsafe impl Send for RansacParams {}
+
+	impl RansacParams {
+		#[inline]
+		pub fn default() -> Result<crate::videostab::RansacParams> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_PyrLkOptFlowEstimatorBase_PyrLkOptFlowEstimatorBase(ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_videostab_RansacParams_RansacParams(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::videostab::PyrLkOptFlowEstimatorBase::opencv_from_extern(ret) };
+			let ret = unsafe { crate::videostab::RansacParams::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	boxed_cast_descendant! { PyrLkOptFlowEstimatorBase, crate::videostab::DensePyrLkOptFlowEstimatorGpu, cv_videostab_PyrLkOptFlowEstimatorBase_to_DensePyrLkOptFlowEstimatorGpu }
-
-	boxed_cast_descendant! { PyrLkOptFlowEstimatorBase, crate::videostab::SparsePyrLkOptFlowEstimator, cv_videostab_PyrLkOptFlowEstimatorBase_to_SparsePyrLkOptFlowEstimator }
-
-	boxed_cast_descendant! { PyrLkOptFlowEstimatorBase, crate::videostab::SparsePyrLkOptFlowEstimatorGpu, cv_videostab_PyrLkOptFlowEstimatorBase_to_SparsePyrLkOptFlowEstimatorGpu }
-
-	impl std::fmt::Debug for PyrLkOptFlowEstimatorBase {
+		/// Constructor
+		/// ## Parameters
+		/// * size: Subset size.
+		/// * thresh: Maximum re-projection error value to classify as inlier.
+		/// * eps: Maximum ratio of incorrect correspondences.
+		/// * prob: Required success probability.
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("PyrLkOptFlowEstimatorBase")
-				.finish()
+		pub fn new(size: i32, thresh: f32, eps: f32, prob: f32) -> Result<crate::videostab::RansacParams> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_RansacParams_RansacParams_int_float_float_float(size, thresh, eps, prob, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::videostab::RansacParams::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
+		/// ## Parameters
+		/// * model: Motion model. See cv::videostab::MotionModel.
+		/// ## Returns
+		/// Default RANSAC method parameters for the given motion model.
+		#[inline]
+		pub fn default2d_motion(model: crate::videostab::MotionModel) -> Result<crate::videostab::RansacParams> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_RansacParams_default2dMotion_MotionModel(model, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::videostab::RansacParams::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::videostab::RansacParams]
@@ -4501,21 +4548,17 @@ pub mod videostab {
 
 	}
 
-	/// Describes RANSAC method parameters.
-	pub struct RansacParams {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { RansacParams }
-
-	impl Drop for RansacParams {
+	impl std::fmt::Debug for RansacParams {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_RansacParams_delete(self.as_raw_mut_RansacParams()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("RansacParams")
+				.field("size", &crate::videostab::RansacParamsTraitConst::size(self))
+				.field("thresh", &crate::videostab::RansacParamsTraitConst::thresh(self))
+				.field("eps", &crate::videostab::RansacParamsTraitConst::eps(self))
+				.field("prob", &crate::videostab::RansacParamsTraitConst::prob(self))
+				.finish()
 		}
 	}
-
-	unsafe impl Send for RansacParams {}
 
 	impl crate::videostab::RansacParamsTraitConst for RansacParams {
 		#[inline] fn as_raw_RansacParams(&self) -> *const c_void { self.as_raw() }
@@ -4527,59 +4570,30 @@ pub mod videostab {
 
 	boxed_ref! { RansacParams, crate::videostab::RansacParamsTraitConst, as_raw_RansacParams, crate::videostab::RansacParamsTrait, as_raw_mut_RansacParams }
 
-	impl RansacParams {
-		#[inline]
-		pub fn default() -> Result<crate::videostab::RansacParams> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_RansacParams_RansacParams(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::videostab::RansacParams::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// Constructor
-		/// ## Parameters
-		/// * size: Subset size.
-		/// * thresh: Maximum re-projection error value to classify as inlier.
-		/// * eps: Maximum ratio of incorrect correspondences.
-		/// * prob: Required success probability.
-		#[inline]
-		pub fn new(size: i32, thresh: f32, eps: f32, prob: f32) -> Result<crate::videostab::RansacParams> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_RansacParams_RansacParams_int_float_float_float(size, thresh, eps, prob, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::videostab::RansacParams::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Parameters
-		/// * model: Motion model. See cv::videostab::MotionModel.
-		/// ## Returns
-		/// Default RANSAC method parameters for the given motion model.
-		#[inline]
-		pub fn default2d_motion(model: crate::videostab::MotionModel) -> Result<crate::videostab::RansacParams> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_RansacParams_default2dMotion_MotionModel(model, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::videostab::RansacParams::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	pub struct SparsePyrLkOptFlowEstimator {
+		ptr: *mut c_void,
 	}
 
-	impl std::fmt::Debug for RansacParams {
+	opencv_type_boxed! { SparsePyrLkOptFlowEstimator }
+
+	impl Drop for SparsePyrLkOptFlowEstimator {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("RansacParams")
-				.field("size", &crate::videostab::RansacParamsTraitConst::size(self))
-				.field("thresh", &crate::videostab::RansacParamsTraitConst::thresh(self))
-				.field("eps", &crate::videostab::RansacParamsTraitConst::eps(self))
-				.field("prob", &crate::videostab::RansacParamsTraitConst::prob(self))
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_SparsePyrLkOptFlowEstimator_delete(self.as_raw_mut_SparsePyrLkOptFlowEstimator()) };
 		}
+	}
+
+	unsafe impl Send for SparsePyrLkOptFlowEstimator {}
+
+	impl SparsePyrLkOptFlowEstimator {
+		/// Creates a default instance of the class by calling the default constructor
+		#[inline]
+		pub fn default() -> crate::videostab::SparsePyrLkOptFlowEstimator {
+			let ret = unsafe { sys::cv_videostab_SparsePyrLkOptFlowEstimator_defaultNew_const() };
+			let ret = unsafe { crate::videostab::SparsePyrLkOptFlowEstimator::opencv_from_extern(ret) };
+			ret
+		}
+
 	}
 
 	/// Constant methods for [crate::videostab::SparsePyrLkOptFlowEstimator]
@@ -4609,20 +4623,25 @@ pub mod videostab {
 
 	}
 
-	pub struct SparsePyrLkOptFlowEstimator {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { SparsePyrLkOptFlowEstimator }
-
-	impl Drop for SparsePyrLkOptFlowEstimator {
+	impl Default for SparsePyrLkOptFlowEstimator {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_SparsePyrLkOptFlowEstimator_delete(self.as_raw_mut_SparsePyrLkOptFlowEstimator()) };
+		/// Forwards to infallible Self::default()
+		fn default() -> Self {
+			Self::default()
 		}
 	}
 
-	unsafe impl Send for SparsePyrLkOptFlowEstimator {}
+	impl std::fmt::Debug for SparsePyrLkOptFlowEstimator {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SparsePyrLkOptFlowEstimator")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { SparsePyrLkOptFlowEstimator, crate::videostab::ISparseOptFlowEstimator, cv_videostab_SparsePyrLkOptFlowEstimator_to_ISparseOptFlowEstimator }
+
+	boxed_cast_base! { SparsePyrLkOptFlowEstimator, crate::videostab::PyrLkOptFlowEstimatorBase, cv_videostab_SparsePyrLkOptFlowEstimator_to_PyrLkOptFlowEstimatorBase }
 
 	impl crate::videostab::ISparseOptFlowEstimatorTraitConst for SparsePyrLkOptFlowEstimator {
 		#[inline] fn as_raw_ISparseOptFlowEstimator(&self) -> *const c_void { self.as_raw() }
@@ -4654,33 +4673,32 @@ pub mod videostab {
 
 	boxed_ref! { SparsePyrLkOptFlowEstimator, crate::videostab::SparsePyrLkOptFlowEstimatorTraitConst, as_raw_SparsePyrLkOptFlowEstimator, crate::videostab::SparsePyrLkOptFlowEstimatorTrait, as_raw_mut_SparsePyrLkOptFlowEstimator }
 
-	impl SparsePyrLkOptFlowEstimator {
-		/// Creates a default instance of the class by calling the default constructor
-		#[inline]
-		fn default() -> Self {
-			unsafe { Self::from_raw(sys::cv_videostab_SparsePyrLkOptFlowEstimator_defaultNew_const()) }
-		}
-
+	pub struct SparsePyrLkOptFlowEstimatorGpu {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { SparsePyrLkOptFlowEstimator, crate::videostab::ISparseOptFlowEstimator, cv_videostab_SparsePyrLkOptFlowEstimator_to_ISparseOptFlowEstimator }
+	opencv_type_boxed! { SparsePyrLkOptFlowEstimatorGpu }
 
-	boxed_cast_base! { SparsePyrLkOptFlowEstimator, crate::videostab::PyrLkOptFlowEstimatorBase, cv_videostab_SparsePyrLkOptFlowEstimator_to_PyrLkOptFlowEstimatorBase }
-
-	impl std::fmt::Debug for SparsePyrLkOptFlowEstimator {
+	impl Drop for SparsePyrLkOptFlowEstimatorGpu {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("SparsePyrLkOptFlowEstimator")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_SparsePyrLkOptFlowEstimatorGpu_delete(self.as_raw_mut_SparsePyrLkOptFlowEstimatorGpu()) };
 		}
 	}
 
-	impl Default for SparsePyrLkOptFlowEstimator {
+	unsafe impl Send for SparsePyrLkOptFlowEstimatorGpu {}
+
+	impl SparsePyrLkOptFlowEstimatorGpu {
 		#[inline]
-		/// Forwards to infallible Self::default()
-		fn default() -> Self {
-			Self::default()
+		pub fn default() -> Result<crate::videostab::SparsePyrLkOptFlowEstimatorGpu> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_SparsePyrLkOptFlowEstimatorGpu_SparsePyrLkOptFlowEstimatorGpu(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::videostab::SparsePyrLkOptFlowEstimatorGpu::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
 	}
 
 	/// Constant methods for [crate::videostab::SparsePyrLkOptFlowEstimatorGpu]
@@ -4728,20 +4746,17 @@ pub mod videostab {
 
 	}
 
-	pub struct SparsePyrLkOptFlowEstimatorGpu {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { SparsePyrLkOptFlowEstimatorGpu }
-
-	impl Drop for SparsePyrLkOptFlowEstimatorGpu {
+	impl std::fmt::Debug for SparsePyrLkOptFlowEstimatorGpu {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_SparsePyrLkOptFlowEstimatorGpu_delete(self.as_raw_mut_SparsePyrLkOptFlowEstimatorGpu()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("SparsePyrLkOptFlowEstimatorGpu")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for SparsePyrLkOptFlowEstimatorGpu {}
+	boxed_cast_base! { SparsePyrLkOptFlowEstimatorGpu, crate::videostab::ISparseOptFlowEstimator, cv_videostab_SparsePyrLkOptFlowEstimatorGpu_to_ISparseOptFlowEstimator }
+
+	boxed_cast_base! { SparsePyrLkOptFlowEstimatorGpu, crate::videostab::PyrLkOptFlowEstimatorBase, cv_videostab_SparsePyrLkOptFlowEstimatorGpu_to_PyrLkOptFlowEstimatorBase }
 
 	impl crate::videostab::ISparseOptFlowEstimatorTraitConst for SparsePyrLkOptFlowEstimatorGpu {
 		#[inline] fn as_raw_ISparseOptFlowEstimator(&self) -> *const c_void { self.as_raw() }
@@ -4773,30 +4788,20 @@ pub mod videostab {
 
 	boxed_ref! { SparsePyrLkOptFlowEstimatorGpu, crate::videostab::SparsePyrLkOptFlowEstimatorGpuTraitConst, as_raw_SparsePyrLkOptFlowEstimatorGpu, crate::videostab::SparsePyrLkOptFlowEstimatorGpuTrait, as_raw_mut_SparsePyrLkOptFlowEstimatorGpu }
 
-	impl SparsePyrLkOptFlowEstimatorGpu {
-		#[inline]
-		pub fn default() -> Result<crate::videostab::SparsePyrLkOptFlowEstimatorGpu> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_SparsePyrLkOptFlowEstimatorGpu_SparsePyrLkOptFlowEstimatorGpu(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::videostab::SparsePyrLkOptFlowEstimatorGpu::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	pub struct StabilizerBase {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { SparsePyrLkOptFlowEstimatorGpu, crate::videostab::ISparseOptFlowEstimator, cv_videostab_SparsePyrLkOptFlowEstimatorGpu_to_ISparseOptFlowEstimator }
+	opencv_type_boxed! { StabilizerBase }
 
-	boxed_cast_base! { SparsePyrLkOptFlowEstimatorGpu, crate::videostab::PyrLkOptFlowEstimatorBase, cv_videostab_SparsePyrLkOptFlowEstimatorGpu_to_PyrLkOptFlowEstimatorBase }
-
-	impl std::fmt::Debug for SparsePyrLkOptFlowEstimatorGpu {
+	impl Drop for StabilizerBase {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("SparsePyrLkOptFlowEstimatorGpu")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_StabilizerBase_delete(self.as_raw_mut_StabilizerBase()) };
 		}
 	}
+
+	unsafe impl Send for StabilizerBase {}
 
 	/// Constant methods for [crate::videostab::StabilizerBase]
 	pub trait StabilizerBaseTraitConst {
@@ -4996,20 +5001,17 @@ pub mod videostab {
 
 	}
 
-	pub struct StabilizerBase {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { StabilizerBase }
-
-	impl Drop for StabilizerBase {
+	impl std::fmt::Debug for StabilizerBase {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_StabilizerBase_delete(self.as_raw_mut_StabilizerBase()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("StabilizerBase")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for StabilizerBase {}
+	boxed_cast_descendant! { StabilizerBase, crate::videostab::OnePassStabilizer, cv_videostab_StabilizerBase_to_OnePassStabilizer }
+
+	boxed_cast_descendant! { StabilizerBase, crate::videostab::TwoPassStabilizer, cv_videostab_StabilizerBase_to_TwoPassStabilizer }
 
 	impl crate::videostab::StabilizerBaseTraitConst for StabilizerBase {
 		#[inline] fn as_raw_StabilizerBase(&self) -> *const c_void { self.as_raw() }
@@ -5021,19 +5023,33 @@ pub mod videostab {
 
 	boxed_ref! { StabilizerBase, crate::videostab::StabilizerBaseTraitConst, as_raw_StabilizerBase, crate::videostab::StabilizerBaseTrait, as_raw_mut_StabilizerBase }
 
-	impl StabilizerBase {
+	pub struct ToFileMotionWriter {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_descendant! { StabilizerBase, crate::videostab::OnePassStabilizer, cv_videostab_StabilizerBase_to_OnePassStabilizer }
+	opencv_type_boxed! { ToFileMotionWriter }
 
-	boxed_cast_descendant! { StabilizerBase, crate::videostab::TwoPassStabilizer, cv_videostab_StabilizerBase_to_TwoPassStabilizer }
-
-	impl std::fmt::Debug for StabilizerBase {
+	impl Drop for ToFileMotionWriter {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("StabilizerBase")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_ToFileMotionWriter_delete(self.as_raw_mut_ToFileMotionWriter()) };
 		}
+	}
+
+	unsafe impl Send for ToFileMotionWriter {}
+
+	impl ToFileMotionWriter {
+		#[inline]
+		pub fn new(path: &str, mut estimator: core::Ptr<crate::videostab::ImageMotionEstimatorBase>) -> Result<crate::videostab::ToFileMotionWriter> {
+			extern_container_arg!(path);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_ToFileMotionWriter_ToFileMotionWriter_const_StringR_PtrLImageMotionEstimatorBaseG(path.opencv_as_extern(), estimator.as_raw_mut_PtrOfImageMotionEstimatorBase(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::videostab::ToFileMotionWriter::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::videostab::ToFileMotionWriter]
@@ -5101,20 +5117,15 @@ pub mod videostab {
 
 	}
 
-	pub struct ToFileMotionWriter {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { ToFileMotionWriter }
-
-	impl Drop for ToFileMotionWriter {
+	impl std::fmt::Debug for ToFileMotionWriter {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_ToFileMotionWriter_delete(self.as_raw_mut_ToFileMotionWriter()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ToFileMotionWriter")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for ToFileMotionWriter {}
+	boxed_cast_base! { ToFileMotionWriter, crate::videostab::ImageMotionEstimatorBase, cv_videostab_ToFileMotionWriter_to_ImageMotionEstimatorBase }
 
 	impl crate::videostab::ImageMotionEstimatorBaseTraitConst for ToFileMotionWriter {
 		#[inline] fn as_raw_ImageMotionEstimatorBase(&self) -> *const c_void { self.as_raw() }
@@ -5136,28 +5147,32 @@ pub mod videostab {
 
 	boxed_ref! { ToFileMotionWriter, crate::videostab::ToFileMotionWriterTraitConst, as_raw_ToFileMotionWriter, crate::videostab::ToFileMotionWriterTrait, as_raw_mut_ToFileMotionWriter }
 
-	impl ToFileMotionWriter {
+	pub struct TranslationBasedLocalOutlierRejector {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { TranslationBasedLocalOutlierRejector }
+
+	impl Drop for TranslationBasedLocalOutlierRejector {
 		#[inline]
-		pub fn new(path: &str, mut estimator: core::Ptr<crate::videostab::ImageMotionEstimatorBase>) -> Result<crate::videostab::ToFileMotionWriter> {
-			extern_container_arg!(path);
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_TranslationBasedLocalOutlierRejector_delete(self.as_raw_mut_TranslationBasedLocalOutlierRejector()) };
+		}
+	}
+
+	unsafe impl Send for TranslationBasedLocalOutlierRejector {}
+
+	impl TranslationBasedLocalOutlierRejector {
+		#[inline]
+		pub fn default() -> Result<crate::videostab::TranslationBasedLocalOutlierRejector> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_ToFileMotionWriter_ToFileMotionWriter_const_StringR_PtrLImageMotionEstimatorBaseG(path.opencv_as_extern(), estimator.as_raw_mut_PtrOfImageMotionEstimatorBase(), ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_videostab_TranslationBasedLocalOutlierRejector_TranslationBasedLocalOutlierRejector(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::videostab::ToFileMotionWriter::opencv_from_extern(ret) };
+			let ret = unsafe { crate::videostab::TranslationBasedLocalOutlierRejector::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	boxed_cast_base! { ToFileMotionWriter, crate::videostab::ImageMotionEstimatorBase, cv_videostab_ToFileMotionWriter_to_ImageMotionEstimatorBase }
-
-	impl std::fmt::Debug for ToFileMotionWriter {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("ToFileMotionWriter")
-				.finish()
-		}
 	}
 
 	/// Constant methods for [crate::videostab::TranslationBasedLocalOutlierRejector]
@@ -5221,20 +5236,15 @@ pub mod videostab {
 
 	}
 
-	pub struct TranslationBasedLocalOutlierRejector {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { TranslationBasedLocalOutlierRejector }
-
-	impl Drop for TranslationBasedLocalOutlierRejector {
+	impl std::fmt::Debug for TranslationBasedLocalOutlierRejector {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_TranslationBasedLocalOutlierRejector_delete(self.as_raw_mut_TranslationBasedLocalOutlierRejector()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TranslationBasedLocalOutlierRejector")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for TranslationBasedLocalOutlierRejector {}
+	boxed_cast_base! { TranslationBasedLocalOutlierRejector, crate::videostab::IOutlierRejector, cv_videostab_TranslationBasedLocalOutlierRejector_to_IOutlierRejector }
 
 	impl crate::videostab::IOutlierRejectorTraitConst for TranslationBasedLocalOutlierRejector {
 		#[inline] fn as_raw_IOutlierRejector(&self) -> *const c_void { self.as_raw() }
@@ -5256,27 +5266,32 @@ pub mod videostab {
 
 	boxed_ref! { TranslationBasedLocalOutlierRejector, crate::videostab::TranslationBasedLocalOutlierRejectorTraitConst, as_raw_TranslationBasedLocalOutlierRejector, crate::videostab::TranslationBasedLocalOutlierRejectorTrait, as_raw_mut_TranslationBasedLocalOutlierRejector }
 
-	impl TranslationBasedLocalOutlierRejector {
+	pub struct TwoPassStabilizer {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { TwoPassStabilizer }
+
+	impl Drop for TwoPassStabilizer {
 		#[inline]
-		pub fn default() -> Result<crate::videostab::TranslationBasedLocalOutlierRejector> {
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_TwoPassStabilizer_delete(self.as_raw_mut_TwoPassStabilizer()) };
+		}
+	}
+
+	unsafe impl Send for TwoPassStabilizer {}
+
+	impl TwoPassStabilizer {
+		#[inline]
+		pub fn default() -> Result<crate::videostab::TwoPassStabilizer> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_TranslationBasedLocalOutlierRejector_TranslationBasedLocalOutlierRejector(ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_videostab_TwoPassStabilizer_TwoPassStabilizer(ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::videostab::TranslationBasedLocalOutlierRejector::opencv_from_extern(ret) };
+			let ret = unsafe { crate::videostab::TwoPassStabilizer::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	boxed_cast_base! { TranslationBasedLocalOutlierRejector, crate::videostab::IOutlierRejector, cv_videostab_TranslationBasedLocalOutlierRejector_to_IOutlierRejector }
-
-	impl std::fmt::Debug for TranslationBasedLocalOutlierRejector {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("TranslationBasedLocalOutlierRejector")
-				.finish()
-		}
 	}
 
 	/// Constant methods for [crate::videostab::TwoPassStabilizer]
@@ -5366,20 +5381,17 @@ pub mod videostab {
 
 	}
 
-	pub struct TwoPassStabilizer {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { TwoPassStabilizer }
-
-	impl Drop for TwoPassStabilizer {
+	impl std::fmt::Debug for TwoPassStabilizer {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_TwoPassStabilizer_delete(self.as_raw_mut_TwoPassStabilizer()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("TwoPassStabilizer")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for TwoPassStabilizer {}
+	boxed_cast_base! { TwoPassStabilizer, crate::videostab::IFrameSource, cv_videostab_TwoPassStabilizer_to_IFrameSource }
+
+	boxed_cast_base! { TwoPassStabilizer, crate::videostab::StabilizerBase, cv_videostab_TwoPassStabilizer_to_StabilizerBase }
 
 	impl crate::videostab::IFrameSourceTraitConst for TwoPassStabilizer {
 		#[inline] fn as_raw_IFrameSource(&self) -> *const c_void { self.as_raw() }
@@ -5411,29 +5423,49 @@ pub mod videostab {
 
 	boxed_ref! { TwoPassStabilizer, crate::videostab::TwoPassStabilizerTraitConst, as_raw_TwoPassStabilizer, crate::videostab::TwoPassStabilizerTrait, as_raw_mut_TwoPassStabilizer }
 
-	impl TwoPassStabilizer {
+	pub struct VideoFileSource {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { VideoFileSource }
+
+	impl Drop for VideoFileSource {
 		#[inline]
-		pub fn default() -> Result<crate::videostab::TwoPassStabilizer> {
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_VideoFileSource_delete(self.as_raw_mut_VideoFileSource()) };
+		}
+	}
+
+	unsafe impl Send for VideoFileSource {}
+
+	impl VideoFileSource {
+		/// ## C++ default parameters
+		/// * volatile_frame: false
+		#[inline]
+		pub fn new(path: &str, volatile_frame: bool) -> Result<crate::videostab::VideoFileSource> {
+			extern_container_arg!(path);
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_TwoPassStabilizer_TwoPassStabilizer(ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_videostab_VideoFileSource_VideoFileSource_const_StringR_bool(path.opencv_as_extern(), volatile_frame, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { crate::videostab::TwoPassStabilizer::opencv_from_extern(ret) };
+			let ret = unsafe { crate::videostab::VideoFileSource::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	boxed_cast_base! { TwoPassStabilizer, crate::videostab::IFrameSource, cv_videostab_TwoPassStabilizer_to_IFrameSource }
-
-	boxed_cast_base! { TwoPassStabilizer, crate::videostab::StabilizerBase, cv_videostab_TwoPassStabilizer_to_StabilizerBase }
-
-	impl std::fmt::Debug for TwoPassStabilizer {
+		/// ## Note
+		/// This alternative version of [new] function uses the following default values for its arguments:
+		/// * volatile_frame: false
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("TwoPassStabilizer")
-				.finish()
+		pub fn new_def(path: &str) -> Result<crate::videostab::VideoFileSource> {
+			extern_container_arg!(path);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_VideoFileSource_VideoFileSource_const_StringR(path.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::videostab::VideoFileSource::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
 	}
 
 	/// Constant methods for [crate::videostab::VideoFileSource]
@@ -5503,20 +5535,15 @@ pub mod videostab {
 
 	}
 
-	pub struct VideoFileSource {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { VideoFileSource }
-
-	impl Drop for VideoFileSource {
+	impl std::fmt::Debug for VideoFileSource {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_VideoFileSource_delete(self.as_raw_mut_VideoFileSource()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("VideoFileSource")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for VideoFileSource {}
+	boxed_cast_base! { VideoFileSource, crate::videostab::IFrameSource, cv_videostab_VideoFileSource_to_IFrameSource }
 
 	impl crate::videostab::IFrameSourceTraitConst for VideoFileSource {
 		#[inline] fn as_raw_IFrameSource(&self) -> *const c_void { self.as_raw() }
@@ -5538,44 +5565,32 @@ pub mod videostab {
 
 	boxed_ref! { VideoFileSource, crate::videostab::VideoFileSourceTraitConst, as_raw_VideoFileSource, crate::videostab::VideoFileSourceTrait, as_raw_mut_VideoFileSource }
 
-	impl VideoFileSource {
-		/// ## C++ default parameters
-		/// * volatile_frame: false
-		#[inline]
-		pub fn new(path: &str, volatile_frame: bool) -> Result<crate::videostab::VideoFileSource> {
-			extern_container_arg!(path);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_VideoFileSource_VideoFileSource_const_StringR_bool(path.opencv_as_extern(), volatile_frame, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::videostab::VideoFileSource::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [new] function uses the following default values for its arguments:
-		/// * volatile_frame: false
-		#[inline]
-		pub fn new_def(path: &str) -> Result<crate::videostab::VideoFileSource> {
-			extern_container_arg!(path);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_VideoFileSource_VideoFileSource_const_StringR(path.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::videostab::VideoFileSource::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	pub struct WeightingDeblurer {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { VideoFileSource, crate::videostab::IFrameSource, cv_videostab_VideoFileSource_to_IFrameSource }
+	opencv_type_boxed! { WeightingDeblurer }
 
-	impl std::fmt::Debug for VideoFileSource {
+	impl Drop for WeightingDeblurer {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("VideoFileSource")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_WeightingDeblurer_delete(self.as_raw_mut_WeightingDeblurer()) };
 		}
+	}
+
+	unsafe impl Send for WeightingDeblurer {}
+
+	impl WeightingDeblurer {
+		#[inline]
+		pub fn default() -> Result<crate::videostab::WeightingDeblurer> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_videostab_WeightingDeblurer_WeightingDeblurer(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { crate::videostab::WeightingDeblurer::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::videostab::WeightingDeblurer]
@@ -5617,20 +5632,15 @@ pub mod videostab {
 
 	}
 
-	pub struct WeightingDeblurer {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { WeightingDeblurer }
-
-	impl Drop for WeightingDeblurer {
+	impl std::fmt::Debug for WeightingDeblurer {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_WeightingDeblurer_delete(self.as_raw_mut_WeightingDeblurer()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WeightingDeblurer")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for WeightingDeblurer {}
+	boxed_cast_base! { WeightingDeblurer, crate::videostab::DeblurerBase, cv_videostab_WeightingDeblurer_to_DeblurerBase }
 
 	impl crate::videostab::DeblurerBaseTraitConst for WeightingDeblurer {
 		#[inline] fn as_raw_DeblurerBase(&self) -> *const c_void { self.as_raw() }
@@ -5652,28 +5662,20 @@ pub mod videostab {
 
 	boxed_ref! { WeightingDeblurer, crate::videostab::WeightingDeblurerTraitConst, as_raw_WeightingDeblurer, crate::videostab::WeightingDeblurerTrait, as_raw_mut_WeightingDeblurer }
 
-	impl WeightingDeblurer {
-		#[inline]
-		pub fn default() -> Result<crate::videostab::WeightingDeblurer> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_videostab_WeightingDeblurer_WeightingDeblurer(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { crate::videostab::WeightingDeblurer::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	pub struct WobbleSuppressorBase {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { WeightingDeblurer, crate::videostab::DeblurerBase, cv_videostab_WeightingDeblurer_to_DeblurerBase }
+	opencv_type_boxed! { WobbleSuppressorBase }
 
-	impl std::fmt::Debug for WeightingDeblurer {
+	impl Drop for WobbleSuppressorBase {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("WeightingDeblurer")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_videostab_WobbleSuppressorBase_delete(self.as_raw_mut_WobbleSuppressorBase()) };
 		}
 	}
+
+	unsafe impl Send for WobbleSuppressorBase {}
 
 	/// Constant methods for [crate::videostab::WobbleSuppressorBase]
 	pub trait WobbleSuppressorBaseTraitConst {
@@ -5790,20 +5792,21 @@ pub mod videostab {
 
 	}
 
-	pub struct WobbleSuppressorBase {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { WobbleSuppressorBase }
-
-	impl Drop for WobbleSuppressorBase {
+	impl std::fmt::Debug for WobbleSuppressorBase {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_videostab_WobbleSuppressorBase_delete(self.as_raw_mut_WobbleSuppressorBase()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("WobbleSuppressorBase")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for WobbleSuppressorBase {}
+	boxed_cast_descendant! { WobbleSuppressorBase, crate::videostab::MoreAccurateMotionWobbleSuppressor, cv_videostab_WobbleSuppressorBase_to_MoreAccurateMotionWobbleSuppressor }
+
+	boxed_cast_descendant! { WobbleSuppressorBase, crate::videostab::MoreAccurateMotionWobbleSuppressorBase, cv_videostab_WobbleSuppressorBase_to_MoreAccurateMotionWobbleSuppressorBase }
+
+	boxed_cast_descendant! { WobbleSuppressorBase, crate::videostab::MoreAccurateMotionWobbleSuppressorGpu, cv_videostab_WobbleSuppressorBase_to_MoreAccurateMotionWobbleSuppressorGpu }
+
+	boxed_cast_descendant! { WobbleSuppressorBase, crate::videostab::NullWobbleSuppressor, cv_videostab_WobbleSuppressorBase_to_NullWobbleSuppressor }
 
 	impl crate::videostab::WobbleSuppressorBaseTraitConst for WobbleSuppressorBase {
 		#[inline] fn as_raw_WobbleSuppressorBase(&self) -> *const c_void { self.as_raw() }
@@ -5815,22 +5818,4 @@ pub mod videostab {
 
 	boxed_ref! { WobbleSuppressorBase, crate::videostab::WobbleSuppressorBaseTraitConst, as_raw_WobbleSuppressorBase, crate::videostab::WobbleSuppressorBaseTrait, as_raw_mut_WobbleSuppressorBase }
 
-	impl WobbleSuppressorBase {
-	}
-
-	boxed_cast_descendant! { WobbleSuppressorBase, crate::videostab::MoreAccurateMotionWobbleSuppressor, cv_videostab_WobbleSuppressorBase_to_MoreAccurateMotionWobbleSuppressor }
-
-	boxed_cast_descendant! { WobbleSuppressorBase, crate::videostab::MoreAccurateMotionWobbleSuppressorBase, cv_videostab_WobbleSuppressorBase_to_MoreAccurateMotionWobbleSuppressorBase }
-
-	boxed_cast_descendant! { WobbleSuppressorBase, crate::videostab::MoreAccurateMotionWobbleSuppressorGpu, cv_videostab_WobbleSuppressorBase_to_MoreAccurateMotionWobbleSuppressorGpu }
-
-	boxed_cast_descendant! { WobbleSuppressorBase, crate::videostab::NullWobbleSuppressor, cv_videostab_WobbleSuppressorBase_to_NullWobbleSuppressor }
-
-	impl std::fmt::Debug for WobbleSuppressorBase {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("WobbleSuppressorBase")
-				.finish()
-		}
-	}
 }

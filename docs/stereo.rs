@@ -199,7 +199,69 @@ pub mod stereo {
 
 	opencv_type_simple! { crate::stereo::PropagationParameters }
 
-	impl PropagationParameters {
+	/// Class containing the methods needed for Quasi Dense Stereo computation.
+	///
+	/// This module contains the code to perform quasi dense stereo matching.
+	/// The method initially starts with a sparse 3D reconstruction based on feature matching across a
+	/// stereo image pair and subsequently propagates the structure into neighboring image regions.
+	/// To obtain initial seed correspondences, the algorithm locates Shi and Tomashi features in the
+	/// left image of the stereo pair and then tracks them using pyramidal Lucas-Kanade in the right image.
+	/// To densify the sparse correspondences, the algorithm computes the zero-mean normalized
+	/// cross-correlation (ZNCC) in small patches around every seed pair and uses it as a quality metric
+	/// for each match. In this code, we introduce a custom structure to store the location and ZNCC value
+	/// of correspondences called "Match". Seed Matches are stored in a priority queue sorted according to
+	/// their ZNCC value, allowing for the best quality Match to be readily available. The algorithm pops
+	/// Matches and uses them to extract new matches around them. This is done by considering a small
+	/// neighboring area around each Seed and retrieving correspondences above a certain texture threshold
+	/// that are not previously computed. New matches are stored in the seed priority queue and used as seeds.
+	/// The propagation process ends when no additional matches can be retrieved.
+	/// ## See also
+	/// This code represents the work presented in [Stoyanov2010](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Stoyanov2010).
+	/// If this code is useful for your work please cite [Stoyanov2010](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Stoyanov2010).
+	///
+	/// Also the original growing scheme idea is described in [Lhuillier2000](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Lhuillier2000)
+	pub struct QuasiDenseStereo {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { QuasiDenseStereo }
+
+	impl Drop for QuasiDenseStereo {
+		#[inline]
+		fn drop(&mut self) {
+			unsafe { sys::cv_stereo_QuasiDenseStereo_delete(self.as_raw_mut_QuasiDenseStereo()) };
+		}
+	}
+
+	unsafe impl Send for QuasiDenseStereo {}
+
+	impl QuasiDenseStereo {
+		/// ## C++ default parameters
+		/// * param_filepath: cv::String()
+		#[inline]
+		pub fn create(mono_img_size: core::Size, param_filepath: &str) -> Result<core::Ptr<crate::stereo::QuasiDenseStereo>> {
+			extern_container_arg!(param_filepath);
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_stereo_QuasiDenseStereo_create_Size_String(&mono_img_size, param_filepath.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::stereo::QuasiDenseStereo>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Note
+		/// This alternative version of [QuasiDenseStereo::create] function uses the following default values for its arguments:
+		/// * param_filepath: cv::String()
+		#[inline]
+		pub fn create_def(mono_img_size: core::Size) -> Result<core::Ptr<crate::stereo::QuasiDenseStereo>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_stereo_QuasiDenseStereo_create_Size(&mono_img_size, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::stereo::QuasiDenseStereo>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::stereo::QuasiDenseStereo]
@@ -363,41 +425,14 @@ pub mod stereo {
 
 	}
 
-	/// Class containing the methods needed for Quasi Dense Stereo computation.
-	///
-	/// This module contains the code to perform quasi dense stereo matching.
-	/// The method initially starts with a sparse 3D reconstruction based on feature matching across a
-	/// stereo image pair and subsequently propagates the structure into neighboring image regions.
-	/// To obtain initial seed correspondences, the algorithm locates Shi and Tomashi features in the
-	/// left image of the stereo pair and then tracks them using pyramidal Lucas-Kanade in the right image.
-	/// To densify the sparse correspondences, the algorithm computes the zero-mean normalized
-	/// cross-correlation (ZNCC) in small patches around every seed pair and uses it as a quality metric
-	/// for each match. In this code, we introduce a custom structure to store the location and ZNCC value
-	/// of correspondences called "Match". Seed Matches are stored in a priority queue sorted according to
-	/// their ZNCC value, allowing for the best quality Match to be readily available. The algorithm pops
-	/// Matches and uses them to extract new matches around them. This is done by considering a small
-	/// neighboring area around each Seed and retrieving correspondences above a certain texture threshold
-	/// that are not previously computed. New matches are stored in the seed priority queue and used as seeds.
-	/// The propagation process ends when no additional matches can be retrieved.
-	/// ## See also
-	/// This code represents the work presented in [Stoyanov2010](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Stoyanov2010).
-	/// If this code is useful for your work please cite [Stoyanov2010](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Stoyanov2010).
-	///
-	/// Also the original growing scheme idea is described in [Lhuillier2000](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_Lhuillier2000)
-	pub struct QuasiDenseStereo {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { QuasiDenseStereo }
-
-	impl Drop for QuasiDenseStereo {
+	impl std::fmt::Debug for QuasiDenseStereo {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_stereo_QuasiDenseStereo_delete(self.as_raw_mut_QuasiDenseStereo()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("QuasiDenseStereo")
+				.field("param", &crate::stereo::QuasiDenseStereoTraitConst::param(self))
+				.finish()
 		}
 	}
-
-	unsafe impl Send for QuasiDenseStereo {}
 
 	impl crate::stereo::QuasiDenseStereoTraitConst for QuasiDenseStereo {
 		#[inline] fn as_raw_QuasiDenseStereo(&self) -> *const c_void { self.as_raw() }
@@ -409,41 +444,4 @@ pub mod stereo {
 
 	boxed_ref! { QuasiDenseStereo, crate::stereo::QuasiDenseStereoTraitConst, as_raw_QuasiDenseStereo, crate::stereo::QuasiDenseStereoTrait, as_raw_mut_QuasiDenseStereo }
 
-	impl QuasiDenseStereo {
-		/// ## C++ default parameters
-		/// * param_filepath: cv::String()
-		#[inline]
-		pub fn create(mono_img_size: core::Size, param_filepath: &str) -> Result<core::Ptr<crate::stereo::QuasiDenseStereo>> {
-			extern_container_arg!(param_filepath);
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_stereo_QuasiDenseStereo_create_Size_String(&mono_img_size, param_filepath.opencv_as_extern(), ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::stereo::QuasiDenseStereo>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [QuasiDenseStereo::create] function uses the following default values for its arguments:
-		/// * param_filepath: cv::String()
-		#[inline]
-		pub fn create_def(mono_img_size: core::Size) -> Result<core::Ptr<crate::stereo::QuasiDenseStereo>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_stereo_QuasiDenseStereo_create_Size(&mono_img_size, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::stereo::QuasiDenseStereo>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	impl std::fmt::Debug for QuasiDenseStereo {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("QuasiDenseStereo")
-				.field("param", &crate::stereo::QuasiDenseStereoTraitConst::param(self))
-				.finish()
-		}
-	}
 }

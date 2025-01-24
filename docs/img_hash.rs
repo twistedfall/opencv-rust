@@ -271,18 +271,6 @@ pub mod img_hash {
 		Ok(ret)
 	}
 
-	/// Constant methods for [crate::img_hash::AverageHash]
-	pub trait AverageHashTraitConst: crate::img_hash::ImgHashBaseTraitConst {
-		fn as_raw_AverageHash(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::img_hash::AverageHash]
-	pub trait AverageHashTrait: crate::img_hash::AverageHashTraitConst + crate::img_hash::ImgHashBaseTrait {
-		fn as_raw_mut_AverageHash(&mut self) -> *mut c_void;
-
-	}
-
 	/// Computes average hash value of the input image
 	///
 	/// This is a fast image hashing algorithm, but only work on simple case. For more details, please
@@ -301,6 +289,43 @@ pub mod img_hash {
 	}
 
 	unsafe impl Send for AverageHash {}
+
+	impl AverageHash {
+		#[inline]
+		pub fn create() -> Result<core::Ptr<crate::img_hash::AverageHash>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_img_hash_AverageHash_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::img_hash::AverageHash>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [crate::img_hash::AverageHash]
+	pub trait AverageHashTraitConst: crate::img_hash::ImgHashBaseTraitConst {
+		fn as_raw_AverageHash(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::img_hash::AverageHash]
+	pub trait AverageHashTrait: crate::img_hash::AverageHashTraitConst + crate::img_hash::ImgHashBaseTrait {
+		fn as_raw_mut_AverageHash(&mut self) -> *mut c_void;
+
+	}
+
+	impl std::fmt::Debug for AverageHash {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("AverageHash")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { AverageHash, core::Algorithm, cv_img_hash_AverageHash_to_Algorithm }
+
+	boxed_cast_base! { AverageHash, crate::img_hash::ImgHashBase, cv_img_hash_AverageHash_to_ImgHashBase }
 
 	impl core::AlgorithmTraitConst for AverageHash {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -332,29 +357,50 @@ pub mod img_hash {
 
 	boxed_ref! { AverageHash, crate::img_hash::AverageHashTraitConst, as_raw_AverageHash, crate::img_hash::AverageHashTrait, as_raw_mut_AverageHash }
 
-	impl AverageHash {
+	/// Image hash based on block mean.
+	///
+	/// See [zauner2010implementation](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_zauner2010implementation) for details.
+	pub struct BlockMeanHash {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { BlockMeanHash }
+
+	impl Drop for BlockMeanHash {
 		#[inline]
-		pub fn create() -> Result<core::Ptr<crate::img_hash::AverageHash>> {
+		fn drop(&mut self) {
+			unsafe { sys::cv_img_hash_BlockMeanHash_delete(self.as_raw_mut_BlockMeanHash()) };
+		}
+	}
+
+	unsafe impl Send for BlockMeanHash {}
+
+	impl BlockMeanHash {
+		/// ## C++ default parameters
+		/// * mode: BLOCK_MEAN_HASH_MODE_0
+		#[inline]
+		pub fn create(mode: i32) -> Result<core::Ptr<crate::img_hash::BlockMeanHash>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_img_hash_AverageHash_create(ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_img_hash_BlockMeanHash_create_int(mode, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::img_hash::AverageHash>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::img_hash::BlockMeanHash>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	boxed_cast_base! { AverageHash, core::Algorithm, cv_img_hash_AverageHash_to_Algorithm }
-
-	boxed_cast_base! { AverageHash, crate::img_hash::ImgHashBase, cv_img_hash_AverageHash_to_ImgHashBase }
-
-	impl std::fmt::Debug for AverageHash {
+		/// ## Note
+		/// This alternative version of [BlockMeanHash::create] function uses the following default values for its arguments:
+		/// * mode: BLOCK_MEAN_HASH_MODE_0
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("AverageHash")
-				.finish()
+		pub fn create_def() -> Result<core::Ptr<crate::img_hash::BlockMeanHash>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_img_hash_BlockMeanHash_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::img_hash::BlockMeanHash>::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
 	}
 
 	/// Constant methods for [crate::img_hash::BlockMeanHash]
@@ -391,23 +437,17 @@ pub mod img_hash {
 
 	}
 
-	/// Image hash based on block mean.
-	///
-	/// See [zauner2010implementation](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_zauner2010implementation) for details.
-	pub struct BlockMeanHash {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { BlockMeanHash }
-
-	impl Drop for BlockMeanHash {
+	impl std::fmt::Debug for BlockMeanHash {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_img_hash_BlockMeanHash_delete(self.as_raw_mut_BlockMeanHash()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("BlockMeanHash")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for BlockMeanHash {}
+	boxed_cast_base! { BlockMeanHash, core::Algorithm, cv_img_hash_BlockMeanHash_to_Algorithm }
+
+	boxed_cast_base! { BlockMeanHash, crate::img_hash::ImgHashBase, cv_img_hash_BlockMeanHash_to_ImgHashBase }
 
 	impl core::AlgorithmTraitConst for BlockMeanHash {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -439,58 +479,6 @@ pub mod img_hash {
 
 	boxed_ref! { BlockMeanHash, crate::img_hash::BlockMeanHashTraitConst, as_raw_BlockMeanHash, crate::img_hash::BlockMeanHashTrait, as_raw_mut_BlockMeanHash }
 
-	impl BlockMeanHash {
-		/// ## C++ default parameters
-		/// * mode: BLOCK_MEAN_HASH_MODE_0
-		#[inline]
-		pub fn create(mode: i32) -> Result<core::Ptr<crate::img_hash::BlockMeanHash>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_img_hash_BlockMeanHash_create_int(mode, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::img_hash::BlockMeanHash>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [BlockMeanHash::create] function uses the following default values for its arguments:
-		/// * mode: BLOCK_MEAN_HASH_MODE_0
-		#[inline]
-		pub fn create_def() -> Result<core::Ptr<crate::img_hash::BlockMeanHash>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_img_hash_BlockMeanHash_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::img_hash::BlockMeanHash>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_base! { BlockMeanHash, core::Algorithm, cv_img_hash_BlockMeanHash_to_Algorithm }
-
-	boxed_cast_base! { BlockMeanHash, crate::img_hash::ImgHashBase, cv_img_hash_BlockMeanHash_to_ImgHashBase }
-
-	impl std::fmt::Debug for BlockMeanHash {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("BlockMeanHash")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::img_hash::ColorMomentHash]
-	pub trait ColorMomentHashTraitConst: crate::img_hash::ImgHashBaseTraitConst {
-		fn as_raw_ColorMomentHash(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::img_hash::ColorMomentHash]
-	pub trait ColorMomentHashTrait: crate::img_hash::ColorMomentHashTraitConst + crate::img_hash::ImgHashBaseTrait {
-		fn as_raw_mut_ColorMomentHash(&mut self) -> *mut c_void;
-
-	}
-
 	/// Image hash based on color moments.
 	///
 	/// See [tang2012perceptual](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_tang2012perceptual) for details.
@@ -508,6 +496,43 @@ pub mod img_hash {
 	}
 
 	unsafe impl Send for ColorMomentHash {}
+
+	impl ColorMomentHash {
+		#[inline]
+		pub fn create() -> Result<core::Ptr<crate::img_hash::ColorMomentHash>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_img_hash_ColorMomentHash_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::img_hash::ColorMomentHash>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [crate::img_hash::ColorMomentHash]
+	pub trait ColorMomentHashTraitConst: crate::img_hash::ImgHashBaseTraitConst {
+		fn as_raw_ColorMomentHash(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::img_hash::ColorMomentHash]
+	pub trait ColorMomentHashTrait: crate::img_hash::ColorMomentHashTraitConst + crate::img_hash::ImgHashBaseTrait {
+		fn as_raw_mut_ColorMomentHash(&mut self) -> *mut c_void;
+
+	}
+
+	impl std::fmt::Debug for ColorMomentHash {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ColorMomentHash")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { ColorMomentHash, core::Algorithm, cv_img_hash_ColorMomentHash_to_Algorithm }
+
+	boxed_cast_base! { ColorMomentHash, crate::img_hash::ImgHashBase, cv_img_hash_ColorMomentHash_to_ImgHashBase }
 
 	impl core::AlgorithmTraitConst for ColorMomentHash {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -539,30 +564,21 @@ pub mod img_hash {
 
 	boxed_ref! { ColorMomentHash, crate::img_hash::ColorMomentHashTraitConst, as_raw_ColorMomentHash, crate::img_hash::ColorMomentHashTrait, as_raw_mut_ColorMomentHash }
 
-	impl ColorMomentHash {
-		#[inline]
-		pub fn create() -> Result<core::Ptr<crate::img_hash::ColorMomentHash>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_img_hash_ColorMomentHash_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::img_hash::ColorMomentHash>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
+	/// The base class for image hash algorithms
+	pub struct ImgHashBase {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { ColorMomentHash, core::Algorithm, cv_img_hash_ColorMomentHash_to_Algorithm }
+	opencv_type_boxed! { ImgHashBase }
 
-	boxed_cast_base! { ColorMomentHash, crate::img_hash::ImgHashBase, cv_img_hash_ColorMomentHash_to_ImgHashBase }
-
-	impl std::fmt::Debug for ColorMomentHash {
+	impl Drop for ImgHashBase {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("ColorMomentHash")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_img_hash_ImgHashBase_delete(self.as_raw_mut_ImgHashBase()) };
 		}
 	}
+
+	unsafe impl Send for ImgHashBase {}
 
 	/// Constant methods for [crate::img_hash::ImgHashBase]
 	pub trait ImgHashBaseTraitConst: core::AlgorithmTraitConst {
@@ -609,21 +625,15 @@ pub mod img_hash {
 
 	}
 
-	/// The base class for image hash algorithms
-	pub struct ImgHashBase {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { ImgHashBase }
-
-	impl Drop for ImgHashBase {
+	impl std::fmt::Debug for ImgHashBase {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_img_hash_ImgHashBase_delete(self.as_raw_mut_ImgHashBase()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("ImgHashBase")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for ImgHashBase {}
+	boxed_cast_base! { ImgHashBase, core::Algorithm, cv_img_hash_ImgHashBase_to_Algorithm }
 
 	impl core::AlgorithmTraitConst for ImgHashBase {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -645,17 +655,60 @@ pub mod img_hash {
 
 	boxed_ref! { ImgHashBase, crate::img_hash::ImgHashBaseTraitConst, as_raw_ImgHashBase, crate::img_hash::ImgHashBaseTrait, as_raw_mut_ImgHashBase }
 
-	impl ImgHashBase {
+	/// Marr-Hildreth Operator Based Hash, slowest but more discriminative.
+	///
+	/// See [zauner2010implementation](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_zauner2010implementation) for details.
+	pub struct MarrHildrethHash {
+		ptr: *mut c_void,
 	}
 
-	boxed_cast_base! { ImgHashBase, core::Algorithm, cv_img_hash_ImgHashBase_to_Algorithm }
+	opencv_type_boxed! { MarrHildrethHash }
 
-	impl std::fmt::Debug for ImgHashBase {
+	impl Drop for MarrHildrethHash {
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("ImgHashBase")
-				.finish()
+		fn drop(&mut self) {
+			unsafe { sys::cv_img_hash_MarrHildrethHash_delete(self.as_raw_mut_MarrHildrethHash()) };
 		}
+	}
+
+	unsafe impl Send for MarrHildrethHash {}
+
+	impl MarrHildrethHash {
+		/// ## Parameters
+		/// * alpha: int scale factor for marr wavelet (default=2).
+		/// * scale: int level of scale factor (default = 1)
+		///
+		/// ## C++ default parameters
+		/// * alpha: 2.0f
+		/// * scale: 1.0f
+		#[inline]
+		pub fn create(alpha: f32, scale: f32) -> Result<core::Ptr<crate::img_hash::MarrHildrethHash>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_img_hash_MarrHildrethHash_create_float_float(alpha, scale, ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::img_hash::MarrHildrethHash>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+		/// ## Parameters
+		/// * alpha: int scale factor for marr wavelet (default=2).
+		/// * scale: int level of scale factor (default = 1)
+		///
+		/// ## Note
+		/// This alternative version of [MarrHildrethHash::create] function uses the following default values for its arguments:
+		/// * alpha: 2.0f
+		/// * scale: 1.0f
+		#[inline]
+		pub fn create_def() -> Result<core::Ptr<crate::img_hash::MarrHildrethHash>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_img_hash_MarrHildrethHash_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::img_hash::MarrHildrethHash>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
 	}
 
 	/// Constant methods for [crate::img_hash::MarrHildrethHash]
@@ -703,23 +756,17 @@ pub mod img_hash {
 
 	}
 
-	/// Marr-Hildreth Operator Based Hash, slowest but more discriminative.
-	///
-	/// See [zauner2010implementation](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_zauner2010implementation) for details.
-	pub struct MarrHildrethHash {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { MarrHildrethHash }
-
-	impl Drop for MarrHildrethHash {
+	impl std::fmt::Debug for MarrHildrethHash {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_img_hash_MarrHildrethHash_delete(self.as_raw_mut_MarrHildrethHash()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("MarrHildrethHash")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for MarrHildrethHash {}
+	boxed_cast_base! { MarrHildrethHash, core::Algorithm, cv_img_hash_MarrHildrethHash_to_Algorithm }
+
+	boxed_cast_base! { MarrHildrethHash, crate::img_hash::ImgHashBase, cv_img_hash_MarrHildrethHash_to_ImgHashBase }
 
 	impl core::AlgorithmTraitConst for MarrHildrethHash {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -751,68 +798,6 @@ pub mod img_hash {
 
 	boxed_ref! { MarrHildrethHash, crate::img_hash::MarrHildrethHashTraitConst, as_raw_MarrHildrethHash, crate::img_hash::MarrHildrethHashTrait, as_raw_mut_MarrHildrethHash }
 
-	impl MarrHildrethHash {
-		/// ## Parameters
-		/// * alpha: int scale factor for marr wavelet (default=2).
-		/// * scale: int level of scale factor (default = 1)
-		///
-		/// ## C++ default parameters
-		/// * alpha: 2.0f
-		/// * scale: 1.0f
-		#[inline]
-		pub fn create(alpha: f32, scale: f32) -> Result<core::Ptr<crate::img_hash::MarrHildrethHash>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_img_hash_MarrHildrethHash_create_float_float(alpha, scale, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::img_hash::MarrHildrethHash>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Parameters
-		/// * alpha: int scale factor for marr wavelet (default=2).
-		/// * scale: int level of scale factor (default = 1)
-		///
-		/// ## Note
-		/// This alternative version of [MarrHildrethHash::create] function uses the following default values for its arguments:
-		/// * alpha: 2.0f
-		/// * scale: 1.0f
-		#[inline]
-		pub fn create_def() -> Result<core::Ptr<crate::img_hash::MarrHildrethHash>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_img_hash_MarrHildrethHash_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::img_hash::MarrHildrethHash>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_base! { MarrHildrethHash, core::Algorithm, cv_img_hash_MarrHildrethHash_to_Algorithm }
-
-	boxed_cast_base! { MarrHildrethHash, crate::img_hash::ImgHashBase, cv_img_hash_MarrHildrethHash_to_ImgHashBase }
-
-	impl std::fmt::Debug for MarrHildrethHash {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("MarrHildrethHash")
-				.finish()
-		}
-	}
-
-	/// Constant methods for [crate::img_hash::PHash]
-	pub trait PHashTraitConst: crate::img_hash::ImgHashBaseTraitConst {
-		fn as_raw_PHash(&self) -> *const c_void;
-
-	}
-
-	/// Mutable methods for [crate::img_hash::PHash]
-	pub trait PHashTrait: crate::img_hash::ImgHashBaseTrait + crate::img_hash::PHashTraitConst {
-		fn as_raw_mut_PHash(&mut self) -> *mut c_void;
-
-	}
-
 	/// pHash
 	///
 	/// Slower than average_hash, but tolerant of minor modifications
@@ -832,6 +817,43 @@ pub mod img_hash {
 	}
 
 	unsafe impl Send for PHash {}
+
+	impl PHash {
+		#[inline]
+		pub fn create() -> Result<core::Ptr<crate::img_hash::PHash>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_img_hash_PHash_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::img_hash::PHash>::opencv_from_extern(ret) };
+			Ok(ret)
+		}
+
+	}
+
+	/// Constant methods for [crate::img_hash::PHash]
+	pub trait PHashTraitConst: crate::img_hash::ImgHashBaseTraitConst {
+		fn as_raw_PHash(&self) -> *const c_void;
+
+	}
+
+	/// Mutable methods for [crate::img_hash::PHash]
+	pub trait PHashTrait: crate::img_hash::ImgHashBaseTrait + crate::img_hash::PHashTraitConst {
+		fn as_raw_mut_PHash(&mut self) -> *mut c_void;
+
+	}
+
+	impl std::fmt::Debug for PHash {
+		#[inline]
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("PHash")
+				.finish()
+		}
+	}
+
+	boxed_cast_base! { PHash, core::Algorithm, cv_img_hash_PHash_to_Algorithm }
+
+	boxed_cast_base! { PHash, crate::img_hash::ImgHashBase, cv_img_hash_PHash_to_ImgHashBase }
 
 	impl core::AlgorithmTraitConst for PHash {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -863,29 +885,52 @@ pub mod img_hash {
 
 	boxed_ref! { PHash, crate::img_hash::PHashTraitConst, as_raw_PHash, crate::img_hash::PHashTrait, as_raw_mut_PHash }
 
-	impl PHash {
+	/// Image hash based on Radon transform.
+	///
+	/// See [tang2012perceptual](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_tang2012perceptual) for details.
+	pub struct RadialVarianceHash {
+		ptr: *mut c_void,
+	}
+
+	opencv_type_boxed! { RadialVarianceHash }
+
+	impl Drop for RadialVarianceHash {
 		#[inline]
-		pub fn create() -> Result<core::Ptr<crate::img_hash::PHash>> {
+		fn drop(&mut self) {
+			unsafe { sys::cv_img_hash_RadialVarianceHash_delete(self.as_raw_mut_RadialVarianceHash()) };
+		}
+	}
+
+	unsafe impl Send for RadialVarianceHash {}
+
+	impl RadialVarianceHash {
+		/// ## C++ default parameters
+		/// * sigma: 1
+		/// * num_of_angle_line: 180
+		#[inline]
+		pub fn create(sigma: f64, num_of_angle_line: i32) -> Result<core::Ptr<crate::img_hash::RadialVarianceHash>> {
 			return_send!(via ocvrs_return);
-			unsafe { sys::cv_img_hash_PHash_create(ocvrs_return.as_mut_ptr()) };
+			unsafe { sys::cv_img_hash_RadialVarianceHash_create_double_int(sigma, num_of_angle_line, ocvrs_return.as_mut_ptr()) };
 			return_receive!(unsafe ocvrs_return => ret);
 			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::img_hash::PHash>::opencv_from_extern(ret) };
+			let ret = unsafe { core::Ptr::<crate::img_hash::RadialVarianceHash>::opencv_from_extern(ret) };
 			Ok(ret)
 		}
 
-	}
-
-	boxed_cast_base! { PHash, core::Algorithm, cv_img_hash_PHash_to_Algorithm }
-
-	boxed_cast_base! { PHash, crate::img_hash::ImgHashBase, cv_img_hash_PHash_to_ImgHashBase }
-
-	impl std::fmt::Debug for PHash {
+		/// ## Note
+		/// This alternative version of [RadialVarianceHash::create] function uses the following default values for its arguments:
+		/// * sigma: 1
+		/// * num_of_angle_line: 180
 		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("PHash")
-				.finish()
+		pub fn create_def() -> Result<core::Ptr<crate::img_hash::RadialVarianceHash>> {
+			return_send!(via ocvrs_return);
+			unsafe { sys::cv_img_hash_RadialVarianceHash_create(ocvrs_return.as_mut_ptr()) };
+			return_receive!(unsafe ocvrs_return => ret);
+			let ret = ret.into_result()?;
+			let ret = unsafe { core::Ptr::<crate::img_hash::RadialVarianceHash>::opencv_from_extern(ret) };
+			Ok(ret)
 		}
+
 	}
 
 	/// Constant methods for [crate::img_hash::RadialVarianceHash]
@@ -976,23 +1021,17 @@ pub mod img_hash {
 
 	}
 
-	/// Image hash based on Radon transform.
-	///
-	/// See [tang2012perceptual](https://docs.opencv.org/4.11.0/d0/de3/citelist.html#CITEREF_tang2012perceptual) for details.
-	pub struct RadialVarianceHash {
-		ptr: *mut c_void,
-	}
-
-	opencv_type_boxed! { RadialVarianceHash }
-
-	impl Drop for RadialVarianceHash {
+	impl std::fmt::Debug for RadialVarianceHash {
 		#[inline]
-		fn drop(&mut self) {
-			unsafe { sys::cv_img_hash_RadialVarianceHash_delete(self.as_raw_mut_RadialVarianceHash()) };
+		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+			f.debug_struct("RadialVarianceHash")
+				.finish()
 		}
 	}
 
-	unsafe impl Send for RadialVarianceHash {}
+	boxed_cast_base! { RadialVarianceHash, core::Algorithm, cv_img_hash_RadialVarianceHash_to_Algorithm }
+
+	boxed_cast_base! { RadialVarianceHash, crate::img_hash::ImgHashBase, cv_img_hash_RadialVarianceHash_to_ImgHashBase }
 
 	impl core::AlgorithmTraitConst for RadialVarianceHash {
 		#[inline] fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
@@ -1024,45 +1063,4 @@ pub mod img_hash {
 
 	boxed_ref! { RadialVarianceHash, crate::img_hash::RadialVarianceHashTraitConst, as_raw_RadialVarianceHash, crate::img_hash::RadialVarianceHashTrait, as_raw_mut_RadialVarianceHash }
 
-	impl RadialVarianceHash {
-		/// ## C++ default parameters
-		/// * sigma: 1
-		/// * num_of_angle_line: 180
-		#[inline]
-		pub fn create(sigma: f64, num_of_angle_line: i32) -> Result<core::Ptr<crate::img_hash::RadialVarianceHash>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_img_hash_RadialVarianceHash_create_double_int(sigma, num_of_angle_line, ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::img_hash::RadialVarianceHash>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-		/// ## Note
-		/// This alternative version of [RadialVarianceHash::create] function uses the following default values for its arguments:
-		/// * sigma: 1
-		/// * num_of_angle_line: 180
-		#[inline]
-		pub fn create_def() -> Result<core::Ptr<crate::img_hash::RadialVarianceHash>> {
-			return_send!(via ocvrs_return);
-			unsafe { sys::cv_img_hash_RadialVarianceHash_create(ocvrs_return.as_mut_ptr()) };
-			return_receive!(unsafe ocvrs_return => ret);
-			let ret = ret.into_result()?;
-			let ret = unsafe { core::Ptr::<crate::img_hash::RadialVarianceHash>::opencv_from_extern(ret) };
-			Ok(ret)
-		}
-
-	}
-
-	boxed_cast_base! { RadialVarianceHash, core::Algorithm, cv_img_hash_RadialVarianceHash_to_Algorithm }
-
-	boxed_cast_base! { RadialVarianceHash, crate::img_hash::ImgHashBase, cv_img_hash_RadialVarianceHash_to_ImgHashBase }
-
-	impl std::fmt::Debug for RadialVarianceHash {
-		#[inline]
-		fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-			f.debug_struct("RadialVarianceHash")
-				.finish()
-		}
-	}
 }
