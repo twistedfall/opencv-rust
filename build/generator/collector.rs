@@ -190,6 +190,7 @@ impl<'r> Collector<'r> {
 		writeln!(hub_rs, "\nmod ffi_exports {{")?;
 		writeln!(hub_rs, "\tuse crate::mod_prelude_sys::*;")?;
 		write!(hub_rs, "\t")?;
+		// MSRV: use #[unsafe(no_mangle)] when MSRV is 1.82
 		writeln!(
 			hub_rs,
 			r#"#[no_mangle] unsafe extern "C" fn ocvrs_create_string{}(s: *const c_char) -> *mut String {{ crate::templ::ocvrs_create_string(s) }}"#,

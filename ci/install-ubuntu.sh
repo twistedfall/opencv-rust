@@ -312,11 +312,10 @@ if [[ "$OPENCV_VERSION" == "5.0.0-alpha" ]]; then
 	BUILD_FLAGS="$BUILD_FLAGS -D WITH_QT=OFF"
 fi
 
-pushd "$build_dir" > /dev/null
+cd "$build_dir"
 cmake $BUILD_FLAGS \
 	-D CMAKE_INSTALL_PREFIX=/usr \
 	-D OPENCV_EXTRA_MODULES_PATH="$opencv_contrib_src/modules" \
 	"$opencv_src"
 make -j"$(nproc)"
 sudo make -j"$(nproc)" install
-popd > /dev/null

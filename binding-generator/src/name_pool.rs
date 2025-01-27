@@ -24,15 +24,15 @@ impl NamePool {
 		out
 	}
 
-	pub fn into_disambiguator<T, I, CB>(mut self, args: I, mut name_cb: CB) -> impl Iterator<Item = (String, T)>
+	pub fn into_disambiguator<T, I, CB>(mut self, args: I, name_cb: CB) -> impl Iterator<Item = (String, T)>
 	where
 		I: IntoIterator<Item = T>,
-		CB: for<'a> FnMut(&'a T) -> Cow<'a, str>,
+		CB: for<'a> Fn(&'a T) -> Cow<'a, str>,
 	{
-		args.into_iter().map(move |f| {
-			let mut name = name_cb(&f);
+		args.into_iter().map(move |item| {
+			let mut name = name_cb(&item);
 			self.make_unique_name(&mut name);
-			(name.into_owned(), f)
+			(name.into_owned(), item)
 		})
 	}
 }

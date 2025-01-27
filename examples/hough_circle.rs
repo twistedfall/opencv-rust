@@ -136,7 +136,7 @@ fn main() -> Result<()> {
 	// and refresh the content of the output image
 	// until the user presses q or Q
 	let mut key: char = ' ';
-	while key.to_ascii_lowercase() != 'q' {
+	while !key.eq_ignore_ascii_case(&'q') {
 		// Those parameters cannot be = 0, so we must check here
 		let canny_threshold_val = canny_threshold.fetch_max(1, Ordering::SeqCst);
 		let accumulator_threshold_val = accumulator_threshold.fetch_max(1, Ordering::SeqCst);

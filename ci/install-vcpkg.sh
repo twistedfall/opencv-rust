@@ -10,7 +10,7 @@ fi
 if [ ! -e "$VCPKG_ROOT" ]; then
 	git clone https://github.com/Microsoft/vcpkg.git "$VCPKG_ROOT"
 fi
-pushd "$VCPKG_ROOT"
+cd "$VCPKG_ROOT"
 git fetch --all --prune --tags
 git status
 git checkout .
@@ -39,4 +39,3 @@ echo "set(VCPKG_BUILD_TYPE release)" >> triplets/community/x64-windows-static-md
 )
 # remove build artifacts to save CI cache space
 rm -rf "$VCPKG_ROOT/downloads" "$VCPKG_ROOT/buildtrees" "$VCPKG_ROOT/packages"
-popd

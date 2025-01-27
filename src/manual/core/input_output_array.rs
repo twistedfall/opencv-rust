@@ -39,6 +39,7 @@ pub trait ToInputOutputArray {
 
 #[inline]
 fn call_input_array(input_array: &impl _InputArrayTraitConst) -> Result<BoxedRef<_InputArray>> {
+	// MSRV: change to `unsafe extern "C"` when MSRV is 1.82
 	extern "C" {
 		fn cv_InputArray_input_array(instance: *const c_void, ocvrs_return: *mut sys::Result<*mut c_void>);
 	}

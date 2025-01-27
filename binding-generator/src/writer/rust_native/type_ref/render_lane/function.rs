@@ -48,8 +48,7 @@ impl RenderLaneTrait for FunctionRenderLane<'_, '_> {
 				.collect::<Vec<_>>();
 			let fw_args = tramp_args
 				.iter()
-				.filter(|(is_user_data, _)| !is_user_data)
-				.map(|(_, decl)| decl)
+				.filter_map(|(is_user_data, decl)| (!is_user_data).then_some(decl))
 				.join(", ");
 			let ret = self.func.return_type();
 			format!(

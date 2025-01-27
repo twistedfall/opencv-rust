@@ -7,6 +7,7 @@ readme = "README.md"
 keywords = ["opencv", "vision"]
 license = "MIT"
 version = "0.94.2"
+# bump edition to 2024 when MSRV is 1.85
 edition = "2021"
 rust-version = "1.77.0"
 authors = ["Pro <twisted.fall@gmail.com>", "Mathieu Poumeyrol <kali@zoy.org>"]
@@ -28,7 +29,7 @@ libc = "0.2"
 num-traits = "0.2"
 once_cell = "1"
 # version 0.8.20 doesn't contain the deficiency mentioned in https://deps.rs/crate/opencv/0.59.0#vulnerabilities
-rgb = { version = "0.8.20", features = ["argb"], optional = true }
+rgb = { version = "0.8.20", default-features = false, features = ["argb"], optional = true }
 
 [target.'cfg(target_os = "windows")'.dependencies]
 windows = { version = "0.61", features = ["Win32_Graphics_Direct3D9", "Win32_Graphics_Direct3D10", "Win32_Graphics_Direct3D11"] }

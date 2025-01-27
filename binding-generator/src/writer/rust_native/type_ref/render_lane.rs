@@ -38,21 +38,16 @@ pub trait RenderLaneTrait {
 		"".to_string()
 	}
 	fn rust_arg_func_call(&self, name: &str) -> String;
-
 	fn rust_arg_post_success_call(&self, _name: &str) -> String {
 		"".to_string()
 	}
-
 	fn rust_extern_arg_func_decl(&self, name: &str) -> String;
 
 	fn cpp_arg_func_decl(&self, name: &str) -> Cow<str>;
-
 	fn cpp_arg_pre_call(&self, _name: &str) -> String {
 		"".to_string()
 	}
-
 	fn cpp_arg_func_call(&self, name: &str) -> String;
-
 	fn cpp_arg_post_call(&self, _name: &str) -> String {
 		"".to_string()
 	}
@@ -109,7 +104,7 @@ pub enum Indirection {
 }
 
 impl fmt::Debug for RenderLane<'_, '_> {
-	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		match self {
 			RenderLane::Primitive(_) => f.write_str("Primitive"),
 			RenderLane::InString(_) => f.write_str("InString"),

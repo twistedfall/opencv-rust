@@ -136,8 +136,7 @@ impl GeneratorVisitor<'_> for RustNativeBindingWriter<'_> {
 
 	fn visit_func(&mut self, func: Func) {
 		self.emit_debug_log(&func);
-		let companion_funcs = func.companion_functions();
-		for func in iter::once(func).chain(companion_funcs) {
+		for func in func.with_companion_functions() {
 			let name = func.identifier();
 			self.rust_funcs.push((name.clone(), func.gen_rust(self.opencv_version)));
 			self.extern_funcs.push((name.clone(), func.gen_rust_externs()));
