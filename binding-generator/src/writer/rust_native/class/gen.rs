@@ -188,10 +188,7 @@ pub fn extern_functions<'tu, 'ge>(c: &Class<'tu, 'ge>) -> Vec<Func<'tu, 'ge>> {
 	let mut out = c
 		.methods(|m| m.exclude_kind().is_included())
 		.into_iter()
-		.flat_map(|m| {
-			let companion_func = m.companion_functions();
-			iter::once(m).chain(companion_func)
-		})
+		.flat_map(|m| m.with_companion_functions())
 		.collect::<Vec<_>>();
 
 	if c.has_implicit_clone() {

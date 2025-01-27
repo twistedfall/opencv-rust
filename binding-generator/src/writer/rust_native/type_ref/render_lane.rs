@@ -109,7 +109,7 @@ pub enum Indirection {
 }
 
 impl fmt::Debug for RenderLane<'_, '_> {
-	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		match self {
 			RenderLane::Primitive(_) => f.write_str("Primitive"),
 			RenderLane::InString(_) => f.write_str("InString"),

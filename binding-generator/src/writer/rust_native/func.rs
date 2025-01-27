@@ -1,7 +1,10 @@
 use std::borrow::Cow;
 use std::collections::HashMap;
 use std::fmt::Write;
+use std::iter;
+use std::iter::{Chain, Once};
 use std::rc::Rc;
+use std::vec::IntoIter;
 
 use once_cell::sync::Lazy;
 use Cow::{Borrowed, Owned};
@@ -20,6 +23,9 @@ use crate::{reserved_rename, CompiledInterpolation, Element, Func, IteratorExt, 
 
 pub trait FuncExt<'tu, 'ge> {
 	fn companion_functions(&self) -> Vec<Func<'tu, 'ge>>;
+	fn with_companion_functions(self) -> Chain<Once<Self>, IntoIter<Self>>
+	where
+		Self: Sized;
 }
 
 impl<'tu, 'ge> FuncExt<'tu, 'ge> for Func<'tu, 'ge> {
@@ -31,6 +37,11 @@ impl<'tu, 'ge> FuncExt<'tu, 'ge> for Func<'tu, 'ge> {
 		}
 		out.extend(companion_func_boxref_mut(self));
 		out
+	}
+
+	fn with_companion_functions(self) -> Chain<Once<Self>, IntoIter<Self>> {
+		let companions = self.companion_functions();
+		iter::once(self).chain(companions)
 	}
 }
 
