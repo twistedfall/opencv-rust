@@ -18,11 +18,6 @@
 
 #include <opencv2/core.hpp>
 
-#if defined(_WIN32) || defined(_WIN64) || defined(__WIN32__) || defined(__TOS_WIN__) || defined(__WINDOWS__) \
- || defined(__CYGWIN__) || defined(__MINGW32__) || defined(__BORLANDC__)
-	#define OCVRS_TARGET_OS_WINDOWS
-#endif
-
 #define OCVRS_ONLY_DEPENDENT_TYPES
 
 #define OCVRS_HANDLE(code, msg, return_name) Err(code, msg, return_name)

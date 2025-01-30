@@ -278,7 +278,16 @@ fn make_compiler(opencv: &Library, ffi_export_suffix: &str) -> cc::Build {
 		out.flag_if_supported("-Wa,-mbig-obj");
 	}
 	out.define("OCVRS_FFI_EXPORT_SUFFIX", ffi_export_suffix);
+	out.define("OCVRS_TARGET_OS_WINDOWS", target_os_windows());
 	out
+}
+
+fn target_os_windows() -> &'static str {
+	if env::var("CARGO_CFG_TARGET_OS").expect("Can't read CARGO_CFG_TARGET_OS env var") == "windows" {
+		"1"
+	} else {
+		"0"
+	}
 }
 
 fn setup_rerun() -> Result<()> {
