@@ -22,7 +22,7 @@ impl OpenCVFromExtern for String {
 
 	#[inline]
 	unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self {
-		receive_string(s.cast::<String>())
+		unsafe { receive_string(s.cast::<String>()) }
 	}
 }
 
@@ -78,7 +78,7 @@ impl OpenCVFromExtern for Vec<u8> {
 
 	#[inline]
 	unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self {
-		receive_string(s.cast::<Vec<u8>>())
+		unsafe { receive_string(s.cast::<Vec<u8>>()) }
 	}
 }
 

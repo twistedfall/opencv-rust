@@ -173,7 +173,7 @@ impl<T> Boxed for Mat_<T> {
 	#[inline]
 	unsafe fn from_raw(ptr: *mut c_void) -> Self {
 		Self {
-			inner: Mat::from_raw(ptr),
+			inner: unsafe { Mat::from_raw(ptr) },
 			_type: PhantomData,
 		}
 	}

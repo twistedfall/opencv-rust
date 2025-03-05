@@ -45,7 +45,7 @@ fn call_input_array(input_array: &impl _InputArrayTraitConst) -> Result<BoxedRef
 	}
 	return_send!(via ocvrs_return);
 	unsafe { cv_InputArray_input_array(input_array.as_raw__InputArray(), ocvrs_return.as_mut_ptr()) }
-	return_receive!(unsafe ocvrs_return => ret);
+	return_receive!(ocvrs_return => ret);
 	ret.into_result().map(|ptr| unsafe { _InputArray::from_raw(ptr) }.into())
 }
 
@@ -56,7 +56,7 @@ fn call_output_array(output_array: &mut impl _OutputArrayTrait) -> Result<BoxedR
 	}
 	return_send!(via ocvrs_return);
 	unsafe { cv_OutputArray_output_array(output_array.as_raw_mut__OutputArray(), ocvrs_return.as_mut_ptr()) }
-	return_receive!(unsafe ocvrs_return => ret);
+	return_receive!(ocvrs_return => ret);
 	ret.into_result().map(|ptr| unsafe { _OutputArray::from_raw(ptr) }.into())
 }
 
@@ -103,7 +103,7 @@ impl ToInputOutputArray for _InputOutputArray {
 		}
 		return_send!(via ocvrs_return);
 		unsafe { cv_InputOutputArray_input_output_array(self.as_raw_mut__InputOutputArray(), ocvrs_return.as_mut_ptr()) }
-		return_receive!(unsafe ocvrs_return => ret);
+		return_receive!(ocvrs_return => ret);
 		ret.into_result()
 			.map(|ptr| unsafe { _InputOutputArray::from_raw(ptr) }.into())
 	}

@@ -64,7 +64,7 @@ macro_rules! tuple_extern {
 		impl $crate::core::TupleExtern for $crate::core::Tuple<$type> {
 			#[inline]
 			unsafe fn extern_delete(&mut self) {
-				$crate::sys::$extern_delete(self.as_raw_mut())
+				unsafe { $crate::sys::$extern_delete(self.as_raw_mut()) }
 			}
 		}
 
@@ -73,11 +73,9 @@ macro_rules! tuple_extern {
 			#[inline]
 			pub fn $element_get(&self) -> $element_type {
 				return_send!(via ocvrs_return);
-				unsafe {
-					$crate::sys::$extern_element_get(self.as_raw(), ocvrs_return.as_mut_ptr());
-					return_receive!(ocvrs_return => ret);
-					<$element_type>::opencv_from_extern(ret)
-				}
+				unsafe { $crate::sys::$extern_element_get(self.as_raw(), ocvrs_return.as_mut_ptr()); }
+				return_receive!(ocvrs_return => ret);
+				unsafe { <$element_type>::opencv_from_extern(ret) }
 			}
 			)+
 

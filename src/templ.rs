@@ -34,7 +34,7 @@ macro_rules! callback_arg {
 	($tr_name: ident($($tr_arg_name: ident: $tr_arg_type: ty),*) -> $tr_ret: ty => $tr_userdata_name: ident in $callback_name: ident($($fw_arg_name: ident: $fw_arg_type: ty),*) -> $fw_ret: ty) => {
 		unsafe extern "C" fn trampoline($($tr_arg_name: $tr_arg_type),*) -> $tr_ret {
 			let callback: *mut Box<dyn FnMut($($fw_arg_type),*) -> $fw_ret> = $tr_userdata_name.cast();
-			let out = (*callback)($($fw_arg_name),*);
+			let out = unsafe { (*callback)($($fw_arg_name),*) };
 			out
 		}
 
@@ -97,7 +97,7 @@ macro_rules! string_array_arg_mut {
 }
 
 macro_rules! smart_ptr_option_arg {
-	(unsafe ref $name: ident) => {
+	(ref $name: ident) => {
 		let null = if $name.is_none() {
 			Some(unsafe { $crate::core::Ptr::new_null() })
 		} else {
@@ -105,19 +105,8 @@ macro_rules! smart_ptr_option_arg {
 		};
 		let $name = $name.or(null.as_ref()).expect("Nullability should have been checked");
 	};
-	(unsafe $name: ident) => {
-		let $name = $name.unwrap_or_else(|| unsafe { $crate::core::Ptr::new_null() });
-	};
-	(ref $name: ident) => {
-		let null = if $name.is_none() {
-			Some($crate::core::Ptr::new_null())
-		} else {
-			None
-		};
-		let $name = $name.or(null.as_ref()).expect("Nullability should have been checked");
-	};
 	($name: ident) => {
-		let $name = $name.unwrap_or_else(|| $crate::core::Ptr::new_null());
+		let $name = $name.unwrap_or_else(|| unsafe { $crate::core::Ptr::new_null() });
 	};
 }
 
@@ -128,18 +117,15 @@ macro_rules! return_send {
 }
 
 macro_rules! return_receive {
-	(unsafe $name_via: ident => $name: ident) => {
-		let $name = unsafe { $name_via.assume_init() };
-	};
 	($name_via: ident => $name: ident) => {
-		let $name = $name_via.assume_init();
+		let $name = unsafe { $name_via.assume_init() };
 	};
 }
 
 /// The return type of this function goes into `receive_string::<String>()`
 #[inline(always)]
 pub unsafe fn ocvrs_create_string(s: *const c_char) -> *mut String {
-	let s = CStr::from_ptr(s).to_string_lossy().into_owned();
+	let s = unsafe { CStr::from_ptr(s) }.to_string_lossy().into_owned();
 	Box::into_raw(Box::new(s))
 }
 
@@ -149,7 +135,7 @@ pub unsafe fn ocvrs_create_byte_string(v: *const u8, len: size_t) -> *mut Vec<u8
 	let byte_slice = if v.is_null() {
 		&[]
 	} else {
-		slice::from_raw_parts(v, len)
+		unsafe { slice::from_raw_parts(v, len) }
 	};
 	let v = byte_slice.to_vec();
 	Box::into_raw(Box::new(v))
@@ -161,5 +147,5 @@ pub unsafe fn receive_string<T>(s: *mut T) -> T {
 	if s.is_null() {
 		panic!("Got null pointer for receive_string()");
 	}
-	*Box::from_raw(s)
+	unsafe { *Box::from_raw(s) }
 }

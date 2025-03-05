@@ -60,7 +60,7 @@ impl<T: OpenCVFromExtern + Boxed> OpenCVFromExtern for BoxedRef<'_, T> {
 	#[inline]
 	unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self {
 		Self {
-			reference: T::opencv_from_extern(s),
+			reference: unsafe { T::opencv_from_extern(s) },
 			referenced_object: PhantomData,
 		}
 	}
@@ -139,7 +139,7 @@ impl<T: OpenCVFromExtern + Boxed> OpenCVFromExtern for BoxedRefMut<'_, T> {
 	#[inline]
 	unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self {
 		Self {
-			reference: T::opencv_from_extern(s),
+			reference: unsafe { T::opencv_from_extern(s) },
 			referenced_object: PhantomData,
 		}
 	}

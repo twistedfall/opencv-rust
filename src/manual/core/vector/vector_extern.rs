@@ -73,80 +73,80 @@ macro_rules! vector_extern {
 		impl<'t> $crate::core::VectorExtern<$type> for $crate::core::Vector<$type> {
 			#[inline]
 			unsafe fn extern_new() -> extern_receive!(Self) {
-				$crate::sys::$extern_new()
+				unsafe { $crate::sys::$extern_new() }
 			}
 
 			#[inline]
 			unsafe fn extern_delete(&mut self) {
-				$crate::sys::$extern_delete(self.as_raw_mut())
+				unsafe { $crate::sys::$extern_delete(self.as_raw_mut()) }
 			}
 
 			#[inline]
 			unsafe fn extern_len(&self) -> $crate::platform_types::size_t {
-				$crate::sys::$extern_len(self.as_raw())
+				unsafe { $crate::sys::$extern_len(self.as_raw()) }
 			}
 
 			#[inline]
 			unsafe fn extern_is_empty(&self) -> bool {
-				$crate::sys::$extern_is_empty(self.as_raw())
+				unsafe { $crate::sys::$extern_is_empty(self.as_raw()) }
 			}
 
 			#[inline]
 			unsafe fn extern_capacity(&self) -> $crate::platform_types::size_t {
-				$crate::sys::$extern_capacity(self.as_raw())
+				unsafe { $crate::sys::$extern_capacity(self.as_raw()) }
 			}
 
 			#[inline]
 			unsafe fn extern_shrink_to_fit(&mut self) {
-				$crate::sys::$extern_shrink_to_fit(self.as_raw_mut())
+				unsafe { $crate::sys::$extern_shrink_to_fit(self.as_raw_mut()) }
 			}
 
 			#[inline]
 			unsafe fn extern_reserve(&mut self, additional: $crate::platform_types::size_t) {
-				$crate::sys::$extern_reserve(self.as_raw_mut(), additional)
+				unsafe { $crate::sys::$extern_reserve(self.as_raw_mut(), additional) }
 			}
 
 			#[inline]
 			unsafe fn extern_remove(&mut self, index: $crate::platform_types::size_t) {
-				$crate::sys::$extern_remove(self.as_raw_mut(), index)
+				unsafe { $crate::sys::$extern_remove(self.as_raw_mut(), index) }
 			}
 
 			#[inline]
 			unsafe fn extern_swap(&mut self, index1: $crate::platform_types::size_t, index2: $crate::platform_types::size_t) {
-				$crate::sys::$extern_swap(self.as_raw_mut(), index1, index2)
+				unsafe { $crate::sys::$extern_swap(self.as_raw_mut(), index1, index2) }
 			}
 
 			#[inline]
 			unsafe fn extern_clear(&mut self) {
-				$crate::sys::$extern_clear(self.as_raw_mut())
+				unsafe { $crate::sys::$extern_clear(self.as_raw_mut()) }
 			}
 
 			#[inline]
 			unsafe fn extern_get(&self, index: $crate::platform_types::size_t) -> extern_receive!($type) {
 				return_send!(via ocvrs_return);
-				$crate::sys::$extern_get(self.as_raw(), index, ocvrs_return.as_mut_ptr());
+				unsafe { $crate::sys::$extern_get(self.as_raw(), index, ocvrs_return.as_mut_ptr()); }
 				return_receive!(ocvrs_return => ret);
 				ret
 			}
 
 			#[inline]
 			unsafe fn extern_push(&mut self, val: extern_arg_send!($type: '_)) {
-				$crate::sys::$extern_push(self.as_raw_mut(), val)
+				unsafe { $crate::sys::$extern_push(self.as_raw_mut(), val) }
 			}
 
 			#[inline]
 			unsafe fn extern_push_owned(&mut self, val: extern_container_send!($type)) {
-				$crate::sys::$extern_push(self.as_raw_mut(), val)
+				unsafe { $crate::sys::$extern_push(self.as_raw_mut(), val) }
 			}
 
 			#[inline]
 			unsafe fn extern_insert(&mut self, index: $crate::platform_types::size_t, val: extern_arg_send!($type: '_)) {
-				$crate::sys::$extern_insert(self.as_raw_mut(), index, val)
+				unsafe { $crate::sys::$extern_insert(self.as_raw_mut(), index, val) }
 			}
 
 			#[inline]
 			unsafe fn extern_set(&mut self, index: $crate::platform_types::size_t, val: extern_arg_send!($type: '_)) {
-				$crate::sys::$extern_set(self.as_raw_mut(), index, val)
+				unsafe { $crate::sys::$extern_set(self.as_raw_mut(), index, val) }
 			}
 		}
 	};
@@ -197,17 +197,17 @@ macro_rules! vector_copy_non_bool {
 		impl $crate::core::VectorExternCopyNonBool<$type> for $crate::core::Vector<$type> {
 			#[inline]
 			unsafe fn extern_data(&self) -> *const $type {
-				$crate::sys::$extern_data_const(self.as_raw())
+				unsafe { $crate::sys::$extern_data_const(self.as_raw()) }
 			}
 
 			#[inline]
 			unsafe fn extern_data_mut(&mut self) -> *mut $type {
-				$crate::sys::$extern_data_mut(self.as_raw_mut())
+				unsafe { $crate::sys::$extern_data_mut(self.as_raw_mut()) }
 			}
 
 			#[inline]
 			unsafe fn extern_from_slice(data: *const $type, len: $crate::platform_types::size_t) -> extern_receive!(Self) {
-				$crate::sys::$extern_from_slice(data, len)
+				unsafe { $crate::sys::$extern_from_slice(data, len) }
 			}
 		}
 	};

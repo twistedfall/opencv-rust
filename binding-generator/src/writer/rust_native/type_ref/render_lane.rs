@@ -14,7 +14,6 @@ pub use string::{InStringRenderLane, OutStringRenderLane};
 pub use trait_class::TraitClassRenderLane;
 pub use void_slice::VoidSliceRenderLane;
 
-use crate::func::Safety;
 use crate::type_ref::{Constness, TypeRef};
 use crate::writer::rust_native::type_ref::{Lifetime, TypeRefExt};
 
@@ -146,7 +145,6 @@ fn rust_self_func_decl(method_constness: Constness, lifetime: Lifetime) -> Cow<'
 
 pub struct FunctionProps {
 	pub is_infallible: bool,
-	pub safety: Safety,
 }
 
 fn rust_arg_func_decl(name: &str, argument_constness: Constness, typ: &str) -> String {

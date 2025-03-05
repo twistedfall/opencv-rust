@@ -72,7 +72,7 @@ fn extract_functions(code: &str, cb: impl FnMut(Func)) {
 #[test]
 fn char_ptr_slice() {
 	extract_functions("CV_EXPORTS int startLoop(int argc, char* argv[]);", |f| {
-		assert_eq!(f.gen_rust("0.0.0").trim(), "#[inline]\npub fn start_loop(argv: &mut [&str]) -> Result<i32> {\n\tstring_array_arg_mut!(argv);\n\treturn_send!(via ocvrs_return);\n\tunsafe { sys::cv_startLoop_int_charXX(argv.len().try_into()?, argv.as_mut_ptr(), ocvrs_return.as_mut_ptr()) };\n\treturn_receive!(unsafe ocvrs_return => ret);\n\tlet ret = ret.into_result()?;\n\tOk(ret)\n}");
+		assert_eq!(f.gen_rust("0.0.0").trim(), "#[inline]\npub fn start_loop(argv: &mut [&str]) -> Result<i32> {\n\tstring_array_arg_mut!(argv);\n\treturn_send!(via ocvrs_return);\n\tunsafe { sys::cv_startLoop_int_charXX(argv.len().try_into()?, argv.as_mut_ptr(), ocvrs_return.as_mut_ptr()) };\n\treturn_receive!(ocvrs_return => ret);\n\tlet ret = ret.into_result()?;\n\tOk(ret)\n}");
 		assert_eq!(f.gen_cpp().trim(), "void cv_startLoop_int_charXX(int argc, char** argv, Result<int>* ocvrs_return) {\n\ttry {\n\t\tint ret = cv::startLoop(argc, argv);\n\t\tOk(ret, ocvrs_return);\n\t} OCVRS_CATCH(ocvrs_return);\n}");
 		assert_eq!(
 			f.gen_rust_externs().trim(),

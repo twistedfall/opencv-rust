@@ -37,17 +37,14 @@ impl RenderLaneTrait for CppPassByVoidPtrRenderLane<'_, '_> {
 		)
 	}
 
-	fn rust_arg_pre_call(&self, name: &str, function_props: &FunctionProps) -> String {
+	fn rust_arg_pre_call(&self, name: &str, _function_props: &FunctionProps) -> String {
 		let is_nullable = self.non_canonical.type_hint().nullability().is_nullable();
 		if is_nullable && self.non_canonical.source().kind().as_smart_ptr().is_some() {
 			let ref_spec = match self.indirection {
 				Indirection::Pointer | Indirection::Reference => "ref ",
 				Indirection::None => "",
 			};
-			format!(
-				"smart_ptr_option_arg!({safety}{ref_spec}{name})",
-				safety = function_props.safety.rust_block_safety_qual()
-			)
+			format!("smart_ptr_option_arg!({ref_spec}{name})")
 		} else {
 			"".to_string()
 		}

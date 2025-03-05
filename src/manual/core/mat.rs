@@ -17,13 +17,13 @@ mod mat_;
 #[inline(always)]
 /// We rely on OpenCV to make sure that the pointer is correctly aligned
 unsafe fn convert_ptr<'r, T>(r: *const u8) -> &'r T {
-	&*(r.cast::<T>())
+	unsafe { &*(r.cast::<T>()) }
 }
 
 #[inline(always)]
 /// We rely on OpenCV to make sure that the pointer is correctly aligned
 unsafe fn convert_ptr_mut<'r, T>(r: *mut u8) -> &'r mut T {
-	&mut *(r.cast::<T>())
+	unsafe { &mut *(r.cast::<T>()) }
 }
 
 #[inline]
@@ -488,7 +488,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 			let i = i0 / mat_size.height;
 			(i, i0 - i * mat_size.height)
 		};
-		self.ptr_2d(i, j).map(|ptr| convert_ptr(ptr))
+		self.ptr_2d(i, j).map(|ptr| unsafe { convert_ptr(ptr) })
 	}
 
 	/// Like `Mat::at_2d()` but performs no bounds or type checks
@@ -496,7 +496,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 	/// Caller must ensure that indices are within Mat bounds
 	#[inline]
 	unsafe fn at_2d_unchecked<T: DataType>(&self, row: i32, col: i32) -> Result<&T> {
-		self.ptr_2d(row, col).map(|ptr| convert_ptr(ptr))
+		self.ptr_2d(row, col).map(|ptr| unsafe { convert_ptr(ptr) })
 	}
 
 	/// Like `Mat::at_pt()` but performs no bounds or type checks
@@ -504,7 +504,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 	/// Caller must ensure that point is within Mat bounds
 	#[inline]
 	unsafe fn at_pt_unchecked<T: DataType>(&self, pt: Point) -> Result<&T> {
-		self.at_2d_unchecked(pt.y, pt.x)
+		unsafe { self.at_2d_unchecked(pt.y, pt.x) }
 	}
 
 	/// Like `Mat::at_3d()` but performs no bounds or type checks
@@ -512,7 +512,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 	/// Caller must ensure that indices are within Mat bounds
 	#[inline]
 	unsafe fn at_3d_unchecked<T: DataType>(&self, i0: i32, i1: i32, i2: i32) -> Result<&T> {
-		self.ptr_3d(i0, i1, i2).map(|ptr| convert_ptr(ptr))
+		self.ptr_3d(i0, i1, i2).map(|ptr| unsafe { convert_ptr(ptr) })
 	}
 
 	/// Like `Mat::at_nd()` but performs no bounds or type checks
@@ -520,7 +520,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 	/// Caller must ensure that indices are within Mat bounds
 	#[inline]
 	unsafe fn at_nd_unchecked<T: DataType>(&self, idx: &[i32]) -> Result<&T> {
-		self.ptr_nd(idx).map(|ptr| convert_ptr(ptr))
+		self.ptr_nd(idx).map(|ptr| unsafe { convert_ptr(ptr) })
 	}
 
 	/// Return a complete read-only row
@@ -542,7 +542,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 			if row.is_null() {
 				&[]
 			} else {
-				slice::from_raw_parts(convert_ptr(row), width)
+				unsafe { slice::from_raw_parts(convert_ptr(row), width) }
 			}
 		})
 	}
@@ -580,7 +580,7 @@ pub trait MatTraitConstManual: MatTraitConst {
 		Ok(if data.is_null() {
 			&[]
 		} else {
-			slice::from_raw_parts(data.cast::<T>(), self.total())
+			unsafe { slice::from_raw_parts(data.cast::<T>(), self.total()) }
 		})
 	}
 
@@ -657,7 +657,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 	#[inline]
 	unsafe fn at_unchecked_mut<T: DataType>(&mut self, i0: i32) -> Result<&mut T> {
 		let (i, j) = idx_to_row_col(self, i0)?;
-		self.ptr_2d_mut(i, j).map(|ptr| convert_ptr_mut(ptr))
+		self.ptr_2d_mut(i, j).map(|ptr| unsafe { convert_ptr_mut(ptr) })
 	}
 
 	/// Like `Mat::at_2d_mut()` but performs no bounds or type checks
@@ -665,7 +665,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 	/// Caller must ensure that indices are within Mat bounds
 	#[inline]
 	unsafe fn at_2d_unchecked_mut<T: DataType>(&mut self, row: i32, col: i32) -> Result<&mut T> {
-		self.ptr_2d_mut(row, col).map(|ptr| convert_ptr_mut(ptr))
+		self.ptr_2d_mut(row, col).map(|ptr| unsafe { convert_ptr_mut(ptr) })
 	}
 
 	/// Like `Mat::at_pt_mut()` but performs no bounds or type checks
@@ -673,7 +673,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 	/// Caller must ensure that point is within Mat bounds
 	#[inline]
 	unsafe fn at_pt_unchecked_mut<T: DataType>(&mut self, pt: Point) -> Result<&mut T> {
-		self.at_2d_unchecked_mut(pt.y, pt.x)
+		unsafe { self.at_2d_unchecked_mut(pt.y, pt.x) }
 	}
 
 	/// Like `Mat::at_3d_mut()` but performs no bounds or type checks
@@ -681,7 +681,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 	/// Caller must ensure that indices are within Mat bounds
 	#[inline]
 	unsafe fn at_3d_unchecked_mut<T: DataType>(&mut self, i0: i32, i1: i32, i2: i32) -> Result<&mut T> {
-		self.ptr_3d_mut(i0, i1, i2).map(|ptr| convert_ptr_mut(ptr))
+		self.ptr_3d_mut(i0, i1, i2).map(|ptr| unsafe { convert_ptr_mut(ptr) })
 	}
 
 	/// Like `Mat::at_nd_mut()` but performs no bounds or type checks
@@ -689,7 +689,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 	/// Caller must ensure that indices are within Mat bounds
 	#[inline]
 	unsafe fn at_nd_unchecked_mut<T: DataType>(&mut self, idx: &[i32]) -> Result<&mut T> {
-		self.ptr_nd_mut(idx).map(|ptr| convert_ptr_mut(ptr))
+		self.ptr_nd_mut(idx).map(|ptr| unsafe { convert_ptr_mut(ptr) })
 	}
 
 	/// Return a complete writeable row
@@ -710,7 +710,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 			if x.is_null() {
 				&mut []
 			} else {
-				slice::from_raw_parts_mut(convert_ptr_mut(x), width)
+				unsafe { slice::from_raw_parts_mut(convert_ptr_mut(x), width) }
 			}
 		})
 	}
@@ -743,7 +743,7 @@ pub trait MatTraitManual: MatTraitConstManual + MatTrait {
 		Ok(if data.is_null() {
 			&mut []
 		} else {
-			slice::from_raw_parts_mut(data.cast::<T>(), total)
+			unsafe { slice::from_raw_parts_mut(data.cast::<T>(), total) }
 		})
 	}
 

@@ -185,7 +185,7 @@ where
 		T: for<'t> OpenCVType<'t>,
 	{
 		let val = val.opencv_into_extern_container_nofail();
-		self.extern_set(index, val.opencv_as_extern())
+		unsafe { self.extern_set(index, val.opencv_as_extern()) }
 	}
 
 	/// Get element at the specified `index`
@@ -206,8 +206,8 @@ where
 	where
 		T: OpenCVFromExtern,
 	{
-		let val = self.extern_get(index);
-		T::opencv_from_extern(val)
+		let val = unsafe { self.extern_get(index) };
+		unsafe { T::opencv_from_extern(val) }
 	}
 
 	#[inline]

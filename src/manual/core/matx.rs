@@ -71,7 +71,7 @@ pub trait MatxTrait: Sized {
 	/// Caller must ensure that the specified `idx` is within the `Matx` bounds
 	#[inline]
 	unsafe fn get_unchecked(&self, idx: (usize, usize)) -> &Self::ElemType {
-		self.val().get_unchecked(idx.0 * self.cols() + idx.1)
+		unsafe { self.val().get_unchecked(idx.0 * self.cols() + idx.1) }
 	}
 
 	#[inline]
@@ -85,7 +85,7 @@ pub trait MatxTrait: Sized {
 	#[inline]
 	unsafe fn get_unchecked_mut(&mut self, idx: (usize, usize)) -> &mut Self::ElemType {
 		let cols = self.cols();
-		self.val_mut().get_unchecked_mut(idx.0 * cols + idx.1)
+		unsafe { self.val_mut().get_unchecked_mut(idx.0 * cols + idx.1) }
 	}
 
 	#[inline]
@@ -317,7 +317,7 @@ macro_rules! matx_extern {
 			#[inline]
 			unsafe fn extern_input_array(&self) -> $crate::sys::Result<extern_receive!($crate::core::_InputArray)> {
 				return_send!(via ocvrs_return);
-				$extern_input_array(self, ocvrs_return.as_mut_ptr());
+				unsafe { $extern_input_array(self, ocvrs_return.as_mut_ptr()); }
 				return_receive!(ocvrs_return => ret);
 				ret
 			}
@@ -325,7 +325,7 @@ macro_rules! matx_extern {
 			#[inline]
 			unsafe fn extern_output_array(&mut self) -> $crate::sys::Result<extern_receive!($crate::core::_OutputArray)> {
 				return_send!(via ocvrs_return);
-				$extern_ouput_array(self, ocvrs_return.as_mut_ptr());
+				unsafe { $extern_ouput_array(self, ocvrs_return.as_mut_ptr()); }
 				return_receive!(ocvrs_return => ret);
 				ret
 			}
@@ -333,7 +333,7 @@ macro_rules! matx_extern {
 			#[inline]
 			unsafe fn extern_input_output_array(&mut self) -> $crate::sys::Result<extern_receive!($crate::core::_InputOutputArray)> {
 				return_send!(via ocvrs_return);
-				$extern_input_array_output(self, ocvrs_return.as_mut_ptr());
+				unsafe { $extern_input_array_output(self, ocvrs_return.as_mut_ptr()); }
 				return_receive!(ocvrs_return => ret);
 				ret
 			}

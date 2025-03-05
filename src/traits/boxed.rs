@@ -41,7 +41,7 @@ impl<T: Boxed> OpenCVFromExtern for T {
 
 	#[inline]
 	unsafe fn opencv_from_extern(s: Self::ExternReceive) -> Self {
-		Self::from_raw(s)
+		unsafe { Self::from_raw(s) }
 	}
 }
 

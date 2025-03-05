@@ -252,7 +252,7 @@ macro_rules! vecn_extern {
 			#[inline]
 			unsafe fn extern_input_array(&self) -> $crate::sys::Result<extern_receive!($crate::core::_InputArray)> {
 				return_send!(via ocvrs_return);
-				$extern_input_array(self, ocvrs_return.as_mut_ptr());
+				unsafe { $extern_input_array(self, ocvrs_return.as_mut_ptr()); }
 				return_receive!(ocvrs_return => ret);
 				ret
 			}
@@ -260,7 +260,7 @@ macro_rules! vecn_extern {
 			#[inline]
 			unsafe fn extern_output_array(&mut self) -> $crate::sys::Result<extern_receive!($crate::core::_OutputArray)> {
 				return_send!(via ocvrs_return);
-				$extern_ouput_array(self, ocvrs_return.as_mut_ptr());
+				unsafe { $extern_ouput_array(self, ocvrs_return.as_mut_ptr()); }
 				return_receive!(ocvrs_return => ret);
 				ret
 			}
@@ -268,7 +268,7 @@ macro_rules! vecn_extern {
 			#[inline]
 			unsafe fn extern_input_output_array(&mut self) -> $crate::sys::Result<extern_receive!($crate::core::_InputOutputArray)> {
 				return_send!(via ocvrs_return);
-				$extern_input_array_output(self, ocvrs_return.as_mut_ptr());
+				unsafe { $extern_input_array_output(self, ocvrs_return.as_mut_ptr()); }
 				return_receive!(ocvrs_return => ret);
 				ret
 			}

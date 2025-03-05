@@ -30,22 +30,22 @@ macro_rules! ptr_extern {
 		impl $crate::core::PtrExtern for $crate::core::Ptr<$type> {
 			#[inline]
 			unsafe fn extern_new_null() -> *mut ::std::ffi::c_void {
-				$crate::sys::$extern_new_null()
+				unsafe { $crate::sys::$extern_new_null() }
 			}
 
 			#[inline]
 			unsafe fn extern_delete(&mut self) {
-				$crate::sys::$extern_delete(self.as_raw_mut())
+				unsafe { $crate::sys::$extern_delete(self.as_raw_mut()) }
 			}
 
 			#[inline]
 			unsafe fn extern_inner_as_ptr(&self) -> *const ::std::ffi::c_void {
-				$crate::sys::$extern_inner_as_ptr(self.as_raw()).cast::<::std::ffi::c_void>()
+				unsafe { $crate::sys::$extern_inner_as_ptr(self.as_raw()).cast::<::std::ffi::c_void>() }
 			}
 
 			#[inline]
 			unsafe fn extern_inner_as_ptr_mut(&mut self) -> *mut ::std::ffi::c_void {
-				$crate::sys::$extern_inner_as_ptr_mut(self.as_raw_mut()).cast::<::std::ffi::c_void>()
+				unsafe { $crate::sys::$extern_inner_as_ptr_mut(self.as_raw_mut()).cast::<::std::ffi::c_void>() }
 			}
 		}
 	};
@@ -58,7 +58,7 @@ macro_rules! ptr_extern_ctor {
 		impl $crate::core::PtrExternCtor<$type> for $crate::core::Ptr<$type> {
 			#[inline]
 			unsafe fn extern_new(val: extern_container_send!(mut $type)) -> extern_receive!(Self) {
-				$crate::sys::$extern_new(val)
+				unsafe { $crate::sys::$extern_new(val) }
 			}
 		}
 	};

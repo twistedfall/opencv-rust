@@ -1,4 +1,6 @@
 #![allow(rustdoc::broken_intra_doc_links)]
+// MSRV: remove this hint when edition is "2024" because it's included in it
+#![deny(unsafe_op_in_unsafe_fn)]
 //! Rust bindings for the OpenCV computer vision library
 //!
 //! [Git](https://github.com/twistedfall/opencv-rust) | [Readme](https://github.com/twistedfall/opencv-rust/blob/master/README.md) |

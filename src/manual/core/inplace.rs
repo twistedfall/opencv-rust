@@ -16,7 +16,7 @@ pub trait ModifyInplace {
 impl<Mat: Boxed> ModifyInplace for Mat {
 	#[inline(always)]
 	unsafe fn modify_inplace<Res>(&mut self, f: impl FnOnce(&Self, &mut Self) -> Res) -> Res {
-		let mut m_alias = Mat::from_raw(self.as_raw_mut());
+		let mut m_alias = unsafe { Mat::from_raw(self.as_raw_mut()) };
 		let out = f(self, &mut m_alias);
 		// prevent running destructor on m_alias
 		let _ = m_alias.into_raw();
@@ -27,7 +27,7 @@ impl<Mat: Boxed> ModifyInplace for Mat {
 impl<Mat: Boxed> ModifyInplace for BoxedRefMut<'_, Mat> {
 	#[inline(always)]
 	unsafe fn modify_inplace<Res>(&mut self, f: impl FnOnce(&Self, &mut Self) -> Res) -> Res {
-		let mut m_alias = BoxedRefMut::from(Mat::from_raw(self.reference.as_raw_mut()));
+		let mut m_alias = BoxedRefMut::from(unsafe { Mat::from_raw(self.reference.as_raw_mut()) });
 		let out = f(self, &mut m_alias);
 		// prevent running destructor on m_alias
 		let _ = m_alias.reference.into_raw();

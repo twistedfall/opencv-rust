@@ -193,13 +193,13 @@ impl<'r> Collector<'r> {
 		// MSRV: use #[unsafe(no_mangle)] when MSRV is 1.82
 		writeln!(
 			hub_rs,
-			r#"#[no_mangle] unsafe extern "C" fn ocvrs_create_string{}(s: *const c_char) -> *mut String {{ crate::templ::ocvrs_create_string(s) }}"#,
+			r#"#[no_mangle] unsafe extern "C" fn ocvrs_create_string{}(s: *const c_char) -> *mut String {{ unsafe {{ crate::templ::ocvrs_create_string(s) }} }}"#,
 			self.ffi_export_suffix
 		)?;
 		write!(hub_rs, "\t")?;
 		writeln!(
 			hub_rs,
-			r#"#[no_mangle] unsafe extern "C" fn ocvrs_create_byte_string{}(v: *const u8, len: size_t) -> *mut Vec<u8> {{ crate::templ::ocvrs_create_byte_string(v, len) }}"#,
+			r#"#[no_mangle] unsafe extern "C" fn ocvrs_create_byte_string{}(v: *const u8, len: size_t) -> *mut Vec<u8> {{ unsafe {{ crate::templ::ocvrs_create_byte_string(v, len) }} }}"#,
 			self.ffi_export_suffix
 		)?;
 		writeln!(hub_rs, "}}")?;

@@ -14,7 +14,7 @@ use super::element::{DefaultRustNativeElement, RustElement};
 use super::type_ref::{Lifetime, TypeRefExt};
 use super::{comment, rust_disambiguate_names, RustNativeGeneratedElement};
 use crate::field::Field;
-use crate::func::{FuncCppBody, FuncKind, FuncRustBody, FuncRustExtern, InheritConfig, OperatorKind, ReturnKind, Safety};
+use crate::func::{FuncCppBody, FuncKind, FuncRustBody, FuncRustExtern, InheritConfig, OperatorKind, ReturnKind};
 use crate::name_pool::NamePool;
 use crate::settings::ARG_OVERRIDE_SELF;
 use crate::type_ref::{Constness, CppNameStyle, ExternDir, FishStyle, NameStyle, StrEnc, StrType, TypeRef, TypeRefTypeHint};
@@ -246,7 +246,6 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		let mut callback_arg_name: Option<&str> = None;
 		let function_props = FunctionProps {
 			is_infallible: return_kind.is_infallible(),
-			safety,
 		};
 		for (name, arg) in &args {
 			let arg_type_ref = arg.type_ref();
@@ -335,7 +334,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 		} else {
 			format!(" -> {return_type_func_decl}")
 		};
-		let (ret_pre_call, ret_handle, ret_stmt) = rust_return(self, &return_type_ref, return_kind, safety, return_lifetime);
+		let (ret_pre_call, ret_handle, ret_stmt) = rust_return(self, &return_type_ref, return_kind, return_lifetime);
 		let mut attributes = Vec::with_capacity(2);
 		if self.is_no_discard() {
 			attributes.push(Borrowed("#[must_use]"));
@@ -360,7 +359,7 @@ impl RustNativeGeneratedElement for Func<'_, '_> {
 			("return_pre_call", ret_pre_call),
 			(
 				"call",
-				&rust_call(self, safety, &identifier, &name, &call_args, &forward_args, return_kind),
+				&rust_call(self, &identifier, &name, &call_args, &forward_args, return_kind),
 			),
 			("return_handle", &ret_handle),
 			("post_success_call_args", &post_success_call_args.join("\n")),
@@ -534,7 +533,6 @@ fn pre_post_arg_handle(mut arg: String, args: &mut Vec<String>) {
 
 fn rust_call(
 	f: &Func,
-	func_safety: Safety,
 	identifier: &str,
 	func_name: &str,
 	call_args: &[String],
@@ -543,7 +541,7 @@ fn rust_call(
 ) -> String {
 	#![allow(clippy::too_many_arguments)]
 	static CALL_TPL: Lazy<CompiledInterpolation> =
-		Lazy::new(|| "{{ret_receive}}{{unsafety_call}}{ sys::{{identifier}}({{call_args}}) };".compile_interpolation());
+		Lazy::new(|| "{{ret_receive}}unsafe { sys::{{identifier}}({{call_args}}) };".compile_interpolation());
 
 	let ret_receive = if return_kind.is_naked() {
 		"let ret = "
@@ -556,7 +554,6 @@ fn rust_call(
 	};
 	tpl.interpolate(&HashMap::from([
 		("ret_receive", ret_receive),
-		("unsafety_call", func_safety.rust_block_safety_qual()),
 		("identifier", identifier),
 		("name", func_name),
 		("call_args", &call_args.join(", ")),
@@ -568,7 +565,6 @@ fn rust_return(
 	f: &Func,
 	return_type_ref: &TypeRef,
 	return_kind: ReturnKind,
-	safety: Safety,
 	lifetime: Lifetime,
 ) -> (&'static str, String, &'static str) {
 	match f.rust_body() {
@@ -581,15 +577,12 @@ fn rust_return(
 
 			let mut ret_convert = Vec::with_capacity(3);
 			if !return_kind.is_naked() {
-				ret_convert.push(Owned(format!(
-					"return_receive!({safety}ocvrs_return => ret);",
-					safety = safety.rust_block_safety_qual()
-				)));
+				ret_convert.push(Borrowed("return_receive!(ocvrs_return => ret);"));
 			}
 			if !return_kind.is_infallible() {
 				ret_convert.push("let ret = ret.into_result()?;".into())
 			}
-			let ret_map = rust_return_map(return_type_ref, "ret", safety, return_kind, lifetime);
+			let ret_map = rust_return_map(return_type_ref, "ret", return_kind, lifetime);
 			if !ret_map.is_empty() {
 				ret_convert.push(format!("let ret = {ret_map};").into());
 			}
@@ -605,18 +598,11 @@ fn rust_return(
 	}
 }
 
-fn rust_return_map(
-	return_type: &TypeRef,
-	ret_name: &str,
-	context_safety: Safety,
-	return_kind: ReturnKind,
-	lifetime: Lifetime,
-) -> Cow<'static, str> {
-	let unsafety_call = context_safety.rust_block_safety_qual();
+fn rust_return_map(return_type: &TypeRef, ret_name: &str, return_kind: ReturnKind, lifetime: Lifetime) -> Cow<'static, str> {
 	let return_type_kind = return_type.kind();
 	if return_type_kind.as_string(return_type.type_hint()).is_some() || return_type_kind.extern_pass_kind().is_by_void_ptr() {
 		format!(
-			"{unsafety_call}{{ {typ}::opencv_from_extern({ret_name}) }}",
+			"unsafe {{ {typ}::opencv_from_extern({ret_name}) }}",
 			typ = return_type.rust_return(FishStyle::Turbo, lifetime),
 		)
 		.into()
@@ -634,7 +620,7 @@ fn rust_return_map(
 		} else {
 			".ok_or_else(|| Error::new(core::StsNullPtr, \"Function returned null pointer\"))?"
 		};
-		format!("{unsafety_call}{{ {ret_name}.{ptr_call}() }}{error_handling}").into()
+		format!("unsafe {{ {ret_name}.{ptr_call}() }}{error_handling}").into()
 	} else {
 		"".into()
 	}
